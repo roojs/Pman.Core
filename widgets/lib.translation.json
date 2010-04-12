@@ -1,0 +1,16 @@
+
+"SecurePass.js" : {
+	 "Weak" : "Weak",
+	 "Medium" : "Medium",
+	 "Strong" : "Strong",
+	 "Too Weak" : "Too Weak",
+	 "Password strength:" : "Password strength:",
+	 "Your password is Too Weak." : "Your password is Too Weak.",
+	 "Please type a password, and then retype it to confirm." : "Please type a password, and then retype it to confirm.",
+	 "Your password can't contain your last name. Please type a different password." : "Your password can't contain your last name. Please type a different password.",
+	 "Your password can't contain your first name. Please type a different password." : "Your password can't contain your first name. Please type a different password.",
+	 "Your password can't include the part of your ID. Please type a different password." : "Your password can't include the part of your ID. Please type a different password.",
+	 "Your password must be at least 6 characters long. Please type a different password." : "Your password must be at least 6 characters long. Please type a different password.",
+	 "Your password can't contain more than 16 characters. Please type a different password." : "Your password can't contain more than 16 characters. Please type a different password.",
+	 "The password contains characters that aren't allowed. Please type a different password." : "The password contains characters that aren't allowed. Please type a different password."
+},

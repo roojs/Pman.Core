@@ -1,0 +1,598 @@
+//<script type="text/javascript">
+
+/**
+ * 
+ * generic person list - used by perms. and staff lists.
+ * 
+ */
+
+
+
+Pman.Tab.PersonList = function(config)
+{
+    Ext.apply(this, config);
+}
+
+Pman.Tab.PersonList.prototype = {
+    
+    //--- things that should be set!!!!
+    id : '',  // should be set to something!
+    type : 0, // means!! = 0 = Groups (perms) 1= teams - loose grouping..
+    title : false,
+    hiddenColumns: false,  // lsit of cols to hide..
+    itemDisplayName : false, /// eg "Staff Employees / Contacts etc."
+    permName : 'Core.Person', // or 'Core.Staff'
+    getLeftSelections : function() { return []; },
+    hideDelete : false,
+    
+    // beforeload handler... -- override on extended versions..
+    beforeload: function(t, o) {
+        //console.log(o.params);
+        // teams!?!
+        alert('person list not configured');
+        return false;
+        var tms = _this.getLeftSelections();
+        
+        if (tms.length) {
+            o.params['query[in_group]'] = tms[0].data.id;
+        }
+        o.params['query[name]'] = this.searchBox.getValue();
+        o.params['query[type]'] = this.type; // group type..
+        o.params['query[person_internal_only_all]'] = 1;
+        o.params['query[person_inactive]'] = this.showInActive ? 0  : 1;
+        
+    },
+    
+    columns : function()
+    {
+        alert('person list not configured');
+        return false;
+        return [
+            this.c_name(),
+            this.c_office_id_name(),
+            this.c_role(),
+            this.c_phone(),
+            this.c_fax(),
+            this.c_email(),
+            this.c_active()
+        ]
+    },
+    
+    dialog: function () {
+        alert('person list not configured');
+        return false;
+        return Pman.Dialog.PersonStaff;
+    },
+    bulkAdd : function() {
+        //return Pman.Dialog.PersonBulkAdd
+        return false;
+    },
+    newDefaults : function() {
+        alert('person list not configured');
+        return false;
+        return {
+            
+            id : 0,
+            company_id : Pman.Login.authUser.company_id,
+            company_id_name : Pman.Login.authUser.company_id_name,
+            company_id_address : Pman.Login.authUser.company_id_address,
+            company_id_tel : Pman.Login.authUser.company_id_tel,
+            company_id_fax : Pman.Login.authUser.company_id_fax
+        };
+    },
+         
+    
+    
+    /// --- end extendable bits...
+    
+    
+    parentLayout : false,
+    showInActive : 0,  // toggle var for hiding and showing active staff..
+    grid : false,
+    panel : false,
+    toolbar : false,
+    paging:  false,
+    tab: false,
+    
+    
+    refreshWestPanel : function() /// used wher???
+    {
+        var actpan = this.parentLayout.getRegion('west').getActivePanel();
+        if (actpan && actpan.controller) {
+            actpan.controller.paging.onClick('refresh');
+            return;
+        }
+        // depreciated..    
+    
+        if (!actpan || !actpan.id) {
+            return;
+        }
+        Pman.Tab[actpan.id].refresh();
+    },
+    
+    refresh: function(){
+        if (!this.paging) {
+            this.delayedCreate();
+        }
+        this.paging.onClick('refresh');
+    },
+    
+    loadFirst: function(){
+        if (!this.paging) {
+            this.delayedCreate();
+        }
+        this.paging.onClick('first');
+    },  
+    
+    
+    
+    add : function(parentLayout, region) {
+        
+        var _this = this;
+        if (this.tab) {
+            parentLayout.getRegion(region).showPanel(this.panel);
+            return;
+        }
+        this.parentLayout = parentLayout;
+        
+        this.layout = new Ext.BorderLayout(
+            parentLayout.getEl().createChild({tag:'div'}),
+            {
+               
+                center: {
+                    autoScroll:true,
+                    hideTabs: true
+                }
+            }
+        );
+
+
+
+        this.tab = parentLayout.add(region,  new Ext.NestedLayoutPanel(
+            this.layout, {title: this.title, background: true, controller : this}));
+
+        this.tab.on('activate', function() {
+            _this.delayedCreate();
+           // _this.paging.onClick('refresh');
+        });
+    },
+    delayedCreate : function () 
+     
+    {
+        var _this = this;
+        if (this.grid) {
+            return;
+        }
+        
+        var refreshPager = function() {
+            _this.refresh();
+        }
+        this.layout.beginUpdate();
+        
+        var frm = this.layout.getRegion('center').getEl().createChild({tag:'div'});
+        //this.grid = new Ext.grid.EditorGrid(frm,  {
+        this.grid = new Ext.grid.Grid(frm,  {
+                ddGroup: 'groupDD',
+                //enableDrag: true,
+                enableDrag: true,
+                id: this.id + '-grid',
+                ds:   new Ext.data.Store({
+                    // load using HTTP
+                    proxy: new Ext.data.HttpProxy({
+                        url: baseURL + '/Roo/Person.html',
+                        method: 'GET'
+                    }),
+                    reader: Pman.Readers.Person,
+                    remoteSort: true,
+                    listeners : {
+                        
+                        beforeload: function(t, o) {
+                            //console.log(o.params);
+                            // teams!?!
+                            return _this.beforeload(t,o);
+                             
+                            
+                        },
+                        loadexception : Pman.loadException
+                    
+                    },
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                }),
+                cm: new Ext.grid.ColumnModel(
+                    this.columns()
+                ),
+                autoExpandColumn: _this.id + '-name' , // fixme!!!!
+                clicksToEdit : 1,
+                
+                loadMask: true,
+
+                listeners : {
+                    rowdblclick : function(g, ri, e) {
+                        var s = g.getDataSource().getAt(ri).data;
+                        if (_this.dialog() && Pman.hasPerm(_this.permName, 'E')) {
+                            _this.dialog().show(s,refreshPager);
+                        }
+                        
+                        
+                    } 
+                    
+                }
+                 
+                 
+        });
+        this.panel  = this.layout.add('center',  new Ext.GridPanel(this.grid , {
+                fitToframe: true,
+                fitContainer: true, 
+                id: this.id, 
+                title: this.title || "Staff", 
+                controller : this 
+            })
+        );
+        this.grid.render();
+        
+        if (this.hiddenColumns) {
+            var cm = this.grid.getColumnModel();
+            Roo.each(this.hiddenColumns, function(c) {
+                cm.setHidden(cm.getIndexByDataIndex(c), true);
+            });
+        }
+        
+
+        
+        var gridFoot = this.grid.getView().getFooterPanel(true);
+        this.paging = new Ext.PagingToolbar(gridFoot, this.grid.getDataSource(), {
+            pageSize: 25,
+            displayInfo: true,
+            displayMsg: "Displaying " + (this.itemDisplayName || "Staff") + " {0} - {1} of {2}",
+            emptyMsg: "No " + (this.itemDisplayName || "Staff") + " found"
+        });
+        var grid = this.grid;
+ 
+    
+        this.toolbar = new Ext.Toolbar(this.grid.getView().getHeaderPanel(true));
+        
+        var tb = this.toolbar;
+        
+        
+        if (this.parentLayout.getRegion('west') && this.parentLayout.getRegion('west').panels.length) {
+                
+            this.paging.add( 
+                '<b><i><font color="red">'+ 
+                    (this.type ?
+                        "Drag person to add or remove from group" :
+                        "Drag person to add or remove from team"
+                    ) +
+                '</font></i></b>'
+            );
+        }
+        
+        var _this = this;
+        if (this.permName == 'Core.Staff') {
+                
+            this.paging.add( '-',
+                {
+                    text: "Show old staff",
+                    pressed: false,
+                    enableToggle: true,
+                    toggleHandler: function(btn,pressed) {
+                        _this.showInActive = (pressed ? 1 : 0);
+                        btn.setText(pressed ? "Hide old staff": "Show old staff" );
+                        refreshPager();
+                    }
+                }, 
+                
+               
+                '-'
+            );
+        }
+        
+     
+        this.searchBox = new Ext.form.TextField({
+            name: 'search',
+            width:135,
+            listeners : {
+                specialkey : function(f,e)
+                {
+                    
+                    if (e.getKey() == 13) {
+                        
+                        refreshPager();
+                    } 
+                   
+                
+                }
+            }
+         
+        });
+        var dg = _this.dialog();
+        tb.add(
+            {
+                text: "Add",
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                hidden :  !dg || (_this.newDefaults() === false) || !Pman.hasPerm(this.permName, 'A'),  
+                handler : function(){
+                    dg.show(  _this.newDefaults(), refreshPager );  
+                }
+            }, 
+             { ///... for contacts stuff...
+                text: "Bulk Add",
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                hidden : !this.bulkAdd() || !Pman.hasPerm(this.permName, 'A'),    
+                handler : function(){
+                    
+                   // Pman.Dialog.PersonBulkAdd.show( {  id : 0 }, refreshPager ); 
+                   _this.bulkAdd().show( {  id : 0 }, refreshPager ); 
+                }
+            },
+
+            {
+                text: "Edit",
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+                hidden : !dg || !Pman.hasPerm(this.permName, 'E'),    
+                handler : function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    if (!s.length || (s.length > 1))  {
+                        Ext.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
+                        return;
+                    }
+                    dg.show( s[0].data,refreshPager);
+                 }
+            }, 
+            {
+                text: "Toogle Active",
+                cls: 'x-btn-text-icon',
+                icon:   rootURL + '/Pman/templates/images/trash.gif',
+                hidden : (this.permName != 'Core.Staff') || !Pman.hasPerm(this.permName, 'E'),   // SPECIFIC TO STAFF!!!!!!
+                handler : function(){
+                 
+                    var s = grid.getSelectionModel().getSelections();
+                    if (!s.length  )  {
+                        Ext.MessageBox.alert("Error",  "Select People Row");
+                        return;
+                    }
+                    var r = [];
+                    for(var i = 0; i < s.length; i++) {
+                        r.push(s[i].data.id);
+                    }
+                
+                
+                
+                    grid.getView().mainWrap.mask("Sending");
+
+                    
+                    Ext.Ajax.request({
+                        url: baseURL + '/Roo/Person.html',
+                        method: 'GET',
+                        params: {
+                            _toggleActive : r.join(',')
+                        },
+                        success: function(resp) {
+                            var res = Pman.processResponse(resp);
+                            grid.getView().mainWrap.unmask();
+                            if (!res.success) {
+                                Ext.MessageBox.alert("Error", res.errorMsg ? res.errorMsg  : "Error Sending");
+                                return;
+                            }
+                            refreshPager();
+                            
+                        },
+                        failure: function(act) {
+                            grid.getView().mainWrap.unmask();
+                            Ext.MessageBox.alert("Error", "Error Sending");
+                        }
+                        
+                    });
+                }
+                
+            }, 
+            {
+                text: "Delete",
+                cls: 'x-btn-text-icon',
+                hidden : (this.permName == 'Core.Staff') ||  !Pman.hasPerm('Core.Person', 'D') || this.hideDelete,    
+                icon: rootURL + '/Pman/templates/images/trash.gif',
+                handler : function(){
+                    Pman.genericDelete(_this, 'Person'); 
+                }
+            } ,
+
+           
+            '-',
+            'Search: ',
+             
+            this.searchBox,
+        
+            {
+                
+               
+                icon: rootURL + '/Pman/templates/images/search.gif', // icons can also be specified inline
+                cls: 'x-btn-icon',
+                qtip: "Search",
+                handler : function () { 
+                    _this.grid.getSelectionModel().clearSelections();
+
+                    refreshPager();
+                }
+            },   
+             {
+                
+               
+                icon: rootURL + '/Pman/templates/images/edit-clear.gif', // icons can also be specified inline
+                cls: 'x-btn-icon',
+                qtip: "Reset Search",
+                handler : function () {
+                    _this.searchBox.setValue('');
+                    _this.grid.getSelectionModel().clearSelections();
+
+                    refreshPager();
+                }
+            }
+            
+
+        );
+        
+            
+        //this.toolbar = tb;
+        // add stuff to toolbar?
+        //this.innerLayout.endUpdate();
+         this.layout.endUpdate();
+
+        
+        
+    },
+    /*
+    show: function (parentLayout, region)
+    {
+        this.add(parentLayout, region);
+        this.grid.getDataSource().load({
+            params: {
+                start:0, 
+                limit:25
+            }
+        });
+
+    },
+    */
+    
+    c_project_id_code : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({               
+            header : "Project",
+            dataIndex : 'project_id_code',
+            sortable : false,
+            width : 70,
+            renderer : function(v,x,r) {
+                return String.format('<span qtip="{0}">{1}</span>', 
+                    r.data.action_type,
+                    v);
+            }
+        },cfg);
+    },
+
+    
+    
+    
+    c_name : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            id : this.id + '-name',
+            header : "Name",
+            dataIndex : 'name',
+            sortable : true,
+            width : 150  
+        }, cfg);
+    },
+     c_company_id_comptype : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Company Type",
+            dataIndex : 'company_id_comptype',
+            sortable : true,
+            width : 70
+        }, cfg);
+    },
+    
+    c_company_id_name : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Company / Office",
+            dataIndex : 'company_id_name',
+            sortable : true,
+            width : 150,
+            renderer: function(v,x,r) {
+                return String.format('{0}{1}{2}', 
+                    v,
+                    r.data.office_id ? ' / ' : '',
+                    r.data.office_id_name);
+            }
+
+        }, cfg);
+    },
+    
+    c_office_id_name : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Office / Dept.",
+            dataIndex : 'office_id_name',
+            sortable : true,
+            width : 150  
+        }, cfg);
+        
+    },
+    c_role : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Role / Position",
+            dataIndex : 'role',
+            sortable : true,
+            width : 100
+        }, cfg);
+        
+    },
+    c_phone : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Phone",
+            dataIndex : 'phone',
+            sortable : true,
+            width : 70
+        }, cfg);
+        
+    },
+    c_fax : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Fax",
+            dataIndex : 'fax',
+            sortable : true,
+            width : 70
+        }, cfg);
+        
+    },
+    c_email : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Email",
+            dataIndex : 'email',
+            sortable : true,
+            width : 150,
+            renderer : function (v) {
+                return (v.length && v.indexOf('@') > 0 ) ? 
+                    String.format('<a href="mailto:{0}">{0}</a>',v) : v;
+            }
+        }, cfg);
+        
+    },
+    c_active : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+            header : "Active",
+            dataIndex : 'active',
+            sortable : true,
+            width : 50,
+            renderer : function(v) {
+                // work out what the column is..
+                
+                var state = v> 0 ?  '-checked' : '';
+
+                return '<img class="x-grid-check-icon' + state + '" src="' + Ext.BLANK_IMAGE_URL + '"/>';
+                
+                
+            }
+
+        }, cfg);
+        
+    }
+     
+    
+    
+};
+// need two version of this 
+// (one can be used as edit + ProjectDirectory ADD)
+// - the other one needs selection combos's for company / office
+
+

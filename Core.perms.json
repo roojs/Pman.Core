@@ -1,0 +1,24 @@
+
+{	
+ 
+	"/Permission Name"   :  "/ full perms (Default admin),    default perms) , description",
+        
+          
+	"Projects_Member_Of"      : [ "EPS",     "S" , "Can only See projects they are member of" ] ,
+	"Projects_All"            : [ "ADEPS",   "" , "Can see All Projects"] ,
+        
+        
+	"Document_Types"            : [ "ADEPS",  "S" , "Document Types"] ,
+        
+	"Person"                    : [ "ADEPS", "S" , "Contacts"] ,
+	"Offices"                   : [ "ADEPS", "S" , "Contact Offices"] ,
+	"Companies"                 : [ "ADEPS", "S" , "Contact Companies"] ,
+        
+	"Staff"                     : [ "ADEPS", "S" , "Staff"] ,
+	"Groups"                    : [ "ADEPS", "" , "Group Management"] ,
+        
+	"Events"                    : [ "PS",     "", "Event Log"] 
+}
+            
+            
+            
