@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         $enabled =  array('Core') ;
         $enabled = explode(',', $ff->enable);
         $disabled =  explode(',', $ff->disable? $ff->disable: '');
-        $pman = dirname(__FILE__).'/../../';
+        $pman = $ff->rootDir . '/Pman';
         $ret = array();
          //echo '<PRE>';print_r($enabled);
         foreach($enabled as $module) {
