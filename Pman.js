@@ -795,7 +795,7 @@ Pman = new Roo.Document(
     register : function(obj) {
         if (!obj.parent) {
             if (obj.parent === false) {
-                console.log('skip module (no parent)' + obj.modkey);
+                //console.log('skip module (no parent)' + obj.modkey);
                 return;
             }
             
