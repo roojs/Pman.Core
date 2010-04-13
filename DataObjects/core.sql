@@ -139,17 +139,6 @@ ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) default '';
 
 
 
-CREATE TABLE `ProjectDirectory` (
-  `id` int(11) NOT NULL auto_increment,
-  `project_id` int(11) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  `ispm` int(11) NOT NULL,
-  `office_id` int(11) default NULL,
-  `company_id` int(11) default NULL,
-  `role` varchar(16) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ;
- 
 CREATE TABLE `Projects` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(254) collate utf8_unicode_ci NOT NULL,
@@ -232,10 +221,7 @@ ALTER TABLE  `Images` ADD COLUMN `descript` TEXT DEFAULT '' NOT NULL;
 ALTER TABLE  `Images` ADD COLUMN `title` VARCHAR(128) DEFAULT '' NOT NULL;
  
 
-
-
-
-
+ 
 
 
 CREATE TABLE  `i18n` (
