@@ -235,18 +235,4 @@ DELIMITER ;
 			
         
     
-CREATE TABLE `Signup` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(128) character set latin1 NOT NULL,
-  `email` varchar(128) character set latin1 NOT NULL,
-  `role` varchar(32) character set latin1 NOT NULL,
-  `company_name` varchar(128) character set latin1 NOT NULL,
-  `person_id` int(11) default 0,
-  `remarks` text NOT NULL,
-  
-  PRIMARY KEY  (`id`)
-) ;
-
- 
- 
  
