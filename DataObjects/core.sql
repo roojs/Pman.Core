@@ -172,23 +172,6 @@ ALTER TABLE `Projects`  ADD COLUMN `languages` varchar(128)  NOT NULL;
 ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 
 
-CREATE TABLE `Remarks` (
-  `id` int(11) NOT NULL auto_increment,
-  `remark` text NOT NULL,
-  `add_when` datetime NOT NULL,
-  `on_table` varchar(32) NOT NULL,
-  `on_id` int(11) NOT NULL,
-  `person_name` varchar(64) NOT NULL,
-  `person_id` int(11) NOT NULL,
-  `isHTML` int(11) default '0',
-  `action` varchar(32) default '',
-  PRIMARY KEY  (`id`),
-  KEY `qlookup` (`add_when`,`on_table`,`on_id`)
-);
- alter table Remarks add column isHTML int(11) default 0;
-
- 
- 
 
 
 CREATE TABLE   `Images` (
