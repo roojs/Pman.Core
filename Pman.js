@@ -795,7 +795,7 @@ Pman = new Roo.Document(
     register : function(obj) {
         if (!obj.parent) {
             if (obj.parent === false) {
-                //console.log(obj);
+                console.log('skip module (no parent)' + o.modkey);
                 return;
             }
             
@@ -804,6 +804,7 @@ Pman = new Roo.Document(
         if (!obj.parent.modules) {
             obj.parent.modules = new Roo.util.MixedCollection(false, function(o) { return o.modKey });
         }
+        
         obj.parent.modules.add(obj);
         
     },
