@@ -150,8 +150,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             $this->selectAdd('distinct(client_id)');
             $this->selectAs(DB_DataObject::factory('Companies'), 'client_id_%s','join_client_id_id');
             $this->groupBy('client_id');
-            
-            
+             
         }
         
         // this is clipping related..  -- we should have an API for addons like this.. (and docs)
