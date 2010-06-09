@@ -143,6 +143,13 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
                 $this->whereAdd("1=0"); // can see nothing!!!
             }
         }
+        
+        if (!empty($q['query']['distinct_client_id'])) {
+            $this->selectAdd();
+            $this->selectAdd('distinct(client_id)');
+            
+        }
+        
         // this is clipping related..  -- we should have an API for addons like this.. (and docs)
         
         if ($au->company()->comptype == 'SUPPLIER') {
