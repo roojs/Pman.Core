@@ -145,7 +145,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         }
         
         if (!empty($q['query']['distinct_client_id'])) {
-            DB_DataObjecT::debuglevel(1);
+            //DB_DataObjecT::debuglevel(1);
             $this->selectAdd();
             $this->selectAdd('distinct(client_id)');
             $this->selectAs(DB_DataObject::factory('Companies'), 'client_id_%s','join_client_id_id');
