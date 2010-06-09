@@ -9,7 +9,7 @@
         <title>{appName}</title>
         <link rel="shortcut icon" href="./Pman.ico" type="image/vnd.microsoft.icon"/>
         
-        <link rel="stylesheet" type="text/css" href="/roojs1/cssX/roojs-all.css" />
+        <link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/cssX/roojs-all.css" />
         
         {outputCSSIncludes()}
         
@@ -84,10 +84,10 @@
             <div class="loading-indicator" id="loading-text">&#160;Loading...(This may take a few seconds)</div>
         </div>
 {if:isDev}                  
-        <script type="text/javascript" src="/roojs1/roojs-debug.js"></script>  
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-debug.js"></script>  
          
 {else:}                  
-        <script type="text/javascript" src="/roojs1/roojs-all.js"></script>
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js"></script>
                  
 {end:}                  
         <flexy:toJavascript 
@@ -114,8 +114,8 @@
         
         <script type="text/javascript">
             Ext=Roo; // bc
-            Roo.BLANK_IMAGE_URL =  "/roojs1/images/gray/s.gif";
-            Roo.rootURL = '/roojs1/';
+            Roo.BLANK_IMAGE_URL =  rootURL + "/roojs1/images/gray/s.gif";
+            Roo.rootURL = rootURL +'/roojs1/';
         </script>
         
         {outputJavascriptIncludes()}
