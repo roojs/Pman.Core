@@ -147,6 +147,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         if (!empty($q['query']['distinct_client_id'])) {
             $this->selectAdd();
             $this->selectAdd('distinct(client_id)');
+            $this->groupBy('client_id');
             
         }
         
