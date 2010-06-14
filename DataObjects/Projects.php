@@ -348,6 +348,13 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     }
     
     
+    function client()
+    {
+        $c = DB_DataObject::factory('Companies');
+        $c->get($this->client_id);
+        return $c;
+    }
+    
     /**
      * check who is trying to access this. false == access denied..
      */
