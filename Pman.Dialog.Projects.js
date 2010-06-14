@@ -113,7 +113,7 @@ Pman.Dialog.Projects = {
                 store: new Ext.data.SimpleStore({
                       // load using HTTP
                     fields: [ 'code', 'desc' ],
-                    data: Pman.Tab.ProjectsMgr.getTypes()
+                    data:  Pman.Dialog.Projects.getTypes()
                 }),
                 displayField:'desc',
                 editable : false,
@@ -437,8 +437,19 @@ Pman.Dialog.Projects = {
                 ts : Math.random()
             } 
         });
-    }
-    
+    },
+    getTypes: function()
+    {
+ 
+        return [
+            [  'U' , "Project (Unconfirmed)" ],
+            [  'P' , "Project" ],
+            [  'C' , "Project (Closed)" ],
+            [  'N' , "Non-Project" ],
+            [  'X' , "Non-Project (Closed)" ]
+        
+        ];
+    },
     
     
     
