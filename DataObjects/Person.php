@@ -292,6 +292,28 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 }
             }
         }
+        
+        
+        $lang = empty($this->lang) ? 'en' : $this->lang;
+        if (empty($_SESSION['Pman_I18N'][$lang])) {
+            require_once 'Pman/I18N.php';
+            $x = new Pman_I18N();
+            $x->setSession($au);
+            
+        }
+        
+        $aur['i18n'] =$_SESSION['Pman_I18N'][$lang];
+        
+        // perms + groups.
+        $aur['perms']  = $this->getPerms();
+        $g = DB_DataObject::Factory('Group_Members');
+        $aur['groups']  = $g->listGroupMembership($this, 'name');
+        
+        $aur['passwd'] = '';
+        $aur['dailykey'] = '';
+        
+        
+        
         return $aur;
     }
     
