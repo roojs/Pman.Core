@@ -266,7 +266,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         
         $this->whereAdd('LENGTH(passwd) > 1'); 
-        $this->email = $n
+        $this->email = $n;
     }
     
     function authUserArray()
