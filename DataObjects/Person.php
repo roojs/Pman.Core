@@ -257,6 +257,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         return $x;
     }
     
+    
+    function active()
+    {
+        return $this->active;
+    }
+    
     function authUserArray()
     {
         
