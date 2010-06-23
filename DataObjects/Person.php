@@ -268,6 +268,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $this->whereAdd('LENGTH(passwd) > 1'); 
         $this->email = $n;
     }
+    function lang($val)
+    {
+        if ($val == $this->lang) {
+            return;
+        }
+        $uu = clone($u);
+        $this->lang = $val;
+        $this->update($uu);
+
+    }
+            
     
     function authUserArray()
     {
