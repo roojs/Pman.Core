@@ -262,6 +262,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         return $this->active;
     }
+    function authUserName($n) // set username prior to acheck user exists query.
+    {
+        
+        $this->whereAdd('LENGTH(passwd) > 1'); 
+        $this->email = $n
+    }
     
     function authUserArray()
     {
