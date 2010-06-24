@@ -321,7 +321,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (empty($_SESSION['Pman_I18N'][$lang])) {
             require_once 'Pman/I18N.php';
             $x = new Pman_I18N();
-            $x->setSession($au);
+            $x->setSession($this);
             
         }
         
