@@ -283,7 +283,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function authUserArray()
     {
         
-        $aur = $thisu->toArray();
+        $aur = $this->toArray();
         
         
         
