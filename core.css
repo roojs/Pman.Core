@@ -251,7 +251,7 @@
 }
 /** ------ email adder ---- */
 .p-cblist-item {
-    display: table-cell; 
+    display: inline-block; 
     background: #e0ecff none no-repeat scroll 0 0;
     float: left;
     height: 18px;
@@ -269,7 +269,7 @@
 }
 .p-cblist-item div
 {
-    display: table;
+    display: inline-block;
     float: left;
     margin: 2px;
     margin-left: 5px;
@@ -289,7 +289,7 @@
 {
     padding: 2px;
     border: 1px solid #e0ecff;
-    display: table;
+    display: inline-block;
 }
    
    /** ---- more kludges? --- */
