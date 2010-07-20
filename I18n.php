@@ -204,10 +204,14 @@ class Pman_Core_i18N extends Pman
     }
     function objToList($type, $obj) {
         $ret = array();
-        foreach($obj->codes as $k=>$v) {
+        
+        
+        
+        foreach($this->cfg[$type] as $k) {
+            $v = $obj->getName($k);
             
             $ret[] = array(
-                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k) , 
+                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k), 
                 'title' => $v
             );
         }
