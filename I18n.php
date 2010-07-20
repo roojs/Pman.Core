@@ -82,7 +82,7 @@ class Pman_Core_i18N extends Pman
         $this->authUser = $au;
         
         $opts = PEAR::getStaticProperty('Pman_Core_I18N', 'options');
-        if (empty($opts) {
+        if (empty($opts)) {
             $opts = PEAR::getStaticProperty('Pman_I18N', 'options');
         }
         $opts = empty($opts)  ?  array() : $opts;
