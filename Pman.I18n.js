@@ -122,7 +122,6 @@ Pman.I18n = {
     {
         var lang = Pman.Login.authUser.lang || 'en';
         return Pman.I18n.Data[lang][type];
-        
     },
     
     
