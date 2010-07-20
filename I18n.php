@@ -20,7 +20,8 @@
  * .. other formats are depreciated, but are supported by the old code....
  * 
  * 
- * 
+ * Database language translation should be done using the database table.
+ * So sorting can be done correctly..
  * 
  * Configuration in index.php..
  * 
