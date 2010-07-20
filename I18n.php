@@ -139,7 +139,8 @@ class Pman_Core_i18N extends Pman
         
         
         switch ($s)
-         
+        {
+            
             case 'BuildDB':
             // by admin only?!?
                 //DB_DataObject::debugLevel(1);
