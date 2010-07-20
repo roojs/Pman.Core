@@ -36,7 +36,7 @@
             'ta', // tamil
             '**', // other
         ), 
-       'c' => '*',
+       'c' => '*', // eg. all languages..
        'm' => array( 'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY' )
     ), 
 
@@ -46,14 +46,9 @@ require_once 'Pman.php';
 
 class Pman_Core_i18N extends Pman
 {
-    function getAuth()
-    {
-        // anyone can downlaod this list - as it's needed prior to the login box.
-        return true;
-    }
+ 
     
-    
-    // these are the languages we support.
+    // these are the default languages we support.
     var $cfg = array(
         'l' => array(
             'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
