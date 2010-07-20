@@ -208,7 +208,7 @@ class Pman_Core_i18N extends Pman
         
         
         foreach($this->cfg[$type] as $k) {
-            $v = $obj->getName($k);
+            $v = $k == '**' ? 'Other' : $obj->getName($k);
             
             $ret[] = array(
                 'code'=>   $type=='l' ? strtolower($k) : strtoupper($k), 
