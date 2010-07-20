@@ -186,9 +186,9 @@ class Pman_Core_i18N extends Pman
             $lang = array_shift(explode('_', strtoupper($lang)));
             
             $ar[$lang] = array(
-                'l' => $this->objToList(new I18Nv2_Language($lang, 'UTF-8')),
-                'c' => $this->objToList(new I18Nv2_Country($lang, 'UTF-8')),
-                'm' => $this->objToList(new I18Nv2_Currency($lang, 'UTF-8'))
+                'l' => $this->objToList('l', new I18Nv2_Language($lang, 'UTF-8')),
+                'c' => $this->objToList('c', new I18Nv2_Country($lang, 'UTF-8')),
+                'm' => $this->objToList('m', new I18Nv2_Currency($lang, 'UTF-8'))
             );
         }
         header('Content-type: text/javascript');
@@ -198,12 +198,12 @@ class Pman_Core_i18N extends Pman
         
         
     }
-    function objToList($obj) {
+    function objToList($type, $obj) {
         $ret = array();
         foreach($obj->codes as $k=>$v) {
             
             $ret[] = array(
-                'code'=> $k , 
+                'code'=> $type == 'c' ? $k : strtolower($v) , 
                 'title' => $v
             );
         }
