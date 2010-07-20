@@ -193,7 +193,7 @@ class Pman_Core_i18N extends Pman
     }
     function objToList($obj) {
         $ret = array();
-        foreach($obj=>codes as $k=$v) {
+        foreach($obj->codes as $k=$v) {
             
             $ret[] = array(
                 'code'=>$k , 
