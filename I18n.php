@@ -201,7 +201,7 @@ class Pman_Core_i18N extends Pman
             );
         }
         return $ret;
-    
+    }
     
      /**
      * translate (used by database building);
