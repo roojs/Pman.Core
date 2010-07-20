@@ -178,7 +178,7 @@ class Pman_Core_i18N extends Pman
         require_once 'I18Nv2/Language.php';
         require_once 'I18Nv2/Currency.php';
         
-        $langs = $this->cfg['l'];
+        $langs = $this->cfg['t'];
         var_dump($langs);exit;
         $ar = array();
         foreach($langs as $lang)
