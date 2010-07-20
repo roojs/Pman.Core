@@ -99,7 +99,10 @@ Pman.I18n = {
     
     
     /**
-     * 
+     * dataToProxy
+     * return proxy data for a pulldown.
+     * @param {String} type  eg. l,c,m (lang/country/money)
+         
      * these should use generally..
      {
       xtype: 'Store',
@@ -125,7 +128,7 @@ Pman.I18n = {
     },
     
     
-    // DEPRECIATED...
+    // DEPRECIATED... -- see dataToProxy
     countryStore : function() { return {
         
         // load using HTTP
