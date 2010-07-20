@@ -95,6 +95,27 @@ Pman.I18n = {
             'title'
         ]
 	},
+    
+    /**
+     * 
+     * these should use generally..
+     {
+      xtype: 'Store',
+      xns: Roo.data,
+      reader : Pman.I18n.reader,
+      proxy : {
+         xtype : 'MemoryProxy',
+         xns : Roo.data,
+         data : Pman.I18n.dataToProxy('l'), // eg. language
+         remoteSort : false,
+         sortInfo : { field : 'title' , direction : 'ASC' } 
+      }
+         * 
+         *}
+     * 
+     * 
+     */
+    
     // DEPRECIATED...
     countryStore : function() { return {
         
