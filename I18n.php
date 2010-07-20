@@ -167,20 +167,45 @@ class Pman_Core_i18N extends Pman
     
     function outputJavascript()
     {
+        
+        require_once 'I18Nv2/Country.php';
+        require_once 'I18Nv2/Language.php';
+        require_once 'I18Nv2/Currency.php';
+        
         $langs = $this->getDefaultCfg('l');
         $ar = array();
-        foreach($langs as $l)
+        foreach($langs as $lang)
         {
+            $lang = array_shift(explode('_', strtoupper($lang)));
+            $l = new I18Nv2_Language($lang, 'UTF-8'),
+            $c = new I18Nv2_Country($lang, 'UTF-8'),
+            $m = new I18Nv2_Currency($lang, 'UTF-8')
             
             
             
+            $ar[$lang] = array(
+                'l' => $this->objToList(new I18Nv2_Language($lang, 'UTF-8')),
+                'c' => $this->objToList(new I18Nv2_Country($lang, 'UTF-8')),
+                'm' => $this->objToList(new I18Nv2_Currency($lang, 'UTF-8'))
+            );
         }
-        
+        header('Content-type: text/javascript');
+        echo 'Pman.I18n.Data = ' .  json_encode($ar);
+        exit;
         
         
         
     }
-    
+    function objToList($obj) {
+        $ret = array();
+        foreach($obj=>codes as $k=$v) {
+            
+            $ret[] = array(
+                'code'=>$k , 
+                'title' => $v
+            );
+        }
+        return $ret;
     
     
      /**
