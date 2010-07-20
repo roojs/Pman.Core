@@ -54,6 +54,11 @@ class Pman_Core_i18N extends Pman
     // these are the default languages we support.
     // they will allways be overlaid with the current configuration (via getAuth)
     var $cfg = array(
+        // translated versions availalable
+        't' => array(
+            'en', 'zh_CN',   'zh_HK', 
+        ),
+        // languages available
         'l' => array(
             'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
             'id', // indonesian
@@ -198,7 +203,7 @@ class Pman_Core_i18N extends Pman
         foreach($obj->codes as $k=>$v) {
             
             $ret[] = array(
-                'code'=>$k , 
+                'code'=> $k , 
                 'title' => $v
             );
         }
