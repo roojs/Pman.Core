@@ -315,7 +315,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 }
             }
         }
-        
+        /*
         
         $lang = empty($this->lang) ? 'en' : $this->lang;
         if (empty($_SESSION['Pman_I18N'][$lang])) {
@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         $aur['i18n'] =$_SESSION['Pman_I18N'][$lang];
-        
+        */
         // perms + groups.
         $aur['perms']  = $this->getPerms();
         $g = DB_DataObject::Factory('Group_Members');
