@@ -96,6 +96,8 @@ Pman.I18n = {
         ]
 	},
     
+    
+    
     /**
      * 
      * these should use generally..
@@ -115,6 +117,14 @@ Pman.I18n = {
      * 
      * 
      */
+    
+    dataToProxy : function(type)
+    {
+        var lang = Pman.Login.authUser.lang || 'en';
+        return Pman.I18n.Data[lang][type];
+        
+    },
+    
     
     // DEPRECIATED...
     countryStore : function() { return {
