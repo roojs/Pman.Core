@@ -7,6 +7,12 @@
 * Our login details contain the available translation data..
 * 
 * 
+* Languages are included in the main application
+* using <script src="baseURL/Core/I18N/Data.js"></script>
+* which set's up. Pman.I18n.data 
+* 
+* 
+* 
 * includes standard pulldowns.
 */
 
