@@ -14,14 +14,17 @@
    }
  * 
  * 
- * usage:
+ * other usage:
  * 
  * index.php/Pman/I18N/BuildDB -- buildes the database..
+ * .. other formats are depreciated, but still supported..
  * 
  * 
- * Config in index.php..
  * 
- *  'Pman_I18N' => array(
+ * 
+ * Configuration in index.php..
+ * 
+ *  'Pman_Core_I18N' => array(
       'l' => array(
             'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
             'id', // indonesian
