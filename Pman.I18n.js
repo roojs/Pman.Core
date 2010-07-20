@@ -51,7 +51,7 @@ Pman.I18n = {
         }
         
         
-        Roo.each(Pman.I18n.Data[lang], function(d) {
+        Roo.each(Pman.I18n.Data[lang][type], function(d) {
             if (d.code == code) {
                 ret = d.title;
                 return false; // stop!
