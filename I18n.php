@@ -133,100 +133,13 @@ class Pman_Core_i18N extends Pman
         return $ret;
     }
     
-    
-    
-    function setSession($au)
-    {
-        $this->authUser = $au;
-        $lbits = implode('_', $this->findLang());
-        if (empty($_SESSION['Pman_I18N'])) {
-            $_SESSION['Pman_I18N']  = array();
-        }
-        
-        $_SESSION['Pman_I18N'][$lbits] = array(
-            'l' => $this->getList('l', $lbits),
-            'c' => $this->getList('c', $lbits),
-            'm' => $this->getList('m', $lbits),
-        );
-        
-        
-    }
-      
-    function getList($type, $inlang,$fi=false)
-    {
-        //$l = new I18Nv2_Language($inlang);
-        //$c= new I18Nv2_Country($inlang);
-        $filter = !$fi  ? false :  $this->loadFilter($type); // project specific languages..
-       // print_r($filter);
-        
-        $ret = array();
-        
-        
-        
-        
-        foreach($this->cfg[$type] as $k) {
-            if (is_array($filter) && !in_array($k, $filter)) {
-                continue;
-            }
-             
-            $ret[] = array(
-                'code'=>$k , 
-                'title' => $this->translate($inlang, $type, $k)
-            );
-            continue;
-            
-        }
-        // sort it??
-        return $ret;
-        
-    }
      
-    
-    function findLang() {
-         
-        $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
-        $lbits = explode('_', strtoupper($lang));
-        $lbits[0] = strtolower($lbits[0]);
-        require_once 'I18Nv2/Country.php';
-        require_once 'I18Nv2/Language.php';
-        $langs = new I18Nv2_Language('en');
-        $countries = new I18Nv2_Country('en');
-      //  print_r($langs);
-        //print_R($lbits);
-        if (!isset($langs->codes[strtolower($lbits[0])])) {
-            $this->jerr('invalid lang');
-        }
-        if (!empty($lbits[1]) &&  !isset($countries->codes[$lbits[1]])) {  
-            $this->jerr('invalid lang Country component');
-            
-        }
-        return $lbits;
-    }
-    
-    function get($s)
+    function get($s ='')
     {
-        if (empty($s)) {
-            die('no type');
-        }
         
-        $lbits = $this->findLang();
+        
+        switch ($s)
          
-        
-        
-        
-        switch($s) {
-            case 'Lang': 
-                $ret = $this->getList('l', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
-                break;
-
-            case 'Country':
-                $ret = $this->getList('c', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
-                break;
-                
-             case 'Currency':
-                $ret = $this->getList('m', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
-                break;
-              
             case 'BuildDB':
             // by admin only?!?
                 //DB_DataObject::debugLevel(1);
@@ -237,6 +150,7 @@ class Pman_Core_i18N extends Pman
                 break;
                   
             default: 
+                // output javascript..
                 $this->jerr("ERROR");
         }
          
@@ -244,57 +158,9 @@ class Pman_Core_i18N extends Pman
         exit;
         
     }
-    function loadFilter($type)
-    {
-        // this code only applies to Clipping module
-        if (!$this->authUser) {
-            return false;
-        }
-        
-        // this needs moving to it's own project
-        
-        if (!$this->hasModule('Clipping')) {
-            return false;
-        }
-        if ($type == 'm') {
-            return false;
-        }
-        
-        //DB_DataObject::debugLevel(1);
-        $q = DB_DataObject::factory('Projects');
-        
-        $c = DB_Dataobject::factory('Companies');
-        $c->get($this->authUser->company_id);
-        if ($c->comptype !='OWNER') {
-            $q->client_id = $this->authUser->company_id;
-        }
-        $q->selectAdd();
-        $col = ($type == 'l' ? 'languages' : 'countries');
-        $q->selectAdd('distinct(' . ($type == 'l' ? 'languages' : 'countries').') as dval');
-        $q->whereAdd("LENGTH($col) > 0");
-        $q->find();
-        $ret = array();
-        $ret['**'] = 1;
-        while ($q->fetch()) {
-            $bits = explode(',', $q->dval);
-            foreach($bits as $k) {
-                $ret[$k] = true;
-            }
-        }
-        return array_keys($ret);
-        
-    }
-   
-     
-    function translateList($au, $type, $k)  
-    {
-        $ar = explode(',', $k);
-        $ret = array();
-        foreach($ar as $kk) {
-            $ret[] = $this->translate($au, $type, $kk);
-        }
-        return implode(', ', $ret);
-    }
+    
+    
+    
      /**
      * translate
      * usage :
