@@ -151,6 +151,7 @@ class Pman_Core_i18N extends Pman
                 break;
                   
             default: 
+                $this->outputJavascript();
                 // output javascript..
                 $this->jerr("ERROR");
         }
@@ -163,10 +164,10 @@ class Pman_Core_i18N extends Pman
     
     
      /**
-     * translate
+     * translate (used by database building);
      * usage :
-     * require_once 'Pman/I18N.php';
-     * $x = new Pman_I18N();
+     * require_once 'Pman/Core/I18N.php';
+     * $x = new Pman_Core_I18N();
      * $x->translate($this->authuser, 'c', 'US');
      * @param au - auth User
      * @param type = 'c' or 'l'
