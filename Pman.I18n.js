@@ -54,10 +54,11 @@ Pman.I18n = {
         Roo.each(Pman.I18n.Data[lang], function(d) {
             if (d.code == code) {
                 ret = d.title;
-                return false;
+                return ret;
             }
         });
-        return ret;
+        return code;
+        
     },
     /**
      * List to Objects
