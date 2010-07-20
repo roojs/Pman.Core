@@ -43,7 +43,8 @@ Pman.I18n = {
     toName: function(type, code) 
     {
         var ret = code;
-        Roo.each(Pman.Login.authUser.i18n[type], function(d) {
+        var lang = Pman.Login.authUser.lang || 'en'
+        Roo.each(Pman.I18N.Data[lang], function(d) {
             if (d.code == code) {
                 ret = d.title;
                 return false;
@@ -86,7 +87,7 @@ Pman.I18n = {
             'title'
         ]
 	},
-    
+    // DEPRECIATED...
     countryStore : function() { return {
         
         // load using HTTP
@@ -109,6 +110,7 @@ Pman.I18n = {
         }
               
     }},
+      // DEPRECIATED...
     languageStore: function() {return{
         // load using HTTP
         xtype: 'Store',
@@ -129,6 +131,7 @@ Pman.I18n = {
             field: 'title', direction: 'ASC'
         }
     }},
+      // DEPRECIATED...
     currencyStore: function() {return{
         // load using HTTP
         xtype: 'Store',
@@ -149,7 +152,7 @@ Pman.I18n = {
             field: 'title', direction: 'ASC'
         }
     }},
-    
+      // DEPRECIATED...
     country: function(cfg) {
         var _this = this;
         cfg = cfg || {};
@@ -180,6 +183,7 @@ Pman.I18n = {
                  
             }, cfg);
     },
+      // DEPRECIATED...
     language: function(cfg) {
                var _this = this;
         cfg = cfg || {};
@@ -212,7 +216,7 @@ Pman.I18n = {
                 
             }, cfg);
     },
-       
+         // DEPRECIATED...
     currency: function(cfg) {
         var _this = this;
         cfg = cfg || {};
@@ -248,7 +252,7 @@ Pman.I18n = {
                  
             }, cfg);
     },
-    
+      // DEPRECIATED...
     languageList : function(cfg) {
         cfg = cfg || {};
          
@@ -309,6 +313,7 @@ Pman.I18n = {
                  
             }, cfg);
     },
+      // DEPRECIATED...
     countryList : function(cfg) {
         cfg = cfg || {};
          
