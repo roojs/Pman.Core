@@ -102,8 +102,8 @@ Pman.I18n = {
      * dataToProxy
      * return proxy data for a pulldown.
      * @param {String} type  eg. l,c,m (lang/country/money)
-         
-     * these should use generally..
+     *    
+     * usage:
      {
       xtype: 'Store',
       xns: Roo.data,
