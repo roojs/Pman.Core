@@ -81,10 +81,13 @@ class Pman_Core_i18N extends Pman
         //}
         $this->authUser = $au;
         
-        $opts = PEAR::getStaticProperty('Pman_I18N', 'options');
+        $opts = PEAR::getStaticProperty('Pman_Core_I18N', 'options');
+        if (empty($opts) {
+            $opts = PEAR::getStaticProperty('Pman_I18N', 'options');
+        }
         $opts = empty($opts)  ?  array() : $opts;
         
-        
+        // load the cofiguration
         foreach($opts as $k=>$v) {
             
             if ($v == '*') {
