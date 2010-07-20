@@ -9,7 +9,11 @@
  * By default it returns
  * 
  * Pman.I18n.Data = {
-      en : [ { code : 'end', title : 'English' }, .... ],
+      
+      en : {
+          l :  [ { code : 'en', title : 'English' }, .... ],
+          c :  [ { code : 'UK', title : 'United Kingdom' }, .... ],
+          m :  [ { code : 'USD', title : 'US Dollars' }, .... ],
       fr : ....
    }
  * 
@@ -158,6 +162,22 @@ class Pman_Core_i18N extends Pman
          
         $this->jdata($ret);
         exit;
+        
+    }
+    
+    function outputJavascript()
+    {
+        $langs = $this->getDefaultCfg('l');
+        $ar = array();
+        foreach($langs as $l)
+        {
+            
+            
+            
+        }
+        
+        
+        
         
     }
     
