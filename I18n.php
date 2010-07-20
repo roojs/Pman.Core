@@ -17,7 +17,7 @@
  * other usage:
  * 
  * index.php/Pman/I18N/BuildDB -- buildes the database..
- * .. other formats are depreciated, but still supported..
+ * .. other formats are depreciated, but are supported by the old code....
  * 
  * 
  * 
