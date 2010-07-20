@@ -207,7 +207,7 @@ class Pman_Core_i18N extends Pman
         foreach($obj->codes as $k=>$v) {
             
             $ret[] = array(
-                'code'=>   strtoupper($k) , 
+                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k) , 
                 'title' => $v
             );
         }
