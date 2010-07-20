@@ -52,6 +52,7 @@ class Pman_Core_i18N extends Pman
  
     
     // these are the default languages we support.
+    // they will allways be overlaid with the current configuration (via getAuth)
     var $cfg = array(
         'l' => array(
             'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
@@ -172,7 +173,7 @@ class Pman_Core_i18N extends Pman
         require_once 'I18Nv2/Language.php';
         require_once 'I18Nv2/Currency.php';
         
-        $langs = $this->getDefaultCfg('l');
+        $langs = $this->cfg['l'];
         $ar = array();
         foreach($langs as $lang)
         {
