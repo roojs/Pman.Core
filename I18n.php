@@ -189,7 +189,7 @@ class Pman_Core_i18N extends Pman
         {
             $lang = array_shift(explode('_', strtoupper($lang)));
             
-            $ar[strtolower($lang)] = array(
+            $ar[$lang] = array(
                 'l' => $this->objToList('l', new I18Nv2_Language($lang, 'UTF-8')),
                 'c' => $this->objToList('c', new I18Nv2_Country($lang, 'UTF-8')),
                 'm' => $this->objToList('m', new I18Nv2_Currency($lang, 'UTF-8'))
@@ -207,7 +207,7 @@ class Pman_Core_i18N extends Pman
         foreach($obj->codes as $k=>$v) {
             
             $ret[] = array(
-                'code'=> $type == 'c' ? $k : strtolower($v) , 
+                'code'=>   strtoupper($k) , 
                 'title' => $v
             );
         }
