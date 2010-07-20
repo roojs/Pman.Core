@@ -44,7 +44,7 @@ Pman.I18n = {
     {
         var ret = code;
         var lang = Pman.Login.authUser.lang || 'en'
-        Roo.each(Pman.I18N.Data[lang], function(d) {
+        Roo.each(Pman.I18n.Data[lang], function(d) {
             if (d.code == code) {
                 ret = d.title;
                 return false;
