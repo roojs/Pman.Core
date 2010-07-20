@@ -187,12 +187,12 @@ class Pman_Core_i18N extends Pman
         $ar = array();
         foreach($langs as $lang)
         {
-            $lang = array_shift(explode('_', strtoupper($lang)));
+            $rlang = array_shift(explode('_', strtoupper($lang)));
             
             $ar[$lang] = array(
-                'l' => $this->objToList('l', new I18Nv2_Language($lang, 'UTF-8')),
-                'c' => $this->objToList('c', new I18Nv2_Country($lang, 'UTF-8')),
-                'm' => $this->objToList('m', new I18Nv2_Currency($lang, 'UTF-8'))
+                'l' => $this->objToList('l', new I18Nv2_Language($rlang, 'UTF-8')),
+                'c' => $this->objToList('c', new I18Nv2_Country($rlang, 'UTF-8')),
+                'm' => $this->objToList('m', new I18Nv2_Currency($rlang, 'UTF-8'))
             );
         }
         header('Content-type: text/javascript');
