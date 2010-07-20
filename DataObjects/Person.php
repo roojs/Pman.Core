@@ -316,6 +316,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
         }
         /*
+        now handled by interface...
         
         $lang = empty($this->lang) ? 'en' : $this->lang;
         if (empty($_SESSION['Pman_I18N'][$lang])) {
