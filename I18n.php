@@ -24,6 +24,8 @@
  * 
  * Configuration in index.php..
  * 
+ * 
+ * 
  *  'Pman_Core_I18N' => array(
       'l' => array(
             'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
