@@ -6,7 +6,7 @@
  * 
  * We basically load up all supported languages at the start of the application.
  * 
- * By default tt returns
+ * By default it returns
  * 
  * Pman.I18n.Data = {
       en : [ { code : 'end', title : 'English' }, .... ],
