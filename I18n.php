@@ -177,11 +177,6 @@ class Pman_Core_i18N extends Pman
         foreach($langs as $lang)
         {
             $lang = array_shift(explode('_', strtoupper($lang)));
-            $l = new I18Nv2_Language($lang, 'UTF-8'),
-            $c = new I18Nv2_Country($lang, 'UTF-8'),
-            $m = new I18Nv2_Currency($lang, 'UTF-8')
-            
-            
             
             $ar[$lang] = array(
                 'l' => $this->objToList(new I18Nv2_Language($lang, 'UTF-8')),
