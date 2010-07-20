@@ -277,7 +277,7 @@ class Pman_Core_i18N extends Pman
             return; // dont bother building generic..
         }
         if ($inlang === false) {
-            foreach( $this->cfg['l'] as $l) {
+            foreach( $this->cfg['t'] as $l) {
                 $this->buildDB($ltype, $l);
             }
             return;
