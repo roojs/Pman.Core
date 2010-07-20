@@ -44,6 +44,13 @@ Pman.I18n = {
     {
         var ret = code;
         var lang = Pman.Login.authUser.lang || 'en'
+        if (code.indexOf('_') > -1) {
+            var clang = code.split('_').shift();
+            var cc = code.split('_').pop();
+            return this.toName('l', clang) + ' (' + this.toName('c', cc) + ')';
+        }
+        
+        
         Roo.each(Pman.I18n.Data[lang], function(d) {
             if (d.code == code) {
                 ret = d.title;
