@@ -835,7 +835,7 @@ Pman = new Roo.Document(
             }
             if (mod.finalize) {
                 mod.finalize.name = mod.name + " (clean up) ";
-                mods.push(m.finalize);
+                mods.push(mod.finalize);
             }
             
         }
@@ -862,13 +862,13 @@ Pman = new Roo.Document(
         var n = 0;
         var progressRun = function() {
             
-            var m = mods[n];
+            var mod = mods[n];
             
             
             Ext.MessageBox.updateProgress(
                 (n+1)/mods.length,  "Building Interface " + (n+1) + 
                     " of " + mods.length + 
-                    (m.name ? (' - ' + m.name) : '')
+                    (mod.name ? (' - ' + mod.name) : '')
                     );
             
             
@@ -877,8 +877,8 @@ Pman = new Roo.Document(
                 m();
                 
             } else {
-                if (m.parent.layout && !m.module.disabled) {
-                    m.module.add(m.parent.layout, m.region);    
+                if (mod.parent.layout && !mod.module.disabled) {
+                    mod.module.add(mod.parent.layout, mod.region);    
                 }
                 
             }
