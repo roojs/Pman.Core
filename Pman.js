@@ -873,8 +873,8 @@ Pman = new Roo.Document(
             
             
             
-            if (typeof(m) == 'function') {
-                m();
+            if (typeof(mod) == 'function') {
+                mod();
                 
             } else {
                 if (mod.parent.layout && !mod.module.disabled) {
