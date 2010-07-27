@@ -1,5 +1,5 @@
 
-'an.Dialog.Companies.js' : {
+'Pman.Dialog.Companies.js' : {
 	"Edit Companies" : "Edit Companies",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -35,7 +35,7 @@
 	"Add / Change Image" : "Add / Change Image",
 	"Upload Image" : "Upload Image"
 },
-'an.Dialog.Document_Types.js' : {
+'Pman.Dialog.Document_Types.js' : {
 	"Edit Document Type" : "Edit Document Type",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -46,7 +46,7 @@
 	"Remarks" : "Remarks",
 	"Enter remarks" : "Enter remarks"
 },
-'an.Dialog.Image.js' : {
+'Pman.Dialog.Image.js' : {
 	"Upload Image or  File" : "Upload Image or  File",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -57,7 +57,7 @@
 	"Sending" : "Sending",
 	"Uploading" : "Uploading"
 },
-'an.Dialog.Office.js' : {
+'Pman.Dialog.Office.js' : {
 	"Edit Office / Department / Sub Company" : "Edit Office / Department / Sub Company",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -73,10 +73,10 @@
 	"Email" : "Email",
 	"Enter email" : "Enter email"
 },
-'an.Dialog.PersonEdit.js' : {
+'Pman.Dialog.PersonEdit.js' : {
 	"Edit Contact Details" : "Edit Contact Details"
 },
-'an.Dialog.PersonEditor.js' : {
+'Pman.Dialog.PersonEditor.js' : {
 	"Send Introduction Mail" : "Send Introduction Mail",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -126,16 +126,16 @@
 	"Done - " : "Done - ",
 	" : " : " : "
 },
-'an.Dialog.Person.js' : {
+'Pman.Dialog.Person.js' : {
 	"Edit Contact Details" : "Edit Contact Details"
 },
-'an.Dialog.PersonNew.js' : {
+'Pman.Dialog.PersonNew.js' : {
 	"New Contact Details" : "New Contact Details"
 },
-'an.Dialog.PersonStaff.js' : {
+'Pman.Dialog.PersonStaff.js' : {
 	"Add / Edit Staff" : "Add / Edit Staff"
 },
-'an.Dialog.Projects.js' : {
+'Pman.Dialog.Projects.js' : {
 	"Edit Project" : "Edit Project",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -163,7 +163,7 @@
 	"Non-Project" : "Non-Project",
 	"Non-Project (Closed)" : "Non-Project (Closed)"
 },
-'an.I18n.js' : {
+'Pman.I18n.js' : {
 	"Country" : "Country",
 	"Select Country" : "Select Country",
 	"Language" : "Language",
@@ -176,7 +176,7 @@
 	"Country(s)" : "Country(s)",
 	"Select a country to add." : "Select a country to add."
 },
-'an.js' : {
+'Pman.js' : {
 	"Error" : "Error",
 	"You are Logged in as <b>{0} ({1})</b>" : "You are Logged in as <b>{0} ({1})</b>",
 	"Change Password" : "Change Password",
@@ -204,7 +204,7 @@
 	"Building Interface " : "Building Interface ",
 	" of " : " of "
 },
-'an.Login.js' : {
+'Pman.Login.js' : {
 	"Error" : "Error",
 	"Error getting authentication status. - try reloading, or wait a while" : "Error getting authentication status. - try reloading, or wait a while",
 	"Error getting authentication status. - try reloading" : "Error getting authentication status. - try reloading",
@@ -228,7 +228,7 @@
 	"Sorry" : "Sorry",
 	"Language not available yet (" : "Language not available yet ("
 },
-'an.PasswordChange.js' : {
+'Pman.PasswordChange.js' : {
 	"Change Password" : "Change Password",
 	"Cancel" : "Cancel",
 	"Save" : "Save",
@@ -241,10 +241,10 @@
 	"Enter Passwords in both boxes" : "Enter Passwords in both boxes",
 	"Passwords do not match" : "Passwords do not match"
 },
-'an.Preview.js' : {
+'Pman.Preview.js' : {
 	"Click to view PDF" : "Click to view PDF"
 },
-'an.Std.js' : {
+'Pman.Std.js' : {
 	"Project" : "Project",
 	"Select Project" : "Select Project",
 	"Searching..." : "Searching...",
@@ -257,7 +257,7 @@
 	"Office / Department" : "Office / Department",
 	"Select Office" : "Select Office"
 },
-'an.Tab.GroupsList.js' : {
+'Pman.Tab.GroupsList.js' : {
 	"Name" : "Name",
 	"Not in a Group" : "Not in a Group",
 	"All Staff (Default Permissions)" : "All Staff (Default Permissions)",
@@ -275,7 +275,7 @@
 	"You can not delete that group" : "You can not delete that group",
 	"Reload" : "Reload"
 },
-'an.Tab.PersonList.js' : {
+'Pman.Tab.PersonList.js' : {
 	"Staff" : "Staff",
 	"Displaying " : "Displaying ",
 	" {0} - {1} of {2}" : " {0} - {1} of {2}",
