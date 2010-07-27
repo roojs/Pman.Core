@@ -273,7 +273,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($val == $this->lang) {
             return;
         }
-        $uu = clone($u);
+        $uu = clone($this);
         $this->lang = $val;
         $this->update($uu);
 
