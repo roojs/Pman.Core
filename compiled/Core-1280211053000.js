@@ -5620,3 +5620,1310 @@ Pman.Preview = {
     
     
 }
+
+
+
+
+
+Pman.Std = {
+    project_id : function (A) {
+        A = A || {};
+        A.storeListeners = A.storeListeners || {};
+        return   Roo.apply({
+                
+            width: 200,
+            fieldLabel: _T["e82288f1b4eba83e3912993b59e9874c"],
+            name : 'project_id_code',
+            hiddenName:  'project_id',
+            
+            allowBlank : false,
+            selectOnFocus:true,
+            qtip : _T["8e24b2c00ecb83fdbedee6634dbe7a6e"],
+            
+            
+            
+            xtype: 'ComboBox',
+            
+            store: {
+                xtype : 'Store',
+                  
+                proxy: {
+                    xtype : 'HttpProxy',
+                    url: baseURL + '/Roo/Projects.html',
+                    method: 'GET'
+                },
+                reader: Pman.Readers.Projects,
+                listeners : Roo.apply(
+                    {
+                        loadexception : Pman.loadException
+                    }, 
+                    A.storeListeners
+                ),
+                remoteSort : true,
+                sortInfo: {
+                    field: 'code', direction: 'ASC'
+                }
+            },
+            displayField:'code',
+            valueField : 'id',
+            
+            typeAhead: true,
+            forceSelection: true,
+            
+            triggerAction: 'all',
+            tpl: new  Ext.Template(
+                '<div class="x-grid-cell-text x-btn button">',
+                    '<b>{code}</b> {name}',
+                '</div>'
+            ),
+            queryParam: 'query[project_search]',
+            loadingText: _T["dacaeb74293d8e9bb58c28681b02c321"],
+            listWidth: 400,
+           
+            minChars: 2,
+            pageSize:20 
+             
+        }, A);
+   },
+   
+    
+   company_id : function(B) { 
+        B = B || {};
+        B.storeListeners = B.storeListeners || {};
+        
+        B.listeners = B.listeners || {};
+           
+        return  Roo.apply({
+                
+                
+                name : 'addressto_name',
+                displayField:'name',
+                
+                fieldLabel : _T["993475eb7faf2229459aa6ca1c3745e9"],
+                allowBlank : true,
+                qtip : _T["f7e6a2016c5b5f0113b18708d84db782"],
+                width: 290,
+                
+                
+                value : '',
+                xtype: 'ComboBoxAdder',
+                selectOnFocus:true,
+                allowBlank : false,
+                
+               
+                store: {
+                      
+                    xtype: 'Store',
+                    proxy: {
+                        xtype : 'HttpProxy',
+                        url: baseURL + '/Roo/Companies.html',
+                        method: 'GET'
+                    },
+                    reader: Pman.Readers.Companies,
+                    
+                    listeners : Roo.apply(
+                        {
+                            loadexception : Pman.loadException
+                        }, 
+                        B.storeListeners
+                    ),
+                    remoteSort : true,
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                    
+                },
+              
+                typeAhead: true,
+                forceSelection: true,
+                
+                triggerAction: 'all',
+                tpl: new  Ext.Template(
+                    '<div class="x-grid-cell-text x-btn button">',
+                        '<b>{name}</b> {address}',
+                    '</div>'
+                ),
+                queryParam: 'query[name]',
+                loadingText: _T["dacaeb74293d8e9bb58c28681b02c321"],
+                listWidth: 400,
+               
+                minChars: 2,
+                pageSize:20 
+                
+            }, B);
+    },
+    
+    doctype_name: function(C) {
+        C = C || {};
+        return  Roo.apply({
+                
+                name : 'doctype_name',
+                width : 290,
+                fieldLabel : _T["adaa177b337c92793900a09979b7644f"],
+                allowBlank : false,
+                
+                
+                qtip : _T["f3ae3d381d60864b13244e2ac16c12fe"],
+                
+                value : '',
+                
+                xtype : 'ComboBox',   
+                store: {
+                    
+                    xtype: 'Store',
+                    proxy: {
+                        xtype: 'HttpProxy',
+                        url: baseURL + '/Roo/Document_Types.html',
+                        method: 'GET'
+                    },
+                    
+                    reader: Pman.Readers.Document_Types,
+                    listeners : {
+                        beforeload: function(t, o) {
+                            
+                            o.params.limit = 9999;
+                        },
+                        loadexception : Pman.loadException
+                
+                    },
+                    remoteSort: true,
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                },
+                displayField:'name',
+                
+                typeAhead: false,
+                editable: false,
+                
+                triggerAction: 'all',
+                
+                selectOnFocus:true 
+            }, C);
+    },
+    
+    
+    address_list_adder : function(D) {
+        D = D || {};
+        D.storeListeners = D.storeListeners || {};
+        return  Roo.apply({
+                
+                name : 'send_to',
+                fieldLabel : _T["f6551e5409cd0bd1293c73466c0d5a71"],
+                idField : 'email',
+                
+                 renderer : function(d) {
+                    return  String.format('{0}', 
+                        d.name.length ? d.name : d.email
+                    );
+                },
+                
+                
+                xtype: 'ComboBoxLister',
+                displayField:'name',
+                value : '',
+               
+                qtip : _T["397925800f038e68f28adacc0c39d6ca"],
+                selectOnFocus:true,
+                allowBlank : true,
+                width: 150,
+                
+                
+                store: {
+                    xtype : 'Store',
+                      
+                    proxy: {
+                        xtype : 'HttpProxy',
+                        url: baseURL + '/Roo/Person.html',
+                        method: 'GET'
+                    },
+                    reader: Pman.Readers.Companies,
+                    listeners : D.storeListeners, 
+                    remoteSort : true,
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                },
+               
+                
+                typeAhead: true,
+                forceSelection: true,
+                
+                triggerAction: 'all',
+                tpl: new  Ext.Template(
+                    '<div class="x-grid-cell-text x-btn button">',
+                        '<b>{name}</b> {email}',
+                    '</div>'
+                ),
+                queryParam: 'query[name]',
+                loadingText: _T["dacaeb74293d8e9bb58c28681b02c321"],
+                listWidth: 400,
+               
+                minChars: 2,
+                pageSize:20,
+                setList : function(ar) {
+                    var  E = this;
+                    Roo.each(ar, function(a) {
+                        E.addItem(a);
+                    });
+                },
+                toList : function() {
+                    var  F = [];
+                    this.items.each(function(a) {
+                        F.push(a.data);
+                    });
+                    return  F;
+                }
+                
+                 
+            }, D);
+    },
+    
+    
+    our_office_id : function(E) 
+    {
+        E = E || {};
+        E.listeners = E.listeners  || {};
+        return  Roo.apply({
+            xtype: 'ComboBoxAdder',
+            fieldLabel: _T["964610e35dbc2d5e2ef34f1492eff1c7"],
+            
+            hiddenName:  'office_id',
+            name : 'office_id_name',
+            
+            qtip : _T["2b617d7e2e8fdfe8fee08f5086f6e7b7"],
+            width: 300,
+            allowBlank : true,
+            triggerAction: 'all',
+            
+            
+            typeAhead: true,
+            forceSelection: true,
+            selectOnFocus:true,
+            
+            displayField:'name',
+            valueField : 'id',
+            
+            store:  {
+                xtype : 'Store',
+                  
+                proxy: {
+                    xtype : 'HttpProxy',
+                    url: baseURL + '/Roo/Office.html',
+                    method: 'GET'
+                },
+                reader: Pman.Readers.Office,
+                listeners : Roo.apply({
+                    loadexception : Pman.loadException
+                    }, E.storeListeners
+                ),
+                remoteSort : true,
+                sortInfo: {
+                    field: 'name', direction: 'ASC'
+                }
+            },
+            listeners : Roo.apply({
+                adderclick : function()
+                {
+                     
+                    var  F = {
+                        company_id : Pman.Login.authUser.company_id * 1,
+                        company_id_name:  Pman.Login.authUser.company_id_name,
+                        address: '',
+                        phone: '',
+                        fax: '',
+                        email: ''
+                    };
+
+                    
+                    Pman.Preview.tmpDisable();
+                    
+                    Pman.Dialog.Office.show(F, function(G) {
+                        _this.setFromData(G);
+                        Pman.Preview.tmpEnable();
+                    }); 
+                } 
+            }, E.listeners),
+           
+            
+            
+            tpl: new  Ext.Template(
+                '<div class="x-grid-cell-text x-btn button">',
+                    '<b>{name}</b> {address}',
+                '</div>'
+            ),
+            queryParam: 'query[name]',
+            loadingText: _T["dacaeb74293d8e9bb58c28681b02c321"],
+            listWidth: 400,
+           
+            minChars: 2,
+            pageSize:20 
+             
+             
+             
+        }, E);
+    },
+    
+    
+
+
+    country: function(F) { return  Pman.I18n.country(F); }, 
+    language: function(G) { return  Pman.I18n.language(G); }, 
+       
+    languageList : function(H) { return  Pman.I18n.languageList(H); },
+    countryList : function(I) { return  Pman.I18n.countryList(I); }
+     
+        
+};
+
+
+
+
+
+
+Pman.Tab.GroupsList = function(A) {
+    Ext.apply(this, A);
+};
+
+Pman.Tab.GroupsList.prototype = {
+    id : false,
+    grid : false,
+    panel : false,
+    getDialog : false,
+    title : false,
+    type : 0,
+    disabled : false,
+    add : function(B, C) {
+        
+        var  D = this;
+        
+        var  E = function() {
+            D.refresh();
+        };
+        
+        if (this.panel) {
+            B.getRegion(C).showPanel(this.panel);
+            return;
+        }
+          
+        var  F = function()
+        {
+            var  K = B.getRegion('center').getActivePanel();
+            if (K && K.controller) {
+                K.controller.refresh();
+                return;
+            }
+            
+            var  L = K.id;
+            if (!L) {
+                return;
+            }
+
+            Pman.Tab[L].refresh();
+        };
+        
+        var  G = B.getRegion(C).getEl().createChild({tag:'div'});
+        
+        this.grid = new  Ext.grid.Grid(G,  {
+                id: D.id + '-groups',
+                
+                
+                enableDrop:true,
+                ddGroup: 'groupDD',
+                
+                
+                
+                
+                
+                ds:   new  Ext.data.Store({
+                    
+                    
+                    
+                    proxy: new  Ext.data.HttpProxy({
+                        url: baseURL + '/Roo/Groups.html',
+                        method: 'GET'
+                    }),
+                    remoteSort: true,
+                    reader: Pman.Readers.Groups,
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    },
+                    listeners : {
+                        
+                        beforeload: function(t, o) {
+                            
+                            if (!o.params) {
+                                o.params = {};
+                            }
+
+                            o.params.type = D.type;
+                            
+                            
+                        },
+                        load : function()
+                        {
+                            var  sm = D.grid.getSelectionModel();
+                            if (!sm.getSelections().length) {
+                                sm.selectFirstRow();
+                            }
+
+                            F();
+                          
+                          
+                        },
+                        loadexception : Pman.loadException
+                    
+                    }
+                }),
+                sm: new  Ext.grid.RowSelectionModel({ singleSelect: true }),
+                cm: new  Ext.grid.ColumnModel(
+                    [{
+                        id : D.id + '-name',
+                        header : _T["45e376f384cdb1f67a866700b892b3e8"],
+                        dataIndex : 'name',
+                        sortable : true,
+                        width : 100,
+                        renderer : function(v,x,r) {
+                            if (r.data.id == -1) {
+                                return  '<b>' + _T["d5cd30d9a8889de9ad91d34e09da494b"] + '</b>';
+                            }
+                            if ((r.data.id == 0) && (D.type == 0)) {
+                                return  '<b>' + _T["8b2b7b9a1be82d2550e1d2bf71504f40"] + '</b>';
+                            }
+                            if ((r.data.id == 0) && (D.type == 2)) {
+                                return  '<b>' + _T["0534e1944a96427d47b562c494d85447"] + '</b>';
+                            }
+                            if (r.data.id == 0) {
+                                return  '<b>' + _T["0b0e4ee0b6875cbaa307a8d7f3c3d7ee"] + '</b>';
+                            }
+                            if (v == 'Administrators') {
+                                return  '<b>' + _T["b9b270f938cabca10640a932c830a4ce"] + '</b>';
+                            }
+                            if (r.data.leader) {
+                                return  v + ' (' + r.data.leader_name + ')';
+                            }
+                            
+                            return  v;
+                            
+
+                            
+                       }
+                    }]
+                ),
+                autoExpandColumn: D.id + '-name' , 
+                clicksToEdit : 1,
+                
+                loadMask: true,
+                listeners : {
+                    rowclick: function(g, ri, e)
+                    {
+                        F();
+                    } 
+                }
+                 
+        });
+        
+        
+        this.panel  = B.add(C,  new  Ext.GridPanel(this.grid ,
+            { fitToframe: true,fitContainer: true, title: D.title, id : D.id, background: true})
+        );
+        this.grid.render();
+        
+        
+        new  Ext.dd.DropTarget(D.grid.getView().mainBody, {  
+            ddGroup : 'groupDD',  
+            copy       : true,
+
+            notifyOver : function(dd, e, K){  
+                var  t = Roo.lib.Event.getTarget(e); 
+                var  ri = D.grid.view.findRowIndex(t);
+                var  L  = false;
+                if (ri !== false) {
+                    L = D.grid.getDataSource().getAt(ri).data;
+                }
+                
+                var  s = D.grid.getSelectionModel().getSelections();
+                
+                var  M = s.length ? s[0].data.id > 0 : false;
+                
+                var  N = L && L.id > 0;
+                
+                if (M && N) {
+                    return  this.dropNotAllowed; 
+                }
+                if (!M && !N) {
+                    return  this.dropNotAllowed; 
+                }
+                if (M && !N) {
+                    return  'x-dd-drop-ok-sub'; 
+                } 
+                
+                    return  'x-dd-drop-ok-add'; 
+                
+                
+                  
+            },  
+            notifyDrop : function(dd, e, O){  
+                
+                var  t = Roo.lib.Event.getTarget(e); 
+                var  ri = D.grid.view.findRowIndex(t);
+                var  P  = false;
+                if (ri !== false) {
+                    P = D.grid.getDataSource().getAt(ri).data;
+                }
+                var  s = D.grid.getSelectionModel().getSelections();
+                  
+                
+                var  Q = s.length ? s[0].data.id > 0 : false;
+                
+                var  R = P && P.id > 0;
+                
+                if (Q && R) {
+                    return  false;
+                }
+                if (!Q && !R) {
+                    return  false;
+                }
+                var  S = 'add';
+                if (Q && !R) {
+                    S = 'sub';
+                    
+                }
+                
+                var  T = [];
+                for (var  i=0; i < O.selections.length; i++) {
+                    T.push(O.selections[i].data.id);
+                }
+
+                
+                Pman.request({
+                    url: baseURL + '/Core/GroupMembers.php',
+                    params: {
+                        action : S,
+                        group_id: S =='add' ? P.id : s[0].data.id,
+                        type: D.type,
+                        user_ids : T.join(',')
+                        
+                    },  
+                    method: 'POST',  
+                    success : function(U) {
+                        E();
+                    }, 
+                    
+                    failure: function() {
+                        
+                        
+                        
+                        
+                         
+                    }
+                });
+                
+                
+                
+                
+                    
+                return  true;
+                
+                
+                  
+            }
+        });  
+        
+        
+
+        var  H = this.grid;
+ 
+        var  I = this.grid.getView().getHeaderPanel(true);
+        this.toolbar = new  Ext.Toolbar(I);
+          
+ 
+        var  J= this.getDialog();
+        this.toolbar.add({
+            
+            text: _T["982d7a1e24433e552a3d694a095f053e"],
+            cls: 'x-btn-text-icon',
+            icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+            menu : {
+                items : [
+                    
+                    {
+                        text: _T["0f65f59038860dbf03201afab99fe7e1"],
+                         cls: 'x-btn-text-icon',
+                        icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                        hidden : !Pman.hasPerm('Core.Groups', 'A'),
+                        handler : function(){
+                            J.show( { id : 0, type: D.type }, E ); 
+                        }
+                    }, 
+                    {
+                        text: _T["0537a153a0e54447d83d2c8d094a03d1"],
+                        cls: 'x-btn-text-icon',
+                        icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+                        hidden : !Pman.hasPerm('Core.Groups', 'E'),
+                        handler : function() {
+                            var  s = H.getSelectionModel().getSelections();
+                            if (!s.length || (s.length > 1))  {
+                                Ext.MessageBox.alert(_T["081fcfe0460716e500eeab497d45d6b8"], s.length ? _T["f845801a4be23199251c41e1c2ac5e98"] : _T["178044591ed0652d2b82b7f7eb90b22a"]);
+                                return;
+                            }
+                            if ((s[0].data.name == 'Administrators') ||(s[0].data.name == 'Default')) {
+                                Ext.MessageBox.alert(_T["081fcfe0460716e500eeab497d45d6b8"], _T["075c26b58d3827f7726bb1eb7c2d13dc"]);
+                                return;
+                            }
+                            if (s.data.id < 1) {
+                                Ext.MessageBox.alert(_T["081fcfe0460716e500eeab497d45d6b8"], _T["075c26b58d3827f7726bb1eb7c2d13dc"]);
+                                return;
+                            }
+
+                            J.show(s[0].data, E); 
+                        }
+                    },  
+                    
+                    {
+                        text: _T["1eeb327bd294d207da46d9cfb93f9042"],
+                         cls: 'x-btn-text-icon',
+                        icon: rootURL + '/Pman/templates/images/trash.gif',
+                        hidden : !Pman.hasPerm('Core.Groups', 'D'),
+                        handler : function(){
+                            var  s = H.getSelectionModel().getSelections();
+                              
+                            for(var  i = 0; i < s.length; i++) {
+                                
+                                if ((s[i].data.id < 1) || (s[i].data.name == 'Administrators')) {
+                                    Ext.MessageBox.alert(_T["081fcfe0460716e500eeab497d45d6b8"], _T["2d481b48a578e9122e0cda91604a73b1"]);
+                                    return;
+                                }
+                            }
+
+                            
+                            
+                            Pman.genericDelete(D, 'Groups'); 
+                        } 
+                    } , '-',
+                      {
+                        text: _T["726e57af6b8966adfdcaa385105de4d1"],
+                         cls: 'x-btn-text-icon',
+                           icon: rootURL + '/Pman/templates/images/view-refresh.gif',
+                        handler : function(){
+                            E();
+                        }
+                    }
+                ]
+            }
+                    
+        });
+        this.panel.on('activate', function() {
+           
+        });
+            
+        
+        
+        
+        
+        
+        
+    },
+    refresh: function()
+    {
+        this.grid.getDataSource().reload();   
+    } 
+
+};
+
+
+
+
+
+
+
+
+Pman.Tab.PersonList = function(A)
+{
+    Ext.apply(this, A);
+}
+
+
+Pman.Tab.PersonList.prototype = {
+    
+    
+    id : '',  
+    type : 0, 
+    title : false,
+    hiddenColumns: false,  
+    itemDisplayName : false, 
+    permName : 'Core.Person', 
+    getLeftSelections : function() { return  []; },
+    hideDelete : false,
+    
+    
+    beforeload: function(t, o) {
+        
+        
+        alert('person list not configured');
+        return  false;
+        var  B = _this.getLeftSelections();
+        
+        if (B.length) {
+            o.params['query[in_group]'] = B[0].data.id;
+        }
+
+        o.params['query[name]'] = this.searchBox.getValue();
+        o.params['query[type]'] = this.type; 
+        o.params['query[person_internal_only_all]'] = 1;
+        o.params['query[person_inactive]'] = this.showInActive ? 0  : 1;
+        
+    },
+    
+    columns : function()
+    {
+        alert('person list not configured');
+        return  false;
+        return  [
+            this.c_name(),
+            this.c_office_id_name(),
+            this.c_role(),
+            this.c_phone(),
+            this.c_fax(),
+            this.c_email(),
+            this.c_active()
+        ]
+    },
+    
+    dialog: function () {
+        alert('person list not configured');
+        return  false;
+        return  Pman.Dialog.PersonStaff;
+    },
+    bulkAdd : function() {
+        
+        return  false;
+    },
+    newDefaults : function() {
+        alert('person list not configured');
+        return  false;
+        return  {
+            
+            id : 0,
+            company_id : Pman.Login.authUser.company_id,
+            company_id_name : Pman.Login.authUser.company_id_name,
+            company_id_address : Pman.Login.authUser.company_id_address,
+            company_id_tel : Pman.Login.authUser.company_id_tel,
+            company_id_fax : Pman.Login.authUser.company_id_fax
+        };
+    },
+         
+    
+    
+    
+    
+    
+    parentLayout : false,
+    showInActive : 0,  
+    grid : false,
+    panel : false,
+    toolbar : false,
+    paging:  false,
+    tab: false,
+    
+    
+    refreshWestPanel : function() 
+    {
+        var  C = this.parentLayout.getRegion('west').getActivePanel();
+        if (C && C.controller) {
+            C.controller.paging.onClick('refresh');
+            return;
+        }
+        
+    
+        if (!C || !C.id) {
+            return;
+        }
+
+        Pman.Tab[C.id].refresh();
+    },
+    
+    refresh: function(){
+        if (!this.paging) {
+            this.delayedCreate();
+        }
+
+        this.paging.onClick('refresh');
+    },
+    
+    loadFirst: function(){
+        if (!this.paging) {
+            this.delayedCreate();
+        }
+
+        this.paging.onClick('first');
+    },  
+    
+    
+    
+    add : function(D, E) {
+        
+        var  F = this;
+        if (this.tab) {
+            D.getRegion(E).showPanel(this.panel);
+            return;
+        }
+
+        this.parentLayout = D;
+        
+        this.layout = new  Ext.BorderLayout(
+            D.getEl().createChild({tag:'div'}),
+            {
+               
+                center: {
+                    autoScroll:true,
+                    hideTabs: true
+                }
+            }
+        );
+
+
+
+        this.tab = D.add(E,  new  Ext.NestedLayoutPanel(
+            this.layout, {title: this.title, background: true, controller : this}));
+
+        this.tab.on('activate', function() {
+            F.delayedCreate();
+           
+        });
+    },
+    delayedCreate : function () 
+     
+    {
+        var  G = this;
+        if (this.grid) {
+            return;
+        }
+        
+        var  H = function() {
+            G.refresh();
+        }
+
+        this.layout.beginUpdate();
+        
+        var  I = this.layout.getRegion('center').getEl().createChild({tag:'div'});
+        
+        this.grid = new  Ext.grid.Grid(I,  {
+                ddGroup: 'groupDD',
+                
+                enableDrag: true,
+                id: this.id + '-grid',
+                ds:   new  Ext.data.Store({
+                    
+                    proxy: new  Ext.data.HttpProxy({
+                        url: baseURL + '/Roo/Person.html',
+                        method: 'GET'
+                    }),
+                    reader: Pman.Readers.Person,
+                    remoteSort: true,
+                    listeners : {
+                        
+                        beforeload: function(t, o) {
+                            
+                            
+                            return  G.beforeload(t,o);
+                             
+                            
+                        },
+                        loadexception : Pman.loadException
+                    
+                    },
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                }),
+                cm: new  Ext.grid.ColumnModel(
+                    this.columns()
+                ),
+                autoExpandColumn: G.id + '-name' , 
+                clicksToEdit : 1,
+                
+                loadMask: true,
+
+                listeners : {
+                    rowdblclick : function(g, ri, e) {
+                        var  s = g.getDataSource().getAt(ri).data;
+                        if (G.dialog() && Pman.hasPerm(G.permName, 'E')) {
+                            G.dialog().show(s,H);
+                        }
+                        
+                        
+                    } 
+                    
+                }
+                 
+                 
+        });
+        this.panel  = this.layout.add('center',  new  Ext.GridPanel(this.grid , {
+                fitToframe: true,
+                fitContainer: true, 
+                id: this.id, 
+                title: this.title || _T["25310235b726d71d9d0bc2fc903b9a3b"], 
+                controller : this 
+            })
+        );
+        this.grid.render();
+        
+        if (this.hiddenColumns) {
+            var  cm = this.grid.getColumnModel();
+            Roo.each(this.hiddenColumns, function(c) {
+                cm.setHidden(cm.getIndexByDataIndex(c), true);
+            });
+        }
+        
+
+        
+        var  J = this.grid.getView().getFooterPanel(true);
+        this.paging = new  Ext.PagingToolbar(J, this.grid.getDataSource(), {
+            pageSize: 25,
+            displayInfo: true,
+            displayMsg: _T["4788be05034a6a24e08add98ed12fddf"] + (this.itemDisplayName || _T["25310235b726d71d9d0bc2fc903b9a3b"]) + _T["0a1ea6b8f312884c024a49ea271b6330"],
+            emptyMsg: _T["f405b2cca36f62eb81fa563a0b7406ac"] + (this.itemDisplayName || _T["25310235b726d71d9d0bc2fc903b9a3b"]) + _T["7bca1e8820519d2993ebabfa434007c9"]
+        });
+        var  K = this.grid;
+ 
+    
+        this.toolbar = new  Ext.Toolbar(this.grid.getView().getHeaderPanel(true));
+        
+        var  tb = this.toolbar;
+        
+        
+        if (this.parentLayout.getRegion('west') && this.parentLayout.getRegion('west').panels.length) {
+                
+            this.paging.add( 
+                '<b><i><font color="red">'+ 
+                    (this.type ?
+                        _T["469845eeeb8c7f2983a5fc6550af4dc7"] :
+                        _T["d559132c96908612dd66163dbd532812"]
+                    ) +
+                '</font></i></b>'
+            );
+        }
+        
+        var  G = this;
+        if (this.permName == 'Core.Staff') {
+                
+            this.paging.add( '-',
+                {
+                    text: _T["40c16e64d6bf564aa75d2287d06c9a7b"],
+                    pressed: false,
+                    enableToggle: true,
+                    toggleHandler: function(L,M) {
+                        G.showInActive = (M ? 1 : 0);
+                        L.setText(M ? _T["2bcbf24c822c1428b849349709d432b4"]: _T["40c16e64d6bf564aa75d2287d06c9a7b"] );
+                        H();
+                    }
+                }, 
+                
+               
+                '-'
+            );
+        }
+
+        
+     
+        this.searchBox = new  Ext.form.TextField({
+            name: 'search',
+            width:135,
+            listeners : {
+                specialkey : function(f,e)
+                {
+                    
+                    if (e.getKey() == 13) {
+                        
+                        H();
+                    } 
+                   
+                
+                }
+            }
+         
+        });
+        var  dg = G.dialog();
+        tb.add(
+            {
+                text: _T["39c8bb31d465dfc147324be427ace5e9"],
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                hidden :  !dg || (G.newDefaults() === false) || !Pman.hasPerm(this.permName, 'A'),  
+                handler : function(){
+                    dg.show(  G.newDefaults(), H );  
+                }
+            }, 
+             { 
+                text: _T["a89b59994ae0fe49d108d3e22d68a8f3"],
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                hidden : !this.bulkAdd() || !Pman.hasPerm(this.permName, 'A'),    
+                handler : function(){
+                    
+                   
+                   G.bulkAdd().show( {  id : 0 }, H ); 
+                }
+            },
+
+            {
+                text: _T["d1ff8ffcb0bc971614aef7c0b5a07290"],
+                cls: 'x-btn-text-icon',
+                icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+                hidden : !dg || !Pman.hasPerm(this.permName, 'E'),    
+                handler : function(){
+                    var  s = K.getSelectionModel().getSelections();
+                    if (!s.length || (s.length > 1))  {
+                        Ext.MessageBox.alert(_T["bf5c8b4410513986dffc6d6d6f025c5f"], s.length ? _T["8d7a86f0b9a3f7f52e7b49206b42f1ff"] : _T["f8eeb7a5fd0bed49c85e3664518a5e7c"]);
+                        return;
+                    }
+
+                    dg.show( s[0].data,H);
+                 }
+            }, 
+            {
+                text: _T["022426919cf2c4cb91db4d37dbe5d24c"],
+                cls: 'x-btn-text-icon',
+                icon:   rootURL + '/Pman/templates/images/trash.gif',
+                hidden : (this.permName != 'Core.Staff') || !Pman.hasPerm(this.permName, 'E'),   
+                handler : function(){
+                 
+                    var  s = K.getSelectionModel().getSelections();
+                    if (!s.length  )  {
+                        Ext.MessageBox.alert(_T["bf5c8b4410513986dffc6d6d6f025c5f"],  _T["ecb1973f7aa6a900a49efa65dfc18da4"]);
+                        return;
+                    }
+                    var  r = [];
+                    for(var  i = 0; i < s.length; i++) {
+                        r.push(s[i].data.id);
+                    }
+
+                
+                
+                
+                    K.getView().mainWrap.mask(_T["0c87cd7a6911dfa20a87e9073a4891f0"]);
+
+                    
+                    Ext.Ajax.request({
+                        url: baseURL + '/Roo/Person.html',
+                        method: 'GET',
+                        params: {
+                            _toggleActive : r.join(',')
+                        },
+                        success: function(L) {
+                            var  M = Pman.processResponse(L);
+                            K.getView().mainWrap.unmask();
+                            if (!M.success) {
+                                Ext.MessageBox.alert(_T["bf5c8b4410513986dffc6d6d6f025c5f"], M.errorMsg ? M.errorMsg  : _T["864c4e5c64245516e1fcdabaf49b8de1"]);
+                                return;
+                            }
+
+                            H();
+                            
+                        },
+                        failure: function(N) {
+                            K.getView().mainWrap.unmask();
+                            Ext.MessageBox.alert(_T["bf5c8b4410513986dffc6d6d6f025c5f"], _T["864c4e5c64245516e1fcdabaf49b8de1"]);
+                        }
+                        
+                    });
+                }
+                
+            }, 
+            {
+                text: _T["1984cf10277dee6c3ff92d27c3b05493"],
+                cls: 'x-btn-text-icon',
+                hidden : (this.permName == 'Core.Staff') ||  !Pman.hasPerm('Core.Person', 'D') || this.hideDelete,    
+                icon: rootURL + '/Pman/templates/images/trash.gif',
+                handler : function(){
+                    Pman.genericDelete(G, 'Person'); 
+                }
+            } ,
+
+           
+            '-',
+            'Search: ',
+             
+            this.searchBox,
+        
+            {
+                
+               
+                icon: rootURL + '/Pman/templates/images/search.gif', 
+                cls: 'x-btn-icon',
+                qtip: _T["f128b31c31b3754f5792d2eefdca21d0"],
+                handler : function () { 
+                    G.grid.getSelectionModel().clearSelections();
+
+                    H();
+                }
+            },   
+             {
+                
+               
+                icon: rootURL + '/Pman/templates/images/edit-clear.gif', 
+                cls: 'x-btn-icon',
+                qtip: _T["87472631093f63c722db73519eb9e4b9"],
+                handler : function () {
+                    G.searchBox.setValue('');
+                    G.grid.getSelectionModel().clearSelections();
+
+                    H();
+                }
+            }
+            
+
+        );
+        
+            
+        
+        
+        
+         this.layout.endUpdate();
+
+        
+        
+    },
+    
+
+    
+    c_project_id_code : function(L) {
+        L = L || {};
+        return  Roo.apply({               
+            header : _T["4d49b66bbfd392f5307e93c277054732"],
+            dataIndex : 'project_id_code',
+            sortable : false,
+            width : 70,
+            renderer : function(v,x,r) {
+                return  String.format('<span qtip="{0}">{1}</span>', 
+                    r.data.action_type,
+                    v);
+            }
+        },L);
+    },
+
+    
+    
+    
+    c_name : function(M) {
+        M = M || {};
+        return  Roo.apply({
+            id : this.id + '-name',
+            header : _T["aacd489f97738135f87d1c85be64536b"],
+            dataIndex : 'name',
+            sortable : true,
+            width : 150  
+        }, M);
+    },
+     c_company_id_comptype : function(N) {
+        N = N || {};
+        return  Roo.apply({
+            header : _T["bd87244321a326daa26695ab4b721c7c"],
+            dataIndex : 'company_id_comptype',
+            sortable : true,
+            width : 70
+        }, N);
+    },
+    
+    c_company_id_name : function(O) {
+        O = O || {};
+        return  Roo.apply({
+            header : _T["60c647263578176b102261a5ae1004a6"],
+            dataIndex : 'company_id_name',
+            sortable : true,
+            width : 150,
+            renderer: function(v,x,r) {
+                return  String.format('{0}{1}{2}', 
+                    v,
+                    r.data.office_id ? ' / ' : '',
+                    r.data.office_id_name);
+            }
+
+        }, O);
+    },
+    
+    c_office_id_name : function(P) {
+        P = P || {};
+        return  Roo.apply({
+            header : _T["3bb13cf053c9459ba5f2bad62a2e208b"],
+            dataIndex : 'office_id_name',
+            sortable : true,
+            width : 150  
+        }, P);
+        
+    },
+    c_role : function(Q) {
+        Q = Q || {};
+        return  Roo.apply({
+            header : _T["118585dae50b38d2079b28afa5d768d6"],
+            dataIndex : 'role',
+            sortable : true,
+            width : 100
+        }, Q);
+        
+    },
+    c_phone : function(R) {
+        R = R || {};
+        return  Roo.apply({
+            header : _T["0bfc17408bdeecfce4652e09c3b90621"],
+            dataIndex : 'phone',
+            sortable : true,
+            width : 70
+        }, R);
+        
+    },
+    c_fax : function(S) {
+        S = S || {};
+        return  Roo.apply({
+            header : _T["1ee4e8e2d1859ff63a7b58f29505249f"],
+            dataIndex : 'fax',
+            sortable : true,
+            width : 70
+        }, S);
+        
+    },
+    c_email : function(T) {
+        T = T || {};
+        return  Roo.apply({
+            header : _T["42fcc3face9df26268d1c2bf30dcd747"],
+            dataIndex : 'email',
+            sortable : true,
+            width : 150,
+            renderer : function (v) {
+                return  (v.length && v.indexOf('@') > 0 ) ? 
+                    String.format('<a href="mailto:{0}">{0}</a>',v) : v;
+            }
+        }, T);
+        
+    },
+    c_active : function(U) {
+        U = U || {};
+        return  Roo.apply({
+            header : _T["54bf9f5699148960b91086f351cf159e"],
+            dataIndex : 'active',
+            sortable : true,
+            width : 50,
+            renderer : function(v) {
+                
+                
+                var  V = v> 0 ?  '-checked' : '';
+
+                return  '<img class="x-grid-check-icon' + V + '" src="' + Ext.BLANK_IMAGE_URL + '"/>';
+                
+                
+            }
+
+        }, U);
+        
+    }
+     
+    
+    
+};
+
+
+
+
+
+
