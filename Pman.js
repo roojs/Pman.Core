@@ -825,16 +825,16 @@ Pman = new Roo.Document(
         
         
         // add modules to their parents..
-        var addMod = function(m) {
+        var addMod = function(mod) {
            // console.log(m.modKey);
             
-            mods.push(m);
-            if (m.module.modules) {
-                m.module.modules.keySort('ASC',  cmp );
-                m.module.modules.each(addMod);
+            mods.push(mod);
+            if (mod.module.modules) {
+                mod.module.modules.keySort('ASC',  cmp );
+                mod.module.modules.each(addMod);
             }
-            if (m.finalize) {
-                m.finalize.name = m.name + " (clean up) ";
+            if (mod.finalize) {
+                mod.finalize.name = mod.name + " (clean up) ";
                 mods.push(m.finalize);
             }
             
