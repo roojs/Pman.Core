@@ -291,7 +291,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     }
     
     
-    function toRooArray($req) {
+    function toRooArray($req= array()) {
         $ret = parent::toArray();
         // sor tout 
         $ret['countrylist'] = $this->I18toArray('c',$ret['countries']);
