@@ -127,7 +127,15 @@ Pman.I18n = {
         return Pman.I18n.Data[lang][type];
     },
     
-    
+    simpleStoreData : function(type)
+    {
+        var lang = Pman.Login.authUser.lang || 'en';
+        var ret = [];
+        Roo.each(Pman.I18n.Data[lang][type], function (o) {
+            ret.push([ o.code, o.title ]);
+        })
+        return ret;
+    },
     // DEPRECIATED... -- see dataToProxy
     countryStore : function() { return {
         
