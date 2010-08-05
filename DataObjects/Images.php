@@ -217,7 +217,27 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
     }
      
-
+    
+     
+    function toRooArray($req = array()) {
+        if (empty($req['query']['imagesize'])) {
+            return $this->toArray();
+        }
+        $ret= $this->toArray();
+        $ret['url'] = $this->URL($req['query']['imagesize']);
+        
+        
+        return $ret;
+    }
+     
+    function URL($size)
+    {
+        $size = max(100, (int) $size);
+        $size = min(1024, (int) $size);
+        
+        $ff = HTML_FlexyFramework::get();
+        return $ff->baseURL + "Images/Thumb/$size/{$this->id}/{$this->filename}";
+    }
     function setFromRoo($ar, $roo)
     {
         // not sure why we do this.. 
