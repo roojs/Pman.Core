@@ -227,8 +227,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return array();
         }
         $c = clone($this);
-        $c->on_table = $obj->tableName();
-        $c->on_id = $obj->id;
+        $c->ontable = $obj->tableName();
+        $c->onid = $obj->id;
         if (!empty($mime_regex)) {
             $c->whereAdd("mimetype LIKE '". $c->escape($mime_like) ."'");
         }
