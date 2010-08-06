@@ -248,13 +248,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $ret;
     }
      
-    function URL($size)
+    function URL($size, $provider = '/Images/Thumb/')
     {
+        
+        
         $size = max(100, (int) $size);
         $size = min(1024, (int) $size);
         
         $ff = HTML_FlexyFramework::get();
-        return $ff->baseURL . "/Images/Thumb/$size/{$this->id}/{$this->filename}";
+        return $ff->baseURL . $provider . "$size/{$this->id}/{$this->filename}";
     }
     function setFromRoo($ar, $roo)
     {
