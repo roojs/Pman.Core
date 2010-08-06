@@ -217,6 +217,24 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
     }
      
+    /**
+     * return a list of images for an object, optionally with a mime regex.
+     * eg. '%/pdf' or 'image/%'
+     */
+    function gather($obj, $mime_like='')
+    {
+        if (empty($obj->id)) {
+            return array();
+        }
+        $c = clone($this);
+        $c->on_table = $obj->tableName();
+        $c->on_id = $obj->id;
+        if (!empty($mime_regex)) {
+            $c->whereAdd("mimetype LIKE '". $c->escape($mime_like) ."'");
+        }
+
+        return $c->fetchAll();
+    }
     
      
     function toRooArray($req = array()) {
