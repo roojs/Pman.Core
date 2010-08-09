@@ -9,19 +9,19 @@
  * <script type="text/javascript">
  */
 /**
- * @class Ext.form.DisplayText
- * @extends Ext.form.Field
+ * @class Roo.form.DisplayText
+ * @extends Roo.form.Field
  * Display text field 
  * @constructor
  * Creates a new Display text fiedl
  * @param {Object} config Configuration options
  */
-Ext.form.DisplayText = function(config){
-    Ext.form.DisplayText.superclass.constructor.call(this, config);
+Roo.form.DisplayText = function(config){
+    Roo.form.DisplayText.superclass.constructor.call(this, config);
     
 };
 
-Ext.extend(Ext.form.DisplayText, Ext.form.Field,  {
+Roo.extend(Roo.form.DisplayText, Roo.form.Field,  {
      /**
      * @cfg {Number} width  - mostly ignored
      */
@@ -51,12 +51,12 @@ Ext.extend(Ext.form.DisplayText, Ext.form.Field,  {
      */
     //
     onResize : function(){
-        Ext.form.Field.superclass.onResize.apply(this, arguments);
+        Roo.form.Field.superclass.onResize.apply(this, arguments);
         
     },
 
     initEvents : function(){
-        // Ext.form.Checkbox.superclass.initEvents.call(this);
+        // Roo.form.Checkbox.superclass.initEvents.call(this);
         // has no events...
        
     },
@@ -72,14 +72,14 @@ Ext.extend(Ext.form.DisplayText, Ext.form.Field,  {
 
     // private
     onRender : function(ct, position){
-        Ext.form.DisplayText.superclass.onRender.call(this, ct, position);
+        Roo.form.DisplayText.superclass.onRender.call(this, ct, position);
         //if(this.inputValue !== undefined){
         
         this.style = this.style || '';
         var style = this.style;
         delete this.style;
         
-        Ext.form.DisplayImage.superclass.onRender.call(this, ct, position);
+        Roo.form.DisplayImage.superclass.onRender.call(this, ct, position);
         this.wrap = this.el.wrap({cls: 'x-menu-check-item'});
         this.viewEl = this.wrap.createChild({ tag: 'div'});
         
