@@ -225,8 +225,10 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     {
         
         // do we have an empty system..
-        var_dump($au);exit;
-        die();
+        if ($au && $au->id == -1) {
+            return true;
+        }
+        
         
         
         if ($au->company()->comptype != 'OWNER') {
