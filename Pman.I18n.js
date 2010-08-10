@@ -133,7 +133,7 @@ Pman.I18n = {
         var ret = [];
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
             ret.push([ o.code, o.title ]);
-        })
+        });
         return ret;
     },
     // DEPRECIATED... -- see dataToProxy
