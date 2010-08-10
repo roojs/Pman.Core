@@ -225,6 +225,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     {
         
         // do we have an empty system..
+        var_dump($au);exit;
         die($au);
         
         
