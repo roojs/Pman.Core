@@ -191,7 +191,7 @@ CREATE TABLE   `Images` (
 
 
 
-ALTER TABLE images    ADD COLUMN `width` int(11) NOT NULL default '0';
+ALTER TABLE images    ADD COLUMN  `width` int(11) NOT NULL default '0';
 ALTER TABLE images    ADD COLUMN  `height` int(11) NOT NULL default '0';
 ALTER TABLE images    ADD COLUMN  `filesize` int(11) NOT NULL default '0';
 ALTER TABLE images    ADD COLUMN  `displayorder` int(11) NOT NULL default '0';
