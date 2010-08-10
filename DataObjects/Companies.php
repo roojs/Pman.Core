@@ -223,6 +223,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
      */
     function checkPerm($lvl, $au, $changes = false) 
     {
+        
+        // do we have an empty system..
+        die($au);
+        
+        
         if ($au->company()->comptype != 'OWNER') {
             
             // hacking!
