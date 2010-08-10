@@ -495,8 +495,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     }    
     function checkPerm($lvl, $au, $changes=false) //heck who is trying to access this. false == access denied..
     {
-         // determine if it's staff!!!
          
+       // do we have an empty system..
+        if ($au && $au->id == -1) {
+            return true;
+        }
+        
+        // determine if it's staff!!!
          
         if ($au->company()->comptype != 'OWNER') {
             
