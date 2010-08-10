@@ -189,7 +189,7 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
             
             [ 'CONSULTANT', "Consultant" ],
             [ 'CLIENT'    ,  "Client" ],
-            [ 'CONTRACTOR' , "Contractor" ],
+            [ 'CONTRACTOR' , "Contractor" ]
           //  [ 'OWNER', "System Owner" ]
          ];
     },
@@ -229,7 +229,7 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
                     
                     
                     this.c_address(),
-                    this.c_remarks(),
+                    this.c_remarks()
                 ]
             },
             {   

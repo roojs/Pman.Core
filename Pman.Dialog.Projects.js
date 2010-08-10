@@ -449,7 +449,7 @@ Pman.Dialog.Projects = {
             [  'X' , "Non-Project (Closed)" ]
         
         ];
-    },
+    }
     
     
     
