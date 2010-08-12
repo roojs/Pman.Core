@@ -15,13 +15,13 @@
 
 .x-grid-row-selected .x-grid-check-icon-toggle,
 .x-grid-check-icon-checked {
-    background:transparent url(/roojs1/images/default/menu/chk-sprite.gif) no-repeat scroll 0 -16px;
+    background:transparent url(../../roojs1/images/default/menu/chk-sprite.gif) no-repeat scroll 0 -16px;
     height:16px;
     width:16px;
 }
 .x-grid-check-icon-toggle,
 .x-grid-check-icon {
-    background:transparent url(/roojs1/images/default/menu/chk-sprite.gif) no-repeat scroll 0 0;
+    background:transparent url(../../roojs1/images/default/menu/chk-sprite.gif) no-repeat scroll 0 0;
     height:16px;
     width:16px;
 }
@@ -56,7 +56,7 @@
 .x-form-textfield-adder, 
 .x-form-textfield-minus
 {
-    background:transparent url(/roojs1/images/default/dd/drop-add.gif) no-repeat scroll 0 0;
+    background:transparent url(../../roojs1/images/default/dd/drop-add.gif) no-repeat scroll 0 0;
     border-style:none none solid;
     
     cursor:pointer;
@@ -72,7 +72,7 @@
 } 
 .x-form-textfield-minus
 {
-    background:transparent url(/roojs1/images/default/dd/drop-sub.gif) no-repeat scroll 0 0;
+    background:transparent url(../../roojs1/images/default/dd/drop-sub.gif) no-repeat scroll 0 0;
     margin-left: 23px;
 }
 
