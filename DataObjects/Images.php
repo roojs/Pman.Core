@@ -260,14 +260,24 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ff = HTML_FlexyFramework::get();
         return $ff->baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
-    
-    function toHTML($provider, $sx, $sy = 0) 
+    /**
+     * size could be 123x345
+     * 
+     * 
+     */
+    function toHTML($provider, $size) 
     {
         
-        if (!$sy) {
-            $ratio =  $height/ ($width *1.0);
+        $sz = explode('x', $size);
+        $sx = $sz[0];
+        
+        if (empty($sz[1])) {
+            $ratio =  $this->height/ ($this->width *1.0);
             $sy = $ration * $sx;
-           }
+        }
+        
+        
+        
         return '<img src="' . $this->URL($sx, $provider) . '" width="'. $sx . '" height="'. $sy . '">';
         
         
