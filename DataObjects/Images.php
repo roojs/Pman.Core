@@ -268,7 +268,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $ratio =  $height/ ($width *1.0);
             $sy = $ration * $sx;
            }
-        return '<img src="' $this->URL($sx, $provider) . '" width="'. $sx . '" height="'. $sy . '">';
+        return '<img src="' . $this->URL($sx, $provider) . '" width="'. $sx . '" height="'. $sy . '">';
         
         
     }
