@@ -260,6 +260,22 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ff = HTML_FlexyFramework::get();
         return $ff->baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
+    
+    function toHTML($provider, $sx, $sy = 0) 
+    {
+        
+        if (!$sy) {
+            $ratio =  $height/ ($width *1.0);
+            $sy = $ration * $sx;
+           }
+        return '<img src="' $this->URL($sx, $provider) . '" width="'. $sx . '" height="'. $sy . '">';
+        
+        
+    }
+    
+    
+    
+    
     function setFromRoo($ar, $roo)
     {
         // not sure why we do this.. 
