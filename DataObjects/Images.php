@@ -265,7 +265,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * 
      * 
      */
-    function toHTML($size,$provider) 
+    function toHTML($size, $provider = '/Images/Thumb') 
     {
         
         $sz = explode('x', $size);
