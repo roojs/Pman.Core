@@ -250,7 +250,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      
     function URL($size, $provider = '/Images/Thumb')
     {
-        
+        if (!$this->id) {
+            return 'about:blank';
+            
+        }
         if ($size < 0) {
             return $ff->baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
@@ -267,6 +270,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function toHTML($size, $provider = '/Images/Thumb') 
     {
+        
+        
         
         $sz = explode('x', $size);
         $sx = $sz[0];
