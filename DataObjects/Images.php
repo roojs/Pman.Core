@@ -285,6 +285,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (empty($sz[1])) {
             $ratio =  $this->height/ ($this->width *1.0);
             $sy = $ration * $sx;
+        } else {
+            $sy = $sz[1];
         }
         // create it?
         
