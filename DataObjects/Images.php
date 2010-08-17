@@ -258,8 +258,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($size < 0) {
             return $ff->baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
-        $size = max(100, (int) $size);
-        $size = min(1024, (int) $size);
+        //-- max?
+        //$size = max(100, (int) $size);
+        //$size = min(1024, (int) $size);
         
         $ff = HTML_FlexyFramework::get();
         return $ff->baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
