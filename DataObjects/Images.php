@@ -223,6 +223,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function gather($obj, $mime_like='')
     {
+        DB_DataObject::debugLevel(1);
         if (empty($obj->id)) {
             return array();
         }
