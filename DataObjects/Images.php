@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $sz = explode('x', $size);
         $sx = $sz[0];
-        var_dump($sz);
+        //var_dump($sz);
         if (!$this->id) {
             $this->height = $sx;
             $this->width = empty($sz[1]) ? $sx : $sz[1];
