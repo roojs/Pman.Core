@@ -47,7 +47,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $content->$k = $v;
         }
         
-        if (empty($args['no_auth'] && !in_array($templateFile, array(
+        if (empty($args['no_auth']) && !in_array($templateFile, array(
            // templates that can be sent without authentication.
             'password_reset' ,
             'password_welcome'
