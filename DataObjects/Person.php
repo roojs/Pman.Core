@@ -30,7 +30,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
+    /**
+     * send a template
+     * - user must be authenticate or args[no_auth] = true
+     *   or template = password_[reset|welcome]
+     * 
+     */
     function sendTemplate($templateFile, $args)
     {
         
@@ -42,7 +47,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $content->$k = $v;
         }
         
-        if (!in_array($templateFile, array(
+        if (empty($args['no_auth'] && !in_array($templateFile, array(
            // templates that can be sent without authentication.
             'password_reset' ,
             'password_welcome'
