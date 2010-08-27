@@ -71,15 +71,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
         }
         if (!empty($q['query']['comptype'])) {
-            DB_DataObject::debugLevel(1);
+           
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
-        if (!empty($q['query']['distinct_province'])) {
-            $this->selectAdd();
-            $this->selectAdd('distinct(province)');
-            
-        }
+         
     }
     function toEventString() {
         return $this->name;
@@ -251,37 +247,5 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         
         return $au->hasPerm("Core.".$this->tableName(), $lvl);    
     } 
-    function whereAddIn($key, $list, $type= 'int') 
-    {
-        $ar = array();
-        foreach($list as $k) {
-            $ar[] = $type =='int' ? (int)$k : $this->escape($k);
-        }
-        if (!$ar) {
-            return;
-        }
-        return $this->whereAdd("$key IN (". implode(',', $ar). ')');
-    }
-    function fetchAll($k= false, $v = false) 
-    {
-        if ($k !== false) {
-            $this->selectAdd();
-            $this->selectAdd($k);
-            if ($v !== false) {
-                $this->selectAdd($v);
-            }
-        }
-        
-        $this->find();
-        $ret = array();
-        while ($this->fetch()) {
-            if ($v !== false) {
-                $ret[$this->$k] = $this->$v;
-                continue;
-            }
-            $ret[] = $k === false ? clone($this) : $this->$k;
-        }
-        return $ret;
-         
-    }
+    
 }
