@@ -487,6 +487,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ) {
             return true;
         }
+        if (empty($this->email)) {
+            return true;
+        }
         $xx = DB_Dataobject::factory('Person');
         $xx->setFrom(array(
             'email' => $this->email,
