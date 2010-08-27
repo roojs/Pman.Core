@@ -1,0 +1,155 @@
+<!DOCTYPE html 
+      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:html="http://www.w3.org/1999/xhtml" 
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"> 
+    <head>
+        <title>{appName}</title>
+        <link rel="shortcut icon" href="./Pman.ico" type="image/vnd.microsoft.icon"/>
+        
+        <link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/cssX/roojs-all.css" />
+        
+        {outputCSSIncludes()}
+        
+                    
+   
+    <style>
+     #loading-logo-bottom,
+     #loading-logo-center,
+     #loading-logo-tile,
+     #loading-logo-tile-top
+     {
+        width:100%;
+        height:100%;
+        position:absolute;
+       
+        left:0;
+        top:0;
+        background-position:50% 50%;
+    }
+    
+    /* background-tile.jpg */
+    #loading-logo-tile {
+         z-index:1000;
+    }
+    
+    /* background.jpg */
+    #loading-logo-center
+    {
+        background-position:50% 0;
+        background-repeat:no-repeat; 
+        z-index:1001;
+    }
+    /* background-tile-top.jpg */
+    #loading-logo-tile-top
+    {
+        background-position:50% 0;
+        z-index:1002;
+        background-repeat:repeat-x; 
+        
+    }
+    /* background_bottom_logo.gif */
+    #loading-logo-bottom
+    {
+        background-position:50% 100%;
+        background-repeat:no-repeat; 
+        z-index:1003;
+    }
+    </style>
+     </head>
+    <body class="ytheme-gray">  
+         <!--background:#F8ECB2;-->   
+        <div flexy:if="hasBg(#background-tile.jpg#)" 
+            id="loading-logo-tile"
+            style="background-image:url({rootURL}/Pman/{appNameShort}/templates/images/background-tile.jpg);"></div>
+        
+        <div flexy:if="hasBg(#background-tile-top.jpg#)"  
+            id="loading-logo-tile-top"
+            style="background-image:url({rootURL}/Pman/{appNameShort}/templates/images/background-tile-top.jpg);"></div>
+        
+        <div flexy:if="hasBg(#background.jpg#)" 
+            id="loading-logo-center"
+            style="background-image:url({rootURL}/Pman/{appNameShort}/templates/images/background.jpg);"></div>
+        
+        <div flexy:if="hasBg(#background_bottom_logo.gif#)" 
+            id="loading-logo-bottom"
+            style="background-image:url({rootURL}/Pman/{appNameShort}/templates/images/background_bottom_logo.gif);"></div>
+        
+        
+        <div id="loading-mask"
+            style="width:1;height:1;position:absolute;z-index:1000;left:0;top:0;">&#160;</div>
+        <div id="loading">
+            <div class="loading-indicator" id="loading-text">&#160;Loading...(This may take a few seconds)</div>
+        </div>
+{if:isDev}                  
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-debug.js"></script>  
+         
+{else:}                  
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js"></script>
+                 
+{end:}                  
+        <flexy:toJavascript 
+            baseURL="baseURL" 
+            rootURL="rootURL" 
+            isDev="isDev"
+            serverName="serverName" 
+            appLang="lang"
+            appName="appName"
+            appNameShort="appNameShort"
+            appOwnerCompanyId="company.id"
+             
+            AppLinkError="linkFail"
+            AppTrackOnLoad="onloadTrack"
+            
+            showNewPass="showNewPass"
+            allowSignup="allowSignup"
+            
+            logoPrefix="logoPrefix"
+            
+            AppModules="appModules"
+            AppVersion="appVersion"
+        >
+        
+        <script type="text/javascript">
+            Ext=Roo; // bc
+            Roo.BLANK_IMAGE_URL =  rootURL + "/roojs1/images/gray/s.gif";
+            Roo.rootURL = rootURL +'/roojs1/';
+        </script>
+        
+        {outputJavascriptIncludes()}
+             
+        <!-- used by App.php in Builder - to enable loading of code/applicaiton on the fly -->
+        {foreach:builderJs,js}
+            <script type="text/javascript" src="{baseURL}/Builder/Code/{js}.js"></script>    
+        {end:} 
+           
+        <!-- finally language.. -->   
+        <script type="text/javascript" src="{baseURL}/Core/I18n.js"></script>
+               
+               
+        <script type="text/javascript">
+            Pman.debug = true;
+        </script>
+               
+               
+        <div id="title" class="x-layout-inactive-content logoblock">
+            <img id="headerInformation-company-logo" 
+                src="{rootURL}/Pman/{appNameShort}/templates/images/logo_small.gif" height="25"/>
+            <div id="headerInformation">Some other details</div>
+            <img id="headerInformation-applogo" 
+                src="{rootURL}/Pman/{appNameShort}/templates/images/logo_small.gif" height="25"/>
+            
+        </div>
+         
+          
+           
+        <div id="mainlist" class="x-layout-inactive-content">
+            <p>main list</p>
+                
+        </div>
+          
+    </body>
+</html>
+        
