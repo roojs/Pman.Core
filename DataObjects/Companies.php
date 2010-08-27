@@ -76,6 +76,12 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
         }
          
+         if (!empty($q['query']['province'])) {
+             $prov = $this->escape($q['query']['province']);
+            $this->whereAdd("province LIKE '$prov%'");
+            
+            
+        }
          
     }
     function toEventString() {
