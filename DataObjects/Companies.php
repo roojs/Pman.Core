@@ -74,7 +74,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
-        
+        if (!empty($q['query']['distinct_province'])) {
+            $this->selectAdd();
+            $this->selectAdd('distinct(province)');
+            
+        }
     }
     function toEventString() {
         return $this->name;
