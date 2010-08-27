@@ -71,6 +71,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
         }
         if (!empty($q['query']['comptype'])) {
+            DB_DataObject::debugLevel(1);
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
