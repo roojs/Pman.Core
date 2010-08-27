@@ -31,6 +31,14 @@ ALTER TABLE `Companies` ADD COLUMN `updated_dt` datetime  NOT NULL;
 
 ALTER TABLE `Companies` ADD COLUMN   `passwd` varchar(64) NOT NULL;
 
+
+ALTER TABLE Companies 
+	ADD COLUMN dispatch_port varchar(255) NOT NULL DEFAULT '',
+	ADD COLUMN province varchar(255) NOT NULL DEFAULT '',,
+	ADD COLUMN country varchar(4) NOT NULL DEFAULT '';
+
+
+
 UPDATE Companies set comptype='OWNER' where isOwner=1;
 
 
