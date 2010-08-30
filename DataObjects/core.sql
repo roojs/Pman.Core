@@ -143,6 +143,8 @@ ALTER TABLE Person ADD COLUMN project_id int(11) default 0;
 
 ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) default '';
 
+ALTER TABLE Person ADD COLUMN deleted_by INT(11) NOT NULL default 0 ;
+ALTER TABLE Person ADD COLUMN deleted_dt DATETIME;;
 
 
 
