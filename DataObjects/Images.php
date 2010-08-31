@@ -106,16 +106,18 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (file_exists($fn)) {
             unlink($fn);
         }
-        
+        // delete thumbs..
         $b = basename($fn);
         $d = dirname($fn);
-        $dh = opendir($d);
-        while (false !== ($fn = readdir($dh))) {
-            if (substr($fn, 0, strlen($b)) == $b) {
-                unlink($d. '/'. $fn);
+        if (file_exists($d)) {
+                
+            $dh = opendir($d);
+            while (false !== ($fn = readdir($dh))) {
+                if (substr($fn, 0, strlen($b)) == $b) {
+                    unlink($d. '/'. $fn);
+                }
             }
         }
-        
         
     }
     
