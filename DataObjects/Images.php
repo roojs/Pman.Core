@@ -247,7 +247,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ret= $this->toArray();
         
         $ret['url'] = $this->URL(-1);
-        $ret['thumburl'] = $this->URL($req['query']['imagesize']);
+        $ret['url_thumb'] = $this->URL($req['query']['imagesize']);
         
         
         return $ret;
