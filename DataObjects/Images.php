@@ -259,6 +259,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return 'about:blank';
             
         }
+        $ff = HTML_FlexyFramework::get();
         if ($size < 0) {
             return $ff->baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
@@ -266,7 +267,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
         
-        $ff = HTML_FlexyFramework::get();
+        
         return $ff->baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
     /**
