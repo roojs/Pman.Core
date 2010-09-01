@@ -499,7 +499,7 @@ Pman.Login =  new Roo.util.Observable({
         }); 
     },
     switchLang : function (lang) {
-        if (!lang.length) {
+        if (!lang || !lang.length) {
             return;
         }
         if (typeof(_T.en) == 'undefined') {
