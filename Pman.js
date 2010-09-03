@@ -563,9 +563,10 @@ Pman = new Roo.Document(
      * 
      */
     request : function(c) {
-        
-        Ext.Ajax.request({
-            timeout : c.timeout || 30000,
+        var r= new Roo.data.Connection({
+            timeout : typeof(c.timeout) == 'undefined' ?  30000 c.timeout
+        });
+        r.request({
             url: c.url,
             method : c.method,
             params: c.params,
@@ -825,17 +826,17 @@ Pman = new Roo.Document(
         
         
         // add modules to their parents..
-        var addMod = function(mod) {
+        var addMod = function(m) {
            // console.log(m.modKey);
             
-            mods.push(mod);
-            if (mod.module.modules) {
-                mod.module.modules.keySort('ASC',  cmp );
-                mod.module.modules.each(addMod);
+            mods.push(m);
+            if (m.module.modules) {
+                m.module.modules.keySort('ASC',  cmp );
+                m.module.modules.each(addMod);
             }
-            if (mod.finalize) {
-                mod.finalize.name = mod.name + " (clean up) ";
-                mods.push(mod.finalize);
+            if (m.finalize) {
+                m.finalize.name = m.name + " (clean up) ";
+                mods.push(m.finalize);
             }
             
         }
