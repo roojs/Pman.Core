@@ -37,16 +37,16 @@ Pman = new Roo.Document(
             }
             
             // remove loader..
-            if (Ext.get('loading')) {
-                Ext.get('loading').remove();
+            if (Roo.get('loading')) {
+                Roo.get('loading').remove();
             }
             
-            Ext.state.Manager.setProvider(new Ext.state.CookieProvider());
+            Roo.state.Manager.setProvider(new Roo.state.CookieProvider());
             
             // link errors...
             
             if (AppLinkError.length) {
-                Ext.MessageBox.alert("Error", AppLinkError, function() {
+                Roo.MessageBox.alert("Error", AppLinkError, function() {
                     Pman.Login.onLoad();
                 });
                 return;
@@ -97,18 +97,18 @@ Pman = new Roo.Document(
         if (this.layout) {
             return; // already loaded
         } 
-        if (Ext.get('loading')) {
-            Ext.get('loading').remove();
+        if (Roo.get('loading')) {
+            Roo.get('loading').remove();
         }
-        if (Ext.get('loading-mask')) {
-            Ext.get('loading-mask').show();
+        if (Roo.get('loading-mask')) {
+            Roo.get('loading-mask').show();
         }
         
         
        
         
         /*
-        Ext.MessageBox.show({
+        Roo.MessageBox.show({
            title: "Please wait...",
            msg: "Building Interface...",
            width:340,
@@ -118,7 +118,7 @@ Pman = new Roo.Document(
         });
         */
         //Pman.onLoadBuild();
-        //Ext.get(document.body).mask("Building Interface");
+        //Roo.get(document.body).mask("Building Interface");
         //Pman.onLoadBuild.defer(100, Pman);
        //Pman.onLoadBuild();
                     
@@ -127,7 +127,7 @@ Pman = new Roo.Document(
         
         var _this = this;
         this.stime = new Date();
-        this.layout = new Ext.BorderLayout(document.body, {
+        this.layout = new Roo.BorderLayout(document.body, {
             north: {
                 split:false,
                 initialSize: 25,
@@ -157,20 +157,20 @@ Pman = new Roo.Document(
         
         
         this.layout.beginUpdate();
-        this.layout.add('north', new Ext.ContentPanel('title', 'North'));
+        this.layout.add('north', new Roo.ContentPanel('title', 'North'));
         var au = Pman.Login.authUser;
         if (au.id > 0 && au.company_id_background_color.length) {
-            Ext.get('title').dom.style.backgroundColor = '#' + au.company_id_background_color;
-            Ext.get('headerInformation').dom.style.color = this.invertColor('#' + au.company_id_background_color);
+            Roo.get('title').dom.style.backgroundColor = '#' + au.company_id_background_color;
+            Roo.get('headerInformation').dom.style.color = this.invertColor('#' + au.company_id_background_color);
         }
         if (au.id > 0 && au.company_id_logo_id * 1 > 0) {
-            Ext.get('headerInformation-company-logo').dom.src =  baseURL + 
+            Roo.get('headerInformation-company-logo').dom.src =  baseURL + 
                 '/Images/' + au.company_id_logo_id + '/' + au.company_id_logo_id_filename;
         } else {
-            Ext.get('headerInformation-company-logo').dom.src = Roo.BLANK_IMAGE_URL;
+            Roo.get('headerInformation-company-logo').dom.src = Roo.BLANK_IMAGE_URL;
         }
         
-        Ext.get('headerInformation').dom.innerHTML = String.format(
+        Roo.get('headerInformation').dom.innerHTML = String.format(
                 "You are Logged in as <b>{0} ({1})</b>", // to {4} v{3}", // for <b>{2}</b>",
                 au.name, au.email, au.company_id_name, 
                 AppVersion , appNameShort
@@ -178,13 +178,13 @@ Pman = new Roo.Document(
         
         
         document.title = appName + ' v' + AppVersion + ' - ' + au.company_id_name;
-        Ext.QuickTips.init(); 
-        if (Ext.isGecko) {
-           Ext.useShims = true;
+        Roo.QuickTips.init(); 
+        if (Roo.isGecko) {
+           Roo.useShims = true;
         }
        
         //this.mainLayout.beginUpdate();
-        //var maskDom = Ext.get(document.body)._maskMsg.dom
+        //var maskDom = Roo.get(document.body)._maskMsg.dom
         this.layout.beginUpdate();
         
         Pman.building = true;
@@ -216,14 +216,14 @@ Pman = new Roo.Document(
         var tbh = se.createChild( 
                 { tag: 'td', style: 'width:100%;'  });
         
-        var lotb = new Ext.Toolbar(tbh);
+        var lotb = new Roo.Toolbar(tbh);
         
         if (Roo.isSafari) {
             var tbl = se.child('table', true);
             tbl.setAttribute('width', '100%');
         }
         lotb.add(
-            new Ext.Toolbar.Fill(), 
+            new Roo.Toolbar.Fill(), 
      
             {
                 text: "Change Password",
@@ -260,7 +260,7 @@ Pman = new Roo.Document(
                      
                     text: "Add New Item",
                     cls: 'x-btn-text-icon',
-                    icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                    icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
                     menu : {
                         items : this.subMenuItems
                     }     
@@ -302,9 +302,9 @@ Pman = new Roo.Document(
             
         };
         
-        Ext.MessageBox.hide();
-        if (Ext.get('loading-mask')) {
-           Ext.get('loading-mask').remove();
+        Roo.MessageBox.hide();
+        if (Roo.get('loading-mask')) {
+           Roo.get('loading-mask').remove();
         }
         
         
@@ -332,7 +332,7 @@ Pman = new Roo.Document(
                 );
                 return;
             }
-            Ext.state.Manager.set('Pman.Login.username', data.email),
+            Roo.state.Manager.set('Pman.Login.username', data.email),
             window.onbeforeunload = false;
             document.location = baseURL + '?ts=' + Math.random();
         }
@@ -379,7 +379,7 @@ Pman = new Roo.Document(
     
     
     onLoadTrackCall : function(id,cb, cls) {
-        Ext.get(document.body).mask("Loading Document details");
+        Roo.get(document.body).mask("Loading Document details");
 
         Pman.request({
             url: baseURL + '/Roo/Documents.html',  
@@ -388,7 +388,7 @@ Pman = new Roo.Document(
             },  
             method: 'GET',  
             success : function(data) {
-                Ext.get(document.body).unmask();
+                Roo.get(document.body).unmask();
              
                 
                 switch(data.in_out) {
@@ -396,14 +396,14 @@ Pman = new Roo.Document(
                     case 'OUT' : cls+='Out';break;
                     case 'WIP' : cls+='Wip';break;
                     default: 
-                        Ext.MessageBox.alert("Error", "invalid in_out");
+                        Roo.MessageBox.alert("Error", "invalid in_out");
                         return;
                 }
                 Pman.Dialog[cls].show(data, cb ? cb : Pman.refreshActivePanel);
             }, 
             
             failure: function() {
-                Ext.get(document.body).unmask();
+                Roo.get(document.body).unmask();
                 //if (cb) {
                 //    cb.call(false);
                 //}
@@ -445,7 +445,7 @@ Pman = new Roo.Document(
     {
         var res = '';
         try {
-            res = Ext.decode(response.responseText);
+            res = Roo.decode(response.responseText);
             // oops...
             if (typeof(res) != 'object') {
                 res = { success : false, errorMsg : res, errors : true };
@@ -466,7 +466,7 @@ Pman = new Roo.Document(
             
         var s = tab.grid.getSelectionModel().getSelections();
         if (!s.length)  {
-            Ext.MessageBox.alert("Error", "Select at least one Row to delete" );
+            Roo.MessageBox.alert("Error", "Select at least one Row to delete" );
             return '';
         }
         
@@ -474,7 +474,7 @@ Pman = new Roo.Document(
             r.push(s[i].data.id);
         }
     
-        Ext.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
+        Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
             function(btn) {
                 if (btn != 'yes') {
                     return;
@@ -505,7 +505,7 @@ Pman = new Roo.Document(
                     },
                     failure: function(act) {
                         tab.grid.getView().mainWrap.unmask();
-                        Ext.MessageBox.alert("Error", "Error Deleting");
+                        Roo.MessageBox.alert("Error", "Error Deleting");
                     }
                     
                 });
@@ -532,28 +532,28 @@ Pman = new Roo.Document(
     standardActionFailed :  function(f, act, cb) {
     
         if (act.failureType == 'client') {
-            Ext.MessageBox.alert("Error", "Please Correct all the errors in red", cb);
+            Roo.MessageBox.alert("Error", "Please Correct all the errors in red", cb);
             return;
         }
         if (act.failureType == 'connect') {
-            Ext.MessageBox.alert("Error", "Problem Connecting to Server - please try again.", cb);
+            Roo.MessageBox.alert("Error", "Problem Connecting to Server - please try again.", cb);
             return;
         }
         
         if (act.type == 'submit') {
             
-            Ext.MessageBox.alert("Error", typeof(act.result.errorMsg) == 'string' ?
+            Roo.MessageBox.alert("Error", typeof(act.result.errorMsg) == 'string' ?
                 String.format('{0}', act.result.errorMsg) : 
                 "Saving failed = fix errors and try again", cb);
             return;
         }
         
         // what about load failing..
-        Ext.MessageBox.alert("Error", "Error loading details",cb); 
+        Roo.MessageBox.alert("Error", "Error loading details",cb); 
     },
     /**
      * 
-     * similar to Ext.Ajax, but handles our responses better...
+     * similar to Roo.Ajax, but handles our responses better...
      * c.url
      * c.method
      * c.params
@@ -582,7 +582,7 @@ Pman = new Roo.Document(
                         }
                     }
                     Roo.MessageBox.hide();
-                    Ext.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : "Error Sending");
+                    Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : "Error Sending");
                     return;
                 }
                 
@@ -599,7 +599,7 @@ Pman = new Roo.Document(
                 }
                 Roo.MessageBox.hide();
                 Roo.MessageBox.alert("Error", "Connection timed out sending");
-                console.log(response);
+                Roo.log(response);
                 
             },
             scope: this
@@ -615,17 +615,17 @@ Pman = new Roo.Document(
             document.body.removeChild(this.csvFrame);
         }
             
-        var id = Ext.id();
+        var id = Roo.id();
         this.csvFrame = document.createElement('iframe');
         this.csvFrame.id = id;
         this.csvFrame.name = id;
         this.csvFrame.className = 'x-hidden';
-        if(Ext.isIE){
-            this.csvFrame.src = Ext.SSL_SECURE_URL;
+        if(Roo.isIE){
+            this.csvFrame.src = Roo.SSL_SECURE_URL;
         }
         document.body.appendChild(this.csvFrame);
 
-        if(Ext.isIE){
+        if(Roo.isIE){
             document.frames[id].name = id;
         }
         
@@ -655,23 +655,23 @@ Pman = new Roo.Document(
             var frame = this.csvFrame;
 
             try { 
-                var doc = Ext.isIE ? 
+                var doc = Roo.isIE ? 
                     frame.contentWindow.document : 
                     (frame.contentDocument || window.frames[this.csvFrame.id].document);
                 
                 if(doc && doc.body && doc.body.innerHTML.length){
                   //  alert(doc.body.innerHTML);
-                    Ext.MessageBox.alert("Error download",doc.body.innerHTML);
+                    Roo.MessageBox.alert("Error download",doc.body.innerHTML);
                 }
                  
             }
             catch(e) {
             }
 
-            Ext.EventManager.removeListener(frame, 'load', cb, this);
+            Roo.EventManager.removeListener(frame, 'load', cb, this);
  
         }
-        Ext.EventManager.on( this.csvFrame, 'load', cb, this);
+        Roo.EventManager.on( this.csvFrame, 'load', cb, this);
         this.csvFrame.src = c.url;
     },
     downloadRevision : function(doc, rev)
@@ -690,7 +690,7 @@ Pman = new Roo.Document(
         }
         
         
-        c.url +=  '?' + Ext.urlEncode(c.params);
+        c.url +=  '?' + Roo.urlEncode(c.params);
         this.download(c);
 
     },
@@ -850,8 +850,8 @@ Pman = new Roo.Document(
             return;
         }
         // flash it up as modal - so we store the mask!?
-        Ext.MessageBox.show({ title: 'loading' });
-        Ext.MessageBox.show({
+        Roo.MessageBox.show({ title: 'loading' });
+        Roo.MessageBox.show({
            title: "Please wait...",
            msg: "Building Interface...",
            width:450,
@@ -866,7 +866,7 @@ Pman = new Roo.Document(
             var mod = mods[n];
             
             
-            Ext.MessageBox.updateProgress(
+            Roo.MessageBox.updateProgress(
                 (n+1)/mods.length,  "Building Interface " + (n+1) + 
                     " of " + mods.length + 
                     (mod.name ? (' - ' + mod.name) : '')
