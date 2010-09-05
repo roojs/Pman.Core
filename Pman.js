@@ -564,7 +564,7 @@ Pman = new Roo.Document(
      */
     request : function(c) {
         var r= new Roo.data.Connection({
-            timeout : typeof(c.timeout) == 'undefined' ?  30000 c.timeout
+            timeout : typeof(c.timeout) == 'undefined' ?  30000 : c.timeout
         });
         r.request({
             url: c.url,
