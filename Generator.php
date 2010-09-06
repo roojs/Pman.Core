@@ -473,111 +473,13 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
         foreach($this->modtables as $m=>$ts) {
             $dirs[] = $ff->page->rootDir.'/Pman/'.$m.'/DataObjects';
         }
-        $ini = array('database__render' => array());
-        foreach($dirs as $d) {
-            if (!file_exists($d.'/pman.links.ini')) {
-                continue;
-            }
-            $in = parse_ini_file($d.'/pman.links.ini',true);
-            $r = array();
-            if (isset($in['database__render'])) {
-                $r = $in['database__render'];
-                unset($in['database__render']);
-            }
-            $ini = array_merge($ini, $in);
-            $ini['database__render'] = array_merge($ini['database__render'] , $r);
-        }
+        
          //echo '<PRE>';print_R($ini);//exit;
         
         
-        if (!isset($ini['database__render'])) {
-            die("database__render not available in links files.");
-            return;
-        }
-        $this->mapcols = array();
-        foreach($ini as $tab=>$conf) {
-            if ($tab == 'database__render') {
-                continue;
-            }
-            $this->mergeConfig($tab,$conf,$ini['database__render']);
-             
-        }
-        $this->renderMap = $ini['database__render'];
+         
     }
-    function mergeConfig($table, $conf, $render)
-    {
-        $this->mapcols[$table] = array();
-        $options = &PEAR::getStaticProperty('DB_DataObject','options');
-        if (isset($options['modtables'])) {
-            $this->modtables = $options['modtables'];
-            $this->modmap = $options['modmap'];
-            $this->modsql = $options['modsql'];
-        }
-        
-        
-        foreach($conf as $ocol=>$info) {
-            // format col => showval..
-            //list($rtc, $rshow) = explode(':', $info);
-            list($tab,$col) = explode(':', $info);
-            //print_r($render);
-            $rshow = $render[$tab];
-            
-            $this->mapcols[$table][$ocol] = array('table'=>$tab, 'col' => $col);
-            
-            // for the grid...
-            
-            // reader:
-            //- just add an extra line..
-            if (!isset($this->def['readers'][$tab][$rshow])){
-                echo "WARNING in links.ini TABLE $tab does not have renderer $rshow <BR>\n";
-                continue;
-            }
-            
-            // for the readers.. we need to merge all the columns in the left to the right...
-            
-            // table => original
-            // ocol => column in table
-            // tab => remote table
-            // col => right col linked to...
-            
-            $rdef = $this->_definitions[$tab];
-            
-            
-            foreach($rdef as $t) {
-                //copy typedata from old coll
-                $this->def['readers'][$table][$ocol.'-'. $t->name] = $this->def['readers'][$tab][$t->name];
-                $this->def['readers'][$table][$ocol.'-'. $t->name]['name'] = $ocol.'_'. $t->name;
-            }
-            
-            
-            
-            
-            
-            // remove the def column from the id one..
-            if (isset($this->def['colmodels'][$table][$ocol])) {
-                unset($this->def['colmodels'][$table][$ocol]);
-            }
-            $this->def['colmodels'][$table][$ocol.'-'. $rshow] = 
-                    $this->def['colmodels'][$tab][$rshow];
-            
-            // change the header name (merge of two..)
-            list($colname,) = explode('_',$ocol,2);
-            
-            $this->def['colmodels'][$table][$ocol.'-'. $rshow]['dataIndex'] = $ocol.'_'. $rshow;
-            $this->def['colmodels'][$table][$ocol.'-'. $rshow]['id'] = $ocol.'-'. $rshow;
-            
-            $this->def['colmodels'][$table][$ocol.'-'. $rshow]['header'] = ucwords($colname . ' ' . 
-                $this->def['colmodels'][$tab][$rshow]['header']);
-            
-            // last of all add replace the old $col, with 
-            $p = array_search($ocol, empty($this->def['order'][$table]) ? array() : $this->def['order'][$table]);
-            $this->def['order'][$table][$p] = $ocol.'-'. $rshow;
-            $this->def['order'][$table][] = $ocol;
-             
-            // --- now for forms!!!!
-            
-             
-        }
+     
         //var_dump($table);
         //print_r( $this->def['readers'][$table]);
        // print_r( $this->def['colmodels'][$table]);
