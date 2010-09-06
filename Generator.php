@@ -485,8 +485,7 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
        // print_r( $this->def['colmodels'][$table]);
         //print_r($this->def['readers'][$table]); exit;
         
-    }
-        
+      
        
     function writeFileEx($n, $f, $str) 
     {
