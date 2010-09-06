@@ -3,7 +3,9 @@
  
 /**
  * 
- * Generate DataObjects... and readers in the right places..
+ * Generate DataObjects...
+ * 
+ * This does not generate ini files any more - as that is done on the fly by the framework.
  * 
  * note - we write to a temporary directory first...
  * 
@@ -245,6 +247,10 @@ class Pman_Core_Generator extends DB_DataObject_Generator
             
             foreach($fl as $f) {
                 $fn = $ff->page->rootDir. "/Pman/$m/DataObjects/$f";
+                if (preg_match('/migrate/i', $f)) { // skip migration scripts at present..
+                    continue;
+                }
+                
                 $cmd = $cat . ' ' . escapeshellarg($fn) . " | $mysql_cmd -f ";
                 echo $cmd. ($cli ? "\n" : "<BR>\n");
                 if ($cli) {
@@ -371,29 +377,7 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
             
             $inis[$mod] .= $this->_newConfig;
         }
-        
-        //echo '<PRE>';print_r($this->_inis); exit;
-        $options = PEAR::getStaticProperty('DB_DataObject','options');
-        
-        $rd = $options['rootDir'];
-        foreach($inis as $m=>$ini) {
-            if (!empty($mods) && !in_array($m, $mods)) {
-                continue;
-            }
-            
-            if (!file_exists($rd.'/'.$m)) {
-                mkdir($rd.'/'.$m, 0775, true);
-            }
-            $fname = '/pman.ini';
-            if (isset($options['database_'. $m])) {
-                $url = parse_url($options['database_'.$m]);
-                $fname = '/'. basename($url['path']).'.ini';
-            }
-
-            
-            file_put_contents($rd.'/'.$m.$fname, $ini);
-        }
-         
+        return; // we do not generate in ifiles any more..
          
     }
     
@@ -440,7 +424,9 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
             $out = preg_replace('/(\n|\r\n)\s*function staticGet[^\n]+(\n|\r\n)/s', '', $out);
             $out = preg_replace('#/\* Static get \*/#s', '', $out);
               
-
+            if (!file_exists(dirname($outfilename)) {
+                mkdir(dirname($outfilename), 0755, true);
+            }
            // $this->debug( "writing $this->classname\n");
             //$tmpname = tempnam(session_save_path(),'DataObject_');
             file_put_contents($outfilename, $out);
