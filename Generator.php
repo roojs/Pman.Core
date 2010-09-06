@@ -424,7 +424,7 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
             $out = preg_replace('/(\n|\r\n)\s*function staticGet[^\n]+(\n|\r\n)/s', '', $out);
             $out = preg_replace('#/\* Static get \*/#s', '', $out);
               
-            if (!file_exists(dirname($outfilename)) {
+            if (!file_exists(dirname($outfilename))) {
                 mkdir(dirname($outfilename), 0755, true);
             }
            // $this->debug( "writing $this->classname\n");
