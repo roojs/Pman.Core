@@ -34,11 +34,11 @@ Pman.Download = function(cfg)
     
     this.createCsvFrame();
     
-    var requested = false;
+    var requested = 0;
     function cb()
     {
-        
-        if (!requested) {
+        requested++; // second request is real one..
+        if (requested < 2) {
             return;
         }
         var r = { responseText : "", responseXML : null };
@@ -100,7 +100,7 @@ Pman.Download = function(cfg)
     }
  
     
-     this.form.submit();
+    this.form.submit();
     
     requested = true;
 
