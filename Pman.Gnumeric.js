@@ -562,7 +562,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             method: 'POST',
             params : {
                xml : ser.serializeToString(this.doc),
-               format : 'xml'
+               format : 'xml',
                debug : 0
                
             },
