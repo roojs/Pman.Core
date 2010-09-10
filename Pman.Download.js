@@ -100,10 +100,10 @@ Pman.Download = function(cfg)
     }
  
     
-    requested = true;
      this.form.submit();
     
-    
+    requested = true;
+
  
 }
 
