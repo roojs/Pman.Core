@@ -432,6 +432,18 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         Roo.util.CSS.createStyleSheet(css, sid);
     },
 
+    /* ---------------------------------------  AFTER LOAD METHODS... ----------------------- */
+    /**
+     * set: 
+     * Set the value of a cell..
+     * @param {String} cell name of cell, eg. C10
+     * @param {Value} value to put in cell..
+     * 
+     */
+    
+    
+    
+    
     set : function(cell, v) {
         
         var cs= this.toRC(cell);
