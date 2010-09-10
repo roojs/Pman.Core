@@ -52,7 +52,18 @@ Pman.Gnumeric = function (cfg)
     
     
     
-    Roo.apply(this,cfg);
+    
+    
+    this.addEvents({
+        /**
+	     * @event load
+	     * Fires when source document has been loaded
+	     * @param {Pman.Gnumerci} this
+	     */
+	    "load" : true
+    }); 
+    
+    Roo.util.Observable.call(this,cfg);
     
     this.defaultCell = {
         valueType : 0,
@@ -67,6 +78,7 @@ Pman.Gnumeric = function (cfg)
     this.load();
     
     this.applyData(cfg.data);
+    
     
     
 }
