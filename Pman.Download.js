@@ -87,12 +87,12 @@ Pman.Download = function(cfg)
     });
  
     for(var i in cfg.params) {
-        this.form.createChild( {
+        var el = this.form.createChild( {
             tag : 'input',
             type: 'hidden',
             name : i,
-            value : cfg.params[i]
         });
+        el.dom.value = cfg.params[i];
         
     }
     return;
