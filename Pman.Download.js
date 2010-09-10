@@ -25,7 +25,6 @@ var t = new Pman.Download({
 Pman.Download = function(cfg)
 {
     Roo.log(cfg);
-    return;
     
     if (cfg.newWindow) {
             // as ie seems buggy...
@@ -75,8 +74,11 @@ Pman.Download = function(cfg)
         this.csvFrame.src = cfg.url;
         return;
     }
+    
+     Roo.log(cfg);
+    
     var b = Roo.get(document.body);
-    this.form = b.createChild(document.body, {
+    this.form = b.createChild({
         tag: 'form',
         method : 'POST',
         action : cfg.url,
