@@ -133,6 +133,18 @@ Roo.apply(Pman.Gnumeric.prototype, {
         var ar = s.split(':');
         return [ this.toRC(ar[0]) , this.toRC(ar[1])]
     },
+    
+    
+    
+    load : function()
+    {
+        this.parseDoc();
+        this.parseStyles();
+        this.overlayStyles();
+
+    }
+    
+    
     /**
      * parseDoc:
      * convert XML document into cells and other data..
@@ -230,26 +242,33 @@ Roo.apply(Pman.Gnumeric.prototype, {
         
         this.parseStyles();
         
-        // apply styles.
+     
+        
+    },
+    
+    overlayStyles : function ()
+    {
+           // apply styles.
+        var _t = this;
         Roo.each(this.styles, function(s) {
        
             for (var r = s.r; r < s.r1;r++) {
-                if (typeof(grid[r]) == 'undefined') {
+                if (typeof(_t.grid[r]) == 'undefined') {
                    continue;
                 }
                 for (var c = s.c; c < s.c1;c++) {
-                   if (c > cmax) continue;
+                   if (c > _t.cmax) continue;
     
-                    if (typeof(grid[r][c]) == 'undefined') grid[r][c] = Roo.apply({}, defaultCell);
-                    var g=grid[r][c];
+                    if (typeof(_t.grid[r][c]) == 'undefined') _t.grid[r][c] = Roo.apply({}, _t.defaultCell);
+                    var g=_t.grid[r][c];
                     if (typeof(g.cls) =='undefined') g.cls = [];
                     if (g.cls.indexOf(s.name)  > -1) continue;
                     g.cls.push(s.name);
                 }
             }
         });
-        
     },
+    
 
 
     set : function(cell, v) {
