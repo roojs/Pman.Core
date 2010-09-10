@@ -278,7 +278,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         ci = this.sheet.getElementsByTagName('RowInfo');
         
         this.rowInfo = {};
-         Roo.each(ci, function(c) {
+        Roo.each(ci, function(c) {
             var count = c.getAttribute('Count') || 1;
             var s =  c.getAttribute('No')*1;
             for(var i =0; i < count; i++) {
@@ -455,6 +455,13 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         }
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
+    
+    applyData : function(data)
+    {
+        
+    }
+    
+    
      /**
      * toHTML: 
      * Convert spreadsheet into a HTML table.
