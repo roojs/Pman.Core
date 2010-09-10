@@ -24,9 +24,9 @@ var t = new Pman.Download({
 */
 Pman.Download = function(cfg)
 {
-    if (c.newWindow) {
+    if (cfg.newWindow) {
             // as ie seems buggy...
-        window.open( c.url + '?' + Roo.urlEncode(c.params || {}), '_blank');
+        window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
         return ; 
         
     }
@@ -66,7 +66,7 @@ Pman.Download = function(cfg)
     cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
-        this.csvFrame.src = c.url;
+        this.csvFrame.src = cfg.url;
         return;
     }
     
