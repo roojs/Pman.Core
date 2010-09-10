@@ -104,7 +104,6 @@ Roo.apply(Pman.Download.prototype, {
     // private
     form : false,
     
-    
     // private..
     createCsvFrame: function()
     {
