@@ -606,38 +606,9 @@ Pman = new Roo.Document(
             
         });
     },
-    csvFrame : false,
     
-    createCsvFrame: function()
-    {
-        
-        if (this.csvFrame) {
-            document.body.removeChild(this.csvFrame);
-        }
-            
-        var id = Roo.id();
-        this.csvFrame = document.createElement('iframe');
-        this.csvFrame.id = id;
-        this.csvFrame.name = id;
-        this.csvFrame.className = 'x-hidden';
-        if(Roo.isIE){
-            this.csvFrame.src = Roo.SSL_SECURE_URL;
-        }
-        document.body.appendChild(this.csvFrame);
-
-        if(Roo.isIE){
-            document.frames[id].name = id;
-        }
-        
-    },
-    /**
-     * download({
-          url: 
-         })
-     * 
-     * 
-     */
     
+    // depreciated - use Pman.Download()
     
     download : function(c) {
         
