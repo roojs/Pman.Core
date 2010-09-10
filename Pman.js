@@ -636,6 +636,8 @@ Pman = new Roo.Document(
         this.download(c);
 
     },
+    
+    
     prettyDate : function (value) 
     {
         if (typeof(value) == 'string') {
