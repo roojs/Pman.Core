@@ -124,6 +124,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @type {Object} rmax - maximum number of rows
      */
     rmax : false,
+       /**
+     * @type {String} stylesheetID id of stylesheet created to render spreadsheat
+     */
+    stylesheetID : false,
     /**
      * load:
      * run the connection, parse document and fire load event..
@@ -146,6 +150,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.cmax = false;
         this.rmax = false;
         
+        if (this.stylesheetID) {
+            
+            Roo.util.CSS.removeStyleSheet(this.stylesheetID);
+            this.stylesheetID = false;
+            
+        }
         
         _t = this;
         var c = new Roo.data.Connection();
@@ -446,7 +456,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         this.styles = styles;
         
-        
+        this.stylesheetID = sid;
         Roo.util.CSS.createStyleSheet(css, sid);
     },
 
