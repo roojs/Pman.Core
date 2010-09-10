@@ -484,8 +484,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var x = new Roo.Template({ html: this.grid[r][c].value });
                 try {
+                    var res = x.applyTemplate(data);
+                    Roo.log("set " + r  + "," + c + ":"+res)
                     this.set({ r: r, c: c}, x.applyTemplate(data));
                 } catch (e) {
+                    Roo.log(e.toString());
+                    Roo.log(e);
                     // continue?
                 }
                 
