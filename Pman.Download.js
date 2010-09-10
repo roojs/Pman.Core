@@ -49,7 +49,11 @@ Pman.Download = function(cfg)
         }
         catch(e) {
         }
-
+        if (this.form)
+        {
+            this.form.remove();
+            this.form= false;
+        }
         Roo.EventManager.removeListener(frame, 'load', cb, this);
         if (cfg.success) {
             cfg.success();
@@ -68,9 +72,21 @@ Pman.Download = function(cfg)
     this.form = Roo.DomHelper.append(document.body, {
         tag: 'form',
         method : 'POST',
-        action : cfg.url
+        action : cfg.url,
+        target : this.csvFrame.id
         
     }, true);
+    
+    for(var i in cfg.params) {
+        this.form.appendChild( {
+            tag : 'input',
+            type: 'hidden',
+            name : i,
+            value : cfg.params[i]
+        });
+        
+    }
+    this.form.submit();
     
     
  
