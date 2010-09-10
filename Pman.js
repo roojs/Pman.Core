@@ -654,7 +654,7 @@ Pman = new Roo.Document(
                     
     },
     exportCSV : function(c) {
-        //this.createCsvFrame(); 
+        
         for(var i=0;i < c.csvFormat.length;i++) {
             c.params['csvCols['+i+']'] = c.csvFormat[i][0];
             c.params['csvTitles['+i+']'] = c.csvFormat[i][1];
