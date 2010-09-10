@@ -122,7 +122,13 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * @prop {Object} rmax - maximum number of rows
      */
     rmax : false,
-    
+    /**
+     * load:
+     * run the connection, parse document and fire load event..
+     * 
+     * @arg {String} k cell name
+     * @return {Object}  as { r: {Number} , c: {Number}  }
+     */
     
     load : function()
     {
@@ -135,11 +141,15 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
             url: this.url,
             method:  'GET',
             success : function(resp, opts) {
-                _t.xml = resp.responseXML;
+                _t.doc = resp.responseXML;
                 _t.parseDoc();
                 _t.parseStyles();
                 _t.overlayStyles();
                 _t.fireEvent('load', _t);
+            },
+            failure : function()
+            {
+                Roo.MessageBox.alert("Error", "Failed to Load Template for Spreadsheet");
             }
         });
         
