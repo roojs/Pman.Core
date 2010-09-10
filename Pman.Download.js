@@ -32,6 +32,8 @@ Pman.Download = function(cfg)
     }
     
     this.createCsvFrame();
+    
+    
     function cb(){
         var r = { responseText : "", responseXML : null };
 
