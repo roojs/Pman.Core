@@ -34,9 +34,13 @@ Pman.Download = function(cfg)
     
     this.createCsvFrame();
     
-    
+    var requested = false;
     function cb()
     {
+        
+        if (!requested) {
+            return;
+        }
         var r = { responseText : "", responseXML : null };
         
         var frame = this.csvFrame;
@@ -67,12 +71,11 @@ Pman.Download = function(cfg)
 
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
-    return;
-    cfg.method = cfg.method || 'GET';
+     cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
-        Roo.log("doing get??");
         
+        requested = true;
         this.csvFrame.src = cfg.url;
         return;
     }
@@ -98,7 +101,7 @@ Pman.Download = function(cfg)
     }
  
     
-    
+    requested = true;
      this.form.submit();
     
     
