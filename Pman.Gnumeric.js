@@ -461,13 +461,13 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         for (var r = 0; r < this.rmax;r++) {
             if (typeof(_this.grid[r]) == 'undefined') continue;
             for (var c = 0; c < this.cmax;c++) {  
-                if (typeof(_this.grid[r][c]) == 'undefined') continue;
-                if (
-                        !_this.grid[r][c].value.length 
-                        || !_this.grid[r][c].value.match(/\{/)
-                    ) {
-                        continue;
-                    }
+                if (typeof(_this.grid[r][c]) == 'undefined') {
+                    continue;
+                }
+                if (!_this.grid[r][c].value.length 
+                        || !_this.grid[r][c].value.match(/\{/)) {
+                    continue;
+                }
                 
                 var x = new Roo.Template({ html: _this.grid[r][c].value });
                 try {
