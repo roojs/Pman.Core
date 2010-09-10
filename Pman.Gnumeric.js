@@ -458,7 +458,15 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
     
     applyData : function(data)
     {
-        
+        for (var r = 0; r < this.rmax;r++) {
+            if (typeof(_this.grid[r]) == 'undefined') continue;
+            for (var c = 0; c < this.cmax;c++) {  
+                if (typeof(_this.grid[r][c]) == 'undefined') continue;
+                if (!_this.grid[r][c].value.match(/\{/)) continue;
+                
+            }
+        }
+            
     }
     
     
