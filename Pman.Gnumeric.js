@@ -127,6 +127,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     /**
      * load:
      * run the connection, parse document and fire load event..
+     * can be run multiple times with new data..
      * 
     */
     
