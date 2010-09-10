@@ -624,14 +624,14 @@ Pman = new Roo.Document(
         }); 
                     
     },
+    
+    
     exportCSV : function(c) {
         
         for(var i=0;i < c.csvFormat.length;i++) {
             c.params['csvCols['+i+']'] = c.csvFormat[i][0];
             c.params['csvTitles['+i+']'] = c.csvFormat[i][1];
         }
-        
-        
         c.url +=  '?' + Roo.urlEncode(c.params);
         this.download(c);
 
