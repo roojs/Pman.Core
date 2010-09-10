@@ -18,6 +18,7 @@ var t = new Pman.Download({
 * @constructor
 * @param {Object} cfg   Configuration object.
 * @cfg {String} url     Location to download from.
+* @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
 * @cfg {Boolean} newWindow (optional) download to new window
      
 */
