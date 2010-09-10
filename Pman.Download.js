@@ -25,8 +25,8 @@ Pman.Download = function(cfg)
 {
     if (c.newWindow) {
             // as ie seems buggy...
-        window.open( c.url + '?' + Roo.urlEncode(c.params || {}), '_blank');
-        return;
+       return window.open( c.url + '?' + Roo.urlEncode(c.params || {}), '_blank');
+         
         
     }
     
@@ -58,6 +58,7 @@ Pman.Download = function(cfg)
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     this.csvFrame.src = c.url;
+    return this.csvFrame;
 }
 
 Roo.apply(Pman.Download.prototype, {
