@@ -445,7 +445,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
     
     set : function(cell, v) {
         
-        var cs= this.toRC(cell);
+        var cs= typeof(cell == 'string') ? this.toRC(cell) : cell;
         Roo.log(    this.grid[cs.r][cs.c]);
         this.grid[cs.r][cs.c].value=  v;
         // need to generate clell if it doe
@@ -463,6 +463,13 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
             for (var c = 0; c < this.cmax;c++) {  
                 if (typeof(_this.grid[r][c]) == 'undefined') continue;
                 if (!_this.grid[r][c].value.match(/\{/)) continue;
+                
+                var x = new Roo.Template({ html: _this.grid[r][c].value });
+                try {
+                    this.set({ r: r, c: c}, x.applyTemplate(data));
+                } catch (e) {
+                    // continue?
+                   }
                 
             }
         }
