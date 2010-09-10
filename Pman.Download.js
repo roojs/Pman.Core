@@ -73,7 +73,7 @@ Pman.Download = function(cfg)
         return;
     }
     var b = Roo.get(document.body);
-    this.form = b.appendChild(document.body, {
+    this.form = b.createChild(document.body, {
         tag: 'form',
         method : 'POST',
         action : cfg.url,
@@ -83,7 +83,7 @@ Pman.Download = function(cfg)
     Roo.log(this.form);
     
     for(var i in cfg.params) {
-        this.form.appendChild( {
+        this.form.createChild( {
             tag : 'input',
             type: 'hidden',
             name : i,
