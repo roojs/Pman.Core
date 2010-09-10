@@ -99,7 +99,7 @@ Pman.Download = function(cfg)
     }
  
     
-    this.form.submit();
+    this.form.dom.submit();
      
  
 }
