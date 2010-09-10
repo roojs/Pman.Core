@@ -80,7 +80,7 @@ Pman.Download = function(cfg)
         target : this.csvFrame.id
         
     }, true);
-    console.log(this.form);
+    Roo.log(this.form);
     
     for(var i in cfg.params) {
         this.form.appendChild( {
