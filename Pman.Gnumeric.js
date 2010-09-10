@@ -206,7 +206,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rmax = 1;
         this.cmax = 1;
         
-        this.sheet = _.doc.getElementsByTagName('Sheet')[0];
+        this.sheet = _t.doc.getElementsByTagName('Sheet')[0];
         var cells = this.sheet.getElementsByTagName('Cell');
 
         
