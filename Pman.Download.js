@@ -68,12 +68,14 @@ Pman.Download = function(cfg)
     //Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     
     cfg.method = cfg.method || 'GET';
- 
+    
     if (cfg.method == 'GET') {
+        Roo.log("doing get??");
+        
         this.csvFrame.src = cfg.url;
         return;
     }
-    
+    Roo.log("creating form?");
     
     var b = Roo.get(document.body);
     this.form = b.createChild({
