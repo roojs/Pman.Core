@@ -15,7 +15,9 @@
  * -> send for conversion to XLS (via ssconvert)
  * 
  * usage:
- * x = new Pman.Gnumeric( {
+ * 
+   
+   x = new Pman.Gnumeric( {
       url: rootURL + '/xxx/yyy/templates/reports/myreport.xml',
       data: { ..... }
     });
@@ -23,6 +25,8 @@
    x.set('A3', 'test');
    mypanel.update(x.toHTML());
    x.download()
+ 
+ *  
  */
 
 Pman.Gnumeric = function (cfg)
