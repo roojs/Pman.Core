@@ -72,14 +72,14 @@ Pman.Download = function(cfg)
         this.csvFrame.src = cfg.url;
         return;
     }
-    
-    this.form = Roo.DomHelper.append(document.body, {
+    var b = Roo.get(document.body);
+    this.form = b.appendChild(document.body, {
         tag: 'form',
         method : 'POST',
         action : cfg.url,
         target : this.csvFrame.id
         
-    }, true);
+    });
     Roo.log(this.form);
     
     for(var i in cfg.params) {
