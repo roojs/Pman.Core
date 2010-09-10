@@ -79,10 +79,30 @@ Roo.apply(Pman.Gnumeric.prototype, {
     doc : false,
     
     /**
-     * @prop {XmlDocument} doc the gnumeric xml document
+     * @prop {XmlNode} sheet the 'Sheet' element 
      */
     sheet : false,
+    /**
+     * @prop {Object} grid the map[row][col] = cellData 
+     */
+    grid : false,
+    /**
+     * @prop {Object} colInfo - list of column sizes
+     */
+    colInfo : false,
+    /**
+     * @prop {Object} rowInfo - list of row sizes
+     */
+    rowInfo : false,
     
+    /**
+     * @prop {Number} cmax - maximum number of columns
+     */
+    cmax: false,
+    /**
+     * @prop {Object} rmax - maximum number of rows
+     */
+    rmax : false,
     /**
      * toRC:
      * convert 'A1' style position to row/column reference
@@ -120,84 +140,90 @@ Roo.apply(Pman.Gnumeric.prototype, {
      */
     parseDoc : function() 
     {
-      
+        var _t = this;
+        this.grid = {}
+        this.rmax = 1;
+        this.cmax = 1;
         
-        var sheet = _this.doc.getElementsByTagName('Sheet')[0];
-        var cells = sheet.getElementsByTagName('Cell');
-        var grid ={};
-        var rmax = 1;
-        var cmax = 1;
+        this.sheet = _this.doc.getElementsByTagName('Sheet')[0];
+        var cells = this.sheet.getElementsByTagName('Cell');
+
+        
         
         Roo.each(cells, function(c) {
            // Roo.log(c);
             var row = c.getAttribute('Row') * 1;
             var col = c.getAttribute('Col') * 1;
-            cmax = Math.max(col+1, cmax);
-            rmax = Math.max(row+1, rmax);
+            _t.cmax = Math.max(col+1, _t.cmax);
+            _t.rmax = Math.max(row+1, _t.rmax);
             var vt = c.getAttribute('ValueType');
             var vf = c.getAttribute('ValueFormat');
             var val = c.textContent;
-            if (typeof(grid[row]) == 'undefined') {
-                grid[row] ={};
+            
+            if (typeof(_t.grid[row]) == 'undefined') {
+                _t.grid[row] ={};
             }
-            grid[row][col] = Roo.applyIf({
+            _t.grid[row][col] = Roo.applyIf({
                 valueType : vt,
                 valueFormat : vf,
                 value : val,
                 dom: c
-            }, defaultCell);
+            }, _t.defaultCell);
         });
        
-        for (var r = 0; r < rmax;r++) {
-            if (typeof(grid[r]) == 'undefined') {
-              grid[r] ={};
+        for (var r = 0; r < _t.rmax;r++) {
+            if (typeof(this.grid[r]) == 'undefined') {
+              this.grid[r] ={};
             }
             for (var c = 0; c < cmax;c++) {
-                if (typeof(grid[r][c]) == 'undefined') {
+                if (typeof(this.grid[r][c]) == 'undefined') {
                     continue;
                 }
                 //this.print( "[" + r + "]["+c+"]=" + grid[r][c].value +'<br/>');
             }
         }
         
-         var merge = sheet.getElementsByTagName('Merge');
-         var t= this;
-         Roo.each(merge, function(c) {
-            var rc = t.rangeToRC(c.textContent);
+        var merge = this.sheet.getElementsByTagName('Merge');
+
+        Roo.each(merge, function(c) {
+            var rc = _t.rangeToRC(c.textContent);
             //Roo.log(JSON.stringify(rc))
-            if (typeof(grid[rc[0].r][rc[0].c]) == 'undefined') {
-                grid[rc[0].r][rc[0].c] =  Roo.apply({}, defaultCell);
+            if (typeof(_t.grid[rc[0].r][rc[0].c]) == 'undefined') {
+                _t.grid[rc[0].r][rc[0].c] =  Roo.apply({}, _t.defaultCell);
             }
                 
-            grid[rc[0].r][rc[0].c].colspan = (rc[1].c - rc[0].c) + 1;
-            grid[rc[0].r][rc[0].c].rowspan = (rc[1].r - rc[0].r) + 1;
+            _t.grid[rc[0].r][rc[0].c].colspan = (rc[1].c - rc[0].c) + 1;
+            _t.grid[rc[0].r][rc[0].c].rowspan = (rc[1].r - rc[0].r) + 1;
             for(var r = (rc[0].r); r < (rc[1].r+1); r++) {
                for(var c = rc[0].c; c < (rc[1].c+1); c++) {
-    //            Roo.log('adding alias : ' + r+','+c);
-                   grid[r][c] = grid[rc[0].r][rc[0].c];
+                    //Roo.log('adding alias : ' + r+','+c);
+                   _t.grid[r][c] = _t.grid[rc[0].r][rc[0].c];
                }
            }
             
             
         });
         // read colinfo..
-         var ci = sheet.getElementsByTagName('ColInfo');
-         var colInfo = {};
-         Roo.each(ci, function(c) {
-            var count =c.getAttribute('Count') || 1;
+        var ci = this.sheet.getElementsByTagName('ColInfo');
+        this.colInfo = {};
+        
+        Roo.each(ci, function(c) {
+            var count = c.getAttribute('Count') || 1;
             var s =  c.getAttribute('No')*1;
             for(var i =0; i < count; i++) {
-                colInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
+                _t.colInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
             }
         });
-         ci = sheet.getElementsByTagName('RowInfo');
-    
-         var rowInfo = {};
+        
+        
+        ci = this.sheet.getElementsByTagName('RowInfo');
+        
+        this.rowInfo = {};
          Roo.each(ci, function(c) {
-            var count =c.getAttribute('Count') || 1;
+            var count = c.getAttribute('Count') || 1;
             var s =  c.getAttribute('No')*1;
             for(var i =0; i < count; i++) {
-                rowInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
+                _t.rowInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
             }
         });
     
@@ -222,11 +248,6 @@ Roo.apply(Pman.Gnumeric.prototype, {
                 }
             }
         });
-        this.grid=  grid;
-        this.cmax = cmax;
-        this.rmax = rmax;
-        this.colInfo = colInfo;
-        this.rowInfo = rowInfo;
         
     },
 
@@ -245,8 +266,8 @@ Roo.apply(Pman.Gnumeric.prototype, {
     },
            
             parseStyles : function() {
-                var sheet = this.xml.getElementsByTagName('Sheet')[0];
-                var srs = sheet.getElementsByTagName('StyleRegion');
+                
+                var srs = this.sheet.getElementsByTagName('StyleRegion');
                 var _t  = this;
                 var ent = {};
                 
