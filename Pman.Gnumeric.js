@@ -73,8 +73,7 @@ Pman.Gnumeric = function (cfg)
         rowspan: 1
           
     };
-    
-    
+     
     this.load();
     
     this.applyData(cfg.data);
