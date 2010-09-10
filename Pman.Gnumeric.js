@@ -132,8 +132,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     load : function(url)
     {
-        url = url || this.url;
-        if (!url) {
+        this.url = url || this.url;
+        if (!this.url) {
             return;
         }
         // reset stufff..
@@ -149,7 +149,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         _t = this;
         var c = new Roo.data.Connection();
         c.request({
-            url: url,
+            url: this.url,
             method:  'GET',
             success : function(resp, opts) {
                 _t.response = resp;
@@ -170,6 +170,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
     },
     
+    
+     
     
     
     /**
