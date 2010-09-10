@@ -455,7 +455,15 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         }
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
-    
+    /**
+     * applyData: 
+     * Set the value of a cell..
+     * @param {String} cell name of cell, eg. C10
+     * @param {Value} value to put in cell..
+     * 
+     * Cells should exist at present, we do not make them up...
+     */
+     
     applyData : function(data)
     {
         for (var r = 0; r < this.rmax;r++) {
