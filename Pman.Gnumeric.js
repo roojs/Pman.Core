@@ -83,7 +83,7 @@ Pman.Gnumeric = function (cfg)
     
     
 }
-Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
+Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     /**
      * @cfg {String} url the source of the Gnumeric document.
