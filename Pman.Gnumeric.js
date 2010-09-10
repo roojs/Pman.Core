@@ -1,22 +1,20 @@
 //<script type="text/javascript">
-
 /**
- * Pman Gnumeric.
- * 
- * -> load up a remote xml file of a gnumeric document.
- * 
- * -> convert into a usable data structure
- * 
- * -> ?? apply templated values ??
- * -> allow modification of fields
- * 
- * -> render to screen.
- * 
- * -> send for conversion to XLS (via ssconvert)
- * 
- * usage:
- * 
-   
+* @class Pman Gnumeric.
+*-> load up a remote xml file of a gnumeric document.
+* 
+* -> convert into a usable data structure
+* 
+* -> ?? apply templated values ??
+* -> allow modification of fields
+* 
+* -> render to screen.
+* 
+* -> send for conversion to XLS (via ssconvert)
+* 
+* Usage:
+<pre><code>
+
     new Pman.Gnumeric( {
       url: rootURL + '/xxx/yyy/templates/reports/myreport.xml',
       data: { ..... },
@@ -36,15 +34,13 @@
       }
     });
     
-   
- 
- 
- * 
- * FIXME: - sheet - we currently use first sheet only..
- * 
- * 
- */
 
+</code></pre>
+* 
+* @constructor
+* @param {Object} cfg   Configuration object.
+*/
+ 
 
 
 Pman.Gnumeric = function (cfg)
@@ -94,33 +90,33 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     data : false,
      
     /**
-     * @prop {XmlDocument} doc the gnumeric xml document
+     * @type {XmlDocument} doc the gnumeric xml document
      */
     doc : false,
     
     /**
-     * @prop {XmlNode} sheet the 'Sheet' element 
+     * @type {XmlNode} sheet the 'Sheet' element 
      */
     sheet : false,
     /**
-     * @prop {Object} grid the map[row][col] = cellData 
+     * @type {Object} grid the map[row][col] = cellData 
      */
     grid : false,
     /**
-     * @prop {Object} colInfo - list of column sizes
+     * @type {Object} colInfo - list of column sizes
      */
     colInfo : false,
     /**
-     * @prop {Object} rowInfo - list of row sizes
+     * @type {Object} rowInfo - list of row sizes
      */
     rowInfo : false,
     
     /**
-     * @prop {Number} cmax - maximum number of columns
+     * @type {Number} cmax - maximum number of columns
      */
     cmax: false,
     /**
-     * @prop {Object} rmax - maximum number of rows
+     * @type {Object} rmax - maximum number of rows
      */
     rmax : false,
     /**
