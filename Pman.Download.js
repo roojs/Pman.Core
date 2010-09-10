@@ -69,6 +69,8 @@ Pman.Download = function(cfg)
     
     cfg.method = cfg.method || 'GET';
     
+    Roo.log(cfg);
+    
     if (cfg.method == 'GET') {
         this.csvFrame.src = cfg.url;
         return;
