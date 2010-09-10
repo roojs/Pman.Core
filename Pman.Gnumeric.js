@@ -385,6 +385,8 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         var css = {};
         var styles = [];
         var sid= Roo.id();
+        
+        
         Roo.each(srs, function(sr,n)
         {
             ent = {
