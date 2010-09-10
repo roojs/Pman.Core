@@ -128,15 +128,16 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * 
     */
     
-    load : function()
+    load : function(url)
     {
-        if (!this.url) {
+        url = url || this.url;
+        if (!url) {
             return;
         }
         _t = this;
         var c = new Roo.data.Connection();
         c.request({
-            url: this.url,
+            url: url,
             method:  'GET',
             success : function(resp, opts) {
                 _t.doc = resp.responseXML;
@@ -286,12 +287,15 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         });
     
         
-        this.parseStyles();
         
      
         
     },
-    
+     /**
+     * overlayStyles:
+     * put the style info onto the cell data.
+     * 
+     */
     overlayStyles : function ()
     {
            // apply styles.
@@ -314,8 +318,117 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
             }
         });
     },
+     /**
+     * parseStyles: 
+     *  read the style information
+     * generates a stylesheet for the current file
+     * this should be disposed of really.....
+     * 
+     */
+    parseStyles : function() {
+                
+        var srs = this.sheet.getElementsByTagName('StyleRegion');
+        var _t  = this;
+        var ent = {};
+        
+        var map =  {
+            HAlign : function(ent,v) { 
+                ent['text-align'] = { '1' : 'left', '8': 'center', '4' : 'right'}[v] || 'left';
+            },
+            VAlign : function(ent,v) { 
+                ent['vertical-align'] = { '1' : 'top', '4': 'middel', '8' : 'bottom'}[v]  || 'top'
+            },
+            Fore : function(ent,v) { 
+                var col=[];
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['color'] = 'rgb(' + col.join(',') + ')';
+            },
+            Back : function(ent,v) { 
+                var col=[];
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['background-color'] = 'rgb(' + col.join(',') + ')';
+            },
+            FontUnit : function(ent,v) { 
+                ent['font-size'] = v + 'px';
+            },
+            FontBold : function(ent,v) { 
+                if (v*1 < 1) return;
+                ent['font-weight'] = 'bold';
+            },
+            FontItalic : function(ent,v) { 
+                if (v*0 < 1) return;
+                //ent['font-weight'] = 'bold';
+            },
+            FontName : function(ent,v) { 
+                ent['font-family'] = v;
+            },
+            BorderStyle : function(ent,v) { 
+                var vv  = v.split('-');
+                ent['border-'+vv[0]+'-style'] = 'solid';
+                ent['border-'+vv[0]+'-width'] = vv[1]+'px';
+            },
+            BorderColor : function(ent,v) { 
+                var vv  = v.split('-');
+                var col=[];
+                Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
+            }
+        }
+        function add(e, k, v) {
+            //Roo.log(k,v);
+            e.gstyle[k] = v;
+            if (typeof(map[k]) == 'undefined') {
+                return;
+            }
+            map[k](e.style,v);    
+        }
+        var css = {};
+        var styles = [];
+        var sid= Roo.id();
+        Roo.each(srs, function(sr,n)
+        {
+            ent = {
+                c : sr.getAttribute('startCol') *1,
+                r : sr.getAttribute('startRow')*1,
+                c1 : (sr.getAttribute('endCol')*1) +1,
+                r1 : (sr.getAttribute('endRow')*1) +1,
+                style : {},
+                gstyle : {},
+                name : sid +'-gstyle-' + n
+                
+            };
     
-
+            Roo.each(sr.getElementsByTagName('Style')[0].attributes, function(e) { 
+                add(ent, e.name, e.value);
+            });
+            if (sr.getElementsByTagName('Font').length) {
+                Roo.each(sr.getElementsByTagName('Font')[0].attributes, function(e) { 
+                     add(ent, 'Font'+e.name, e.value);
+    
+                });
+                add(ent, 'FontName', sr.getElementsByTagName('Font')[0].textContent);
+    
+            }
+            if (sr.getElementsByTagName('StyleBorder').length) {
+                Roo.each(sr.getElementsByTagName('StyleBorder')[0].childNodes, function(e) {
+                    if (!e.tagName) {
+                        return;
+                    }
+                    Roo.each(e.attributes, function(ea) { 
+                        add(ent, 'Border'+ea.name, e.tagName.split(':')[1].toLowerCase() + '-' + ea.value);
+                    });
+                })
+                    
+            }
+            styles.push(ent);
+            css['.'+ent.name] = ent.style;
+        });
+        
+        this.styles = styles;
+        
+        
+        Roo.util.CSS.createStyleSheet(css, sid);
+    },
 
     set : function(cell, v) {
         
@@ -330,107 +443,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
            
-            parseStyles : function() {
-                
-                var srs = this.sheet.getElementsByTagName('StyleRegion');
-                var _t  = this;
-                var ent = {};
-                
-                var map =  {
-                    HAlign : function(ent,v) { 
-                        ent['text-align'] = { '1' : 'left', '8': 'center', '4' : 'right'}[v] || 'left';
-                    },
-                    VAlign : function(ent,v) { 
-                        ent['vertical-align'] = { '1' : 'top', '4': 'middel', '8' : 'bottom'}[v]  || 'top'
-                    },
-                    Fore : function(ent,v) { 
-                        var col=[];
-                        Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                        ent['color'] = 'rgb(' + col.join(',') + ')';
-                    },
-                    Back : function(ent,v) { 
-                        var col=[];
-                        Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                        ent['background-color'] = 'rgb(' + col.join(',') + ')';
-                    },
-                    FontUnit : function(ent,v) { 
-                        ent['font-size'] = v + 'px';
-                    },
-                    FontBold : function(ent,v) { 
-                        if (v*1 < 1) return;
-                        ent['font-weight'] = 'bold';
-                    },
-                    FontItalic : function(ent,v) { 
-                        if (v*0 < 1) return;
-                        //ent['font-weight'] = 'bold';
-                    },
-                    FontName : function(ent,v) { 
-                        ent['font-family'] = v;
-                    },
-                    BorderStyle : function(ent,v) { 
-                        var vv  = v.split('-');
-                        ent['border-'+vv[0]+'-style'] = 'solid';
-                        ent['border-'+vv[0]+'-width'] = vv[1]+'px';
-                    },
-                    BorderColor : function(ent,v) { 
-                        var vv  = v.split('-');
-                        var col=[];
-                        Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                        ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
-                    }
-                }
-                function add(e, k, v) {
-                    //Roo.log(k,v);
-                    e.gstyle[k] = v;
-                    if (typeof(map[k]) == 'undefined') {
-                        return;
-                    }
-                    map[k](e.style,v);    
-                }
-                var css = {};
-                var styles = [];
-                var sid= Roo.id();
-                Roo.each(srs, function(sr,n)
-                {
-                    ent = {
-                        c : sr.getAttribute('startCol') *1,
-                        r : sr.getAttribute('startRow')*1,
-                        c1 : (sr.getAttribute('endCol')*1) +1,
-                        r1 : (sr.getAttribute('endRow')*1) +1,
-                        style : {},
-                        gstyle : {},
-                        name : sid +'-gstyle-' + n
-                        
-                    };
-            
-                    Roo.each(sr.getElementsByTagName('Style')[0].attributes, function(e) { 
-                        add(ent, e.name, e.value);
-                    });
-                    if (sr.getElementsByTagName('Font').length) {
-                        Roo.each(sr.getElementsByTagName('Font')[0].attributes, function(e) { 
-                             add(ent, 'Font'+e.name, e.value);
-            
-                        });
-                        add(ent, 'FontName', sr.getElementsByTagName('Font')[0].textContent);
-            
-                    }
-                    if (sr.getElementsByTagName('StyleBorder').length) {
-                        Roo.each(sr.getElementsByTagName('StyleBorder')[0].childNodes, function(e) {
-                            if (!e.tagName) {
-                                return;
-                            }
-                            Roo.each(e.attributes, function(ea) { 
-                                add(ent, 'Border'+ea.name, e.tagName.split(':')[1].toLowerCase() + '-' + ea.value);
-                            });
-                        })
-                            
-                    }
-                    styles.push(ent);
-                    css['.'+ent.name] = ent.style;
-                });
-                this.styles = styles;
-                Roo.util.CSS.createStyleSheet(css, sid);
-            },
+         
             print : function(str) {
                 var p = this.layout.getRegion('center').getPanel(0);
                 var o = p.el.dom.innerHTML;
