@@ -88,7 +88,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @cfg {Object} data overlay data for spreadsheet - from constructor.
      */
     data : false,
+     /**
+     * @cfg {String} downloadUrl where GnumerictoExcel.php is...
+     */
      
+    downloadUrl : false,
+    
     /**
      * @type {XmlDocument} doc the gnumeric xml document
      */
@@ -543,9 +548,18 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         
     },
-    download : function()
+    download : function(name)
     {
-        
+        var x = new Pman.Download({
+            method: 'POST',
+            params : {
+               xml : 
+               format : 'xml'
+               debug : 0
+               
+            },
+            url : ((this.downloadUrl || (baseURL + '/GnumericToExcel/')) + name + '.xls'
+        });
         
         
         
