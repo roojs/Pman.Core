@@ -65,6 +65,13 @@ Pman.Download = function(cfg)
         return;
     }
     
+    this.form = Roo.DomHelper.append(document.body, {
+        tag: 'form',
+        method : 'POST',
+        action : cfg.url
+        
+    }, true);
+    
     
  
 }
@@ -77,6 +84,11 @@ Roo.apply(Pman.Download.prototype, {
      
     csvFrame : false,
     
+    // private
+    form : false,
+    
+    
+    // private..
     createCsvFrame: function()
     {
         
