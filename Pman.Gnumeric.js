@@ -439,6 +439,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * @param {String} cell name of cell, eg. C10
      * @param {Value} value to put in cell..
      * 
+     * Cells should exist at present, we do not make them up...
      */
     
     
