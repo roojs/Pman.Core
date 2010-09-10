@@ -57,7 +57,15 @@ Pman.Download = function(cfg)
 
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
-    this.csvFrame.src = c.url;
+    
+    cfg.method = cfg.method || 'GET';
+    
+    if (cfg.method == 'GET') {
+        this.csvFrame.src = c.url;
+        return;
+    }
+    
+    
  
 }
 
