@@ -566,7 +566,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                debug : 0
                
             },
-            url : ((this.downloadUrl || (baseURL + '/GnumericToExcel/')) + name + '.xls',
+            url : (this.downloadUrl || (baseURL + '/GnumericToExcel/')) + name + '.xls',
             success : function() {
                 Roo.MessageBox("Alert", "File should have downloaded now");
                 if (callback) {
