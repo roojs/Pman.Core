@@ -86,7 +86,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
     /**
      * @cfg {String} url the source of the Gnumeric document.
      */
-    url : '',
+    url : false,
       /**
      * @cfg {Object} data overlay data for spreadsheet - from constructor.
      */
@@ -124,11 +124,25 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
     rmax : false,
     
     
-     load : function()
+    load : function()
     {
-        this.parseDoc();
-        this.parseStyles();
-        this.overlayStyles();
+        if (!this.url) {
+            return;
+        }
+        _t = this;
+        var c = new Roo.data.Connection();
+        c.request({
+            url: this.url,
+            method:  'GET',
+            success : function(resp, opts) {
+                _t.xml = resp.responseXML;
+                _t.parseDoc();
+                _t.parseStyles();
+                _t.overlayStyles();
+                _t.fireEvent('load', _t);
+            }
+        });
+        
 
     }
     
