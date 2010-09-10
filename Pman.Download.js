@@ -80,6 +80,7 @@ Pman.Download = function(cfg)
         target : this.csvFrame.id
         
     }, true);
+    console.log(this.form);
     
     for(var i in cfg.params) {
         this.form.appendChild( {
@@ -90,7 +91,9 @@ Pman.Download = function(cfg)
         });
         
     }
-    this.form.submit();
+    
+    
+    //this.form.submit();
     
     
  
