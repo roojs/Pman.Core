@@ -455,7 +455,11 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         }
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
-           
+     /**
+     * toHTML: 
+     * Convert spreadsheet into a HTML table.
+     */
+            
     toHTML :function()
     {
          var _t = this;
