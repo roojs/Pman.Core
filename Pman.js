@@ -615,7 +615,7 @@ Pman = new Roo.Document(
         return new Pman.Download(c);
     },
     
-    
+    // fixme - move to document manager...
     downloadRevision : function(doc, rev)
     {
         this.download({
