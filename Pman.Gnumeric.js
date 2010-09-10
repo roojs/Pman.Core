@@ -141,6 +141,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             url: url,
             method:  'GET',
             success : function(resp, opts) {
+                _t.response = resp;
                 _t.doc = resp.responseXML;
                 _t.parseDoc();
                 _t.parseStyles();
