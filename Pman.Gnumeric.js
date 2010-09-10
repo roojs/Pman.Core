@@ -548,8 +548,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         
     },
-    download : function(name)
+    /**
+     * download:
+     * @param {String} name  filename to downlaod (without xls)
+     * @param {String} callback  (optional) - callback to call after callback is complete.
+     */
+    download : function(name,callback)
     {
+        name = name || "Missing_download_filename";
+        
         var ser = new XMLSerializer();
         var x = new Pman.Download({
             method: 'POST',
@@ -562,11 +569,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             url : ((this.downloadUrl || (baseURL + '/GnumericToExcel/')) + name + '.xls',
             success : function() {
                 Roo.MessageBox("Alert", "File should have downloaded now");
+                if (callback) {
+                    callback();
+                }
             }
         });
-        
-        
-        
+         
     }
 
 });
