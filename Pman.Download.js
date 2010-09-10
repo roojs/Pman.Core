@@ -65,7 +65,7 @@ Pman.Download = function(cfg)
         }
 
     }
-    Roo.EventManager.on( this.csvFrame, 'load', cb, this);
+    //Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     
     cfg.method = cfg.method || 'GET';
     
