@@ -469,7 +469,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
                     this.set({ r: r, c: c}, x.applyTemplate(data));
                 } catch (e) {
                     // continue?
-                   }
+                }
                 
             }
         }
