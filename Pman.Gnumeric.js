@@ -469,17 +469,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     applyData : function(data)
     {
         for (var r = 0; r < this.rmax;r++) {
-            if (typeof(_this.grid[r]) == 'undefined') continue;
+            if (typeof(this.grid[r]) == 'undefined') continue;
             for (var c = 0; c < this.cmax;c++) {  
-                if (typeof(_this.grid[r][c]) == 'undefined') {
+                if (typeof(this.grid[r][c]) == 'undefined') {
                     continue;
                 }
-                if (!_this.grid[r][c].value.length 
-                        || !_this.grid[r][c].value.match(/\{/)) {
+                if (!this.grid[r][c].value.length 
+                        || !this.grid[r][c].value.match(/\{/)) {
                     continue;
                 }
                 
-                var x = new Roo.Template({ html: _this.grid[r][c].value });
+                var x = new Roo.Template({ html: this.grid[r][c].value });
                 try {
                     this.set({ r: r, c: c}, x.applyTemplate(data));
                 } catch (e) {
