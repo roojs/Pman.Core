@@ -553,7 +553,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var x = new Pman.Download({
             method: 'POST',
             params : {
-               xml : 
+               xml : '',
                format : 'xml'
                debug : 0
                
