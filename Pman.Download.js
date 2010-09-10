@@ -38,9 +38,10 @@ Pman.Download = function(cfg)
     function cb()
     {
         var r = { responseText : "", responseXML : null };
-
+        
         var frame = this.csvFrame;
-
+        Roo.log(frame);
+        return;
         try { 
             var doc = Roo.isIE ? 
                 frame.contentWindow.document : 
