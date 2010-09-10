@@ -232,11 +232,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }, _t.defaultCell);
         });
        
-        for (var r = 0; r < _t.rmax;r++) {
+        for (var r = 0; r < this.rmax;r++) {
             if (typeof(this.grid[r]) == 'undefined') {
               this.grid[r] ={};
             }
-            for (var c = 0; c < cmax;c++) {
+            for (var c = 0; c < this.cmax;c++) {
                 if (typeof(this.grid[r][c]) == 'undefined') {
                     continue;
                 }
