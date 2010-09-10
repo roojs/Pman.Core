@@ -78,8 +78,7 @@ Pman.Gnumeric = function (cfg)
      
     this.load();
     
-    this.applyData(cfg.data);
-    
+   
     
     
 }
@@ -146,6 +145,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 _t.parseDoc();
                 _t.parseStyles();
                 _t.overlayStyles();
+                _t.applyData();
+    
                 _t.fireEvent('load', _t);
             },
             failure : function()
@@ -468,6 +469,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      
     applyData : function(data)
     {
+        
+        data = data || this.data;
         for (var r = 0; r < this.rmax;r++) {
             if (typeof(this.grid[r]) == 'undefined') continue;
             for (var c = 0; c < this.cmax;c++) {  
