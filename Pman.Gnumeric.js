@@ -561,7 +561,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var x = new Pman.Download({
             method: 'POST',
             params : {
-               xml : ser.serializeToString(this.doc);,
+               xml : ser.serializeToString(this.doc),
                format : 'xml'
                debug : 0
                
