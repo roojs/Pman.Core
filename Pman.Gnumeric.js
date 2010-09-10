@@ -550,10 +550,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     },
     download : function(name)
     {
+        var ser = new XMLSerializer();
         var x = new Pman.Download({
             method: 'POST',
             params : {
-               xml : '',
+               xml : ser.serializeToString(this.doc);,
                format : 'xml'
                debug : 0
                
