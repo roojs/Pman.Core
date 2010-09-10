@@ -144,7 +144,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         });
         
 
-    }
+    },
     
     
     
