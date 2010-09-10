@@ -74,8 +74,7 @@ Pman.Download = function(cfg)
     
     if (cfg.method == 'GET') {
         
-        requested = true;
-        this.csvFrame.src = cfg.url;
+         this.csvFrame.src = cfg.url;
         return;
     }
     Roo.log("creating form?");
@@ -101,9 +100,7 @@ Pman.Download = function(cfg)
  
     
     this.form.submit();
-    
-    requested = true;
-
+     
  
 }
 
