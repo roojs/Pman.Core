@@ -126,9 +126,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * load:
      * run the connection, parse document and fire load event..
      * 
-     * @arg {String} k cell name
-     * @return {Object}  as { r: {Number} , c: {Number}  }
-     */
+    */
     
     load : function()
     {
