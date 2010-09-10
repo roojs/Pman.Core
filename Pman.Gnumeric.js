@@ -208,8 +208,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rmax = 1;
         this.cmax = 1;
         
-        this.sheet = _t.doc.getElementsByTagName('Sheet')[0];
-        var cells = this.sheet.getElementsByTagName('Cell');
+        this.sheet = _t.doc.getElementsByTagNameNS('*','Sheet')[0];
+        var cells = this.sheet.getElementsByTagNameNS('*','Cell');
 
         
         
@@ -246,7 +246,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
         }
         
-        var merge = this.sheet.getElementsByTagName('Merge');
+        var merge = this.sheet.getElementsByTagNameNS('*','Merge');
 
         Roo.each(merge, function(c) {
             var rc = _t.rangeToRC(c.textContent);
@@ -267,7 +267,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
         });
         // read colinfo..
-        var ci = this.sheet.getElementsByTagName('ColInfo');
+        var ci = this.sheet.getElementsByTagNameNS('*','ColInfo');
         this.colInfo = {};
         
         Roo.each(ci, function(c) {
@@ -279,7 +279,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         });
         
         
-        ci = this.sheet.getElementsByTagName('RowInfo');
+        ci = this.sheet.getElementsByTagNameNS('*','RowInfo');
         
         this.rowInfo = {};
         Roo.each(ci, function(c) {
@@ -331,7 +331,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     parseStyles : function() {
                 
-        var srs = this.sheet.getElementsByTagName('StyleRegion');
+        var srs = this.sheet.getElementsByTagNameNS('*','StyleRegion');
         var _t  = this;
         var ent = {};
         
@@ -404,19 +404,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
             };
     
-            Roo.each(sr.getElementsByTagName('Style')[0].attributes, function(e) { 
+            Roo.each(sr.getElementsByTagNameNS('*','Style')[0].attributes, function(e) { 
                 add(ent, e.name, e.value);
             });
-            if (sr.getElementsByTagName('Font').length) {
-                Roo.each(sr.getElementsByTagName('Font')[0].attributes, function(e) { 
+            if (sr.getElementsByTagNameNS('*','Font').length) {
+                Roo.each(sr.getElementsByTagNameNS('*','Font')[0].attributes, function(e) { 
                      add(ent, 'Font'+e.name, e.value);
     
                 });
-                add(ent, 'FontName', sr.getElementsByTagName('Font')[0].textContent);
+                add(ent, 'FontName', sr.getElementsByTagNameNS('*','Font')[0].textContent);
     
             }
-            if (sr.getElementsByTagName('StyleBorder').length) {
-                Roo.each(sr.getElementsByTagName('StyleBorder')[0].childNodes, function(e) {
+            if (sr.getElementsByTagNameNS('*','StyleBorder').length) {
+                Roo.each(sr.getElementsByTagNameNS('*','StyleBorder')[0].childNodes, function(e) {
                     if (!e.tagName) {
                         return;
                     }
