@@ -95,7 +95,7 @@ Pman.Download = function(cfg)
         el.dom.value = cfg.params[i];
         
     }
-    return;
+ 
     
     
      this.form.submit();
