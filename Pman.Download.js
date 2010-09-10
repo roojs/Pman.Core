@@ -58,7 +58,7 @@ Pman.Download = function(cfg)
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     this.csvFrame.src = c.url;
-    return;
+ 
 }
 
 Roo.apply(Pman.Download.prototype, {
