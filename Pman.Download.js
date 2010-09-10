@@ -24,6 +24,9 @@ var t = new Pman.Download({
 */
 Pman.Download = function(cfg)
 {
+    Roo.log(cfg);
+    return;
+    
     if (cfg.newWindow) {
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
