@@ -122,6 +122,18 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * @prop {Object} rmax - maximum number of rows
      */
     rmax : false,
+    
+    
+     load : function()
+    {
+        this.parseDoc();
+        this.parseStyles();
+        this.overlayStyles();
+
+    }
+    
+    
+    
     /**
      * toRC:
      * convert 'A1' style position to row/column reference
@@ -155,14 +167,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
     
     
     
-    load : function()
-    {
-        this.parseDoc();
-        this.parseStyles();
-        this.overlayStyles();
-
-    }
-    
+   
     
     /**
      * parseDoc:
