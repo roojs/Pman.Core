@@ -441,9 +441,7 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
      * 
      * Cells should exist at present, we do not make them up...
      */
-    
-    
-    
+     
     
     set : function(cell, v) {
         
@@ -458,57 +456,47 @@ Roo.extend(Pman.Gnumeric.prototype, Roo.Observable, {
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
            
-         
-            print : function(str) {
-                var p = this.layout.getRegion('center').getPanel(0);
-                var o = p.el.dom.innerHTML;
-                p.setContent(o + str, false)
-                
-            },
-            renderXML : function() {
-                 this.parseDoc();
-                 
-                 
-                 this.cset('G3', 'TEST')
-                 
-                 
-                 var _t = this;
-                 function calcWidth(sc, span)
-                {
-                    var n =0;
-                    for(var i =sc; i< sc+span;i++) {
-                        n+=_t.colInfo[i];
-                    }   
-                    return n;
-                }
-                
-                var grid = this.grid;
-                // lets do a basic dump..
-                var out = '<table style="table-layout:fixed;" cellpadding="0" cellspacing="0">';
-                for (var r = 0; r < this.rmax;r++) {
-                    out += '<tr style="height:'+this.rowInfo[r]+'px;">';
-                    for (var c = 0; c < this.cmax;c++) {
-                        var g = (typeof(grid[r][c]) == 'undefined') ? defaultCell  : grid[r][c];
-                        if (typeof(g.cls) =='undefined') g.cls = [];
-                        var w= calcWidth(c,g.colspan);
-                        out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
-                            g.colspan, g.rowspan, g.value,
-                            'overflow:hidden;' + 
-                            'width:'+w+'px;' +
-                           
-                            'text-overflow:ellipsis;' +
-                            'white-space:nowrap;',
-                             g.cls.join(' ')
-            
-            
-                        );
-                        c+=(g.colspan-1);
-                    }
-                    out += '</tr>';
-                }
-                //Roo.log(out);
-                this.print(out+'</table>');
-                
-                
-                
-            },
+    toHTML :function()
+    {
+         var _t = this;
+        function calcWidth(sc, span)
+        {
+            var n =0;
+            for(var i =sc; i< sc+span;i++) {
+                n+=_t.colInfo[i];
+            }   
+            return n;
+        }
+        
+        var grid = this.grid;
+        // lets do a basic dump..
+        var out = '<table style="table-layout:fixed;" cellpadding="0" cellspacing="0">';
+        for (var r = 0; r < this.rmax;r++) {
+            out += '<tr style="height:'+this.rowInfo[r]+'px;">';
+            for (var c = 0; c < this.cmax;c++) {
+                var g = (typeof(grid[r][c]) == 'undefined') ? defaultCell  : grid[r][c];
+                if (typeof(g.cls) =='undefined') g.cls = [];
+                var w= calcWidth(c,g.colspan);
+                out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
+                    g.colspan, g.rowspan, g.value,
+                    'overflow:hidden;' + 
+                    'width:'+w+'px;' +
+                   
+                    'text-overflow:ellipsis;' +
+                    'white-space:nowrap;',
+                     g.cls.join(' ')
+    
+    
+                );
+                c+=(g.colspan-1);
+            }
+            out += '</tr>';
+        }
+        //Roo.log(out);
+        return out+'</table>';
+        
+        
+        
+    }
+
+});
