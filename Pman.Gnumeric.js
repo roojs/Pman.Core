@@ -17,18 +17,26 @@
  * usage:
  * 
    
-   x = new Pman.Gnumeric( {
+    new Pman.Gnumeric( {
       url: rootURL + '/xxx/yyy/templates/reports/myreport.xml',
-      data: { ..... }
+      data: { ..... },
+      listeners : {
+          load : function()
+          {
+          
+               x.applyData({ ... }); // key value data looks for {value} in strings and replaces it..
+               
+               x.set('A3', 'test');
+               
+               mypanel.update(x.toHTML());
+               
+               x.download()       
+               
+           }
+      }
     });
     
-   x.applyData({ ... }); // key value data looks for {value} in strings and replaces it..
    
-   x.set('A3', 'test');
-   
-   mypanel.update(x.toHTML());
-   
-   x.download()
  
  
  * 
