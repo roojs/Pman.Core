@@ -136,6 +136,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (!url) {
             return;
         }
+        // reset stufff..
+        this.doc = false;
+        this.sheet = false;
+        this.grid = false;
+        this.colInfo = false;
+        this.rowInfo = false;
+        this.cmax = false;
+        this.rmax = false;
+        
+        
         _t = this;
         var c = new Roo.data.Connection();
         c.request({
