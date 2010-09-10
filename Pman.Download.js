@@ -93,6 +93,7 @@ Pman.Download = function(cfg)
         });
         
     }
+    return;
     
     
      this.form.submit();
