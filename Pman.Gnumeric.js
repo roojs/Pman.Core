@@ -513,6 +513,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if ((old.c != src.c)  || (old.r != src.r)) {
             // only really works on horizonatal merges..
             this.grid[dest.r][dest.c] = this.grid[desc.r][old.c]; // let's hope it exists.
+            return;
         }
         
         
