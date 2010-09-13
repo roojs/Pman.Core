@@ -527,6 +527,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         nc.value = '';
         if (old.dom) {
             Roo.log("No cell for " + Roo.encode(src));
+            return;
         }
         
         nc.dom = old.dom.cloneNode(true);
