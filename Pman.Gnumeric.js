@@ -530,9 +530,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         nc.dom.setAttribute('cell', r);
         nc.dom.textContent = '';
         old.dom.parentNode.appendChild(nc.dom);
-        
+        if (!old.styles || !old.styles.length) {
+            return;
+        }
         //  .styles...
-        
+        Roo.each(old.styles, function(s) {
+            
+            
+            
+        })
         
     }
     
