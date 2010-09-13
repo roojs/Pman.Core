@@ -490,6 +490,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             Roo.log('no row:' + cell);
             return
         }
+        if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
+            Roo.log('cell not defined:' + cell);
+        }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
             return;
