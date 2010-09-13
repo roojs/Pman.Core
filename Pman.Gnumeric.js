@@ -474,7 +474,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     set : function(cell, v) {
         
         var cs= typeof(cell) == 'string' ? this.toRC(cell) : cell;
-        Roo.log(    this.grid[cs.r][cs.c]);
+        //Roo.log(    this.grid[cs.r][cs.c]);
         this.grid[cs.r][cs.c].value=  v;
         // need to generate clell if it doe
         if (typeof(this.grid[cs.r]) == 'undefined') {
