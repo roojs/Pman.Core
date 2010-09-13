@@ -25,3 +25,15 @@ var t = new Pman.Request({
 * @cfg {Boolean} newWindow (optional) download to new window
      
 */
+
+Pman.Request = function(config){
+    
+    Pman.Request.superclass.constructor.call(this, config);
+    this.request(config);
+
+}
+
+Roo.extend(Pman.Request, Roo.data.Connection, {
+    
+    
+});
