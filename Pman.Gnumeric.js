@@ -527,18 +527,20 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // is it an alias...
         if ((old.c != src.c)  || (old.r != src.r)) {
             // only really works on horizonatal merges..
+            
             this.grid[dest.r][dest.c] = this.grid[desc.r][old.c]; // let's hope it exists.
             return;
         }
         
         
         var nc = Roo.apply({}, this.grid[src.r][src.c]);
+        
         nc.value = '';
         if (typeof(old.dom) == 'undefined') {
             Roo.log("No cell to copy for " + Roo.encode(src));
             return;
         }
-        
+        this.grid[dest.r][dest.c] = nc;
         nc.dom = old.dom.cloneNode(true);
         nc.dom.setAttribute('row', dest.r);
         nc.dom.setAttribute('cell', dest.c);
