@@ -507,6 +507,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (dest == src) {
             return;
         }
+        Roo.log('create Row' + dest);
         if (typeof(this.grid[dest]) == 'undefined') {
             this.grid[dest] = {}
         }
