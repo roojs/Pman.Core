@@ -343,9 +343,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
                     if (typeof(_t.grid[r][c]) == 'undefined') _t.grid[r][c] = Roo.applyIf({ r: r , c : c }, _t.defaultCell);
                     var g=_t.grid[r][c];
-                    if (typeof(g.cls) =='undefined') g.cls = [];
+                    if (typeof(g.cls) =='undefined') {
+                        g.cls = [];
+                        g.styles = [];
+                    }
                     if (g.cls.indexOf(s.name)  > -1) continue;
                     g.cls.push(s.name);
+                    g.styles.push(s.dom);
+                    
                 }
             }
         });
