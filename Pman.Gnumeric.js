@@ -518,6 +518,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             this.copyCell({ r: src, c: c } , { r: dest, c: c});
             
         }
+        this.rmax = Math.max(this.rmax, dest +1);
         
     },
     
