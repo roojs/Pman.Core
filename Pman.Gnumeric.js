@@ -502,6 +502,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     copyCell : function(src, dest)
     {
+        var old = this.grid[src.r][src.c];
+        
+        var nc = Roo.apply({}, this.grid[src.r][src.c]);
         
         
         
