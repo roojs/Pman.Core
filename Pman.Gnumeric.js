@@ -535,10 +535,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         //  .styles...
         Roo.each(old.styles, function(s) {
+            // duplidate the style..
+            var ns = s.cloneNode(true);
+            s.parentNode.appendChild(ns);
+            ns.setAttribute('startCol', dest.c);
+            ns.setAttribute('startRow', dest.r);
+            ns.setAttribute('endCol', dest.c + 1);
+            ns.setAttribute('endRow', dest.r +1);
             
-            
-            
-        })
+        });
         
     }
     
