@@ -85,7 +85,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         var res = Roo.callback(options.failure, options.scope, [response, options]);
         if (res !== true) {
             Roo.MessageBox.hide(); // hide any existing messages..
-            Roo.MessageBox.alert("Error", "Error Sending" + res);
+            Roo.MessageBox.alert("Error", "Error Sending" + JSON.stringify(res));
         }
     }
 });
