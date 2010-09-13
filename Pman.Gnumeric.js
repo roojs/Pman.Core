@@ -64,6 +64,8 @@ Pman.Gnumeric = function (cfg)
     Roo.util.Observable.call(this,cfg);
     
     this.defaultCell = {
+        c : 0,
+        r : 0,
         valueType : 0,
         valueFormat : '',
         value : '',
@@ -254,7 +256,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 valueType : vt,
                 valueFormat : vf,
                 value : val,
-                dom: c
+                dom: c,
+                r: row,
+                c: col
             }, _t.defaultCell);
         });
        
@@ -276,7 +280,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var rc = _t.rangeToRC(c.textContent);
             //Roo.log(JSON.stringify(rc))
             if (typeof(_t.grid[rc[0].r][rc[0].c]) == 'undefined') {
-                _t.grid[rc[0].r][rc[0].c] =  Roo.apply({}, _t.defaultCell);
+                _t.grid[rc[0].r][rc[0].c] =  Roo.applyIf({ r : rc[0].r, c : rc[0].c }, _t.defaultCell);
             }
                 
             _t.grid[rc[0].r][rc[0].c].colspan = (rc[1].c - rc[0].c) + 1;
@@ -337,7 +341,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 for (var c = s.c; c < s.c1;c++) {
                    if (c > _t.cmax) continue;
     
-                    if (typeof(_t.grid[r][c]) == 'undefined') _t.grid[r][c] = Roo.apply({}, _t.defaultCell);
+                    if (typeof(_t.grid[r][c]) == 'undefined') _t.grid[r][c] = Roo.applyIf({ r: r , c : c }, _t.defaultCell);
                     var g=_t.grid[r][c];
                     if (typeof(g.cls) =='undefined') g.cls = [];
                     if (g.cls.indexOf(s.name)  > -1) continue;
@@ -495,7 +499,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.grid[dest] = {}
            
         for (var c = 0; c < this.cmax; c++) {
+
             this.copyCell({ r: src, c: c } , { r: dest, c: c});
+            
         }
         
     },
@@ -503,8 +509,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     copyCell : function(src, dest)
     {
         var old = this.grid[src.r][src.c];
+        // is it an alias...
+        if ((old.c != src.c)  || (old.r != src.r)) {
+            // only really works on horizonatal merges..
+            this.grid[dest.r][dest.c] = this.grid[desc.r][old.c]; // let's hope it exists.
+        }
+        
         
         var nc = Roo.apply({}, this.grid[src.r][src.c]);
+        nc.value = '';
         
         
         
@@ -577,6 +590,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             out += '<tr style="height:'+this.rowInfo[r]+'px;">';
             for (var c = 0; c < this.cmax;c++) {
                 var g = (typeof(grid[r][c]) == 'undefined') ? defaultCell  : grid[r][c];
+                
                 if (typeof(g.cls) =='undefined') g.cls = [];
                 var w= calcWidth(c,g.colspan);
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
