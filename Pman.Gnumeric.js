@@ -339,7 +339,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                    continue;
                 }
                 for (var c = s.c; c < s.c1;c++) {
-                   if (c > _t.cmax) continue;
+                    if (c > _t.cmax) continue;
     
                     if (typeof(_t.grid[r][c]) == 'undefined') _t.grid[r][c] = Roo.applyIf({ r: r , c : c }, _t.defaultCell);
                     var g=_t.grid[r][c];
@@ -426,9 +426,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 r : sr.getAttribute('startRow')*1,
                 c1 : (sr.getAttribute('endCol')*1) +1,
                 r1 : (sr.getAttribute('endRow')*1) +1,
-                style : {},
-                gstyle : {},
-                name : sid +'-gstyle-' + n
+                style : {},  // key val of style for HTML..
+                gstyle : {}, // key val of attributes used..
+                name : sid +'-gstyle-' + n,
+                dom : sr
                 
             };
     
