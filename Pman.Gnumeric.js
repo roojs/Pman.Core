@@ -477,6 +477,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         Roo.log(    this.grid[cs.r][cs.c]);
         this.grid[cs.r][cs.c].value=  v;
         // need to generate clell if it doe
+        if (typeof(this.grid[cs.r]) == 'undefined') {
+            Roo.log('no row:' + cell);
+            return
+        }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
             return;
