@@ -38,7 +38,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
     processResponse : function(response) {
         // convert the Roo Connection response into JSON data.
         
-        var res = '';
+        var res;
         try {
             res = Roo.decode(response.responseText);
             // oops...
