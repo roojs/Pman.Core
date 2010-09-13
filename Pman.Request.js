@@ -52,7 +52,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         } catch(e) {
             res = { success : false,  errorMsg : response.responseText || Roo.encode(response), errors : true };
         }
-        Roo.log(response.responseText);
+        //Roo.log(response.responseText);
         if (!res.errorMsg) {
             res .errorMsg = Roo.encode(response);
         }
