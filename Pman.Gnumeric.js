@@ -525,6 +525,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var nc = Roo.apply({}, this.grid[src.r][src.c]);
         nc.value = '';
+        if (old.dom) {
+            Roo.log("No cell for " + Roo.encode(src));
+        }
+        
         nc.dom = old.dom.cloneNode(true);
         nc.dom.setAttribute('row', dest.r);
         nc.dom.setAttribute('cell', dest.c);
