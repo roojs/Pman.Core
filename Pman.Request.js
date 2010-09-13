@@ -24,6 +24,7 @@ var t = new Pman.Request({
 * @cfg  {Object/String/Function} params (Optional) An object containing properties which are used as parameters to the
 *       request, a url encoded string or a function to call to get either.
 * @cfg  {Function} success  called with ( JSON decoded data of the data.. )
+* @cfg  {Function} success  called with ( JSON decoded data of the data.. )
 */
 
 Pman.Request = function(config){
@@ -80,9 +81,8 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         var options = response.argument.options;
         response.argument = options ? options.argument : null;
         this.fireEvent("requestexception", this, response, options, e);
-        Roo.callback(options.failure, options.scope, [response, options]);
-        Roo.callback(options.callback, options.scope, [options, false, response]);
-        if (!options.failure) {
+        var res = Roo.callback(options.failure, options.scope, [response, options]);
+        if (res !== true) {
             Roo.MessageBox.hide(); // hide any existing messages..
             Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : "Error Sending");
         }
