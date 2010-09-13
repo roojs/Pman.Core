@@ -525,7 +525,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         nc.dom.textContent = '';
         old.dom.parentNode.appendChild(nc.dom);
         
-        //.. .styles...
+        //  .styles...
         
         
     }
