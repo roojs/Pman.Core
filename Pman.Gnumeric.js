@@ -501,7 +501,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     copyRow : function(src, dest) {
-         this.grid[dest] = {}
+        this.grid[dest] = {}
            
         for (var c = 0; c < this.cmax; c++) {
 
