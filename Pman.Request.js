@@ -22,9 +22,9 @@ var t = new Pman.Request({
 * @param {Object} cfg   Configuration object.
 * @cfg {String} url     Location to download from.
 * @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
-* @cfg  {Object/String/Function} (Optional) An object containing properties which are used as parameters to the
+* @cfg  {Object/String/Function} params (Optional) An object containing properties which are used as parameters to the
 *       request, a url encoded string or a function to call to get either.
-*    
+* @cfg  {Function} success  called with ( JSON decoded data of the data.. )
 */
 
 Pman.Request = function(config){
