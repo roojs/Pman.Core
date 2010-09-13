@@ -50,7 +50,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
             }
             
         } catch(e) {
-            res = { success : false,  errorMsg : response.responseText, errors : true };
+            res = { success : false,  errorMsg : response.responseText || Roo.encode(response), errors : true };
         }
         return res;
     },
@@ -83,9 +83,12 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         response.argument = options ? options.argument : null;
         this.fireEvent("requestexception", this, response, options, e);
         var res = Roo.callback(options.failure, options.scope, [response, options]);
+        
         if (res !== true) {
+            var decode = this.processResponse(response);
+                
             Roo.MessageBox.hide(); // hide any existing messages..
-            Roo.MessageBox.alert("Error", "Error Sending" + res || JSON.stringify(response));
+            Roo.MessageBox.alert("Error", "Error Sending" + decode.errorMsg);
         }
     }
 });
