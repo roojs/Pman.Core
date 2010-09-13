@@ -504,6 +504,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     copyRow : function(src, dest) {
+        if (dest == src) {
+            return;
+        }
         if (typeof(this.grid[dest]) == 'undefined') {
             this.grid[dest] = {}
         }
