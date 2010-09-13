@@ -527,7 +527,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var nc = Roo.apply({}, this.grid[src.r][src.c]);
         nc.value = '';
-        if (old.dom) {
+        if (typeof(old.dom) == 'undefined') {
             Roo.log("No cell to copy for " + Roo.encode(src));
             return;
         }
