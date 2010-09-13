@@ -8,8 +8,10 @@
 var t = new Pman.Request({
     url: baseURL + '/Images/Download/0/myfile.jpg',
     params: { .... },
-    success : function(data) {
-        
+    success : function(res) {
+        Roo.log(res.data);
+        Roo.log(res.total);
+        ....
     },
     failure : function () {
          
