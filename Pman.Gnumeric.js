@@ -488,6 +488,27 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
         this.grid[cs.r][cs.c].dom.textContent=  v;
     },
+    
+    
+    copyRow : function(src, dest) {
+        var old = this.grid[src];
+        this.grid[dest] = {}
+           
+        for (var c = 0; c < this.cmax; c++) {
+            this.copyCell({ r: src, c: c } , { r: dest, c: c});
+        }
+        
+    },
+    
+    copyCell : function(src, dest)
+    {
+        
+        
+        
+        
+    }
+    
+    
     /**
      * applyData: 
      * Set the value of a cell..
