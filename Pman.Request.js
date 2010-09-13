@@ -12,10 +12,7 @@ var t = new Pman.Request({
         Roo.log(res.data);
         Roo.log(res.total);
         ....
-    },
-    failure : function () {
-         
-    }
+    } 
 });
 
 </code></pre>
