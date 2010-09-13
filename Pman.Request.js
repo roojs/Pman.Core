@@ -73,7 +73,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
             Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : "Error Sending");
             return;
         }
-        Roo.callback(options.success, options.scope, [res.data, options]);
+        Roo.callback(options.success, options.scope, [res, options]);
         
     },
     handleFailure : function(response, e){
