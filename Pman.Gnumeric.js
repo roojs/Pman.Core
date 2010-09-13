@@ -526,8 +526,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var nc = Roo.apply({}, this.grid[src.r][src.c]);
         nc.value = '';
         nc.dom = old.dom.cloneNode(true);
-        nc.dom.setAttribute('row', r);
-        nc.dom.setAttribute('cell', r);
+        nc.dom.setAttribute('row', dest.r);
+        nc.dom.setAttribute('cell', dest.c);
         nc.dom.textContent = '';
         old.dom.parentNode.appendChild(nc.dom);
         if (!old.styles || !old.styles.length) {
