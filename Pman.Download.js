@@ -70,7 +70,7 @@ Pman.Download = function(cfg)
 
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
-     cfg.method = cfg.method || 'GET';
+    cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
         
