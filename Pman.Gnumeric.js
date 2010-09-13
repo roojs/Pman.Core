@@ -523,8 +523,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         nc.dom.setAttribute('row', r);
         nc.dom.setAttribute('cell', r);
         nc.dom.textContent = '';
-        
-        
+        old.dom.parentNode.appendChild(nc.dom);
         
         
         
