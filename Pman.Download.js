@@ -41,11 +41,9 @@ Pman.Download = function(cfg)
        // if (requested < 2) {
        //     return;
         //}
-        Roo.log("loaded?");
-        var r = { responseText : "", responseXML : null };
         
         var frame = this.csvFrame;
-        
+        var success  = true; 
         try { 
             var doc = Roo.isIE ? 
                 frame.contentWindow.document : 
@@ -55,6 +53,7 @@ Pman.Download = function(cfg)
             if(doc && doc.body && doc.body.innerHTML.length){
               //  alert(doc.body.innerHTML);
                 Roo.MessageBox.alert("Error download",doc.body.innerHTML);
+                success  = false;
             }
             
             Roo.log(doc.body.innerHTML);
@@ -71,7 +70,7 @@ Pman.Download = function(cfg)
             this.form= false;
         }
         Roo.EventManager.removeListener(frame, 'load', cb, this);
-        if (cfg.success) {
+        if (cfg.success && success) {
             cfg.success();
         }
         //Roo.get(frame).remove();
