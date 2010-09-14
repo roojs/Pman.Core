@@ -31,6 +31,12 @@ Pman.Request = function(config){
     
     Pman.Request.superclass.constructor.call(this, config);
     this.request(config);
+    
+    if (this.mask && this.maskEl) {
+        Roo.get(this.maskEl).mask(this.mask);
+        
+    }
+    
 }
 
 Roo.extend(Pman.Request, Roo.data.Connection, {
@@ -59,12 +65,17 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         return res;
     },
     
-    handleResponse : function(response){
-       this.transId = false;
-       var options = response.argument.options;
-       response.argument = options ? options.argument : null;
-       this.fireEvent("requestcomplete", this, response, options);
-       
+    handleResponse : function(response)
+    {
+        this.transId = false;
+        var options = response.argument.options;
+        response.argument = options ? options.argument : null;
+        this.fireEvent("requestcomplete", this, response, options);
+        
+        if (this.mask && this.maskEl) {
+            Roo.get(this.maskEl).unmask();
+        }
+        
         var res = this.processResponse(response);
                 
         if (!res.success) { // error!
@@ -87,7 +98,9 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         response.argument = options ? options.argument : null;
         this.fireEvent("requestexception", this, response, options, e);
         var res = Roo.callback(options.failure, options.scope, [response, options]);
-        
+        if (this.mask && this.maskEl) {
+            Roo.get(this.maskEl).unmask();
+        }
         if (res !== true) {
             var decode = this.processResponse(response);
                 
