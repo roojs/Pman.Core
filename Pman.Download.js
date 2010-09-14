@@ -63,7 +63,7 @@ Pman.Download = function(cfg)
                     cb.defer(1000, this);
                     return;
                 }
-                Roo.MessageBox.alert("Download Error",doc.body.innerHTML);
+                Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
                 success  = false;
             
                 
