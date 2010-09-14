@@ -61,8 +61,8 @@ Pman.Download = function(cfg)
         
         if (this.form)
         {
-            return;
-            this.form.remove();
+            
+            //this.form.remove();
             this.form= false;
         }
         Roo.EventManager.removeListener(frame, 'load', cb, this);
