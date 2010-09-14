@@ -94,8 +94,8 @@ Pman.Download = function(cfg)
         if (('' + cfg.params[i]).length > 1000) {
            var el = this.form.createChild( {
                 tag : 'textarea',
-                style: 'width:1px;height:1px',
-                name : i,
+             //   style: 'width:1px;height:1px',
+                name : i
             }); 
             el.value = cfg.params[i];
             continue;
@@ -104,7 +104,7 @@ Pman.Download = function(cfg)
             tag : 'input',
             
             type: 'hidden',
-            name : i,
+            name : i
         });
         el.dom.value = cfg.params[i];
         
