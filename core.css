@@ -277,7 +277,7 @@
 .p-cblist-item img
 {
    margin-left: 5px;
-   background:transparent url(../mailAddClose.gif) no-repeat scroll 0 0;
+   background:transparent url(../templates/images/mailAddClose.gif) no-repeat scroll 0 0;
    cursor: pointer;
 }
 .p-cblist-cb 
@@ -391,7 +391,7 @@ span.ptcv-selectlang
     font-weight:bold;
 }
 .x-action-box-top-right {
-    background-image:url(../action/shcornertop.png);
+    background-image:url(../templates/images/shcornertop.png);
     background-repeat:no-repeat;
   /*  height:12px; */
     min-width:12px;
@@ -399,7 +399,7 @@ span.ptcv-selectlang
 }
 
 .x-action-box-right {
-    background-image:url(../action/shr.png);
+    background-image:url(../templates/images/action/shr.png);
     background-repeat:repeat-y;
 }
 .x-action-box-body {
@@ -429,18 +429,18 @@ span.ptcv-selectlang
 }
  
 .x-action-box-bottom-left {
-    background-image:url(../action/shcornerbottom.png);
+    background-image:url(../templates/images/action/shcornerbottom.png);
     background-repeat:no-repeat;
     height:12px;
   /*   min-width:12px; */
     width:1%;
 }
 .x-action-box-bottom {
-    background-image:url(../action/shb.png);
+    background-image:url(../templates/images/action/shb.png);
     background-repeat:repeat-x;
 }
 .x-action-box-bottom-right {
-    background-image:url(../action/shcorner.png);
+    background-image:url(../templates/images/action/shcorner.png);
     background-repeat:no-repeat;
     height:12px;
     min-width:12px;
