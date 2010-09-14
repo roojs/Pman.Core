@@ -63,9 +63,12 @@ Pman.Download = function(cfg)
                     cb.defer(1000, this);
                     return;
                 }
+                // firebug plays with iner html...
+                if (doc.body.innerHTML.replace(/\<div fire.*/, '').length)  {
+                    Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
+                    success  = false;
+                }
                 
-                Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
-                success  = false;
             
                 
             }
