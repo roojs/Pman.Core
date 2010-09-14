@@ -58,8 +58,10 @@ Pman.Download = function(cfg)
         }
         catch(e) {
         }
+        
         if (this.form)
         {
+            return;
             this.form.remove();
             this.form= false;
         }
