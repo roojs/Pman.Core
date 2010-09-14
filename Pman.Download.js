@@ -55,14 +55,17 @@ Pman.Download = function(cfg)
             var doc = Roo.isIE ? 
                 frame.contentWindow.document : 
                 (frame.contentDocument || window.frames[Pman.Download.csvFrame.id].document);
-            Roo.log(doc);
+            
             
             if(doc && doc.body && doc.body.innerHTML.length){
               //  alert(doc.body.innerHTML);
-                if (doc.body.innerHTML != 'false') {
-                    Roo.MessageBox.alert("Error download",doc.body.innerHTML);
-                    success  = false;
+                if (doc.body.innerHTML == 'false') {
+                    cb.defer(1000, this);
+                    return;
                 }
+                Roo.MessageBox.alert("Error download",doc.body.innerHTML);
+                success  = false;
+            
                 
             }
             
@@ -87,13 +90,15 @@ Pman.Download = function(cfg)
         
 
     }
-    Roo.EventManager.on( this.csvFrame, 'load', cb, this);
+    //Roo.EventManager.on( this.csvFrame, 'load', cb, this);
+    
     cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
         (function() {
             submit = true;
             this.csvFrame.src = cfg.url;
+            cb.defer(1000,this);
         }).defer(100, this);
         
        
@@ -131,6 +136,7 @@ Pman.Download = function(cfg)
     (function() {
         submit = true;
         this.form.dom.submit();
+        cb.defer(1000,this);
     }).defer(100, this);
     
      
