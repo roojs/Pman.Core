@@ -57,6 +57,8 @@ Pman.Download = function(cfg)
              
         }
         catch(e) {
+            Roo.log(e.toString());
+            Roo.log(e);
         }
         
         if (this.form)
