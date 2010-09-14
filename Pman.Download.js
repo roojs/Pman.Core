@@ -32,15 +32,22 @@ Pman.Download = function(cfg)
         
     }
     
+    var submit = false;
     this.createCsvFrame();
     
     var requested = 0;
+    
+    
     function cb()
     {
        // requested++; // second request is real one..
        // if (requested < 2) {
        //     return;
-        //}
+        //} // n
+        if (!submit) {
+            return;
+        }
+        
         Roo.log('downloaded');
         var frame = this.csvFrame;
         var success  = true; 
@@ -76,7 +83,7 @@ Pman.Download = function(cfg)
         if (cfg.success && success) {
             cfg.success();
         }
-        //Roo.get(frame).remove();
+        Roo.get(frame).remove();
         
 
     }
@@ -84,10 +91,15 @@ Pman.Download = function(cfg)
     cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
+        (function() {
+            submit = true;
+            this.csvFrame.src = cfg.url;
+        }).defer(100, this);
         
-         this.csvFrame.src = cfg.url;
+       
         return;
     }
+    
     Roo.log("creating form?");
     
     var b = Roo.get(document.body);
@@ -115,9 +127,12 @@ Pman.Download = function(cfg)
         
         
     }
- 
     
-    this.form.dom.submit.defer(100,this.form.dom);
+    (function() {
+        submit = true;
+        this.form.dom.submit();
+    }).defer(100, this);
+    
      
  
 }
