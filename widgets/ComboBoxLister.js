@@ -67,6 +67,8 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         this.trigger.setStyle('position','relative');
         this.trigger.setStyle('left', '0px');
         this.trigger.setStyle('top', '7px');
+        this.el.setStyle('vertical-align', 'text-bottom');
+        
         //this.trigger.setStyle('vertical-align', 'top');
         if (this.adder) {
             
