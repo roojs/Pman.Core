@@ -86,7 +86,7 @@ Pman.Download = function(cfg)
         tag: 'form',
         method : 'POST',
         action : cfg.url,
-        target : this.csvFrame.id.
+        target : this.csvFrame.id,
         enctype : 'multipart/form-data'
 
 
