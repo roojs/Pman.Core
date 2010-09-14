@@ -48,7 +48,7 @@ Pman.Download = function(cfg)
             return;
         }
         
-        Roo.log('downloaded');
+      
         var frame = this.csvFrame;
         var success  = true; 
         try { 
@@ -59,17 +59,10 @@ Pman.Download = function(cfg)
             
             if(doc && doc.body && doc.body.innerHTML.length){
               //  alert(doc.body.innerHTML);
-                if (doc.body.innerHTML == 'false') {
-                    cb.defer(1000, this);
-                    return;
-                }
-                // firebug plays with iner html...
-                if (doc.body.innerHTML.replace(/\<div fire.*/, '').length)  {
-                    Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
-                    success  = false;
-                }
-                
-            
+                  
+                Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
+                success  = false;
+                 
                 
             }
             
@@ -87,14 +80,17 @@ Pman.Download = function(cfg)
             this.form= false;
         }
         Roo.EventManager.removeListener(frame, 'load', cb, this);
+        // this will never fire.. see 
+        // http://www.atalasoft.com/cs/blogs/jake/archive/2009/08/18/events-to-expect-when-dynamically-loading-iframes-in-javascript-take-2-thanks-firefox-3-5.aspx
         if (cfg.success && success) {
+            
             cfg.success();
         }
         Roo.get(frame).remove();
         
 
     }
-    //Roo.EventManager.on( this.csvFrame, 'load', cb, this);
+    Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     
     cfg.method = cfg.method || 'GET';
     
@@ -102,7 +98,7 @@ Pman.Download = function(cfg)
         (function() {
             submit = true;
             this.csvFrame.src = cfg.url;
-            cb.defer(1000,this);
+            cleanup.defer(30000,this);
         }).defer(100, this);
         
        
@@ -140,7 +136,7 @@ Pman.Download = function(cfg)
     (function() {
         submit = true;
         this.form.dom.submit();
-        cb.defer(1000,this);
+       cleanup.defer(30000,this);
     }).defer(100, this);
     
      
