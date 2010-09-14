@@ -93,6 +93,7 @@ Pman.Download = function(cfg)
     for(var i in cfg.params) {
         
         var el = this.form.createChild( {
+            ns : 'html',
             tag : 'input',
             
             type: 'hidden',
