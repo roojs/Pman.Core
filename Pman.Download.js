@@ -20,17 +20,21 @@ var t = new Pman.Download({
 * @cfg {String} url     Location to download from.
 * @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
 * @cfg {Boolean} newWindow (optional) download to new window
+* @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
      
 */
 Pman.Download = function(cfg)
 {
  
+    
+    
     if (cfg.newWindow) {
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
         return ; 
         
     }
+    Roo.apply(this, cfg);
     
     var submit = false;
     this.createCsvFrame();
@@ -39,54 +43,7 @@ Pman.Download = function(cfg)
     
    
     
-    function cb()
-    {
-       // requested++; // second request is real one..
-       // if (requested < 2) {
-       //     return;
-        //} // n
-        if (!submit) {
-            return;
-        }
-        
-      
-        var frame = this.csvFrame;
-        var success  = true; 
-        try { 
-            var doc = Roo.isIE ? 
-                frame.contentWindow.document : 
-                (frame.contentDocument || window.frames[Pman.Download.csvFrame.id].document);
-            
-            
-            if(doc && doc.body && doc.body.innerHTML.length){
-              //  alert(doc.body.innerHTML);
-                  
-                Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
-                success  = false;
-                 
-                
-            }
-            
-            Roo.log(doc.body.innerHTML);
-             
-        }
-        catch(e) {
-            Roo.log(e.toString());
-            Roo.log(e);
-        }
-        
-        cleanup();
-        
-        // this will never fire.. see 
-        // http://www.atalasoft.com/cs/blogs/jake/archive/2009/08/18/events-to-expect-when-dynamically-loading-iframes-in-javascript-take-2-thanks-firefox-3-5.aspx
-        if (cfg.success && success) {
-            
-            cfg.success();
-        }
-       
-        
-
-    }
+    
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
     
     cfg.method = cfg.method || 'GET';
@@ -95,7 +52,7 @@ Pman.Download = function(cfg)
         (function() {
             submit = true;
             this.csvFrame.src = cfg.url;
-            cleanup.defer(30000,this);
+            this.cleanup.defer(30000,this);
         }).defer(100, this);
         
        
@@ -133,7 +90,7 @@ Pman.Download = function(cfg)
     (function() {
         submit = true;
         this.form.dom.submit();
-       cleanup.defer(30000,this);
+        this.cleanup.defer(30000,this);
     }).defer(100, this);
     
      
@@ -174,6 +131,56 @@ Roo.apply(Pman.Download.prototype, {
         }
         
     },
+    
+    onLoad : function()
+    {
+       // requested++; // second request is real one..
+       // if (requested < 2) {
+       //     return;
+        //} // n
+        if (!this.submit) {
+            return;
+        }
+        
+      
+        var frame = this.csvFrame;
+        var success  = true; 
+        try { 
+            var doc = Roo.isIE ? 
+                frame.contentWindow.document : 
+                (frame.contentDocument || window.frames[Pman.Download.csvFrame.id].document);
+            
+            
+            if(doc && doc.body && doc.body.innerHTML.length){
+              //  alert(doc.body.innerHTML);
+                  
+                Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
+                success  = false;
+                 
+                
+            }
+            
+            Roo.log(doc.body.innerHTML);
+             
+        }
+        catch(e) {
+            Roo.log(e.toString());
+            Roo.log(e);
+        }
+        
+        this.cleanup();
+        
+        // this will never fire.. see 
+        // http://www.atalasoft.com/cs/blogs/jake/archive/2009/08/18/events-to-expect-when-dynamically-loading-iframes-in-javascript-take-2-thanks-firefox-3-5.aspx
+        if (cfg.success && success) {
+            
+            cfg.success();
+        }
+       
+        
+
+    }
+    
     // private - clean up download elements.
     cleanup :function()
     {
@@ -184,7 +191,7 @@ Roo.apply(Pman.Download.prototype, {
         }
         
         if (this.csvFrame) {
-            Roo.EventManager.removeListener(this.csvFrame, 'load', cb, this);
+            Roo.EventManager.removeListener(this.csvFrame, 'load', this.onLoad, this);
             Roo.get(this.csvFrame).remove();
             this.csvFrame= false;
         }
