@@ -59,12 +59,14 @@
     background:transparent url(../../roojs1/images/default/dd/drop-add.gif) no-repeat scroll 0 0;
     border-style:none none solid;
     
+    border-style:none none solid;
     cursor:pointer;
     height:21px;
-    position:absolute;
-    top:2;
+    left:2px;
+    margin-left:20px;
+    position:relative;
+    top:4px;
     width:17px;
-    margin-left: 20px;
 } 
 .x-form-textfield-adder
 {
