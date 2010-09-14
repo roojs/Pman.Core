@@ -97,7 +97,7 @@ Pman.Download = function(cfg)
                 style: 'width:1px;height:1px',
                 name : i,
             }); 
-            el.setValue(cfg.params[i]);
+            el.value = cfg.params[i];
             continue;
         }
         var el = this.form.createChild( {
