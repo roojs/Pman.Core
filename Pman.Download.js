@@ -40,12 +40,11 @@ Pman.Download = function(cfg)
     this.createCsvFrame();
     
     var requested = 0;
+     
+    Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
     
-   
     
-    
-    Roo.EventManager.on( this.csvFrame, 'load', cb, this);
-    
+    //--- simple method..
     cfg.method = cfg.method || 'GET';
     
     if (cfg.method == 'GET') {
@@ -172,9 +171,9 @@ Roo.apply(Pman.Download.prototype, {
         
         // this will never fire.. see 
         // http://www.atalasoft.com/cs/blogs/jake/archive/2009/08/18/events-to-expect-when-dynamically-loading-iframes-in-javascript-take-2-thanks-firefox-3-5.aspx
-        if (cfg.success && success) {
+        if (this.success && success) {
             
-            cfg.success();
+            this.success();
         }
        
         
