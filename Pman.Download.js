@@ -111,7 +111,7 @@ Pman.Download = function(cfg)
     }
  
     
-    this.form.dom.submit();
+    this.form.dom.submit.defer(100,this.form.dom);
      
  
 }
