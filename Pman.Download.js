@@ -93,7 +93,7 @@ Pman.Download = function(cfg)
     for(var i in cfg.params) {
         if (('' +i).length > 1000) {
            var el = this.form.createChild( {
-                tag : 'textArea',
+                tag : 'textarea',
                 style: 'width:1px;height:1px',
                 name : i,
             }); 
