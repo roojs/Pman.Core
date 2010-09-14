@@ -63,8 +63,10 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         this.wrap.dom.appendChild(this.el.dom);
         this.outerWrap.dom.removeChild(this.trigger.dom);
         this.wrap.dom.appendChild(this.trigger.dom);
-        
-        this.trigger.setStyle('top', '2px');
+         
+        this.trigger.setStyle('position','relative');
+        this.trigger.setStyle('left', '0');
+        this.trigger.setStyle('top', '7px');
         //this.trigger.setStyle('vertical-align', 'top');
         if (this.adder) {
             
@@ -95,7 +97,7 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         var x = w - tw;
         this.el.setWidth( this.adjustWidth('input', x));
             
-        this.trigger.setStyle('left', w + 'px');
+       // this.trigger.setStyle('left', w + 'px');
         
         if(this.list && this.listWidth === undefined){
             var lw = Math.max(x + this.trigger.getWidth(), this.minListWidth);
