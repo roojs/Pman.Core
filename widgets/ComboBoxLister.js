@@ -64,7 +64,7 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         this.outerWrap.dom.removeChild(this.trigger.dom);
         this.wrap.dom.appendChild(this.trigger.dom);
         
-        //this.trigger.setStyle('position', 'relative');
+        this.trigger.setStyle('top', '2px');
         //this.trigger.setStyle('vertical-align', 'top');
         if (this.adder) {
             
