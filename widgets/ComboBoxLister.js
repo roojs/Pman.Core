@@ -95,7 +95,7 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         var x = w - tw;
         this.el.setWidth( this.adjustWidth('input', x));
             
-        this.trigger.setStyle('left', '0px');
+        this.trigger.setStyle('left', w + 'px');
         
         if(this.list && this.listWidth === undefined){
             var lw = Math.max(x + this.trigger.getWidth(), this.minListWidth);
