@@ -37,10 +37,10 @@ Pman.Download = function(cfg)
     var requested = 0;
     function cb()
     {
-        requested++; // second request is real one..
-        if (requested < 2) {
-            return;
-        }
+       // requested++; // second request is real one..
+       // if (requested < 2) {
+       //     return;
+        //}
         var r = { responseText : "", responseXML : null };
         
         var frame = this.csvFrame;
