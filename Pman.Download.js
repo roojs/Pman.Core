@@ -91,8 +91,17 @@ Pman.Download = function(cfg)
     });
  
     for(var i in cfg.params) {
+        if (('' +i).length > 1000) {
+           var el = this.form.createChild( {
+                tag : 'textArea',
+                style: 'width:1px;height:1px',
+                name : i,
+            }); 
+            el.setValue(cfg.params[i]);
+        }
         var el = this.form.createChild( {
             tag : 'input',
+            
             type: 'hidden',
             name : i,
         });
