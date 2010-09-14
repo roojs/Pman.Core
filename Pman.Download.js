@@ -62,13 +62,15 @@ Pman.Download = function(cfg)
         if (this.form)
         {
             
-           //  this.form.remove();
+             this.form.remove();
             this.form= false;
         }
         Roo.EventManager.removeListener(frame, 'load', cb, this);
         if (cfg.success) {
             cfg.success();
         }
+        //Roo.get(frame).remove();
+        
 
     }
     Roo.EventManager.on( this.csvFrame, 'load', cb, this);
