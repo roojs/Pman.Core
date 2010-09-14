@@ -41,7 +41,7 @@ Pman.Download = function(cfg)
        // if (requested < 2) {
        //     return;
         //}
-        
+        Roo.log('downloaded');
         var frame = this.csvFrame;
         var success  = true; 
         try { 
