@@ -98,6 +98,7 @@ Pman.Download = function(cfg)
                 name : i,
             }); 
             el.setValue(cfg.params[i]);
+            continue;
         }
         var el = this.form.createChild( {
             tag : 'input',
