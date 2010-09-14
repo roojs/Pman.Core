@@ -543,8 +543,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         this.grid[dest.r][dest.c] = nc;
         nc.dom = old.dom.cloneNode(true);
-        nc.dom.setAttribute('row', dest.r);
-        nc.dom.setAttribute('cell', dest.c);
+        nc.dom.setAttribute('Row', dest.r);
+        nc.dom.setAttribute('Cell', dest.c);
         nc.dom.textContent = '';
         old.dom.parentNode.appendChild(nc.dom);
         if (!old.styles || !old.styles.length) {
