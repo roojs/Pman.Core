@@ -128,9 +128,9 @@ Roo.apply(Pman.Download.prototype, {
         this.csvFrame.id = id;
         this.csvFrame.name = id;
         this.csvFrame.className = 'x-hidden';
-        if(Roo.isIE){
+        //if(Roo.isIE){
             this.csvFrame.src = Roo.SSL_SECURE_URL;
-        }
+        //}
         document.body.appendChild(this.csvFrame);
 
         if(Roo.isIE){
