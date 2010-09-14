@@ -178,7 +178,7 @@ Roo.apply(Pman.Download.prototype, {
        
         
 
-    }
+    },
     
     // private - clean up download elements.
     cleanup :function()
