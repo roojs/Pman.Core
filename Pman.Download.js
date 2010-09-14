@@ -50,11 +50,14 @@ Pman.Download = function(cfg)
             var doc = Roo.isIE ? 
                 frame.contentWindow.document : 
                 (frame.contentDocument || window.frames[Pman.Download.csvFrame.id].document);
+            Roo.log(doc);
             
             if(doc && doc.body && doc.body.innerHTML.length){
               //  alert(doc.body.innerHTML);
                 Roo.MessageBox.alert("Error download",doc.body.innerHTML);
             }
+            
+            Roo.log(doc.body.innerHTML);
              
         }
         catch(e) {
