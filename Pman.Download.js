@@ -52,8 +52,11 @@ Pman.Download = function(cfg)
             
             if(doc && doc.body && doc.body.innerHTML.length){
               //  alert(doc.body.innerHTML);
-                Roo.MessageBox.alert("Error download",doc.body.innerHTML);
-                success  = false;
+                if (doc.body.innerHTML != 'false') {
+                    Roo.MessageBox.alert("Error download",doc.body.innerHTML);
+                    success  = false;
+                }
+                
             }
             
             Roo.log(doc.body.innerHTML);
