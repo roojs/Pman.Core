@@ -80,6 +80,33 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         //this.adder.on('click', this.onAddClick, _t);
         
     },
+    
+    
+    onResize: function(w, h){
+        Roo.form.ComboBox.superclass.onResize.apply(this, arguments);
+        
+        if(typeof w != 'number'){
+            // we do not handle it!?!?
+            return;
+        }
+        var tw = this.trigger.getWidth();
+        tw += this.addicon ? this.addicon.getWidth() : 0;
+        tw += this.editicon ? this.editicon.getWidth() : 0;
+        var x = w - tw;
+        this.el.setWidth( this.adjustWidth('input', x));
+            
+        this.trigger.setStyle('left', '0px');
+        
+        if(this.list && this.listWidth === undefined){
+            var lw = Math.max(x + this.trigger.getWidth(), this.minListWidth);
+            this.list.setWidth(lw);
+            this.innerList.setWidth(lw - this.list.getFrameWidth('lr'));
+        }
+        
+    
+        
+    },
+    
     addItem: function(rec)
     {
         if (this.items.indexOfKey(rec[this.idField]) > -1) {
