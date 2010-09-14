@@ -37,6 +37,7 @@ Pman.Download = function(cfg)
     
     var requested = 0;
     
+   
     
     function cb()
     {
@@ -74,19 +75,15 @@ Pman.Download = function(cfg)
             Roo.log(e);
         }
         
-        if (this.form)
-        {
-            this.form.remove();
-            this.form= false;
-        }
-        Roo.EventManager.removeListener(frame, 'load', cb, this);
+        cleanup();
+        
         // this will never fire.. see 
         // http://www.atalasoft.com/cs/blogs/jake/archive/2009/08/18/events-to-expect-when-dynamically-loading-iframes-in-javascript-take-2-thanks-firefox-3-5.aspx
         if (cfg.success && success) {
             
             cfg.success();
         }
-        Roo.get(frame).remove();
+       
         
 
     }
@@ -176,6 +173,22 @@ Roo.apply(Pman.Download.prototype, {
             document.frames[id].name = id;
         }
         
+    },
+    // private - clean up download elements.
+    cleanup :function()
+    {
+        if (this.form) {
+            this.form.remove();
+            this.form= false;
+        
+        }
+        
+        if (this.csvFrame) {
+            Roo.EventManager.removeListener(this.csvFrame, 'load', cb, this);
+            Roo.get(this.csvFrame).remove();
+            this.csvFrame= false;
+        }
+         
     }
      
      
