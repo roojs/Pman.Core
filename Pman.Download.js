@@ -91,7 +91,7 @@ Pman.Download = function(cfg)
     });
  
     for(var i in cfg.params) {
-        if (('' +i).length > 1000) {
+        if (('' + cfg.params[i]).length > 1000) {
            var el = this.form.createChild( {
                 tag : 'textarea',
                 style: 'width:1px;height:1px',
