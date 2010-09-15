@@ -663,6 +663,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         name = name || "Missing_download_filename";
         
+        if (this.downloadURL && this.downloadURL.charAt(this.downloadURL .length-1) != '/') {
+            this.downloadURL += '/';
+        }
+        
         var ser = new XMLSerializer();
         var x = new Pman.Download({
             method: 'POST',
