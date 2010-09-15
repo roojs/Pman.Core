@@ -360,6 +360,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         $g = DB_DataObject::Factory('Group_Members');
+        if (!$g->count()) {
+            // add the current user to the admin group..
+            $g = DB_DataObject::Factory('Groups');
+            $g->get('name', 'Administrators');
+            $gm = DB_DataObject::Factory('Group_Members');
+            $gm->group_id = $g->id;
+            $gm->user_id = $this->id;
+            $gm->insert();
+        }
+        
+        $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
         $isAdmin = $g->inAdmin;
        // var_dump($grps);
