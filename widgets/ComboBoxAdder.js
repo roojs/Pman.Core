@@ -1,5 +1,14 @@
 
 //<script type="text/javascript">
+/**
+ * 
+ * old combobox adder.. 
+ * this is all incorporated into the new combobox, however the API is different..
+ * 
+ * 
+ */
+
+
 
 
 
