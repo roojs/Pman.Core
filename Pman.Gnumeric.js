@@ -557,13 +557,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         Roo.each(old.styles, function(s) {
             // try and extend existing styles..
             var er = s.getAttribute('endRow') * 1;
-            var ec = s.getAttribute('endCell') * 1;
+            var ec = s.getAttribute('endCol') * 1;
             Roo.log(s);
             if (dest.r == er) {
                 s.setAttribute('endRow', dest.r + 1);
             }
             if (dest.c == ec) {
-                s.setAttribute('endCell', dest.c + 1);
+                s.setAttribute('endCol', dest.c + 1);
             }
             /*var ns = s.cloneNode(true);
             s.parentNode.appendChild(ns);
