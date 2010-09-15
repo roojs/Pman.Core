@@ -9,9 +9,6 @@
  */
 
 
-
-
-
 Ext.form.ComboBoxAdder = function(config){
     
     if (typeof(config.listeners.adderclick) != 'undefined') {
