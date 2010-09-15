@@ -91,10 +91,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     data : false,
      /**
-     * @cfg {String} downloadUrl where GnumerictoExcel.php is...
+     * @cfg {String} downloadURL where GnumerictoExcel.php is...
      */
      
-    downloadUrl : false,
+    downloadURL : false,
     
     /**
      * @type {XmlDocument} doc the gnumeric xml document
@@ -672,7 +672,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                debug : 0
                
             },
-            url : (this.downloadUrl || (baseURL + '/GnumericToExcel/')) + name + '.xls',
+            url : (this.downloadURL || (baseURL + '/GnumericToExcel/')) + name + '.xls',
             success : function() {
                 Roo.MessageBox.alert("Alert", "File should have downloaded now");
                 if (callback) {
