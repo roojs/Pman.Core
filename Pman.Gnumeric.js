@@ -550,15 +550,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (!old.styles || !old.styles.length) {
             return;
         }
-        Roo.log("DEST");
-        Roo.log(dest);
-        Roo.log("STYLES");
+        //Roo.log("DEST");
+        //Roo.log(dest);
+        //Roo.log("STYLES");
         //  .styles...
         Roo.each(old.styles, function(s) {
             // try and extend existing styles..
             var er = s.getAttribute('endRow') * 1;
             var ec = s.getAttribute('endCol') * 1;
-            Roo.log(s);
+            //Roo.log(s);
             if (dest.r == er) {
                 s.setAttribute('endRow', dest.r + 1);
             }
