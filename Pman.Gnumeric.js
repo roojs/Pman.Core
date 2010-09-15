@@ -552,7 +552,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         //  .styles...
         Roo.each(old.styles, function(s) {
-            // duplidate the style..
+            // try and extend existing styles..
             var er = s.getAttribute('endRow') * 1;
             var ec = s.getAttribute('endCell') * 1;
             if (dest.r == er) {
