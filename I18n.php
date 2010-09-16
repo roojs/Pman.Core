@@ -206,8 +206,7 @@ class Pman_Core_i18N extends Pman
     function objToList($type, $obj) {
         $ret = array();
         
-        $country = new I18Nv2_Country($obj->language, 'UTF-8');
-        
+         
         foreach($this->cfg[$type] as $k) {
             $sub = false;
             if (strpos($k, '_') !== false) {
@@ -218,7 +217,7 @@ class Pman_Core_i18N extends Pman
             $v = $k == '**' ? 'Other' : $obj->getName($k);
             
             if ($sub) {
-                $v .= ' ('. $country->getName($sub).')';
+                $v .= ' ('.$sub.')';
             }
             
             $ret[] = array(
