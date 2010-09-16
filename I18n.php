@@ -98,7 +98,7 @@ class Pman_Core_i18N extends Pman
         
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
-        print_r($opts);exit;
+        
         // load the cofiguration
         foreach($opts as $k=>$v) {
             
