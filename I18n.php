@@ -209,6 +209,7 @@ class Pman_Core_i18N extends Pman
          
         foreach($this->cfg[$type] as $k) {
             $sub = false;
+            
             if (strpos($k, '_') !== false) {
                 $bits = explode('_', $k);
                 $k = array_shift($bits);
@@ -221,7 +222,7 @@ class Pman_Core_i18N extends Pman
             }
             
             $ret[] = array(
-                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k), 
+                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k) . ($sub ? '_'.strtoupper($sub) : ''), 
                 'title' => $v
             );
         }
