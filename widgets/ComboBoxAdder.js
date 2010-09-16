@@ -8,6 +8,8 @@
  * to make this work on the new combo, you just implement a 'add' handler.
  */
 
+ 
+ 
 
 Ext.form.ComboBoxAdder = function(config){
     
