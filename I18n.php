@@ -205,8 +205,7 @@ class Pman_Core_i18N extends Pman
     }
     function objToList($type, $obj) {
         $ret = array();
-        echo '<PRE>';print_r($this->cfg);
-        
+         
          
         foreach($this->cfg[$type] as $k) {
             $sub = false;
