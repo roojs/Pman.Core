@@ -195,7 +195,7 @@ class Pman_Core_i18N extends Pman
                 'm' => $this->objToList('m', new I18Nv2_Currency($rlang, 'UTF-8'))
             );
         }
-        echo '<PRE>';print_r($ar);
+        //echo '<PRE>';print_r($ar);
         header('Content-type: text/javascript');
         echo 'Pman.I18n.Data = ' .  json_encode($ar);
         exit;
