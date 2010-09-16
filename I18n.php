@@ -209,11 +209,17 @@ class Pman_Core_i18N extends Pman
         
         
         foreach($this->cfg[$type] as $k) {
+            $sub = false;
             if (strpos($k, '_') !== false) {
-                $k = array_shift(explode('_', $k));
+                $bits = explode('_', $k);
+                $k = array_shift($bits);
+                $sub = array_shift($bits);
             }
             $v = $k == '**' ? 'Other' : $obj->getName($k);
             
+            if ($sub) {
+                print_r($obj);exit;
+            }
             
             $ret[] = array(
                 'code'=>   $type=='l' ? strtolower($k) : strtoupper($k), 
