@@ -222,7 +222,7 @@ class Pman_Core_i18N extends Pman
             }
             
             $ret[] = array(
-                'code'=>   $type=='l' ? strtolower($k) : strtoupper($k) . ($sub ? '_'.strtoupper($sub) : ''), 
+                'code'=>   ($type=='l' ? strtolower($k) : strtoupper($k)) . ($sub ? '_'.strtoupper($sub) : ''), 
                 'title' => $v
             );
         }
