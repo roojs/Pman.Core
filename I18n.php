@@ -218,7 +218,7 @@ class Pman_Core_i18N extends Pman
             $v = $k == '**' ? 'Other' : $obj->getName($k);
             
             if ($sub) {
-                print_r($obj);exit;
+                echo '<PRE>';print_r($obj);exit;
             }
             
             $ret[] = array(
