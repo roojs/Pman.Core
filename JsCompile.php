@@ -96,50 +96,7 @@ class Pman_Core_JsCompile  extends Pman
         $cmd = "$seed {$o['jspacker']}/pack.js -m $proj  -a  $src/*.js -o $tmp";
         echo $cmd;
         passthru($cmd);
-        
-        
-        exit;
-        // copy into the revision controlled area.
-        
-        
-        
-        
-        
-        
-        
-        $src = realpath(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj .'.js');
-        if (!$src) {
-            return;
-        }
-        $pdir = realpath(dirname(__FILE__).'/../'. $proj);
-        if (!file_exists($pdir.'/compiled')) {
-            mkdir($pdir.'/compiled', 0755, true);
-            
-        }
-        copy($src , $pdir.'/compiled/'. $proj .'.js');
-        
-        // copy the translation strings.
-        $src = realpath(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj .'/build/_translation_.js');
-       // var_dump($src);
-        
-        $pdir = realpath(dirname(__FILE__).'/../'. $proj);
-       
-        copy($src , $pdir.'/compiled/_translation_.js');
-        
-        if ($svn) {
-            $base = getcwd();
-            chdir($pdir);
-            $cmd = "$svn add compiled";
-            `$cmd`;
-            $cmd = "$svn add ". escapeshellarg('compiled/'.$proj .'.js'); 
-            $cmd = "$svn add ". escapeshellarg('compiled/_translation_.js'); 
-            
-            `$cmd`;
-            `$svn commit -m 'update compiled version'`;
-            chdir($base);
-        }
-        
-        
+         
         
         /*
         
