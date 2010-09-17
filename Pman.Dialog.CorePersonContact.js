@@ -84,10 +84,10 @@ Pman.Dialog.CorePersonContact = {
                                     listeners : {
                                         add : function (combo)
                                         {
-                                         var cb = this;
-                                                                Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
-                                                                    cb.setFromData(data);
-                                                                }); 
+                                        
+                                                Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
+                                                    cb.setFromData(data);
+                                                    }); 
                                         }
                                     },
                                     allowBlank : 'false',
