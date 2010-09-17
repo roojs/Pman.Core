@@ -87,7 +87,8 @@ Pman.Dialog.CorePersonContact = {
                                         
                                             Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
                                                     _this.form.setValues({
-                                                            
+                                                            company_id_name : data.name,
+                                                            company_id : data
                                                     })
                                             }); 
                                         }
