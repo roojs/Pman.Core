@@ -85,9 +85,9 @@ Pman.Dialog.CorePersonContact = {
                                         add : function (combo)
                                         {
                                         
-                                                Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
-                                                    cb.setFromData(data);
-                                                    }); 
+                                            Pman.Dialog.CoreCompanies.show( {  id: 0 },  function(data) {
+                                                cb.setFromData(data);
+                                            }); 
                                         }
                                     },
                                     allowBlank : 'false',
