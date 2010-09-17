@@ -94,7 +94,7 @@ class Pman_Core_JsCompile  extends Pman
         
         $buildjs = 
         $cmd = "$seed {$o['jspacker']}/pack.js -m $proj  -a  $src/*.js";
-        echo $cmd;
+        echo "$cmd\n";
         passthru($cmd);
         // technically we should trash old compiled files.. 
         // or we move towards a 'cache in session directory model..'
