@@ -95,7 +95,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "add": "function (combo)\n{\n    var coid = _this.form.findField('company_id').getValue();\n    o.params.company_id = coid;\n}"
+                                        "add": "function (combo)\n{\n    var coid = _this.form.findField('company_id').getValue();\n    o.params.company_id = coid;\n    \n}"
                                     },
                                     "allowBlank": "false",
                                     "displayField": "name",
