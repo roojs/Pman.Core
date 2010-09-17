@@ -97,6 +97,8 @@ class Pman_Core_JsCompile  extends Pman
         echo $cmd;
         passthru($cmd);
         // technically we should trash old compiled files.. 
+        // or we move towards a 'cache in session directory model..'
+        
         
         /*
         
