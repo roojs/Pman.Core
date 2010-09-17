@@ -92,8 +92,8 @@ class Pman_Core_JsCompiler extends Pman
         // should we be more specirfic!??!?!?
         
         $buildjs = 
-        $cmd = "$seed {$o['jspacker']}/pack.js -m$proj  -a  $src/*.js -o $tmp"
-      echo $cmd;
+        $cmd = "$seed {$o['jspacker']}/pack.js -m$proj  -a  $src/*.js -o $tmp";
+        echo $cmd;
         passthru($cmd);
         
         
