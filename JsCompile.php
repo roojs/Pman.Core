@@ -68,7 +68,7 @@ class Pman_Core_JsCompile  extends Pman
             return;
         }
         
-        
+        phpinfo();exit;
         $src =  realpath(dirname(__FILE__).'/../'. $proj);
         echo $src. "\n";exit;
         
