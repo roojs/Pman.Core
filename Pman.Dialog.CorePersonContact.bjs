@@ -180,13 +180,6 @@
                                     "xtype": "TextField"
                                 },
                                 {
-                                    "fieldLabel": "Deleted dt",
-                                    "name": "deleted_dt",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "DateField"
-                                },
-                                {
                                     "name": "id",
                                     "|xns": "Roo.form",
                                     "xtype": "Hidden"
