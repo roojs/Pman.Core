@@ -166,14 +166,15 @@ Pman.Dialog.CorePersonContact = {
                                     store : {
                                         xtype: 'Store',
                                         xns: Roo.data,
-                                        remoteSort : true,
-                                        sortInfo : { direction : 'ASC', field: 'id' },
                                         listeners : {
                                             beforeload : function (_self, o){
                                                 o.params = o.params || {};
-                                                // set more here
+                                                var coid = _this.form.findField('company_id').getValue();
+                                                    o.params.company_id = coid;
                                             }
                                         },
+                                        remoteSort : true,
+                                        sortInfo : { direction : 'ASC', field: 'id' },
                                         proxy : {
                                             xtype: 'HttpProxy',
                                             xns: Roo.data,
