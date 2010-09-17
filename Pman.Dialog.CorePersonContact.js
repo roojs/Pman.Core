@@ -81,6 +81,15 @@ Pman.Dialog.CorePersonContact = {
                                 {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
+                                    listeners : {
+                                        add : function (combo)
+                                        {
+                                         var cb = this;
+                                                                Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
+                                                                    cb.setFromData(data);
+                                                                }); 
+                                        }
+                                    },
                                     allowBlank : 'false',
                                     displayField : 'code',
                                     editable : 'false',
@@ -101,12 +110,6 @@ Pman.Dialog.CorePersonContact = {
                                     typeAhead : true,
                                     valueField : 'id',
                                     width : 300,
-                                    listeners : {
-                                        add : function (combo)
-                                        {
-                                        
-                                        }
-                                    },
                                     store : {
                                         xtype: 'Store',
                                         xns: Roo.data,
