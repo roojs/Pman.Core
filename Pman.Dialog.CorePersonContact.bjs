@@ -119,7 +119,7 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    var coid = _this.form.findField('company_id').getValue();\n        o.params.company_id = coid;\n}\n"
+                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    var coid = _this.form.findField('company_id').getValue();\n    o.params.company_id = coid;\n}\n"
                                             },
                                             "*prop": "store",
                                             "remoteSort": true,
