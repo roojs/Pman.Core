@@ -36,7 +36,7 @@ class Pman_Core_Cli
  
 ================================    
 
-    $cli Builder/JsCompiler  build PROJECT
+    $cli Core/JsCompiler  build PROJECT
      
     Runs the javascript compiler - merging all the JS files so the load faster.
     Note: cfg option Pman_Builder['jspacker'] must be set to location of jstoolkit code 
