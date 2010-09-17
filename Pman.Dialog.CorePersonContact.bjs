@@ -37,6 +37,9 @@
                             "|url": "baseURL + '/Roo/Person.php'",
                             "items": [
                                 {
+                                    "listeners": {
+                                        "add": "function (combo)\n{\n var cb = this;\n                        Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n                            cb.setFromData(data);\n                        }); \n}"
+                                    },
                                     "allowBlank": "false",
                                     "displayField": "code",
                                     "editable": "false",
@@ -59,9 +62,6 @@
                                     "width": 300,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
-                                    "listeners": {
-                                        "add": "function (combo)\n{\n\n}"
-                                    },
                                     "items": [
                                         {
                                             "*prop": "store",
