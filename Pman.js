@@ -822,7 +822,7 @@ Pman = new Roo.Document(
                 mod();
                 
             } else  if (mod.parent.layout && !mod.module.disabled) {
-                
+                // honour permname setings..
                 if (mod.permname && mod.permname.length) {
                     if (Pman.hasPerm(mod.permname, 'S')) {
                         mod.module.add(mod.parent.layout, mod.region);    
