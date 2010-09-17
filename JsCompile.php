@@ -100,6 +100,12 @@ class Pman_Core_JsCompiler extends Pman
         exit;
         // copy into the revision controlled area.
         
+        
+        
+        
+        
+        
+        
         $src = realpath(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj .'.js');
         if (!$src) {
             return;
