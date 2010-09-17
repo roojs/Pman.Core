@@ -180,20 +180,6 @@
                                     "xtype": "TextField"
                                 },
                                 {
-                                    "fieldLabel": "No reset sent",
-                                    "name": "no_reset_sent",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "fieldLabel": "Action type",
-                                    "name": "action_type",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "|xns": "Roo.form",
                                     "xtype": "ComboBox",
                                     "allowBlank": "false",
