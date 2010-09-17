@@ -140,7 +140,8 @@ class Pman_Core_JsCompile  extends Pman
     }
     
     function gatherProjects() {
-        $src =  realpath(dirname(__FILE__).'/../');
+        $src= array_shift(explode(PATH_SEPARATOR, ini_get('include_path'))) .'/Pman';
+        
         $ret = array();
         foreach(scandir($src) as $f) {
             if (!strlen($f) || $f[0] == '.') {
