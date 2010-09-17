@@ -156,7 +156,9 @@
                                     "name": "name",
                                     "width": 300,
                                     "xtype": "TextField",
-                                    "|xns": "Roo.form"
+                                    "|xns": "Roo.form",
+                                    "allowBlank": true,
+                                    "listeners": {}
                                 },
                                 {
                                     "fieldLabel": "Role",
