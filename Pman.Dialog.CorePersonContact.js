@@ -216,20 +216,6 @@ Pman.Dialog.CorePersonContact = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    fieldLabel : 'Lang',
-                                    name : 'lang',
-                                    width : 200
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    fieldLabel : 'No reset sent',
-                                    name : 'no_reset_sent',
-                                    width : 75
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
                                     fieldLabel : 'Action type',
                                     name : 'action_type',
                                     width : 200
