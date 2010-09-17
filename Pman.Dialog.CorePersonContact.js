@@ -170,7 +170,7 @@ Pman.Dialog.CorePersonContact = {
                                             beforeload : function (_self, o){
                                                 o.params = o.params || {};
                                                 var coid = _this.form.findField('company_id').getValue();
-                                                    o.params.company_id = coid;
+                                                o.params.company_id = coid;
                                             }
                                         },
                                         remoteSort : true,
