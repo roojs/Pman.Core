@@ -152,6 +152,7 @@ Pman.Dialog.CorePersonContact = {
                                                  Ext.MessageBox.alert("Error", "Select An Company First");
                                                     return false
                                                 }
+                                            
                                         }
                                     },
                                     allowBlank : 'false',
