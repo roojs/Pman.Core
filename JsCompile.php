@@ -8,7 +8,7 @@
 require_once 'Pman.php';
 
 
-class Pman_Core_JsCompiler extends Pman
+class Pman_Core_JsCompile  extends Pman
 {
     var $cli = false;
     function getAuth()
