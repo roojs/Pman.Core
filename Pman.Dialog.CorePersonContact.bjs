@@ -94,6 +94,9 @@
                                     ]
                                 },
                                 {
+                                    "listeners": {
+                                        "add": "function (combo)\n{\n    var coid = _this.form.findField('company_id').getValue();\n    o.params.company_id = coid;\n}"
+                                    },
                                     "allowBlank": "false",
                                     "displayField": "name",
                                     "editable": "false",
@@ -116,9 +119,6 @@
                                     "width": 300,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
-                                    "listeners": {
-                                        "add": "function (combo)\n{\n\n}"
-                                    },
                                     "items": [
                                         {
                                             "listeners": {
