@@ -72,7 +72,7 @@ class Pman_Core_JsCompile  extends Pman
         
         
         
-        $tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
+       //$tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
         
         
         require_once 'System.php';
