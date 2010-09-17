@@ -1,9 +1,9 @@
 {
     "id": "roo-file-129",
-    "name": "Pman.Dialog.AdminProject",
+    "name": "Pman.Dialog.CoreProject",
     "parent": "",
     "title": "",
-    "path": "/home/alan/Pman.Admin/Pman.Dialog.AdminProject.bjs",
+    "path": "/home/alan/Pman.Admin/Pman.Dialog.CoreProject.bjs",
     "items": [
         {
             "closable": false,
