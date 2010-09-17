@@ -43,6 +43,11 @@ class Pman_Core_RunGenerator extends Pman
         $x = new Pman_Core_Generator();
        // $x->page = clone($this);
         $x->start($this->cli, $args, $lastarg);
+        $ff = FlexyFramework::get();
+        
+        print_r($ff->DB_DataObject);
+        
+        
         die("done!");
     }
     
