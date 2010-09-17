@@ -183,7 +183,7 @@ Pman.Dialog.CorePersonContact = {
                                     xns: Roo.form,
                                     fieldLabel : 'Name',
                                     name : 'name',
-                                    width : 200
+                                    width : 300
                                 },
                                 {
                                     xtype: 'TextField',
