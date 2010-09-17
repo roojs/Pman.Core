@@ -93,7 +93,7 @@ class Pman_Core_JsCompile  extends Pman
         // should we be more specirfic!??!?!?
         
         $buildjs = 
-        $cmd = "$seed {$o['jspacker']}/pack.js -m $proj  -a  $src/*.js -o $tmp";
+        $cmd = "$seed {$o['jspacker']}/pack.js -m $proj  -a  $src/*.js";
         echo $cmd;
         passthru($cmd);
         // technically we should trash old compiled files.. 
