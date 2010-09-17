@@ -83,6 +83,56 @@ Pman.Dialog.CorePersonContact = {
                                     xns: Roo.form,
                                     allowBlank : 'false',
                                     editable : 'false',
+                                    emptyText : "Select Companies",
+                                    forceSelection : true,
+                                    listWidth : 400,
+                                    loadingText : "Searching...",
+                                    minChars : 2,
+                                    pageSize : 20,
+                                    qtip : "Select Companies",
+                                    selectOnFocus : true,
+                                    triggerAction : 'all',
+                                    typeAhead : true,
+                                    width : 300,
+                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{code}</b> </div>',
+                                    queryParam : 'query[code]',
+                                    fieldLabel : 'Company',
+                                    valueField : 'id',
+                                    displayField : 'code',
+                                    hiddenName : 'company_id',
+                                    name : 'company_id_code',
+                                    store : {
+                                        xtype: 'Store',
+                                        xns: Roo.data,
+                                        remoteSort : true,
+                                        sortInfo : { direction : 'ASC', field: 'id' },
+                                        listeners : {
+                                            beforeload : function (_self, o){
+                                                o.params = o.params || {};
+                                                // set more here
+                                            }
+                                        },
+                                        proxy : {
+                                            xtype: 'HttpProxy',
+                                            xns: Roo.data,
+                                            method : 'GET',
+                                            url : baseURL + '/Roo/Companies.php'
+                                        },
+                                        reader : {
+                                            xtype: 'JsonReader',
+                                            xns: Roo.data,
+                                            id : 'id',
+                                            root : 'data',
+                                            totalProperty : 'total',
+                                            fields : [{"name":"id","type":"int"},{"name":"code","type":"string"}]
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'ComboBox',
+                                    xns: Roo.form,
+                                    allowBlank : 'false',
+                                    editable : 'false',
                                     emptyText : "Select Office",
                                     forceSelection : true,
                                     listWidth : 400,
@@ -155,56 +205,6 @@ Pman.Dialog.CorePersonContact = {
                                     fieldLabel : 'Email',
                                     name : 'email',
                                     width : 200
-                                },
-                                {
-                                    xtype: 'ComboBox',
-                                    xns: Roo.form,
-                                    allowBlank : 'false',
-                                    editable : 'false',
-                                    emptyText : "Select Companies",
-                                    forceSelection : true,
-                                    listWidth : 400,
-                                    loadingText : "Searching...",
-                                    minChars : 2,
-                                    pageSize : 20,
-                                    qtip : "Select Companies",
-                                    selectOnFocus : true,
-                                    triggerAction : 'all',
-                                    typeAhead : true,
-                                    width : 300,
-                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{code}</b> </div>',
-                                    queryParam : 'query[code]',
-                                    fieldLabel : 'Company',
-                                    valueField : 'id',
-                                    displayField : 'code',
-                                    hiddenName : 'company_id',
-                                    name : 'company_id_code',
-                                    store : {
-                                        xtype: 'Store',
-                                        xns: Roo.data,
-                                        remoteSort : true,
-                                        sortInfo : { direction : 'ASC', field: 'id' },
-                                        listeners : {
-                                            beforeload : function (_self, o){
-                                                o.params = o.params || {};
-                                                // set more here
-                                            }
-                                        },
-                                        proxy : {
-                                            xtype: 'HttpProxy',
-                                            xns: Roo.data,
-                                            method : 'GET',
-                                            url : baseURL + '/Roo/Companies.php'
-                                        },
-                                        reader : {
-                                            xtype: 'JsonReader',
-                                            xns: Roo.data,
-                                            id : 'id',
-                                            root : 'data',
-                                            totalProperty : 'total',
-                                            fields : [{"name":"id","type":"int"},{"name":"code","type":"string"}]
-                                        }
-                                    }
                                 },
                                 {
                                     xtype: 'TextField',
