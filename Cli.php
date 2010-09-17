@@ -33,6 +33,14 @@ class Pman_Core_Cli
     Runs the generator for a project (NOTE - runs all the SQL updates)
     - Changes the files.
 
+ 
+================================    
+
+    $cli Builder/JsCompiler  build PROJECT
+     
+    Runs the javascript compiler - merging all the JS files so the load faster.
+    Note: cfg option Pman_Builder['jspacker'] must be set to location of jstoolkit code 
+    
 ";
 
 
