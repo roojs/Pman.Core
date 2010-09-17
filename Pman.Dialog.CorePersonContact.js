@@ -188,6 +188,13 @@ Pman.Dialog.CorePersonContact = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
+                                    fieldLabel : 'Role',
+                                    name : 'role',
+                                    width : 200
+                                },
+                                {
+                                    xtype: 'TextField',
+                                    xns: Roo.form,
                                     fieldLabel : 'Phone',
                                     name : 'phone',
                                     width : 200
@@ -204,13 +211,6 @@ Pman.Dialog.CorePersonContact = {
                                     xns: Roo.form,
                                     fieldLabel : 'Email',
                                     name : 'email',
-                                    width : 200
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    fieldLabel : 'Role',
-                                    name : 'role',
                                     width : 200
                                 },
                                 {
