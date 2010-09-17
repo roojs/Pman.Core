@@ -118,14 +118,14 @@
                                     "name": "office_id_name",
                                     "items": [
                                         {
-                                            "*prop": "store",
-                                            "xtype": "Store",
-                                            "|xns": "Roo.data",
-                                            "remoteSort": true,
-                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
                                             "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
+                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    var coid = _this.form.findField('company_id').getValue();\n        o.params.company_id = coid;\n}\n"
                                             },
+                                            "*prop": "store",
+                                            "remoteSort": true,
+                                            "xtype": "Store",
+                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
+                                            "|xns": "Roo.data",
                                             "items": [
                                                 {
                                                     "*prop": "proxy",
