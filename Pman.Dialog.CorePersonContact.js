@@ -214,13 +214,6 @@ Pman.Dialog.CorePersonContact = {
                                     width : 200
                                 },
                                 {
-                                    xtype: 'DateField',
-                                    xns: Roo.form,
-                                    fieldLabel : 'Deleted dt',
-                                    name : 'deleted_dt',
-                                    width : 75
-                                },
-                                {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'id'
