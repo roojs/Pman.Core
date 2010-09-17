@@ -180,13 +180,6 @@
                                     "xtype": "TextField"
                                 },
                                 {
-                                    "fieldLabel": "Lang",
-                                    "name": "lang",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "fieldLabel": "No reset sent",
                                     "name": "no_reset_sent",
                                     "width": 75,
