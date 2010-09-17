@@ -161,6 +161,10 @@ Pman.Dialog.CorePersonContact = {
                                                 }); 
                                             
                                             
+                                        },
+                                        beforequery : function (combo, query, forceAll, cancel, e)
+                                        {
+                                        
                                         }
                                     },
                                     allowBlank : 'false',
