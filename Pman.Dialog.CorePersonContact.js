@@ -214,63 +214,6 @@ Pman.Dialog.CorePersonContact = {
                                     width : 200
                                 },
                                 {
-                                    xtype: 'ComboBox',
-                                    xns: Roo.form,
-                                    allowBlank : 'false',
-                                    editable : 'false',
-                                    emptyText : "Select Projects",
-                                    forceSelection : true,
-                                    listWidth : 400,
-                                    loadingText : "Searching...",
-                                    minChars : 2,
-                                    pageSize : 20,
-                                    qtip : "Select Projects",
-                                    selectOnFocus : true,
-                                    triggerAction : 'all',
-                                    typeAhead : true,
-                                    width : 300,
-                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
-                                    queryParam : 'query[name]',
-                                    fieldLabel : 'Project',
-                                    valueField : 'id',
-                                    displayField : 'name',
-                                    hiddenName : 'project_id',
-                                    name : 'project_id_name',
-                                    store : {
-                                        xtype: 'Store',
-                                        xns: Roo.data,
-                                        remoteSort : true,
-                                        sortInfo : { direction : 'ASC', field: 'id' },
-                                        listeners : {
-                                            beforeload : function (_self, o){
-                                                o.params = o.params || {};
-                                                // set more here
-                                            }
-                                        },
-                                        proxy : {
-                                            xtype: 'HttpProxy',
-                                            xns: Roo.data,
-                                            method : 'GET',
-                                            url : baseURL + '/Roo/Projects.php'
-                                        },
-                                        reader : {
-                                            xtype: 'JsonReader',
-                                            xns: Roo.data,
-                                            id : 'id',
-                                            root : 'data',
-                                            totalProperty : 'total',
-                                            fields : [{"name":"id","type":"int"},{"name":"name","type":"string"}]
-                                        }
-                                    }
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    fieldLabel : 'Deleted by',
-                                    name : 'deleted_by',
-                                    width : 75
-                                },
-                                {
                                     xtype: 'DateField',
                                     xns: Roo.form,
                                     fieldLabel : 'Deleted dt',
