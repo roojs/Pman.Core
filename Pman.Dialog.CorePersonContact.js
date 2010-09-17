@@ -153,7 +153,9 @@ Pman.Dialog.CorePersonContact = {
                                                 return false;
                                         
                                             }
-                                            
+                                            Pman.Dialog.Office.show(cfg, function(data) {
+                                                        cb.setFromData(data);
+                                                }); 
                                             
                                             
                                         }
