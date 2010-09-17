@@ -16,7 +16,7 @@ Ext.form.ComboBoxAdder = function(config){
     if (typeof(config.listeners.adderclick) != 'undefined') {
         config.listeners.add = config.listeners.adderclick;
     }
-     
+   Ext.form.ComboBoxAdder.superclass.constructor.call(this, config);  
 }
  
 Ext.extend(Ext.form.ComboBoxAdder, Ext.form.ComboBox);
