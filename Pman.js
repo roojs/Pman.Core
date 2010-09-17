@@ -821,11 +821,17 @@ Pman = new Roo.Document(
             if (typeof(mod) == 'function') {
                 mod();
                 
-            } else {
-                if (mod.parent.layout && !mod.module.disabled) {
+            } else  if (mod.parent.layout && !mod.module.disabled) {
+                
+                if (mod.permname && mod.permname.length) {
+                    if (Pman.hasPerm(mod.permname, 'S')) {
+                        mod.module.add(mod.parent.layout, mod.region);    
+                    }
+                } else {
                     mod.module.add(mod.parent.layout, mod.region);    
                 }
-                
+                    
+                 
             }
             
             
