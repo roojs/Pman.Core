@@ -82,25 +82,31 @@ Pman.Dialog.CorePersonContact = {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
                                     allowBlank : 'false',
+                                    displayField : 'code',
                                     editable : 'false',
                                     emptyText : "Select Companies",
+                                    fieldLabel : 'Company',
                                     forceSelection : true,
+                                    hiddenName : 'company_id',
                                     listWidth : 400,
                                     loadingText : "Searching...",
                                     minChars : 2,
+                                    name : 'company_id_code',
                                     pageSize : 20,
                                     qtip : "Select Companies",
+                                    queryParam : 'query[code]',
                                     selectOnFocus : true,
+                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{code}</b> </div>',
                                     triggerAction : 'all',
                                     typeAhead : true,
-                                    width : 300,
-                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{code}</b> </div>',
-                                    queryParam : 'query[code]',
-                                    fieldLabel : 'Company',
                                     valueField : 'id',
-                                    displayField : 'code',
-                                    hiddenName : 'company_id',
-                                    name : 'company_id_code',
+                                    width : 300,
+                                    listeners : {
+                                        add : function (combo)
+                                        {
+                                        
+                                        }
+                                    },
                                     store : {
                                         xtype: 'Store',
                                         xns: Roo.data,
