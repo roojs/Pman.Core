@@ -66,37 +66,38 @@ class Pman_Core_JsCompiler extends Pman
             if ($this->cli) echo $this->err;
             return;
         }
-        $src = realpath(dirname(__FILE__).'/../'. $proj);
-        if (!file_exists(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj)) {
-            mkdir(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj, 0755, true);
-        }
         
-         
-        $tmp = realpath(dirname(__FILE__).'/../../_compiled_tmp_');
-        //$tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
+        
+        $src = realpath(dirname(__FILE__).'/../'. $proj);
+        
+        
+        $tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
+        
+        
         require_once 'System.php';
-        $roolite = System::which('roolite');
-        $svn = System::which('svn');
-        if (!$roolite) {
-            $this->err ="no roolite";
+        $seed= System::which('seed');
+        if (!$seed) {
+            $this->err ="no seed installed";
             if ($this->cli) echo $this->err;
             return false;
         }
-        $o = PEAR::getStaticProperty('Pman_Builder','options');
-        if (empty($o['jstoolkit'])) {
-            $this->err ="no jstoolkit path";
+        
+        $o = PEAR::getStaticProperty('Pman_Core','options');
+        if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
+            $this->err ="no jstoolkit path set [Pman_Core][jspacker] to the introspection documentation directory where pack.js is located.";
             if ($this->cli) echo $this->err;
             return false;
         }  
         
         // should we be more specirfic!??!?!?
         
-        $buildjs = realpath(dirname(__FILE__) .'/jsbuilder/build.js');
-        $cmd = "$roolite $buildjs -L{$o['jstoolkit']} -- ". 
-            escapeshellarg( $src) . " " . escapeshellarg($tmp); 
-      
+        $buildjs = 
+        $cmd = "$seed {$o['jspacker']}/pack.js -m$proj  -a  $src/*.js -o $tmp"
+      echo $cmd;
         passthru($cmd);
         
+        
+        exit;
         // copy into the revision controlled area.
         
         $src = realpath(dirname(__FILE__).'/../../_compiled_tmp_/'.$proj .'.js');
