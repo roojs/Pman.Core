@@ -408,6 +408,7 @@ Pman.Dialog.Projects = {
         this.create();
         this.form.reset();
         this.form.setValues(data);
+/*        
         if (data.id) {
              
             this.form.findField('client_id').setFromData({
@@ -423,6 +424,7 @@ Pman.Dialog.Projects = {
                 name: data.open_by_name
             });
         }
+        */
         this.dialog.show();
         
 
