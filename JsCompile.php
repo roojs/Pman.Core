@@ -67,7 +67,7 @@ class Pman_Core_JsCompile  extends Pman
             if ($this->cli) echo $this->err;
             return;
         }
-         
+        // first item in path is always the app start directoyr..
         $src= array_shift(explode(PATH_SEPARATOR, ini_get('include_path'))) .'/Pman/'. $proj;
         
         echo $src. "\n";exit;
