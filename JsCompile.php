@@ -69,8 +69,11 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         phpinfo();exit;
-        $src =  realpath(dirname(__FILE__).'/../'. $proj);
+        $src= array_shift(explode(PATH_SEPARATOR, ini_get('include_path'))) .'/Pman/'. $proj;
+        
         echo $src. "\n";exit;
+        
+        
         
         $tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
         
