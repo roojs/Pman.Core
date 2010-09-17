@@ -32,10 +32,11 @@ class Pman_Core_JsCompile  extends Pman
         if (empty($args[1])) {
             
             $ar = $this->gatherProjects();
-        } else {
-            echo "SELECT Component to build\n";
+             echo "SELECT Component to build\n";
             print_r($ar);
             exit;
+        } else {
+           
             //$ar = $args;
             //array_shift($ar);
         }
