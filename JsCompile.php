@@ -69,7 +69,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         
-        $src =  dirname(__FILE__).'/../'. $proj;
+        $src =  realpath(dirname(__FILE__).'/../'. $proj);
         echo $src. "\n";exit;
         
         $tmp = ini_get('session.save_path')."/{$proj}_". posix_getuid(). '_'.md5($src);
