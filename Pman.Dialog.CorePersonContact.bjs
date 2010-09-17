@@ -148,8 +148,8 @@
                                     "fieldLabel": "Name",
                                     "name": "name",
                                     "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "fieldLabel": "Phone",
