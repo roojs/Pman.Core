@@ -43,11 +43,11 @@ class Pman_Core_RunGenerator extends Pman
         $x = new Pman_Core_Generator();
        // $x->page = clone($this);
         $x->start($this->cli, $args, $lastarg);
-        $ff = HTML_FlexyFramework::get();
         
-        print_r($ff->DB_DataObject);
-        $dsn = parse_url($ff->DB_DataObject['database']);
-        print_r($dsn);
+        // technically it would be good to trash the cached ini files here.. 
+        // however we can not really do that, as the ownships are off..
+        //we can however regen our own files..
+        
         
         die("done!");
     }
