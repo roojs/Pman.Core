@@ -46,7 +46,8 @@ class Pman_Core_RunGenerator extends Pman
         $ff = HTML_FlexyFramework::get();
         
         print_r($ff->DB_DataObject);
-        
+        $dsn = parse_url($ff->DB_DataObject['database']);
+        print_r($dsn);
         
         die("done!");
     }
