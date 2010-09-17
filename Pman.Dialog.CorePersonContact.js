@@ -164,11 +164,11 @@ Pman.Dialog.CorePersonContact = {
                                         },
                                         beforequery : function (combo, query, forceAll, cancel, e)
                                         {
-                                         var coid = _this.form.findField('company_id').getValue();
+                                                var coid = _this.form.findField('company_id').getValue();
                                                 if (coid < 1 ) {
-                                                        Ext.MessageBox.alert("Error", "Select An Company First");
-                                                        return false;
-                                                    }
+                                                    Ext.MessageBox.alert("Error", "Select An Company First");
+                                                    return false;
+                                                }
                                         }
                                     },
                                     allowBlank : 'false',
