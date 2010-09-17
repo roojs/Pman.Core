@@ -3,7 +3,6 @@
     "name": "Pman.Dialog.CoreProject",
     "parent": "",
     "title": "",
-    "path": "/home/alan/Pman.Admin/Pman.Dialog.CoreProject.bjs",
     "items": [
         {
             "closable": false,
