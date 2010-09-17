@@ -1,8 +1,9 @@
 {
-    "id": "roo-file-129",
+    "id": "roo-file-130",
     "name": "Pman.Dialog.CoreProject",
     "parent": "",
     "title": "",
+    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreProject.bjs",
     "items": [
         {
             "closable": false,
