@@ -180,13 +180,6 @@
                                     "xtype": "TextField"
                                 },
                                 {
-                                    "fieldLabel": "Passwd",
-                                    "name": "passwd",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "|xns": "Roo.form",
                                     "xtype": "ComboBox",
                                     "allowBlank": "false",
