@@ -148,6 +148,7 @@ Pman.Dialog.CorePersonContact = {
                                         {
                                             var coid = _this.form.findField('company_id').getValue();
                                             o.params.company_id = coid;
+                                            
                                         }
                                     },
                                     allowBlank : 'false',
