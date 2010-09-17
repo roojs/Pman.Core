@@ -38,7 +38,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "add": "function (combo)\n{\n\n    Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n            _this.form.setValues({\n                    \n            })\n    }); \n}"
+                                        "add": "function (combo)\n{\n\n    Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n            _this.form.setValues({\n                    company_id_name : data.name,\n                    company_id : dat\n            })\n    }); \n}"
                                     },
                                     "allowBlank": "false",
                                     "displayField": "code",
