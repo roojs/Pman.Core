@@ -95,7 +95,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "add": "function (combo)\n{\n    var coid = _this.form.findField('company_id').getValue();\n    if (!coid ) {\n    \n         Ext.MessageBox.alert(\"Error\", \"Select An Company First\");\n        return false;\n\n    }\n    Pman.Dialog.Office.show(cfg, function(data) {\n                cb.setFromData(data);\n        }); \n    \n    \n}"
+                                        "add": "function (combo)\n{\n    var coid = _this.form.findField('company_id').getValue();\n    if (!coid ) {\n    \n         Ext.MessageBox.alert(\"Error\", \"Select An Company First\");\n        return false;\n\n    }\n    Pman.Dialog.Office.show(cfg, function(data) {\n                _this.form.setValues({\n                    company_id_name : data.name,\n                    company_id : data.id\n            });\n        }); \n    \n    \n}"
                                     },
                                     "allowBlank": "false",
                                     "displayField": "name",
