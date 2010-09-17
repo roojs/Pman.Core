@@ -32,7 +32,7 @@ Pman.Dialog.CorePersonContact = {
             xns: Roo,
             closable : false,
             collapsible : false,
-            height : 400,
+            height : 350,
             resizable : false,
             title : "Edit / Create Person",
             width : 500,
