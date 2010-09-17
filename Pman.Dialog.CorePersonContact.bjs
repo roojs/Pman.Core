@@ -180,21 +180,6 @@
                                     "xtype": "TextField"
                                 },
                                 {
-                                    "fieldLabel": "Active",
-                                    "name": "active",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "fieldLabel": "Remarks",
-                                    "name": "remarks",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextArea",
-                                    "height": 100
-                                },
-                                {
                                     "fieldLabel": "Passwd",
                                     "name": "passwd",
                                     "width": 200,
