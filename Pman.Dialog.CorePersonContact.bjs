@@ -182,13 +182,12 @@
                                     "xtype": "TextField"
                                 },
                                 {
+                                    "allowBlank": false,
                                     "fieldLabel": "Email",
                                     "name": "email",
                                     "width": 200,
                                     "xtype": "TextField",
-                                    "|xns": "Roo.form",
-                                    "allowBlank": true,
-                                    "listeners": {}
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "name": "id",
