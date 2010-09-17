@@ -152,6 +152,13 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
+                                    "fieldLabel": "Role",
+                                    "name": "role",
+                                    "width": 200,
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextField"
+                                },
+                                {
                                     "fieldLabel": "Phone",
                                     "name": "phone",
                                     "width": 200,
@@ -168,13 +175,6 @@
                                 {
                                     "fieldLabel": "Email",
                                     "name": "email",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "fieldLabel": "Role",
-                                    "name": "role",
                                     "width": 200,
                                     "|xns": "Roo.form",
                                     "xtype": "TextField"
