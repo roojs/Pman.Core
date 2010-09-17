@@ -154,7 +154,10 @@ Pman.Dialog.CorePersonContact = {
                                         
                                             }
                                             Pman.Dialog.Office.show(cfg, function(data) {
-                                                        cb.setFromData(data);
+                                                        _this.form.setValues({
+                                                            company_id_name : data.name,
+                                                            company_id : data.id
+                                                    });
                                                 }); 
                                             
                                             
