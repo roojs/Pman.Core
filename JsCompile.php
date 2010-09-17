@@ -36,7 +36,7 @@ class Pman_Core_JsCompile  extends Pman
             print_r($ar);
             exit;
         } else {
-           
+            $p = $proj; 
             //$ar = $args;
             //array_shift($ar);
         }
