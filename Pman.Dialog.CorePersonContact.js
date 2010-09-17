@@ -214,13 +214,6 @@ Pman.Dialog.CorePersonContact = {
                                     width : 200
                                 },
                                 {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    fieldLabel : 'Action type',
-                                    name : 'action_type',
-                                    width : 200
-                                },
-                                {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
                                     allowBlank : 'false',
