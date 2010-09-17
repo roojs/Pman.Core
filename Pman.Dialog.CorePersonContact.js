@@ -216,21 +216,6 @@ Pman.Dialog.CorePersonContact = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    fieldLabel : 'Active',
-                                    name : 'active',
-                                    width : 75
-                                },
-                                {
-                                    xtype: 'TextArea',
-                                    xns: Roo.form,
-                                    fieldLabel : 'Remarks',
-                                    name : 'remarks',
-                                    width : 200,
-                                    height : 100
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
                                     fieldLabel : 'Passwd',
                                     name : 'passwd',
                                     width : 200
