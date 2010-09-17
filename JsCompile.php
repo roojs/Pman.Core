@@ -36,8 +36,8 @@ class Pman_Core_JsCompiler extends Pman
             echo "SELECT Component to build\n";
             print_r($ar);
             exit;
-            $ar = $args;
-            array_shift($ar);
+            //$ar = $args;
+            //array_shift($ar);
         }
         
         switch ($args[0]) {
@@ -45,10 +45,11 @@ class Pman_Core_JsCompiler extends Pman
              
                 foreach($ar as $p) {
                     $this->build($p);
-                    $this->install($p);
+                    //$this->install($p);
                 }
                 break;
             case 'install' :     // needed for install on remote sites..
+                die('not yet..');
                 foreach($ar as $p) {
                     $this->install($p);
                 }
