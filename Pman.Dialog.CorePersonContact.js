@@ -149,9 +149,9 @@ Pman.Dialog.CorePersonContact = {
                                             var coid = _this.form.findField('company_id').getValue();
                                             if (!coid ) {
                                             
-                                                     Ext.MessageBox.alert("Error", "Select An Company First");
-                                                                        return false
-                                                                    }
+                                                 Ext.MessageBox.alert("Error", "Select An Company First");
+                                                    return false
+                                                }
                                         }
                                     },
                                     allowBlank : 'false',
