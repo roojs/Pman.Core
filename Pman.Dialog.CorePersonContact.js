@@ -143,6 +143,13 @@ Pman.Dialog.CorePersonContact = {
                                 {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
+                                    listeners : {
+                                        add : function (combo)
+                                        {
+                                            var coid = _this.form.findField('company_id').getValue();
+                                            o.params.company_id = coid;
+                                        }
+                                    },
                                     allowBlank : 'false',
                                     displayField : 'name',
                                     editable : 'false',
@@ -163,12 +170,6 @@ Pman.Dialog.CorePersonContact = {
                                     typeAhead : true,
                                     valueField : 'id',
                                     width : 300,
-                                    listeners : {
-                                        add : function (combo)
-                                        {
-                                        
-                                        }
-                                    },
                                     store : {
                                         xtype: 'Store',
                                         xns: Roo.data,
