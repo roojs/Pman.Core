@@ -94,28 +94,31 @@
                                     ]
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "ComboBox",
                                     "allowBlank": "false",
+                                    "displayField": "name",
                                     "editable": "false",
                                     "emptyText": "Select Office",
+                                    "fieldLabel": "Office",
                                     "forceSelection": true,
+                                    "hiddenName": "office_id",
                                     "listWidth": 400,
                                     "loadingText": "Searching...",
                                     "minChars": 2,
+                                    "name": "office_id_name",
                                     "pageSize": 20,
                                     "qtip": "Select Office",
+                                    "queryParam": "query[name]",
                                     "selectOnFocus": true,
+                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
                                     "triggerAction": "all",
                                     "typeAhead": true,
-                                    "width": 300,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-                                    "queryParam": "query[name]",
-                                    "fieldLabel": "Office",
                                     "valueField": "id",
-                                    "displayField": "name",
-                                    "hiddenName": "office_id",
-                                    "name": "office_id_name",
+                                    "width": 300,
+                                    "xtype": "ComboBox",
+                                    "|xns": "Roo.form",
+                                    "listeners": {
+                                        "add": "function (combo)\n{\n\n}"
+                                    },
                                     "items": [
                                         {
                                             "listeners": {
