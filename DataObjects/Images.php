@@ -54,6 +54,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
+        
+        if (empty($this->mimetype)) {
+            require_once 'File/MimeType.php';
+            $y = new File_MimeType();
+            $this->mimetype = $y->fromFilename('fred.doc');
+        }
+        
+        
         if (empty($this->filename)) {
             $this->filename = basename($file);
         }
