@@ -30,7 +30,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
+    /**
+     * create an email from file.
+     * these must have been set first.
+     * 
+     * 
+     */
     function createFrom($file)
     {
         // copy the file into the storage area..
@@ -49,6 +54,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
+        if (empty($this->filename)) {
+            $this->filename = basename($file);
+        }
+        
         //DB_DataObject::debugLevel(1);
         if (!$this->id) {
             $this->insert();
