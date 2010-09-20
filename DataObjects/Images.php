@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (empty($this->mimetype)) {
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
-            $this->mimetype = $y->fromFilename('fred.doc');
+            $this->mimetype = $y->fromFilename($file);
         }
         
         
