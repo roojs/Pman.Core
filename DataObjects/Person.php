@@ -168,6 +168,19 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = '';
             
         }
+        // local auth - 
+        $u = DB_DataObject::factory('Person');
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Pman['local_autoauth']) && 
+            ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
+            ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
+            $u->get('email', $ff->Pman['local_autoauth'])
+        ) {
+            $u->login();
+            return true;
+        }
+           
+        
         // not in session or not matched...
         $u = DB_DataObject::factory('Person');
         $u->whereAdd(' LENGTH(passwd) > 0');
