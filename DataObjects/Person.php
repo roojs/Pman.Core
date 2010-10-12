@@ -176,7 +176,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
             $u->get('email', $ff->Pman['local_autoauth'])
         ) {
-            $u->login();
+            $db = $this->getDatabaseConnection();
+            $sesPrefix = $db->dsn['database'];
+            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
             return true;
         }
            
