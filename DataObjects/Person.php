@@ -431,7 +431,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // -- for distribution
         if (!empty($q['query']['person_internal_only'])) {
             // must be internal and not current user (need for distribution list)
-            $this->whereAdd(" join_company_id_id.isOwner = 1");
+            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
             
             //$this->whereAdd(($this->tableName() == 'Person' ? 'Person' : "join_person_id_id") .
             //    ".id  != ".$au->id);
