@@ -263,29 +263,34 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         $ret= $this->toArray();
         
-        $ret['url'] = $this->URL(-1,'/Images/Download');
-        $ret['url_thumb'] = $this->URL($req['query']['imagesize']);
+        $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
         
-        
+        $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
+            
+        if (!empty($req['query']['imagesize'])) {
+            $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
+        }
+         
         return $ret;
     }
      
-    function URL($size, $provider = '/Images/Thumb')
+    function URL($size, $provider = '/Images/Thumb', $baseURL=false)
     {
         if (!$this->id) {
             return 'about:blank';
             
         }
         $ff = HTML_FlexyFramework::get();
+        $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
         if ($size < 0) {
-            return $ff->baseURL . $provider . "/{$this->id}/{$this->filename}";
+            return $baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
         //-- max?
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
         
         
-        return $ff->baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
     /**
      * size could be 123x345
