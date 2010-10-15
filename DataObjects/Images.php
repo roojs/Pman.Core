@@ -266,7 +266,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
         
         $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
+        
         $ret['url_view'] = $this->URL(-1, '/Images',$baseURL);    
+        
         if (!empty($req['query']['imagesize'])) {
             $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
         }
