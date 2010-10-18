@@ -437,6 +437,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             //    ".id  != ".$au->id);
             $this->whereAdd("Person.id != {$au->id}");
         } 
+        
+        if (!empty($q['query']['comptype_or_company_id'])) {
+            $bits = explode(',', $q['query']['comptype_or_company_id']);
+            $id = (int) array_pop($bits);
+            $ct = $this->escape($bits[0]);
+            
+            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR Person.company_id = $id");
+            
+        }
+        
+        
         // staff list..
         if (!empty($q['query']['person_inactive'])) {
            // DB_Dataobject::debugLevel(1);
