@@ -69,11 +69,10 @@
                                     "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{desc}</b> </div>",
                                     "triggerAction": "all",
                                     "typeAhead": true,
-                                    "valueField": "id",
+                                    "valueField": "code",
                                     "width": 200,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
-                                    "listeners": {},
                                     "items": [
                                         {
                                             "*prop": "store",
