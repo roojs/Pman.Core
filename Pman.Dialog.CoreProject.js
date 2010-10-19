@@ -102,6 +102,7 @@ Pman.Dialog.CoreProject = {
                                     emptyText : "Select Project Type",
                                     fieldLabel : 'Project Type',
                                     forceSelection : true,
+                                    hiddenName : 'type',
                                     listWidth : 400,
                                     loadingText : "Searching...",
                                     minChars : 2,
@@ -115,7 +116,6 @@ Pman.Dialog.CoreProject = {
                                     typeAhead : true,
                                     valueField : 'code',
                                     width : 200,
-                                    hiddenName : '',
                                     store : {
                                         xtype: 'SimpleStore',
                                         xns: Roo.data,
