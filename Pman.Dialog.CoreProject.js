@@ -143,7 +143,7 @@ Pman.Dialog.CoreProject = {
                                         }
                                     },
                                     allowBlank : 'false',
-                                    displayField : 'code',
+                                    displayField : 'name',
                                     editable : 'false',
                                     emptyText : "Select Company",
                                     fieldLabel : 'Client',
