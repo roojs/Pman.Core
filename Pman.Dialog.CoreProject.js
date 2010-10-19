@@ -106,7 +106,7 @@ Pman.Dialog.CoreProject = {
                                     listWidth : 400,
                                     loadingText : "Searching...",
                                     minChars : 2,
-                                    name : 'type',
+                                    name : 'type_desc',
                                     pageSize : 20,
                                     qtip : "Select Project Type",
                                     queryParam : 'query[name]',
