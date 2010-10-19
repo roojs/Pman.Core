@@ -73,6 +73,8 @@
                                     "width": 200,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
+                                    "hiddenName": "",
+                                    "listeners": {},
                                     "items": [
                                         {
                                             "*prop": "store",
