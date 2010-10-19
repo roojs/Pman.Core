@@ -1,5 +1,5 @@
 {
-    "id": "roo-file-130",
+    "id": "roo-file-131",
     "name": "Pman.Dialog.CoreProject",
     "parent": "",
     "title": "",
@@ -58,11 +58,10 @@
                                     "emptyText": "Select Project Type",
                                     "fieldLabel": "Project Type",
                                     "forceSelection": true,
-                                    "hiddenName": "type",
                                     "listWidth": 400,
                                     "loadingText": "Searching...",
                                     "minChars": 2,
-                                    "name": "type_desc",
+                                    "name": "type",
                                     "pageSize": 20,
                                     "qtip": "Select Project Type",
                                     "queryParam": "query[name]",
@@ -74,6 +73,7 @@
                                     "width": 200,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
+                                    "listeners": {},
                                     "items": [
                                         {
                                             "*prop": "store",
