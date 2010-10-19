@@ -155,7 +155,7 @@ Pman.Dialog.CoreProject = {
                                     name : 'client_id_name',
                                     pageSize : 20,
                                     qtip : "Select Companies",
-                                    queryParam : 'query[code]',
+                                    queryParam : 'query[name]',
                                     selectOnFocus : true,
                                     tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
                                     triggerAction : 'all',
