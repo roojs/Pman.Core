@@ -258,6 +258,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
      
     function toRooArray($req = array()) {
+      //  echo '<PRE>';print_r($req);exit;
         if (empty($req['query']['imagesize'])) {
             return $this->toArray();
         }
@@ -343,7 +344,24 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }   
             
         
-        
+        if (!empty($ar['_copy_from'])) {
+            $copy = DB_DataObject::factory('Images');
+            $copy->get($ar['_copy_from']);
+            $this->setFrom($copy->toArray());
+            $this->setFrom($ar);
+            $this->createFrom($copy->getStoreName());
+            
+            $roo->addEvent("ADD", $this, $this->toEventString());
+            
+            $r = DB_DataObject::factory($this->tableName());
+            $r->id = $this->id;
+            $roo->loadMap($r);
+            $r->limit(1);
+            $r->find(true);
+            $roo->jok($r->toArray());
+            
+            
+        }
         
          
         
