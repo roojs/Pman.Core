@@ -89,7 +89,7 @@
                                         "add": "function (combo)\n{\n Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n            _this.form.setValues({ \n                client_id : data.id,\n                client_id_name : data.name\n            });\n        }); \n}"
                                     },
                                     "allowBlank": "false",
-                                    "displayField": "code",
+                                    "displayField": "name",
                                     "editable": "false",
                                     "emptyText": "Select Company",
                                     "fieldLabel": "Client",
