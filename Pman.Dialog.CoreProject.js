@@ -115,6 +115,7 @@ Pman.Dialog.CoreProject = {
                                     typeAhead : true,
                                     valueField : 'code',
                                     width : 200,
+                                    hiddenName : '',
                                     store : {
                                         xtype: 'SimpleStore',
                                         xns: Roo.data,
