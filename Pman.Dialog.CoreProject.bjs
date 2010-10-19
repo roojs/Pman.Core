@@ -58,6 +58,7 @@
                                     "emptyText": "Select Project Type",
                                     "fieldLabel": "Project Type",
                                     "forceSelection": true,
+                                    "hiddenName": "type",
                                     "listWidth": 400,
                                     "loadingText": "Searching...",
                                     "minChars": 2,
@@ -73,8 +74,6 @@
                                     "width": 200,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",
-                                    "hiddenName": "",
-                                    "listeners": {},
                                     "items": [
                                         {
                                             "*prop": "store",
