@@ -113,7 +113,7 @@ Pman.Dialog.CoreProject = {
                                     tpl : '<div class="x-grid-cell-text x-btn button"><b>{desc}</b> </div>',
                                     triggerAction : 'all',
                                     typeAhead : true,
-                                    valueField : 'id',
+                                    valueField : 'code',
                                     width : 200,
                                     store : {
                                         xtype: 'SimpleStore',
