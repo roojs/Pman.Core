@@ -86,7 +86,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
                 }
             }
             Roo.MessageBox.hide(); // hide any existing messages..
-            Roo.MessageBox.alert("Error", res && res.errorMsg ?  decode.errorMsg : "Error Sending data");
+            Roo.MessageBox.alert("Error", res && res.errorMsg ?  res.errorMsg : "Error Sending data");
             return;
         }
         Roo.callback(options.success, options.scope, [res, options]);
