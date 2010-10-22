@@ -103,7 +103,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         }
         if (res !== true) {
             var decode = this.processResponse(response);
-                
+             Roo.log(decode);   
             Roo.MessageBox.hide(); // hide any existing messages..
             Roo.MessageBox.alert("Error", "Error Sending: " + decode.errorMsg);
         }
