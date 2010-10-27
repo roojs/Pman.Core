@@ -548,7 +548,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //<gnm:Cell Row="6" Col="5" ValueType="60">Updated</gnm:Cell>    
         var nc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Cell');
         this.cellholder.appendChild(nc);
-        var lb = this.doc.createTextNode("\n");
+        var lb = this.doc.createTextNode("\n");// add a line break..
         this.cellholder.appendChild(lb);
         
         nc.setAttribute('Row', r);
