@@ -539,12 +539,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         //<gnm:Cell Row="6" Col="5" ValueType="60">Updated</gnm:Cell>    
         var nc = this.doc.createElement('gnm:Cell');
-        
+        this.cellholder.appendChild(nc);
         nc.setAttribute('Row', r);
         nc.setAttribute('Col', c);
         nc.setAttribute('ValueType', '60');
         nc.textContent = '';
-        
+        return nc;
 
     },
     
