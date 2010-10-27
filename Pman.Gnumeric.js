@@ -105,6 +105,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @type {XmlNode} sheet the 'Sheet' element 
      */
     sheet : false,
+    
+    /**
+     * @type {XmlNode} sheet the 'Cells' element 
+     */    
+    cellholder : false
     /**
      * @type {Object} grid the map[row][col] = cellData 
      */
@@ -235,6 +240,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.cmax = 1;
         
         this.sheet = _t.doc.getElementsByTagNameNS('*','Sheet')[0];
+        
+        
+        this.cellholder = this.sheet.getElementsByTagNameNS('*','Cells');
         var cells = this.sheet.getElementsByTagNameNS('*','Cell');
 
         
