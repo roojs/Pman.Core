@@ -482,14 +482,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     /**
      * set: 
      * Set the value of a cell..
-     * @param {String} cell name of cell, eg. C10
+     * @param {String} cell name of cell, eg. C10 or { c: 1, r :1 }
+         
      * @param {Value} value to put in cell..
+     * @param {ValueType} type of value
+     * @param {ValueFormat} value format of cell
      * 
      * Cells should exist at present, we do not make them up...
      */
      
     
-    set : function(cell, v) {
+    set : function(cell, v, vt, vf) {
         
         var cs= typeof(cell) == 'string' ? this.toRC(cell) : cell;
         //Roo.log(    this.grid[cs.r][cs.c]);
@@ -508,8 +511,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             return;
         }
         this.grid[cs.r][cs.c].value=  v;
-
         this.grid[cs.r][cs.c].dom.textContent=  v;
+        if (typeof(vt != 'undefined') && vt) {
+            this.grid[cs.r][cs.c].valueType = vt;
+            this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
+        }
+        if (typeof(vf != 'undefined') && vf) {
+            this.grid[cs.r][cs.c].valueFormat = vf;
+            this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
+        }
+        
     },
     
     
@@ -537,6 +548,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //<gnm:Cell Row="6" Col="5" ValueType="60">Updated</gnm:Cell>    
         var nc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Cell');
         this.cellholder.appendChild(nc);
+        var lb = this.doc.createTextNode("\n");
+        this.cellholder.appendChild(lb);
+        
         nc.setAttribute('Row', r);
         nc.setAttribute('Col', c);
         nc.setAttribute('ValueType', '60');
@@ -650,7 +664,191 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
             
     },
+     // now the rows..
+    importTable : function (datagrid)
+    {
+        if (!datagrid) {
+            Roo.log("Error table not found!?");
+            return;
+        }
+        function cleanHTML(str) {
+            
+             var ret = str;
+            ret = ret.replace(/&nbsp;/g,'.');
+            ret = ret.replace(/\n/g,'.');
+            ret = ret.replace(/\r/g,'.');
+            var i;
+            while (-1 != (i = ret.indexOf(unescape('%A0')))) {
+                ret = ret.substring(0,i) + ' ' + ret.substring(i+1,str.length);
+            }
+            return ret;
+        }
+
+        
+        // <cell col="A" row="1">Test< / cell>
+        // <cell col="B" row="2" type="Number" format="test1">30< / cell>
+        var rowOffsets = [];
+        var rows = datagrid.getElementsByTagName('tr');
+        //alert(rows.length);
+        
+        for(var row=0;row<rows.length;row++) {
+            //var style = document.defaultView.getComputedStyle(rows[row], "");
+            
+            //if (rows[row].getAttribute('xls:height')) {
+            //    this.setRowHeight(row+y_offset, 0 + rows[row].getAttribute('xls:height'));
+            //} else {
+            //    this.setRowHeight(row+y_offset, 0 + style.height.replace(/[^0-9.]+/g,''));
+           // }
+            
+            var coloffset = 0;
+            if (rowOffsets[row]) {
+                coloffset += rowOffsets[row];
+            }
+            var cols = rows[row].getElementsByTagName('td');
+            
+            
+            for(var col=0;col < cols.length; col++) {
+                
+                
+                var colat = col + coloffset;
+                /*
+                if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
+                    
+                    
+                    this.mergeRegion(
+                        colat,
+                        row +y_offset,
+                        colat + (cols[col].getAttribute('colspan') - 1), 
+                        row+y_offset + (
+                                (cols[col].getAttribute('rowspan') > 1) ?
+                                    (cols[col].getAttribute('rowspan') - 1) : 0
+                                )
+                    );
+                    
+                    
+                    
+                    coloffset += (cols[col].getAttribute('colspan') - 1);
+                }
+               
+                if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
+                    // this should really do a merge, but it's pretty damn complex...
+                    //this.mergeRegion(colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
+                    var rroff = cols[col].getAttribute('colspan')  ? (cols[col].getAttribute('colspan') -0): 1;
+                    var rr = 0;
+                    for (rr = 0; rr < cols[col].getAttribute('rowspan');rr++) {
+                        rowOffsets[rr + row] = col + rroff;
+                    }
+                    
+                }
+                 */
+               
+                /*
+                var style = this.newStyle();
+                if (style.setFrom(cols[col])) {
+                    style.add(
+                        colat+x_offset,
+                        row+y_offset,
+                        
+                        colat+x_offset + ((cols[col].getAttribute('colspan') > 1) ?
+                                    (cols[col].getAttribute('colspan') - 1) : 0),
+                        row+y_offset  + ((cols[col].getAttribute('rowspan') > 1) ?
+                                    (cols[col].getAttribute('rowspan') - 1) : 0) 
+                    );
+                }
+                
+                 */
+                // skip blank cells
+                if (!cols[col].childNodes.length) {
+                    continue;
+                }
+                
+                
+                
+                
+                var vt = '60'';
+                var vf = false;
+                
+                switch(cols[col].getAttribute('xls:type')) {
+                    case 'int':
+                        vt = 30; // int!!!!
+                        break;
+                        
+                    case 'float':
+                        vt = 40; // float!!!!
+                        if (cols[col].getAttribute('xls:floatformat')) {
+                                vf = cols[col].getAttribute('xls:floatformat');
+                        }
+                        break;
+                        
+                    case 'date':
+                        vt = 30;
+                        //ValueFormat="d/m/yyyy" 38635  
+                        var vf = 'd/m/yyy';
+                        if (cols[col].getAttribute('xls:dateformat')) {
+                            vf= cols[col].getAttribute('xls:dateformat');
+                        }
+                        
+                       
+                        
+                        break;
+                    
+                    default:
+                       
+                        break;
+                }
+                /*
+                if (cols[col].getAttribute('xls:src')) {
+                    //alert(cols[col].childNodes[0].width);
+                    if (this.writeImage(
+                        row+y_offset, 
+                        colat+x_offset+coloffset, 
+                        cols[col].getAttribute('xls:src'), 
+                        cols[col].childNodes[0].width, 
+                        cols[col].childNodes[0].height
+                        )) {
+                       
+                    }
+                    continue;
+                }
+                */
+                 
+                if (!cols[col].childNodes[0].nodeValue) {
+                    continue;
+                }
+                if (!cols[col].childNodes[0].nodeValue.replace(/^\s*|\s*$/g,"").length) {
+                    continue;
+                }
+                // strip me.!
+                var cell_value_text = cleanHtml(cols[col].childNodes[0].nodeValue);
+       
+                if (cols[col].getAttribute('xls:percent')) {
+                    cell_value_text = '' + ((cell_value_text * 1) / 100);
+                }
+
+                if (cell_value_text.length && (vt = 30)) {
+                    var bits = cell_value_text.split(/-/);
+                    var cur = new Date(bits[0],bits[1]-1,bits[2]);
+                    cell_value_text = '' + Math.round((cur.getTime() - Date.UTC(1899,11,30)) / (24 * 60 * 60 * 1000));
+                }
+
+                
+                
+                if (cols[col].getAttribute('xls:formula')) {
+                    var s = cols[col].getAttribute('xls:formula');
+                    cell.removeAttribute('ValueType');
+                    cell_value_text = s.replace(/#row#/g,(row + y_offset + 1));
+                }
+                this.set({ r: row, c : col}, cell_value_text, vt, vf);
+                
+                
+                
+                
+                
+            }
+        }
+    }
     
+
     
      /**
      * toHTML: 
