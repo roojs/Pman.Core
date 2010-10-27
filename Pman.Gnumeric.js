@@ -136,6 +136,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     stylesheetID : false,
     /**
+     * @type {Number} rowOffset - used by table importer to enable multiple tables to be improted
+     */
+    
+    rowOffset : 0,
+    
+    /**
      * load:
      * run the connection, parse document and fire load event..
      * can be run multiple times with new data..
@@ -840,7 +846,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     cell.removeAttribute('ValueType');
                     cell_value_text = s.replace(/#row#/g,(row + y_offset + 1));
                 }
-                this.set({ r: row, c : col}, cell_value_text, vt, vf);
+                this.set({ r: row + this.rowOffset, c : col}, cell_value_text, vt, vf);
                 
                 
                 
