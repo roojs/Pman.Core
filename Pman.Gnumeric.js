@@ -819,7 +819,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     continue;
                 }
                 // strip me.!
-                var cell_value_text = cleanHtml(cols[col].childNodes[0].nodeValue);
+                var cell_value_text = cleanHTML(cols[col].childNodes[0].nodeValue);
        
                 if (cols[col].getAttribute('xls:percent')) {
                     cell_value_text = '' + ((cell_value_text * 1) / 100);
