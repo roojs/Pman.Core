@@ -242,7 +242,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.sheet = _t.doc.getElementsByTagNameNS('*','Sheet')[0];
         
         
-        this.cellholder = this.sheet.getElementsByTagNameNS('*','Cells');
+        this.cellholder = this.sheet.getElementsByTagNameNS('*','Cells')[0];
         var cells = this.sheet.getElementsByTagNameNS('*','Cell');
 
         
