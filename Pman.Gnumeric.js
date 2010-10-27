@@ -109,7 +109,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     /**
      * @type {XmlNode} sheet the 'Cells' element 
      */    
-    cellholder : false
+    cellholder : false,
     /**
      * @type {Object} grid the map[row][col] = cellData 
      */
