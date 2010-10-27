@@ -557,8 +557,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var lb = this.doc.createTextNode("\n");// add a line break..
         this.cellholder.appendChild(lb);
         
-        nc.setAttribute('Row', r);
-        nc.setAttribute('Col', c);
+        nc.setAttribute('Row', new String(r));
+        nc.setAttribute('Col', new String(c));
         nc.setAttribute('ValueType', '60');
         nc.textContent = '';
         
