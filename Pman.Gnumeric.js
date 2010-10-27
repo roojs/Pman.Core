@@ -501,13 +501,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
             Roo.log('cell not defined:' + cell);
+            this.createCell(cs.r,cs.c);
         }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
-            
-            
-            
-            
             return;
         }
         this.grid[cs.r][cs.c].value=  v;
