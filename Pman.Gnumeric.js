@@ -765,7 +765,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 
-                var vt = '60'';
+                var vt = '60';
                 var vf = false;
                 
                 switch(cols[col].getAttribute('xls:type')) {
