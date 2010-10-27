@@ -496,6 +496,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
+            
+            
+            
+            
             return;
         }
         this.grid[cs.r][cs.c].value=  v;
@@ -522,6 +526,20 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rmax = Math.max(this.rmax, dest +1);
         
     },
+    
+    createCell: function(r,c)
+    {
+        //<gnm:Cell Row="6" Col="5" ValueType="60">Updated</gnm:Cell>    
+        var nc = this.doc.createElement('gnm:Cell');
+        
+        nc.setAttribute('Row', r);
+        nc.setAttribute('Col', c);
+        nc.setAttribute('ValueType', '60');
+        nc.textContent = '';
+        
+
+    },
+    
     
     copyCell : function(src, dest)
     {
