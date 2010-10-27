@@ -514,7 +514,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
-            return;
+            this.createCell(cs.r,cs.c);
+            //return;
         }
         this.grid[cs.r][cs.c].value=  v;
         this.grid[cs.r][cs.c].dom.textContent=  v;
