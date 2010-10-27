@@ -488,7 +488,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // need to generate clell if it doe
         if (typeof(this.grid[cs.r]) == 'undefined') {
             Roo.log('no row:' + cell);
-            return
+            this.grid[cs.r] = [];
+            //return;
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
             Roo.log('cell not defined:' + cell);
