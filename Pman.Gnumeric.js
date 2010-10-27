@@ -671,7 +671,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             Roo.log("Error table not found!?");
             return;
         }
-        function cleanHTML(str) {
+        var cleanHTML = function (str) {
             
              var ret = str;
             ret = ret.replace(/&nbsp;/g,'.');
@@ -682,7 +682,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 ret = ret.substring(0,i) + ' ' + ret.substring(i+1,str.length);
             }
             return ret;
-        }
+        };
 
         
         // <cell col="A" row="1">Test< / cell>
