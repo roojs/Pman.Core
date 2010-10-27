@@ -671,6 +671,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             Roo.log("Error table not found!?");
             return;
         }
+        this.rowOffset = this.rowOffset  || 0;
+        
         var cleanHTML = function (str) {
             
              var ret = str;
@@ -846,6 +848,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
             }
         }
+        this.rowOffset += rows.length;
+        
     },
     
 
