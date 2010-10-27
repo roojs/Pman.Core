@@ -538,7 +538,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     createCell: function(r,c)
     {
         //<gnm:Cell Row="6" Col="5" ValueType="60">Updated</gnm:Cell>    
-        var nc = this.doc.createElementNS('gnm:Cell');
+        var nc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Cell');
         this.cellholder.appendChild(nc);
         nc.setAttribute('Row', r);
         nc.setAttribute('Col', c);
