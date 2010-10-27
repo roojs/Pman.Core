@@ -544,6 +544,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         nc.setAttribute('Col', c);
         nc.setAttribute('ValueType', '60');
         nc.textContent = '';
+        
+        this.grid[r][c] = Roo.applyIf({
+            valueType : '60',
+            valueFormat : '',
+            value : '',
+            dom: nc,
+            r: r,
+            c: c
+            }, _t.defaultCell);
+        
         return nc;
 
     },
