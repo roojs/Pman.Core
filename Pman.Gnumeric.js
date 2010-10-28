@@ -672,13 +672,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
     },
      // now the rows..
-    importTable : function (datagrid)
+    importTable : function (datagrid, xoff,yoff)
     {
         if (!datagrid) {
             Roo.log("Error table not found!?");
             return;
         }
-        this.rowOffset = this.rowOffset  || 0;
+        xoff = xoff || 0;
+        yoff = yoff || 0;
         
         var cleanHTML = function (str) {
             
@@ -709,10 +710,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //    this.setRowHeight(row+y_offset, 0 + style.height.replace(/[^0-9.]+/g,''));
            // }
             
-            var coloffset = 0;
-            if (rowOffsets[row]) {
-                coloffset += rowOffsets[row];
-            }
+            //var coloffset = 0;
+           // if (rowOffsets[row]) {
+           //     coloffset += rowOffsets[row];
+           // }
             var cols = rows[row].getElementsByTagName('td');
             
             
@@ -847,7 +848,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     cell.removeAttribute('ValueType');
                     cell_value_text = s.replace(/#row#/g,(row + y_offset + 1));
                 }
-                this.set({ r: row + this.rowOffset, c : col}, cell_value_text, vt, vf);
+                this.set({ r: row + yoff, c : col + xoff }, cell_value_text, vt, vf);
                 
                 
                 
