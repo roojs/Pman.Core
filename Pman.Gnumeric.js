@@ -720,7 +720,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             for(var col=0;col < cols.length; col++) {
                 
                 
-                var colat = col + coloffset;
+                //var colat = col + coloffset;
                 /*
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
