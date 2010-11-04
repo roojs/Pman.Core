@@ -32,10 +32,10 @@ Pman.Dialog.ImageUpload = {
             xns: Roo,
             closable : false,
             collapsible : false,
+            height : 140,
             modal : true,
             resizable : true,
-            width : 500,
-            height : 0
+            width : 500
         });
     }
 };
