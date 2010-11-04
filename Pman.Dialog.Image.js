@@ -108,7 +108,8 @@ Pman.Dialog.Image = {
                                     _this.dialog.el.unmask();
                                      
                                     if (act.type == 'setdata') { 
-                                        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php'
+                                        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
+                                        this.el.dom.action = this.url;
                                         this.findField('UPLOAD_IDENTIFIER').setValue(
                                             (new Date() * 1) + '' + Math.random());
                                             
