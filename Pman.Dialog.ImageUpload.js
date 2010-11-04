@@ -76,10 +76,10 @@ Pman.Dialog.ImageUpload = {
                                     _this.form= form;
                                 }
                             },
+                            labelWidth : 140,
                             method : 'POST',
                             style : 'margin:10px;',
                             url : baseURL + '/Roo/Images.php',
-                            labelWidth : 0,
                             items : [
                                 {
                                     xtype: 'TextField',
