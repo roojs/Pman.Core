@@ -31,7 +31,7 @@ Pman.Dialog.ImageUpload = {
             xtype: 'LayoutDialog',
             xns: Roo,
             closable : false,
-            collapsible : true
+            collapsible : false
         });
     }
 };
