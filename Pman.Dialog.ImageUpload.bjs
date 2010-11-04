@@ -31,7 +31,7 @@
                             "listeners": {
                                 "|actioncomplete": "function(_self,action)\n{\n    if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, _this.form.getValues());\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
                                 "|rendered": "function (form)\n{\n    _this.form= form;\n}\n",
-                                "actionfailed": "function (_self, action)\n{\n\n}"
+                                "actionfailed": "function (_self, action)\n{\n    _this.uploadComplete = true;\n    _this.dialog.el.unmask();\n    // error msg???\n    \n    if (act.type == 'submit') {\n        Ext.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");\n        return;\n    }\n    \n    // what about load failing..\n    Ext.MessageBox.alert(\"Error\", \"Error loading details\"); \n}"
                             },
                             "labelWidth": 140,
                             "method": "POST",
