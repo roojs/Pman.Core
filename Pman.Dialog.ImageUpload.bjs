@@ -48,11 +48,11 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Ontable",
                                     "name": "ontable",
                                     "width": 200,
+                                    "xtype": "TextField",
                                     "|xns": "Roo.form",
-                                    "xtype": "TextField"
+                                    "listeners": {}
                                 },
                                 {
                                     "fieldLabel": "Onid",
