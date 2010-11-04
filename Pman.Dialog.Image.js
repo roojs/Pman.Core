@@ -46,7 +46,7 @@ Pman.Dialog.Image = {
             haveProgress : false,
             height : 140,
             modal : true,
-            resizable : true,
+            resizable : false,
             title : "Upload an Image or File",
             uploadProgress : false,
             width : 500,
