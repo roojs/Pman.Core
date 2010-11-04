@@ -40,7 +40,7 @@
                             "items": [
                                 {
                                     "fieldLabel": "Upload Image or File",
-                                    "inputType": "fo;e",
+                                    "inputType": "file",
                                     "name": "image",
                                     "width": 200,
                                     "xtype": "TextField",
