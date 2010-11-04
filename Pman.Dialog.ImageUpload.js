@@ -58,6 +58,17 @@ Pman.Dialog.ImageUpload = {
                         }
                     },
                     text : "Post"
+                },
+                {
+                    xtype: 'Button',
+                    xns: Roo,
+                    listeners : {
+                        click : function (_self, e)
+                        {
+                            _this.dialog.hide();
+                        }
+                    },
+                    text : "Cancel"
                 }
             ]
         });
