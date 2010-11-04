@@ -35,7 +35,7 @@ Pman.Dialog.ImageUpload = {
             height : 140,
             modal : true,
             resizable : true,
-            shadow : 'true',
+            shadow : true,
             title : "Upload an Image or File",
             width : 500
         });
