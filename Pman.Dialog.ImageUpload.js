@@ -42,6 +42,7 @@ Pman.Dialog.ImageUpload = {
                 {
                     xtype: 'ContentPanel',
                     xns: Roo,
+                    region : '',
                     items : [
                         {
                             xtype: 'Form',
