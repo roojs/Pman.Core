@@ -49,9 +49,8 @@
                                 },
                                 {
                                     "name": "ontable",
-                                    "xtype": "TextField",
-                                    "|xns": "Roo.form",
-                                    "listeners": {}
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "fieldLabel": "Onid",
