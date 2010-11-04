@@ -6,9 +6,9 @@
     "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.ImageUpload.bjs",
     "items": [
         {
-            "haveProgress": false,
             "closable": false,
             "collapsible": false,
+            "haveProgress": false,
             "height": 140,
             "modal": true,
             "resizable": true,
