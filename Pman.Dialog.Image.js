@@ -167,6 +167,18 @@ Pman.Dialog.Image = {
                                     name : 'UPLOAD_IDENTIFIER'
                                 },
                                 {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'post_max_size',
+                                    value : "32M"
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'upload_max_filesize',
+                                    value : "32M"
+                                },
+                                {
                                     xtype: 'TextField',
                                     xns: Roo.form,
                                     fieldLabel : 'Upload Image or File',
@@ -188,18 +200,6 @@ Pman.Dialog.Image = {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'imgtype'
-                                },
-                                {
-                                    xtype: 'Hidden',
-                                    xns: Roo.form,
-                                    name : 'post_max_size',
-                                    value : "32M"
-                                },
-                                {
-                                    xtype: 'Hidden',
-                                    xns: Roo.form,
-                                    name : 'upload_max_filesize',
-                                    value : "32M"
                                 }
                             ]
                         }
