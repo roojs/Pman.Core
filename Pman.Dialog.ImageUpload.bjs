@@ -33,7 +33,7 @@
                 },
                 {
                     "listeners": {
-                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    _this.dialog.el.mask(\"Sending\");\n    _this.uploadComplete = false;\n    _this.form.doAction('submit', {\n        url: baseURL + '/Roo/Images.html',\n        method: 'POST',\n        params: {\n         //   _id: 0 ,\n            ts : Math.random()\n        } \n    });\n    _this.haveProgress = false,\n    _this.uploadProgress.defer(1000, this);\n\n}"
                     },
                     "*prop": "buttons[]",
                     "text": "Post",
