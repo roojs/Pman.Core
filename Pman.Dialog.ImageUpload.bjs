@@ -40,7 +40,7 @@
                             "items": [
                                 {
                                     "fieldLabel": "Upload Image or File",
-                                    "name": "Upload mage of File",
+                                    "name": "image",
                                     "width": 200,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
