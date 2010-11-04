@@ -58,7 +58,7 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "name": "onid",
+                                    "name": "UPLOAD_IDENTIFIER",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 }
