@@ -93,7 +93,7 @@ Pman.Dialog.ImageUpload = {
                             listeners : {
                                 actioncomplete : function(_self,act)
                                 {
-                                       _this.uploadComplete = true;
+                                       _this.dialog.uploadComplete = true;
                                         _this.dialog.el.unmask();
                                          
                                           if (act.type == 'setdata') { 
