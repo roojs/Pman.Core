@@ -6,10 +6,9 @@
     "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.ImageUpload.bjs",
     "items": [
         {
+            "closable": false,
             "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "closable": true,
-            "listeners": {}
+            "|xns": "Roo"
         }
     ],
     "permname": "",
