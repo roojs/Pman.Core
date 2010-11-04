@@ -40,12 +40,11 @@
                             "items": [
                                 {
                                     "fieldLabel": "Upload Image or File",
+                                    "inputType": "fo;e",
                                     "name": "image",
                                     "width": 200,
                                     "xtype": "TextField",
-                                    "|xns": "Roo.form",
-                                    "inputType": "",
-                                    "listeners": {}
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "fieldLabel": "Ontable",
