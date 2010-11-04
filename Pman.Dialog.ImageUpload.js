@@ -82,6 +82,11 @@ Pman.Dialog.ImageUpload = {
                             url : baseURL + '/Roo/Images.php',
                             items : [
                                 {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'UPLOAD_IDENTIFIER'
+                                },
+                                {
                                     xtype: 'TextField',
                                     xns: Roo.form,
                                     fieldLabel : 'Upload Image or File',
@@ -98,11 +103,6 @@ Pman.Dialog.ImageUpload = {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'onid'
-                                },
-                                {
-                                    xtype: 'Hidden',
-                                    xns: Roo.form,
-                                    name : 'UPLOAD_IDENTIFIER'
                                 }
                             ]
                         }
