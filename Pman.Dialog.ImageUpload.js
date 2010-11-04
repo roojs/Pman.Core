@@ -54,6 +54,13 @@ Pman.Dialog.ImageUpload = {
                                        _this.uploadComplete = true;
                                         _this.dialog.el.unmask();
                                          
+                                          if (act.type == 'setdata') { 
+                                         
+                                              this.findField('UPLOAD_IDENTIFIER').setValue(
+                                                (new Date() * 1) + '' + Math.random());
+                                            return;
+                                         }
+                                         
                                        
                                         if (act.type == 'load') {
                                           // should this happen?  
