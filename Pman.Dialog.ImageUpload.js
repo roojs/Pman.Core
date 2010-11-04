@@ -79,6 +79,7 @@ Pman.Dialog.ImageUpload = {
                 })
                 
             },
+             : false,
             items : [
                 {
                     xtype: 'ContentPanel',
