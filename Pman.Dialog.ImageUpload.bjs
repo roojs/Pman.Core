@@ -55,7 +55,7 @@
                                 {
                                     "fieldLabel": "Upload Image or File",
                                     "inputType": "file",
-                                    "name": "image",
+                                    "name": "imageUpload",
                                     "width": 200,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
