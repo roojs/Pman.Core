@@ -30,7 +30,7 @@ Pman.Dialog.ImageUpload = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
-            closable : true
+            closable : false
         });
     }
 };
