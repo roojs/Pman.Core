@@ -48,7 +48,7 @@ Pman.Dialog.Image = {
             modal : true,
             resizable : false,
             title : "Upload an Image or File",
-            uploadProgress : false,
+            uploadProgressRunning : false,
             width : 500,
             shadow : true,
             uploadProgres : function()
