@@ -38,6 +38,12 @@ Pman.Dialog.ImageUpload = {
             shadow : true,
             title : "Upload an Image or File",
             width : 500,
+            items : [
+                {
+                    xtype: 'ContentPanel',
+                    xns: Roo
+                }
+            ],
             center : {
                 xtype: 'LayoutRegion',
                 xns: Roo
