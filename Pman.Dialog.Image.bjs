@@ -54,6 +54,18 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
+                                    "name": "post_max_size",
+                                    "value": "32M",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "upload_max_filesize",
+                                    "value": "32M",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
                                     "fieldLabel": "Upload Image or File",
                                     "inputType": "file",
                                     "name": "imageUpload",
@@ -73,18 +85,6 @@
                                 },
                                 {
                                     "name": "imgtype",
-                                    "xtype": "Hidden",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "name": "post_max_size",
-                                    "value": "32M",
-                                    "xtype": "Hidden",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "name": "upload_max_filesize",
-                                    "value": "32M",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 }
