@@ -16,7 +16,7 @@
             "modal": true,
             "resizable": false,
             "title": "Upload an Image or File",
-            "uploadProgressRunning": false,
+            "hasProgress": false,
             "width": 500,
             "xtype": "LayoutDialog",
             "|shadow": "true",
