@@ -43,7 +43,9 @@
                                     "name": "image",
                                     "width": 200,
                                     "xtype": "TextField",
-                                    "|xns": "Roo.form"
+                                    "|xns": "Roo.form",
+                                    "inputType": "",
+                                    "listeners": {}
                                 },
                                 {
                                     "fieldLabel": "Ontable",
