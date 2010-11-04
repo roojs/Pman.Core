@@ -10,7 +10,9 @@
             "collapsible": false,
             "modal": true,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "resizable": true,
+            "listeners": {}
         }
     ],
     "permname": "",
