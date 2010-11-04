@@ -117,7 +117,7 @@ Pman.Dialog.ImageUpload = {
                                 {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
-                                    name : 'imgtype'
+                                    name : 'upload_max_filesize'
                                 }
                             ]
                         }
