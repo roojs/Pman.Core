@@ -92,7 +92,6 @@ Pman.Dialog.ImageUpload = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    fieldLabel : 'Ontable',
                                     name : 'ontable',
                                     width : 200
                                 },
