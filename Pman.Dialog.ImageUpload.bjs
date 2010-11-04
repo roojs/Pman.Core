@@ -53,28 +53,6 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Linkurl",
-                                    "name": "linkurl",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "fieldLabel": "Descript",
-                                    "name": "descript",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextArea",
-                                    "height": 100
-                                },
-                                {
-                                    "fieldLabel": "Title",
-                                    "name": "title",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "name": "id",
                                     "|xns": "Roo.form",
                                     "xtype": "Hidden"
