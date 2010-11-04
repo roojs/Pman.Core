@@ -74,6 +74,7 @@
                                 },
                                 {
                                     "name": "upload_max_filesize",
+                                    "value": "32M",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 }
