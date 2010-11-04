@@ -37,10 +37,46 @@ Pman.Dialog.ImageUpload = {
             resizable : true,
             title : "Upload an Image or File",
             width : 500,
-            shadow : true,
-             : function() {
+             : function()
+            {
+               if (!this.haveProgress) {
+                    Roo.MessageBox.progress("Uploading", "Uploading");
+                }
+                if (this.uploadComplete) {
+                    Roo.MessageBox.hide();
+                    return;
+                }
+                this.haveProgress = true;
+                var _this = this;
+                var uid = this.form.findField('UPLOAD_IDENTIFIER').getValue();
+                Pman.request({
+                    url : baseURL + '/Core/UploadProgress.php',
+                    params: {
+                        id : uid
+                    },
+                    method: 'GET',
+                    success : function(data){
+                        //console.log(data);
+                        if (_this.uploadComplete) {
+                            Roo.MessageBox.hide();
+                            return;
+                        }
+                            
+                        if (data){
+                            Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,
+                                Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'
+                            );
+                        }
+                        _this.uploadProgress.defer(2000, _this);
+                    },
+                    failure: function(data) {
+                      //  console.log('fail');
+                     //   console.log(data);
+                    }
+                })
                 
             },
+            shadow : true,
             items : [
                 {
                     xtype: 'ContentPanel',
