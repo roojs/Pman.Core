@@ -215,7 +215,7 @@ Pman.Dialog.ImageUpload = {
                             // do some checks?
                              
                             _this.dialog.el.mask("Sending");
-                            _this.uploadComplete = false;
+                            _this.dialog.uploadComplete = false;
                             _this.form.doAction('submit', {
                                 url: baseURL + '/Roo/Images.html',
                                 method: 'POST',
@@ -224,7 +224,7 @@ Pman.Dialog.ImageUpload = {
                                     ts : Math.random()
                                 } 
                             });
-                            _this.haveProgress = false,
+                            _this.dialog.haveProgress = false,
                             _this.dialog.uploadProgress.defer(1000, _this.dialog);
                         
                         }
