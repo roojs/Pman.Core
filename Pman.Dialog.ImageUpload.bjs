@@ -49,7 +49,6 @@
                                 },
                                 {
                                     "name": "ontable",
-                                    "width": 200,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form",
                                     "listeners": {}
