@@ -104,34 +104,34 @@ Pman.Dialog.Image = {
                             listeners : {
                                 actioncomplete : function(_self,act)
                                 {
-                                       _this.dialog.uploadComplete = true;
-                                        _this.dialog.el.unmask();
-                                         
-                                          if (act.type == 'setdata') { 
-                                            this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php'
-                                              this.findField('UPLOAD_IDENTIFIER').setValue(
-                                                (new Date() * 1) + '' + Math.random());
-                                                
-                                            return;
-                                         }
-                                         
-                                       
-                                        if (act.type == 'load') {
-                                          // should this happen?  
-                                            _this.data = act.result.data;
-                                           // _this.loaded();
-                                            return;
+                                    _this.dialog.uploadComplete = true;
+                                    _this.dialog.el.unmask();
+                                     
+                                    if (act.type == 'setdata') { 
+                                        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php'
+                                        this.findField('UPLOAD_IDENTIFIER').setValue(
+                                            (new Date() * 1) + '' + Math.random());
+                                            
+                                        return;
+                                    }
+                                     
+                                   
+                                    if (act.type == 'load') {
+                                      // should this happen?  
+                                        _this.data = act.result.data;
+                                       // _this.loaded();
+                                        return;
+                                    }
+                                    
+                                    
+                                    if (act.type == 'submit') { // only submitted here if we are 
+                                        _this.dialog.hide();
+                                        //console.log(act);
+                                        if (_this.callback) {
+                                            _this.callback.call(this, act.result.data);
                                         }
-                                        
-                                        
-                                        if (act.type == 'submit') { // only submitted here if we are 
-                                            _this.dialog.hide();
-                                            //console.log(act);
-                                            if (_this.callback) {
-                                                _this.callback.call(this, act.result.data);
-                                            }
-                                            return; 
-                                        }
+                                        return; 
+                                    }
                                 },
                                 rendered : function (form)
                                 {
