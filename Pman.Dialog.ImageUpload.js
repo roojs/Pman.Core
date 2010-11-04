@@ -78,6 +78,7 @@ Pman.Dialog.ImageUpload = {
                 
             },
             shadow : true,
+             : false,
             items : [
                 {
                     xtype: 'ContentPanel',
