@@ -83,7 +83,7 @@ Pman.Dialog.ImageUpload = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    name : 'filename',
+                                    name : 'Upload mage of File',
                                     width : 200
                                 },
                                 {
