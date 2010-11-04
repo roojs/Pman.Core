@@ -30,13 +30,14 @@ Pman.Dialog.ImageUpload = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
-            uploadProgress : false,
+            haveProgress : false,
             closable : false,
             collapsible : false,
             height : 140,
             modal : true,
             resizable : true,
             title : "Upload an Image or File",
+            uploadProgress : false,
             width : 500,
             shadow : true,
             uploadProgres : function()
@@ -79,7 +80,6 @@ Pman.Dialog.ImageUpload = {
                 })
                 
             },
-             : false,
             items : [
                 {
                     xtype: 'ContentPanel',
