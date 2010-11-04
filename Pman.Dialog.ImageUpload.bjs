@@ -13,7 +13,9 @@
             "resizable": true,
             "width": 500,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "title": "",
+            "listeners": {}
         }
     ],
     "permname": "",
