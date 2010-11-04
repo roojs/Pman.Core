@@ -53,13 +53,6 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Filesize",
-                                    "name": "filesize",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "fieldLabel": "Displayorder",
                                     "name": "displayorder",
                                     "width": 75,
