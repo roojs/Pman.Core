@@ -34,7 +34,7 @@ Pman.Dialog.ImageUpload = {
             collapsible : false,
             modal : true,
             resizable : true,
-            width : 0
+            width : 500
         });
     }
 };
