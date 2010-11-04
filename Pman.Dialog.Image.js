@@ -1,5 +1,6 @@
 //<script type="text/javascript">
 
+/*
 Pman.Dialog.Image = {
     dialog : false,
     form : false,
@@ -208,3 +209,4 @@ Pman.Dialog.Image = {
     
          
 };
+*/
