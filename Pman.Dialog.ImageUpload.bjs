@@ -53,9 +53,9 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "name": "id",
-                                    "|xns": "Roo.form",
-                                    "xtype": "Hidden"
+                                    "name": "onid",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }
