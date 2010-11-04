@@ -183,7 +183,7 @@ Pman.Dialog.ImageUpload = {
                                 } 
                             });
                             _this.haveProgress = false,
-                            _this.uploadProgress.defer(1000, this);
+                            _this.dialog.uploadProgress.defer(1000, _this.dialog);
                         
                         }
                     },
