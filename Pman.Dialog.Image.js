@@ -146,6 +146,7 @@ Pman.Dialog.Image = {
                                     // error msg???
                                     
                                     if (act.type == 'submit') {
+                                        Roo.log(act);
                                         Ext.MessageBox.alert("Error", "Saving failed = fix errors and try again");
                                         return;
                                     }
