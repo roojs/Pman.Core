@@ -55,7 +55,7 @@ Pman.Dialog.ImageUpload = {
                                          
                                        
                                         if (act.type == 'load') {
-                                            
+                                          // should this happen?  
                                             _this.data = act.result.data;
                                            // _this.loaded();
                                             return;
