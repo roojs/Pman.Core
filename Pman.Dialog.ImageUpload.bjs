@@ -40,6 +40,11 @@
                             "|xns": "Roo.form",
                             "items": [
                                 {
+                                    "name": "UPLOAD_IDENTIFIER",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
                                     "fieldLabel": "Upload Image or File",
                                     "inputType": "file",
                                     "name": "image",
@@ -54,11 +59,6 @@
                                 },
                                 {
                                     "name": "onid",
-                                    "xtype": "Hidden",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "name": "UPLOAD_IDENTIFIER",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 }
