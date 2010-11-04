@@ -11,11 +11,10 @@
             "height": 140,
             "modal": true,
             "resizable": true,
+            "title": "Upload an Image or File",
             "width": 500,
             "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "title": "",
-            "listeners": {}
+            "|xns": "Roo"
         }
     ],
     "permname": "",
