@@ -238,7 +238,7 @@ Pman.Dialog.ImageUpload = {
                         
                         }
                     },
-                    text : "Post"
+                    text : "Upload"
                 }
             ]
         });
