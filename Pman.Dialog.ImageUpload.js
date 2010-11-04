@@ -97,66 +97,9 @@ Pman.Dialog.ImageUpload = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    fieldLabel : 'Displayorder',
-                                    name : 'displayorder',
-                                    width : 75
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
                                     fieldLabel : 'Language',
                                     name : 'language',
                                     width : 200
-                                },
-                                {
-                                    xtype: 'ComboBox',
-                                    xns: Roo.form,
-                                    allowBlank : 'false',
-                                    editable : 'false',
-                                    emptyText : "Select Images",
-                                    forceSelection : true,
-                                    listWidth : 400,
-                                    loadingText : "Searching...",
-                                    minChars : 2,
-                                    pageSize : 20,
-                                    qtip : "Select Images",
-                                    selectOnFocus : true,
-                                    triggerAction : 'all',
-                                    typeAhead : true,
-                                    width : 300,
-                                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{filename}</b> </div>',
-                                    queryParam : 'query[filename]',
-                                    fieldLabel : 'Parent image',
-                                    valueField : 'id',
-                                    displayField : 'filename',
-                                    hiddenName : 'parent_image_id',
-                                    name : 'parent_image_id_filename',
-                                    store : {
-                                        xtype: 'Store',
-                                        xns: Roo.data,
-                                        remoteSort : true,
-                                        sortInfo : { direction : 'ASC', field: 'id' },
-                                        listeners : {
-                                            beforeload : function (_self, o){
-                                                o.params = o.params || {};
-                                                // set more here
-                                            }
-                                        },
-                                        proxy : {
-                                            xtype: 'HttpProxy',
-                                            xns: Roo.data,
-                                            method : 'GET',
-                                            url : baseURL + '/Roo/Images.php'
-                                        },
-                                        reader : {
-                                            xtype: 'JsonReader',
-                                            xns: Roo.data,
-                                            id : 'id',
-                                            root : 'data',
-                                            totalProperty : 'total',
-                                            fields : [{"name":"id","type":"int"},{"name":"filename","type":"string"}]
-                                        }
-                                    }
                                 },
                                 {
                                     xtype: 'DateField',
