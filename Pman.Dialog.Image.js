@@ -51,7 +51,7 @@ Pman.Dialog.Image = {
             uploadProgressRunning : false,
             width : 500,
             shadow : true,
-            uploadProgres : function()
+            uploadProgress : function()
             {
                 var dlg = this;
                if (!dlg.haveProgress) {
