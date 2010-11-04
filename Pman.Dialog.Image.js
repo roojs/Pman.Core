@@ -127,6 +127,7 @@ Pman.Dialog.Image = {
                                     
                                     if (act.type == 'submit') { // only submitted here if we are 
                                         _this.dialog.hide();
+                                        
                                         //console.log(act);
                                         if (_this.callback) {
                                             _this.callback.call(this, act.result.data);
