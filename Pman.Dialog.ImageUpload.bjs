@@ -7,10 +7,9 @@
     "items": [
         {
             "closable": false,
+            "collapsible": false,
             "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "collapsible": true,
-            "listeners": {}
+            "|xns": "Roo"
         }
     ],
     "permname": "",
