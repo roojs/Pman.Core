@@ -39,11 +39,10 @@
                             "|url": "baseURL + '/Roo/Images.php'",
                             "items": [
                                 {
-                                    "name": "filename",
+                                    "name": "Upload mage of File",
                                     "width": 200,
                                     "xtype": "TextField",
-                                    "|xns": "Roo.form",
-                                    "listeners": {}
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "fieldLabel": "Ontable",
