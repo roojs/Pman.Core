@@ -77,7 +77,17 @@ Pman.Dialog.ImageUpload = {
                                 },
                                 actionfailed : function (_self, action)
                                 {
-                                
+                                    _this.uploadComplete = true;
+                                    _this.dialog.el.unmask();
+                                    // error msg???
+                                    
+                                    if (act.type == 'submit') {
+                                        Ext.MessageBox.alert("Error", "Saving failed = fix errors and try again");
+                                        return;
+                                    }
+                                    
+                                    // what about load failing..
+                                    Ext.MessageBox.alert("Error", "Error loading details"); 
                                 }
                             },
                             labelWidth : 140,
