@@ -232,10 +232,7 @@ Pman.Dialog.Image = {
                             _this.dialog.el.mask("Sending");
                             _this.dialog.uploadComplete = false;
                             _this.form.doAction('submit', {
-                                url: this.url,
-                                method: 'POST',
                                 params: {
-                                 //   _id: 0 ,
                                     ts : Math.random()
                                 } 
                             });
