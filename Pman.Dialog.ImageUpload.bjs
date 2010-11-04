@@ -38,11 +38,11 @@
                             "|url": "baseURL + '/Roo/Images.php'",
                             "items": [
                                 {
-                                    "fieldLabel": "Filename",
                                     "name": "filename",
                                     "width": 200,
+                                    "xtype": "TextField",
                                     "|xns": "Roo.form",
-                                    "xtype": "TextField"
+                                    "listeners": {}
                                 },
                                 {
                                     "fieldLabel": "Ontable",
