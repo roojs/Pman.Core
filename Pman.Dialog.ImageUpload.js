@@ -37,7 +37,11 @@ Pman.Dialog.ImageUpload = {
             resizable : true,
             shadow : true,
             title : "Upload an Image or File",
-            width : 500
+            width : 500,
+            center : {
+                xtype: 'LayoutRegion',
+                xns: Roo
+            }
         });
     }
 };
