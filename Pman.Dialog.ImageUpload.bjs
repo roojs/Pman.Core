@@ -15,7 +15,14 @@
             "title": "Upload an Image or File",
             "width": 500,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "LayoutRegion",
+                    "*prop": "center"
+                }
+            ]
         }
     ],
     "permname": "",
