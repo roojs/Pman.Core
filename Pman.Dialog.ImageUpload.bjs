@@ -8,6 +8,7 @@
         {
             "closable": false,
             "collapsible": false,
+            "modal": true,
             "xtype": "LayoutDialog",
             "|xns": "Roo"
         }
