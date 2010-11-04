@@ -14,7 +14,9 @@
             "title": "Upload an Image or File",
             "width": 500,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "shadow": "",
+            "listeners": {}
         }
     ],
     "permname": "",
