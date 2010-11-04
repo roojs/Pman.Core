@@ -53,67 +53,6 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Language",
-                                    "name": "language",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "|xns": "Roo.form",
-                                    "xtype": "ComboBox",
-                                    "allowBlank": "false",
-                                    "editable": "false",
-                                    "emptyText": "Select Images",
-                                    "forceSelection": true,
-                                    "listWidth": 400,
-                                    "loadingText": "Searching...",
-                                    "minChars": 2,
-                                    "pageSize": 20,
-                                    "qtip": "Select Images",
-                                    "selectOnFocus": true,
-                                    "triggerAction": "all",
-                                    "typeAhead": true,
-                                    "width": 300,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{filename}</b> </div>",
-                                    "queryParam": "query[filename]",
-                                    "fieldLabel": "Parent image",
-                                    "valueField": "id",
-                                    "displayField": "filename",
-                                    "hiddenName": "parent_image_id",
-                                    "name": "parent_image_id_filename",
-                                    "items": [
-                                        {
-                                            "*prop": "store",
-                                            "xtype": "Store",
-                                            "|xns": "Roo.data",
-                                            "remoteSort": true,
-                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                            "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
-                                            },
-                                            "items": [
-                                                {
-                                                    "*prop": "proxy",
-                                                    "xtype": "HttpProxy",
-                                                    "method": "GET",
-                                                    "|xns": "Roo.data",
-                                                    "|url": "baseURL + '/Roo/Images.php'"
-                                                },
-                                                {
-                                                    "*prop": "reader",
-                                                    "xtype": "JsonReader",
-                                                    "|xns": "Roo.data",
-                                                    "id": "id",
-                                                    "root": "data",
-                                                    "totalProperty": "total",
-                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"filename\",\"type\":\"string\"}]"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
                                     "fieldLabel": "Created",
                                     "name": "created",
                                     "width": 75,
