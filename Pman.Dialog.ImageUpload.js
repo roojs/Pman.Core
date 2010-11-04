@@ -41,7 +41,25 @@ Pman.Dialog.ImageUpload = {
             center : {
                 xtype: 'LayoutRegion',
                 xns: Roo
-            }
+            },
+            buttons : [
+                {
+                    xtype: 'Button',
+                    xns: Roo,
+                    listeners : {
+                        click : function (_self, e)
+                        {
+                            // do some checks?
+                             
+                            
+                            _this.dialog.el.mask("Saving");
+                            _this.form.doAction("submit");
+                        
+                        }
+                    },
+                    text : "Post"
+                }
+            ]
         });
     }
 };
