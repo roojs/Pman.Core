@@ -49,6 +49,17 @@ Pman.Dialog.ImageUpload = {
                     listeners : {
                         click : function (_self, e)
                         {
+                            _this.dialog.hide();
+                        }
+                    },
+                    text : "Cancel"
+                },
+                {
+                    xtype: 'Button',
+                    xns: Roo,
+                    listeners : {
+                        click : function (_self, e)
+                        {
                             // do some checks?
                              
                             
@@ -58,17 +69,6 @@ Pman.Dialog.ImageUpload = {
                         }
                     },
                     text : "Post"
-                },
-                {
-                    xtype: 'Button',
-                    xns: Roo,
-                    listeners : {
-                        click : function (_self, e)
-                        {
-                            _this.dialog.hide();
-                        }
-                    },
-                    text : "Cancel"
                 }
             ]
         });
