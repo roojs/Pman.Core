@@ -62,9 +62,18 @@ Pman.Dialog.ImageUpload = {
                         {
                             // do some checks?
                              
-                            
-                            _this.dialog.el.mask("Saving");
-                            _this.form.doAction("submit");
+                            _this.dialog.el.mask("Sending");
+                            _this.uploadComplete = false;
+                            _this.form.doAction('submit', {
+                                url: baseURL + '/Roo/Images.html',
+                                method: 'POST',
+                                params: {
+                                 //   _id: 0 ,
+                                    ts : Math.random()
+                                } 
+                            });
+                            _this.haveProgress = false,
+                            _this.uploadProgress.defer(1000, this);
                         
                         }
                     },
