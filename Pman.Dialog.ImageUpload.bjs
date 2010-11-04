@@ -14,10 +14,9 @@
             "title": "Upload an Image or File",
             "width": 500,
             "xtype": "LayoutDialog",
+            "|": "function()\n{\n   if (!this.haveProgress) {\n        Roo.MessageBox.progress(\"Uploading\", \"Uploading\");\n    }\n    if (this.uploadComplete) {\n        Roo.MessageBox.hide();\n        return;\n    }\n    this.haveProgress = true;\n    var _this = this;\n    var uid = this.form.findField('UPLOAD_IDENTIFIER').getValue();\n    Pman.request({\n        url : baseURL + '/Core/UploadProgress.php',\n        params: {\n            id : uid\n        },\n        method: 'GET',\n        success : function(data){\n            //console.log(data);\n            if (_this.uploadComplete) {\n                Roo.MessageBox.hide();\n                return;\n            }\n                \n            if (data){\n                Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,\n                    Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'\n                );\n            }\n            _this.uploadProgress.defer(2000, _this);\n        },\n        failure: function(data) {\n          //  console.log('fail');\n         //   console.log(data);\n        }\n    })\n    \n}\n",
             "|shadow": "true",
             "|xns": "Roo",
-            "|": "function() {\n    \n}\n",
-            "listeners": {},
             "items": [
                 {
                     "|xns": "Roo",
