@@ -108,6 +108,16 @@ Pman.Dialog.ImageUpload = {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'imgtype'
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'imgtype'
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'imgtype'
                                 }
                             ]
                         }
