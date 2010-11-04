@@ -152,6 +152,7 @@ Pman.Dialog.Image = {
                                     Ext.MessageBox.alert("Error", "Error loading details"); 
                                 }
                             },
+                            fileUpload : true,
                             labelWidth : 140,
                             method : 'POST',
                             style : 'margin:10px;',
