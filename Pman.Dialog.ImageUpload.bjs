@@ -23,6 +23,7 @@
                     "*prop": "center"
                 },
                 {
+                    "fitToFrame": true,
                     "region": "center",
                     "xtype": "ContentPanel",
                     "|xns": "Roo",
