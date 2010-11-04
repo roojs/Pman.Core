@@ -30,6 +30,15 @@ Pman.Dialog.ImageUpload = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
+            listeners : {
+                show : function (_self)
+                {
+                    if (this.keylistener) {
+                        return;
+                    }
+                    this.keylistener = this.addKeyListener(27, this.hide, this);
+                }
+            },
             closable : false,
             collapsible : false,
             haveProgress : false,
@@ -79,12 +88,6 @@ Pman.Dialog.ImageUpload = {
                     }
                 })
                 
-            },
-            listeners : {
-                show : function (_self)
-                {
-                
-                }
             },
             items : [
                 {
