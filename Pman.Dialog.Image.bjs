@@ -40,6 +40,7 @@
                                 "|rendered": "function (form)\n{\n    _this.form= form;\n}\n",
                                 "actionfailed": "function (_self, act)\n{\n    _this.dialog.uploadComplete = true;\n    _this.dialog.el.unmask();\n    // error msg???\n    \n    if (act.type == 'submit') {\n        Ext.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");\n        return;\n    }\n    \n    // what about load failing..\n    Ext.MessageBox.alert(\"Error\", \"Error loading details\"); \n}"
                             },
+                            "fileUpload": true,
                             "labelWidth": 140,
                             "method": "POST",
                             "style": "margin:10px;",
