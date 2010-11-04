@@ -74,6 +74,10 @@ Pman.Dialog.ImageUpload = {
                                 rendered : function (form)
                                 {
                                     _this.form= form;
+                                },
+                                actionfailed : function (_self, action)
+                                {
+                                
                                 }
                             },
                             labelWidth : 140,
