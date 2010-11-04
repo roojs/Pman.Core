@@ -39,7 +39,7 @@
                             "|url": "baseURL + '/Roo/Images.php'",
                             "items": [
                                 {
-                                    "fieldLabel": "Upload Image of File",
+                                    "fieldLabel": "Upload Image or File",
                                     "name": "Upload mage of File",
                                     "width": 200,
                                     "xtype": "TextField",
