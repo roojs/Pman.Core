@@ -73,7 +73,7 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "name": "imgtype",
+                                    "name": "upload_max_filesize",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 }
