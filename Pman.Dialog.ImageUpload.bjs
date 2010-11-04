@@ -69,6 +69,7 @@
                                 },
                                 {
                                     "name": "post_max_size",
+                                    "value": "32M",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 },
