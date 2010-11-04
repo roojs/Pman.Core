@@ -1,0 +1,117 @@
+{
+    "id": "roo-file-143",
+    "name": "Pman.Dialog.Image",
+    "parent": "",
+    "title": "",
+    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
+    "items": [
+        {
+            "listeners": {
+                "show": "function (_self)\n{\n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n}"
+            },
+            "closable": false,
+            "collapsible": false,
+            "haveProgress": false,
+            "height": 140,
+            "modal": true,
+            "resizable": true,
+            "title": "Upload an Image or File",
+            "uploadProgress": false,
+            "width": 500,
+            "xtype": "LayoutDialog",
+            "|shadow": "true",
+            "|uploadProgres": "function()\n{\n    var dlg = this;\n   if (!dlg.haveProgress) {\n        Roo.MessageBox.progress(\"Uploading\", \"Uploading\");\n    }\n    if (dlg.uploadComplete) {\n        Roo.MessageBox.hide();\n        return;\n    }\n    dlg.haveProgress = true;\n\n    var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();\n    Pman.request({\n        url : baseURL + '/Core/UploadProgress.php',\n        params: {\n            id : uid\n        },\n        method: 'GET',\n        success : function(data){\n            //console.log(data);\n            if (dlg.uploadComplete) {\n                Roo.MessageBox.hide();\n                return;\n            }\n                \n            if (data){\n                Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,\n                    Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'\n                );\n            }\n            dlg.uploadProgress.defer(2000,dlg);\n        },\n        failure: function(data) {\n          //  console.log('fail');\n         //   console.log(data);\n        }\n    })\n    \n}\n",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "LayoutRegion",
+                    "*prop": "center"
+                },
+                {
+                    "fitToFrame": true,
+                    "region": "center",
+                    "xtype": "ContentPanel",
+                    "|xns": "Roo",
+                    "items": [
+                        {
+                            "listeners": {
+                                "|actioncomplete": "function(_self,act)\n{\n       _this.dialog.uploadComplete = true;\n        _this.dialog.el.unmask();\n         \n          if (act.type == 'setdata') { \n         \n              this.findField('UPLOAD_IDENTIFIER').setValue(\n                (new Date() * 1) + '' + Math.random());\n            return;\n         }\n         \n       \n        if (act.type == 'load') {\n          // should this happen?  \n            _this.data = act.result.data;\n           // _this.loaded();\n            return;\n        }\n        \n        \n        if (act.type == 'submit') { // only submitted here if we are \n            _this.dialog.hide();\n            //console.log(act);\n            if (_this.callback) {\n                _this.callback.call(this, act.result.data);\n            }\n            return; \n        }\n}\n",
+                                "|rendered": "function (form)\n{\n    _this.form= form;\n}\n",
+                                "actionfailed": "function (_self, act)\n{\n    _this.dialog.uploadComplete = true;\n    _this.dialog.el.unmask();\n    // error msg???\n    \n    if (act.type == 'submit') {\n        Ext.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");\n        return;\n    }\n    \n    // what about load failing..\n    Ext.MessageBox.alert(\"Error\", \"Error loading details\"); \n}"
+                            },
+                            "labelWidth": 140,
+                            "method": "POST",
+                            "style": "margin:10px;",
+                            "xtype": "Form",
+                            "|url": "baseURL + '/Roo/Images.php'",
+                            "|xns": "Roo.form",
+                            "items": [
+                                {
+                                    "name": "UPLOAD_IDENTIFIER",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "fieldLabel": "Upload Image or File",
+                                    "inputType": "file",
+                                    "name": "imageUpload",
+                                    "width": 200,
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "ontable",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "onid",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "imgtype",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "post_max_size",
+                                    "value": "32M",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "upload_max_filesize",
+                                    "value": "32M",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Cancel",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    _this.dialog.el.mask(\"Sending\");\n    _this.dialog.uploadComplete = false;\n    _this.form.doAction('submit', {\n        url: baseURL + '/Roo/Images.html',\n        method: 'POST',\n        params: {\n         //   _id: 0 ,\n            ts : Math.random()\n        } \n    });\n    _this.dialog.haveProgress = false,\n    _this.dialog.uploadProgress.defer(1000, _this.dialog);\n\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Upload",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                }
+            ]
+        }
+    ],
+    "permname": "",
+    "modOrder": "001"
+}
