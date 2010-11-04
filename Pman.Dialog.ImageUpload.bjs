@@ -23,6 +23,10 @@
                     "*prop": "center"
                 },
                 {
+                    "|xns": "Roo",
+                    "xtype": "ContentPanel"
+                },
+                {
                     "listeners": {
                         "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
                     },
