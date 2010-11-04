@@ -53,20 +53,6 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Created",
-                                    "name": "created",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "DateField"
-                                },
-                                {
-                                    "fieldLabel": "Imgtype",
-                                    "name": "imgtype",
-                                    "width": 200,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "fieldLabel": "Linkurl",
                                     "name": "linkurl",
                                     "width": 200,
