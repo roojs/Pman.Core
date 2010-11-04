@@ -9,9 +9,10 @@
             "closable": false,
             "collapsible": false,
             "modal": true,
+            "resizable": true,
             "xtype": "LayoutDialog",
             "|xns": "Roo",
-            "resizable": true,
+            "width": 0,
             "listeners": {}
         }
     ],
