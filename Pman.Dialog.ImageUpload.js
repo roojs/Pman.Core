@@ -48,28 +48,28 @@ Pman.Dialog.ImageUpload = {
                             xtype: 'Form',
                             xns: Roo.form,
                             listeners : {
-                                actioncomplete : function(_self,action)
+                                actioncomplete : function(_self,act)
                                 {
-                                    if (action.type == 'setdata') {
-                                       //_this.dialog.el.mask("Loading");
-                                       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});
-                                       return;
-                                    }
-                                    if (action.type == 'load') {
+                                       _this.uploadComplete = true;
                                         _this.dialog.el.unmask();
-                                        return;
-                                    }
-                                    if (action.type =='submit') {
-                                    
-                                        _this.dialog.el.unmask();
-                                        _this.dialog.hide();
-                                    
-                                         if (_this.callback) {
-                                            _this.callback.call(_this, _this.form.getValues());
-                                         }
-                                         _this.form.reset();
-                                         return;
-                                    }
+                                         
+                                       
+                                        if (act.type == 'load') {
+                                            
+                                            _this.data = act.result.data;
+                                           // _this.loaded();
+                                            return;
+                                        }
+                                        
+                                        
+                                        if (act.type == 'submit') { // only submitted here if we are 
+                                            _this.dialog.hide();
+                                            //console.log(act);
+                                            if (_this.callback) {
+                                                _this.callback.call(this, act.result.data);
+                                            }
+                                            return; 
+                                        }
                                 },
                                 rendered : function (form)
                                 {
