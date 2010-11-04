@@ -80,6 +80,12 @@ Pman.Dialog.ImageUpload = {
                 })
                 
             },
+            listeners : {
+                keydown : function (_self, e)
+                {
+                
+                }
+            },
             items : [
                 {
                     xtype: 'ContentPanel',
