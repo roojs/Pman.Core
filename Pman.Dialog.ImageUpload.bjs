@@ -53,20 +53,6 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "fieldLabel": "Width",
-                                    "name": "width",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
-                                    "fieldLabel": "Height",
-                                    "name": "height",
-                                    "width": 75,
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
-                                },
-                                {
                                     "fieldLabel": "Filesize",
                                     "name": "filesize",
                                     "width": 75,
