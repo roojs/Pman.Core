@@ -37,7 +37,7 @@ Pman.Dialog.ImageUpload = {
             resizable : true,
             title : "Upload an Image or File",
             width : 500,
-             : function()
+            uploadProgres : function()
             {
                if (!this.haveProgress) {
                     Roo.MessageBox.progress("Uploading", "Uploading");
