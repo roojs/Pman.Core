@@ -21,6 +21,15 @@
                     "|xns": "Roo",
                     "xtype": "LayoutRegion",
                     "*prop": "center"
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Post",
+                    "xtype": "Button",
+                    "|xns": "Roo"
                 }
             ]
         }
