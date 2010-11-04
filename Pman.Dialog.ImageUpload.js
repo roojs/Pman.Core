@@ -84,7 +84,7 @@ Pman.Dialog.ImageUpload = {
                                     xtype: 'TextField',
                                     xns: Roo.form,
                                     fieldLabel : 'Upload Image or File',
-                                    inputType : 'fo;e',
+                                    inputType : 'file',
                                     name : 'image',
                                     width : 200
                                 },
