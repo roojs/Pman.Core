@@ -39,16 +39,17 @@ Pman.Dialog.ImageUpload = {
             width : 500,
             uploadProgres : function()
             {
-               if (!this.haveProgress) {
+                var dlg = this;
+               if (!dlg.haveProgress) {
                     Roo.MessageBox.progress("Uploading", "Uploading");
                 }
-                if (this.uploadComplete) {
+                if (dlg.uploadComplete) {
                     Roo.MessageBox.hide();
                     return;
                 }
-                this.haveProgress = true;
-                var _this = this;
-                var uid = this.form.findField('UPLOAD_IDENTIFIER').getValue();
+                dlg.haveProgress = true;
+            
+                var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();
                 Pman.request({
                     url : baseURL + '/Core/UploadProgress.php',
                     params: {
@@ -57,7 +58,7 @@ Pman.Dialog.ImageUpload = {
                     method: 'GET',
                     success : function(data){
                         //console.log(data);
-                        if (_this.uploadComplete) {
+                        if (dlg.uploadComplete) {
                             Roo.MessageBox.hide();
                             return;
                         }
@@ -67,7 +68,7 @@ Pman.Dialog.ImageUpload = {
                                 Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'
                             );
                         }
-                        _this.uploadProgress.defer(2000, _this);
+                        dlg.uploadProgress.defer(2000,dlg);
                     },
                     failure: function(data) {
                       //  console.log('fail');
