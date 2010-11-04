@@ -75,7 +75,7 @@ Pman.Dialog.ImageUpload = {
                                 {
                                     _this.form= form;
                                 },
-                                actionfailed : function (_self, action)
+                                actionfailed : function (_self, act)
                                 {
                                     _this.uploadComplete = true;
                                     _this.dialog.el.unmask();
