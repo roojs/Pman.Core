@@ -8,7 +8,9 @@
         {
             "closable": false,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "collapsible": true,
+            "listeners": {}
         }
     ],
     "permname": "",
