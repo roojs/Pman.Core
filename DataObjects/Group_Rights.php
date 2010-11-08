@@ -121,6 +121,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             }
             $ar = (array)json_decode(file_get_contents($fn));
             if (empty($ar)) {
+                // since these are critical files.. die'ing with error is ok.
                 die("invalid json file: " . $fn);
                }
            // echo '<PRE>';print_r($ar);
