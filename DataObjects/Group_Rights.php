@@ -120,6 +120,9 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
                 continue;
             }
             $ar = (array)json_decode(file_get_contents($fn));
+            if (empty($ar)) {
+                die("invalid json file: " . $fn);
+               }
            // echo '<PRE>';print_r($ar);
             foreach($ar as $k=> $perm) {
                 if ($k[0] == '/') {
