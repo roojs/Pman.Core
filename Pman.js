@@ -852,6 +852,7 @@ Pman = new Roo.Document(
     /**
      * 
      * gtranslate
+     * Translate a string using google translate API
      * @param str {String} input string
      * @param src {String} source language (or '' for autoguess)
      * @param str {String} target language
