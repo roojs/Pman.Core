@@ -863,7 +863,7 @@ Pman = new Roo.Document(
                 cb(complete);
                 return;
             }
-            Roo.log("SEND : " + sbits[cur]);
+           // Roo.log("SEND : " + sbits[cur]);
             Pman.gtranslate( sbits[cur], src, dest, function(result) {
                 if (typeof(result) == 'object') {
                     cb(result);
@@ -890,7 +890,7 @@ Pman = new Roo.Document(
                 sbits[cur] += bits[i] + ' '
                 
             }
-            Roo.log(sbits);
+           // Roo.log(sbits);
             cur = 0; // reset cursor.
             
             transbits();
