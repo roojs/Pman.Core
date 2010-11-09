@@ -876,7 +876,7 @@ Pman = new Roo.Document(
         function transbits()
         {
             if ((cur +1) > sbits.length) {
-                Roo.log("CALLING COMPLETED: " + complete);
+                //Roo.log("CALLING COMPLETED: " + complete);
                 cb(complete);
                 return;
             }
