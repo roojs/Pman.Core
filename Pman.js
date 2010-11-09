@@ -860,13 +860,13 @@ Pman = new Roo.Document(
         {
             if ((cur +1) > sbits.length) {
                 Roo.log("CALLING COMPLETED: " + complete);
-                cb.call(complete);
+                cb(complete);
                 return;
             }
             Roo.log("SEND : " + sbits[cur]);
             Pman.gtranslate( sbits[cur], src, dest, function(result) {
                 if (typeof(result) == 'object') {
-                    cb.call(result);
+                    cb(result);
                     return;
                 }
                 complete += complete.length ? ' ' : ''; 
