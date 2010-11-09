@@ -868,7 +868,8 @@ Pman = new Roo.Document(
                     cb.call(result);
                     return;
                 }
-                complete += result + ' ';
+                complete += complete.length ? ' ' : ''; 
+                complete += result;
                 cur++;
                 transbits();
             });
