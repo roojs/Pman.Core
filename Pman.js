@@ -880,7 +880,7 @@ Pman = new Roo.Document(
             var bits = str.split(/\s+/);
             sbits = [''];
             for (var i =0; i < bits.length; i++) {
-                if (sbits[cur].length + bits[i].length > 250) {
+                if (sbits[cur].length + bits[i].length > 240) {
                     cur++;
                     sbits[cur] = bits[i] + ' ';
                     continue;
