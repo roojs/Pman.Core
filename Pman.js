@@ -857,18 +857,18 @@ Pman = new Roo.Document(
         var complete = '';
         
         function escapeDecode(encodedString) {
-          var output = encodedString;
-          var binVal, thisString;
-          var myregexp = /(&#([0-9]+);)/;
-          while ((match = myregexp.exec(output)) != null
-                     && match.length > 1
-                     && match[1] != '') {
-            //     Roo.log(match);
-            binVal = parseInt(match[2]);
-            thisString = String.fromCharCode(binVal);
-            output = output.replace(match[1], thisString);
-          }
-          return Roo.util.Format.htmlDecode( output);
+            var output = encodedString;
+            var binVal, thisString;
+            var myregexp = /(&#([0-9]+);)/;
+            while ((match = myregexp.exec(output)) != null
+                       && match.length > 1
+                       && match[1] != '') {
+              //     Roo.log(match);
+              binVal = parseInt(match[2]);
+              thisString = String.fromCharCode(binVal);
+              output = output.replace(match[1], thisString);
+            }
+            return Roo.util.Format.htmlDecode( output);
         }
         
         
