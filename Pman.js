@@ -864,7 +864,7 @@ Pman = new Roo.Document(
                      && match.length > 1
                      && match[1] != '') {
                  Roo.log(match);
-            binVal = parseInt(match[1]);
+            binVal = parseInt(match[2]);
             thisString = String.fromCharCode(binVal);
             output = output.replace(match[1], thisString);
           }
