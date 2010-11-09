@@ -877,11 +877,11 @@ Pman = new Roo.Document(
         }
         
         
-        if (str.length > 500) {
+        if (str.length > 1000) {
             var bits = str.split(/\s+/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
-                if (sbits[cur].length + bits[i].length > 490) {
+                if (sbits[cur].length + bits[i].length > 990) {
                     cur++;
                     sbits[cur] = bits[i];
                     continue;
