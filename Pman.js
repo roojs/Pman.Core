@@ -863,7 +863,7 @@ Pman = new Roo.Document(
           while ((match = myregexp.exec(output)) != null
                      && match.length > 1
                      && match[1] != '') {
-                 Roo.log(match);
+            //     Roo.log(match);
             binVal = parseInt(match[2]);
             thisString = String.fromCharCode(binVal);
             output = output.replace(match[1], thisString);
