@@ -863,7 +863,7 @@ Pman = new Roo.Document(
                 return;
             }
             //console.log("SEND : " + sbits[cur]);
-            
+            Roo.log("SEND : " + sbits[cur]);
             Pman.gtranslate( sbits[cur], src, dest, function(result) {
                 if (typeof(result) == 'object') {
                     cb.call(result);
