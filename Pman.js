@@ -869,7 +869,7 @@ Pman = new Roo.Document(
                     cb.call(result);
                     return;
                 }
-                complete+= result;
+                complete += result;
                 cur++;
                 transbits();
             });
