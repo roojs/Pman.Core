@@ -849,7 +849,14 @@ Pman = new Roo.Document(
         
         
     },
-    
+    /**
+     * 
+     * gtranslate
+     * @param str {String} input string
+     * @param src {String} source language (or '' for autoguess)
+     * @param str {String} target language
+     * @param str {String} callback - calls back with result or an error object.
+     */
     gtranslate : function(str, src, dest, cb) {
         // load script: 
         var cur = 0;
