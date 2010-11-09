@@ -852,6 +852,51 @@ Pman = new Roo.Document(
     
     gtranslate : function(str, src, dest, cb) {
         // load script: 
+        var cur = 0;
+        var sbits = [];
+        var complete = '';
+        
+        function transbits()
+        {
+            if ((cur +1) > sbits.length) {
+                cb.call(complete);
+                return;
+            }
+            //console.log("SEND : " + sbits[cur]);
+            
+            gtranslate( sbits[cur], src, dest, function(result) {
+                if (typeof(result) == 'object') {
+                    cb.call(result);
+                    return;
+                }
+                complete+= result;
+                cur++;
+                transbits();
+            });
+        }
+        
+        if (str.length > 500) {
+            var bits = rec.get('origtxt').split(/\s+/);
+            sbits = [''];
+            for (var i =0; i < bits.length; i++) {
+                if (sbits[cur].length + bits[i].length > 450) {
+                    cur++;
+                    sbits[cur] = bits[i] + ' ';
+                    continue;
+                }
+                sbits[cur] += bits[i] + ' '
+                
+            }
+            transbits();
+            return;
+        }
+                
+                
+                
+                
+                
+        
+        
         
         
         var x = new Roo.data.ScriptTagProxy({ 
