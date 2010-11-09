@@ -859,7 +859,7 @@ Pman = new Roo.Document(
         function escapeDecode(encodedString) {
           var output = encodedString;
           var binVal, thisString;
-          var myregexp = /(&#([0-9]+)/;
+          var myregexp = /(&#([0-9]+);)/;
           while ((match = myregexp.exec(output)) != null
                      && match.length > 1
                      && match[1] != '') {
