@@ -875,6 +875,7 @@ Pman = new Roo.Document(
             });
         }
         
+        
         if (str.length > 500) {
             var bits = rec.get('origtxt').split(/\s+/);
             sbits = [''];
