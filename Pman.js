@@ -888,6 +888,7 @@ Pman = new Roo.Document(
                 sbits[cur] += bits[i] + ' '
                 
             }
+            cur = 0; // reset cur..
             Roo.log(sbits);
             transbits();
             return;
