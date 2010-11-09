@@ -876,11 +876,11 @@ Pman = new Roo.Document(
         }
         
         
-        if (str.length > 500) {
+        if (str.length > 250) {
             var bits = rec.get('origtxt').split(/\s+/);
             sbits = [''];
             for (var i =0; i < bits.length; i++) {
-                if (sbits[cur].length + bits[i].length > 450) {
+                if (sbits[cur].length + bits[i].length > 250) {
                     cur++;
                     sbits[cur] = bits[i] + ' ';
                     continue;
