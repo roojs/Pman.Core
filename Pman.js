@@ -858,7 +858,7 @@ Pman = new Roo.Document(
         
         function transbits()
         {
-            if ((cur +1) > sbits.length) {
+            if (cur  > sbits.length) {
                 cb.call(complete);
                 return;
             }
