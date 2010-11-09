@@ -856,9 +856,8 @@ Pman = new Roo.Document(
         
         var x = new Roo.data.ScriptTagProxy({ 
             url:  'http://ajax.googleapis.com/ajax/services/language/translate', 
-            callbackParam : 'callback',
-            method : 'POST'
-
+            callbackParam : 'callback' 
+            
         });
         x.load(
             {
