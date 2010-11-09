@@ -868,7 +868,7 @@ Pman = new Roo.Document(
             thisString = String.fromCharCode(binVal);
             output = output.replace(match[1], thisString);
           }
-          return output;
+          return Roo.util.Format.htmlDecode( output);
         }
         
         
