@@ -856,6 +856,22 @@ Pman = new Roo.Document(
         var sbits = [];
         var complete = '';
         
+        function escapeDecode(encodedString) {
+          var output = encodedString;
+          var binVal, thisString;
+          var myregexp = /(&#([0-9]+)/;
+          while ((match = myregexp.exec(output)) != null
+                     && match.length > 1
+                     && match[1] != '') {
+            binVal = parseInt(match[1]);
+            thisString = String.fromCharCode(binVal);
+            output = output.replace(match[1], thisString);
+          }
+          return output;
+        }
+        
+        
+        
         function transbits()
         {
             if ((cur +1) > sbits.length) {
@@ -921,7 +937,7 @@ Pman = new Roo.Document(
                     if (!o.responseData) {
                         return o;
                     }
-                    return o.responseData.translatedText;
+                    return escapeDecode(o.responseData.translatedText);
                 }
             }, 
             function (result) {
