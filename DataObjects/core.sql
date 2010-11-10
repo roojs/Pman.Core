@@ -41,6 +41,12 @@ ALTER TABLE Companies
 UPDATE Companies set comptype='OWNER' where isOwner=1;
 
 
+CREATE TABLE  `core_company_type` (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `name` varchar(64)  NOT NULL,
+  PRIMARY KEY (`id`)
+) ;
+
 
 CREATE TABLE `Events` (
   `id` int(11) NOT NULL auto_increment,
