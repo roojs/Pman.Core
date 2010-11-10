@@ -217,6 +217,11 @@ ALTER TABLE  `Images` ADD COLUMN `linkurl` VARCHAR(254) DEFAULT '' NOT NULL;
 ALTER TABLE  `Images` ADD COLUMN `descript` TEXT DEFAULT '' NOT NULL;
 ALTER TABLE  `Images` ADD COLUMN `title` VARCHAR(128) DEFAULT '' NOT NULL;
  
+CREATE TABLE  `core_image_type` (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `name` varchar(64)  NOT NULL,
+  PRIMARY KEY (`id`)
+) ;
 
  
 
