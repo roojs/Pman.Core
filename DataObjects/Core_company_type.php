@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for cms_category_type
+ * Table Definition for core company
  */
 require_once 'DB/DataObject.php';
 
