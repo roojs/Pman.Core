@@ -114,44 +114,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         return empty($this->name) ? $this->email : $this->name;
     } 
-    function whereAddIn($key, $list, $type) {
-        $ar = array();
-        foreach($list as $k) {
-            $ar[] = $type =='int' ? (int)$k : $this->escape($k);
-        }
-        if (!$ar) {
-            return;
-        }
-        $this->whereAdd("$key IN (". implode(',', $ar). ')');
-    }
-    function fetchAll($k= false, $v = false) 
-    {
-        // should it even do this!!!?!?
-        if ($k !== false && 
-                (   // only do this is we have not been explicit..
-                    empty($this->_query['data_select']) || 
-                    ($this->_query['data_select'] == '*')
-                )
-            ) {
-            $this->selectAdd();
-            $this->selectAdd($k);
-            if ($v !== false) {
-                $this->selectAdd($v);
-            }
-        }
-        
-        $this->find();
-        $ret = array();
-        while ($this->fetch()) {
-            if ($v !== false) {
-                $ret[$this->$k] = $this->$v;
-                continue;
-            }
-            $ret[] = $k === false ? clone($this) : $this->$k;
-        }
-        return $ret;
-         
-    }
+   
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
     {
