@@ -402,7 +402,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         } 
         
         if (!empty($q['query']['comptype_or_company_id'])) {
-            DB_DataObject::debugLevel(1);
+           // DB_DataObject::debugLevel(1);
             $bits = explode(',', $q['query']['comptype_or_company_id']);
             $id = (int) array_pop($bits);
             $ct = $this->escape($bits[0]);
