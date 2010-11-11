@@ -528,7 +528,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (typeof(vt != 'undefined') && vt) {
             this.grid[cs.r][cs.c].valueType = vt;
             this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
-            if (vt === '') {
+            if (vt === '') { // value type is empty for formula's
                 this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
             }
         }
