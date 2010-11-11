@@ -756,7 +756,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 //var colat = col + coloffset;
-               
+                coloffsetadd = 0;
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
                    //row + yoff, c : col + xoff + coloffset
@@ -769,8 +769,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                                     (cols[col].getAttribute('rowspan') - 1) : 0
                                 )*/
                     );
-                     
-                    coloffset += (cols[col].getAttribute('colspan') - 1);
+                    coloffsetadd  = (cols[col].getAttribute('colspan')*1) - 1;
+                    
                 }
                 /*
                 if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
@@ -802,6 +802,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                  */
                 // skip blank cells
                 if (!cols[col].childNodes.length) {
+                    coloffset += coloffsetadd;
                     continue;
                 }
                 
@@ -857,9 +858,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 */
                  
                 if (!cols[col].childNodes[0].nodeValue) {
+                    coloffset += coloffsetadd;
                     continue;
                 }
                 if (!cols[col].childNodes[0].nodeValue.replace(/^\s*|\s*$/g,"").length) {
+                    coloffset += coloffsetadd;
                     continue;
                 }
                 // strip me.!
