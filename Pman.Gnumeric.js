@@ -210,7 +210,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         cc = String.fromCharCode('A'.charCodeAt(0) + bottom);
         return c+r;
         
-    }
+    },
     
     /**
      * toRC:
