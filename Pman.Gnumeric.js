@@ -922,7 +922,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[sheet];
         sheetn.textContent = name;
-        var sheetb = this.doc.getElementsByTagNameNS('*','Sheet')[sheet].getElementsByTagNameNS('*','Name');
+        var sheetb = this.doc.getElementsByTagNameNS('*','Sheet')[sheet].getElementsByTagNameNS('*','Name')[0];
         sheetb.textContent = name;
         this.parseDoc(sheet);
         
