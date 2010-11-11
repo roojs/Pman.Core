@@ -243,14 +243,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * convert XML document into cells and other data..
      * 
      */
-    parseDoc : function() 
+    parseDoc : function(sheetnum) 
     {
         var _t = this;
         this.grid = {}
         this.rmax = 1;
         this.cmax = 1;
         
-        this.sheet = _t.doc.getElementsByTagNameNS('*','Sheet')[0];
+        this.sheet = _t.doc.getElementsByTagNameNS('*','Sheet')[sheetnum];
         
         
         this.cellholder = this.sheet.getElementsByTagNameNS('*','Cells')[0];
