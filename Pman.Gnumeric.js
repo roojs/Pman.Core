@@ -862,11 +862,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 if (cols[col].getAttribute('xls:formula')) {
                     var s = cols[col].getAttribute('xls:formula');
-                    cols[col].removeAttribute('ValueType');
+                    vt = '';
                     cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
                 }
                 this.set({ r: row + yoff, c : col + xoff }, cell_value_text, vt, vf);
-                
+                 
                 
                 
                 
