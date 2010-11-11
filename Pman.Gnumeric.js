@@ -119,6 +119,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     colInfo : false,
     /**
+     * @type {Object} colInfoDom - column sizes dom element
+     */
+    colInfoDom : false,
+    /**
      * @type {Object} rowInfo - list of row sizes
      */
     rowInfo : false,
@@ -311,12 +315,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // read colinfo..
         var ci = this.sheet.getElementsByTagNameNS('*','ColInfo');
         this.colInfo = {};
+        this.colInfoDom = {};
         
         Roo.each(ci, function(c) {
             var count = c.getAttribute('Count') || 1;
             var s =  c.getAttribute('No')*1;
             for(var i =0; i < count; i++) {
                 _t.colInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
+                _t.colInfoDom[s+i] = c;
             }
         });
         
