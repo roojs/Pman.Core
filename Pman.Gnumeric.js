@@ -888,7 +888,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[0];
         sheetn.textContent = n;
         
-    }
+    },
     
      /**
      * toHTML: 
