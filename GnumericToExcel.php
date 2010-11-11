@@ -88,7 +88,7 @@ class Pman_Core_GnumericToExcel extends Pman
             header("HTTP/1.0 400 Internal Server Error - Convert error");
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
-        unlink($srcTmp);
+       // unlink($srcTmp);
         
         $fh = fopen($targetTmp, 'r');
         header('Content-type: application/vnd.ms-excel');
