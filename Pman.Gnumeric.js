@@ -903,11 +903,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         */
         // has to set sheet name on index and body..
         
-        var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[0];
-        sheetn.textContent = name;
-        sheetn = this.sheet.getElementsByTagNameNS('*','Name')[0];
-        sheetn.textContent = name;
+        var sheetnames = this.doc.getElementsByTagNameNS('*','SheetName');
+        if (sheet >=  sheetnames.length) {
+            
+        }
         
+        var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[sheet];
+        sheetn.textContent = name;
+        sheetn = this.sheet.getElementsByTagNameNS('*','Name')[sheet];
+        sheetn.textContent = name;
+        this.parseDoc(sheet);
         
         
         
