@@ -895,7 +895,32 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         sheetn.textContent = n;
         
     },
-    
+     /**
+     * setColumnWidth: 
+     * Set the column width
+     * @param {Number} column number (starts at '0')
+     * @param {Number} width size of column
+     **/
+    setColumnWidth : function(column, width)
+    {
+        column = column *1; 
+        width= width*1;
+        if (typeof(this.colInfoDom[column]) == 'undefined') {
+            var cols = this.doc.getElementsByTagNameNS('*','Cols')[0];
+            var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:ColInfo');
+            ri.setAttribute('No', column);
+            ri.setAttribute('Unit', width);
+            ri.setAttribute('MarginA', 2);
+            ri.setAttribute('MarginB', 2);
+            ri.setAttribute('HardSize', 1);
+            cols.appendChild(ri);
+            this.colInfo[column] = width;
+            this.colInfoDom[column]  = ri;
+            return;
+        }
+        this.colInfoDom[column].setAttribute('Unit', width);
+        
+    },
      /**
      * toHTML: 
      * Convert spreadsheet into a HTML table.
