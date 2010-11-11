@@ -772,7 +772,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                      
                     coloffset += (cols[col].getAttribute('colspan') - 1);
                 }
-               
+                /*
                 if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
                     // this should really do a merge, but it's pretty damn complex...
                     //this.mergeRegion(colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
