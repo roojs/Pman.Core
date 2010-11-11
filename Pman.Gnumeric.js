@@ -182,9 +182,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             success : function(resp, opts) {
                 _t.response = resp;
                 _t.doc = resp.responseXML;
-                _t.parseDoc();
-                _t.parseStyles();
-                _t.overlayStyles();
+                
+                _t.parseDoc(0);
+                
+                
                 _t.applyData();
     
                 _t.fireEvent('load', _t);
@@ -338,7 +339,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
         });
     
-        
+        _t.parseStyles();
+        _t.overlayStyles();
+                
         
      
         
@@ -889,7 +892,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * Set the sheet name.
      * @param {String} title for sheet
      **/
-    setSheetName : function(n)
+    setSheetName : function(name,sheet)
     {
         /*
         <gnm:SheetNameIndex>
@@ -899,10 +902,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         </gnm:SheetNameIndex>
         */
         // has to set sheet name on index and body..
+        
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[0];
-        sheetn.textContent = n;
+        sheetn.textContent = name;
         sheetn = this.sheet.getElementsByTagNameNS('*','Name')[0];
-        sheetn.textContent = n;
+        sheetn.textContent = name;
+        
+        
+        
+        
         
     },
      /**
