@@ -912,7 +912,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //var merges = this.gnumeric.getElementsByTagNameNS('*','MergedRegions');
         var merges = this.sheet.getElementsByTagNameNS('*','MergedRegions');
         if (!merges || !merges.length) {
-            merges = createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MergedRegions');
+            merges = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MergedRegions');
             var sl = this.sheet.getElementsByTagNameNS('*','SheetLayout')[0];
             this.sheet.insertBefore(merges,sl);
         } else {
