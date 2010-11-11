@@ -796,11 +796,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 var vt = '60';
-                var vf = false;
+                var vf = '';
                 
                 switch(cols[col].getAttribute('xls:type')) {
                     case 'int':
                         vt = 30; // int!!!!
+                        vf = cols[col].getAttribute('xls:floatformat');
                         break;
                         
                     case 'float':
