@@ -769,9 +769,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                                     (cols[col].getAttribute('rowspan') - 1) : 0
                                 )*/
                     );
-                    
-                    
-                    
+                     
                     coloffset += (cols[col].getAttribute('colspan') - 1);
                 }
                
