@@ -800,8 +800,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var vt = '60';
                 var vf = false;
-                
-                switch(cols[col].getAttribute('xls:type')) {
+                var xlstype = cols[col].getAttribute('xls:type');
+                switch(xlstype) {
                     case 'int':
                         vt = 30; // int!!!!
                     
@@ -859,7 +859,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     cell_value_text = '' + ((cell_value_text * 1) / 100);
                 }
 
-                if (cell_value_text.length && (vt == 30)) {
+                if (cell_value_text.length && (vt == 30) && xlstype == 'date') {
                     var bits = cell_value_text.split(/-/);
                     var cur = new Date(bits[0],bits[1]-1,bits[2]);
                     cell_value_text = '' + Math.round((cur.getTime() - Date.UTC(1899,11,30)) / (24 * 60 * 60 * 1000));
