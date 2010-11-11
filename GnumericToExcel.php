@@ -28,6 +28,10 @@ class Pman_Core_GnumericToExcel extends Pman
         return true;
     }
 
+    function get()
+    {
+        
+    }
     function post($fname) {
         
           $ml = (int) ini_get('suhosin.post.max_value_length');
@@ -81,7 +85,7 @@ class Pman_Core_GnumericToExcel extends Pman
         clearstatcache(); 
         
         if (!file_exists($targetTmp) || !filesize($targetTmp)) {
-            header("HTTP/1.0 400 Internal Server Error");
+            header("HTTP/1.0 400 Internal Server Error - Convert error");
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
         unlink($srcTmp);
