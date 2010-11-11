@@ -887,10 +887,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 this.set({ r: row + yoff, c : col + xoff + coloffset }, cell_value_text, vt, vf);
                  
-                
-                if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
-                    coloffset += (cols[col].getAttribute('colspan')*1) - 1;
-                }
+                coloffset += coloffsetadd;
                 
                 
                 
