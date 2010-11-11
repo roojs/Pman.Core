@@ -578,7 +578,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
     },
     
-    
+    // private
     copyCell : function(src, dest)
     {
         var old = this.grid[src.r][src.c];
@@ -673,6 +673,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
             
     },
+     
+    /**
+     * importTable: 
+     * Import a table and put it into the spreadsheet
+     * @param {HTMLTable} datagrid dom element of html table.
+     * @param {Number} xoff X offset to start rendering to
+     * @param {Number} yoff Y offset to start rendering to
+     **/
+     
      // now the rows..
     importTable : function (datagrid, xoff,yoff)
     {
