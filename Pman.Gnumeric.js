@@ -736,7 +736,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //    this.setRowHeight(row+y_offset, 0 + style.height.replace(/[^0-9.]+/g,''));
            // }
             
-            //var coloffset = 0;
+            var coloffset = 0;
            // if (rowOffsets[row]) {
            //     coloffset += rowOffsets[row];
            // }
@@ -747,10 +747,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 //var colat = col + coloffset;
-                /*
+               
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
-                    
+                    /*
                     this.mergeRegion(
                         colat,
                         row +y_offset,
@@ -760,7 +760,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                                     (cols[col].getAttribute('rowspan') - 1) : 0
                                 )
                     );
-                    
+                    */
                     
                     
                     coloffset += (cols[col].getAttribute('colspan') - 1);
@@ -875,8 +875,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     vt = '';
                     cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
                 }
-                this.set({ r: row + yoff, c : col + xoff }, cell_value_text, vt, vf);
+                this.set({ r: row + yoff, c : col + xoff + coloffset }, cell_value_text, vt, vf);
                  
+                
+                if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
+                    
+                    
+                    coloffset += (cols[col].getAttribute('colspan')*1 - 1);
+                }
+                
+                
                 
                 
                 
