@@ -894,6 +894,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      **/
     setSheetName : function(name,sheet)
     {
+        sheet = sheet || 0;
         /*
         <gnm:SheetNameIndex>
         <gnm:SheetName>Sheet1</gnm:SheetName>
