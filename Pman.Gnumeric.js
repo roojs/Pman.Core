@@ -801,7 +801,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 switch(cols[col].getAttribute('xls:type')) {
                     case 'int':
                         vt = 30; // int!!!!
-                        vf = cols[col].getAttribute('xls:floatformat');
+                        
                         break;
                         
                     case 'float':
