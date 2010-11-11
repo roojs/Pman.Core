@@ -906,11 +906,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var sheetnames = this.doc.getElementsByTagNameNS('*','SheetName');
         if (sheet >=  sheetnames.length) {
             
+            sheetnames[0].parentNode.appendChild(sheetnames[sheetnames.length-1].cloneNode(true));
+            // copy body.
+            sheetnames = this.doc.getElementsByTagNameNS('*','Sheet');
+            sheetnames[0].parentNode.appendChild(sheetnames[sheetnames.length-1].cloneNode(true));
+            var sn = this.doc.getElementsByTagNameNS('*','Sheet')[sheet];
+            var cls = sn.getElementsByTagNameNS('*','Cells')[0]
+            while (cls.childNodes.length) {
+                cls.removeChild(cls.firstChild);
+            }
+            
+            
         }
         
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[sheet];
         sheetn.textContent = name;
-        sheetn = this.sheet.getElementsByTagNameNS('*','Name')[sheet];
+        sheetn = this.doc.getElementsByTagNameNS('*','Sheet')[sheet].getElementsByTagNameNS('*','Name');
         sheetn.textContent = name;
         this.parseDoc(sheet);
         
