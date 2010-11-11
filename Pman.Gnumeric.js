@@ -525,18 +525,18 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         this.grid[cs.r][cs.c].value=  v;
         this.grid[cs.r][cs.c].dom.textContent=  v;
-        if (typeof(vt) != 'undefined' && vf !== false) {
+        if (typeof(vt) != 'undefined') {
             this.grid[cs.r][cs.c].valueType = vt;
             this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
-            if (vt === '') { // value type is empty for formula's
+            if (vt === '' || vt === false) { // value type is empty for formula's
                 this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
             }
         }
         if (typeof(vf) != 'undefined' && vf !== false) {
             this.grid[cs.r][cs.c].valueFormat = vf;
             this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
-            if (vt === '') { // value type is empty for formula's
-                this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
+            if (vf === '' || vf === false) { // value type is empty for formula's
+                this.grid[cs.r][cs.c].dom.removeAttribute('ValueFormat');
             }
         }
         
