@@ -916,7 +916,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 cls.removeChild(cls.firstChild);
             }
             
-            
         }
         
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[sheet];
