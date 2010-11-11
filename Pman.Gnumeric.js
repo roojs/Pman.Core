@@ -916,7 +916,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var sl = this.sheet.getElementsByTagNameNS('*','SheetLayout')[0];
             this.sheet.insertBefore(merges,sl);
         }
-        this.merges.appendChild(cell);
+         merges.appendChild(cell);
     
     },
     
