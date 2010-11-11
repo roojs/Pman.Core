@@ -896,6 +896,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         */
         var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[0];
         sheetn.textContent = n;
+        sheetn = this.sheet.getElementsByTagNameNS('*','Name')[0];
+        sheetn.textContent = n;
         
     },
      /**
