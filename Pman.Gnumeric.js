@@ -878,7 +878,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      **/
     setSheetName : function(n)
     {
-        
+        /*
+        <gnm:SheetNameIndex>
+        <gnm:SheetName>Sheet1</gnm:SheetName>
+        <gnm:SheetName>Sheet2</gnm:SheetName>
+        <gnm:SheetName>Sheet3</gnm:SheetName>
+        </gnm:SheetNameIndex>
+        */
+        var sheetn = this.doc.getElementsByTagNameNS('*','SheetName')[0];
+        sheetn.textContent = n;
         
     }
     
