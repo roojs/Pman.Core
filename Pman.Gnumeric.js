@@ -902,7 +902,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         </gnm:SheetNameIndex>
         */
         // has to set sheet name on index and body..
-        
+        Roo.log(sheet);
+        Roo.log(name);
         var sheetnames = this.doc.getElementsByTagNameNS('*','SheetName');
         if (sheet >=  sheetnames.length) {
             
