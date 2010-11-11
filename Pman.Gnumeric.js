@@ -682,7 +682,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} yoff Y offset to start rendering to
      **/
      
-     // now the rows..
+ 
     importTable : function (datagrid, xoff,yoff)
     {
         if (!datagrid) {
@@ -870,8 +870,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rowOffset += rows.length;
         
     },
-    
-
+       
+    /**
+     * setSheetName: 
+     * Set the sheet name.
+     * @param {String} title for sheet
+     **/
+    setSheetName : function(n)
+    {
+        
+        
+    }
     
      /**
      * toHTML: 
