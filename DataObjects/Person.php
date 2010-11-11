@@ -135,6 +135,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $u = DB_DataObject::factory('Person');
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['local_autoauth']) && 
+            (!empty($_SERVER['SERVER_ADDR'])) &&
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
             $u->get('email', $ff->Pman['local_autoauth'])
