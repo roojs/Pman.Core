@@ -910,7 +910,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         cell.textContent = this.RCtoCell(row1,col1) + ':' + this.RCtoCell(row2,col2)
         
         //var merges = this.gnumeric.getElementsByTagNameNS('*','MergedRegions');
-        var merges = this.sheet.getElementsByTagNameNS('*','MergedRegions');
+        var merges = this.sheet.getElementsByTagNameNS('*','MergedRegions')[0];
         if (!merges) {
             merges = createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MergedRegions');
             var sl = this.sheet.getElementsByTagNameNS('*','SheetLayout')[0];
