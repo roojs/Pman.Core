@@ -201,7 +201,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
      
-     RCtoCell function(c,r)
+     RCtoCell : function(c,r)
     {
         // we wil only support AA not AAA
         var top = Math.floor(c/26);
