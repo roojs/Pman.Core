@@ -201,7 +201,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
      
-    
+    function RCtoCell(c,r)
+    {
+        // we wil only support AA not AAA
+        var top = Math.floor(c/26);
+        var bot = c % 26;
+        var cc = top > 0 ? String.fromCharCode('A'.charCodeAt(0) + top) : '';
+        cc = String.fromCharCode('A'.charCodeAt(0) + bottom);
+        return c+r;
+        
+    }
     
     /**
      * toRC:
@@ -213,7 +222,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     toRC : function(k)
     {
-          var c = k.charCodeAt(0)-64;
+        var c = k.charCodeAt(0)-64;
         var n = k.substring(1);
         if (k.charCodeAt(1) > 64) {
             c *=26;
@@ -750,17 +759,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
-                    /*
+                   //row + yoff, c : col + xoff + coloffset
                     this.mergeRegion(
-                        colat,
-                        row +y_offset,
-                        colat + (cols[col].getAttribute('colspan') - 1), 
-                        row+y_offset + (
+                        col + xoff + coloffset,
+                        row + yoff,
+                        col + xoff + coloffset + (cols[col].getAttribute('colspan') - 1), 
+                        row + yoff /*+ (
                                 (cols[col].getAttribute('rowspan') > 1) ?
                                     (cols[col].getAttribute('rowspan') - 1) : 0
-                                )
+                                )*/
                     );
-                    */
+                    
                     
                     
                     coloffset += (cols[col].getAttribute('colspan') - 1);
@@ -892,7 +901,27 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rowOffset += rows.length;
         
     },
-       
+        
+    mergeRegion : function (col1,row1,col2,row2)
+    {
+        var cell = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Merge');
+        //if (col1 > 50|| col2 > 50) { // do not merge cols off to right?
+       //     return;
+        //}
+        
+        cell.textContent = this.RCtoCell(row1,col1) + ':' + this.RCtoCell(row2,col2)
+        
+        //var merges = this.gnumeric.getElementsByTagNameNS('*','MergedRegions');
+        var merges = this.sheet.getElementsByTagNameNS('*','MergedRegions');
+        if (!merges) {
+            merges = createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MergedRegions');
+            var sl = this.sheet.getElementsByTagNameNS('*','SheetLayout')[0];
+            this.sheet.insertBefore(merges,sl);
+        }
+        this.merges.appendChild(cell);
+    
+    },
+    
     /**
      * setSheetName: 
      * Set the sheet name.
