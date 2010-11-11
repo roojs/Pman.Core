@@ -530,7 +530,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
     },
     
-    
+    // private
     copyRow : function(src, dest) {
         if (dest == src) {
             return;
@@ -549,6 +549,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rmax = Math.max(this.rmax, dest +1);
         
     },
+    
+    // private
     
     createCell: function(r,c)
     {
