@@ -902,6 +902,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     /**
      * mergeRegion:
      * Merge cells in the spreadsheet. (does not check if existing merges exist..)
+     * 
      * @param {Number} col1  first column 
      * @param {Number} row1  first row
      * @param {Number} col2  to column 
@@ -929,6 +930,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         merges.appendChild(cell);
     
     },
+    /**
+     * setRowHeight:
+     * Sets the height of a row.
+     * 
+     * @param {Number} col1  first column 
+     * @param {Number} row1  first row
+     * @param {Number} col2  to column 
+     * @param {Number} row2  to row
+     */
     setRowHeight : function (row,height)
     {
         //<gmr:Rows DefaultSizePts="12.75">
