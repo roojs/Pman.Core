@@ -1048,7 +1048,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     try  {
                        rdata = Roo.decode(req.responseText)
                     } catch (e) {
-                        Roo.log("Invalid data from server..");
+                      
                         Roo.log(edata);
                         Roo.MessageBox.hide();
                         Roo.MessageBox.alert("Error", "Invalid data from server..");
