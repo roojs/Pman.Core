@@ -934,10 +934,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * setRowHeight:
      * Sets the height of a row.
      * 
-     * @param {Number} col1  first column 
-     * @param {Number} row1  first row
-     * @param {Number} col2  to column 
-     * @param {Number} row2  to row
+     * @param {Number} row  the row to set the height of.
+     * @param {Number} height (in pixels)
      */
     setRowHeight : function (row,height)
     {
