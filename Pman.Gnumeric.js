@@ -1034,6 +1034,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         {
             if (p+1 == ar.length) { // got to end..
                 Roo.MessageBox.hide();
+                complete();
             }
             
             
@@ -1063,6 +1064,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         return;
                     }
                     var data = rdata.data;
+                    ar[
                     
                     if (data){
                         Roo.MessageBox.updateProgress(p/n,
@@ -1088,7 +1090,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         
         
-    }
+    },
     
     
     
