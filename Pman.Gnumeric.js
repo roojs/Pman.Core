@@ -1057,6 +1057,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     }
                     if (!rdata || !rdata.success) {
                         Roo.log(rdata);
+                        Roo.MessageBox.hide();
+                        Roo.MessageBox.alert("Error", "Failed to get data " + Roo.encode(rdata));
+                       
                         return;
                     }
                     var data = rdata.data;
