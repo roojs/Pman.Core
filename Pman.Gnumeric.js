@@ -1039,12 +1039,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
             var c = new Roo.data.Connection();
             c.request({
-                url : this.form.progressUrl,
-                params: {
-                    id : uid
-                },
+                url : ar[0].url,
                 method: 'GET',
-                success : function(req){
+                success : function(req) {
                    //console.log(data);
                     var rdata = false;
                     var edata;
@@ -1053,6 +1050,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     } catch (e) {
                         Roo.log("Invalid data from server..");
                         Roo.log(edata);
+                        Roo.MessageBox.hide();
+                        Roo.MessageBox.alert("Error", "Invalid data from server..");
+                        
                         return;
                     }
                     if (!rdata || !rdata.success) {
