@@ -1027,6 +1027,18 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         // loop through images, fetching them, so they can be added to document..
         // we use callbacks on http request and show a progress bar..
+        var p = 0; 
+        var n = ar.length +1;
+        
+        function gather()
+        {
+            if (p+1 == ar.length) { // got to end..
+                Roo.MessageBox.hide();
+            }
+            
+        }
+        
+        
         
         
         
