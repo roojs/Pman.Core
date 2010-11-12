@@ -1025,7 +1025,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     gatherImages : function(ar)
     {
-        
+        // loop through images, fetching them, so they can be added to document..
         
         
         
