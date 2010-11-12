@@ -1064,17 +1064,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     }
                     var data = rdata.data;
                     
-                    if (this.uploadComplete) {
-                       Roo.MessageBox.hide();
-                       return;
-                    }
-                       
                     if (data){
-                        Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,
-                           Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'
+                        Roo.MessageBox.updateProgress(p/n,
+                           (n-p) ' Images Remaining'
                         );
                     }
-                    this.uploadProgress.defer(2000,this);
+                    p++;
+                    gather();
                 },
            
                 failure: function(data) {
