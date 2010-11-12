@@ -899,7 +899,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rowOffset += rows.length;
         
     },
-        
+    /**
+     * mergeRegion:
+     * Merge cells in the spreadsheet. (does not check if existing merges exist..)
+     * @param {Number} col1  first column 
+     * @param {Number} row1  first row
+     * @param {Number} col2  to column 
+     * @param {Number} row2  to row
+     * 
+     */
     mergeRegion : function (col1,row1,col2,row2)
     {
         var cell = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Merge');
