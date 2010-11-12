@@ -1022,6 +1022,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.colInfoDom[column].setAttribute('Unit', width);
         
     },
+    
+    gatherImages : function(ar)
+    {
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
      /**
      * toHTML: 
      * Convert spreadsheet into a HTML table.
