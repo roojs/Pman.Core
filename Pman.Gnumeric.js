@@ -921,7 +921,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         merges.appendChild(cell);
     
     },
-    
+    setRowHeight : function (row,height)
+    {
+        //<gmr:Rows DefaultSizePts="12.75">
+        //   <gmr:RowInfo No="2" Unit="38.25" MarginA="0" MarginB="0" HardSize="1"/>
+    //  < /gmr:Rows>
+        var rows = this.doc.getElementsByTagNameNS('*','Rows')[0]; // assume this exists..
+        var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MRowInfo');
+        // assume we have no rows..
+        ri.setAttribute('No', row);
+        ri.setAttribute('Unit', height);
+        ri.setAttribute('MarginA', 0);
+        ri.setAttribute('MarginB', 0);
+        ri.setAttribute('HardSize', 1);
+        rows.appendChild(ri);
+    },
+     
     /**
      * setSheetName: 
      * Set the sheet name.
