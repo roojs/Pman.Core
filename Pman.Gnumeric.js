@@ -1063,8 +1063,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                        
                         return;
                     }
-                    var data = rdata.data;
-                    ar[
+                    
+                    ar[p].data = rdata.data;
                     
                     if (data){
                         Roo.MessageBox.updateProgress(p/n,
