@@ -1029,13 +1029,57 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // we use callbacks on http request and show a progress bar..
         var p = 0; 
         var n = ar.length +1;
-        
+        Roo.MessageBox.progress("Downloading Images", "Download Images");
         function gather()
         {
             if (p+1 == ar.length) { // got to end..
                 Roo.MessageBox.hide();
             }
             
+            
+            var c = new Roo.data.Connection();
+            c.request({
+                url : this.form.progressUrl,
+                params: {
+                    id : uid
+                },
+                method: 'GET',
+                success : function(req){
+                   //console.log(data);
+                    var rdata = false;
+                    var edata;
+                    try  {
+                       rdata = Roo.decode(req.responseText)
+                    } catch (e) {
+                        Roo.log("Invalid data from server..");
+                        Roo.log(edata);
+                        return;
+                    }
+                    if (!rdata || !rdata.success) {
+                        Roo.log(rdata);
+                        return;
+                    }
+                    var data = rdata.data;
+                    
+                    if (this.uploadComplete) {
+                       Roo.MessageBox.hide();
+                       return;
+                    }
+                       
+                    if (data){
+                        Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,
+                           Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'
+                        );
+                    }
+                    this.uploadProgress.defer(2000,this);
+                },
+           
+                failure: function(data) {
+                    Roo.log('progress url failed ');
+                    Roo.log(data);
+                },
+                scope : this
+            });
         }
         
         
