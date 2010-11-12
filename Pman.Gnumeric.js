@@ -1064,7 +1064,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         return;
                     }
                     
-                    ar[p].data = rdata.data;
+                    ar[p].data = rdata.data.base64;
                     
                     if (data){
                         Roo.MessageBox.updateProgress(p/n,
