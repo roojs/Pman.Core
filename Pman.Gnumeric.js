@@ -1074,13 +1074,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 },
            
                 failure: function(data) {
-                    Roo.log('progress url failed ');
                     Roo.log(data);
+                    Roo.MessageBox.hide();
+                    Roo.MessageBox.alert("Error", "Failed to get data " + Roo.encode(data));
+
                 },
                 scope : this
             });
         }
         
+        gather();
         
         
         
