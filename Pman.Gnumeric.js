@@ -998,12 +998,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         //<gnm:StyleRegion startCol="0" startRow="0" endCol="255" endRow="65535"
         var sr = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
+        objs.appendChild(sr);
         sr.setAttribute('startCol', col);
         sr.setAttribute('endCol', col);
         sr.setAttribute('startRow', row);
         sr.setAttribute('endRow', row);
         
+        
         var st = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Style');
+        sr.appendChild(st);
         // do we need some defaults..
         for(var k in ent) {
             st.setAttribute(k, ent[k]);
@@ -1032,9 +1035,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
         });
         // start adding them all together..
+        
         if (sb) {
             st.appendChild(sb)
         }
+        
         
         
         
