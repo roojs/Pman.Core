@@ -925,19 +925,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             'vertical-align': function(ent,v) { 
                 ent['VAlign'] = { 'top' : '1', 'middel' : '8' ,  'bottom' : '4' }[v] || '1';
+            },
+            
+            'color': function(ent,v) { 
+                ent['Fore '] = toCol(v);
+            },
+            'background-color' : function(ent,v) { 
+                ent['Back'] = toCol(v);
+                
             }
-            /*
-            Fore : function(ent,v) { 
-                var col=[];
-                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                ent['color'] = 'rgb(' + col.join(',') + ')';
-            },
-            Back : function(ent,v) { 
-                var col=[];
-                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                ent['background-color'] = 'rgb(' + col.join(',') + ')';
-            },
-            */
             
         }
        
