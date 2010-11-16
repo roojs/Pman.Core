@@ -945,9 +945,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //    if (v*0 < 1) return;
             //    //ent['font-weight'] = 'bold';
             //},
-            'font-family' : function(ent,v) { 
-                ent['FontName'] = v;
-            }
+            //'font-family' : function(ent,v) { 
+            //    ent['FontName'] = v;
+            //}
         }
         var fent = {
             Unit:"10",
