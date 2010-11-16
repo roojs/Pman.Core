@@ -1043,7 +1043,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             be.setAttribute('Color', '0:0:0'); // fixme..
             sb.appendChild(be);
             
-        });
+        }, this);
         // start adding them all together..
         
         if (sb) {
