@@ -905,7 +905,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * write an image (needs base64 data to write it)
      * 
      * 
-     * @param {Number} row  row to put it in
+     * @param {Number} row  row to put it in (rows start at 0)
      * @param {Number} col  column to put it in
      * @param {Number} data  the base64 description of the images
      * @param {Number} width image width
@@ -1027,7 +1027,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * setRowHeight:
      * Sets the height of a row.
      * 
-     * @param {Number} r  the row to set the height of.
+     * @param {Number} r  the row to set the height of. (rows start at 0)
      * @param {Number} height (in pixels)
      */
     setRowHeight : function (r,height)
