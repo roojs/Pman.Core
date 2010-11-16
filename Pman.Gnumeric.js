@@ -920,7 +920,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // our default height width is 50/50 ?!
         //console.log('w='+width+',height='+height);
                 //        <gmr:Objects>
-        var objs = this.doc.getElementsByTagNameNS('*','Objects')[0];
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
         //<gmr:SheetObjectImage 
