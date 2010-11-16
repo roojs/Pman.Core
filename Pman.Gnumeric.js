@@ -949,14 +949,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //    ent['FontName'] = v;
             //}
         }
-        var fent = {
-            Unit:"10",
-            Bold:"0",
-            Italic:"0",
-            Underline:"0",
-            StrikeThrough:"0"
-        };
-        
+       
         var ent = {
                 HAlign:"1",
                 VAlign:"2",
@@ -980,6 +973,28 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
             map[k](ent,v);
         }
+        
+        var fent = {
+            Unit:"10",
+            Bold:"0",
+            Italic:"0",
+            Underline:"0",
+            StrikeThrough:"0"
+        };
+        
+        for(var k in fmap) {
+            var val = el.getStyle(k);
+            if (!val.length) {
+               continue;
+            }
+            fmap[k](ent,v);
+        }
+        var font = el.getStyle('font-family') || 'Sans';
+        
+        
+        
+        /// -- now create elements..
+        
         var objs = this.sheet.getElementsByTagNameNS('*','Styles')[0];
         
         //<gnm:StyleRegion startCol="0" startRow="0" endCol="255" endRow="65535"
@@ -995,7 +1010,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             st.setAttribute(k, ent[k]);
         }
         
-        
+        var fo = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Font');
+        // do we need some defaults..
+        for(var k in fent) {
+            fo.setAttribute(k, ent[k]);
+        }
+        fo.textContents = font;
         
         
         
