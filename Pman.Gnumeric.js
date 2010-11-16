@@ -913,8 +913,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
             var rcs = [];
             Roo.each(ar, function(c) { 
-                var hex = (c*256).toString(16);
-                rcs.push( substring(  hex.length)); 
+                
+                rcs.push(c*256).toString(16)  ); 
             });
             return rcs.join(':');
             
