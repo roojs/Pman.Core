@@ -957,7 +957,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
            
         for(var k in map) {
             var val = el.getStyle(k);
-            if (!val.length) {
+            if (!val || !val.length) {
                continue;
             }
             map[k](ent,val);
@@ -990,7 +990,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         for(var k in fmap) {
             var val = el.getStyle(k);
-            if (!val.length) {
+            if (!val || !val.length) {
                continue;
             }
             fmap[k](ent,val);
