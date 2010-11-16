@@ -201,7 +201,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
      
-     RCtoCell : function(c,r)
+    RCtoCell : function(r,c)
     {
         // we wil only support AA not AAA
         var top = Math.floor(c/26);
@@ -899,6 +899,96 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rowOffset += rows.length;
         
     },
+    
+    
+    
+    
+    _writeImage : function (row, col, imgsrc, width, height) 
+    {
+        
+        // our default height width is 50/50 ?!
+        //console.log('w='+width+',height='+height);
+                //        <gmr:Objects>
+        var objs = this.doc.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElement('gnm:SheetObjectImage');
+        
+        //<gmr:SheetObjectImage 
+        //      ObjectBound="A3:J8" 
+        //      ObjectOffset="0.375 0.882 0.391 0.294" 
+        //      ObjectAnchorType="16 16 16 16" 
+        //      Direction="17" 
+        //      crop-top="0.000000" 
+        //      crop-bottom="0.000000" 
+        //      crop-left="0.000000" 
+        //      crop-right="0.000000">
+                
+                
+        //alert(gnumeric_colRowToName(row,col));
+               
+        // this is where we really have fun!!!... 
+        // since our design currently assumes the height is enough to fit
+        // stuff in, we only really need to work out how wide it has to be..
+        
+        // note we should probably use centralized calcs if it fits in the first cell!
+        
+        // step 1 - work out how many columns it will span..
+        // lets hope the spreadsheet is big enought..
+        var colwidth = width;
+        /*
+        for (var endcol=col;endcol <100; endcol++) {
+            if (!this.widths[endcol]) {
+                this.widths[endcol] = 100; // eak fudge
+            }
+            colwidth += this.widths[endcol];
+            if (colwidth > width) {
+                break;
+            }
+        }
+        */
+        
+        soi.setAttribute('ObjectBound',
+            //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
+            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,col));
+     
+        var ww = 0.01; // offset a bit...
+        var hh = 0.01; //
+        
+        var ww2 = 1 - ((colwidth - width) / this.widths[endcol]);
+        var hh2 = 0.99;
+        
+        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+        //console.log(offset_str );
+        //alert(offset_str);
+        soi.setAttribute('ObjectOffset', offset_str);
+        soi.setAttribute('ObjectAnchorType','16 16 16 16');
+        soi.setAttribute('Direction','17');
+        soi.setAttribute('crop-top','0.000000');
+        soi.setAttribute('crop-bottom','0.000000');
+        soi.setAttribute('crop-left','0.000000');
+        soi.setAttribute('crop-right','0.000000');
+                // <Content image-type="jpeg" size-bytes="3900">......  < / Content>
+        var content = this.gnumeric.createElement('Content');
+        content.setAttribute('image-type','jpeg');
+        //alert(imgsrc);
+        var ireq = new phpRequest(imgsrc);
+        var xreq = ireq.executeGet();
+        
+        
+        if (xreq.responseText == '') {
+            return false;
+        }
+        content.setAttribute('size-bytes',xreq.responseText.length);
+      
+        var body = this.gnumeric.createTextNode(xreq.responseText ) ;
+        content.appendChild(body);
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        return true;
+                //< /gnm:SheetObjectImage>
+                // < /gnm:Objects>
+
+    }
+ 
     /**
      * mergeRegion:
      * Merge cells in the spreadsheet. (does not check if existing merges exist..)
