@@ -960,7 +960,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             if (!val.length) {
                continue;
             }
-            map[k](ent,v);
+            map[k](ent,val);
         }
         // fonts..
         var fmap = {
