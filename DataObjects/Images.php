@@ -262,6 +262,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ret= $this->toArray();
         if (isset($req['_base64')) {
             $ret['base64'] = base64_encode(file_get_contents($this->getStoreName()));
+            return $ret;
         }
         
       
