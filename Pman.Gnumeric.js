@@ -405,7 +405,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 ent['text-align'] = { '1' : 'left', '8': 'center', '4' : 'right'}[v] || 'left';
             },
             VAlign : function(ent,v) { 
-                ent['vertical-align'] = { '1' : 'top', '4': 'middel', '8' : 'bottom'}[v]  || 'top'
+                ent['vertical-align'] = { '1' : 'top', '4': 'middle', '8' : 'bottom'}[v]  || 'top'
             },
             Fore : function(ent,v) { 
                 var col=[];
@@ -502,6 +502,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         Roo.util.CSS.createStyleSheet(css, sid);
     },
 
+    
+    
+    
     /* ---------------------------------------  AFTER LOAD METHODS... ----------------------- */
     /**
      * set: 
@@ -899,6 +902,66 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.rowOffset += rows.length;
         
     },
+    
+    
+    
+    parseHtmlStyle : function(dom, r, c) {
+        
+        
+        
+        var el = Roo.get(dom);
+        var map =  {
+            'text-align'  : function(ent,v) { 
+                ent['HAlign'] = { 'left' : '1', 'center' : '8' ,  'right' : '4' }[v] || '1';
+            },
+            'vertical-align': function(ent,v) { 
+                ent['VAlign'] = { 'top' : '1', 'middel' : '8' ,  'bottom' : '4' }[v] || '1';
+            },
+            /*
+            Fore : function(ent,v) { 
+                var col=[];
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['color'] = 'rgb(' + col.join(',') + ')';
+            },
+            Back : function(ent,v) { 
+                var col=[];
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['background-color'] = 'rgb(' + col.join(',') + ')';
+            },
+            */
+            'font-size' : function(ent,v) { 
+                ent['FontUnit'] = v.replace(/px/, '');
+            },
+            FontBold : function(ent,v) { 
+                if (v*1 < 1) return;
+                ent['font-weight'] = 'bold';
+            },
+            FontItalic : function(ent,v) { 
+                if (v*0 < 1) return;
+                //ent['font-weight'] = 'bold';
+            },
+            FontName : function(ent,v) { 
+                ent['font-family'] = v;
+            },
+            BorderStyle : function(ent,v) { 
+                var vv  = v.split('-');
+                ent['border-'+vv[0]+'-style'] = 'solid';
+                ent['border-'+vv[0]+'-width'] = vv[1]+'px';
+            },
+            BorderColor : function(ent,v) { 
+                var vv  = v.split('-');
+                var col=[];
+                Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
+            }
+        }
+        
+        
+        
+        
+    },
+    
+    
     
     /**
      * writeImage:
