@@ -933,18 +933,18 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         // step 1 - work out how many columns it will span..
         // lets hope the spreadsheet is big enought..
-        var colwidth = width + 10;
-        /*
+        var colwidth = 0;
+        
         for (var endcol=col;endcol <100; endcol++) {
-            if (!this.widths[endcol]) {
-                this.widths[endcol] = 100; // eak fudge
+            if (!this.colInfo[endcol]) {
+                this.colInfo[endcol] = 100; // eak fudge
             }
-            colwidth += this.widths[endcol];
+            colwidth += this.colInfo[endcol];
             if (colwidth > width) {
                 break;
             }
         }
-        */
+       
         
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
@@ -953,7 +953,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
         
-        var ww2 = 1 - ((colwidth - width) / this.widths[endcol]);
+        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
         var hh2 = 0.99;
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
