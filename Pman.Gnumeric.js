@@ -1039,7 +1039,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var rows = this.sheet.getElementsByTagNameNS('*','Rows')[0]; // assume this exists..
         var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:RowInfo');
         // assume we have no rows..
-        ri.setAttribute('No', ''+r);
+        ri.setAttribute('No', r-1);
         ri.setAttribute('Unit', height);
         ri.setAttribute('MarginA', 0);
         ri.setAttribute('MarginB', 0);
