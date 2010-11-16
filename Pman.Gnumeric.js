@@ -949,8 +949,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // step 1 - work out how many columns it will span..
         // lets hope the spreadsheet is big enought..
         var colwidth = 0;
-        
-        for (var endcol=col;endcol <100; endcol++) {
+        var endcol=col
+        for ( endcol=col;endcol <100; endcol++) {
             if (!this.colInfo[endcol]) {
                 this.colInfo[endcol] = 100; // eak fudge
             }
@@ -963,7 +963,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,col));
+            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
      
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
