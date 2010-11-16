@@ -913,7 +913,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             Roo.each(v.split(','), function(c) { 
                 var hex = (c*256).toString(16);
                 col.push( ('0000' + hex).substring(  hex.length)); 
-            })
+            });
+            return col.join(':');
             
         }
         
