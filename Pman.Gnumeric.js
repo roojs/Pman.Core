@@ -914,7 +914,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var rcs = [];
             Roo.each(ar, function(c) { 
                 
-                rcs.push(c*256).toString(16)  ); 
+                rcs.push((c*256).toString(16)) ; 
             });
             return rcs.join(':');
             
