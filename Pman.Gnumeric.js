@@ -890,7 +890,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 this.set({ r: row + yoff, c : col + xoff + coloffset }, cell_value_text, vt, vf);
                  
-                parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , coloffsetadd);
+                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , coloffsetadd);
                  
                 coloffset += coloffsetadd;
                 
