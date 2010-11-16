@@ -933,7 +933,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         // step 1 - work out how many columns it will span..
         // lets hope the spreadsheet is big enought..
-        var colwidth = width;
+        var colwidth = width + 10;
         /*
         for (var endcol=col;endcol <100; endcol++) {
             if (!this.widths[endcol]) {
