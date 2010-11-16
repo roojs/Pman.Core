@@ -279,7 +279,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $ret;
     }
      
-    function URL($size, $provider = '/Images/Thumb', $baseURL=false)
+    function URL($size = false, $provider = '/Images/Thumb', $baseURL=false)
     {
         if (!$this->id) {
             return 'about:blank';
