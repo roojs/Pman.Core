@@ -1036,7 +1036,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //   <gmr:RowInfo No="2" Unit="38.25" MarginA="0" MarginB="0" HardSize="1"/>
     //  < /gmr:Rows>
         var rows = this.sheet.getElementsByTagNameNS('*','Rows')[0]; // assume this exists..
-        var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:MRowInfo');
+        var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:RowInfo');
         // assume we have no rows..
         ri.setAttribute('No', row);
         ri.setAttribute('Unit', height);
