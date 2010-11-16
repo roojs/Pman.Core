@@ -900,7 +900,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
     },
     
-    
+    /**
+     * writeImage:
+     * write an image (needs base64 data to write it)
+     * 
+     * 
+     * @param {Number} row  row to put it in
+     * @param {Number} col  column to put it in
+     * @param {Number} data  the base64 description of the images
+     * @param {Number} row2  to row
+     * 
+     */
     
     
     writeImage : function (row, col, data, width, height) 
@@ -967,7 +977,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.setAttribute('crop-left','0.000000');
         soi.setAttribute('crop-right','0.000000');
                 // <Content image-type="jpeg" size-bytes="3900">......  < / Content>
-        var content = this.gnumeric.createElement('Content');
+        var content = this.doc.createElement('Content');
         content.setAttribute('image-type','jpeg');
         //alert(imgsrc);
         
@@ -979,7 +989,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
 
-    }
+    },
  
     /**
      * mergeRegion:
