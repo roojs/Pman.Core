@@ -930,7 +930,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             
             'color': function(ent,v) { 
-                ent['Fore '] = toCol(v);
+                ent['Fore'] = toCol(v);
             },
             'background-color' : function(ent,v) { 
                 ent['Back'] = toCol(v);
