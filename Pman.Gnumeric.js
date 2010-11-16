@@ -1007,7 +1007,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var sr = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
         objs.appendChild(sr);
         sr.setAttribute('startCol', col);
-        sr.setAttribute('endCol', col);
+        sr.setAttribute('endCol', col+coloffsetadd);
         sr.setAttribute('startRow', row);
         sr.setAttribute('endRow', row);
         
