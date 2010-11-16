@@ -920,7 +920,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //console.log('w='+width+',height='+height);
                 //        <gmr:Objects>
         var objs = this.doc.getElementsByTagNameNS('*','Objects')[0];
-        var soi = this.doc.createElement('gnm:SheetObjectImage');
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
         //<gmr:SheetObjectImage 
         //      ObjectBound="A3:J8" 
