@@ -1032,6 +1032,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     setRowHeight : function (r,height)
     {
+        r*=1;
         //<gmr:Rows DefaultSizePts="12.75">
         //   <gmr:RowInfo No="2" Unit="38.25" MarginA="0" MarginB="0" HardSize="1"/>
     //  < /gmr:Rows>
