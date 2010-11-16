@@ -912,8 +912,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var col = [];
             Roo.each(v.split(','), function(c) { 
                 var hex = (c*256).toString(16);
-                var hh = ('0000' + hex).substring(4- hex.length);
-                col.push( ); 
+                col.push( ('0000' + hex).substring(  hex.length)); 
             })
             
         }
