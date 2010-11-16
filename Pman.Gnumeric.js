@@ -942,19 +942,47 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //},
             'font-family' : function(ent,v) { 
                 ent['FontName'] = v;
-            },
-            BorderStyle : function(ent,v) { 
-                var vv  = v.split('-');
-                ent['border-'+vv[0]+'-style'] = 'solid';
-                ent['border-'+vv[0]+'-width'] = vv[1]+'px';
-            },
-            BorderColor : function(ent,v) { 
-                var vv  = v.split('-');
-                var col=[];
-                Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
-                ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
             }
+             
         }
+        var ent = {
+                HAlign:"1",
+                VAlign:"2",
+                WrapText:"0",
+                ShrinkToFit:"0",
+                Rotation:"0",
+                Shade:"0",
+                Indent:"0",
+                Locked:"0",
+                Hidden:"0"
+                Fore:"0:0:0",
+                Back:"FFFF:FFFF:FFFF",
+                PatternColor:"0:0:0",
+                Format:"General"
+    }
+           
+        for(var k in map) {
+            var val = el.getStyle(k);
+            if (!val.length) {
+               continue;
+            }
+            map[k](ent,v);
+        }
+        var objs = this.sheet.getElementsByTagNameNS('*','Styles')[0];
+        
+        //<gnm:StyleRegion startCol="0" startRow="0" endCol="255" endRow="65535"
+        var sr = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
+        sr.setAttribute('startCol', col);
+        sr.setAttribute('endCol', col);
+        sr.setAttribute('startRow', row);
+        sr.setAttribute('endRow', row);
+        
+        var st = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Style');
+        // do we need some defaults..
+        for(var k in ent) {
+            st.setAttribute(k, ent[k]);
+        }
+        
         
         
         
