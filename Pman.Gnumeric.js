@@ -1030,7 +1030,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} row  the row to set the height of.
      * @param {Number} height (in pixels)
      */
-    setRowHeight : function (row,height)
+    setRowHeight : function (r,height)
     {
         //<gmr:Rows DefaultSizePts="12.75">
         //   <gmr:RowInfo No="2" Unit="38.25" MarginA="0" MarginB="0" HardSize="1"/>
@@ -1038,7 +1038,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var rows = this.sheet.getElementsByTagNameNS('*','Rows')[0]; // assume this exists..
         var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd','gnm:RowInfo');
         // assume we have no rows..
-        ri.setAttribute('No', row);
+        ri.setAttribute('No', r);
         ri.setAttribute('Unit', height);
         ri.setAttribute('MarginA', 0);
         ri.setAttribute('MarginB', 0);
