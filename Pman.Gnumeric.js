@@ -1013,6 +1013,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         
         var fo = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Font');
+        st.appendChild(fo);
         // do we need some defaults..
         for(var k in fent) {
             fo.setAttribute(k, ent[k]);
