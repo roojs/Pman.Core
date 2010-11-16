@@ -912,7 +912,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         function toCol (rgb) {
             var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').split(',');
             var col = [];
-            Roo.each(v.split(','), function(c) { 
+            Roo.each(ar, function(c) { 
                 var hex = (c*256).toString(16);
                 col.push( ('0000' + hex).substring(  hex.length)); 
             });
