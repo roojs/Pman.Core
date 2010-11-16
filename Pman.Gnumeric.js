@@ -1026,6 +1026,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 sb= this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleBorder');
             }
             var be = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:' + p[0].toUpperCase() + p.substring(2));
+            be.setAttribute('Style', '1');
+            be.setAttribute('Color', '0:0:0'); // fixme..
             sb.appendChild(be);
             
         });
