@@ -260,26 +260,25 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function toRooArray($req = array()) {
       //  echo '<PRE>';print_r($req);exit;
         $ret= $this->toArray();
-        if (isset($req['_base64'])) {
+        if (!empty($req['_base64'])) {
             $ret['base64'] = base64_encode(file_get_contents($this->getStoreName()));
             return $ret;
         }
         
       
-        if (empty($req['query']['imagesize'])) {
-            return $this->toArray();
-        }
-        
-        
-        $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
-        
-        $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
-        
-        $ret['url_view'] = $this->URL(-1, '/Images',$baseURL);    
-        
         if (!empty($req['query']['imagesize'])) {
-            $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
+             $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
+            
+            $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
+            
+            $ret['url_view'] = $this->URL(-1, '/Images',$baseURL);    
+            
+            if (!empty($req['query']['imagesize'])) {
+                $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
+            }
         }
+        
+         
          
         return $ret;
     }
