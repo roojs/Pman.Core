@@ -903,7 +903,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     
-    _writeImage : function (row, col, imgsrc, width, height) 
+    _writeImage : function (row, col, data, width, height) 
     {
         
         // our default height width is 50/50 ?!
@@ -970,17 +970,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var content = this.gnumeric.createElement('Content');
         content.setAttribute('image-type','jpeg');
         //alert(imgsrc);
-        var ireq = new phpRequest(imgsrc);
-        var xreq = ireq.executeGet();
         
-        
-        if (xreq.responseText == '') {
-            return false;
-        }
-        content.setAttribute('size-bytes',xreq.responseText.length);
-      
-        var body = this.gnumeric.createTextNode(xreq.responseText ) ;
-        content.appendChild(body);
+        content.setAttribute('size-bytes',data.length);
+        content.textContent = data;
         soi.appendChild(content);
         objs.appendChild(soi);
         return true;
