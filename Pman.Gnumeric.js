@@ -929,21 +929,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 ent['background-color'] = 'rgb(' + col.join(',') + ')';
             },
             */
-            'font-size' : function(ent,v) { 
-                ent['FontUnit'] = v.replace(/px/, '');
-            },
-            'font-weight' : function(ent,v) { 
-                if (v != 'bold') return;
-                ent['FontBold'] = 1;
-            },
-            //FontItalic : function(ent,v) { 
-            //    if (v*0 < 1) return;
-            //    //ent['font-weight'] = 'bold';
-            //},
-            'font-family' : function(ent,v) { 
-                ent['FontName'] = v;
-            }
-             
+            
         }
         var ent = {
                 HAlign:"1",
