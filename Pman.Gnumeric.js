@@ -959,7 +959,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 Back:"FFFF:FFFF:FFFF",
                 PatternColor:"0:0:0",
                 Format:"General"
-    }
+        }
            
         for(var k in map) {
             var val = el.getStyle(k);
