@@ -1016,6 +1016,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         sr.appendChild(st);
         // do we need some defaults..
         for(var k in ent) {
+            Roo.log(k);
             st.setAttribute(k, ent[k]);
         }
         
