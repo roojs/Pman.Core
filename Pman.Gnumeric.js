@@ -932,16 +932,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             'font-size' : function(ent,v) { 
                 ent['FontUnit'] = v.replace(/px/, '');
             },
-            FontBold : function(ent,v) { 
-                if (v*1 < 1) return;
-                ent['font-weight'] = 'bold';
+            'font-weight' : function(ent,v) { 
+                if (v != 'bold') return;
+                ent['FontBold'] = 1;
             },
-            FontItalic : function(ent,v) { 
-                if (v*0 < 1) return;
-                //ent['font-weight'] = 'bold';
-            },
-            FontName : function(ent,v) { 
-                ent['font-family'] = v;
+            //FontItalic : function(ent,v) { 
+            //    if (v*0 < 1) return;
+            //    //ent['font-weight'] = 'bold';
+            //},
+            'font-family' : function(ent,v) { 
+                ent['FontName'] = v;
             },
             BorderStyle : function(ent,v) { 
                 var vv  = v.split('-');
