@@ -911,7 +911,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').split(',');
             var col = [];
             Roo.each(v.split(','), function(c) { 
-                col.push( (c*256).toString(16)); 
+                var hex = (c*256).toString(16);
+                var hh = ('0000' + hex).substring(4- hex.length);
+                col.push( ); 
             })
             
         }
