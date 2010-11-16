@@ -208,7 +208,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var bot = c % 26;
         var cc = top > 0 ? String.fromCharCode('A'.charCodeAt(0) + top) : '';
         cc += String.fromCharCode('A'.charCodeAt(0)  + bot);
-        return c+'' +r;
+        return cc+'' +r;
         
     },
     
