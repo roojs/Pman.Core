@@ -907,7 +907,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     parseHtmlStyle : function(dom, r, c) {
         
-        
+        function toCol (rgb) {
+            var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').split(',');
+            var col = [];
+            Roo.each(v.split(','), function(c) { 
+                col.push( (c*256).toString(16)); 
+            })
+            
+        }
         
         var el = Roo.get(dom);
         var map =  {
