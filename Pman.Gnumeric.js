@@ -948,7 +948,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 Shade:"0",
                 Indent:"0",
                 Locked:"0",
-                Hidden:"0"
+                Hidden:"0",
                 Fore:"0:0:0",
                 Back:"FFFF:FFFF:FFFF",
                 PatternColor:"0:0:0",
