@@ -1015,8 +1015,24 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             fo.setAttribute(k, ent[k]);
         }
         fo.textContents = font;
+        var sb = false;
+        // borders..
+        Roo.each(['top','left','bottom','right'], function(p) {
+            var w = el.getStyle('border-' + p + '-width').replace(/px/, '');
+            if (!w.length) {
+                return;
+            }
+            if (!sb) {
+                sb= this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleBorder');
+            }
+            var be = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:' + p[0].toUpperCase() + p.substring(2));
+            sb.appendChild(be);
+            
+        });
         
-        
+        if (sb) {
+            st.appendChild(sb)
+        }
         
     },
     
