@@ -903,7 +903,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     
-    _writeImage : function (row, col, data, width, height) 
+    writeImage : function (row, col, data, width, height) 
     {
         
         // our default height width is 50/50 ?!
