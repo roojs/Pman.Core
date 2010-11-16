@@ -260,11 +260,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function toRooArray($req = array()) {
       //  echo '<PRE>';print_r($req);exit;
         $ret= $this->toArray();
-        if (!empty($req['_base64'])) {
-            $ret['base64'] = base64_encode(file_get_contents($this->getStoreName()));
-            return $ret;
-        }
-        
+      
       
         if (!empty($req['query']['imagesize'])) {
              $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
