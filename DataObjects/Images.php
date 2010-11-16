@@ -278,7 +278,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
         return $ret;
     }
-     
+    
+    /**
+     * URL - create  a url for the image.
+     * size - use -1 to show full size.
+     * provier = baseURL + /Images/Thumb ... use '/Images/' for full
+     * 
+     * 
+     */
     function URL($size , $provider = '/Images/Thumb', $baseURL=false)
     {
         if (!$this->id) {
