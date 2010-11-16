@@ -1019,6 +1019,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             fo.setAttribute(k, ent[k]);
         }
         fo.textContents = font;
+        
         var sb = false;
         // borders..
         Roo.each(['top','left','bottom','right'], function(p) {
