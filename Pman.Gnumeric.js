@@ -910,7 +910,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     parseHtmlStyle : function(dom, row, col, cspan) {
         
         function toCol (rgb) {
-            var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').split(',');
+            var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
             var rcs = [];
             Roo.each(ar, function(c) { 
                 var hex = (c*256).toString(16);
