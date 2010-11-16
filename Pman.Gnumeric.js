@@ -916,7 +916,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             'vertical-align': function(ent,v) { 
                 ent['VAlign'] = { 'top' : '1', 'middel' : '8' ,  'bottom' : '4' }[v] || '1';
-            },
+            }
             /*
             Fore : function(ent,v) { 
                 var col=[];
@@ -930,24 +930,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             */
             
-        }
-        var fmap = {
-            
-           
-            'font-size' : function(ent,v) { 
-                ent['FontUnit'] = v.replace(/px/, '');
-            },
-            'font-weight' : function(ent,v) { 
-                if (v != 'bold') return;
-                ent['FontBold'] = 1;
-            },
-            //FontItalic : function(ent,v) { 
-            //    if (v*0 < 1) return;
-            //    //ent['font-weight'] = 'bold';
-            //},
-            //'font-family' : function(ent,v) { 
-            //    ent['FontName'] = v;
-            //}
         }
        
         var ent = {
@@ -973,7 +955,24 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
             map[k](ent,v);
         }
-        
+        // fonts..
+        var fmap = {
+            
+           
+            'font-size' : function(ent,v) { 
+                ent['FontUnit'] = v.replace(/px/, '');
+            },
+            'font-weight' : function(ent,v) { 
+                if (v != 'bold') return;
+                ent['FontBold'] = 1;
+            } 
+            //FontItalic : function(ent,v) { 
+            //    if (v*0 < 1) return;
+            //    //ent['font-weight'] = 'bold';
+            //},
+            
+        }
+       
         var fent = {
             Unit:"10",
             Bold:"0",
