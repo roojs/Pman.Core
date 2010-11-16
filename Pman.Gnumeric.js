@@ -908,7 +908,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} row  row to put it in
      * @param {Number} col  column to put it in
      * @param {Number} data  the base64 description of the images
-     * @param {Number} row2  to row
+     * @param {Number} width image width
+     * @param {Number} width image height
      * 
      */
     
