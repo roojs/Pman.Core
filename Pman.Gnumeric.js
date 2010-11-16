@@ -931,6 +931,32 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             */
             
         }
+        var fmap = {
+            
+           
+            'font-size' : function(ent,v) { 
+                ent['FontUnit'] = v.replace(/px/, '');
+            },
+            'font-weight' : function(ent,v) { 
+                if (v != 'bold') return;
+                ent['FontBold'] = 1;
+            },
+            //FontItalic : function(ent,v) { 
+            //    if (v*0 < 1) return;
+            //    //ent['font-weight'] = 'bold';
+            //},
+            'font-family' : function(ent,v) { 
+                ent['FontName'] = v;
+            }
+        }
+        var fent = {
+            Unit:"10",
+            Bold:"0",
+            Italic:"0",
+            Underline:"0",
+            StrikeThrough:"0"
+        };
+        
         var ent = {
                 HAlign:"1",
                 VAlign:"2",
@@ -945,7 +971,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 Back:"FFFF:FFFF:FFFF",
                 PatternColor:"0:0:0",
                 Format:"General"
-        }
+        };
            
         for(var k in map) {
             var val = el.getStyle(k);
