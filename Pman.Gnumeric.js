@@ -1025,7 +1025,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for(var k in fent) {
             fo.setAttribute(k, ent[k]);
         }
-        fo.textContents = font;
+        fo.textContent  = font;
         
         var sb = false;
         // borders..
