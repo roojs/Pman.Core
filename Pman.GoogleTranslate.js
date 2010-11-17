@@ -63,7 +63,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
         
         // chunk up long strings..
         if (str.length > 200) {
-            var bits = str.split(/\s+/);
+            var bits = str.split(/(\s+|[0-9+])/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
                 if (sbits[cur].length + bits[i].length > 190) {
@@ -71,7 +71,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
                     sbits[cur] = bits[i];
                     continue;
                 }
-                sbits[cur] += sbits[cur].length  ? ' ' : '';
+                //sbits[cur] += sbits[cur].length  ? ' ' : '';
                 sbits[cur] += bits[i] + ' '
                 
             }
