@@ -36,8 +36,6 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
         function transbits()
         {
             while (true) {
-                
-               
                 if ((cur +1) > sbits.length) {
                     //Roo.log("CALLING COMPLETED: " + complete);
                     cb(complete);
