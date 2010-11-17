@@ -788,6 +788,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 //var colat = col + coloffset;
                 var coloffsetadd = 0;
                 var merged = false;
+                
+                //var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
+                
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
                    //row + yoff, c : col + xoff + coloffset
