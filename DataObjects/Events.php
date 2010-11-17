@@ -52,7 +52,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pk = $obj ? $obj->keys()  : false;
         $this->on_id  = $obj && $pk ? $obj->{$pk[0]}: 0;
         $pref = '';
-        // should this really go in remarks?
+        // should this really go in remarks? - 
         if ($obj && method_exists('toEventString')) {
             $pref = $obj->toEventString() . ' : ';
         }
