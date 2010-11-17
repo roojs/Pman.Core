@@ -739,6 +739,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var rows = datagrid.getElementsByTagName('tr');
         //alert(rows.length);
         
+        
         for(var row=0;row<rows.length;row++) {
             //var style = document.defaultView.getComputedStyle(rows[row], "");
             
@@ -749,9 +750,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
            // }
             
             var coloffset = 0;
-            if (rowOffsets[row]) {
-                 coloffset += rowOffsets[row];
-            }
+        
             var cols = rows[row].getElementsByTagName('td');
             
             
@@ -759,7 +758,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 //var colat = col + coloffset;
-                coloffsetadd = 0;
+                var coloffsetadd = 0;
+                var merged = false;
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
                    //row + yoff, c : col + xoff + coloffset
@@ -783,7 +783,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     this.mergeRegion(
                         
                         colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
-                    var rroff = cols[col].getAttribute('colspan')  ? (cols[col].getAttribute('colspan') -0): 1;
+                    var rroff = cols[col].getAttribute('colspan')  ? (cols[col].getAttribute('colspan') *1): 1;
                     var rr = 0;
                     for (rr = 0; rr < cols[col].getAttribute('rowspan');rr++) {
                         rowOffsets[rr + row] = col + rroff;
