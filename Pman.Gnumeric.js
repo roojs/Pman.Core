@@ -1032,7 +1032,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // borders..
         Roo.each(['top','left','bottom','right'], function(p) {
             var w = el.getStyle('border-' + p + '-width').replace(/px/, '');
-            if (!w || !w.length) {
+            if (!w || !w.length || (w*1) < 1) {
                 return;
             }
             if (!sb) {
