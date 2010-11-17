@@ -816,7 +816,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 // skip blank cells
                 // set the style first..
-                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , colspan, rowspan);
+                this.parseHtmlStyle( cols[col], row + yoff, realcol + xoff + coloffset , colspan, rowspan);
                 
                 if (!cols[col].childNodes.length) {
                     coloffset += coloffsetadd;
