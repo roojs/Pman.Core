@@ -721,7 +721,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // find the left.
         var ret = { cols : nc, pos : {} };
         for (i =0; i < nc; i++) {
-            ret.pos[i] = Roo.get(ar[i]).getLeft();
+            ret.pos[ Roo.get(ar[i]).getLeft()] =i;
         }
         return ret;
     },
