@@ -929,7 +929,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             var rcs = [];
             ar = ar.slice(0,3);
             Roo.each(ar, function(c) { 
-                rcs.push((c*256).toString(16)) ; 
+                rcs.push((c).toString(16) + (c).toString(16)) ; 
             });
             return rcs.join(':');
             
