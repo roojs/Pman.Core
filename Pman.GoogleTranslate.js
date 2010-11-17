@@ -64,7 +64,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         
         // chunk up long strings..
         if (!force && str.length > 200) {
-            var bits = str.split(/(\s+|[0-9]+)/);
+            var bits = str.split(/(\s+|[0-9\u3002\uff0c\u3001\u201c\u201d]+)/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
                 if (sbits[cur].length + bits[i].length > 190) {
@@ -90,7 +90,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         
         
         
-        
+        ,
         var x = new Roo.data.ScriptTagProxy({ 
             url:  'http://ajax.googleapis.com/ajax/services/language/translate', 
             callbackParam : 'callback' 
