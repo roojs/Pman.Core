@@ -785,9 +785,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             // it might mess things up..
             
             if (rows[row].getAttribute('xls:height')) {
-                this.setRowHeight(row + yoff, 1* rows[row].getAttribute('xls:height'));
+                this.setRowHeight(row + yoff +1, 1* rows[row].getAttribute('xls:height'));
             } else {
-                this.setRowHeight( row + yoff, Roo.get(rows[row]).getHeight());
+                this.setRowHeight( row + yoff +1, Roo.get(rows[row]).getHeight());
             }
             
          
