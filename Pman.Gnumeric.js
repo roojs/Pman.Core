@@ -818,7 +818,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 var rowspan = cols[col].getAttribute('rowspan');
                 rowspan = rowspan ? rowspan * 1 : 1;
                 
-                var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
+                var realcol = table_data.near( Roo.get(cols[col]).getLeft() );
                 
                 
                 
