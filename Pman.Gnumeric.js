@@ -988,7 +988,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             fmap[k](fent,val);
         }
         var font = el.getStyle('font-family') || 'Sans';
-        
+        if (font.split(',').length > 1) {
+            font = font.split(',')[1].replace(/\s+/, '');
+        }
         
         
         /// -- now create elements..
