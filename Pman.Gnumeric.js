@@ -807,7 +807,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         realcol + xoff,
                         row + yoff +1,
                         realcol+ xoff + (colspan -1),
-                        row + yoff + rowspan -1
+                        row + yoff + rowspan 
                     );
                     
                 }
