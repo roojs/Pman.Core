@@ -722,7 +722,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ret = { cols : nc, pos : {} };
         for (i =0; i < nc; i++) {
             ret.pos[i] = Roo.get(ar[i]).getLeft();
-        });
+        }
         return ret;
     },
     
