@@ -902,10 +902,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     parseHtmlStyle : function(dom, row, col, colspan, rowspan) {
         
         function toCol (rgb) {
-            var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
+            
+            var ar = rgb.replace(/rgb[a]?\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
             var rcs = [];
+            ar = ar.slice(0,3);
             Roo.each(ar, function(c) { 
-                
                 rcs.push((c*256).toString(16)) ; 
             });
             return rcs.join(':');
