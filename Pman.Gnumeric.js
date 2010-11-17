@@ -773,6 +773,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         
         for(var row=0;row<rows.length;row++) {
+            
+            this.setRowHeight( row + yoff, Roo.get(rows[row]).getHeight());
             //var style = document.defaultView.getComputedStyle(rows[row], "");
             
             //if (rows[row].getAttribute('xls:height')) {
