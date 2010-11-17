@@ -1203,7 +1203,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //<gmr:Rows DefaultSizePts="12.75">
         //   <gmr:RowInfo No="2" Unit="38.25" MarginA="0" MarginB="0" HardSize="1"/>
     //  < /gmr:Rows>
-    
+        
+        // this doesnt handle row ranges very well.. - with 'coutn in them..'
+        
         if (this.rowInfoEl[r]) {
             this.rowInfoEl[r].setAttribute('Unit', height);
             return;
