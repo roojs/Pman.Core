@@ -999,14 +999,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var objs = this.sheet.getElementsByTagNameNS('*','Styles')[0];
         
         //<gnm:StyleRegion startCol="0" startRow="0" endCol="255" endRow="65535"
-        var sr = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
+        var sr = this.sheet.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
         objs.appendChild(sr);
         objs.appendChild(this.doc.createTextNode("\n"));// add a line break..
 
         sr.setAttribute('startCol', col);
         sr.setAttribute('endCol', col+ colspan-1);
         sr.setAttribute('startRow', row);
-        sr.setAttribute('endRow', row +rowspan -1);
+        sr.setAttribute('endRow', row + rowspan -1);
         
         
         var st = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Style');
