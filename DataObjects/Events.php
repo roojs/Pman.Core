@@ -30,6 +30,14 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         return $lvl == 'S' && $au->hasPerm("Admin.Admin_Tab", $lvl);
     } 
+    /**
+     * init:
+     * Initialize an event - ready to insert..
+     * 
+     * @param {String} action  - group/name of event
+     * @param {DataObject|false} obj - dataobject action occured on.
+     * @param {String} any remarks 
+     */
     
     function init($act, $obj, $remarks)
     {
