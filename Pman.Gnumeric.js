@@ -935,6 +935,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             'background-color' : function(ent,v) { 
                 ent['Back'] = toCol(v);
+                ent['Shade'] = 1;
                 
             }
             
