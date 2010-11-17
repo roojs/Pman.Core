@@ -761,7 +761,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var cleanHTML = function (str) {
             
              var ret = str;
-            ret = ret.replace(/&nbsp;/g,'.');
+            ret = ret.replace(/&nbsp;/g,' ');
             ret = ret.replace(/\n/g,'.');
             ret = ret.replace(/\r/g,'.');
             var i;
