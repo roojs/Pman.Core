@@ -54,9 +54,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pref = '';
         // should this really go in remarks? - 
         if ($obj && method_exists($obj,'toEventString')) {
-            $pref = $obj->toEventString() . ' : ';
+            $pref = $obj->toEventString() ;
         }
         
-        $this->remarks = $pref. $remarks;
+        $this->remarks = implode(' : ', array($pref,  $remarks));
     }
 }
