@@ -53,7 +53,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
             });
         }
         
-        
+        // chunk up long strings..
         if (str.length > 300) {
             var bits = str.split(/\s+/);
             sbits[0]  = '';
