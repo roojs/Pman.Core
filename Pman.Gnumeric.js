@@ -802,7 +802,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 if (colspan > 1 || rowspan > 1) {
                     
-                   
+                    // getting thisese right is tricky..
                     this.mergeRegion(
                         realcol + xoff,
                         row + yoff +1,
