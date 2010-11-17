@@ -760,14 +760,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var cleanHTML = function (str) {
             
-             var ret = str;
+            var ret = str;
             ret = ret.replace(/&nbsp;/g,' ');
-            ret = ret.replace(/\n/g,'.');
-            ret = ret.replace(/\r/g,'.');
+           // ret = ret.replace(/\n/g,'.');
+          //  ret = ret.replace(/\r/g,'.');
             var i;
-            while (-1 != (i = ret.indexOf(unescape('%A0')))) {
-                ret = ret.substring(0,i) + ' ' + ret.substring(i+1,str.length);
-            }
+             
             return ret;
         };
 
