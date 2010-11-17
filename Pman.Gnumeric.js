@@ -730,6 +730,20 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for (i =0; i < nc; i++) {
             ret.pos[ Roo.get(ar[i]).getLeft()] =i;
         }
+        ret.near = function(p) {
+            // which one is nearest..
+            var prox = 100000;
+            var match = 0;
+            for(var i in this.pos) {
+                var dis = Math.abs(p-i);
+                if (dis < prox) {
+                    prox = dis;
+                    match = this.pos[i];
+                }
+            }
+            return match;
+            
+        }
         table.removeChild(tr);
         return ret;
     },
