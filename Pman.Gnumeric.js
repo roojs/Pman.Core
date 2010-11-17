@@ -748,6 +748,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         xoff = xoff || 0;
         yoff = yoff || 0;
         
+        
+        var tabledata = this.readTableData(datagrid);
+        
         var cleanHTML = function (str) {
             
              var ret = str;
@@ -778,8 +781,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //    this.setRowHeight(row+y_offset, 0 + style.height.replace(/[^0-9.]+/g,''));
            // }
             
-            var coloffset = 0;
-        
+         
             var cols = rows[row].getElementsByTagName('td');
             
             
@@ -790,15 +792,17 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 var coloffsetadd = 0;
                 var merged = false;
                 
-                //var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
+                car colspan = 0;
+                
+                var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
                 
                 if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
                     
                    //row + yoff, c : col + xoff + coloffset
                     this.mergeRegion(
-                        col + xoff + coloffset,
+                        realcol + xoff,
                         row + yoff,
-                        col + xoff + coloffset + (cols[col].getAttribute('colspan') - 1), 
+                        realcol+ xoff +(cols[col].getAttribute('colspan') - 1), 
                         row + yoff + (
                                 (cols[col].getAttribute('rowspan') > 1) ?
                                     (cols[col].getAttribute('rowspan') - 1) : 0
