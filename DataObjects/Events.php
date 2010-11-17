@@ -30,4 +30,19 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         return $lvl == 'S' && $au->hasPerm("Admin.Admin_Tab", $lvl);
     } 
+    
+    function init($act, $obj, $remarks)
+    {
+        $pg = HTML_FlexyFramework::get()->page;
+        $au = $pg->getAuthUser();
+         
+        $this->person_name = $au ? $au->name : '';
+        $this->person_id = $au ? $au->id : '';
+        $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
+        $this->action = $act;
+        $this->on_table = $obj ? $obj->tableName() : '';
+        $pk = $obj ? $obj->keys()  : false;
+        $this->on_id  = $obj && $pk ? $obj->{$pk[0]}: 0;
+        $this->remarks = $remarks;
+    }
 }
