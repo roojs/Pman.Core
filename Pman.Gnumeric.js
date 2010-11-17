@@ -166,7 +166,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.sheet = false;
         this.grid = false;
         this.colInfo = false;
+        this.colInfoDom = false;
         this.rowInfo = false;
+        this.rowInfoDom = false;
         this.cmax = false;
         this.rmax = false;
         
@@ -343,10 +345,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         ci = this.sheet.getElementsByTagNameNS('*','RowInfo');
         
         this.rowInfo = {};
+        this.rowInfoDom = {};
         Roo.each(ci, function(c) {
             var count = c.getAttribute('Count') || 1;
             var s =  c.getAttribute('No')*1;
             for(var i =0; i < count; i++) {
+                _t.rowInfoDom[s+i] = c;
                 _t.rowInfo[s+i] = Math.floor(c.getAttribute('Unit')*1);
             }
         });
