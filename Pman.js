@@ -849,7 +849,7 @@ Pman = new Roo.Document(
         
         
     },
-   
+    
     invertColor : function(c)
     {
         // read..
