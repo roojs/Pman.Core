@@ -964,6 +964,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
             map[k](ent,val);
         }
+        // special flags..
+        if (el.getAttribute('xls:wraptext')) {
+            ent.WrapText = 1;
+        }
         // fonts..
         var fmap = {
             
