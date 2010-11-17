@@ -35,11 +35,21 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
         
         function transbits()
         {
-            if ((cur +1) > sbits.length) {
-                //Roo.log("CALLING COMPLETED: " + complete);
-                cb(complete);
-                return;
+            while (true) {
+                
+               
+                if ((cur +1) > sbits.length) {
+                    //Roo.log("CALLING COMPLETED: " + complete);
+                    cb(complete);
+                    return;
+                }
+                if (!sbits[cur].length) {
+                    cur++;
+                    continue;
+                }
+                break;
             }
+            
            // Roo.log("SEND : " + sbits[cur]);
             Pman.gtranslate( sbits[cur], src, dest, function(result) {
                 if (typeof(result) == 'object') {
