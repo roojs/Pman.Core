@@ -974,12 +974,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             'font-weight' : function(ent,v) { 
                 if (v != 'bold') return;
                 ent['Bold'] = 1;
+            },
+            'font-style' : function(ent,v) { 
+                if (v != 'italic') return;
+                ent['Italic'] = 1;
             } 
-            //FontItalic : function(ent,v) { 
-            //    if (v*0 < 1) return;
-            //    //ent['font-weight'] = 'bold';
-            //},
-            
         }
        
         var fent = {
