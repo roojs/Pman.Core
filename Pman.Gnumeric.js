@@ -1018,7 +1018,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         st.appendChild(fo);
         // do we need some defaults..
         for(var k in fent) {
-            fo.setAttribute(k, ent[k]);
+            fo.setAttribute(k, fent[k]);
         }
         fo.textContent  = font;
         
