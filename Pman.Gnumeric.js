@@ -723,6 +723,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for (i =0; i < nc; i++) {
             ret.pos[ Roo.get(ar[i]).getLeft()] =i;
         }
+        table.removeChild(tr);
         return ret;
     },
     
