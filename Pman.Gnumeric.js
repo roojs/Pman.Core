@@ -805,20 +805,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 // if we hit a rowspan
                 // then the following rows will skip this column..
-                
-                if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
-                    // this should really do a merge, but it's pretty damn complex...
-                    this.mergeRegion(
-                        
-                        colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
-                    var rroff = cols[col].getAttribute('colspan')  ? (cols[col].getAttribute('colspan') *1): 1;
-                    var rr = 0;
-                    for (rr = 0; rr < cols[col].getAttribute('rowspan');rr++) {
-                        rowOffsets[rr + row] = col + rroff;
-                    }
-                    
-                }
-                 */
+                 
                
                 /*
                 var style = this.newStyle();
