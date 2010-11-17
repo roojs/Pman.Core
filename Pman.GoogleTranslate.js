@@ -1,15 +1,15 @@
 //<script type="text/javascript">
 /**
-     * 
-     * GoogleTranslate
-     * Translate a string using google translate API
-     * 
-     * Note: this does not handle html input at present - 
-     * @param str {String} input string
-     * @param src {String} source language (or '' for autoguess)
-     * @param str {String} target language
-     * @param str {String} callback - calls back with result or an error object.
-     */
+ * 
+ * GoogleTranslate
+ * Translate a string using google translate API
+ * 
+ * Note: this does not handle html input at present - 
+ * @param str {String} input string
+ * @param src {String} source language (or '' for autoguess)
+ * @param str {String} target language
+ * @param str {String} callback - calls back with result or an error object.
+ */
 Pman.GoogleTranslate = function(str, src, dest, cb) {
         // load script: 
         var cur = 0;
