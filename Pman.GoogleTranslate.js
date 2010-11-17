@@ -54,11 +54,11 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
         }
         
         // chunk up long strings..
-        if (str.length > 300) {
+        if (str.length > 200) {
             var bits = str.split(/\s+/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
-                if (sbits[cur].length + bits[i].length > 290) {
+                if (sbits[cur].length + bits[i].length > 190) {
                     cur++;
                     sbits[cur] = bits[i];
                     continue;
