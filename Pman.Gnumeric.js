@@ -805,9 +805,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                    
                     this.mergeRegion(
                         realcol + xoff,
-                        row + yoff,
+                        row + yoff +1,
                         realcol+ xoff + (colspan -1),
-                        row + yoff + (rowspan -1)
+                        row + yoff + rowspan -1
                     );
                     
                 }
