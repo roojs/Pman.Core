@@ -858,28 +858,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                        
                         break;
                 }
-                /*
-                if (cols[col].getAttribute('xls:src')) {
-                    //alert(cols[col].childNodes[0].width);
-                    if (this.writeImage(
-                        row+y_offset, 
-                        colat+x_offset+coloffset, 
-                        cols[col].getAttribute('xls:src'), 
-                        cols[col].childNodes[0].width, 
-                        cols[col].childNodes[0].height
-                        )) {
-                       
-                    }
-                    continue;
-                }
-                */
-                 
+               
                 if (!cols[col].childNodes[0].nodeValue) {
-                    coloffset += coloffsetadd;
+                   
                     continue;
                 }
                 if (!cols[col].childNodes[0].nodeValue.replace(/^\s*|\s*$/g,"").length) {
-                    coloffset += coloffsetadd;
+                  
                     continue;
                 }
                 // strip me.!
@@ -902,7 +887,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     vt = '';
                     cell_value_text = s.replace(/#row#/g,(row + yoff + 1));
                 }
-                this.set({ r: row + yoff, c : col + xoff + coloffset }, cell_value_text, vt, vf);
+                this.set({ r: row + yoff, c : realcol + xoff }, cell_value_text, vt, vf);
                  
                   
                 coloffset += coloffsetadd;
