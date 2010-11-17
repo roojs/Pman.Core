@@ -993,7 +993,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             if (!val || !val.length) {
                continue;
             }
-            fmap[k](ent,val);
+            fmap[k](fent,val);
         }
         var font = el.getStyle('font-family') || 'Sans';
         
