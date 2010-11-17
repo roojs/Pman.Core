@@ -758,6 +758,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var table_data = this.readTableData(datagrid);
         
+        // oroginally this cleaned line breaks, but we acutally need them..
         var cleanHTML = function (str) {
             
             var ret = str;
