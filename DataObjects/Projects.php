@@ -67,7 +67,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     }
 
     function toEventString() {
-        return $this->name;
+        return $this->company()->toEventString() . ':' . $this->name;
     }
     
     /**
