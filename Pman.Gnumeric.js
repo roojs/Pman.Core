@@ -788,8 +788,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             for(var col=0;col < cols.length; col++) {
                 
                 
-                //var colat = col + coloffset;
-                
+               
                 
                 var colspan = cols[col].getAttribute('colspan');
                 colspan  = colspan ? colspan *1 : 1;
@@ -803,7 +802,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 if (colspan > 1 || rowspan > 1) {
                     
-                   //row + yoff, c : col + xoff + coloffset
+                   
                     this.mergeRegion(
                         realcol + xoff,
                         row + yoff,
@@ -815,7 +814,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 // skip blank cells
                 // set the style first..
-                this.parseHtmlStyle( cols[col], row + yoff, realcol + xoff + coloffset , colspan, rowspan);
+                this.parseHtmlStyle( cols[col], row + yoff, realcol + xoff   , colspan, rowspan);
                 
                 if (!cols[col].childNodes.length) {
                      
