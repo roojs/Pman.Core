@@ -804,6 +804,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                  */
                 // skip blank cells
+                // set the style first..
+                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , coloffsetadd);
+                
                 if (!cols[col].childNodes.length) {
                     coloffset += coloffsetadd;
                     continue;
@@ -890,8 +893,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 this.set({ r: row + yoff, c : col + xoff + coloffset }, cell_value_text, vt, vf);
                  
-                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , coloffsetadd);
-                 
+                  
                 coloffset += coloffsetadd;
                 
                 
