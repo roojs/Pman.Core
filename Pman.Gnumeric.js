@@ -947,7 +947,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             'color': function(ent,v) { 
                 ent['Fore'] = toCol(v);
                 // this is a bit dumb.. we assume that if it's not black text, then it's shaded..
-                if (ent['Fore'] != '00:00:00') {
+                if (ent['Fore'] != '0:0:0') {
                     ent['Shade'] = 1;
                 }
                 
