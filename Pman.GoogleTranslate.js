@@ -54,7 +54,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
         }
         
         
-        if (str.length > 400) {
+        if (str.length > 300) {
             var bits = str.split(/\s+/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
