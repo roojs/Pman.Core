@@ -1213,7 +1213,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             this.sheet.insertBefore(merges,sl);
         } else {
             merges = merges[0];
-           }
+        }
         merges.appendChild(cell);
     
     },
