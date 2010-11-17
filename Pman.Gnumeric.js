@@ -1206,8 +1206,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         // this doesnt handle row ranges very well.. - with 'count in them..'
         
-        if (this.rowInfoEl[r]) {
-            this.rowInfoEl[r].setAttribute('Unit', height);
+        if (this.rowInfoDom[r]) {
+            this.rowInfoDom[r].setAttribute('Unit', height);
             return;
         }
     
@@ -1220,7 +1220,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         ri.setAttribute('MarginB', 0);
         ri.setAttribute('HardSize', 1);
         rows.appendChild(ri);
-        this.rowInfoEl[r] = ri;
+        this.rowInfoDom[r] = ri;
     },
      
     /**
