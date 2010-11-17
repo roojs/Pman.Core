@@ -899,7 +899,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     
-    parseHtmlStyle : function(dom, row, col, cspan, rspan) {
+    parseHtmlStyle : function(dom, row, col, colspan, rowspan) {
         
         function toCol (rgb) {
             var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
