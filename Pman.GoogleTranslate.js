@@ -63,6 +63,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         }
         
         // chunk up long strings..
+        // we should roo.encode to test lenght..
         if (!force && str.length > 200) {
             var bits = str.split(/(\s+|[0-9\u3002\uff0c\u3001\u201c\u201d]+)/);
             sbits[0]  = '';
