@@ -790,7 +790,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 //var colat = col + coloffset;
                 var coloffsetadd = 0;
-                var merged = false;
+             
                 
                 var colspan = cols[col].getAttribute('colspan');
                 colspan  = colspan ? colspan *1 : 1;
@@ -800,43 +800,23 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
                 
-                if (cols[col].getAttribute('colspan') && (cols[col].getAttribute('colspan') > 1)) {
+                
+                
+                if (colspan > 1 || rowspan > 1) {
                     
                    //row + yoff, c : col + xoff + coloffset
                     this.mergeRegion(
                         realcol + xoff,
                         row + yoff,
-                        realcol+ xoff +(cols[col].getAttribute('colspan') - 1), 
-                        row + yoff + (
-                                (cols[col].getAttribute('rowspan') > 1) ?
-                                    (cols[col].getAttribute('rowspan') - 1) : 0
-                                )
+                        realcol+ xoff + (colspan -1),
+                        row + yoff + (rowspan -1)
                     );
-                    coloffsetadd  = (cols[col].getAttribute('colspan') * 1) - 1;
                     
                 }
-                // if we hit a rowspan
-                // then the following rows will skip this column..
-                 
-               
-                /*
-                var style = this.newStyle();
-                if (style.setFrom(cols[col])) {
-                    style.add(
-                        colat+x_offset,
-                        row+y_offset,
-                        
-                        colat+x_offset + ((cols[col].getAttribute('colspan') > 1) ?
-                                    (cols[col].getAttribute('colspan') - 1) : 0),
-                        row+y_offset  + ((cols[col].getAttribute('rowspan') > 1) ?
-                                    (cols[col].getAttribute('rowspan') - 1) : 0) 
-                    );
-                }
                 
-                 */
                 // skip blank cells
                 // set the style first..
-                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , coloffsetadd);
+                this.parseHtmlStyle( cols[col], row + yoff, col + xoff + coloffset , colspan, rowspan);
                 
                 if (!cols[col].childNodes.length) {
                     coloffset += coloffsetadd;
