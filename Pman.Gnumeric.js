@@ -749,7 +749,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         yoff = yoff || 0;
         
         
-        var tabledata = this.readTableData(datagrid);
+        var table_data = this.readTableData(datagrid);
         
         var cleanHTML = function (str) {
             
