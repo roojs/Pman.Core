@@ -775,15 +775,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for(var row=0;row<rows.length;row++) {
             
             // let's see what affect this has..
-            this.setRowHeight( row + yoff, Roo.get(rows[row]).getHeight());
+            // it might mess things up..
+            
             
             //var style = document.defaultView.getComputedStyle(rows[row], "");
             
-            //if (rows[row].getAttribute('xls:height')) {
-            //    this.setRowHeight(row+y_offset, 0 + rows[row].getAttribute('xls:height'));
-            //} else {
-            //    this.setRowHeight(row+y_offset, 0 + style.height.replace(/[^0-9.]+/g,''));
-           // }
+            if (rows[row].getAttribute('xls:height')) {
+                this.setRowHeight(row + yoff, 1* rows[row].getAttribute('xls:height'));
+            } else {
+                this.setRowHeight( row + yoff, Roo.get(rows[row]).getHeight());
+            }
             
          
             var cols = rows[row].getElementsByTagName('td');
