@@ -537,11 +537,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //return;
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
-            Roo.log('cell not defined:' + cell);
+            //Roo.log('cell not defined:' + cell);
             this.createCell(cs.r,cs.c);
         }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
-            Roo.log('no default content for cell:' + cell);
+            ///Roo.log('no default content for cell:' + cell);
             this.createCell(cs.r,cs.c);
             //return;
         }
