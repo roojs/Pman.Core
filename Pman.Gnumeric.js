@@ -700,7 +700,32 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
             
     },
-     
+    
+    readTableData : function(table)
+    {
+        // read the first row.
+        var tds = Roo.get(table).select('tr').item(0).select('td');
+        var nc = 0;
+        tds.each(function(td) {
+            var cs = td.dom.getAttribute('colspan');
+            cs = cs ? cs * 1 : 1;
+            nc += cs;
+        });
+        var tr = document.createElement('tr');
+        table.appendChild(tr);
+        var ar = {}
+        for (i =0; i < nc; i++) {
+            ar[i] = document.createElement('td');
+            td.appendChild(ar[i]);
+        }
+        // find the left.
+        var ret = { cols : nc, pos : {} };
+        for (i =0; i < nc; i++) {
+            ret.pos[i] = Roo.get(ar[i]).getLeft();
+        });
+        return ret;
+    },
+    
      
    
      
