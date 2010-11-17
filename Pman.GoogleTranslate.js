@@ -1,7 +1,7 @@
 //<script type="text/javascript">
 /**
      * 
-     * gtranslate
+     * GoogleTranslate
      * Translate a string using google translate API
      * 
      * Note: this does not handle html input at present - 
