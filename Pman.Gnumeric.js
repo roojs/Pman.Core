@@ -901,7 +901,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     
     
-    parseHtmlStyle : function(dom, row, col, cspan) {
+    parseHtmlStyle : function(dom, row, col, cspan, rspan) {
         
         function toCol (rgb) {
             var ar = rgb.replace(/rgb\(/, '').replace(/\)/, '').replace(/ /, '').split(',');
@@ -1001,9 +1001,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var sr = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:StyleRegion');
         objs.appendChild(sr);
         sr.setAttribute('startCol', col);
-        sr.setAttribute('endCol', col+coloffsetadd);
+        sr.setAttribute('endCol', col+ colspan-1);
         sr.setAttribute('startRow', row);
-        sr.setAttribute('endRow', row);
+        sr.setAttribute('endRow', row +rowspan -1);
         
         
         var st = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:Style');
