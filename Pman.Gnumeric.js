@@ -777,9 +777,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             // let's see what affect this has..
             // it might mess things up..
             
-            
-            //var style = document.defaultView.getComputedStyle(rows[row], "");
-            
             if (rows[row].getAttribute('xls:height')) {
                 this.setRowHeight(row + yoff, 1* rows[row].getAttribute('xls:height'));
             } else {
