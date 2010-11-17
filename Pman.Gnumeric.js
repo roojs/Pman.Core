@@ -965,13 +965,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             map[k](ent,val);
         }
         // special flags..
-        if (el.getAttribute('xls:wraptext')) {
+        if (el.dom.getAttribute('xls:wraptext')) {
             ent.WrapText = 1;
         }
-        if (el.getAttribute('xls:valign')) {
+        if (el.dom.getAttribute('xls:valign')) {
             ent.VAlign= 1;
         }
-        if (el.getAttribute('xls:halign')) {
+        if (el.dom.getAttribute('xls:halign')) {
             ent.HAlign= 1;
         }
         // fonts..
