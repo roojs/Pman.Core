@@ -792,7 +792,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 var coloffsetadd = 0;
                 var merged = false;
                 
-                var colspan = 0;
+                var colspan = cols[col].getAttribute('colspan');
+                colspan  = colspan ? colspan *1 : 1;
+                
+                var rowspan = cols[col].getAttribute('rowspan');
+                rowspan = rowspan ? rowspan * 1 : 1;
                 
                 var realcol = table_data.pos[ Roo.get(cols[col]).getLeft() ];
                 
