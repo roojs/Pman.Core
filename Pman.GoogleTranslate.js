@@ -41,7 +41,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
                     cb(complete);
                     return;
                 }
-                if (!sbits[cur].length) {
+                if (!sbits[cur].length || !sbits[cur].replace(/\s/+).length) {
                     cur++;
                     continue;
                 }
