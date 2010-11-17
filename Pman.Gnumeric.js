@@ -968,6 +968,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (el.getAttribute('xls:wraptext')) {
             ent.WrapText = 1;
         }
+        if (el.getAttribute('xls:valign')) {
+            ent.VAlign= 1;
+        }
+        if (el.getAttribute('xls:halign')) {
+            ent.HAlign= 1;
+        }
         // fonts..
         var fmap = {
             
