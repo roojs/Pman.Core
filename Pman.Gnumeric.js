@@ -819,7 +819,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 this.parseHtmlStyle( cols[col], row + yoff, realcol + xoff + coloffset , colspan, rowspan);
                 
                 if (!cols[col].childNodes.length) {
-                    coloffset += coloffsetadd;
+                     
                     continue;
                 }
                 
