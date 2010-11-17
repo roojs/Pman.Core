@@ -728,13 +728,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var tr = document.createElement('tr');
         table.appendChild(tr);
         var ar = {}
-        for (i =0; i < nc; i++) {
+        for (i =0; i < maxnc; i++) {
             ar[i] = document.createElement('td');
             tr.appendChild(ar[i]);
         }
         // find the left.
-        var ret = { cols : nc, pos : {} };
-        for (i =0; i < nc; i++) {
+        var ret = { cols : maxnc, pos : {} };
+        for (i =0; i < maxnc; i++) {
             ret.pos[ Roo.get(ar[i]).getLeft()] =i;
         }
         ret.near = function(p) {
