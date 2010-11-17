@@ -54,6 +54,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
                     cb(result);
                     return;
                 }
+                //padding might not be needed...
                 complete += complete.length ? ' ' : ''; 
                 complete += result;
                 cur++;
