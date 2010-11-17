@@ -8,10 +8,16 @@
  * 
  * {tag: 'div', style: 'display:block;position:absolute;top:2;left:300;width:100%;height:25px'});
  * 
+ * 
+ *  CHANGES
+ *  - gtranslate moved to Pman.GoogleTranslate
+ * 
+ * 
  */
  
 if (typeof(_T) == 'undefined') { _T={};}
  
+
 
   
 
