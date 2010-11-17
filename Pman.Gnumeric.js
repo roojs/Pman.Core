@@ -739,6 +739,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         ret.near = function(p) {
             // which one is nearest..
+            
+            if (this.pos[p]) {
+                return this.pos[p];
+            }
             var prox = 100000;
             var match = 0;
             for(var i in this.pos) {
