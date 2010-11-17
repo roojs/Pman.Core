@@ -10,7 +10,7 @@
  * @param str {String} target language
  * @param str {String} callback - calls back with result or an error object.
  */
-Pman.GoogleTranslate = function(str, src, dest, cb) {
+Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         // load script: 
         var cur = 0;
         var sbits = [];
@@ -59,11 +59,11 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
                 complete += result;
                 cur++;
                 transbits();
-            });
+            }, true);
         }
         
         // chunk up long strings..
-        if (str.length > 200) {
+        if (!force && str.length > 200) {
             var bits = str.split(/(\s+|[0-9]+)/);
             sbits[0]  = '';
             for (var i =0; i < bits.length; i++) {
