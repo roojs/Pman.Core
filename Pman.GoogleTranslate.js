@@ -48,7 +48,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb) {
                 break;
             }
             
-           Roo.log("SEND : " + sbits[cur]);
+           // Roo.log("SEND : " + sbits[cur]);
             Pman.gtranslate( sbits[cur], src, dest, function(result) {
                 if (typeof(result) == 'object') {
                     cb(result);
