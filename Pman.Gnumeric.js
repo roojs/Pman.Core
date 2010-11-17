@@ -712,12 +712,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         // read the first row.
         var tds = Roo.get(table).select('tr').item(0).select('td');
-        var nc = 0;
-        tds.each(function(td) {
-            var cs = td.dom.getAttribute('colspan');
-            cs = cs ? cs * 1 : 1;
-            nc += cs;
+        var maxnc = 0
+        
+        Roo.get(table).select('tr').each(function(trs) {
+            var nc = 0;
+           
+            trs.select('td').each(function(td) {
+                var cs = td.dom.getAttribute('colspan');
+                cs = cs ? cs * 1 : 1;
+                nc += cs;
+            });
+            maxnc = Math.max(nc, maxnc);
         });
+        
         var tr = document.createElement('tr');
         table.appendChild(tr);
         var ar = {}
