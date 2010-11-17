@@ -960,11 +960,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
            
             'font-size' : function(ent,v) { 
-                ent['FontUnit'] = v.replace(/px/, '');
+                ent['Unit'] = v.replace(/px/, '');
             },
             'font-weight' : function(ent,v) { 
                 if (v != 'bold') return;
-                ent['FontBold'] = 1;
+                ent['Bold'] = 1;
             } 
             //FontItalic : function(ent,v) { 
             //    if (v*0 < 1) return;
