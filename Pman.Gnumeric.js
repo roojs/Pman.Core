@@ -126,7 +126,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @type {Object} rowInfo - list of row sizes
      */
     rowInfo : false,
-    
+     /**
+     * @type {Object} rowInfoDom - dom elements with sizes
+     */
+    rowInfoDom : false,
     /**
      * @type {Number} cmax - maximum number of columns
      */
