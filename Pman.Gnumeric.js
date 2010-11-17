@@ -789,8 +789,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 
                 //var colat = col + coloffset;
-                var coloffsetadd = 0;
-             
+                
                 
                 var colspan = cols[col].getAttribute('colspan');
                 colspan  = colspan ? colspan *1 : 1;
