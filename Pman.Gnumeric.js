@@ -946,12 +946,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
             'color': function(ent,v) { 
                 ent['Fore'] = toCol(v);
+                // this is a bit dumb.. we assume that if it's not black text, then it's shaded..
+                if (ent['Fore'] != '0:0:0') {
+                    ent['Shade'] = 1;
+                }
+                
             },
             'background-color' : function(ent,v) { 
                 ent['Back'] = toCol(v);
-                if (ent['Back'] != '0:0:0') {
-                    ent['Shade'] = 1;
-                }
                 
                 
             }
