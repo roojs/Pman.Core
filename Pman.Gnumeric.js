@@ -735,7 +735,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         // <cell col="A" row="1">Test< / cell>
         // <cell col="B" row="2" type="Number" format="test1">30< / cell>
-        var rowOffsets = [];
+        var rowOffsets = {};
         var rows = datagrid.getElementsByTagName('tr');
         //alert(rows.length);
         
@@ -749,9 +749,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
            // }
             
             var coloffset = 0;
-           // if (rowOffsets[row]) {
-           //     coloffset += rowOffsets[row];
-           // }
+            if (rowOffsets[row]) {
+                 coloffset += rowOffsets[row];
+            }
             var cols = rows[row].getElementsByTagName('td');
             
             
@@ -772,9 +772,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                                     (cols[col].getAttribute('rowspan') - 1) : 0
                                 )
                     );
-                    coloffsetadd  = (cols[col].getAttribute('colspan')*1) - 1;
+                    coloffsetadd  = (cols[col].getAttribute('colspan') * 1) - 1;
                     
                 }
+                // if we hit a rowspan
+                // then the following rows will skip this column..
                 
                 if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
                     // this should really do a merge, but it's pretty damn complex...
