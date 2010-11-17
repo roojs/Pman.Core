@@ -532,7 +532,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         //Roo.log( cs.r+ ',' + cs.c + ' = '+ v);
         // need to generate clell if it doe
         if (typeof(this.grid[cs.r]) == 'undefined') {
-            Roo.log('no row:' + cell);
+            //Roo.log('no row:' + cell);
             this.grid[cs.r] = []; // create a row..
             //return;
         }
