@@ -716,7 +716,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ar = {}
         for (i =0; i < nc; i++) {
             ar[i] = document.createElement('td');
-            td.appendChild(ar[i]);
+            tr.appendChild(ar[i]);
         }
         // find the left.
         var ret = { cols : nc, pos : {} };
