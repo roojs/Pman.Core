@@ -701,6 +701,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
     },
      
+     
+   
+     
     /**
      * importTable: 
      * Import a table and put it into the spreadsheet
