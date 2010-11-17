@@ -890,10 +890,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 this.set({ r: row + yoff, c : realcol + xoff }, cell_value_text, vt, vf);
                  
                   
-                coloffset += coloffsetadd;
-                
-                
-                
                 
                 
                 
