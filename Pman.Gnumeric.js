@@ -767,18 +767,20 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         col + xoff + coloffset,
                         row + yoff,
                         col + xoff + coloffset + (cols[col].getAttribute('colspan') - 1), 
-                        row + yoff /*+ (
+                        row + yoff + (
                                 (cols[col].getAttribute('rowspan') > 1) ?
                                     (cols[col].getAttribute('rowspan') - 1) : 0
-                                )*/
+                                )
                     );
                     coloffsetadd  = (cols[col].getAttribute('colspan')*1) - 1;
                     
                 }
-                /*
+                
                 if (cols[col].getAttribute('rowspan') && (cols[col].getAttribute('rowspan') > 1)) {
                     // this should really do a merge, but it's pretty damn complex...
-                    //this.mergeRegion(colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
+                    this.mergeRegion(
+                        
+                        colat,row +y_offset,colat + (cols[col].getAttribute('colspan') - 1), row+y_offset);
                     var rroff = cols[col].getAttribute('colspan')  ? (cols[col].getAttribute('colspan') -0): 1;
                     var rr = 0;
                     for (rr = 0; rr < cols[col].getAttribute('rowspan');rr++) {
