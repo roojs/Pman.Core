@@ -31,8 +31,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             return Roo.util.Format.htmlDecode( output);
         }
         
-        
-        
+         
         function transbits()
         {
             while (true) {
