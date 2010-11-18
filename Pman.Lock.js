@@ -96,8 +96,7 @@ Roo.apply(Pman.Lock.prototype, {
         Pman.Request({
             url : baseURL + 'Core/Lock/unlock',
             params : {
-                id : this.lock_id,
-                on_id : cfg.id
+                id : this.lock_id
             },
             failure : function() {
                 Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
