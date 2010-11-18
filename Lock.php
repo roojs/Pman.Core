@@ -112,7 +112,7 @@ class Pman_Core_Lock extends Pman
             $ar = $curlock->fetchAll('person_id', 'created');
             $p = DB_DataObject::factory('Person');
             $p->selectAdd();
-            $p->selectAdd('name,email');
+            $p->selectAdd('id,name,email');
             
             $p->whereAddIn('id', array_keys($ar), 'int');
             $p->find();
