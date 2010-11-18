@@ -51,12 +51,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->on_table = $obj ? $obj->tableName() : '';
         $pk = $obj ? $obj->keys()  : false;
         $this->on_id  = $obj && $pk ? $obj->{$pk[0]}: 0;
-        $pref = '';
+        $rem  = array();
         // should this really go in remarks? - 
         if ($obj && method_exists($obj,'toEventString')) {
-            $pref = $obj->toEventString() ;
+            $rem[] = $obj->toEventString() ;
         }
-        
-        $this->remarks = implode(' : ', array($pref,  $remarks));
+        $rem[] = $remarks;
+        $this->remarks = implode(' : ', $rem);
     }
 }
