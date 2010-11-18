@@ -69,7 +69,7 @@ class Pman_Core_Lock extends Pman
             'on_table' => $_REQUEST['on_table']
         ));
         if ($curlock->count()) {
-            $err  = $this->canunlock();
+            $err  = $this->canUnlock();
             if ($err !== true) {
                 $this->jerr($err);
             }
