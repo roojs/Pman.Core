@@ -58,7 +58,7 @@ Roo.apply(Pman.Lock.prototype, {
             success : function(data)
             {
                 
-                
+                Roo.log(data);
                 if (!force && typeof(data) == 'object') {
                     _t.confirmBreak(data);
                 }
