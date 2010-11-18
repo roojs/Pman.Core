@@ -88,7 +88,7 @@ Roo.apply(Pman.Lock.prototype, {
         
         
         
-    }
+    },
     
     
     unlock : function() {
