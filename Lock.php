@@ -87,6 +87,22 @@ class Pman_Core_Lock extends Pman
         $this->jok($id);
         
     }
+    
+    function canUnlock()
+    {
+        // the only scenario where we can automatically unlock is:::
+        
+        // this user owns the lock.
+        
+        // the user who owns the lock is not logged in..
+        
+        
+        
+        
+        
+        
+    }
+    
         
     
 }
