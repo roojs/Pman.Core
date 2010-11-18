@@ -11,6 +11,9 @@
  * Do you to prevent them saving and lock it yourself..
  * 
  * 
+ * 
+ * 
+ * 
  * -- interacts with Roo and _lock = id..
  * 
  * 
@@ -83,7 +86,16 @@ class Pman_Core_Lock extends Pman
             'on_id' => $_REQUEST['on_id'],
             'on_table' => $_REQUEST['on_table']
         ));
-        if ($curlock->count()) {
+        
+        
+        
+        if ($curlock->count() && empty($_REQUEST['force'])) {
+            $curlock->selectAdd();
+            $curlock->selectAdd('distinct(person_id)');
+            $ar = $curlock->fetchAll('person_id');
+            $p = DB_DataObject::factory('Person');
+            
+            
             $err  = $this->canUnlock();
             if ($err !== true) {
                 $this->jerr($err);
@@ -102,58 +114,7 @@ class Pman_Core_Lock extends Pman
         $this->jok($id);
         
     }
-    
-    function canUnlock()
-    {
-        // the only scenario where we can automatically unlock is:::
-        
-        // this user owns the lock.
-        
-        $curlock = DB_DataObject::factory('Core_locking');
-        $curlock->setFrom(array(
-            'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table']
-        ));
-        $cc = clone($curlock);
-        // the user who owns the lock is not logged in.. ?? - their last 
-        $curlock->find();
-        $users = array();
-        while ($curlock->fetch()) {
-            $u = DB_DataObject::factory('Person');
-            $u->get($curlock->person_id);
-            if (!$u->isCurrentlyLoggedIn()) {
-                $cc = clone($curlock);
-                $cc->delete();
-                continue;
-            }
-            $users[] = clone($u);
-            
-        }
-        if (empty($users)) {
-            return true;
-            
-        }
-        // situations
-        
-        //- the user is logged in, and we can clear it..
-        
-        //- the user is logged in multiple times, on different browser..
-        
-        //- the user is logged in multiple times on the same browser..
-        
-        
-        
-        // one of two error messages..
-        
-        $this->jerr("Item is Locked by " . $u->name . ' (' . $u->email . "),  Try asking them to log out");
-        
-        return true;
-        
-        
-        
-        
-        
-    }
+     
     
         
     
