@@ -52,7 +52,7 @@ class Pman_Core_Lock extends Pman
     {
         
         // default action is to attempt to lock..
-        $action = empty($action) ? 'lock' : 'unlock';
+        $action = empty($action) || $action == 'lock' ? 'lock' : 'unlock';
         $this->$action();
         
     }
