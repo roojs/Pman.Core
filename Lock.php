@@ -116,10 +116,10 @@ class Pman_Core_Lock extends Pman
             
         }
         if ($u) {
-            
-            
+            $this->jerr("Item is Locked by " . $u->name . ' (' . $u->email . "),  Try asking them to log out");
             
         }
+        return true;
         
         
         
