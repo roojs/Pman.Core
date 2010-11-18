@@ -25,6 +25,7 @@ class Pman_Core_Lock extends Pman
         if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
             $this->jerr("Missing table or id");
         }
+        $action = empty($_REQUEST['unlock']) ? 'lock' : 'unlock';
         $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
         $x = DB_DataObject::factory($tab);
         if (!$x->get($_REQUEST['on_id'])) {
@@ -33,16 +34,26 @@ class Pman_Core_Lock extends Pman
         $curlock = DB_DataObject::factory('Core_locking');
         $curlock->setFrom(array(
             'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table']
+            'on_table' => $_REQUEST['on_table'],
+            //'person_id' => $this->authUser->id,
         ));
         $locked = false;
         if ($curlock->find(true)) {
             $locked = true;
         }
-        
-        
-        
+        $this->$action($curlock);
         
     }
+    
+    function unlock($curlock)
+    {
+        if (!$curlock->id) {
+            $this->jok("No lock");
+        }
+        
+        $curlock->delete();
+        $this->jok('locked');
+    }
+    
     
 }
