@@ -83,7 +83,8 @@ class Pman_Core_Lock extends Pman
             'created' => date('Y-m-d H:i:s'),
             'person_id' => $this->authUser->id,
         ));
-        
+        $id = $curlock->insert();
+        $this->jok($id);
         
     }
         
