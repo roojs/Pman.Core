@@ -17,6 +17,14 @@
  * -- interacts with Roo and _lock = id..
  * 
  * 
+ * call : 
+ * try and lock it..
+ * baseURL + /Core/Lock/lock?on_id=...&on_table=...
+ * - returns id or an array of who has the locks.
+ * 
+ * baseURL + /Core/Lock/lock?on_id=...&on_table=...&force=1
+ * - returns id..
+ * 
  */
 
 require_once 'Pman.php';
@@ -88,19 +96,32 @@ class Pman_Core_Lock extends Pman
         ));
         
         
-        
-        if ($curlock->count() && empty($_REQUEST['force'])) {
+        $nlocks = $curlock->count() 
+        if ($nlocks && empty($_REQUEST['force'])) {
             $curlock->selectAdd();
-            $curlock->selectAdd('distinct(person_id)');
-            $ar = $curlock->fetchAll('person_id');
+            $curlock->selectAdd('distinct(person_id), created');
+            
+            
+            $ar = $curlock->fetchAll('person_id', 'created');
             $p = DB_DataObject::factory('Person');
+            $p->whereAddIn('id', $ar, 'int');
+            $p->find();
+            while ($p->fetch()) {
+                $ret[$p->id] = $p->toRooArray();
+                $ret[$p->id]->lock_created = $ar[$p->id];
+            }
+            $this->jok($ret);
             
-            
-            $err  = $this->canUnlock();
-            if ($err !== true) {
-                $this->jerr($err);
+        }
+        if ($nlocks) {
+            // trash all the locks..
+            $curlock->find();
+            while($curlock->fetch()) {
+                $cc =clone($curlock);
+                $cc->delete();
             }
         }
+        
         // make a lock..
         
         $curlock = DB_DataObject::factory('Core_locking');
