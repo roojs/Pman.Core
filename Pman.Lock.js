@@ -41,6 +41,8 @@ Pman.Lock = function (cfg) {
 Roo.apply(Pman.Lock.prototype, {
     cfg : false,
     
+    id : false, // the id of the lock..
+    
     callLock : function(force)
     {
         force = force || 0;
