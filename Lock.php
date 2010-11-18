@@ -22,6 +22,7 @@
  * baseURL + /Core/Lock/lock?on_id=...&on_table=...
  * - returns id or an array of who has the locks.
  * 
+ * Force an unlock after a warning..
  * baseURL + /Core/Lock/lock?on_id=...&on_table=...&force=1
  * - returns id..
  * 
