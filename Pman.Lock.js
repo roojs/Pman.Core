@@ -37,7 +37,7 @@ Pman.Lock = function (cfg) {
         this.cfg = cfg;
         var _t = this;
         Pman.Request({
-            url : baseURL + 'Core/Lock.php',
+            url : baseURL + 'Core/Lock/lock',
             params : {
                 on_table : cfg.table,
                 on_id : cfg.id
@@ -49,6 +49,13 @@ Pman.Lock = function (cfg) {
             {
                 Roo.log(data);
                 
+                if (typeof(data) == 'object') {
+                    this.confirmBreak();
+                    
+                    
+                    
+                }
+                
                 _t.cfg.success.call(_t,_t);
                 
                 
@@ -57,6 +64,39 @@ Pman.Lock = function (cfg) {
     
     
     },
+    
+    
+    attempt : function()
+    {
+        var _t = this
+        Pman.Request({
+            url : baseURL + 'Core/Lock/lock',
+            params : {
+                on_table : cfg.table,
+                on_id : cfg.id
+            },
+            failure : function() {
+                Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
+            },
+            success : function(data)
+            {
+                Roo.log(data);
+                
+                if (typeof(data) == 'object') {
+                    this.confirmBreak();
+                    
+                    
+                    
+                }
+                
+                _t.cfg.success(_t); //dont care about scope..
+                
+                
+            }
+        })
+    }
+    
+    
     unlock : function() {
         
     }
