@@ -22,45 +22,61 @@ class Pman_Core_Lock extends Pman
     {
         
         // default action is to attempt to lock..
-        if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
-            $this->jerr("Missing table or id");
-        }
         $action = empty($action) ? 'lock' : 'unlock';
-        $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
-        $x = DB_DataObject::factory($tab);
-        if (!$x->get($_REQUEST['on_id'])) {
-            $this->jerr("Item does not exist");
-        }
-        
-        $locked = false;
-        if ($curlock->find(true)) {
-            $locked = true;
-        }
         $this->$action($curlock);
+        
+       
+        
         
     }
     
     function unlock($curlock)
     {
     
-        $curlock = DB_DataObject::factory('Core_locking');
-        $curlock->setFrom(array(
-            'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table'],
-            'person_id' => $this->authUser->id,
-        ));
-        
-        
-        if (!$curlock->find()) {
-            $this->jok("No lock");
-        }    
-        while ($curlock->fetch()) {
-            $cc = clone($curlock);
-            $cc->delete();
+        if (empty($_REQUEST['id'])) {
+            $this->jerr("No lock id");
         }
+        $curlock = DB_DataObject::factory('Core_locking');
+        if (!$curlock->get($_REQUEST['id'])) {
+            $this->jerr("No lock exists");
+        }
+        
+        if ($curlock->person_id != $this->authUser->id) {
+            $this->jerr("Lock id is invalid")
+        }
+        
+        $curlock->delete();
         
         $this->jok('unlocked');
     }
-    
+    function lock()
+    {
+        
+        if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
+            $this->jerr("Missing table or id");
+        }
+       
+        $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
+        $x = DB_DataObject::factory($tab);
+        if (!$x->get($_REQUEST['on_id'])) {
+            $this->jerr("Item does not exist");
+        }
+        // is there a current lock on the item..
+        
+        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock->setFrom(array(
+            'on_id' => $_REQUEST['on_id'],
+            'on_table' => $_REQUEST['on_table']
+        ));
+        if ($curlock->count()) {
+            $err  = $this->canunlock()
+            if ($err !== true) {
+                $this->jerr($err);
+            }
+        }
+        // make a lock..
+         
+        
+        
     
 }
