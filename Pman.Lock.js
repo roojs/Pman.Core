@@ -34,39 +34,13 @@
  * 
  */
 Pman.Lock = function (cfg) {
-        this.cfg = cfg;
-        var _t = this;
-        Pman.Request({
-            url : baseURL + 'Core/Lock/lock',
-            params : {
-                on_table : cfg.table,
-                on_id : cfg.id
-            },
-            failure : function() {
-                Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
-            },
-            success : function(data)
-            {
-                Roo.log(data);
-                
-                if (typeof(data) == 'object') {
-                    this.confirmBreak();
-                    
-                    
-                    
-                }
-                
-                _t.cfg.success.call(_t,_t);
-                
-                
-            }
-        })
+    this.cfg = cfg;
+    this.attemptLock();
+}
+
+Roo.apply(Pman.Lock.prototype, {
     
-    
-    },
-    
-    
-    attempt : function()
+    attemptLock : function()
     {
         var _t = this
         Pman.Request({
@@ -92,7 +66,17 @@ Pman.Lock = function (cfg) {
             }
         })
     },
-    confirmBreak : function 
+    confirmBreak : function (ar)
+    {
+        
+        var msg = '';
+        Roo.each(ar, function(p) {
+            
+           }
+        
+        
+        
+    }
     
     
     unlock : function() {
@@ -121,5 +105,5 @@ Pman.Lock = function (cfg) {
     }
     
 
-}
+});
  
