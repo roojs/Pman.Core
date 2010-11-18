@@ -94,7 +94,17 @@ class Pman_Core_Lock extends Pman
         
         // this user owns the lock.
         
-        // the user who owns the lock is not logged in.. ??
+        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock->setFrom(array(
+            'on_id' => $_REQUEST['on_id'],
+            'on_table' => $_REQUEST['on_table']
+        ));
+        $cc = clone($curlock);
+        // the user who owns the lock is not logged in.. ?? - their last 
+        $curlock->find();
+        while ($curlock->fetch()) {
+            $curlock->deleteIfLoggedOut();
+        }
         
         
         
