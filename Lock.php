@@ -11,7 +11,7 @@
  * Do you to prevent them saving and lock it yourself..
  * 
  * 
- * 
+ * -- interacts with Roo and _lock = id..
  * 
  * 
  */
