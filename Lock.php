@@ -48,6 +48,11 @@ class Pman_Core_Lock extends Pman
         return true; 
     }
     
+    function get()
+    {
+        // should we allow url links to lock things???
+    }
+    
     function post($action)
     {
         
