@@ -18,4 +18,9 @@ class Pman_Core_Lock extends Pman
         return true; 
     }
     
+    function get()
+    {
+        
+    }
+    
 }
