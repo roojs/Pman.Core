@@ -27,6 +27,9 @@ class Pman_Core_Lock extends Pman
         }
         $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
         $x = DB_DataObject::factory($tab);
+        if (!$x->get($_REQUEST['on_id'])) {
+            $this->jerr("Item does not exist");
+        }
     }
     
 }
