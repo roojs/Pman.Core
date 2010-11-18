@@ -58,7 +58,7 @@ Roo.apply(Pman.Lock.prototype, {
             success : function(data)
             {
                 
-                Roo.log(data);
+               // Roo.log(data);
                 if (!force && typeof(data) == 'object') {
                     _t.confirmBreak(data);
                 }
@@ -99,18 +99,11 @@ Roo.apply(Pman.Lock.prototype, {
                 id : this.lock_id
             },
             failure : function() {
-                Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
+                Roo.MessageBox.alert("Error", "UnLock Request failed, you may get a warning when trying to edit again");
             },
             success : function(data)
             {
-                Roo.log(data);
-                
-                if (typeof(data) == 'object') {
-                    _t.confirmBreak(data);
-                }
-                
-                _t.cfg.success(_t); //dont care about scope..
-                
+                // don nothing
                 
             }
         });
