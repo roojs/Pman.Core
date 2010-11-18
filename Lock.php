@@ -100,7 +100,7 @@ class Pman_Core_Lock extends Pman
         ));
         
         
-        $nlocks = $curlock->count() 
+        $nlocks = $curlock->count() ;
         if ($nlocks && empty($_REQUEST['force'])) {
             $curlock->selectAdd();
             $curlock->selectAdd('distinct(person_id), created');
