@@ -75,8 +75,17 @@ class Pman_Core_Lock extends Pman
             }
         }
         // make a lock..
-         
         
+        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock->setFrom(array(
+            'on_id' => $_REQUEST['on_id'],
+            'on_table' => $_REQUEST['on_table'],
+            'created' => date('Y-m-d H:i:s'),
+            'person_id' => $this->authUser->id,
+        ));
+        
+        
+    }
         
     
 }
