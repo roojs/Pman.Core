@@ -260,4 +260,12 @@ DELIMITER ;
 			
         
     
- 
+ CREATE TABLE  core_locking (
+  `int` int(11)  NOT NULL AUTO_INCREMENT,
+  `on_table` varchar(64)  NOT NULL,
+  `on_id` int(11)  NOT NULL,
+  `person_id` int(11)  NOT NULL,
+  `created` datetime  NOT NULL,
+  PRIMARY KEY (`int`),
+  INDEX `lookup`(`on_table`, `on_id`, `person_id`, `created`)
+)
