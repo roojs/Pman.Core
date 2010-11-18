@@ -102,23 +102,36 @@ class Pman_Core_Lock extends Pman
         $cc = clone($curlock);
         // the user who owns the lock is not logged in.. ?? - their last 
         $curlock->find();
-        $u = false;
+        $users = array();
         while ($curlock->fetch()) {
             $u = DB_DataObject::factory('Person');
             $u->get($curlock->person_id);
             if (!$u->isCurrentlyLoggedIn()) {
                 $cc = clone($curlock);
                 $cc->delete();
-                $u = false;
                 continue;
             }
-            break;
+            $users[] = clone($u);
             
         }
-        if ($u) {
-            $this->jerr("Item is Locked by " . $u->name . ' (' . $u->email . "),  Try asking them to log out");
+        if (empty($users)) {
+            return true;
             
         }
+        // situations
+        
+        //- the user is logged in, and we can clear it..
+        
+        //- the user is logged in multiple times, on different browser..
+        
+        //- the user is logged in multiple times on the same browser..
+        
+        
+        
+        // one of two error messages..
+        
+        $this->jerr("Item is Locked by " . $u->name . ' (' . $u->email . "),  Try asking them to log out");
+        
         return true;
         
         
