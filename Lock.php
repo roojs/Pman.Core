@@ -107,6 +107,7 @@ class Pman_Core_Lock extends Pman
             $p = DB_DataObject::factory('Person');
             $p->whereAddIn('id', $ar, 'int');
             $p->find();
+            $ret = array();
             while ($p->fetch()) {
                 $ret[$p->id] = $p->toRooArray();
                 $ret[$p->id]->lock_created = $ar[$p->id];
