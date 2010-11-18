@@ -42,7 +42,7 @@ class Pman_Core_Lock extends Pman
         }
         
         if ($curlock->person_id != $this->authUser->id) {
-            $this->jerr("Lock id is invalid")
+            $this->jerr("Lock id is invalid");
         }
         
         $curlock->delete();
