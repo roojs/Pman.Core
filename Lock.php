@@ -18,14 +18,14 @@ class Pman_Core_Lock extends Pman
         return true; 
     }
     
-    function get()
+    function get($action)
     {
         
         // default action is to attempt to lock..
         if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
             $this->jerr("Missing table or id");
         }
-        $action = empty($_REQUEST['unlock']) ? 'lock' : 'unlock';
+        $action = empty($action) ? 'lock' : 'unlock';
         $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
         $x = DB_DataObject::factory($tab);
         if (!$x->get($_REQUEST['on_id'])) {
