@@ -31,12 +31,7 @@ class Pman_Core_Lock extends Pman
         if (!$x->get($_REQUEST['on_id'])) {
             $this->jerr("Item does not exist");
         }
-        $curlock = DB_DataObject::factory('Core_locking');
-        $curlock->setFrom(array(
-            'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table'],
-            //'person_id' => $this->authUser->id,
-        ));
+        
         $locked = false;
         if ($curlock->find(true)) {
             $locked = true;
@@ -47,12 +42,24 @@ class Pman_Core_Lock extends Pman
     
     function unlock($curlock)
     {
-        if (!$curlock->id) {
+    
+        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock->setFrom(array(
+            'on_id' => $_REQUEST['on_id'],
+            'on_table' => $_REQUEST['on_table'],
+            'person_id' => $this->authUser->id,
+        ));
+        
+        
+        if (!$curlock->find()) {
             $this->jok("No lock");
+        }    
+        while ($curlock->fetch()) {
+            $cc = clone($curlock);
+            $cc->delete();
         }
         
-        $curlock->delete();
-        $this->jok('locked');
+        $this->jok('unlocked');
     }
     
     
