@@ -64,7 +64,7 @@ Roo.apply(Pman.Lock.prototype, {
                 if (!force && typeof(data) == 'object') {
                     _t.confirmBreak(data);
                 }
-                _t.lock_id = data;
+                _t.id = data;
                 _t.cfg.success(_t); //dont care about scope..
                 
                 
@@ -98,7 +98,7 @@ Roo.apply(Pman.Lock.prototype, {
         Pman.Request({
             url : baseURL + '/Core/Lock/unlock',
             params : {
-                id : this.lock_id
+                id : this.id
             },
             failure : function() {
                 Roo.MessageBox.alert("Error", "UnLock Request failed, you may get a warning when trying to edit again");
