@@ -51,6 +51,7 @@ class Pman_Core_Lock extends Pman
     function get()
     {
         // should we allow url links to lock things???
+        $this->jerr("invalid request");
     }
     
     function post($action)
