@@ -83,10 +83,7 @@ Pman.Lock = function (cfg) {
                 Roo.log(data);
                 
                 if (typeof(data) == 'object') {
-                    this.confirmBreak();
-                    
-                    
-                    
+                    _t.confirmBreak(data);
                 }
                 
                 _t.cfg.success(_t); //dont care about scope..
@@ -94,11 +91,33 @@ Pman.Lock = function (cfg) {
                 
             }
         })
-    }
+    },
+    confirmBreak : function 
     
     
     unlock : function() {
-        
+        Pman.Request({
+            url : baseURL + 'Core/Lock/unlock',
+            params : {
+                id : this.lock_id,
+                on_id : cfg.id
+            },
+            failure : function() {
+                Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
+            },
+            success : function(data)
+            {
+                Roo.log(data);
+                
+                if (typeof(data) == 'object') {
+                    _t.confirmBreak(data);
+                }
+                
+                _t.cfg.success(_t); //dont care about scope..
+                
+                
+            }
+        })
     }
     
 
