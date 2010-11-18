@@ -46,7 +46,7 @@ Roo.apply(Pman.Lock.prototype, {
         force = force || 0;
         var _t = this
         Pman.Request({
-            url : baseURL + 'Core/Lock/lock',
+            url : baseURL + '/Core/Lock/lock',
             params : {
                 on_table : this.cfg.table,
                 on_id : this.cfg.id,
@@ -94,7 +94,7 @@ Roo.apply(Pman.Lock.prototype, {
     
     unlock : function() {
         Pman.Request({
-            url : baseURL + 'Core/Lock/unlock',
+            url : baseURL + '/Core/Lock/unlock',
             params : {
                 id : this.lock_id
             },
