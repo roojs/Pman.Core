@@ -22,5 +22,6 @@ class Pman_Core_DataObjects_Core_locking extends DB_DataObject
     function person() {
         $p = DB_DataObjecT::factory('Person');
         $p->get($this->person_id);
+        return $p;
     }
 }
