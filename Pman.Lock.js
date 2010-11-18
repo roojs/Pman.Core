@@ -4,26 +4,33 @@
  * 
  * usage:
  * 
-   Pman.Lock.lock( {
-     table : 'Product',
-     id : 123,
-     success : function() { ..show dialog etc..... }
-    });
-   Pman.Lock.unlock( {
-        table : 'Product',
-        id : 123
-    });
-    * 
+ 
     * new Pman.Lock( {
           table : 'Product',
          id : 123,
          success : function(lock) { ..show dialog etc..... 
-         * 
-         *  ... dostuff..
-         * lock.unlock()
-         * }
+          
+           ... dostuff..
+           ... send _lock=XXX to Roo updated code..
+           
+            lock.unlock() -- we dont care about the result..
+          }
         }
     * 
+ * 
+ * 
+ *  call : 
+ * try and lock it..
+ * baseURL + /Core/Lock/lock?on_id=...&on_table=...
+ * - returns id or an array of who has the locks.
+ * 
+ * Force an unlock after a warning..
+ * baseURL + /Core/Lock/lock?on_id=...&on_table=...&force=1
+ * - returns id..
+ * 
+ * Unlock - call when window is closed..
+ * baseURL + /Core/Lock/unlock?on_id=...&on_table=...&force=1
+ * - returns jerr or jok
  * 
  */
 Pman.Lock = function (cfg) {
