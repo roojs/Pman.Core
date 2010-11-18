@@ -79,7 +79,7 @@ Roo.apply(Pman.Lock.prototype, {
             msg += '<br/>' + p.name + ' at ' + p.lock_created ;
         })
         var _t = this;
-        Roo.messageBox.confirm("Confirm breaking locks", msg, function(r) {
+        Roo.MessageBox.confirm("Confirm breaking locks", msg, function(r) {
             if (r != 'yes') {
                 return;
             }
