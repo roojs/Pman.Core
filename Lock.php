@@ -116,7 +116,7 @@ class Pman_Core_Lock extends Pman
             $ret = array();
             while ($p->fetch()) {
                 $ret[$p->id] = $p->toRooArray();
-                $ret[$p->id]->lock_created = $ar[$p->id];
+                $ret[$p->id]['lock_created'] = $ar[$p->id];
             }
             $this->jok(array_values($ret));
             
