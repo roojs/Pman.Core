@@ -39,6 +39,7 @@ Pman.Lock = function (cfg) {
 }
 
 Roo.apply(Pman.Lock.prototype, {
+    cfg : false,
     
     callLock : function(force)
     {
