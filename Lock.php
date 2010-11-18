@@ -20,6 +20,8 @@ class Pman_Core_Lock extends Pman
     
     function get()
     {
+        
+        // default action is to attempt to lock..
         if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
             
         }
