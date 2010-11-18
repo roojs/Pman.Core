@@ -62,7 +62,7 @@ Roo.apply(Pman.Lock.prototype, {
                 if (!force && typeof(data) == 'object') {
                     _t.confirmBreak(data);
                 }
-                
+                _t.lock_id = data;
                 _t.cfg.success(_t); //dont care about scope..
                 
                 
