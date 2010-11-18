@@ -30,6 +30,19 @@ class Pman_Core_Lock extends Pman
         if (!$x->get($_REQUEST['on_id'])) {
             $this->jerr("Item does not exist");
         }
+        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock->setFrom(array(
+            'on_id' => $_REQUEST['on_id'],
+            'on_table' => $_REQUEST['on_table']
+        ));
+        $locked = false;
+        if ($curlock->find(true)) {
+            $locked = true;
+        }
+        
+        
+        
+        
     }
     
 }
