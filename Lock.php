@@ -20,7 +20,9 @@ class Pman_Core_Lock extends Pman
     
     function get()
     {
-        
+        if (empty(
+        $tab = str_replace('/', '',$tab); // basic protection??
+        $x = DB_DataObject::factory($tab);
     }
     
 }
