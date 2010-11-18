@@ -111,7 +111,7 @@ class Pman_Core_Lock extends Pman
             DB_DataObjecT::debugLevel(1);
             $ar = $curlock->fetchAll('person_id', 'created');
             $p = DB_DataObject::factory('Person');
-            $p->whereAddIn('id', $ar, 'int');
+            $p->whereAddIn('id', array_keys($ar), 'int');
             $p->find();
             $ret = array();
             while ($p->fetch()) {
