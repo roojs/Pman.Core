@@ -48,7 +48,7 @@ class Pman_Core_Lock extends Pman
         return true; 
     }
     
-    function get($action)
+    function post($action)
     {
         
         // default action is to attempt to lock..
