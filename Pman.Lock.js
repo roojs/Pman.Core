@@ -48,8 +48,8 @@ Roo.apply(Pman.Lock.prototype, {
         Pman.Request({
             url : baseURL + 'Core/Lock/lock',
             params : {
-                on_table : cfg.table,
-                on_id : cfg.id,
+                on_table : this.cfg.table,
+                on_id : this.cfg.id,
                 force : force
             },
             failure : function() {
