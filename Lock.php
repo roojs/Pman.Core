@@ -94,7 +94,7 @@ class Pman_Core_Lock extends Pman
         
         // this user owns the lock.
         
-        // the user who owns the lock is not logged in..
+        // the user who owns the lock is not logged in.. ??
         
         
         
