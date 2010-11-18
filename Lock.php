@@ -55,9 +55,6 @@ class Pman_Core_Lock extends Pman
         $action = empty($action) ? 'lock' : 'unlock';
         $this->$action();
         
-       
-        
-        
     }
     
     function unlock()
