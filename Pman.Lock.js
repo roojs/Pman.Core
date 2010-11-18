@@ -113,7 +113,7 @@ Roo.apply(Pman.Lock.prototype, {
                 
                 
             }
-        })
+        });
     }
     
 
