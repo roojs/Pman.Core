@@ -23,9 +23,9 @@ class Pman_Core_Lock extends Pman
         
         // default action is to attempt to lock..
         if (empty($_REQUEST['on_id']) || empty($_REQUEST['on_table'])) {
-            
+            $this->jerr("Missing table or id");
         }
-        $tab = str_replace('/', '',$tab); // basic protection??
+        $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
         $x = DB_DataObject::factory($tab);
     }
     
