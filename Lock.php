@@ -25,6 +25,7 @@
  * baseURL + /Core/Lock/lock?on_id=...&on_table=...&force=1
  * - returns id..
  * 
+ * Unlock - call when window is closed..
  * baseURL + /Core/Lock/unlock?on_id=...&on_table=...&force=1
  * - returns jerr or jok
  */
