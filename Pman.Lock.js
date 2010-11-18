@@ -5,7 +5,7 @@
  * usage:
  * 
  
-    * new Pman.Lock( {
+     new Pman.Lock( {
           table : 'Product',
          id : 123,
          success : function(lock) { ..show dialog etc..... 
