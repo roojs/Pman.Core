@@ -1,6 +1,21 @@
 <?php
 
 
+
+/**
+ * 
+ * Locking theory
+ * 
+ * 
+ * This page is locked by XXXXXXX.. 
+ * Do you to prevent them saving and lock it yourself..
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+
 require_once 'Pman.php';
 
 class Pman_Core_Lock extends Pman
