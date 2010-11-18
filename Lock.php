@@ -100,7 +100,6 @@ class Pman_Core_Lock extends Pman
         $nlocks = $curlock->count() ;
         if ($nlocks && empty($_REQUEST['force'])) {
             
-            $curlock->selectAdd();
             $ar = $curlock->fetchAll('person_id', 'created');
             $p = DB_DataObject::factory('Person');
             $p->whereAddIn('id', $ar, 'int');
