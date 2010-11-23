@@ -147,7 +147,11 @@ Pman.Dialog.Image = {
                                     
                                     if (act.type == 'submit') {
                                         Roo.log(act);
-                                        Ext.MessageBox.alert("Error", "Saving failed = fix errors and try again");
+                                        try {
+                                            Ext.MessageBox.alert("Error", act.errMessage);
+                                        } catch(e) {
+                                            Ext.MessageBox.alert("Error", "Saving failed = fix errors and try again");        
+                                        }
                                         return;
                                     }
                                     
