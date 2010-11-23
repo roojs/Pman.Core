@@ -146,11 +146,11 @@ Pman.Dialog.Image = {
                                     // error msg???
                                     
                                     if (act.type == 'submit') {
-                                        Roo.log(act);
+                                        //Roo.log(act);
                                         try {
                                             Roo.MessageBox.alert("Error", act.result.errorMsg);
                                         } catch(e) {
-                                            Roo.log(e);
+                                          //  Roo.log(e);
                                             Roo.MessageBox.alert("Error", "Saving failed = fix errors and try again");        
                                         }
                                         return;
