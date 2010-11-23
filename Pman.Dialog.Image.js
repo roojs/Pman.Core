@@ -150,13 +150,14 @@ Pman.Dialog.Image = {
                                         try {
                                             Roo.MessageBox.alert("Error", act.result.errorMsg);
                                         } catch(e) {
+                                            Roo.log(e);
                                             Roo.MessageBox.alert("Error", "Saving failed = fix errors and try again");        
                                         }
                                         return;
                                     }
                                     
                                     // what about load failing..
-                                    Ext.MessageBox.alert("Error", "Error loading details"); 
+                                    Roo.MessageBox.alert("Error", "Error loading details"); 
                                 }
                             },
                             fileUpload : true,
