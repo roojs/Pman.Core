@@ -90,10 +90,11 @@ class Pman_Core_GnumericToExcel extends Pman
         }
        // unlink($srcTmp);
         $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
-        $fh = fopen($targetTmp, 'r');
+       
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
         header('Content-length: '. filesize($targetTmp));
+        $fh = fopen($targetTmp, 'r');
         // will not work on IE... - needs while/fget..
         fpassthru($fh);
         unlink($targetTmp);
