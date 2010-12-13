@@ -89,7 +89,7 @@ class Pman_Core_GnumericToExcel extends Pman
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
        // unlink($srcTmp);
-        $fname .= preg_match('/\.xls/i', $fname) ? ' :  '.xls'; // make sure it ends in xls..
+        $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
         $fh = fopen($targetTmp, 'r');
         header('Content-type: application/vnd.ms-excel');
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
