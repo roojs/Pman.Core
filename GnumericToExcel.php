@@ -89,6 +89,9 @@ class Pman_Core_GnumericToExcel extends Pman
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
        // unlink($srcTmp);
+        if (empty($fname)) {
+           $fname = basename($targetTmp);
+        }
         $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
        
         header('Content-type: application/vnd.ms-excel');
