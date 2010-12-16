@@ -562,7 +562,7 @@ Pman.Tab.PersonList.prototype = {
     c_name : function(cfg) {
         cfg = cfg || {};
         return Roo.apply({
-            id : (this.id + '-name').toLowerCase(),
+         //   id : (this.id + '-name').toLowerCase(),
             header : "Name",
             dataIndex : 'name',
             sortable : true,
