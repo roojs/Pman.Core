@@ -193,7 +193,36 @@ Pman.Tab.PersonList.prototype = {
                              
                             
                         },
-                        loadexception : Pman.loadException
+                        loadexception : Pman.loadException,
+                        update : function (_self, record, operation)
+                        {
+                            if (operation != 'commit') {
+                                return;
+                            }
+                            // only used to change active status.
+                            
+                            new Pman.Request({
+                                url : baseURL + '/Roo/Person.php',
+                                method :'POST',
+                                params : {
+                                    id : record.data.id,
+                                    active: record.data.active
+                                    
+                                },
+                                success : function() {
+                                    // do nothing
+                                },
+                                failure : function() 
+                                {
+                                    Roo.MessageBox.alert("Error", "saving failed", function() {
+                                        _this.grid.footer.onClick('first');
+                                    });
+                                }
+                            });
+                                
+                            
+                            
+                        }
                     
                     },
                     sortInfo: {
