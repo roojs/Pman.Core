@@ -512,7 +512,7 @@ Pman.Tab.PersonList.prototype = {
                 }
             
                      
-            },
+            }
             
 
         );
