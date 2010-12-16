@@ -313,7 +313,7 @@ Pman.Tab.PersonList.prototype = {
         }
         
         var _this = this;
-        if (this.permName == 'Core.Staff') {
+        //if (this.permName == 'Core.Staff') {
                 
             this.paging.add( '-',
                 {
@@ -330,7 +330,7 @@ Pman.Tab.PersonList.prototype = {
                
                 '-'
             );
-        }
+        //}
         
      
         this.searchBox = new Ext.form.TextField({
