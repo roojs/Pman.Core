@@ -10,7 +10,7 @@
 
 Pman.Tab.PersonList = function(config)
 {
-    Ext.apply(this, config);
+    Roo.apply(this, config);
 }
 
 Pman.Tab.PersonList.prototype = {
@@ -135,7 +135,7 @@ Pman.Tab.PersonList.prototype = {
         }
         this.parentLayout = parentLayout;
         
-        this.layout = new Ext.BorderLayout(
+        this.layout = new Roo.BorderLayout(
             parentLayout.getEl().createChild({tag:'div'}),
             {
                
@@ -148,7 +148,7 @@ Pman.Tab.PersonList.prototype = {
 
 
 
-        this.tab = parentLayout.add(region,  new Ext.NestedLayoutPanel(
+        this.tab = parentLayout.add(region,  new Roo.NestedLayoutPanel(
             this.layout, {title: this.title, background: true, controller : this}));
 
         this.tab.on('activate', function() {
@@ -170,15 +170,15 @@ Pman.Tab.PersonList.prototype = {
         this.layout.beginUpdate();
         
         var frm = this.layout.getRegion('center').getEl().createChild({tag:'div'});
-        //this.grid = new Ext.grid.EditorGrid(frm,  {
-        this.grid = new Ext.grid.Grid(frm,  {
+        //this.grid = new Roo.grid.EditorGrid(frm,  {
+        this.grid = new Roo.grid.Grid(frm,  {
                 ddGroup: 'groupDD',
                 //enableDrag: true,
                 enableDrag: true,
                 id: this.id + '-grid',
-                ds:   new Ext.data.Store({
+                ds:   new Roo.data.Store({
                     // load using HTTP
-                    proxy: new Ext.data.HttpProxy({
+                    proxy: new Roo.data.HttpProxy({
                         url: baseURL + '/Roo/Person.html',
                         method: 'GET'
                     }),
@@ -229,7 +229,7 @@ Pman.Tab.PersonList.prototype = {
                         field: 'name', direction: 'ASC'
                     }
                 }),
-                cm: new Ext.grid.ColumnModel(
+                cm: new Roo.grid.ColumnModel(
                     this.columns()
                 ),
                 autoExpandColumn: _this.id + '-name' , // fixme!!!!
@@ -266,7 +266,7 @@ Pman.Tab.PersonList.prototype = {
                  
                  
         });
-        this.panel  = this.layout.add('center',  new Ext.GridPanel(this.grid , {
+        this.panel  = this.layout.add('center',  new Roo.GridPanel(this.grid , {
                 fitToframe: true,
                 fitContainer: true, 
                 id: this.id, 
@@ -286,7 +286,7 @@ Pman.Tab.PersonList.prototype = {
 
         
         var gridFoot = this.grid.getView().getFooterPanel(true);
-        this.paging = new Ext.PagingToolbar(gridFoot, this.grid.getDataSource(), {
+        this.paging = new Roo.PagingToolbar(gridFoot, this.grid.getDataSource(), {
             pageSize: 25,
             displayInfo: true,
             displayMsg: "Displaying " + (this.itemDisplayName || "Staff") + " {0} - {1} of {2}",
@@ -295,7 +295,7 @@ Pman.Tab.PersonList.prototype = {
         var grid = this.grid;
  
     
-        this.toolbar = new Ext.Toolbar(this.grid.getView().getHeaderPanel(true));
+        this.toolbar = new Roo.Toolbar(this.grid.getView().getHeaderPanel(true));
         
         var tb = this.toolbar;
         
@@ -333,7 +333,7 @@ Pman.Tab.PersonList.prototype = {
         //}
         
      
-        this.searchBox = new Ext.form.TextField({
+        this.searchBox = new Roo.form.TextField({
             name: 'search',
             width:135,
             listeners : {
@@ -355,7 +355,7 @@ Pman.Tab.PersonList.prototype = {
             {
                 text: "Add",
                 cls: 'x-btn-text-icon',
-                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
                 hidden :  !dg || (_this.newDefaults() === false) || !Pman.hasPerm(this.permName, 'A'),  
                 handler : function(){
                     dg.show(  _this.newDefaults(), refreshPager );  
@@ -364,7 +364,7 @@ Pman.Tab.PersonList.prototype = {
              { ///... for contacts stuff...
                 text: "Bulk Add",
                 cls: 'x-btn-text-icon',
-                icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
                 hidden : !this.bulkAdd() || !Pman.hasPerm(this.permName, 'A'),    
                 handler : function(){
                     
@@ -376,12 +376,12 @@ Pman.Tab.PersonList.prototype = {
             {
                 text: "Edit",
                 cls: 'x-btn-text-icon',
-                icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+                icon: Roo.rootURL + 'images/default/tree/leaf.gif',
                 hidden : !dg || !Pman.hasPerm(this.permName, 'E'),    
                 handler : function(){
                     var s = grid.getSelectionModel().getSelections();
                     if (!s.length || (s.length > 1))  {
-                        Ext.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
+                        Roo.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
                         return;
                     }
                     dg.show( s[0].data,refreshPager);
@@ -396,7 +396,7 @@ Pman.Tab.PersonList.prototype = {
                  
                     var s = grid.getSelectionModel().getSelections();
                     if (!s.length  )  {
-                        Ext.MessageBox.alert("Error",  "Select People Row");
+                        Roo.MessageBox.alert("Error",  "Select People Row");
                         return;
                     }
                     var r = [];
@@ -409,7 +409,7 @@ Pman.Tab.PersonList.prototype = {
                     grid.getView().mainWrap.mask("Sending");
 
                     
-                    Ext.Ajax.request({
+                    Roo.Ajax.request({
                         url: baseURL + '/Roo/Person.html',
                         method: 'GET',
                         params: {
@@ -419,7 +419,7 @@ Pman.Tab.PersonList.prototype = {
                             var res = Pman.processResponse(resp);
                             grid.getView().mainWrap.unmask();
                             if (!res.success) {
-                                Ext.MessageBox.alert("Error", res.errorMsg ? res.errorMsg  : "Error Sending");
+                                Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg  : "Error Sending");
                                 return;
                             }
                             refreshPager();
@@ -427,7 +427,7 @@ Pman.Tab.PersonList.prototype = {
                         },
                         failure: function(act) {
                             grid.getView().mainWrap.unmask();
-                            Ext.MessageBox.alert("Error", "Error Sending");
+                            Roo.MessageBox.alert("Error", "Error Sending");
                         }
                         
                     });
@@ -487,7 +487,7 @@ Pman.Tab.PersonList.prototype = {
                     click : function () { 
                         var s = grid.getSelectionModel().getSelections();
                         if (s.length != 1)  {
-                            Ext.MessageBox.alert("Error",  "Select a Person");
+                            Roo.MessageBox.alert("Error",  "Select a Person");
                             return;
                         }
                         new Pman.Request({
@@ -500,6 +500,9 @@ Pman.Tab.PersonList.prototype = {
                             success : function() {
                                 document.location = baseURL + '?ts=' + Math.random();
                                 
+                            }, 
+                            failure : function() {
+                                Roo.m
                             }
                         });
                         
@@ -657,7 +660,7 @@ Pman.Tab.PersonList.prototype = {
                 
                 var state = v> 0 ?  '-checked' : '';
 
-                return '<img class="x-grid-check-icon' + state + '" src="' + Ext.BLANK_IMAGE_URL + '"/>';
+                return '<img class="x-grid-check-icon' + state + '" src="' + Roo.BLANK_IMAGE_URL + '"/>';
                 
                 
             }
