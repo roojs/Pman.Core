@@ -41,7 +41,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         
         //DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('Companies');
-        $x->isOwner = 1;
+        $x->comptype= 'OWNER';
         $x->find(true);
         
         if (!empty($q['query']['company_project_id'])) {
