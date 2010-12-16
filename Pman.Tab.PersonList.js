@@ -232,7 +232,7 @@ Pman.Tab.PersonList.prototype = {
                 cm: new Roo.grid.ColumnModel(
                     this.columns()
                 ),
-                autoExpandColumn: _this.id + '-name' , // fixme!!!!
+                autoExpandColumn:  'name', // fixme!!!!
                 clicksToEdit : 1,
                 
                 loadMask: true,
