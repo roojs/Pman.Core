@@ -472,7 +472,7 @@ Pman.Tab.PersonList.prototype = {
                 handler : function () {
                     _this.searchBox.setValue('');
                     _this.grid.getSelectionModel().clearSelections();
-
+                    
                     refreshPager();
                 }
             },
@@ -481,7 +481,8 @@ Pman.Tab.PersonList.prototype = {
                
                
                
-                qtip: "Switch to Selected User",
+                text: "Switch to Selected User",
+                hidden : !Pman.hasPerm('Core.Person', 'D'),    
                 listeners : {
                     click : function () { 
                         var s = grid.getSelectionModel().getSelections();
