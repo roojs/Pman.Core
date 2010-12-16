@@ -248,7 +248,7 @@ Pman.Tab.PersonList.prototype = {
                     },
                     cellclick : function (_self, rowIndex, columnIndex, e)
                     {
-                        var di = this.colModel.getDataIndex(colIndex);
+                        var di = this.colModel.getDataIndex(columnIndex);
                         if (di != 'active') {
                             return;
                         }
