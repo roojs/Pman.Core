@@ -483,7 +483,7 @@ Pman.Tab.PersonList.prototype = {
                 xns : Roo.Toolbar,
                
                 text: "Switch to Selected User",
-               // hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
+                hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
                 listeners : {
                     click : function () { 
                         var s = grid.getSelectionModel().getSelections();
