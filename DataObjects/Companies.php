@@ -38,6 +38,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     
     function applyFilters($q, $au)
     {
+        
+        //DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('Companies');
         $x->isOwner = 1;
         $x->find(true);
@@ -67,7 +69,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
                 SELECT distinct(company_id) FROM ProjectDirectory where project_id IN ($pids)
             ) $add" );
             
-           // DB_DataObject::debugLevel(1);
+           
             
         }
         if (!empty($q['query']['comptype'])) {
