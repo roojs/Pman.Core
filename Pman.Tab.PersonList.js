@@ -438,7 +438,7 @@ Pman.Tab.PersonList.prototype = {
             {
                 text: "Delete",
                 cls: 'x-btn-text-icon',
-                hidden : !Pman.hasPerm('Core.Staff', 'D'),    
+                hidden : !Pman.hasPerm(_this.permName, 'D'),    
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     Pman.genericDelete(_this, 'Person'); 
@@ -482,7 +482,7 @@ Pman.Tab.PersonList.prototype = {
                
                
                 text: "Switch to Selected User",
-                hidden : !Pman.hasPerm('Core.Staff', 'E'),    
+                hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
                 listeners : {
                     click : function () { 
                         var s = grid.getSelectionModel().getSelections();
