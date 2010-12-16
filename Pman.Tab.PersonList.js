@@ -482,7 +482,7 @@ Pman.Tab.PersonList.prototype = {
                
                
                 text: "Switch to Selected User",
-                hidden : !Pman.hasPerm('Core.Person', 'E'),    
+                hidden : !Pman.hasPerm('Core.Staff', 'E'),    
                 listeners : {
                     click : function () { 
                         var s = grid.getSelectionModel().getSelections();
