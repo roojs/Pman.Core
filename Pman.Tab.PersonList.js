@@ -490,7 +490,13 @@ Pman.Tab.PersonList.prototype = {
                             Ext.MessageBox.alert("Error",  "Select a Person");
                             return;
                         }
-                    
+                        new Pman.Request({
+                            url : baseURL+ '/Login.php',
+                            'switch' : s[0].data.id
+                             
+                        });
+                        
+                        
                     }
                 }
             
