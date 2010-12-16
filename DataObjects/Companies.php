@@ -39,7 +39,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function applyFilters($q, $au)
     {
         
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('Companies');
         $x->comptype= 'OWNER';
         $x->find(true);
