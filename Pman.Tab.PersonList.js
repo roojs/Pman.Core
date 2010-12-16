@@ -482,8 +482,17 @@ Pman.Tab.PersonList.prototype = {
                
                
                 qtip: "Switch to Selected User",
-                handler : function () { 
-                
+                listeners : {
+                    click : function () { 
+                        var s = grid.getSelectionModel().getSelections();
+                        if (s.length != 1)  {
+                            Ext.MessageBox.alert("Error",  "Select a Person");
+                            return;
+                        }
+                    
+                    }
+                }
+            
                      
             },
             
