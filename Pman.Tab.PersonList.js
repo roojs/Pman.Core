@@ -566,7 +566,7 @@ Pman.Tab.PersonList.prototype = {
             header : "Name",
             dataIndex : 'name',
             sortable : true,
-            width : 150  
+          //  width : 150  
         }, cfg);
     },
      c_company_id_comptype : function(cfg) {
