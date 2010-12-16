@@ -492,8 +492,15 @@ Pman.Tab.PersonList.prototype = {
                         }
                         new Pman.Request({
                             url : baseURL+ '/Login.php',
-                            'switch' : s[0].data.id
-                             
+                            params {
+                                'switch' : s[0].data.id
+                            },
+                            
+                            method : 'GET',
+                            success : function() {
+                                
+                                
+                            }
                         });
                         
                         
