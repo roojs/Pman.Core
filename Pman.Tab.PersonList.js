@@ -498,7 +498,7 @@ Pman.Tab.PersonList.prototype = {
                             
                             method : 'GET',
                             success : function() {
-                                
+                                document.location = baseURL + '?ts=' + Math.random();
                                 
                             }
                         });
