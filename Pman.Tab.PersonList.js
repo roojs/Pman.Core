@@ -387,7 +387,7 @@ Pman.Tab.PersonList.prototype = {
                     dg.show( s[0].data,refreshPager);
                  }
             }, 
-            {
+         /*   {
                 text: "Toogle Active",
                 cls: 'x-btn-text-icon',
                 icon:   rootURL + '/Pman/templates/images/trash.gif',
@@ -434,10 +434,11 @@ Pman.Tab.PersonList.prototype = {
                 }
                 
             }, 
+            */
             {
                 text: "Delete",
                 cls: 'x-btn-text-icon',
-                hidden : (this.permName == 'Core.Staff') ||  !Pman.hasPerm('Core.Person', 'D') || this.hideDelete,    
+                hidden : !Pman.hasPerm('Core.Person', 'D'),    
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     Pman.genericDelete(_this, 'Person'); 
