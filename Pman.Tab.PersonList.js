@@ -476,7 +476,7 @@ Pman.Tab.PersonList.prototype = {
                     refreshPager();
                 }
             },
-            '->',
+            '-',
              {
                
                
