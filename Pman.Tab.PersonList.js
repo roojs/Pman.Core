@@ -475,7 +475,17 @@ Pman.Tab.PersonList.prototype = {
 
                     refreshPager();
                 }
-            }
+            },
+            '->',
+             {
+               
+               
+               
+                qtip: "Switch to Selected User",
+                handler : function () { 
+                
+                     
+            },
             
 
         );
