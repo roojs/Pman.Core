@@ -219,30 +219,16 @@ Pman.Tab.PersonList.prototype = {
                     },
                     cellclick : function (_self, rowIndex, columnIndex, e)
                     {
-                        var id = this.colModel.getDataIndex(colIndex);
-                        if (columnIndex > 0 ) {
+                        var di = this.colModel.getDataIndex(colIndex);
+                        if (di != 'active') {
                             return;
                         }
-                        var sel = _this.panel.tree.getSelectionModel().getSelectedNode();
-                        if (!sel || isNaN(parseInt(sel.id))) {
-                             
-                            return  ;
-                        }
-                        
+                         
                         var rec = _this.grid.ds.getAt(rowIndex);
-                        if (rec.data.has_perm) {
-                            if (rec.data.has_perm != sel.id) {
-                                Roo.MessageBox.alert("Error", "This is an inherited permission, Remove permission for parent category");
-                                return;
-                            }
-                            Roo.log('setting perm to 0');
-                            rec.set('has_perm', 0);
-                            rec.commit();
-                            // remove it only if it's the same..
-                            return;
-                        }
-                        rec.set('has_perm', sel.id);
+                        
+                        rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
+                         
                         
                         
                     }
