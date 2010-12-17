@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
             return true;
         }
         
-        $pi = DB_DataObject::factory('Person');
+        $pi = DB_DataObject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $pi->get($this->leader);
             
         $p = DB_DataObject::factory('Group_Members');
@@ -86,7 +86,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         if (!$ids) {
             return array();
         }
-        $p = DB_Dataobject::factory('Person');
+        $p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         return $p->fetchAll();
      
