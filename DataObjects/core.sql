@@ -144,8 +144,7 @@ CREATE TABLE `Person` (
  
 ALTER TABLE Person ADD COLUMN no_reset_sent INT(11) DEFAULT 0;
 ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) DEFAULT '';
-ALTER TABLE Person CHANGE COLUMN active active int(11);
-ALTER TABLE Person ADD COLUMN project_id int(11) default 0;
+ ALTER TABLE Person ADD COLUMN project_id int(11) default 0;
 
 ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) default '';
 
