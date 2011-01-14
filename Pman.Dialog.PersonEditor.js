@@ -611,7 +611,7 @@ Pman.Dialog.PersonEditor.prototype = {
         this.data = data;
         this.create();
         this.form.reset();
-        if (data._fetch) {
+        //if (data._fetch) {
             this.dialog.show();
             this.dialog.el.mask("Loading");
             this.form.doAction('load', {
@@ -624,9 +624,9 @@ Pman.Dialog.PersonEditor.prototype = {
             });
            // this.fireEvent('show');
             return;
-        } else {
-            this.form.setValues(data);
-        }
+        //} else {
+        //    this.form.setValues(data);
+        //}
         this.form.fireEvent('actioncomplete', this.form,{
             type : 'setdata',
             data: data
