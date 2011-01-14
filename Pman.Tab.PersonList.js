@@ -31,6 +31,7 @@ Pman.Tab.PersonList.prototype = {
         // teams!?!
         alert('person list not configured');
         return false;
+        /*
         var tms = _this.getLeftSelections();
         
         if (tms.length) {
@@ -40,6 +41,7 @@ Pman.Tab.PersonList.prototype = {
         o.params['query[type]'] = this.type; // group type..
         o.params['query[person_internal_only_all]'] = 1;
         o.params['query[person_inactive]'] = this.showInActive ? 0  : 1;
+        */
         
     },
     
