@@ -63,7 +63,7 @@ Pman.Download = function(cfg)
     var b = Roo.get(document.body);
     this.form = b.createChild({
         tag: 'form',
-        method : 'POST',
+        method : cfg.method,
         action : cfg.url,
         target : this.csvFrame.id,
         enctype : 'multipart/form-data'
