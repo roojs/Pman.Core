@@ -47,7 +47,7 @@ Pman.Download = function(cfg)
     //--- simple method..
     cfg.method = cfg.method || 'GET';
     
-    if (cfg.method == 'GET') {
+    if (cfg.method == 'GET' && !cfg.params) {
         (function() {
             submit = true;
             this.csvFrame.src = cfg.url;
