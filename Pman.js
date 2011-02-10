@@ -330,7 +330,7 @@ Pman = new Roo.Document(
                 Pman.Dialog.PersonStaff.show( 
                     { 
                         id : 0, 
-                        company_id : Pman.Login.authUser.company_id * 1, 
+                        company_id : Pman.Login.authUser.company_id_id * 1, 
                         company_id_name : Pman.Login.authUser.company_id_name
                     }, function(data) {
                         forceAdmin(data);
