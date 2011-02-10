@@ -269,3 +269,16 @@ CREATE TABLE  core_locking (
   PRIMARY KEY (`int`),
   INDEX `lookup`(`on_table`, `on_id`, `person_id`, `created`)
 );
+
+
+
+
+CREATE TABLE  `translations` (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `module` varchar(64)  NOT NULL,
+  tfile varchar(128) NOT NULL,
+  tlang varchar(8)  NOT NULL,
+  tkey varchar(32)  NOT NULL,
+  tval longtext  NOT NULL,
+  PRIMARY KEY (`id`)
+);
