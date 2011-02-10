@@ -57,6 +57,8 @@ Pman.Login =  new Roo.util.Observable({
                     //console.log('call failure');
                     return Pman.Login.failure(response,opts);
                 }
+                
+                
                 if (!res.data.id) { // id=0 == login failure.
                     return this.show(true);
                 }
