@@ -327,6 +327,7 @@ Pman = new Roo.Document(
         var forceAdmin = function(data)
         {
             if (!data || !data.id) {
+                Roo.log("Force Admin");
                 Pman.Dialog.PersonStaff.show( 
                     { 
                         id : 0, 
