@@ -361,7 +361,11 @@ Pman = new Roo.Document(
         }
         
         if (Pman.Login.authUser.id < 0) {
-            
+            // admin company has been created - create the user..
+            if (Pman.Login.authUser.company_id_id* 1 > 0) {
+                forceAdmin();
+                return;
+            }
             
             forceCompany();
             /// create account..
