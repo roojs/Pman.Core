@@ -354,12 +354,15 @@ Pman = new Roo.Document(
                 });
                 return;
             }
+            Pman.Login.authUser.company_id_id  = data.id;
             Pman.Login.authUser.company_id  = data.id;
             Pman.Login.authUser.company_id_name  = data.name;
             forceAdmin();
         }
         
         if (Pman.Login.authUser.id < 0) {
+            
+            
             forceCompany();
             /// create account..
             
