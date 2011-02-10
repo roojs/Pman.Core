@@ -282,3 +282,5 @@ CREATE TABLE  `translations` (
   tval longtext  NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+ALTER TABLE translations ADD INDEX qlookup (module, tfile, tlang, tkey);
