@@ -170,7 +170,8 @@ CREATE TABLE `Projects` (
   PRIMARY KEY  (`id`),
   KEY `plookup` (`code`)
 ) ;
- alter table Projects add column active int(11) default 1;
+
+alter table Projects add column active int(11) default 1;
 alter table Projects add index plookup(code);
 
 ALTER TABLE  Projects  ADD COLUMN `type` varchar(1)  NOT NULL DEFAULT 'P';
