@@ -167,7 +167,7 @@ CREATE TABLE `Projects` (
   `file_location` varchar(254)    NOT NULL default '',
   `open_date` date default NULL,
   `open_by` int(11) NOT NULL default '0',
-  PRIMARY KEY  USING BTREE (`id`),
+  PRIMARY KEY  (`id`),
   KEY `plookup` (`code`)
 ) ;
  alter table Projects add column active int(11) default 1;
