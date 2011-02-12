@@ -10,7 +10,7 @@ CREATE TABLE `Companies` (
   `email` varchar(128)  default NULL,
   `id` int(11) NOT NULL auto_increment,
   `isOwner` int(11) default NULL,
-  PRIMARY KEY  USING BTREE (`id`),
+  PRIMARY KEY   (`id`),
   KEY `Company_Name` (`name`)
 ) ;
 
@@ -98,7 +98,7 @@ CREATE TABLE `Groups` (
   `name` varchar(64)  NOT NULL,
   `type` int(11) default NULL,
   `leader` int(11) NOT NULL default '0',
-  PRIMARY KEY  USING BTREE (`id`)
+  PRIMARY KEY   (`id`)
 );
 
 
