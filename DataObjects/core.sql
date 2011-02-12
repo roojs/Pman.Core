@@ -1,13 +1,13 @@
 
 CREATE TABLE `Companies` (
-  `code` varchar(32) collate utf8_unicode_ci NOT NULL,
-  `name` varchar(128) collate utf8_unicode_ci default NULL,
-  `remarks` text collate utf8_unicode_ci,
+  `code` varchar(32)  NOT NULL,
+  `name` varchar(128)  default NULL,
+  `remarks` text ,
   `owner_id` int(11) NOT NULL,
-  `address` text collate utf8_unicode_ci,
-  `tel` varchar(32) collate utf8_unicode_ci default NULL,
-  `fax` varchar(32) collate utf8_unicode_ci default NULL,
-  `email` varchar(128) collate utf8_unicode_ci default NULL,
+  `address` text ,
+  `tel` varchar(32)  default NULL,
+  `fax` varchar(32)  default NULL,
+  `email` varchar(128)  default NULL,
   `id` int(11) NOT NULL auto_increment,
   `isOwner` int(11) default NULL,
   PRIMARY KEY  USING BTREE (`id`),
@@ -50,14 +50,14 @@ CREATE TABLE  `core_company_type` (
 
 CREATE TABLE `Events` (
   `id` int(11) NOT NULL auto_increment,
-  `person_name` varchar(128) collate utf8_unicode_ci default NULL,
+  `person_name` varchar(128)  default NULL,
   `event_when` datetime default NULL,
-  `action` varchar(32) collate utf8_unicode_ci default NULL,
-  `ipaddr` varchar(16) collate utf8_unicode_ci default NULL,
+  `action` varchar(32)  default NULL,
+  `ipaddr` varchar(16)  default NULL,
   `on_id` int(11) default NULL,
-  `on_table` varchar(64) collate utf8_unicode_ci default NULL,
+  `on_table` varchar(64)  default NULL,
   `person_id` int(11) default NULL,
-  `remarks` text collate utf8_unicode_ci,
+  `remarks` text ,
   PRIMARY KEY  (`id`)
 ) ;
 
@@ -83,9 +83,9 @@ CREATE TABLE `Group_Members` (
 
 
 CREATE TABLE `Group_Rights` (
-  `rightname` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `rightname` varchar(64)  NOT NULL,
   `group_id` int(11) NOT NULL,
-  `AccessMask` varchar(10) collate utf8_unicode_ci NOT NULL,
+  `AccessMask` varchar(10)  NOT NULL,
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
 ) ;
@@ -95,7 +95,7 @@ CREATE TABLE `Group_Rights` (
 
 CREATE TABLE `Groups` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(64) collate utf8_unicode_ci NOT NULL,
+  `name` varchar(64)  NOT NULL,
   `type` int(11) default NULL,
   `leader` int(11) NOT NULL default '0',
   PRIMARY KEY  USING BTREE (`id`)
@@ -156,15 +156,15 @@ ALTER TABLE Person ADD COLUMN deleted_dt DATETIME;;
 
 CREATE TABLE `Projects` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(254) collate utf8_unicode_ci NOT NULL,
-  `remarks` text collate utf8_unicode_ci NOT NULL,
+  `name` varchar(254)  NOT NULL,
+  `remarks` text  NOT NULL,
   `owner_id` int(11) default NULL,
-  `code` varchar(32) collate utf8_unicode_ci NOT NULL,
+  `code` varchar(32)  NOT NULL,
   `active` int(11) default '1',
-  `type` varchar(1) collate utf8_unicode_ci NOT NULL default 'P',
+  `type` varchar(1)  NOT NULL default 'P',
   `client_id` int(11) NOT NULL default '0',
   `team_id` int(11) NOT NULL default '0',
-  `file_location` varchar(254) collate utf8_unicode_ci NOT NULL default '',
+  `file_location` varchar(254) collate  NOT NULL default '',
   `open_date` date default NULL,
   `open_by` int(11) NOT NULL default '0',
   PRIMARY KEY  USING BTREE (`id`),
