@@ -164,7 +164,7 @@ CREATE TABLE `Projects` (
   `type` varchar(1)  NOT NULL default 'P',
   `client_id` int(11) NOT NULL default '0',
   `team_id` int(11) NOT NULL default '0',
-  `file_location` varchar(254) collate  NOT NULL default '',
+  `file_location` varchar(254)    NOT NULL default '',
   `open_date` date default NULL,
   `open_by` int(11) NOT NULL default '0',
   PRIMARY KEY  USING BTREE (`id`),
