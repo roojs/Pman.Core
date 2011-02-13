@@ -149,7 +149,7 @@ ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) DEFAULT '';
 ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) default '';
 
 ALTER TABLE Person ADD COLUMN deleted_by INT(11) NOT NULL default 0 ;
-ALTER TABLE Person ADD COLUMN deleted_dt DATETIME;;
+ALTER TABLE Person ADD COLUMN deleted_dt DATETIME;
 
  alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
 
