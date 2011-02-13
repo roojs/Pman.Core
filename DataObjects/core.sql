@@ -230,7 +230,6 @@ CREATE TABLE  `core_image_type` (
   PRIMARY KEY (`id`)
 ) ;
 
- 
 
 
 CREATE TABLE  `i18n` (
