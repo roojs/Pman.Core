@@ -223,8 +223,6 @@ class Pman_Core_Generator extends DB_DataObject_Generator
             $url['host'] = '*****';
         }
          
-        
-        
         require_once 'System.php';
         $cat = System::which('cat');
         $mysql = System::which('mysql');
