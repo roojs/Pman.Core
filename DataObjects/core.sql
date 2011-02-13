@@ -169,9 +169,10 @@ CREATE TABLE `Projects` (
   `file_location` varchar(254)    NOT NULL default '',
   `open_date` date default NULL,
   `open_by` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  KEY `plookup` (`code`)
+  PRIMARY KEY  (`id`)
+  
 ) ;
+ALTER TABLE `Projects` ADD INDEX `plookup` (`code`);
 
 alter table Projects add column active int(11) default 1;
 alter table Projects add index plookup(code);
