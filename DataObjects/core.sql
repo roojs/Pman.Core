@@ -230,8 +230,6 @@ CREATE TABLE  `core_image_type` (
   PRIMARY KEY (`id`)
 ) ;
 
-
-
 CREATE TABLE  `i18n` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `ltype` varchar(1)  NOT NULL,
