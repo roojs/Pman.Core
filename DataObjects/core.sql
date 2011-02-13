@@ -239,7 +239,7 @@ CREATE TABLE  `i18n` (
   PRIMARY KEY (`id`),
   
 ) ;
-ALTER TABLE i18n ADD INDEX `lookup`(`ltype`, `lkey`, `inlang`);
+ALTER TABLE i18n ADD INDEX `lookup` (`ltype`, `lkey`, `inlang`);
 
 			
         
