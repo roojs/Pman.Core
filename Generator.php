@@ -222,7 +222,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
             $url['user'] = '*****';
             $url['host'] = '*****';
         }
-         
+        
         require_once 'System.php';
         $cat = System::which('cat');
         $mysql = System::which('mysql');
@@ -230,7 +230,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
         foreach($this->modsql as $m => $fl)
         {
             if ($cli && isset($options['database_'. $m])) {
-                $url =parse_url($options['database_'.$m]);
+                $url = parse_url($options['database_'.$m]);
             }
             
             $mysql_cmd = $mysql .
