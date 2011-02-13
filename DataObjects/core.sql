@@ -11,8 +11,10 @@ CREATE TABLE `Companies` (
   `id` int(11) NOT NULL auto_increment,
   `isOwner` int(11) default NULL,
   PRIMARY KEY   (`id`),
-  KEY `Company_Name` (`name`)
+  
 ) ;
+ALTER TABLE `Company_Name` ADD INDEX name_lookup (`name`);
+
 
 alter table Companies change column isOwner isOwner int(11);
 ALTER TABLE Companies ADD COLUMN logo_id INT(11)  NOT NULL;
