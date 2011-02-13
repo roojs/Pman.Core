@@ -240,9 +240,9 @@ CREATE TABLE  `i18n` (
   `inlang` varchar(8)  NOT NULL,
   `lval` varchar(64)  NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `lookup`(`ltype`, `lkey`, `inlang`)
+  
 ) ;
-
+ALTER TABLE i18n ADD INDEX `lookup`(`ltype`, `lkey`, `inlang`);
 
 DROP FUNCTION IF EXISTS i18n_translate;
 
