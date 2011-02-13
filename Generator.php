@@ -203,9 +203,11 @@ class Pman_Core_Generator extends DB_DataObject_Generator
         
         
     }
-    
-    
-    
+    /**
+     * imports SQL files from all DataObjects directories....
+     * 
+     * except any matching /migrate/
+     */
     function importSQL()
     {
         $options = &PEAR::getStaticProperty('DB_DataObject','options');
