@@ -178,6 +178,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
                 SELECT person_id from 
                     ProjectDirectory 
                 WHERE project_id = ' . ((int) $_REQUEST['query']['project_member_of']) .')');
+            // this is also a flag to return if they are a member..
             
         }
         
