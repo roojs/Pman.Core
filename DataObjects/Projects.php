@@ -179,7 +179,6 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
                     ProjectDirectory 
                 WHERE project_id = ' . ((int) $_REQUEST['query']['project_member_of']) .')');
             
-            
         }
         
         
