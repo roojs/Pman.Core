@@ -172,6 +172,17 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             $this->client_id = $au->company()->id; // can see nothing!!!
             
         }
+        
+        if (!empty($_REQUEST['query']['project_member_of'])) {
+            $this->whereAdd('id IN (
+                SELECT person_id from 
+                    ProjectDirectory 
+                WHERE project_id = ' . ((int) $_REQUEST['query']['project_member_of']) .')');
+            
+            
+        }
+        
+        
                  
         
         
