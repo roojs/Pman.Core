@@ -458,7 +458,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                // this is also a flag to return if they are a member..
             DB_DataObject::debugLevel(1);
             $do = DB_DataObject::factory('ProjectDirectory');
-            $this->joinAdd($do,'LEFT');
+            $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
             $do->project_id = $q['query']['project_member_of'];
             $this->selectAdd('IF(ProjectDirectory.id IS NULL, 0,  ProjectDirectory.id )  as is_member');
                 
