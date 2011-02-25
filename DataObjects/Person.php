@@ -463,10 +463,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 
                 
             if (!empty($q['query']['project_member_filter'])) {
-                $this->whereAdd('id IN (
-                    SELECT person_id from 
-                        ProjectDirectory 
-                    WHERE project_id = ' . ((int) $q['query']['project_member_of']) .')');
+                $this->having('is_member IS NOT NULL')'
             
             }
             
