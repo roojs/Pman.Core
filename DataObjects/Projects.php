@@ -175,7 +175,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         
         if (!empty($q['query']['project_member_of'])) {
             
-            $do = DB_DataObject::Factory('ProjectDirectory')
+            $do = DB_DataObject::Factory('ProjectDirectory');
             $this->joinAdd('LEFT', $do);
             $this->selectAdd('ProjectDirectory.id as is_member');
                 
