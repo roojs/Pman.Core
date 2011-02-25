@@ -177,10 +177,9 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             
             $do = DB_DataObject::Factory('ProjectDirectory')
             $this->joinAdd('LEFT', $do);
-            $this->selectAs('ProjectDirectory.id as is_member');
+            $this->selectAdd('ProjectDirectory.id as is_member');
                 
                 
-            )
             if (!empty($q['query']['project_member_filter'])) {
                 $this->whereAdd('id IN (
                     SELECT person_id from 
