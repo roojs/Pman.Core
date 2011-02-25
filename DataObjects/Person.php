@@ -463,7 +463,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 
                 
             if (!empty($q['query']['project_member_filter'])) {
-                $this->having('is_member IS NOT NULL');
+                $this->having('is_member !=0');
             
             }
             
