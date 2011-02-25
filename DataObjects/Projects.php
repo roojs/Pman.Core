@@ -173,12 +173,20 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             
         }
         
-        if (!empty($_REQUEST['query']['project_member_of'])) {
-            $this->whereAdd('id IN (
-                SELECT person_id from 
-                    ProjectDirectory 
-                WHERE project_id = ' . ((int) $_REQUEST['query']['project_member_of']) .')');
-            // this is also a flag to return if they are a member..
+        if (!empty($q['query']['project_member_of'])) {
+            
+            $do = DB_DataObject::Factory('ProjectDirectory')
+            $this->joinAdd('LEFT', $do);
+            $this->selectAs('ProjectDirectory.id as is_member');
+                
+                
+            )
+            if (!empty($q['query']['project_member_filter'])) {
+                $this->whereAdd('id IN (
+                    SELECT person_id from 
+                        ProjectDirectory 
+                    WHERE project_id = ' . ((int) $q['query']['project_member_of']) .')');
+                // this is also a flag to return if they are a member..
             
         }
         
