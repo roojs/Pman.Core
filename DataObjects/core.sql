@@ -258,6 +258,19 @@ CREATE TABLE  core_locking (
 alter table  core_locking ADD  INDEX `lookup`(`on_table`, `on_id`, `person_id`, `created`);
 
 
+# -- a generic enumeraction 
+CREATE TABLE   `core_enum` (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `etype` varchar(32)  NOT NULL,
+  `name` varchar(255)  NOT NULL,
+  `active` int(2)  NOT NULL DEFAULT 1,
+  `seqid` int(11)  NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  INDEX `lookup`(`seqid`, `active`, `name`, `etype`)
+)
+ENGINE = MyISAM;
+
+
 
 
 CREATE TABLE  `translations` (
