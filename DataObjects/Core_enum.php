@@ -12,11 +12,19 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     public $__table = 'core_enum';               // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // string(64)  not_null
-    public $otype;                            // string(64)  not_null
+    public $etype;                            // string(64)  not_null
     public $seqid;                            // string(64)  not_null
     public $active;                            // string(64)  not_null
 
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    function applyFilters($q, $au)
+    {
+        
+        //DB_DataObject::debugLevel(1);
+        if (!empty($q['query']['empty_etype'])) {
+            $this->whereAdd("etype = ''");
+        }
+    }
 }
