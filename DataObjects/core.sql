@@ -258,7 +258,8 @@ CREATE TABLE  core_locking (
 alter table  core_locking ADD  INDEX `lookup`(`on_table`, `on_id`, `person_id`, `created`);
 
 
-# -- a generic enumeraction 
+# -- a generic enumeraction
+
 CREATE TABLE   `core_enum` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `etype` varchar(32)  NOT NULL,
