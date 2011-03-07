@@ -14,8 +14,9 @@ class Pman_Core_RunGenerator extends Pman
     var $cli = false;
     function getAuth() {
         
-        $o = PEAR::getStaticProperty('HTML_FlexyFramework', 'options');
-        if (!empty($o['cli'])) {
+        
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->cli)) {
             $this->cli = true;
             return true;
         }
