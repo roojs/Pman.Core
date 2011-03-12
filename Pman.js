@@ -151,8 +151,10 @@ Pman = new Roo.Document(
                 minTabWidth: 140
             } ,
             south: {
-                split:false,
-                initialSize: 25,
+                collapsable : true,
+                collapsed : true,
+                split:true,
+                initialSize: 45,
                 titlebar: false
             }
             
