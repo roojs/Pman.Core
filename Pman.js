@@ -151,11 +151,11 @@ Pman = new Roo.Document(
                 minTabWidth: 140
             } ,
             south: {
-                collapsable : true,
-                //collapsed : true,
+                collapsible : true,
+                collapsed : true,
                 split:true,
                 height: 112,
-                titlebar: true
+                titlebar: false
             }
             
         });
