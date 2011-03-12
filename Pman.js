@@ -149,13 +149,13 @@ Pman = new Roo.Document(
                 //resizeTabs: true,
                 alwaysShowTabs: true,
                 minTabWidth: 140
-            } /*,
+            } ,
             south: {
                 split:false,
                 initialSize: 25,
                 titlebar: false
             }
-            */
+            
         });
         
         this.fireEvent('beforeload',this);
