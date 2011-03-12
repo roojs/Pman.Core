@@ -154,7 +154,7 @@ Pman = new Roo.Document(
                 collapsable : true,
                 collapsed : true,
                 split:true,
-                initialSize: 45,
+                height: 45,
                 titlebar: false
             }
             
