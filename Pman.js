@@ -155,7 +155,7 @@ Pman = new Roo.Document(
                 //collapsed : true,
                 split:true,
                 height: 112,
-                titlebar: false
+                titlebar: true
             }
             
         });
