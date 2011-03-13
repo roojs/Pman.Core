@@ -16,7 +16,15 @@ Pman.Login =  new Roo.util.Observable({
     
     events : {
         
-        'render' : true
+        'render' : true,
+        /**
+         * @event poll fired after server has been polled for login information
+         * which may also contain extra user info.
+         * 
+         */
+        
+        
+        'poll' : true,
     },
     disabled : false,
     
