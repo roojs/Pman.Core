@@ -4,7 +4,7 @@
  * login code -
  * fires Pman 'authrefreshed'  event on every poll to server..
  *
- *
+ */
 
 /***
 re-arrange language code...
