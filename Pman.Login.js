@@ -20,7 +20,7 @@ Pman.Login =  new Roo.util.Observable({
     
     events : {
         
-        'render' : true,
+        'render' : true
        
     },
     disabled : false,
