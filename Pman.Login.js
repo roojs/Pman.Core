@@ -1,9 +1,13 @@
 //<script type="text/javascript">
 
+/**
+ * login code -
+ * fires Pman 'authrefreshed'  event on every poll to server..
+ *
+ *
 
 /***
 re-arrange language code...
-
 * flipping language should be like this:
 * 
 * Ext.apply(_T, _T[lang]);
@@ -17,14 +21,7 @@ Pman.Login =  new Roo.util.Observable({
     events : {
         
         'render' : true,
-        /**
-         * @event poll fired after server has been polled for login information
-         * which may also contain extra user info.
-         * 
-         */
-        
-        
-        'poll' : true,
+       
     },
     disabled : false,
     
@@ -164,6 +161,8 @@ Pman.Login =  new Roo.util.Observable({
         this.authUser = au;
         this.lastChecked = new Date();
         Pman.fireEvent('authrefreshed', au);
+        
+        
         //Pman.Tab.FaxQueue.newMaxId(au.faxMax);
         //Pman.Tab.FaxTab.setTitle(au.faxNumPending);
         
