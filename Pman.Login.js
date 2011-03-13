@@ -154,6 +154,7 @@ Pman.Login =  new Roo.util.Observable({
         
         this.checkFails =0;
         Pman.onload();
+        return false;
     },
     
     fillAuth: function(au) {
