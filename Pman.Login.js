@@ -73,6 +73,7 @@ Pman.Login =  new Roo.util.Observable({
                 this.fillAuth(res.data);   
                 this.checkFails =0;
                 Pman.onload();
+                return false;
             },
             failure : Pman.Login.show,
             scope : Pman.Login
