@@ -153,7 +153,7 @@ Pman = new Roo.Document(
             south: {
                 collapsible : true,
                 collapsed : true,
-                split:true,
+                split:false,
                 height: 120,
                 titlebar: false
             }
