@@ -253,7 +253,7 @@ CREATE TABLE  core_locking (
   `on_id` int(11)  NOT NULL,
   `person_id` int(11)  NOT NULL,
   `created` datetime  NOT NULL,
-  PRIMARY KEY (`int`),
+  PRIMARY KEY (`int`)
 );
 alter table  core_locking ADD  INDEX `lookup`(`on_table`, `on_id`, `person_id`, `created`);
 
