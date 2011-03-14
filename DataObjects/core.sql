@@ -231,7 +231,7 @@ CREATE TABLE  `core_image_type` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `name` varchar(64)  NOT NULL,
   PRIMARY KEY (`id`)
-) ;
+);
 
 CREATE TABLE  `i18n` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
@@ -239,9 +239,9 @@ CREATE TABLE  `i18n` (
   `lkey` varchar(8)  NOT NULL,
   `inlang` varchar(8)  NOT NULL,
   `lval` varchar(64)  NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
   
-) ;
+);
 ALTER TABLE i18n ADD INDEX `lookup` (`ltype`, `lkey`, `inlang`);
 
 			
