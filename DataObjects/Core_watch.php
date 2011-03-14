@@ -11,8 +11,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
     public $__table = 'core_watch';                      // table name
     public $ontable;                         // string(128)  not_null primary_key
-    public $onid;                            // string(128)  not_null primary_key
-    public $person_id;                         // string(128)  not_null primary_key
+    public $onid;                            // int(11)  not_null primary_key
+    public $person_id;                         // int(11)  not_null primary_key
     public $event;                           // string(128)  not_null primary_key
     public $medium;                          // string(128)  not_null primary_key
     public $active;                          // int(11)  not_null
