@@ -297,3 +297,4 @@ CREATE TABLE `core_watch` (
   `active` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ontype`,`onid`,`user_id`,`event`,`medium`)
 ) ;
+
