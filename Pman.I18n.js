@@ -135,11 +135,11 @@ Pman.I18n = {
             ret.push([ o.code, o.title ]);
         });
         
-        ret = ret.sort(function(a,b) {
+        var xret = ret.sort(function(a,b) {
             a[1]  > b[1] ? 1 : -1;
         });
         
-        return ret;
+        return xret;
     },
     // DEPRECIATED... -- see dataToProxy
     countryStore : function() { return {
