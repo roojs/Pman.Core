@@ -288,7 +288,7 @@ ALTER TABLE translations ADD INDEX qlookup (module, tfile, tlang, tkey);
 
 
 
-CREATE TABLE `core_watches` (
+CREATE TABLE `core_watche` (
   `ontable` varchar(128) NOT NULL,
   `onid` varchar(128) NOT NULL,
   `user_id` varchar(128) NOT NULL,
