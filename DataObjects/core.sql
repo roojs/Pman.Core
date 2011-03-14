@@ -285,3 +285,15 @@ CREATE TABLE  `translations` (
 );
 
 ALTER TABLE translations ADD INDEX qlookup (module, tfile, tlang, tkey);
+
+
+
+CREATE TABLE `core_watches` (
+  `ontable` varchar(128) NOT NULL,
+  `onid` varchar(128) NOT NULL,
+  `user_id` varchar(128) NOT NULL,
+  `event` varchar(128) NOT NULL,
+  `medium` varchar(128) NOT NULL,
+  `active` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`ontype`,`onid`,`user_id`,`event`,`medium`)
+) ;
