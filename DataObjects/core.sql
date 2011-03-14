@@ -10,7 +10,7 @@ CREATE TABLE `Companies` (
   `email` varchar(128)  default NULL,
   `id` int(11) NOT NULL auto_increment,
   `isOwner` int(11) default NULL,
-  PRIMARY KEY   (`id`),
+  PRIMARY KEY   (`id`)
   
 ) ;
 ALTER TABLE `Company_Name` ADD INDEX name_lookup (`name`);
