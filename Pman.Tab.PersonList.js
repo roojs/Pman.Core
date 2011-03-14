@@ -3,6 +3,8 @@
 /**
  * 
  * generic person list - used by perms. and staff lists.
+ *
+ * -- this is probably depreciated now..
  * 
  */
 
