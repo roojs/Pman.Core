@@ -310,6 +310,6 @@ CREATE TABLE `core_person_aliases` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `person_id` varchar(128) DEFAULT NULL,
   `alias` varchar(254) NOT NULL,
-  PRIMARY KEY (`alias`)
+  PRIMARY KEY (`id`)
 ) ;
 ALTER TABLE core_watch ADD INDEX qlookup (`alias`);
