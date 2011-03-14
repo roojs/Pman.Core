@@ -136,7 +136,7 @@ Pman.I18n = {
         });
         
         var xret = ret.sort(function(a,b) {
-            a[1]  > b[1] ? 1 : -1;
+            return a[1]  > b[1] ? 1 : -1;
         });
         
         return xret;
