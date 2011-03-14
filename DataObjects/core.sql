@@ -295,6 +295,6 @@ CREATE TABLE `core_watch` (
   `event` varchar(128) NOT NULL,
   `medium` varchar(128) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`ontype`,`onid`,`user_id`,`event`,`medium`)
+  PRIMARY KEY (`ontable`,`onid`,`user_id`,`event`,`medium`)
 ) ;
 
