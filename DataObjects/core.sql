@@ -290,14 +290,18 @@ ALTER TABLE translations ADD INDEX qlookup (module, tfile, tlang, tkey);
 # - used to trigger emails about changes to items being watched.
 
 CREATE TABLE `core_watch` (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
   `ontable` varchar(128) NOT NULL,
   `onid` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `event` varchar(128) NOT NULL,
   `medium` varchar(128) NOT NULL,
   `active` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`ontable`,`onid`,`user_id`,`event`,`medium`)
+  PRIMARY KEY (id)
 ) ;
+ALTER TABLE core_watch ADD INDEX qlookup (`ontable`,`onid`,`user_id`,`event`,`medium`);
+
+
 
 ALTER TABLE core_watch change change column user_id person_id int(11);
 ALTER TABLE core_watch change alter column onid int(11);
@@ -305,8 +309,9 @@ ALTER TABLE core_watch change alter column onid int(11);
 # - used by email / tracker to handle alises
 
 CREATE TABLE `core_person_aliases` (
- `person_id` varchar(128) DEFAULT NULL,
-  `alias` varchar(128) NOT NULL,
+  
+  `person_id` varchar(128) DEFAULT NULL,
+  `alias` varchar(254) NOT NULL,
   
   PRIMARY KEY (`alias`)
 ) ;
