@@ -306,7 +306,7 @@ ALTER TABLE core_watch ADD INDEX qlookup (`ontable`,`onid`,`user_id`,`event`,`me
 
 # - used by email / tracker to handle alises - we have to be carefull adding to this table...
 
-CREATE TABLE `core_person_aliases` (
+CREATE TABLE `core_person_alias` (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `person_id` varchar(128) DEFAULT NULL,
   `alias` varchar(254) NOT NULL,
