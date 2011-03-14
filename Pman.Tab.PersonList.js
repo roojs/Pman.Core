@@ -569,7 +569,7 @@ Pman.Tab.PersonList.prototype = {
          //   id : (this.id + '-name').toLowerCase(),
             header : "Name",
             dataIndex : 'name',
-            sortable : true,
+            sortable : true
           //  width : 150  
         }, cfg);
     },
