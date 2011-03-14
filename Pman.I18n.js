@@ -134,6 +134,11 @@ Pman.I18n = {
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
             ret.push([ o.code, o.title ]);
         });
+        
+        ret.sort(function(a,b) {
+            return a[1]  > b[1] ? 1 : 0;
+        })
+        
         return ret;
     },
     // DEPRECIATED... -- see dataToProxy
