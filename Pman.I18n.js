@@ -135,7 +135,7 @@ Pman.I18n = {
             ret.push([ o.code, o.title ]);
         });
         
-        ret.sort(function(a,b) {
+        ret = ret.sort(function(a,b) {
             a[1]  > b[1] ? 1 : -1;
         });
         
