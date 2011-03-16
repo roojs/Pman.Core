@@ -361,6 +361,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                    die("No existing DataObject file found for table {$this->table} 
             
 - either add it to Pman_Builder[skip_tables] or\n
+- run generator and specify that module..
 - create an empty file in the related Module/DataObjects directory
 eg. 
 touch Pman/????/DataObjects/".ucfirst($this->table).".php
