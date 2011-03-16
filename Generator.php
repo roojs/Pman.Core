@@ -151,8 +151,11 @@ class Pman_Core_Generator extends DB_DataObject_Generator
             if (!empty($options['mods'] ) && !in_array($m,  $options['mods'] )) {
                 continue;
             }
-            
-            
+            // this happens when we have no database tables from a module,
+            // but module code has been defined.
+            if (!file_exists($options['rootDir'].'/'.$m)) {
+                continue;
+            }
             foreach(scandir($options['rootDir'].'/'.$m) as $f) {
                 if (!strlen($f) || $f[0] == '.') {
                     continue;
