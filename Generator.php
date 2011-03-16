@@ -151,6 +151,8 @@ class Pman_Core_Generator extends DB_DataObject_Generator
             if (!empty($options['mods'] ) && !in_array($m,  $options['mods'] )) {
                 continue;
             }
+            
+            
             foreach(scandir($options['rootDir'].'/'.$m) as $f) {
                 if (!strlen($f) || $f[0] == '.') {
                     continue;
