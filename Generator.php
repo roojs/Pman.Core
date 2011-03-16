@@ -355,17 +355,22 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                 if (in_array($this->table, $ignore)) {
                     continue;
                 }
-             
-             
-                die("No existing DataObject file found for table {$this->table} 
+                if (empty($mods)) {
                 
+                
+                   die("No existing DataObject file found for table {$this->table} 
+            
 - either add it to Pman_Builder[skip_tables] or\n
 - create an empty file in the related Module/DataObjects directory
 eg. 
 touch Pman/????/DataObjects/".ucfirst($this->table).".php
-
-");
-                    
+   
+   ");
+                }
+                // use mods to determine where it should output to..
+                $this->modmap[$tn] = $mods;
+                
+                
             }
             $mod = $this->modmap[$tn];
             $inis[$mod] = isset($inis[$mod]) ? $inis[$mod] : '';
