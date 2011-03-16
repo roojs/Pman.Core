@@ -420,7 +420,8 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
             
            
                 // file_get_contents???
-            $oldcontents = file_get_contents($orig);
+            
+            $oldcontents = file_exists($orig) ? file_get_contents($orig) : '';
             
              
             echo "GENERATE: " .   $this->classname  . ($cli ? "\n" : "<BR>");
