@@ -369,8 +369,8 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
    ");
                 }
                 // use mods to determine where it should output to..
-                var_dump($mods);exit;
-                $this->modmap[$tn] = $mods;
+                //var_dump($mods);exit;
+                $this->modmap[$tn] = $mods[0];
                 
                 
             }
