@@ -317,7 +317,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     //   ----------PERMS------  ----------------
     function getPerms() 
     {
-         //DB_DataObject::debugLevel(1);
+         DB_DataObject::debugLevel(1);
         // find out all the groups they are a member of.. + Default..
         $g = DB_DataObject::Factory('Group_Rights');
         if (!$g->count()) {
