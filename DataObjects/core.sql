@@ -193,7 +193,7 @@ ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 
 #-- we duplicate office_id and company_id here...
 #-- not sure if we should keep doing that in the new design...
-
+#-- we should improve our links code to handle this..
 CREATE TABLE `ProjectDirectory` (
   `id` int(11) NOT NULL auto_increment,
   `project_id` int(11) NOT NULL,
