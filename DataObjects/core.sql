@@ -199,8 +199,6 @@ CREATE TABLE `ProjectDirectory` (
   `project_id` int(11) NOT NULL,
   `person_id` int(11) NOT NULL,
   `ispm` int(11) NOT NULL,
-  `office_id` int(11) default NULL,
-  `company_id` int(11) default NULL,
   `role` varchar(16) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ;
