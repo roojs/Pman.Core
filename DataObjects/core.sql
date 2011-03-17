@@ -191,6 +191,8 @@ ALTER TABLE `Projects`  ADD COLUMN `languages` varchar(128)  NOT NULL;
 ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 
 
+#-- we duplicate office_id and company_id here...
+#-- not sure if we should keep doing that in the new design...
 
 CREATE TABLE `ProjectDirectory` (
   `id` int(11) NOT NULL auto_increment,
