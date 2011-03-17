@@ -192,6 +192,17 @@ ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 
 
 
+CREATE TABLE `ProjectDirectory` (
+  `id` int(11) NOT NULL auto_increment,
+  `project_id` int(11) NOT NULL,
+  `person_id` int(11) NOT NULL,
+  `ispm` int(11) NOT NULL,
+  `office_id` int(11) default NULL,
+  `company_id` int(11) default NULL,
+  `role` varchar(16) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ;
+ 
 
 CREATE TABLE   `Images` (
   `id` int(11) NOT NULL auto_increment,
