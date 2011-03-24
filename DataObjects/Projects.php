@@ -119,9 +119,10 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         }
          // user projects!!!! - make sure they can only see project they are suppsed to..
          // only applies to document stuff..
+        
+        //&& $au->hasPerm('Documents.Documents','S') << this is dependant on the doc modules
           
-        if (!$au->hasPerm('Core.Projects_All','S') &&
-            $au->hasPerm('Documents.Documents','S')) {
+        if (!$au->hasPerm('Core.Projects_All','S') ) {
             
             
             
