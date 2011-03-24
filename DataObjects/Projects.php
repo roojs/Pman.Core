@@ -312,23 +312,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             ));
         }
         return true;
-    }
-    
-    function fetchAll($k= false) {
-        if ($k !== false) {
-            $this->selectAdd();
-            $this->selectAdd($k);
-        }
-        
-        $this->find();
-        $ret = array();
-        while ($this->fetch()) {
-            $ret[] = $k === false ? clone($this) : $this->$k;
-        }
-        return $ret;
-         
-    }
-    
+    } 
     /**
      * fetch a list of user projects.
      * if you need to filter open/closed.. then add whereAdds before calling
