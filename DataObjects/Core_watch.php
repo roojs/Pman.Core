@@ -59,9 +59,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
         $w->active = 1;
         $w->medium = $medium;
-        $w->selectAdd();
-        $w->selectAdd("person_id, CONCAT(ontable, ':', onid) as onobject");
+        $ar = $w->fetchAll();
+        $ret = array();
+        foreach($ar as $o) {
+            if (!isset($ret[$o->person_id])) {
+                $ret[$o->person_id] = array();
+            }
+            $ret[$o->person_id][] = $o->ontable .':'. $o->onid;
+        }
         
-        return $this->fetchAll('person_id, onobject');
+        return $ret;
     }
 }
