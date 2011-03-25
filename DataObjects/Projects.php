@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             $pr->whereAdd("Projects.type IN ('N','X')");
             $prjs = $pr->fetchAll('id');
             
-            DB_DataObject::debugLevel(1);
+            //DB_DataObject::debugLevel(1);
             $pd = DB_DataObject::factory('ProjectDirectory');
             $pd->joinAdd(DB_DataObject::factory('Projects'), 'LEFT');
             $pd->whereAdd("Projects.type NOT IN ('N','X')");
