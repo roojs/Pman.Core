@@ -456,7 +456,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         if (!empty($q['query']['project_member_of'])) {
                // this is also a flag to return if they are a member..
-            DB_DataObject::debugLevel(1);
+            //DB_DataObject::debugLevel(1);
             $do = DB_DataObject::factory('ProjectDirectory');
             $do->project_id = $q['query']['project_member_of'];
             
