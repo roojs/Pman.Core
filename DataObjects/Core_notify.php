@@ -18,4 +18,25 @@ CREATE TABLE  core_notify  (
   INDEX `lookup`(`act_when`, `msgid`)
 );
 */
+ 
+require_once 'DB/DataObject.php';
 
+class Pman_Core_DataObjects_Core_notify extends DB_DataObject 
+{
+    ###START_AUTOCODE
+    /* the code below is auto generated do not remove the above tag */
+
+    
+    public $__table = 'core_nofity';         
+    public $act_when;                        
+    
+    public $ontable;                         
+    public $onid;                            
+    
+    public $person_id;                       
+    
+    public $msgid;   // message id after it has been sent.                          
+    public $sent;    // date it was sent.?? or last effort..
+    public $bounced; // 1 - failed to send (??) // 2 = we got a bounce.
+
+    
