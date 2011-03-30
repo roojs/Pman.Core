@@ -35,7 +35,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     public $person_id;                       
     
-    public $msgid;   // message id after it has been sent.                          
+    public $msgid;   // message id after it has been sent. -- empty if not sent..
     public $sent;    // date it was sent.?? or last effort..
     public $bounced; // 1 - failed to send (??) // 2 = we got a bounce.
 
