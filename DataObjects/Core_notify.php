@@ -39,4 +39,4 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $sent;    // date it was sent.?? or last effort..
     public $bounced; // 1 - failed to send (??) // 2 = we got a bounce.
 
-    
+}
