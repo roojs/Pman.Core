@@ -312,17 +312,18 @@ CREATE TABLE `core_watch` (
 ) ;
 ALTER TABLE core_watch ADD INDEX qlookup (`ontable`,`onid`,`user_id`,`event`,`medium`);
 
-CREATE TABLE core_notify (
+CREATE TABLE  core_notify  (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
-  `act_when` datetime  NOT NULL,
-  `onid` int(11)  NOT NULL,
-  `ontable` int(11)  NOT NULL,
-  `person_id` int(11)  NOT NULL,
-  `msgid` varchar(128)  NOT NULL,
+  `act_when` DATETIME NOT NULL,
+  `onid` int(11)  NOT NULL DEFAULT 0,
+  `ontable` varchar(128)  NOT NULL DEFAULT '',
+  `person_id` int(11)  NOT NULL DEFAULT 0,
+  `msgid` varchar(128)  NOT NULL  DEFAULT '',
+  `sent` DATETIME  NOT NULL,
+  `bounced` int(4)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `lookup`(`act_when`, `msgid`)
 );
-
 
 
  
