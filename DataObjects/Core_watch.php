@@ -7,7 +7,7 @@
  * any object can call
  *   $watch->notify($ontable, $onid)
  *
- *   in which case it should create a notify event.
+ *   in which case it should create a core_notify event.
  *
  *
  * 
