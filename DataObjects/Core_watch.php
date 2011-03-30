@@ -1,6 +1,16 @@
 <?php
 /**
  * Table Definition for core_watch
+ *
+ * works with 'core_notify'
+ *
+ * any object can call
+ *   $watch->notify($ontable, $onid)
+ *
+ *   in which case it should create a notify event.
+ *
+ *
+ * 
  */
 require_once 'DB/DataObject.php';
 
