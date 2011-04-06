@@ -37,6 +37,9 @@ class Pman_Core_NotifySend extends Pman
         // phpinfo();exit;
         
         $w = DB_DataObject::factory($this->table);
+        if (!$w->get($id) || strtotime($w->act_when) < strtotime($w->sent)) {
+            die("invalid time");
+        }
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
         $w->orderBy('act_when ASC'); // oldest first.
         $w->limit(1000); // we can run 1000 ...
