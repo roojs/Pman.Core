@@ -102,7 +102,7 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
-            if ($code == 451 || $next_try_min > (2*24*60)) {
+            if ($code == 451 && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED');
@@ -110,7 +110,11 @@ class Pman_Core_NotifySend extends Pman
                 $w->update($ww);
                 die("GREYLISTED");
             }
-            // fail.. = log and give up..
+            $fail = true;
+            break;
+        }
+        if ($fail || $next_try_min > (2*24*60)) {
+        // fail.. = log and give up..
             $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. $res->toString());
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
