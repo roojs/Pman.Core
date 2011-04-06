@@ -59,7 +59,7 @@ class Pman_Core_Notify extends Pman
     {
         
         $php = $_SERVER["_"];
-        $cwd = realpath(dirname(__FILE__) . '/../..');
+        $cwd = getcwd(); // same as run on.. (so script should end up being same relatively..)
         $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  Core/NotifySend/'. $id;
         $cmd = $php . ' ' . $app;
         echo $cmd . "\n";
