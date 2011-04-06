@@ -42,42 +42,14 @@ class Pman_Core_NotifySend extends Pman
             die("invalid id or time");
         }
          
+        $o = $w->object();
+        $p = $w->person();
+        // should we fetch the watch that caused it.. - which should contain the method to call..
+         
+         
         die("DONE\n");
     }
-    
-    function run($id)
-    {
-        $descriptorspec = array(
-            0 => array("file", "/dev/null", 'r'),  // stdin is a pipe that the child will read from
-            1 => array("file", "/dev/null", 'a'),  // stdout is a pipe that the child will write to
-            2 => array("file", "/dev/null", "a") // stderr is a file to write to
-         );
-        $php = $_SERVER["_"];
-        $cwd = getcwd(); // same as run on.. (so script should end up being same relatively..)
-        $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  ' . $this->target . '/'. $id;
-        $cmd = $php . ' ' . $app;
-        echo $cmd . "\n";
-        $pipe = array();
-        $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
-        $this->pool[] = $p;
-    }
-    
-    function poolfree() {
-        $pool = array();
-        foreach($this->pool as $p) {
-            $ar = proc_get_Status($p);
-            //var_dump($ar);
-            if ($p['running']) {
-                $pool[] = $p;
-            }
-        }
-        $this->pool = $pool;
-        if (count($pool) < 10) {
-            return true;
-        }
-        return false;
-        
-    }
+     
     
     
 }
