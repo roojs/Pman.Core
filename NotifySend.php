@@ -76,6 +76,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = -1; // sent ok.. - no need to record it..
                 $w->update($ww);
+                die("SENT");
             }
             
                 
