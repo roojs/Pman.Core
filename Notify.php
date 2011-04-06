@@ -35,8 +35,13 @@ class Pman_Core_Notify extends Pman
         
         
         $w = DB_DataObject::factory('core_notify');
-         
-        $w->whereAdd('act_when < NOW()');
+        $w->whereAdd('act_when < sent');
+        $w->fetchAll('id');
+        $w->limit(1000);
+        
+        
+        
+        
         
         
          
