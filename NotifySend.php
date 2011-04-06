@@ -64,14 +64,14 @@ class Pman_Core_NotifySend extends Pman
         $dom = array_pop(explode('@', $p->email));
         
         $mxs = $this->mxs($dom);
-        
+        $ww = clone($w);
         foreach($mxs as $dom) {
             
             $mailer = Mail::factory('smtp', array( 'host'         => $dom ));
             $res = $mailer->send($email['recipients'], $email['headers'], $email['body']);
             if ($res === true) {
                 // success....
-                $ww = clone($w);
+                
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = -1; // sent ok.. - no need to record it..
@@ -90,7 +90,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED');
                 
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
-                
+                $w->update($ww);
                 
             }
             // fail.. = log and give up..
