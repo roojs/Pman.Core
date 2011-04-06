@@ -56,7 +56,20 @@ class Pman_Core_Notify extends Pman
     }
     
     function run($id) {
+        $php = 'php';
+        $cwd = realpath(dirname(__FILE__) . '/../../');
+        $app = 'index.php' .'/Core/NotifySend.php '. $id;
+        $cmd = $php . ' ' . $app;
+        $p = proc_open($cmd, $cwd , array());
+        $this->pool[] = $p;
+    }
+    
+    function poolfree() {
+        foreach($this->pool as $p)
+        
+        
         
     }
+    
     
 }
