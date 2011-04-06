@@ -44,6 +44,8 @@ class Pman_Core_NotifySend extends Pman
          
         $o = $w->object();
         $p = $w->person();
+        
+        $email = $o->toEmail($p,)
         // should we fetch the watch that caused it.. - which should contain the method to call..
          
          
