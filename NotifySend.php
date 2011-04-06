@@ -54,10 +54,10 @@ class Pman_Core_NotifySend extends Pman
         $l->orderBy('sent DESC');
         $l->limit(1);
         $ar = $l->fetchAll('sent');
-        $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar['sent'];
+        $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar[0];
         
         
-        $email = $o->toEmail($p,)
+        $email = $o->toEmail($p,$last);
         // should we fetch the watch that caused it.. - which should contain the method to call..
          
          
