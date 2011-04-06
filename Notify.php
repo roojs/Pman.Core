@@ -36,16 +36,9 @@ class Pman_Core_Notify extends Pman
         
         $w = DB_DataObject::factory('core_notify');
          
+        $w->whereAdd('act_when < NOW()');
         
-         
-        /* For each watcher, compute the changes.
-         * Group changes by ticket, sending one email per ticket.
-         * Group tickets into batch updates if the only fields that changed are
-         * bulk update style (milestone, assignment etc.)
-         *
-         * For the wiki repo, group by file so that serial edits within the batch
-         * period show up as a single email.
-         */
+        
          
     }
 }
