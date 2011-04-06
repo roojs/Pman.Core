@@ -52,6 +52,10 @@ class Pman_Core_Notify extends Pman
             $p = array_shift($ar);
             $this->run($p);
         }
+        while($this->poolfree()) {
+            sleep(10);
+        }
+        
         die("DONE\n");
     }
     
