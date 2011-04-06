@@ -17,7 +17,7 @@ class Pman_Core_Notify extends Pman
 {
     
     var $table = 'core_notify';
-    var $target = 'Core/NotifySend'
+    var $target = 'Core/NotifySend';
     
     function getAuth()
     {
