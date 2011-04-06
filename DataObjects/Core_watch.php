@@ -30,7 +30,27 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    /** make sure there is a watch for this user.. */
     
+    function ensureNotify(  $ontable, $onid, $person_id, $whereAdd)
+    {
+        $w = DB_DataObject::factory('core_watch');
+        $w->ontable = $ontable;
+        $w->onid = $onid;
+        $w->person_id = $personid;
+        $nw = clone($w);
+        $w->whereAdd($whereAdd);
+        
+        
+        if ($w->count()) {
+            return;
+        }
+        $nw->medium = 'email';
+        $nw->active = 1;
+        $nw->insert();
+        
+        
+    }
     
     function notify($ontable , $onid, $whereAdd)
     {
