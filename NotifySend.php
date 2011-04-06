@@ -101,7 +101,8 @@ class Pman_Core_NotifySend extends Pman
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
-            if ($code == 451) {
+            // give up after 2 days..
+            if ($code == 451 || $next_try_min > (2*24*60)) {
                 // try again later..
                 // check last event for this item..
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED');
