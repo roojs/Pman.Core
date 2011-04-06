@@ -31,7 +31,7 @@ class Pman_Core_Notify extends Pman
     
     function get()    
     {
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
         
