@@ -91,7 +91,7 @@ class Pman_Core_NotifySend extends Pman
                 
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
                 $w->update($ww);
-                
+                die("GREYLISTED");
             }
             // fail.. = log and give up..
             
