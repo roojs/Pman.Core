@@ -27,7 +27,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     /* the code below is auto generated do not remove the above tag */
 
     
-    public $__table = 'core_nofity';         
+    public $__table = 'core_notify';         
     public $act_when;                        
     
     public $ontable;                         
