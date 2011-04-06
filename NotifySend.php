@@ -92,8 +92,12 @@ class Pman_Core_NotifySend extends Pman
                 die("GREYLISTED");
             }
             // fail.. = log and give up..
-            $this->addEvent('NOTIFY', $w, 'FAILED - '. $res->toString());
-            
+            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. $res->toString());
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $id;
+            $w->update($ww);
+        
             
             
         }
