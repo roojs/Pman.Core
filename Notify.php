@@ -36,14 +36,27 @@ class Pman_Core_Notify extends Pman
         
         $w = DB_DataObject::factory('core_notify');
         $w->whereAdd('act_when < sent');
-        $w->fetchAll('id');
-        $w->limit(1000);
+        $w->orderBy('act_when ASC'); // oldest first.
+        $w->limit(1000); // we can run 1000 ...
+        $ar = $w->fetchAll('id');
         
-        
-        
-        
-        
+        while (true) {
+            if (empty($ar)) {
+                break;
+            }
+            if (!$this->poolfree()) {
+                sleep(10);
+                continue;
+            }
+            $p = array_shift($ar);
+            $this->run($p);
+        }
         
          
     }
+    
+    function run($id) {
+        
+    }
+    
 }
