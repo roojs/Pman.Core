@@ -97,7 +97,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $id;
             $w->update($ww);
-        
+            die("DONE");
         }
         
         
