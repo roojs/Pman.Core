@@ -56,7 +56,7 @@ class Pman_Core_Notify extends Pman
             $this->run($p);
         }
         while(count($this->pool)) {
-            $this->poolfree()
+            $this->poolfree();
             sleep(10);
         }
         
