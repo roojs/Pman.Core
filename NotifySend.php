@@ -66,12 +66,11 @@ class Pman_Core_NotifySend extends Pman
         $ev->orderBy('event_when DESC');
         $ar = $ev->fetchAll('event_when');
         $last_event = empty($ar) ? 0 : $ar[0];
-        $next_try = '5 MINUTES';
+        $next_try_min = 5;
         if ($last_event) {
-            
-            
+            $next_try_min = floor((time() - strtotime($last_event)) / 60) * 2;
         }
-        
+        $next_try = $next_try_min . ' MINUTES';
         
         
         $email = $o->toEmail($p,$last);
