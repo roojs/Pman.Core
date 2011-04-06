@@ -61,7 +61,11 @@ class Pman_Core_NotifySend extends Pman
         
         $email = $o->toEmail($p,$last);
         // should we fetch the watch that caused it.. - which should contain the method to call..
-         
+        
+        
+        
+        
+        
          
         die("DONE\n");
     }
