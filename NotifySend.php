@@ -4,6 +4,14 @@ require_once 'Pman.php';
 /**
  * notification script sender
  *
+ * called with an id of a core_notify element
+ *
+ * uses core_notify - to find an event to object and person.
+ *
+ * uses Events table to log failures
+ * 
+ * 
+ *
  * calls $object->toEmail($person,$last_send) to generate an email struct with
  *  array (
  *      headers =>
