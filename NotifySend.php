@@ -63,6 +63,9 @@ class Pman_Core_NotifySend extends Pman
         // should we fetch the watch that caused it.. - which should contain the method to call..
         $dom = array_pop(explode('@', $p->email));
         
+        bool getmxrr ( $dom , array &$mxhosts [, array &$weight ] )
+
+        
         Mail::factory('smtp', array( 
             'host'         => 'smtp.gmail.com', 
             'persist'      =>  FALSE
@@ -73,7 +76,23 @@ class Pman_Core_NotifySend extends Pman
          
         die("DONE\n");
     }
-     
-    
+    function mx($fqdn)
+    {
+        $mx_records = array();
+        $mx_weight = array();
+        
+        if (getmxrr($fqdn, $mx_records, $mx_weight)) {
+            // copy mx records and weight into array $mxs
+            // ignore multiple mx's at the same weight
+            for ($i = 0; $i < count($mx_records); $i++) {
+                $mxs[$mx_weight[$i]] = $mx_records[$i];
+            }
+            // sort array mxs to get servers with highest priority
+            ksort ($mxs, SORT_NUMERIC);
+            reset ($mxs);
+        } else {
+            // No MX so use A
+            $mxs[0]= $fqdn;
+        }
     
 }
