@@ -65,7 +65,7 @@ class Pman_Core_NotifySend extends Pman
         
         $mxs = $this->mxs($dom);
         
-        
+        foreach($mxs as $)
         
         
         Mail::factory('smtp', array( 
@@ -85,7 +85,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (getmxrr($fqdn, $mx_records, $mx_weight)) {
             // copy mx records and weight into array $mxs
-            // ignore multiple mx's at the same weight
+            // ignore multiple mx's at the same weight << that's just dumb...
             for ($i = 0; $i < count($mx_records); $i++) {
                 $mxs[$mx_weight[$i]] = $mx_records[$i];
             }
