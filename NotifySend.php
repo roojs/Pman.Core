@@ -66,6 +66,8 @@ class Pman_Core_NotifySend extends Pman
         $mxs = $this->mxs($dom);
         
         
+        
+        
         Mail::factory('smtp', array( 
             'host'         => 'smtp.gmail.com', 
             'persist'      =>  FALSE
