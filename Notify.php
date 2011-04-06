@@ -66,7 +66,7 @@ class Pman_Core_Notify extends Pman
     function run($id)
     {
         $descriptorspec = array(
-            0 => false,  // stdin is a pipe that the child will read from
+            0 => array("file", "/dev/null"),  // stdin is a pipe that the child will read from
             1 => array("file", "/dev/null"),  // stdout is a pipe that the child will write to
             2 => array("file", "/dev/null", "a") // stderr is a file to write to
          );
