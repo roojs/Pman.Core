@@ -98,8 +98,6 @@ class Pman_Core_NotifySend extends Pman
             $w->event_id = $id;
             $w->update($ww);
         
-            
-            
         }
         
         
