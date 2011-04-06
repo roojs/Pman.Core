@@ -78,7 +78,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->update($ww);
                 die("SENT");
             }
-            
+            // what type of error..
                 
             
         }
