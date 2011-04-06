@@ -38,6 +38,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->ontable = $ontable;
         $w->onid = $onid;
         $w->person_id = $person_id;
+        if (empty($w->person_id)) {
+            return;
+        }
+        
         $nw = clone($w);
         $w->whereAdd($whereAdd);
         
