@@ -65,9 +65,18 @@ class Pman_Core_Notify extends Pman
     }
     
     function poolfree() {
-        foreach($this->pool as $p)
-        
-        
+        $pool = array();
+        foreach($this->pool as $p) {
+            $ar = proc_get_Status($p);
+            if (!$p['running']) {
+                $pool[] = $p;
+            }
+        }
+        $this->pool = $pool;
+        if (count($pool) < 10) {
+            return true;
+        }
+        return false;
         
     }
     
