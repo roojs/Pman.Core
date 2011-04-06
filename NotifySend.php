@@ -82,21 +82,18 @@ class Pman_Core_NotifySend extends Pman
     {
         $mx_records = array();
         $mx_weight = array();
-        
-        if (getmxrr($fqdn, $mx_records, $mx_weight)) {
-            // copy mx records and weight into array $mxs
-            // ignore multiple mx's at the same weight << that's just dumb...
-            for ($i = 0; $i < count($mx_records); $i++) {
-                $mxs[$mx_weight[$i]] = $mx_records[$i];
-            }
-            // sort array mxs to get servers with highest priority
-            ksort ($mxs, SORT_NUMERIC);
-            reset ($mxs);
-        } else {
-            // No MX so use A
-            $mxs[0]= $fqdn;
+        $mxs = array();
+        if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
+            return araray($fqdn);
         }
+        
+        asort($mx_weight)
+        
+        forach($mx_weight as $k => $weight) {
+            $mxs[] = $mx_records[$k];
+        }
+        return $mxs;
     }
-    return $mxs;
+    
     
 }
