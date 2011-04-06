@@ -38,7 +38,7 @@ class Pman_Core_NotifySend extends Pman
         
         $w = DB_DataObject::factory($this->table);
         if (!$w->get($id) || strtotime($w->act_when) < strtotime($w->sent)) {
-            die("invalid time");
+            die("invalid id or time");
         }
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
         $w->orderBy('act_when ASC'); // oldest first.
