@@ -63,7 +63,8 @@ class Pman_Core_Notify extends Pman
         $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  Core/NotifySend/'. $id;
         $cmd = $php . ' ' . $app;
         echo $cmd . "\n";
-        $p = proc_open($cmd, $cwd );
+        
+        $p = proc_open($cmd, $cwd, $pipes );
         $this->pool[] = $p;
     }
     
