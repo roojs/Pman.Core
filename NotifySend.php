@@ -16,7 +16,7 @@ require_once 'Pman.php';
 class Pman_Core_NotifySend extends Pman
 {
     
-    
+    var $table = 'core_notify'
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -30,11 +30,11 @@ class Pman_Core_NotifySend extends Pman
     
     var $pool = array();
     
-    function get()    
+    function get($id)    
     {
         DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
-       // phpinfo();exit;
+        // phpinfo();exit;
         
         $w = DB_DataObject::factory($this->table);
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
