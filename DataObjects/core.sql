@@ -327,7 +327,7 @@ CREATE TABLE  core_notify  (
 ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) DEFAULT 0;
 
 
-
+ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
  
 
 # - used by email / tracker to handle alises - we have to be carefull adding to this table...
