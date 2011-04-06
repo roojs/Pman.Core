@@ -100,12 +100,12 @@ class Pman_Core_NotifySend extends Pman
             die("DONE");
         }
         
+        $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED');
+        $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
+        $w->update($ww);
+        die("NO HOST AVAILABLE");
+
         
-        
-        
-        
-         
-        die("DONE\n");
     }
     function mxs($fqdn)
     {
