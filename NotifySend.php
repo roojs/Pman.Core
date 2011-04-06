@@ -85,10 +85,12 @@ class Pman_Core_NotifySend extends Pman
             }
             if ($code == 451) {
                 // try again later..
-                
+                $this->addEvent('NOTIFY', $w, 'GREYLISTED');
+                $w->act_when = strtotime('NOW + 5 MINUTES');
                 
             }
             // fail.. = log and give up..
+            
             
             
             
