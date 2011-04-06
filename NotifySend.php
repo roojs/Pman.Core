@@ -81,7 +81,7 @@ class Pman_Core_NotifySend extends Pman
             // what type of error..
             list($code, $response) = $mailer->_smtp->getResponse();
             if ($code < 0) {
-                continue; // try next mx... ??? should we wait???
+                continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             
             switch($res->getCode()) {
