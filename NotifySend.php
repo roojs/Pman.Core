@@ -58,6 +58,17 @@ class Pman_Core_NotifySend extends Pman
         $ar = $l->fetchAll('sent');
         $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar[0];
         
+        // find last event..
+        $ev = DB_DataObject::factory('Events');
+        $ev->on_id = $w->id;                           // int(11)
+        $ev->od_table = $this->table;
+        $ev->limit(1);
+        $ev->orderBy('event_when DESC');
+        $ar = $ev->fetchAll('event_when');
+        $last_event = empty($ar) ? 0 : $ar[0];
+        
+        
+        
         
         $email = $o->toEmail($p,$last);
         // should we fetch the watch that caused it.. - which should contain the method to call..
@@ -65,6 +76,10 @@ class Pman_Core_NotifySend extends Pman
         
         $mxs = $this->mxs($dom);
         $ww = clone($w);
+        
+        
+        
+        
         foreach($mxs as $dom) {
             
             $mailer = Mail::factory('smtp', array( 'host'         => $dom ));
