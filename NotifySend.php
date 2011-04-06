@@ -94,5 +94,6 @@ class Pman_Core_NotifySend extends Pman
             // No MX so use A
             $mxs[0]= $fqdn;
         }
+    }
     
 }
