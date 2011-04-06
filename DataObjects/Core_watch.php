@@ -36,8 +36,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     {
         DB_DAtaObject::debugLevel(1);
         $w = DB_DataObject::factory('core_watch');
-        $w->ontable = $ontable;
-        $w->onid = $onid;
         $w->person_id = $person_id;
         if (empty($w->person_id)) {
             return;
@@ -50,6 +48,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if ($w->count()) {
             return;
         }
+        $nw->ontable = $ontable;
+        $nw->onid = $onid;
+        
         $nw->medium = 'email';
         $nw->active = 1;
         $nw->insert();
