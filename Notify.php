@@ -52,7 +52,7 @@ class Pman_Core_Notify extends Pman
             $p = array_shift($ar);
             $this->run($p);
         }
-        die("DONE");
+        die("DONE\n");
     }
     
     function run($id)
