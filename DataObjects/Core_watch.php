@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nn->ontable = $ontable;
         $nn->onid = $onid;
         foreach($people as $p) {
-            if (!$p) {
+            if (!$p) { // no people??? bugs in watch table
                 continue;
             }
             $n = clone($nn);
