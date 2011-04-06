@@ -65,13 +65,22 @@ class Pman_Core_NotifySend extends Pman
         
         $mxs = $this->mxs($dom);
         
-        foreach($mxs as $)
+        foreach($mxs as $dom) {
+            
+            $mailer = Mail::factory('smtp', array( 'host'         => $dom ));
+            $res = $mailer->send($email['recipients'], $email['headers'], $email['body']);
+            if ($res === true) {
+                // success....
+                $ww = clone($w);
+                $w->sent = date('Y-m-d H:i:s');
+                $w->msgid = $email['headers']['msgid''];
+            }
+            
+                
+            
+        }
         
         
-        Mail::factory('smtp', array( 
-            'host'         => 'smtp.gmail.com', 
-            'persist'      =>  FALSE
-        )); 
         
         
         
