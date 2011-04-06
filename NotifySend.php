@@ -76,7 +76,7 @@ class Pman_Core_NotifySend extends Pman
          
         die("DONE\n");
     }
-    function mx($fqdn)
+    function mxs($fqdn)
     {
         $mx_records = array();
         $mx_weight = array();
@@ -95,5 +95,6 @@ class Pman_Core_NotifySend extends Pman
             $mxs[0]= $fqdn;
         }
     }
+    return $mxs;
     
 }
