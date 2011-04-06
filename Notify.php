@@ -1,5 +1,5 @@
 <?php
-require_once 'MTrackWeb.php';
+require_once 'Pman.php';
 
 /**
  * notification script runner
@@ -31,8 +31,8 @@ class Pman_Core_Notify extends Pman
     function get()    
     {
         //DB_DataObject::debugLevel(1);
-        date_default_timezone_set('UTC');
-        
+        //date_default_timezone_set('UTC');
+       // phpinfo();exit;
         
         $w = DB_DataObject::factory('core_notify');
         $w->whereAdd('act_when < sent');
@@ -51,16 +51,17 @@ class Pman_Core_Notify extends Pman
             $p = array_shift($ar);
             $this->run($p);
         }
-        
          
     }
     
     function run($id)
     {
-        $php = 'php';
-        $cwd = realpath(dirname(__FILE__) . '/../../');
-        $app = 'index.php' .'/Core/NotifySend.php '. $id;
+        
+        $php = $_SERVER["_"];
+        $cwd = realpath(dirname(__FILE__) . '/../..');
+        $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  Core/NotifySend/'. $id;
         $cmd = $php . ' ' . $app;
+        echo $cmd . "\n";
         $p = proc_open($cmd, $cwd );
         $this->pool[] = $p;
     }
