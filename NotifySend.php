@@ -83,12 +83,14 @@ class Pman_Core_NotifySend extends Pman
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
-            
-            switch($res->getCode()) {
-                case PEAR_MAIL_SMTP_ERROR_CONNECT:
+            if ($code == 451) {
+                // try again later..
                 
-                    
+                
             }
+            // fail.. = log and give up..
+            
+            
             
         }
         
