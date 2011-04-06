@@ -87,7 +87,7 @@ class Pman_Core_NotifySend extends Pman
             return araray($fqdn);
         }
         
-        asort($mx_weigh,SORT_NUMERICt)
+        asort($mx_weight,SORT_NUMERIC);
         
         forach($mx_weight as $k => $weight) {
             $mxs[] = $mx_records[$k];
