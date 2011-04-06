@@ -2,7 +2,8 @@
 require_once 'Pman.php';
 
 /**
- * notification script sender
+ * notification script sender - designed to be run by the Notify script - with many children running
+ * in parallel.
  *
  * called with an id of a core_notify element
  *
