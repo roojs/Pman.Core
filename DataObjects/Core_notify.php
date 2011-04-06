@@ -47,5 +47,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return $c;
         
     }
+    function object()
+    {
+        $c = DB_DataObject::factory($this->ontable);
+        $c->get($this->onid);
+        return $c;
+        
+    }
   
 }
