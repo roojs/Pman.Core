@@ -79,7 +79,13 @@ class Pman_Core_NotifySend extends Pman
                 die("SENT");
             }
             // what type of error..
-                
+            
+            switch($res->getCode()) {
+                case
+                    
+                    list($code, $response) = $mailer->_smtp->getResponse();
+                    
+            }
             
         }
         
