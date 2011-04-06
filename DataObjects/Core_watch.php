@@ -63,6 +63,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nn->ontable = $ontable;
         $nn->onid = $onid;
         foreach($people as $p) {
+            if (!$p) {
+                continue;
+            }
             $n = clone($nn);
             $n->person_id = $p;
             $nf = clone($n);
