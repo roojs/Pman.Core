@@ -2,12 +2,14 @@
 require_once 'Pman.php';
 
 /**
- * notification script runner
+ * notification script sender
  *
- * This does not actualy send stuf out, it only starts the NotifySend/{id}
- * which does the actuall notifcations.
- *
- * It manages a pool of notifiers.
+ * calls $object->toEmail($person,$last_send) to generate an email struct with
+ *  array (
+ *      headers =>
+ *      recipients =>
+ *      body =>
+ *  )
  * 
  * 
  */
