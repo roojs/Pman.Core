@@ -16,6 +16,9 @@ require_once 'Pman.php';
 class Pman_Core_Notify extends Pman
 {
     
+    var $table = 'core_notify';
+    var $target = 'Core/NotifySend'
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -35,7 +38,7 @@ class Pman_Core_Notify extends Pman
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
         
-        $w = DB_DataObject::factory('core_notify');
+        $w = DB_DataObject::factory($this->table);
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
         $w->orderBy('act_when ASC'); // oldest first.
         $w->limit(1000); // we can run 1000 ...
@@ -64,7 +67,7 @@ class Pman_Core_Notify extends Pman
         
         $php = $_SERVER["_"];
         $cwd = getcwd(); // same as run on.. (so script should end up being same relatively..)
-        $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  Core/NotifySend/'. $id;
+        $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  ' . $this->target . '/'. $id;
         $cmd = $php . ' ' . $app;
         echo $cmd . "\n";
         $pipe = array();
