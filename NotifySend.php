@@ -79,11 +79,14 @@ class Pman_Core_NotifySend extends Pman
                 die("SENT");
             }
             // what type of error..
+            list($code, $response) = $mailer->_smtp->getResponse();
+            if ($code < 0) {
+                continue; // try next mx...
+            }
             
             switch($res->getCode()) {
-                case
-                    
-                    list($code, $response) = $mailer->_smtp->getResponse();
+                case PEAR_MAIL_SMTP_ERROR_CONNECT:
+                
                     
             }
             
