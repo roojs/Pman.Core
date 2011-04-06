@@ -63,8 +63,8 @@ class Pman_Core_NotifySend extends Pman
         // should we fetch the watch that caused it.. - which should contain the method to call..
         $dom = array_pop(explode('@', $p->email));
         
-        bool getmxrr ( $dom , array &$mxhosts [, array &$weight ] )
-
+        $mxs = $this->mxs($dom);
+        
         
         Mail::factory('smtp', array( 
             'host'         => 'smtp.gmail.com', 
