@@ -55,7 +55,8 @@ class Pman_Core_Notify extends Pman
          
     }
     
-    function run($id) {
+    function run($id)
+    {
         $php = 'php';
         $cwd = realpath(dirname(__FILE__) . '/../../');
         $app = 'index.php' .'/Core/NotifySend.php '. $id;
