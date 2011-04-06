@@ -31,6 +31,35 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    
+    function notify($ontable , $onid, $whereAdd)
+    {
+        $w = DB_DataObject::factory('core_watch');
+        $w->whereAdd($whereAdd);
+        $w->selectAdd();
+        $w->selectAdd('distinct(person_id) as person_id');
+        $people = $w->fetchAll('person_id');
+        $nn = DB_DataObject::Factory('core_notify');
+        $nn->ontable = $ontable;
+        $nn->onid = $onid;
+        foreach($people as $p) {
+            $n = clone($nn);
+            $n->person_id = $p;
+            $nf = clone($n);
+            $nf->whereAdd('sent < act_when');
+            if ($nf->count()) {
+                // we have a item in the queue for that waiting to be sent..
+                continue;
+            }
+            $n->act_when = date("Y-m-d H:i:s");
+            $n->insert();
+            
+            
+        }
+        
+        
+        
+    }
     /***
      * The purpose of this is to gather all the events that have
      * occured in the system (where watches exist)

@@ -13,7 +13,7 @@ CREATE TABLE  core_notify  (
   `person_id` int(11)  NOT NULL DEFAULT 0,
   `msgid` varchar(128)  NOT NULL  DEFAULT '',
   `sent` DATETIME  NOT NULL,
-  `bounced` int(4)  NOT NULL DEFAULT 0,
+  `event_id` int(11)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `lookup`(`act_when`, `msgid`)
 );
@@ -47,5 +47,5 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return $c;
         
     }
-
+  
 }
