@@ -80,7 +80,7 @@ class Pman_Core_NotifySend extends Pman
         $mxs = $this->mxs($dom);
         $ww = clone($w);
         
-        
+        $fail = false;
         
         
         foreach($mxs as $dom) {
