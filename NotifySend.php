@@ -73,7 +73,8 @@ class Pman_Core_NotifySend extends Pman
                 // success....
                 $ww = clone($w);
                 $w->sent = date('Y-m-d H:i:s');
-                $w->msgid = $email['headers']['msgid''];
+                $w->msgid = $email['headers']['Message-Id'];
+                $w->event_id = -1; // sent ok.. - no need to record it..
             }
             
                 
