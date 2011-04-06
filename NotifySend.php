@@ -51,7 +51,7 @@ class Pman_Core_NotifySend extends Pman
                 'ontable' => $w->ontable,
                 'onid' => $w->onid,
                 'person_id' => $w->person_id,
-                ));
+        ));
         
         $l->whereAdd('id != '. $w->id);
         $l->orderBy('sent DESC');
