@@ -50,6 +50,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     function object()
     {
         $c = DB_DataObject::factory($this->ontable);
+        $c->autoJoin();
         if ($c->get($this->onid)) {
             return $c;
         }
