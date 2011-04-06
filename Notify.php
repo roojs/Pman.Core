@@ -49,7 +49,7 @@ class Pman_Core_Notify extends Pman
                 break;
             }
             if (!$this->poolfree()) {
-                sleep(10);
+                sleep(3);
                 continue;
             }
             $p = array_shift($ar);
@@ -57,7 +57,7 @@ class Pman_Core_Notify extends Pman
         }
         while(count($this->pool)) {
             $this->poolfree();
-            sleep(10);
+            sleep(3);
         }
         
         die("DONE\n");
