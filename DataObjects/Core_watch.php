@@ -37,7 +37,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $ontable;
         $w->onid = $onid;
-        $w->person_id = $personid;
+        $w->person_id = $person_id;
         $nw = clone($w);
         $w->whereAdd($whereAdd);
         
