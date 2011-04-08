@@ -17,7 +17,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $mimetype;                        // string(64)  not_null
     public $filesize;                        // int(11)  not_null
     public $created;                         // datetime(19)  not_null binary
-    public $created_by;                         // datetime(19)  not_null binary
+    public $created_by;                         // int(11)  not_null
 
     public $width;                           // int(11)  not_null
     public $height;                          // int(11)  not_null
