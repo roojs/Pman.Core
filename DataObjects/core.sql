@@ -233,7 +233,7 @@ ALTER TABLE images    ADD COLUMN  `parent_image_id` int(11) NOT NULL default '0'
 ALTER TABLE `Images` ADD INDEX `lookup`(`ontable`, `onid`);
 
 ALTER TABLE  `Images` ADD COLUMN `created` datetime  NOT NULL;
-ALTER TABLE  `Images` ADD COLUMN `created_by` datetime  NOT NULL;
+ALTER TABLE  `Images` ADD COLUMN `created_by` INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE  `Images` ADD COLUMN `imgtype` VARCHAR(32) DEFAULT '' NOT NULL;
 ALTER TABLE  `Images` ADD COLUMN `linkurl` VARCHAR(254) DEFAULT '' NOT NULL;
