@@ -1,4 +1,4 @@
-?php
+<?php
 /**
  * Table Definition for core_watch
  *
