@@ -36,30 +36,38 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * ontable / onid.
      * 
      */
-    function createFrom($file)
+    function createFrom($file, $filename=false)
     {
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             return false;
         }
         
+        $filename = empty($filename) ? $file : $filename;
         
-        $imgs = @getimagesize($file);
+        if (empty($this->mimetype)) {
+            require_once 'File/MimeType.php';
+            $y = new File_MimeType();
+            $this->mimetype = $y->fromFilename($filename);
+        }
         
-        if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
-            // it's a file!!!!
-        } else {
-            list($this->width , $this->height)  = $imgs;
+        $this->mimetype= strtolower($this->mimetype);
+        
+        if (array_shift(explode($this->mimetype)) == 'image') { 
+        
+            $imgs = @getimagesize($file);
+            
+            if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
+                // it's a file!!!!
+            } else {
+                list($this->width , $this->height)  = $imgs;
+            }
         }
         
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
         
-        if (empty($this->mimetype)) {
-            require_once 'File/MimeType.php';
-            $y = new File_MimeType();
-            $this->mimetype = $y->fromFilename($file);
-        }
+        
         
         
         if (empty($this->filename)) {
