@@ -263,6 +263,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     /**
      * creation - associate this image with a dataobject
+     * - currently assumes id is the key column
      * @param DB_DataObject $obj a dataobject
      */
     function associate($obj)
