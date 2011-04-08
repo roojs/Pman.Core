@@ -66,10 +66,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
-        
-        
-        
-        
+         
         
         if (empty($this->filename)) {
             $this->filename = basename($filename);
