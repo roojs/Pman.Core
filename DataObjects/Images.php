@@ -23,6 +23,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $parent_image_id;                 // int(11)  not_null
     public $created;                         // datetime(19)  not_null binary
     public $imgtype;                         // string(32)  not_null
+    public $created_by;                         // datetime(19)  not_null binary
+
     public $linkurl;                         // string(254)  not_null
     public $descript;                        // blob(65535)  not_null blob
     public $title;                           // string(128)  not_null
