@@ -70,6 +70,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         
+        
         if (empty($this->filename)) {
             $this->filename = basename($file);
         }
