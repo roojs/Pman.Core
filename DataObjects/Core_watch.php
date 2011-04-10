@@ -34,7 +34,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     
     function ensureNotify(  $ontable, $onid, $person_id, $whereAdd)
     {
-        DB_DAtaObject::debugLevel(1);
+        //DB_DAtaObject::debugLevel(1);
         $w = DB_DataObject::factory('core_watch');
         $w->person_id = $person_id;
         if (empty($w->person_id)) {
