@@ -77,7 +77,7 @@ class Pman_Core_Notify extends Pman
         $php = $_SERVER["_"];
         $cwd = getcwd(); // same as run on.. (so script should end up being same relatively..)
         $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  ' . $this->target . '/'. $id;
-        $cmd = $php . ' ' . $app. '&';
+        $cmd = $php . ' ' . $app. ' &';
         echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
