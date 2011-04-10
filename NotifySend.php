@@ -42,7 +42,7 @@ class Pman_Core_NotifySend extends Pman
     
     function get($id)    
     {
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
         
