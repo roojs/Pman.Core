@@ -77,7 +77,7 @@ class Pman_Core_Notify extends Pman
         $php = $_SERVER["_"];
         $sn =  $_SERVER["SCRIPT_NAME"];
         
-        $cwd = $sn[0] == '/' ? dirname($sn) : dirname(realpath(getcwd() . $sn)) // same as run on.. (so script should end up being same relatively..)
+        $cwd = $sn[0] == '/' ? dirname($sn) : dirname(realpath(getcwd() . $sn)); // same as run on.. (so script should end up being same relatively..)
         $app = $cwd . '/' . basename($_SERVER["SCRIPT_NAME"]) . '  ' . $this->target . '/'. $id;
         $cmd = $php . ' ' . $app. ' &';
         echo $cmd . "\n";
