@@ -81,7 +81,7 @@ class Pman_Core_Notify extends Pman
         echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
-        $this->pool[] = array('proc' => $p, 'pipes' => &$pipes, 'cmd' => $cmd);
+        $this->pool[] = array('proc' => $p, 'out' => $tn,  'cmd' => $cmd);
     }
     
     function poolfree() {
@@ -93,7 +93,8 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
-            echo $p['cmd'] . " : " . stream_get_contents($p['pipes'][1]);
+            echo $p['cmd'] . " : " . stream_get_contents($p['out']);
+            unlink($pp['out']);
         }
         $this->pool = $pool;
         if (count($pool) < 10) {
