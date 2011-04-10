@@ -75,8 +75,10 @@ class Pman_Core_Notify extends Pman
             2 => array("pipe", "w") // stderr is a file to write to
          );
         $php = $_SERVER["_"];
-        $cwd = getcwd(); // same as run on.. (so script should end up being same relatively..)
-        $app = $cwd . '/'. $_SERVER["SCRIPT_NAME"] . '  ' . $this->target . '/'. $id;
+        $sn =  $_SERVER["SCRIPT_NAME"];
+        
+        $cwd = $sn[0] == '/' ? dirname($sn) : dirname(realpath(getcwd() . $sn)) // same as run on.. (so script should end up being same relatively..)
+        $app = $cwd . '/'. basename($_SERVER["SCRIPT_NAME"]) . '  ' . $this->target . '/'. $id;
         $cmd = $php . ' ' . $app. ' &';
         echo $cmd . "\n";
         $pipe = array();
