@@ -99,10 +99,7 @@ class Pman_Core_NotifySend extends Pman
         foreach($mxs as $dom) {
             
             $mailer = Mail::factory('smtp', array( 'host'         => $dom ));
-            $res = $mailer->send(
-                                 
-                                 $p->email,
-                                 $email['headers'], $email['body']);
+            $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if ($res === true) {
                 // success....
                 
