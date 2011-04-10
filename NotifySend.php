@@ -149,7 +149,7 @@ class Pman_Core_NotifySend extends Pman
         $mx_weight = array();
         $mxs = array();
         if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
-            return araray($fqdn);
+            return array($fqdn);
         }
         
         asort($mx_weight,SORT_NUMERIC);
