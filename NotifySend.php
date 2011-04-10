@@ -85,6 +85,7 @@ class Pman_Core_NotifySend extends Pman
         
         $email = $o->toEmail($p,$last);
         
+        $p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         $dom = array_pop(explode('@', $p->email));
@@ -98,7 +99,10 @@ class Pman_Core_NotifySend extends Pman
         foreach($mxs as $dom) {
             
             $mailer = Mail::factory('smtp', array( 'host'         => $dom ));
-            $res = $mailer->send($email['recipients'], $email['headers'], $email['body']);
+            $res = $mailer->send(
+                                 
+                                 $p->email,
+                                 $email['headers'], $email['body']);
             if ($res === true) {
                 // success....
                 
