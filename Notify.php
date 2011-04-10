@@ -95,7 +95,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             echo $p['cmd'] . " : " . file_get_contents($p['out']);
-            unlink($p['out']);
+            //unlink($p['out']);
         }
         $this->pool = $pool;
         if (count($pool) < 10) {
