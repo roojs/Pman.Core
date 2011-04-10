@@ -94,7 +94,7 @@ class Pman_Core_NotifySend extends Pman
         $ww = clone($w);
         
         $fail = false;
-        
+        require_once 'Mail.php';
         
         foreach($mxs as $dom) {
             
