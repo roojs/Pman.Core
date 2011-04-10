@@ -48,7 +48,7 @@ class Pman_Core_Cli
     Runs the notification tool - should be run every minute ideally.
     Sends out emails to anyone in the notification list.
     
-    /etc/cron.d/PmanNotify
+    /etc/cron.d/pman-notify
      * *  * * *     www-data     /usr/bin/php /home/gitlive/web.mtrack/admin.php  Core/Notify > /dev/null
     
         
