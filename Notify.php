@@ -79,7 +79,7 @@ class Pman_Core_Notify extends Pman
         echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
-        $this->pool[] = array('proc' => $p, 'pipes' =>$pipes, 'cmd' => $cmd);
+        $this->pool[] = array('proc' => $p, 'pipes' => &$pipes, 'cmd' => $cmd);
     }
     
     function poolfree() {
