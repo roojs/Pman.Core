@@ -67,7 +67,7 @@ class Pman_Core_Notify extends Pman
     
     function run($id)
     {
-        
+        phpinfo();exit;
         $tn = tempnam(ini_get('session.save_path'),'stdout') . '.stdout';
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
