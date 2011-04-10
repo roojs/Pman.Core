@@ -46,7 +46,7 @@ class Pman_Core_Cli
     $cli Core/Notify
     
     Runs the notification tool - should be run every minute ideally.
-    
+    Sends out emails to anyone in the notification list.
         
 ";
 
