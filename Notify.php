@@ -79,17 +79,19 @@ class Pman_Core_Notify extends Pman
         echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
-        $this->pool[] = array('proc' => $p, 'pipes' =>$pipes);
+        $this->pool[] = array('proc' => $p, 'pipes' =>$pipes, 'cmd' => $cmd);
     }
     
     function poolfree() {
         $pool = array();
         foreach($this->pool as $p) {
-            $ar = proc_get_Status($p['proc']);
+            $ar = proc_get_status($p['proc']);
             //var_dump($ar);
             if ($ar['running']) {
                 $pool[] = $p;
+                continue;
             }
+            echo $p['cmd'] . " : " . stream_get_contents($p['pipes'][1]);
         }
         $this->pool = $pool;
         if (count($pool) < 10) {
