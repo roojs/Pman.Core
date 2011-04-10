@@ -15,18 +15,22 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $ontable;                         // string(32)  not_null multiple_key
     public $onid;                            // int(11)  not_null
     public $mimetype;                        // string(64)  not_null
+    public $filesize;                        // int(11)  not_null
+    public $created;                         // datetime(19)  not_null binary
+    public $created_by;                         // int(11)  not_null
+
     public $width;                           // int(11)  not_null
     public $height;                          // int(11)  not_null
-    public $filesize;                        // int(11)  not_null
-    public $displayorder;                    // int(11)  not_null
-    public $language;                        // string(6)  not_null
-    public $parent_image_id;                 // int(11)  not_null
-    public $created;                         // datetime(19)  not_null binary
+    
+
     public $imgtype;                         // string(32)  not_null
+    public $parent_image_id;                 // int(11)  not_null
     public $linkurl;                         // string(254)  not_null
     public $descript;                        // blob(65535)  not_null blob
     public $title;                           // string(128)  not_null
-
+    public $displayorder;                    // int(11)  not_null
+    public $language;                        // string(6)  not_null
+    
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -36,34 +40,40 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * ontable / onid.
      * 
      */
-    function createFrom($file)
+    function createFrom($file, $filename=false)
     {
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             return false;
         }
         
-        
-        $imgs = @getimagesize($file);
-        
-        if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
-            // it's a file!!!!
-        } else {
-            list($this->width , $this->height)  = $imgs;
-        }
-        
-        $this->filesize = filesize($file);
-        $this->created = date('Y-m-d H:i:s');
+        $filename = empty($filename) ? $file : $filename;
         
         if (empty($this->mimetype)) {
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
-            $this->mimetype = $y->fromFilename($file);
+            $this->mimetype = $y->fromFilename($filename);
         }
         
+        $this->mimetype= strtolower($this->mimetype);
+        
+        if (array_shift(explode('/', $this->mimetype)) == 'image') { 
+        
+            $imgs = @getimagesize($file);
+            
+            if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
+                // it's a file!!!!
+            } else {
+                list($this->width , $this->height)  = $imgs;
+            }
+        }
+        
+        $this->filesize = filesize($file);
+        $this->created = date('Y-m-d H:i:s');
+         
         
         if (empty($this->filename)) {
-            $this->filename = basename($file);
+            $this->filename = basename($filename);
         }
         
         //DB_DataObject::debugLevel(1);
@@ -103,7 +113,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function getStoreName() 
     {
-        $opts = PEAR::getStaticProperty('Pman', 'options');
+        $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
         return implode( '/', array(
             $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
@@ -246,14 +256,27 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (empty($obj->id)) {
             return array();
         }
+        
         $c = clone($this);
         $c->ontable = $obj->tableName();
         $c->onid = $obj->id;
+        $c->autoJoin();
         if (!empty($mime_like)) {
             $c->whereAdd("mimetype LIKE '". $c->escape($mime_like) ."'");
         }
 
         return $c->fetchAll();
+    }
+    /**
+     * creation - associate this image with a dataobject
+     * - currently assumes id is the key column
+     * @param DB_DataObject $obj a dataobject
+     */
+    function associate($obj)
+    {
+        $this->ontable = $obj->tableName();
+        $this->onid = $obj->id; /// assumes our nice standard of using ids..
+        
     }
     
      
@@ -318,14 +341,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $sz = explode('x', $size);
         $sx = $sz[0];
         //var_dump($sz);
-        if (!$this->id) {
+        if (!$this->id || empty($this->width)) {
             $this->height = $sx;
             $this->width = empty($sz[1]) ? $sx : $sz[1];
             $sy = $this->width ;
         }
         if (empty($sz[1])) {
-            $ratio =  $this->height/ ($this->width *1.0);
-            $sy = $ration * $sx;
+            $ratio =  empty($this->width) ? 1 : $this->height/ ($this->width *1.0);
+            $sy = $ratio * $sx;
         } else {
             $sy = $sz[1];
         }
