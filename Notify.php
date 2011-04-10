@@ -40,7 +40,7 @@ class Pman_Core_Notify extends Pman
         
         $w = DB_DataObject::factory($this->table);
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
-        $w->whereAdd('act_when > NOW()'); // eg.. not if future..
+        $w->whereAdd('act_when < NOW()'); // eg.. not if future..
 
         $w->orderBy('act_when ASC'); // oldest first.
         $w->limit(1000); // we can run 1000 ...
