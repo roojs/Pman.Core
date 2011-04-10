@@ -40,7 +40,14 @@ class Pman_Core_Cli
      
     Runs the javascript compiler - merging all the JS files so the load faster.
     Note: cfg option Pman_Builder['jspacker'] must be set to location of jstoolkit code 
+
+================================    
+
+    $cli Core/Notify
     
+    Runs the notification tool - should be run every minute ideally.
+    
+        
 ";
 
 
