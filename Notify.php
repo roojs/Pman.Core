@@ -93,8 +93,8 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
-            echo $p['cmd'] . " : " . stream_get_contents($p['out']);
-            unlink($pp['out']);
+            echo $p['cmd'] . " : " . file_get_contents($p['out']);
+            unlink($p['out']);
         }
         $this->pool = $pool;
         if (count($pool) < 10) {
