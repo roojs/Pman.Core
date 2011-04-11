@@ -158,7 +158,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         return 0 === strcasecmp($type, array_shift(explode('/',$this->mimetype)));
-        
     }
   
     /**
