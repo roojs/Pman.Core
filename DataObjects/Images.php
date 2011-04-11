@@ -274,7 +274,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     * @param DB_DataObject $obj An object to associate this image with
     *        (does not store it - you need to call update() to do that)
     * @return DB_DataObject the dataobject this image is attached to.
-     */
+    */
     function object($obj=false)
     {
         if ($obj === false) {
