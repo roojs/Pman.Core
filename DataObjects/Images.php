@@ -147,7 +147,19 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
     }
-    
+    /**
+     * check mimetype against type
+     * - eg. img.is(#image#)
+     *
+     */
+    function is($type)
+    {
+        if (empty($this->mimetype)) {
+            return false;
+        }
+        return strcasecmp($type, array_shift(explode('/',$this->mimetype)));
+        
+    }
   
     /**
      * onUpload (singlely attached image to a table)
