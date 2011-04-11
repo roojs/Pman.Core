@@ -279,6 +279,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
+    /**
+    * object
+    * @return DB_DataObject the dataobject this image is attached to.
+     */
+    function object()
+    {
+        $ret = DB_DataObject::factory($this->ontable);
+        $ret->get($this->onid);
+        return $ret;
+    }
+    
      
     function toRooArray($req = array()) {
       //  echo '<PRE>';print_r($req);exit;
