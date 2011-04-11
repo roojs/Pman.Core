@@ -280,14 +280,21 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     
     /**
-    * object
+    * set or get the dataobject this image is associated with
+    * @param DB_DataObject $obj An object to associate this image with
+    *        (does not store it - you need to call update() to do that)
     * @return DB_DataObject the dataobject this image is attached to.
      */
-    function object()
+    function object($obj=false)
     {
-        $ret = DB_DataObject::factory($this->ontable);
-        $ret->get($this->onid);
-        return $ret;
+        if ($obj === false) {
+            $ret = DB_DataObject::factory($this->ontable);
+            $ret->get($this->onid);
+            return $ret;
+        }
+        $this->ontable = $obj->tableName();
+        $this->onid = $obj->id; /// assumes our nice standard of using ids..
+        return $obj;
     }
     
      
