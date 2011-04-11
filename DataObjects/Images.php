@@ -267,17 +267,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
         return $c->fetchAll();
     }
-    /**
-     * creation - associate this image with a dataobject
-     * - currently assumes id is the key column
-     * @param DB_DataObject $obj a dataobject
-     */
-    function associate($obj)
-    {
-        $this->ontable = $obj->tableName();
-        $this->onid = $obj->id; /// assumes our nice standard of using ids..
-        
-    }
+     
     
     /**
     * set or get the dataobject this image is associated with
