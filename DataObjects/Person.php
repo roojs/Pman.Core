@@ -353,6 +353,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
          
         
     }
+    
+    
+    function groups()
+    {
+        
+        
+        
+    }
+    
     function hasPerm($name, $lvl) 
     {
         static $pcache = array();
