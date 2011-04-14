@@ -33,6 +33,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     function toEventString() {
         $p = $this->person();
         // this is weird... company is in the person.. - effieciency??
+        // for seaching??
         $c = DB_DataObject::factory('Companies');
         $c->get($this->company_id);
         $pr = DB_DataObject::factory('Projects');
