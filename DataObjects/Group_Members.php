@@ -23,7 +23,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     /**
      * Get a list of memberships for a person
      * @param Pman_Core_DataObjects_Person $person who
-     * @param 
+     * @param String column to fetch..
      *
      */
     
