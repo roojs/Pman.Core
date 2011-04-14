@@ -19,6 +19,14 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     ###END_AUTOCODE
     
     var $inAdmin = false;
+    
+    /**
+     * Get a list of memberships for a person
+     * @param Pman_Core_DataObjects_Person $person who
+     * @param 
+     *
+     */
+    
     function listGroupMembership($person, $arrayof = 'group_id') 
     {
         $this->inAdmin = false;
@@ -36,7 +44,8 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         
         $t->find();
         
-        $ret = $arrayof == 'group_id' ? array(0) : array(); // default member of 'All groups'!!
+        $ret = $arrayof == 'group_id' ? array(0) : array();
+        // default member of 'All groups'!!
         
         while ($t->fetch()) {
             $ret[] = $t->$arrayof;
@@ -51,18 +60,5 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     {
         return false;
     } 
-    function fetchAll($k= false) {
-        if ($k !== false) {
-            $this->selectAdd();
-            $this->selectAdd($k);
-        }
-        
-        $this->find();
-        $ret = array();
-        while ($this->fetch()) {
-            $ret[] = $k === false ? clone($this) : $this->$k;
-        }
-        return $ret;
-         
-    }
+   
 }
