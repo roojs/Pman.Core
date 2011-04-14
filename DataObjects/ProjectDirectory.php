@@ -23,9 +23,15 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     ###END_AUTOCODE
     
     
-    function toEventString() {
+    function person()
+    {
         $p = DB_DataObject::factory('Person');
         $p->get($this->person_id);
+        return $p;
+    }
+    
+    function toEventString() {
+        $p = $this->person();
         $c = DB_DataObject::factory('Companies');
         $c->get($this->company_id);
         $pr = DB_DataObject::factory('Projects');
