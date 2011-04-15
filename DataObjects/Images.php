@@ -250,7 +250,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $c->ontable = $obj->tableName();
         $c->onid = $obj->id;
         if (!empty($mime_like)) {
-            $c->whereAdd("mimetype LIKE '". $c->escape($mime_like) ."'");
+            $c->whereAdd("Images.mimetype LIKE '". $c->escape($mime_like) ."'");
         }
 
         return $c->fetchAll();
