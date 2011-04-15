@@ -324,6 +324,8 @@ CREATE TABLE  core_notify  (
   PRIMARY KEY (`id`),
   INDEX `lookup`(`act_when`, `msgid`)
 );
+ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) DEFAULT 0;
+
 
 ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
  

@@ -34,10 +34,13 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     
     function ensureNotify(  $ontable, $onid, $person_id, $whereAdd)
     {
+        //DB_DAtaObject::debugLevel(1);
         $w = DB_DataObject::factory('core_watch');
-        $w->ontable = $ontable;
-        $w->onid = $onid;
-        $w->person_id = $personid;
+        $w->person_id = $person_id;
+        if (empty($w->person_id)) {
+            return;
+        }
+        
         $nw = clone($w);
         $w->whereAdd($whereAdd);
         
@@ -45,6 +48,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if ($w->count()) {
             return;
         }
+        $nw->ontable = $ontable;
+        $nw->onid = $onid;
+        
         $nw->medium = 'email';
         $nw->active = 1;
         $nw->insert();
@@ -63,6 +69,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nn->ontable = $ontable;
         $nn->onid = $onid;
         foreach($people as $p) {
+            if (!$p) { // no people??? bugs in watch table
+                continue;
+            }
             $n = clone($nn);
             $n->person_id = $p;
             $nf = clone($n);
@@ -80,53 +89,5 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
         
     }
-    /***
-     * The purpose of this is to gather all the events that have
-     * occured in the system (where watches exist)
-     * Do we want to send the user 1 email ?? or multiple...
-     * --> I guess multiple emails..
-     *
-     * so we need to return
-     *
-     *  array(
-          $USER_ID => array(
-                $OBJECT:$ID, $OBJECT:$ID, $OBJECT:$ID, .....
-          )
-     * )
-     *
-     * The mailer can then go through and call each object ??
-     *
-     *
-     * -- Things we can watch..
-     *
-     * mtrack_change <- this is a neat log of all events.
-     *  which logs these things
-     *     Individual Ticket changes (already)
-     *     a Project -> which means ticket changes... which again can be discovered via mtrack_changes..
-     *     a Repo for Commits (-- which will be handled by mtrack_changes)
-     *     Wiki changes.. later...
-     *     
-     *
-     *
-     */
-    
-    function watched($medium, $watcher = null)
-    {
-        $w = DB_DataObject::factory('core_watch');
-        if ($watcher) {
-            $w->person_id = $watcher;
-        }
-        $w->active = 1;
-        $w->medium = $medium;
-        $ar = $w->fetchAll();
-        $ret = array();
-        foreach($ar as $o) {
-            if (!isset($ret[$o->person_id])) {
-                $ret[$o->person_id] = array();
-            }
-            $ret[$o->person_id][] = $o->ontable .':'. $o->onid;
-        }
-        
-        return $ret;
-    }
+     
 }

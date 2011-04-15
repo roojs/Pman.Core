@@ -353,6 +353,21 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
          
         
     }
+    /**
+     *Basic group fetching - probably needs to filter by type eventually.
+     *
+     */
+    
+    function groups()
+    {
+        $g = DB_DataObject::Factory('Group_Members');
+        $grps = $g->listGroupMembership($this);
+        $g = DB_DataObject::Factory('Groups');
+        $g->whereAddIn('id', $grps, 'int');
+        return $g->fetchAll();
+        
+    }
+    
     function hasPerm($name, $lvl) 
     {
         static $pcache = array();
@@ -512,7 +527,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return "Duplicate Email found";
         }
         return true;
-    }    
+    }
+    
+    
+    /***
+     * Check if the a user has access to modify this item.
+     * @param String $lvl Level (eg. Core.Projects)
+     * @param Pman_Core_DataObjects_Person $au The authenticated user.
+     * @param boolean $changes alllow changes???
+     *
+     * @return false if no access..
+     */
     function checkPerm($lvl, $au, $changes=false) //heck who is trying to access this. false == access denied..
     {
          

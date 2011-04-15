@@ -27,7 +27,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     /* the code below is auto generated do not remove the above tag */
 
     
-    public $__table = 'core_nofity';         
+    public $__table = 'core_notify';         
     public $act_when;                        
     
     public $ontable;                         
@@ -45,6 +45,16 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $c = DB_DataObject::Factory('Person');
         $c->get($this->person_id);
         return $c;
+        
+    }
+    function object()
+    {
+        $c = DB_DataObject::factory($this->ontable);
+        $c->autoJoin();
+        if ($c->get($this->onid)) {
+            return $c;
+        }
+        return false;
         
     }
   
