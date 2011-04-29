@@ -748,6 +748,7 @@ Pman = new Roo.Document(
      * Pman.register({
           modKey : '00-admin-xxxx',
           module : Pman.Tab.projectMgr,
+          moduleName : 'Pman.Tab.projectMgr',
           region : 'center',
           parent : Pman.layout
         })
@@ -757,10 +758,12 @@ Pman = new Roo.Document(
     {
         
         // ignore registration of objects which are disabled.
+        appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        if ( )
+        if ((typeof(obj.moduleName) != 'undefined')
+                && appDisabled.indexOf(obj.moduleName) > -1)
         {
-            
+            return;
         }
         
         if (!obj.parent) {
