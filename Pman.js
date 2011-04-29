@@ -753,13 +753,23 @@ Pman = new Roo.Document(
         })
      * 
      */
-    register : function(obj) {
+    register : function(obj)
+    {
+        
+        // ignore registration of objects which are disabled.
+        
+        if ( )
+        {
+            
+        }
+        
         if (!obj.parent) {
             if (obj.parent === false) {
                 //console.log('skip module (no parent)' + obj.modkey);
                 return;
             }
-            
+            // this is an error condition - the parent does not exist..
+            // technically it should not happen..
             console.log(obj);
         }
         if (!obj.parent.modules) {
