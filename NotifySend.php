@@ -107,7 +107,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = -1; // sent ok.. - no need to record it..
                 $w->update($ww);
-                die("SENT");
+                die(date('Y-m-d h:i:s') . " - SENT");
             }
             // what type of error..
             list($code, $response) = $mailer->_smtp->getResponse();
@@ -121,7 +121,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED');
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
                 $w->update($ww);
-                die("GREYLISTED");
+                die(date('Y-m-d h:i:s') . " - GREYLISTED");
             }
             $fail = true;
             break;
