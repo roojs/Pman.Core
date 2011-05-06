@@ -133,13 +133,13 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $id;
             $w->update($ww);
-            die("DONE");
+            die(date('Y-m-d h:i:s') . " - DONE");
         }
         
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED');
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->update($ww);
-        die("NO HOST AVAILABLE");
+        die(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE");
 
         
     }
