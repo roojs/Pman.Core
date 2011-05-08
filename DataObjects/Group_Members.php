@@ -25,7 +25,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     {
         $gm = DB_DataObject::factory('Group_Members');
         $gm->group_id = $group->id;
-        $gm->user_id = $user->id;
+        $gm->user_id = $person->id;
         $gm->find(true);
         if ($state) {
             if (!$gm->id) {
