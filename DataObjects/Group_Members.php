@@ -20,12 +20,33 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     
     var $inAdmin = false;
     
+    
+    function change($person, $group, $state)
+    {
+        $gm = DB_DataObject::factory('Group_Members');
+        $gm->group_id = $group->id;
+        $gm->user_id = $user->id;
+        $gm->find(true);
+        if ($state) {
+            if (!$gm->id) {
+                $gm->insert();
+            }
+            return;
+        }
+        // remove..
+        if ($gm->id) {
+            $gm->delete();
+        }
+        
+    }
+    
     /**
      * Get a list of memberships for a person
      * @param Pman_Core_DataObjects_Person $person who
      * @param String column to fetch.. eg. group_id or 'name'
      *
      */
+    
     
     function listGroupMembership($person, $arrayof = 'group_id') 
     {
