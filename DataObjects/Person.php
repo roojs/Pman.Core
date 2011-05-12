@@ -540,7 +540,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         $e->delete(true);
-         
+        
+        // anything else?  
         
     }
     
