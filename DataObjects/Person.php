@@ -528,6 +528,21 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         return true;
     }
+    /**
+     *
+     * before Delete - delete significant dependancies..
+     * this is called after checkPerm..
+     */
+    
+    function beforeDelete()
+    {
+        
+        $e = DB_DataObject::Factory('Events');
+        $e->whereAdd('person_id = ' . $this->id);
+        $e->delete(true);
+         
+        
+    }
     
     
     /***
