@@ -223,12 +223,12 @@ CREATE TABLE   `Images` (
 
 
 
-ALTER TABLE images    ADD COLUMN  `width` int(11) NOT NULL default '0';
-ALTER TABLE images    ADD COLUMN  `height` int(11) NOT NULL default '0';
-ALTER TABLE images    ADD COLUMN  `filesize` int(11) NOT NULL default '0';
-ALTER TABLE images    ADD COLUMN  `displayorder` int(11) NOT NULL default '0';
-ALTER TABLE images    ADD COLUMN  `language` varchar(6) NOT NULL default 'en';
-ALTER TABLE images    ADD COLUMN  `parent_image_id` int(11) NOT NULL default '0';
+ALTER TABLE Images    ADD COLUMN  `width` int(11) NOT NULL default '0';
+ALTER TABLE Images    ADD COLUMN  `height` int(11) NOT NULL default '0';
+ALTER TABLE Images    ADD COLUMN  `filesize` int(11) NOT NULL default '0';
+ALTER TABLE Images    ADD COLUMN  `displayorder` int(11) NOT NULL default '0';
+ALTER TABLE Images    ADD COLUMN  `language` varchar(6) NOT NULL default 'en';
+ALTER TABLE Images    ADD COLUMN  `parent_image_id` int(11) NOT NULL default '0';
 
 
 
