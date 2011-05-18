@@ -16,7 +16,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     public $inlang;                          // string(8)  not_null
     public $lval;                            // string(64)  not_null
 
-     
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
 }
