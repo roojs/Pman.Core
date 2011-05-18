@@ -19,7 +19,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     public $email;                           // string(128)  not_null
     public $role;                            // string(32)  not_null
 
-     
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     function toEventString() {
