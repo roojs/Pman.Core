@@ -15,22 +15,18 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $ontable;                         // string(32)  not_null multiple_key
     public $onid;                            // int(11)  not_null
     public $mimetype;                        // string(64)  not_null
-    public $filesize;                        // int(11)  not_null
-    public $created;                         // datetime(19)  not_null binary
-    public $created_by;                         // int(11)  not_null
-
     public $width;                           // int(11)  not_null
     public $height;                          // int(11)  not_null
-    
-
-    public $imgtype;                         // string(32)  not_null
+    public $filesize;                        // int(11)  not_null
+    public $displayorder;                    // int(11)  not_null
+    public $language;                        // string(6)  not_null
     public $parent_image_id;                 // int(11)  not_null
+    public $created;                         // datetime(19)  not_null binary
+    public $imgtype;                         // string(32)  not_null
     public $linkurl;                         // string(254)  not_null
     public $descript;                        // blob(65535)  not_null blob
     public $title;                           // string(128)  not_null
-    public $displayorder;                    // int(11)  not_null
-    public $language;                        // string(6)  not_null
-    
+
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
