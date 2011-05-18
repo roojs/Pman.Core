@@ -14,8 +14,6 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     public $project_id;                      // int(11)  not_null
     public $person_id;                       // int(11)  not_null
     public $ispm;                            // int(11)  not_null
-    public $office_id;                       // int(11)  
-    public $company_id;                      // int(11)  
     public $role;                            // string(16)  not_null
 
     
