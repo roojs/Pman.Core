@@ -22,9 +22,9 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     public $file_location;                   // string(254)  not_null
     public $open_date;                       // date(10)  binary
     public $open_by;                         // int(11)  not_null
+    public $close_date;                      // date(10)  binary
     public $countries;                       // string(128)  not_null
     public $languages;                       // string(128)  not_null
-    public $close_date;                      // date(10)  binary
     public $agency_id;                       // int(11)  not_null
 
     
@@ -169,6 +169,8 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
                 $this->whereAdd("1=0"); // can see nothing!!!
             }
         }
+        
+        
         if ($au->company()->comptype == 'CLIENT') {
             $this->client_id = $au->company()->id; // can see nothing!!!
             
