@@ -116,7 +116,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
         $standard_database = $options['database'];
        
        
-        var_dump($mods);exit;
+        var_dump($options);exit;
        
        
        
