@@ -179,7 +179,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                     continue;
                 }
                 // always copy readers and ini file.=  nope - not on live..
-                if ($cli && in_array($f, $flist)) {
+                if ($cli && in_array($f, $flist) || in_array('_all_', $flist )) {
                     
                    //|| $f=='pman.ini' || preg_match('/\.js$/', $f))) {
                     echo "COPY $src $tg". ($cli ? "\n" : "<BR>");
