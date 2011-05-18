@@ -14,7 +14,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $user_id;                         // int(11)  not_null
 
-  
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
