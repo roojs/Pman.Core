@@ -15,7 +15,7 @@ class Pman_Core_DataObjects_Translations extends DB_DataObject
     public $tfile;                           // string(128)  not_null
     public $tlang;                           // string(8)  not_null
     public $tkey;                            // string(32)  not_null
-    public $tval;                            // blob(-1)  not_null blob
+    public $tval;                            // blob(4294967295)  not_null blob
 
     
     /* the code above is auto generated do not remove the tag below */
