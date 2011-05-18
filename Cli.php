@@ -29,7 +29,7 @@ class Pman_Core_Cli
 
     
     $cli Core/RunGenerator/COMPONENT pman.ini,COMPONENT.readers.js,...
-
+    $cli Core/RunGenerator/COMPONENT _all_
     Runs the generator for a project (NOTE - runs all the SQL updates)
     - Changes the files.
 
