@@ -256,8 +256,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     /**
      * return a list of images for an object, optionally with a mime regex.
      * eg. '%/pdf' or 'image/%'
+     *
+     * @param {DB_DataObject} dataobject  = the object to gather data on.
+     * @param {String} mimelike  LIKE query to use for search
+     * @param {Array} options  setFrom on images to loo for it..
      */
-    function gather($obj, $mime_like='')
+    function gather($obj, $mime_like='', $opts=array())
     {
         //DB_DataObject::debugLevel(1);
         if (empty($obj->id)) {
