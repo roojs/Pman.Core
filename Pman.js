@@ -155,7 +155,8 @@ Pman = new Roo.Document(
                 collapsed : true,
                 split:false,
                 height: 120,
-                titlebar: false
+                titlebar: false,
+                hidden : true
             }
             
         });
@@ -434,12 +435,16 @@ Pman = new Roo.Document(
      * 
      */
     hasPerm: function(name, lvl) {
-        if (typeof(Pman.Login.authUser) != 'object') {
-            return false;
+        if (
+            (typeof(Pman.Login.authUser) != 'object')
+            ||
+            (typeof(Pman.Login.authUser.perms) != 'object')
+            ||
+            (typeof(Pman.Login.authUser.perms[name]) != 'string')
+            ) {
+                return false;
         }
-        if (typeof(Pman.Login.authUser.perms[name]) != 'string') {
-            return false;
-        }
+        
         return Pman.Login.authUser.perms[name].indexOf(lvl) > -1;
         
     },
