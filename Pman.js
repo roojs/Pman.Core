@@ -206,8 +206,9 @@ Pman = new Roo.Document(
                 _this.addTopToolbar();  
                 _this.finalize();
                 _this.fireEvent('load',this);
-                if (!Pman.layout.getRegion('south').panels.length) {
-                    Pman.layout.getRegion('south').hide();
+                
+                if (!_this.layout.getRegion('south').panels.length) {
+                    _this.layout.getRegion('south').hide();
                 }
                 
                 
