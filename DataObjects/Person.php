@@ -115,7 +115,19 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function toEventString() 
     {
         return empty($this->name) ? $this->email : $this->name;
-    } 
+    }
+    
+    /// check config 'auth_comptype' to see if we restrict access ..
+    function verifyAuth()
+    { 
+        $ff= HTML_FlexyFramework::get();
+        if (!empty($ff->Pman['auth_comptype']) && $ff->Pman['auth_comptype'] != $this->company()->comptype) {
+            $ff->page->jerr("Login not permited to outside companies");
+        }
+        return true;
+        
+    }    
+   
    
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
@@ -128,8 +140,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             $u = DB_DataObject::factory('Person');
             if ($u->get($a->id)) { //&& strlen($u->passwd)) {
+                $u->verifyAuth();
+                
                 return true;
             }
+            
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = '';
             
         }
@@ -194,6 +209,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function login()
     {
         $this->isAuth(); // force session start..
+        $this->verifyAuth();
          $db = $this->getDatabaseConnection();
         $sesPrefix = $db->dsn['database'];
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
@@ -272,6 +288,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $aur = $this->toArray();
         
+        if ($this->id < 1) {
+            return $aur;
+        }
         
         
         //DB_DataObject::debugLevel(1);
