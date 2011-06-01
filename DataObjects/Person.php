@@ -120,9 +120,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     /// check config 'auth_comptype' to see if we restrict access ..
     function verifyAuth()
     { 
-       
-        echo '<PRE>';print_r($this->company());exit;
-         if (!empty($ff->Pman['auth_comptype']) && $ff->Pman['auth_comptype'] != $this->company()->comptype) {
+        $ff= HTML_FlexyFramework::get();
+          if (!empty($ff->Pman['auth_comptype']) && $ff->Pman['auth_comptype'] != $this->company()->comptype) {
             $ff->page->jerr("Login not permited to outside companies");
         }
         return true;
