@@ -129,6 +129,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
     }    
     
+    
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
     {
