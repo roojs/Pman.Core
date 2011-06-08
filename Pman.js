@@ -435,6 +435,24 @@ Pman = new Roo.Document(
           
     },
     
+    refreshActivePanel : function() {
+        var actpan = this.layout.getRegion('center').getActivePanel();
+        if (actpan.controller && actpan.controller.paging) {
+            actpan.controller.paging.onClick('refresh');
+            return;
+        }
+        
+        var agid = Pman.layout.getRegion('center').getActivePanel().id;
+        if (!agid) {
+            return;
+        }
+        Pman.Tab[agid].paging.onClick('refresh');
+    },
+    toCidV : function(data) {
+        return 'C' + data.in_out.substring(0,1) + data.cid;
+    },
+    
+    
     /**
      * eg. has Pman.hasPerm('Admin.Admin_Tab', 'S') == showlist..
      * 
@@ -540,22 +558,7 @@ Pman = new Roo.Document(
         );
         return '';
     },
-    refreshActivePanel : function() {
-        var actpan = this.layout.getRegion('center').getActivePanel();
-        if (actpan.controller && actpan.controller.paging) {
-            actpan.controller.paging.onClick('refresh');
-            return;
-        }
-        
-        var agid = Pman.layout.getRegion('center').getActivePanel().id;
-        if (!agid) {
-            return;
-        }
-        Pman.Tab[agid].paging.onClick('refresh');
-    },
-    toCidV : function(data) {
-        return 'C' + data.in_out.substring(0,1) + data.cid;
-    },
+    
     
     standardActionFailed :  function(f, act, cb) {
     
@@ -580,14 +583,8 @@ Pman = new Roo.Document(
         Roo.MessageBox.alert("Error", "Error loading details",cb); 
     },
     /**
-     * 
-     * similar to Roo.Ajax, but handles our responses better...
-     * c.url
-     * c.method
-     * c.params
-     * c.failure() == failure function..
-     * c.success(data) == success function..
-     * 
+     * Depreciated - USE new Pman.Request
+    * 
      * 
      */
     request : function(c) {
@@ -745,7 +742,7 @@ Pman = new Roo.Document(
             }
             s = !s;
             document.title = s ? msg : oldtitle;
-                  
+            return false;     
         }, 1000); // every 120 secs = 2mins..
          document.title =   msg;
         
