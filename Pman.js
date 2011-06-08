@@ -303,7 +303,7 @@ Pman = new Roo.Document(
       
        
         window.onbeforeunload = function(e) { 
-            var e = e || window.event;
+            e = e || window.event;
             var r = "Closing this window will loose changes, are you sure you want to do that?";
 
             // For IE and Firefox
