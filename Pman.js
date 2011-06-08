@@ -386,7 +386,7 @@ Pman = new Roo.Document(
     },
     
     
-    
+    // REMOVE THESE 
     
      
     onLoadTrack : function(id,cb) {
@@ -536,7 +536,9 @@ Pman = new Roo.Document(
                     
                 });
             }
+            
         );
+        return '';
     },
     refreshActivePanel : function() {
         var actpan = this.layout.getRegion('center').getActivePanel();
