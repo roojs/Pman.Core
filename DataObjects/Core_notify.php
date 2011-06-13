@@ -22,4 +22,29 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function person()
+    {
+        $c = DB_DataObject::Factory('Person');
+        $c->get($this->person_id);
+        return $c;
+        
+    }
+    function object()
+    {
+        $c = DB_DataObject::factory($this->ontable);
+        $c->autoJoin();
+        if ($c->get($this->onid)) {
+            return $c;
+        }
+        return false;
+        
+    }
+    
+    function delivered()
+    {
+        return !empty($msgid);
+    }
+    
+}
 }
