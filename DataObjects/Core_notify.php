@@ -63,5 +63,5 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return !empty($msgid);
     }
     
-}
+
 }
