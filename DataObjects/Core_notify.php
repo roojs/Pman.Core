@@ -17,7 +17,8 @@ CREATE TABLE  core_notify  (
   PRIMARY KEY (`id`),
   INDEX `lookup`(`act_when`, `msgid`)
 );
-*/
+**/
+
 require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_notify extends DB_DataObject 
