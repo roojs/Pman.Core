@@ -48,7 +48,7 @@ class Pman_Core_NotifySend extends Pman
         
         $w = DB_DataObject::factory($this->table);
         
-        if (!$w->get($id) {
+        if (!$w->get($id)) {
             die("invalid id or time\n");
         }
         if (strtotime($w->act_when) < strtotime($w->sent)) {
