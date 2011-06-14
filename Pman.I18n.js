@@ -129,7 +129,11 @@ Pman.I18n = {
     
     simpleStoreData : function(type)
     {
-        var lang = Pman.Login.authUser.lang || 'en';
+        var lang =  'en';
+        try {
+            lang = Pman.Login.authUser.lang;
+        } catch (E) {};
+        lang = lang || 'en';
         var ret = [];
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
             ret.push([ o.code, o.title ]);
