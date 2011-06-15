@@ -513,11 +513,7 @@ span.ptcv-selectlang
         position: relative;
          
  }
-
-.x-form fieldset.x-formbox legend span {
-      margin-left: 10px;
-        
- }
+ 
 .x-form fieldset.x-formbox .x-form-item {
     margin-left: 2px;
 }
