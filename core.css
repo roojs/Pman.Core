@@ -526,7 +526,11 @@ span.ptcv-selectlang
     margin-right: 2px;
 }
 
+.x-form fieldset.x-formbox x-form-displayfield,
+.x-form fieldset.x-formbox label {
+    padding-top: 0px; /* tighter layout */
 
+}
 
 
 
