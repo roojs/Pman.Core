@@ -469,3 +469,47 @@ span.ptcv-selectlang
    background:#FFF2BF none repeat scroll 0 0;
     color:#655205;
 }
+
+
+
+
+
+
+
+
+
+
+
+/** BOX style forms **/
+
+
+
+
+
+.x-form fieldset.box {
+   padding :0
+   border-color: gray;
+   -moz-box-shadow: 5px 5px 5px #ccc;
+  -webkit-box-shadow: 5px 5px 5px #ccc;
+  box-shadow: 5px 5px 5px #ccc;
+ }
+
+x-form fieldset.box legend {
+       padding :0;
+        display: block;
+        border: 1px solid #ccc;
+        margin: 0px;
+        padding: 5px;
+                
+        background: #E3E3E3 none repeat scroll 0 0;
+        -webkit-padding-start: 0;
+        -webkit-padding-end: 0;
+        width: 100%;
+        
+ }
+
+x-form fieldset.box legend span {
+      margin-left: 10px;
+        
+ }
+
