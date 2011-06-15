@@ -490,7 +490,7 @@ span.ptcv-selectlang
     padding-left :0;
     padding-bottom :0;
     padding-right :0;
-    padding-top: 10px;
+    padding-top: 15px;
      
     border: 1px solid gray;
     -moz-box-shadow: 5px 5px 5px #ccc;
@@ -499,7 +499,7 @@ span.ptcv-selectlang
 
     -webkit-margin-start: 0;
     -webkit-margin-end: 0;
-    -webkit-padding-before: 0;
+   -webkit-padding-before: 15px;
     -webkit-padding-start: 0;
     -webkit-padding-end: 0;
     -webkit-padding-after: 0;
