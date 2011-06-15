@@ -531,7 +531,9 @@ span.ptcv-selectlang
     padding-top: 0px; /* tighter layout */
 
 }
-
+.x-form fieldset.x-formbox x-form-displayfield {
+    font-weight: bold;
+}
 
 
 
