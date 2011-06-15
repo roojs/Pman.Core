@@ -487,37 +487,38 @@ span.ptcv-selectlang
 
 
 .x-form fieldset.x-formbox {
-   padding-left :0;
-   padding-bottom :0;
-   padding-right :0;
-   padding-top: 10px;
-
-  border: 1px solid gray;
-   -moz-box-shadow: 5px 5px 5px #ccc;
+    padding-left :0;
+    padding-bottom :0;
+    padding-right :0;
+    padding-top: 10px;
+     
+    border: 1px solid gray;
+    -moz-box-shadow: 5px 5px 5px #ccc;
     -webkit-box-shadow: 5px 5px 5px #ccc;
     box-shadow: 5px 5px 5px #ccc;
-    
-      -webkit-margin-start: 0;
-        -webkit-margin-end: 0;
-        -webkit-padding-before: 0;
-        -webkit-padding-start: 0;
-        -webkit-padding-end: 0;
-        -webkit-padding-after: 0;
- }
+
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-before: 0;
+    -webkit-padding-start: 0;
+    -webkit-padding-end: 0;
+    -webkit-padding-after: 0;
+}
 
 .x-form fieldset.x-formbox legend {
-         display: block;
-        border-bottom: 1px solid gray;
-        border-top: 1px solid gray;
-        margin: 0px;
-        padding: 5px 0px;
-                
-        background: #E3E3E3 none repeat scroll 0 0;
-      
-        width: 100%;
-        position: relative;
-        text-align: center;
-         
+    display: block;
+    border-bottom: 1px solid gray;
+    border-top: 1px solid gray;
+    margin: 0px;
+    padding: 5px 0px;
+        
+    background: #E3E3E3 none repeat scroll 0 0;
+    
+    width: 100%;
+    position: relative;
+    top: 11px;
+    text-align: center;
+
  }
  
 .x-form fieldset.x-formbox .x-form-item {
