@@ -487,7 +487,9 @@ span.ptcv-selectlang
 
 
 .x-form fieldset.x-formbox {
-   padding :0;
+   padding-left :0;
+   padding-bottom :0;
+   padding-right :0;
    padding-top: 10px;
 
   border: 1px solid gray;
