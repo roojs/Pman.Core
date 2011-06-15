@@ -492,6 +492,12 @@ span.ptcv-selectlang
    -moz-box-shadow: 5px 5px 5px #ccc;
     -webkit-box-shadow: 5px 5px 5px #ccc;
     box-shadow: 5px 5px 5px #ccc;
+      -webkit-margin-start: 0;
+        -webkit-margin-end: 0;
+        -webkit-padding-before: 0;
+        -webkit-padding-start: 0;
+        -webkit-padding-end: 0;
+        -webkit-padding-after: 0;
  }
 
 .x-form fieldset.x-formbox legend {
@@ -502,12 +508,7 @@ span.ptcv-selectlang
         padding: 5px;
                 
         background: #E3E3E3 none repeat scroll 0 0;
-        -webkit-margin-start: 0;
-        -webkit-margin-end: 0;
-        -webkit-padding-before: 0;
-        -webkit-padding-start: 0;
-        -webkit-padding-end: 0;
-        -webkit-padding-after: 0;
+      
         width: 100%;
         
  }
