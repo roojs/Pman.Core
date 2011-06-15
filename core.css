@@ -486,7 +486,7 @@ span.ptcv-selectlang
 
 
 
-.x-form fieldset.box {
+.x-form fieldset.x-formbox {
    padding :0
    border-color: gray;
    -moz-box-shadow: 5px 5px 5px #ccc;
@@ -494,7 +494,7 @@ span.ptcv-selectlang
     box-shadow: 5px 5px 5px #ccc;
  }
 
-x-form fieldset.box legend {
+x-form fieldset.x-formbox legend {
        padding :0;
         display: block;
         border: 1px solid #ccc;
@@ -508,7 +508,7 @@ x-form fieldset.box legend {
         
  }
 
-x-form fieldset.box legend span {
+x-form fieldset.x-formbox legend span {
       margin-left: 10px;
         
  }
