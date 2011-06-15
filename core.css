@@ -488,6 +488,8 @@ span.ptcv-selectlang
 
 .x-form fieldset.x-formbox {
    padding :0;
+   padding-top: 10px;
+
   border: 1px solid gray;
    -moz-box-shadow: 5px 5px 5px #ccc;
     -webkit-box-shadow: 5px 5px 5px #ccc;
