@@ -503,7 +503,7 @@ span.ptcv-selectlang
 
 .x-form fieldset.x-formbox legend {
          display: block;
-        border: 1px solid #ccc;
+        border: 1px solid gray;
         margin: 0px;
         padding: 5px;
                 
