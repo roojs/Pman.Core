@@ -30,13 +30,13 @@ var t = new Pman.Request({
 Pman.Request = function(config){
     
     Pman.Request.superclass.constructor.call(this, config);
-    this.request(config);
     
     if (this.mask && this.maskEl) {
         Roo.get(this.maskEl).mask(this.mask);
         
     }
-    
+    this.request(config);
+
 }
 
 Roo.extend(Pman.Request, Roo.data.Connection, {
