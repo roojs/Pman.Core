@@ -171,7 +171,7 @@ Ext.extend(Ext.form.ComboBoxLister, Ext.form.ComboBox, {
         }
         var _this = this;
         Roo.each(v, function(l) {
-                _this.addItem(l);
+            _this.addItem(l);
         });
         
     },
