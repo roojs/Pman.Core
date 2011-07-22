@@ -77,7 +77,7 @@ class Pman_Core_JsCompile  extends Pman
         $arfiles = array();
         foreach($files as $f) {
             if (!is_dir($f)) {
-                $arfiles[] = $basedir .'/' $f;
+                $arfiles[] = $basedir .'/' .$f;
                 continue;
             }
             foreach(scandir($src) as $f) {
