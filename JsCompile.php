@@ -132,7 +132,7 @@ class Pman_Core_JsCompile  extends Pman
             return;
         }
         foreach($files as $f=>$t) {
-            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'$f.'" />'."\n";
+            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'.$f.'" />'."\n";
             
             
         }
