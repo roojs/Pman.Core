@@ -77,8 +77,13 @@ class Pman_Core_JsCompile  extends Pman
         if (!$seed) {
             throw new Exception(" no seed installed");
         }
-        
-        
+        foreach($files as $i => $f) {
+            $files[$i] = escapeshellarg($f);
+        }
+        $output = escapeshellarg($f);
+        $cmd = "$seed {$o['jspacker']}/pack.js  -o $output " . implode($files, ' ');
+        echo "$cmd\n";
+        passthru($cmd);
         
         
         
