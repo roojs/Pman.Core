@@ -95,8 +95,10 @@ class Pman_Core_JsCompile  extends Pman
         
         $eoutput = escapeshellarg($f);
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($files, ' ');
-        //echo "$cmd\n";
-        `$cmd`;
+        echo "$cmd\n";
+        echo `$cmd`;
+        exit;
+        
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
             return true;
