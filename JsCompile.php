@@ -87,13 +87,13 @@ class Pman_Core_JsCompile  extends Pman
         
         $output = md5(serialize($arfiles)) .'.js';
         
-        if (!file_exists($output_path.'/_cached_/'.$output)) {
-            $this->pack($arfiles,$output_path.'/_cached_/'.$output);
+        if (!file_exists($output_path.'/_cache_/'.$output)) {
+            $this->pack($arfiles,$output_path.'/_cache_/'.$output);
         }
         
         if (file_exists($output_path.'/'.$output)) {
             
-            echo '<script type="text/javascript" src="'.$output_url.'/_cached_/'. $output.'"></script>';
+            echo '<script type="text/javascript" src="'.$output_url.'/_cache_/'. $output.'"></script>';
             return;
         }
         foreach($files as $f=>$t) {
@@ -123,12 +123,12 @@ class Pman_Core_JsCompile  extends Pman
         
         $output = md5(serialize($arfiles)) .'.css';
         
-        if (!file_exists($output_path.'/_cached_/'.$output)) {
-            $this->packCssCore($arfiles,$output_path.'/_cached_/'.$output);
+        if (!file_exists($output_path.'/_cache_/'.$output)) {
+            $this->packCssCore($arfiles,$output_path.'/_cache_/'.$output);
         }
         
         if (file_exists($output_path.'/'.$output)) {
-            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url. '/_cached_/'. $output.'" />';
+            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url. '/_cache_/'. $output.'" />';
             return;
         }
         foreach($files as $f=>$t) {
