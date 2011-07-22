@@ -99,7 +99,7 @@ class Pman_Core_JsCompile  extends Pman
             echo '<script type="text/javascript" src="'.$output_url.'/_cache_/'. $output.'"></script>';
             return;
         }
-        foreach($ofiles as $f=>$t) {
+        foreach($ofiles as $f) {
             echo '<script type="text/javascript" src="'.$output_url.'/'.$f.'"></script>';
             
         }
