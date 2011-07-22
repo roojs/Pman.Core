@@ -65,6 +65,32 @@ class Pman_Core_JsCompile  extends Pman
         exit;
     }
     
+    
+    
+    function packScript($basedir, $files, $output, $output_path)
+    {
+        // this outputs <script tags..>
+        // either for just the original files,
+        // or the compressed version.
+        // first expand files..
+        
+        $arfiles = array();
+        foreach($files as $f) {
+            if (!is_dir($f)) {
+                $arfiles[] = $basedir .'/' $f;
+                continue;
+            }
+            foreach(scandir($src) as $f) {
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
     /**
      * wrapper arroudn packer...
      * @param {Array} $files the files to pack
@@ -74,8 +100,7 @@ class Pman_Core_JsCompile  extends Pman
     function pack($files, $output)
     {
         
-        
-        
+         
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
