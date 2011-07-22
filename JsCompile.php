@@ -150,7 +150,7 @@ class Pman_Core_JsCompile  extends Pman
         
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
-            return $output;
+            return true;
         }
         return false;
         
