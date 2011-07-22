@@ -96,8 +96,10 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         $o = HTML_FlexyFramework::get()->Pman_Core;
+        
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
-            $this->err ="no jstoolkit path set [Pman_Core][jspacker] to the introspection documentation directory where pack.js is located.";
+            $this->err ="no jstoolkit path set [Pman_Core][jspacker] to the
+                    introspection documentation directory where pack.js is located.";
             if ($this->cli) echo $this->err;
             return false;
         }  
