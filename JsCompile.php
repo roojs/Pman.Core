@@ -139,6 +139,57 @@ class Pman_Core_JsCompile  extends Pman
          
         
     }
+     /**
+     * wrapper arroudn packer...
+     * @param {Array} map of $files => filemtime the files to pack
+     * @param {String} $output name fo file to output
+     *
+     */
+    function packCssCore($files, $output)
+    {
+        
+         
+        $o = HTML_FlexyFramework::get()->Pman_Core;
+        
+        if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
+            echo '<!-- jspacker not set -->';
+            return false;
+            
+        }
+        require_once 'System.php';
+        $seed= System::which('seed');
+        if (!$seed) {
+            echo '<!-- seed not installed -->';
+            return false;
+            
+        }
+        $targetm = file_exists($output) ? filemtime($output) : 0;
+        $max = 0;
+        $ofiles = array();
+        foreach($files as $f => $mt) {
+            $max = max($max,$mt);
+            $ofiles[] = escapeshellarg($f);
+        }
+        if ($max < $targetm)  {
+            return true;
+        }
+        if (!file_exists(dirname($output))) {
+            mkdir(dirname($output), 0755, true);
+        }
+        $eoutput = escapeshellarg($output);
+        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ');
+        //echo "<PRE>$cmd\n";
+        //echo `$cmd`;
+        `$cmd`;
+        
+        
+        // we should do more checking.. return val etc..
+        if (file_exists($output) && ($max < filemtime($output) ) ) {
+            return true;
+        }
+        return false;
+        
+    }
     /**
      * wrapper arroudn packer...
      * @param {Array} map of $files => filemtime the files to pack
