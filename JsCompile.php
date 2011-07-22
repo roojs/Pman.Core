@@ -103,7 +103,7 @@ class Pman_Core_JsCompile  extends Pman
          
         
     }
-     function packCSS($basedir, $files,  $output_path, $output_url)
+     function packCss($basedir, $files,  $output_path, $output_url)
     {
         // this outputs <script tags..>
         // either for just the original files,
@@ -124,7 +124,7 @@ class Pman_Core_JsCompile  extends Pman
         $output = md5(serialize($arfiles)) .'.css';
         
         if (!file_exists($output_path.'/'.$output)) {
-            $this->pack($arfiles,$output_path.'/'.$output);
+            $this->packCssCore($arfiles,$output_path.'/'.$output);
         }
         
         if (file_exists($output_path.'/'.$output)) {
