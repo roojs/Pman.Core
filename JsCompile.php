@@ -67,7 +67,7 @@ class Pman_Core_JsCompile  extends Pman
     
     
     
-    function packScript($basedir, $files, $output, $output_path)
+    function packScript($basedir, $files,  $output_path)
     {
         // this outputs <script tags..>
         // either for just the original files,
