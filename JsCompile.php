@@ -132,7 +132,7 @@ class Pman_Core_JsCompile  extends Pman
             return;
         }
         foreach($arfiles as $f=>$t) {
-            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$f.'" />';
+            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$f.'" />'."\n";
             
             
         }
