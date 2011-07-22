@@ -59,6 +59,24 @@ class Pman_Core_JsCompile  extends Pman
         exit;
     }
     
+    /**
+     * wrapper arroudn packer...
+     *
+     */
+    function pack($files, $output) {
+        
+        $o = HTML_FlexyFramework::get()->Pman_Core;
+        
+        if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
+            throw new Exception("no jstoolkit path set [Pman_Core][jspacker] to the
+                    introspection documentation directory where pack.js is located.");
+            return false;
+        }  
+        
+        
+    }
+    
+    
     /***
      * build:
      *
