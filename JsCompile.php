@@ -128,8 +128,8 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         if (file_exists($output_path.'/'.$output)) {
-            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'. $output.'" /> 
-            echo '<script type="text/javascript" src="'.$output_url.'/'. $output.'"></script>';
+            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'. $output.'" />';
+            
             return;
         }
         foreach($arfiles as $f=>$t) {
