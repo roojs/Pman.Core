@@ -81,7 +81,7 @@ class Pman_Core_JsCompile  extends Pman
                 continue;
             }
             foreach(glob($basedir .'/' .$f.'/*.js') as $fx) {
-                $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
+                $arfiles[$fx] = filemtime($fx);
             }
         }
         
