@@ -61,6 +61,8 @@ class Pman_Core_JsCompile  extends Pman
     
     /**
      * wrapper arroudn packer...
+     * @param {Array} $files the files to pack
+     * @param {String} $output name fo file to output
      *
      */
     function pack($files, $output) {
@@ -69,8 +71,7 @@ class Pman_Core_JsCompile  extends Pman
         
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
             throw new Exception("no jstoolkit path set [Pman_Core][jspacker] to the
-                    introspection documentation directory where pack.js is located.");
-            
+                    introspection documentation directory where pack.js is located.");   
         }
         require_once 'System.php';
         $seed= System::which('seed');
