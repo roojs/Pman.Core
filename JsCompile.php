@@ -91,7 +91,7 @@ class Pman_Core_JsCompile  extends Pman
             $this->pack($arfiles,$output);
         }
         
-        print_r($arfiles);exit;
+        print_r(sort(array_keys($arfiles));exit;
         
         
         
@@ -102,7 +102,7 @@ class Pman_Core_JsCompile  extends Pman
     
     /**
      * wrapper arroudn packer...
-     * @param {Array} $files the files to pack
+     * @param {Array} map of $files => filemtime the files to pack
      * @param {String} $output name fo file to output
      *
      */
@@ -126,7 +126,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         $targetm = file_exists($output) ? filemtime($output) : 0;
         $max = 0;
-        foreach($files as $i => $f) {
+        foreach($files as $f => $mt) {
             $max = max($max,filemtime($f));
             $files[$i] = escapeshellarg($f);
         }
