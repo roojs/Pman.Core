@@ -136,7 +136,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         $output = md5(serialize($arfiles)) .'.css';
-        
+        )
         if (!file_exists($output_path.'/_cache_/'.$output)) {
             $this->packCssCore($arfiles,$output_path.'/_cache_/'.$output);
         }
