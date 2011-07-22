@@ -67,7 +67,7 @@ class Pman_Core_JsCompile  extends Pman
     
     
     
-    function packScript($basedir, $files,  $output_path)
+    function packScript($basedir, $files,  $output_path, $output_url)
     {
         // this outputs <script tags..>
         // either for just the original files,
@@ -92,6 +92,9 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         if (file_exists($output_path.'/'.$output)) {
+            
+            echo '<script type="text/javascript" src=">
+            
             echo "output compressed..";
             exit;
         }
