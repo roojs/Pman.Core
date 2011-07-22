@@ -77,7 +77,11 @@ class Pman_Core_JsCompile  extends Pman
         $arfiles = array();
         $ofiles = array();
         foreach($files as $f) {
+            if (!file_exists($f)) {
+                continue;
+            }
             if (!is_dir($basedir .'/' .$f)) {
+                
                 $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
                  $ofiles[] = $f;
                 continue;
@@ -116,6 +120,9 @@ class Pman_Core_JsCompile  extends Pman
         $arfiles = array();
         $ofiles = array();
         foreach($files as $f) {
+            if (!file_exists($f)) {
+                continue;
+            }
             if (!is_dir($basedir .'/' .$f)) {
                 $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
                 $ofiles[] = $f;
