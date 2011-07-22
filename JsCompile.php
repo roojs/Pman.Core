@@ -119,7 +119,7 @@ class Pman_Core_JsCompile  extends Pman
         
         $arfiles = array();
         $ofiles = array();
-        print_R($files);
+        //print_R($files);
         foreach($files as $f) {
             if (!file_exists($f)) {
                 continue;
