@@ -245,7 +245,7 @@ class Pman_Core_JsCompile  extends Pman
         echo "<PRE>$cmd\n";
         echo `$cmd`;
         `$cmd`;
-        
+        exit;
         
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
