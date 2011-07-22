@@ -121,7 +121,7 @@ class Pman_Core_JsCompile  extends Pman
         $ofiles = array();
         //print_R($files);
         foreach($files as $f) {
-            if (!file_exists(basedir .'/' .$f)) {
+            if (!file_exists($basedir .'/' .$f)) {
                 continue;
             }
             if (!is_dir($basedir .'/' .$f)) {
