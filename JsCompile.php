@@ -80,8 +80,8 @@ class Pman_Core_JsCompile  extends Pman
                 $arfiles[] = $basedir .'/' .$f;
                 continue;
             }
-            foreach(scandir($basedir .'/' .$f.'/*.js') as $f) {
-                $arfiles[] = $f;
+            foreach(scandir($basedir .'/' .$f.'/*.js') as $fx) {
+                $arfiles[] = $fx;
             }
         }
         
