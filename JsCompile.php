@@ -64,10 +64,18 @@ class Pman_Core_JsCompile  extends Pman
         }
         exit;
     }
+    /**
+     * packScript:
+     *
+     * @param {String} basedir absolute path to files
+     * @param {Array}  list of files (ontop of basedir) 
+     *
+     *
+     *
+     */
     
     
-    
-    function packScript($basedir, $files,  $output_path, $output_url)
+    function packScript($basedir, $files,  $output_url)
     {
         // this outputs <script tags..>
         // either for just the original files,
