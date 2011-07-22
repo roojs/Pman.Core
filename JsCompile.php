@@ -136,7 +136,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         $eoutput = escapeshellarg($f);
-        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($files, ' ');
+        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ');
         echo "$cmd\n";
         echo `$cmd`;
         exit;
