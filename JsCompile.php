@@ -140,7 +140,7 @@ class Pman_Core_JsCompile  extends Pman
         if (!file_exists($output_path.'/_cache_/'.$output)) {
             $this->packCssCore($arfiles,$output_path.'/_cache_/'.$output);
         }
-        
+        var_dump()$output_path. '/_cache_/'.$output);
         if (file_exists($output_path. '/_cache_/'.$output)) {
             echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url. '/_cache_/'. $output.'" />';
             return;
