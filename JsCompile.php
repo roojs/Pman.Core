@@ -135,7 +135,7 @@ class Pman_Core_JsCompile  extends Pman
             $max = max($max,$mt);
             $ofiles[] = escapeshellarg($f);
         }
-        if ($max < $targetm)) {
+        if ($max < $targetm)  {
             return true;
         }
         
