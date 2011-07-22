@@ -8,7 +8,7 @@
 *
 * For general usage:
 *  $x = new Pman_Core_JsCompile();
-*  $x->pack('/path/to/files/', $xxxx)
+*  $x->pack('/path/to/files/', 'destination')
 *  
 */
 require_once 'Pman.php';
