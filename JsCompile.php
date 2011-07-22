@@ -103,10 +103,10 @@ class Pman_Core_JsCompile  extends Pman
         $output = md5(serialize($arfiles)) .'.js';
         
         if (!file_exists($basedir'/_cache_/'.$output)) {
-            $this->pack($arfiles,$output_path.'/_cache_/'.$output);
+            $this->pack($arfiles,$basedir.'/_cache_/'.$output);
         }
         
-        if (file_exists($output_path.'/_cache_/'.$output)) {
+        if (file_exists($basedir.'/_cache_/'.$output)) {
             
             echo '<script type="text/javascript" src="'.$output_url.'/_cache_/'. $output.'"></script>';
             return;
