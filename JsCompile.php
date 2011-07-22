@@ -126,9 +126,10 @@ class Pman_Core_JsCompile  extends Pman
         }
         $targetm = file_exists($output) ? filemtime($output) : 0;
         $max = 0;
+        $ofiles = array();
         foreach($files as $f => $mt) {
-            $max = max($max,filemtime($f));
-            $files[$i] = escapeshellarg($f);
+            $max = max($max,$mt);
+            $ofiles[] = escapeshellarg($f);
         }
         if ($max < filemtime($output)) {
             return true;
