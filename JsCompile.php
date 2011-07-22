@@ -100,14 +100,45 @@ class Pman_Core_JsCompile  extends Pman
             echo '<script type="text/javascript" src="'.$f.'"></script>';
             
         }
-        
-        
-        
-        
-        
+         
         
     }
-    
+     function packCSS($basedir, $files,  $output_path, $output_url)
+    {
+        // this outputs <script tags..>
+        // either for just the original files,
+        // or the compressed version.
+        // first expand files..
+        
+        $arfiles = array();
+        foreach($files as $f) {
+            if (!is_dir($basedir .'/' .$f)) {
+                $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
+                continue;
+            }
+            foreach(glob($basedir .'/' .$f.'/*.css') as $fx) {
+                $arfiles[$fx] = filemtime($fx);
+            }
+        }
+        
+        $output = md5(serialize($arfiles)) .'.css';
+        
+        if (!file_exists($output_path.'/'.$output)) {
+            $this->pack($arfiles,$output_path.'/'.$output);
+        }
+        
+        if (file_exists($output_path.'/'.$output)) {
+            echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'. $output.'" /> 
+            echo '<script type="text/javascript" src="'.$output_url.'/'. $output.'"></script>';
+            return;
+        }
+        foreach($arfiles as $f=>$t) {
+            echo '<script type="text/javascript" src="'.$f.'"></script>';
+            
+        }
+         
+        
+    }
     /**
      * wrapper arroudn packer...
      * @param {Array} map of $files => filemtime the files to pack
