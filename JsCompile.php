@@ -77,13 +77,15 @@ class Pman_Core_JsCompile  extends Pman
         $arfiles = array();
         foreach($files as $f) {
             if (!is_dir($basedir .'/' .$f)) {
-                $arfiles[] = $basedir .'/' .$f;
+                $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
                 continue;
             }
             foreach(glob($basedir .'/' .$f.'/*.js') as $fx) {
-                $arfiles[] = $fx;
+                $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
             }
         }
+        
+        $output = serialize($arfiles);
         
         print_r($arfiles);exit;
         
