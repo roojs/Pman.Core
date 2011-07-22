@@ -91,8 +91,11 @@ class Pman_Core_JsCompile  extends Pman
             $this->pack($arfiles,$output);
         }
         
-        print_r(sort(array_keys($arfiles));exit;
-        
+        if (file_exists($output_path.'/'.$output)) {
+            echo "output compressed.."
+            return;
+        }
+        echo "output original.."
         
         
         
