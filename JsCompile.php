@@ -136,7 +136,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         $output = md5(serialize($arfiles)) .'.css';
-        )
+        
         if (!file_exists($output_path.'/_cache_/'.$output)) {
             $this->packCssCore($arfiles,$output_path.'/_cache_/'.$output);
         }
@@ -165,7 +165,7 @@ class Pman_Core_JsCompile  extends Pman
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
         if (empty($o['cssminify']) || !file_exists($o['cssminify'])) {
-            echo '<!-- cssminify not set -->';
+            echo '<!-- jspacker not set -->';
             return false;
         }
         require_once 'System.php';
