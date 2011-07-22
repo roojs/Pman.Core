@@ -100,7 +100,7 @@ class Pman_Core_JsCompile  extends Pman
             echo '<script type="text/javascript" src="'.$f.'"></script>';
             
         }
-        ;
+        
         
         
         
