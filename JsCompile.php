@@ -4,6 +4,12 @@
 * wrapper code around js builder...
 * 
 *  -- we will use this later to compile on the fly...
+*
+*
+* For general usage:
+*  $x = new Pman_Core_JsCompile();
+*  $x->pack('/path/to/files/', $xxxx)
+*  
 */
 require_once 'Pman.php';
 
