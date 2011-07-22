@@ -116,6 +116,7 @@ class Pman_Core_JsCompile  extends Pman
         foreach($files as $f) {
             if (!is_dir($basedir .'/' .$f)) {
                 $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
+                $ofiles = $f;
                 continue;
             }
             foreach(glob($basedir .'/' .$f.'/*.css') as $fx) {
