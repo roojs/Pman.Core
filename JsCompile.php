@@ -70,8 +70,16 @@ class Pman_Core_JsCompile  extends Pman
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
             throw new Exception("no jstoolkit path set [Pman_Core][jspacker] to the
                     introspection documentation directory where pack.js is located.");
-            return false;
-        }  
+            
+        }
+        require_once 'System.php';
+        $seed= System::which('seed');
+        if (!$seed) {
+            throw new Exception(" no seed installed");
+        }
+        
+        
+        
         
         
     }
