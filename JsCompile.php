@@ -58,6 +58,18 @@ class Pman_Core_JsCompile  extends Pman
         }
         exit;
     }
+    
+    /***
+     * build:
+     *
+     * @param {String} $proj name of Pman component to build
+     *
+     * 
+     *
+     */
+     
+     
+     
     function build($proj) 
     {
         echo "Building $proj\n";
@@ -83,7 +95,7 @@ class Pman_Core_JsCompile  extends Pman
             return false;
         }
         
-        $o = PEAR::getStaticProperty('Pman_Core','options');
+        $o = HTML_FlexyFramework::get()->Pman_Core;
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
             $this->err ="no jstoolkit path set [Pman_Core][jspacker] to the introspection documentation directory where pack.js is located.";
             if ($this->cli) echo $this->err;
