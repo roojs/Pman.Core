@@ -151,7 +151,7 @@ class Pman_Core_JsCompile  extends Pman
          
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
-        if (empty($o['cssminify']) || !file_exists($o['jspacker'])) {
+        if (empty($o['cssminify']) || !file_exists($o['cssminify'])) {
             echo '<!-- jspacker not set -->';
             return false;
         }
