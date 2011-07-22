@@ -116,11 +116,12 @@ class Pman_Core_JsCompile  extends Pman
         foreach($files as $f) {
             if (!is_dir($basedir .'/' .$f)) {
                 $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
-                $ofiles = $f;
+                $ofiles[] = $f;
                 continue;
             }
             foreach(glob($basedir .'/' .$f.'/*.css') as $fx) {
                 $arfiles[$fx] = filemtime($fx);
+                $ofiles [] = $f . '/'. basename($fx);
             }
         }
         
@@ -134,7 +135,7 @@ class Pman_Core_JsCompile  extends Pman
             echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url. '/_cache_/'. $output.'" />';
             return;
         }
-        foreach($arfiles as $f=>$t) {
+        foreach($ofiles as $f=>$t) {
             echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url.'/'.$f.'" />'."\n";
              
         }
