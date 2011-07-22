@@ -85,7 +85,11 @@ class Pman_Core_JsCompile  extends Pman
             }
         }
         
-        $output = serialize($arfiles);
+        $output = serialize($arfiles) .'.js';
+        
+        if (!file_exists($output_path.'/'.$output)) {
+            $this->pack($arfiles,$output);
+        }
         
         print_r($arfiles);exit;
         
