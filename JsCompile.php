@@ -63,13 +63,11 @@ class Pman_Core_JsCompile  extends Pman
      * build:
      *
      * @param {String} $proj name of Pman component to build
-     *
+     * runs pack.js -m {proj} -a $src/*.js
      * 
      *
      */
-     
-     
-     
+      
     function build($proj) 
     {
         echo "Building $proj\n";
