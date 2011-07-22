@@ -71,7 +71,10 @@ class Pman_Core_JsCompile  extends Pman
      * @param {String} $output name fo file to output
      *
      */
-    function pack($files, $output) {
+    function pack($files, $output)
+    {
+        
+        
         
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
@@ -101,7 +104,7 @@ class Pman_Core_JsCompile  extends Pman
         
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
-            return true;
+            return $output;
         }
         return false;
         
