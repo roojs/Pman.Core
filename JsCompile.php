@@ -138,7 +138,9 @@ class Pman_Core_JsCompile  extends Pman
         if ($max < $targetm)  {
             return true;
         }
-        
+        if (!file_exists(dirname($output))) {
+            mkdir(dirname($output), 0755, true);
+        }
         $eoutput = escapeshellarg($output);
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ');
         echo "$cmd\n";
