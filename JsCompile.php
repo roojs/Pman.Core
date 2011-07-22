@@ -92,10 +92,11 @@ class Pman_Core_JsCompile  extends Pman
         }
         
         if (file_exists($output_path.'/'.$output)) {
-            echo "output compressed.."
+            echo "output compressed..";
             return;
         }
-        echo "output original.."
+        echo "output original..";
+        exit;
         
         
         
