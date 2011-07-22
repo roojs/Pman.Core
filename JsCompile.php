@@ -118,7 +118,7 @@ class Pman_Core_JsCompile  extends Pman
          
         
     }
-    function packCss($basedir, $files,  $output_path, $output_url)
+    function packCss($basedir, $files,   $output_url)
     {
         // this outputs <script tags..>
         // either for just the original files,
@@ -145,11 +145,11 @@ class Pman_Core_JsCompile  extends Pman
         
         $output = md5(serialize($arfiles)) .'.css';
         
-        if (!file_exists($output_path.'/_cache_/'.$output)) {
-            $this->packCssCore($arfiles,$output_path.'/_cache_/'.$output);
+        if (!file_exists($basedir.'/_cache_/'.$output)) {
+            $this->packCssCore($arfiles,$basedir.'/_cache_/'.$output);
         }
-        //var_dump()$output_path. '/_cache_/'.$output);
-        if (file_exists($output_path. '/_cache_/'.$output)) {
+        //var_dump()$basedir. '/_cache_/'.$output);
+        if (file_exists($basedir. '/_cache_/'.$output)) {
             echo '<link type="text/css" rel="stylesheet" media="screen" href="'.$output_url. '/_cache_/'. $output.'" />';
             return;
         }
