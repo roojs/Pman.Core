@@ -154,7 +154,6 @@ class Pman_Core_JsCompile  extends Pman
         if (empty($o['cssminify']) || !file_exists($o['jspacker'])) {
             echo '<!-- jspacker not set -->';
             return false;
-            
         }
         require_once 'System.php';
         $seed= System::which('seed');
