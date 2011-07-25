@@ -44,7 +44,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pg = HTML_FlexyFramework::get()->page;
         $au = $pg->getAuthUser();
          
-        $this->person_name = $au ? $au->name : '';
+        $this->person_name = $au && !empty($au->name) ? $au->name : '';
         $this->person_id = $au ? $au->id : '';
         $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
         $this->action = $act;
