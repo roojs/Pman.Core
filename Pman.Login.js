@@ -343,7 +343,7 @@ Pman.Login =  new Roo.util.Observable({
                         if (ev.keyCode == 13) {
                             Pman.Login.dialog.el.mask("Logging in");
                             Pman.Login.form.doAction('submit', {
-                                    url: baseURL + '/Login.json',
+                                    url: baseURL + '/Login',
                                     method: 'POST'
                             });
                         }
