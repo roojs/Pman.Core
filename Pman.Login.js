@@ -424,8 +424,8 @@ Pman.Login =  new Roo.util.Observable({
             this.resizeToLogo.defer(1000,this);
             return;
         }
-        var w = Ext.lib.Dom.getViewWidth() - 100;
-        var h = Ext.lib.Dom.getViewHeight() - 100;
+        var w = Roo.lib.Dom.getViewWidth() - 100;
+        var h = Roo.lib.Dom.getViewHeight() - 100;
         Pman.Login.dialog.resizeTo(Math.max(350, Math.min(sz.width + 30, w)),Math.min(sz.height+200, h));
         Pman.Login.dialog.center();
     },
