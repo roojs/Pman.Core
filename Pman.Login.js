@@ -316,10 +316,13 @@ Pman.Login =  new Roo.util.Observable({
                         //Roo.get('loading').show();
                         Roo.get('loading-mask').show();
                     }
-                   
-                    Pman.onload();
-                    
+                    if (Pman.onload) { 
+                        Pman.onload();
+                    }
+                    if (Pman.Login.callback) {
+                        Pman.Login.callback();
                      
+                    }
                     
                 }
             }
