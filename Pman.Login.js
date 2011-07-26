@@ -450,6 +450,9 @@ Pman.Login =  new Roo.util.Observable({
         if (this.disabled) {
             return;
         }
+        
+        
+        
         this.callback = cb; // used for non-pman usage..
         modal = modal || false;
         if (Pman.Login.authUserId < 0) { // logout!?
@@ -480,7 +483,10 @@ Pman.Login =  new Roo.util.Observable({
         this.dialog.show();
         this.dialog.el.unmask(); 
         this.resizeToLogo.defer(1000,this);
-        
+        if (!Roo.state.Manager.getProvider().expires) { 
+            Roo.state.Manager.setProvider(new Roo.state.CookieProvider());
+        }
+         
          
         this.form.setValues({
             'username' : Roo.state.Manager.get('Pman.Login.username.'+appNameShort, ''),
