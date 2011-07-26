@@ -261,8 +261,11 @@ class Pman_Core_JsCompile  extends Pman
             return true;
         }
         echo "<!-- packed file did not exist
-            " . htmlspecialchars($res) . "
+          
             " . htmlspecialchars($cmd) . "
+            
+            " . htmlspecialchars($res) . "
+            
             -->";
         return false;
         
