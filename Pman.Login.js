@@ -301,8 +301,10 @@ Pman.Login =  new Roo.util.Observable({
                     //act.result.errorMsg// invalid form element list...
                     
                     Pman.Login.dialog.el.unmask();
-                    Roo.MessageBox.alert("Error", act.result.errorMsg ? act.result.errorMsg : 
-                                "Login failed - communication error - try again.");
+                    Roo.MessageBox.alert("Error",
+                        act.result.errorMsg ? act.result.errorMsg : 
+                        "Login failed - communication error - try again."
+                    );
                               
                 },
                 actioncomplete: function(re, act) {
