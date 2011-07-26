@@ -462,6 +462,7 @@ Pman.Login =  new Roo.util.Observable({
         }
         
         //incomming._node = tnode;
+        // why we want this non-modal????
         this.form.reset();
         this.dialog.modal = !modal;
         this.dialog.show();
