@@ -433,11 +433,12 @@ Pman.Login =  new Roo.util.Observable({
     
      
     
-    show: function (modal) 
+    show: function (modal, cb) 
     {
         if (this.disabled) {
             return;
         }
+        this.callback = cb; // used for non-pman usage..
         modal = modal || false;
         if (Pman.Login.authUserId < 0) { // logout!?
             return;
