@@ -162,7 +162,8 @@ Pman.Login =  new Roo.util.Observable({
         this.authUserId = au.id;
         this.authUser = au;
         this.lastChecked = new Date();
-        Pman.fireEvent('authrefreshed', au);
+        // if login is used on other applicaitons..
+        if (Pman.fireEvent) { Pman.fireEvent('authrefreshed', au); }
         
         
         //Pman.Tab.FaxQueue.newMaxId(au.faxMax);
