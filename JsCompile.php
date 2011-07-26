@@ -255,18 +255,20 @@ class Pman_Core_JsCompile  extends Pman
         $res = `$cmd`;
         //exit;
         
-        // we should do more checking.. return val etc..
-        if (file_exists($output) && ($max < filemtime($output) ) ) {
-            
-            return true;
-        }
-        echo "<!-- packed file did not exist
+        // since this only appears when we change.. it's ok to dump it out..
+          echo "<!-- Compiled javascript
           
             " . htmlspecialchars($cmd) . "
             
             " . htmlspecialchars($res) . "
             
             -->";
+        // we should do more checking.. return val etc..
+        if (file_exists($output) && ($max < filemtime($output) ) ) {
+            
+            return true;
+        }
+        echo "<!-- JS COMPILE ERROR: packed file did not exist  -->";
         return false;
         
     }
