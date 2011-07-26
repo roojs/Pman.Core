@@ -222,14 +222,14 @@ class Pman_Core_JsCompile  extends Pman
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
-            echo '<!-- jspacker not set -->';
+            echo '<!-- JS COMPILE ERROR: option: Pman_Core[jspacker] not set -->';
             return false;
             
         }
         require_once 'System.php';
         $seed= System::which('seed');
         if (!$seed) {
-            echo '<!-- seed not installed -->';
+            echo '<!-- JS COMPILE ERROR: seed not installed -->';
             return false;
             
         }
