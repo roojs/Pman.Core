@@ -483,6 +483,8 @@ Pman.Login =  new Roo.util.Observable({
         this.dialog.show();
         this.dialog.el.unmask(); 
         this.resizeToLogo.defer(1000,this);
+        
+        // if we have not created a provider.. do it now...
         if (!Roo.state.Manager.getProvider().expires) { 
             Roo.state.Manager.setProvider(new Roo.state.CookieProvider());
         }
