@@ -303,7 +303,7 @@ Pman.Login =  new Roo.util.Observable({
                     Pman.Login.dialog.el.unmask();
                     var msg = act.result.errorMsg || act.result.message;
                     msg = msg ||   "Login failed - communication error - try again.";
-                    Roo.MessageBox.alert("Error", , msg); 
+                    Roo.MessageBox.alert("Error",  msg); 
                               
                 },
                 actioncomplete: function(re, act) {
