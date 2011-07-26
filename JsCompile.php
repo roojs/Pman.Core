@@ -263,6 +263,7 @@ class Pman_Core_JsCompile  extends Pman
             " . htmlspecialchars($res) . "
             
             -->";
+            
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
             
