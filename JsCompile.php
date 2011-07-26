@@ -112,7 +112,7 @@ class Pman_Core_JsCompile  extends Pman
             return;
         }
         foreach($ofiles as $f) {
-            echo '<script type="text/javascript" src="'.$output_url.'/'.$f.'"></script>';
+            echo '<script type="text/javascript" src="'.$output_url.'/'.$f.'"></script>'."\n";
             
         }
          
