@@ -153,7 +153,15 @@ Pman.Login =  new Roo.util.Observable({
         this.fillAuth(res.data);
         
         this.checkFails =0;
-        Pman.onload();
+        
+        
+        if (Pman.onload) { 
+            Pman.onload();
+        }
+        if (Pman.Login.callback) {
+            Pman.Login.callback();
+            
+        }
         return false;
     },
     
