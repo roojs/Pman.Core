@@ -249,7 +249,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         sort($ofiles);
         $eoutput = escapeshellarg($output);
-        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ') . ' >2&1';
+        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         $res = `$cmd`;
