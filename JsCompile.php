@@ -252,7 +252,7 @@ class Pman_Core_JsCompile  extends Pman
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ');
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
-        `$cmd`;
+        $res = `$cmd`;
         //exit;
         
         // we should do more checking.. return val etc..
@@ -260,7 +260,7 @@ class Pman_Core_JsCompile  extends Pman
             
             return true;
         }
-        echo '<!-- packed file did not exist -->';
+        echo '<!-- packed file did not exist '. htmlspecialchars($res) . "\n-->";
         return false;
         
     }
