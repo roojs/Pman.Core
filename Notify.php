@@ -65,7 +65,7 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            if (!$this->poolHasDomain($p->person_id_email)) {
+            if ($this->poolHasDomain($p->person_id_email)) {
                 $ar[] = $p; // push it on the end..
                 echo "domain {$p->person_id_email} already on queue, pushing to end.\n";
                 sleep(3);
