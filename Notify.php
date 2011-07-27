@@ -98,7 +98,7 @@ class Pman_Core_Notify extends Pman
         $cwd = $sn[0] == '/' ? dirname($sn) : dirname(realpath(getcwd() . $sn)); // same as run on.. (so script should end up being same relatively..)
         $app = $cwd . '/' . basename($_SERVER["SCRIPT_NAME"]) . '  ' . $this->target . '/'. $id;
         $cmd = $php . ' ' . $app. ' &';
-        //echo $cmd . "\n";
+        echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
         $this->pool[] = array(
