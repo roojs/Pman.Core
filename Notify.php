@@ -128,7 +128,13 @@ class Pman_Core_Notify extends Pman
         return false;
         
     }
-    function poolHasDomain($email) {
+    /**
+     * see if pool is already trying to deliver to this domain.?
+     * -- if so it get's pushed to the end of the queue.
+     *
+     */
+    function poolHasDomain($email)
+    {
         $dom = strotlower(array_pop(explode('@',$email)));
         foreach($this->pool as $p) {
             $mdom = strtolower(array_pop(explode('@',$p['email'])));
