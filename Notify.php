@@ -137,7 +137,7 @@ class Pman_Core_Notify extends Pman
      */
     function poolHasDomain($email)
     {
-        $dom = strotlower(array_pop(explode('@',$email)));
+        $dom = strtolower(array_pop(explode('@',$email)));
         foreach($this->pool as $p) {
             $mdom = strtolower(array_pop(explode('@',$p['email'])));
             if ($mdom == $dom) {
