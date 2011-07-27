@@ -49,7 +49,7 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        
+        $w->autoJoin();
         $w->limit(1000); // we can run 1000 ...
         $ar = $w->fetchAll('id');
         
