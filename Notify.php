@@ -98,7 +98,8 @@ class Pman_Core_Notify extends Pman
         $this->pool[] = array('proc' => $p, 'out' => $tn,  'cmd' => $cmd);
     }
     
-    function poolfree() {
+    function poolfree($email) {
+        $dom = array_pop(explode('@',$email));
         $pool = array();
         foreach($this->pool as $p) {
             $ar = proc_get_status($p['proc']);
