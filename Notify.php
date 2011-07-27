@@ -60,11 +60,16 @@ class Pman_Core_Notify extends Pman
             }
             
             $p = array_shift($ar);
-            if (!$this->poolfree($p->person_id_email)) {
-                array_unshift($p); /// put it back on..
+            if (!$this->poolfree()) {
+                array_unshift($ar,$p); /// put it back on..
                 sleep(3);
                 continue;
             }
+            if (!$this->poolHasDomain($p->person_id_email)) {
+                $ar[] = $p; // push it on the end..
+                continue;
+            }
+            
             
             
             $this->run($p->id,$p->person_id_email);
@@ -103,7 +108,8 @@ class Pman_Core_Notify extends Pman
         );
     }
     
-    function poolfree($email) {
+    function poolfree($email)
+    {
         $dom = array_pop(explode('@',$email));
         $pool = array();
         foreach($this->pool as $p) {
