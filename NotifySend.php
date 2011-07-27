@@ -85,8 +85,9 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
+        $email =  $this->makeEmail($o, $p,$last);
         
-        $email = $o->toEmail($p,$last);
+        
         
         //$p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
@@ -163,5 +164,7 @@ class Pman_Core_NotifySend extends Pman
         return $mxs;
     }
     
-    
+    function makeEmail($o, $p, $last) {
+        return $o->toEmail($p,$last);
+    }
 }
