@@ -130,7 +130,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. $fail ? $res->toString() : "RETRY TIME EXCEEDED");
+            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
