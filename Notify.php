@@ -67,7 +67,7 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id);
+            $this->run($p->id,$p->person_id_email);
         }
         while(count($this->pool)) {
             $this->poolfree();
@@ -77,7 +77,7 @@ class Pman_Core_Notify extends Pman
         die("DONE\n");
     }
     
-    function run($id)
+    function run($id, $email)
     {
        // phpinfo();exit;
         $tn = tempnam(ini_get('session.save_path'),'stdout') . '.stdout';
@@ -95,7 +95,12 @@ class Pman_Core_Notify extends Pman
         //echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
-        $this->pool[] = array('proc' => $p, 'out' => $tn,  'cmd' => $cmd);
+        $this->pool[] = array(
+                'proc' => $p,
+                'out' => $tn,
+                'cmd' => $cmd,
+                'email' => $email
+        );
     }
     
     function poolfree($email) {
