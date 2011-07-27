@@ -67,6 +67,7 @@ class Pman_Core_Notify extends Pman
             }
             if (!$this->poolHasDomain($p->person_id_email)) {
                 $ar[] = $p; // push it on the end..
+                sleep(1);
                 continue;
             }
             
