@@ -71,7 +71,6 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            
             $this->run($p->id,$p->person_id_email);
         }
         while(count($this->pool)) {
@@ -108,9 +107,8 @@ class Pman_Core_Notify extends Pman
         );
     }
     
-    function poolfree($email)
+    function poolfree()
     {
-        $dom = array_pop(explode('@',$email));
         $pool = array();
         foreach($this->pool as $p) {
             $ar = proc_get_status($p['proc']);
@@ -130,6 +128,16 @@ class Pman_Core_Notify extends Pman
         return false;
         
     }
-    
-    
+    function poolHasDomain($email) {
+        $dom = strotlower(array_pop(explode('@',$email)));
+        foreach($this->pool as $p) {
+            $mdom = strtolower(array_pop(explode('@',$p['email'])));
+            if ($mdom == $dom) {
+                return true;
+            }
+        }
+        return false;
+        
+    }
+
 }
