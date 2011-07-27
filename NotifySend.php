@@ -164,7 +164,12 @@ class Pman_Core_NotifySend extends Pman
         return $mxs;
     }
     
-    function makeEmail($o, $p, $last) {
+    /**
+     * wrapper to call object->toEmail()
+     * 
+     **/
+    function makeEmail($o, $p, $last)
+    {
         return $o->toEmail($p,$last);
     }
 }
