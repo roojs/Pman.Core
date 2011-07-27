@@ -12,7 +12,7 @@ require_once 'Pman.php';
  * uses Events table to log failures
  * 
  * 
- * calls $object->toEmail($person,$last_send) to generate an email struct with
+ * calls $object->toEmail($person,$last_send, $notify) to generate an email struct with
  *  array (
  *      headers =>
  *      recipients =>
