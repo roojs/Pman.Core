@@ -58,11 +58,15 @@ class Pman_Core_Notify extends Pman
             if (empty($ar)) {
                 break;
             }
-            if (!$this->poolfree()) {
+            
+            $p = array_shift($ar);
+            if (!$this->poolfree($p->person_id_email)) {
+                array_unshift($p); /// put it back on..
                 sleep(3);
                 continue;
             }
-            $p = array_shift($ar);
+            
+            
             $this->run($p->id);
         }
         while(count($this->pool)) {
