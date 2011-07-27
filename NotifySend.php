@@ -37,9 +37,7 @@ class Pman_Core_NotifySend extends Pman
         return true;
         
     }
-    
-    var $pool = array();
-    
+   
     function get($id)    
     {
         //DB_DataObject::debugLevel(1);
