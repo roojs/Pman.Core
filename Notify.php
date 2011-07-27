@@ -51,7 +51,8 @@ class Pman_Core_Notify extends Pman
         
         $w->autoJoin();
         $w->limit(1000); // we can run 1000 ...
-        $ar = $w->fetchAll('id');
+        
+        $ar = $w->fetchAll();
         
         while (true) {
             if (empty($ar)) {
@@ -62,7 +63,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             $p = array_shift($ar);
-            $this->run($p);
+            $this->run($p->id);
         }
         while(count($this->pool)) {
             $this->poolfree();
