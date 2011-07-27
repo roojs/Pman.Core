@@ -18,6 +18,8 @@ class Pman_Core_Notify extends Pman
     
     var $table = 'core_notify';
     var $target = 'Core/NotifySend';
+    var $evtype = ''; // any notification...
+                    // this script should only handle EMAIL notifications..
     
     function getAuth()
     {
