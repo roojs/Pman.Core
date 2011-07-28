@@ -69,7 +69,8 @@ class Pman_Core_JsCompile  extends Pman
      *
      * @param {String} basedir absolute path to files
      * @param {Array}  list of files (ontop of basedir) 
-     *
+     * @param {String|false} output url (path to basedir basically), or false
+     *                  to not compile
      *
      *
      */
