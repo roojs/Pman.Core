@@ -107,7 +107,7 @@ class Pman_Core_JsCompile  extends Pman
             $this->pack($arfiles,$basedir.'/_cache_/'.$output);
         }
         
-        if ($ompile && file_exists($basedir.'/_cache_/'.$output)) {
+        if ($compile && file_exists($basedir.'/_cache_/'.$output)) {
             
             echo '<script type="text/javascript" src="'.$output_url.'/_cache_/'. $output.'"></script>';
             return;
