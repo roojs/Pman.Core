@@ -102,7 +102,7 @@ class Pman_Core_NotifySend extends Pman
             
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
-                    'debug' => true
+                  //  'debug' => true
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if ($res === true) {
