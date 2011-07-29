@@ -22,8 +22,8 @@ var t = new Pman.Download({
 * @cfg {Boolean} newWindow (optional) download to new window
 * @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
 * @cfg {Number} timeout (optional) in milliseconds before it gives up (default 30000 = 30s)
-     
 */
+
 Pman.Download = function(cfg)
 {
  
