@@ -69,13 +69,14 @@ class Pman_Core_JsCompile  extends Pman
      *
      * @param {String} basedir absolute path to files
      * @param {Array}  list of files (ontop of basedir) 
-     *
+     * @param {String} output url (path to basedir basically), or false
+     *                  to not compile
      *
      *
      */
     
     
-    function packScript($basedir, $files,  $output_url)
+    function packScript($basedir, $files,  $output_url, $compile=true)
     {
         // this outputs <script tags..>
         // either for just the original files,
@@ -102,11 +103,11 @@ class Pman_Core_JsCompile  extends Pman
         
         $output = md5(serialize($arfiles)) .'.js';
         
-        if (!file_exists($basedir.'/_cache_/'.$output)) {
+        if ( $compile && !file_exists($basedir.'/_cache_/'.$output)) {
             $this->pack($arfiles,$basedir.'/_cache_/'.$output);
         }
         
-        if (file_exists($basedir.'/_cache_/'.$output)) {
+        if ($compile && file_exists($basedir.'/_cache_/'.$output)) {
             
             echo '<script type="text/javascript" src="'.$output_url.'/_cache_/'. $output.'"></script>';
             return;
