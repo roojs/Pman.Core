@@ -16,6 +16,9 @@ require_once 'Pman.php';
 
 class Pman_Core_JsCompile  extends Pman
 {
+    
+    static $cli_desc = "Wrapper around Javascript compression tools";
+    
     var $cli = false;
     function getAuth()
     {
