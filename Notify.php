@@ -32,7 +32,7 @@ class Pman_Core_Notify extends Pman
             'default' => 0,
             'short' => 'l',
             'min' => 0,
-            'max' => 1,
+            'max' => 0,
             
         )
     );
