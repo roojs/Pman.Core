@@ -73,7 +73,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return !empty($msgid);
     }
     
-    function status()
+    function status() // used by commandline reporting at present..
     {
         switch($this->event_id) {
             case -1:
