@@ -73,7 +73,7 @@ class Pman_Core_Notify extends Pman
         }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
-        $showold = $opts['old'];
+        $showold = !empty($opts['old']);
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
