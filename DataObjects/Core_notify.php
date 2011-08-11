@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             case 0:
                 return 'PENDING';
             default:
-                return = $this->event()->$remarks;
+                return  $this->event()->remarks;
         }
         
     }
