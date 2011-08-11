@@ -135,8 +135,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (!isset($email['headers']['Message-Id'])) {
             $HOST = gethostname();
-            $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>":;
-            
+            $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
         //$p->email = 'alan@akbkhome.com'; //for testing..
