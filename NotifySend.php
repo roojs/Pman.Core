@@ -131,8 +131,13 @@ class Pman_Core_NotifySend extends Pman
         
         $email =  $this->makeEmail($o, $p,$last);
         
+        $HOST = gethostname();
         
-        
+        if (!isset($email['headers']['Message-Id'])) {
+            $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>":;
+            
+            
+        }
         //$p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
