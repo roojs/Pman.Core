@@ -91,8 +91,6 @@ class Pman_Core_Notify extends Pman
             exit;
             
             
-            
-            
         }
         
         
