@@ -34,6 +34,14 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 0,
             
+        ),
+        'old' => array(
+            'desc' => 'Show old messages..',
+            'default' => 0,
+            'short' => 'l',
+            'min' => 0,
+            'max' => 0,
+            
         )
     );
     
@@ -65,7 +73,10 @@ class Pman_Core_Notify extends Pman
         }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
-        
+       $showold = 
+        if (!empty($opts['old'])) {
+            $opts['list'] = 1; // force listing..
+        }
         
         
         $w = DB_DataObject::factory($this->table);
@@ -91,8 +102,6 @@ class Pman_Core_Notify extends Pman
                 echo "$e->id : $w->person_id_email email    : ". $o->toEventString()."\n";
             }
             exit;
-            
-            
         }
         
         
