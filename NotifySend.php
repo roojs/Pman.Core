@@ -35,7 +35,17 @@ class Pman_Core_NotifySend extends Pman
             'min' => 1,
             'max' => 1,
             
+        ),
+        'force' => array(
+            'desc' => 'Force redelivery, even if it has been sent before.',
+            'default' => 0,
+            'short' => 'f',
+            'min' => 1,
+            'max' => 1,
         )
+        
+        
+        
     );
     var $table = 'core_notify';
     function getAuth()
