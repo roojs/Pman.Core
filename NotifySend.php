@@ -72,7 +72,7 @@ class Pman_Core_NotifySend extends Pman
         $w = DB_DataObject::factory($this->table);
         
         if (!$w->get($id)) {
-            die("invalid id or time\n");
+            die("invalid id\n");
         }
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             die("send repeat to early\n");
