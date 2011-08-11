@@ -58,6 +58,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
     function event()
+    {
 
         $c = DB_DataObject::factory('Events');
         
@@ -80,7 +81,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             case 0:
                 return 'PENDING';
             default:
-                $e = $this->event();
+                return = $this->event()->$remarks;
         }
         
     }
