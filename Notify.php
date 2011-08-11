@@ -30,7 +30,7 @@ class Pman_Core_Notify extends Pman
         'list' => array(
             'desc' => 'List message to send, do not send them..',
             'default' => 0,
-            'short' => 'v',
+            'short' => 'l',
             'min' => 1,
             'max' => 1,
             
@@ -80,6 +80,22 @@ class Pman_Core_Notify extends Pman
         $w->limit(1000); // we can run 1000 ...
         
         $ar = $w->fetchAll();
+        
+        if (!empty($opts['list'])) {
+            foreach($ar as $w) {
+                $o = $w->object();
+                $p = $w->person();
+                
+                echo "$e->id : $w->email    : ". $w->toEventString()."\n";
+            }
+            exit;
+            
+            
+            
+            
+        }
+        
+        
         
         while (true) {
             if (empty($ar)) {
