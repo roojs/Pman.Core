@@ -82,7 +82,6 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$forced && !empty($w->msgid)) {
             die("message has been sent already.\n");
-            
         }
         
         
