@@ -83,6 +83,9 @@ class Pman_Core_Notify extends Pman
         $ar = $w->fetchAll();
         
         if (!empty($opts['list'])) {
+            if (empty($ar)) {
+                die("Nothing in Queue\n");
+            }
             foreach($ar as $w) {
                 $o = $w->object();
                 echo "$e->id : $w->person_id_email email    : ". $o->toEventString()."\n";
