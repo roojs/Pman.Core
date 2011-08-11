@@ -49,11 +49,15 @@ class Pman_Core_Notify extends Pman
     
     var $pool = array();
     
-    function get()    
+    function get($r,$opts)    
     {
-       //DB_DataObject::debugLevel(1);
+        if ($opts['debug']) {
+            DB_DataObject::debugLevel($opts['debug']);
+        }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
+        
+        
         
         $w = DB_DataObject::factory($this->table);
         $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
