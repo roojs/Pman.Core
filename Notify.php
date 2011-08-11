@@ -18,6 +18,16 @@ class Pman_Core_Notify extends Pman
     
     static $cli_desc = "Send out notification emails (usually from cron)";
     
+    static $cli_opts = array(
+        'debug' => array(
+            'desc' => 'Turn on debugging (DataObjects etc.)',
+            'default' => 0,
+        
+        )
+    )
+    
+    
+    
     var $table = 'core_notify';
     var $target = 'Core/NotifySend';
     var $evtype = ''; // any notification...
