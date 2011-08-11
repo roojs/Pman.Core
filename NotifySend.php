@@ -217,4 +217,15 @@ class Pman_Core_NotifySend extends Pman
     {
         return $o->toEmail($p,$last);
     }
+    
+    function debug($str)
+    {
+        if (empty($this->cli_args['debug'])) {
+            return;
+            
+        }
+        echo $str . "\n";
+        
+    }
+    
 }
