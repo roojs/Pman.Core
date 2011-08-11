@@ -225,7 +225,6 @@ class Pman_Core_NotifySend extends Pman
             
         }
         echo $str . "\n";
-        
     }
     
 }
