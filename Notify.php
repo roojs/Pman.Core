@@ -106,7 +106,10 @@ class Pman_Core_Notify extends Pman
             }
             foreach($ar as $w) {
                 $o = $w->object();
-                echo "$e->id : $w->person_id_email email    : ". $o->toEventString()."\n";
+                
+                
+                echo "$e->id : $w->person_id_email email    : ".
+                        $o->toEventString()."    ". $w->status() . "\n";
             }
             exit;
         }
