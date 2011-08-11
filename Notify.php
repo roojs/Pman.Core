@@ -86,15 +86,17 @@ class Pman_Core_Notify extends Pman
             $w->whereAdd('act_when < NOW()'); // eg.. not if future..
     
             $w->orderBy('act_when ASC'); // oldest first.
+            $w->limit(1000); // we can run 1000 ...
         } else {
             $w->orderBy('act_when DESC'); // latest first
+            $w->limit(50); // we can run 1000 ...
         }
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
         
         $w->autoJoin();
-        $w->limit(1000); // we can run 1000 ...
+        
         
         $ar = $w->fetchAll();
         
