@@ -84,9 +84,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['list'])) {
             foreach($ar as $w) {
                 $o = $w->object();
-                $p = $w->person();
-                
-                echo "$e->id : $w->email    : ". $w->toEventString()."\n";
+                echo "$e->id : $w->person_id_email email    : ". $o->toEventString()."\n";
             }
             exit;
             
