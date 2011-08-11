@@ -45,6 +45,7 @@ class Pman_Core_NotifySend extends Pman
         ),
         'send-to' => array(
             'desc' => 'Send the message to this address, rather than the one listed.',
+            'default' => '',
             'short' => 't',
             'min' => 0,
             'max' => 1,
