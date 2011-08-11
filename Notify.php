@@ -27,7 +27,7 @@ class Pman_Core_Notify extends Pman
             'max' => 1,
             
         )
-    )
+    );
     
     
     
