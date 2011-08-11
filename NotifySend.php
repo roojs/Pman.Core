@@ -25,7 +25,18 @@ require_once 'Pman.php';
 
 class Pman_Core_NotifySend extends Pman
 {
+    static $cli_desc = "Send out single notification email (usually called from  Core/Notify)";
     
+    static $cli_opts = array(
+        'debug' => array(
+            'desc' => 'Turn on debugging (see DataObjects debugLevel )',
+            'default' => 0,
+            'short' => 'v',
+            'min' => 1,
+            'max' => 1,
+            
+        )
+    );
     var $table = 'core_notify';
     function getAuth()
     {
