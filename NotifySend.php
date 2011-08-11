@@ -67,13 +67,14 @@ class Pman_Core_NotifySend extends Pman
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
+        $force = $opts['force'];
         
         $w = DB_DataObject::factory($this->table);
         
         if (!$w->get($id)) {
             die("invalid id or time\n");
         }
-        if (strtotime($w->act_when) < strtotime($w->sent)) {
+        if (!$foce && strtotime($w->act_when) < strtotime($w->sent)) {
             die("send repeat to early\n");
         }
          
