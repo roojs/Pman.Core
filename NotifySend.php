@@ -75,10 +75,15 @@ class Pman_Core_NotifySend extends Pman
             die("invalid id\n");
         }
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
+            
+            
             die("send repeat to early\n");
         }
         
-        
+        if (!$forced && !empty($w->msgid)) {
+            die("message has been sent already.\n");
+            
+        }
         
         
         $o = $w->object();
