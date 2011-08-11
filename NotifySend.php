@@ -32,6 +32,14 @@ class Pman_Core_NotifySend extends Pman
             'desc' => 'Turn on debugging (see DataObjects debugLevel )',
             'default' => 0,
             'short' => 'v',
+            'min' => 0,
+            'max' => 0,
+            
+        ),
+        'DB_DataObject-debug' => array(
+            'desc' => 'Turn on debugging (see DataObjects debugLevel )',
+            'default' => 0,
+            'short' => 'd',
             'min' => 1,
             'max' => 1,
             
