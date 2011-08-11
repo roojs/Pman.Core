@@ -26,6 +26,14 @@ class Pman_Core_Notify extends Pman
             'min' => 1,
             'max' => 1,
             
+        ),
+        'list' => array(
+            'desc' => 'List message to send, do not send them..',
+            'default' => 0,
+            'short' => 'v',
+            'min' => 1,
+            'max' => 1,
+            
         )
     );
     
