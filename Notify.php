@@ -22,7 +22,10 @@ class Pman_Core_Notify extends Pman
         'debug' => array(
             'desc' => 'Turn on debugging (DataObjects etc.)',
             'default' => 0,
-        
+            'short' => 'v',
+            'min' => 1,
+            'max' => 1,
+            
         )
     )
     
