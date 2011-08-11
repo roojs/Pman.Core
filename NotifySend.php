@@ -143,7 +143,7 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         foreach($mxs as $dom) {
-            
+            $this->debug("Trying SMTP: $dom");
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
                   //  'debug' => true
@@ -156,7 +156,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = -1; // sent ok.. - no need to record it..
                 $w->update($ww);
-                die(date('Y-m-d h:i:s') . " - SENT");
+                die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
             list($code, $response) = $mailer->_smtp->getResponse();
@@ -167,10 +167,10 @@ class Pman_Core_NotifySend extends Pman
             if ($code == 421 && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
-                $this->addEvent('NOTIFY', $w, 'GREYLISTED');
+                $this->addEvent('NOTIFY', $w, 'GREYLISTED\n');
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
                 $w->update($ww);
-                die(date('Y-m-d h:i:s') . " - GREYLISTED");
+                die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
             }
             $fail = true;
             break;
@@ -182,13 +182,13 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED"));
+            die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
         }
         
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED');
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->update($ww);
-        die(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE");
+        die(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
 
         
     }
