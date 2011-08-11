@@ -20,7 +20,7 @@ class Pman_Core_Notify extends Pman
     
     static $cli_opts = array(
         'debug' => array(
-            'desc' => 'Turn on debugging (DataObjects etc.)',
+            'desc' => 'Turn on debugging (see DataObjects debugLevel )',
             'default' => 0,
             'short' => 'v',
             'min' => 1,
