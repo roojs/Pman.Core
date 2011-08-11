@@ -61,6 +61,7 @@ class Pman_Core_Notify extends Pman
     {
         if ($opts['debug']) {
             DB_DataObject::debugLevel($opts['debug']);
+            print_r($opts);
         }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
