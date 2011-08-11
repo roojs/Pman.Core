@@ -73,17 +73,22 @@ class Pman_Core_Notify extends Pman
         }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
-       $showold = 
+        $showold = $opts['old'];
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
         
         
         $w = DB_DataObject::factory($this->table);
-        $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
-        $w->whereAdd('act_when < NOW()'); // eg.. not if future..
-
-        $w->orderBy('act_when ASC'); // oldest first.
+        
+        if (!$showold) {
+            $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
+            $w->whereAdd('act_when < NOW()'); // eg.. not if future..
+    
+            $w->orderBy('act_when ASC'); // oldest first.
+        } else {
+            $w->orderBy('act_when DESC'); // latest first
+        }
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
