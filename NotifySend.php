@@ -80,7 +80,7 @@ class Pman_Core_NotifySend extends Pman
             die("send repeat to early\n");
         }
         
-        if (!$forced && !empty($w->msgid)) {
+        if (!$force && !empty($w->msgid)) {
             die("message has been sent already.\n");
         }
         
