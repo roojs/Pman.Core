@@ -38,7 +38,7 @@ class Pman_Core_Notify extends Pman
         'old' => array(
             'desc' => 'Show old messages..',
             'default' => 0,
-            'short' => 'l',
+            'short' => 'o',
             'min' => 0,
             'max' => 0,
             
