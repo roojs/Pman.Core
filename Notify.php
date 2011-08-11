@@ -23,7 +23,7 @@ class Pman_Core_Notify extends Pman
             'desc' => 'Turn on debugging (see DataObjects debugLevel )',
             'default' => 0,
             'short' => 'v',
-            'min' => 0,
+            'min' => 1,
             'max' => 1,
             
         ),
