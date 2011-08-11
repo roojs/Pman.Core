@@ -74,10 +74,13 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             die("invalid id or time\n");
         }
-        if (!$foce && strtotime($w->act_when) < strtotime($w->sent)) {
+        if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             die("send repeat to early\n");
         }
-         
+        
+        
+        
+        
         $o = $w->object();
         $p = $w->person();
         
