@@ -40,8 +40,8 @@ class Pman_Core_NotifySend extends Pman
             'desc' => 'Force redelivery, even if it has been sent before or not queued...',
             'default' => 0,
             'short' => 'f',
-            'min' => 1,
-            'max' => 1,
+            'min' => 0,
+            'max' => 0,
         )
         
         
