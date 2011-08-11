@@ -128,6 +128,12 @@ class Pman_Core_NotifySend extends Pman
         //$p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
+        
+        if (!empty($opts['send-to'])) {
+            $p->email = $opts['send-to'];
+        }
+        
+        
         $dom = array_pop(explode('@', $p->email));
         
         $mxs = $this->mxs($dom);
