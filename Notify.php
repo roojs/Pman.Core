@@ -84,7 +84,12 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
+        
         $this->force = empty($opts['force']) ? 0 : 1;
+     
+        if (!empty($opts['send-to'])) {
+            $this->send_to = $opts['send-to'];
+        }
      
         
         $w = DB_DataObject::factory($this->table);
