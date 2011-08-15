@@ -172,7 +172,7 @@ class Pman_Core_NotifySend extends Pman
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
-            $code = empty(($res->smtpcode) ? -1 : $res->smtpcode;
+            $code = empty($res->smtpcode) ? -1 : $res->smtpcode;
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
