@@ -181,7 +181,7 @@ class Pman_Core_NotifySend extends Pman
             if (in_array($code, array( 421, 451, 452))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
-                $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email);
+                $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email .  $res->toString());
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
                 $w->update($ww);
                 die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
