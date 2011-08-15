@@ -53,6 +53,7 @@ class Pman_Core_NotifySend extends Pman
         ),
         'send-to' => array(
             'desc' => 'Send the message to this address, rather than the one listed.',
+            default => '',
             'short' => 't',
             'min' => 0,
             'max' => 1,
@@ -81,7 +82,7 @@ class Pman_Core_NotifySend extends Pman
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
-        $force = empty($opts['force']) ? 0 : 1;
+        $force = $opts['force'];
         
         $w = DB_DataObject::factory($this->table);
         
@@ -129,7 +130,7 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
-        $email =  $this->makeEmail($o, $p, $last, $ev);
+        $email =  $this->makeEmail($o, $p,$last);
         
         
         
@@ -172,7 +173,7 @@ class Pman_Core_NotifySend extends Pman
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
-            $code = empty($res->smtpcode) ? -1 : $res->smtpcode;
+            list($code, $response) = $mailer->_smtp->getResponse();
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
@@ -190,7 +191,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $id = $this->addEvent('NOTIFY', $w, "FAILED - ". ($fail ? ($res->smtpcode . ' : ' .$res->toString()) :  " - RETRY TIME EXCEEDED"));
+            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
@@ -226,9 +227,9 @@ class Pman_Core_NotifySend extends Pman
      * wrapper to call object->toEmail()
      * 
      **/
-    function makeEmail($o, $p, $last, $notify)
+    function makeEmail($o, $p, $last)
     {
-        return $o->toEmail($p,$last,$notify);
+        return $o->toEmail($p,$last);
     }
     
     function debug($str)
