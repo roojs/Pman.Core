@@ -228,7 +228,7 @@ class Pman_Core_NotifySend extends Pman
      **/
     function makeEmail($o, $p, $last, $notify)
     {
-        return $o->toEmail($p,$last);
+        return $o->toEmail($p,$last,$notify);
     }
     
     function debug($str)
