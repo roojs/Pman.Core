@@ -173,6 +173,7 @@ class Pman_Core_Notify extends Pman
         if ($this->force) {
             $app .= ' -f';
         }
+        
         $cmd = $php . ' ' . $app. ' &';
         
         echo $cmd . "\n";
