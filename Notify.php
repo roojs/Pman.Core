@@ -42,7 +42,14 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 0,
             
-        )
+        ),
+         'force' => array(
+            'desc' => 'Force redelivery, even if it has been sent before or not queued...',
+            'default' => 0,
+            'short' => 'f',
+            'min' => 0,
+            'max' => 0,
+        ),
     );
     
     
@@ -77,13 +84,17 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
-        
+        $force = empty($opts['force']) ? 0 : 1;
+     
         
         $w = DB_DataObject::factory($this->table);
         
         if (!$showold) {
             $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
-            $w->whereAdd('act_when < NOW()'); // eg.. not if future..
+            
+            if (!$force) {
+                $w->whereAdd('act_when < NOW()'); // eg.. not if future..
+            }
     
             $w->orderBy('act_when ASC'); // oldest first.
             $w->limit(1000); // we can run 1000 ...
