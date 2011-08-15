@@ -173,6 +173,7 @@ class Pman_Core_NotifySend extends Pman
             }
             // what type of error..
             list($code, $response) = $mailer->_smtp->getResponse();
+            $res->smtpcode = $code;
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
@@ -190,7 +191,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED"));
+            $id = $this->addEvent('NOTIFY', $w, "FAILED - ". ($fail ? ($res->smtpcode . ' : ' .$res->toString()) :  " - RETRY TIME EXCEEDED"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
