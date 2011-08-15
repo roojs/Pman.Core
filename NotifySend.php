@@ -173,7 +173,7 @@ class Pman_Core_NotifySend extends Pman
             }
             // what type of error..
             $code = empty(($res->smtpcode) ? -1 : $res->smtpcode;
-             if ($code < 0) {
+            if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
