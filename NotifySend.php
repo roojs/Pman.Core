@@ -178,7 +178,7 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
-            if ((in_array($code, array( 421, 451) )   && $next_try_min < (2*24*60)) {
+            if (in_array($code, array( 421, 451))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED\n');
