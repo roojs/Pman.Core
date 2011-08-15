@@ -178,7 +178,9 @@ class Pman_Core_Notify extends Pman
         if ($this->force) {
             $app .= ' -f';
         }
-        
+        if (!empty($this->send_to)) {
+            $app .= ' --sent-to='.escapeshellarg($this->send_to);
+        }
         $cmd = $php . ' ' . $app. ' &';
         
         echo $cmd . "\n";
