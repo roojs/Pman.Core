@@ -84,7 +84,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
-        $force = empty($opts['force']) ? 0 : 1;
+        $this->force = empty($opts['force']) ? 0 : 1;
      
         
         $w = DB_DataObject::factory($this->table);
@@ -92,7 +92,7 @@ class Pman_Core_Notify extends Pman
         if (!$showold) {
             $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
             
-            if (!$force) {
+            if (!$this->force) {
                 $w->whereAdd('act_when < NOW()'); // eg.. not if future..
             }
     
