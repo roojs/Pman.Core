@@ -129,7 +129,7 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
-        $email =  $this->makeEmail($o, $p,$last,$ev);
+        $email =  $this->makeEmail($o, $p, $last, $ev);
         
         
         
@@ -226,7 +226,7 @@ class Pman_Core_NotifySend extends Pman
      * wrapper to call object->toEmail()
      * 
      **/
-    function makeEmail($o, $p, $last,$notify)
+    function makeEmail($o, $p, $last, $notify)
     {
         return $o->toEmail($p,$last);
     }
