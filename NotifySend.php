@@ -130,7 +130,7 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
-        $email =  $this->makeEmail($o, $p,$last);
+        $email =  $this->makeEmail($o, $p,$last, $ev);
         
         
         
@@ -173,7 +173,7 @@ class Pman_Core_NotifySend extends Pman
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
-            list($code, $response) = $mailer->_smtp->getResponse();
+            $code = empty($res->smtpcode) ? -1 : $res->smtpcode;
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
