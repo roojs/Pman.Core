@@ -191,7 +191,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $id = $this->addEvent('NOTIFY', $w, 'FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED"));
+            $id = $this->addEvent('NOTIFY', $w, "FAILED - ". ($fail ? ($res->smtpcode . ' : ' .$res->toString()) :  " - RETRY TIME EXCEEDED"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
@@ -227,9 +227,9 @@ class Pman_Core_NotifySend extends Pman
      * wrapper to call object->toEmail()
      * 
      **/
-    function makeEmail($o, $p, $last)
+    function makeEmail($o, $p, $last, $notify)
     {
-        return $o->toEmail($p,$last);
+        return $o->toEmail($p,$last, $notify);
     }
     
     function debug($str)
