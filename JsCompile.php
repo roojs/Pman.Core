@@ -265,7 +265,7 @@ class Pman_Core_JsCompile  extends Pman
             
             -->";
             
-        return false;
+       // return false;
         
         $res = `$cmd`;
         //exit;
