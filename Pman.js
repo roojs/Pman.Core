@@ -27,6 +27,13 @@ Pman = new Roo.Document(
     subMenuItems : [],
     topMenuItems : [],
     rightNames: { }, /// register right names here - so they can be translated and rendered.
+    /**
+     * @property {Roo.Menu} pulldownMenu - the 'add menu pulldown, you can use it to add items..
+     *
+     */
+    pulldownMenu : false, 
+    
+    
     buildCompleted : false, // flag to say if we are building interface..
     events : {
         'beforeload' : true, // fired after page ready, before module building.
@@ -269,7 +276,7 @@ Pman = new Roo.Document(
             // since we always add it.. just chop of last item
             this.subMenuItems.pop(); 
             
-            lotb.add(
+            this.pulldownMenu = lotb.add(
                 {
                      
                     text: "Add New Item",
