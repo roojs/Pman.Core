@@ -28,7 +28,7 @@ Pman = new Roo.Document(
     topMenuItems : [],
     rightNames: { }, /// register right names here - so they can be translated and rendered.
     /**
-     * @property {Roo.Menu} pulldownMenu - the 'add menu pulldown, you can use it to add items..
+     * @property {Roo.menu.Menu} pulldownMenu - the 'add menu pulldown, you can use it to add items..
      *
      */
     pulldownMenu : false, 
