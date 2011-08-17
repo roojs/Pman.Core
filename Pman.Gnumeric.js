@@ -712,7 +712,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         // read the first row.
         var tds = Roo.get(table).select('tr').item(0).select('td');
-        var maxnc = 0
+        var maxnc = 0;
         
         Roo.get(table).select('tr').each(function(trs) {
             var nc = 0;
@@ -727,7 +727,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var tr = document.createElement('tr');
         table.appendChild(tr);
-        var ar = {}
+        var ar = {};
         for (i =0; i < maxnc; i++) {
             ar[i] = document.createElement('td');
             tr.appendChild(ar[i]);
