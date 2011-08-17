@@ -276,7 +276,7 @@ Pman = new Roo.Document(
             // since we always add it.. just chop of last item
             this.subMenuItems.pop(); 
             
-            this.pulldownMenu = new Roo.Toolbar.Button( 
+            var btn = new Roo.Toolbar.Button( 
                 {
                     text: "Add New Item",
                     cls: 'x-btn-text-icon',
@@ -286,6 +286,7 @@ Pman = new Roo.Document(
                     }     
                 }
             );
+            this.pulldownMenu = btn.menu;
             lotb.add(this.pulldownMenu, '0');
             
         }
