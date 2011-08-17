@@ -226,7 +226,7 @@ class Pman_Core_JsCompile  extends Pman
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
         if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
-            echo '<!-- JS COMPILE ERROR: option: Pman_Core[jspacker] not set to introspection directory -->';
+            echo '<!-- JS COMPILE ERROR: option: Pman_Core[jspacker] not set to directory -->';
             return false;
             
         }
