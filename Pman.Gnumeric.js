@@ -1287,7 +1287,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             sheetnames = this.doc.getElementsByTagNameNS('*','Sheet');
             sheetnames[0].parentNode.appendChild(sheetnames[sheetnames.length-1].cloneNode(true));
             var sn = this.doc.getElementsByTagNameNS('*','Sheet')[sheet];
-            var cls = sn.getElementsByTagNameNS('*','Cells')[0]
+            var cls = sn.getElementsByTagNameNS('*','Cells')[0];
             while (cls.childNodes.length) {
                 cls.removeChild(cls.firstChild);
             }
