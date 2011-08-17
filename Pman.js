@@ -278,7 +278,6 @@ Pman = new Roo.Document(
             
             this.pulldownMenu = new Roo.Toolbar.Button( 
                 {
-                     
                     text: "Add New Item",
                     cls: 'x-btn-text-icon',
                     icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
