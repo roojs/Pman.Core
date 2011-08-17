@@ -269,7 +269,7 @@ class Pman_Core_JsCompile  extends Pman
         
         $res = `$cmd`;
         //exit;
-        file_put_contents($output.'.log'. $cmd."\n\n". $res);
+        file_put_contents($output.'.log', $cmd."\n\n". $res);
         // since this only appears when we change.. it's ok to dump it out..
           echo "<!-- Compiled javascript
             " . htmlspecialchars($res) . "
