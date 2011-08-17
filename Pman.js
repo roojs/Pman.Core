@@ -287,7 +287,7 @@ Pman = new Roo.Document(
                 }
             );
             this.pulldownMenu = btn.menu;
-            lotb.add(btn, '0');
+            lotb.add(btn, '-');
             
         }
        
