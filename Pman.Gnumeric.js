@@ -1091,7 +1091,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // start adding them all together..
         
         if (sb) {
-            st.appendChild(sb)
+            st.appendChild(sb);
         }
         
         
