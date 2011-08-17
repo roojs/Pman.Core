@@ -80,7 +80,7 @@ Roo.apply(Pman.Lock.prototype, {
             
         Roo.each(ar, function(p) {
             msg += '<br/>' + p.name + ' at ' + p.lock_created ;
-        })
+        });
         var _t = this;
         Roo.MessageBox.confirm("Confirm breaking locks", msg, function(r) {
             if (r != 'yes') {
