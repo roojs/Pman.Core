@@ -74,7 +74,7 @@ class Pman_Core_JsCompile  extends Pman
      * @param {Array}  list of files (ontop of basedir) 
      * @param {String} output url (path to basedir basically), or false
      *                  to not compile
-     *
+     * 
      *
      */
     
@@ -251,7 +251,9 @@ class Pman_Core_JsCompile  extends Pman
         if (!file_exists(dirname($output))) {
             mkdir(dirname($output), 0755, true);
         }
-        sort($ofiles);
+        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        usort($ofiles, $lsort);
+        
         $eoutput = escapeshellarg($output);
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
