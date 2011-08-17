@@ -258,9 +258,18 @@ class Pman_Core_JsCompile  extends Pman
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
+        
+         echo "<!-- Compile javascript
+          
+            " . htmlspecialchars($cmd) . "
+            
+            -->";
+            
+        
+        
         $res = `$cmd`;
         //exit;
-        
+        file_put_contents($output.'.log'. $res);
         // since this only appears when we change.. it's ok to dump it out..
           echo "<!-- Compiled javascript
           
