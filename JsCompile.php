@@ -261,8 +261,8 @@ class Pman_Core_JsCompile  extends Pman
                    
         if (  $translation_base) {
             $toutput = "-t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
-                    " -p " . escapeshellarg($translation_base) .
-                    " -k "; // this kills the compression.
+                    " -p " . escapeshellarg($translation_base) ;//." -k "; // this kills the compression.
+                    
         }
         
         
