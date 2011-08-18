@@ -256,8 +256,9 @@ class Pman_Core_JsCompile  extends Pman
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($ofiles, $lsort);
         
-        $eoutput = escapeshellarg($output);
-        
+        $eoutput = " -o " . escapeshellarg($output) .
+                   " -O ". escapeshellarg(preg_replace('/\.js$/', '.__debug__.js', $output));
+                   
         if (false && $translation_base) {
             $toutput = "-t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
                     " -p " . escapeshellarg($translation_base);
@@ -265,7 +266,7 @@ class Pman_Core_JsCompile  extends Pman
         
         
         
-        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
+        $cmd = "$seed {$o['jspacker']}/pack.js  $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
