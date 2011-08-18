@@ -255,7 +255,8 @@ class Pman_Core_JsCompile  extends Pman
         usort($ofiles, $lsort);
         
         $eoutput = escapeshellarg($output);
-        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput " . implode($ofiles, ' ') . ' 2>&1';
+        $toutput = escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output));
+        $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput -t $output" . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
