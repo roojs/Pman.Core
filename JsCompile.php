@@ -256,18 +256,17 @@ class Pman_Core_JsCompile  extends Pman
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($ofiles, $lsort);
         
-        $eoutput = " -o " . escapeshellarg($output) .
-                   " -O ". escapeshellarg(preg_replace('/\.js$/', '.__debug__.js', $output));
+        $eoutput = " -o " . escapeshellarg($output) ;
+            
                    
-        if (false && $translation_base) {
+        if (  $translation_base) {
             $toutput = "-t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
-                    " -p " . escapeshellarg($translation_base);
+                    " -p " . escapeshellarg($translation_base) .
+                    " -k "; // this kills the compression.
         }
         
-        // -k == keep white
-        // -C == keep cached files.
         
-        $cmd = "$seed {$o['jspacker']}/pack.js  -k $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
+        $cmd = "$seed {$o['jspacker']}/pack.js   $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
