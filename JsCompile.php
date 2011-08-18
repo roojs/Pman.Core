@@ -214,7 +214,9 @@ class Pman_Core_JsCompile  extends Pman
         
     }
     /**
-     * wrapper arroudn packer...
+     * wrapper arround packer...
+     * uses the translation module & puts index in __tra
+     * 
      * @param {Array} map of $files => filemtime the files to pack
      * @param {String} $output name fo file to output
      *
