@@ -58,7 +58,7 @@ Pman.Gnumeric = function (cfg)
 	     * Fires when source document has been loaded
 	     * @param {Pman.Gnumerci} this
 	     */
-	    "load" : true
+	    'load' : true
     }); 
     
     Roo.util.Observable.call(this,cfg);
