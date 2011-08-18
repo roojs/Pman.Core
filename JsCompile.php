@@ -221,7 +221,7 @@ class Pman_Core_JsCompile  extends Pman
      * @param {String} $output name fo file to output
      *
      */
-    function pack($files, $output)
+    function pack($files, $output, $translation_base=false)
     {
         
          
@@ -258,7 +258,12 @@ class Pman_Core_JsCompile  extends Pman
         
         $eoutput = escapeshellarg($output);
         
-        $toutput = "-t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output));
+        if ($translation_base) {
+            $toutput = "-t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
+                    " -p " . escapeshellarg($translation_base);
+        }
+        
+        
         
         $cmd = "$seed {$o['jspacker']}/pack.js  -o $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
