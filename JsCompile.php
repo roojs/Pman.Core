@@ -264,9 +264,10 @@ class Pman_Core_JsCompile  extends Pman
                     " -p " . escapeshellarg($translation_base);
         }
         
+        // -k == keep white
+        // -C == keep cached files.
         
-        
-        $cmd = "$seed {$o['jspacker']}/pack.js  -C $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
+        $cmd = "$seed {$o['jspacker']}/pack.js  -k $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
