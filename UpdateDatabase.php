@@ -78,7 +78,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 $cmd = $cat . ' ' . escapeshellarg($fn) . " | $mysql_cmd -f ";
                 
-                echo $cmd. ($cli ? "\n" : "<BR>\n");
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
                 
                 passthru($cmd);
             
