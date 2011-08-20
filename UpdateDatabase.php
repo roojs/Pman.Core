@@ -66,7 +66,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         foreach($ar as $m) {
             
-            $fd = $this->rootDir. "/Pman/$m/DataObjects/$fl";
+            $fd = $this->rootDir. "/Pman/$m/DataObjects/";
             
             foreach(glob($fd.'/*.sql') as $f) {
                 
