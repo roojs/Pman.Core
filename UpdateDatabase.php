@@ -43,14 +43,13 @@ class Pman_Core_RunGenerator extends Pman
      */
     function importSQL()
     {
-        $options = &PEAR::getStaticProperty('DB_DataObject','options');
         
         $ff = HTML_Flexyframework::get();
         
-        $url = parse_url($options['database']);
+        $url = parse_url($ff->DB_DataObject['database']);
         // hide stuff for web..
-        $cli = $options['cli'];
-        if (!$cli) {
+        
+        if (!$this->cli) {
             $url['pass'] = '*****';
             $url['user'] = '*****';
             $url['host'] = '*****';
@@ -59,7 +58,9 @@ class Pman_Core_RunGenerator extends Pman
         require_once 'System.php';
         $cat = System::which('cat');
         $mysql = System::which('mysql');
+        
         print_r($options['mods'] );
+        
         foreach($this->modsql as $m => $fl)
         {
             if ($cli && isset($options['database_'. $m])) {
