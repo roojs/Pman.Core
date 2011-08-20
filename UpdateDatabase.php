@@ -68,11 +68,10 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
-            foreach(glob($fd.'/*.sql') as $f) {
+            foreach(glob($fd.'/*.sql') as $fn) {
                 
-                $fn = "$fd/$f";
-                
-                if (preg_match('/migrate/i', $f)) { // skip migration scripts at present..
+                 
+                if (preg_match('/migrate/i', basename($f))) { // skip migration scripts at present..
                     continue;
                 }
                 
