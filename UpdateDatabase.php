@@ -75,7 +75,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 
-                $cmd = $cat . ' ' . escapeshellarg($fn) . " | $mysql_cmd -f ";
+                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
                 
                 echo $cmd. ($this->cli ? "\n" : "<BR>\n");
                 
