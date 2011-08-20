@@ -8,9 +8,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     static $cli_desc = "Update SQL - Beta";
  
-class Pman_Core_RunGenerator extends Pman
-{     
-    
+ 
   
     var $cli = false;
     function getAuth() {
@@ -49,47 +47,41 @@ class Pman_Core_RunGenerator extends Pman
         $url = parse_url($ff->DB_DataObject['database']);
         // hide stuff for web..
         
-        if (!$this->cli) {
-            $url['pass'] = '*****';
-            $url['user'] = '*****';
-            $url['host'] = '*****';
-        }
-        
         require_once 'System.php';
         $cat = System::which('cat');
         $mysql = System::which('mysql');
         
-        print_r($options['mods'] );
+        $ar = $this->modulesList();
         
-        foreach($this->modsql as $m => $fl)
-        {
-            if ($cli && isset($options['database_'. $m])) {
-                $url = parse_url($options['database_'.$m]);
-            }
-            
+           
             $mysql_cmd = $mysql .
                 ' -h ' . $url['host'] .
                 ' -u' . escapeshellarg($url['user']) .
                 (!empty($url['pass']) ? ' -p' . escapeshellarg($url['pass'])  :  '') .
                 ' ' . basename($url['path']);
-           
-            echo $mysql_cmd . "\n" ;
+        echo $mysql_cmd . "\n" ;
+        
+        
+        
+        
+        foreach($ar as $fl) {
             
-            if (!empty($options['mods'] ) && !in_array($m,  $options['mods'] )) {
-                continue;
-            }
+            $fd = $this->rootDir. "/Pman/$m/DataObjects/$fl";
             
-            foreach($fl as $f) {
-                $fn = $ff->page->rootDir. "/Pman/$m/DataObjects/$f";
+            foreach(glob($fd.'/*.sql') as $f) {
+                
+                $fn = "$fd/$f";
+                
                 if (preg_match('/migrate/i', $f)) { // skip migration scripts at present..
                     continue;
                 }
                 
                 $cmd = $cat . ' ' . escapeshellarg($fn) . " | $mysql_cmd -f ";
+                
                 echo $cmd. ($cli ? "\n" : "<BR>\n");
-                if ($cli) {
-                    passthru($cmd);
-                }
+                
+                passthru($cmd);
+            
                 
             }
         }
