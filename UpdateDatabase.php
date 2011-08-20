@@ -71,7 +71,7 @@ class Pman_Core_UpdateDatabase extends Pman
             foreach(glob($fd.'/*.sql') as $fn) {
                 
                  
-                if (preg_match('/migrate/i', basename($f))) { // skip migration scripts at present..
+                if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
                     continue;
                 }
                 
