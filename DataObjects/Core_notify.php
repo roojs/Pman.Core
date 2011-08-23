@@ -40,8 +40,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    function person()
+    function person($set)
     {
+        if ($set !== false) {
+            $this->person_id = is_object($set) ? $set->id : $set;
+            return;
+        }
         $c = DB_DataObject::Factory('Person');
         $c->get($this->person_id);
         return $c;
