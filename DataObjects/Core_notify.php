@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    function person($set)
+    function person($set = false)
     {
         if ($set !== false) {
             $this->person_id = is_object($set) ? $set->id : $set;
@@ -51,8 +51,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return $c;
         
     }
-    function object()
+    function object($set = false)
     {
+        if ($set !== false) {
+            $this->ontable = $set->tableName();
+            $this->onid = $set->id;
+            return;
+        }
         $c = DB_DataObject::factory($this->ontable);
         $c->autoJoin();
         if ($c->get($this->onid)) {
