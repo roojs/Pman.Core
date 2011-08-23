@@ -134,9 +134,8 @@ class Pman_Core_NotifySend extends Pman
         
         if ($email === false) {
             // object returned 'false' - it does not know how to send it..
-            $id = $this->addEvent('NOTIFY', $w, "INTERNAL ERROR  - We can not handle " . $w->ontable
-                        $p->email . ' ' .
-                         ));
+            $id = $this->addEvent('NOTIFY', $w, "INTERNAL ERROR  - We can not handle " . $w->ontable);;
+            $ww = clone($w);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
