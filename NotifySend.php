@@ -141,8 +141,10 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . isset($email['error'])  ?
-                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable);
+            die(date('Y-m-d h:i:s') .
+                    (isset($email['error'])  ?
+                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable)
+                    ."\n");
         }
         
         
