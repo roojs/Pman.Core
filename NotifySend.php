@@ -130,7 +130,7 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
-        $email =  $this->makeEmail($o, $p, $last, $w);
+        $email =  $this->makeEmail($o, $p, $last, $lastevent);
         
         if ($email === false) {
             // object returned 'false' - it does not know how to send it..
