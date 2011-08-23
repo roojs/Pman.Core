@@ -56,7 +56,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($set !== false) {
             $this->ontable = $set->tableName();
             $this->onid = $set->id;
-            return;
+            return $set;
         }
         $c = DB_DataObject::factory($this->ontable);
         $c->autoJoin();
