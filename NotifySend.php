@@ -130,7 +130,22 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
-        $email =  $this->makeEmail($o, $p,$last, $ev);
+        $email =  $this->makeEmail($o, $p, $last, $w);
+        
+        if ($email === false) {
+            // object returned 'false' - it does not know how to send it..
+            $id = $this->addEvent('NOTIFY', $w, "INTERNAL ERROR - ".
+                        $p->email . ' ' .
+                         " - We can not handle "));
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
+            
+            
+        }
+        
         
         
         
