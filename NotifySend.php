@@ -119,7 +119,7 @@ class Pman_Core_NotifySend extends Pman
         // find last event..
         $ev = DB_DataObject::factory('Events');
         $ev->on_id = $w->id;                           // int(11)
-        $ev->od_table = $this->table;
+        $ev->on_table = $this->table;
         $ev->limit(1);
         $ev->orderBy('event_when DESC');
         $ar = $ev->fetchAll('event_when');
@@ -134,9 +134,9 @@ class Pman_Core_NotifySend extends Pman
         
         if ($email === false) {
             // object returned 'false' - it does not know how to send it..
-            $id = $this->addEvent('NOTIFY', $w, "INTERNAL ERROR - ".
+            $id = $this->addEvent('NOTIFY', $w, "INTERNAL ERROR  - We can not handle " . $w->ontable
                         $p->email . ' ' .
-                         " - We can not handle "));
+                         ));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
