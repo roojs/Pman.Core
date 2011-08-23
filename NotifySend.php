@@ -140,7 +140,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
+            die(date('Y-m-d h:i:s') . "INTERNAL ERROR  - We can not handle " . $w->ontable);
             
             
         }
