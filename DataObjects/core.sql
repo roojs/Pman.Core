@@ -33,11 +33,9 @@ ALTER TABLE `Companies` ADD COLUMN `updated_dt` datetime  NOT NULL;
 
 ALTER TABLE `Companies` ADD COLUMN   `passwd` varchar(64) NOT NULL;
 
-
-ALTER TABLE Companies 
-	ADD COLUMN dispatch_port varchar(255) NOT NULL DEFAULT '',
-	ADD COLUMN province varchar(255) NOT NULL DEFAULT '',
-	ADD COLUMN country varchar(4) NOT NULL DEFAULT '';
+ALTER TABLE Companies 	ADD COLUMN dispatch_port varchar(255) NOT NULL DEFAULT '';
+ALTER TABLE Companies 	ADD COLUMN province varchar(255) NOT NULL DEFAULT '';
+ALTER TABLE Companies 	ADD COLUMN country varchar(4) NOT NULL DEFAULT '';
 
  
 UPDATE Companies set comptype='OWNER' where isOwner=1;
@@ -310,20 +308,21 @@ ALTER TABLE core_watch ADD INDEX qlookup (`ontable`,`onid`,`user_id`,`event`,`me
 CREATE TABLE  core_notify  (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `act_when` DATETIME NOT NULL,
+  act_start DATETIME NOT NULL,
   `onid` int(11)  NOT NULL DEFAULT 0,
   `ontable` varchar(128)  NOT NULL DEFAULT '',
   `person_id` int(11)  NOT NULL DEFAULT 0,
   `msgid` varchar(128)  NOT NULL  DEFAULT '',
   `sent` DATETIME  NOT NULL,
-  `bounced` int(4)  NOT NULL DEFAULT 0,
+  `event_id` int(11)  NOT NULL DEFAULT 0,
+  
   PRIMARY KEY (`id`),
   INDEX `lookup`(`act_when`, `msgid`)
 );
-ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) DEFAULT 0;
-
-
 ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
  
+ALTER TABLE core_notify ADD COLUMN  act_start DATETIME NOT NULL,
+
 
 # - used by email / tracker to handle alises - we have to be carefull adding to this table...
 
