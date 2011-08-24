@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-            $n->act_start(  date("Y-m-d H:i:s") );
+            $n->act_start( date("Y-m-d H:i:s") );
             $n->insert();
             
             
