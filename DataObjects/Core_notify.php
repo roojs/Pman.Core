@@ -70,6 +70,18 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return false;
         
     }
+    
+    
+    function act_start($set = false)
+    {
+        if ($set === false) {
+            return $this->act_start;
+        }
+        $this->act_when = $set;
+        $this->act_start = $set;
+        return $set;
+    }
+    
     function event()
     {
 
