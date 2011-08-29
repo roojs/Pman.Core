@@ -189,7 +189,7 @@ class Pman_Core_NotifySend extends Pman
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
-            $code = empty($res->smtpcode) ? -1 : $res->smtpcode;
+            $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if ($code < 0) {
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
@@ -209,7 +209,7 @@ class Pman_Core_NotifySend extends Pman
         // fail.. = log and give up..
             $id = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ".
                         $p->email . ' ' .
-                        ($fail ? ($res->smtpcode . ' : ' .$res->toString()) :  " - UNKNOWN ERROR"));
+                        ($fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $id;
