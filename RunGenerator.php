@@ -71,6 +71,10 @@ class Pman_Core_RunGenerator extends Pman
         }
         $x = new Pman_Core_Generator();
        // $x->page = clone($this);
+       
+        
+        $modules = $opts
+       
         $x->start($this->cli, $args, $lastarg);
         
         // technically it would be good to trash the cached ini files here.. 
