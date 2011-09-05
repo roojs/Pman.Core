@@ -76,7 +76,7 @@ class Pman_Core_RunGenerator extends Pman
         $modules = is_string($opts['modules']) ? array($opts['modules']) : $opts['modules'];
         $overwrite = is_string($opts['overwrite']) ? array($opts['overwrite']) : $opts['overwrite'];
 
-        $x->start($this->cli, $modules, overwrite);
+        $x->start($this->cli, $modules, $overwrite);
         
         // technically it would be good to trash the cached ini files here.. 
         // however we can not really do that, as the ownships are off..
