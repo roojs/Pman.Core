@@ -52,7 +52,7 @@ class Pman_Core_RunGenerator extends Pman
         return true;
     }
      
-    function get($args)
+    function get($args, $opts)
     {
         HTML_FlexyFramework::run('Core/UpdateDatabase');
         
