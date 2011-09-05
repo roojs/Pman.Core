@@ -128,7 +128,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
         $diff = System::which('diff');
         // now for each of the directories copy/show diffs..
         echo $cli ? '' : '<PRE>';
-        $flist = explode(',', $overwrite);
+        $flist =   $overwrite;
         foreach($this->modtables as $m=>$ar) {
             if ($options['database'] !=  $standard_database) {
                 $options['database'] =  $standard_database ;
