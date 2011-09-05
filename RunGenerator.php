@@ -19,7 +19,7 @@ class Pman_Core_RunGenerator extends Pman
             'short' => 'm',
             'default' => '',
             'min' => 1,
-            'max' => 0,
+            'max' => 1,
             
         ),
         'overwrite' => array(
