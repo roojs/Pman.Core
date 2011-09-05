@@ -81,7 +81,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
     // we always overwrite the definition!!!
     // set to array('all') to overwrite everything!!!
     
-    function start($cli=false, $mods='', $overwrite='')
+    function start($cli=false, $mods='', $overwrite=array())
     {
         
         $ff = HTML_Flexyframework::get();
