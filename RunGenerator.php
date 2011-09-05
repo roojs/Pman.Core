@@ -26,7 +26,7 @@ class Pman_Core_RunGenerator extends Pman
             'desc' => 'Files to Overwrite',
             'default' => '',
             'short' => 'o',
-            'min' => 0,
+            'min' => 1,
             'max' => 999,
             
         )
