@@ -19,7 +19,7 @@ class Pman_Core_RunGenerator extends Pman
             'short' => 'm',
             'default' => '',
             'min' => 1,
-            'max' => 1,
+            'max' => 0,
             
         ),
         'overwrite' => array(
@@ -73,7 +73,7 @@ class Pman_Core_RunGenerator extends Pman
        // $x->page = clone($this);
        
         
-        $modules = is_string($opts['modules']) ? array($opts['modules']) : $opts['modules'];
+        $modules = is_string($opts['module']) ? array($opts['module']) : $opts['module'];
         $overwrite = is_string($opts['overwrite']) ? array($opts['overwrite']) : $opts['overwrite'];
 
         $x->start($this->cli, $modules, $overwrite);
