@@ -55,7 +55,7 @@ class Pman_Core_RunGenerator extends Pman
     {
         HTML_FlexyFramework::run('Core/UpdateDatabase');
         
-        die("running generator")
+        die("running generator");
         
         require_once 'Pman/Core/Generator.php';
         ini_set('pcre.backtrack_limit', 2000000);
