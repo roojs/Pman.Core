@@ -32,7 +32,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function get()
     {
         $this->importSQL();
-        die("done");
+         
     }
      /**
      * imports SQL files from all DataObjects directories....
