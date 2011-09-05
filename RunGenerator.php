@@ -17,7 +17,8 @@ class Pman_Core_RunGenerator extends Pman
         'module' => array(
             'desc' => 'Module',
             'short' => 'm',
-            'min' => 1,
+            'default' => '',
+            'min' => 0,
             'max' => 1,
             
         ),
