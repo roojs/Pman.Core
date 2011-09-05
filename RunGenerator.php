@@ -12,7 +12,26 @@ require_once 'Pman.php';
 class Pman_Core_RunGenerator extends Pman
 {     
     static $cli_desc = "Update SQL or Generate DataObjects";
-  
+   
+    static $cli_opts = array(
+        'module' => array(
+            'desc' => 'Module',
+            'short' => 'm',
+            'min' => 1,
+            'max' => 1,
+            
+        ),
+        'overwrite' => array(
+            'desc' => 'Files to Overwrite',
+            'default' => '',
+            'short' => 'o',
+            'min' => 0,
+            'max' => 999,
+            
+        )
+        
+    );
+    
     var $cli = false;
     function getAuth() {
         
