@@ -55,7 +55,7 @@ class Pman_Core_RunGenerator extends Pman
     function get($args, $opts)
     {
         
-        print_r($opts);exit;
+        
         HTML_FlexyFramework::run('Core/UpdateDatabase');
         
          
@@ -75,7 +75,7 @@ class Pman_Core_RunGenerator extends Pman
         
         $modules = is_string($opts['modules']) ? array($opts['modules']) : $opts['modules'];
        
-        $x->start($this->cli, $args, $lastarg);
+        $x->start($this->cli, $modules, $lastarg);
         
         // technically it would be good to trash the cached ini files here.. 
         // however we can not really do that, as the ownships are off..
