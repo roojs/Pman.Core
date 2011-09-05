@@ -11,7 +11,7 @@
 require_once 'Pman.php';
 class Pman_Core_RunGenerator extends Pman
 {     
-    static $cli_desc = "Update SQL or Generate DataObjects";
+    static $cli_desc = "Generate DataObjects";
    
     static $cli_opts = array(
         'module' => array(
