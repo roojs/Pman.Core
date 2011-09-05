@@ -27,7 +27,7 @@ class Pman_Core_RunGenerator extends Pman
             'default' => '',
             'short' => 'o',
             'min' => 1,
-            'max' => 999,
+            'max' => -1,
             
         )
         
@@ -64,16 +64,13 @@ class Pman_Core_RunGenerator extends Pman
         ini_set('pcre.backtrack_limit', 2000000);
         ini_set('pcre.recursion_limit', 2000000);
         $this->init();
-         
-        $lastarg = $this->cli  ? array_pop($_SERVER['argv']) : '';
-        if (preg_match('/RunGenerator/', $lastarg)) {
-            $lastarg  = '';
-        }
+        
         $x = new Pman_Core_Generator();
        // $x->page = clone($this);
        
         
-        $modules = is_string($opts['module']) ? array($opts['module']) : $opts['module'];
+        $modules = $opts['module'];
+        // overwrite can be multiple
         $overwrite = is_string($opts['overwrite']) ? array($opts['overwrite']) : $opts['overwrite'];
 
         $x->start($this->cli, $modules, $overwrite);
