@@ -73,7 +73,7 @@ class Pman_Core_RunGenerator extends Pman
        // $x->page = clone($this);
        
         
-        $modules = $opts
+        $modules = $opts;exit;
        
         $x->start($this->cli, $args, $lastarg);
         
