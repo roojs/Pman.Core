@@ -34,6 +34,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->importSQL();
          
     }
+    function output() {
+        return '';
+    }
      /**
      * imports SQL files from all DataObjects directories....
      * 
