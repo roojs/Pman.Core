@@ -792,6 +792,7 @@ Pman = new Roo.Document(
             // this is an error condition - the parent does not exist..
             // technically it should not happen..
             console.log(obj);
+            return;
         }
         if (!obj.parent.modules) {
             obj.parent.modules = new Roo.util.MixedCollection(false, function(o) { return o.modKey });
