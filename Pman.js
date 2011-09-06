@@ -791,6 +791,7 @@ Pman = new Roo.Document(
             }
             // this is an error condition - the parent does not exist..
             // technically it should not happen..
+            console.log("Parent is missing");
             console.log(obj);
             return;
         }
