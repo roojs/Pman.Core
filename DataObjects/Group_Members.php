@@ -65,6 +65,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         
         $t->find();
         
+        $ret = array() ;
         $ret = $arrayof == 'group_id' ? array(0) : array();
         // default member of 'All groups'!!
         
@@ -74,6 +75,10 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
                 $this->inAdmin = true;
             }
         }
+        if ($arrayof == 'group_id' && !count($ret)) {
+            $ret = array(0); /// default if they are not a member of any group.
+        }
+        
         return $ret;
         
     }
