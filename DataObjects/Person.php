@@ -338,10 +338,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
          //DB_DataObject::debugLevel(1);
         // find out all the groups they are a member of.. + Default..
+        
+        // ------ INIITIALIZE IF NO GROUPS ARE SET UP.
+        
         $g = DB_DataObject::Factory('Group_Rights');
         if (!$g->count()) {
             $g->genDefault();
         }
+        
         if ($this->id < 0) {
             return $g->adminRights(); // system is not set up - so they get full rights.
         }
@@ -358,6 +362,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             
         }
+        
+        // ------ STANDARD PERMISSION HANDLING.
         
         $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
