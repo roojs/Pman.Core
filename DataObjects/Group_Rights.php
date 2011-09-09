@@ -168,7 +168,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
                 break;
                 
             default:
-                $this->AccessMask = $this->mergeMask($this->AccessMask, $defs[$this->rightname][1]);
+                //$this->AccessMask = $this->mergeMask($this->AccessMask, $defs[$this->rightname][1]);
                 break;
         
         }
