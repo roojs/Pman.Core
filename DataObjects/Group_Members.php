@@ -66,7 +66,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         $t->find();
         
         $ret = array() ;
-        $ret = $arrayof == 'group_id' ? array(0) : array();
+       // $ret = $arrayof == 'group_id' ? array(0) : array();
         // default member of 'All groups'!!
         
         while ($t->fetch()) {
