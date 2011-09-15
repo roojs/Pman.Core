@@ -27,7 +27,8 @@ Pman.I18n = {
      * odd situations.
      *
      * To enable it to be translated, we need to change it's value after the pages is loaded..
-     *
+     * The trigger is at the bottom of this file. (eg.Pman.on('load'))
+     * 
      */
     
     onReady : function()
