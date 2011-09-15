@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             return;
         }
         
-        $list =  $this->getDefaultCfg($ltype);
+        $list =  $this->availableCodes($ltype);
         
         //DB_DataObject::debugLevel(1);
         
