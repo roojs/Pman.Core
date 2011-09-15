@@ -69,6 +69,20 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // -------------- code to handle importing into database..
+    
+    
+    
+    
     // returns a list of all countries/languages etc.. (with '*')
     function availableCodes($t)
     {
