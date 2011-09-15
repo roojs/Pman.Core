@@ -158,9 +158,8 @@ class Pman_Core_i18N extends Pman
             case 'BuildDB':
             // by admin only?!?
                 //DB_DataObject::debugLevel(1);
-                $this->buildDb('l');
-                $this->buildDb('c');
-                $this->buildDb('m');
+                $i = DB_DataObject::Factory('I18n');
+                $i->buildDb();
                 die("DONE!");
                 break;
                   
