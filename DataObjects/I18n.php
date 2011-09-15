@@ -88,38 +88,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $x->find();
         $ret = array();
         while ($x->fetch()) {
-            $ret[] = array('code' => $x->code, 'title' =>$x->title);
+            $ret[] = array(
+                'code' => $x->code,
+                'title' =>$x->title);
         }
         
     }
-    
-    function objToList($type, $obj) {
-        $ret = array();
-         
-         
-        foreach($this->cfg[$type] as $k) {
-            $sub = false;
-            
-            if (strpos($k, '_') !== false) {
-                $bits = explode('_', $k);
-                $k = array_shift($bits);
-                $sub = array_shift($bits);
-            }
-            $v = $k == '**' ? 'Other' : $obj->getName($k);
-            
-            if ($sub) {
-                $v .= ' ('.$sub.')';
-            }
-            
-            $ret[] = array(
-                'code'=>   ($type=='l' ? strtolower($k) : strtoupper($k)) . ($sub ? '_'.strtoupper($sub) : ''), 
-                'title' => $v
-            );
-        }
-        return $ret;
-    }
-    
-    
+     
     
     
     
