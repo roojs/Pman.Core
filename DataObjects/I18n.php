@@ -57,11 +57,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
      * initalizie the cfg aray
      *
      */
-    function initCfg()
+    function cfg()
     {
         static $loaded  = false;
         if ($loaded) {
-            return;
+            return self::$cfg;
         }
         $loaded =true;
         $ff= HTML_FlexyFramework::get();
@@ -79,7 +79,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
             self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
         }
-        
+        return self::$cfg;
         
         
     }
