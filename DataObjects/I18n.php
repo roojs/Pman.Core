@@ -69,12 +69,37 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
     }
     
-    function loadDefault()
-    {
-        /// 
+    // returns a list of all countries/languages etc.. (with '*')
+    function availableCodes($t) {
+        $ret = array();
+        switch ($t) {
+            case 'c':
+                require_once 'I18Nv2/Country.php';
+                
+                $c = new I18Nv2_Country('en');
+                $ret =  array_keys($c->codes);
+                $ret[] = '**';
+                break;
+            case 'l':
+                require_once 'I18Nv2/Language.php';
+                $c = new I18Nv2_Language('en');
+                $ret =  array_keys($c->codes);
+                $ret[] = '**';
+                break;
+            case 'm':
+                require_once 'I18Nv2/Currency.php';
+                $c = new I18Nv2_Currency('en');
+                $ret =  array_keys($c->codes);
+                $ret[] = '**';
+                break;
+        }
+        
+        foreach ($ret as $k=>$v) {
+            $ret[$k] = strtoupper($v);
+        }
         
         
-        
+        return $ret;
     }
     function buildDB($ltype= false, $inlang= false )
     {
