@@ -103,7 +103,7 @@ class Pman_Core_I18N extends Pman
         foreach($opts as $k=>$v) {
             
             if ($v == '*') { // everything..
-                $this->cfg[$k] = $i->available($k);
+                $this->cfg[$k] = $i->availableCodes($k);
                 continue;
             }
             $this->cfg[$k] = is_array($v) ? $v  : explode(',', $v);
@@ -114,62 +114,17 @@ class Pman_Core_I18N extends Pman
         
         return true;
     }
-    // returns a list of all countries..
-    function getDefaultCfg($t) {
-        $ret = array();
-        switch ($t) {
-            case 'c':
-                require_once 'I18Nv2/Country.php';
-                
-                $c = new I18Nv2_Country('en');
-                $ret =  array_keys($c->codes);
-                $ret[] = '**';
-                break;
-            case 'l':
-                require_once 'I18Nv2/Language.php';
-                $c = new I18Nv2_Language('en');
-                $ret =  array_keys($c->codes);
-                $ret[] = '**';
-                break;
-            case 'm':
-                require_once 'I18Nv2/Currency.php';
-                $c = new I18Nv2_Currency('en');
-                $ret =  array_keys($c->codes);
-                $ret[] = '**';
-                break;
-        }
-        
-        foreach ($ret as $k=>$v) {
-            $ret[$k] = strtoupper($v);
-        }
-        
-        
-        return $ret;
-    }
+     
     
      
     function get($s ='')
     {
         
+        $i = DB_DataObject::Factory('I18n');
+        $i->buildDb();
+        $this->outputJavascript();
+    
         
-        switch ($s)
-        {
-            
-            case 'BuildDB':
-            // by admin only?!?
-                //DB_DataObject::debugLevel(1);
-                $i = DB_DataObject::Factory('I18n');
-                $i->buildDb();
-                die("DONE!");
-                break;
-                  
-            default: 
-                $this->outputJavascript();
-                // output javascript..
-                $this->jerr("ERROR");
-        }
-         
-        $this->jdata($ret);
         exit;
         
     }
