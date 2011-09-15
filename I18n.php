@@ -51,34 +51,7 @@ class Pman_Core_I18N extends Pman
 {
  
     
-    // these are the default languages we support.
-    // they will allways be overlaid with the current configuration (via getAuth)
-    // THESE WILL ALLWAYS BE UPPERCASE!!!
-    var $cfg = array(
-        // translated versions availalable
-        
-        't' => array(
-            'en', 'zh_CN',   'zh_HK', 
-        ),
-        // languages available
-        'l' => array(
-            
-            'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
-            'id', // indonesian
-            'tl', // tagalog
-            'vi', //vietnamise
-            'hi', // hindi
-            'ta', // tamil
-            '**', // other
-        ),
-        'c' => array(
-             'AU', 'CN', 'HK', 'IN', 'ID', 'JP', 'MY', 'NZ', 'TW', 'SG', 'TH', 'KR', 'US', 'PH', 'VN','**'
-        ),
-        'm' => array(
-            'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
-        )
-    );
-    
+     
     
      
     
@@ -185,42 +158,7 @@ class Pman_Core_I18N extends Pman
         return $i->translate($lang,$type,$k);
         
         
-        
-        
-        $lbits = explode('_', strtoupper($lang));
-        $lang = $lbits[0];
-        
-        
-        
-        
-        if (!isset($cache[$lang])) {
-            require_once 'I18Nv2/Country.php';
-            require_once 'I18Nv2/Language.php';
-            require_once 'I18Nv2/Currency.php';
-            $cache[$lang] = array(
-                'l' =>  new I18Nv2_Language($lang, 'UTF-8'),
-                'c' => new I18Nv2_Country($lang, 'UTF-8'),
-                'm' => new I18Nv2_Currency($lang, 'UTF-8')
-            );
-            //echo '<PRE>';print_r(array($lang, $cache[$lang]['c']));
-        }
-        if ($k == '**') {
-            return 'Other / Unknown';
-        }
-    
-        
-        if ($type == 'l') {
-            $tolang = explode('_', $k);
          
-            $ret = $cache[$lang][$type]->getName($tolang[0]);
-            if (count($tolang) > 1) {
-                $ret.= '('.$tolang[1].')'; 
-            }
-            return $ret;
-        }
-        $ret = $cache[$lang][$type]->getName($k);
-        //print_r(array($k, $ret));
-        return $ret;
         
         
     }
