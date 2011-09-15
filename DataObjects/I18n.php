@@ -135,9 +135,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         if ($inlang === false) {
             // do we want to add our 'configured ones..'
-            foreach( $this->availableCodes('l') as $l) {
+            // We only build translatiosn for our configured ones..
+            //foreach( $this->availableCodes('l') as $l) {
                 
-             // foreach( $this->cfg['t'] as $l) {
+            foreach( $this->cfg['t'] as $l) {
                 $this->buildDB($ltype, $l);
             }
             return;
