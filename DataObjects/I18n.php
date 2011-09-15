@@ -121,7 +121,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function buildDB($ltype= false, $inlang= false )
     {
         if ($ltype === false) {
-            
+            // trigger all builds.
             $this->buildDB('c');
             $this->buildDB('l');
             $this->buildDB('m');
