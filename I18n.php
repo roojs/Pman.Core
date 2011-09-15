@@ -98,7 +98,7 @@ class Pman_Core_I18N extends Pman
         
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
-        $i = DB_DataObject::Factory('I18n');
+         $i = DB_DataObject::Factory('I18n');
         // load the cofiguration
         foreach($opts as $k=>$v) {
             
@@ -156,38 +156,7 @@ class Pman_Core_I18N extends Pman
         
     }
     
-    function transToList($type, $tolang)
-    {
-        
-        
-        
-    }
-    
-    function objToList($type, $obj) {
-        $ret = array();
-         
-         
-        foreach($this->cfg[$type] as $k) {
-            $sub = false;
-            
-            if (strpos($k, '_') !== false) {
-                $bits = explode('_', $k);
-                $k = array_shift($bits);
-                $sub = array_shift($bits);
-            }
-            $v = $k == '**' ? 'Other' : $obj->getName($k);
-            
-            if ($sub) {
-                $v .= ' ('.$sub.')';
-            }
-            
-            $ret[] = array(
-                'code'=>   ($type=='l' ? strtolower($k) : strtoupper($k)) . ($sub ? '_'.strtoupper($sub) : ''), 
-                'title' => $v
-            );
-        }
-        return $ret;
-    }
+ 
     
      /**
      * translate (used by database building);
