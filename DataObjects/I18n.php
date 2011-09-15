@@ -132,11 +132,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $x->inlang= $inlang;
             if ($x->find(true)) {
                 $xx= clone($x);
-                $x->lval = $this->translate($inlang, $ltype, $lkey);
+                $x->lval = $this->defaultTranslate($inlang, $ltype, $lkey);
                 $x->update($xx);
                 continue;
             }
-            $x->lval = $this->translate($inlang, $ltype, $lkey);
+            $x->lval = $this->defaultTranslate($inlang, $ltype, $lkey);
             $x->insert();
             
         }
@@ -150,7 +150,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
      * 
      */
      
-    function defaultTranslate($au, $type, $k) 
+    function defaultTranslate($lang, $type, $k) 
     {
       
         static $cache;
@@ -158,8 +158,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (empty($k)) {
             return '??';
         }
-        
-        $lang = !$au || empty($au->lang ) ? 'en' : is_string($au) ? $au : $au->lang;
+
         $lbits = explode('_', strtoupper($lang));
         $lang = $lbits[0];
         
@@ -174,6 +173,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             );
             //echo '<PRE>';print_r(array($lang, $cache[$lang]['c']));
         }
+        
         if ($k == '**') {
             return 'Other / Unknown';
         }
