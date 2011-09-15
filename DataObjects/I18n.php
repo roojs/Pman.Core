@@ -53,6 +53,36 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
         )
     );
+    /**
+     * initalizie the cfg aray
+     *
+     */
+    function initCfg()
+    {
+        static $loaded  = false;
+        if ($loaded) {
+            return;
+        }
+        $loaded =true;
+        $ff= HTML_FlexyFramework::get();
+         
+        // since our opts array changed alot..
+        $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
+        
+        $i = DB_DataObject::Factory('I18n');
+        // load the cofiguration
+        foreach($opts as $k=>$v) {
+            
+            if ($v == '*') { // everything..
+                self::$cfg[$k] = $i->availableCodes($k);
+                continue;
+            }
+            self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
+        }
+        
+        
+        
+    }
     
     
       // the default configuration.
@@ -151,6 +181,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     function buildDB($ltype= false, $inlang= false )
     {
+        $this->initCfg();
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
