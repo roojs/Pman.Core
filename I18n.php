@@ -72,7 +72,7 @@ class Pman_Core_I18N extends Pman
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
         $i = DB_DataObject::Factory('I18n');
-        $this->cfg = $i->cfg();
+         
         
         
         
