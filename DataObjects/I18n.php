@@ -28,7 +28,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->selectAdd("
                 i18n_translate(ltype, lkey, 'en') as lval_en
                 
-            ")
+            ");
             
             
             
