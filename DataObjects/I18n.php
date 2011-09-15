@@ -140,9 +140,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $x->insert();
             
         }
-        
-        
-        
+         
         
     }
     
