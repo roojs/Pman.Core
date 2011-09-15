@@ -94,16 +94,16 @@ class Pman_Core_I18N extends Pman
         $this->authUser = $au;
         
         $ff= HTML_FlexyFramework::get();
-        
+         
         
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
-        
+        $i = DB_DataObject::Factory('I18n');
         // load the cofiguration
         foreach($opts as $k=>$v) {
             
             if ($v == '*') { // everything..
-                $this->cfg[$k] = $this->getDefaultCfg($k);
+                $this->cfg[$k] = $i->available($k);
                 continue;
             }
             $this->cfg[$k] = is_array($v) ? $v  : explode(',', $v);
