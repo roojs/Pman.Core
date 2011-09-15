@@ -16,7 +16,7 @@
 * includes standard pulldowns.
 */
 
-Pmnan.on('load', Pman.I18n.onReady, this)
+
 
 Pman.I18n = {
     
@@ -33,7 +33,18 @@ Pman.I18n = {
     onReady : function()
     {
         var d = this.Data;
+        var lang = Pman.Login.authUser.lang;
         
+        var types = ['l','c'];
+        Roo.each(types, function(t) {
+            Roo.each(d[lang][t],function(v,i) {
+                if (v['code'] == '**') {
+                    d[lang][t][i]['title'] = "Other";
+                }
+                
+            });
+            
+        });
         
         
         
@@ -460,4 +471,5 @@ Pman.I18n = {
     
 };
 
+Pmnan.on('load', Pman.I18n.onReady, Pman.I18n);
 
