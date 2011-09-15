@@ -77,7 +77,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     
     
-    function transToList($ltype, $inlang)
+    function toTransList($ltype, $inlang)
     {
         
         $x = DB_DataObject::factory('i18n');
