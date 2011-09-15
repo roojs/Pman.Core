@@ -87,8 +87,7 @@ class Pman_Core_I18N extends Pman
         $i = DB_DataObject::Factory('I18n');
         $i->buildDb();
      
-     
-        
+       
         $i = DB_DataObject::Factory('I18n');
         $cfg = $i->cfg();
         $langs = $cfg['t'];
