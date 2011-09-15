@@ -125,9 +125,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB('c');
             $this->buildDB('l');
             $this->buildDB('m');
-            
-            
-            die("OOPS NO LTYPE");
+            return;
         }
         if ($inlang == '**') {
             return; // dont bother building generic..
