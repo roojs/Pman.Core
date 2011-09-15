@@ -179,7 +179,10 @@ class Pman_Core_I18N extends Pman
         }
         $lang = !$au || empty($au->lang ) ? 'en' : is_string($au) ? $au : $au->lang;
         
+        // does it need caching?
         
+        $i = DB_DataObject::Factory('I18n');
+        return $i->translate($lang,$type,$k);
         
         
         
