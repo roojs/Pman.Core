@@ -123,7 +123,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $list =  $this->getDefaultCfg($ltype);
         
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         
         foreach($list as $lkey) {
             $x = DB_DataObject::factory('i18n');
