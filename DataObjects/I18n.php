@@ -25,6 +25,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    static $cfg; // the default configuration.
+    
     function applyFilters($q, $au)
     {
         
@@ -40,6 +42,47 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function loadDefault()
     {
         /// 
+        
+        
+        
+    }
+    function buildDB($ltype= false, $inlang= false )
+    {
+        if ($ltype === false) {
+            die("OOPS NO LTYPE");
+        }
+        if ($inlang == '**') {
+            return; // dont bother building generic..
+        }
+        
+        
+        if ($inlang === false) {
+            foreach( $this->cfg['t'] as $l) {
+                $this->buildDB($ltype, $l);
+            }
+            return;
+        }
+        
+        $list =  $this->getDefaultCfg($ltype);
+        
+        DB_DataObject::debugLevel(1);
+        
+        foreach($list as $lkey) {
+            $x = DB_DataObject::factory('i18n');
+            $x->ltype = $ltype;
+            $x->lkey = $lkey;
+            $x->inlang= $inlang;
+            if ($x->find(true)) {
+                $xx= clone($x);
+                $x->lval = $this->translate($inlang, $ltype, $lkey);
+                $x->update($xx);
+                continue;
+            }
+            $x->lval = $this->translate($inlang, $ltype, $lkey);
+            $x->insert();
+            
+        }
+        
         
         
         
