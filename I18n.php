@@ -102,7 +102,7 @@ class Pman_Core_i18N extends Pman
         // load the cofiguration
         foreach($opts as $k=>$v) {
             
-            if ($v == '*') {
+            if ($v == '*') { // everything..
                 $this->cfg[$k] = $this->getDefaultCfg($k);
                 continue;
             }
