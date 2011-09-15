@@ -20,35 +20,7 @@
 
 Pman.I18n = {
     
-    /**
-     * onReady: called on page load to fix 'other' translation.
-     *
-     * We have a special country/languages called 'other', which is used to handle
-     * odd situations.
-     *
-     * To enable it to be translated, we need to change it's value after the pages is loaded..
-     * The trigger is at the bottom of this file. (eg.Pman.on('load'))
-     * 
-     */
     
-    onReady : function()
-    {
-        var d = this.Data;
-        var lang = Pman.Login.authUser.lang;
-        
-        var types = ['l','c'];
-        Roo.each(types, function(t) {
-            Roo.each(d[lang][t],function(v,i) {
-                if (v['code'] == '**') {
-                    d[lang][t][i]['title'] = "Other";
-                }
-                
-            });
-            
-        });
-        
-        
-    },
     
     /**
      * turn zh_HK,en  => into Chinese(HK) , English
@@ -470,6 +442,4 @@ Pman.I18n = {
      
     
 };
-
-Pmnan.on('load', Pman.I18n.onReady, Pman.I18n);
-
+ 
