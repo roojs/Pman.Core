@@ -86,15 +86,8 @@ class Pman_Core_I18N extends Pman
         
         $i = DB_DataObject::Factory('I18n');
         $i->buildDb();
-        $this->outputJavascript();
-    
-        
-        exit;
-        
-    }
-    
-    function outputJavascript()
-    {
+     
+     
         
         $i = DB_DataObject::Factory('I18n');
         $cfg = $i->cfg();
