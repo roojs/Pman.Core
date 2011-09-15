@@ -178,8 +178,17 @@ class Pman_Core_I18N extends Pman
             return '??';
         }
         $lang = !$au || empty($au->lang ) ? 'en' : is_string($au) ? $au : $au->lang;
+        
+        
+        
+        
+        
+        
         $lbits = explode('_', strtoupper($lang));
         $lang = $lbits[0];
+        
+        
+        
         
         if (!isset($cache[$lang])) {
             require_once 'I18Nv2/Country.php';
