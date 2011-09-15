@@ -144,5 +144,56 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
     }
     
+    /**
+     * default translate  - use i18n classes to provide a value.
+     *
+     * 
+     */
+     
+    function defaultTranslate($au, $type, $k) 
+    {
+      
+        static $cache;
+        
+        if (empty($k)) {
+            return '??';
+        }
+        
+        $lang = !$au || empty($au->lang ) ? 'en' : is_string($au) ? $au : $au->lang;
+        $lbits = explode('_', strtoupper($lang));
+        $lang = $lbits[0];
+        
+        if (!isset($cache[$lang])) {
+            require_once 'I18Nv2/Country.php';
+            require_once 'I18Nv2/Language.php';
+            require_once 'I18Nv2/Currency.php';
+            $cache[$lang] = array(
+                'l' =>  new I18Nv2_Language($lang, 'UTF-8'),
+                'c' => new I18Nv2_Country($lang, 'UTF-8'),
+                'm' => new I18Nv2_Currency($lang, 'UTF-8')
+            );
+            //echo '<PRE>';print_r(array($lang, $cache[$lang]['c']));
+        }
+        if ($k == '**') {
+            return 'Other / Unknown';
+        }
+    
+        
+        if ($type == 'l') {
+            $tolang = explode('_', $k);
+         
+            $ret = $cache[$lang][$type]->getName($tolang[0]);
+            if (count($tolang) > 1) {
+                $ret.= '('.$tolang[1].')'; 
+            }
+            return $ret;
+        }
+        $ret = $cache[$lang][$type]->getName($k);
+        //print_r(array($k, $ret));
+        return $ret;
+        
+        
+    }
+    
     
 }
