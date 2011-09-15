@@ -47,7 +47,7 @@
  */
 require_once 'Pman.php';
 
-class Pman_Core_i18N extends Pman
+class Pman_Core_I18N extends Pman
 {
  
     
