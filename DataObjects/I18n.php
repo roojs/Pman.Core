@@ -25,7 +25,37 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    static $cfg; // the default configuration.
+    // we have a small default set of languages available..
+    // you can modify this by making this setting in the index.php loader.
+    // Pman_Core_i18n = array( 'c' => *, 'l' => '*', 'm' => '*')
+    
+    static $cfg = array(
+        // translated versions availalable
+        
+        't' => array(
+            'en', 'zh_CN',   'zh_HK', 
+        ),
+        // languages available
+        'l' => array(
+            
+            'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
+            'id', // indonesian
+            'tl', // tagalog
+            'vi', //vietnamise
+            'hi', // hindi
+            'ta', // tamil
+            '**', // other
+        ),
+        'c' => array(
+             'AU', 'CN', 'HK', 'IN', 'ID', 'JP', 'MY', 'NZ', 'TW', 'SG', 'TH', 'KR', 'US', 'PH', 'VN','**'
+        ),
+        'm' => array(
+            'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
+        )
+    );
+    
+    
+      // the default configuration.
     
     function applyFilters($q, $au)
     {
