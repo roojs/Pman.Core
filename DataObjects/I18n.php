@@ -1,6 +1,11 @@
 <?php
 /**
  * Table Definition for i18n
+ *
+ * This is heavily related to the Pman_I18n implementation..
+ *
+ * It should eventually replace most of that..
+ * 
  */
 require_once 'DB/DataObject.php';
 
