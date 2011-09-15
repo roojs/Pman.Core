@@ -70,7 +70,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     }
     
     // returns a list of all countries/languages etc.. (with '*')
-    function availableCodes($t) {
+    function availableCodes($t)
+    {
         $ret = array();
         switch ($t) {
             case 'c':
@@ -101,6 +102,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         return $ret;
     }
+    
+    
     function buildDB($ltype= false, $inlang= false )
     {
         if ($ltype === false) {
