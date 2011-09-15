@@ -47,7 +47,7 @@ Pman.I18n = {
         });
         
         
-    }
+    },
     
     /**
      * turn zh_HK,en  => into Chinese(HK) , English
