@@ -24,8 +24,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         
         //DB_DataObject::debugLevel(1);
-        if (!empty($q['query']['empty_etype'])) {
-            $this->whereAdd("etype = ''");
+        if (!empty($q['query']['_with_en'])) {
+            $this->selectAdd(""
+                i18n_translate(ltype, lkey, 'en') as lval_en
+                
+            ")
+            
+            
+            
         }
     }
 }
