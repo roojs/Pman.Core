@@ -19,4 +19,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function applyFilters($q, $au)
+    {
+        
+        //DB_DataObject::debugLevel(1);
+        if (!empty($q['query']['empty_etype'])) {
+            $this->whereAdd("etype = ''");
+        }
+    }
 }
