@@ -144,11 +144,22 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             return;
         }
         
-        $list =  $this->availableCodes($ltype);
         
         //DB_DataObject::debugLevel(1);
+        $x = DB_DataObject::factory('i18n');
+        $x->inlang= $inlang;
+        $x->ltype = $ltype;
+        
+        $complete = $x->fetchAll('lkey');
+        
+        $list =  $this->availableCodes($ltype);
+        
         
         foreach($list as $lkey) {
+            // skip ones we know we have done...
+            if (in_array($lkey, $complete)) {
+                continue;
+            }
             $x = DB_DataObject::factory('i18n');
             $x->ltype = $ltype;
             $x->lkey = $lkey;
