@@ -144,7 +144,7 @@ class Pman_Core_I18N extends Pman
             $ar[$lang] = array(
                 'l' => $i->toTransList('l',  $rlang),
                 'c' => $i->toTransList('c', $rlang),
-                'm' => $ti->toTransList('m', $rlang),
+                'm' => $i->toTransList('m', $rlang),
             );
         }
         //echo '<PRE>';print_r($ar);
