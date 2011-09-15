@@ -62,6 +62,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         //DB_DataObject::debugLevel(1);
         if (!empty($q['query']['_with_en'])) {
+            
+            $this->buildDB(); // ensure we have the full database...
+            
             $this->selectAdd("
                 i18n_translate(ltype, lkey, 'en') as lval_en
                 
