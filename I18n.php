@@ -132,9 +132,7 @@ class Pman_Core_I18N extends Pman
     function outputJavascript()
     {
         
-        require_once 'I18Nv2/Country.php';
-        require_once 'I18Nv2/Language.php';
-        require_once 'I18Nv2/Currency.php';
+        $i = DB_DataObject::Factory('I18n');
         
         $langs = $this->cfg['t'];
        // var_dump($langs);exit;
@@ -144,9 +142,9 @@ class Pman_Core_I18N extends Pman
             $rlang = array_shift(explode('_', strtoupper($lang)));
             
             $ar[$lang] = array(
-                'l' => $this->objToList('l', new I18Nv2_Language($rlang, 'UTF-8')),
-                'c' => $this->objToList('c', new I18Nv2_Country($rlang, 'UTF-8')),
-                'm' => $this->objToList('m', new I18Nv2_Currency($rlang, 'UTF-8'))
+                'l' => $i->toTransList('l',  $rlang),
+                'c' => $i->toTransList('c', $rlang),
+                'm' => $ti->toTransList('m', $rlang),
             );
         }
         //echo '<PRE>';print_r($ar);
@@ -157,6 +155,14 @@ class Pman_Core_I18N extends Pman
         
         
     }
+    
+    function transToList($type, $tolang)
+    {
+        
+        
+        
+    }
+    
     function objToList($type, $obj) {
         $ret = array();
          
