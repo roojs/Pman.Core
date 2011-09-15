@@ -73,7 +73,18 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     }
     
     
-    
+    function translate($inlang,$ltype,$kval)
+    {
+        
+        $x = DB_DataObject::factory('i18n');
+        $x->ltype = $ltype;
+        $x->inlang= $inlang;
+        $x->kval = $kval;
+        $x->limit(1);
+        $x->find(true);
+        return $x->lval;
+        
+    }
     
     
     
