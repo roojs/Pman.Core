@@ -16,7 +16,28 @@
 * includes standard pulldowns.
 */
 
+Pmnan.on('load', Pman.I18n.onReady, this)
+
 Pman.I18n = {
+    
+    /**
+     * onReady: called on page load to fix 'other' translation.
+     *
+     * We have a special country/languages called 'other', which is used to handle
+     * odd situations.
+     *
+     * To enable it to be translated, we need to change it's value after the pages is loaded..
+     *
+     */
+    
+    onReady : function()
+    {
+        var d = this.Data;
+        
+        
+        
+        
+    }
     
     /**
      * turn zh_HK,en  => into Chinese(HK) , English
