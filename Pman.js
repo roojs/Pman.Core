@@ -779,7 +779,7 @@ Pman = new Roo.Document(
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
         if ((typeof(obj.moduleName) != 'undefined')
-                && appDisabled.indexOf(obj.moduleName) > -1)
+                && APPDISABLED.indexOf(obj.moduleName) > -1)
         {
             return;
         }
