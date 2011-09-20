@@ -157,24 +157,6 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         
         // this is clipping related..  -- we should have an API for addons like this.. (and docs)
         
-        if ($au->company()->comptype == 'SUPPLIER') {
-            $pr = DB_DataObject::factory('CampaignAssign');
-            $pr->supplier_id = $au->company_id;
-            $prjs = $pr->fetchAll('project_id');
-             if (count($prjs)) {
-                $this->whereAdd("
-                     (Projects.id IN (".implode(',', $prjs).")) 
-                ");
-            }  else {
-                $this->whereAdd("1=0"); // can see nothing!!!
-            }
-        }
-        
-        
-        if ($au->company()->comptype == 'CLIENT') {
-            $this->client_id = $au->company()->id; // can see nothing!!!
-            
-        }
         
         
         
