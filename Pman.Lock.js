@@ -99,7 +99,7 @@ Roo.apply(Pman.Lock.prototype, {
         Pman.Request({
             url : baseURL + '/Core/Lock/unlock',
             params : {
-                id : this.id
+                id : this.cfg.id
             },
             failure : function() {
                 Roo.MessageBox.alert("Error", "UnLock Request failed, you may get a warning when trying to edit again");
