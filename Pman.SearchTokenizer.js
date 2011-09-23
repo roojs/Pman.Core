@@ -111,7 +111,7 @@ Pman.SearchTokenizer.prototype =  {
         }
         
         if (!q) {
-            if ((s..toUpperCase() == 'AND') || (s.toUpperCase() == 'OR')) {
+            if ((s.toUpperCase() == 'AND') || (s.toUpperCase() == 'OR')) {
                 this.tokens.push( { type: s.toUpperCase() });
                 return;
             }
