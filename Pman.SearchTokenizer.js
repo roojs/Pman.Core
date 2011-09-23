@@ -15,7 +15,7 @@
 Pman.SearchTokenizer = function(s)
 {
         this.str = s;
-        this.strlen = s.length;
+        this.strlen = typeof(s) ? 'string' ? s.length : '';
         this.i = 0;
         this.tokens = [];
        //print_r(this);
