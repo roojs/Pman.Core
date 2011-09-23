@@ -133,8 +133,11 @@ Pman.SearchTokenizer.prototype =  {
     {
         this.i--;
     }
-    
-    
+     
+}
+Pman.SearchTokenizer.parse(v) {
+    var x = new Pman.SearchTokenizer();
+    return x.parse();
     
     
 }
