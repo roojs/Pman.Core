@@ -101,9 +101,11 @@ Pman.SearchTokenizer.prototype =  {
             str += c;
         }
             
-    }
-    function addStr(s, q=false) { //q == quoted..
-        s = q ? s : trim(s);
+    },
+    addStr : function (s,q) { //q == quoted..
+        q = q || false;
+        
+        s = q ? s : String.trim(s);
         if (!strlen(s)) {
             return;
         }
