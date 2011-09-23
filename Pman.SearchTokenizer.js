@@ -136,7 +136,7 @@ Pman.SearchTokenizer.prototype =  {
      
 };
 
-Pman.SearchTokenizer.parse(v) {
+Pman.SearchTokenizer.parse = function(v) {
     var x = new Pman.SearchTokenizer();
     return x.parse();
     
