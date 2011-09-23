@@ -14,8 +14,8 @@
  
 Pman.SearchTokenizer = function(s)
 {
-        this.str = s;
-        this.strlen = typeof(s) ? 'string' ? s.length : '';
+        this.str = typeof(s) == 'string' ? s : '';
+        this.strlen = typeof(s) == 'string' ? s.length : 0;
         this.i = 0;
         this.tokens = [];
        //print_r(this);
@@ -137,7 +137,7 @@ Pman.SearchTokenizer.prototype =  {
 };
 
 Pman.SearchTokenizer.parse = function(v) {
-    var x = new Pman.SearchTokenizer();
+    var x = new Pman.SearchTokenizer(v);
     return x.parse();
     
 }
