@@ -54,10 +54,11 @@ Pman.SearchTokenizer.prototype =  {
     },
     strParse : function ()
     {
-        
-        str = '';
+        var c;
+        var str = '';
         while(true) {
-            if (false === (c = this.getChar())) {
+            c = this.getChar();
+            if (false === c) {
                 this.addStr(str);
                 return;
             }
@@ -68,7 +69,7 @@ Pman.SearchTokenizer.prototype =  {
                 case '(': 
                 case ')': this.addStr(str); this.ungetChar(); return;
                 case '"': 
-                    if (strlen(str)) {
+                    if (str.length) {
                         this.addStr(str); 
                         str = '';
                     }
@@ -76,17 +77,20 @@ Pman.SearchTokenizer.prototype =  {
                     break;
                     
                 default : 
-                    str .= c;
+                    str += c;
                     continue;
             }
             
         }
-    }
-    function strParseQuoted(end) 
+    },
+    
+    strParseQuoted: function (end) 
     {
-        str = '';   /// ignore \" slashed ???
+        var str = '';   /// ignore \" slashed ???
+        var c;
         while(true) {
-            if (false === (c = this.getChar())) {
+            c = this.getChar();
+            if (false === c) {
                 this.addStr(str,true);
                 return;
             }
@@ -94,7 +98,7 @@ Pman.SearchTokenizer.prototype =  {
                 this.addStr(str,true);
                 return;
             }
-            str .= c;
+            str += c;
         }
             
     }
