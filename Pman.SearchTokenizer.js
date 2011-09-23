@@ -105,18 +105,18 @@ Pman.SearchTokenizer.prototype =  {
     addStr : function (s,q) { //q == quoted..
         q = q || false;
         
-        s = q ? s : String.trim(s);
-        if (!strlen(s)) {
+        s = q ? s : Roo.util.Format.trim(s);
+        if (!s.length) {
             return;
         }
+        
         if (!q) {
-            
-            if ((strtoupper(s) == 'AND') || (strtoupper(s) == 'OR')) {
-                this.tokens[] = new Text_SearchParser_Token_Op(strtoupper(s));
+            if ((s..toUpperCase() == 'AND') || (s.toUpperCase() == 'OR')) {
+                this.tokens.push( { type: s.toUpperCase() });
                 return;
             }
         }
-        this.tokens[] = new Text_SearchParser_Token_String(s);
+        this.tokens.push( { type : 's' , v : s });
     }
     
     function getChar()
