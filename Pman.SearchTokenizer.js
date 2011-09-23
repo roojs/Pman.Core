@@ -117,18 +117,19 @@ Pman.SearchTokenizer.prototype =  {
             }
         }
         this.tokens.push( { type : 's' , v : s });
-    }
+    },
     
-    function getChar()
+    getChar : function ()
     {
+        
         if (this.i >= this.strlen) {
             return false;
         }
         c = this.str[this.i];
         this.i++;
         return c;
-    }
-    function ungetChar()
+    },
+    ungetChar : function ()
     {
         this.i--;
     }
