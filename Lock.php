@@ -128,6 +128,7 @@ class Pman_Core_Lock extends Pman
             $this->jok(array_values($ret));
             
         }
+        // trash the lock if it belongs to current user..
         $nlocks = $curlock->count();
         if ($nlocks) {
             // trash all the locks..
