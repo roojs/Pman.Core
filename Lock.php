@@ -106,8 +106,11 @@ class Pman_Core_Lock extends Pman
             'on_table' => $_REQUEST['on_table']
         ));
         
+        $curlock_ex = clone($curlock);
+        $curlock_ex->whereAdd('person_id != '. $this->authUser->id);
         
-        $nlocks = $curlock->count() ;
+        
+        $nlocks = $curlock_ex->count() ;
         if ($nlocks && empty($_REQUEST['force'])) {
            // DB_DataObjecT::debugLevel(1);
             $ar = $curlock->fetchAll('person_id', 'created');
@@ -125,6 +128,7 @@ class Pman_Core_Lock extends Pman
             $this->jok(array_values($ret));
             
         }
+        $nlocks = $curlock->count();
         if ($nlocks) {
             // trash all the locks..
             $curlock->find();
