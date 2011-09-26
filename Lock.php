@@ -74,7 +74,7 @@ class Pman_Core_Lock extends Pman
         }
         $curlock = DB_DataObject::factory('Core_locking');
         if (!$curlock->get($_REQUEST['id'])) {
-            $this->jerr("No lock exists");
+            $this->jok("No lock exists");
         }
         
         if ($curlock->person_id != $this->authUser->id) {
