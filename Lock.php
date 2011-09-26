@@ -78,6 +78,7 @@ class Pman_Core_Lock extends Pman
         }
         
         if ($curlock->person_id != $this->authUser->id) {
+            // this is an error conditon..
             $this->jerr("Lock id is invalid");
         }
         
