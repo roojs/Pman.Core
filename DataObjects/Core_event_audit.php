@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
                 join_event_id_id .on_table = '{$event->on_table}' AND
                 join_event_id_id .on_id    = {$event->on_id}
         ");
-        $x->orderBy('Events.event_when DESC');
+        $x->orderBy('join_event_id_id.event_when DESC');
         $x->limit(1);
         if (!$x->find(true)) {
             return 0;
