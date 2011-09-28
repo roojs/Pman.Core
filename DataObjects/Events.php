@@ -83,18 +83,27 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if ($n == $o) {
                 continue;
             }
-            $x = DB_DataObject::factory('core_event_audit');
-            $x->setFrom(array(
-                'event_id' => $this->id,
-                'name' => $k,
-                'old_audit_id' => $old ? $x->findLast($this, $k) : 0,
-                'newvalue' => $n
-
-            ));
-            $x->insert();
+            $this->auditField($k, $o, $n, $old);
             $ret++;
         }
         return $ret;
     }
-     
+    /**
+     * Record an audited change, in theory so we can audit data that is not just
+     * database Fields...
+     *
+     */
+    function auditField($name, $ov, $nv, $old=false )
+    {
+        $x = DB_DataObject::factory('core_event_audit');
+        $x->setFrom(array(
+            'event_id' => $this->id,
+            'name' => $name,
+            'old_audit_id' => $old ? $x->findLast($this, $name) : 0,
+            'newvalue' => $nv
+
+        ));
+        $x->insert();
+    
+    }
 }
