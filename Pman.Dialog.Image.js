@@ -57,11 +57,17 @@ Pman.Dialog.Image = {
                if (!dlg.haveProgress) {
                     Roo.MessageBox.progress("Uploading", "Uploading");
                 }
+                
+                if (dlg.haveProgress == 2) {
+                    // it's been closed elsewhere..
+                    return;
+                }
                 if (dlg.uploadComplete) {
                     Roo.MessageBox.hide();
                     return;
                 }
-                dlg.haveProgress = true;
+                
+                dlg.haveProgress = 1;
             
                 var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();
                 Pman.request({
