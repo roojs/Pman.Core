@@ -59,4 +59,47 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $rem[] = $remarks;
         $this->remarks = implode(' : ', $rem);
     }
+    
+    /**
+     * Generate an audit for this field.
+     *
+     * @param {DB_DataObject} new data
+     * @param {DB_DataObject} old data
+     * 
+     * @return {int} number of entries logged.
+     */
+    
+    function audit($new, $old = false)
+    {
+        if ($old == $new) {
+            return 0; // they are the same...
+        }
+         
+        $ret = 0;
+        foreach(array_keys($new->table()) as $k) {
+            // should we JSON serialize this?
+            $n = empty($new->$k) ? '' : $new->$k;
+            $o = empty($old->$k) || empty($old->$k) ? '' : $old->$k;
+            if ($n == $o) {
+                continue;
+            }
+            $ret += $this->auditChange($k, $new, $old);
+        }
+        return $ret;
+    }
+    
+    function auditChange($field, $new, $old)
+    {
+        
+        if (!$old === false) {
+            $this->addentry($fieldname, 'set', $old, $new);
+            return 1;
+        }
+        if ($new === false) {
+            $this->addentry($fieldname, 'deleted', $old, $new);
+            return 1;
+        }
+        $this->addentry($fieldname, 'changed', $old, $new);
+        return 1;
+    }
 }
