@@ -158,7 +158,7 @@ Pman.Dialog.Image = {
                                     _this.dialog.uploadComplete = true;
                                     _this.dialog.el.unmask();
                                     // error msg???
-                                    
+                                     _this.dialog.haveProgress = 2; 
                                     if (act.type == 'submit') {
                                         //Roo.log(act);
                                         try {
