@@ -38,7 +38,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $dt = date('Y-m-d' , strtotime($q['query']['to']));
             $this->whereAdd(" Events.event_when <=  '$dt' ");
         }
-         
+        if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
+            // grouped..
+        }
+            
     }
     /**
      * check who is trying to access this. false == access denied..
