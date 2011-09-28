@@ -134,12 +134,12 @@ class Pman_Core_NotifySend extends Pman
         
         if ($email === false || isset($email['error'])) {
             // object returned 'false' - it does not know how to send it..
-            $id = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
+            $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable);;
             $ww = clone($w);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
-            $w->event_id = $id;
+            $w->event_id = $ev->id;
             $w->update($ww);
             die(date('Y-m-d h:i:s ') . 
                     (isset($email['error'])  ?
@@ -207,12 +207,12 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $id = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ".
+            $ev = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ".
                         $p->email . ' ' .
                         ($fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR"));
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
-            $w->event_id = $id;
+            $w->event_id = $ev->id;
             $w->update($ww);
             die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
         }
