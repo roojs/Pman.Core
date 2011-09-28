@@ -38,6 +38,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $dt = date('Y-m-d' , strtotime($q['query']['to']));
             $this->whereAdd(" Events.event_when <=  '$dt' ");
         }
+        /*
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
             // grouped..
             DB_DataObject::Debuglevel(1);
@@ -46,6 +47,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 (SELECT count(id) FROM core_event_audit WHERE event_id = Events.id) as changed
                 ');
         }
+        */
             
     }
     /**
