@@ -59,8 +59,26 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         return $x->newvalue($event);
         
     }
-     
-     
+    function findLast($event, $name)
+    {
+        $x = DB_DataObject::factory('core_event_audit');
+        $x->autoJoin();
+        $x->selectAdd();
+        $x->selectAdd('core_event_audit.id as id');
+
+        $x->name = $name;
+        $x->whereAdd("
+                Events.on_table= '{$event->on_table}' AND
+                Events.on_id= '{$event->on_id}'
+        ");
+        $x->orderBy('Events.event_when DESC');
+        $x->limit(1);
+        if (!$x->find(true)) {
+            return 0;
+        }
+        return $x->id;
+        
+    }
     
     
     
