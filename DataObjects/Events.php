@@ -96,19 +96,5 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         return $ret;
     }
-    
-    function auditChange($field, $new, $old)
-    {
-        
-        if (!$old === false) {
-            $this->addentry($fieldname, 'set', $old, $new);
-            return 1;
-        }
-        if ($new === false) {
-            $this->addentry($fieldname, 'deleted', $old, $new);
-            return 1;
-        }
-        $this->addentry($fieldname, 'changed', $old, $new);
-        return 1;
-    }
+     
 }
