@@ -69,8 +69,8 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
 
         $x->name = $name;
         $x->whereAdd("
-                Events.on_table = '{$event->on_table}' AND
-                Events.on_id    = '{$event->on_id}'
+                join_event_id_id .on_table = '{$event->on_table}' AND
+                join_event_id_id .on_id    = {$event->on_id}
         ");
         $x->orderBy('Events.event_when DESC');
         $x->limit(1);
