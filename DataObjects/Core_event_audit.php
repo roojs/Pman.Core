@@ -48,105 +48,19 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         return $x->toEventString(); // big assumption..        
     }
     
-    function oldvalue($cg)
+    function oldvalue($event)
     {
-        
+        if (!$this->old_audit_id) {
+            return 'Unknown';
+        }
         //var_dump($cg->ontable);
-        $x = DB_DataObject::factory($cg->ontable);
-        
-        $ar = $x->links();
-        if ( !isset($ar[$this->field()])) {
-            return $this->oldvalue;
-        }
-        // lr = ProjecT:id
-        if (empty($this->oldvalue)) {
-            return '';
-        }
-        $lr = explode(':', $ar[$this->field()]);
-        $x = DB_DataObject::factory($lr[0]);
-        $x->get($this->oldvalue);
-        return isset($x->name) ? $x->name : $this->oldvalue; 
+        $x = DB_DataObject::factory('core_event_audit');
+        $x->get($this->old_audit_id);
+        return $x->newvalue($event);
         
     }
-    
-    function toAuditString($change)
-    {
-        $field = $this->field();
-        switch($field) {
-            case 'id':
-            case 'created_id':
-            
-                return false; //??? ignore?
-            case '@components':
-                return false;
-            //  $old = array();
-            //  foreach (preg_split("/\s*,\s*/", $old_values[$field]) as $id) {
-             /*   if (!strlen($id)) continue;
-                $c = get_component($id);
-                $old[$id] = $c->name;
-              }
-              $value = $T->getComponents();
-              $field = 'Component';
-              break;
-             */
-            case '@milestones':
-                return false;
-            //  $old = array();
-            //  foreach (preg_split("/\s*,\s*/", $old_values[$field]) as $id) {
-              /*  if (!strlen($id)) continue;
-                $m = get_milestone($id);
-                $old[$id] = $m->name;
-              }
-              $value = array();
-              $value = $T->getMilestones();
-              $field = 'Milestone';
-              break;
-              */
-            case '@keywords':
-                return false;
-            
-            default:
-                $oldvalue = $this->oldvalue($change);
-                $value = $this->value($change);
-                
-                $field = preg_replace('/_id$/', '', $this->field());
-                $field = ucfirst(str_replace('_', ' ', $field));
-                
-                if ( ($oldvalue == $value)  ||
-                    (!strlen($oldvalue) && !strlen($value))) {
-                    return false;
-                }
-                $lb = strpos($oldvalue,"\n") > -1 || strpos($value,"\n") > -1 ? "\n\n" : '';
-                $lbs = $lb == '' ? '' : "\n\n---\n\n";
-                if (!strlen($oldvalue)) {
-                    return " * Set {$field} to: {$lbs}{$value}{$lbs}";
-                }
-                       
-                if (!strlen($value)) {
-                    return  " * Removed {$lb}{$field} - was: {$lbs}{$oldvalue}";
-                    
-                }
-                
-                return " * Changed {$field} from : {$lbs}{$oldvalue} {$lbs} to {$lbs}{$value}{$lbs}";
-                
-        }
-    }
-    
-    function toJSONArray($change)
-    {
-        $ret=  $this->toArray();
-        // now add the value strings..
-        
-        $field = preg_replace('/_id$/', '', $this->field());
-        $field = ucfirst(str_replace('_', ' ', $field));
-                
-        $ret['field_str'] = $field;
-
-        $ret['oldvalue_str'] = $this->oldvalue($change);
-        $ret['value_str'] = $this->value($change);
-        return $ret;
-        
-    }
+     
+     
     
     
     
