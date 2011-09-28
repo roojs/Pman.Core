@@ -45,8 +45,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         }
         $x->get($this->value);
         
-        return $x->toEventString(); // big assumption..
-        
+        return $x->toEventString(); // big assumption..        
     }
     function oldvalue($cg)
     {
