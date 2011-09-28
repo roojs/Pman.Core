@@ -114,7 +114,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         //    if more intelligence is needed...
         //    then it 'rules' will have to be added by the watched object....
         //    anyway leave that for another day..
-        
+        if (empty($event->action)) {
+            return;
+        }
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $event->on_table;
         $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
