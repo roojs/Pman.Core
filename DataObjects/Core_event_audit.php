@@ -25,7 +25,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
      *
      */
     
-    function value($event)
+    function newvalue($event)
     {
         $x = DB_DataObject::factory($event->on_table);
         $ar = $x->links();
@@ -47,8 +47,10 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         
         return $x->toEventString(); // big assumption..        
     }
+    
     function oldvalue($cg)
     {
+        
         //var_dump($cg->ontable);
         $x = DB_DataObject::factory($cg->ontable);
         
