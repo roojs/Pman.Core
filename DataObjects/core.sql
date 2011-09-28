@@ -67,6 +67,8 @@ ALTER TABLE Events CHANGE COLUMN ItemID on_id INT(11);
 ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 ALTER TABLE Events ADD COLUMN remarks INT(11);
 
+
+ALTER TABLE Events ADD COLUMN remarks INT(11);
 CREATE TABLE  core_event_audit  (
     `id` int(11)  NOT NULL AUTO_INCREMENT,
     `event_id` int(11)  NOT NULL,
