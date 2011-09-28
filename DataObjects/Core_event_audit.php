@@ -80,6 +80,5 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         
     }
     
-    
-    
+     
 }
