@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $x->setFrom(array(
                 'event_id' => $this->id,
                 'name' => $k,
-                'old_value_id' => $old ? $x->findLast($this, $k) : 0,
+                'old_audit_id' => $old ? $x->findLast($this, $k) : 0,
                 'newvalue' => $n
 
             ));
