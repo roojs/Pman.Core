@@ -110,6 +110,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     {
         // see if there are any watches on events..
         // notify everyone flagged except the person doing it...
+        // this is very basic logic... -
+        //    if 
         
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $event->on_table;
