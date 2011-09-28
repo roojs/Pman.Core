@@ -248,7 +248,7 @@ Pman.Dialog.Image = {
                                     ts : Math.random()
                                 } 
                             });
-                            _this.dialog.haveProgress = false,
+                            _this.dialog.haveProgress = 0,
                             _this.dialog.uploadProgress.defer(1000, _this.dialog);
                         
                         }
