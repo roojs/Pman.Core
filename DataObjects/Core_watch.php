@@ -114,7 +114,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->ontable = $event->on_table;
         $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
         $w->event  = $event->action;
-        
+        $w->whereAdd('person_id != '. (int) $event->person_id)));
+
         
         $watches = $w->fetchAll();
         
