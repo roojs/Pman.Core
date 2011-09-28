@@ -119,8 +119,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $watches = $w->fetchAll();
         
         $nn = DB_DataObject::Factory('core_notify');
-        $nn->ontable = $event->on_table;
-        $nn->onid = $event->on_id;
+        $nn->ontable    = $event->on_table;
+        $nn->onid       = $event->on_id;
         
         foreach($watches as $watch) {
             if (!$watch->person_id) { // no people??? bugs in watch table
