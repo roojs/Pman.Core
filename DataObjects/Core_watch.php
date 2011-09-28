@@ -10,6 +10,16 @@
  *   in which case it should create a core_notify event.
  *
  *
+ * Should 'event' trigger this..
+ *   -> eg. somebody makes a 'EDIT' on 'person'
+ *   -> a watch exists for
+ *        ontable=person,
+ *        onid = -1 <<-- every entry..
+ *        person_id -> who is goes to.
+ *        event = CRUD (eg. shortcut for edit/create/delete)
+ *     
+ *
+ * 
  * 
  */
 require_once 'DB/DataObject.php';
@@ -33,6 +43,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     ###END_AUTOCODE
     /** make sure there is a watch for this user.. */
     
+    /**
+     *
+     * Create a watch...
+     *
+     */
+    
     function ensureNotify(  $ontable, $onid, $person_id, $whereAdd)
     {
         //DB_DAtaObject::debugLevel(1);
@@ -55,8 +71,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nw->medium = 'email';
         $nw->active = 1;
         $nw->insert();
-        
-        
+         
     }
     
     function notify($ontable , $onid, $whereAdd)
