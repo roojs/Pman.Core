@@ -131,6 +131,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n->person_id = $p;
             $n->watch_id =  $watch->id;
             
+            // does this watch already have a flag...
             $nf = clone($n);
             $nf->whereAdd('sent < act_when');
             if ($nf->count()) {
