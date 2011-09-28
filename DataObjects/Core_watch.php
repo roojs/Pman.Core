@@ -115,20 +115,22 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
         $w->event  = $event->action;
         
-        $w->selectAdd();
-        $w->selectAdd('distinct(person_id) as person_id');
-        $people = $w->fetchAll('person_id');
         
-         $nn = DB_DataObject::Factory('core_notify');
+        $watches = $w->fetchAll();
+        
+        $nn = DB_DataObject::Factory('core_notify');
         $nn->ontable = $event->on_table;
         $nn->onid = $event->on_id;
         
-        foreach($people as $p) {
-            if (!$p) { // no people??? bugs in watch table
+        foreach($watches as $watch) {
+            if (!$watch->person_id) { // no people??? bugs in watch table
                 continue;
             }
+            
             $n = clone($nn);
             $n->person_id = $p;
+            $n->watch_id =  $watch->id;
+            
             $nf = clone($n);
             $nf->whereAdd('sent < act_when');
             if ($nf->count()) {
@@ -136,6 +138,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
             $n->act_start( date("Y-m-d H:i:s") );
+            
             $n->insert();
             
             
