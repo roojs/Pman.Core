@@ -111,6 +111,8 @@ Pman.Dialog.Image = {
                                 actioncomplete : function(_self,act)
                                 {
                                     _this.dialog.uploadComplete = true;
+                                    _this.haveProgress = 2; 
+                                    Roo.MessageBox.hide(); // force hiding
                                     _this.dialog.el.unmask();
                                      
                                     if (act.type == 'setdata') { 
