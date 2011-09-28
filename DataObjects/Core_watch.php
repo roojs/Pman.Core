@@ -105,7 +105,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
          
     }
-    
+    // static really...
     function notifyEvent($event)
     {
         // see if there are any watches on events..
