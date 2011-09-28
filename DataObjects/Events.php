@@ -92,6 +92,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
      * Record an audited change, in theory so we can audit data that is not just
      * database Fields...
      *
+     * @param {string} $name    table field anme
+     * @param {mixed} $ov  old value
+     * @param {mixed} $onv  new value
+     * @param {mixed} $old  old object (false if we are creating..)
      */
     function auditField($name, $ov, $nv, $old=false )
     {
