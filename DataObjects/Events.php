@@ -41,6 +41,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
             // grouped..
             DB_DataObject::Debuglevel(1);
+            $this->groupBy('on_id');
         }
             
     }
