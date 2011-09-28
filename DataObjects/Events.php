@@ -83,8 +83,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if ($n == $o) {
                 continue;
             }
-            
-            
+            $x = DB_DataObject::factory('core_event_audit');
+            $x->setFrom(array(
+                'event_id' => $this->id,
+                'name' => $k,
+                'old_value_id' => $x->findLast($this, $name),
+                'newvalue' => $n
+
+            ));
+            $x->insert();
             $ret += $this->auditChange($k, $new, $old);
         }
         return $ret;
