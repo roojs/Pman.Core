@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for mtrack_change_audit
+ * Table Definition for core_event_audit
  */
 require_once 'DB/DataObject.php';
 
