@@ -35,6 +35,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $msgid;                           // string(128)  not_null
     public $sent;                            // datetime(19)  not_null binary
     public $event_id;                        // int(11)  
+    public $watch_id;                        // int(11)  
 
     
     /* the code above is auto generated do not remove the tag below */
