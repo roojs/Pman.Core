@@ -92,7 +92,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
 
             ));
             $x->insert();
-            $ret += $this->auditChange($k, $new, $old);
+            $ret++;
         }
         return $ret;
     }
