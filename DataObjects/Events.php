@@ -83,6 +83,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if ($n == $o) {
                 continue;
             }
+            
+            
             $ret += $this->auditChange($k, $new, $old);
         }
         return $ret;
