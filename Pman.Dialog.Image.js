@@ -78,6 +78,12 @@ Pman.Dialog.Image = {
                     method: 'GET',
                     success : function(data){
                         //console.log(data);
+                        
+                        if (dlg.haveProgress == 2) {
+                            // it's been closed elsewhere..
+                            return;
+                        }
+                        
                         if (dlg.uploadComplete) {
                             Roo.MessageBox.hide();
                             return;
