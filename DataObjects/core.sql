@@ -67,6 +67,15 @@ ALTER TABLE Events CHANGE COLUMN ItemID on_id INT(11);
 ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 ALTER TABLE Events ADD COLUMN remarks INT(11);
 
+CREATE TABLE  core_event_audit  (
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `event_id` int(11)  NOT NULL,
+  `name` varchar(128)  NOT NULL,
+  `old_audit_id` int(11)  NOT NULL,
+  `newvalue` BLOB  NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `lookup`(`event_id`, `name`, `last_audit_id`)
+);
 
 
 CREATE TABLE `Group_Members` (
