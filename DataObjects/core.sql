@@ -76,7 +76,7 @@ CREATE TABLE  core_event_audit  (
     `old_audit_id` int(11)  NOT NULL,
     `newvalue` BLOB  NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `lookup`(`event_id`, `name`, `$old_audit_id`)
+    INDEX `lookup`(`event_id`, `name`, `old_audit_id`)
 );
 
 
