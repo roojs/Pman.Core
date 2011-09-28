@@ -160,7 +160,8 @@ Pman.Dialog.Image = {
                                     // error msg???
                                      _this.dialog.haveProgress = 2; 
                                     if (act.type == 'submit') {
-                                        //Roo.log(act);
+                                        Roo.log("Upload error");
+                                        Roo.log(act);
                                         try {
                                             Roo.MessageBox.alert("Error", act.result.errorMsg);
                                         } catch(e) {
