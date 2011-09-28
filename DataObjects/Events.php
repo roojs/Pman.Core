@@ -23,6 +23,42 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    
+    
+    
+    //  ------------ROO HOOKS------------------------------------
+    function applyFilters($q, $au)
+    {
+        if (!empty($q['query']['person_not_internal'])) {
+            $this->whereAdd(" join_company_id_id.isOwner = 0 ");
+        }
+        if (!empty($q['query']['person_internal_only_all'])) {
+            // must be internal and not current user (need for distribution list)
+            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
+            
+        }
+        // -- for distribution
+        if (!empty($q['query']['person_internal_only'])) {
+            // must be internal and not current user (need for distribution list)
+            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
+            
+            //$this->whereAdd(($this->tableName() == 'Person' ? 'Person' : "join_person_id_id") .
+            //    ".id  != ".$au->id);
+            $this->whereAdd("Person.id != {$au->id}");
+        } 
+        
+        if (!empty($q['query']['comptype_or_company_id'])) {
+           // DB_DataObject::debugLevel(1);
+            $bits = explode(',', $q['query']['comptype_or_company_id']);
+            $id = (int) array_pop($bits);
+            $ct = $this->escape($bits[0]);
+            
+            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR Person.company_id = $id");
+            
+        }
+    
+    }
     /**
      * check who is trying to access this. false == access denied..
      */
