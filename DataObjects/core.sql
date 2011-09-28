@@ -67,7 +67,7 @@ ALTER TABLE Events CHANGE COLUMN ItemID on_id INT(11);
 ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 
 
-ALTER TABLE Events ADD INDEX lookup (remarks INT(11);
+ALTER TABLE Events ADD INDEX lookup (on_id, on_table, person_id, event_when);
 
 CREATE TABLE  core_event_audit  (
     `id` int(11)  NOT NULL AUTO_INCREMENT,
