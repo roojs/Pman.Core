@@ -17,7 +17,8 @@
  *        onid = -1 <<-- every entry..
  *        person_id -> who is goes to.
  *        event = CRUD (eg. shortcut for edit/create/delete)
- *     
+ *        medium = "REVIEW" << eg. review needed..
+ *        
  *
  * 
  * 
@@ -81,6 +82,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->selectAdd();
         $w->selectAdd('distinct(person_id) as person_id');
         $people = $w->fetchAll('person_id');
+        
         $nn = DB_DataObject::Factory('core_notify');
         $nn->ontable = $ontable;
         $nn->onid = $onid;
@@ -101,9 +103,28 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             
         }
+         
+    }
+    
+    function notifyEvent($event)
+    {
+        // see if there are any watches on events..
+        
+        $w = DB_DataObject::factory('core_watch');
+        $w->ontable = $event->on_table;
+        $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
+        $w->event  = $event->action;
+        
+        $w->selectAdd();
+        $w->selectAdd('distinct(person_id) as person_id');
+        $people = $w->fetchAll('person_id');
+        
+        
+        
         
         
         
     }
+    
      
 }
