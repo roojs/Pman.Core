@@ -47,11 +47,11 @@ class Pman_Core_NotifyAction extends Pman
         $n->person_id = $this->authUser->id;
         // in theory in workflow, this could trigger another action...
         // if watch is on it..
-        foreach(array('on_table','on_id','action') as $k) {
+        foreach(array('ontable','onid','action') as $k) {
             if (empty($_POST[$k])) {
                 $this->jerr("missing argument $k");
             }
-            if ($k == 'on_id') {
+            if ($k == 'onid') {
                 continue;
             }
             $n->$k = $_POST[$k];
@@ -59,7 +59,7 @@ class Pman_Core_NotifyAction extends Pman
         
         $n->whereAdd('sent < act_when'); // not issued yet..
         $n->whereAdd("join_watch_id_id.medium = '". $n->escape($n->action) ."'");
-        $n->whereAddIn('core_notify.on_id', explode(',', $_POST['on_id']), 'int' );
+        $n->whereAddIn('core_notify.onid', explode(',', $_POST['onid']), 'int' );
         $n->autoJoin();
         $ar = $n->fetchAll();
         
