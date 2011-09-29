@@ -56,10 +56,10 @@ class Pman_Core_NotifyAction extends Pman
             }
             $n->$k = $_POST[$k];
         }
-        $ids = explode(',', $_POST['on_id']);
+        
         $n->whereAdd('sent < act_when'); // not issued yet..
         $n->whereAdd("join_watch_id_id.medium = '". $n->escape($n->action) ."'");
-        $n->whereAddIn('core_notify.id', $ids, 'int' );
+        $n->whereAddIn('core_notify.on_id', explode(',', $_POST['on_id']), 'int' );
         $n->autoJoin();
         $ar = $n->fetchAll();
         
