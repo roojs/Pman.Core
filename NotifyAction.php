@@ -7,6 +7,7 @@
  *
  *
  */
+require_once 'Pman.php';
 
 class Pman_Core_NotifyAction extends Pman
 {
