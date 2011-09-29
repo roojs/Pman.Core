@@ -38,8 +38,9 @@ class Pman_Core_NotifyAction extends Pman
     function post()
     {
         // needs: (Array of...)
-        // on_table, action(eg. APPROVAL)
-        // on_id (comma delimited.)
+        //   on_table,
+        //   action(eg. APPROVAL)
+        //   on_id (comma delimited.)
         $n = DB_DataObject::factory('core_notify');
         $n->person_id = $this->authUser->id;
         // in theory in workflow, this could trigger another action...
