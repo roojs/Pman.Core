@@ -141,7 +141,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             }
             
             $n = clone($nn);
-            $n->trigger_id = $event->person_id;
+            $n->trigger_person_id = $event->person_id;
+            $n->trigger_event_id = $event->id;
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
             
