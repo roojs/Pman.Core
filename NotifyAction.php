@@ -54,7 +54,7 @@ class Pman_Core_NotifyAction extends Pman
             if ($k == 'on_id') {
                 continue;
             }
-            $n->$k = $v;
+            $n->$k = $_POST[$k];
         }
         $ids = explode(',', $_POST['on_id']);
         $n->whereAdd('sent < act_when'); // not issued yet..
