@@ -38,19 +38,36 @@ class Pman_Core_NotifyAction extends Pman
     function post()
     {
         // needs: (Array of...)
-        // ontable, action(eg. APPROVAL)
-        // onid (comma delimited.)
+        // on_table, action(eg. APPROVAL)
+        // on_id (comma delimited.)
         $n = DB_DataObject::factory('core_notify');
+        $n->person_id = $this->authUser->id;
         // in theory in workflow, this could trigger another action...
         // if watch is on it..
         foreach(array('on_table','on_id','action') as $k) {
             if (empty($_POST[$k])) {
                 $this->jerr("missing argument $k");
             }
+            if ($k == 'on_id') {
+                continue;
+            }
             $n->$k = $v;
         }
+        $ids = explode(',', $_POST['on_id']);
+        $n->whereAdd('sent < act_when'); // not issued yet..
+        $n->whereAdd("join_watch_id_id.medium = '". $n->escape($k) ."'");
+        $n->whereAddIn('core_notify.id', $ids, 'int' );
+        $n->autoJoin();
+        $ar = $n->fetchAll();
         
-        
+        foreach($ar as $n) {
+            $nc = clone($n);
+            $nc->sent = date('Y-m-d H:i:s');
+            $nc->update($n);
+            // add an event?????
+            
+        }
+    
         
         
         
