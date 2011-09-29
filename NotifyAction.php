@@ -64,11 +64,9 @@ class Pman_Core_NotifyAction extends Pman
             $nc = clone($n);
             $nc->sent = date('Y-m-d H:i:s');
             $nc->update($n);
+            
             // add an event?????
         }
-        
-    
-        
         
         
         
