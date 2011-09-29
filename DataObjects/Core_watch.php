@@ -108,7 +108,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     // static really...
     function notifyEvent($event)
     {
-        DB_DataObject::DebugLevel(1);
+        //DB_DataObject::DebugLevel(1);
         // see if there are any watches on events..
         // notify everyone flagged except the person doing it...
         // this is very basic logic... -
