@@ -337,6 +337,8 @@ ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 
  
 ALTER TABLE core_notify ADD COLUMN  act_start DATETIME NOT NULL;
 ALTER TABLE core_notify ADD COLUMN  watch_id INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN  trigger_person_id INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN  trigger_event_id INT(11) NOT NULL DEFAULT 0;
 
 
 # - used by email / tracker to handle alises - we have to be carefull adding to this table...
