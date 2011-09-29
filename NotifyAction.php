@@ -42,7 +42,7 @@ class Pman_Core_NotifyAction extends Pman
         //   on_table,
         //   action(eg. APPROVAL)
         //   on_id (comma delimited.)
-        
+        DB_DataObject::debugLevel(1);
         $n = DB_DataObject::factory('core_notify');
         $n->person_id = $this->authUser->id;
         // in theory in workflow, this could trigger another action...
