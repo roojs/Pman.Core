@@ -779,6 +779,10 @@ Pman = new Roo.Document(
         
         
     },
+    /**
+     * @property {Array} appModules  - array based on AppModules global
+     */
+    appModules : false,
     
     modules : false,
     /**
@@ -786,8 +790,9 @@ Pman = new Roo.Document(
      * 
      * Pman.register({
           modKey : '00-admin-xxxx',
-          module : Pman.Tab.projectMgr,
+          module : Pman.Tab.projectMgr, << really a components..
           moduleName : 'Pman.Tab.projectMgr',
+          moduleOwner : 
           region : 'center',
           parent : Pman.layout
         })
@@ -795,6 +800,15 @@ Pman = new Roo.Document(
      */
     register : function(obj)
     {
+        
+        
+        // work out owner..
+        if (!this.appModules === false) {
+            this.appModules = typeof(AppModules ) == 'undefined'? [] :
+                AppModules.split(',');
+        }
+        
+        
         
         // ignore registration of objects which are disabled.
         // global supplied by master.html
@@ -804,7 +818,26 @@ Pman = new Roo.Document(
             if (appDisabled.indexOf(obj.moduleName) > -1) {
                 return;
             }
-            
+            // now let's see if the user has the module disabled.
+            // eg. Pman.Tab.AdminProjectManager
+            // matches permission Admin.ProjectManager
+            var np = obj.moduleName.split('.').pop();
+            obj.moduleOwner = '';
+            Roo.each(this.appModules, function(nm) {
+                if (np.substring(0,nm.length) == nm) {
+                    obj.moduleOwner = nm;
+                }
+            });
+            if (obj.moduleOwner.length) { 
+                var permname = obj.moduleOwner +'.' + np.substring(obj.moduleOwner.length);
+                // we now have permission...
+                // obj.moduleOwner '.' lname
+                
+                if (this.hasPermExists(permname) && !this.hasPerm(permname,'S')) {
+                    // it's a turned off permission...
+                    return;
+                }
+            }
             
             
         }
