@@ -154,7 +154,7 @@ Pman.I18n = {
         lang = lang || 'en';
         var ret = [];
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
-            if (filter && filter(o) === false) {
+            if (typeof(filter) != 'undefined') && filter(o) === false) {
                 return;
             }
             ret.push([ o.code, o.title ]);
