@@ -797,7 +797,8 @@ Pman = new Roo.Document(
         
         /// design flaw
         // previously we did not a good naming policy for module and parts
-        // new versions should have 'part' as 
+        // most things that are called module here, really are 'parts'
+        // new versions should have 'part' as [ module : part ]
         
         
         if (typeof(obj.part) != 'undefined')  {
