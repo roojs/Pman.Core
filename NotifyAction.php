@@ -69,7 +69,7 @@ class Pman_Core_NotifyAction extends Pman
             $nc->update($n);
             
             // add an event????? - yeap...
-            $this->addEventOnce($_POST['action'],$n->object()));
+            $this->addEventOnce($_POST['action'],$n->object());
             
             
         }
