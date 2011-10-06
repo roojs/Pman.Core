@@ -814,14 +814,15 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        if (typeof(obj.moduleName) != 'undefined')  {
-            if (appDisabled.indexOf(obj.moduleName) > -1) {
+        var modName = obj.modKey.split('-').pop(); // last part of modkey..
+        if (typeof(modName) != 'undefined')  {
+            if (appDisabled.indexOf(modName) > -1) {
                 return;
             }
             // now let's see if the user has the module disabled.
             // eg. Pman.Tab.AdminProjectManager
             // matches permission Admin.ProjectManager
-            var np = obj.moduleName.split('.').pop();
+            var np = modName.split('.').pop();
             obj.moduleOwner = '';
             Roo.each(this.appModules, function(nm) {
                 if (np.substring(0,nm.length) == nm) {
