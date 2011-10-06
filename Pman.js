@@ -797,13 +797,21 @@ Pman = new Roo.Document(
     {
         
         // ignore registration of objects which are disabled.
+        // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        if ((typeof(obj.moduleName) != 'undefined')
-                && appDisabled.indexOf(obj.moduleName) > -1)
-        {
-            return;
+        if (typeof(obj.moduleName) != 'undefined')  {
+            if (appDisabled.indexOf(obj.moduleName) > -1) {
+                return;
+            }
+            
+            
+            
         }
+        
+        
+        
+        
         
         if (!obj.parent) {
             if (obj.parent === false) {
