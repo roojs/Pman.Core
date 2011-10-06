@@ -771,7 +771,7 @@ Pman = new Roo.Document(
      * Pman.register({
           modKey : '00-admin-xxxx',
           module : Pman.Tab.projectMgr, << really a components..
-           part : [ 'Admin', 'ProjectManager' ]
+          part : [ 'Admin', 'ProjectManager' ]
           moduleOwner : 
           region : 'center',
           parent : Pman.layout
