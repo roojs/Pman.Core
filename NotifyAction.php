@@ -68,7 +68,10 @@ class Pman_Core_NotifyAction extends Pman
             $nc->sent = date('Y-m-d H:i:s');
             $nc->update($n);
             
-            // add an event?????
+            // add an event????? - yeap...
+            $this->addEventOnce($_POST['action'],$n->object()))
+            
+            
         }
         $this->jok("updated");
         
