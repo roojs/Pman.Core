@@ -823,14 +823,14 @@ Pman = new Roo.Document(
             // eg. Pman.Tab.AdminProjectManager
             // matches permission Admin.ProjectManager
             var np = modName.split('.').pop();
-            obj.moduleOwner = '';
+            modOwner  = '';
             Roo.each(this.appModules, function(nm) {
                 if (np.substring(0,nm.length) == nm) {
-                    obj.moduleOwner = nm;
+                    modOwner = nm;
                 }
             });
-            if (obj.moduleOwner.length) { 
-                var permname = obj.moduleOwner +'.' + np.substring(obj.moduleOwner.length);
+            if (modOwner .length) { 
+                var permname = modOwner +'.' + np.substring(modOwner.length);
                 // we now have permission...
                 // obj.moduleOwner '.' lname
                 
