@@ -57,7 +57,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
             
     }
-     
+    /**
+     * check who is trying to access this. false == access denied..
+     */
+    function checkPerm($lvl, $au) 
+    {
+        return $lvl == 'S' && $au->hasPerm("Admin.Admin_Tab", $lvl);
+    } 
     /**
      * init:
      * Initialize an event - ready to insert..
