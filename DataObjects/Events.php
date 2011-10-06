@@ -49,7 +49,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         */
         
-        if (!$au->hasPerm("Admin.Admin_Tab", $lvl)) {
+        if (!$au->hasPerm("Admin.Admin_Tab", 'S')) {
             // they can only view their changes..
             $this->person_id = $au->id;
             
