@@ -68,7 +68,20 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         // listing is controleed by applyfilters..
         return $au->hasPerm("Admin.Admin_Tab", 'S');
-    } 
+    }
+    /**
+     * object : return the object that this relates to.
+     * @return {DB_DataObject} related object
+     */
+    function object()
+    {
+        $o = DB_DataObject::factory($this->on_table);
+        $o->get($this->on_id);
+        return $o;
+        
+    }
+    
+    
     /**
      * init:
      * Initialize an event - ready to insert..
