@@ -131,7 +131,21 @@ Pman.I18n = {
         return Pman.I18n.Data[lang][type];
     },
     
-    simpleStoreData : function(type)
+    /**
+     * simpleStoreData:
+     * return a simplestore to be used by country/language combos
+     * eg.
+     * store: (function() {
+            return Pman.I18n.simpleStoreData('c');
+        })(),
+     *
+     * @param {Char} type (c,l,m)
+     * @param {function} (optional) filter language list
+     *     called with object { code: xxx , title: xxx }
+     *     if it exists then returning false will hide the entry.
+     */
+    
+    simpleStoreData : function(type, filter)
     {
         var lang =  'en';
         try {
@@ -140,6 +154,9 @@ Pman.I18n = {
         lang = lang || 'en';
         var ret = [];
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
+            if (filter && filter(o) === false) {
+                return;
+            }
             ret.push([ o.code, o.title ]);
         });
         
