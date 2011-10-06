@@ -147,6 +147,7 @@ Pman.I18n = {
     
     simpleStoreData : function(type, filter)
     {
+        filter = typeof(filter) != 'undefined' ? false : filter
         var lang =  'en';
         try {
             lang = Pman.Login.authUser.lang;
@@ -154,7 +155,7 @@ Pman.I18n = {
         lang = lang || 'en';
         var ret = [];
         Roo.each(Pman.I18n.Data[lang][type], function (o) {
-            if (typeof(filter) != 'undefined' && filter(o) === false) {
+            if (filter !== false && filter(o) === false) {
                 return;
             }
             ret.push([ o.code, o.title ]);
