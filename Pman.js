@@ -117,27 +117,7 @@ Pman = new Roo.Document(
             Roo.get('loading-mask').show();
         }
         
-        
-       
-        
-        /*
-        Roo.MessageBox.show({
-           title: "Please wait...",
-           msg: "Building Interface...",
-           width:340,
-           progress:true,
-           closable:false
-          
-        });
-        */
-        //Pman.onLoadBuild();
-        //Roo.get(document.body).mask("Building Interface");
-        //Pman.onLoadBuild.defer(100, Pman);
-       //Pman.onLoadBuild();
-                    
-   // },
-    //onLoadBuild : function() {
-        
+     
         var _this = this;
         this.stime = new Date();
         this.layout = new Roo.BorderLayout(document.body, {
@@ -791,7 +771,7 @@ Pman = new Roo.Document(
      * Pman.register({
           modKey : '00-admin-xxxx',
           module : Pman.Tab.projectMgr, << really a components..
-          moduleName : 'Pman.Tab.projectMgr',
+           part : [ 'Admin', 'ProjectManager' ]
           moduleOwner : 
           region : 'center',
           parent : Pman.layout
@@ -814,32 +794,24 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        var modName = obj.modKey.split('-').pop(); // last part of modkey..
-        if (typeof(modName) != 'undefined')  {
-            if (appDisabled.indexOf(modName) > -1) {
-                return;
-            }
-            // now let's see if the user has the module disabled.
-            // eg. Pman.Tab.AdminProjectManager
-            // matches permission Admin.ProjectManager
-            var np = modName.split('.').pop();
-            modOwner  = '';
-            Roo.each(this.appModules, function(nm) {
-                if (np.substring(0,nm.length) == nm) {
-                    modOwner = nm;
-                }
-            });
-            if (modOwner .length) { 
-                var permname = modOwner +'.' + np.substring(modOwner.length);
+        
+        /// design flaw
+        // previously we did not a good naming policy for module and parts
+        // new versions should have 'part' as 
+        
+        
+        if (typeof(obj.part) != 'undefined')  {
+            
+            var permname = part.join('.');
                 // we now have permission...
                 // obj.moduleOwner '.' lname
                 
-                if (this.hasPermExists(permname) && !this.hasPerm(permname,'S')) {
-                    // it's a turned off permission...
-                    Roo.log(permname + " is Disabled for this user");
-                    return;
-                }
+            if (this.hasPermExists(permname) && !this.hasPerm(permname,'S')) {
+                // it's a turned off permission...
+                Roo.log(permname + " is Disabled for this user");
+                return;
             }
+            
             
             
         }
