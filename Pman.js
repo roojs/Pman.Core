@@ -463,7 +463,9 @@ Pman = new Roo.Document(
     
     
     /**
-     * eg. has Pman.hasPerm('Admin.Admin_Tab', 'S') == showlist..
+     * hasPerm:
+     * Does the authenticated user have permission to see this.
+     * 
      * @param {String} name the [Module].[permission] to check for
      * @param {Char} lvl  - which type of permission to use (eg. S=show...)
      * @returns {Boolean} tue indicates permission allowed
@@ -483,9 +485,10 @@ Pman = new Roo.Document(
         
     },
     /**
-     * eg. has Pman.hasPerm('Admin.Admin_Tab', 'S') == showlist..
+     * hasPermExists:
+     * Is there a permission defined for this (used by module registration.)
+     * 
      * @param {String} name the [Module].[permission] to check for
-     * @param {Char} lvl  - which type of permission to use (eg. S=show...)
      * @returns {Boolean} tue indicates permission exists.
      */
     hasPermExists: function(name) {
