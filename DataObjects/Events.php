@@ -70,7 +70,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         return $au->hasPerm("Admin.Admin_Tab", 'S');
     }
     /**
-     * object : return the object that this relates to.
+     * object :
+     * return the object that this relates to.
+     * 
      * @return {DB_DataObject} related object
      */
     function object()
