@@ -147,7 +147,7 @@ Pman.I18n = {
     
     simpleStoreData : function(type, filter)
     {
-        filter = typeof(filter) != 'undefined' ? false : filter
+        filter = typeof(filter) == 'undefined' ? false : filter
         var lang =  'en';
         try {
             lang = Pman.Login.authUser.lang;
