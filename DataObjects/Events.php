@@ -60,6 +60,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     }
     /**
      * check who is trying to access this. false == access denied..
+     * @return {boolean} true if access is allowed.
      */
     function checkPerm($lvl, $au) 
     {
