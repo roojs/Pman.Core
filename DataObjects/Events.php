@@ -62,7 +62,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
      */
     function checkPerm($lvl, $au) 
     {
-        return $lvl != 'S' && $au->hasPerm("Admin.Admin_Tab", $lvl);
+        // listing is controleed by applyfilters..
+        return $lvl != 'S' && $au->hasPerm("Admin.Admin_Tab", 'S');
     } 
     /**
      * init:
