@@ -63,15 +63,20 @@ class Pman_Core_NotifyAction extends Pman
         $n->autoJoin();
         $ar = $n->fetchAll();
         
+        $done = array();
+        
         foreach($ar as $n) {
             $nc = clone($n);
             $nc->sent = date('Y-m-d H:i:s');
             $nc->update($n);
             
-            // add an event????? - yeap...
-            $this->addEventOnce($_POST['action'],$n->object());
-            
-            
+            // add an event????? - yeap... only once per object
+            $key = implode(':', array($nc->ontable,$nc->onid));
+            if (!isset($done[$key])) { 
+                
+                $e = $this->addEvent($_POST['action'],$n->object());
+            }
+            $done[$key] = true;
         }
         $this->jok("updated");
         
