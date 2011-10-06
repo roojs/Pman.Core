@@ -464,7 +464,9 @@ Pman = new Roo.Document(
     
     /**
      * eg. has Pman.hasPerm('Admin.Admin_Tab', 'S') == showlist..
-     * 
+     * @param {String} name the [Module].[permission] to check for
+     * @param {Char} lvl  - which type of permission to use (eg. S=show...)
+     * @returns {Boolean} tue indicates permission allowed
      */
     hasPerm: function(name, lvl) {
         if (
@@ -480,8 +482,24 @@ Pman = new Roo.Document(
         return Pman.Login.authUser.perms[name].indexOf(lvl) > -1;
         
     },
-    
-    
+    /**
+     * eg. has Pman.hasPerm('Admin.Admin_Tab', 'S') == showlist..
+     * @param {String} name the [Module].[permission] to check for
+     * @param {Char} lvl  - which type of permission to use (eg. S=show...)
+     * @returns {Boolean} tue indicates permission exists.
+     */
+    hasPermExists: function(name) {
+        if (
+            (typeof(Pman.Login.authUser) != 'object')
+            ||
+            (typeof(Pman.Login.authUser.perms) != 'object')
+            ||
+            (typeof(Pman.Login.authUser.perms[name]) != 'string')
+            ) {
+                return false;
+        }
+        return true;
+    },
     
     
     
