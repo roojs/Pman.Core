@@ -96,8 +96,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function init($act, $obj, $remarks)
     {
-        $pg = HTML_FlexyFramework::get()->page;
+        $ff = HTML_FlexyFramework::get();
+        $pg = $ff->page;
         $au = $pg->getAuthUser();
+        
+        if ($ff->cli && empty($au) && isset($obj->person_id)) {
+            $au = DB_DataObject::Factory('Person'); // not always a person..
+            $au->get($obj->person_id);
+        } 
+         
+         
          
         $this->person_name = $au && !empty($au->name) ? $au->name : '';
         $this->person_id = $au ? $au->id : '';
