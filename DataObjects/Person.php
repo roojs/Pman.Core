@@ -36,6 +36,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
      *
      * @param {String} $templateFile  (mail/XXXXXXX.txt) exclude the mail and .txt bit.
      * @param {Array|Object} $args   data to send out..
+     * @return {Array|PEAR_Error} array of $recipents, $header, $body 
      */
     function buildMail($templateFile, $args)
     {
@@ -98,18 +99,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($content->bcc) && is_array($content->bcc)) {
             $recipents =array_merge($recipents, $content->bcc);
         }
-        //print_r($recipents);exit;
-        $mailOptions = PEAR::getStaticProperty('Mail','options');
-        $mail = Mail::factory("SMTP",$mailOptions);
         $headers['Date'] = date('r');
-        if (PEAR::isError($mail)) {
-            return $mail;
-        } 
-        $oe = error_reporting(E_ALL ^ E_NOTICE);
-        $ret = $mail->send($recipents,$headers,$body);
-        error_reporting($oe);
-       
-        return $ret;
+        
+        return array( $recipents, $header, $body );
         
         
     }
@@ -124,68 +116,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function sendTemplate($templateFile, $args)
     {
         
-        
-        
-        $content  = clone($this);
-        
-        foreach((array)$args as $k=>$v) {
-            $content->$k = $v;
-        }
-        
-        if (empty($args['no_auth']) && !in_array($templateFile, array(
-           // templates that can be sent without authentication.
-            'password_reset' ,
-            'password_welcome'
-            ))) {
-            $content->authUser = $this->getAuthUser();
-            if (!$content->authUser) {
-                return PEAR::raiseError("Not authenticated");
-            }
-        }
-        
-        $content->HTTP_HOST = $_SERVER["HTTP_HOST"];
-        /* use the regex compiler, as it doesnt parse <tags */
-        require_once 'HTML/Template/Flexy.php';
-        $template = new HTML_Template_Flexy( array(
-                 'compiler'    => 'Regex',
-                 'filters' => array('SimpleTags','Mail'),
-            //     'debug'=>1,
-            ));
-        
-     
+        $ar = this->buildMail($templateFile, $args);
          
-        
-        $template->compile("mail/$templateFile.txt");
-        
-        /* use variables from this object to ouput data. */
-        $mailtext = $template->bufferedOutputObject($content);
-        //echo "<PRE>";print_R($mailtext);
-        
-        /* With the output try and send an email, using a few tricks in Mail_MimeDecode. */
-        require_once 'Mail/mimeDecode.php';
-        require_once 'Mail.php';
-        
-        $decoder = new Mail_mimeDecode($mailtext);
-        $parts = $decoder->getSendArray();
-        if (PEAR::isError($parts)) {
-            return $parts;
-            //echo "PROBLEM: {$parts->message}";
-            //exit;
-        } 
-        list($recipents,$headers,$body) = $parts;
-        $recipents = array($this->email);
-        if (!empty($content->bcc) && is_array($content->bcc)) {
-            $recipents =array_merge($recipents, $content->bcc);
-        }
         //print_r($recipents);exit;
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         $mail = Mail::factory("SMTP",$mailOptions);
-        $headers['Date'] = date('r');
+        
         if (PEAR::isError($mail)) {
             return $mail;
         } 
         $oe = error_reporting(E_ALL ^ E_NOTICE);
-        $ret = $mail->send($recipents,$headers,$body);
+        $ret = $mail->send($ar[0],$ar[1],$ar[2]);
         error_reporting($oe);
        
         return $ret;
