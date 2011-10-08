@@ -32,7 +32,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
+    /**
+     *
+     * @param {String} $templateFile  (mail/XXXXXXX.txt) exclude the mail and .txt bit.
+     * @param {Array|Object} $args   data to send out..
+     */
     function buildMail($templateFile, $args)
     {
           
