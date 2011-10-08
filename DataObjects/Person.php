@@ -103,7 +103,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         return array(
             'recipents' => $recipents,
-            'header'    => $header,
+            'headers'    => $header,
             'body'      => $body
         );
         
