@@ -202,14 +202,14 @@ class Pman_Core_NotifySend extends Pman
                 $w->event_id = -1; // sent ok.. - no need to record it..
                 $w->update($ww);
                 
-                
+                // enable cc in notify..
                 if (!empty($email['headers']['Bcc'])) {
                     $mailer = Mail::factory('smtp', array(
                        //'host'    => $dom ,
                       //  'debug' => true
                     ));
                     
-                    
+                    $mailer->send($email['headers']['Bcc'], $email['headers'], $email['body']);
                     
                 }
                 
