@@ -208,8 +208,9 @@ class Pman_Core_NotifySend extends Pman
                        //'host'    => $dom ,
                       //  'debug' => true
                     ));
-                    
-                    $mailer->send($email['headers']['Bcc'], $email['headers'], $email['body']);
+                    $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
+                    $mailer->send($email['headers']['Bcc'],
+                                  $email['headers'], $email['body']);
                     
                 }
                 
