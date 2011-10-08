@@ -132,6 +132,23 @@ class Pman_Core_NotifySend extends Pman
         
         $email =  $this->makeEmail($o, $p, $last, $w);
         
+        
+        if ($email === true)  {
+            
+            $ev = $this->addEvent('NOTIFY', $w,
+                            "Notification event cleared (not required any more)" );;
+            $ww = clone($w);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s ') . 
+                     "Notification event cleared (not required any more)" 
+                    ."\n");
+        }
+        
+        
+        
         if ($email === false || isset($email['error'])) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
