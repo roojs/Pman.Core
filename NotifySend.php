@@ -197,9 +197,13 @@ class Pman_Core_NotifySend extends Pman
             if ($res === true) {
                 // success....
                 
+                $ev = $this->addEvent('NOTIFY', $w, 'SUCCESS: ' .$email['headers']['Subject']);
+               
+                
+                
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
-                $w->event_id = -1; // sent ok.. - no need to record it..
+                $w->event_id = $ev->id; // sent ok.. - no need to record it..
                 $w->update($ww);
                 
                 // enable cc in notify..
