@@ -41,7 +41,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function buildMail($templateFile, $args)
     {
           
-        
+        $args (array) $args;
         $content  = clone($this);
         
         foreach((array)$args as $k=>$v) {
