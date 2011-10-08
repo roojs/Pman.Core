@@ -201,6 +201,29 @@ class Pman_Core_NotifySend extends Pman
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = -1; // sent ok.. - no need to record it..
                 $w->update($ww);
+                
+                
+                if (!empty($email['headers']['Bcc'])) {
+                    $mailer = Mail::factory('smtp', array(
+                       //'host'    => $dom ,
+                      //  'debug' => true
+                    ));
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
