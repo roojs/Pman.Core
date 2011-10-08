@@ -260,7 +260,20 @@ class Pman_Core_NotifySend extends Pman
     
     /**
      * wrapper to call object->toEmail()
-     * 
+     *
+     * return
+     *   {
+        headers : {AssocArray},
+        body: {String}
+        
+        // optional..
+        error :  {String} // error message in log.
+        send-to: {String} // use to override rcpt
+        
+        
+        
+        
+     }
      **/
     function makeEmail($object, $rcpt, $last_sent_date, $notify)
     {
