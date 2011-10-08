@@ -90,7 +90,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         /* use variables from this object to ouput data. */
         $mailtext = $template->bufferedOutputObject($content);
         //echo "<PRE>";print_R($mailtext);
-        
+        print_R($mailtext);exit;
         /* With the output try and send an email, using a few tricks in Mail_MimeDecode. */
         require_once 'Mail/mimeDecode.php';
         require_once 'Mail.php';
