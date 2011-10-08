@@ -209,7 +209,7 @@ class Pman_Core_NotifySend extends Pman
                       //  'debug' => true
                     ));
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $mailer->send($email['headers']['Bcc'],
+                    $mailer->send($email['headers']['Cc'],
                                   $email['headers'], $email['body']);
                     
                 }
