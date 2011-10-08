@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return $mail;
         } 
         $oe = error_reporting(E_ALL ^ E_NOTICE);
-        $ret = $mail->send($ar[0],$ar[1],$ar[2]);
+        $ret = $mail->send($ar['recipents'],$ar['headers'],$ar['body']);
         error_reporting($oe);
        
         return $ret;
