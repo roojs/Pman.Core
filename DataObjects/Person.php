@@ -56,16 +56,18 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         // should handle x-forwarded...
-        $content->HTTP_HOST = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] :
+        
+        $content->HTTP_HOST = isset($_SERVER["HTTP_HOST"]) ?
+            $_SERVER["HTTP_HOST"] :
             (isset($ff->HTTP_HOST) ? $ff->HTTP_HOST : 'localhost');
             
         /* use the regex compiler, as it doesnt parse <tags */
         require_once 'HTML/Template/Flexy.php';
         $template = new HTML_Template_Flexy( array(
-                 'compiler'    => 'Regex',
-                 'filters' => array('SimpleTags','Mail'),
+            'compiler'    => 'Regex',
+            'filters' => array('SimpleTags','Mail'),
             //     'debug'=>1,
-            ));
+        ));
         
      
          
