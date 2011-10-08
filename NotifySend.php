@@ -245,9 +245,9 @@ class Pman_Core_NotifySend extends Pman
      * wrapper to call object->toEmail()
      * 
      **/
-    function makeEmail($o, $p, $last, $notify)
+    function makeEmail($object, $rcpt, $last_sent_date, $notify)
     {
-        return $o->toEmail($p,$last, $notify);
+        return $object->toEmail($rcpt, $last_sent_date, $notify);
     }
     
     function debug($str)
