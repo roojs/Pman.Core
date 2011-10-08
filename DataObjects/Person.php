@@ -78,6 +78,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         require_once 'HTML/Template/Flexy.php';
         $template = new HTML_Template_Flexy( array(
             'compiler'    => 'Flexy',
+            'nonHTML' => true,
             'filters' => array('SimpleTags','Mail'),
             //     'debug'=>1,
         ));
