@@ -74,7 +74,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nw->insert();
          
     }
-    
+    /**
+     * Generate a notify event based on watches (matching whereAdd)
+     *
+     */
     function notify($ontable , $onid, $whereAdd)
     {
         $w = DB_DataObject::factory('core_watch');
