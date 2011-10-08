@@ -55,6 +55,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
         }
         
+        // should handle x-forwarded...
         $content->HTTP_HOST = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] :
             (isset($ff->HTTP_HOST) ? $ff->HTTP_HOST : 'localhost');
             
