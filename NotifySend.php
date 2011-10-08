@@ -203,7 +203,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->update($ww);
                 
                 // enable cc in notify..
-                if (!empty($email['headers']['Bcc'])) {
+                if (!empty($email['headers']['Cc'])) {
                     $mailer = Mail::factory('smtp', array(
                        //'host'    => $dom ,
                       //  'debug' => true
