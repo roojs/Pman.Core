@@ -101,7 +101,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         $headers['Date'] = date('r');
         
-        return array( $recipents, $header, $body );
+        return array(
+            'recipents' => $recipents,
+            'header' => $header
+            'body' => $body
+        );
         
         
     }
