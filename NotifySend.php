@@ -269,10 +269,7 @@ class Pman_Core_NotifySend extends Pman
         // optional..
         error :  {String} // error message in log.
         send-to: {String} // use to override rcpt
-        
-        
-        
-        
+         
      }
      **/
     function makeEmail($object, $rcpt, $last_sent_date, $notify)
