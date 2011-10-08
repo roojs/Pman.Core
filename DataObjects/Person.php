@@ -77,7 +77,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         /* use the regex compiler, as it doesnt parse <tags */
         require_once 'HTML/Template/Flexy.php';
         $template = new HTML_Template_Flexy( array(
-            'compiler'    => 'Regex',
+            'compiler'    => 'Flexy',
             'filters' => array('SimpleTags','Mail'),
             //     'debug'=>1,
         ));
