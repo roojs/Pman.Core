@@ -48,12 +48,20 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $content->$k = $v;
         }
         
+        $ff = HTML_FlexyFramework::get();
+        
+        
         //?? is this really the place for this???
-        if (empty($args['no_auth']) && !in_array($templateFile, array(
-           // templates that can be sent without authentication.
-            'password_reset' ,
-            'password_welcome'
-            ))) {
+        if (
+                !$ff->cli && 
+                empty($args['no_auth']) &&
+                !in_array($templateFile, array(
+                    // templates that can be sent without authentication.
+                     'password_reset' ,
+                     'password_welcome'
+                 ))
+            ) {
+            
             $content->authUser = $this->getAuthUser();
             if (!$content->authUser) {
                 return PEAR::raiseError("Not authenticated");
