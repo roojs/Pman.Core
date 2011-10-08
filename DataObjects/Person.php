@@ -32,6 +32,82 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function buildMail($templateFile, $args)
+    {
+          
+        
+        $content  = clone($this);
+        
+        foreach((array)$args as $k=>$v) {
+            $content->$k = $v;
+        }
+        
+        //?? is this really the place for this???
+        if (empty($args['no_auth']) && !in_array($templateFile, array(
+           // templates that can be sent without authentication.
+            'password_reset' ,
+            'password_welcome'
+            ))) {
+            $content->authUser = $this->getAuthUser();
+            if (!$content->authUser) {
+                return PEAR::raiseError("Not authenticated");
+            }
+        }
+        
+        $content->HTTP_HOST = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] :
+            (isset($ff->HTTP_HOST) ? $ff->HTTP_HOST : 'localhost');
+            
+        /* use the regex compiler, as it doesnt parse <tags */
+        require_once 'HTML/Template/Flexy.php';
+        $template = new HTML_Template_Flexy( array(
+                 'compiler'    => 'Regex',
+                 'filters' => array('SimpleTags','Mail'),
+            //     'debug'=>1,
+            ));
+        
+     
+         
+        
+        $template->compile("mail/$templateFile.txt");
+        
+        /* use variables from this object to ouput data. */
+        $mailtext = $template->bufferedOutputObject($content);
+        //echo "<PRE>";print_R($mailtext);
+        
+        /* With the output try and send an email, using a few tricks in Mail_MimeDecode. */
+        require_once 'Mail/mimeDecode.php';
+        require_once 'Mail.php';
+        
+        $decoder = new Mail_mimeDecode($mailtext);
+        $parts = $decoder->getSendArray();
+        if (PEAR::isError($parts)) {
+            return $parts;
+            //echo "PROBLEM: {$parts->message}";
+            //exit;
+        } 
+        list($recipents,$headers,$body) = $parts;
+        $recipents = array($this->email);
+        if (!empty($content->bcc) && is_array($content->bcc)) {
+            $recipents =array_merge($recipents, $content->bcc);
+        }
+        //print_r($recipents);exit;
+        $mailOptions = PEAR::getStaticProperty('Mail','options');
+        $mail = Mail::factory("SMTP",$mailOptions);
+        $headers['Date'] = date('r');
+        if (PEAR::isError($mail)) {
+            return $mail;
+        } 
+        $oe = error_reporting(E_ALL ^ E_NOTICE);
+        $ret = $mail->send($recipents,$headers,$body);
+        error_reporting($oe);
+       
+        return $ret;
+        
+        
+    }
+    
+    
     /**
      * send a template
      * - user must be authenticate or args[no_auth] = true
