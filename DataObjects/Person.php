@@ -116,7 +116,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function sendTemplate($templateFile, $args)
     {
         
-        $ar = this->buildMail($templateFile, $args);
+        $ar = $this->buildMail($templateFile, $args);
          
         //print_r($recipents);exit;
         $mailOptions = PEAR::getStaticProperty('Mail','options');
