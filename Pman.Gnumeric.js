@@ -1399,7 +1399,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ser = new XMLSerializer();
         var x = new Pman.Download({
             method: 'POST',
-            timeout : 120000,
+            timeout : 120000, // quite a long wait.. 2 minutes.
             params : {
                xml : ser.serializeToString(this.doc),
                format : 'xls', //xml
