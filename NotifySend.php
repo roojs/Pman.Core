@@ -191,6 +191,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("Trying SMTP: $dom");
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
+                    'localhost' => $ff->Mail['helo'],
                   //  'debug' => true
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
