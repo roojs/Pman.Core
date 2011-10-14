@@ -167,7 +167,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                 
                 if (!file_exists($tg) || !filesize($tg) ) {
                   
-                    if ($cli && file_exists($tg) || in_array($f, $flist)) {
+                    if ($cli && file_exists($tg) || in_array($f, $flist) || in_array('_all_', $flist )) {
                         echo "COPY $src $tg" . ($cli ? "\n" : "<BR>");
                         copy($src, $tg);
                         continue;
