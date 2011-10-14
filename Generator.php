@@ -359,7 +359,7 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
             $this->classname    = 'Pman_'.$mod . '_DataObjects_'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));; // replace odd chars?
            
            
-            $outfilename    = $rd.'/'.$mod.'/'. ucfirst($this->table).'.php';
+            $outfilename    = $rd.'/'.$mod.'/'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));'.php';
             $orig           = $ff->page->rootDir .'/Pman/'.$mod.'/DataObjects/'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));.'.php';
             
            
