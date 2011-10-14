@@ -355,12 +355,13 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
                 continue;
             }
             
+            $clean_table = preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));
             
-            $this->classname    = 'Pman_'.$mod . '_DataObjects_'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));; // replace odd chars?
+            $this->classname    = 'Pman_'.$mod . '_DataObjects_'. $clean_table; // replace odd chars?
            
            
-            $outfilename    = $rd.'/'.$mod.'/'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));'.php';
-            $orig           = $ff->page->rootDir .'/Pman/'.$mod.'/DataObjects/'. preg_replace('/[^A-Z0-9]+/i','_',ucfirst(trim($this->table)));.'.php';
+            $outfilename    = $rd.'/'.$mod.'/'. $clean_table .'.php';
+            $orig           = $ff->page->rootDir .'/Pman/'.$mod.'/DataObjects/'.  $clean_table.'.php';
             
            
                 // file_get_contents???
