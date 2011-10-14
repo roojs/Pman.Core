@@ -23,7 +23,7 @@ class Pman_Core_RunGenerator extends Pman
             
         ),
         'overwrite' => array(
-            'desc' => 'Files to Overwrite',
+            'desc' => 'Files to Overwrite (use _all_ to create everything)',
             'default' => '',
             'short' => 'o',
             'min' => 1,
