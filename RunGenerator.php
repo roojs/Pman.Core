@@ -15,7 +15,7 @@ class Pman_Core_RunGenerator extends Pman
    
     static $cli_opts = array(
         'module' => array(
-            'desc' => 'Module',
+            'desc' => 'Module (if new tables are found, they will be put in the modules database directory',
             'short' => 'm',
             'default' => '',
             'min' => 1,
