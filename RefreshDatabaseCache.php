@@ -42,6 +42,7 @@ class Pman_Core_RefreshDatabaseCache extends Pman
         // however we can not really do that, as the ownships are off..
         //we can however regen our own files..
         DB_DataObject::debugLevel(1);
+        HTML_FlexyFramework::get()->debug = 1;
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         
         die("done!");
