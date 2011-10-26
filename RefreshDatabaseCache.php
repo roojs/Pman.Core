@@ -22,7 +22,15 @@ class Pman_Core_RefreshDatabaseCache extends Pman
             $this->cli = true;
             return true;
         }
-        die("cli only"); 
+        parent::getAuth(); // load company!
+        $au = $this->getAuthUser();
+        if (!$au || $au->company()->comptype != 'OWNER') {
+            $this->jerr("Not authenticated", array('authFailure' => true));
+        }
+        $this->authUser = $au;
+        return true;
+    
+    
     }
      
     function get($args, $opts)
