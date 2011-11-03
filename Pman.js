@@ -812,7 +812,7 @@ Pman = new Roo.Document(
                 Roo.log(permname + " is Disabled for this user");
                 return;
             }
-            if (appDisabled.indexOf(permname)) {
+            if (appDisabled.indexOf(permname) > 0)  {
                 Roo.log(permname + " is Disabled for this site");
                 return;
             }
