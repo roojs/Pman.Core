@@ -119,11 +119,11 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             
         });
         /// fix some of the languages..
-        switch (dest) {
-                case 'zh-CN' : dest = 'zh-CN'; break;
-                case 'zh-HK' : dest = 'zh-TW'; break;
-                    
-        }
+        //switch (dest) {
+        //        case 'zh-CN' : dest = 'zh-CN'; break;
+         //       case 'zh-HK' : dest = 'zh-TW'; break;
+         //           
+        //}
          
         
         x.load(
