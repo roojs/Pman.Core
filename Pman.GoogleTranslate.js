@@ -124,7 +124,9 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 key :  Pman.GoogleTranslate.key,
               //  v: '1.0',
                 q : str,
-                langpair : src + '|' +dest
+                source : src,
+                target : dest
+                //langpair : src + '|' +dest
             }, // end params.
             { // reader
                 readRecords : function (o) {
