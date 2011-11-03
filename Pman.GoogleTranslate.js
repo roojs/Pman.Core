@@ -112,7 +112,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 
           
         var x = new Roo.data.ScriptTagProxy({ 
-            url:   'https://www.googleapis.com/language/translate/v2/languages',
+            url:   'https://www.googleapis.com/language/translate/v2',
                   //'http://ajax.googleapis.com/ajax/services/language/translate', 
             callbackParam : 'callback'
             
