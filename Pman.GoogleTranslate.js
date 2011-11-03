@@ -31,7 +31,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 }
                 
                 
-            })
+            });
             
             
             
