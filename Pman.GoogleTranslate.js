@@ -137,6 +137,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             }, // end params.
             { // reader
                 readRecords : function (o) {
+                    Roo.log(o);
                     if (!o.responseData) {
                         return o;
                     }
