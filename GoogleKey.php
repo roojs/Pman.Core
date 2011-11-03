@@ -14,6 +14,10 @@ class Pman_Core_GoogleKey extends Pman
         
         $this->authUser = $au;
     }
+    function get() {
+        // for testing..
+        return $this->post();
+    }
     
     function post()
     {
