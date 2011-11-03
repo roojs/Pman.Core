@@ -119,9 +119,9 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             
         });
         /// fix some of the languages..
-        switch (target) {
-                case 'zh-CN' : target = 'zh'; break;
-                case 'zh-HK' : target = 'zh-TW'; break;
+        switch (dest) {
+                case 'zh-CN' : dest = 'zh'; break;
+                case 'zh-HK' : dest = 'zh-TW'; break;
                     
         }
          
