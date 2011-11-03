@@ -119,9 +119,9 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             
         });
         switch (src) {
-           case 'zh_CN' : dest = 'zh-CN'; break;
-           case 'zh_HK' : dest = 'zh-TW'; break;
-            case 'zh_TW' : dest = 'zh-TW'; break;
+           case 'zh_CN' : src = 'zh-CN'; break;
+           case 'zh_HK' : src = 'zh-TW'; break;
+            case 'zh_TW' : src = 'zh-TW'; break;
                    
         }
         /// fix some of the languages..
