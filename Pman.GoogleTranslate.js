@@ -24,7 +24,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 url : baseURL + '/Core/GoogleKey',
                 success : function(data)
                 {
-                    Pman.GoogleTranslate.key = data;
+                    Pman.GoogleTranslate.key = data.data;
                     
                     Pman.GoogleTranslate(str, src, dest, cb, force);
                     
