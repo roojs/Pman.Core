@@ -138,10 +138,10 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             { // reader
                 readRecords : function (o) {
                     Roo.log(o);
-                    if (!o.responseData) {
+                    if (!o.data) {
                         return o;
                     }
-                    return escapeDecode(o.responseData.translations[0].translatedText);
+                    return escapeDecode(o.data.translations[0].translatedText);
                 }
             }, 
             function (result) {
