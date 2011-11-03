@@ -16,6 +16,30 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         var sbits = [];
         var complete = '';
         
+        
+        if (!Pman.GoogleTranslate.key) {
+            
+            new Pman.Request({
+                method : 'POST',
+                url : baseURL + '/Core/GoogleAPI',
+                success : function(data)
+                {
+                    Pman.GoogleTranslate.key = data.key;
+                    
+                    Pman.GoogleTranslate(str, src, dest, cb, force);
+                    
+                }
+                
+                
+            })
+            
+            
+            
+            
+            return;
+        }
+        
+        
         function escapeDecode(encodedString) {
             var output = encodedString;
             var binVal, thisString;
@@ -92,6 +116,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             callbackParam : 'callback' 
             
         });
+        
         x.load(
             {
                 v: '1.0',
