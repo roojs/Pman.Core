@@ -140,7 +140,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     if (!o.responseData) {
                         return o;
                     }
-                    return escapeDecode(o.responseData.translatedText);
+                    return escapeDecode(o.responseData.translations[0].translatedText);
                 }
             }, 
             function (result) {
