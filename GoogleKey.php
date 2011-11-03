@@ -18,7 +18,7 @@ class Pman_Core_GoogleKey extends Pman
     function post()
     {
         $key = HTML_FlexyFramework::get()->Pman_Core['googlekey'];
-        $this->jdata($key)
+        $this->jdata($key);
         
     }
     
