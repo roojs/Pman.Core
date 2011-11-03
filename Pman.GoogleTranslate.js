@@ -21,7 +21,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             
             new Pman.Request({
                 method : 'POST',
-                url : baseURL + '/Core/GoogleAPI',
+                url : baseURL + '/Core/GoogleKey',
                 success : function(data)
                 {
                     Pman.GoogleTranslate.key = data.key;
