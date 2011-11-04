@@ -822,8 +822,6 @@ Pman = new Roo.Document(
         
         
         
-        
-        
         if (!obj.parent) {
             if (obj.parent === false) {
                 //console.log('skip module (no parent)' + obj.modkey);
@@ -910,6 +908,10 @@ Pman = new Roo.Document(
             if (typeof(mod) == 'function') {
                 mod();
                 
+            } else  if (typeof(mod.region) == 'undefined') {
+                Roo.log("Module does not have region defined, skipping");
+                Roo.log(mod);
+                
             } else  if (mod.parent.layout && !mod.module.disabled) {
                 // honour permname setings..
                 if (mod.permname && mod.permname.length) {
@@ -918,9 +920,7 @@ Pman = new Roo.Document(
                     }
                 } else {
                     mod.module.add(mod.parent.layout, mod.region);    
-                }
-                    
-                 
+                } 
             }
             
             
