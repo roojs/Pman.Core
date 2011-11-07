@@ -48,6 +48,13 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_Flexyframework::get();
         
         $url = parse_url($ff->DB_DataObject['database']);
+        
+        $this->{'import' . $url['scheme']}($url);
+        
+    }
+    function importmysql($url)
+    {
+        
         // hide stuff for web..
         
         require_once 'System.php';
@@ -57,11 +64,11 @@ class Pman_Core_UpdateDatabase extends Pman
         $ar = $this->modulesList();
         
            
-            $mysql_cmd = $mysql .
-                ' -h ' . $url['host'] .
-                ' -u' . escapeshellarg($url['user']) .
-                (!empty($url['pass']) ? ' -p' . escapeshellarg($url['pass'])  :  '') .
-                ' ' . basename($url['path']);
+        $mysql_cmd = $mysql .
+            ' -h ' . $url['host'] .
+            ' -u' . escapeshellarg($url['user']) .
+            (!empty($url['pass']) ? ' -p' . escapeshellarg($url['pass'])  :  '') .
+            ' ' . basename($url['path']);
         echo $mysql_cmd . "\n" ;
         
         
@@ -91,5 +98,114 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
+    /**
+     * postgresql import..
+     */
+    function importpgsql($url)
+    {
+        
+        // hide stuff for web..
+        
+        require_once 'System.php';
+        $cat = System::which('cat');
+        $psql = System::which('psql');
+        
+        $ar = $this->modulesList();
+        if (!empty($url['pass'])) { 
+            putenv("PGPASSWORD=". $url['pass']);
+        }
+           
+        $psql_cmd = $psql .
+            ' -h ' . $url['host'] .
+            ' -U' . escapeshellarg($url['user']) .
+             ' ' . basename($url['path']);
+        echo $psql_cmd . "\n" ;
+        
+        
+        
+        
+        foreach($ar as $m) {
+            
+            $fd = $this->rootDir. "/Pman/$m/DataObjects";
+            
+            foreach(glob($fd.'/*.sql') as $fn) {
+                
+                 
+                if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
+                    continue;
+                }
+                $fn = $this->convertToPG($fn);
+                
+                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) ;
+                
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                
+                passthru($cmd);
+            
+                unlink($fn);
+            }
+        }
+        
+    }
+    /**
+     * simple regex based convert mysql to pgsql...
+     */
+    function convertToPG($src)
+    {
+        $fn = $this->tempName('.sql');
+        
+        $ret = array( ); // pad it a bit.
+        $extra = array("", "" );
+        
+        $tbl = false;
+        foreach(file($src) as $l) {
+            $l = trim($l);
+            
+            if (!strlen($l) || $l[0] == '#') {
+                continue;
+            }
+            $m = array();
+            if (preg_match('#create\s+table\s+([a-z0-9_]+)#i',  $l, $m)) {
+                $tbl = $m[1];
+               // $extra[]  =   "drop table {$tbl};";
+             }
+            // autoinc
+            if ($tbl && preg_match('#auto_increment#i',  $l, $m)) {
+                $l = preg_replace('#auto_increment#i', "default nextval('{$tbl}_seq')", $l);
+                $extra[]  =   "create sequence {$tbl}_seq;";
+              
+            }
+            $m = array();
+            if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
+               $l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
+             }
+            // ALTER TABLE core_event_audit ADD     INDEX looku
+            // CREATE INDEX 
+            
+            // basic types..
+            $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
+            
+            $l = preg_replace('# datetime #i', ' TIMESTAMP WITHOUT TIME ZONE ', $l);
+            $l = preg_replace('# blob #i', ' TEXT ', $l);
+             $l = preg_replace('# longtext #i', ' TEXT ', $l);
+            //$l = preg_match('#int\([0-9]+\)#i', 'INT', $l);
+                            
+            $ret[] = $l;
+            
+            
+            
+            
+            
+            
+            
+        }
+        $ret = array_merge($extra,$ret);
+        
+        echo implode("\n", $ret); //exit;
+        file_put_contents($fn, implode("\n", $ret));
+        
+        return $fn;
+    }
+                
     
 }
