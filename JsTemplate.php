@@ -141,7 +141,7 @@ class Pman_Core_JsTemplate extends Pman {
                     continue;
                 
                 case ($item[1] == '!'):
-                    $ret[] = $in . substr($item,1,-1) .';';
+                    $ret[] = $in . substr($item,2,-1) .';';
                     continue;
                 
                 
