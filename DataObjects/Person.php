@@ -455,8 +455,22 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $this->whereAdd(" join_company_id_id.isOwner = 0 ");
         }
         if (!empty($q['query']['person_internal_only_all'])) {
+            
             // must be internal and not current user (need for distribution list)
-            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
+            // user has a projectdirectory entry and role is not blank.
+            DB_DataObject::DebugLevel(1);
+            $pd = DB_DataObject::factory('ProjectDirectory');
+            $pd->whereAdd("role != ''");
+            $pd->selectAdd();
+            $pd->selectAdd('distinct(person_id) as person_id');
+            $roled = $pd->fetchAll('person_id');
+            $this->whereAdd("
+                    join_company_id_id.comptype = 'OWNER'
+                    OR
+                    id IN (".implode(',', $roled) . ") 
+                    
+                    
+                    ");
             
         }
         // -- for distribution
