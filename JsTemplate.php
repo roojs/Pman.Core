@@ -95,6 +95,10 @@ class Pman_Core_JsTemplate extends Pman {
         
         $contents = file_get_contents($fn);
         $ar = preg_split('/(\{[^\}]+})/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
+        
+        
+        
+        
         //echo '<PRE>' . htmlspecialchars(print_r($ar,true));
         
         $out= array();
@@ -115,12 +119,23 @@ class Pman_Core_JsTemplate extends Pman {
                 case (!strlen($item)):
                     continue;
                 
+                if ($inscript && ($item != '{end:}') {
+                    $ret[] = $item;
+                }
+                
                 case ($item[0] != '{'):
                     if (!strlen(trim($item))) {
                         continue;
                     }
                     $ret[] = $in . "ret += ". json_encode($item) . ";";
                     continue;
+                
+                
+                case (substr($item,1,6) == 'script:'): 
+                    $inscript = true;
+                    continue;
+                
+                
                 
                 case (substr($item,1,3) == 'if('):
                     $ret[] = $in . substr($item,1,-1) . ' {';
