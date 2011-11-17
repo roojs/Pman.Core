@@ -467,7 +467,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $this->whereAdd("
                     join_company_id_id.comptype = 'OWNER'
                     OR
-                    id IN (".implode(',', $roled) . ") 
+                    {$this->tableName()}.id IN (".implode(',', $roled) . ") 
                     
                     
                     ");
