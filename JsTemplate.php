@@ -132,6 +132,7 @@ class Pman_Core_JsTemplate extends Pman {
                     $in = str_repeat("    ", $indent);
                     $ret[] = $in . "}";
                     if ($fstart == $indent) {
+                        $fstart = 0;
                         $ret = &$out;
                     }
                     continue;
