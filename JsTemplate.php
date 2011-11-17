@@ -99,7 +99,7 @@ class Pman_Core_JsTemplate extends Pman {
         
         $out= array();
         
-        $out[] = "var $name = function(t) {\n    var ret=[];\n";
+        $head = "var $name = function(t) {\n    var ret=[];\n";
         
         $funcs = array();
         // do not allow nested functions..?
@@ -131,6 +131,9 @@ class Pman_Core_JsTemplate extends Pman {
                     $indent--;
                     $in = str_repeat("    ", $indent);
                     $ret[] = $in . "}";
+                    if ($fstart == $indent) {
+                        $ret = &$out;
+                    }
                     continue;
                 
                 case (substr($item,1,7) == 'return:'):
@@ -162,8 +165,8 @@ class Pman_Core_JsTemplate extends Pman {
         }
         $in = str_repeat("    ", $indent);
         $ret[] = $in .  "return ret.join('');\n}\n";
-        return implode("\n",$ret);
-        echo '<PRE>' . htmlspecialchars(implode("\n",$ret));
+        return $head . implode("\n",$funcs) . "\n" .implode("\n",$out) ;
+        //echo '<PRE>' . htmlspecialchars(implode("\n",$ret));
         
         
         
