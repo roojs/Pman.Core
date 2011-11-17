@@ -63,7 +63,7 @@ class Pman_Core_JsTemplate extends Pman {
             
             foreach(glob("$dir/*.html") as $fn) {
                 $name = 'Pman.' . $mn .'.' . preg_replace('/\.html$/i', '', $fn);
-                $this->compile($fn, $name);
+                echo $this->compile($fn, $name);
                 
 
             }
