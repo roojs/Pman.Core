@@ -97,14 +97,16 @@ class Pman_Core_JsTemplate extends Pman {
         $ar = preg_split('/(\{[^\}]+})/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
         //echo '<PRE>' . htmlspecialchars(print_r($ar,true));
         
-        $ret = array();
+        $out= array();
         
-        $ret[] = "var $name = function(t) {\n    var ret=[];\n";
+        $out[] = "var $name = function(t) {\n    var ret=[];\n";
         
         $funcs = array();
         // do not allow nested functions..?
         $fstart = 0;
         $indent = 1;
+        
+        $ret = &$out;
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
             
@@ -138,7 +140,7 @@ class Pman_Core_JsTemplate extends Pman {
                 case (substr($item,1,9) == 'function:'):
                     $fstart = $indent;
                     $indent++;
-                    
+                    $ret = &$funct;
                     $def  = substr($item,10,-1) ;
                     list($name,$body) = explode('(', $def, 2);
                     
