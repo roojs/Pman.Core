@@ -456,9 +456,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         if (!empty($q['query']['person_internal_only_all'])) {
             
+            
             // must be internal and not current user (need for distribution list)
             // user has a projectdirectory entry and role is not blank.
-            //DB_DataObject::DebugLevel(1);
+            DB_DataObject::DebugLevel(1);
             $pd = DB_DataObject::factory('ProjectDirectory');
             $pd->whereAdd("role != ''");
             $pd->selectAdd();
