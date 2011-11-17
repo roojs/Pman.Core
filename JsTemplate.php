@@ -56,14 +56,21 @@ class Pman_Core_JsTemplate extends Pman {
             $dir =   dirname($mod) . '/jtemplates';
             if (!file_exists($dir)) {
                 echo '// missing directory '. htmlspecialchars($dir) ."\n";
+                continue;
             }
             // got a directory..
             $mn = basename(dirname($mod));
-
+            $ar = glob("$dir/*.html") ;
+            if (empty($ar)) {
+                echo '// no template is directory '. htmlspecialchars($dir) ."\n";
+                continue;
+            }
+            echo "Pman.{$mn} = Pman.{$mn} || {};\n";
+            echo "Pman.{$mn}.template = Pman.{$mn}.template   || {};\n\n";
             
             foreach(glob("$dir/*.html") as $fn) {
-                $name = 'Pman.' . $mn .'.' . preg_replace('/\.html$/i', '', basename($fn));
-                echo $this->compile($fn, $name);
+                $name = 'Pman.' . $mn .'.template.' . preg_replace('/\.html$/i', '', basename($fn));
+                echo $this->compile($fn, $name) . "\m";
                 
 
             }
