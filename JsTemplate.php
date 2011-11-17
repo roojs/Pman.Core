@@ -109,7 +109,7 @@ class Pman_Core_JsTemplate extends Pman {
         // do not allow nested functions..?
         $fstart = -1;
         $indent = 1;
-        
+        $inscript = false;
         $ret = &$out;
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
