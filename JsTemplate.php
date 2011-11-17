@@ -94,7 +94,7 @@ class Pman_Core_JsTemplate extends Pman {
         
         
         $contents = file_get_contents($fn);
-        $ar = preg_split('/(\{[^\}]+})/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $ar = preg_split('/(\{[^\\n}]+})/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
         
         
         
