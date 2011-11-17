@@ -46,12 +46,11 @@ class Pman_Core_JsTemplate extends Pman {
         header('Content-type: text/javascript');
         
         $ff = HTML_FlexyFramework::get();
-        print_R($ff);
         
+        $pr = $ff->project;
         $ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
-        
-        
+        $prefix = $pr == 'Pman' ? 'Pman.' : '';
         
         foreach($ar as $mod) {
             $dir =   dirname($mod) . '/jtemplates';
@@ -66,11 +65,12 @@ class Pman_Core_JsTemplate extends Pman {
                 echo '// no template is directory '. htmlspecialchars($dir) ."\n";
                 continue;
             }
-            echo "Pman.{$mn} = Pman.{$mn} || {};\n";
-            echo "Pman.{$mn}.template = Pman.{$mn}.template   || {};\n\n";
+            
+            echo "{$prefix}{$mn} = {$prefix}{$mn} || {};\n";
+            echo "{$prefix}{$mn}.template = {$prefix}{$mn}.template   || {};\n\n";
             
             foreach(glob("$dir/*.html") as $fn) {
-                $name = 'Pman.' . $mn .'.template.' . preg_replace('/\.html$/i', '', basename($fn));
+                $name = '{$prefix}.' . $mn .'.template.' . preg_replace('/\.html$/i', '', basename($fn));
                 echo $this->compile($fn, $name) . "\n";
                 
 
