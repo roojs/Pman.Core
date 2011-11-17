@@ -126,12 +126,8 @@ class Pman_Core_JsTemplate extends Pman {
                 case ($inscript && ($item == '{end:}')):
                     $inscript = false;
                     continue;
-                
-                
-                case ($inscript):
-                     $ret[] = $item;
-                     continue;
-                    
+                 
+             
                 case ($item[0] != '{'):
                     if (!strlen(trim($item))) {
                         continue;
