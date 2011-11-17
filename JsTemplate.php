@@ -146,7 +146,7 @@ class Pman_Core_JsTemplate extends Pman {
         }
         $in = str_repeat("    ", $indent);
         $ret[] = $in .  "return ret.join('');\n}\n";
-        
+        return implode("\n",$ret);
         echo '<PRE>' . htmlspecialchars(implode("\n",$ret));
         
         
