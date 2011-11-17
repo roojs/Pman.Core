@@ -113,7 +113,7 @@ class Pman_Core_JsTemplate extends Pman {
                     if (!strlen(trim($item))) {
                         continue;
                     }
-                    $ret[] = $in . "ret+= ". json_encode($item) . ";";
+                    $ret[] = $in . "ret += ". json_encode($item) . ";";
                     continue;
                 
                 case (substr($item,1,3) == 'if('):
