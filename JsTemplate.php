@@ -26,6 +26,7 @@
  *
  *
  */
+require_once 'Pman.php';
 
 class Pman_Core_JsTemplate extends Pman {
     
