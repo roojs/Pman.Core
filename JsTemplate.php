@@ -46,11 +46,12 @@ class Pman_Core_JsTemplate extends Pman {
         header('Content-type: text/javascript');
         
         $ff = HTML_FlexyFramework::get()->HTML_Template_Flexy;
-        print_R($ff);
         
-        $mods = $this->modulesList();
-        foreach($mods as $mod) {
-            $dir =   $this->rootDir.'/Pman/'. $mod . '/jtemplates';
+        $ar = explode(PATH_SEPARATOR, $ff['templateDir']);
+        
+        
+        foreach($ar as $mod) {
+            $dir =   dirname($mod) . '/jtemplates';
             if (!file_exists($dir)) {
                 echo '// missing directory '. htmlspecialchars($dir) ."\n";
             }
