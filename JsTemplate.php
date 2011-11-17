@@ -101,7 +101,8 @@ class Pman_Core_JsTemplate extends Pman {
         
         $ret[] = "var $name = function(t) {\n    var ret=[];\n";
         
-        $funcs = [];
+        $funcs = array();
+        $infunc = false;
         
         $indent = 1;
         foreach($ar as $item) {
