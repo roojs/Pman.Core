@@ -103,7 +103,7 @@ class Pman_Core_JsTemplate extends Pman {
         
         $out= array();
         
-        $head = "$name = function(t)\n{\n    var ret = [];\n";
+        $head = "$name = function(t)\n{\n    var ret = [];\n\n";
         
         $funcs = array();
         // do not allow nested functions..?
