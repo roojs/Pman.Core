@@ -103,7 +103,7 @@ class Pman_Core_JsTemplate extends Pman {
         
         $funcs = array();
         // do not allow nested functions..?
-        $fstart = 0;
+        $fstart = -1;
         $indent = 1;
         
         $ret = &$out;
