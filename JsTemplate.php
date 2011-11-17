@@ -144,6 +144,7 @@ class Pman_Core_JsTemplate extends Pman {
                     $ret[] = $in . substr($item,1,-1) .';';
                     continue;
                 
+                
                 case (substr($item,1,3) == 'if('):
                     $ret[] = $in . substr($item,1,-1) . ' {';
                     $indent++;
