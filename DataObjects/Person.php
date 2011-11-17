@@ -465,13 +465,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $pd->selectAdd();
             $pd->selectAdd('distinct(person_id) as person_id');
             $roled = $pd->fetchAll('person_id');
-            $this->whereAdd("
-                    join_company_id_id.comptype = 'OWNER'
-                    OR
+            $rs = $roled  ? "  OR
                     {$this->tableName()}.id IN (".implode(',', $roled) . ") 
-                    
-                    
-                    ");
+                    " : '';
+            $this->whereAdd(" join_company_id_id.comptype = 'OWNER' $rs ");
             
         }
         // -- for distribution
