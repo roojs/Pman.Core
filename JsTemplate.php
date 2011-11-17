@@ -102,8 +102,8 @@ class Pman_Core_JsTemplate extends Pman {
         $ret[] = "var $name = function(t) {\n    var ret=[];\n";
         
         $funcs = array();
-        $infunc = false;
-        
+        // do not allow nested functions..?
+        $fstart = 0;
         $indent = 1;
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
