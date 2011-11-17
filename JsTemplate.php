@@ -140,7 +140,7 @@ class Pman_Core_JsTemplate extends Pman {
                     $inscript = true;
                     continue;
                 
-                case $item[1] == '!'):
+                case ($item[1] == '!'):
                     $ret[] = $in . "$item;";
                     continue;
                 
