@@ -45,9 +45,10 @@ class Pman_Core_JsTemplate extends Pman {
         // get the modules.
         header('Content-type: text/javascript');
         
-        $ff = HTML_FlexyFramework::get()->HTML_Template_Flexy;
+        $ff = HTML_FlexyFramework::get();
+        print_R($ff);
         
-        $ar = explode(PATH_SEPARATOR, $ff['templateDir']);
+        $ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
         
         
