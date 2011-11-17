@@ -136,7 +136,9 @@ class Pman_Core_JsTemplate extends Pman {
                     continue;
                 
                 case (substr($item,1,9) == 'function:'):
+                    $fstart = $indent;
                     $indent++;
+                    
                     $def  = substr($item,10,-1) ;
                     list($name,$body) = explode('(', $def, 2);
                     
