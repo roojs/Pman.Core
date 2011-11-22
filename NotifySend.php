@@ -189,6 +189,13 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         foreach($mxs as $dom) {
+            
+            
+            
+            if (!isset($ff->Mail['helo'])) {
+                die("config Mail[helo] is not set");
+            }
+            
             $this->debug("Trying SMTP: $dom / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
