@@ -62,7 +62,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("
                     
                     COUNT(on_id) as id,
-                    id,
+                    Events.id,
                     DATE_FORMAT(event_when, '%Y-%m-%d') as event_when,
                     on_table,
                     action,
