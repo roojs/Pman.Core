@@ -57,7 +57,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         if (!empty($q['query']['viewtype']) && $q['query']['viewtype'] == 'summary') {
-            DB_DataObject::debugLevel(1);
+            //DB_DataObject::debugLevel(1);
             $this->selectAdd();
             $this->selectAdd("
                     COUNT(on_id) as id,
