@@ -57,7 +57,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         if (!empty($q['query']['viewtype']) && $q['query']['viewtype'] == 'summary') {
-            $this->selectAdd('COUNT(on_id) as no_changed');
+            $this->selectAdd();
+            $this->selectAdd("
+                    COUNT(on_id) as id,
+                    DATE_FORMAT(event_when, '%Y-%m-%d') as event_when,
+                    on_table,
+                    action
+                ") ;
             $this->groupBy('on_table, action');
             
             
