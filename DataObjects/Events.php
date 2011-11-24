@@ -63,9 +63,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     COUNT(on_id) as id,
                     DATE_FORMAT(event_when, '%Y-%m-%d') as event_when,
                     on_table,
-                    action
+                    action,
+                    join_person_id_id.name as name,
+                    join_person_id_id.email as email,
                 ") ;
-            $this->groupBy('on_table, action');
+            $this->groupBy('on_table, action, name, email');
             
             
         }
