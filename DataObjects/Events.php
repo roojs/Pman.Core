@@ -60,7 +60,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             //DB_DataObject::debugLevel(1);
             $this->selectAdd();
             $this->selectAdd("
+                    
                     COUNT(on_id) as id,
+                    id,
                     DATE_FORMAT(event_when, '%Y-%m-%d') as event_when,
                     on_table,
                     action,
