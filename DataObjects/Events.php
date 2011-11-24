@@ -65,7 +65,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     on_table,
                     action,
                     join_person_id_id.name as person_id_name,
-                    join_person_id_id.email as person_id_email,
+                    join_person_id_id.email as person_id_email
                 ") ;
             $this->groupBy('on_table, action, person_id_name, person_id_email');
             
