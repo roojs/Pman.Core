@@ -30,13 +30,14 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au)
     {
+        $tn = $this->tableName();
         if (!empty($q['query']['from'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['from']));
-            $this->whereAdd(" Events.event_when >=  '$dt' ");
+            $this->whereAdd(" {$tn}.event_when >=  '$dt' ");
         }
         if (!empty($q['query']['to'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['to']));
-            $this->whereAdd(" Events.event_when <=  '$dt' ");
+            $this->whereAdd(" {$tn}.event_when <=  '$dt' ");
         }
         /*
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
@@ -62,7 +63,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("
                     
                     COUNT(on_id) as id,
-                    Events.id,
+                    {$tn}.id,
                     DATE_FORMAT(event_when, '%Y-%m-%d') as event_when,
                     on_table,
                     action,
