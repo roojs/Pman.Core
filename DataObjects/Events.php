@@ -57,25 +57,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         
-        if (!empty($q['query']['viewtype']) && $q['query']['viewtype'] == 'summary') {
-            //DB_DataObject::debugLevel(1);
-            $this->selectAdd();
-            $this->selectAdd("
-                    
-                    COUNT(on_id) as nmod,
-                    {$tn}.id as id,
-                    DATE_FORMAT(event_when, '%Y-%m-%d') as event_when_d,
-                    on_table,
-                    action,
-                    join_person_id_id.name as person_id_name,
-                    join_person_id_id.email as person_id_email,
-                    '' as remarks
-                ") ;
-            $this->groupBy('event_when_d, on_table, action, person_id_name, person_id_email');
-            
-            
-        }
-        
         
         
             
