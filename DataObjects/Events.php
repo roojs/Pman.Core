@@ -67,13 +67,14 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
                 $jtn = $x->tableName();
                 $jk = array_shift($x->keys());
-                /*
-                    LEFT JOIN $jtn as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{jk}
+                $this->_join .= "
+                
+                    LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{jk}
                         AND {$tn} = '{$jtn}'
-                        
-                    selectAdd($)
-                 
-                */
+                ";
+                
+                $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
+                
                 
                 $this->joinAdd(
                     
