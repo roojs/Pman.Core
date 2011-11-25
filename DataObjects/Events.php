@@ -98,7 +98,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                        
                         $this->selectAdd( " distinct(join_on_id_{$jtn}.{$jc}  ) as on_id_{$jc} ");
                         $this->groupBy("on_id_{$jc} ");
-                        $this->whereAdd("{$jc} IS NOT NULL");
+                        $this->whereAdd("join_on_id_{$jtn}.{$jc} IS NOT NULL");
                     }
                     $this->selectAdd( "MAX(events.event_when) as event_when");
                     $this->orderBy('event_when DESC');
