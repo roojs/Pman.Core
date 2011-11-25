@@ -74,11 +74,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 ";
                 
                 $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
-                
-                
-                $this->joinAdd(
-                    
-                )
+                 
                 
                 
                 
