@@ -88,7 +88,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $keys = array_keys($x->table());
                 if (isset($q['_join_cols'])) {
                     $jcs = explode(',',$q['_join_cols'] );
-                    DB_DataObject::DebugLevel(1);
+                    //DB_DataObject::DebugLevel(1);
                     
                     foreach($jcs as $jc) { 
                         if (! in_array($jc, $keys)) {
