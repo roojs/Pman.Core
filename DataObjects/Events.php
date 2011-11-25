@@ -70,7 +70,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $jk = array_shift($x->keys());
                 $this->_join .= "
                 
-                    LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{jk}
+                    LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{$jk}
                         AND {$tn} = '{$jtn}'
                 ";
                 
