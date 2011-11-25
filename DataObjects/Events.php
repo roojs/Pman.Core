@@ -62,6 +62,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         //   &_join=cohead
         //   &_join_cols=cohead_number
         //    &_columns=on_id_cohead_number,event_when << this is ignored at present.
+        // max event when is not supported...
         
         
         if (isset($q['_join'])) {
