@@ -70,6 +70,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $joins = explode(',',$q['_join']);
             
             $this->selectAdd(); // ???
+            $distinct = false;
             
             foreach($joins as $t) {
                 $t = preg_replace('/[^a-z_]+/', '', $t); // protection.
@@ -93,10 +94,14 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         if (! in_array($jc, $keys)) {
                             continue;
                         }
-                    
+                        if ($distinct) { 
                         
                        
-                        $this->selectAdd( " distinct(join_on_id_{$jtn}.{$jc}  ) as on_id_{$jc} ");
+                            $this->selectAdd( " join_on_id_{$jtn}.{$jc}   as on_id_{$jc} ");
+                        } else {
+                            $this->selectAdd( " distinct(join_on_id_{$jtn}.{$jc}  ) as on_id_{$jc} ");
+                            $distinct = true;
+                        }
                         $this->groupBy("on_id_{$jc} ");
                         $this->whereAdd("join_on_id_{$jtn}.{$jc} IS NOT NULL");
                     }
