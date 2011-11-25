@@ -56,6 +56,34 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->person_id = $au->id;
             
         }
+        // _join = tablename,tablename...
+        if (isset($q['_join'])) {
+            $joins = explode(',',$q['_join']);
+            foreach($joins as $t) {
+                $t = preg_replace('/[^a-z_]+/', '', $t); // protection.
+                $x = DB_DataObject::Factory($t);
+                if (!is_a($x,'DB_DataObject')) {
+                    continue;
+                }
+                $jtn = $x->tableName();
+                $jk = array_shift($x->keys());
+                /*
+                    LEFT JOIN $jtn as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{jk}
+                        AND {$tn} = '{$jtn}'
+                        
+                    selectAdd($)
+                 
+                */
+                
+                $this->joinAdd(
+                    
+                )
+                
+                
+                
+            
+            
+        }
         
         
         
