@@ -80,7 +80,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                    
                     $this->selectAdd( "
                                 distinct(join_on_id_{$jtn}.{$q['_join_cols']}  )
-                                as on_id_{$q['_join_cols']},
+                                as on_id_{$q['_join_cols']} 
                                
                                 
                                 ");
