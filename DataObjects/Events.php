@@ -57,6 +57,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         // _join = tablename,tablename...
+        
+        /// on_table=cohead
+        //   &_join=cohead
+        //   &_join_cols=cohead_number
+        //    &_columns=on_id_cohead_number,event_when << this is ignored at present.
+        
+        
         if (isset($q['_join'])) {
             //DB_DataObject::DebugLevel(1);
             $joins = explode(',',$q['_join']);
