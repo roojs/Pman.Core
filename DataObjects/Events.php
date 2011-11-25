@@ -58,6 +58,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         // _join = tablename,tablename...
         if (isset($q['_join'])) {
+            DB_DataObject::DebugLevel(1);
             $joins = explode(',',$q['_join']);
             foreach($joins as $t) {
                 $t = preg_replace('/[^a-z_]+/', '', $t); // protection.
