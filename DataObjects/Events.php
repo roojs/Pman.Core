@@ -68,6 +68,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (isset($q['_join'])) {
             //DB_DataObject::DebugLevel(1);
             $joins = explode(',',$q['_join']);
+            
+            $this->selectAdd(); // ???
+            
             foreach($joins as $t) {
                 $t = preg_replace('/[^a-z_]+/', '', $t); // protection.
                 $x = DB_DataObject::Factory($t);
@@ -82,19 +85,23 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         AND on_table = '{$jtn}'
                 ";
                 $keys = array_keys($x->table());
-                if (isset($q['_join_cols']) && in_array($q['_join_cols'], $keys)) {
-                   // DB_DataObject::DebugLevel(1);
-                     $this->selectAdd();
-                   
-                    $this->selectAdd( "
-                                distinct(join_on_id_{$jtn}.{$q['_join_cols']}  )
-                                as on_id_{$q['_join_cols']} ,
-                                MAX(events.event_when) as event_when
-                                
-                                ");
-                    $this->groupBy("on_id_{$q['_join_cols']} ");
+                if (isset($q['_join_cols']) {
+                    $jcs = explode(',',$q['_join_cols'] );
+                    DB_DataObject::DebugLevel(1);
+                    
+                    foreach($jcs as $jc) { 
+                        if (! in_array($jc, $keys)) {
+                            continue;
+                        }
+                    
+                        
+                       
+                        $this->selectAdd( " distinct(join_on_id_{$jtn}.{$q['_join_cols']}  ) as on_id_{$q['_join_cols']} ");
+                        $this->groupBy("on_id_{$q['_join_cols']} ");
+                        $this->whereAdd("{$q['_join_cols']} IS NOT NULL");
+                    }
+                    $this->selectAdd( "MAX(events.event_when) as event_when");
                     $this->orderBy('event_when DESC');
-                    $this->whereAdd("{$q['_join_cols']} IS NOT NULL");
                    // $this->selectAs(array($q['_join_cols']) , 'on_id_%s', "join_on_id_{$jtn}");
                 } else { 
                     $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
