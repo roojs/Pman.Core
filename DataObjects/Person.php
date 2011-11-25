@@ -285,7 +285,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             //php -r var_dump(crypt('testpassword', '$1$'. (rand(64,126)). '$'));
         }
         $this->passwd = crypt($value, '$1$'. $salt. '$');
-        $this->passwdraw = $value;
+        $this->passwd_raw = $value;
        
     }      
     
