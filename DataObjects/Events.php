@@ -84,7 +84,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                                 events.event_when as event_when 
                                 
                                 ");
-                    $this->groupBy("on_id_{$q['_join_cols']} DESC");
+                    $this->groupBy("on_id_{$q['_join_cols']}");
                    // $this->selectAs(array($q['_join_cols']) , 'on_id_%s', "join_on_id_{$jtn}");
                 } else { 
                     $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
