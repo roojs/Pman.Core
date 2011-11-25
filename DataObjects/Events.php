@@ -71,7 +71,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $this->_join .= "
                 
                     LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = {$jtn}.{$jk}
-                        AND {$tn} = '{$jtn}'
+                        AND on_table = '{$jtn}'
                 ";
                 
                 $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
