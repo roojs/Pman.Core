@@ -75,6 +75,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 ";
                 $keys = array_keys($x->table());
                 if (isset($q['_join_cols']) && in_array($q['_join_cols'], $keys)) {
+                    $this->selectAdd( "
+                                distinct(join_on_id_{$q['_join_cols']}  as on_id_{$q['_join_cols']})
+                                ")
+                    
                     $this->selectAs(array($q['_join_cols']) , 'on_id_%s', "join_on_id_{$jtn}");
                 } else { 
                     $this->selectAs($x, 'on_id_%s', "join_on_id_{$jtn}");
