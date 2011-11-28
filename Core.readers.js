@@ -144,7 +144,7 @@ Pman.Readers.Group_Rights = {
 	fields : [
 		'rightname',
 		{name : 'group_id',type : 'int'},
-		'AccessMask',
+		'accessmask',
 		{name : 'id',type : 'int'},
 		{name : 'group_id_id',type : 'int'},
 		'group_id_name',
