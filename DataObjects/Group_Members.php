@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         if ($arrayof == 'group_id' && !count($ret)) {
             $ret = array(0); /// default if they are not a member of any group.
         }
-        
+        var_dump($ret);
         return $ret;
         
     }
