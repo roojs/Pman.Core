@@ -517,28 +517,28 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
            // DB_Dataobject::debugLevel(1);
             $this->active = 1;
         }
+        $tn_p = $this->tableName();
+        $tn_gm = DB_DataObject::Factory('Group_Members')->tableName();
+        $tn_g = DB_DataObject::Factory('Groups')->tableName();
         
         ///---------------- Group views --------
         if (!empty($q['query']['in_group'])) {
             // DB_DataObject::debugLevel(1);
             $ing = (int) $q['query']['in_group'];
             if ($q['query']['in_group'] == -1) {
-                $ptn = $this->tableName();
-                $pgm = DB_DataObject::Factory('Group_Members')->tableName();
-                $pg = DB_DataObject::Factory('Groups')->tableName();
-                
+             
                 // list all staff who are not in a group.
                 $this->whereAdd("Person.id NOT IN (
-                    SELECT distinct(user_id) FROM $pgm LEFT JOIN
-                        $pg ON $pg.id = $pgm.group_id
-                        WHERE $pg.type = ".$q['query']['type']."
+                    SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
+                        $tn_g ON $tn_g.id = $tn_gm.group_id
+                        WHERE $tn_g.type = ".$q['query']['type']."
                     )");
                 
                 
             } else {
                 
                 $this->whereAdd("Person.id IN (
-                    SELECT distinct(user_id) FROM Group_Members 
+                    SELECT distinct(user_id) FROM $tn_gm
                         WHERE group_id = $ing
                     )");
                }
