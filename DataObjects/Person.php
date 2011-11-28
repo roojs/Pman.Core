@@ -537,7 +537,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 
             } else {
                 
-                $this->whereAdd("Person.id IN (
+                $this->whereAdd("$tn_p.id IN (
                     SELECT distinct(user_id) FROM $tn_gm
                         WHERE group_id = $ing
                     )");
