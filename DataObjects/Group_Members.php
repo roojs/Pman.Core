@@ -62,6 +62,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         ");
         $t->selectAdd();
         $t->selectAdd("distinct(group_id), {$grp->tableName()}.name as name");
+        $t->whereAdd('group_id IS NOT NULL');
         
         $t->find();
         
