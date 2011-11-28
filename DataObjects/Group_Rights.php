@@ -199,7 +199,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     function applyDefs($g, $usecol) {
         
         $defs = $this->defaultPermData();
-        echo '<PRE>';print_r($defs);
+        //echo '<PRE>';print_r($defs);
         //$usecol = 1;
         foreach($defs as $rightname => $defdata) {
             $gr = DB_DataObject::Factory('Group_Rights');
