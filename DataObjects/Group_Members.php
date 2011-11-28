@@ -54,14 +54,14 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
         $t = clone($this);
         //DB_DataObject::debugLevel(1);
          
-        
-        $t->joinAdd(DB_DataObject::factory('Groups'), 'LEFT');
+        $grp = DB_DataObject::factory('Groups');
+        $t->joinAdd($grp , 'LEFT');
         //$person->id = (int)$person->id;
         $t->whereAdd("
             user_id = {$person->id}
         ");
         $t->selectAdd();
-        $t->selectAdd('distinct(group_id), Groups.name as name');
+        $t->selectAdd("distinct(group_id), {$grp->tableName()}.name as name");
         
         $t->find();
         
