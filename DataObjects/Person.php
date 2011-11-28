@@ -329,7 +329,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         
-        // DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $c = DB_Dataobject::factory('Companies');
         $im = DB_Dataobject::factory('Images');
         $c->joinAdd($im, 'LEFT');
