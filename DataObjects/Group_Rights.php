@@ -211,7 +211,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             }
             $oldgr = clone($gr);
             $gr->AccessMask = $gr->mergeMask($gr->AccessMask, $defdata[$usecol]);
-            if ($gr->AccesMask == $oldgr->AccesMask) {
+            if ($gr->AccessMask == $oldgr->AccessMask) {
                 continue;
             }
             $gr->update($oldgr);
