@@ -349,6 +349,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $im->onid = $c->id;
             $im->imgtype = 'LOGO';
             $im->limit(1);
+            $im->selectAdd();
             $im->selectAs($im,  'company_id_logo_id_%s');
             if ($im->find(true)) {
                     
