@@ -52,7 +52,7 @@ class Pman_Core_DataObjects_Group_Members extends DB_DataObject
     {
         $this->inAdmin = false;
         $t = clone($this);
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
          
         $grp = DB_DataObject::factory('Groups');
         $t->joinAdd($grp , 'LEFT');
