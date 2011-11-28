@@ -523,11 +523,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // DB_DataObject::debugLevel(1);
             $ing = (int) $q['query']['in_group'];
             if ($q['query']['in_group'] == -1) {
+                $ptn = $this->tableName();
+                $pgm = DB_DataObject::Factory('Group_Members')->tableName();
+                $pg = DB_DataObject::Factory('Groups')->tableName();
+                
                 // list all staff who are not in a group.
                 $this->whereAdd("Person.id NOT IN (
-                    SELECT distinct(user_id) FROM Group_Members LEFT JOIN
-                        Groups ON Groups.id = Group_Members.group_id
-                        WHERE Groups.type = ".$q['query']['type']."
+                    SELECT distinct(user_id) FROM $pgm LEFT JOIN
+                        $pg ON $pg.id = $pgm.group_id
+                        WHERE $pg.type = ".$q['query']['type']."
                     )");
                 
                 
