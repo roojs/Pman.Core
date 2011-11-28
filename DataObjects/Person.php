@@ -251,10 +251,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $g = DB_DataObject::factory('Groups');
         $g->type = 0;
         $g->get('name', 'Administrators');
-        if (in_array($g->id,$this->groups('id'))) {
+        $gm = DB_DataObject::Factory('Group_Members');
+        if (in_array($g->id,$gm->listGroupMembership($this))) {
             // refresh admin groups.
-            $g = DB_DataObject::Factory('Group_Members');
-            $grps = $g->listGroupMembership($this);
+           
             
         }
             
