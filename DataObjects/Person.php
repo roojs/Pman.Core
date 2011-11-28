@@ -248,6 +248,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         
         
+        // refresh admin group if we are logged in as one..
         $g = DB_DataObject::factory('Groups');
         $g->type = 0;
         $g->get('name', 'Administrators');
@@ -256,7 +257,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // refresh admin groups.
             $gr = DB_DataObject::Factory('Group_Rights');
             $gr->applyDefs($g, 0);
-            
         }
             
             
