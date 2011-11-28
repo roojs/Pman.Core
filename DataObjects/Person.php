@@ -390,6 +390,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         $g = DB_DataObject::Factory('Group_Members');
+        $g->whereAdd('group_id is NO NULL AND user_id IS NOT NULL');
         if (!$g->count()) {
             // add the current user to the admin group..
             $g = DB_DataObject::Factory('Groups');
