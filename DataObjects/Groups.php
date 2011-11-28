@@ -36,7 +36,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
      */
     function checkPerm($lvl, $au) 
     {
-        return $au->hasPerm("Core.".$this->tableName(), $lvl);    
+        return $au->hasPerm("Core.Groups", $lvl);    
     } 
     function onUpdate($old, $req, $roo)
     {
