@@ -591,10 +591,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($q['query']['search'])) {
             $s = $this->escape($q['query']['search']);
                     $this->whereAdd("
-                        Person.name LIKE '%$s%'  OR
-                        Person.email LIKE '%$s%'  OR
-                        Person.role LIKE '%$s%'  OR
-                        Person.remarks LIKE '%$s%' 
+                        $tn_p.name LIKE '%$s%'  OR
+                        $tn_p.email LIKE '%$s%'  OR
+                        $tn_p.role LIKE '%$s%'  OR
+                        $tn_p.remarks LIKE '%$s%' 
                         
                     ");
         }
