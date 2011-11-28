@@ -406,7 +406,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
-       // print_r($grps);
+       var_dump($grps);
         $isAdmin = $g->inAdmin;
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
