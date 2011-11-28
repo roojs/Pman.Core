@@ -107,8 +107,9 @@ CREATE TABLE  Group_Rights  (
 );
 ALTER TABLE Group_Rights ADD COLUMN    rightname varchar(64)  NOT NULL DEFAULT '';
 ALTER TABLE Group_Rights ADD COLUMN     group_id int(11) NOT NULL DEFAULT 0;
-ALTER TABLE Group_Rights ADD COLUMN   AccessMask varchar(10)  NOT NULL DEFAULT '';
-  
+ALTER TABLE Group_Rights ADD COLUMN   accessmask varchar(10)  NOT NULL DEFAULT '';
+ALTER TABLE Group_Rights CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
+
 
 
 
