@@ -253,6 +253,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $g->get('name', 'Administrators');
         if (in_array($g->id,$this->groups('id'))) {
             // refresh admin groups.
+            $g = DB_DataObject::Factory('Group_Members');
+            $grps = $g->listGroupMembership($this);
             
         }
             
@@ -436,13 +438,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
      *
      */
     
-    function groups($col = false)
+    function groups()
     {
         $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
         $g = DB_DataObject::Factory('Groups');
         $g->whereAddIn('id', $grps, 'int');
-        return col == false ? $g->fetchAll() : $g->fetchAll($col);
+        return $g->fetchAll();
         
     }
     
