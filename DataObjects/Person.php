@@ -388,7 +388,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($this->id < 0) {
             return $g->adminRights(); // system is not set up - so they get full rights.
         }
-        
+        DB_DataObject::debugLevel(1);
         $g = DB_DataObject::Factory('Group_Members');
         $g->whereAdd('group_id is NO NULL AND user_id IS NOT NULL');
         if (!$g->count()) {
