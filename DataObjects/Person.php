@@ -520,7 +520,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $tn_p = $this->tableName();
         $tn_gm = DB_DataObject::Factory('Group_Members')->tableName();
         $tn_g = DB_DataObject::Factory('Groups')->tableName();
-        
+        $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+
         ///---------------- Group views --------
         if (!empty($q['query']['in_group'])) {
             // DB_DataObject::debugLevel(1);
@@ -560,10 +561,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             if ( $q['query']['not_in_directory'] > -1) {
                 // can list current - so that it does not break!!!
-                $x->whereAdd('Person.id NOT IN 
-                    ( SELECT distinct person_id FROM ProjectDirectory WHERE
-                        project_id = ' . $q['query']['not_in_directory'] . ' AND 
-                        company_id = ' . $this->company_id . ')');
+                $x->whereAdd("$tn_p.id NOT IN 
+                    ( SELECT distinct person_id FROM $tn_pd WHERE
+                        project_id = " . $q['query']['not_in_directory'] . " AND 
+                        company_id = " . $this->company_id . ')');
             }
         }
         
