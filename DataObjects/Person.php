@@ -245,7 +245,19 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         $this->isAuth(); // force session start..
         $this->verifyAuth();
-         $db = $this->getDatabaseConnection();
+        $db = $this->getDatabaseConnection();
+        
+        
+        $g = DB_DataObject::factory('Groups');
+        $g->type = 0;
+        $g->get('name', 'Administrators');
+        if (in_array($g->id,$this->groups('id'))) {
+            // refresh admin groups.
+            
+        }
+            
+            
+        
         $sesPrefix = $db->dsn['database'];
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
         
