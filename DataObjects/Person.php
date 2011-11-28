@@ -436,13 +436,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
      *
      */
     
-    function groups()
+    function groups($col = false)
     {
         $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
         $g = DB_DataObject::Factory('Groups');
         $g->whereAddIn('id', $grps, 'int');
-        return $g->fetchAll();
+        return col == false ? $g->fetchAll() : $g->fetchAll($col);
         
     }
     
