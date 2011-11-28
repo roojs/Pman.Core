@@ -13,7 +13,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     public $__table = 'Group_Rights';                    // table name
     public $rightname;                       // string(64)  not_null
     public $group_id;                        // int(11)  not_null
-    public $AccessMask;                      // string(10)  not_null
+    public $accessmask;                      // string(10)  not_null
     public $id;                              // int(11)  not_null primary_key auto_increment
 
     
@@ -31,10 +31,10 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         $ret = array();
         while($t->fetch()) {
             if (isset($ret[$t->rightname])) {
-                $ret[$t->rightname] = $this->mergeMask($ret[$t->rightname], $t->AccessMask);
+                $ret[$t->rightname] = $this->mergeMask($ret[$t->rightname], $t->accessmask);
                 continue;
             }
-            $ret[$t->rightname] = $t->AccessMask;
+            $ret[$t->rightname] = $t->accessmask;
         }
         // blank out rights that are disabled by the system..
         $defs = $this->defaultPermData();
@@ -164,11 +164,11 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         $defs = $this->defaultPermData();
         switch($g->name) {
             case "Administrators";
-                $this->AccessMask = $this->mergeMask($this->AccessMask, $defs[$this->rightname][0]);
+                $this->accessmask = $this->mergeMask($this->accessmask, $defs[$this->rightname][0]);
                 break;
                 
             default:
-                //$this->AccessMask = $this->mergeMask($this->AccessMask, $defs[$this->rightname][1]);
+                //$this->accessmask = $this->mergeMask($this->accessmask, $defs[$this->rightname][1]);
                 break;
         
         }
@@ -206,13 +206,13 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             $gr->rightname  = $rightname;
             $gr->group_id = $g->id;
             if (!$gr->find(true)) {
-                $gr->AccessMask = $defdata[$usecol];
+                $gr->accessmask = $defdata[$usecol];
                 $gr->insert();
                 continue;
             }
             $oldgr = clone($gr);
-            $gr->AccessMask = $gr->mergeMask($gr->AccessMask, $defdata[$usecol]);
-            if ($gr->AccessMask == $oldgr->AccessMask) {
+            $gr->accessmask = $gr->mergeMask($gr->accessmask, $defdata[$usecol]);
+            if ($gr->accessmask == $oldgr->accessmask) {
                 continue;
             }
             $gr->update($oldgr);
