@@ -256,7 +256,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             return $this->id == $au->company_id;
         }
         
-        return $au->hasPerm("Core.".$this->tableName(), $lvl);    
+        return $au->hasPerm("Core.Companies", $lvl);    
     } 
     
 }
