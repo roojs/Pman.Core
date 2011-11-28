@@ -158,7 +158,7 @@ ALTER TABLE Person ADD COLUMN   role varchar(32)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   active int(11) NOT NULL  default 1;
 ALTER TABLE Person ADD COLUMN   remarks text;
 ALTER TABLE Person ADD COLUMN   passwd varchar(64) NOT NULL  DEFAULT '';
-ALTER TABLE Person ADD COLUMN   owner_id int(11) NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   owner_id int(11) NOT NULL DEFAULT 0;
 ALTER TABLE Person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE Person ADD COLUMN   no_reset_sent int(11) default '0';
 
