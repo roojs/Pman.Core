@@ -187,6 +187,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     
         $g = DB_DataObject::Factory('Groups');
         $g->name = 'Administrators';
+        $g->type = 0;
         if (!$g->find(true)) {
             $g->insert();
         }
