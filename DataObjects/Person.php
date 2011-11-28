@@ -575,9 +575,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             //DB_DataObject::debugLevel(1);
             $do = DB_DataObject::factory('ProjectDirectory');
             $do->project_id = $q['query']['project_member_of'];
-            
+            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
             $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
-            $this->selectAdd('IF(ProjectDirectory.id IS NULL, 0,  ProjectDirectory.id )  as is_member');
+            $this->selectAdd("IF($tn_pd.id IS NULL, 0,  $tn_pd.id )  as is_member");
                 
                 
             if (!empty($q['query']['project_member_filter'])) {
