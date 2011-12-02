@@ -108,12 +108,12 @@ class Pman_Core_JsTemplate extends Pman {
         $funcs = array();
         // do not allow nested functions..?
         $fstart = -1;
-        $indent = 1;
+        $indent = 2;
         $inscript = false;
         $ret = &$out;
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
-            $indent  = max($indent , 0);
+            $indent  = max($indent , 1);
             //var_Dump(substr($item,-3,2));
             switch(true) {
                 case (!strlen($item)):
