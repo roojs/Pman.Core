@@ -113,7 +113,7 @@ class Pman_Core_JsTemplate extends Pman {
         $ret = &$out;
         foreach($ar as $item) {
             $in = str_repeat("    ", $indent);
-            
+            $indent  = max($indent , 0);
             //var_Dump(substr($item,-3,2));
             switch(true) {
                 case (!strlen($item)):
