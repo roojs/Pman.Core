@@ -150,6 +150,13 @@ class Pman_Core_JsTemplate extends Pman {
                     $indent++;
                     continue;
                 
+                case (substr($item,1,4) == 'else:'):
+                    $indent--;
+                    $in = str_repeat("    ", $indent);
+                    $ret[] = $in . "} else { ";
+                    $indent++;
+                    continue;
+                 
                 case (substr($item,1,4) == 'end:'):
                     $indent--;
                     $in = str_repeat("    ", $indent);
