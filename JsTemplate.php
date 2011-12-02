@@ -180,6 +180,10 @@ class Pman_Core_JsTemplate extends Pman {
                         $ret[] = $in . "ret += ".  substr($item,1,-3) . ';';
                         continue;
                     }
+                    if (substr($item,-3,2) == ':b') {
+                        $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-1).').split("\n").join("<br/>\n");';
+                        continue;
+                    }
                     $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-1).');';
                     continue;
                 
