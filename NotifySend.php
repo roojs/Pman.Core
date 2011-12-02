@@ -146,8 +146,7 @@ class Pman_Core_NotifySend extends Pman
                      "Notification event cleared (not required any more)" 
                     ."\n");
         }
-        
-        
+     
         
         if ($email === false || isset($email['error'])) {
             // object returned 'false' - it does not know how to send it..
@@ -162,6 +161,12 @@ class Pman_Core_NotifySend extends Pman
                     (isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable)
                     ."\n");
+        }
+        if (isset($email['later'])) {
+            $old = clone($w);
+            $w->act_when = $email['later'];
+            $w->update($old);
+            die(date('Y-m-d h:i:s ') . " Delivery postponed by email creator";
         }
         
          
