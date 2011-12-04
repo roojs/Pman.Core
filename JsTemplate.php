@@ -138,6 +138,7 @@ class Pman_Core_JsTemplate extends Pman {
                 
                 case ($item == '{script:}'): 
                     $inscript = true;
+                     $ret[] = '';
                     continue;
                 
                 case ($item[1] == '!'):
