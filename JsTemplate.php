@@ -120,7 +120,7 @@ class Pman_Core_JsTemplate extends Pman {
                     continue;
                 
                 case ($inscript && ($item != '{end:}')):
-                    $ret[] = $item;
+                    $ret[count($ret)-1] .= $item;
                     continue;
                 
                 case ($inscript && ($item == '{end:}')):
