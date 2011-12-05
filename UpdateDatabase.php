@@ -136,7 +136,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $fn = $this->convertToPG($bfn);
                 
-                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) . '2>&1' ;
+                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) . ' 2>&1' ;
                 
                 echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
                 
