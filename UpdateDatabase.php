@@ -128,17 +128,17 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
-            foreach(glob($fd.'/*.sql') as $fn) {
+            foreach(glob($fd.'/*.sql') as $bfn) {
                 
                  
-                if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
+                if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
                     continue;
                 }
-                $fn = $this->convertToPG($fn);
+                $fn = $this->convertToPG($bfn);
                 
                 $cmd = "$psql_cmd -f  " . escapeshellarg($fn) . '2>&1' ;
                 
-                echo "$fn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
+                echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
                 
                 
                 $res = `$cmd`;
