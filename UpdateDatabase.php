@@ -154,7 +154,7 @@ class Pman_Core_UpdateDatabase extends Pman
      */
     function convertToPG($src)
     {
-        $fn = $this->tempName('.sql');
+        $fn = $this->tempName('sql');
         
         $ret = array( ); // pad it a bit.
         $extra = array("", "" );
