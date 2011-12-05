@@ -136,12 +136,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $fn = $this->convertToPG($fn);
                 
-                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) ;
+                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) . '2>&1' ;
                 
-                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                echo "$fn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
                 
                 
-                //$res = `$cmd`;
+                $res = `$cmd`;
                 
             
                 unlink($fn);
@@ -203,7 +203,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         $ret = array_merge($extra,$ret);
         
-        echo implode("\n", $ret); //exit;
+        //echo implode("\n", $ret); //exit;
         file_put_contents($fn, implode("\n", $ret));
         
         return $fn;
