@@ -77,7 +77,7 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts)
     {
         if ($opts['DB_DataObject-debug']) {
-            DB_DataObject::debugLevel($opts['debug']);
+            DB_DataObject::debugLevel($opts['DB_DataObject-debug'']);
         }
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
