@@ -85,9 +85,9 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     {
         $c = clone ($this);
         if (is_array($pr)) {
-            $c->whereAddIn('project_id', $au, 'int');
+            $c->whereAddIn('project_id', $pr, 'int');
         } else {
-            $c->project_id = $au->id;
+            $c->project_id = $pr->id;
         }
         return $c->fetchAll('person_id');
         
