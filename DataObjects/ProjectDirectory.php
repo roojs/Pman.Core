@@ -68,7 +68,8 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
      */
     function projects($au)
     {
-        
+        $this->person_id = $au->id;
+        return $this->fetchAll('project_id');
         
         
     }
