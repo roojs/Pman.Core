@@ -70,21 +70,28 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     {
         $c = clone ($this);
         if (is_array($au)) {
-            $c->whereAddIn('id', $au, 'int');
+            $c->whereAddIn('person_id', $au, 'int');
         } else {
             $c->person_id = $au->id;
         }
-        return $this->fetchAll('project_id');
+        return $c->fetchAll('project_id');
     }
         /**
      * project id's for a user.
      * @param DB_DataObject_Core_Person - who
      * @return array id's of the project they are a member of..
      */
-    function projects($au)
+    function people($pr)
     {
-        $this->person_id = $au->id;
-        return $this->fetchAll('project_id');
+        $c = clone ($this);
+        if (is_array($pr)) {
+            $c->whereAddIn('project_id', $au, 'int');
+        } else {
+            $c->project_id = $au->id;
+        }
+        return $c->fetchAll('person_id');
+        
+         
     }
     
     
