@@ -297,7 +297,10 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             ));
         }
         return true;
-    } 
+    }
+    
+    
+    
     /**
      * fetch a list of user projects.
      * if you need to filter open/closed.. then add whereAdds before calling
