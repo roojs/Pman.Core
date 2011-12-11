@@ -105,7 +105,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         
         if ($this->id && 
             ($this->project_id == $roo->old->project_id) &&
-            ($this->person_id == $roo->old->person_id) &&
+            ($this->person_id  == $roo->old->person_id) &&
             ($this->company_id == $roo->old->company_id) )
         {
             return true;
