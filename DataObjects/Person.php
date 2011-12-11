@@ -468,7 +468,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     }    
     
     //  ------------ROO HOOKS------------------------------------
-    function applyFilters($q, $au)
+    function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
         if (!empty($q['query']['person_not_internal'])) {
