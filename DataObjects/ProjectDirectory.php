@@ -63,6 +63,21 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     }
     /**
      * project id's for a user.
+     * @param DB_DataObject_Core_Person|array - who, or list of people.
+     * @return array id's of the project they are a member of..
+     */
+    function projects($au)
+    {
+        $c = clone ($this);
+        if (is_array($au)) {
+            $c->whereAddIn('id', $au, 'int');
+        } else {
+            $c->person_id = $au->id;
+        }
+        return $this->fetchAll('project_id');
+    }
+        /**
+     * project id's for a user.
      * @param DB_DataObject_Core_Person - who
      * @return array id's of the project they are a member of..
      */
