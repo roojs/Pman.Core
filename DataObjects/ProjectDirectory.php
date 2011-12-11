@@ -59,10 +59,21 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         $this->office_id = $pe->office_id;
         $this->role = $pe->role;
         $this->insert();
+         
+    }
+    /**
+     * project id's for a user.
+     * @param DB_DataObject_Core_Person - who
+     * @return array id's of the project they are a member of..
+     */
+    function projects($au)
+    {
         
         
         
     }
+    
+    
     function checkPerm($lvl, $au) 
     {
         return $au->hasPerm('Documents.Project_Directory', $lvl);
