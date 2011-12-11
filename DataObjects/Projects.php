@@ -320,7 +320,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     
     function getUserProjects($au, $data='id') // COMPANY BASED!!!!
     {
-        return $this->userProjects($au, $data)
+        return $this->userProjects($au, $data);
          
             
     }
