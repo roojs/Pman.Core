@@ -308,16 +308,9 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         $this->whereAdd("
             (client_id= $id) OR (agency_id= $id)
         ");
-        if (!empty($data)) {
-            $this->selectAdd();
-            $this->selectAdd($data);
-        }
-        $this->find();
-        $ret = array();
-        while ($this->fetch()) {
-            $ret[] = empty($data) ? clone($this) : $this->$data;
-        }
-        return $ret;
+        
+        return empty($data) ? $this->fetchAll() :$this->fetchAll($data); 
+         
             
     }
     
