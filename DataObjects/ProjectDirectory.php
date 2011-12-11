@@ -114,7 +114,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         $xx = DB_Dataobject::factory('ProjectDirectory');
         $xx->setFrom(array(
             'project_id' => $this->project_id,
-            'person_id' => $this->person_id,
+            'person_id'  => $this->person_id,
             'company_id' => $this->company_id,
         ));
         
