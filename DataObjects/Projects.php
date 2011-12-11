@@ -300,12 +300,11 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     }
     
     
-    
     /**
      * fetch a list of user projects.
      * if you need to filter open/closed.. then add whereAdds before calling
      */
-    function getUserProjects($au, $data='id') // COMPANY BASED!!!!
+    function userProjects($au, $data='id') // COMPANY BASED!!!!
     {
         $id = (int) $au->company_id;
         $this->whereAdd("
@@ -313,6 +312,15 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         ");
         
         return empty($data) ? $this->fetchAll() :$this->fetchAll($data); 
+         
+            
+    }
+    
+    // DEPRICATED - use userProjects
+    
+    function getUserProjects($au, $data='id') // COMPANY BASED!!!!
+    {
+        return $this->userProjects($au, $data)
          
             
     }
