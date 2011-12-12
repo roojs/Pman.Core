@@ -243,7 +243,7 @@ class Pman_Core_NotifySend extends Pman
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
-            if (in_array($code, array( 421, 451, 452))   && $next_try_min < (2*24*60)) {
+            if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
@@ -279,6 +279,9 @@ class Pman_Core_NotifySend extends Pman
         $mx_weight = array();
         $mxs = array();
         if (!getmxrr($fqdn, $mx_records, $mx_weight)) {
+            if (!checkdnsrr($fqdn)) {
+                return false;
+            }
             return array($fqdn);
         }
         
