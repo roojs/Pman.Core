@@ -189,6 +189,20 @@ class Pman_Core_NotifySend extends Pman
         
         $mxs = $this->mxs($dom);
         $ww = clone($w);
+
+        
+        if ($mxs === false) {
+            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s') . ' - FAILED -  BAD EMAIL - {$p->email} \n"));
+            
+            
+        }
+        
+        
         
         $fail = false;
         require_once 'Mail.php';
