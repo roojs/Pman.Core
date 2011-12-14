@@ -137,7 +137,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         while ($this->fetch()) {
             $ret[] = array(
                 'code'  => $this->code,
-                'title' => $this->title);
+                'title' => $this->title
+            );
         }
         return $ret;
     }
