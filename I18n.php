@@ -109,30 +109,23 @@ class Pman_Core_I18N extends Pman
             case 'Lang':
                 $i->ltype = 'l';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $i->toTransList('l',  $lbits[0]);
-                
-                $ret = $this->getList('l', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+                $this->jdata($i->toTransList('l',  $lbits[0]));
                 break;
 
             case 'Country':
+                $i->ltype = 'l';
+                $i->applyFilters($_REQUEST, $this->authUser, $this);
+                $this->jdata($i->toTransList('l',  $lbits[0]));
+                
                 $ret = $this->getList('c', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
                 break;
                 
              case 'Currency':
-                $ret = $this->getList('m', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+                $i->ltype = 'l';
+                $i->applyFilters($_REQUEST, $this->authUser, $this);
+                $this->jdata($i->toTransList('l',  $lbits[0]));
                 break;
-            // part of parent!!!!
-            /*
-            case 'BuildDB':
-            // by admin only?!?
-                //DB_DataObject::debugLevel(1);
-                $this->buildDb('l');
-                $this->buildDb('c');
-                $this->buildDb('m');
-                die("DONE!");
-                break;
-            */      
-            default: 
+             
                 
         }
           
