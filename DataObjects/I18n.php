@@ -151,24 +151,36 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function availableCodes($t)
     {
         $ret = array();
+        $cfg = $this->cfg();
+        
         switch ($t) {
             case 'c':
                 require_once 'I18Nv2/Country.php';
                 
                 $c = new I18Nv2_Country('en');
                 $ret =  array_keys($c->codes);
+                if (!empty($cfg['add_c'])) {
+                    $ret = array_merge($ret, array_keys($cfg['add_c']));
+                }
                 $ret[] = '**';
                 break;
+            
             case 'l':
                 require_once 'I18Nv2/Language.php';
                 $c = new I18Nv2_Language('en');
                 $ret =  array_keys($c->codes);
+                if (!empty($cfg['add_l'])) {
+                    $ret = array_merge($ret, array_keys($cfg['add_l']));
+                }
                 $ret[] = '**';
                 break;
             case 'm':
                 require_once 'I18Nv2/Currency.php';
                 $c = new I18Nv2_Currency('en');
                 $ret =  array_keys($c->codes);
+                if (!empty($cfg['add_m'])) {
+                    $ret = array_merge($ret, array_keys($cfg['add_m']));
+                }
                 $ret[] = '**';
                 break;
         }
