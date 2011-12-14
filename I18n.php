@@ -90,6 +90,8 @@ class Pman_Core_I18N extends Pman
         $i->ltype = 'l';                           // string(1)  not_null multiple_key
         $i->lkey = $lang;                            // string(8)  not_null
         if (!$i->count()) {
+            
+            
             $this->jerr('invalid lang configured: ' . $lang);
         }
         
