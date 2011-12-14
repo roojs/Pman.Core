@@ -51,7 +51,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         ),
         'm' => array(
             'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
-        )
+        ),
+        'add_l'=> array(), // additional languages... 
+        'add_c'=> array(), // additional countries...(eg. '-R' => 'Regional' )
+        
     );
     /**
      * initalizie the cfg aray
