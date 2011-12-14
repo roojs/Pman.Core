@@ -69,7 +69,9 @@ class Pman_Core_I18N extends Pman
         $ff= HTML_FlexyFramework::get();
          
         
-        $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
+        $opts = empty($ff->Pman_Core_I18N) ?
+                (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)
+                : $ff->Pman_Core_I18N;
         
          
         
