@@ -80,10 +80,66 @@ class Pman_Core_I18N extends Pman
     }
      
     
+    function guessUsersLanguage() {
+         
+        $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
+        $lbits = explode('_', strtoupper($lang));
+        $lbits[0] = strtolower($lbits[0]);
+        
+        /// verify the selected language..
+        
+        
+        require_once 'I18Nv2/Country.php';
+        require_once 'I18Nv2/Language.php';
+        $langs = new I18Nv2_Language('en');
+        $countries = new I18Nv2_Country('en');
+      //  print_r($langs);
+        //print_R($lbits);
+        if (!isset($langs->codes[strtolower($lbits[0])])) {
+            $this->jerr('invalid lang');
+        }
+        if (!empty($lbits[1]) &&  !isset($countries->codes[$lbits[1]])) {  
+            $this->jerr('invalid lang Country component');
+            
+        }
+        return $lbits;
+    }
      
     function get($s ='')
     {
+     
+        $lbits = $this->guessUsersLanguage();
+         
         
+        
+        
+        switch($s) {
+            case 'Lang': 
+                $ret = $this->getList('l', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+                break;
+
+            case 'Country':
+                $ret = $this->getList('c', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+                break;
+                
+             case 'Currency':
+                $ret = $this->getList('m', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+                break;
+            // part of parent!!!!
+            /*
+            case 'BuildDB':
+            // by admin only?!?
+                //DB_DataObject::debugLevel(1);
+                $this->buildDb('l');
+                $this->buildDb('c');
+                $this->buildDb('m');
+                die("DONE!");
+                break;
+            */      
+            default: 
+                break;
+        }
+          
         $i = DB_DataObject::Factory('I18n');
         $i->buildDb();
      
