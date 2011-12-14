@@ -71,7 +71,6 @@ class Pman_Core_I18N extends Pman
         
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
-        $i = DB_DataObject::Factory('I18n');
          
         
         
@@ -83,30 +82,23 @@ class Pman_Core_I18N extends Pman
     function guessUsersLanguage() {
          
         $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
-        $lbits = explode('_', strtoupper($lang));
-        $lbits[0] = strtolower($lbits[0]);
         
         /// verify the selected language..
+        $i = DB_DataObject::Factory('I18n');
+        $i->ltype = 'l';                           // string(1)  not_null multiple_key
+        $i->lkey = $lang;                            // string(8)  not_null
+        if (!$i->count()) {
+            $this->jerr('invalid lang configured: ' . $lang);
+        }
         
         
-        require_once 'I18Nv2/Country.php';
-        require_once 'I18Nv2/Language.php';
-        $langs = new I18Nv2_Language('en');
-        $countries = new I18Nv2_Country('en');
-      //  print_r($langs);
-        //print_R($lbits);
-        if (!isset($langs->codes[strtolower($lbits[0])])) {
-            $this->jerr('invalid lang');
-        }
-        if (!empty($lbits[1]) &&  !isset($countries->codes[$lbits[1]])) {  
-            $this->jerr('invalid lang Country component');
-            
-        }
-        return $lbits;
+        return explode('_', $lang);
     }
      
     function get($s ='')
     {
+        $i = DB_DataObject::Factory('I18n');
+        $i->buildDb();
      
         $lbits = $this->guessUsersLanguage();
          
@@ -137,12 +129,10 @@ class Pman_Core_I18N extends Pman
                 break;
             */      
             default: 
-                break;
+                
         }
           
-        $i = DB_DataObject::Factory('I18n');
-        $i->buildDb();
-     
+      
        
         $i = DB_DataObject::Factory('I18n');
         $cfg = $i->cfg();
