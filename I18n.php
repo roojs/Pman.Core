@@ -92,6 +92,7 @@ class Pman_Core_I18N extends Pman
         if (!$i->count()) {    
             $i = DB_DataObject::Factory('I18n');
             $i->buildDb();
+            
             $i = DB_DataObject::Factory('I18n');
             $i->ltype = 'l';                           // string(1)  not_null multiple_key
             $i->lkey = $lang;  
