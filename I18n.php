@@ -116,7 +116,7 @@ class Pman_Core_I18N extends Pman
             case 'Country':
                 $i->ltype = 'c';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('l',  $lbits[0]));
+                $this->jdata($i->toTransList('c',  $lbits[0]));
                 
                 $ret = $this->getList('c', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
                 break;
@@ -124,7 +124,7 @@ class Pman_Core_I18N extends Pman
              case 'Currency':
                 $i->ltype = 'm';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('l',  $lbits[0]));
+                $this->jdata($i->toTransList('m',  $lbits[0]));
                 break;
              
                 
