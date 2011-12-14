@@ -97,8 +97,7 @@ class Pman_Core_I18N extends Pman
      
     function get($s ='')
     {
-        $i = DB_DataObject::Factory('I18n');
-        $i->buildDb();
+     
      
         $lbits = $this->guessUsersLanguage();
          
@@ -128,7 +127,9 @@ class Pman_Core_I18N extends Pman
              
                 
         }
-          
+        
+        $i = DB_DataObject::Factory('I18n');
+        $i->buildDb();
       
        
         $i = DB_DataObject::Factory('I18n');
