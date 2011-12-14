@@ -112,7 +112,7 @@ class Pman_Core_I18N extends Pman
                 break;
 
             case 'Country':
-                $i->ltype = 'l';
+                $i->ltype = 'c';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
                 $this->jdata($i->toTransList('l',  $lbits[0]));
                 
@@ -120,7 +120,7 @@ class Pman_Core_I18N extends Pman
                 break;
                 
              case 'Currency':
-                $i->ltype = 'l';
+                $i->ltype = 'm';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
                 $this->jdata($i->toTransList('l',  $lbits[0]));
                 break;
