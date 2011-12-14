@@ -126,17 +126,18 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function toTransList($ltype, $inlang)
     {
         
-        $x = DB_DataObject::factory('i18n');
-        $x->ltype = $ltype;
-        $x->inlang= $inlang;
-        $x->selectAdd();
-        $x->selectAdd('lkey as code, lval as title');
-        $x->find();
+        
+        $this->ltype = $ltype;
+        $this->inlang= $inlang;
+        $this->selectAdd();
+        $this->selectAdd('lkey as code, lval as title');
+        
+        $this->find();
         $ret = array();
-        while ($x->fetch()) {
+        while ($this->fetch()) {
             $ret[] = array(
-                'code' => $x->code,
-                'title' =>$x->title);
+                'code'  => $this->code,
+                'title' => $this>title);
         }
         return $ret;
     }
