@@ -267,7 +267,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
       
         static $cache;
-        
+        $cfg = $this->cfg();
         if (empty($k)) {
             return '??';
         }
@@ -290,7 +290,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if ($k == '**') {
             return 'Other / Unknown';
         }
-    
+        $ret = $cache[$lang][$type]->getName($k);
         
         if ($type == 'l') {
             $tolang = explode('_', $k);
@@ -299,9 +299,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             if (count($tolang) > 1) {
                 $ret.= '('.$tolang[1].')'; 
             }
-            return $ret;
+             
         }
-        $ret = $cache[$lang][$type]->getName($k);
+        // our wierd countries/langs etc..
+        if (isset($cfg['add_' . $type][$k])) {
+            return $cfg['add_' . $type][$k];
+            
+        }
+        
         //print_r(array($k, $ret));
         return $ret;
         
