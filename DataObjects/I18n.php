@@ -54,6 +54,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         ),
         'add_l'=> array(), // additional languages... 
         'add_c'=> array(), // additional countries...(eg. '-R' => 'Regional' )
+        'add_m'=> array(), // additional currencies...
+
         
     );
     /**
