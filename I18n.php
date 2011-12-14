@@ -143,11 +143,13 @@ class Pman_Core_I18N extends Pman
         {
             $rlang = array_shift(explode('_', strtoupper($lang)));
             
-            $ar[$lang] = array(
-                'l' => $i->toTransList('l',  $rlang),
-                'c' => $i->toTransList('c', $rlang),
-                'm' => $i->toTransList('m', $rlang),
-            );
+            $ar[$lang] = array();
+            $i = DB_DataObject::Factory('I18n');
+            $ar[$lang]['l'] = $i->toTransList('l',  $rlang);
+            $i = DB_DataObject::Factory('I18n');
+            $ar[$lang]['c'] =  $i->toTransList('c', $rlang);
+            $i = DB_DataObject::Factory('I18n');
+            $ar[$lang]['m'] = $i->toTransList('m', $rlang);
         }
         //echo '<PRE>';print_r($ar);
         header('Content-type: text/javascript');
