@@ -103,10 +103,14 @@ class Pman_Core_I18N extends Pman
         $lbits = $this->guessUsersLanguage();
          
         
-        
+        $i = DB_DataObject::Factory('I18n');
         
         switch($s) {
-            case 'Lang': 
+            case 'Lang':
+                $i->ltype = 'l';
+                $i->applyFilters($_REQUEST, $this->authUser, $this);
+                $i->toTransList('l',  $lbits[0]);
+                
                 $ret = $this->getList('l', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
                 break;
 
