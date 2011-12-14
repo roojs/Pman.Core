@@ -49,6 +49,10 @@ Pman.SearchTokenizer.prototype =  {
                
             }
         }
+        // sort tokens longest first..
+        
+        
+        
         // should not get here...
         return this.tokens;
     },
