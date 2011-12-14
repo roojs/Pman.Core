@@ -198,7 +198,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     function buildDB($ltype= false, $inlang= false )
     {
-        $this->cfg();
+        $cfg = $this->cfg();
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
@@ -217,7 +217,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             // We only build translatiosn for our configured ones..
             //foreach( $this->availableCodes('l') as $l) {
                 
-            foreach( self::$cfg['t'] as $l) {
+            foreach( $cfg['t'] as $l) {
                 $this->buildDB($ltype, $l);
             }
             return;
