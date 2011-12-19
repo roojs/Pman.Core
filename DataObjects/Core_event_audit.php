@@ -64,7 +64,6 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         //DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('core_event_audit');
         $x->autoJoin();
-        
          
         
         $x->selectAdd();
