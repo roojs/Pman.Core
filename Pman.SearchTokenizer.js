@@ -120,7 +120,7 @@ Pman.SearchTokenizer.prototype =  {
                 return;
             }
         }
-        this.tokens.push( { type : 's' , v : s });
+        this.tokens.push( { type : 's' , v : s, q: q });
     },
     
     getChar : function ()
