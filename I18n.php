@@ -202,7 +202,10 @@ class Pman_Core_I18N extends Pman
         
     }
     /**
-     * translate a list 
+     * translate a list of items
+     * @param Pman_Core_DataObjects_Person $au Authenticated user
+     * @param String                      $type  c/l/m
+     * @param String                      $k     'comma' seperated list of keys to translate
      */
     
     function translateList($au, $type, $k)  
