@@ -201,6 +201,19 @@ class Pman_Core_I18N extends Pman
         
         
     }
+    /**
+     * translate a list 
+     */
+    
+    function translateList($au, $type, $k)  
+    {
+        $ar = explode(',', $k);
+        $ret = array();
+        foreach($ar as $kk) {
+            $ret[] = $this->translate($au, $type, $kk);
+        }
+        return implode(', ', $ret);
+    }
      
     
 }
