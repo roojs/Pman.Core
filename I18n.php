@@ -217,6 +217,62 @@ class Pman_Core_I18N extends Pman
         }
         return implode(', ', $ret);
     }
+    /**
+     * convert rate:
+     * usage  : $i = new Pman_Core_I18n();
+     * $ret = $i->convertCurrency(100,"HKD","USD");
+     * if ($ret == false) {
+            /// something went wrong.
+     }
+     * 
+     * @param Pman_Core_DataObjects_Person $au Authenticated user
+     * @param String                      $type  c/l/m
+     * @param String                      $k     'comma' seperated list of keys to translate
+     */
+    
+    
+    function convertCurrency($val, $from, $to)
+    {
+        $r = $this->loadRates();
+        if ($r === false) {
+            return false;
+        }
+        if (!isset($this->rates[$from]) || !isset($this->rates[$to]) ) {
+            return false;
+        }
+        //echo '<PRE>';print_R($this->rates);
+        $base = (1.0 / $this->rates[$from]) * $val;
+  
+        return $this->rates[$to] * $base;
+    
+    }
+    var $rates = array();
+    function loadRates()
+    {
+        if (!empty($this->rates)) {
+            return true;
+        }
+        $target = ini_get('session.save_path').'/eurofxref-daily.xml';
+        if (!file_exists($target) || filemtime($target) < (time() - 60*60*24)) {
+            $f = file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
+            if (!strlen($f)) {
+                return false;
+            }
+            file_put_contents($target,$f);
+        } 
+        $dom = simplexml_load_file($target);
+        $this->rates['EUR'] = 1.0;
+        $this->rates['TWD'] = 46.7008412;
+        $this->rates['VND'] = 26405.3;
+       
+        foreach($dom->Cube->Cube->Cube as $c) {
+           //echo '<PRE>';print_r($c );
+            $this->rates[(string)$c['currency']] = (string)$c['rate'];
+        }
+         $this->rates['RMB'] = $this->rates['CNY'] ;
+    }
+    
+    
      
     
 }
