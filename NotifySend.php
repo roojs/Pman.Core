@@ -309,7 +309,6 @@ class Pman_Core_NotifySend extends Pman
             die(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
             
             
-            
         }
         
         
