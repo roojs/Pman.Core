@@ -299,6 +299,20 @@ class Pman_Core_NotifySend extends Pman
             die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
         }
         
+        // handle no host availalbe forever...
+        if (strtotime($w->act_start) < strtotime('NOW - 3 DAYS')) {
+            $ev = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ". $p->email);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
+            
+            
+            
+        }
+        
+        
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->update($ww);
