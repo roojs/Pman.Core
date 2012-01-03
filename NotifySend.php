@@ -147,11 +147,12 @@ class Pman_Core_NotifySend extends Pman
                     ."\n");
         }
      
+       
         
         if ($email === false || isset($email['error'])) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
-                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable);;
+                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
             $ww = clone($w);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
@@ -162,6 +163,11 @@ class Pman_Core_NotifySend extends Pman
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable)
                     ."\n");
         }
+        
+        
+        
+        
+        
         if (isset($email['later'])) {
             $old = clone($w);
             $w->act_when = $email['later'];
@@ -182,6 +188,19 @@ class Pman_Core_NotifySend extends Pman
         if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
+        
+        require_once 'Validate.php';
+        if (!Validate::email($p->email, true)) {
+              $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
+            $ww = clone($w);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
+            
+        }
+        
         
         $ff = HTML_FlexyFramework::get();
         
