@@ -191,7 +191,7 @@ class Pman_Core_NotifySend extends Pman
         
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
-              $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
+            $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
             $ww = clone($w);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
