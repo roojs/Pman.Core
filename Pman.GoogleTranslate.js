@@ -118,18 +118,13 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             
             
         });
-        switch (src) {
-           case 'zh_CN' : src = 'zh-CN'; break;
-           case 'zh_HK' : src = 'zh-TW'; break;
-            case 'zh_TW' : src = 'zh-TW'; break;
-                   
-        }
-        /// fix some of the languages..
-        //switch (dest) {
-        //        case 'zh-CN' : dest = 'zh-CN'; break;
-         //       case 'zh-HK' : dest = 'zh-TW'; break;
-         //           
-        //}
+        
+        src = src.replace('_','-');
+        dest = dest.replace('_','-');
+        // google does not recognize HK...
+        if (src  == 'zh-HK')  src = 'zh-TW';
+        if (dest == 'zh-HK') dest = 'zh-TW';
+     
          
         
         x.load(
