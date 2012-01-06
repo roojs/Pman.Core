@@ -118,6 +118,41 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         
+        if (isset($q['_related_on_id']) && isset($q['_related_on_table'])) {
+            // example: sales order - has invoices,
+            $ev  =$this->factory('Events');
+            $ev->setFrom(array(
+                'on_id' => $q['_related_on_id'],
+                'on_table' => $q['_related_on_table'],
+                               ));
+            $obj = $ev->object();
+            
+            if ($obj && method_exists($obj,'relatedWhere')) {
+                $ar = $obj->relatedWhere();
+                $tn = $this->tableName();
+                
+                $w = array();
+                $w[] = "( {$tn}.on_table = '" .
+                        $this->escape($q['_related_on_table']) .
+                        "' AND {$tn}.on_id = ". ((int)  $q['_related_on_id']) .
+                    ")";
+                
+                
+                foreach($ar as $k=>$v) {
+                    $w[] = "( {$tn}.on_table = '$k' AND {$tn}.on_id IN (". implode(',', $v). "))";
+                }
+                $this->whereAdd(implode(' OR ' , $w);
+                
+            }
+            
+            
+            
+            
+            
+        }
+        
+        
+        
         
         
             
