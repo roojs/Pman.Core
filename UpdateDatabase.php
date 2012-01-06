@@ -17,7 +17,9 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
             
-        ),
+        )
+    );
+    
     var $cli = false;
     function getAuth() {
         
