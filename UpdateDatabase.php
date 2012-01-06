@@ -9,7 +9,15 @@ class Pman_Core_UpdateDatabase extends Pman
     static $cli_desc = "Update SQL - Beta";
  
  
-  
+    static $cli_opts = array(
+        'account' => array(
+            'desc' => 'Account name primary email? (email)',
+            'short' => 'a',
+            
+            'min' => 1,
+            'max' => 1,
+            
+        ),
     var $cli = false;
     function getAuth() {
         
