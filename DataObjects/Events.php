@@ -1,6 +1,11 @@
 <?php
 /**
  * Table Definition for Events
+ *
+ * objects can implement relatedWhere(), which should return
+ *    'tablename' => array of ids
+ *
+ * 
  */
 require_once 'DB/DataObject.php';
 
