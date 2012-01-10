@@ -405,7 +405,7 @@ Pman.Login =  new Roo.util.Observable({
         this.form.render(ef.dom);
          // logoprefix comes from base config.
          
-        var img = typeof(appLogo) != 'undefined' ? appLogo :
+        var img = typeof(appLogo) != 'undefined'  && appLogo.length ? appLogo :
             rootURL + '/Pman/'+appNameShort + '/templates/images/logo.gif' 
          
         Pman.Login.form.el.createChild({
