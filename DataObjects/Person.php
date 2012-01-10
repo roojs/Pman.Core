@@ -438,15 +438,16 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     /**
      *Basic group fetching - probably needs to filter by type eventually.
      *
+     *@param String $what - fetchall() argument - eg. 'name' returns names of all groups that they are members of.
      */
     
-    function groups()
+    function groups($what=false)
     {
         $g = DB_DataObject::Factory('Group_Members');
         $grps = $g->listGroupMembership($this);
         $g = DB_DataObject::Factory('Groups');
         $g->whereAddIn('id', $grps, 'int');
-        return $g->fetchAll();
+        return $g->fetchAll($what);
         
     }
     
