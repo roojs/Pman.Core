@@ -144,7 +144,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 
                 
                 foreach($ar as $k=>$v) {
-                    $w[] = "( {$tn}.on_table = '$k' AND {$tn}.on_id IN (". implode(',', $v). "))";
+                    if (empty($v)) {
+                        continue;
+                    }                
+                     $w[] = "( {$tn}.on_table = '$k' AND {$tn}.on_id IN (". implode(',', $v). "))";
+                    
                 }
                 $this->whereAdd(implode(' OR ' , $w));
             }
