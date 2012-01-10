@@ -410,7 +410,7 @@ Pman.Login =  new Roo.util.Observable({
          
         Pman.Login.form.el.createChild({
                 tag: 'img', 
-                src: rootURL + '/Pman/'+appNameShort + '/templates/images/logo.gif',
+                src: img,
                 style: 'margin-bottom: 10px;'
             },
             Pman.Login.form.el.dom.firstChild 
