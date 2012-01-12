@@ -78,6 +78,16 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         
     }
     
+    
+    function addMember($person) {
+        $gm = DB_Dataobject::factory('Group_Members');
+        $gm->group_id = $this->id;
+        $gm->user_id = $person->id;
+        if (!$gm->count()) {
+            $gm->insert();
+        }
+    }
+    
     function members()
     {
         
