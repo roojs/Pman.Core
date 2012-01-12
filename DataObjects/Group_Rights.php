@@ -174,6 +174,10 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         }
         
     }
+    /**
+     * generates the default admin group.
+     * and returns it.
+     */
     function genDefault()
     {
         // need to create to special groups, admin & DEFAULT.
