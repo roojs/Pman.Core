@@ -192,7 +192,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             $g->insert();
         }
         $this->applyDefs($g, 0);
-        
+        return $g;
         
     }
         
