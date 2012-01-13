@@ -157,7 +157,7 @@ ALTER TABLE Person ADD COLUMN   phone varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   fax varchar(32)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   email varchar(128)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   company_id int(11) default '0';
-ALTER TABLE Person ADD COLUMN   role varchar(32)  NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   active int(11) NOT NULL  default 1;
 ALTER TABLE Person ADD COLUMN   remarks text;
 ALTER TABLE Person ADD COLUMN   passwd varchar(64) NOT NULL  DEFAULT '';
@@ -172,6 +172,7 @@ ALTER TABLE Person ADD COLUMN deleted_dt DATETIME ;
 
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
+alter table Person change role role varchar(254);
 
 
 
@@ -327,7 +328,7 @@ alter table  core_watch ADD COLUMN    ontable varchar(128) NOT NULL DEFAULT '';
 alter table  core_watch ADD COLUMN   onid int(11) NOT NULL DEFAULT 0;
 alter table  core_watch ADD COLUMN   person_id int(11) NOT NULL DEFAULT 0;
 alter table  core_watch ADD COLUMN   event varchar(128) NOT NULL DEFAULT '';
-alter table  core_watch ADD COLUMN   medium varchar(128) NOT NULL DEFAULT '';
+alter table  core_watch ADD COLUMN   medium varchar(64) NOT NULL DEFAULT '';
 alter table  core_watch ADD COLUMN  active int(11) NOT NULL DEFAULT '1';
 
 ALTER TABLE core_watch ADD INDEX qlookup (ontable,onid,person_id,event,medium);
