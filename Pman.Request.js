@@ -31,7 +31,8 @@ Pman.Request = function(config){
     
     Pman.Request.superclass.constructor.call(this, config);
     
-    if (this.mask && this.maskEl) {
+    if (this.mask) {
+        this.maskEl = this.maskEl || Roo.get(document.body);
         Roo.get(this.maskEl).mask(this.mask);
         
     }
