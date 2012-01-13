@@ -151,7 +151,7 @@ CREATE TABLE Person (
   PRIMARY KEY  (id)
 ) ;
 
-ALTER TABLE Person ADD COLUMN  office_id int(11) default '0';
+ALTER TABLE Person ADD COLUMN   office_id int(11) default '0';
 ALTER TABLE Person ADD COLUMN   name varchar(128)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   phone varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   fax varchar(32)  NOT NULL DEFAULT '';
