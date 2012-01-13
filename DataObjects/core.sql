@@ -172,7 +172,7 @@ ALTER TABLE Person ADD COLUMN deleted_dt DATETIME ;
 
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
-alter table Person change role role varchar(254);
+alter table Person change role role varchar(254) NOT NULL DEFAULT '';
 
 
 
