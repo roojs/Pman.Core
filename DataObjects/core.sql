@@ -165,10 +165,10 @@ ALTER TABLE Person ADD COLUMN   owner_id int(11) NOT NULL DEFAULT 0;
 ALTER TABLE Person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE Person ADD COLUMN   no_reset_sent int(11) default '0';
 
-ALTER TABLE Person ADD COLUMN action_type VARCHAR(32) DEFAULT '';
-ALTER TABLE Person ADD COLUMN project_id int(11) default 0;
-ALTER TABLE Person ADD COLUMN deleted_by INT(11) NOT NULL default 0 ;
-ALTER TABLE Person ADD COLUMN deleted_dt DATETIME ;
+ALTER TABLE Person ADD COLUMN   action_type VARCHAR(32) DEFAULT '';
+ALTER TABLE Person ADD COLUMN   project_id int(11) default 0;
+ALTER TABLE Person ADD COLUMN   deleted_by INT(11) NOT NULL default 0 ;
+ALTER TABLE Person ADD COLUMN   deleted_dt DATETIME ;
 
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
