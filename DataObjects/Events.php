@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
          if (isset($q['query']['day_sum'])) {
             //DB_DataObject::debugLevel(1);
             $this->_extra_cols = array('qty' , 'uqty');
-            $this->selectAdd("DATE_FORMAT(event_when, '%Y-%M-%d') as on_day");
+            $this->selectAdd("DATE_FORMAT(event_when, '%Y-%m-%d') as on_day");
             $this->selectAdd("count($tn.id) as qty");
             $this->selectAdd("count( distinct $tn.on_id) as uqty");
             
