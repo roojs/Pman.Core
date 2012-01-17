@@ -77,9 +77,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
          if (isset($q['query']['table_sum'])) {
             //DB_DataObject::debugLevel(1);
-            $this->_extra_cols = array('qty' );
+            $this->_extra_cols = array('qty' , 'uqty');
             $this->selectAdd("count($tn.id) as qty");
-            $this->groupBy('person_id');
+            $this->selectAdd("count( distinct $tn.on_id) as uqty");
+            
+            $this->groupBy('on_table');
         }
         
         
