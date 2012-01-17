@@ -69,6 +69,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         //    &_columns=on_id_cohead_number,event_when << this is ignored at present.
         // max(event_when) is not supported... by any query yet..
         
+        if (isset($q['query']['person_sum'])) {
+            $this->selectAdd('sum(id) as qty');
+            $this->groupBy('person_id');
+        }
+        
+        
         
         if (isset($q['_join'])) {
             //DB_DataObject::DebugLevel(1);
