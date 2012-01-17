@@ -70,7 +70,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         // max(event_when) is not supported... by any query yet..
         
         if (isset($q['query']['person_sum'])) {
-            $this->selectAdd("sum($tn.id) as qty");
+            $this->selectAdd("count($tn.id) as qty");
             $this->groupBy('person_id');
         }
         
