@@ -198,8 +198,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
             $u->get('email', $ff->Pman['local_autoauth'])
         ) {
-            $db = $this->getDatabaseConnection();
-            $sesPrefix = $db->dsn['database'];
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
             return true;
         }
@@ -226,7 +224,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return false;
         }
         $db = $this->getDatabaseConnection();
-        $sesPrefix = $db->dsn['database'];
+        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
@@ -268,7 +267,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             
         
-        $sesPrefix = $db->dsn['database'];
+        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
         
     }
@@ -276,7 +275,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         $this->isAuth(); // force session start..
          $db = $this->getDatabaseConnection();
-        $sesPrefix = $db->dsn['database'];
+        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
         
     }    
