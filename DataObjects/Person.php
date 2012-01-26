@@ -168,11 +168,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function isAuth()
     {
         $db = $this->getDatabaseConnection();
-        $sesPrefix = $db->dsn['database'];
+        // we combine db + project names,
+        // otherwise if projects use different 'auth' objects
+        // then we get unserialize issues.
+        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        
+        
         @session_start();
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
+            
             $u = DB_DataObject::factory('Person');
             if ($u->get($a->id)) { //&& strlen($u->passwd)) {
                 $u->verifyAuth();
