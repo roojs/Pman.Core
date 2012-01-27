@@ -171,7 +171,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // we combine db + project names,
         // otherwise if projects use different 'auth' objects
         // then we get unserialize issues.
-        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         
         
         @session_start();
@@ -224,7 +224,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return false;
         }
         $db = $this->getDatabaseConnection();
-        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
@@ -251,8 +251,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $this->isAuth(); // force session start..
         $this->verifyAuth();
         $db = $this->getDatabaseConnection();
-        
-        
         // refresh admin group if we are logged in as one..
         //DB_DataObject::debugLevel(1);
         $g = DB_DataObject::factory('Groups');
@@ -267,7 +265,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             
         
-        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
         
     }
@@ -275,7 +273,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         $this->isAuth(); // force session start..
          $db = $this->getDatabaseConnection();
-        $sesPrefix = HTML_FlexyFramework::get()->project .'-'.$db->dsn['database'] ;
+        $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
         
     }    
