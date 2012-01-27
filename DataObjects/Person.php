@@ -262,9 +262,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $gr = DB_DataObject::Factory('Group_Rights');
             $gr->applyDefs($g, 0);
         }
-            
-            
-        
+             
         $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
         
