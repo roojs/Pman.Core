@@ -299,21 +299,20 @@ alter table  core_enum ADD COLUMN  seqmax int(11)  NOT NULL DEFAULT 0;
 
 alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 
-DELIMITER |
+DELIMITER $$
 
 CREATE TRIGGER core_enum_insert AFTER INSERT ON core_enum
 FOR EACH ROW BEGIN
     CALL core_enum_seqmax(NEW.etype);
 END;
-|
-DELIMITER ;
 
 CREATE TRIGGER core_enum_update AFTER UDPATE ON core_enum
 FOR EACH ROW BEGIN
     CALL core_enum_seqmax(NEW.etype);
 END;
-|
+$$
 DELIMITER ;
+
 
 
 CREATE TABLE  translations (
