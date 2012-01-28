@@ -18,7 +18,7 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS core_enum_seqmax;
 DELIMITER $$
-CREATE PROCEDURE core_enum_seqmax_update( etype varchar(128))
+CREATE FUNCTION core_enum_seqmax( etype varchar(128))
 BEGIN
         DECLARE seqmax INT(11);
         SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
