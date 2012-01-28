@@ -23,7 +23,7 @@ CREATE FUNCTION core_enum_seqmax_update( in_etype varchar(128))
 
 BEGIN
         DECLARE v_seqmax INT(11);
-        SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
+        SELECT MAX(seqid) +1 INTO v_seqmax FROM core_enum WHERE
             etype = in_etype;
         UPDATE core_enum SET seqmax = v_seqmax WHERE etype = in_etype;
         RETURN v_seqmax;
