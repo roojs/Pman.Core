@@ -18,14 +18,14 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS core_enum_seqmax_update;
 DELIMITER $$
-CREATE FUNCTION core_enum_seqmax_update( etype varchar(128))
+CREATE FUNCTION core_enum_seqmax_update( in_etype varchar(128))
         RETURNS INT(11) DETERMINISTIC
 
 BEGIN
-        DECLARE seqmax INT(11);
+        DECLARE v_seqmax INT(11);
         SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
-            etype = etype;
-        UPDATE core_enum SET seqmax = seqmax WHERE etype = etype;
+            etype = in_etype;
+        UPDATE core_enum SET seqmax = v_seqmax WHERE etype = in_etype;
         RETURN seqmax;
     END $$
 DELIMITER ;
