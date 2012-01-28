@@ -305,7 +305,7 @@ DROP TRIGGER IF EXISTS core_enum_insert   $$
 
 CREATE TRIGGER core_enum_insert AFTER INSERT ON core_enum
 FOR EACH ROW BEGIN
-    CALL core_enum_seqmax(NEW.etype);
+    CALL core_enum_seqmax_update(NEW.etype);
 END;
 $$
 
@@ -313,7 +313,7 @@ DROP TRIGGER IF EXISTS core_enum_update  $$
 
 CREATE TRIGGER core_enum_update AFTER UPDATE ON core_enum
 FOR EACH ROW BEGIN
-    CALL core_enum_seqmax(NEW.etype);
+    CALL core_enum_seqmax_update(NEW.etype);
 END;
 $$
 
