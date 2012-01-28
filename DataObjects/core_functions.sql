@@ -31,3 +31,7 @@ BEGIN
 DELIMITER ;
 
 -- usage: SELECT core_enum_seqmax_update(DISTINCT(etype)) FROM core_enum;
+DROP TABLE IF EXISTS core_enum_tmp;
+CREATE TEMPORARY TABLE core_enum_tmp SELECT DISTINCT(etype) FROM core_enum;
+SELECT core_enum_seqmax_update(etype) FROM core_enum_tmp;
+DROP TABLE IF EXISTS core_enum_tmp;
