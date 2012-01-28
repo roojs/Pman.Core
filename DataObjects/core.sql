@@ -307,7 +307,7 @@ FOR EACH ROW BEGIN
 END;
 $$
 
-CREATE TRIGGER core_enum_update AFTER UDPATE ON core_enum
+CREATE TRIGGER core_enum_update AFTER UPDATE ON core_enum
 FOR EACH ROW BEGIN
     CALL core_enum_seqmax(NEW.etype);
 END;
