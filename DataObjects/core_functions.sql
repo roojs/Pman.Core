@@ -21,7 +21,7 @@ DELIMITER $$
 CREATE PROCEDURE core_enum_seqmax_update( etype varchar(128))
 BEGIN
         DECLARE seqmax INT(11);
-        SELECT MAX(seqid) +1  INT seqmax FROM core_enum WHERE
+        SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
             etype = etype;
         UPDATE core_enum SET seqmax = seqmax WHERE etype = etype;
         
