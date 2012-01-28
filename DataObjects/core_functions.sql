@@ -29,3 +29,5 @@ BEGIN
         RETURN seqmax;
     END $$
 DELIMITER ;
+
+-- usage: SELECT core_enum_seqmax_update(DISTINCT(etype)) FROM core_enum;
