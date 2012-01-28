@@ -301,7 +301,7 @@ alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 
 DELIMITER $$
 
-DROP TRIGGER core_enum_insert IF EXISTS $$
+DROP TRIGGER IF EXISTS core_enum_insert   $$
 
 CREATE TRIGGER core_enum_insert AFTER INSERT ON core_enum
 FOR EACH ROW BEGIN
@@ -309,7 +309,7 @@ FOR EACH ROW BEGIN
 END;
 $$
 
-DROP TRIGGER core_enum_update IF EXISTS $$
+DROP TRIGGER IF EXISTS core_enum_update  $$
 
 CREATE TRIGGER core_enum_update AFTER UPDATE ON core_enum
 FOR EACH ROW BEGIN
