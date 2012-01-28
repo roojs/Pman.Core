@@ -297,7 +297,7 @@ alter table  core_enum ADD COLUMN   active int(2)  NOT NULL DEFAULT 1;
 alter table  core_enum ADD COLUMN  seqid int(11)  NOT NULL DEFAULT 0;
 alter table  core_enum ADD COLUMN  seqmax int(11)  NOT NULL DEFAULT 0;
 
- alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
+alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 
 
 
