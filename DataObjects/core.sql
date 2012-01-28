@@ -301,6 +301,7 @@ alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
  
 
 
+
 CREATE TABLE  translations (
   id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
