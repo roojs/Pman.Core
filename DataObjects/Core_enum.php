@@ -15,6 +15,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     public $name;                            // string(255)  not_null
     public $active;                          // int(2)  not_null
     public $seqid;                           // int(11)  not_null multiple_key
+    public $seqmax;                           // int(11)  not_null multiple_key
 
     
     /* the code above is auto generated do not remove the tag below */
