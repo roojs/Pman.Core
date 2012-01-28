@@ -26,7 +26,7 @@ BEGIN
         SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
             etype = in_etype;
         UPDATE core_enum SET seqmax = v_seqmax WHERE etype = in_etype;
-        RETURN seqmax;
+        RETURN v_seqmax;
     END $$
 DELIMITER ;
 
