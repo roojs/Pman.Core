@@ -38,4 +38,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
+    function onInsert($req)
+    {
+        $x = $this->factory($this->tableName());
+        $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')");
+        
+        
+    }
+    
 }
