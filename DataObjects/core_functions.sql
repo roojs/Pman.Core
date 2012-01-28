@@ -19,6 +19,8 @@ DELIMITER ;
 DROP FUNCTION IF EXISTS core_enum_seqmax_update;
 DELIMITER $$
 CREATE FUNCTION core_enum_seqmax_update( etype varchar(128))
+        RETURNS INT(11) DETERMINISTIC
+
 BEGIN
         DECLARE seqmax INT(11);
         SELECT MAX(seqid) +1 INTO seqmax FROM core_enum WHERE
