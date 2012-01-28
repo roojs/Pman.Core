@@ -305,12 +305,14 @@ CREATE TRIGGER core_enum_insert AFTER INSERT ON core_enum
 FOR EACH ROW BEGIN
     CALL core_enum_seqmax(NEW.etype);
 END;
+$$
 
 CREATE TRIGGER core_enum_update AFTER UDPATE ON core_enum
 FOR EACH ROW BEGIN
     CALL core_enum_seqmax(NEW.etype);
 END;
 $$
+
 DELIMITER ;
 
 
