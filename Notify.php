@@ -207,7 +207,10 @@ class Pman_Core_Notify extends Pman
                 'pid' => $info['pid'],
                 'out' => $tn,
                 'cmd' => $cmd,
-                'email' => $email
+                'email' => $email,
+                'pipes' => $pipes
+            
+                
         );
     }
     
@@ -226,7 +229,12 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
+            
+            fclose($p['pipes'][1]);
+            fclose($p['pipes'][0]);
+            fclose($p['pipes'][2]);
             proc_close($p['proc']);
+            
             echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             
             
