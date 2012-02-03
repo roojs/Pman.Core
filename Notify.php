@@ -226,8 +226,10 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
-            echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             proc_close($p['proc']);
+            echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            
+            
             //unlink($p['out']);
         }
         echo "POOL SIZE: ". count($pool) ."\n";
