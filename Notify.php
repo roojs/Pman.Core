@@ -206,7 +206,7 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
-            echo $p['cmd'] . " : " . file_get_contents($p['out']);
+            echo $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //unlink($p['out']);
         }
         $this->pool = $pool;
