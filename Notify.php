@@ -200,7 +200,7 @@ class Pman_Core_Notify extends Pman
         foreach($this->pool as $p) {
             $ar = proc_get_status($p['proc']);
            // print_r($p);
-            //print_r($ar);
+            print_r($ar);
             if ($ar['running']) {
                 $pool[] = $p;
                 continue;
