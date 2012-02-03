@@ -220,7 +220,7 @@ class Pman_Core_Notify extends Pman
         clearstatcache();
         foreach($this->pool as $p) {
              
-            echo "CHECK PID: " . $p['pid'] . "\n";
+            //echo "CHECK PID: " . $p['pid'] . "\n";
             $info =  proc_get_status($p['proc']);
             //var_dump($info);
             
