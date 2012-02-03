@@ -241,6 +241,10 @@ class Pman_Core_NotifySend extends Pman
                   //  'debug' => true
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            
+            
+            
+            
             if ($res === true) {
                 // success....
                 
@@ -273,6 +277,7 @@ class Pman_Core_NotifySend extends Pman
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if ($code < 0) {
+                $this->debug(print_R($res,true));
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
