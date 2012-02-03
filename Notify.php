@@ -153,6 +153,8 @@ class Pman_Core_Notify extends Pman
             
             $this->run($p->id,$p->person_id_email);
         }
+        
+        // we should have a time limit here...
         while(count($this->pool)) {
             $this->poolfree();
             sleep(3);
