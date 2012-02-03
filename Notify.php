@@ -223,7 +223,9 @@ class Pman_Core_Notify extends Pman
             echo "CHECK PID: " . $p['pid'] . "\n";
             $info =  proc_get_status($p['proc']);
             //var_dump($info);
-            
+            if ($info['pid']) {
+                $p['pid'] = $info['pid'];
+            }
             if ($info['running']) {
             
             //if (file_exists('/proc/'.$p['pid'])) {
