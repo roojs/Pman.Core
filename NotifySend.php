@@ -100,8 +100,6 @@ class Pman_Core_NotifySend extends Pman
             $w->sent = $w->sqlValue("NOW()");
             $w->update($ww);
             
-            
-            
             die("message has been sent already.\n");
         }
         
