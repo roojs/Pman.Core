@@ -197,11 +197,12 @@ class Pman_Core_Notify extends Pman
     function poolfree()
     {
         $pool = array();
+        clearstatcache();
         foreach($this->pool as $p) {
             $ar = proc_get_status($p['proc']);
-           // print_r($p);
-            print_r($ar);
-            if ($ar['running']) {
+            
+            
+            if (file_exists('/proc/'.$ar['pid'])) {
                 $pool[] = $p;
                 continue;
             }
