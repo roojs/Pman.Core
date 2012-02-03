@@ -96,6 +96,12 @@ class Pman_Core_NotifySend extends Pman
         }
         
         if (!$force && !empty($w->msgid)) {
+            $ww = clone($w);
+            $w->sent = $w->sqlValue("NOW()");
+            $w->update($ww);
+            
+            
+            
             die("message has been sent already.\n");
         }
         
