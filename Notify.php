@@ -91,7 +91,7 @@ class Pman_Core_Notify extends Pman
             $this->send_to = $opts['send-to'];
         }
      
-        
+        DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         
         if (!$showold) {
