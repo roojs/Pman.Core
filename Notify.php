@@ -218,12 +218,16 @@ class Pman_Core_Notify extends Pman
         foreach($this->pool as $p) {
              
             echo "CHECK PID: " . $p['pid'] . "\n";
+            $info =  proc_get_status($p['proc']);
             
-            if (file_exists('/proc/'.$p['pid'])) {
+            if ($info['running']) {
+            
+            //if (file_exists('/proc/'.$p['pid'])) {
                 $pool[] = $p;
                 continue;
             }
             echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            proc_close($p['proc'])
             //unlink($p['out']);
         }
         echo "POOL SIZE: ". count($pool) ."\n";
