@@ -289,8 +289,25 @@ class Pman_Core_NotifySend extends Pman
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
+                
+                // we try for 3 days..
+                $retry = 5;
+                if (strtotime($w->act_start) <  strtotime('NOW - 1 HOUR')) {
+                    // older that 1 hour.
+                    $retry = 15;
+                }
+                
+                if (strtotime($w->act_start) <  strtotime('NOW - 1 DAY')) {
+                    // older that 1 day.
+                    $retry = 60;
+                }
+                if (strtotime($w->act_start) <  strtotime('NOW - 2 DAY')) {
+                    // older that 1 day.
+                    $retry = 120;
+                }
+                
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
-                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
+                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
             }
