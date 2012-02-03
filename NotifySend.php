@@ -238,7 +238,7 @@ class Pman_Core_NotifySend extends Pman
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
                     'localhost' => $ff->Mail['helo'],
-                    'timeout' => 30,
+                    'timeout' => 15,
                   //  'debug' => true
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
