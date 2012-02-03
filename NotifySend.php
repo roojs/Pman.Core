@@ -282,7 +282,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($code < 0) {
-                $this->debug(print_R($res,true));
+                $this->debug($res->message);
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
