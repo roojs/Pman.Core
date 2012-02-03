@@ -211,6 +211,7 @@ class Pman_Core_Notify extends Pman
             echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //unlink($p['out']);
         }
+        echo "POOL SIZE: ". count($pool) ."\n";
         $this->pool = $pool;
         if (count($pool) < 10) {
             return true;
