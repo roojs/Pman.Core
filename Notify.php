@@ -231,13 +231,19 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             
+            echo "CLOSING: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             fclose($p['pipes'][0]);
             fclose($p['pipes'][2]);
             proc_close($p['proc']);
             
-            echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             
+            clearstatcache();
+            if (file_exists('/proc/'.$p['pid'])) {
+                $pool[] = $p;
+                continue;
+            }
+            echo "ENDED: " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             
             //unlink($p['out']);
         }
