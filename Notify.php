@@ -186,8 +186,10 @@ class Pman_Core_Notify extends Pman
         echo $cmd . "\n";
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
+        $info =  proc_get_status($p['proc']);
         $this->pool[] = array(
                 'proc' => $p,
+                'pid' => $info['pid'],
                 'out' => $tn,
                 'cmd' => $cmd,
                 'email' => $email
