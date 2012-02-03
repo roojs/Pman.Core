@@ -230,7 +230,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             
-            fclose($p['pipes'][1]);
+            //fclose($p['pipes'][1]);
             fclose($p['pipes'][0]);
             fclose($p['pipes'][2]);
             proc_close($p['proc']);
