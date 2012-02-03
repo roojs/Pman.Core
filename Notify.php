@@ -217,7 +217,7 @@ class Pman_Core_Notify extends Pman
         clearstatcache();
         foreach($this->pool as $p) {
              
-            
+            echo "CHECK PID: " . $p['pid'] . "\n";
             
             if (file_exists('/proc/'.$p['pid'])) {
                 $pool[] = $p;
