@@ -69,6 +69,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         //    &_columns=on_id_cohead_number,event_when << this is ignored at present.
         // max(event_when) is not supported... by any query yet..
         
+        if (isset($q['on_table']) && !strlen($q['on_table'])) {
+            // empty ontable queries.. these are valid..
+            $this->whereAdd("$tn.on_table = ''");
+        }
+        
+        
         if (isset($q['query']['person_sum'])) {
             //DB_DataObject::debugLevel(1);
             $this->_extra_cols = array('qty' );
