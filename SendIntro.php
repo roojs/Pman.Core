@@ -95,12 +95,15 @@ class Pman_Core_SendIntro extends Pman
         // next.. 
         
         
-        $p->sendTemplate('password_welcome', array(
+        $ret = $p->sendTemplate('password_welcome', array(
             'sender' => $this->authUser,
             'rawPasswd' => $rawPasswd,
             'baseURL' => $this->baseURL,
         ));
-        
+        if (is_object($ret)) {
+            $this->jerr($ret->toString());
+            
+        }
         
         $this->jok("SENT");
         
