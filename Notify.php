@@ -256,7 +256,7 @@ class Pman_Core_Notify extends Pman
             }
             fclose($p['pipes'][0]);
             fclose($p['pipes'][2]);
-            echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            //echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
