@@ -221,6 +221,8 @@ class Pman_Core_Notify extends Pman
     {
         $pool = array();
         clearstatcache();
+        $maxruntime = 2 * 60; // 2 minutes.. ?? should be long enoguh
+        
         foreach($this->pool as $p) {
              
             //echo "CHECK PID: " . $p['pid'] . "\n";
@@ -237,7 +239,17 @@ class Pman_Core_Notify extends Pman
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
                 echo "RUNTIME ({$p['pid']}): $runtime\n";
-                
+                if ($runtime > $maxruntime) {
+                    
+                    proc_terminate($p['proc']);
+                    echo "TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+                    //fclose($p['pipes'][1]);
+                    fclose($p['pipes'][0]);
+                    fclose($p['pipes'][2]);
+                    
+                    
+                    continue;
+                }
                 
                 $pool[] = $p;
                 continue;
