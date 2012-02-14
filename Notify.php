@@ -262,11 +262,11 @@ class Pman_Core_Notify extends Pman
             proc_close($p['proc']);
             
             
-            clearstatcache();
-            if (file_exists('/proc/'.$p['pid'])) {
-                $pool[] = $p;
-                continue;
-            }
+            //clearstatcache();
+            //if (file_exists('/proc/'.$p['pid'])) {
+            //    $pool[] = $p;
+            //    continue;
+            //}
             echo "ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             @unlink($p['out']);
             //unlink($p['out']);
