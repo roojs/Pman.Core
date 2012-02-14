@@ -328,7 +328,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $ev = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ".
+            $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
                         $p->email . ' ' .
                         ($fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR"));
             $w->sent = date('Y-m-d H:i:s');
