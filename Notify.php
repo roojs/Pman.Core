@@ -212,7 +212,7 @@ class Pman_Core_Notify extends Pman
             
                 
         );
-        echo "RUN ($info['pid']) $cmd . "\n";
+        echo "RUN ($info['pid']) $cmd  \n";
     }
     
     function poolfree()
