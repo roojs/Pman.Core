@@ -246,7 +246,7 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
-                    
+                    @unlink($p['out']);
                     
                     continue;
                 }
@@ -268,7 +268,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             echo "ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
-            
+            @unlink($p['out']);
             //unlink($p['out']);
         }
         echo "POOL SIZE: ". count($pool) ."\n";
