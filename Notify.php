@@ -238,7 +238,7 @@ class Pman_Core_Notify extends Pman
             
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
-                echo "RUNTIME ({$p['pid']}): $runtime\n";
+                //echo "RUNTIME ({$p['pid']}): $runtime\n";
                 if ($runtime > $maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
