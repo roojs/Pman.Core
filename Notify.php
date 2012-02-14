@@ -241,7 +241,7 @@ class Pman_Core_Notify extends Pman
                 echo "RUNTIME ({$p['pid']}): $runtime\n";
                 if ($runtime > $maxruntime) {
                     
-                    proc_terminate($p['proc']);
+                    proc_terminate($p['proc'], 9);
                     echo "TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
