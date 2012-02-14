@@ -234,7 +234,11 @@ class Pman_Core_Notify extends Pman
             
             if ($info['running']) {
             
-            //if (file_exists('/proc/'.$p['pid'])) {
+                //if (file_exists('/proc/'.$p['pid'])) {
+                $runtime = time() - $p['started'];
+                echo "RUNTIME ({$p['pid']}): $runtime\n";
+                
+                
                 $pool[] = $p;
                 continue;
             }
