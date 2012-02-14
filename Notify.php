@@ -242,10 +242,10 @@ class Pman_Core_Notify extends Pman
                 if ($runtime > $maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
-                    echo "TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
+                    echo "TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
                     @unlink($p['out']);
                     
                     continue;
@@ -254,11 +254,11 @@ class Pman_Core_Notify extends Pman
                 $pool[] = $p;
                 continue;
             }
-            
-            echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
-            //fclose($p['pipes'][1]);
             fclose($p['pipes'][0]);
             fclose($p['pipes'][2]);
+            echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            //fclose($p['pipes'][1]);
+            
             proc_close($p['proc']);
             
             
