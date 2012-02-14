@@ -198,7 +198,7 @@ class Pman_Core_Notify extends Pman
         }
         $cmd = $php . ' ' . $app. ' &';
         
-        echo $cmd . "\n";
+       
         $pipe = array();
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
         $info =  proc_get_status($p);
@@ -212,6 +212,7 @@ class Pman_Core_Notify extends Pman
             
                 
         );
+        echo "RUN ($info['pid']) $cmd . "\n";
     }
     
     function poolfree()
