@@ -393,9 +393,9 @@ class Pman_Core_NotifySend extends Pman
          
      }
      **/
-    function makeEmail($object, $rcpt, $last_sent_date, $notify)
+    function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
     {
-        return $object->toEmail($rcpt, $last_sent_date, $notify);
+        return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
     }
     
     function debug($str)
