@@ -133,9 +133,9 @@ class Pman_Core_NotifySend extends Pman
             $next_try_min = floor((time() - strtotime($last_event)) / 60) * 2;
         }
         $next_try = $next_try_min . ' MINUTES';
-        
+         
         // this may modify $p->email. (it will not update it though)
-        $email =  $this->makeEmail($o, $p, $last, $w);
+        $email =  $this->makeEmail($o, $p, $last, $w, $force);
         
         
         if ($email === true)  {
