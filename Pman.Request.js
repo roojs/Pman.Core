@@ -104,7 +104,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (res !== true) {
             var decode = this.processResponse(response);
             Roo.log(decode);
-            if (Roo.MessageBox.isVisable()) {
+            if (Roo.MessageBox.isVisible()) {
                 alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
                 return;
             }            

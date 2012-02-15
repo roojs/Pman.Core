@@ -134,6 +134,7 @@ class Pman_Core_NotifySend extends Pman
         }
         $next_try = $next_try_min . ' MINUTES';
         
+        // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w);
         
         
@@ -241,7 +242,7 @@ class Pman_Core_NotifySend extends Pman
             // older that 1 day.
             $retry = 120;
         }
-        
+        $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
         $w->update($ww);
