@@ -33,10 +33,18 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function checkPerm($perm, $au)
     {
+        // default permissons are to
+        // allow create / edit / if the user has
+        if (!$au) {
+            return false;
+        }
+         
+        
+        
         $o = $this->object();
         if (method_exists($o, 'hasPerm')) {
             // edit permissions on related object needed...
-            return $o->hasPerm('E', $au);
+            return $o->hasPerm( $perm == 'S' ? 'S' : 'E' , $au);
             
         }
         
