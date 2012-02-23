@@ -385,12 +385,20 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
-    
+    /**
+     *
+     *
+     *
+     */
     
     
     function setFromRoo($ar, $roo)
     {
         // not sure why we do this.. 
+        
+        
+        
+        
         
         // if imgtype starts with '-' ? then we set the 'old' (probably to delete later)
         if (!empty($ar['imgtype']) && !empty($ar['ontable']) && !empty($ar['onid']) && ($ar['imgtype'][0] == '-')) {
@@ -424,11 +432,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
         
         // FIXME - we should be checking perms here...
-        //if (method_exists($x, 'checkPerm') && !$x->checkPerm('E', $this->authUser))  {
-        //    $this->jerr("PERMISSION DENIED");
-        // }
+       
         // this should be doign update
         $this->setFrom($ar);
+        
+        if (method_exists(this, 'checkPerm') && !$this->checkPerm('E', $this->authUser))  {
+            $this->jerr("IMAGE UPLOAD PERMISSION DENIED");
+        }
         
         if (!isset($_FILES['imageUpload'])) {
             return; // standard update...
