@@ -1,6 +1,17 @@
 <?php
 /**
  * Table Definition for Group_Rights
+ *
+ * // what they mean:
+        // A - add
+        // D - delete
+        // E - edit
+        // S - list
+        // P - print / export
+        // I - import
+        // M????
+ *
+ * 
  */
 require_once 'DB/DataObject.php';
 
