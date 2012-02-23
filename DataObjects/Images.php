@@ -438,6 +438,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         
         if (!empty($ar['_copy_from'])) {
+            
+            if (!$this->checkPerm( 'A' , $this->authUser))  {
+                $roo->jerr("IMAGE UPLOAD PERMISSION DENIED");
+            }
+            
             $copy = DB_DataObject::factory('Images');
             $copy->get($ar['_copy_from']);
             $this->setFrom($copy->toArray());
