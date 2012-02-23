@@ -462,9 +462,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
        
         // this should be doign update
         $this->setFrom($ar);
-        
-        if (method_exists(this, 'checkPerm') &&
-                !$this->checkPerm('E', $this->authUser))  {
+         
+        $this->checkPerm($this->id ? 'A' ? 'E', $this->authUser))  {
             $this->jerr("IMAGE UPLOAD PERMISSION DENIED");
         }
         
