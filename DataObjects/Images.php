@@ -30,6 +30,25 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function checkPerm($perm, $au)
+    {
+        $o = $this->object();
+        if (method_exists($o, 'hasPerm')) {
+            // edit permissions on related object needed...
+            return $o->hasPerm('E', $au);
+            
+        }
+        
+        return true; //// ??? not really that safe...
+        
+    }
+    
+    
+    
+    
+    
+    
     /**
      * create an email from file.
      * these must have been set first.
@@ -436,7 +455,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // this should be doign update
         $this->setFrom($ar);
         
-        if (method_exists(this, 'checkPerm') && !$this->checkPerm('E', $this->authUser))  {
+        if (method_exists(this, 'checkPerm') &&
+                !$this->checkPerm('E', $this->authUser))  {
             $this->jerr("IMAGE UPLOAD PERMISSION DENIED");
         }
         
@@ -457,6 +477,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $roo->jok($r->toArray());
          
     }
+    
     function toEventString()
     {
         
