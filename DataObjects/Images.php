@@ -42,6 +42,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         $o = $this->object();
+        print_r($o);
         if (method_exists($o, 'hasPerm')) {
             // edit permissions on related object needed...
             return $o->hasPerm( $perm == 'S' ? 'S' : 'E' , $au);
