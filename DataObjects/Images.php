@@ -36,6 +36,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // default permissons are to
         // allow create / edit / if the user has
         if (!$au) {
+            
+          
+            
             return false;
         }
          
