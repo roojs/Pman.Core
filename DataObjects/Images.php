@@ -326,10 +326,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function object($obj=false)
     {
         if ($obj === false) {
+            if (empty($this->ontable) || empty($this->onid)) {
+                return false;
+            }
             $ret = DB_DataObject::factory($this->ontable);
             $ret->get($this->onid);
             return $ret;
         }
+        
+        
         $this->ontable = $obj->tableName();
         $this->onid = $obj->id; /// assumes our nice standard of using ids..
         return $obj;
