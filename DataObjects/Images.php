@@ -448,7 +448,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if (!empty($ar['_copy_from'])) {
             
-            if (!$this->checkPerm( 'A' , $this->authUser))  {
+            if (!$this->checkPerm( 'A' , $roo->authUser))  {
                 $roo->jerr("IMAGE UPLOAD PERMISSION DENIED");
             }
             
