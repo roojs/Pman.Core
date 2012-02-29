@@ -276,7 +276,7 @@ class Pman_Core_NotifySend extends Pman
             if ($res === true) {
                 // success....
                 
-                $ev = $this->addEvent('NOTIFY', $w, "SUCCESS: {$w->to_email} - {$email['headers']['Subject']}");
+                $ev = $this->addEvent('NOTIFYSENT', $w, "{$w->to_email} - {$email['headers']['Subject']}");
                
                 
                 
