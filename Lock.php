@@ -93,7 +93,7 @@ class Pman_Core_Lock extends Pman
             $this->jerr("Missing table or id");
         }
        
-        $tab = str_replace('/', '',$_REQUEST['on_table']); // basic protection??
+        $tab = str_replace('/', '', strtolower($_REQUEST['on_table'])); // basic protection??
         $x = DB_DataObject::factory($tab);
         if (!$x->get($_REQUEST['on_id'])) {
             $this->jerr("Item does not exist");
@@ -103,7 +103,7 @@ class Pman_Core_Lock extends Pman
         $curlock = DB_DataObject::factory('Core_locking');
         $curlock->setFrom(array(
             'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table']
+            'on_table' => strtolower($_REQUEST['on_table'])
         ));
         
         $curlock_ex = clone($curlock);
@@ -135,7 +135,7 @@ class Pman_Core_Lock extends Pman
             $curlock = DB_DataObject::factory('Core_locking');
             $curlock->setFrom(array(
                 'on_id' => $_REQUEST['on_id'],
-                'on_table' => $_REQUEST['on_table']
+                'on_table' => strtolower($_REQUEST['on_table'])
             ));
             $curlock->find();
             while($curlock->fetch()) {
@@ -149,7 +149,7 @@ class Pman_Core_Lock extends Pman
         $curlock = DB_DataObject::factory('Core_locking');
         $curlock->setFrom(array(
             'on_id' => $_REQUEST['on_id'],
-            'on_table' => $_REQUEST['on_table'],
+            'on_table' => strtolower($_REQUEST['on_table']),
             'created' => date('Y-m-d H:i:s'),
             'person_id' => $this->authUser->id,
         ));
