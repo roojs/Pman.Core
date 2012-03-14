@@ -132,6 +132,11 @@ class Pman_Core_Lock extends Pman
         $nlocks = $curlock->count();
         if ($nlocks) {
             // trash all the locks..
+            $curlock = DB_DataObject::factory('Core_locking');
+            $curlock->setFrom(array(
+                'on_id' => $_REQUEST['on_id'],
+                'on_table' => $_REQUEST['on_table']
+            ));
             $curlock->find();
             while($curlock->fetch()) {
                 $cc =clone($curlock);
