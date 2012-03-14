@@ -10,7 +10,7 @@ class Pman_Core_DataObjects_Core_locking extends DB_DataObject
     /* the code below is auto generated do not remove the above tag */
 
     public $__table = 'core_locking';                    // table name
-    public $int;                             // int(11)  not_null primary_key auto_increment
+    public $id;                             // int(11)  not_null primary_key auto_increment
     public $on_table;                        // string(64)  not_null multiple_key
     public $on_id;                           // int(11)  not_null
     public $person_id;                       // int(11)  not_null
