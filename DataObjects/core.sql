@@ -282,7 +282,8 @@ ALTER TABLE  core_locking ADD COLUMN  person_id int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE  core_locking ADD COLUMN  created datetime ;
 
 alter table  core_locking ADD  INDEX lookup(on_table, on_id, person_id, created);
-alter table core_locking change column `int` id int(11) auto_increment not null;
+# -- oops... - wrong name of pid.
+alter table  core_locking change column `int` id int(11) auto_increment not null;
 
 # -- a generic enumeraction
 
