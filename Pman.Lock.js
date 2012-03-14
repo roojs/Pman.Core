@@ -35,6 +35,7 @@
  */
 Pman.Lock = function (cfg) {
     this.cfg = cfg;
+    Roo.log('ctor-callLock');
     this.callLock();
 }
 
@@ -45,6 +46,7 @@ Roo.apply(Pman.Lock.prototype, {
     
     callLock : function(force)
     {
+        Roo.log('callLock');
         force = force || 0;
         var _t = this
         Pman.Request({
