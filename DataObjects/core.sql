@@ -273,7 +273,7 @@ ALTER TABLE i18n ADD INDEX lookup (ltype, lkey, inlang);
         
     
 CREATE TABLE  core_locking (
-  int int(11)  NOT NULL AUTO_INCREMENT,
+  id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (int)
 );
 ALTER TABLE  core_locking ADD COLUMN   on_table varchar(64)  NOT NULL DEFAULT '';
