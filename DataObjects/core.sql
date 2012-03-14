@@ -79,6 +79,7 @@ ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 
 ALTER TABLE Events ADD INDEX lookup (on_id, on_table, person_id, event_when);
 
+ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when);
 
 
 
