@@ -165,7 +165,7 @@ class Pman_Core_Lock extends Pman
             'person_id' => $this->authUser->id,
         ));
         $id = $curlock->insert();
-        $this->jok($ret ? $ret : $id);
+        $this->jok( $id);
         
     }
      
