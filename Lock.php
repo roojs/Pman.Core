@@ -153,7 +153,6 @@ class Pman_Core_Lock extends Pman
                 $cc =clone($curlock_ex);
                 $cc->delete();
             }
-            
         }
         
         
