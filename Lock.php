@@ -100,7 +100,7 @@ class Pman_Core_Lock extends Pman
         }
         // is there a current lock on the item..
         
-        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock = DB_DataObject::factory('core_locking');
         $curlock->setFrom(array(
             'on_id' => $_REQUEST['on_id'],
             'on_table' => strtolower($_REQUEST['on_table'])
@@ -136,7 +136,7 @@ class Pman_Core_Lock extends Pman
         $ulocks = $curlock->count();
         if ($ulocks) {
             // trash all the locks..
-            $curlock = DB_DataObject::factory('Core_locking');
+            $curlock = DB_DataObject::factory('core_locking');
             $curlock->setFrom(array(
                 'on_id' => $_REQUEST['on_id'],
                 'on_table' => strtolower($_REQUEST['on_table'])
