@@ -105,12 +105,13 @@ class Pman_Core_Lock extends Pman
             'on_id' => $_REQUEST['on_id'],
             'on_table' => strtolower($_REQUEST['on_table'])
         ));
-        
+        $curlock->person_id = $this->authUser->id;
         $curlock_ex = clone($curlock);
         $curlock_ex->whereAdd('person_id != '. $this->authUser->id);
-        
-        
         $nlocks = $curlock_ex->count() ;
+        
+        $ret = false;
+        
         if ($nlocks && empty($_REQUEST['force'])) {
            // DB_DataObjecT::debugLevel(1);
             $ar = $curlock->fetchAll('person_id', 'created');
@@ -125,7 +126,8 @@ class Pman_Core_Lock extends Pman
                 $ret[$p->id] = $p->toArray();
                 $ret[$p->id]['lock_created'] = $ar[$p->id];
             }
-            $this->jok(array_values($ret));
+            $ret = array_values($ret);
+            //$this->jok(array_values($ret));
             
         }
         // trash the lock if it belongs to current user..
