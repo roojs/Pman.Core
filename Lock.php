@@ -126,8 +126,7 @@ class Pman_Core_Lock extends Pman
                 $ret[$p->id] = $p->toArray();
                 $ret[$p->id]['lock_created'] = $ar[$p->id];
             }
-            $ret = array_values($ret);
-            //$this->jok(array_values($ret));
+             $this->jok(array_values($ret));
             
         }
         // trash the lock if it belongs to current user..
