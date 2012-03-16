@@ -139,9 +139,10 @@ class Pman_Core_Lock extends Pman
             $curlock = DB_DataObject::factory('core_locking');
             $curlock->setFrom(array(
                 'on_id' => $_REQUEST['on_id'],
-                'on_table' => strtolower($_REQUEST['on_table'])
+                'on_table' => strtolower($_REQUEST['on_table']),
+                'person_id' => $this->authUser->id
             ));
-            $curlock->person_id = $this->authUser->id;
+            
             $curlock->find();
             while($curlock->fetch()) {
                 $cc =clone($curlock);
