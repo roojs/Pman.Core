@@ -131,8 +131,8 @@ class Pman_Core_Lock extends Pman
             
         }
         // trash the lock if it belongs to current user..
-        $nlocks = $curlock->count();
-        if ($nlocks) {
+        $ulocks = $curlock->count();
+        if ($ulocks) {
             // trash all the locks..
             $curlock = DB_DataObject::factory('Core_locking');
             $curlock->setFrom(array(
@@ -146,6 +146,8 @@ class Pman_Core_Lock extends Pman
                 $cc->delete();
             }
         }
+        
+        
         
         // make a lock..
         
