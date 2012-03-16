@@ -117,7 +117,7 @@ class Pman_Core_Lock extends Pman
         
         if ($nlocks && empty($_REQUEST['force'])) {
            // DB_DataObjecT::debugLevel(1);
-            $ar = $curlock->fetchAll('person_id', 'created');
+            $ar = $curlock_ex->fetchAll('person_id', 'created');
             $p = DB_DataObject::factory('Person');
             $p->selectAdd();
             $p->selectAdd('id,name,email');
