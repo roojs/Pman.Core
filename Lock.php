@@ -146,7 +146,12 @@ class Pman_Core_Lock extends Pman
                 $cc->delete();
             }
         }
-        
+        if ($nlocks && !empty($_REQUEST['force'])) {
+            // user has decied to delete eveyone elses locks..   
+            
+            
+            
+        }
         
         
         // make a lock..
