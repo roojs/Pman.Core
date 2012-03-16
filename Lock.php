@@ -105,8 +105,11 @@ class Pman_Core_Lock extends Pman
             'on_id' => $_REQUEST['on_id'],
             'on_table' => strtolower($_REQUEST['on_table'])
         ));
-        $curlock->person_id = $this->authUser->id;
+        
         $curlock_ex = clone($curlock);
+        $curlock->person_id = $this->authUser->id;
+        
+        
         $curlock_ex->whereAdd('person_id != '. $this->authUser->id);
         $nlocks = $curlock_ex->count() ;
         
