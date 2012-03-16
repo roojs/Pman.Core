@@ -154,8 +154,6 @@ class Pman_Core_Lock extends Pman
                 $cc->delete();
             }
             
-            
-            
         }
         
         
