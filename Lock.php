@@ -147,7 +147,12 @@ class Pman_Core_Lock extends Pman
             }
         }
         if ($nlocks && !empty($_REQUEST['force'])) {
-            // user has decied to delete eveyone elses locks..   
+            // user has decied to delete eveyone elses locks..
+            $curlock_ex->find();
+            while($curlock_ex->fetch()) {
+                $cc =clone($curlock_ex);
+                $cc->delete();
+            }
             
             
             
