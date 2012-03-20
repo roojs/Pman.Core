@@ -152,7 +152,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
                 
                 
-                $res = `$cmd`;
+                passthru($cmd);
                 
                 if ($fn) {
                     unlink($fn);
