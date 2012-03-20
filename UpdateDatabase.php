@@ -134,17 +134,20 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
                     continue;
                 }
-                $fn = $this->convertToPG($bfn);
                 
-                $cmd = "$psql_cmd -f  " . escapeshellarg($fn) . ' 2>&1' ;
+                
+                $fn = preg_match('/pgsql.sql$/', $bfn) ? false : $this->convertToPG($bfn);
+                
+                $cmd = "$psql_cmd -f  " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
                 
                 echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
                 
                 
                 $res = `$cmd`;
                 
-            
-                unlink($fn);
+                if ($fn) {
+                    unlink($fn);
+                }
             }
         }
         
