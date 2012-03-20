@@ -85,8 +85,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 // .my.sql but not .pg.sql
-                if (preg_match('/\.[a-z]{2}\.sql/i', basename($bfn))
-                    && !preg_match('/\.my\.sql/i', basename($bfn))
+                if (preg_match('/#.[a-z]{2}\.sql#i', basename($bfn))
+                    && !preg_match('/#\.my\.sql#i', basename($bfn))
                 ) { // skip migration scripts at present..
                     continue;
                 }
@@ -139,13 +139,13 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
                     continue;
                 }
-                if (preg_match('/\.[a-z]{2}\.sql/i', basename($bfn))
-                    && !preg_match('/\.pg\.sql/i', basename($bfn))
+                if (preg_match('#\.[a-z]{2}\.sql#i', basename($bfn))
+                    && !preg_match('#\.pg\.sql#i', basename($bfn))
                 ) { // skip migration scripts at present..
                     continue;
                 }
                 // files ending in .pg.sql are native postgres files..
-                $fn = preg_match('/\.pg\.sql$/', $bfn) ? false : $this->convertToPG($bfn);
+                $fn = preg_match('/#.pg\.sql$#', $bfn) ? false : $this->convertToPG($bfn);
                 
                 $cmd = "$psql_cmd -f  " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
                 
