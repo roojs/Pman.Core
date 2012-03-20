@@ -84,7 +84,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
                     continue;
                 }
-                
+                // .my.sql but not .pg.sql
+                if (preg_match('/\.[a-z]+\.sql/i', basename($bfn))
+                    && !preg_match('/\.my\.sql/i', basename($bfn))
+                ) { // skip migration scripts at present..
+                    continue;
+                }
                 $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
                 
                 echo $cmd. ($this->cli ? "\n" : "<BR>\n");
