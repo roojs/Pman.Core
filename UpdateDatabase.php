@@ -145,7 +145,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 // files ending in .pg.sql are native postgres files..
-                $fn = preg_match('/#.pg\.sql$#', $bfn) ? false : $this->convertToPG($bfn);
+                $fn = preg_match('/#\.pg\.sql$#', $bfn) ? false : $this->convertToPG($bfn);
                 
                 $cmd = "$psql_cmd -f  " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
                 
