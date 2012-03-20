@@ -139,7 +139,11 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
                     continue;
                 }
-                
+                 if (preg_match('/\.[a-z]+\.sql/i', basename($bfn))
+                    && !preg_match('/\.pg\.sql/i', basename($bfn))
+                ) { // skip migration scripts at present..
+                    continue;
+                }
                 // files ending in .pg.sql are native postgres files..
                 $fn = preg_match('/\.pg\.sql$/', $bfn) ? false : $this->convertToPG($bfn);
                 
