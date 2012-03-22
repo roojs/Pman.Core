@@ -145,6 +145,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         return $ret;
     
     }
+    
+  
+    
+    
     function getEmailFrom()
     {
         return '"' . addslashes($this->name) . '" <' . $this->email . '>';
