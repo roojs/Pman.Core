@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $headers['Date'] = date('r');
         
         return array(
-            'recipents' => $recipents,
+            'recipients' => $recipents,
             'headers'    => $headers,
             'body'      => $body
         );
@@ -140,7 +140,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return $mail;
         } 
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
-        $ret = $mail->send($ar['recipents'],$ar['headers'],$ar['body']);
+        $ret = $mail->send($ar['recipients'],$ar['headers'],$ar['body']);
         error_reporting($oe);
        
         return $ret;
