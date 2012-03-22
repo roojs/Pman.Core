@@ -379,6 +379,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
         $ff = HTML_FlexyFramework::get();
         $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
+        if preg_match('#^http[s]*://#', $provider) {
+            $baseURL = '';
+        }
+        
         if ($size < 0) {
             return $baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
