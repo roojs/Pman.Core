@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         
         $ar = $this->buildMail($templateFile, $args);
-        $this->jerr($ar);
+      
         
         //print_r($recipents);exit;
         $mailOptions = PEAR::getStaticProperty('Mail','options');
