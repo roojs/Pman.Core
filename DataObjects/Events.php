@@ -238,8 +238,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pg = $ff->page;
         $au = $pg->getAuthUser();
         
-        if ($ff->cli && empty($au) && isset($obj->person_id)) {
-            
+        if ($ff->cli) { // && empty($au) && isset($obj->person_id)) {
+            $au = false;
            // $au = DB_DataObject::Factory('Person'); // not always a person..
            // $au->get($obj->person_id);
         } 
