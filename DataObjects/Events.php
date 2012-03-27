@@ -239,14 +239,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $au = $pg->getAuthUser();
         
         if ($ff->cli && empty($au) && isset($obj->person_id)) {
-            $au = DB_DataObject::Factory('Person'); // not always a person..
-            $au->get($obj->person_id);
+            
+           // $au = DB_DataObject::Factory('Person'); // not always a person..
+           // $au->get($obj->person_id);
         } 
          
          
          
         $this->person_name = $au && !empty($au->name) ? $au->name : '';
-        $this->person_id = $au ? $au->id : '';
+        $this->person_id = $au ? $au->id : -1;
         $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
         $this->action = $act;
         $this->on_table = $obj ? $obj->tableName() : '';
