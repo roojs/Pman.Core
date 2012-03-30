@@ -705,20 +705,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // extra case change passwod?
             case 'P': //??? password
                 // standard perms -- for editing + if the user is dowing them selves..
-                $ret = $isStaff ? $au->hasPerm("Core.Person", "E") : $au->hasPerm("Core.Staff", "E");
+                $ret = $isStaff ? $au->hasPerm("Core.Staff", "E") : $au->hasPerm("Core.Person", "E");
                 return $ret || $au->id == $this->id;
             
-            case 'S': // list..
-                return $au->hasPerm("Core.Person", "S");
-            
-            case 'E': // edit
-                return $isStaff ? $au->hasPerm("Core.Person", "E") : $au->hasPerm("Core.Staff", "E");
-            
-            case 'A': // add
-                return $isStaff ? $au->hasPerm("Core.Person", "A") : $au->hasPerm("Core.Staff", "A");
-            
-            case 'D': // add
-                return $isStaff ? $au->hasPerm("Core.Person", "D") : $au->hasPerm("Core.Staff", "D");
+            default:                
+                return $isStaff ? $au->hasPerm("Core.Staff", $lvl) : $au->hasPerm("Core.Person", $lvl);
         
         }
         return false;
