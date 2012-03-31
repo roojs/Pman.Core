@@ -829,8 +829,8 @@ Pman = new Roo.Document(
         
         if (!obj.parent) {
             if (obj.parent === false) {
-                obj.disabled = true;
-                console.log('skip module (no parent)');
+                obj.disabled = false;
+                console.log('adding top level object (as parent===false found)');
                 console.log(obj);
                 return;
             }
