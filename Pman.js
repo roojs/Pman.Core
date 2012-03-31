@@ -849,6 +849,10 @@ Pman = new Roo.Document(
     {
         
         this.xregister(obj);
+        Roo.XComponent.register(obj);
+        /*
+        
+        
         if (obj.disabled) {
             return;
         }
@@ -858,7 +862,7 @@ Pman = new Roo.Document(
         }
         
         obj.parent.modules.add(obj);
-        
+        */
     },
     
     
