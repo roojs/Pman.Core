@@ -19,6 +19,8 @@ if (typeof(_T) == 'undefined') { _T={};}
  
 
 
+Roo.XComponent.on('register', function(e) { return Pman.xregister(e); });
+
   
 
 Pman = new Roo.Document(
@@ -765,22 +767,10 @@ Pman = new Roo.Document(
     appModules : false,
     
     modules : false,
-    /**
-     * example:
-     * 
-     * Pman.register({
-          modKey : '00-admin-xxxx',
-          module : Pman.Tab.projectMgr, << really a components..
-          part : [ 'Admin', 'ProjectManager' ]
-          moduleOwner : 
-          region : 'center',
-          parent : Pman.layout
-        })
-     * 
-     */
-    register : function(obj)
+    
+    
+    xregister : function(obj)
     {
-        
         
         // work out owner..
         if (!this.appModules === false) {
@@ -810,10 +800,12 @@ Pman = new Roo.Document(
             if (this.hasPermExists(permname) && !this.hasPerm(permname,'S')) {
                 // it's a turned off permission...
                 Roo.log(permname + " is Disabled for this user");
+                obj.disabled = true;
                 return;
             }
             if (appDisabled.indexOf(permname) > -1)  {
                 Roo.log(permname + " is Disabled for this site");
+                obj.disabled = true;
                 return;
             }
             
@@ -824,15 +816,43 @@ Pman = new Roo.Document(
         
         if (!obj.parent) {
             if (obj.parent === false) {
-                //console.log('skip module (no parent)' + obj.modkey);
+                obj.disabled = true;
+                console.log('skip module (no parent)');
+                console.log(obj);
                 return;
             }
             // this is an error condition - the parent does not exist..
             // technically it should not happen..
-            console.log("Parent is missing");
+            console.log("Parent is undefined");
             console.log(obj);
+            obj.disabled = true;
             return;
         }
+        
+       
+        
+    },
+    /**
+     * DEPRICATED : use Roo.XComponents now..
+     * 
+     * Pman.register({
+          modKey : '00-admin-xxxx',
+          module : Pman.Tab.projectMgr, << really a components..
+          part : [ 'Admin', 'ProjectManager' ]
+          moduleOwner : 
+          region : 'center',
+          parent : Pman.layout
+        })
+     * 
+     */
+    register : function(obj)
+    {
+        
+        this.xregister(obj);
+        if (obj.disabled) {
+            return;
+        }
+         
         if (!obj.parent.modules) {
             obj.parent.modules = new Roo.util.MixedCollection(false, function(o) { return o.modKey });
         }
@@ -840,6 +860,7 @@ Pman = new Roo.Document(
         obj.parent.modules.add(obj);
         
     },
+    
     
     buildModules : function(parent, onComplete) 
     {
