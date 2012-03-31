@@ -843,8 +843,7 @@ Pman = new Roo.Document(
         }
         // this is an error condition - the parent does not exist..
             // technically it should not happen..
-            
-        }
+          
         // hack for Pman parent == Pman..
         if (obj.parent == obj.module) {
             obj.parent = false;
