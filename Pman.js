@@ -831,6 +831,11 @@ Pman = new Roo.Document(
             return;
         }
         
+        
+        if (obj.parent === Pman) {
+            obj.parent = Pman.fakeRoot;
+        }
+        
         if (typeof(obj.parent) == 'undefined') {
             console.log("Parent is undefined");
             console.log(obj);
