@@ -100,7 +100,16 @@ Pman = new Roo.Document(
         
     },
    
-
+    fakeRoot :  {
+        modKey : '000',
+        module : Pman,
+        region : 'center',
+        parent : false,
+        isTop : true,
+        name : "Pman Base",
+        disabled : false, 
+        permname: '' 
+    },
     
     layout: false,
     
@@ -150,16 +159,7 @@ Pman = new Roo.Document(
         });
         
         
-        Pman.register({
-            modKey : '000',
-            module : Pman,
-            region : 'center',
-            parent : false,
-            isTop : true,
-            name : "Pman Base",
-            disabled : false, 
-            permname: '' 
-        });
+        Pman.register( this.fakeRoot );
         
         // creates all the modules ready to load..
         
