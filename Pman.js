@@ -829,8 +829,8 @@ Pman = new Roo.Document(
         
         if (!obj.parent) {
             if (obj.parent === false) {
-                obj.disabled = false;
-                console.log('adding top level object (as parent===false found)');
+                obj.disabled = true;
+                console.log('ignoring top level object (as parent===false found)');
                 console.log(obj);
                 return;
             }
@@ -841,7 +841,10 @@ Pman = new Roo.Document(
             obj.disabled = true;
             return;
         }
-        
+        if (obj.parent == obj.module) {
+            obj.parent = false;
+            
+        }
        
         
     },
