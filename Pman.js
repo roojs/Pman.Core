@@ -102,7 +102,7 @@ Pman = new Roo.Document(
    
     fakeRoot :  {
         modKey : '000',
-        module : Pman,
+        module : 'Pman',
         region : 'center',
         parent : false,
         isTop : true,
