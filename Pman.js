@@ -868,9 +868,11 @@ Pman = new Roo.Document(
     register : function(obj)
     {
         
-        this.xregister(obj);
+        //this.xregister(obj);
         
         Roo.log("CALLING XComponent register with : " + obj.name);
+        
+        // this will call xregister as it's the on.register handler..
         Roo.XComponent.register(obj);
         /*
         
