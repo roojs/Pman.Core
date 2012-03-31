@@ -826,7 +826,10 @@ Pman = new Roo.Document(
             
         }
         
-        
+        if ( obj.isTop) {
+            // false parent... use it..
+            return;
+        }
         
         if (typeof(obj.parent) == 'undefined') {
             console.log("Parent is undefined");
