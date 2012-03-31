@@ -866,6 +866,8 @@ Pman = new Roo.Document(
     {
         
         this.xregister(obj);
+        
+        Roo.log("CALLING XComponent register with : " + obj.name);
         Roo.XComponent.register(obj);
         /*
         
