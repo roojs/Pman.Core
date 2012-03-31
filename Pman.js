@@ -149,6 +149,19 @@ Pman = new Roo.Document(
             
         });
         
+        
+        Pman.register({
+            modKey : '000',
+            module : Pman,
+            region : 'center',
+            parent : false,
+            name : "Pman Base",
+            disabled : false, 
+            permname: '' 
+        });
+        
+        // creates all the modules ready to load..
+        
         this.fireEvent('beforeload',this);
         
         
