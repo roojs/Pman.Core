@@ -868,7 +868,8 @@ Pman = new Roo.Document(
     
     buildModules : function(parent, onComplete) 
     {
-        
+        Roo.XComponent.build();
+        /*
         var _this = this;
         var cmp = function(a,b) {   
             return String(a).toUpperCase() > String(b).toUpperCase() ? 1 : -1;
@@ -959,7 +960,7 @@ Pman = new Roo.Document(
             progressRun.defer(10, Pman);    
         }
         progressRun.defer(1, Pman);
-     
+        */
         
         
     },
