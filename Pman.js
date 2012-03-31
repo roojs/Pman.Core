@@ -154,7 +154,8 @@ Pman = new Roo.Document(
             modKey : '000',
             module : Pman,
             region : 'center',
-            parent : Pman,
+            parent : false,
+            isTop : true,
             name : "Pman Base",
             disabled : false, 
             permname: '' 
