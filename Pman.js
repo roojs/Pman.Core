@@ -841,6 +841,7 @@ Pman = new Roo.Document(
             obj.disabled = true;
             return;
         }
+        // hack for Pman parent == Pman..
         if (obj.parent == obj.module) {
             obj.parent = false;
             
