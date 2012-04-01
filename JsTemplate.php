@@ -54,7 +54,7 @@ class Pman_Core_JsTemplate extends Pman {
         
         //$ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
-        $prefix = $pr == 'Pman' ? 'Pman.' : '';
+        $prefix = empty($mods) ? '' : ($pr .'.') ;
         
         foreach($mods as $mod) {
             $dir =  $this->rootDir .'/'.$pr . '/'.  $mod . '/jtemplates';
