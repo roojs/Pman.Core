@@ -21,7 +21,7 @@ if (typeof(_T) == 'undefined') { _T={};}
 
 Roo.XComponent.on('register', function(e) { return Pman.xregister(e); });
 
-Roo.debug = 1;
+//Roo.debug = 1;
   
 
 Pman = new Roo.Document(
