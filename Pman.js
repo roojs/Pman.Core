@@ -881,8 +881,8 @@ Pman = new Roo.Document(
         
         
         // old style calls go in here..
-        // we need to convert the object going in to something like a XComponent.
-        
+        // we need to convert the object so that it looks a bit like an XCompoenent..
+         
         obj.render = function()
         {
                         
