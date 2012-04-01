@@ -919,7 +919,7 @@ Pman = new Roo.Document(
            // new code should use PART name, and matching permissions.
             if (this.permname && this.permname.length) {
                 if (Pman.hasPerm(this.permname, 'S')) {
-                   this.module.add(this.parent.layout, this.region);    
+                   this.add(this.parent.layout, this.region);    
                 }
                 return;
             }
