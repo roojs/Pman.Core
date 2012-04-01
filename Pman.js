@@ -912,12 +912,11 @@ Pman = new Roo.Document(
                 if (Pman.hasPerm(this.permname, 'S')) {
                    this.module.add(this.parent.layout, this.region);    
                 }
-                } else {
-                    this.module.add(this.parent.layout, this.region);    
-                } 
+                return;
             }
-             
-        }
+            this.module.add(this.parent.layout, this.region);    
+              
+        };
         
         
         Roo.log("CALLING XComponent register with : " + obj.name);
