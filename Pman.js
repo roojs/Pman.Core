@@ -900,27 +900,23 @@ Pman = new Roo.Document(
                 return;
             }
             
-            if (!mod.parent.layout) {
+            if (!this.parent.layout) {
                 Roo.log("Module parent does not have property layout.")
                 Roo.log(this);
                 return;
             }
-            
-                
-                || this.module.disabled) {
-                // honour permname setings..
-                if (mod.permname && mod.permname.length) {
-                    if (Pman.hasPerm(mod.permname, 'S')) {
-                        mod.module.add(mod.parent.layout, mod.region);    
-                    }
+        
+           // honour DEPRICATED permname setings..
+           // new code should use PART name, and matching permissions.
+            if (this.permname && this.permname.length) {
+                if (Pman.hasPerm(this.permname, 'S')) {
+                   this.module.add(this.parent.layout, this.region);    
+                }
                 } else {
-                    mod.module.add(mod.parent.layout, mod.region);    
+                    this.module.add(this.parent.layout, this.region);    
                 } 
             }
-            
-            
-            
-            
+             
         }
         
         
