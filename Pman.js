@@ -219,8 +219,8 @@ Pman = new Roo.Document(
         this.layout.beginUpdate();
         
         Pman.building = true;
-        
-        this.buildModules();
+        Roo.XComponent.build();
+         
         
         
      
@@ -940,121 +940,8 @@ Pman = new Roo.Document(
         
         // this will call xregister as it's the on.register handler..
         Roo.XComponent.register(obj.isTop ? obj : Roo.apply(obj.module, obj));
-        /*
-        
-        
-        if (obj.disabled) {
-            return;
-        }
          
-        if (!obj.parent.modules) {
-            obj.parent.modules = new Roo.util.MixedCollection(false, function(o) { return o.modKey });
-        }
-        
-        obj.parent.modules.add(obj);
-        */
-    },
-    
-    
-    buildModules : function(parent, onComplete) 
-    {
-        Roo.XComponent.build();
-        /*
-        var _this = this;
-        var cmp = function(a,b) {   
-            return String(a).toUpperCase() > String(b).toUpperCase() ? 1 : -1;
-            
-        };
-        if (!parent.modules) {
-            return;
-        }
-        parent.modules.keySort('ASC',  cmp );
-        var mods = [];
-        
-        
-        // add modules to their parents..
-        var addMod = function(m) {
-           // console.log(m.modKey);
-            
-            mods.push(m);
-            if (m.module.modules) {
-                m.module.modules.keySort('ASC',  cmp );
-                m.module.modules.each(addMod);
-            }
-            if (m.finalize) {
-                m.finalize.name = m.name + " (clean up) ";
-                mods.push(m.finalize);
-            }
-            
-        }
- 
-        parent.modules.each(addMod);
-        //this.allmods = mods;
-        //console.log(mods);
-        //return;
-        if (!mods.length) {
-            if (onComplete) onComplete();
-            return;
-        }
-        // flash it up as modal - so we store the mask!?
-        Roo.MessageBox.show({ title: 'loading' });
-        Roo.MessageBox.show({
-           title: "Please wait...",
-           msg: "Building Interface...",
-           width:450,
-           progress:true,
-           closable:false,
-           modal: false
-          
-        });
-        var n = 0;
-        var progressRun = function() {
-            
-            var mod = mods[n];
-            
-            
-            Roo.MessageBox.updateProgress(
-                (n+1)/mods.length,  "Building Interface " + (n+1) + 
-                    " of " + mods.length + 
-                    (mod.name ? (' - ' + mod.name) : '')
-                    );
-            
-            
-            
-            if (typeof(mod) == 'function') {
-                mod();
-                
-            } else  if (typeof(mod.region) == 'undefined') {
-                Roo.log("Module does not have region defined, skipping");
-                Roo.log(mod);
-                
-            } else  if (mod.parent.layout && !mod.module.disabled) {
-                // honour permname setings..
-                if (mod.permname && mod.permname.length) {
-                    if (Pman.hasPerm(mod.permname, 'S')) {
-                        mod.module.add(mod.parent.layout, mod.region);    
-                    }
-                } else {
-                    mod.module.add(mod.parent.layout, mod.region);    
-                } 
-            }
-            
-            
-            n++;
-            if (n >= mods.length) {
-                onComplete();  
-                return;
-            }
-                
-            
-            progressRun.defer(10, Pman);    
-        }
-        progressRun.defer(1, Pman);
-        */
-        
-        
-    },
-    
+    } 
     invertColor : function(c)
     {
         // read..
