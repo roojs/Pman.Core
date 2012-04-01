@@ -929,11 +929,17 @@ Pman = new Roo.Document(
         // map some of the standard properties..
         obj.order = obj.modKey;
         
+        // a bit risky...
+        
+        
+        
+        // the other issue we have is that
+         
         
         Roo.log("CALLING XComponent register with : " + obj.name);
         
         // this will call xregister as it's the on.register handler..
-        Roo.XComponent.register(obj);
+        Roo.XComponent.register(Roo.apply(obj.module, obj));
         /*
         
         
