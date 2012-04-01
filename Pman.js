@@ -892,6 +892,7 @@ Pman = new Roo.Document(
             if (!this.parent) {
                 Roo.log("Skip module, as parent does not exist");
                 Roo.log(this);
+                return;
             }
             //if (typeof(mod) == 'function') {
             //    mod();
