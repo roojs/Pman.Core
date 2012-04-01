@@ -43,7 +43,7 @@ class Pman_Core_JsTemplate extends Pman {
     function get()
     {
         // get the modules.
-        header('Content-type: text/javascript');
+        //header('Content-type: text/javascript');
         
         $ff = HTML_FlexyFramework::get();
         
