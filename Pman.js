@@ -879,6 +879,44 @@ Pman = new Roo.Document(
         
         //this.xregister(obj);
         
+        
+        // old style calls go in here..
+        // we need to convert the object going in to something like a XComponent.
+        
+        obj.render = function()
+        {
+                        
+            //if (typeof(mod) == 'function') {
+            //    mod();
+                
+            if (typeof(this.region) == 'undefined') {
+                Roo.log("Module does not have region defined, skipping");
+                Roo.log(this);
+                return;
+            }
+            if (this.module.disabled) {
+                Roo.log("Module disabled, should not rendering")
+                Roo.log(this);
+                return;
+            }
+            
+            if (!mod.parent.layout)) || this.module.disabled) {
+                // honour permname setings..
+                if (mod.permname && mod.permname.length) {
+                    if (Pman.hasPerm(mod.permname, 'S')) {
+                        mod.module.add(mod.parent.layout, mod.region);    
+                    }
+                } else {
+                    mod.module.add(mod.parent.layout, mod.region);    
+                } 
+            }
+            
+            
+            
+            
+        }
+        
+        
         Roo.log("CALLING XComponent register with : " + obj.name);
         
         // this will call xregister as it's the on.register handler..
