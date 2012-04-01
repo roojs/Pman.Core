@@ -43,7 +43,7 @@ class Pman_Core_JsTemplate extends Pman {
     function get()
     {
         // get the modules.
-        header('Content-type: text/javascript');
+        //header('Content-type: text/javascript');
         
         $ff = HTML_FlexyFramework::get();
         
@@ -58,7 +58,7 @@ class Pman_Core_JsTemplate extends Pman {
         foreach($mods as $mod )
         {
             $prefix = $mod == $pr  ?  "{$pr}." : "{$pr}.{$mod}.";
-            var_dump($prefix)
+            var_dump($prefix);
             $pdir = $mod == $pr  ? '' : ($pr .'/') ;
          
             $dir =  $this->rootDir .'/'.$pdir .  $mod . '/jtemplates';
