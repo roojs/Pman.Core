@@ -67,7 +67,7 @@ class Pman_Core_JsTemplate extends Pman {
                 continue;
             }
             // got a directory..
-            $mn = basename(dirname($mod));
+            $mn = $mod;
             $ar = glob("$dir/*.html") ;
             if (empty($ar)) {
                 echo '// no template is directory '. htmlspecialchars($dir) ."\n";
