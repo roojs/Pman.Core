@@ -900,7 +900,14 @@ Pman = new Roo.Document(
                 return;
             }
             
-            if (!mod.parent.layout)) || this.module.disabled) {
+            if (!mod.parent.layout) {
+                Roo.log("Module parent does not have property layout.")
+                Roo.log(this);
+                return;
+            }
+            
+                
+                || this.module.disabled) {
                 // honour permname setings..
                 if (mod.permname && mod.permname.length) {
                     if (Pman.hasPerm(mod.permname, 'S')) {
