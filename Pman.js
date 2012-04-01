@@ -939,7 +939,7 @@ Pman = new Roo.Document(
         Roo.log("CALLING XComponent register with : " + obj.name);
         
         // this will call xregister as it's the on.register handler..
-        Roo.XComponent.register(Roo.apply(obj.module, obj));
+        Roo.XComponent.register(obj.isTop ? obj : Roo.apply(obj.module, obj));
         /*
         
         
