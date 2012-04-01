@@ -220,9 +220,7 @@ Pman = new Roo.Document(
         
         Pman.building = true;
         
-        this.buildModules(this, 
-           
-        );
+        this.buildModules();
         
         
      
