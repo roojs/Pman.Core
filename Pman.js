@@ -923,7 +923,7 @@ Pman = new Roo.Document(
                 }
                 return;
             }
-            this.module.add(this.parent.layout, this.region);    
+            this.add(this.parent.layout, this.region);    
               
         };
         // map some of the standard properties..
