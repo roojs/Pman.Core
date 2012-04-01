@@ -941,7 +941,7 @@ Pman = new Roo.Document(
         // this will call xregister as it's the on.register handler..
         Roo.XComponent.register(obj.isTop ? obj : Roo.apply(obj.module, obj));
          
-    } 
+    } ,
     invertColor : function(c)
     {
         // read..
