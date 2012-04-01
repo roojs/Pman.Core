@@ -207,20 +207,7 @@ Pman = new Roo.Document(
         Pman.building = true;
         
         this.buildModules(this, 
-            function() {
-                
-                _this.layout.getRegion('center').showPanel(0);
-                _this.layout.endUpdate(); 
-                _this.addTopToolbar();  
-                _this.finalize();
-                _this.fireEvent('load',this);
-                
-                if (!_this.layout.getRegion('south').panels.length) {
-                    _this.layout.getRegion('south').hide();
-                }
-                
-                
-            }
+           
         );
         
         
