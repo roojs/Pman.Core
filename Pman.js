@@ -20,7 +20,21 @@ if (typeof(_T) == 'undefined') { _T={};}
 
 
 Roo.XComponent.on('register', function(e) { return Pman.xregister(e); });
-Roo.XComponent.on('buildComplete', function(e) { return Pman.finalize(); });
+Roo.XComponent.on('buildComplete',  
+     function() {
+                    
+        Pman.layout.getRegion('center').showPanel(0);
+        Pman.layout.endUpdate(); 
+        Pman.addTopToolbar();  
+        Pman.finalize();
+        Pman.fireEvent('load',this);
+        
+        if (!Pman.layout.getRegion('south').panels.length) {
+            Pman.layout.getRegion('south').hide();
+        }
+    
+    
+} );
 
 //Roo.debug = 1;
   
