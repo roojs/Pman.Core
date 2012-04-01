@@ -50,14 +50,14 @@ class Pman_Core_JsTemplate extends Pman {
         $pr = $ff->project;
         
         $mods = $this->modulesList();
-        print_r($mods);
+        //print_r($mods);
         
-        $ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
+        //$ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
-        $prefix = $pr == 'Pman' ? 'Pman.' : '';
+        //$prefix = $pr == 'Pman' ? 'Pman.' : '';
         
-        foreach($ar as $mod) {
-            $dir =   dirname($mod) . '/jtemplates';
+        foreach($mods as $mod) {
+            $dir =  $this->rootDir .'/Pman/'.  $mod . '/jtemplates';
             if (!file_exists($dir)) {
                 echo '// missing directory '. htmlspecialchars($dir) ."\n";
                 continue;
