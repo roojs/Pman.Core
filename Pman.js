@@ -926,6 +926,8 @@ Pman = new Roo.Document(
             this.module.add(this.parent.layout, this.region);    
               
         };
+        // map some of the standard properties..
+        obj.order = obj.modKey;
         
         
         Roo.log("CALLING XComponent register with : " + obj.name);
