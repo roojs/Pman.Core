@@ -163,7 +163,7 @@ Pman = new Roo.Document(
             layout : this.layout      
                 
                                  
-        } );
+        } ) );
         
         // creates all the modules ready to load..
         
