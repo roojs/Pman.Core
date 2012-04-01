@@ -54,10 +54,10 @@ class Pman_Core_JsTemplate extends Pman {
         
         //$ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
-        //$prefix = $pr == 'Pman' ? 'Pman.' : '';
+        $prefix = $pr == 'Pman' ? 'Pman.' : '';
         
         foreach($mods as $mod) {
-            $dir =  $this->rootDir .'/Pman/'.  $mod . '/jtemplates';
+            $dir =  $this->rootDir .'/'.$pr . '/'.  $mod . '/jtemplates';
             if (!file_exists($dir)) {
                 echo '// missing directory '. htmlspecialchars($dir) ."\n";
                 continue;
