@@ -48,6 +48,10 @@ class Pman_Core_JsTemplate extends Pman {
         $ff = HTML_FlexyFramework::get();
         
         $pr = $ff->project;
+        
+        $mods = $this->modulesList();
+        var_dump($mods);
+        
         $ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
         $prefix = $pr == 'Pman' ? 'Pman.' : '';
