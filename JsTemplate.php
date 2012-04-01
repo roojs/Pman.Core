@@ -50,7 +50,7 @@ class Pman_Core_JsTemplate extends Pman {
         $pr = $ff->project;
         
         $mods = $this->modulesList();
-        var_dump($mods);
+        print_r($mods);
         
         $ar = explode(PATH_SEPARATOR, $ff->HTML_Template_Flexy['templateDir']);
         
