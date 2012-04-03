@@ -126,10 +126,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         
         foreach($ar as $a) {
-            $a = strtotime($a " + ")
-            
+            $ret[] = date('Y-m-d H:i', strtotime($a . $append));
             
         }
+        return $ret;
         
         
     }
