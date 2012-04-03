@@ -84,7 +84,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                         strtotime($day) < strtotime($end);
                         $day = date('Y-m-d', strtotime("$day + 1 DAY")))
                 {
-                    
+                    // skip days not accounted for..
                     if (!in_array(date('N', strtotime($day)), $days)) {
                         continue;
                     }
@@ -94,6 +94,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                         $ret[] = $day . ' ' . $hh;
                     }
                 }
+                
                 return $this->applyTimezoneToList($ret);
                 
                 
