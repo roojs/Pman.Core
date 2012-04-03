@@ -389,15 +389,15 @@ CREATE TABLE core_notify_recur (
 ALTER TABLE  core_notify_recur  ADD COLUMN 
  
 
-ALTER TABLE  core_notify_recur  ADD COLUMN   `person_id` int(11)  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN `dtstart` datetime  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN `dtend` datetime  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN `tz` decimal(4,2)  NOT NULL;,
-ALTER TABLE  core_notify_recur  ADD COLUMN `max_applied_dt` datetime  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN `updated_dt` datetime  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN `last_applied_dt` datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN person_id int(11)  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN dtstart datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN dtend datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN tz decimal(4,2)  NOT NULL;,
+ALTER TABLE  core_notify_recur  ADD COLUMN max_applied_dt datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN updated_dt datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN last_applied_dt datetime  NOT NULL;
 
-ALTER TABLE  core_notify_recur  ADD INDEX `lookup`(`person_id`, `dtstart`, `dtend`, `tz`, `max_applied_dt`, `updated_dt`, `last_applied_dt`);
+ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
  
 
 
