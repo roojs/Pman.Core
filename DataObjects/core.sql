@@ -396,10 +396,7 @@ ALTER TABLE  core_notify_recur  ADD COLUMN max_applied_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN updated_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN last_applied_dt datetime  NOT NULL;
 
-
  
- 
-
 ALTER TABLE  core_notify_recur  ADD COLUMN freq varchar(8) NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_day text NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_hour text  NOT NULL;
