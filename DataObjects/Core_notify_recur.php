@@ -109,7 +109,30 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         
     }
-    
+    function applyTimezoneToList($ar)
+    {
+        $ret = array();
+        
+        $tz = explode($this->tz, ":");
+        if ($tz < 0) {
+            
+        }
+        $append = ($tz[0] < 0) ? " - " : " + ";
+        
+        $append .= abs($tz[0]) . " HOURS";
+        if (!empty($tz[1])) {
+            $append .= $tz[1] . " MINUTES";
+        }
+        
+        
+        foreach($ar as $a) {
+            $a = strtotime($a " + ")
+            
+            
+        }
+        
+        
+    }
     
     
 }
