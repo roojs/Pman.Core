@@ -18,7 +18,29 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $updated_dt;                      // datetime(19)  not_null binary
     public $last_applied_dt;                 // datetime(19)  not_null binary
 
+    public $freq; //  varchar(8) NOT NULL;
+    public $freq_day; // text NOT NULL;
+    public $freq_hour; // text 
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function repeats()
+    {
+        
+    }
+    
+    function notifytimes()
+    {
+        // make a list of datetimes when notifies need 
+        $ar = 
+        
+        
+        
+        
+        
+    }
+    
+    
+    
 }
