@@ -378,3 +378,30 @@ ALTER TABLE core_person_alias ADD COLUMN   person_id varchar(128) DEFAULT NULL;
 ALTER TABLE core_person_alias ADD COLUMN  alias varchar(254) NOT NULL DEFAULT '';
   
 ALTER TABLE core_person_alias ADD INDEX alias (alias);
+
+
+
+CREATE TABLE core_notify_recur (
+  id int(11)  NOT NULL AUTO_INCREMENT,
+
+  PRIMARY KEY (id)
+) ;
+ALTER TABLE  core_notify_recur  ADD COLUMN 
+ 
+
+ALTER TABLE  core_notify_recur  ADD COLUMN   `person_id` int(11)  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN `dtstart` datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN `dtend` datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN `tz` decimal(4,2)  NOT NULL;,
+ALTER TABLE  core_notify_recur  ADD COLUMN `max_applied_dt` datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN `updated_dt` datetime  NOT NULL;
+ALTER TABLE  core_notify_recur  ADD COLUMN `last_applied_dt` datetime  NOT NULL;
+
+ALTER TABLE  core_notify_recur  ADD INDEX `lookup`(`person_id`, `dtstart`, `dtend`, `tz`, `max_applied_dt`, `updated_dt`, `last_applied_dt`);
+ 
+
+
+
+
+
+
