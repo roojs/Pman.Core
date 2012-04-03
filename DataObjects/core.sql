@@ -402,7 +402,6 @@ ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, 
 
 CREATE TABLE core_notify_recur_repeat (
   id int(11)  NOT NULL AUTO_INCREMENT,
-
   PRIMARY KEY (id)
 ) ;
 ALTER TABLE  core_notify_recur_repeat  ADD COLUMN 
