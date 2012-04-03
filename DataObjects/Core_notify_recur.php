@@ -73,8 +73,28 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 return $this->applyTimezoneToList($ret);
                 
             case 'DAILY':
+                $hours = explode(',', $this->freq_hour);
+                if (!$hours) {
+                    $hours = array(date('H:i', strtotime($this->dtstart)));
+                }
                 
+                $days = explode(','. $this->freq_day);
                 
+                for ($day = date('Y-m-d', strtotime($start));
+                        strtotime($day) < strtotime($end);
+                        $day = date('Y-m-d', strtotime("$day + 1 DAY")))
+                {
+                    
+                    if (!in_array(date('N', strtotime($day)), $days)) {
+                        continue;
+                    }
+                    
+                    foreach($hours as $h) {
+                        $hh = strpos($h,":") > 0 ? $h : "$H:00";
+                        $ret[] = $day . ' ' . $hh;
+                    }
+                }
+                return $this->applyTimezoneToList($ret);
                 
                 
             case 'MONTHLY': // ignored..
