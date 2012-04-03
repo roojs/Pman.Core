@@ -404,7 +404,7 @@ CREATE TABLE core_notify_recur_repeat (
   id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
 ) ;
-ALTER TABLE  core_notify_recur_repeat  ADD COLUMN 
+ 
  
 
 ALTER TABLE  core_notify_recur_repeat  ADD COLUMN recur_id int(11)  NOT NULL;
