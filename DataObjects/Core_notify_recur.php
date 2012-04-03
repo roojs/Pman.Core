@@ -21,19 +21,57 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $freq; //  varchar(8) NOT NULL;
     public $freq_day; // text NOT NULL;
     public $freq_hour; // text 
-    
-    /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    function repeats()
-    {
-        
+    
+    /*
+      freq =  DAILY | YEARLY | MONTHLY
+        *
+        *        THESE ARE EXCLUSIVE..
+        *        freq_day =  1,2,3,4,5" - day number.. or dayofmonth USES TIME FROM DTSTART (unless hours are speced.)
+        *        >> must..
+        *        freq_hourly = 'what hours' << OR IF EMPTY USES TIME FROM DTSTART
+        *
+    /* the code above is auto generated do not remove the tag below */
+    
+    
+    function notifytimesRange($advance) {
+       
+        $start = date('Y-m-d H:i:s', max(strtotime("NOW - 24 HOURS"), sttotime($this->dtstart)));
+        $end  = date('Y-m-d H:i:s', min(strtotime("NOW  + $advance DAYS"), sttotime($this->dtend));
+    
     }
     
-    function notifytimes()
+    function notifytimes($advance)
     {
-        // make a list of datetimes when notifies need 
-        $ar = 
+        
+        // make a list of datetimes when notifies need to be generated for.
+        // it starts 24 hours ago.. or when dtstart
+        list($start, $end) = $this->notifytimesRange($advance);
+        if (strtotime($start) > strtotime($end)) {
+            return array(); // no data..
+        }
+        
+        
+        
+        switch($this->freq) {
+            case 'HOURLY':
+                
+                $days = 
+                // happens every day based on freq_hour.
+                $hours = explode(',', $this->freq_hour);
+                foreach($hours as $h) {
+                    
+                }
+                
+            case 'DAILY':
+                
+                
+            case 'MONTHLY': // ignored..
+            case 'YEARLY': // ignored..
+                break;
+            
+        }
         
         
         
