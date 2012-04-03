@@ -386,7 +386,6 @@ CREATE TABLE core_notify_recur (
 
   PRIMARY KEY (id)
 ) ;
-ALTER TABLE  core_notify_recur  ADD COLUMN 
  
 
 ALTER TABLE  core_notify_recur  ADD COLUMN person_id int(11)  NOT NULL;
@@ -400,6 +399,41 @@ ALTER TABLE  core_notify_recur  ADD COLUMN last_applied_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
  
 
+
+CREATE TABLE core_notify_recur_repeat (
+  id int(11)  NOT NULL AUTO_INCREMENT,
+
+  PRIMARY KEY (id)
+) ;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN 
+ 
+
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN recur_id int(11)  NOT NULL;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN freq varchar(8) NOT NULL;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN dtend datetime  NOT NULL;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN tz decimal(4,2)  NOT NULL;,
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN max_applied_dt datetime  NOT NULL;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN updated_dt datetime  NOT NULL;
+ALTER TABLE  core_notify_recur_repeat  ADD COLUMN last_applied_dt datetime  NOT NULL;
+
+ALTER TABLE  core_notify_recur_repeat  ADD INDEX lookup(recur_id);
+ 
+ Repeat table
+ *        core_notify_recur_repeat
+ *        id 
+ *        recur_id      << parent..
+ *        freq =  DAILY | YEARLY | MONTHLY
+ *
+ *        THESE ARE EXCLUSIVE..
+ *        freq_day =  1,2,3,4,5" - day number.. or dayofmonth USES TIME FROM DTSTART (unless hours are speced.)
+ *        >> must..
+ *        freq_hourly = 'what hours' << OR IF EMPTY USES TIME FROM DTSTART
+ *
+ *        
+ *        Actualy time.. 
+ *        
+ *
+ *   
 
 
 
