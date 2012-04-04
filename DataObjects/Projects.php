@@ -306,7 +306,9 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
      */
     function userProjects($au, $data='id') // COMPANY BASED!!!!
     {
+        
         $id = (int) $au->company_id;
+        
         $this->whereAdd("
             (client_id= $id) OR (agency_id= $id)
         ");
