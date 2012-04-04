@@ -81,6 +81,8 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         } else {
             $c->person_id = $au->id;
         }
+        $c->selectAdd();
+        $c->selectAdd('distinct(project_id) as project_id');
         return $c->fetchAll('project_id');
     }
         /**
