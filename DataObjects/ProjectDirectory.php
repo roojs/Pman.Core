@@ -82,6 +82,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
             $c->person_id = $au->id;
         }
         $c->selectAdd();
+        // people may have multiple roles for a project..
         $c->selectAdd('distinct(project_id) as project_id');
         return $c->fetchAll('project_id');
     }
