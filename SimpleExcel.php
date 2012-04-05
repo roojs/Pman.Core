@@ -90,7 +90,7 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
-            $worksheet->write(0, $c, $col_cfg['header']);
+            $worksheet->write($start_row, $c, $col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
         }
@@ -98,7 +98,7 @@ class Pman_Core_SimpleExcel extends Pman
         foreach($data as $r=>$cl) {
             
             if (isset($cfg['row_height'])) {
-                $worksheet->setRow($r+1, $cfg['row_height']);
+                $worksheet->setRow($start_row +1, $cfg['row_height']);
                }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
@@ -122,7 +122,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
                 
           //    echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c,$v), true));
-                $worksheet->write($r+1, $c, $v, $format);
+                $worksheet->write($start_row+1, $c, $v, $format);
             }
         }
         
