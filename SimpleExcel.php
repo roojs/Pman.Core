@@ -127,7 +127,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
                 
           //    echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c,$v), true));
-                $worksheet->write($start_row+1, $c, $v, $format);
+                $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
         
