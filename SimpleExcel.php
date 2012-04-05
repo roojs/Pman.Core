@@ -99,6 +99,7 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
         }
+        $start_row++;
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$cl) {
             
