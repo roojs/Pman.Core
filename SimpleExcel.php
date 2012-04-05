@@ -6,14 +6,25 @@
  * cfg:
  *     formats 
  *          name : [ Align : left, .... ]
- *     workbook : nameof 
- *     close :  array(
+ *          
+ *     workbook : nameof
+ *
+ *     headdata : [
+            [ "a", "b" ]
+            
+            e : f
+        ]
+ *     cols :  array(
             array(
                 'header'=> "Thumbnail",
                 'dataIndex'=> 'id',
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb')
             ),
+            
+            
+            
+            
  */
  
  
@@ -54,6 +65,29 @@ class Pman_Core_SimpleExcel extends Pman
         // Creating a worksheet
         $worksheet =& $workbook->addWorksheet($cfg['workbook']);
         $worksheet->setInputEncoding('UTF-8'); 
+         
+         
+         
+        $start_row = 0;
+        
+        if (!empty($cfg['head'])) {
+            foreach($cfg['head'] as $row) { 
+                foreach($row as $c => $col) {
+                    $worksheet->write($start_row, $c, $col);
+                    
+                }
+                $start_row++;
+            }
+            // add a spacer..
+            $start_row++;
+        }
+            
+            
+            
+         
+         
+         
+         
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
             $worksheet->write(0, $c, $col_cfg['header']);
