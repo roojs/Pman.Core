@@ -103,7 +103,7 @@ class Pman_Core_SimpleExcel extends Pman
         foreach($data as $r=>$cl) {
             
             if (isset($cfg['row_height'])) {
-                $worksheet->setRow($start_row +1, $cfg['row_height']);
+                $worksheet->setRow($start_row +$r, $cfg['row_height']);
                }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
