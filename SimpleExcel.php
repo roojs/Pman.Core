@@ -9,11 +9,11 @@
  *          
  *     workbook : nameof
  *
- *     headdata : [
+ *     head  : [
             [ "a", "b" ]
-            
-            e : f
-        ]
+            [],
+            [ "A", "B" ]
+        ],
  *     cols :  array(
             array(
                 'header'=> "Thumbnail",
