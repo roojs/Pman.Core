@@ -116,7 +116,7 @@ Pman = new Roo.Document(
         
     },
    
-    fakeRoot :  {
+    fakeRoot :  new XComponent( {
         modKey : '000',
         module : 'Pman',
         region : 'center',
@@ -125,7 +125,7 @@ Pman = new Roo.Document(
         name : "Pman Base",
         disabled : false, 
         permname: '' 
-    },
+    }),
     
     layout: false,
     
