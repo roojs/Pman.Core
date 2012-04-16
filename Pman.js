@@ -173,13 +173,14 @@ Pman = new Roo.Document(
             }
             
         });
-        
-        
+        this.fakeRoot.layout = this.layout;
+        /*
         Pman.register( Roo.apply(this.fakeRoot, {
             layout : this.layout      
                 
                                  
         } ) );
+        */
         
         // creates all the modules ready to load..
         
