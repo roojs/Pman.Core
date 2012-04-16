@@ -116,7 +116,7 @@ Pman = new Roo.Document(
         
     },
    
-    fakeRoot :  new XComponent( {
+    fakeRoot :  new Roo.XComponent( {
         modKey : '000',
         module : 'Pman',
         region : 'center',
