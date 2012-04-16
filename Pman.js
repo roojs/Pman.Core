@@ -837,7 +837,7 @@ Pman = new Roo.Document(
         }
         
         
-        if (obj.parent === Pman) {
+        if (obj.parent === Pman || obj.parent  == 'Pman') {
             obj.parent = Pman.fakeRoot;
         }
         
