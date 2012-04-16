@@ -19,7 +19,7 @@ if (typeof(_T) == 'undefined') { _T={};}
  
 
 
-Roo.XComponent.on('register', function(e) { return Pman.xregister(e); });
+Roo.XComponent.on('register', function(e) { if (Pman) { return Pman.xregister(e); } });
 Roo.XComponent.on('buildComplete',  
      function() {
                     
