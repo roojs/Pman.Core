@@ -124,7 +124,8 @@ Pman = new Roo.Document(
         isTop : true,
         name : "Pman Base",
         disabled : false, 
-        permname: '' 
+        permname: '' ,
+        render : function (el) { }
     }),
     
     layout: false,
