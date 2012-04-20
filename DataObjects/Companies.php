@@ -259,7 +259,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         return $au->hasPerm("Core.Companies", $lvl);    
     }
     
-    function logoImageTag($size)
+    function logoImageHTML($size)
     {
         $i = DB_DataObject::factory('Images');
         if (!$this->logo_id || $i->get($this->logo_id)) {
