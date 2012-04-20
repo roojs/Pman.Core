@@ -317,7 +317,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $x->get($this->company_id);
         return $x;
     }
-    
+    function loadCompany()
+    {
+        $this->company = $this->company();
+    }
     
     function active()
     {
@@ -481,6 +484,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($q['query']['person_not_internal'])) {
             $this->whereAdd(" join_company_id_id.isOwner = 0 ");
         }
+        
+        
         if (!empty($q['query']['person_internal_only_all'])) {
             
             
