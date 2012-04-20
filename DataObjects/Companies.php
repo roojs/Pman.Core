@@ -257,6 +257,14 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         }
         
         return $au->hasPerm("Core.Companies", $lvl);    
-    } 
+    }
+    
+    function logoImageTag($size)
+    {
+        
+        
+    }
+    
+    
     
 }
