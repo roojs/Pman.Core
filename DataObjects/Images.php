@@ -117,7 +117,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!file_exists($dest)) {
             
             $oldumask = umask(0);
-            mkdir($dest, 0770, true);
+            mkdir($dest, 0775, true);
             umask($oldumask);  
         }
         
