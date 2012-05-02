@@ -108,7 +108,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (!empty($q['query']['name'])) {
             DB_DAtaObject::debugLevel(1);
         
-            $this->whereAdd("title LIKE '". $this->escape($q['query']['name']). "%'");
+            $this->whereAdd("lval LIKE '". $this->escape($q['query']['name']). "%'");
         }
     }
     
