@@ -125,8 +125,7 @@ class Pman_Core_I18N extends Pman
                 $i->ltype = 'c';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
                 $this->jdata($i->toTransList('c',  $lbits[0]));
-                
-                $ret = $this->getList('c', $lbits[0],empty($_REQUEST['filter']) ? false : $_REQUEST['filter']);
+               
                 break;
                 
              case 'Currency':
