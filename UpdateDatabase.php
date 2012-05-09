@@ -1,6 +1,15 @@
 <?php
 
-
+/**
+ *
+ * This applies database files from
+ * a) OLD - {MODULE}/DataObjects/XXXX.{dbtype}.sql
+ *
+ * b) NEW - {MODULE}/sql/XXX.sql (SHARED or translable)
+ * b) NEW - {MODULE}/{dbtype}/XXX.sql (SHARED or translable)
+ *
+ *
+ */
 
 require_once 'Pman.php';
 class Pman_Core_UpdateDatabase extends Pman
