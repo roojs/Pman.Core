@@ -6,7 +6,7 @@
  * a) OLD - {MODULE}/DataObjects/XXXX.{dbtype}.sql
  *
  * b) NEW - {MODULE}/sql/XXX.sql (SHARED or translable)
- * b) NEW - {MODULE}/{dbtype}/XXX.sql (SHARED or translable)
+ *  and {MODULE}/{dbtype}/XXX.sql (SHARED or translable)
  *
  *
  */
