@@ -61,6 +61,13 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->{'import' . $url['scheme']}($url);
         
     }
+    
+    /**
+     * mysql - does not support conversions.
+     * 
+     *
+     */ 
+    
     function importmysql($url)
     {
         
@@ -81,7 +88,7 @@ class Pman_Core_UpdateDatabase extends Pman
         echo $mysql_cmd . "\n" ;
         
         
-        
+        // old -- DAtaObjects/*.sql
         
         foreach($ar as $m) {
             
@@ -107,8 +114,37 @@ class Pman_Core_UpdateDatabase extends Pman
             
                 
             }
+            // new -- sql directory..
+            // new style will not support migrate ... they have to go into mysql-migrate.... directories..
+            // new style will not support pg.sql etc.. naming - that's what the direcotries are for..
+            $fd = $this->rootDir. "/Pman/$m/sql";
+            
+            foreach(glob($fd.'/*.sql') as $fn) {
+                
+                
+                
+                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
+                
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                
+                passthru($cmd);
+            
+                
+            }
+              
+            
+            
+            
+            
+            
         }
         
+       
+        
+        foreach($ar as $m) {
+            
+            
+        }
         
         
     }
