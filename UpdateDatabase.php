@@ -197,6 +197,31 @@ class Pman_Core_UpdateDatabase extends Pman
                     unlink($fn);
                 }
             }
+            
+            
+            
+            $fd = $this->rootDir. "/Pman/$m/sql";
+            
+            foreach(glob($fd.'/*.sql') as $bfn) {
+                $fn =  $this->convertToPG($bfn);
+                
+                $cmd = "$psql_cmd -f < " . escapeshellarg($fn) ;
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                passthru($cmd);
+            }
+            $fd = $this->rootDir. "/Pman/$m/mysql";
+            
+            foreach(glob($fd.'/*.sql') as $fn) {
+                $cmd = "$psql_cmd -f < " . escapeshellarg($fn) ;
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                passthru($cmd);
+            }
+            
+            
+            
+            
+            
+            
         }
         
     }
