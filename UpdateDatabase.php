@@ -120,16 +120,16 @@ class Pman_Core_UpdateDatabase extends Pman
             $fd = $this->rootDir. "/Pman/$m/sql";
             
             foreach(glob($fd.'/*.sql') as $fn) {
-                
-                
-                
                 $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
-                
                 echo $cmd. ($this->cli ? "\n" : "<BR>\n");
-                
                 passthru($cmd);
+            }
+            $fd = $this->rootDir. "/Pman/$m/mysql";
             
-                
+            foreach(glob($fd.'/*.sql') as $fn) {
+                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
+                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
+                passthru($cmd);
             }
               
             
