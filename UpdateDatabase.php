@@ -209,6 +209,8 @@ class Pman_Core_UpdateDatabase extends Pman
                 passthru($cmd);
             }
             
+            // postgres specific directory..
+            
             $fd = $this->rootDir. "/Pman/$m/pgsql";
             
             foreach(glob($fd.'/*.sql') as $fn) {
