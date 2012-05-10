@@ -21,7 +21,11 @@ class Pman_Core_GoogleKey extends Pman
     
     function post()
     {
-        $key = HTML_FlexyFramework::get()->Pman_Core['googlekey'];
+        $pc = HTML_FlexyFramework::get()->Pman_Core;
+        if (empty($pc['googlekey'])) {
+            $this->jerr("Google API Key not configured");
+        }
+        $key = $pc['googlekey'];
         $this->jdata($key);
         
     }
