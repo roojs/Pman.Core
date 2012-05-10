@@ -81,9 +81,8 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (!res.success) { // error!
             if (options.failure) {
                 // failure is handled... - do not show error..
-                if (true === Roo.callback(options.failure, options.scope, [res, options])) {
-                    return;
-                }
+                Roo.callback(options.failure, options.scope, [res, options]);
+                return;
             }
             Roo.MessageBox.hide(); // hide any existing messages..
             Roo.MessageBox.alert("Error", res && res.errorMsg ?  res.errorMsg : "Error Sending data");
