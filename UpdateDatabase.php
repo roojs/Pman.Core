@@ -204,7 +204,7 @@ class Pman_Core_UpdateDatabase extends Pman
             // sql directory  - we try to convert..
             foreach(glob($fd.'/*.sql') as $bfn) {
                 $fn =  $this->convertToPG($bfn);
-                $cmd = "$psql_cmd -f < " . escapeshellarg($fn) ;
+                $cmd = "$psql_cmd  < " . escapeshellarg($fn) ;
                 echo $cmd. ($this->cli ? "\n" : "<BR>\n");
                 passthru($cmd);
             }
@@ -214,7 +214,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $fd = $this->rootDir. "/Pman/$m/pgsql";
             
             foreach(glob($fd.'/*.sql') as $fn) {
-                $cmd = "$psql_cmd -f < " . escapeshellarg($fn) ;
+                $cmd = "$psql_cmd   < " . escapeshellarg($fn) ;
                 echo $cmd. ($this->cli ? "\n" : "<BR>\n");
                 passthru($cmd);
             }
