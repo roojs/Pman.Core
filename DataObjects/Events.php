@@ -212,7 +212,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $tbls = $pt->fetchAll('person_table');
         $pers = DB_DataObject::Factory('Person');
         $ptbl = $pers->tableName();
-        if (!in_array($pers->tableName(),$tbls)) {
+        if (!in_array($ptbl,$tbls)) {
             $tbls[] = $ptbl;
             
         }
