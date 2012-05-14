@@ -214,16 +214,20 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $st = DB_DataObject::Factory($tbl);
             $tcols = array_keys($st->table());
             foreach($tcols as $col) {
-                $cols[$col] = "WHEN {$tn}.person_table = '$tbl  THEN {$tbl}.{$col}";
+                $cols[$col] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
             
             $this->_join .= "
-                LEFT JOIN {$tbl} as person_table_{$tbl}
-                    ON {$tn}.person_id = person_table_{$tbl}
+                LEFT JOIN {$tbl} as join_person_table_{$tbl}
+                    ON {$tn}.person_id = join_person_table_{$tbl}
                         AND {$tn}.person_table = '{$tbl}'
             
             
-            "
+            ";
+        }
+        
+        
+        
         
     }
     
