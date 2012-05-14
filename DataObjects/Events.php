@@ -223,7 +223,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
                 $cols[$col][] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
-            
+            // id's are hard coded...
             $this->_join .= "
                 LEFT JOIN {$tbl}  join_person_table_{$tbl}
                     ON {$tn}.person_id = join_person_table_{$tbl}.id
