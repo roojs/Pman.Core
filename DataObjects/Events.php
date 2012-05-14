@@ -210,8 +210,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pt->selectAdD('distinct(person_table) as person_table');
         $pt->whereAdd('person_table IS NOT NULL AND LENGTH(person_table) > 0');
         $tbls = $pt->fetchAll('person_table');
-        if (!in_array('Person',$tbls)) {
-            $tbls[] = 'Person';
+        $pers = DB_DataObject::Factory('Person');
+        if (!in_array($pers->tableName(),$tbls)) {
+            $tbls[] = $pers->tableName();
         }
         foreach($tbls as $tbl) {
             
