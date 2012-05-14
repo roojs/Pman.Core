@@ -210,6 +210,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pt->selectAdD('distinct(person_table) as person_table');
         $pt->whereAdd('person_table IS NOT NULL AND LENGTH(person_table) > 0');
         $tbls = $pt->fetchAll('person_table');
+        if (!in_array('Person',$tbls)) {
+            $tbls[] = 'Person';
+        }
         foreach($tbls as $tbl) {
             
             // find all the columns from the joined table..
