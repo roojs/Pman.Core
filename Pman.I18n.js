@@ -60,6 +60,7 @@ Pman.I18n = {
                 ret = d.title;
                 return false; // stop!
             }
+            return true;
         });
         return ret;
         
