@@ -230,7 +230,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             // id's are hard coded...
             $cond = "{$tn}.person_table = '{$tbl}'";
-            if ($tbl = $ptbl) {
+            if ($tbl == $ptbl) {
                 $cond = "( $cond OR {$tn}.person_table  = '')";
             }
             $this->_join .= "
