@@ -201,6 +201,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function autoJoin()
     {
         parent::autoJoin();
+        
         // now try and magically join person_table to the right table..
         $tn = $this->tableName();
         $pt = DB_DataObject::Factory($this->tableName());
@@ -239,9 +240,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     as person_table_{$col}"
             );
         }
-        
-        
-        
+         
     }
     
     
