@@ -244,7 +244,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("
                     CASE
                         ". implode("\n", $whens) ." 
-                        ELSE join_person_table_{$ptbl}
+                        ELSE join_person_table_{$ptbl}.{$col}
                     END
                     as person_table_{$col}"
             );
