@@ -211,8 +211,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $pt->whereAdd('person_table IS NOT NULL AND LENGTH(person_table) > 0');
         $tbls = $pt->fetchAll('person_table');
         $pers = DB_DataObject::Factory('Person');
+        $ptbl = $pers->tableName();
         if (!in_array($pers->tableName(),$tbls)) {
-            $tbls[] = $pers->tableName();
+            $tbls[] = $ptbl;
+            
         }
         foreach($tbls as $tbl) {
             
@@ -239,7 +241,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("
                     CASE
                         ". implode("\n", $whens) ." 
-                        ELSE ''
+                        ELSE join_person_table_{}
                     END
                     as person_table_{$col}"
             );
