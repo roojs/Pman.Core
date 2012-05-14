@@ -196,6 +196,38 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
             
     }
+    
+    
+    function autoJoin()
+    {
+        parent::autoJoin();
+        // now try and magically join person_table to the right table..
+        $tn = $this->tableName();
+        $pt = DB_DataObject::Factory($this->tableName());
+        $pt->selectAdD();
+        $pt->selectAdD('distinct(person_table) as person_table');
+        $pt->whereAdd('person_table IS NOT NULL AND LENGTH(person_table) > 0');
+        $tbls = $pt->fetchAll('person_table');
+        foreach($tbls as $tbl) {
+            
+            // find all the columns from the joined table..
+            $st = DB_DataObject::Factory($tbl);
+            $tcols = array_keys($st->table());
+            foreach($tcols as $col) {
+                $cols[$col] = "WHEN {$tn}.person_table = '$tbl  THEN {$tbl}.{$col}";
+            }
+            
+            $this->_join .= "
+                LEFT JOIN {$tbl} as person_table_{$tbl}
+                    ON {$tn}.person_id = person_table_{$tbl}
+                        AND {$tn}.person_table = '{$tbl}'
+            
+            
+            "
+        
+    }
+    
+    
     /**
      * check who is trying to access this. false == access denied..
      * @return {boolean} true if access is allowed.
