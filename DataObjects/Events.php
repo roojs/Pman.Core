@@ -201,7 +201,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function autoJoinExtra()
     {
         //$ret = parent::autoJoin();
-        //DB_DataObject::debugLevel(1);
+         DB_DataObject::debugLevel(1);
         
         // now try and magically join person_table to the right table..
         $tn = $this->tableName();
