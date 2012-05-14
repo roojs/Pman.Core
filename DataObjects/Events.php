@@ -214,6 +214,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $st = DB_DataObject::Factory($tbl);
             $tcols = array_keys($st->table());
             foreach($tcols as $col) {
+                if ($col == 'passwd') {
+                    continue;
+                }
                 $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
                 $cols[$col] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
