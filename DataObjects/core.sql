@@ -61,7 +61,7 @@ ALTER TABLE Events ADD COLUMN   ipaddr varchar(16)  default NULL;
 ALTER TABLE Events ADD COLUMN   on_id int(11) default NULL;
 ALTER TABLE Events ADD COLUMN   on_table varchar(64)  default NULL;
 ALTER TABLE Events ADD COLUMN   person_id int(11) default NULL;
-ALTER TABLE Events ADD COLUMN   person_table int(64) default NULL;
+ALTER TABLE Events ADD COLUMN   person_table varchar(64) default NULL;
 
 ALTER TABLE Events ADD COLUMN   remarks text ;
  
