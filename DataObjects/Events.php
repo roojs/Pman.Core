@@ -226,7 +226,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $this->_join .= "
                 LEFT JOIN {$tbl}  join_person_table_{$tbl}
-                    ON {$tn}.person_id = join_person_table_{$tbl}
+                    ON {$tn}.person_id = join_person_table_{$tbl}.id
                         AND {$tn}.person_table = '{$tbl}'
             
             
