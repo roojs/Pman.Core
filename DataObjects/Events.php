@@ -214,6 +214,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $st = DB_DataObject::Factory($tbl);
             $tcols = array_keys($st->table());
             foreach($tcols as $col) {
+                $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
                 $cols[$col] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
             
@@ -225,7 +226,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             ";
         }
-        
+        foreach($cols as $col=>$whens) {
+            
+            $this->selectAdd("
+                    CASE
+                        ". implode("\n", $whens) ." 
+                        ELSE ''
+                    END
+                    as person_table_{$col}"
+            );
+        }
         
         
         
