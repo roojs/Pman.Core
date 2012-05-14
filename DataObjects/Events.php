@@ -221,18 +221,21 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             // find all the columns from the joined table..
             $st = DB_DataObject::Factory($tbl);
             $tcols = array_keys($st->table());
+            
+            $cond = "{$tn}.person_table = '{$tbl}'";
+            if ($tbl == $ptbl) {
+                $cond = "( $cond OR {$tn}.person_table  = '')";
+            }
+            
             foreach($tcols as $col) {
                 if ($col == 'passwd') {
                     continue;
                 }
                 $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
-                $cols[$col][] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
+                $cols[$col][] = "WHEN $cond  THEN join_person_table_{$tbl}.{$col}";
             }
             // id's are hard coded...
-            $cond = "{$tn}.person_table = '{$tbl}'";
-            if ($tbl == $ptbl) {
-                $cond = "( $cond OR {$tn}.person_table  = '')";
-            }
+            
             $this->_join .= "
                 LEFT JOIN {$tbl} AS  join_person_table_{$tbl}
                     ON {$tn}.person_id = join_person_table_{$tbl}.id
