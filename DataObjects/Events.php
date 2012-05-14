@@ -242,7 +242,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     as person_table_{$col}"
             );
         }
-        return $ret;
+        //return $ret;
          
     }
     
