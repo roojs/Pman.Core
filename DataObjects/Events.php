@@ -229,11 +229,14 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $cols[$col][] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
             // id's are hard coded...
+            $cond = "{$tn}.person_table = '{$tbl}'";
+            if ($tbl = $ptbl) {
+                $cond = "( $cond OR {$tn}.person_table == '')";
+            }
             $this->_join .= "
                 LEFT JOIN {$tbl} AS  join_person_table_{$tbl}
                     ON {$tn}.person_id = join_person_table_{$tbl}.id
-                        AND {$tn}.person_table = '{$tbl}'
-             
+                        AND $cond
             ";
         }
         foreach($cols as $col=>$whens) {
