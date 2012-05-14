@@ -221,7 +221,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     continue;
                 }
                 $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
-                $cols[$col] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
+                $cols[$col][] = "WHEN {$tn}.person_table = '$tbl'  THEN join_person_table_{$tbl}.{$col}";
             }
             
             $this->_join .= "
