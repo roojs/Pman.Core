@@ -301,7 +301,19 @@ Pman.Dialog.CoreNotifyRefer = {
                                     xns: Roo.grid,
                                     field : {
                                         xtype: 'ComboCheck',
-                                        xns: Roo.form
+                                        xns: Roo.form,
+                                        store : {
+                                            xtype: 'SimpleStore',
+                                            xns: Roo.data,
+                                            data : [ 
+                                                [ 'HOURLY' , 'Hourly at' ] ,
+                                                   [ 'DAILY' , 'Daily at'] ,
+                                                    [ 'WEEKLY' , 'Weekly at'] ,
+                                                     [ 'Montly' , 'Montly at'] 
+                                            ],
+                                            fields : ['code', 'title'],
+                                            sortInfo : { field : 'title', direction: 'ASC' }
+                                        }
                                     }
                                 }
                             },

@@ -219,7 +219,17 @@
                                                 {
                                                     "|xns": "Roo.form",
                                                     "xtype": "ComboCheck",
-                                                    "*prop": "field"
+                                                    "*prop": "field",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "store",
+                                                            "xtype": "SimpleStore",
+                                                            "|data": "[ \n    [ 'HOURLY' , 'Hourly at' ] ,\n       [ 'DAILY' , 'Daily at'] ,\n        [ 'WEEKLY' , 'Weekly at'] ,\n         [ 'Montly' , 'Montly at'] \n]",
+                                                            "|fields": "['code', 'title']",
+                                                            "|sortInfo": "{ field : 'title', direction: 'ASC' }",
+                                                            "|xns": "Roo.data"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
