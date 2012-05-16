@@ -178,7 +178,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                             });
                                             grid.stopEditing();
                                             grid.getDataSource().insert(0, r); 
-                                            grid.startEditing(0, 0); 
+                                            grid.startEditing(0, 2); 
                                         
                                         }
                                     },
