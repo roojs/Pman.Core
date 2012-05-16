@@ -333,6 +333,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                 width : 250,
                                 renderer : function(v,x,r) { 
                                     
+                                    Roo.log(x);
                                     if (v.length) {
                                         var cm = _this.grid.colModel;
                                  
