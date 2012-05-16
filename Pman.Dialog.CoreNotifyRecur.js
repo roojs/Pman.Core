@@ -470,7 +470,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         listWidth : 400,
                                         loadingText : "Searching...",
                                         minChars : 2,
-                                        name : 'tz_name',
+                                        name : 'tz',
                                         pageSize : 999,
                                         qtip : "Select timezone",
                                         queryParam : 'q',
