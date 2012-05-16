@@ -430,6 +430,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             xns: Roo.form,
                                             allowBlank : 'false',
                                             displayField : 'tz',
+                                            editable : true,
                                             emptyText : "Select timezone",
                                             fieldLabel : 'core_enum',
                                             forceSelection : true,
