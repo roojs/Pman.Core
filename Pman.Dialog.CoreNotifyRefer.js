@@ -374,7 +374,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                 xns: Roo.grid,
                                 dataIndex : 'tz',
                                 header : 'Timezone',
-                                width : 75,
+                                width : 100,
                                 renderer : function(v) { return String.format('{0}', v); }
                             },
                             {
