@@ -462,7 +462,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                                     xtype: 'HttpProxy',
                                                     xns: Roo.data,
                                                     method : 'GET',
-                                                    url : baseURL + '/Roo/core_enum.php'
+                                                    url : baseURL + '/Core/I18n/Timezone.php'
                                                 },
                                                 reader : {
                                                     xtype: 'JsonReader',

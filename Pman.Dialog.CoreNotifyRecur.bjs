@@ -343,10 +343,10 @@
                                                             "items": [
                                                                 {
                                                                     "*prop": "proxy",
-                                                                    "xtype": "HttpProxy",
                                                                     "method": "GET",
-                                                                    "|xns": "Roo.data",
-                                                                    "|url": "baseURL + '/Roo/core_enum.php'"
+                                                                    "xtype": "HttpProxy",
+                                                                    "|url": "baseURL + '/Core/I18n/Timezone.php'\n",
+                                                                    "|xns": "Roo.data"
                                                                 },
                                                                 {
                                                                     "*prop": "reader",
