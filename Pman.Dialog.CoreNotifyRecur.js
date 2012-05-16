@@ -340,9 +340,19 @@ Pman.Dialog.CoreNotifyRecur = {
                                         Roo.log(this);
                                         var ci = cm.getColumnByDataIndex(this.name);
                                         Roo.log(ci);
+                                         var tv = [];
+                                        var vals = Roo.decode(v);
+                                        Roo.each(vals, function(k) {
+                                            var r = this.findRecord(this.valueField, k);
+                                            if(r){
+                                                tv.push(r.data[this.displayField]);
+                                            }else if(this.valueNotFoundText !== undefined){
+                                                tv.push( this.valueNotFoundText );
+                                            }
+                                        },ci.editor.field);
                                 
-                                        ci.editor.field.setValue(v);
-                                        return String.format('{0}',ce.field.el.value);
+                                        
+                                        return String.format('{0}',tv.join(', '));
                                 
                                         
                                     
