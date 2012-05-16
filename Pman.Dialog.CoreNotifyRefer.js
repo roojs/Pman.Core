@@ -298,7 +298,11 @@ Pman.Dialog.CoreNotifyRefer = {
                                 renderer : function(v) { return String.format('{0}', v); },
                                 editor : {
                                     xtype: 'GridEditor',
-                                    xns: Roo.grid
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'ComboCheck',
+                                        xns: Roo.form
+                                    }
                                 }
                             },
                             {

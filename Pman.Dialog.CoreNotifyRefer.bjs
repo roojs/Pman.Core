@@ -214,7 +214,14 @@
                                         {
                                             "|xns": "Roo.grid",
                                             "xtype": "GridEditor",
-                                            "*prop": "editor"
+                                            "*prop": "editor",
+                                            "items": [
+                                                {
+                                                    "|xns": "Roo.form",
+                                                    "xtype": "ComboCheck",
+                                                    "*prop": "field"
+                                                }
+                                            ]
                                         }
                                     ]
                                 },
