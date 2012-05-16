@@ -244,9 +244,9 @@ Pman.Dialog.CoreNotifyRefer = {
                                 dataIndex : 'freq',
                                 header : 'Frequency',
                                 width : 100,
-                                renderer : function(v) { 
+                                renderer : function(v,x,r) { 
                                 
-                                    
+                                    Roo.log(x);
                                     var matches = this.editor.field.store.query('code',v);
                                     if (!matches.length) {
                                         return '';
