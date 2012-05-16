@@ -217,9 +217,21 @@
                                             "*prop": "editor",
                                             "items": [
                                                 {
-                                                    "|xns": "Roo.form",
-                                                    "xtype": "ComboCheck",
                                                     "*prop": "field",
+                                                    "allowBlank": false,
+                                                    "displayField": "title",
+                                                    "editable": false,
+                                                    "fieldLabel": "Country",
+                                                    "hiddenName": "freq",
+                                                    "listWidth": 200,
+                                                    "mode": "local",
+                                                    "name": "freq_name",
+                                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
+                                                    "triggerAction": "all",
+                                                    "valueField": "code",
+                                                    "width": 200,
+                                                    "xtype": "ComboBox",
+                                                    "|xns": "Roo.form",
                                                     "items": [
                                                         {
                                                             "*prop": "store",
