@@ -339,7 +339,9 @@ Pman.Dialog.CoreNotifyRecur = {
                                         Roo.log(this);
                                         var ci = cm.getColumnByDataIndex(this.dataIndex);
                                         Roo.log(ci);
+                                        
                                         var ce = cm.getCellEditor(ci);
+                                        Roo.log(ce);
                                         ce.field.setValue(v);
                                         return String.format('{0}',ce.field.el.value);
                                 
