@@ -4,7 +4,12 @@
     "parent": "",
     "title": "",
     "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRefer.bjs",
-    "items": false,
+    "items": [
+        {
+            "|xns": "Roo",
+            "xtype": "LayoutDialog"
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
