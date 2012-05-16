@@ -48,9 +48,12 @@
                             "|xns": "Roo.grid",
                             "items": [
                                 {
+                                    "listeners": {
+                                        "update": "function (_self, record, operation)\n{\n    Roo.log(operation);\n}"
+                                    },
                                     "*prop": "dataSource",
-                                    "xtype": "Store",
                                     "remoteSort": true,
+                                    "xtype": "Store",
                                     "|sortInfo": "{ field : 'freq', direction: 'ASC' }",
                                     "|xns": "Roo.data",
                                     "items": [

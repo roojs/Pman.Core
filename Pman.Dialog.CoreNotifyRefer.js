@@ -83,6 +83,12 @@ Pman.Dialog.CoreNotifyRefer = {
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
+                            listeners : {
+                                update : function (_self, record, operation)
+                                {
+                                    Roo.log(operation);
+                                }
+                            },
                             remoteSort : true,
                             sortInfo : { field : 'freq', direction: 'ASC' },
                             proxy : {
