@@ -62,7 +62,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                 _this.grid = this; 
                                 //_this.dialog = Pman.Dialog.FILL_IN
                                 if (_this.panel.active) {
-                                   this.footer.onClick('first');
+                                //   this.footer.onClick('first');
                                 }
                             },
                             rowdblclick : function (_self, rowIndex, e)
