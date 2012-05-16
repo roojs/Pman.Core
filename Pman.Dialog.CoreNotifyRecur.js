@@ -420,7 +420,39 @@ Pman.Dialog.CoreNotifyRecur = {
                                 dataIndex : 'tz',
                                 header : 'Timezone',
                                 width : 100,
-                                renderer : function(v) { return String.format('{0}', v); }
+                                renderer : function(v) { return String.format('{0}', v); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'ComboBox',
+                                        xns: Roo.form,
+                                        allowBlank : false,
+                                        displayField : 'title',
+                                        editable : false,
+                                        fieldLabel : 'Country',
+                                        hiddenName : 'freq',
+                                        listWidth : 200,
+                                        mode : 'local',
+                                        name : 'freq_name',
+                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{title}</b> </div>',
+                                        triggerAction : 'all',
+                                        valueField : 'code',
+                                        width : 200,
+                                        store : {
+                                            xtype: 'SimpleStore',
+                                            xns: Roo.data,
+                                            data : [ 
+                                                [ 'HOURLY' , 'Hourly at' ] ,
+                                                   [ 'DAILY' , 'Daily at'] ,
+                                                    [ 'WEEKLY' , 'Weekly at'] ,
+                                                     [ 'Montly' , 'Montly at'] 
+                                            ],
+                                            fields : ['code', 'title'],
+                                            sortInfo : { field : 'title', direction: 'ASC' }
+                                        }
+                                    }
+                                }
                             },
                             {
                                 xtype: 'ColumnModel',
