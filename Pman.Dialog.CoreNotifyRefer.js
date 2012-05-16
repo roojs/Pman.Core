@@ -295,7 +295,11 @@ Pman.Dialog.CoreNotifyRefer = {
                                 dataIndex : 'freq_day',
                                 header : 'on day(s)',
                                 width : 100,
-                                renderer : function(v) { return String.format('{0}', v); }
+                                renderer : function(v) { return String.format('{0}', v); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid
+                                }
                             },
                             {
                                 xtype: 'ColumnModel',
