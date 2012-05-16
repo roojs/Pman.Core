@@ -333,6 +333,13 @@ Pman.Dialog.CoreNotifyRecur = {
                                 width : 250,
                                 renderer : function(v,x,r) { 
                                     
+                                    if (v.length) {
+                                        var cm = _this.grid.colModel;
+                                 
+                                        
+                                    
+                                    }
+                                    
                                     return String.format('{0}', r.data.freq_hour_name || v); 
                                     
                                 },
