@@ -104,7 +104,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                     new Pman.Request({
                                         url : baseURL + '/Roo/Core_notify_recur',
                                         method :'POST',
-                                        params : record.data,
+                                        params : p,
                                         success : function(data)
                                         {
                                             //Roo.log(data);
