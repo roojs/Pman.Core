@@ -71,6 +71,10 @@ Pman.Dialog.CoreNotifyRefer = {
                                 _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {
                                     _this.grid.footer.onClick('first');
                                 }); 
+                            },
+                            afteredit : function (e)
+                            {
+                               e.record.commit();
                             }
                         },
                         autoExpandColumn : 'freq_day',
