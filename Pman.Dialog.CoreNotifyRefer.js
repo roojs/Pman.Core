@@ -342,7 +342,11 @@ Pman.Dialog.CoreNotifyRefer = {
                                 dataIndex : 'freq_hour',
                                 header : 'at Hour(s)',
                                 width : 250,
-                                renderer : function(v) { return String.format('{0}', v); },
+                                renderer : function(v,x,r) { 
+                                    
+                                    return String.format('{0}', r.data.freq_hour_name || v); 
+                                    
+                                },
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
