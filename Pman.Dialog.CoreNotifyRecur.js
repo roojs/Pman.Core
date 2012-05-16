@@ -467,7 +467,6 @@ Pman.Dialog.CoreNotifyRecur = {
                                         emptyText : "Select timezone",
                                         fieldLabel : 'core_enum',
                                         forceSelection : true,
-                                        hiddenName : 'tz',
                                         listWidth : 400,
                                         loadingText : "Searching...",
                                         minChars : 2,
