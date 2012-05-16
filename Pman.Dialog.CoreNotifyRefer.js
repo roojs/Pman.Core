@@ -244,7 +244,10 @@ Pman.Dialog.CoreNotifyRefer = {
                                 dataIndex : 'freq',
                                 header : 'Frequency',
                                 width : 100,
-                                renderer : function(v) { return String.format('{0}', v); },
+                                renderer : function(v) { 
+                                
+                                    return String.format('{0}', v);
+                                 },
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
