@@ -512,9 +512,9 @@ Pman.Dialog.CoreNotifyRecur = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Last event',
-                                width : 75,
                                 dataIndex : 'last_event_id',
+                                header : 'Last Sent',
+                                width : 75,
                                 renderer : function(v) { return String.format('{0}', v); }
                             }
                         ]
