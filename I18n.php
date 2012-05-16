@@ -150,7 +150,7 @@ class Pman_Core_I18n extends Pman
                     //filtering..
                     if (empty($_REQUEST['q']) ||
                             0 === strcasecmp(
-                                    substring($tz,0, strlen($_REQUEST['q'])),
+                                    substr($tz,0, strlen($_REQUEST['q'])),
                                     $_REQUEST['q'])
                     ) {
                         $ret[] = array('tz' => $tz);
