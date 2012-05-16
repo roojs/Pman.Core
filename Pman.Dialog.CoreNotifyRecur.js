@@ -273,57 +273,6 @@ Pman.Dialog.CoreNotifyRecur = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                dataIndex : 'freq',
-                                header : 'Frequency',
-                                width : 70,
-                                renderer : function(v,x,r) { 
-                                
-                                    Roo.log(this);
-                                    var cm = _this.grid.colModel;
-                                    var ix = cm.findColumnIndex('freq');
-                                    var ce = cm.getCellEditor(ix)
-                                    var matches = ce.field.store.query('code',v);
-                                    if (!matches.length) {
-                                        return '';
-                                    }
-                                    return String.format('{0}', matches.first().data.title);
-                                 },
-                                editor : {
-                                    xtype: 'GridEditor',
-                                    xns: Roo.grid,
-                                    field : {
-                                        xtype: 'ComboBox',
-                                        xns: Roo.form,
-                                        allowBlank : false,
-                                        displayField : 'title',
-                                        editable : false,
-                                        fieldLabel : 'Country',
-                                        hiddenName : 'freq',
-                                        listWidth : 200,
-                                        mode : 'local',
-                                        name : 'freq_name',
-                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{title}</b> </div>',
-                                        triggerAction : 'all',
-                                        valueField : 'code',
-                                        width : 200,
-                                        store : {
-                                            xtype: 'SimpleStore',
-                                            xns: Roo.data,
-                                            data : [ 
-                                                [ 'HOURLY' , 'Hourly at' ] ,
-                                                   [ 'DAILY' , 'Daily at'] ,
-                                                    [ 'WEEKLY' , 'Weekly at'] ,
-                                                     [ 'Montly' , 'Montly at'] 
-                                            ],
-                                            fields : ['code', 'title'],
-                                            sortInfo : { field : 'title', direction: 'ASC' }
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
                                 dataIndex : 'freq_day',
                                 header : 'on day(s)',
                                 width : 100,

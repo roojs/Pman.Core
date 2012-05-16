@@ -163,51 +163,6 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "freq",
-                                    "header": "Frequency",
-                                    "width": 70,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) { \n\n    Roo.log(this);\n    var cm = _this.grid.colModel;\n    var ix = cm.findColumnIndex('freq');\n    var ce = cm.getCellEditor(ix)\n    var matches = ce.field.store.query('code',v);\n    if (!matches.length) {\n        return '';\n    }\n    return String.format('{0}', matches.first().data.title);\n }",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "*prop": "field",
-                                                    "allowBlank": false,
-                                                    "displayField": "title",
-                                                    "editable": false,
-                                                    "fieldLabel": "Country",
-                                                    "hiddenName": "freq",
-                                                    "listWidth": 200,
-                                                    "mode": "local",
-                                                    "name": "freq_name",
-                                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
-                                                    "triggerAction": "all",
-                                                    "valueField": "code",
-                                                    "width": 200,
-                                                    "xtype": "ComboBox",
-                                                    "|xns": "Roo.form",
-                                                    "items": [
-                                                        {
-                                                            "*prop": "store",
-                                                            "xtype": "SimpleStore",
-                                                            "|data": "[ \n    [ 'HOURLY' , 'Hourly at' ] ,\n       [ 'DAILY' , 'Daily at'] ,\n        [ 'WEEKLY' , 'Weekly at'] ,\n         [ 'Montly' , 'Montly at'] \n]",
-                                                            "|fields": "['code', 'title']",
-                                                            "|sortInfo": "{ field : 'title', direction: 'ASC' }",
-                                                            "|xns": "Roo.data"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
                                     "dataIndex": "freq_day",
                                     "header": "on day(s)",
                                     "width": 100,
