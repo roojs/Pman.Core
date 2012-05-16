@@ -246,6 +246,8 @@ Pman.Dialog.CoreNotifyRefer = {
                                 width : 100,
                                 renderer : function(v) { 
                                 
+                                    
+                                    grid.colModel.config[2].editor.field.store.query('code','WEEKLY').first().data.title
                                     return String.format('{0}', v);
                                  },
                                 editor : {
