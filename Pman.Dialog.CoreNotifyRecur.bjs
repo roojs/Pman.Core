@@ -338,8 +338,7 @@
                                                 {
                                                     "allowBlank": "false",
                                                     "displayField": "tz",
-                                                    "editable": "false",
-                                                    "emptyText": "Select core_enum",
+                                                    "emptyText": "Select timezone",
                                                     "fieldLabel": "core_enum",
                                                     "forceSelection": true,
                                                     "hiddenName": "tz",
