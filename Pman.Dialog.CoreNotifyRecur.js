@@ -289,6 +289,29 @@ Pman.Dialog.CoreNotifyRecur = {
                                 width : 100,
                                 renderer : function(v,x,r) { 
                                     
+                                    if (v.length) {
+                                     
+                                        var cm = _this.grid.colModel;
+                                       
+                                        var ci = cm.getColumnByDataIndex(this.name);
+                                       
+                                         var tv = [];
+                                        var vals = Roo.decode(v);
+                                        Roo.each(vals, function(k) {
+                                            var r = this.findRecord(this.valueField, k);
+                                            if(r){
+                                                tv.push(r.data[this.displayField]);
+                                            }else if(this.valueNotFoundText !== undefined){
+                                                tv.push( this.valueNotFoundText );
+                                            }
+                                        },ci.editor.field);
+                                
+                                        
+                                        return String.format('{0}',tv.join(', '));
+                                
+                                        
+                                    
+                                    }
                                     return String.format('{0}', r.data.freq_day_name || v); 
                                     
                                 },
