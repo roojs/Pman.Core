@@ -164,6 +164,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                         {
                                             var grid = _this.grid;
                                             var r = grid.getDataSource().reader.newRow({
+                                            // defaults..
                                                 person_id : _this.data.person_id,
                                                 dtstart : new Date(0),
                                                 dtend : Data.parseDate('2050-01-01', 'Y-m-d'),
@@ -171,6 +172,8 @@ Pman.Dialog.CoreNotifyRefer = {
                                                 onid : _this.data.onid,
                                                 ontable : _this.data.ontable,
                                                 method : _this.data.method,
+                                                last_event_id : 0,
+                                                
                                             
                                             });
                                             grid.stopEditing();
