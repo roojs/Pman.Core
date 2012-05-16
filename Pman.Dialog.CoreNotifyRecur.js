@@ -210,6 +210,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             grid.stopEditing();
                                             grid.getDataSource().insert(0, r); 
                                             grid.startEditing(0, 2); 
+                                            
                                         
                                         }
                                     },
