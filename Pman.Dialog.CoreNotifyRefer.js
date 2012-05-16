@@ -249,8 +249,8 @@ Pman.Dialog.CoreNotifyRefer = {
                                     Roo.log(this);
                                     var cm = _this.grid.colModel;
                                     var ix = cm.findColumnIndex('freq');
-                                    
-                                    var matches = this.editor.field.store.query('code',v);
+                                    var ce = cm.getCellEditor(ix)
+                                    var matches = ce.field.store.query('code',v);
                                     if (!matches.length) {
                                         return '';
                                     }
