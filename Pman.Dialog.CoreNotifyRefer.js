@@ -307,7 +307,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                         editable : false,
                                         fieldLabel : 'Country',
                                         hiddenName : 'freq',
-                                        listWidth : 200,
+                                        listWidth : 300,
                                         mode : 'local',
                                         name : 'freq_name',
                                         pageSize : 40,
