@@ -359,14 +359,14 @@
                                                     "|xns": "Roo.form",
                                                     "items": [
                                                         {
-                                                            "*prop": "store",
-                                                            "xtype": "Store",
-                                                            "|xns": "Roo.data",
-                                                            "remoteSort": true,
-                                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
                                                             "listeners": {
                                                                 "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
                                                             },
+                                                            "*prop": "store",
+                                                            "remoteSort": true,
+                                                            "xtype": "Store",
+                                                            "|sortInfo": "{ direction : 'ASC', field: 'tz' }",
+                                                            "|xns": "Roo.data",
                                                             "items": [
                                                                 {
                                                                     "*prop": "proxy",
