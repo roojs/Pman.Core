@@ -93,7 +93,14 @@ Pman.Dialog.CoreNotifyRefer = {
                                     new Pman.Request({
                                         url : baseURL + '/Roo/Core_notify_recur',
                                         method :'POST',
-                                        params : record.data
+                                        params : record.data,
+                                        success : function()
+                                        {
+                                            //??
+                                        },
+                                        failure : function() {
+                                            Roo.MessageBox.alert("Error", "There was a problem saving");
+                                        }
                                     });
                                        
                                     
