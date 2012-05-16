@@ -136,7 +136,7 @@ class Pman_Core_I18n extends Pman
             
             case 'Timezone':
                 $ar = DateTimeZone::listAbbreviations();
-                print_R($ar);exit;
+                echo '<PRE>';print_R($ar);exit;
                 
                 
              
