@@ -335,6 +335,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                     
                                     Roo.log(x);
                                     if (v.length) {
+                                    Roo.log("try fill");
                                         var cm = _this.grid.colModel;
                                         Roo.log(this);
                                         var ci = cm.getColumnByDataIndex(this.name);
