@@ -463,6 +463,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         xtype: 'ComboBox',
                                         xns: Roo.form,
                                         allowBlank : 'false',
+                                        displayField : 'tz',
                                         editable : true,
                                         emptyText : "Select timezone",
                                         fieldLabel : 'core_enum',
@@ -478,7 +479,6 @@ Pman.Dialog.CoreNotifyRecur = {
                                         tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
                                         triggerAction : 'all',
                                         typeAhead : true,
-                                        valueField : 'tz',
                                         width : 300,
                                         store : {
                                             xtype: 'Store',
