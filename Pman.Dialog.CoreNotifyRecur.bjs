@@ -206,7 +206,7 @@
                                     "header": "at Hour(s)",
                                     "width": 250,
                                     "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) { \n    \n    Roo.log(x);\n    if (v.length) {\n        var cm = _this.grid.colModel;\n \n        cm.getColumnByDataIndex('xx');\n    \n    }\n    \n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
+                                    "|renderer": "function(v,x,r) { \n    \n    Roo.log(x);\n    if (v.length) {\n        var cm = _this.grid.colModel;\n \n        var ci = cm.getColumnByDataIndex(this.dataIndex);\n        var ce = cm.getCellEditor(ci);\n        ce.field.setValue(v);\n        return String.format('{0}',ce.field.el.value);\n\n        \n    \n    }\n    \n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
                                     "|xns": "Roo.grid",
                                     "items": [
                                         {
