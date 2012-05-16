@@ -440,6 +440,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         name : 'tz_name',
                                         pageSize : 999,
                                         qtip : "Select timezone",
+                                        queryParam : 'q',
                                         selectOnFocus : true,
                                         tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
                                         triggerAction : 'all',
