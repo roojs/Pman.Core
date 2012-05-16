@@ -100,9 +100,9 @@ Pman.Dialog.CoreNotifyRecur = {
                                         url : baseURL + '/Roo/Core_notify_recur',
                                         method :'POST',
                                         params : record.data,
-                                        success : function()
+                                        success : function(data)
                                         {
-                                            //??
+                                            Roo.log(data);
                                         },
                                         failure : function() {
                                             Roo.MessageBox.alert("Error", "There was a problem saving");

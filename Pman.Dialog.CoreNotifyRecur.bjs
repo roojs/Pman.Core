@@ -52,7 +52,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "update": "function (_self, record, operation)\n{\n    Roo.log(operation);\n    if (operation != 'commit') {\n        return;\n    }\n    new Pman.Request({\n        url : baseURL + '/Roo/Core_notify_recur',\n        method :'POST',\n        params : record.data,\n        success : function()\n        {\n            //??\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"There was a problem saving\");\n        }\n    });\n       \n    \n    \n}",
+                                        "update": "function (_self, record, operation)\n{\n    Roo.log(operation);\n    if (operation != 'commit') {\n        return;\n    }\n    new Pman.Request({\n        url : baseURL + '/Roo/Core_notify_recur',\n        method :'POST',\n        params : record.data,\n        success : function(data)\n        {\n            Roo.log(data);\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"There was a problem saving\");\n        }\n    });\n       \n    \n    \n}",
                                         "beforeload": "function (_self, o)\n{\n    if (!_this.data) {\n        return false;\n    }\n    o.params =  Roo.apply(o.params || {}, {\n        person_id : _this.data.person_id,\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method\n    });\n        \n}"
                                     },
                                     "*prop": "dataSource",
