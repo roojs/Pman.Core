@@ -239,8 +239,27 @@ Pman.Dialog.CoreNotifyRecur = {
                                     listeners : {
                                         click : function()
                                         {
-                                             var s = _this.grid.getSelectionModel().getSelected();
-                                             Roo.log(s);
+                                             _this.grid.stopEditing();
+                                             var s = _this.grid.selModel.getSelectedCell()
+                                             if (!s) {
+                                                Roo.MessageBox.alert("Error", "Select row");
+                                                return;
+                                            }
+                                            
+                                            new Pman.Request({
+                                                url : baseURL + '/Roo/core_notify_recur',
+                                                method : 'POST',
+                                                params : {
+                                                    _delete : _this.grid.ds.getAt(s[0]).data.id,
+                                                }, 
+                                                success : function() {
+                                                    _this.grid.ds.load({});
+                                                },
+                                                failure : function() {
+                                                    Roo.MessageBox.alert("Error", "Deleting failed - try reloading");
+                                                }
+                                           });
+                                            
                                         }
                                     },
                                     cls : 'x-btn-text-icon',
