@@ -246,7 +246,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                 width : 100,
                                 renderer : function(v,x,r) { 
                                 
-                                    Roo.log(x);
+                                    Roo.log(this);
                                     var matches = this.editor.field.store.query('code',v);
                                     if (!matches.length) {
                                         return '';
