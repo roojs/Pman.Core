@@ -384,14 +384,6 @@ Pman.Dialog.CoreNotifyRefer = {
                                 width : 75,
                                 dataIndex : 'last_event_id',
                                 renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                dataIndex : 'last_applied_dt',
-                                header : 'Message Last sent',
-                                width : 75,
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
                             }
                         ]
                     }
