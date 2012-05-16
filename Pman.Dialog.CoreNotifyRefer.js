@@ -350,7 +350,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                         hiddenName : 'freq',
                                         listWidth : 300,
                                         mode : 'local',
-                                        name : 'freq_name',
+                                        name : 'freq_hour_name',
                                         pageSize : 40,
                                         tpl : '<div class="x-grid-cell-text x-btn button"><b>{title}</b> </div>',
                                         triggerAction : 'all',
