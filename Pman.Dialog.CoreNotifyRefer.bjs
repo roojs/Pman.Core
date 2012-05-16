@@ -10,7 +10,7 @@
             "modal": true,
             "resizable": false,
             "title": "Modify Recurrent Notifications",
-            "width": 700,
+            "width": 800,
             "xtype": "LayoutDialog",
             "|xns": "Roo",
             "items": [

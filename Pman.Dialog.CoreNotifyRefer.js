@@ -34,7 +34,7 @@ Pman.Dialog.CoreNotifyRefer = {
             modal : true,
             resizable : false,
             title : "Modify Recurrent Notifications",
-            width : 700,
+            width : 800,
             items : [
                 {
                     xtype: 'GridPanel',
