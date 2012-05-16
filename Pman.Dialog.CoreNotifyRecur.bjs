@@ -309,6 +309,7 @@
                                             "*prop": "editor",
                                             "items": [
                                                 {
+                                                    "*prop": "",
                                                     "allowBlank": "false",
                                                     "displayField": "tz",
                                                     "editable": true,

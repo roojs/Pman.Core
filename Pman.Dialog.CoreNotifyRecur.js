@@ -424,57 +424,55 @@ Pman.Dialog.CoreNotifyRecur = {
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
-                                    items : [
-                                        {
-                                            xtype: 'ComboBox',
-                                            xns: Roo.form,
-                                            allowBlank : 'false',
-                                            displayField : 'tz',
-                                            editable : true,
-                                            emptyText : "Select timezone",
-                                            fieldLabel : 'core_enum',
-                                            forceSelection : true,
-                                            hiddenName : 'tz',
-                                            listWidth : 400,
-                                            loadingText : "Searching...",
-                                            minChars : 2,
-                                            name : 'tz_name',
-                                            pageSize : 999,
-                                            qtip : "Select timezone",
-                                            selectOnFocus : true,
-                                            tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
-                                            triggerAction : 'all',
-                                            typeAhead : true,
-                                            valueField : 'tz',
-                                            width : 300,
-                                            store : {
-                                                xtype: 'Store',
-                                                xns: Roo.data,
-                                                listeners : {
-                                                    beforeload : function (_self, o){
-                                                        o.params = o.params || {};
-                                                        // set more here
-                                                    }
-                                                },
-                                                remoteSort : true,
-                                                sortInfo : { direction : 'ASC', field: 'tz' },
-                                                proxy : {
-                                                    xtype: 'HttpProxy',
-                                                    xns: Roo.data,
-                                                    method : 'GET',
-                                                    url : baseURL + '/Core/I18n/Timezone.php'
-                                                },
-                                                reader : {
-                                                    xtype: 'JsonReader',
-                                                    xns: Roo.data,
-                                                    id : 'id',
-                                                    root : 'data',
-                                                    totalProperty : 'total',
-                                                    fields : [{"name":"tz","type":"string"}]
+                                     : {
+                                        xtype: 'ComboBox',
+                                        xns: Roo.form,
+                                        allowBlank : 'false',
+                                        displayField : 'tz',
+                                        editable : true,
+                                        emptyText : "Select timezone",
+                                        fieldLabel : 'core_enum',
+                                        forceSelection : true,
+                                        hiddenName : 'tz',
+                                        listWidth : 400,
+                                        loadingText : "Searching...",
+                                        minChars : 2,
+                                        name : 'tz_name',
+                                        pageSize : 999,
+                                        qtip : "Select timezone",
+                                        selectOnFocus : true,
+                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
+                                        triggerAction : 'all',
+                                        typeAhead : true,
+                                        valueField : 'tz',
+                                        width : 300,
+                                        store : {
+                                            xtype: 'Store',
+                                            xns: Roo.data,
+                                            listeners : {
+                                                beforeload : function (_self, o){
+                                                    o.params = o.params || {};
+                                                    // set more here
                                                 }
+                                            },
+                                            remoteSort : true,
+                                            sortInfo : { direction : 'ASC', field: 'tz' },
+                                            proxy : {
+                                                xtype: 'HttpProxy',
+                                                xns: Roo.data,
+                                                method : 'GET',
+                                                url : baseURL + '/Core/I18n/Timezone.php'
+                                            },
+                                            reader : {
+                                                xtype: 'JsonReader',
+                                                xns: Roo.data,
+                                                id : 'id',
+                                                root : 'data',
+                                                totalProperty : 'total',
+                                                fields : [{"name":"tz","type":"string"}]
                                             }
                                         }
-                                    ]
+                                    }
                                 }
                             },
                             {
