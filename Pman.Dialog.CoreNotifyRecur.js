@@ -333,13 +333,13 @@ Pman.Dialog.CoreNotifyRecur = {
                                 width : 250,
                                 renderer : function(v,x,r) { 
                                     
-                                    Roo.log(x);
+                                 
                                     if (v.length) {
-                                    Roo.log("try fill");
+                                     
                                         var cm = _this.grid.colModel;
-                                        Roo.log(this);
+                                       
                                         var ci = cm.getColumnByDataIndex(this.name);
-                                        Roo.log(ci);
+                                       
                                          var tv = [];
                                         var vals = Roo.decode(v);
                                         Roo.each(vals, function(k) {
