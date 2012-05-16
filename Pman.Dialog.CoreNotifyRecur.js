@@ -211,7 +211,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             var r = grid.getDataSource().reader.newRow({
                                             // defaults..
                                                 person_id : _this.data.person_id,
-                                                dtstart : new Date(0),
+                                                dtstart : new Date(),
                                                 dtend : Date.parseDate('2030-01-01', 'Y-m-d'),
                                                 tz : 'Asia/Hong Kong',
                                                 onid : _this.data.onid,
