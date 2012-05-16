@@ -83,7 +83,7 @@ ALTER TABLE Events ADD INDEX lookup (on_id, on_table, person_id, event_when);
 
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when);
 
-
+ALTER TABLE Events ADD INDEX lookuppt ( person_table);
 
 
 CREATE TABLE  core_event_audit  (
@@ -393,11 +393,11 @@ CREATE TABLE core_notify_recur (
 ALTER TABLE  core_notify_recur  ADD COLUMN person_id int(11)  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN dtstart datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN dtend datetime  NOT NULL;
-ALTER TABLE  core_notify_recur  ADD COLUMN tz decimal(4,2)  NOT NULL;,
+
 ALTER TABLE  core_notify_recur  ADD COLUMN max_applied_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN updated_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN last_applied_dt datetime  NOT NULL;
-
+ALTER TABLE  core_notify_recur  ADD COLUMN tz varchar(64)  NOT NULL;
  
 ALTER TABLE  core_notify_recur  ADD COLUMN freq varchar(8) NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_day text NOT NULL;
@@ -405,6 +405,6 @@ ALTER TABLE  core_notify_recur  ADD COLUMN freq_hour text  NOT NULL;
 
 ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
  
-
+ALTER TABLE  core_notify_recur  CHANGE COLUMN tz  tz varchar(64)  NOT NULL;
  
 
