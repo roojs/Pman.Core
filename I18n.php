@@ -147,6 +147,7 @@ class Pman_Core_I18n extends Pman
                 $tza= array_unique($tza);
                 sort($tza);
                 foreach($tza as $tz) {
+                    //filtering..
                     if (empty($_REQUEST['q']) ||
                             0 === strcasecmp(
                                     substring($tz,0, strlen($_REQUEST['q'])),
