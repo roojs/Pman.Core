@@ -163,7 +163,7 @@
                                     "header": "Frequency",
                                     "width": 100,
                                     "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) { \n\n    Roo.log(this);\n    var matches = this.editor.field.store.query('code',v);\n    if (!matches.length) {\n        return '';\n    }\n    return String.format('{0}', matches.first().data.title);\n }",
+                                    "|renderer": "function(v,x,r) { \n\n    Roo.log(this);\n    var cm = _this.grid.colModel;\n    var ix = cm.findColumnIndex('freq');\n    \n    var matches = this.editor.field.store.query('code',v);\n    if (!matches.length) {\n        return '';\n    }\n    return String.format('{0}', matches.first().data.title);\n }",
                                     "|xns": "Roo.grid",
                                     "items": [
                                         {
