@@ -96,6 +96,11 @@ Pman.Dialog.CoreNotifyRecur = {
                                     if (operation != 'commit') {
                                         return;
                                     }
+                                    var p = Roo.apply({}, record.data);
+                                    p.dtstart = record.data.dtstart.format('Y-m-d');
+                                    p.dtend = record.data.dtend.format('Y-m-d');    
+                                    
+                                    
                                     new Pman.Request({
                                         url : baseURL + '/Roo/Core_notify_recur',
                                         method :'POST',
