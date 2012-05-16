@@ -92,7 +92,7 @@ Pman.Dialog.CoreNotifyRecur = {
                             listeners : {
                                 update : function (_self, record, operation)
                                 {
-                                    Roo.log(operation);
+                                    //Roo.log(operation);
                                     if (operation != 'commit') {
                                         return;
                                     }
