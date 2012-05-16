@@ -167,7 +167,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                             // defaults..
                                                 person_id : _this.data.person_id,
                                                 dtstart : new Date(0),
-                                                dtend : Data.parseDate('2050-01-01', 'Y-m-d'),
+                                                dtend : Date.parseDate('2050-01-01', 'Y-m-d'),
                                                 tz : 'Asia/Hong Kong',
                                                 onid : _this.data.onid,
                                                 ontable : _this.data.ontable,
