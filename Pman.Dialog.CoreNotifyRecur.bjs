@@ -6,6 +6,9 @@
     "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
     "items": [
         {
+            "listeners": {
+                "show": "function (_self)\n{\n    _this.grid.ds.load({});\n}"
+            },
             "height": 500,
             "modal": true,
             "resizable": false,

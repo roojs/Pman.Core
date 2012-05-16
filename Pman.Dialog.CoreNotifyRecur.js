@@ -30,6 +30,12 @@ Pman.Dialog.CoreNotifyRecur = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
+            listeners : {
+                show : function (_self)
+                {
+                    _this.grid.ds.load({});
+                }
+            },
             height : 500,
             modal : true,
             resizable : false,
