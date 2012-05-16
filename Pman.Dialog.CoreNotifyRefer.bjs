@@ -230,7 +230,7 @@
                                                     "triggerAction": "all",
                                                     "valueField": "code",
                                                     "width": 200,
-                                                    "xtype": "ComboBox",
+                                                    "xtype": "ComboCehck",
                                                     "|xns": "Roo.form",
                                                     "items": [
                                                         {

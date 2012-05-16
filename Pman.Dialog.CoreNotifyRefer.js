@@ -300,7 +300,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
                                     field : {
-                                        xtype: 'ComboBox',
+                                        xtype: 'ComboCehck',
                                         xns: Roo.form,
                                         allowBlank : false,
                                         displayField : 'title',
