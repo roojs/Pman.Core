@@ -261,7 +261,6 @@
                                                 {
                                                     "*prop": "field",
                                                     "allowBlank": "false",
-                                                    "displayField": "tz",
                                                     "editable": true,
                                                     "emptyText": "Select timezone",
                                                     "fieldLabel": "core_enum",
