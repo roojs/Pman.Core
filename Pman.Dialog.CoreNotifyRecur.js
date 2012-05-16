@@ -445,7 +445,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
                                             triggerAction : 'all',
                                             typeAhead : true,
-                                            valueField : 'id',
+                                            valueField : 'tz',
                                             width : 300,
                                             store : {
                                                 xtype: 'Store',
