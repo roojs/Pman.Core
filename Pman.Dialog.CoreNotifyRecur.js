@@ -108,6 +108,9 @@ Pman.Dialog.CoreNotifyRecur = {
                                 },
                                 beforeload : function (_self, o)
                                 {
+                                    if (!_this.data) {
+                                        return false;
+                                    }
                                     o.params =  Roo.apply(o.params, {
                                         person_id : _this.data.person_id,
                                         onid : _this.data.onid,
