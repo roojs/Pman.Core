@@ -404,7 +404,8 @@ ALTER TABLE  core_notify_recur  ADD COLUMN freq_day text NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_hour text  NOT NULL;
 
 ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
- 
+
+-- old design..
 ALTER TABLE  core_notify_recur  CHANGE COLUMN tz  tz varchar(64)  NOT NULL;
  
 
