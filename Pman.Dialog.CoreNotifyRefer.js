@@ -317,12 +317,13 @@ Pman.Dialog.CoreNotifyRefer = {
                                         store : {
                                             xtype: 'SimpleStore',
                                             xns: Roo.data,
-                                            data : [ 
-                                                [ 'HOURLY' , 'Hourly at' ] ,
-                                                   [ 'DAILY' , 'Daily at'] ,
-                                                    [ 'WEEKLY' , 'Weekly at'] ,
-                                                     [ 'Montly' , 'Montly at'] 
-                                            ],
+                                            data : (function() { 
+                                                var ret = [];
+                                                Roo.each(Date.dayNames, function(d) {
+                                                    ret.push([ d.substring(0,3).toUpperCase(), d ]);
+                                                });
+                                                return ret;
+                                            })(),
                                             fields : ['code', 'title'],
                                             sortInfo : { field : 'title', direction: 'ASC' }
                                         }

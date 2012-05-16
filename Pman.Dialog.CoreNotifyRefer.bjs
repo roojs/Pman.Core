@@ -236,7 +236,7 @@
                                                         {
                                                             "*prop": "store",
                                                             "xtype": "SimpleStore",
-                                                            "|data": "[ \n    [ 'HOURLY' , 'Hourly at' ] ,\n       [ 'DAILY' , 'Daily at'] ,\n        [ 'WEEKLY' , 'Weekly at'] ,\n         [ 'Montly' , 'Montly at'] \n]",
+                                                            "|data": "(function() { \n    var ret = [];\n    Roo.each(Date.dayNames, function(d) {\n        ret.push([ d.substring(0,3).toUpperCase(), d ]);\n    });\n    return ret;\n})()",
                                                             "|fields": "['code', 'title']",
                                                             "|sortInfo": "{ field : 'title', direction: 'ASC' }",
                                                             "|xns": "Roo.data"
