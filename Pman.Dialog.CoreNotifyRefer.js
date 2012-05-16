@@ -163,10 +163,19 @@ Pman.Dialog.CoreNotifyRefer = {
                                         click : function()
                                         {
                                             var grid = _this.grid;
-                                            var r = grid.getDataSource().reader.newRow();
+                                            var r = grid.getDataSource().reader.newRow({
+                                                person_id : _this.data.person_id,
+                                                dtstart : new Date(0),
+                                                dtend : Data.parseDate('2050-01-01', 'Y-m-d'),
+                                                tz : 'Asia/Hong Kong',
+                                                onid : _this.data.onid,
+                                                ontable : _this.data.ontable,
+                                                method : _this.data.method,
+                                            
+                                            });
                                             grid.stopEditing();
-                                        grid.getDataSource().insert(0, r); 
-                                        grid.startEditing(0, 0); 
+                                            grid.getDataSource().insert(0, r); 
+                                            grid.startEditing(0, 0); 
                                         
                                         }
                                     },
