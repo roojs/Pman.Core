@@ -358,12 +358,18 @@ Pman.Dialog.CoreNotifyRefer = {
                                         store : {
                                             xtype: 'SimpleStore',
                                             xns: Roo.data,
-                                            data : [ 
-                                                [ 'HOURLY' , 'Hourly at' ] ,
-                                                   [ 'DAILY' , 'Daily at'] ,
-                                                    [ 'WEEKLY' , 'Weekly at'] ,
-                                                     [ 'Montly' , 'Montly at'] 
-                                            ],
+                                            data : (function() { 
+                                                var ret = [];
+                                                for (var i = 5; i < 25; i++) {
+                                                    var h = i < 10 ? ('0' + i) : i;
+                                                    var mer = i < 12 || i > 23 ? 'am' : 'pm';
+                                                    var dh = i < 12 ? i : i-12;
+                                                    
+                                                    ret.push([ h+':00', dh+':00' + mer ]);
+                                                    ret.push([ h+':00', dh+':30' + mer ]);        
+                                                }
+                                                return ret;
+                                            })(),
                                             fields : ['code', 'title'],
                                             sortInfo : { field : 'title', direction: 'ASC' }
                                         }

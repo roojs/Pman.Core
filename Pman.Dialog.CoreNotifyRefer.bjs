@@ -281,7 +281,7 @@
                                                         {
                                                             "*prop": "store",
                                                             "xtype": "SimpleStore",
-                                                            "|data": "[ \n    [ 'HOURLY' , 'Hourly at' ] ,\n       [ 'DAILY' , 'Daily at'] ,\n        [ 'WEEKLY' , 'Weekly at'] ,\n         [ 'Montly' , 'Montly at'] \n]",
+                                                            "|data": "(function() { \n    var ret = [];\n    for (var i = 5; i < 25; i++) {\n        var h = i < 10 ? ('0' + i) : i;\n        var mer = i < 12 || i > 23 ? 'am' : 'pm';\n        var dh = i < 12 ? i : i-12;\n        \n        ret.push([ h+':00', dh+':00' + mer ]);\n        ret.push([ h+':00', dh+':30' + mer ]);        \n    }\n    return ret;\n})()",
                                                             "|fields": "['code', 'title']",
                                                             "|sortInfo": "{ field : 'title', direction: 'ASC' }",
                                                             "|xns": "Roo.data"
