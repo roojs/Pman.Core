@@ -1,9 +1,9 @@
 {
     "id": "roo-file-94",
-    "name": "Pman.Dialog.CoreNotifyRefer",
+    "name": "Pman.Dialog.CoreNotifyRecur",
     "parent": "",
     "title": "",
-    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRefer.bjs",
+    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
     "items": [
         {
             "height": 500,
