@@ -49,7 +49,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "update": "function (_self, record, operation)\n{\n    Roo.log(operation);\n}"
+                                        "update": "function (_self, record, operation)\n{\n    Roo.log(operation);\n    if (operation != 'commit') {\n        return;\n    }\n    new Pman.Request({\n        url : baseURL + '/Roo/Core_notify_recur',\n        method :'POST',\n        params : record.data\n    });\n       \n    \n    \n}"
                                     },
                                     "*prop": "dataSource",
                                     "remoteSort": true,

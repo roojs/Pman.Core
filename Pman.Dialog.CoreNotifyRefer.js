@@ -87,6 +87,17 @@ Pman.Dialog.CoreNotifyRefer = {
                                 update : function (_self, record, operation)
                                 {
                                     Roo.log(operation);
+                                    if (operation != 'commit') {
+                                        return;
+                                    }
+                                    new Pman.Request({
+                                        url : baseURL + '/Roo/Core_notify_recur',
+                                        method :'POST',
+                                        params : record.data
+                                    });
+                                       
+                                    
+                                    
                                 }
                             },
                             remoteSort : true,
