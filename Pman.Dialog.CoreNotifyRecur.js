@@ -515,7 +515,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                 dataIndex : 'last_event_id',
                                 header : 'Last Sent',
                                 width : 75,
-                                renderer : function(v) { return String.format('{0}', v); }
+                                renderer : function(v) { return String.format('{0}', v ? v : 'never'); }
                             }
                         ]
                     }
