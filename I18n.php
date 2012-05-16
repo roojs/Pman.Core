@@ -137,10 +137,17 @@ class Pman_Core_I18n extends Pman
             case 'Timezone':
                 $ar = DateTimeZone::listAbbreviations();
                 $ret = array();
+                $tza = array();
                 foreach($ar as $tl => $sar) {
                     foreach($sar as $tz) {
-                        $ret[] = array('tz' => $tz['timezone_id']);
+                        $tza[]  = $tz['timezone_id'];
+                    
                     }
+                }
+                $tza= array_unique($tza);
+                sort($tza);
+                foreach($tza as $tz) {
+                    $ret[] = array('tz' => $tz);
                 }
                 $this->jdata($ret);
                 
