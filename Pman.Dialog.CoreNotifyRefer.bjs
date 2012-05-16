@@ -161,7 +161,7 @@
                                     "*prop": "colModel[]",
                                     "dataIndex": "freq",
                                     "header": "Frequency",
-                                    "width": 100,
+                                    "width": 70,
                                     "xtype": "ColumnModel",
                                     "|renderer": "function(v,x,r) { \n\n    Roo.log(this);\n    var cm = _this.grid.colModel;\n    var ix = cm.findColumnIndex('freq');\n    var ce = cm.getCellEditor(ix)\n    var matches = ce.field.store.query('code',v);\n    if (!matches.length) {\n        return '';\n    }\n    return String.format('{0}', matches.first().data.title);\n }",
                                     "|xns": "Roo.grid",

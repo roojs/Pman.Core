@@ -243,7 +243,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                 xns: Roo.grid,
                                 dataIndex : 'freq',
                                 header : 'Frequency',
-                                width : 100,
+                                width : 70,
                                 renderer : function(v,x,r) { 
                                 
                                     Roo.log(this);
