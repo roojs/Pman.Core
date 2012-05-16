@@ -254,7 +254,43 @@
                                     "width": 100,
                                     "xtype": "ColumnModel",
                                     "|renderer": "function(v) { return String.format('{0}', v); }",
-                                    "|xns": "Roo.grid"
+                                    "|xns": "Roo.grid",
+                                    "items": [
+                                        {
+                                            "|xns": "Roo.grid",
+                                            "xtype": "GridEditor",
+                                            "*prop": "editor",
+                                            "items": [
+                                                {
+                                                    "*prop": "field",
+                                                    "allowBlank": false,
+                                                    "displayField": "title",
+                                                    "editable": false,
+                                                    "fieldLabel": "Country",
+                                                    "hiddenName": "freq",
+                                                    "listWidth": 300,
+                                                    "mode": "local",
+                                                    "name": "freq_name",
+                                                    "pageSize": 40,
+                                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
+                                                    "triggerAction": "all",
+                                                    "valueField": "code",
+                                                    "xtype": "ComboCheck",
+                                                    "|xns": "Roo.form",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "store",
+                                                            "xtype": "SimpleStore",
+                                                            "|data": "[ \n    [ 'HOURLY' , 'Hourly at' ] ,\n       [ 'DAILY' , 'Daily at'] ,\n        [ 'WEEKLY' , 'Weekly at'] ,\n         [ 'Montly' , 'Montly at'] \n]",
+                                                            "|fields": "['code', 'title']",
+                                                            "|sortInfo": "{ field : 'title', direction: 'ASC' }",
+                                                            "|xns": "Roo.data"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 },
                                 {
                                     "*prop": "colModel[]",
