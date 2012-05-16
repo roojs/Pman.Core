@@ -372,7 +372,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                                 for (var i = 5; i < 25; i++) {
                                                     var h = i < 10 ? ('0' + i) : i;
                                                     var mer = i < 12 || i > 23 ? 'am' : 'pm';
-                                                    var dh = i < 12 ? i : i-12;
+                                                    var dh = i < 13 ? i : i-12;
                                                     
                                                     ret.push([ h+':00', dh+':00' + mer ]);
                                                     ret.push([ h+':00', dh+':30' + mer ]);        
