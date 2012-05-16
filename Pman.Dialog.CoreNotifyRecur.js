@@ -191,14 +191,6 @@ Pman.Dialog.CoreNotifyRecur = {
                                 ]
                             }
                         },
-                        footer : {
-                            xtype: 'PagingToolbar',
-                            xns: Roo,
-                            pageSize : 25,
-                            displayInfo : true,
-                            displayMsg : "Displaying core_notify_recur{0} - {1} of {2}",
-                            emptyMsg : "No core_notify_recur found"
-                        },
                         toolbar : {
                             xtype: 'Toolbar',
                             xns: Roo,

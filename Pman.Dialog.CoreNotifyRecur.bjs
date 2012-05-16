@@ -80,15 +80,6 @@
                                     ]
                                 },
                                 {
-                                    "*prop": "footer",
-                                    "xtype": "PagingToolbar",
-                                    "pageSize": 25,
-                                    "displayInfo": true,
-                                    "displayMsg": "Displaying core_notify_recur{0} - {1} of {2}",
-                                    "emptyMsg": "No core_notify_recur found",
-                                    "|xns": "Roo"
-                                },
-                                {
                                     "*prop": "toolbar",
                                     "xtype": "Toolbar",
                                     "|xns": "Roo",
