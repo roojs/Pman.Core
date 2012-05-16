@@ -251,7 +251,7 @@
                                     "*prop": "colModel[]",
                                     "dataIndex": "freq_hour",
                                     "header": "at Hour(s)",
-                                    "width": 150,
+                                    "width": 250,
                                     "xtype": "ColumnModel",
                                     "|renderer": "function(v) { return String.format('{0}', v); }",
                                     "|xns": "Roo.grid",
