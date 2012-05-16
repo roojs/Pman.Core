@@ -41,9 +41,9 @@ Pman.Dialog.CoreNotifyRecur = {
                     xns: Roo,
                     listeners : {
                         activate : function() {
-                            _this.panel = this;
+                         _this.panel = this;
                             if (_this.grid) {
-                                _this.grid.footer.onClick('first');
+                        //        _this.grid.footer.onClick('first');
                             }
                         }
                     },
