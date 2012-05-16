@@ -173,6 +173,9 @@ Pman.Dialog.CoreNotifyRefer = {
                                                 ontable : _this.data.ontable,
                                                 method : _this.data.method,
                                                 last_event_id : 0,
+                                                freq_day_name : '',
+                                                freq_hour_name : '',
+                                                freq_name : ''
                                                 
                                             
                                             });
