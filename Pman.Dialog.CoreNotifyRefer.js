@@ -314,7 +314,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                         tpl : '<div class="x-grid-cell-text x-btn button"><b>{title}</b> </div>',
                                         triggerAction : 'all',
                                         valueField : 'code',
-                                        width : 200,
+                                        width : 300,
                                         store : {
                                             xtype: 'SimpleStore',
                                             xns: Roo.data,
