@@ -236,15 +236,16 @@ Pman.Dialog.CoreNotifyRecur = {
                                 {
                                     xtype: 'Button',
                                     xns: Roo.Toolbar,
-                                    text : "Delete",
-                                    cls : 'x-btn-text-icon',
-                                    icon : rootURL + '/Pman/templates/images/trash.gif',
                                     listeners : {
                                         click : function()
                                         {
-                                             Pman.genericDelete(_this, 'core_notify_recur'); 
+                                             var s = _this.grid.getSelectionModel().getSelected();
+                                             Roo.log(s);
                                         }
-                                    }
+                                    },
+                                    cls : 'x-btn-text-icon',
+                                    text : "Delete",
+                                    icon : rootURL + '/Pman/templates/images/trash.gif'
                                 }
                             ]
                         },

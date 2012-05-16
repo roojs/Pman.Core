@@ -99,13 +99,13 @@
                                             "xtype": "Fill"
                                         },
                                         {
-                                            "text": "Delete",
-                                            "cls": "x-btn-text-icon",
-                                            "|icon": "rootURL + '/Pman/templates/images/trash.gif'",
-                                            "xtype": "Button",
                                             "listeners": {
-                                                "|click": "function()\n{\n     Pman.genericDelete(_this, 'core_notify_recur'); \n}\n        "
+                                                "|click": "function()\n{\n     var s = _this.grid.getSelectionModel().getSelected();\n     Roo.log(s);\n}\n        "
                                             },
+                                            "cls": "x-btn-text-icon",
+                                            "text": "Delete",
+                                            "xtype": "Button",
+                                            "|icon": "rootURL + '/Pman/templates/images/trash.gif'",
                                             "|xns": "Roo.Toolbar"
                                         }
                                     ]
