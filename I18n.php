@@ -147,7 +147,14 @@ class Pman_Core_I18n extends Pman
                 $tza= array_unique($tza);
                 sort($tza);
                 foreach($tza as $tz) {
-                    $ret[] = array('tz' => $tz);
+                    if (empty($_REQUEST['q']) ||
+                            0 === strcasecmp(
+                                    substring($tz,0, strlen($_REQUEST['q'])),
+                                    $_REQUEST['q'])
+                    ) {
+                        $ret[] = array('tz' => $tz);
+                    }
+                    
                 }
                 $this->jdata($ret);
                 
