@@ -312,6 +312,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         
                                     
                                     }
+                                    r.data[this.name + '_name'] = '';
                                     return String.format('{0}', r.data.freq_day_name || v); 
                                     
                                 },
