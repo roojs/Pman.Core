@@ -30,16 +30,15 @@ Pman.Dialog.CoreNotifyRefer = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
+            height : 500,
+            modal : true,
+            resizable : false,
+            title : "Modify Recurrent Notifications",
+            width : 700,
             items : [
                 {
                     xtype: 'GridPanel',
                     xns: Roo,
-                    title : "core_notify_recur",
-                    fitToframe : true,
-                    fitContainer : true,
-                    tableName : 'core_notify_recur',
-                    background : true,
-                    region : 'center',
                     listeners : {
                         activate : function() {
                             _this.panel = this;
@@ -48,11 +47,15 @@ Pman.Dialog.CoreNotifyRefer = {
                             }
                         }
                     },
+                    background : false,
+                    fitContainer : true,
+                    fitToFrame : true,
+                    region : 'center',
+                    tableName : 'core_notify_recur',
+                    title : "core_notify_recur",
                     grid : {
-                        xtype: 'Grid',
+                        xtype: 'EditorGrid',
                         xns: Roo.grid,
-                        autoExpandColumn : 'freq',
-                        loadMask : true,
                         listeners : {
                             render : function() 
                             {
@@ -70,6 +73,9 @@ Pman.Dialog.CoreNotifyRefer = {
                                 }); 
                             }
                         },
+                        autoExpandColumn : 'freq',
+                        clicksToEdit : 1,
+                        loadMask : true,
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
@@ -84,9 +90,9 @@ Pman.Dialog.CoreNotifyRefer = {
                             reader : {
                                 xtype: 'JsonReader',
                                 xns: Roo.data,
-                                totalProperty : 'total',
-                                root : 'data',
                                 id : 'id',
+                                root : 'data',
+                                totalProperty : 'total',
                                 fields : [
                                     {
                                         'name': 'id',
@@ -153,40 +159,24 @@ Pman.Dialog.CoreNotifyRefer = {
                                 {
                                     xtype: 'Button',
                                     xns: Roo.Toolbar,
-                                    text : "Add",
-                                    cls : 'x-btn-text-icon',
-                                    icon : Roo.rootURL + 'images/default/dd/drop-add.gif',
                                     listeners : {
                                         click : function()
                                         {
-                                            if (!_this.dialog) return;
-                                            _this.dialog.show( { id : 0 } , function() {
-                                                _this.grid.footer.onClick('first');
-                                           }); 
+                                            var grid = _this.grid;
+                                            var r = grid.getDataSource().reader.newRow();
+                                            grid.stopEditing();
+                                        grid.getDataSource().insert(0, r); 
+                                        grid.startEditing(0, 0); 
+                                        
                                         }
-                                    }
+                                    },
+                                    cls : 'x-btn-text-icon',
+                                    text : "Add",
+                                    icon : Roo.rootURL + 'images/default/dd/drop-add.gif'
                                 },
                                 {
-                                    xtype: 'Button',
-                                    xns: Roo.Toolbar,
-                                    text : "Edit",
-                                    cls : 'x-btn-text-icon',
-                                    icon : Roo.rootURL + 'images/default/tree/leaf.gif',
-                                    listeners : {
-                                        click : function()
-                                        {
-                                            var s = _this.grid.getSelectionModel().getSelections();
-                                            if (!s.length || (s.length > 1))  {
-                                                Roo.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
-                                                return;
-                                            }
-                                            if (!_this.dialog) return;
-                                            _this.dialog.show(s[0].data, function() {
-                                                _this.grid.footer.onClick('first');
-                                            }); 
-                                            
-                                        }
-                                    }
+                                    xtype: 'Fill',
+                                    xns: Roo.Toolbar
                                 },
                                 {
                                     xtype: 'Button',
@@ -207,73 +197,97 @@ Pman.Dialog.CoreNotifyRefer = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Id',
-                                width : 75,
-                                dataIndex : 'id',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Person',
-                                width : 75,
-                                dataIndex : 'person_id',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Dtstart',
-                                width : 75,
                                 dataIndex : 'dtstart',
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
+                                header : 'From',
+                                width : 75,
+                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'DateField',
+                                        xns: Roo.form
+                                    }
+                                }
                             },
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Dtend',
-                                width : 75,
                                 dataIndex : 'dtend',
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Tz',
+                                header : 'Until',
                                 width : 75,
-                                dataIndex : 'tz',
-                                renderer : function(v) { return String.format('{0}', v); }
+                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'DateField',
+                                        xns: Roo.form
+                                    }
+                                }
                             },
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Last applied dt',
-                                width : 75,
-                                dataIndex : 'last_applied_dt',
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Freq',
-                                width : 200,
                                 dataIndex : 'freq',
-                                renderer : function(v) { return String.format('{0}', v); }
+                                header : 'Frequency',
+                                width : 100,
+                                renderer : function(v) { return String.format('{0}', v); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'ComboBox',
+                                        xns: Roo.form,
+                                        allowBlank : false,
+                                        displayField : 'title',
+                                        editable : false,
+                                        fieldLabel : 'Country',
+                                        hiddenName : 'country',
+                                        listWidth : 200,
+                                        mode : 'local',
+                                        name : 'country_name',
+                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{title}</b> </div>',
+                                        triggerAction : 'all',
+                                        valueField : 'code',
+                                        width : 200,
+                                        store : {
+                                            xtype: 'SimpleStore',
+                                            xns: Roo.data,
+                                            data : [ 
+                                                [ 'HOURLY' , 'Hourly at' ] ,
+                                                   [ 'DAILY' , 'Daily at'] ,
+                                                    [ 'WEEKLY' , 'Weekly at'] ,
+                                                     [ 'Montly' , 'Montly at'] 
+                                            ],
+                                            fields : ['code', 'title'],
+                                            sortInfo : { field : 'title', direction: 'ASC' }
+                                        }
+                                    }
+                                }
                             },
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Freq day',
-                                width : 200,
                                 dataIndex : 'freq_day',
+                                header : 'on day(s)',
+                                width : 100,
                                 renderer : function(v) { return String.format('{0}', v); }
                             },
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Freq hour',
-                                width : 200,
                                 dataIndex : 'freq_hour',
+                                header : 'at Hour(s)',
+                                width : 100,
+                                renderer : function(v) { return String.format('{0}', v); }
+                            },
+                            {
+                                xtype: 'ColumnModel',
+                                xns: Roo.grid,
+                                dataIndex : 'tz',
+                                header : 'Timezone',
+                                width : 75,
                                 renderer : function(v) { return String.format('{0}', v); }
                             },
                             {
@@ -287,13 +301,26 @@ Pman.Dialog.CoreNotifyRefer = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Method',
-                                width : 200,
-                                dataIndex : 'method',
-                                renderer : function(v) { return String.format('{0}', v); }
+                                dataIndex : 'last_applied_dt',
+                                header : 'Message Last sent',
+                                width : 75,
+                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
                             }
                         ]
                     }
+                }
+            ],
+            center : {
+                xtype: 'LayoutRegion',
+                xns: Roo,
+                autoScroll : true,
+                loadOnce : true
+            },
+            buttons : [
+                {
+                    xtype: 'Button',
+                    xns: Roo,
+                    text : "Done"
                 }
             ]
         });
