@@ -105,6 +105,16 @@ Pman.Dialog.CoreNotifyRecur = {
                                        
                                     
                                     
+                                },
+                                beforeload : function (_self, o)
+                                {
+                                    o.params =  Roo.apply(o.params, {
+                                        person_id : _this.data.person_id,
+                                        onid : _this.data.onid,
+                                        ontable : _this.data.ontable,
+                                        method : _this.data.method
+                                    });
+                                        
                                 }
                             },
                             remoteSort : true,
