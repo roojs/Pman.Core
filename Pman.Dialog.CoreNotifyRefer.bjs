@@ -40,7 +40,7 @@
                                 "|rowdblclick": "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n"
                             },
                             "*prop": "grid",
-                            "autoExpandColumn": "freq",
+                            "autoExpandColumn": "freq_day",
                             "clicksToEdit": 1,
                             "loadMask": true,
                             "xtype": "EditorGrid",

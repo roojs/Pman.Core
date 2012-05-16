@@ -73,7 +73,7 @@ Pman.Dialog.CoreNotifyRefer = {
                                 }); 
                             }
                         },
-                        autoExpandColumn : 'freq',
+                        autoExpandColumn : 'freq_day',
                         clicksToEdit : 1,
                         loadMask : true,
                         dataSource : {
