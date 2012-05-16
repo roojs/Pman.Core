@@ -439,7 +439,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             loadingText : "Searching...",
                                             minChars : 2,
                                             name : 'tz_name',
-                                            pageSize : 20,
+                                            pageSize : 999,
                                             qtip : "Select timezone",
                                             selectOnFocus : true,
                                             tpl : '<div class="x-grid-cell-text x-btn button"><b>{tz}</b> </div>',
