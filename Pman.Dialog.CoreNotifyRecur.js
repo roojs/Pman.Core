@@ -374,7 +374,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                             }
                                         },ci.editor.field);
                                 
-                                             r.data[this.name + '_name'] = tv.join(', ');
+                                         r.data[this.name + '_name'] = tv.join(', ');
                                         return String.format('{0}',tv.join(', '));
                                 
                                         
