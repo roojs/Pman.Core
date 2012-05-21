@@ -86,6 +86,8 @@ class Pman_Core_JsCompile  extends Pman
         // or the compressed version.
         // first expand files..
         
+        echo "<!-- compiling   $basedir  -->\n";
+        
         $arfiles = array();
         $ofiles = array();
         foreach($files as $f) {
