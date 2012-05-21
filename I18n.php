@@ -133,7 +133,7 @@ class Pman_Core_I18n extends Pman
             case 'Currency':
                 $i->ltype = 'm';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('m',  implode('_',$lbits[0]));
+                $this->jdata($i->toTransList('m',  implode('_',$lbits[0])));
                 break;
             
             case 'Timezone':
