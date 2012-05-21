@@ -121,9 +121,9 @@ class Pman_Core_JsCompile  extends Pman
             echo '<script type="text/javascript" src="'.$output_url.'/'.$f.'"></script>'."\n";
             
         }
-         
-        
+          
     }
+    
     function packCss($basedir, $files,   $output_url)
     {
         // this outputs <script tags..>
