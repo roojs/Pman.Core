@@ -241,7 +241,7 @@ class Pman_Core_JsCompile  extends Pman
             return false;
             
         }
-        $targetm = file_exists($output) ? filemtime($output) : 0;
+        $targetm = file_exists($output) && filesize($output) ? filemtime($output) : 0;
         $max = 0;
         $ofiles = array();
         foreach($files as $f => $mt) {
