@@ -120,20 +120,20 @@ class Pman_Core_I18n extends Pman
                 
                 $i->ltype = 'l';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('l',  implode('_',$lbits])));
+                $this->jdata($i->toTransList('l',  implode('_',$lbits)));
                 break;
 
             case 'Country':
                 $i->ltype = 'c';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('c',  implode('_',$lbits])));
+                $this->jdata($i->toTransList('c',  implode('_',$lbits)));
                
                 break;
                 
             case 'Currency':
                 $i->ltype = 'm';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
-                $this->jdata($i->toTransList('m',  implode('_',$lbits])));
+                $this->jdata($i->toTransList('m',  implode('_',$lbits)));
                 break;
             
             case 'Timezone':
