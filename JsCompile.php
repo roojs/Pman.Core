@@ -247,7 +247,7 @@ class Pman_Core_JsCompile  extends Pman
             $ofiles[] = escapeshellarg($f);
         }
         if ($max < $targetm)
-            echo '<!--  cached time  is less that outputtime -->';
+            echo '<!--  use cached compile. -->';
             return true;
         }
         //var_dump($output);
