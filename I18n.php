@@ -116,7 +116,7 @@ class Pman_Core_I18n extends Pman
         
         switch($s) {
             case 'Lang':
-                DB_DataObject::DebugLevel(1);
+                 
                 print_R($this->authUser);
                 $i->ltype = 'l';
                 $i->applyFilters($_REQUEST, $this->authUser, $this);
