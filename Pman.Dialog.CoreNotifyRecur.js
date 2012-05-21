@@ -246,7 +246,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         click : function()
                                         {
                                              _this.grid.stopEditing();
-                                             var s = _this.grid.selModel.getSelectedCell()
+                                             var s = _this.grid.selModel.getSelectedCell();
                                              if (!s) {
                                                 Roo.MessageBox.alert("Error", "Select row");
                                                 return;
