@@ -256,7 +256,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                                 url : baseURL + '/Roo/core_notify_recur',
                                                 method : 'POST',
                                                 params : {
-                                                    _delete : _this.grid.ds.getAt(s[0]).data.id,
+                                                    _delete : _this.grid.ds.getAt(s[0]).data.id
                                                 }, 
                                                 success : function() {
                                                     _this.grid.ds.load({});

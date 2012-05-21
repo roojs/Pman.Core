@@ -100,7 +100,7 @@
                                         },
                                         {
                                             "listeners": {
-                                                "|click": "function()\n{\n     _this.grid.stopEditing();\n     var s = _this.grid.selModel.getSelectedCell();\n     if (!s) {\n        Roo.MessageBox.alert(\"Error\", \"Select row\");\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/core_notify_recur',\n        method : 'POST',\n        params : {\n            _delete : _this.grid.ds.getAt(s[0]).data.id,\n        }, \n        success : function() {\n            _this.grid.ds.load({});\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"Deleting failed - try reloading\");\n        }\n   });\n    \n}\n        "
+                                                "|click": "function()\n{\n     _this.grid.stopEditing();\n     var s = _this.grid.selModel.getSelectedCell();\n     if (!s) {\n        Roo.MessageBox.alert(\"Error\", \"Select row\");\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/core_notify_recur',\n        method : 'POST',\n        params : {\n            _delete : _this.grid.ds.getAt(s[0]).data.id\n        }, \n        success : function() {\n            _this.grid.ds.load({});\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"Deleting failed - try reloading\");\n        }\n   });\n    \n}\n        "
                                             },
                                             "cls": "x-btn-text-icon",
                                             "text": "Delete",
