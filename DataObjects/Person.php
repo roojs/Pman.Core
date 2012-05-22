@@ -592,8 +592,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $x->whereAdd("$tn_p.id IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
                         role = '". $x->escape($q['query']['role']) ."'
-                )");
-            }
+            )");
+        
         }
         
         
