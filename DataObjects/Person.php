@@ -589,7 +589,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             //
             $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
                 // can list current - so that it does not break!!!
-            $x->whereAdd("$tn_p.id IN 
+            $this->whereAdd("$tn_p.id IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
                         role = '". $x->escape($q['query']['role']) ."'
             )");
