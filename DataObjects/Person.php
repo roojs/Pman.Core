@@ -580,6 +580,21 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                         company_id = " . $this->company_id . ')');
             }
         }
+           
+        if (!empty($q['query']['role'])) { 
+            // it's a Person list..
+            // DB_DATaobjecT::debugLevel(1);
+            
+            // specific to project directory which is single comp. login
+            //
+            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+                // can list current - so that it does not break!!!
+            $x->whereAdd("$tn_p.id IN 
+                    ( SELECT distinct person_id FROM $tn_pd WHERE
+                        role = '". $x->escape($q['query']['role']) ."'"
+                )');
+            }
+        }
         
         
         if (!empty($q['query']['project_member_of'])) {
