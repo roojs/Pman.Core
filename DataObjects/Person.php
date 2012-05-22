@@ -591,7 +591,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 // can list current - so that it does not break!!!
             $this->whereAdd("$tn_p.id IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
-                        role = '". $x->escape($q['query']['role']) ."'
+                        role = '". $this->escape($q['query']['role']) ."'
             )");
         
         }
