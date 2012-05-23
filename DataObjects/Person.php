@@ -207,6 +207,22 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return true;
         }
            
+        // http basic auth..
+        $u = DB_DataObject::factory('Person');
+
+        if (!empty($_SERVER['PHP_AUTH_USER']) 
+            &&
+            !empty($_SERVER['PHP_AUTH_PW'])
+            &&
+            $u->get('email', $_SERVER['PHP_AUTH_USER'])
+            &&
+            
+            
+            
+        }
+        
+        
+        
         
         // not in session or not matched...
         $u = DB_DataObject::factory('Person');
