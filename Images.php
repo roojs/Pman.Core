@@ -242,7 +242,7 @@ class Pman_Core_Images extends Pman
             foreach($imatch[1] as $i=>$key) {
                 $attr[$key] = $imatch[2][$i];
             }
-            if (!isset($attr['src'])) {
+            if (!isset($attr['src']) || 0 !== strpos($attr['src'], $baseURL) {
                 continue;
             }
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['src'] );
