@@ -1,7 +1,7 @@
 <?php
 
 // include to make the tests run..
-$_test_dir  = dirname(__FILE__).'/../../';
+$_test_dir  = dirname(__FILE__).'/../../../';
 
 ini_set('include_path', 
             $_test_dir  . ':' . 
