@@ -12,4 +12,7 @@ ini_set('include_path',
 
 define('DB_DATAOBJECT_NO_OVERLOAD', true);
 
+require_once 'HTML/FlexyFramework/Page.php';
+
+require_once 'DB/DataObject.php';
 
