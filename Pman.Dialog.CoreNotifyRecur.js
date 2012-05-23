@@ -246,7 +246,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         click : function()
                                         {
                                              _this.grid.stopEditing();
-                                             var s = _this.grid.selModel.getSelectedCell()
+                                             var s = _this.grid.selModel.getSelectedCell();
                                              if (!s) {
                                                 Roo.MessageBox.alert("Error", "Select row");
                                                 return;
@@ -256,7 +256,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                                 url : baseURL + '/Roo/core_notify_recur',
                                                 method : 'POST',
                                                 params : {
-                                                    _delete : _this.grid.ds.getAt(s[0]).data.id,
+                                                    _delete : _this.grid.ds.getAt(s[0]).data.id
                                                 }, 
                                                 success : function() {
                                                     _this.grid.ds.load({});

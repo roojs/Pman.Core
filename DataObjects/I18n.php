@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $list =  $this->availableCodes($ltype);
         
-        
+        //print_r($list); 
         foreach($list as $lkey) {
             // skip ones we know we have done...
             if (in_array($lkey, $complete)) {
