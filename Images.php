@@ -318,7 +318,6 @@ class Pman_Core_Images extends Pman
             // make sure it's available..
             $fc->convert($img->mimetype, $thumbsize);
             
-            }
             
         } else {
             $type = array('Images')
