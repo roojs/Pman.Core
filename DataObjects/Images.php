@@ -441,7 +441,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc = new File_Convert($this->getStoreName(), $this->mimetype);
         return $fc;
         
-        
     }
     /**
      *
