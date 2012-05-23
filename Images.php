@@ -228,6 +228,7 @@ class Pman_Core_Images extends Pman
         if (!isset($ff->Pman_Image['public_baseURL'])) {
             return $html;
         }
+        $baseURL = $ff->Pman_Image['public_baseURL'];
         
         preg_match_all('/<img\w[^>]+>/i',$html, $result); 
 
