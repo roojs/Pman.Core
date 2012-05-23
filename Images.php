@@ -223,6 +223,12 @@ class Pman_Core_Images extends Pman
     
     static function replaceImgURLS($html, $baseURL)
     {
+        
+        $ff = HTML_FlexyFramework::get();
+        if (!isset($ff->Pman_Image['public_baseURL'])) {
+            return $html;
+        }
+        
         preg_match_all('/<img\w[^>]+>/i',$html, $result); 
 
         $matches = array_unique($result[0]);
