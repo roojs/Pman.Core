@@ -296,7 +296,7 @@ class Pman_Core_Images extends Pman
             $thumbsize = $type[2];
             $provider = '/Images/Thumb';
         } else {
-            $provider = $umatch[1];
+            $provider = '/'.$umatch[1];
         }
         
         if (!empty($attr['width']) || !empty($attr['height']) )
