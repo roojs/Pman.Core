@@ -348,7 +348,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
       //  echo '<PRE>';print_r($req);exit;
         $ret= $this->toArray();
       
-      
+        static $ff = false;
+        if (!$ff) {
+            $ff = HTML_FlexyFramework::get();
+        }
         if (!empty($req['query']['imagesize'])) {
              $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
             
