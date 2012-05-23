@@ -265,7 +265,7 @@ class Pman_Core_Images extends Pman
                 continue;
             }
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['href'] );
-        
+        }
         
         return $html;
     }
