@@ -237,12 +237,3 @@ class Pman_Core_Images extends Pman
     }
     
 }
-
-// test...
-
-Pman_Core_Images::replaceImg('
-        <img src="http://test.php/Core/Images/Thumb/200x40/34/test.png">
-        <img src="http://test.php/Images/34/test.png">
-        <img src="http://test.php/Images/Download/34/test.png">        
-        
-');
