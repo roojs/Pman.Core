@@ -2,7 +2,7 @@
 
 // include to make the tests run..
 // this needs fixing - probably needs to point to a test framework..
-$_test_dir  = '/home/gitlive/web.roojsolutions/';
+$_test_dir  = '/var/www/web.roojsolutions/';
 
 ini_set('include_path', 
             $_test_dir  . ':' . 
