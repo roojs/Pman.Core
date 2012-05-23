@@ -209,7 +209,7 @@ class Pman_Core_Images extends Pman
     
     
     
-    static function replaceImg($html, $baseURL)
+    static function replaceImgURLS($html, $baseURL)
     {
         preg_match_all('/<img[^>]+>/i',$html, $result); 
 
@@ -228,6 +228,10 @@ class Pman_Core_Images extends Pman
             }
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['src'] );
         }
+        
+        
+        
+        
         return $html;
     }
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_url) 
