@@ -230,7 +230,7 @@ class Pman_Core_Images extends Pman
         }
     }
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_url) 
-            
+    {
         
         //print_R($attr);
         // see if it's an image url..
