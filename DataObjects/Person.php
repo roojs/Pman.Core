@@ -216,7 +216,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             &&
             $u->get('email', $_SERVER['PHP_AUTH_USER'])
             &&
-            
+            $u->checkPassword($_SERVER['PHP_AUTH_PW'])
+           ) {
+            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
+            return true; 
             
             
         }
