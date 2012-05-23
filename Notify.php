@@ -90,8 +90,10 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['send-to'])) {
             $this->send_to = $opts['send-to'];
         }
+        
         $w = DB_DataObject::factory('core_notify_recur');
         $w->generateNotifications();
+        
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         
