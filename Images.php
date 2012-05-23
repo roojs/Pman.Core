@@ -211,7 +211,7 @@ class Pman_Core_Images extends Pman
     
     static function replaceImgURLS($html, $baseURL)
     {
-        preg_match_all('/<img[^>]+>/i',$html, $result); 
+        preg_match_all('/<img\w[^>]+>/i',$html, $result); 
 
         $matches = array_unique($result[0]);
         foreach($matches as $img) {
@@ -229,7 +229,23 @@ class Pman_Core_Images extends Pman
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['src'] );
         }
         
-        
+        $result = array();
+        preg_match_all('/<a\w[^>]+>/i',$html, $result); 
+
+        $matches = array_unique($result[0]);
+        foreach($matches as $img) {
+            $imatch = array();
+            preg_match_all('/(width|height|src)="([^"]*)"/i',$img, $imatch);
+            // build a keymap
+            $attr =  array();
+            
+            foreach($imatch[1] as $i=>$key) {
+                $attr[$key] = $imatch[2][$i];
+            }
+            if (!isset($attr['src'])) {
+                continue;
+            }
+          
         
         
         return $html;
