@@ -206,7 +206,18 @@ class Pman_Core_Images extends Pman
             die("invalid scale - ".$this->size);
         }
     }
-    
+    /**
+     * replace image urls
+     *
+     * The idea of this code was to replace urls for images when you have an admin
+     * and a distribution page. with different urls.
+     *
+     * it may be usefull later if things like embedded images in emails. but
+     * I think it's proably better not to use this.
+     *
+     *
+     *
+     */
     
     
     static function replaceImgURLS($html, $baseURL)
