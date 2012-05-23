@@ -141,5 +141,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
     }
     
+    function generateNotifications(){
+        //$this->notifytimes(2);
+        print_r($this->notifytimes(2));
+    }
     
 }
