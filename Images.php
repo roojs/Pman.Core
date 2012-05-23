@@ -231,7 +231,7 @@ class Pman_Core_Images extends Pman
         var_dump($ff->Pman_Images['public_baseURL']);
         $baseURL = $ff->Pman_Images['public_baseURL'];
         
-        preg_match_all('/<img\w[^>]+>/i',$html, $result); 
+        preg_match_all('/<img\w+[^>]+>/i',$html, $result); 
         print_r($result);
         $matches = array_unique($result[0]);
         foreach($matches as $img) {
@@ -250,7 +250,7 @@ class Pman_Core_Images extends Pman
         }
         
         $result = array();
-        preg_match_all('/<a\w[^>]+>/i',$html, $result); 
+        preg_match_all('/<a\w+[^>]+>/i',$html, $result); 
 
         $matches = array_unique($result[0]);
         foreach($matches as $img) {
