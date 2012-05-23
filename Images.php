@@ -215,7 +215,8 @@ class Pman_Core_Images extends Pman
      * it may be usefull later if things like embedded images in emails. but
      * I think it's proably better not to use this.
      *
-     *
+     * The key problem being how to determine if we are replacing 'our' images or some external one..
+     * 
      *
      */
     
