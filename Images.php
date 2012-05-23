@@ -216,7 +216,7 @@ class Pman_Core_Images extends Pman
         $matches = array_unique($result[0]);
         foreach($matches as $img) {
             $imatch = array();
-            preg_match_all('/(width|height|src)=("[^"]*")/i',$img, $imatch);
+            preg_match_all('/(width|height|src)="([^"]*)"/i',$img, $imatch);
             // build a keymap
             $attr =  array();
             
