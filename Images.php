@@ -300,28 +300,28 @@ class Pman_Core_Images extends Pman
         if (!empty($attr['width']) || !empty($attr['height']) )
         {
             // no support for %...
-            $new_thumbsize =
+            $thumbsize =
                 (empty($attr['width']) ? '0' : $attr['width'] * 1) .
                 'x' .
                 (empty($attr['height']) ? '0' : $attr['height'] * 1);
             
             
         }
-        if ($new_thumbsize != $thumbsize) {
+        
+        if ($thumbsize !== -1) {
             // change in size..
             // need to regenerate it..
-            if (!$new_thumbsize) {
-                $type = array('Image');
-            } else {
+            
+            $type = array('Images', 'Thumb', $thumbsize);
                 
-                $type = array('Image', 'Thumb', $new_thumbsize);
-                
-                $fc = $img->toFileConvert();
-                // make sure it's available..
-                $fc->convert($img->mimetype, $new_thumbsize);
-                
+            $fc = $img->toFileConvert();
+            // make sure it's available..
+            $fc->convert($img->mimetype, $thumbsize);
+            
             }
             
+        } else {
+            $type = array('Images')
         }
         
         
