@@ -238,7 +238,16 @@ class Pman_Core_Images extends Pman
             if (count($type) > 2 && $type[1] == 'Thumb') {
                 $thumbsize = $type[2];
             }
-            if ($attr)
+            if (!empty($attr['width']) || !empty($attr['height']) )
+            {
+                // no support for %...
+                $thumbsize =
+                    (empty($attr['width']) ? '0' : $attr['width'] * 1) .
+                    'x' .
+                    (empty($attr['height']) ? '0' : $attr['height'] * 1);
+                
+                
+            }
             
             
             
