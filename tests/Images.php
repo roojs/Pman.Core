@@ -2,7 +2,7 @@
 
 require_once 'Tests.php';
 
-require_once 'Pman/Images/Images.php';
+require_once 'Pman/Core/Images.php';
 
 // test...
 echo '<PRE>';
