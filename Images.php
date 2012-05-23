@@ -235,9 +235,12 @@ class Pman_Core_Images extends Pman
             $id = $umatch[2];
             $type = explode('/', $umatch[1]);
             $thumbsize = false;
+            $new_thumbsize = false;
+            
             if (count($type) > 2 && $type[1] == 'Thumb') {
                 $thumbsize = $type[2];
             }
+            
             if (!empty($attr['width']) || !empty($attr['height']) )
             {
                 // no support for %...
