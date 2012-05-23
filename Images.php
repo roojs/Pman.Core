@@ -233,9 +233,9 @@ class Pman_Core_Images extends Pman
                 continue;
             }
             $id = $umatch[2];
-            $img = DB_DataObject::factory('Images');
-            if (!$img->get($id)) {
-                return false;
+            $imgObj = DB_DataObject::factory('Images');
+            if (!$imgObj->get($id)) {
+                continue;
             }
             $type = explode('/', $umatch[1]);
             $thumbsize = false;
@@ -263,7 +263,7 @@ class Pman_Core_Images extends Pman
                 } else {
                     $type = array('Image', 'Thumb', $new_thumbsize);
                     
-                    
+                    $fc = $img->toConvert
                     
                     
                 }
