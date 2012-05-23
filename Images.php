@@ -272,7 +272,7 @@ class Pman_Core_Images extends Pman
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
     {
         
-        //print_R($attr);
+        print_R($attr);
         // see if it's an image url..
         // Images/{ID}/fullname.xxxx
         // Images/Thumb/200/{ID}/fullname.xxxx
