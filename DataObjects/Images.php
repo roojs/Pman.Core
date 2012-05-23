@@ -352,6 +352,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!$ff) {
             $ff = HTML_FlexyFramework::get();
         }
+        
+        $ret['public_baseURL'] = iseet($ff->Pman_Image['public_baseURL']) ? $ff->Pman_Image['public_baseURL'] : '';
+        
         if (!empty($req['query']['imagesize'])) {
              $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
             
