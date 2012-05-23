@@ -267,9 +267,9 @@ class Pman_Core_Images extends Pman
                     
                     $type = array('Image', 'Thumb', $new_thumbsize);
                     
-                    $fc = $img->toFileConvert();
+                    $fc = $imgObj->toFileConvert();
                     // make sure it's available..
-                    $fc = $img->convert($img->mimetype, $new_thumbsize);
+                    $fc = $imgObj->convert($img->mimetype, $new_thumbsize);
                     
                 }
                 
@@ -280,7 +280,7 @@ class Pman_Core_Images extends Pman
             $old_src_tag = 'src="'. $attr[src] . '"';
             $new_img = str_replace(
                 'src="'. $attr[src] . '"',
-                'src="'. htmlspecialchars($img->URL($new_thumbsize , $provider, $baseURL)) . '"',
+                'src="'. htmlspecialchars($imgObj->URL($new_thumbsize , $provider, $baseURL)) . '"',
                 $img
             );
             
