@@ -227,7 +227,7 @@ class Pman_Core_Images extends Pman
             // Images/Thumb/200/{ID}/fullname.xxxx
             // Images/Download/{ID}/fullname.xxxx
             $umatch  = false;
-            if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $umatch))  {
+            if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr['src'], $umatch))  {
                 continue;
             }
             // make an image url..
