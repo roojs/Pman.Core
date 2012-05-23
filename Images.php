@@ -221,7 +221,7 @@ class Pman_Core_Images extends Pman
      */
     
     
-    static function replaceImgURLS($html)
+    static function replaceImageURLS($html)
     {
         
         $ff = HTML_FlexyFramework::get();
