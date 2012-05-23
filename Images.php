@@ -219,9 +219,11 @@ class Pman_Core_Images extends Pman
             preg_match_all('/(width|height|src)=("[^"]*")/i',$img, $imatch);
             // build a keymap
             $attr =  array();
+            
             foreach($imatch[1] as $i=>$key) {
-                $attr[$key] = $imatch[2][$key];
+                $attr[$key] = $imatch[2][$i];
             }
+            print_R($attr);
             // see if it's an image url..
             // Images/{ID}/fullname.xxxx
             // Images/Thumb/200/{ID}/fullname.xxxx
