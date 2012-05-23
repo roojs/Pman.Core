@@ -269,7 +269,7 @@ class Pman_Core_Images extends Pman
                     
                     $fc = $imgObj->toFileConvert();
                     // make sure it's available..
-                    $fc->convert($img->mimetype, $new_thumbsize);
+                    $fc->convert($imgObj->mimetype, $new_thumbsize);
                     
                 }
                 
