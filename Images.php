@@ -209,7 +209,7 @@ class Pman_Core_Images extends Pman
     
     
     
-    function replaceImg($html)
+    function replaceImg($html, $baseURL)
     {
         preg_match_all('/<img[^>]+>/i',$html, $result); 
 
