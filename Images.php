@@ -288,8 +288,7 @@ class Pman_Core_Images extends Pman
         }
         $type = explode('/', $umatch[1]);
         $thumbsize = -1;
-        $new_thumbsize = -1;
-        
+         
         if (count($type) > 2 && $type[1] == 'Thumb') {
             $thumbsize = $type[2];
             $provider = 'Images/Thumb';
@@ -328,7 +327,7 @@ class Pman_Core_Images extends Pman
         
         $new_tag = str_replace(
             'src="'. $attr['src'] . '"',
-            'src="'. htmlspecialchars($img->URL($new_thumbsize , $provider, $baseURL)) . '"',
+            'src="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . '"',
             $tag
         );
         
