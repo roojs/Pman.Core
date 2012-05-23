@@ -277,6 +277,8 @@ class Pman_Core_Images extends Pman
         // Images/{ID}/fullname.xxxx
         // Images/Thumb/200/{ID}/fullname.xxxx
         // Images/Download/{ID}/fullname.xxxx
+        
+        $attr_url = $attr[$attr_name];
         $umatch  = false;
         if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
             continue;
@@ -326,8 +328,8 @@ class Pman_Core_Images extends Pman
         // finally replace the original TAG with the new version..
         
         $new_tag = str_replace(
-            'src="'. $attr['src'] . '"',
-            'src="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . '"',
+            $attr_name. '="'. $attr['src'] . '"',
+            $attr_name .'="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . '"',
             $tag
         );
         
