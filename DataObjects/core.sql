@@ -393,7 +393,6 @@ CREATE TABLE core_notify_recur (
 ALTER TABLE  core_notify_recur  ADD COLUMN person_id int(11)  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN dtstart datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN dtend datetime  NOT NULL;
-
 ALTER TABLE  core_notify_recur  ADD COLUMN max_applied_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN updated_dt datetime  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN last_applied_dt datetime  NOT NULL;
@@ -402,6 +401,12 @@ ALTER TABLE  core_notify_recur  ADD COLUMN tz varchar(64)  NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq varchar(8) NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_day text NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_hour text  NOT NULL;
+
+ALTER TABLE  core_notify_recur  ADD COLUMN onid int(11)  not_null default 0;
+ALTER TABLE  core_notify_recur  ADD COLUMN ontable varchar(128)  not_null default '';
+ALTER TABLE  core_notify_recur  ADD COLUMN last_event_id  int(11)  default 0;
+ALTER TABLE  core_notify_recur  ADD COLUMN method varchar(128) default '';     
+
 
 ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
 

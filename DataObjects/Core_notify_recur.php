@@ -12,15 +12,26 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $__table = 'core_notify_recur';    // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $person_id;                       // int(11)  not_null
+    
     public $dtstart;                         // datetime(19)  not_null binary
     public $dtend;                           // datetime(19)  not_null binary
     public $tz;                              // real(6)  not_null
+    
     public $updated_dt;                      // datetime(19)  not_null binary
+    
     public $last_applied_dt;                 // datetime(19)  not_null binary
-
+//    public $max_applied_dtl
     public $freq; //  varchar(8) NOT NULL;
     public $freq_day; // text NOT NULL;
-    public $freq_hour; // text 
+    public $freq_hour; // text
+    
+    public $onid;                            // int(11)  not_null
+    public $ontable;                         // string(128)  not_null
+    public $last_event_id;                   // int(11)  
+    public $method;                         // string(128)  not_null
+    
+    
+    
     ###END_AUTOCODE
     
     
