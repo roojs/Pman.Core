@@ -151,7 +151,7 @@ class Pman_Core_Images extends Pman
     
         }
         
-        $x = new File_Convert($img->getStoreName(), $img->mimetype);
+        $x = $img->toFileConvert();
         if (empty($this->as_mimetype)) {
             $this->as_mimetype  = $img->mimetype;
         }
@@ -264,7 +264,7 @@ class Pman_Core_Images extends Pman
                     $type = array('Image', 'Thumb', $new_thumbsize);
                     
                     $fc = $img->toFileConvert();
-                    
+                    $fc = $img->
                     
                     
                 }
