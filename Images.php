@@ -238,11 +238,14 @@ class Pman_Core_Images extends Pman
                 continue;
             }
             $type = explode('/', $umatch[1]);
-            $thumbsize = false;
-            $new_thumbsize = false;
+            $thumbsize = -1;
+            $new_thumbsize = -1;
             
             if (count($type) > 2 && $type[1] == 'Thumb') {
                 $thumbsize = $type[2];
+                $provider = 'Images/Thumb';
+            } else {
+                $provider = $type;
             }
             
             if (!empty($attr['width']) || !empty($attr['height']) )
@@ -261,6 +264,7 @@ class Pman_Core_Images extends Pman
                 if (!$new_thumbsize) {
                     $type = array('Image');
                 } else {
+                    
                     $type = array('Image', 'Thumb', $new_thumbsize);
                     
                     $fc = $img->toFileConvert();
@@ -270,6 +274,15 @@ class Pman_Core_Images extends Pman
                 }
                 
             }
+            
+            
+            // finally replace the original TAG with the new version..
+            $old_src_tag = 'src="'. $attr[src] . '"';
+            $img = str_replace(
+                'src="'. $attr[src] . '"',
+                $img->URL($new_thumbsize , $provider, $baseURL=false)
+                'src="'. $baseURL + implode('/', $type) . '/' . urlencode($img->filename)"', 
+            
             
             
             
