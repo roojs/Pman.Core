@@ -285,7 +285,7 @@ class Pman_Core_Images extends Pman
             );
             
             
-            $html = str_replace($img, $new_img);
+            $html = str_replace($img, $new_img, $html);
             
             
             // make an image url..
