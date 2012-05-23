@@ -263,7 +263,8 @@ class Pman_Core_Images extends Pman
                 } else {
                     $type = array('Image', 'Thumb', $new_thumbsize);
                     
-                    $fc = $img->toConvert
+                    $fc = $img->toFileConvert();
+                    
                     
                     
                 }
