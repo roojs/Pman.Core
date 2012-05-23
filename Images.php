@@ -306,7 +306,7 @@ class Pman_Core_Images extends Pman
                 (empty($attr['width']) ? '0' : $attr['width'] * 1) .
                 'x' .
                 (empty($attr['height']) ? '0' : $attr['height'] * 1);
-            
+             $provider = '/Images/Thumb';
             
         }
         
