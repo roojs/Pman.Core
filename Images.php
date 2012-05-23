@@ -279,7 +279,7 @@ class Pman_Core_Images extends Pman
             // finally replace the original TAG with the new version..
             $old_src_tag = 'src="'. $attr[src] . '"';
             $new_img = str_replace(
-                'src="'. $attr[src] . '"',
+                'src="'. $attr['src'] . '"',
                 'src="'. htmlspecialchars($imgObj->URL($new_thumbsize , $provider, $baseURL)) . '"',
                 $img
             );
