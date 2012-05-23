@@ -228,11 +228,11 @@ class Pman_Core_Images extends Pman
         if (!isset($ff->Pman_Images['public_baseURL'])) {
             return $html;
         }
-        var_dump($ff->Pman_Images['public_baseURL']);
+        //var_dump($ff->Pman_Images['public_baseURL']);
         $baseURL = $ff->Pman_Images['public_baseURL'];
         
         preg_match_all('/<img\s+[^>]+>/i',$html, $result); 
-        print_r($result);
+        //print_r($result);
         $matches = array_unique($result[0]);
         foreach($matches as $img) {
             $imatch = array();
@@ -273,7 +273,7 @@ class Pman_Core_Images extends Pman
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
     {
         
-        print_R($attr);
+        //print_R($attr);
         // see if it's an image url..
         // Images/{ID}/fullname.xxxx
         // Images/Thumb/200/{ID}/fullname.xxxx
