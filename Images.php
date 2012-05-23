@@ -294,7 +294,7 @@ class Pman_Core_Images extends Pman
          
         if (count($type) > 2 && $type[1] == 'Thumb') {
             $thumbsize = $type[2];
-            $provider = 'Images/Thumb';
+            $provider = '/Images/Thumb';
         } else {
             $provider = $umatch[1];
         }
