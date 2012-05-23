@@ -320,7 +320,7 @@ class Pman_Core_Images extends Pman
             
             
         } else {
-            $type = array('Images')
+            $provider = $provider == 'Images/Thumb' ? 'Images' : $provider; 
         }
         
         
