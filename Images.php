@@ -245,7 +245,7 @@ class Pman_Core_Images extends Pman
             if (!isset($attr['src']) || 0 !== strpos($attr['src'], $baseURL)) {
                 continue;
             }
-            $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['src'] );
+            $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
         }
         
         $result = array();
@@ -264,12 +264,12 @@ class Pman_Core_Images extends Pman
             if (!isset($attr['href']) || 0 !== strpos($attr['href'], $baseURL)) { 
                 continue;
             }
-            $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['href'] );
+            $html = self::replaceImgUrl($html, $baseURL, $img, $attr, 'href' );
         }
         
         return $html;
     }
-    static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_url) 
+    static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
     {
         
         //print_R($attr);
