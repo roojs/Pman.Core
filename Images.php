@@ -232,9 +232,21 @@ class Pman_Core_Images extends Pman
             if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr['src'], $umatch))  {
                 continue;
             }
+            $id = $umatch[2];
+            $type = explode('/', $umatch[1]);
+            $thumbsize = false;
+            if (count($type) > 2 && $type[1] == 'Thumb') {
+                $thumbsize = $type[2];
+            }
+            if ($attr)
+            
+            
+            
+            
             // make an image url..
             print_R($umatch);exit;
-        }    
+        }
+        return $html;
         
     }
     
