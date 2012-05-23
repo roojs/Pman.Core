@@ -13,7 +13,7 @@ class Pman_Core_tests_Images extends Pman
                 <img src="http://test.php/Images/34/test.png" width="100">
                 <a href="http://test.php/Images/Download/34/test.png">test</a>
                 
-        ');
+        ', 'http://roojs.com/index.php/');
         echo htmlspecialchars($ret);
         
      }
