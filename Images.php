@@ -243,7 +243,7 @@ class Pman_Core_Images extends Pman
         }
         $id = $umatch[2];
         $img = DB_DataObject::factory('Images');
-        if (!$imgObj->get($id)) {
+        if (!$img->get($id)) {
             return $html;
         }
         $type = explode('/', $umatch[1]);
@@ -289,7 +289,7 @@ class Pman_Core_Images extends Pman
         
         $new_tag = str_replace(
             'src="'. $attr['src'] . '"',
-            'src="'. htmlspecialchars($imgObj->URL($new_thumbsize , $provider, $baseURL)) . '"',
+            'src="'. htmlspecialchars($img->URL($new_thumbsize , $provider, $baseURL)) . '"',
             $tag
         );
         
