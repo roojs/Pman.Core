@@ -2,7 +2,7 @@
 
 require_once 'Pman.php';
 
-class Pman_Core_test_Images extends Pman
+class Pman_Core_tests_Images extends Pman
 {
      function get() {
         // test...
