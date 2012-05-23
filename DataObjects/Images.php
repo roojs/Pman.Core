@@ -428,6 +428,21 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
+    
+    /**
+     * to Fileconvert object..
+     *
+     *
+     *
+     */
+    function toFileConvert()
+    {
+        require_once 'File/Convert.php';
+        $fc = new File_Convert($this->getStoreName(), $this->mimetype);
+        return $fc;
+        
+        
+    }
     /**
      *
      *
