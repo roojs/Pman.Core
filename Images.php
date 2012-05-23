@@ -328,7 +328,7 @@ class Pman_Core_Images extends Pman
         // finally replace the original TAG with the new version..
         
         $new_tag = str_replace(
-            $attr_name. '="'. $attr['src'] . '"',
+            $attr_name. '="'. $attr_url . '"',
             $attr_name .'="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . '"',
             $tag
         );
