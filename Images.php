@@ -254,7 +254,15 @@ class Pman_Core_Images extends Pman
             if ($new_thumbsize != $thumbsize) {
                 // change in size..
                 // need to regenerate it..
-                
+                if (!$new_thumbsize) {
+                    $type = array('Image');
+                } else {
+                    $type = array('Image', 'Thumb', $new_thumbsize);
+                    
+                    
+                    
+                    
+                }
                 
                 
             }
