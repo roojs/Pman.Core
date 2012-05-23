@@ -241,14 +241,20 @@ class Pman_Core_Images extends Pman
             if (!empty($attr['width']) || !empty($attr['height']) )
             {
                 // no support for %...
-                $thumbsize =
+                $new_thumbsize =
                     (empty($attr['width']) ? '0' : $attr['width'] * 1) .
                     'x' .
                     (empty($attr['height']) ? '0' : $attr['height'] * 1);
                 
                 
             }
-            
+            if ($new_thumbsize != $thumbsize) {
+                // change in size..
+                // need to regenerate it..
+                
+                
+                
+            }
             
             
             
