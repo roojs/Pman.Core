@@ -223,76 +223,79 @@ class Pman_Core_Images extends Pman
             foreach($imatch[1] as $i=>$key) {
                 $attr[$key] = $imatch[2][$i];
             }
-            //print_R($attr);
-            // see if it's an image url..
-            // Images/{ID}/fullname.xxxx
-            // Images/Thumb/200/{ID}/fullname.xxxx
-            // Images/Download/{ID}/fullname.xxxx
-            $umatch  = false;
-            if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr['src'], $umatch))  {
+            if (!isset($attr['src']) {
                 continue;
             }
-            $id = $umatch[2];
-            $imgObj = DB_DataObject::factory('Images');
-            if (!$imgObj->get($id)) {
-                continue;
-            }
-            $type = explode('/', $umatch[1]);
-            $thumbsize = -1;
-            $new_thumbsize = -1;
+            $html = self::replaceImgUrl($html, $baseURL, $img, $attr, $attr['src'] );
+        }
+    }
+    static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_url) 
             
-            if (count($type) > 2 && $type[1] == 'Thumb') {
-                $thumbsize = $type[2];
-                $provider = 'Images/Thumb';
-            } else {
-                $provider = $umatch[1];
-            }
+        
+        //print_R($attr);
+        // see if it's an image url..
+        // Images/{ID}/fullname.xxxx
+        // Images/Thumb/200/{ID}/fullname.xxxx
+        // Images/Download/{ID}/fullname.xxxx
+        $umatch  = false;
+        if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
+            continue;
+        }
+        $id = $umatch[2];
+        $img = DB_DataObject::factory('Images');
+        if (!$imgObj->get($id)) {
+            return $html;
+        }
+        $type = explode('/', $umatch[1]);
+        $thumbsize = -1;
+        $new_thumbsize = -1;
+        
+        if (count($type) > 2 && $type[1] == 'Thumb') {
+            $thumbsize = $type[2];
+            $provider = 'Images/Thumb';
+        } else {
+            $provider = $umatch[1];
+        }
+        
+        if (!empty($attr['width']) || !empty($attr['height']) )
+        {
+            // no support for %...
+            $new_thumbsize =
+                (empty($attr['width']) ? '0' : $attr['width'] * 1) .
+                'x' .
+                (empty($attr['height']) ? '0' : $attr['height'] * 1);
             
-            if (!empty($attr['width']) || !empty($attr['height']) )
-            {
-                // no support for %...
-                $new_thumbsize =
-                    (empty($attr['width']) ? '0' : $attr['width'] * 1) .
-                    'x' .
-                    (empty($attr['height']) ? '0' : $attr['height'] * 1);
-                
-                
-            }
-            if ($new_thumbsize != $thumbsize) {
-                // change in size..
-                // need to regenerate it..
-                if (!$new_thumbsize) {
-                    $type = array('Image');
-                } else {
-                    
-                    $type = array('Image', 'Thumb', $new_thumbsize);
-                    
-                    $fc = $imgObj->toFileConvert();
-                    // make sure it's available..
-                    $fc->convert($imgObj->mimetype, $new_thumbsize);
-                    
-                }
-                
-            }
-            
-            
-            // finally replace the original TAG with the new version..
-            
-            $new_img = str_replace(
-                'src="'. $attr['src'] . '"',
-                'src="'. htmlspecialchars($imgObj->URL($new_thumbsize , $provider, $baseURL)) . '"',
-                $img
-            );
-            
-            
-            $html = str_replace($img, $new_img, $html);
-            
-            
-            // make an image url..
             
         }
-        return $html;
+        if ($new_thumbsize != $thumbsize) {
+            // change in size..
+            // need to regenerate it..
+            if (!$new_thumbsize) {
+                $type = array('Image');
+            } else {
+                
+                $type = array('Image', 'Thumb', $new_thumbsize);
+                
+                $fc = $img->toFileConvert();
+                // make sure it's available..
+                $fc->convert($img->mimetype, $new_thumbsize);
+                
+            }
+            
+        }
         
+        
+        // finally replace the original TAG with the new version..
+        
+        $new_tag = str_replace(
+            'src="'. $attr['src'] . '"',
+            'src="'. htmlspecialchars($imgObj->URL($new_thumbsize , $provider, $baseURL)) . '"',
+            $tag
+        );
+        
+        
+        return str_replace($tag, $new_tag, $html);
+         
     }
     
 }
