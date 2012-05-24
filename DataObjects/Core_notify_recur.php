@@ -159,7 +159,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         foreach($ar as $a) {
             $date = new DateTime($a, new DateTimeZone($this->tz));
             $ret[] = $date;
-            print_r($date);
+            print_r($date->date);
         }
         return $ret;
         
