@@ -156,24 +156,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         $ret = array();
         
-//        $tz = explode($this->tz, ":");
-//        if ($tz < 0) {
-//            
-//        }
-//        $append = ($tz[0] < 0) ? " - " : " + ";
-//        
-//        $append .= abs($tz[0]) . " HOURS";
-//        if (!empty($tz[1])) {
-//            $append .= $tz[1] . " MINUTES";
-//        }
-        
         foreach($ar as $a) {
             $date = new DateTime($a, new DateTimeZone($this->tz));
             $ret[] = $date;
-            //$ret[] = date('Y-m-d H:i', strtotime($a . $append));
         }
         return $ret;
-        
         
     }
     
