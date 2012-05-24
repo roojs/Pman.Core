@@ -170,7 +170,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         foreach($ar as $a) {
             $date = new DateTime($a);
             $date->setTimezone(new DateTimeZone($this->tz));
-            $ret[] = $date;
+            $ret[] = $date->format('Y-m-d H:i');
             //$ret[] = date('Y-m-d H:i', strtotime($a . $append));
         }
         return $ret;
