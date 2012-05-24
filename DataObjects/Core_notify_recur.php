@@ -57,7 +57,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         // make a list of datetimes when notifies need to be generated for.
         // it starts 24 hours ago.. or when dtstart
-        
+        print_r($this);
         list($start, $end) = $this->notifytimesRange($advance);
         
         if (strtotime($start) > strtotime($end)) {
