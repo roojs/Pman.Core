@@ -7,6 +7,7 @@
  *
 CREATE TABLE  core_notify  (
   `id` int(11)  NOT NULL AUTO_INCREMENT,
+  `recur_id` INT(11) NOT NULL;
   `act_when` DATETIME NOT NULL,
   `onid` int(11)  NOT NULL DEFAULT 0,
   `ontable` varchar(128)  NOT NULL DEFAULT '',
