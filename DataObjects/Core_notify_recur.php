@@ -48,7 +48,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     
     
     function notifytimesRange($advance) {
-        error_log($advance);
+        error_log($this->dtstart);
+        error_log($this->dtend);
         $this->start = date('Y-m-d H:i:s', max(strtotime("NOW - 24 HOURS"), strtotime($this->dtstart)));
         $this->end  = date('Y-m-d H:i:s', min(strtotime("NOW  + $advance DAYS"), strtotime($this->dtend)));
         error_log($this->start);
