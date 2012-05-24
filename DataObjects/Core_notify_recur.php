@@ -91,8 +91,12 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $w->find();
         
         while($w->fetch()){
-            $notifytime = $w->notifyTimes(2);
-            var_dump($notifytime);
+            $notifytimes = $w->notifyTimes(2);
+            var_dump($notifytimes);
+        }
+        foreach($notifytimes as $newTimes){
+            $newSearch = DB_DataObject::factory('core_notify');
+            
         }
     }
     
