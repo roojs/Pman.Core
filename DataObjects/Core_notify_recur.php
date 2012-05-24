@@ -171,7 +171,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             //$this->dtstart = $w->dtstart;
             //$this->dtend = $w->dtend;
             //$this = clone($w);
-            //$this->notifytimes(2);
+            $w->notifytimes(2);
             error_log($this->dtstart);
         }
 //        foreach($test as $item){
