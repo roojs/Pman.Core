@@ -347,6 +347,7 @@ CREATE TABLE  core_notify  (
   PRIMARY KEY (id)
 );
 
+ALTER TABLE core_notify ADD COLUMN recur_id INT(11) NOT NULL AFTER `id`;
 ALTER TABLE core_notify ADD COLUMN   act_when DATETIME ;
 ALTER TABLE core_notify ADD COLUMN    act_start DATETIME ;
 ALTER TABLE core_notify ADD COLUMN  onid int(11)  NOT NULL DEFAULT 0;

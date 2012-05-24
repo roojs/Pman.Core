@@ -57,154 +57,58 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         // make a list of datetimes when notifies need to be generated for.
         // it starts 24 hours ago.. or when dtstart
-        //print_r($this);
+        
         list($start, $end) = $this->notifytimesRange($advance);
         
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
         }
-        print_r($this);
         $ret = array();
-        
         $hours = array_unique(json_decode($this->freq_hour));
-        
         $days = json_decode($this->freq_day);
-        //print_r($days);
         foreach($days as $d){
             foreach($hours as $h){
                 $ret[] = date('Y-m-d', strtotime($d)) . ' ' . $h;
             }
         }
         return $this->applyTimezoneToList($ret);
-        //print_r($ret);
-//        for ($day = date('Y-m-d', strtotime($start)); strtotime($day) < strtotime($end); $day = date('Y-m-d', strtotime("$day + 1 DAY"))){
-//                    print_r($day);
-//            // skip days not accounted for..
-//            if (!in_array(date('N', strtotime($day)), $days)) {
-//                continue;
-//            }
-//            foreach($hours as $h) {
-//                $hh = strpos($h,":") > 0 ? $h : "$H:00";
-//                $ret[] = $day . ' ' . $hh;
-//            }
-//        }
-//        return $this->applyTimezoneToList($ret);
-        
-//        if($this->freq_hour){
-//            // happens every day based on freq_hour.
-//            $hours = json_decode($this->freq_hour);
-//            for ($day = date('Y-m-d', strtotime($start));
-//                    strtotime($day) < strtotime($end);
-//                    $day = date('Y-m-d', strtotime("$day + 1 DAY")))
-//            {
-//                foreach($hours as $h) {
-//                    $hh = strpos($h,":") > 0 ? $h : "$H:00";
-//                    $ret[] = $day . ' ' . $hh;
-//                }
-//            }
-//            return $this->applyTimezoneToList($ret);
-//        }
-//        switch($this->freq) {
-//            case 'HOURLY':
-//                // happens every day based on freq_hour.
-//                $hours = explode(',', $this->freq_hour);
-//                for ($day = date('Y-m-d', strtotime($start));
-//                        strtotime($day) < strtotime($end);
-//                        $day = date('Y-m-d', strtotime("$day + 1 DAY")))
-//                {
-//                    foreach($hours as $h) {
-//                        $hh = strpos($h,":") > 0 ? $h : "$H:00";
-//                        $ret[] = $day . ' ' . $hh;
-//                    }
-//                }
-//                return $this->applyTimezoneToList($ret);
-//                
-//            case 'DAILY':
-//                $hours = explode(',', $this->freq_hour);
-//                if (!$hours) {
-//                    $hours = array(date('H:i', strtotime($this->dtstart)));
-//                }
-//                
-//                $days = explode(','. $this->freq_day);
-//                
-//                for ($day = date('Y-m-d', strtotime($start));
-//                        strtotime($day) < strtotime($end);
-//                        $day = date('Y-m-d', strtotime("$day + 1 DAY")))
-//                {
-//                    // skip days not accounted for..
-//                    if (!in_array(date('N', strtotime($day)), $days)) {
-//                        continue;
-//                    }
-//                    
-//                    foreach($hours as $h) {
-//                        $hh = strpos($h,":") > 0 ? $h : "$H:00";
-//                        $ret[] = $day . ' ' . $hh;
-//                    }
-//                }
-//                
-//                return $this->applyTimezoneToList($ret);
-//                
-//                
-//            case 'MONTHLY': // ignored..
-//            case 'YEARLY': // ignored..
-//                break;
-//            
-//        }
-         
     }
     function applyTimezoneToList($ar)
     {
         $ret = array();
-        
         foreach($ar as $a) {
-            $date = new DateTime($a, new DateTimeZone($this->tz));
-            $ret[] = $date;
-            //print_r($date->date);
+            $date = new DateTime($a);
+            $date->setTimezone(new DateTimeZone($this->tz));
+            $ret[] = $date->format('Y-m-d H:i');
         }
         return $ret;
-        
     }
     
     function generateNotifications(){
-        //$this->notifytimes(2);
+        
         //DB_DataObject::debugLevel(1);
-        
         $w = DB_DataObject::factory($this->tableName());
-        //$this->notifytimes(2);
         $w->find();
-        //$test = $w->fetchAll();
         
-        //$test = $this->notifytimes(2);
-        
-        //$test = array();
         while($w->fetch()){
-            
-            $notifytime = $w->notifyTimes(2);
-            print_r($notifytime);
-//            $this->id = $w->id;
-//            $this->person_id = $w->person_id;
-//            $this->dtstart = $w->dtstart;
-//            $this->dtend = $w->dtend;
-//            $this->tz = $w->tz;
-//            $this->updated_dt = $w->updated_dt;
-//            $this->last_applied_dt = $w->last_applied_dt;
-//            $this->freq = $w->freq;
-//            $this->freq_day = $w->freq_day;
-//            $this->freq_hour = $w->freq_hour;
-//            $this->onid = $w->onid;
-//            $this->ontable = $w->ontable;
-//            $this->last_event_id = $w->last_event_id;
-//            $this->method = $w->method;
-            //$this->dtstart = $w->dtstart;
-            //$this->dtend = $w->dtend;
-            //$this = clone($w);
-            //$w->notifytimes(2);
-            //var_dump($w->notifytimes(2));
+            $notifytimes = $w->notifyTimes(2);
+            var_dump($notifytimes);
         }
-//        foreach($test as $item){
-//            error_log($item);
-//        }
-        
+        foreach($notifytimes as $newTimes){
+            $newSearch = DB_DataObject::factory('core_notify');
+            $newSearch->act_start = $newTimes;
+            if($newSearch->find(true)){
+                continue;
+            }else{
+                $newSearch->id = $w->id;
+                $newSearch->recur_id = $w->id;
+                $newSearch->act_when = $w->dtstart;
+                $newSearch->onid = $w->onid;
+                $newSearch->ontable = $w->ontable;
+                $newSearch->person_id = $w->person_id;
+                $newSearch->act_start = $w->dtstart;
+            }
+        }
     }
     
 }
