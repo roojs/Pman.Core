@@ -51,7 +51,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         error_log($this->dtstart);
         error_log($this->dtend);
         $this->start = date('Y-m-d H:i:s', max(strtotime("NOW - 24 HOURS"), strtotime($this->dtstart)));
-        $this->end  = date('Y-m-d H:i:s', min(strtotime("NOW  + 2 DAYS"), strtotime($this->dtend)));
+        $this->end  = date('Y-m-d H:i:s', min(strtotime("NOW"), strtotime($this->dtend)));
         error_log($this->start);
         error_log($this->end);
     
