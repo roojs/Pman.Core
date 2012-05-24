@@ -155,9 +155,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $test[] = clone($w);
             error_log($w);
         }
-        foreach($test as $item){
-            error_log($item);
-        }
+//        foreach($test as $item){
+//            error_log($item);
+//        }
         
     }
     
