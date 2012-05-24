@@ -149,7 +149,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $w->find(true);
         $test = $w->fetchAll();
         
-        $test = $this->notifytimes(2);
+        //$test = $this->notifytimes(2);
         foreach($test as $item){
             error_log($item);
         }
