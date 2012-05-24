@@ -39,6 +39,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $trigger_person_id;                 // int(11)
     public $trigger_event_id;              // int(11)  
     public $evtype;                         // event type (or method to call)fall                       
+    public $recur_id;
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
