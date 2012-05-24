@@ -75,7 +75,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 $ret[] = date('Y-m-d', strtotime($d)) . ' ' . $h;
             }
         }
-        print_r($ret);
+        return $this->applyTimezoneToList($ret);
+        //print_r($ret);
 //        for ($day = date('Y-m-d', strtotime($start)); strtotime($day) < strtotime($end); $day = date('Y-m-d', strtotime("$day + 1 DAY"))){
 //                    print_r($day);
 //            // skip days not accounted for..
