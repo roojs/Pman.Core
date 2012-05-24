@@ -71,9 +71,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $days = json_decode($this->freq_day);
         //print_r($days);
         foreach($days as $d){
-            $ret[] = date('Y-m-d', strtotime($d)) . ' ' . $hours;
-            print_r($ret);
+            foreach($hours as $h){
+                $ret[] = date('Y-m-d', strtotime($d)) . ' ' . $h;
+            }
         }
+        print_r($ret);
 //        for ($day = date('Y-m-d', strtotime($start)); strtotime($day) < strtotime($end); $day = date('Y-m-d', strtotime("$day + 1 DAY"))){
 //                    print_r($day);
 //            // skip days not accounted for..
