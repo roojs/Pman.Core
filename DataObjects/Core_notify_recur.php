@@ -85,45 +85,15 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     }
     
     function generateNotifications(){
-        //$this->notifytimes(2);
+        
         //DB_DataObject::debugLevel(1);
-        
         $w = DB_DataObject::factory($this->tableName());
-        //$this->notifytimes(2);
         $w->find();
-        //$test = $w->fetchAll();
         
-        //$test = $this->notifytimes(2);
-        
-        //$test = array();
         while($w->fetch()){
-            
             $notifytime = $w->notifyTimes(2);
             var_dump($notifytime);
-//            $this->id = $w->id;
-//            $this->person_id = $w->person_id;
-//            $this->dtstart = $w->dtstart;
-//            $this->dtend = $w->dtend;
-//            $this->tz = $w->tz;
-//            $this->updated_dt = $w->updated_dt;
-//            $this->last_applied_dt = $w->last_applied_dt;
-//            $this->freq = $w->freq;
-//            $this->freq_day = $w->freq_day;
-//            $this->freq_hour = $w->freq_hour;
-//            $this->onid = $w->onid;
-//            $this->ontable = $w->ontable;
-//            $this->last_event_id = $w->last_event_id;
-//            $this->method = $w->method;
-            //$this->dtstart = $w->dtstart;
-            //$this->dtend = $w->dtend;
-            //$this = clone($w);
-            //$w->notifytimes(2);
-            //var_dump($w->notifytimes(2));
         }
-//        foreach($test as $item){
-//            error_log($item);
-//        }
-        
     }
     
 }
