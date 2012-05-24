@@ -146,6 +146,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         //$this->notifytimes(2);
         DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->__table);
+        $this->notifytimes(2);
         $w->find(true);
         $test = $w->fetchAll();
         
