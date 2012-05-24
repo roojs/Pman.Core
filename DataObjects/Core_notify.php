@@ -29,6 +29,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
 
     public $__table = 'core_notify';                     // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
+    public $recur_id;                        // int(11) not_null
     public $act_when;                        // datetime(19)  not_null multiple_key binary
     public $onid;                            // int(11)  not_null
     public $ontable;                         // string(128)  not_null
@@ -39,8 +40,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $watch_id;                        // int(11)  
     public $trigger_person_id;                 // int(11)
     public $trigger_event_id;              // int(11)  
-    public $evtype;                         // event type (or method to call)fall                       
-    public $recur_id;
+    public $evtype;                         // event type (or method to call)fall
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
