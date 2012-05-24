@@ -70,18 +70,22 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         $days = json_decode($this->freq_day);
         //print_r($days);
-        for ($day = date('Y-m-d', strtotime($start));strtotime($day) < strtotime($end); $day = date('Y-m-d', strtotime("$day + 1 DAY"))){
-                    print_r($day);
-            // skip days not accounted for..
-            if (!in_array(date('N', strtotime($day)), $days)) {
-                continue;
-            }
-            foreach($hours as $h) {
-                $hh = strpos($h,":") > 0 ? $h : "$H:00";
-                $ret[] = $day . ' ' . $hh;
-            }
+        foreach($days as $d){
+            $ret[] = date('Y-m-d', strtotime($d)) . ' ' . $hours;
+            print_r($ret);
         }
-        return $this->applyTimezoneToList($ret);
+//        for ($day = date('Y-m-d', strtotime($start)); strtotime($day) < strtotime($end); $day = date('Y-m-d', strtotime("$day + 1 DAY"))){
+//                    print_r($day);
+//            // skip days not accounted for..
+//            if (!in_array(date('N', strtotime($day)), $days)) {
+//                continue;
+//            }
+//            foreach($hours as $h) {
+//                $hh = strpos($h,":") > 0 ? $h : "$H:00";
+//                $ret[] = $day . ' ' . $hh;
+//            }
+//        }
+//        return $this->applyTimezoneToList($ret);
         
 //        if($this->freq_hour){
 //            // happens every day based on freq_hour.
