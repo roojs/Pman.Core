@@ -156,12 +156,25 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         $ret = array();
         
+//        $tz = explode($this->tz, ":");
+//        if ($tz < 0) {
+//            
+//        }
+//        $append = ($tz[0] < 0) ? " - " : " + ";
+//        
+//        $append .= abs($tz[0]) . " HOURS";
+//        if (!empty($tz[1])) {
+//            $append .= $tz[1] . " MINUTES";
+//        }
+        
         foreach($ar as $a) {
-            $date = new DateTime($a, new DateTimeZone($this->tz));
+            $date = new DateTime($a);
+            $date->setTimezone(new DateTimeZone($this->tz));
             $ret[] = $date;
-            //print_r($date->date);
+            //$ret[] = date('Y-m-d H:i', strtotime($a . $append));
         }
         return $ret;
+        
         
     }
     
@@ -180,7 +193,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         while($w->fetch()){
             
             $notifytime = $w->notifyTimes(2);
-            print_r($notifytime);
+            var_dump($notifytime);
 //            $this->id = $w->id;
 //            $this->person_id = $w->person_id;
 //            $this->dtstart = $w->dtstart;
