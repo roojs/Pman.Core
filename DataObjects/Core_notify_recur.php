@@ -30,8 +30,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $last_event_id;                   // int(11)  
     public $method;                         // string(128)  not_null
     
-    $start;
-    $end;
+    public $start;
+    public $end;
     
     ###END_AUTOCODE
     
@@ -49,10 +49,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     
     function notifytimesRange($advance) {
        
-        $start = date('Y-m-d H:i:s', max(strtotime("NOW - 24 HOURS"), strtotime($this->dtstart)));
-        $end  = date('Y-m-d H:i:s', min(strtotime("NOW  + $advance DAYS"), strtotime($this->dtend)));
-        error_log($start);
-        error_log($end);
+        $this->start = date('Y-m-d H:i:s', max(strtotime("NOW - 24 HOURS"), strtotime($this->dtstart)));
+        $this->end  = date('Y-m-d H:i:s', min(strtotime("NOW  + $advance DAYS"), strtotime($this->dtend)));
+        error_log($this->start);
+        error_log($this->end);
     
     }
     
@@ -61,9 +61,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         // make a list of datetimes when notifies need to be generated for.
         // it starts 24 hours ago.. or when dtstart
-        list($start, $end) = $this->notifytimesRange($advance);
-        error_log($start);
-        error_log($end);
+        list($this->start, $this->end) = $this->notifytimesRange($advance);
+        error_log($this->start);
+        error_log($this->end);
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
         }
