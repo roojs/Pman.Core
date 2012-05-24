@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
         }
-        print_r(json_decode($this->freq_day));
+        print_r($this);
         if($this->freq_day){
             $hours = json_decode($this->freq_hour);
             //$dayAry = json_decode($this->freq_day);
