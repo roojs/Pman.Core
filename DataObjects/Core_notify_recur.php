@@ -150,7 +150,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     function generateNotifications(){
         //$this->notifytimes(2);
         $test = $this->notifytimes(2);
-        error_log($test);
+        foreach($test as $item){
+            error_log($item);
+        }
+        
     }
     
 }
