@@ -67,10 +67,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $ret = array();
         
         $hours = json_decode($this->freq_hour);
-        print_r($hours);
+        
         //$dayAry = json_decode($this->freq_day);
         if (!$hours) {
             $hours = array(date('H:i', strtotime($this->dtstart)));
+            print_r($hours);
         }
         $days = json_decode($this->freq_day);
         print_r($days);
