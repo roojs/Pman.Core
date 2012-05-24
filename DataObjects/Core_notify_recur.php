@@ -151,10 +151,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         //$test = $w->fetchAll();
         
         //$test = $this->notifytimes(2);
+           
         $test = array();
         while($w->fetch()){
-            $test[] = clone($w);
-            error_log($w->dtstart);
+            $this = clone($w);
+            error_log($this->dtstart);
         }
 //        foreach($test as $item){
 //            error_log($item);
