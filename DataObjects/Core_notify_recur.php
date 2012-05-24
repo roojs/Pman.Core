@@ -30,7 +30,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $last_event_id;                   // int(11)  
     public $method;                         // string(128)  not_null
     
-    
+    $start;
+    $end;
     
     ###END_AUTOCODE
     
