@@ -180,7 +180,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         while($w->fetch()){
             
             $notifytime = $w->notifyTimes(2);
-            var_dump($notifytime);
+            print_r($notifytime);
 //            $this->id = $w->id;
 //            $this->person_id = $w->person_id;
 //            $this->dtstart = $w->dtstart;
