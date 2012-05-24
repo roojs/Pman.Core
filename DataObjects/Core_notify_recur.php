@@ -98,6 +98,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $newSearch = DB_DataObject::factory('core_notify');
             $newSearch->act_start = $newTimes;
             if($newSearch->find(true)){
+                continue;
+            }else{
                 $newSearch->id = $w->id;
                 $newSearch->recur_id = $w->id;
                 $newSearch->act_when = $w->dtstart;
