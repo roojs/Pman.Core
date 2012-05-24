@@ -65,42 +65,44 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
         print_r($this);
         $ret = array();
-        if($this->freq_day){
-            $hours = json_decode($this->freq_hour);
-            //$dayAry = json_decode($this->freq_day);
-            if (!$hours) {
-                $hours = array(date('H:i', strtotime($this->dtstart)));
-            }
-            $days = json_decode($this->freq_day);
-            for ($day = date('Y-m-d', strtotime($start));
-                    strtotime($day) < strtotime($end);
-                    $day = date('Y-m-d', strtotime("$day + 1 DAY")))
-            {
-                // skip days not accounted for..
-                if (!in_array(date('N', strtotime($day)), $days)) {
-                    continue;
-                }
-                foreach($hours as $h) {
-                    $hh = strpos($h,":") > 0 ? $h : "$H:00";
-                    $ret[] = $day . ' ' . $hh;
-                }
-            }
-            return $this->applyTimezoneToList($ret);
+        
+        $hours = json_decode($this->freq_hour);
+        print_r($hours);
+        //$dayAry = json_decode($this->freq_day);
+        if (!$hours) {
+            $hours = array(date('H:i', strtotime($this->dtstart)));
         }
-        if($this->freq_hour){
-            // happens every day based on freq_hour.
-            $hours = json_decode($this->freq_hour);
-            for ($day = date('Y-m-d', strtotime($start));
-                    strtotime($day) < strtotime($end);
-                    $day = date('Y-m-d', strtotime("$day + 1 DAY")))
-            {
-                foreach($hours as $h) {
-                    $hh = strpos($h,":") > 0 ? $h : "$H:00";
-                    $ret[] = $day . ' ' . $hh;
-                }
+        $days = json_decode($this->freq_day);
+        print_r($days);
+        for ($day = date('Y-m-d', strtotime($start));
+                strtotime($day) < strtotime($end);
+                $day = date('Y-m-d', strtotime("$day + 1 DAY")))
+        {
+            // skip days not accounted for..
+            if (!in_array(date('N', strtotime($day)), $days)) {
+                continue;
             }
-            return $this->applyTimezoneToList($ret);
+            foreach($hours as $h) {
+                $hh = strpos($h,":") > 0 ? $h : "$H:00";
+                $ret[] = $day . ' ' . $hh;
+            }
         }
+        return $this->applyTimezoneToList($ret);
+        
+//        if($this->freq_hour){
+//            // happens every day based on freq_hour.
+//            $hours = json_decode($this->freq_hour);
+//            for ($day = date('Y-m-d', strtotime($start));
+//                    strtotime($day) < strtotime($end);
+//                    $day = date('Y-m-d', strtotime("$day + 1 DAY")))
+//            {
+//                foreach($hours as $h) {
+//                    $hh = strpos($h,":") > 0 ? $h : "$H:00";
+//                    $ret[] = $day . ' ' . $hh;
+//                }
+//            }
+//            return $this->applyTimezoneToList($ret);
+//        }
 //        switch($this->freq) {
 //            case 'HOURLY':
 //                // happens every day based on freq_hour.
