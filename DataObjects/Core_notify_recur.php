@@ -71,15 +71,15 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         //$dayAry = json_decode($this->freq_day);
         if (!$hours) {
             $hours = array(date('H:i', strtotime($this->dtstart)));
-            print_r($hours);
+            //print_r($hours);
         }
         $days = json_decode($this->freq_day);
-        print_r($days);
+        //print_r($days);
         for ($day = date('Y-m-d', strtotime($start));
                 strtotime($day) < strtotime($end);
                 $day = date('Y-m-d', strtotime("$day + 1 DAY")))
         {
-                    error_log($day);
+                    print_r($day);
             // skip days not accounted for..
             if (!in_array(date('N', strtotime($day)), $days)) {
                 continue;
