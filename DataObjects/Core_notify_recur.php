@@ -97,7 +97,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         foreach($notifytimes as $newTimes){
             $newSearch = DB_DataObject::factory('core_notify');
             $newSearch->act_start = $newTimes;
+            $person->whereAdd("act_start == $newTimes");
+            $person->delete(DB_DATAOBJECT_WHEREADD_ONLY);
             if($newSearch->find(true)){
+                
                 continue;
             }else{
                 $newSearch->id = $w->id;
