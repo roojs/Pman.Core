@@ -96,7 +96,16 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
         foreach($notifytimes as $newTimes){
             $newSearch = DB_DataObject::factory('core_notify');
-            
+            $newSearch->act_start = $newTimes;
+            if($newSearch->find(true)){
+                $newSearch->id = $w->id;
+                $newSearch->recur_id = $w->id;
+                $newSearch->act_when = $w->dtstart;
+                $newSearch->onid = $w->onid;
+                $newSearch->ontable = $w->ontable;
+                $newSearch->person_id = $w->person_id;
+                $newSearch->act_start = $w->dtstart;
+            }
         }
     }
     
