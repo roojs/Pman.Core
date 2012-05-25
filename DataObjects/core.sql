@@ -403,8 +403,8 @@ ALTER TABLE  core_notify_recur  ADD COLUMN freq varchar(8) NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_day text NOT NULL;
 ALTER TABLE  core_notify_recur  ADD COLUMN freq_hour text  NOT NULL;
 
-ALTER TABLE  core_notify_recur  ADD COLUMN onid int(11)  not_null default 0;
-ALTER TABLE  core_notify_recur  ADD COLUMN ontable varchar(128)  not_null default '';
+ALTER TABLE  core_notify_recur  ADD COLUMN onid int(11)  not null default 0;
+ALTER TABLE  core_notify_recur  ADD COLUMN ontable varchar(128)  not null default '';
 ALTER TABLE  core_notify_recur  ADD COLUMN last_event_id  int(11)  default 0;
 ALTER TABLE  core_notify_recur  ADD COLUMN method varchar(128) default '';     
 
