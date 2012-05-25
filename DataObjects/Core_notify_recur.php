@@ -127,7 +127,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         foreach($notifytimes as $time){
             if (strtotime($time) < time()) {
-                // will get deleted..
+                // will not get deleted..
+                unset($old[$time]);
                 continue;
             }
             if (isset($old[$time])) {
