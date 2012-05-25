@@ -439,7 +439,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                                     var dh = i < 13 ? i : i-12;
                                                     
                                                     ret.push([ h+':00', dh+':00' + mer ]);
-                                                    ret.push([ h+':00', dh+':30' + mer ]);        
+                                                    ret.push([ h+':30', dh+':30' + mer ]);        
                                                 }
                                                 return ret;
                                             })(),
