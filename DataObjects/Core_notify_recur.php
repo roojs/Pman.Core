@@ -81,13 +81,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $usedays = array();
         for (  $i =0; $i < $advance +1; $i++) {
             $ut = strtotime("NOW + $i DAYS");
-            $day = date("???", $ut);
+            $day = strtoupper(date("D", $ut));
             if (in_array($day, $days)) {
                 $usedays[] = date("Y-m-d", $ut);
             }
         }
                 
-        
+        print_r($use)
         
         
         foreach($usedays as $d){
@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $old = $newSearch->fetchAll('act_start', 'id');
         // returns array('2012-12-xx'=>12, 'date' => id....)
 
-
+        
         foreach($notifytimes as $time){
             if (strtotime($time) < time()) {
                 continue;
