@@ -213,7 +213,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                                 person_id : _this.data.person_id,
                                                 dtstart : new Date(),
                                                 dtend : Date.parseDate('2050-01-01', 'Y-m-d'),
-                                                tz : 'Asia/Hong Kong',
+                                                tz : 'Asia/Hong_Kong',
                                                 onid : _this.data.onid,
                                                 ontable : _this.data.ontable,
                                                 method : _this.data.method,

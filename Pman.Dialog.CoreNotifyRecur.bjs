@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-94",
+    "id": "roo-file-0",
     "name": "Pman.Dialog.CoreNotifyRecur",
     "parent": "",
     "title": "",
-    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
+    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
     "items": [
         {
             "listeners": {
@@ -86,7 +86,7 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "|click": "function()\n{\n    var grid = _this.grid;\n    var r = grid.getDataSource().reader.newRow({\n    // defaults..\n        person_id : _this.data.person_id,\n        dtstart : new Date(),\n        dtend : Date.parseDate('2050-01-01', 'Y-m-d'),\n        tz : 'Asia/Hong Kong',\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method,\n        last_event_id : 0,\n        freq_day_name : '',\n        freq_hour_name : '',\n        freq_name : ''\n        \n    \n    });\n    grid.stopEditing();\n    grid.getDataSource().insert(0, r); \n    grid.startEditing(0, 2); \n    \n\n}\n"
+                                                "|click": "function()\n{\n    var grid = _this.grid;\n    var r = grid.getDataSource().reader.newRow({\n    // defaults..\n        person_id : _this.data.person_id,\n        dtstart : new Date(),\n        dtend : Date.parseDate('2050-01-01', 'Y-m-d'),\n        tz : 'Asia/Hong_Kong',\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method,\n        last_event_id : 0,\n        freq_day_name : '',\n        freq_hour_name : '',\n        freq_name : ''\n        \n    \n    });\n    grid.stopEditing();\n    grid.getDataSource().insert(0, r); \n    grid.startEditing(0, 2); \n    \n\n}\n"
                                             },
                                             "cls": "x-btn-text-icon",
                                             "text": "Add",
