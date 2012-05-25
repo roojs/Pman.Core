@@ -64,63 +64,113 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             return array(); // no data..
         }
         $ret = array();
-        $hours = array_unique(json_decode($this->freq_hour));
+        $hours = empty($this->freq_hour) ? array() : array_unique(json_decode($this->freq_hour));
         $days = json_decode($this->freq_day);
         
-        foreach($days as $d){
+        //days to use are = MON FRI SUN
+        
+        //ARE there events on these day in advance days in the future?
+        //TODAY = 25th of may (FRI)
+        //TODAY+1  = 26th  (SAT)
+        //TODAY +2 = 27th = SUN (2== advance)
+        //foreeach day in the future upto >>> advance <<< days?
+            
+         // - does an event occur on this day?
+        //    -YES - then we will generate an event for it.
+         //   -NO nothing happens..
+        $usedays = array();
+        for (  $i =0; $i < $advance +1; $i++) {
+            $ut = strtotime("NOW + $i DAYS");
+            $day = date("???", $ut);
+            if (in_array($day, $days)) {
+                $usedays[] = date("Y-m-d", $ut);
+            }
+        }
+                
+        
+        
+        
+        foreach($usedays as $d){
             foreach($hours as $h){
-                $date = new DateTime(date('Y-m-d', strtotime($d)) . ' ' . $h, new DateTimeZone($this->tz));
-                $date->setTimezone(new DateTimeZone('Asia/Hong_Kong'));
+                $date = new DateTime($d. ' ' . $h, new DateTimeZone($this->tz));
+                $date->setTimezone(new DateTimeZone(ini_get('date.timezone')));
                 $ret[] = $date->format('Y-m-d H:i:s');
             }
         }
         return $ret;
     }
     
-    function generateNotifications(){
-        
+    function generateNotifications()
+    {
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->tableName());
         $w->find();
         
         while($w->fetch()){
-            $notifytimes = $w->notifyTimes(2);
-            $newSearch = DB_DataObject::factory('core_notify');
-            $newSearch->whereAdd( 'act_start > NOW() and act_start < NOW() + INTERVAL 2 DAY');
-            $newSearch->recur_id = $w->id;
-            $old = $newSearch->fetchAll('act_start', 'id');
-            // returns array('2012-12-xx'=>12, 'date' => id....)
-            
- 
-            foreach($notifytimes as $time){
-                if (strtotime($time) < time()) {
-                    continue;
-                }
-                if (isset($old[$time])) {
-                    // we already have it...
-                    unset($old[$time]);
-                    continue;
-                }
-                
-                // do not have a notify event... creat it..
-                $add = DB_DataObject::factory('core_notify');
-                $add->setFrom(array(
-                    "recur_id" => $w->id,
-                    "act_start" => $time,
-                    "act_when" => $time,
-                    "person_id" => $w->person_id,
-                    "onid" => $w->onid,
-                    "ontable" => $w->ontable
-                ));
-                $add->insert();
-            }
-            foreach($old as $date => $id ) {
-                 $del = DB_DataObject::factory('core_notify');
-                 $del->get($id);
-                 $del->delete();
-            }
- 
+            $w->generateNotificationsSingle();
+        
         }
     }
     
+    
+    function generateNotificationsSingle()
+    {
+        
+
+        $notifytimes = $this->notifyTimes(2);
+        $newSearch = DB_DataObject::factory('core_notify');
+        $newSearch->whereAdd( 'act_start > NOW()');
+        $newSearch->recur_id = $this->id;
+        $old = $newSearch->fetchAll('act_start', 'id');
+        // returns array('2012-12-xx'=>12, 'date' => id....)
+
+
+        foreach($notifytimes as $time){
+            if (strtotime($time) < time()) {
+                continue;
+            }
+            if (isset($old[$time])) {
+                // we already have it...
+                unset($old[$time]);
+                continue;
+            }
+
+            // do not have a notify event... creat it..
+            $add = DB_DataObject::factory('core_notify');
+            $add->setFrom(array(
+                "recur_id" => $this->id,
+                "act_start" => $time,
+                "act_when" => $time,
+                "person_id" => $this->person_id,
+                "onid" => $this->onid,
+                "ontable" => $this->ontable
+            ));
+            $add->insert();
+        }
+        foreach($old as $date => $id ) {
+                $del = DB_DataObject::factory('core_notify');
+                $del->get($id);
+                $del->delete();
+        }
+
+    }
+    
+    function onUpdate($old, $request,$roo)
+    {
+        $this->generateNotificationsSingle();
+        
+    }
+    function onInsert($request,$roo)
+    {
+        $this->generateNotificationsSingle();
+        
+    }
+    function beforeDelete($dependants_array, $roo)
+    {
+        $n = DB_DataObject::Factory("core_notify");
+        $n->recur_id = $this->id;
+        $n->whereAdd('act_start > NOW() OR act_when > NOW()');
+        // should delete old events that have not occurred...
+        $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+    }
 }
