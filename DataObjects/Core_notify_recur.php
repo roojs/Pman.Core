@@ -65,7 +65,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
         $ret = array();
         $hours = empty($this->freq_hour) ? array() : array_unique(json_decode($this->freq_hour));
-        $days = json_decode($this->freq_day);
+        $days = empty($this->freq_day) ? array() : json_decode($this->freq_day);
         
         //days to use are = MON FRI SUN
         
