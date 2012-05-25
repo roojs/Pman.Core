@@ -346,8 +346,8 @@ CREATE TABLE  core_notify  (
   id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
 );
-ALTER TABLE core_notify ADD COLUMN  evtype VARCHAR(128) NOT NULL;
-ALTER TABLE core_notify ADD COLUMN  recur_id INT(11) NOT NULL;
+ALTER TABLE core_notify ADD COLUMN  evtype VARCHAR(128) NOT NULL default '';
+ALTER TABLE core_notify ADD COLUMN  recur_id INT(11) NOT NULL default 0;
 ALTER TABLE core_notify ADD COLUMN  act_when DATETIME ;
 ALTER TABLE core_notify ADD COLUMN  act_start DATETIME ;
 ALTER TABLE core_notify ADD COLUMN  onid int(11)  NOT NULL DEFAULT 0;
