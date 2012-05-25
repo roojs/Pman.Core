@@ -99,18 +99,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             
             $newSearch->whereAdd("act_start == $newTimes");
             $newSearch->delete(DB_DATAOBJECT_WHEREADD_ONLY);
-//            if($newSearch->find(true)){
-//                
-//                continue;
-//            }else{
-//                $newSearch->id = $w->id;
-//                $newSearch->recur_id = $w->id;
-//                $newSearch->act_when = $w->dtstart;
-//                $newSearch->onid = $w->onid;
-//                $newSearch->ontable = $w->ontable;
-//                $newSearch->person_id = $w->person_id;
-//                $newSearch->act_start = $w->dtstart;
-//            }
+ 
         }
     }
     
