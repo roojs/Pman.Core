@@ -94,6 +94,10 @@ class Pman_Core_NotifySend extends Pman
             
             die("send repeat to early\n");
         }
+        if ($opts['debug']) {
+            print_r($w);
+        }
+        
         
         if (!$force && !empty($w->msgid)) {
             $ww = clone($w);
