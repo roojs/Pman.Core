@@ -94,7 +94,7 @@ class Pman_Core_NotifySend extends Pman
             
             die("send repeat to early\n");
         }
-        if ($opts['debug']) {
+        if (!empty($opts['debug'])) {
             print_r($w);
         }
         
