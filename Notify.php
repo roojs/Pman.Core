@@ -201,7 +201,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->send_to)) {
             $app .= ' --sent-to='.escapeshellarg($this->send_to);
         }
-        $cmd = $php . ' ' . $app; //. ' &';
+        $cmd = $php . ' ' . $app . ' ' . $cmdOpts; //. ' &';
         
        
         $pipe = array();
