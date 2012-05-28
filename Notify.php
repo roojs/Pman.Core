@@ -181,7 +181,7 @@ class Pman_Core_Notify extends Pman
         die("DONE\n");
     }
     
-    function run($id, $email)
+    function run($id, $email, $opts=array())
     {
        // phpinfo();exit;
         $tn = tempnam(ini_get('session.save_path'),'stdout') . '.stdout';
