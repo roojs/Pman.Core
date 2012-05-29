@@ -118,7 +118,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
 
         $notifytimes = $this->notifyTimes(2);
-        print_R($notifytimes);
+        ////print_R($notifytimes);
         
         $newSearch = DB_DataObject::factory('core_notify');
         $newSearch->whereAdd( 'act_start > NOW()');
@@ -137,7 +137,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             }
             if (strtotime($time) < time()) {
                 // will not get deleted..
-                echo "SKIP BEFORE NOW";
+                //echo "SKIP BEFORE NOW";
                 unset($old[$time]);
                continue;
             }
@@ -159,7 +159,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 $del->get($id);
                 $del->delete();
         }
-        echo("UPDATED");
+        //echo("UPDATED");
 
     }
     
