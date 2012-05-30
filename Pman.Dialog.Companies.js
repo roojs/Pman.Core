@@ -424,7 +424,7 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
                         Pman.Dialog.Image.show({
                             onid :_this.data.id,
                             ontable : 'Companies',
-                            imgtype : '-LOGO'
+                            imgtype : 'LOGO'
                         }, function(data) {
                             if  (data) {
                                 _t.setValue(data.id);
