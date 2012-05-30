@@ -30,7 +30,7 @@ ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
-#postres
+-- postres
 ALTER TABLE Companies ALTER isOwner TYPE int(11);
 ALTER TABLE Companies ALTER owner_id SET DEFAULT 0;
 ALTER TABLE Companies ALTER url SET DEFAULT '';
@@ -41,7 +41,7 @@ ALTER TABLE Companies ADD INDEX name_lookup (name);
 
 UPDATE Companies set comptype='OWNER' where isOwner=1;
 
-#// core comapy types - use core enums (Company Type)
+-- // core comapy types - use core enums (Company Type)
 DROP TABLE core_company_type;
 
  
