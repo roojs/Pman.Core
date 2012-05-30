@@ -101,8 +101,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 // .my.sql but not .pg.sql
-                if (preg_match('/#.[a-z]{2}\.sql#i', basename($bfn))
-                    && !preg_match('/#\.my\.sql#i', basename($bfn))
+                if (preg_match('#.[a-z]{2}\.sql#i', basename($fn))
+                    && !preg_match('#\.my\.sql#i', basename($fn))
                 ) { // skip migration scripts at present..
                     continue;
                 }
