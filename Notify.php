@@ -308,7 +308,6 @@ class Pman_Core_Notify extends Pman
     }
     function output()
     {
-        die("done\n");
+        die("Done\n");
     }
-
 }
