@@ -306,7 +306,7 @@ class Pman_Core_Notify extends Pman
         return false;
         
     }
-    
+
     function output()
     {
         die("Done\n");
