@@ -241,7 +241,7 @@ class Pman_Core_Notify extends Pman
                 $p['pid'] = $info['pid'];
             }
             
-            echo @file_get_contents('/proc/'. $p['pid'] .'/cmdline');
+            echo @file_get_contents('/proc/'. $p['pid'] .'/cmdline') . "\n";
             
             if ($info['running']) {
             
