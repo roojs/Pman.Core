@@ -418,5 +418,8 @@ class Pman_Core_NotifySend extends Pman
         }
         echo $str . "\n";
     }
-    
+    function output()
+    {
+        die("done\n");
+    }
 }
