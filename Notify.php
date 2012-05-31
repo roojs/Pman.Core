@@ -252,7 +252,7 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
-                    echo "TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+                    echo "\nTERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
                     @unlink($p['out']);
                     
                     continue;
@@ -274,7 +274,7 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            echo "ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            echo "\nENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             @unlink($p['out']);
             //unlink($p['out']);
         }
