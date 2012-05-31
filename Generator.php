@@ -347,6 +347,7 @@ touch Pman/????/DataObjects/".ucfirst($this->table).".php
         $cli = $options['cli'];
 
         foreach($this->tables as $this->table) {
+            
             $this->table        = trim($this->table);
             $tn  = strtolower($this->table);
             $mod = $this->modmap[$tn];
