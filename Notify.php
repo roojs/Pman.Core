@@ -307,6 +307,14 @@ class Pman_Core_Notify extends Pman
         
     }
 
+    function setCompany() {
+        $co = DB_DataObject::Factory('Companies');
+        if(!$co->get('code', 'MediaWatchMe')) {
+            $this->errors[] = 'Invalid Supplier Code: MediaWatchMe';
+        }
+        $this->company = $co->id;
+    }
+
     function output()
     {
         die("Done\n");
