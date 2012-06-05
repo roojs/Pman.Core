@@ -875,6 +875,9 @@ Pman = new Roo.Document(
     {
         if (typeof(obj.part) != 'undefined')  {
            
+            if (!obj.part[1].length) {
+                obj.part[1] = obj.part[0];
+            }
             var permname = obj.part.join('.');
                 // we now have permission...
                 // obj.moduleOwner '.' lname
