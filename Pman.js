@@ -891,11 +891,7 @@ Pman = new Roo.Document(
                 obj.disabled = true;
                 return;
             }
-            if (appDisabled.indexOf(permname) > -1)  {
-                Roo.log(permname + " is Disabled for this site");
-                obj.disabled = true;
-                return;
-            }
+        
             
             
         }
