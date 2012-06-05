@@ -20,6 +20,8 @@ if (typeof(_T) == 'undefined') { _T={};}
 
 
 Roo.XComponent.on('register', function(e) { if (typeof(Pman) != 'undefined') { return Pman.xregister(e); } });
+Roo.XComponent.on('beforebuild', function(e) { if (typeof(Pman) != 'undefined') { return Pman.xbeforebuild(e); } });
+
 Roo.XComponent.on('buildComplete',  
      function() {
                     
