@@ -817,7 +817,9 @@ Pman = new Roo.Document(
             var permname = obj.part.join('.');
                 // we now have permission...
                 // obj.moduleOwner '.' lname
-            Roo.log("CHECKING PERM" + permname);
+            Roo.log("CHECKING PERM: " + permname);
+            Roo.log("Exists: " + Pman.hasPermExists(permname) ? 1 : 0);
+            Roo.log("has: " + Pman.hasPerm(permname,'S') ? 1 : 0);
             if (Pman.hasPermExists(permname) && !Pman.hasPerm(permname,'S')) {
                 // it's a turned off permission...
                 Roo.log(permname + " is Disabled for this user");
