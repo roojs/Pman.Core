@@ -794,8 +794,8 @@ Pman = new Roo.Document(
     {
         
         // work out owner..
-        if (!this.appModules === false) {
-            this.appModules = typeof(AppModules ) == 'undefined'? [] :
+        if (!Pman.appModules === false) {
+            Pman.appModules = typeof(AppModules ) == 'undefined'? [] :
                 AppModules.split(',');
         }
         
@@ -817,8 +817,8 @@ Pman = new Roo.Document(
             var permname = obj.part.join('.');
                 // we now have permission...
                 // obj.moduleOwner '.' lname
-                
-            if (this.hasPermExists(permname) && !this.hasPerm(permname,'S')) {
+            
+            if (Pman.hasPermExists(permname) && !Pman.hasPerm(permname,'S')) {
                 // it's a turned off permission...
                 Roo.log(permname + " is Disabled for this user");
                 obj.disabled = true;
