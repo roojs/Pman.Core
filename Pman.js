@@ -812,7 +812,21 @@ Pman = new Roo.Document(
         // previously we did not a good naming policy for module and parts
         // most things that are called module here, really are 'parts'
         // new versions should have 'part' as [ module : part ]
-        
+         if (typeof(obj.part) != 'undefined')  {
+           
+            var permname = obj.part.join('.');
+                // we now have permission...
+                // obj.moduleOwner '.' lname
+           
+           
+            if (appDisabled.indexOf(permname) > -1)  {
+                Roo.log(permname + " is Disabled for this site");
+                obj.disabled = true;
+                return;
+            }
+            
+            
+        }
         
        
         
