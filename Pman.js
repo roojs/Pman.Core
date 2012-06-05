@@ -871,7 +871,7 @@ Pman = new Roo.Document(
      * used to apply permissions.
      */
     
-    beforebuild : function(obj)
+    xbeforebuild : function(obj)
     {
         if (typeof(obj.part) != 'undefined')  {
            
