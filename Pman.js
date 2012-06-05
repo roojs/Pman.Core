@@ -875,6 +875,18 @@ Pman = new Roo.Document(
         
     },
     /**
+     * fired before building on each compoenent
+     * used to apply permissions.
+     */
+    
+    beforebuild : function(obj)
+    {
+        
+        
+        
+    },
+    
+    /**
      * DEPRICATED : use Roo.XComponents now..
      * 
      * Pman.register({
