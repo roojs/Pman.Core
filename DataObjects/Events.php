@@ -206,6 +206,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         // DB_DataObject::debugLevel(1);
         
         // now try and magically join person_table to the right table..
+        return;
+        // this does not work on postgres.. 
         $tn = $this->tableName();
         $pt = DB_DataObject::Factory($this->tableName());
         $pt->selectAdD();
