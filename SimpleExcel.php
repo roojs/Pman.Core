@@ -105,7 +105,7 @@ class Pman_Core_SimpleExcel extends Pman
         foreach($data as $r=>$clo) {
             $cl = $clo;
             if (is_object($clo)) {
-                $cl = (array)$clo;
+                $cl = (array)$clo; // lossless converstion..
             }
             
             if (isset($cfg['row_height'])) {
