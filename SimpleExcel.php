@@ -103,10 +103,13 @@ class Pman_Core_SimpleExcel extends Pman
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$cl) {
+            if (is_object($cl)) {
+                $cl = $cl->toArray();
+            }
             
             if (isset($cfg['row_height'])) {
                 $worksheet->setRow($start_row +$r, $cfg['row_height']);
-               }
+            }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
                 $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
