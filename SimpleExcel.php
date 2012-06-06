@@ -156,6 +156,7 @@ class Pman_Core_SimpleExcel extends Pman
         if (!empty($cfg['foot'])) {
             foreach($cfg['foot'] as $row) { 
                 foreach($row as $c => $col) {
+                    // if it's an array? - formated ???
                     $worksheet->write($start_row, $c, $col);
                     
                 }
