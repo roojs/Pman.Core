@@ -151,6 +151,22 @@ class Pman_Core_SimpleExcel extends Pman
                 }
             }
         }
+        $start_row += count($data);
+        
+        if (!empty($cfg['foot'])) {
+            foreach($cfg['foot'] as $row) { 
+                foreach($row as $c => $col) {
+                    $worksheet->write($start_row, $c, $col);
+                    
+                }
+                $start_row++;
+            }
+            // add a spacer..
+            $start_row++;
+        }
+            
+        
+        
         $workbook->close();
         $this->outfile2 = $outfile2;
          
