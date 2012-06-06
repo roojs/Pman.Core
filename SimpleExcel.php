@@ -100,6 +100,7 @@ class Pman_Core_SimpleExcel extends Pman
              
         }
         $start_row++;
+        $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$cl) {
             
@@ -121,6 +122,7 @@ class Pman_Core_SimpleExcel extends Pman
                   //  var_dump($v);
                 }
                 if (isset($col_cfg['renderer'])) {
+                    $hasRender = true;
                     continue;
                 }
                 
@@ -131,23 +133,25 @@ class Pman_Core_SimpleExcel extends Pman
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
-        
-        foreach($data as $r=>$cl) {
-        
-            foreach($cfg['cols']   as $c=>$col_cfg) {
-                $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
-                if (empty($cl[$col_cfg['dataIndex']])) {
-                    continue;
+        /// call user render on any that are defined..
+        if ($hasRender) {
+            foreach($data as $r=>$cl) {
+            
+                foreach($cfg['cols']   as $c=>$col_cfg) {
+                    $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
+                    if (empty($cl[$col_cfg['dataIndex']])) {
+                        continue;
+                    }
+                    if (isset($col_cfg['renderer'])) {
+                        call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                        
+                    }
+                  //  echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c, $cl[$col_cfg['dataIndex']]), true));
+             
                 }
-                if (isset($col_cfg['renderer'])) {
-                    call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
-                    
-                }
-              //  echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c, $cl[$col_cfg['dataIndex']]), true));
-         
             }
         }
-           $workbook->close();
+        $workbook->close();
         $this->outfile2 = $outfile2;
          
     }
