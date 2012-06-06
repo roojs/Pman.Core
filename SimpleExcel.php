@@ -102,8 +102,9 @@ class Pman_Core_SimpleExcel extends Pman
         $start_row++;
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
-        foreach($data as $r=>$cl) {
-            if (is_object($cl)) {
+        foreach($data as $r=>$clo) {
+            $cl = $clo;
+            if (is_object($clo)) {
                 $cl = $cl->toArray();
             }
             
@@ -118,7 +119,7 @@ class Pman_Core_SimpleExcel extends Pman
                 }
                 if (isset($col_cfg['txtrenderer'])) {
                     $v = call_user_func($col_cfg['txtrenderer'], 
-                            $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                            $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
                     if ($v === false) {
                         continue;
                     }
