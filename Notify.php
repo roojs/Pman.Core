@@ -108,6 +108,7 @@ class Pman_Core_Notify extends Pman
             if (is_a($w, 'DB_DataObject')) {
                 $w->generateNotifications();
             }
+            exit;
             
             
         }
