@@ -103,7 +103,14 @@ class Pman_Core_Notify extends Pman
         if (is_a($w, 'DB_DataObject')) {
             $w->generateNotifications();
         }
-     
+        if (!empty($opts['generate'])) {
+            $w = DB_DataObject::factory($opts['generate']);
+            if (is_a($w, 'DB_DataObject')) {
+                $w->generateNotifications();
+            }
+            
+            
+        }
      
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
