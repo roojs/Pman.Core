@@ -52,7 +52,7 @@ class Pman_Core_Notify extends Pman
         ),
         'generate' => array(
             'desc' => 'Generate notifications for a table, eg. cash_invoice',
-            'default' => 0,
+            'default' => '',
             'short' => 'g',
             'min' => 0,
             'max' => 1,
