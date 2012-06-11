@@ -99,6 +99,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         }
         $p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
+        $p->is_active = 1;
         return $p->fetchAll();
      
         
