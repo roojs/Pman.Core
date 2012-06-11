@@ -55,7 +55,7 @@ class Pman_Core_Notify extends Pman
             'default' => 0,
             'short' => 'g',
             'min' => 0,
-            'max' => 0,
+            'max' => 1,
         ),
     );
     
