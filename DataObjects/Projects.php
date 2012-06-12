@@ -9,7 +9,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'Projects';                        // table name
+    public $__table = 'Projects';            // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // string(254)  not_null
     public $remarks;                         // blob(65535)  not_null blob
@@ -26,6 +26,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     public $countries;                       // string(128)  not_null
     public $languages;                       // string(128)  not_null
     public $agency_id;                       // int(11)  not_null
+    public $updated_dt;                      // datetime(19)  not_null binary
 
     
     /* the code above is auto generated do not remove the tag below */
