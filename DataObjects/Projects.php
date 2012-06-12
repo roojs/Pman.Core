@@ -182,6 +182,8 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         $oo = clone($this);
         if (empty($this->code)) {
             $this->code = 'C' + $this->client_id + '-P' + $this->id;
+            $dt = new DateTime();
+            $this->updated_dt = $dt->format('Y-m-d H:i:s');
             $this->update($oo);
         }
     }
@@ -191,6 +193,8 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         $oo = clone($this);
         if (empty($this->code)) {
             $this->code = 'C' + $this->client_id + '-P' + $this->id;
+            $dt = new DateTime();
+            $this->updated_dt = $dt->format('Y-m-d H:i:s');
             $this->update($oo);
         }
         
