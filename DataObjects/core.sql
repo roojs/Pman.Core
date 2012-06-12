@@ -200,7 +200,7 @@ ALTER TABLE  Projects  ADD COLUMN   team_id int(11) NOT NULL default '0';
 ALTER TABLE  Projects  ADD COLUMN file_location varchar(254)    NOT NULL default '';
 ALTER TABLE  Projects  ADD COLUMN open_date date default NULL;
 ALTER TABLE  Projects  ADD COLUMN open_by int(11) NOT NULL default '0';
-
+ALTER TABLE  Projects  ADD COLUMN updated_dt DATETIME NOT NULL;
 
 # these should be removed, as they are code specific..
 ALTER TABLE Projects ADD COLUMN countries varchar(128)  NOT NULL DEFAULT '';
