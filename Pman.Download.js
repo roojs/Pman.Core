@@ -62,7 +62,7 @@ Pman.Download = function(cfg)
     if (this.method == 'GET' && !this.params) {
         (function() {
             submit = true;
-            this.csvFrame.src = this.url;
+            this.csvFrame.src = cfg.url;
             this.cleanup.defer(cfg.timeout || 30000,this);
         }).defer(100, this);
         
