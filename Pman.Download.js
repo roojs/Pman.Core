@@ -227,10 +227,7 @@ Roo.apply(Pman.Download.prototype, {
             t.params['csvTitles['+i+']'] = c.header;
             
         });
-        this.grid.ds.fireEvent('load', this.grid.ds, {
-            params : this.params
-            
-        });
+        this.grid.ds.fireEvent('load', this.grid.ds, { });
         this.params.limit = 9999;
         
         
