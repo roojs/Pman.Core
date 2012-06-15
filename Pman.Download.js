@@ -39,6 +39,15 @@ Pman.Download = function(cfg)
     }
     Roo.apply(this, cfg);
     
+    
+    if (this.grid) {
+        
+        this.buildFromGrid();
+        
+    }
+    
+    
+    
     var submit = false;
     this.createCsvFrame();
     
@@ -199,7 +208,32 @@ Roo.apply(Pman.Download.prototype, {
             this.csvFrame= false;
         }
          
+    },
+    
+    buildFromGrid : function()
+    {
+        // get the params from beforeLoad
+        this.grid.ds.fireEvent('beforeload', {
+            params : this.params
+            
+        });
+        
+        // work out the cols
+        Roo.each(this.grid.cm.config, function(c,i) {
+            params['csvCols['+i+']'] = c.dataIndex;
+            params['csvTitles['+i+']'] = c.header;
+            
+        });
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    
      
      
 });
