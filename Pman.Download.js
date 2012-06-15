@@ -217,6 +217,8 @@ Roo.apply(Pman.Download.prototype, {
             params : this.params
             
         });
+        this.url = this.grid.ds.proxy.conn.url;
+        this.method = this.grid.ds.proxy.conn.method ;
         
         // work out the cols
         Roo.each(this.grid.cm.config, function(c,i) {
