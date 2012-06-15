@@ -30,7 +30,7 @@ Pman.Download = function(cfg)
 {
  
     Roo.apply(this, cfg);
-    
+    cfg = this;
     
     if (this.grid) {
         
@@ -57,12 +57,12 @@ Pman.Download = function(cfg)
     
     
     //--- simple method..
-    cfg.method = cfg.method || 'GET';
+    this.method = this.method || 'GET';
     
-    if (cfg.method == 'GET' && !cfg.params) {
+    if (this.method == 'GET' && !this.params) {
         (function() {
             submit = true;
-            this.csvFrame.src = cfg.url;
+            this.csvFrame.src = this.url;
             this.cleanup.defer(cfg.timeout || 30000,this);
         }).defer(100, this);
         
@@ -76,8 +76,8 @@ Pman.Download = function(cfg)
     var b = Roo.get(document.body);
     this.form = b.createChild({
         tag: 'form',
-        method : cfg.method,
-        action : cfg.url,
+        method : this.method,
+        action : this.url,
         target : this.csvFrame.id,
         enctype : 'multipart/form-data'
 
@@ -85,7 +85,7 @@ Pman.Download = function(cfg)
         
     });
  
-    for(var i in cfg.params) {
+    for(var i in this.params) {
         
         var el = this.form.createChild( {
             ns : 'html',
@@ -93,7 +93,7 @@ Pman.Download = function(cfg)
             
             type: 'hidden',
             name : i,
-            value : cfg.params[i]
+            value : this.params[i]
         });
         
         
@@ -102,7 +102,7 @@ Pman.Download = function(cfg)
     (function() {
         submit = true;
         this.form.dom.submit();
-        this.cleanup.defer(cfg.timeout || 30000,this);
+        this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
     
      
