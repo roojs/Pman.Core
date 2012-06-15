@@ -227,8 +227,8 @@ Roo.apply(Pman.Download.prototype, {
             t.params['csvTitles['+i+']'] = c.header;
             
         });
-        if (this.grid.ds.loadMask) {
-            this.grid.ds.loadMask.onLoad();
+        if (this.grid.loadMask) {
+            this.grid.loadMask.onLoad();
         }
         this.params.limit = 9999;
         
