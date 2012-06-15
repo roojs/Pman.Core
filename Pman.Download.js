@@ -28,7 +28,9 @@ var t = new Pman.Download({
 
 Pman.Download = function(cfg)
 {
- 
+    
+    this.params = {};
+    
     Roo.apply(this, cfg);
      
     if (this.grid) {
