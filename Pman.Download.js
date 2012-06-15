@@ -212,7 +212,7 @@ Roo.apply(Pman.Download.prototype, {
     buildFromGrid : function()
     {
         // get the params from beforeLoad
-        this.grid.ds.fireEvent('beforeload', {
+        this.grid.ds.fireEvent('beforeload', this.grid.ds, {
             params : this.params
             
         });
