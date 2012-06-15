@@ -29,14 +29,6 @@ var t = new Pman.Download({
 Pman.Download = function(cfg)
 {
  
-    
-    
-    if (cfg.newWindow) {
-            // as ie seems buggy...
-        window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
-        return ; 
-        
-    }
     Roo.apply(this, cfg);
     
     
@@ -46,6 +38,14 @@ Pman.Download = function(cfg)
         
     }
     
+    
+    if (cfg.newWindow) {
+            // as ie seems buggy...
+        window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
+        return ; 
+        
+    }
+   
     
     
     var submit = false;
