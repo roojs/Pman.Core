@@ -228,7 +228,7 @@ Roo.apply(Pman.Download.prototype, {
             
         });
         
-        
+        this.params.limit = 9999;
         
         
     }
