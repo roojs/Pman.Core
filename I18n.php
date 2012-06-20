@@ -204,7 +204,7 @@ class Pman_Core_I18n extends Pman
      /**
      * translate (used by database building);
      * usage :
-     * require_once 'Pman/Core/I18N.php';
+     * require_once 'Pman/Core/I18n.php';
      * $x = new Pman_Core_I18N();
      * $x->translate($this->authuser, 'c', 'US');
      * @param au - auth User
