@@ -220,7 +220,7 @@ Pman.Dialog.Image = {
                                 {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
-                                    name : 'onid'
+                                    name : 'id'
                                 },
                                 {
                                     xtype: 'Hidden',
