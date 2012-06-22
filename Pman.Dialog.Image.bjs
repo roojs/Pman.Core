@@ -84,6 +84,11 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
+                                    "name": "onid",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
                                     "name": "imgtype",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
