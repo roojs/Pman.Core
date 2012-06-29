@@ -392,7 +392,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (preg_match('#^http[s]*://#', $provider)) {
             $baseURL = '';
         }
-         var_dump($size < 0);
+       
         if ($size < 0) {
             return $baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
