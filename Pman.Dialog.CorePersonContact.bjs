@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-129",
+    "id": "roo-file-7",
     "name": "Pman.Dialog.CorePersonContact",
     "parent": "",
     "title": "",
-    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CorePersonContact.bjs",
+    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CorePersonContact.bjs",
     "items": [
         {
             "closable": false,
@@ -219,5 +219,6 @@
             ]
         }
     ],
-    "permname": ""
+    "permname": "",
+    "modOrder": "001"
 }
