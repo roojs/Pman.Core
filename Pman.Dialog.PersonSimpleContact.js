@@ -15,7 +15,7 @@ Pman.on('beforeload', function() {
             height: 200 // slightly taller..
         },
         itemList : [
-            'company_id',
+         //   'company_id',
             'name', 'phone', 'fax', 'email',
             'id'
         ]
