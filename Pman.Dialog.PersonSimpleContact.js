@@ -8,7 +8,7 @@ Pman.on('beforeload', function() {
     
     // edit - company readonly /office  - selectable..
     // CONTACTS!!!!!
-    Pman.Dialog.PersonEdit = new Pman.Dialog.PersonEditor({
+    Pman.Dialog.PersonSimpleContact = new Pman.Dialog.PersonEditor({
         type : 'edit',
         dialogConfig : {
             title: "Edit Contact Details",
