@@ -641,7 +641,8 @@ Pman.Dialog.PersonEditor.prototype = {
     saveBulk: function() {
         // similar action to SendIntro
         // we build a fake list of data..
-        if (!this.form.findField('company_id').getValue()) {
+        if (this.form.findField('company_id') && 
+                !this.form.findField('company_id').getValue()) {
             Roo.MessageBox.alert("Error", "Select the Company Name");
             return;
         }
