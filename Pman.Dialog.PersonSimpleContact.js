@@ -13,18 +13,10 @@ Pman.on('beforeload', function() {
         dialogConfig : {
             title: "Edit Contact Details",
             height: 350 // slightly taller..
-            
         },
         itemList : [
-            'company_id_name',
-            'office_id_name',
-            'name','role', 'phone', 'fax', 'email',
-       
-            'passwd1', 'passwd2',
-            'id', 
-            //'company_id', 
-            'company_id_email',
-            'company_id_address','company_id_tel','company_id_fax'
+            'name', 'phone', 'fax', 'email',
+            'id'
         ]
     });
 });
