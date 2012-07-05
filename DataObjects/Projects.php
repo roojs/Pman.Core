@@ -249,41 +249,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         
     }
     
-    
-    function i18toArray($type, $str) 
-    {
-        if (empty($str)) {
-            return array();
-        }
-        static $au;
-        static $langs;
-        static $cts;
-        
-        if (!$au) {
-            $u = DB_DataObject::factory('Person');
-            $au =$u->getAuthUser();
-            $lang = empty($au->lang ) ? 'en' : $au->lang;
-            $lbits = explode('_', strtoupper($lang));
-            // no validation here!!!!
-            require_once 'I18Nv2/Language.php';
-            require_once 'I18Nv2/Country.php';
-            $langs = new I18Nv2_Language($lbits[0]); // locale support not there??
-            $cts = new I18Nv2_Country($lbits[0]); // lo
-            
-        }
-        $lk = $type == 'c' ? $cts : $langs;
-        $ar  =explode(',', $str);
-        $ret = array();
-        foreach($ar as $k) {
-            $ret[] = array('code'=>$k, 'title' => $lk->getName($k));
-        }
-        return $ret;
-        // work out locale...
-        
-        
-        
-        
-    }
+   
     
     
    
