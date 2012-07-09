@@ -194,7 +194,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->autoJoinExtra();
         }
         
-        if (isset($q['_distinct'])) {{
+        if (isset($q['_distinct'])) {
             $this->_join = '';
         }
         
