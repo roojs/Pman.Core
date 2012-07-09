@@ -130,10 +130,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             $d = DB_DataObject::Factory($q['ontable']);
             $d->autoJoin();
             $this->selectAdd($d->data_select);
+            $this->_join .= "
+                LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
+                {$d->join}
+            "; 
             
-            $this->_join .= $d->join; 
-            echo '<PRE>';print_R($d);
-            exit;
             
             
             
