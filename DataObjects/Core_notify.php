@@ -125,7 +125,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events' . 'core_watch'))) {
             // this will only work on tables not joined to ours.
             
-            DB_DAtaObject::DebugLevel(1);
+            //DB_DAtaObject::DebugLevel(1);
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
             $d->autoJoin();
