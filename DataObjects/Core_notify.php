@@ -134,14 +134,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
                 {$d->join}
             "; 
-            
-            
-            
-            
-            
-            
-            
-        }
+        } 
         
         
         
