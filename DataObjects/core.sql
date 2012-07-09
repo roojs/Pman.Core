@@ -89,7 +89,8 @@ ALTER TABLE Events ADD INDEX lookuppt ( person_table);
 ALTER TABLE Events ADD INDEX lookup_when( person_id, event_id );
 
 ALTER TABLE Events add index lookup_event_when (event_when);
-
+ALTER TABLE Events add index lookup_action (event_action);
+ALTER TABLE Events add index lookup_on_table (event_on_table);
 
 
 CREATE TABLE  core_event_audit  (
