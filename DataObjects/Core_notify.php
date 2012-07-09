@@ -122,10 +122,16 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if (isset($q['ontable'])) {
+        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events' . 'core_watch')) {
+            // this will only work on tables not joined to ours.
+            
+            
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
             $d->autoJoin();
+            $this->selectAdd($d->data_select);
+            
+            $this->_join .= $d->join; 
             echo '<PRE>';print_R($d);
             exit;
             
