@@ -85,6 +85,10 @@ ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_
 
 ALTER TABLE Events ADD INDEX lookuppt ( person_table);
 
+ALTER TABLE Events ADD INDEX lookup_when( person_id, event_id );
+
+
+
 
 CREATE TABLE  core_event_audit  (
     id int(11)  NOT NULL AUTO_INCREMENT,
