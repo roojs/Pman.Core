@@ -88,6 +88,7 @@ ALTER TABLE Events ADD INDEX lookuppt ( person_table);
 --# speeding up lookups. 
 ALTER TABLE Events ADD INDEX lookup_when( person_id, event_id );
 
+alter table Events add index lookup_event_when (event_when);
 
 
 
