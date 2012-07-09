@@ -126,7 +126,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
             $d->autoJoin();
-            print_R($d);
+            echo '<PRE>';print_R($d);
             exit;
             
             
