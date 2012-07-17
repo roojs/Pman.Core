@@ -14,7 +14,7 @@
  *      ontable (req) tablename.
  *      filename
  *      (other table args)
- *      as (serve as a type) = eg. mimetype.
+ *      as (serve as a type) = eg. ?as=audio/mpeg 
  * 
  * args: generic
  *     as :(serve as a type) = eg. mimetype.
