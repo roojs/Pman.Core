@@ -65,7 +65,7 @@ class Pman_Core_Notify extends Pman
     var $target = 'Core/NotifySend';
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
-    
+    var $force = false;
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
