@@ -119,7 +119,7 @@ Pman.Dialog.Image = {
                                     _this.dialog.uploadComplete = true;
                                     _this.dialog.haveProgress = 2; 
                                     Roo.MessageBox.hide(); // force hiding
-                                    _this.dialog.el.unmask();
+                                    //_this.dialog.el.unmask();
                                      
                                     if (act.type == 'setdata') { 
                                         this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
