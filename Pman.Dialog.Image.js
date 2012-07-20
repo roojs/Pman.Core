@@ -256,7 +256,7 @@ Pman.Dialog.Image = {
                         {
                             // do some checks?
                              
-                            _this.dialog.el.mask("Sending");
+                            //_this.dialog.el.mask("Sending");
                             _this.dialog.uploadComplete = false;
                             _this.form.doAction('submit', {
                                 params: {
