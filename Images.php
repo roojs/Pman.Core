@@ -172,7 +172,7 @@ class Pman_Core_Images extends Pman
         
         $cv->convert($this->as_mimetype);
         $cv->serve();
-        
+        exit;
         
         
         
