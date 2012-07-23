@@ -140,6 +140,44 @@ class Pman_Core_Images extends Pman
         $this->serve($img);
         exit;
     }
+    
+    
+    function post()
+    {
+        // converts a posted string (eg.svg)
+        // into another type..
+        if (empty($_REQUEST['as'])) {
+           $this->jerr("missing target type");
+        }
+        if (empty($_REQUEST['mimetype'])) {
+            $this->jerr("missing mimetype");
+        }
+        if (empty($_REQUEST['data'])) {
+            $this->jerr("missing data");
+        }
+        
+        
+        $this->as_mimetype = $_REQUEST['as'];
+        $this->mimetype = $_REQUEST['mimetype'];
+        require_once 'File/MimeType.php';
+        $y = new File_MimeType();
+        $src_ext = $y->toExt($filename);
+        
+        
+        $tmp = $this->tempName($src_ext);
+        file_put_contents($tmp, $_REQUEST['data']);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
  
     function serve($img)
     {
