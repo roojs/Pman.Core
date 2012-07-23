@@ -95,7 +95,7 @@
         <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js"></script>
                  
 {end:}                  
-        <flexy:toJavascript 
+        <flexy:toJSON 
             baseURL="baseURL" 
             rootURL="rootURL" 
             isDev="isDev"
@@ -118,7 +118,7 @@
             AppVersion="appVersion"
             appDisabled="appDisabled"
             uiConfig="uiConfig"
-        >
+        ></flexy:toJSON>
         
         <script type="text/javascript">
             Ext=Roo; // bc
