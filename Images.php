@@ -167,10 +167,11 @@ class Pman_Core_Images extends Pman
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
         
+        require_once 'File/Convert.php';
+        $cv = new File_Convert($tmp, $this->mimetype);
         
-        
-        
-        
+        $cv->convert($this->as_mimetype);
+        $cv->serve();
         
         
         
