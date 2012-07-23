@@ -171,7 +171,7 @@ class Pman_Core_Images extends Pman
         $cv = new File_Convert($tmp, $this->mimetype);
         
         $cv->convert($this->as_mimetype);
-        $cv->serve();
+        $cv->serve('attachment');
         exit;
         
         
