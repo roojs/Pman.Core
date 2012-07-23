@@ -161,7 +161,7 @@ class Pman_Core_Images extends Pman
         $this->mimetype = $_REQUEST['mimetype'];
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
-        $src_ext = $y->toExt( $this->mimetype);
+        $src_ext = $y->toExt( $this->mimetype );
         
         
         $tmp = $this->tempName($src_ext);
