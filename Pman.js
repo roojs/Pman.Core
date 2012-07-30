@@ -560,7 +560,7 @@ Pman = new Roo.Document(
                 }
                 // what about the toolbar??
                 tab.grid.getView().mainWrap.mask("Deleting");
-                Pman.request({
+                new Pman.Request({
                     url: baseURL + '/Roo/'+tbl+'.php',
                     method: 'GET',
                     params: {
