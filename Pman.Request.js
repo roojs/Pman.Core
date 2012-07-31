@@ -74,7 +74,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         this.fireEvent("requestcomplete", this, response, options);
         
         if (this.mask && this.maskEl) {
-            Roo.get(this.maskEl).unmask();
+            Roo.get(this.maskEl).unmask(true);
         }
         var res = this.processResponse(response);
                 
@@ -98,7 +98,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         this.fireEvent("requestexception", this, response, options, e);
         var res = Roo.callback(options.failure, options.scope, [response, options]);
         if (this.mask && this.maskEl) {
-            Roo.get(this.maskEl).unmask();
+            Roo.get(this.maskEl).unmask(true);
         }
         if (res !== true) {
             var decode = this.processResponse(response);
