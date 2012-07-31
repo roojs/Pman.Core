@@ -322,7 +322,7 @@ class Pman_Core_NotifySend extends Pman
                 // try again later..
                 // check last event for this item..
                 
-                print_r($res);
+                //print_r($res);
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
