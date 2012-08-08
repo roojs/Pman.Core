@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         if (isset($q['_related_on_id']) && isset($q['_related_on_table'])) {
             // example: sales order - has invoices,
-            DB_DataObject::DebugLevel(1);
+            ///DB_DataObject::DebugLevel(1);
             $ev  =$this->factory('Events');
             $ev->setFrom(array(
                 'on_id' => $q['_related_on_id'],
