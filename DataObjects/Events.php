@@ -33,7 +33,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     
     //  ------------ROO HOOKS------------------------------------
-    function applyFilters($q, $au)
+    function applyFilters($q, $au ,$roo)
     {
         $tn = $this->tableName();
         if (!empty($q['query']['from'])) {
@@ -164,6 +164,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                                ));
             $obj = $ev->object();
             
+            if (!$obj) {
+                $roo->jerr("ontable is invalid");
+            }
+            if (!method_exists($obj,'relatedWhere')) {
+                $roo->jerr( $q['_related_on_table'] . " Does not have method relatedWhere");
+            }
             if ($obj && method_exists($obj,'relatedWhere')) {
                 $ar = $obj->relatedWhere();
                 $tn = $this->tableName();
