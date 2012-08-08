@@ -372,6 +372,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
      */
     function auditField($name, $ov, $nv, $old=false )
     {
+        // hack..
+        if (is_object($nv)) {
+            return;
+        
+        }
+        
         $x = DB_DataObject::factory('core_event_audit');
         $x->setFrom(array(
             'event_id' => $this->id,
