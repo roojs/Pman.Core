@@ -396,6 +396,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
        
         if ($size < 0) {
+            $provider = preg_replace('#/Thumb$/', '', $provider);
+            
             return $baseURL . $provider . "/{$this->id}/{$this->filename}";
         }
         //-- max?
