@@ -11,12 +11,17 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
 
     public $__table = 'Person';                          // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
+    public $email;                           // string(128)  not_null
+    
+    public $company_id;                      // int(11)  
     public $office_id;                       // int(11)  
+    
     public $name;                            // string(128)  not_null
+    public $firstname;                            // string(128)  not_null
+    public $lastname;                            // string(128)  not_null
     public $phone;                           // string(32)  not_null
     public $fax;                             // string(32)  not_null
-    public $email;                           // string(128)  not_null
-    public $company_id;                      // int(11)  
+    
     public $role;                            // string(32)  not_null
     public $active;                          // int(11)  not_null
     public $remarks;                         // blob(65535)  not_null blob
