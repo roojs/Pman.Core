@@ -182,8 +182,8 @@ ALTER TABLE Person ADD COLUMN   project_id int(11) default 0;
 ALTER TABLE Person ADD COLUMN   deleted_by INT(11) NOT NULL default 0 ;
 ALTER TABLE Person ADD COLUMN   deleted_dt DATETIME ;
 
-ALTER TABLE Person ADD COLUMN   firstname varchar(128);
-ALTER TABLE Person ADD COLUMN   lastname varchar(128);
+ALTER TABLE Person ADD COLUMN   firstname varchar(128) NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   lastname varchar(128) NOT NULL DEFAULT '';
 
 
 
