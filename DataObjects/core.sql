@@ -182,6 +182,11 @@ ALTER TABLE Person ADD COLUMN   project_id int(11) default 0;
 ALTER TABLE Person ADD COLUMN   deleted_by INT(11) NOT NULL default 0 ;
 ALTER TABLE Person ADD COLUMN   deleted_dt DATETIME ;
 
+ALTER TABLE Person ADD COLUMN   firstname varchar(128);
+ALTER TABLE Person ADD COLUMN   lastname varchar(128);
+
+
+
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
 alter table Person change role role varchar(254) NOT NULL DEFAULT '';
