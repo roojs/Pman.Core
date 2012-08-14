@@ -70,16 +70,16 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             $this->whereAdd("Companies.id IN (
                 SELECT distinct(company_id) FROM ProjectDirectory where project_id IN ($pids)
             ) $add" );
-            
-           
-            
+             
         }
         if (!empty($q['query']['comptype'])) {
            
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
-         
+        
+        // depricated - should be moved to module specific (texon afair)
+        
          if (!empty($q['query']['province'])) {
              $prov = $this->escape($q['query']['province']);
             $this->whereAdd("province LIKE '$prov%'");
@@ -267,6 +267,25 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         }
         return $i->toHTML($size);
         
+    }
+     function firstImage($filter='image/%')
+    {
+        $i = DB_DataObject::factory('Images');
+        //DB_DataObject::debugLevel(1);
+        $im = $i->gather($this, $filter);
+        if (empty($im)) {
+            return false;
+        }
+        return $im[0];
+    }
+    
+    function firstImageTag($size =-1, $base="/Images/Thumb", $filter='image/%')
+    {
+        $fm = $this->firstImage($filter);
+         if (empty($fm)) {
+            return '';
+        }
+        return $fm->toHTML($size, $base);
     }
     
     
