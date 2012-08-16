@@ -20,11 +20,11 @@ class Pman_Core_UploadProgress extends Pman
         
         header("Cache-Control: no-cache, must-revalidate");
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
-        print_r('in');
+        //print_r('in');
         if (  !function_exists('uploadprogress_get_info')) {
             $this->jok(false);
            }
-        print_r('in2');
+        //print_r('in2');
         if (!empty($_GET['id'])) {
            // var_dump(uploadprogress_get_info($_GET['id']));
             $this->jok(uploadprogress_get_info($_GET['id']));
