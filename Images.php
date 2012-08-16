@@ -144,6 +144,10 @@ class Pman_Core_Images extends Pman
     
     function post()
     {
+        
+        if (!$this->authUser) {
+            $this->jerr("image conversion only allowed by registered users");
+        }
         // converts a posted string (eg.svg)
         // into another type..
         if (empty($_REQUEST['as'])) {
