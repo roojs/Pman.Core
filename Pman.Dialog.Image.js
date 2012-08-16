@@ -70,15 +70,15 @@ Pman.Dialog.Image = {
                 dlg.haveProgress = 1;
             
                 var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();
-                Pman.request({
+                new Pman.Request({
                     url : baseURL + '/Core/UploadProgress.php',
                     params: {
                         id : uid
                     },
                     method: 'GET',
-                    success : function(data){
+                    success : function(res){
                         //console.log(data);
-                        
+                        var data = res.data;
                         if (dlg.haveProgress == 2) {
                             // it's been closed elsewhere..
                             return;
