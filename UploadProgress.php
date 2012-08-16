@@ -17,7 +17,7 @@ class Pman_Core_UploadProgress extends Pman
     function get()
     {
         
-        error_log('in');
+        
         header("Cache-Control: no-cache, must-revalidate");
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         
