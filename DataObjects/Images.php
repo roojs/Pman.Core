@@ -42,8 +42,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             return false;
         }
-         
-        error_log($perm);
         
         $o = $this->object();
         //print_r($o);
