@@ -23,14 +23,16 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     public $fax;                             // string(32)  not_null
     
     public $role;                            // string(32)  not_null
-    public $active;                          // int(11)  not_null
     public $remarks;                         // blob(65535)  not_null blob
     public $passwd;                          // string(64)  not_null
     public $owner_id;                        // int(11)  not_null
     public $lang;                            // string(8)  
     public $no_reset_sent;                   // int(11)  
     public $action_type;                     // string(32)  
-    public $project_id;                      // int(11)  
+    public $project_id;                      // int(11)
+
+    
+    public $active;                          // int(11)  not_null
     public $deleted_by;                      // int(11)  not_null
     public $deleted_dt;                      // datetime(19)  binary
 
