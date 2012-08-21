@@ -111,6 +111,21 @@ class Pman_Core_NotifySend extends Pman
         $o = $w->object();
         $p = $w->person();
         
+        if (isset($p->active) && empty($p->active)) {
+              $ev = $this->addEvent('NOTIFY', $w,
+                            "Notification event cleared (not user not active any more)" );;
+            $ww = clone($w);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s ') . 
+                     "Notification event cleared (not user not active any more)" 
+                    ."\n");
+            die("message has been sent already.\n");
+        }
+        
+        
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
         $l->setFrom( array(
