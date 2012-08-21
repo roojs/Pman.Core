@@ -112,7 +112,7 @@ class Pman_Core_NotifySend extends Pman
         $p = $w->person();
         
         if (isset($p->active) && empty($p->active)) {
-              $ev = $this->addEvent('NOTIFY', $w,
+            $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (not user not active any more)" );;
             $ww = clone($w);
             $w->sent = date('Y-m-d H:i:s');
