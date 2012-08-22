@@ -178,12 +178,10 @@ class Pman_Core_Mailer {
             mkdir(dirname($cache),0666, true);
         }
         
+        
         $a = &new HTTP_Request($url);
         $a->sendRequest();
-        echo $a->getResponseBody();
-        $fn = $this->page->tempName('tmp');
-        
-        $data = file_get_contents($url);
+        file_put_contents($cache .'.data', base64_encode( $a->getResponseBody()));
         
         
         
