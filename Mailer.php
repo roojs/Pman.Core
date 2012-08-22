@@ -146,8 +146,7 @@ class Pman_Core_Mailer {
                 $mime->addHTMLImage(
                     $cdata['file'],
                      $cdata['mimetype'],
-                    $cdata['mimetype'],
-                    $cid.'.'.$cdata['ext'],
+                     $cid.'.'.$cdata['ext'],
                     true,
                     $cdata['contentid']
                 );
