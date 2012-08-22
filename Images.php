@@ -220,7 +220,7 @@ class Pman_Core_Images extends Pman
         $ext = array_pop($ar);
         $ar[] = $this->size;
         $ar[] = $ext;
-        )
+        
         if (!file_exists(implode('.', $ar))) {
             var_dump($ar);
             $this->validateSize();
