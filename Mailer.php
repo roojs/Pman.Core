@@ -85,7 +85,10 @@ class Pman_Core_Mailer {
             $this->htmlbodytoCID($htmlbody);
             
              
-        } 
+        }
+        
+        
+        
         $template = new HTML_Template_Flexy( array(
                 'nonHTML' => true,
         ));
@@ -123,6 +126,29 @@ class Pman_Core_Mailer {
         
         $parts[1]['Message-Id'] = '<' .   $content->msgid   .
                                      '@' . $content->HTTP_HOST .'>';
+        
+        
+        
+        
+        if ($htmlbody !== false) {
+            require_once 'Mail/mime.php';
+            $mime = new Mail_mime(array('eol' => "\n"));
+            
+            $mime->setTXTBody($parts[2]);
+            $mime->setHTMLBody($htmlbody);
+            
+            foreach($)
+            
+                $mime->addAttachment($file, 'text/plain');
+
+                $parts[2] = $mime->get();
+                $parts[1]= $mime->headers($parts[1]);
+            
+
+        
+        
+        
+        
         
         
        // list($recipents,$headers,$body) = $parts;
