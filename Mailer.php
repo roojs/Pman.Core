@@ -167,6 +167,8 @@ class Pman_Core_Mailer {
             
             
         }
+        return $dom->saveHTML();
+        
         
         
     }
