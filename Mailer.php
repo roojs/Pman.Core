@@ -209,6 +209,11 @@ class Pman_Core_Mailer {
     }
     function fetchImage($url)
     {
+        
+        if ($url[0] == '/') {
+            var_Dump($this->rootDir);exit;
+        }
+        
         print_R($url);
         
         exit;
