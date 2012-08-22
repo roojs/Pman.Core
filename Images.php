@@ -216,7 +216,7 @@ class Pman_Core_Images extends Pman
         
         // if the mimetype is not converted..
         // then the filename should be FILEPART.{size}.jpg
-        $fn = $img->getStoreName() .$this->size '.jpeg'; // thumbs are currenly all jpeg.!???
+        $fn = $img->getStoreName() . $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
         
         
         if (!file_exists($fn)) {
