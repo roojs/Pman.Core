@@ -260,7 +260,7 @@ class Pman_Core_Mailer {
         $ret['file'] = $cache . '.data';
         return $ret;
         
-    
+    }
     
     
 }
