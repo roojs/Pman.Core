@@ -213,7 +213,16 @@ class Pman_Core_Images extends Pman
         }
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
-        $this->validateSize();
+        
+        // if the mimetype is not converted..
+        // then the filename should be FILEPART.{size}.jpg
+        $ar = explode('.', $img->getStoreName());
+        $ext = array_pop($ar);
+        $ar[] = $this->size;
+        $ar[] = $ext;
+        if (!file_exists(implode('.', $ar))) {
+            $this->validateSize();
+        }
         
         $x->convert( $this->as_mimetype, $this->size);
         $x->serve();
