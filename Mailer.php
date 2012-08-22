@@ -194,7 +194,6 @@ class Pman_Core_Mailer {
             'mimetype' => $mt,
             'ext' => $ext
             
-            
         )));
         
     
