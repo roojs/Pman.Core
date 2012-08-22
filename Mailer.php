@@ -141,9 +141,9 @@ class Pman_Core_Mailer {
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
             
-            foreach($) { 
+            foreach($this->images as $cid=>$cdata) { 
             
-                $mime->addAttachment($file, 'text/plain');
+                $mime->addAttachment($cdata['file'], 'text/plain');
             }
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
@@ -211,6 +211,7 @@ class Pman_Core_Mailer {
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
             $ret =  json_decode($cache);
             $ret['file'] = $cache . '.data';
+            return $ret;
         }
         if (!file_exists(dirname($cache))) {
             mkdir(dirname($cache),0666, true);
@@ -227,12 +228,16 @@ class Pman_Core_Mailer {
         $m  = new File_MimeType();
         $ext = $m->toExt($mt);
         
-        file_put_contents($cache, json_encode(array(
+        $ret = array(
             'mimetype' => $mt,
             'ext' => $ext,
-            'contentid' => md5($url);
+            'contentid' => md5($url)
             
-        )));
+        );
+        
+        file_put_contents($cache, json_encode($ret));
+         $ret['file'] = $cache . '.data';
+        return $ret;
         
     
     
