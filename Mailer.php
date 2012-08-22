@@ -171,7 +171,12 @@ class Pman_Core_Mailer {
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
-        
+        if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
+            return json_decode($cache);
+        }
+        if (!file_exists(dirname($cache))) {
+            mkdir(dirname($cache),0666, true);
+        }
         
         $a = &new HTTP_Request($url);
         $a->sendRequest();
