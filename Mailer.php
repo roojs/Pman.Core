@@ -75,14 +75,14 @@ class Pman_Core_Mailer {
         require_once 'HTML/Template/Flexy.php';
         
         $htmlbody = false;
-        
-        if (is_string($template->resolvePath('mail/'.$template.'.body.html')) ) {
+        $htmltemplate = new HTML_Template_Flexy(  );
+
+        if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
             // then we have a multi-part email...
             
             
-            $htmltemplate = new HTML_Template_Flexy(  );
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
-            $htmlbody =  $template->bufferedOutputObject($content);
+            $htmlbody =  $htmltemplate->bufferedOutputObject($content);
             
             // for the html body, we may want to convert the attachments to images.
             
