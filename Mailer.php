@@ -239,7 +239,7 @@ class Pman_Core_Mailer {
             mkdir(dirname($cache),0666, true);
         }
         
-        
+        require_once 'HTTP/Request.php';
         $a = new HTTP_Request($url);
         $a->sendRequest();
         file_put_contents($cache .'.data', $a->getResponseBody());
