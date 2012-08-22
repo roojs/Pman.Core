@@ -146,10 +146,10 @@ class Pman_Core_Mailer {
                 $mime->addAttachment(
                     $cdata['file'],
                     $cdata['mimetype'],
-                    $name        = $cid.'.'.$cdata['ext'],
-                    $isfile      = true,
+                     $cid.'.'.$cdata['ext'], //$name        =
+                    true, // $isfile      = 
                     $encoding    = 'base64',
-                    $disposition = 'attachment',
+                    $disposition = 'inline',
                     $charset     = '',
                     $language    = '',
                     $location    = '',
