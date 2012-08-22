@@ -183,7 +183,10 @@ class Pman_Core_Mailer {
         $a->sendRequest();
         file_put_contents($cache .'.data', base64_encode( $a->getResponseBody()));
         
+        $a->getResponseHeader('Content-Type');
         
+        require_once 'File/MimeType.php';
+        $m  = new File_MimeType;
         
         
         
