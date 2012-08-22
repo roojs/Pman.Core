@@ -212,6 +212,11 @@ class Pman_Core_Mailer {
         
         if (preg_match('#^file:///#', $url)) {
             $file = preg_replace('#^file:///#', '', $url);
+            require_once 'File/MimeType.php';
+            $m  = new File_MimeType();
+            $mt = $m->fromFilename($file);
+            $ext = $m->toExt($mt); 
+            
             return array(
             //    'mimetype' =>
              //   'ext' =>
