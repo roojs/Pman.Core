@@ -211,7 +211,7 @@ class Pman_Core_Mailer {
     {
         
         if ($url[0] == '/') {
-            var_Dump($this->bootLoader->rootDir);exit;
+            print_R($this->page);exit;
         }
         
         print_R($url);
