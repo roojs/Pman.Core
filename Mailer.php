@@ -159,7 +159,10 @@ class Pman_Core_Mailer {
         $imgs= $dom->getElementsByTagName('img');
         
         foreach ($imgs as $i=>$img) {
-            $dom->
+            $url  = $dom->getAttribute('src');
+            $conv = $this->fetchImage($url);
+            $this->imga
+            $url
             
             
         }
@@ -192,7 +195,8 @@ class Pman_Core_Mailer {
         
         file_put_contents($cache, json_encode(array(
             'mimetype' => $mt,
-            'ext' => $ext
+            'ext' => $ext,
+            'contentid' => md5($url);
             
         )));
         
