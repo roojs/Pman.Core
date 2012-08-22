@@ -150,5 +150,6 @@ class Pman_Core_Mailer {
         error_reporting($oe);
        
         return $ret;
+    }
     
 }
