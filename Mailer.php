@@ -30,6 +30,10 @@ class Pman_Core_Mailer {
     var $template       = false; /* string */
     var $replaceImages  = false; /* boolean */
     
+    
+    var $images         = array(); // generated list of cid images for sending
+    
+    
     function Pman_Core_Mailer($args) {
         foreach($args as $k=>$v) {
             // a bit trusting..
@@ -137,13 +141,13 @@ class Pman_Core_Mailer {
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
             
-            foreach($)
+            foreach($) { 
             
                 $mime->addAttachment($file, 'text/plain');
-
-                $parts[2] = $mime->get();
-                $parts[1]= $mime->headers($parts[1]);
-            
+            }
+            $parts[2] = $mime->get();
+            $parts[1] = $mime->headers($parts[1]);
+        
 
         
         
