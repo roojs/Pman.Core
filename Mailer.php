@@ -82,7 +82,7 @@ class Pman_Core_Mailer {
             
             $htmltemplate = new HTML_Template_Flexy(  );
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
-            $htmlbody =  $template->bufferedOutputObject($content);
+            $htmlbody =  $htmltemplate->bufferedOutputObject($content);
             
             // for the html body, we may want to convert the attachments to images.
             
