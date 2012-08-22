@@ -25,10 +25,10 @@
 
 class Pman_Core_Mailer {
     
-    var $page           = false;
-    var $contents       = false;
-    var $template       = false;
-    var $replaceImages  = false;
+    var $page           = false; /* usually a html_flexyframework_page */
+    var $contents       = false; /* object or array */
+    var $template       = false; /* string */
+    var $replaceImages  = false; /* boolean */
     
     function Pman_Core_Mailer($args) {
         foreach($args as $k=>$v) {
