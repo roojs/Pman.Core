@@ -211,7 +211,21 @@ class Pman_Core_Mailer {
     {
         
         if ($url[0] == '/') {
-            print_R($this->page);exit;
+            $file = $this->page->rootDir . $url;
+            require_once 'File/MimeType.php';
+            $m  = new File_MimeType();
+            $mt = $m->fromFilename($file);
+            $ext = $m->toExt($mt); 
+            
+            return array(
+                    'mimetype' => $mt,
+                   'ext' => $ext,
+                   'contentid' => md5($file),
+                   'file' => $file
+            );
+            
+            
+            
         }
         
         print_R($url);
