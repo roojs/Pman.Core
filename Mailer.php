@@ -149,7 +149,7 @@ class Pman_Core_Mailer {
                     $cdata['mimetype'],
                     $cid.'.'.$cdata['ext'],
                     true,
-                    $cid
+                    $cdata['contentid']
                 );
             }
             $parts[2] = $mime->get();
