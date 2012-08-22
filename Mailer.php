@@ -143,7 +143,20 @@ class Pman_Core_Mailer {
             
             foreach($this->images as $cid=>$cdata) { 
             
-                $mime->addAttachment($cdata['file'], $cdata['mimetype']);
+                $mime->addAttachment(
+                    $cdata['file'],
+                    $cdata['mimetype'],
+                    $name        = $cid.'.'.$cdata['ext'],
+                    $isfile      = true,
+                    $encoding    = 'base64',
+                    $disposition = 'attachment',
+                    $charset     = '',
+                    $language    = '',
+                    $location    = '',
+                    $n_encoding  = null,
+                    $f_encoding  = null,
+                    $description = '',
+                    $h_charset   = null
             }
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
