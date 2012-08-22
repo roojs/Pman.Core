@@ -51,7 +51,7 @@ class Pman_Core_Mailer {
         $templateFile = $this->template;
         $args = $this->contents;
         
-        $content  = clone($page);
+        $content  = clone($this->page);
         
         foreach((array)$args as $k=>$v) {
             $content->$k = $v;
