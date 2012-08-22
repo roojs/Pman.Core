@@ -76,7 +76,7 @@ class Pman_Core_Mailer {
         
         $htmlbody = false;
         $htmltemplate = new HTML_Template_Flexy(  );
-        if (is_string($htmltemplate->resolvePath('mail/'.$template.'.body.html')) ) {
+        if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
             // then we have a multi-part email...
             
             
