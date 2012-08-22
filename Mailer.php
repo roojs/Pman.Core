@@ -209,6 +209,7 @@ class Pman_Core_Mailer {
     }
     function fetchImage($url)
     {
+        print_R($url);
         
         if (preg_match('#^file:///#', $url)) {
             $file = preg_replace('#^file://#', '', $url);
