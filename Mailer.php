@@ -194,11 +194,11 @@ class Pman_Core_Mailer {
         $imgs= $dom->getElementsByTagName('img');
         
         foreach ($imgs as $i=>$img) {
-            $url  = $dom->getAttribute('src');
+            $url  = $img->getAttribute('src');
             $conv = $this->fetchImage($url);
             $this->images[$conv['contentid']] = $conv;
             
-            $url->setAttribute('src', 'cid:' . $conv['contentid']);
+            $img->setAttribute('src', 'cid:' . $conv['contentid']);
             
             
         }
