@@ -172,7 +172,8 @@ class Pman_Core_Mailer {
         // 2 files --- the info file.. and the actual file...
         $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
-            return json_decode($cache);
+            $ret =  json_decode($cache);
+            $ret['file'] = $cache . '.data';
         }
         if (!file_exists(dirname($cache))) {
             mkdir(dirname($cache),0666, true);
@@ -183,14 +184,19 @@ class Pman_Core_Mailer {
         $a->sendRequest();
         file_put_contents($cache .'.data', base64_encode( $a->getResponseBody()));
         
-        $a->getResponseHeader('Content-Type');
+        $mt = $a->getResponseHeader('Content-Type');
         
         require_once 'File/MimeType.php';
-        $m  = new File_MimeType;
+        $m  = new File_MimeType();
+        $ext = $m->toExt($mt);
         
+        file_put_contents($cache, json_encode(array(
+            'mimetype' => $mt,
+            'ext' => $ext
+            
+            
+        )));
         
-        
-    }
     
     
     
