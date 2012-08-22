@@ -218,9 +218,10 @@ class Pman_Core_Mailer {
             $ext = $m->toExt($mt); 
             
             return array(
-            //    'mimetype' =>
-             //   'ext' =>
-             //   'contentid'
+                    'mimetype' => $mt,
+                   'ext' => $ext,
+                   'contentid' => md5($file),
+                   'file' => $file
             );
             
         }
