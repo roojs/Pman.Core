@@ -168,6 +168,8 @@ class Pman_Core_Mailer {
     }
     function fetchImage($url)
     {
+        // CACHE???
+        $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
         
         
         $a = &new HTTP_Request($url);
