@@ -131,7 +131,24 @@ class Pman_Core_Mailer {
             'body' => $parts[2]
         );
     }
-    
-    
+    function send()
+    {
+        
+        $email = $this->toData();
+        if (is_a($email, 'PEAR_Error')) {
+            return $email;
+        }
+        ///$recipents = array($this->email);
+        $mailOptions = PEAR::getStaticProperty('Mail','options');
+        $mail = Mail::factory("SMTP",$mailOptions);
+        $headers['Date'] = date('r');
+        if (PEAR::isError($mail)) {
+            return $mail;
+        } 
+        $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+        $ret = $mail->send($email['recipents'],$email['headers'],$email['body']);
+        error_reporting($oe);
+       
+        return $ret;
     
 }
