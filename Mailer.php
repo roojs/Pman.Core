@@ -209,6 +209,17 @@ class Pman_Core_Mailer {
     }
     function fetchImage($url)
     {
+        
+        if (preg_match('#^file:///#', $url)) {
+            $file = preg_replace('#^file:///#', '', $url);
+            return array(
+            //    'mimetype' =>
+             //   'ext' =>
+             //   'contentid'
+            );
+            
+        }
+        
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
@@ -240,7 +251,7 @@ class Pman_Core_Mailer {
         );
         
         file_put_contents($cache, json_encode($ret));
-         $ret['file'] = $cache . '.data';
+        $ret['file'] = $cache . '.data';
         return $ret;
         
     
