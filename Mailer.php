@@ -41,7 +41,7 @@ class Pman_Core_Mailer {
      * ---------------- Global Tools ---------------   
      */
     
-    function toData(, $args)
+    function toData()
     {
     
         $templateFile = $this->template;
