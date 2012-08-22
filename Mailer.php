@@ -211,6 +211,7 @@ class Pman_Core_Mailer {
     {
         print_R($url);
         
+        exit;
         if (preg_match('#^file:///#', $url)) {
             $file = preg_replace('#^file://#', '', $url);
             require_once 'File/MimeType.php';
