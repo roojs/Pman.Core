@@ -213,7 +213,7 @@ class Pman_Core_Images extends Pman
         }
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
-        $this->validateSize();
+        //$this->validateSize();
         
         $x->convert( $this->as_mimetype, $this->size);
         $x->serve();
