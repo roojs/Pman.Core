@@ -51,7 +51,7 @@ class Pman_Core_Mailer {
         $templateFile = $this->template;
         $args = $this->contents;
         
-        $content  = clone($this->page);
+        $content  = clone($page);
         
         foreach((array)$args as $k=>$v) {
             $content->$k = $v;
@@ -75,14 +75,14 @@ class Pman_Core_Mailer {
         require_once 'HTML/Template/Flexy.php';
         
         $htmlbody = false;
-        $htmltemplate = new HTML_Template_Flexy(  );
-        if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
+        
+        if (is_string($template->resolvePath('mail/'.$template.'.body.html')) ) {
             // then we have a multi-part email...
             
             
             $htmltemplate = new HTML_Template_Flexy(  );
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
-            $htmlbody =  $htmltemplate->bufferedOutputObject($content);
+            $htmlbody =  $template->bufferedOutputObject($content);
             
             // for the html body, we may want to convert the attachments to images.
             
@@ -239,7 +239,7 @@ class Pman_Core_Mailer {
         }
         
         
-        $a =  new HTTP_Request($url);
+        $a = &new HTTP_Request($url);
         $a->sendRequest();
         file_put_contents($cache .'.data', $a->getResponseBody());
         
@@ -260,7 +260,7 @@ class Pman_Core_Mailer {
         $ret['file'] = $cache . '.data';
         return $ret;
         
-    }
+    
     
     
 }
