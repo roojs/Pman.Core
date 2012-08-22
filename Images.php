@@ -216,16 +216,10 @@ class Pman_Core_Images extends Pman
         
         // if the mimetype is not converted..
         // then the filename should be FILEPART.{size}.jpg
-        $fn = $img->getStoreName();
-        $dir = dirname($fn);
-        $file = basename($fn);
-        $ar = explode('.', $file);
-        $ext = array_pop($ar);
-        $ar[] = $this->size;
-        $ar[] = $ext;
+        $fn = $img->getStoreName() .$this->size '.jpeg'; // thumbs are currenly all jpeg.!???
         
-        if (!file_exists($dir .'/'. implode('.', $ar))) {
-            var_dump($dir .'/'. implode('.', $ar));
+        
+        if (!file_exists($fn)) {
             $this->validateSize();
         }
         
