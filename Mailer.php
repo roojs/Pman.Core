@@ -75,8 +75,8 @@ class Pman_Core_Mailer {
         require_once 'HTML/Template/Flexy.php';
         
         $htmlbody = false;
-         $htmltemplate = new HTML_Template_Flexy(  );
-        if (is_string($template->resolvePath('mail/'.$template.'.body.html')) ) {
+        $htmltemplate = new HTML_Template_Flexy(  );
+        if (is_string($htmltemplate->resolvePath('mail/'.$template.'.body.html')) ) {
             // then we have a multi-part email...
             
             
