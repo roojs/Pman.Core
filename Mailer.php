@@ -152,4 +152,37 @@ class Pman_Core_Mailer {
         return $ret;
     }
     
+    function htmlbodytoCID($html)
+    {
+        $dom = new DOMDocument;
+        $dom->loadHTML($html);
+        $imgs= $dom->getElementsByTagName('img');
+        
+        foreach ($imgs as $i=>$img) {
+            $dom->
+            
+            
+        }
+        
+        
+    }
+    function fetchImage($url)
+    {
+        
+        
+        $a = &new HTTP_Request($url);
+        $a->sendRequest();
+        echo $a->getResponseBody();
+        $fn = $this->page->tempName('tmp');
+        
+        $data = file_get_contents($url);
+        
+        
+        
+        
+        
+    }
+    
+    
+    
 }
