@@ -239,7 +239,7 @@ class Pman_Core_Mailer {
         }
         
         
-        $a = &new HTTP_Request($url);
+        $a =  new HTTP_Request($url);
         $a->sendRequest();
         file_put_contents($cache .'.data', $a->getResponseBody());
         
