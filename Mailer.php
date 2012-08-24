@@ -45,7 +45,7 @@ class Pman_Core_Mailer {
     var $contents       = false; /* object or array */
     var $template       = false; /* string */
     var $replaceImages  = false; /* boolean */
-    
+    var $rcpts   = false;
     
     var $images         = array(); // generated list of cid images for sending
     
@@ -195,8 +195,9 @@ class Pman_Core_Mailer {
         if (PEAR::isError($mail)) {
             return $mail;
         } 
+        $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
-        $ret = $mail->send($email['recipents'],$email['headers'],$email['body']);
+        $ret = $mail->send($rcpts,$email['headers'],$email['body']);
         error_reporting($oe);
        
         return $ret;
