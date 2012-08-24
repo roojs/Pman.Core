@@ -20,7 +20,8 @@
        page => 
        contents
        template
-       replaceImages => true|false
+       replaceImages => true|false,
+       rcpts => array()   // override recipients..
     ]
  *
  *  recipents is gathered from the resulting template
