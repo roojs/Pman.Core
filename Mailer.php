@@ -16,6 +16,13 @@
        replaceImages => true|false
     ]
  *
+ *  recipents is gathered from the resulting template
+ *   -- eg.
+ *    To: <a>,<b>,<c>
+ * 
+ *     '
+ * 
+ * 
  *  $x->asData(); // returns data needed for notify?? - notify should really
  *                  // just use this to pass around later..
  *
