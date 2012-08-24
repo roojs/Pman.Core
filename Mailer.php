@@ -3,6 +3,13 @@
 /**
  *
  *  code that used to be in Pman (sendTemplate / emailTemplate)
+ * 
+ *  template is in template directory subfolder 'mail'
+ *   
+ *  eg. use 'welcome' as template -> this will use templates/mail/welcome.txt
+ *  if you also have templates/mail/welcome.body.html - then that will be used as 
+ *     the html body
+ * 
  *
  *  usage:
  *
@@ -20,7 +27,8 @@
  *   -- eg.
  *    To: <a>,<b>,<c>
  * 
- *     '
+ * 
+ *  if the file     '
  * 
  * 
  *  $x->asData(); // returns data needed for notify?? - notify should really
