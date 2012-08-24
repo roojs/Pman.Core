@@ -191,7 +191,7 @@ class Pman_Core_Mailer {
         ///$recipents = array($this->email);
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         $mail = Mail::factory("SMTP",$mailOptions);
-        $headers['Date'] = date('r');
+        $headers['Date'] = date('r'); 
         if (PEAR::isError($mail)) {
             return $mail;
         } 
