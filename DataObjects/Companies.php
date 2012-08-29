@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $x = DB_DataObject::factory('Companies');
         $x->comptype= 'OWNER';
         $x->find(true);
-        error_log('inin');
+        
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
             if (!empty($q['query']['company_include_self'])) {
@@ -76,6 +76,12 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
            
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
+        }
+        
+        // search company name and 
+        if (!empty($q['_search'])) {
+            $s = $this->escape($q['_search']);
+            $this->whereAdd("Companies.name like '%$s%' OR Companies.description like '%$s%' ");
         }
         
         // depricated - should be moved to module specific (texon afair)
