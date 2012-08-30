@@ -288,7 +288,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $gm = DB_DataObject::Factory('group_members');
         if (in_array($g->id,$gm->listGroupMembership($this))) {
             // refresh admin groups.
-            $gr = DB_DataObject::Factory('Group_Rights');
+            $gr = DB_DataObject::Factory('group_rights');
             $gr->applyDefs($g, 0);
         }
              
@@ -429,7 +429,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         // ------ INIITIALIZE IF NO GROUPS ARE SET UP.
         
-        $g = DB_DataObject::Factory('Group_Rights');
+        $g = DB_DataObject::Factory('group_rights');
         if (!$g->count()) {
             $g->genDefault();
         }
@@ -461,7 +461,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
         // then load all those 
-        $g = DB_DataObject::Factory('Group_Rights');
+        $g = DB_DataObject::Factory('group_rights');
         $ret =  $g->listPermsFromGroupIds($grps, $isAdmin);
         //echo '<PRE>';print_r($ret);
         return $ret;
