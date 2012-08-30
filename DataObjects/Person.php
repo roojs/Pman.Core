@@ -285,7 +285,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $g = DB_DataObject::factory('Groups');
         $g->type = 0;
         $g->get('name', 'Administrators');
-        $gm = DB_DataObject::Factory('Group_Members');
+        $gm = DB_DataObject::Factory('group_members');
         if (in_array($g->id,$gm->listGroupMembership($this))) {
             // refresh admin groups.
             $gr = DB_DataObject::Factory('Group_Rights');
@@ -410,7 +410,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();
-        $g = DB_DataObject::Factory('Group_Members');
+        $g = DB_DataObject::Factory('group_members');
         $aur['groups']  = $g->listGroupMembership($this, 'name');
         
         $aur['passwd'] = '';
@@ -438,13 +438,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return $g->adminRights(); // system is not set up - so they get full rights.
         }
         //DB_DataObject::debugLevel(1);
-        $g = DB_DataObject::Factory('Group_Members');
+        $g = DB_DataObject::Factory('group_members');
         $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
         if (!$g->count()) {
             // add the current user to the admin group..
             $g = DB_DataObject::Factory('Groups');
             if ($g->get('name', 'Administrators')) {
-                $gm = DB_DataObject::Factory('Group_Members');
+                $gm = DB_DataObject::Factory('group_members');
                 $gm->group_id = $g->id;
                 $gm->user_id = $this->id;
                 $gm->insert();
@@ -454,7 +454,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         // ------ STANDARD PERMISSION HANDLING.
         
-        $g = DB_DataObject::Factory('Group_Members');
+        $g = DB_DataObject::Factory('group_members');
         $grps = $g->listGroupMembership($this);
        //var_dump($grps);
         $isAdmin = $g->inAdmin;
@@ -476,7 +476,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function groups($what=false)
     {
-        $g = DB_DataObject::Factory('Group_Members');
+        $g = DB_DataObject::Factory('group_members');
         $grps = $g->listGroupMembership($this);
         $g = DB_DataObject::Factory('Groups');
         $g->whereAddIn('id', $grps, 'int');
@@ -554,7 +554,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $this->active = 1;
         }
         $tn_p = $this->tableName();
-        $tn_gm = DB_DataObject::Factory('Group_Members')->tableName();
+        $tn_gm = DB_DataObject::Factory('group_members')->tableName();
         $tn_g = DB_DataObject::Factory('Groups')->tableName();
 
         ///---------------- Group views --------
@@ -766,7 +766,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $g->type = 0;
             $g->get('name', 'Administrators');
             
-            $p = DB_DataObject::factory('Group_Members');
+            $p = DB_DataObject::factory('group_members');
             $p->group_id = $g->id;
             $p->user_id = $this->id;     
             if (!$p->count()) {
