@@ -21,7 +21,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'Group_Rights';                    // table name
+    public $__table = 'group_rights';                    // table name
     public $rightname;                       // string(64)  not_null
     public $group_id;                        // int(11)  not_null
     public $accessmask;                      // string(10)  not_null
@@ -217,7 +217,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         //echo '<PRE>';print_r($defs);
         //$usecol = 1;
         foreach($defs as $rightname => $defdata) {
-            $gr = DB_DataObject::Factory('Group_Rights');
+            $gr = DB_DataObject::Factory('group_rights');
             $gr->rightname  = $rightname;
             $gr->group_id = $g->id;
             if (!$gr->find(true)) {
