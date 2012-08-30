@@ -106,12 +106,15 @@ ALTER TABLE core_event_audit ADD COLUMN       old_audit_id int(11)  NOT NULL DEF
 ALTER TABLE core_event_audit ADD COLUMN       newvalue BLOB  NOT NULL DEFAULT '';
 ALTER TABLE core_event_audit ADD   INDEX lookup(event_id, name, old_audit_id);
 
-CREATE TABLE  Group_Members  (
+RENAME TABLE Group_Members group_members;
+CREATE TABLE  group_members  (
     id int(11)  NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (id)
 );
-ALTER TABLE Group_Members ADD COLUMN  group_id int(11) default NULL;
-ALTER TABLE Group_Members ADD COLUMN   user_id int(11) NOT NULL default 0;
+ALTER TABLE group_members ADD COLUMN  group_id int(11) default NULL;
+ALTER TABLE group_members ADD COLUMN   user_id int(11) NOT NULL default 0;
+
+
 
 CREATE TABLE  Group_Rights  (
     id int(11)  NOT NULL AUTO_INCREMENT,
