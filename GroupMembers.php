@@ -87,7 +87,7 @@ class Pman_Core_GroupMembers extends Pman
         
         
         
-        $p = DB_DataObject::factory('Group_Members');
+        $p = DB_DataObject::factory('group_members');
         $p->group_id = (int)$_GET['group_id'];
         $p->whereAdd('user_id IN ('. implode(',' ,array_keys($ret) ). ')');
         $p->find();
@@ -126,7 +126,7 @@ class Pman_Core_GroupMembers extends Pman
                 $pi = DB_DataObject::factory('Person');
                 $pi->get($uid);
                     
-                $p = DB_DataObject::factory('Group_Members');
+                $p = DB_DataObject::factory('group_members');
                 $p->group_id = (int)$_POST['group_id'];
                 $p->user_id = $uid;
                 //$p->type = (int)$_POST['type'];
@@ -155,7 +155,7 @@ class Pman_Core_GroupMembers extends Pman
            
             
             foreach($_POST['dataDelete'] as $id => $ac) {
-                $m = DB_DataObject::factory('Group_Members');
+                $m = DB_DataObject::factory('group_members');
                 $m->get($id);
                 $m->delete();
             }
@@ -165,7 +165,7 @@ class Pman_Core_GroupMembers extends Pman
         if (!empty($_POST['dataAdd'])) {
              
             foreach($_POST['dataAdd'] as $id => $ac) {
-                $p = DB_DataObject::factory('Group_Members');
+                $p = DB_DataObject::factory('group_members');
                 $p->group_id = (int)$_POST['group_id'];
                 $p->user_id = $id;
                 $p->insert();
