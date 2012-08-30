@@ -129,7 +129,7 @@ ALTER TABLE group_rights ADD COLUMN     group_id int(11) NOT NULL DEFAULT 0;
 ALTER TABLE group_rights ADD COLUMN   accessmask varchar(10)  NOT NULL DEFAULT '';
 
 #old mysql.
-ALTER TABLE Group_Rights CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
+ALTER TABLE group_rights CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
 
 
 
