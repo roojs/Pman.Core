@@ -29,7 +29,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     {
         $x = DB_DataObject::factory('Groups');
         $x->query("DELETE FROM Group_Rights WHERE group_id = {$this->id}");
-        $x->query("DELETE FROM Group_Members WHERE group_id = {$this->id}");
+        $x->query("DELETE FROM group_members WHERE group_id = {$this->id}");
     }
     /**
      * check who is trying to access this. false == access denied..
@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $pi = DB_DataObject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $pi->get($this->leader);
             
-        $p = DB_DataObject::factory('Group_Members');
+        $p = DB_DataObject::factory('group_members');
         $p->group_id = $this->id;
         $p->user_id = $this->leader;
         //$p->type = 1; //???????
