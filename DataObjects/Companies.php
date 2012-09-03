@@ -78,12 +78,6 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
         }
         
-        // search company name and description
-        if (!empty($q['_search'])) {
-            $s = $this->escape($q['_search']);
-            $this->whereAdd("Companies.name like '%$s%' OR Companies.description like '%$s%' ");
-        }
-        
         // depricated - should be moved to module specific (texon afair)
         
          if (!empty($q['query']['province'])) {
