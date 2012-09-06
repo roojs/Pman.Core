@@ -326,7 +326,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function setPassword($value) 
     {
         $salt='';
-        error_log($value);
         while(strlen($salt)<9) {
             $salt.=chr(rand(64,126));
             //php -r var_dump(crypt('testpassword', '$1$'. (rand(64,126)). '$'));
