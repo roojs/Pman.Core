@@ -110,7 +110,8 @@ Pman.Dialog.CoreCompanies = {
                                     xns: Roo.form,
                                     store : {
                                         xtype: 'SimpleStore',
-                                        xns: Roo.data
+                                        xns: Roo.data,
+                                        data : '[ \'CONSULTANT\', "Consultant" ],[ \'CLIENT\'    ,  "Client" ],[ \'CONTRACTOR\' , "Contractor" ]'
                                     }
                                 }
                             ]

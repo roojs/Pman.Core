@@ -60,9 +60,10 @@
                                     "xtype": "ComboBox",
                                     "items": [
                                         {
-                                            "|xns": "Roo.data",
+                                            "*prop": "store",
+                                            "data": "[ 'CONSULTANT', \"Consultant\" ],[ 'CLIENT'    ,  \"Client\" ],[ 'CONTRACTOR' , \"Contractor\" ]",
                                             "xtype": "SimpleStore",
-                                            "*prop": "store"
+                                            "|xns": "Roo.data"
                                         }
                                     ]
                                 }
