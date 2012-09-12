@@ -19,9 +19,14 @@
             "|xns": "Roo",
             "items": [
                 {
-                    "|xns": "Roo",
+                    "*prop": "center",
+                    "alwaysShowTabs": false,
+                    "autoScroll": true,
+                    "closeOnTab": true,
+                    "hideTabs": true,
+                    "titlebar": true,
                     "xtype": "LayoutRegion",
-                    "*prop": "center"
+                    "|xns": "Roo"
                 },
                 {
                     "|xns": "Roo",
