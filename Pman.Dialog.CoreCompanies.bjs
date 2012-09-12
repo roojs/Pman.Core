@@ -172,8 +172,9 @@
                                     "xtype": "Hidden"
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "Hidden"
+                                    "name": "id",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }
