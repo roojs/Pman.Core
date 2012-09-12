@@ -154,7 +154,7 @@ Pman.Dialog.CoreCompanies = {
                                             displayField : 'name',
                                             editable : 'false',
                                             emptyText : "Select pulldown",
-                                            fieldLabel : 'core_enum',
+                                            fieldLabel : 'Type',
                                             forceSelection : true,
                                             listWidth : 400,
                                             loadingText : "Searching...",
