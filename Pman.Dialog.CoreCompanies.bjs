@@ -49,6 +49,7 @@
                                     "allowBlank": false,
                                     "fieldLabel": "Company ID (for filing Ref.)",
                                     "name": "code",
+                                    "qtip": "Enter code",
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
                                 }
