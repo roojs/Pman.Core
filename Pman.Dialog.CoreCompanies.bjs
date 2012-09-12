@@ -48,7 +48,7 @@
                                 {
                                     "allowBlank": false,
                                     "fieldLabel": "Company ID (for filing Ref.)",
-                                    "name": "",
+                                    "name": "code",
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
                                 }
