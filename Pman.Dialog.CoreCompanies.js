@@ -86,10 +86,15 @@ Pman.Dialog.CoreCompanies = {
                                         return; 
                                     }
                                     // unmask?? 
+                                },
+                                rendered : function (form)
+                                {
+                                    _this.form = form;
                                 }
                             },
                             fileUpload : true,
-                            labelWidth : 150
+                            labelWidth : 150,
+                            reader : ''
                         }
                     ]
                 }
