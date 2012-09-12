@@ -68,7 +68,7 @@ Pman.Dialog.CoreCompanies = {
                                    
                                     if (act.type == 'load') {
                                         _this.data = act.result.data;
-                                        var meth = _this.data.isOwner || !Pman.Login.isOwner() ? 'disable' : 'enable';
+                                        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';
                                      
                                             
                                         if (_this.form.findField('comptype')) {
