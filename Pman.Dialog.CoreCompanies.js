@@ -153,7 +153,7 @@ Pman.Dialog.CoreCompanies = {
                                             alwaysQuery : true,
                                             displayField : 'name',
                                             editable : 'false',
-                                            emptyText : "Select pulldown",
+                                            emptyText : "Select Type",
                                             fieldLabel : 'Type',
                                             forceSelection : true,
                                             listWidth : 250,
