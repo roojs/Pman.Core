@@ -179,6 +179,7 @@ Pman.Dialog.CoreCompanies = {
                                     xns: Roo.form,
                                     allowBlank : true,
                                     fieldLabel : '',
+                                    height : 40,
                                     name : '',
                                     qtip : "",
                                     width : 300
