@@ -47,7 +47,7 @@
                             "items": [
                                 {
                                     "allowBlank": false,
-                                    "fieldLabel": "",
+                                    "fieldLabel": "Company ID (for filing Ref.)",
                                     "name": "",
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
