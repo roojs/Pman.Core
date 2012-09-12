@@ -200,7 +200,7 @@ Pman.Dialog.CoreCompanies = {
                                         {
                                             xtype: 'TextField',
                                             xns: Roo.form,
-                                            fieldLabel : 'Backgroud Colour',
+                                            fieldLabel : 'Background Colour',
                                             name : 'background_color'
                                         }
                                     ]
