@@ -62,32 +62,8 @@ Pman.Dialog.CoreCompanies = {
                                     //console.log('load completed'); 
                                     // error messages?????
                                     if(act.type == 'setdata'){
-                                        if (act.data._fetch) {
-                                            _this.dialog.el.mask("Loading");
-                                            _this.form.doAction('load', {
-                                                url: baseURL + '/Roo/Companies.html',
-                                                method: 'GET',
-                                                params: {
-                                                    _id: this._id ,
-                                                    _ts : Math.random()
-                                                } 
-                                            });
-                                            return;
-                                        } else {
-                                            _this.form.setValues(data);
-                                        }
-                                        
-                                        if (act.data.isOwner || !Pman.Login.isOwner()) {
-                                            _this.dialog.setTitle("Your Company Details");
-                                            if (_this.form.findField('comptype')) {
-                                                _this.form.findField('comptype').disable();
-                                            }
-                                        } else {
-                                            _this.dialog.setTitle(data.id ? "Edit Company" : "Add Company");
-                                            if (_this.form.findField('comptype')) {
-                                                _this.form.findField('comptype').enable();
-                                            }
-                                        }
+                                        this.load({ method: 'GET', params: { '_id' : _this.data.id }});
+                                        return;
                                     }
                                    
                                     if (act.type == 'load') {
