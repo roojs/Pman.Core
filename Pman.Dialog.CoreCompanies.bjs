@@ -42,7 +42,6 @@
                             },
                             "fileUpload": true,
                             "labelWidth": 150,
-                            "reader": "",
                             "xtype": "Form",
                             "|xns": "Roo.form"
                         }

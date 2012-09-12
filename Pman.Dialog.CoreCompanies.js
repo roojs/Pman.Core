@@ -93,8 +93,7 @@ Pman.Dialog.CoreCompanies = {
                                 }
                             },
                             fileUpload : true,
-                            labelWidth : 150,
-                            reader : ''
+                            labelWidth : 150
                         }
                     ]
                 }
