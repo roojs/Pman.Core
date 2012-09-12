@@ -167,6 +167,9 @@
                                             "|xns": "Roo.form"
                                         },
                                         {
+                                            "listeners": {
+                                                "click": "function (_self, e)\n{\n    var _t = this;\n                         \n    Pman.Dialog.Image.show({\n        onid :_this.data.id,\n        ontable : 'Companies',\n        imgtype : 'LOGO'\n    }, function(data) {\n        if  (data) {\n            _t.setValue(data.id);\n        }\n        \n    });\n}"
+                                            },
                                             "text": "Add Image",
                                             "xtype": "Button",
                                             "|xns": "Roo"

@@ -224,6 +224,23 @@ Pman.Dialog.CoreCompanies = {
                                         {
                                             xtype: 'Button',
                                             xns: Roo,
+                                            listeners : {
+                                                click : function (_self, e)
+                                                {
+                                                    var _t = this;
+                                                                         
+                                                    Pman.Dialog.Image.show({
+                                                        onid :_this.data.id,
+                                                        ontable : 'Companies',
+                                                        imgtype : 'LOGO'
+                                                    }, function(data) {
+                                                        if  (data) {
+                                                            _t.setValue(data.id);
+                                                        }
+                                                        
+                                                    });
+                                                }
+                                            },
                                             text : "Add Image"
                                         }
                                     ]
