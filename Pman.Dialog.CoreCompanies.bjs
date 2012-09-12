@@ -145,6 +145,7 @@
                                     ]
                                 },
                                 {
+                                    "labelAlign": "top",
                                     "width": 200,
                                     "xtype": "Column",
                                     "|xns": "Roo.form"
