@@ -58,7 +58,7 @@ Pman.Dialog.CoreCompanies = {
                 {
                     xtype: 'Button',
                     xns: Roo,
-                    type : 'Save'
+                    text : "Save"
                 }
             ]
         });

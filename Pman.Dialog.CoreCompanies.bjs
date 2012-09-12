@@ -35,7 +35,7 @@
                 },
                 {
                     "*prop": "buttons[]",
-                    "type": "Save",
+                    "text": "Save",
                     "xtype": "Button",
                     "|xns": "Roo"
                 }
