@@ -180,8 +180,8 @@ Pman.Dialog.CoreCompanies = {
                                     allowBlank : true,
                                     fieldLabel : 'Remarks',
                                     height : 40,
-                                    name : '',
-                                    qtip : "",
+                                    name : 'remarks',
+                                    qtip : "Enter remarks",
                                     width : 300
                                 }
                             ]
