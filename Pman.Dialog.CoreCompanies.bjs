@@ -152,7 +152,7 @@
                                     "items": [
                                         {
                                             "fieldLabel": "Backgroud Colour",
-                                            "name": "",
+                                            "name": "background_color",
                                             "xtype": "TextField",
                                             "|xns": "Roo.form"
                                         }
