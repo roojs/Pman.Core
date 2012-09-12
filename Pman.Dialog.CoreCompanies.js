@@ -54,9 +54,36 @@ Pman.Dialog.CoreCompanies = {
                                     Pman.standardActionFailed(f,act);
                                               
                                 },
-                                actioncomplete : function (_self, action)
-                                {
-                                
+                                actioncomplete : function(f, act) {
+                                    _this.dialog.el.unmask();
+                                    //console.log('load completed'); 
+                                    // error messages?????
+                                    
+                                   
+                                    if (act.type == 'load') {
+                                        
+                                        _this.data = act.result.data;
+                                        var meth = _this.data.isOwner || !Pman.Login.isOwner() ? 'disable' : 'enable';
+                                     
+                                            
+                                        if (_this.form.findField('comptype')) {
+                                            _this.form.findField('comptype')[meth]();
+                                        }
+                                         
+                                       // _this.loaded();
+                                        return;
+                                    }
+                                    
+                                    
+                                    if (act.type == 'submit') { // only submitted here if we are 
+                                        _this.dialog.hide();
+                                       
+                                        if (_this.callback) {
+                                            _this.callback.call(this, act.result.data);
+                                        }
+                                        return; 
+                                    }
+                                    // unmask?? 
                                 }
                             },
                             fileUpload : true,
