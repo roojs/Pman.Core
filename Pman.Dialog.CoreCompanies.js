@@ -228,7 +228,7 @@ Pman.Dialog.CoreCompanies = {
                                             listeners : {
                                                 click : function (_self, e)
                                                 {
-                                                    var _t = this;
+                                                    var _t = _this.form.findField('logo_id');
                                                                          
                                                     Pman.Dialog.Image.show({
                                                         onid :_this.data.id,
