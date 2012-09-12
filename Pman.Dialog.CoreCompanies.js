@@ -99,6 +99,7 @@ Pman.Dialog.CoreCompanies = {
                                 {
                                     xtype: 'Column',
                                     xns: Roo.form,
+                                    width : 500,
                                     items : [
                                         {
                                             xtype: 'TextField',

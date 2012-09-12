@@ -47,8 +47,9 @@
                             "|xns": "Roo.form",
                             "items": [
                                 {
-                                    "|xns": "Roo.form",
+                                    "width": 500,
                                     "xtype": "Column",
+                                    "|xns": "Roo.form",
                                     "items": [
                                         {
                                             "allowBlank": false,
