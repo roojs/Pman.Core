@@ -28,9 +28,10 @@
                     "xtype": "ContentPanel"
                 },
                 {
-                    "|xns": "Roo",
+                    "*prop": "buttons[]",
+                    "text": "Cancel",
                     "xtype": "Button",
-                    "*prop": "buttons[]"
+                    "|xns": "Roo"
                 },
                 {
                     "|xns": "Roo",

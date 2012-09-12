@@ -52,7 +52,8 @@ Pman.Dialog.CoreCompanies = {
             buttons : [
                 {
                     xtype: 'Button',
-                    xns: Roo
+                    xns: Roo,
+                    text : "Cancel"
                 },
                 {
                     xtype: 'Button',
