@@ -33,6 +33,10 @@
                     "xtype": "ContentPanel",
                     "items": [
                         {
+                            "listeners": {
+                                "actionfailed": "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
+                                "actioncomplete": "function (_self, action)\n{\n\n}"
+                            },
                             "fileUpload": true,
                             "labelWidth": 150,
                             "xtype": "Form",

@@ -47,6 +47,18 @@ Pman.Dialog.CoreCompanies = {
                         {
                             xtype: 'Form',
                             xns: Roo.form,
+                            listeners : {
+                                actionfailed : function(f, act) {
+                                    _this.dialog.el.unmask();
+                                    // error msg???
+                                    Pman.standardActionFailed(f,act);
+                                              
+                                },
+                                actioncomplete : function (_self, action)
+                                {
+                                
+                                }
+                            },
                             fileUpload : true,
                             labelWidth : 150
                         }
