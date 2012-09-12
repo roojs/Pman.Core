@@ -67,7 +67,7 @@
                                     "selectOnFocus": true,
                                     "triggerAction": "",
                                     "typeAhead": true,
-                                    "valueField": "",
+                                    "valueField": "val",
                                     "width": 200,
                                     "xtype": "ComboBox",
                                     "|xns": "Roo.form",

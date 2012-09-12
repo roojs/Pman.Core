@@ -119,7 +119,7 @@ Pman.Dialog.CoreCompanies = {
                                     selectOnFocus : true,
                                     triggerAction : '',
                                     typeAhead : true,
-                                    valueField : '',
+                                    valueField : 'val',
                                     width : 200,
                                     store : {
                                         xtype: 'SimpleStore',
