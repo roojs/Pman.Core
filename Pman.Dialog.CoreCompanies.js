@@ -167,7 +167,7 @@ Pman.Dialog.CoreCompanies = {
                                             triggerAction : 'all',
                                             typeAhead : false,
                                             valueField : 'name',
-                                            width : 300,
+                                            width : 200,
                                             store : {
                                                 xtype: 'Store',
                                                 xns: Roo.data,

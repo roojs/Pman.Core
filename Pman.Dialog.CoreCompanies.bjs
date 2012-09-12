@@ -110,7 +110,7 @@
                                             "triggerAction": "all",
                                             "typeAhead": false,
                                             "valueField": "name",
-                                            "width": 300,
+                                            "width": 200,
                                             "xtype": "ComboBox",
                                             "|xns": "Roo.form",
                                             "items": [
