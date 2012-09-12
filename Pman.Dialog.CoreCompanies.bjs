@@ -94,7 +94,7 @@
                                 {
                                     "allowBlank": true,
                                     "fieldLabel": "Company Name",
-                                    "name": "name",
+                                    "name": "tel",
                                     "qtip": "Enter Company Name",
                                     "width": 300,
                                     "xtype": "TextField",
