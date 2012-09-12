@@ -35,8 +35,8 @@ Pman.Dialog.CoreCompanies = {
                 {
                     if (data.isOwner || !Pman.Login.isOwner()) {
                         this.dialog.setTitle("Your Company Details");
-                        if (this.form.findField('comptype')) {
-                            this.form.findField('comptype').disable();
+                        if (_this.form.findField('comptype')) {
+                            _this.form.findField('comptype').disable();
                         }
                         
                         
@@ -44,8 +44,8 @@ Pman.Dialog.CoreCompanies = {
                         
                     } else {
                         this.dialog.setTitle(data.id ? "Edit Company" : "Add Company");
-                        if (this.form.findField('comptype')) {
-                            this.form.findField('comptype').enable();
+                        if (_this.form.findField('comptype')) {
+                            _this.form.findField('comptype').enable();
                         }
                     }
                 }

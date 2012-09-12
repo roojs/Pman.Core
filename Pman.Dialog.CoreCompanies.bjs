@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "beforeshow": "function (_self)\n{\n    if (data.isOwner || !Pman.Login.isOwner()) {\n        this.dialog.setTitle(\"Your Company Details\");\n        if (this.form.findField('comptype')) {\n            this.form.findField('comptype').disable();\n        }\n        \n        \n        \n        \n    } else {\n        this.dialog.setTitle(data.id ? \"Edit Company\" : \"Add Company\");\n        if (this.form.findField('comptype')) {\n            this.form.findField('comptype').enable();\n        }\n    }\n}"
+                "beforeshow": "function (_self)\n{\n    if (data.isOwner || !Pman.Login.isOwner()) {\n        this.dialog.setTitle(\"Your Company Details\");\n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype').disable();\n        }\n        \n        \n        \n        \n    } else {\n        this.dialog.setTitle(data.id ? \"Edit Company\" : \"Add Company\");\n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype').enable();\n        }\n    }\n}"
             },
             "autoCreate": "true",
             "closable": false,
