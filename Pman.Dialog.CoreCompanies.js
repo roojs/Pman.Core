@@ -112,7 +112,7 @@ Pman.Dialog.CoreCompanies = {
                                     displayField : 'desc',
                                     editable : true,
                                     emptyText : "",
-                                    hiddenName : '',
+                                    hiddenName : 'comptype',
                                     listWidth : 250,
                                     name : 'comptype_name',
                                     qtip : "Select Company type",
