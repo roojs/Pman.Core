@@ -107,7 +107,7 @@ Pman.Dialog.CoreCompanies = {
                                         {
                                             xtype: 'TextField',
                                             xns: Roo.form,
-                                            allowBlank : false,
+                                            allowBlank : true,
                                             fieldLabel : 'Company ID (for filing Ref.)',
                                             name : 'code',
                                             qtip : "Enter code",

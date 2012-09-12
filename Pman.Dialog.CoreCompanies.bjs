@@ -53,7 +53,7 @@
                                     "|xns": "Roo.form",
                                     "items": [
                                         {
-                                            "allowBlank": false,
+                                            "allowBlank": true,
                                             "fieldLabel": "Company ID (for filing Ref.)",
                                             "name": "code",
                                             "qtip": "Enter code",
