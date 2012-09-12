@@ -162,7 +162,7 @@
                                             "height": 170,
                                             "icon": "rootURL + 'images/default/dd/drop-add.gif'",
                                             "width": 170,
-                                            "xtype": "DisplayField",
+                                            "xtype": "DisplayImage",
                                             "|xns": "Roo.form"
                                         }
                                     ]

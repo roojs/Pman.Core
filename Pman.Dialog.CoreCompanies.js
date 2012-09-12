@@ -204,7 +204,7 @@ Pman.Dialog.CoreCompanies = {
                                             name : 'background_color'
                                         },
                                         {
-                                            xtype: 'DisplayField',
+                                            xtype: 'DisplayImage',
                                             xns: Roo.form,
                                             style : 'border: 1px solid #ccc;',
                                             fieldLabel : 'Logo Image',
