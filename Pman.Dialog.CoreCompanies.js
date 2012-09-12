@@ -42,7 +42,13 @@ Pman.Dialog.CoreCompanies = {
             items : [
                 {
                     xtype: 'ContentPanel',
-                    xns: Roo
+                    xns: Roo,
+                    items : [
+                        {
+                            xtype: 'Form',
+                            xns: Roo.form
+                        }
+                    ]
                 }
             ],
             center : {
