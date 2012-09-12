@@ -37,7 +37,7 @@ Pman.Dialog.CoreCompanies = {
             height : 400,
             modal : true,
             shadow : 'true',
-            title : "Edit Companies",
+            title : "Edit Company",
             width : 750,
             items : [
                 {
