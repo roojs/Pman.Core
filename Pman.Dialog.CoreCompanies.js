@@ -162,7 +162,7 @@ Pman.Dialog.CoreCompanies = {
                                     allowBlank : true,
                                     fieldLabel : 'Email',
                                     name : 'email',
-                                    qtip : "Enter Fax Number",
+                                    qtip : "Enter Email Address",
                                     width : 300
                                 }
                             ]
