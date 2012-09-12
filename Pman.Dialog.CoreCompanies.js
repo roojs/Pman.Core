@@ -57,7 +57,8 @@ Pman.Dialog.CoreCompanies = {
                 },
                 {
                     xtype: 'Button',
-                    xns: Roo
+                    xns: Roo,
+                    type : 'Save'
                 }
             ]
         });

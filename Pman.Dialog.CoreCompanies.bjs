@@ -34,9 +34,10 @@
                     "|xns": "Roo"
                 },
                 {
-                    "|xns": "Roo",
+                    "*prop": "buttons[]",
+                    "type": "Save",
                     "xtype": "Button",
-                    "*prop": "buttons[]"
+                    "|xns": "Roo"
                 }
             ]
         }
