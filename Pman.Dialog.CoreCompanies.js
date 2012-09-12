@@ -113,6 +113,7 @@ Pman.Dialog.CoreCompanies = {
                                     editable : true,
                                     emptyText : "",
                                     hiddenName : '',
+                                    listWidth : 250,
                                     name : 'comptype_name',
                                     qtip : "Select Company type",
                                     selectOnFocus : true,
