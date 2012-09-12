@@ -176,7 +176,12 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'TextArea',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    allowBlank : true,
+                                    fieldLabel : '',
+                                    name : '',
+                                    qtip : "",
+                                    width : 300
                                 }
                             ]
                         }

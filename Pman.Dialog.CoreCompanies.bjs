@@ -128,8 +128,13 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextArea"
+                                    "allowBlank": true,
+                                    "fieldLabel": "",
+                                    "name": "",
+                                    "qtip": "",
+                                    "width": 300,
+                                    "xtype": "TextArea",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }
