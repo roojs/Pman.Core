@@ -166,6 +166,10 @@
                                             "|xns": "Roo.form"
                                         }
                                     ]
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "Hidden"
                                 }
                             ]
                         }

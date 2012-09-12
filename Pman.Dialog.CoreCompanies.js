@@ -213,6 +213,10 @@ Pman.Dialog.CoreCompanies = {
                                             width : 170
                                         }
                                     ]
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form
                                 }
                             ]
                         }
