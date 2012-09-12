@@ -89,6 +89,62 @@
                                             ]
                                         },
                                         {
+                                            "listeners": {
+                                                "render": "function (_self)\n{\n    _this.etypeCombo = _self;\n}",
+                                                "select": "function (combo, record, index)\n{\n    _this.grid.footer.onClick('first');\n}"
+                                            },
+                                            "alwaysQuery": true,
+                                            "displayField": "name",
+                                            "editable": "false",
+                                            "emptyText": "Select pulldown",
+                                            "fieldLabel": "core_enum",
+                                            "forceSelection": true,
+                                            "listWidth": 400,
+                                            "loadingText": "Searching...",
+                                            "minChars": 2,
+                                            "pageSize": 20,
+                                            "qtip": "Select type",
+                                            "queryParam": "query[name]",
+                                            "selectOnFocus": true,
+                                            "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+                                            "triggerAction": "all",
+                                            "typeAhead": false,
+                                            "valueField": "name",
+                                            "width": 300,
+                                            "xtype": "ComboBox",
+                                            "|xns": "Roo.form",
+                                            "items": [
+                                                {
+                                                    "listeners": {
+                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params['query[empty_etype]'] = 1;\n}\n"
+                                                    },
+                                                    "*prop": "store",
+                                                    "remoteSort": true,
+                                                    "xtype": "Store",
+                                                    "|sortInfo": "{ direction : 'ASC', field: 'id' }",
+                                                    "|xns": "Roo.data",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "proxy",
+                                                            "xtype": "HttpProxy",
+                                                            "method": "GET",
+                                                            "|xns": "Roo.data",
+                                                            "|url": "baseURL + '/Roo/core_enum.php'"
+                                                        },
+                                                        {
+                                                            "*prop": "reader",
+                                                            "xtype": "JsonReader",
+                                                            "|xns": "Roo.data",
+                                                            "id": "id",
+                                                            "root": "data",
+                                                            "totalProperty": "total",
+                                                            "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
                                             "allowBlank": true,
                                             "fieldLabel": "Company Name",
                                             "name": "name",

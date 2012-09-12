@@ -138,6 +138,65 @@ Pman.Dialog.CoreCompanies = {
                                             }
                                         },
                                         {
+                                            xtype: 'ComboBox',
+                                            xns: Roo.form,
+                                            listeners : {
+                                                render : function (_self)
+                                                {
+                                                    _this.etypeCombo = _self;
+                                                },
+                                                select : function (combo, record, index)
+                                                {
+                                                    _this.grid.footer.onClick('first');
+                                                }
+                                            },
+                                            alwaysQuery : true,
+                                            displayField : 'name',
+                                            editable : 'false',
+                                            emptyText : "Select pulldown",
+                                            fieldLabel : 'core_enum',
+                                            forceSelection : true,
+                                            listWidth : 400,
+                                            loadingText : "Searching...",
+                                            minChars : 2,
+                                            pageSize : 20,
+                                            qtip : "Select type",
+                                            queryParam : 'query[name]',
+                                            selectOnFocus : true,
+                                            tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
+                                            triggerAction : 'all',
+                                            typeAhead : false,
+                                            valueField : 'name',
+                                            width : 300,
+                                            store : {
+                                                xtype: 'Store',
+                                                xns: Roo.data,
+                                                listeners : {
+                                                    beforeload : function (_self, o){
+                                                        o.params = o.params || {};
+                                                        // set more here
+                                                        o.params['query[empty_etype]'] = 1;
+                                                    }
+                                                },
+                                                remoteSort : true,
+                                                sortInfo : { direction : 'ASC', field: 'id' },
+                                                proxy : {
+                                                    xtype: 'HttpProxy',
+                                                    xns: Roo.data,
+                                                    method : 'GET',
+                                                    url : baseURL + '/Roo/core_enum.php'
+                                                },
+                                                reader : {
+                                                    xtype: 'JsonReader',
+                                                    xns: Roo.data,
+                                                    id : 'id',
+                                                    root : 'data',
+                                                    totalProperty : 'total',
+                                                    fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}]
+                                                }
+                                            }
+                                        },
+                                        {
                                             xtype: 'TextField',
                                             xns: Roo.form,
                                             allowBlank : true,
