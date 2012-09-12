@@ -30,26 +30,6 @@ Pman.Dialog.CoreCompanies = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
-            listeners : {
-                beforeshow : function (_self)
-                {
-                    if (data.isOwner || !Pman.Login.isOwner()) {
-                        this.dialog.setTitle("Your Company Details");
-                        if (_this.form.findField('comptype')) {
-                            _this.form.findField('comptype').disable();
-                        }
-                        
-                        
-                        
-                        
-                    } else {
-                        this.dialog.setTitle(data.id ? "Edit Company" : "Add Company");
-                        if (_this.form.findField('comptype')) {
-                            _this.form.findField('comptype').enable();
-                        }
-                    }
-                }
-            },
             autoCreate : 'true',
             closable : false,
             collapsible : false,
