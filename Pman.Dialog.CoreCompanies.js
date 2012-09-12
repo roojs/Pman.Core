@@ -209,7 +209,7 @@ Pman.Dialog.CoreCompanies = {
                                             fieldLabel : 'Logo Image',
                                             height : 170,
                                             icon : 'rootURL + \'images/default/dd/drop-add.gif\'',
-                                            width : 0
+                                            width : 170
                                         }
                                     ]
                                 }
