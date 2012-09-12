@@ -29,8 +29,9 @@
                     "|xns": "Roo"
                 },
                 {
-                    "|xns": "Roo",
+                    "autoCreate": "true",
                     "xtype": "ContentPanel",
+                    "|xns": "Roo",
                     "items": [
                         {
                             "listeners": {
