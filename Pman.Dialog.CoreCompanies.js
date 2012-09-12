@@ -111,7 +111,8 @@ Pman.Dialog.CoreCompanies = {
                                     store : {
                                         xtype: 'SimpleStore',
                                         xns: Roo.data,
-                                        data : '[ \'CONSULTANT\', "Consultant" ],[ \'CLIENT\'    ,  "Client" ],[ \'CONTRACTOR\' , "Contractor" ]'
+                                        data : '[ \'CONSULTANT\', "Consultant" ],[ \'CLIENT\'    ,  "Client" ],[ \'CONTRACTOR\' , "Contractor" ]',
+                                        fields : '[\'val\', \'desc\']'
                                     }
                                 }
                             ]

@@ -62,6 +62,7 @@
                                         {
                                             "*prop": "store",
                                             "data": "[ 'CONSULTANT', \"Consultant\" ],[ 'CLIENT'    ,  \"Client\" ],[ 'CONTRACTOR' , \"Contractor\" ]",
+                                            "fields": "['val', 'desc']",
                                             "xtype": "SimpleStore",
                                             "|xns": "Roo.data"
                                         }
