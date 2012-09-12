@@ -157,16 +157,10 @@
                                             "|xns": "Roo.form"
                                         },
                                         {
-                                            "|xns": "Roo.form",
-                                            "xtype": "FieldSet",
-                                            "items": [
-                                                {
-                                                    "fieldLabel": "Logo Image",
-                                                    "icon": "rootURL + 'images/default/dd/drop-add.gif'",
-                                                    "xtype": "DisplayField",
-                                                    "|xns": "Roo.form"
-                                                }
-                                            ]
+                                            "fieldLabel": "Logo Image",
+                                            "icon": "rootURL + 'images/default/dd/drop-add.gif'",
+                                            "xtype": "DisplayField",
+                                            "|xns": "Roo.form"
                                         }
                                     ]
                                 }

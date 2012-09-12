@@ -204,16 +204,10 @@ Pman.Dialog.CoreCompanies = {
                                             name : 'background_color'
                                         },
                                         {
-                                            xtype: 'FieldSet',
+                                            xtype: 'DisplayField',
                                             xns: Roo.form,
-                                            items : [
-                                                {
-                                                    xtype: 'DisplayField',
-                                                    xns: Roo.form,
-                                                    fieldLabel : 'Logo Image',
-                                                    icon : 'rootURL + \'images/default/dd/drop-add.gif\''
-                                                }
-                                            ]
+                                            fieldLabel : 'Logo Image',
+                                            icon : 'rootURL + \'images/default/dd/drop-add.gif\''
                                         }
                                     ]
                                 }
