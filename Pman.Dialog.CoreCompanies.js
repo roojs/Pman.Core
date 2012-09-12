@@ -141,6 +141,9 @@ Pman.Dialog.CoreCompanies = {
                             },
                             fileUpload : true,
                             labelWidth : 160,
+                            url : function() {
+                                
+                            },
                             items : [
                                 {
                                     xtype: 'Column',
