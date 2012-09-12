@@ -57,7 +57,14 @@
                                 },
                                 {
                                     "|xns": "Roo.form",
-                                    "xtype": "ComboBox"
+                                    "xtype": "ComboBox",
+                                    "items": [
+                                        {
+                                            "|xns": "Roo.data",
+                                            "xtype": "SimpleStore",
+                                            "*prop": "store"
+                                        }
+                                    ]
                                 }
                             ]
                         }
