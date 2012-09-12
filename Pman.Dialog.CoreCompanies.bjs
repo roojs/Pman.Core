@@ -139,7 +139,18 @@
                                 },
                                 {
                                     "|xns": "Roo.form",
-                                    "xtype": "Column"
+                                    "xtype": "Column",
+                                    "items": [
+                                        {
+                                            "allowBlank": false,
+                                            "fieldLabel": "Company ID (for filing Ref.)",
+                                            "name": "code",
+                                            "qtip": "Enter code",
+                                            "width": 100,
+                                            "xtype": "TextField",
+                                            "|xns": "Roo.form"
+                                        }
+                                    ]
                                 }
                             ]
                         }

@@ -186,7 +186,18 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'Column',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    items : [
+                                        {
+                                            xtype: 'TextField',
+                                            xns: Roo.form,
+                                            allowBlank : false,
+                                            fieldLabel : 'Company ID (for filing Ref.)',
+                                            name : 'code',
+                                            qtip : "Enter code",
+                                            width : 100
+                                        }
+                                    ]
                                 }
                             ]
                         }
