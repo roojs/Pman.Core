@@ -223,7 +223,8 @@ Pman.Dialog.CoreCompanies = {
                                         },
                                         {
                                             xtype: 'Button',
-                                            xns: Roo
+                                            xns: Roo,
+                                            text : "Add Image"
                                         }
                                     ]
                                 },

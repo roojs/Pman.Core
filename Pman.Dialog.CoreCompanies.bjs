@@ -167,8 +167,9 @@
                                             "|xns": "Roo.form"
                                         },
                                         {
-                                            "|xns": "Roo",
-                                            "xtype": "Button"
+                                            "text": "Add Image",
+                                            "xtype": "Button",
+                                            "|xns": "Roo"
                                         }
                                     ]
                                 },
