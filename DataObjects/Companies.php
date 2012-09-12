@@ -288,6 +288,21 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         return $fm->toHTML($size, $base);
     }
     
+    function toRooSingleArray($authUser, $request)
+    {
+        $ret = $this->toArray();
+        // get the comptype display
+        $e = DB_DataObject::Factory('core_enum');
+        $e->etype = 'COMPTYPE';
+        $e->name = $this->comptype;
+        $ret['comptype_display'] = $ret['comptype'];
+        if ($e->find(true) && !empty($e->name_display)) {
+            $ret['comptype_display'] = $e->name_display;
+        }
+        
+        
+        return $ret;
+    }
     
     
 }
