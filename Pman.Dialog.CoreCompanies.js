@@ -220,7 +220,7 @@ Pman.Dialog.CoreCompanies = {
                                             xns: Roo.form,
                                             allowBlank : true,
                                             fieldLabel : 'Remarks',
-                                            height : 40,
+                                            height : 120,
                                             name : 'remarks',
                                             qtip : "Enter remarks",
                                             width : 300
