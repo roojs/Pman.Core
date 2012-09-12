@@ -39,6 +39,12 @@ Pman.Dialog.CoreCompanies = {
             shadow : 'true',
             title : "Edit Companies",
             width : 750,
+            items : [
+                {
+                    xtype: 'ContentPanel',
+                    xns: Roo
+                }
+            ],
             center : {
                 xtype: 'LayoutRegion',
                 xns: Roo
