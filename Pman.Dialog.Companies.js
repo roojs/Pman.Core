@@ -1,5 +1,5 @@
-//<script type="text/javascript">
 
+/*
 
 Pman.Dialog.Companies =   new Roo.util.Observable({
     
@@ -9,9 +9,9 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
     }
 
 });
-//<script type="text/javascript">
-/*
 
+
+*/
 Pman.Dialog.Companies =   new Roo.util.Observable({
     events : {
         'beforerender' : true, // trigger so we can add modules later..
@@ -386,7 +386,7 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
    },
    c_background_color : function() {
        return {
-                   xtype: 'ColorField',
+                xtype: 'ColorField',
                name : 'background_color',
                fieldLabel: "Background Colour"
        }
@@ -496,4 +496,3 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
    }
          
 });
-*/
