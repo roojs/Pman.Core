@@ -108,6 +108,15 @@ Pman.Dialog.CoreCompanies = {
                                 {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
+                                    displayField : '',
+                                    editable : true,
+                                    emptyText : "",
+                                    hiddenName : '',
+                                    selectOnFocus : true,
+                                    triggerAction : '',
+                                    typeAhead : true,
+                                    valueField : '',
+                                    width : 200,
                                     store : {
                                         xtype: 'SimpleStore',
                                         xns: Roo.data,

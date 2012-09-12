@@ -56,8 +56,17 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
-                                    "|xns": "Roo.form",
+                                    "displayField": "",
+                                    "editable": true,
+                                    "emptyText": "",
+                                    "hiddenName": "",
+                                    "selectOnFocus": true,
+                                    "triggerAction": "",
+                                    "typeAhead": true,
+                                    "valueField": "",
+                                    "width": 200,
                                     "xtype": "ComboBox",
+                                    "|xns": "Roo.form",
                                     "items": [
                                         {
                                             "*prop": "store",
