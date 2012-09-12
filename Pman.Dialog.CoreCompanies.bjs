@@ -62,33 +62,6 @@
                                             "|xns": "Roo.form"
                                         },
                                         {
-                                            "allowBlank": false,
-                                            "displayField": "desc",
-                                            "editable": false,
-                                            "emptyText": "Select Type",
-                                            "fieldLabel": "Type",
-                                            "hiddenName": "comptype",
-                                            "listWidth": 250,
-                                            "name": "comptype_name",
-                                            "qtip": "Select Company type",
-                                            "selectOnFocus": true,
-                                            "triggerAction": "all",
-                                            "typeAhead": false,
-                                            "valueField": "val",
-                                            "width": 200,
-                                            "xtype": "ComboBox",
-                                            "|xns": "Roo.form",
-                                            "items": [
-                                                {
-                                                    "*prop": "store",
-                                                    "data": "[ 'CONSULTANT', \"Consultant\" ],[ 'CLIENT'    ,  \"Client\" ],[ 'CONTRACTOR' , \"Contractor\" ]",
-                                                    "fields": "['val', 'desc']",
-                                                    "xtype": "SimpleStore",
-                                                    "|xns": "Roo.data"
-                                                }
-                                            ]
-                                        },
-                                        {
                                             "listeners": {
                                                 "render": "function (_self)\n{\n    _this.etypeCombo = _self;\n}",
                                                 "select": "function (combo, record, index)\n{\n    _this.grid.footer.onClick('first');\n}"
