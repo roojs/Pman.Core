@@ -42,7 +42,7 @@
                                 "rendered": "function (form)\n{\n    _this.form = form;\n}"
                             },
                             "fileUpload": true,
-                            "labelWidth": 150,
+                            "labelWidth": 200,
                             "xtype": "Form",
                             "|xns": "Roo.form",
                             "items": [
@@ -51,7 +51,7 @@
                                     "fieldLabel": "Company ID (for filing Ref.)",
                                     "name": "code",
                                     "qtip": "Enter code",
-                                    "width": 150,
+                                    "width": 100,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
                                 }

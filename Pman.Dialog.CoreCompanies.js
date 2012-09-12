@@ -94,7 +94,7 @@ Pman.Dialog.CoreCompanies = {
                                 }
                             },
                             fileUpload : true,
-                            labelWidth : 150,
+                            labelWidth : 200,
                             items : [
                                 {
                                     xtype: 'TextField',
@@ -103,7 +103,7 @@ Pman.Dialog.CoreCompanies = {
                                     fieldLabel : 'Company ID (for filing Ref.)',
                                     name : 'code',
                                     qtip : "Enter code",
-                                    width : 150
+                                    width : 100
                                 }
                             ]
                         }
