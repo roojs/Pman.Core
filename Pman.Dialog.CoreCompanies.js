@@ -195,7 +195,13 @@ Pman.Dialog.CoreCompanies = {
                                     xtype: 'Column',
                                     xns: Roo.form,
                                     labelAlign : 'top',
-                                    width : 200
+                                    width : 200,
+                                    items : [
+                                        {
+                                            xtype: 'TextField',
+                                            xns: Roo.form
+                                        }
+                                    ]
                                 }
                             ]
                         }

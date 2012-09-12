@@ -148,7 +148,13 @@
                                     "labelAlign": "top",
                                     "width": 200,
                                     "xtype": "Column",
-                                    "|xns": "Roo.form"
+                                    "|xns": "Roo.form",
+                                    "items": [
+                                        {
+                                            "|xns": "Roo.form",
+                                            "xtype": "TextField"
+                                        }
+                                    ]
                                 }
                             ]
                         }
