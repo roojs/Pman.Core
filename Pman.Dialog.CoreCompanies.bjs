@@ -57,7 +57,7 @@
                                 },
                                 {
                                     "allowBlank": false,
-                                    "displayField": "",
+                                    "displayField": "desc",
                                     "editable": true,
                                     "emptyText": "",
                                     "hiddenName": "",
