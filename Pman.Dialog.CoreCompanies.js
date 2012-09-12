@@ -220,6 +220,10 @@ Pman.Dialog.CoreCompanies = {
                                                         baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg'
                                                 );
                                             }
+                                        },
+                                        {
+                                            xtype: 'Button',
+                                            xns: Roo
                                         }
                                     ]
                                 },
