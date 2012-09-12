@@ -108,6 +108,7 @@ Pman.Dialog.CoreCompanies = {
                                 {
                                     xtype: 'ComboBox',
                                     xns: Roo.form,
+                                    allowBlank : false,
                                     displayField : '',
                                     editable : true,
                                     emptyText : "",
