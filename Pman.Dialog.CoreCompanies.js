@@ -48,7 +48,13 @@ Pman.Dialog.CoreCompanies = {
             center : {
                 xtype: 'LayoutRegion',
                 xns: Roo
-            }
+            },
+            buttons : [
+                {
+                    xtype: 'Button',
+                    xns: Roo
+                }
+            ]
         });
     }
 };

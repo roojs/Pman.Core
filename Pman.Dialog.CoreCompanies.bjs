@@ -26,6 +26,11 @@
                 {
                     "|xns": "Roo",
                     "xtype": "ContentPanel"
+                },
+                {
+                    "|xns": "Roo",
+                    "xtype": "Button",
+                    "*prop": "buttons[]"
                 }
             ]
         }
