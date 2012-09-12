@@ -112,6 +112,7 @@ Pman.Dialog.CoreCompanies = {
                                     editable : true,
                                     emptyText : "",
                                     hiddenName : '',
+                                    name : 'comptype_name',
                                     selectOnFocus : true,
                                     triggerAction : '',
                                     typeAhead : true,
