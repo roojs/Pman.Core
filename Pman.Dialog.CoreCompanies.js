@@ -93,7 +93,13 @@ Pman.Dialog.CoreCompanies = {
                                 }
                             },
                             fileUpload : true,
-                            labelWidth : 150
+                            labelWidth : 150,
+                            items : [
+                                {
+                                    xtype: 'TextField',
+                                    xns: Roo.form
+                                }
+                            ]
                         }
                     ]
                 }

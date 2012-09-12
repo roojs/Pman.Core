@@ -43,7 +43,13 @@
                             "fileUpload": true,
                             "labelWidth": 150,
                             "xtype": "Form",
-                            "|xns": "Roo.form"
+                            "|xns": "Roo.form",
+                            "items": [
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextField"
+                                }
+                            ]
                         }
                     ]
                 },
