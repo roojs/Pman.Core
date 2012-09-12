@@ -104,6 +104,10 @@ Pman.Dialog.CoreCompanies = {
                                     name : 'code',
                                     qtip : "Enter code",
                                     width : 100
+                                },
+                                {
+                                    xtype: 'ComboBox',
+                                    xns: Roo.form
                                 }
                             ]
                         }

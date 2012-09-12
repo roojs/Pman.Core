@@ -54,6 +54,10 @@
                                     "width": 100,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "ComboBox"
                                 }
                             ]
                         }
