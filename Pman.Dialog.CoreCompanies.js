@@ -148,7 +148,8 @@ Pman.Dialog.CoreCompanies = {
                                                     beforeload : function (_self, o){
                                                         o.params = o.params || {};
                                                         // set more here
-                                                        o.params['query[empty_etype]'] = 1;
+                                                        //o.params['query[empty_etype]'] = 1;
+                                                        o.params.etype = 'COMPTYPE';
                                                     }
                                                 },
                                                 remoteSort : true,

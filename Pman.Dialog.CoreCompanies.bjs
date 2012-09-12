@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-160",
+    "id": "roo-file-97",
     "name": "Pman.Dialog.CoreCompanies",
     "parent": "",
     "title": "",
-    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
+    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
     "items": [
         {
             "autoCreate": "true",
@@ -89,7 +89,7 @@
                                             "items": [
                                                 {
                                                     "listeners": {
-                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params['query[empty_etype]'] = 1;\n}\n"
+                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    //o.params['query[empty_etype]'] = 1;\n    o.params.etype = 'COMPTYPE';\n}\n"
                                                     },
                                                     "*prop": "store",
                                                     "remoteSort": true,
