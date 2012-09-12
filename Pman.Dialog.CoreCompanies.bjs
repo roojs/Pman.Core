@@ -16,7 +16,14 @@
             "title": "Edit Companies",
             "width": 750,
             "xtype": "LayoutDialog",
-            "|xns": "Roo"
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "LayoutRegion",
+                    "*prop": "center"
+                }
+            ]
         }
     ],
     "permname": "",

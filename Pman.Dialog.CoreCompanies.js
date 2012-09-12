@@ -38,7 +38,11 @@ Pman.Dialog.CoreCompanies = {
             modal : true,
             shadow : 'true',
             title : "Edit Companies",
-            width : 750
+            width : 750,
+            center : {
+                xtype: 'LayoutRegion',
+                xns: Roo
+            }
         });
     }
 };
