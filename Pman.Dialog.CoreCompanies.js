@@ -99,48 +99,6 @@ Pman.Dialog.CoreCompanies = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
-                                    allowBlank : false,
-                                    fieldLabel : 'Company ID (for filing Ref.)',
-                                    name : 'code',
-                                    qtip : "Enter code",
-                                    width : 100
-                                },
-                                {
-                                    xtype: 'ComboBox',
-                                    xns: Roo.form,
-                                    allowBlank : false,
-                                    displayField : 'desc',
-                                    editable : false,
-                                    emptyText : "Select Type",
-                                    fieldLabel : 'Type',
-                                    hiddenName : 'comptype',
-                                    listWidth : 250,
-                                    name : 'comptype_name',
-                                    qtip : "Select Company type",
-                                    selectOnFocus : true,
-                                    triggerAction : 'all',
-                                    typeAhead : false,
-                                    valueField : 'val',
-                                    width : 200,
-                                    store : {
-                                        xtype: 'SimpleStore',
-                                        xns: Roo.data,
-                                        data : '[ \'CONSULTANT\', "Consultant" ],[ \'CLIENT\'    ,  "Client" ],[ \'CONTRACTOR\' , "Contractor" ]',
-                                        fields : '[\'val\', \'desc\']'
-                                    }
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Company Name',
-                                    name : 'name',
-                                    qtip : "Enter Company Name",
-                                    width : 300
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
                                     allowBlank : true,
                                     fieldLabel : 'Phone',
                                     name : 'tel',
