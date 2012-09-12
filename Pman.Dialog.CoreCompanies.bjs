@@ -162,7 +162,6 @@
                                             "items": [
                                                 {
                                                     "xtype": "DisplayField",
-                                                    "|icon": "Roo.rootURL + 'images/default/dd/drop-add.gif'",
                                                     "|xns": "Roo.form"
                                                 }
                                             ]
