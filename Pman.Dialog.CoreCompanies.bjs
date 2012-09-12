@@ -183,7 +183,7 @@
                                         {
                                             "fieldLabel": "Background Colour",
                                             "name": "background_color",
-                                            "xtype": "TextField",
+                                            "xtype": "ColorField",
                                             "|xns": "Roo.form"
                                         },
                                         {
