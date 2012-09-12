@@ -210,7 +210,16 @@ Pman.Dialog.CoreCompanies = {
                                             height : 170,
                                             icon : 'rootURL + \'images/default/dd/drop-add.gif\'',
                                             style : 'border: 1px solid #ccc;',
-                                            width : 170
+                                            width : 170,
+                                            valueRenderer : function(v) {
+                                                //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';
+                                                if (!v) {
+                                                    return "No Image Available" + '<BR/>';
+                                                }
+                                                return String.format('<img src="{0}" width="150">', 
+                                                        baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg'
+                                                );
+                                            }
                                         }
                                     ]
                                 },

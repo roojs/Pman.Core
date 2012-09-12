@@ -163,6 +163,7 @@
                                             "style": "border: 1px solid #ccc;",
                                             "width": 170,
                                             "xtype": "DisplayField",
+                                            "|valueRenderer": "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<img src=\"{0}\" width=\"150\">', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg'\n    );\n}",
                                             "|xns": "Roo.form"
                                         }
                                     ]
