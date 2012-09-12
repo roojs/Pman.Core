@@ -121,8 +121,8 @@
                                 {
                                     "allowBlank": true,
                                     "fieldLabel": "Address",
-                                    "name": "email",
-                                    "qtip": "Enter Email Address",
+                                    "name": "address",
+                                    "qtip": "Enter Address",
                                     "width": 300,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
