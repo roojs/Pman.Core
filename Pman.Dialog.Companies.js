@@ -1,5 +1,4 @@
 
-/*
 
 Pman.Dialog.Companies =   new Roo.util.Observable({
     
@@ -11,8 +10,9 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
 });
 
 
-*/
+
 //<script type="text/javascript">
+/*
 
 
 Pman.Dialog.Companies =   new Roo.util.Observable({
@@ -495,3 +495,4 @@ Pman.Dialog.Companies =   new Roo.util.Observable({
     }
          
 });
+*/
