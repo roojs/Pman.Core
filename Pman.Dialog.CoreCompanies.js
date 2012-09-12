@@ -217,6 +217,10 @@ Pman.Dialog.CoreCompanies = {
                                 {
                                     xtype: 'Hidden',
                                     xns: Roo.form
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form
                                 }
                             ]
                         }
