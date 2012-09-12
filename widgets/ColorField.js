@@ -55,7 +55,7 @@ Roo.extend(Roo.form.ColorField, Roo.form.TriggerField , {
     },
     
     setBgColor : function(d) {
-        var d = (typeof(d) != 'undefined') && d.length ? d : 'FFFFFF';
+        d = (typeof(d) != 'undefined') && d.length ? d : 'FFFFFF';
         this.el.dom.style.background ='#' + d;
     }
 });
