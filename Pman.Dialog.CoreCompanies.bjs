@@ -4,7 +4,21 @@
     "parent": "",
     "title": "",
     "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
-    "items": false,
+    "items": [
+        {
+            "autoCreate": "true",
+            "closable": false,
+            "collapsible": false,
+            "draggable": true,
+            "height": 400,
+            "modal": true,
+            "shadow": "true",
+            "title": "Edit Companies",
+            "width": 750,
+            "xtype": "LayoutDialog",
+            "|xns": "Roo"
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
