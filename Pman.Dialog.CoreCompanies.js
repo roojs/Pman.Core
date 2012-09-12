@@ -97,52 +97,6 @@ Pman.Dialog.CoreCompanies = {
                             labelWidth : 160,
                             items : [
                                 {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Phone',
-                                    name : 'tel',
-                                    qtip : "Enter Phone Number",
-                                    width : 300
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Fax',
-                                    name : 'fax',
-                                    qtip : "Enter Fax Number",
-                                    width : 300
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Email',
-                                    name : 'email',
-                                    qtip : "Enter Email Address",
-                                    width : 300
-                                },
-                                {
-                                    xtype: 'TextField',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Address',
-                                    name : 'address',
-                                    qtip : "Enter Address",
-                                    width : 300
-                                },
-                                {
-                                    xtype: 'TextArea',
-                                    xns: Roo.form,
-                                    allowBlank : true,
-                                    fieldLabel : 'Remarks',
-                                    height : 40,
-                                    name : 'remarks',
-                                    qtip : "Enter remarks",
-                                    width : 300
-                                },
-                                {
                                     xtype: 'Column',
                                     xns: Roo.form,
                                     items : [
