@@ -209,7 +209,10 @@ Pman.Dialog.CoreCompanies = {
                                             items : [
                                                 {
                                                     xtype: 'DisplayField',
-                                                    xns: Roo.form
+                                                    xns: Roo.form,
+                                                    icon : function() {
+                                                        
+                                                    }
                                                 }
                                             ]
                                         }

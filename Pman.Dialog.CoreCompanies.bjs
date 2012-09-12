@@ -161,8 +161,9 @@
                                             "xtype": "FieldSet",
                                             "items": [
                                                 {
-                                                    "|xns": "Roo.form",
-                                                    "xtype": "DisplayField"
+                                                    "xtype": "DisplayField",
+                                                    "|icon": "function() {\n    \n}\n",
+                                                    "|xns": "Roo.form"
                                                 }
                                             ]
                                         }
