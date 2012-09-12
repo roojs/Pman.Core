@@ -83,6 +83,7 @@
                                     ]
                                 },
                                 {
+                                    "allowBlank": true,
                                     "fieldLabel": "Company Name",
                                     "name": "name",
                                     "xtype": "TextField",
