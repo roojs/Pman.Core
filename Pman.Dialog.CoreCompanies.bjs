@@ -102,7 +102,7 @@
                                 },
                                 {
                                     "allowBlank": true,
-                                    "fieldLabel": "Phone",
+                                    "fieldLabel": "Fax",
                                     "name": "tel",
                                     "qtip": "Enter Phone Number",
                                     "width": 300,
