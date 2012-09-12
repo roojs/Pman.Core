@@ -202,6 +202,9 @@
                     "|xns": "Roo"
                 },
                 {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+                    },
                     "*prop": "buttons[]",
                     "text": "Save",
                     "xtype": "Button",
