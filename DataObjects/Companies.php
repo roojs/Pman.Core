@@ -291,6 +291,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function toRooSingleArray($authUser, $request)
     {
         $ret = $this->toArray();
+        DB_DataObject::debugLevel(1);
         // get the comptype display
         $e = DB_DataObject::Factory('core_enum');
         $e->etype = 'COMPTYPE';
