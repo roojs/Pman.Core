@@ -42,7 +42,7 @@
                                 "rendered": "function (form)\n{\n    _this.form = form;\n}"
                             },
                             "fileUpload": true,
-                            "labelWidth": 200,
+                            "labelWidth": 160,
                             "xtype": "Form",
                             "|xns": "Roo.form",
                             "items": [

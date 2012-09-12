@@ -94,7 +94,7 @@ Pman.Dialog.CoreCompanies = {
                                 }
                             },
                             fileUpload : true,
-                            labelWidth : 200,
+                            labelWidth : 160,
                             items : [
                                 {
                                     xtype: 'TextField',
