@@ -128,6 +128,10 @@ Pman.Dialog.CoreCompanies = {
                                         data : '[ \'CONSULTANT\', "Consultant" ],[ \'CLIENT\'    ,  "Client" ],[ \'CONTRACTOR\' , "Contractor" ]',
                                         fields : '[\'val\', \'desc\']'
                                     }
+                                },
+                                {
+                                    xtype: 'TextField',
+                                    xns: Roo.form
                                 }
                             ]
                         }

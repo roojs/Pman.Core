@@ -81,6 +81,10 @@
                                             "|xns": "Roo.data"
                                         }
                                     ]
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextField"
                                 }
                             ]
                         }
