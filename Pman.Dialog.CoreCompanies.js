@@ -165,7 +165,7 @@ Pman.Dialog.CoreCompanies = {
                                                     id : 'id',
                                                     root : 'data',
                                                     totalProperty : 'total',
-                                                    fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}]
+                                                    fields : [{"name":"id","type":"int"},{"name":"name","type":"string"}]
                                                 }
                                             }
                                         },

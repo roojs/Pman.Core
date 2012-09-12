@@ -106,12 +106,12 @@
                                                         },
                                                         {
                                                             "*prop": "reader",
-                                                            "xtype": "JsonReader",
-                                                            "|xns": "Roo.data",
                                                             "id": "id",
                                                             "root": "data",
                                                             "totalProperty": "total",
-                                                            "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]"
+                                                            "xtype": "JsonReader",
+                                                            "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+                                                            "|xns": "Roo.data"
                                                         }
                                                     ]
                                                 }
