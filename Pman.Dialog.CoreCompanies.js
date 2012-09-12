@@ -152,8 +152,8 @@ Pman.Dialog.CoreCompanies = {
                                     xns: Roo.form,
                                     allowBlank : true,
                                     fieldLabel : 'Fax',
-                                    name : 'tel',
-                                    qtip : "Enter Phone Number",
+                                    name : 'fax',
+                                    qtip : "Enter Fax Number",
                                     width : 300
                                 }
                             ]
