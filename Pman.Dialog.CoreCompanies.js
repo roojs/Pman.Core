@@ -114,6 +114,7 @@ Pman.Dialog.CoreCompanies = {
                                     emptyText : "",
                                     hiddenName : '',
                                     name : 'comptype_name',
+                                    qtip : "Select Company type",
                                     selectOnFocus : true,
                                     triggerAction : '',
                                     typeAhead : true,
