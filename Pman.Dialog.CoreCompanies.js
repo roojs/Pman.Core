@@ -44,6 +44,7 @@ Pman.Dialog.CoreCompanies = {
                     xtype: 'ContentPanel',
                     xns: Roo,
                     autoCreate : 'true',
+                    fitToFrame : true,
                     items : [
                         {
                             xtype: 'Form',

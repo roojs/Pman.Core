@@ -30,6 +30,7 @@
                 },
                 {
                     "autoCreate": "true",
+                    "fitToFrame": true,
                     "xtype": "ContentPanel",
                     "|xns": "Roo",
                     "items": [
