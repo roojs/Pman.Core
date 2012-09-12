@@ -33,7 +33,7 @@ Pman.Dialog.CoreCompanies = {
             autoCreate : 'true',
             closable : false,
             collapsible : false,
-            draggable : true,
+            draggable : false,
             height : 400,
             modal : true,
             shadow : 'true',
