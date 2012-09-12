@@ -183,6 +183,10 @@ Pman.Dialog.CoreCompanies = {
                                     name : 'remarks',
                                     qtip : "Enter remarks",
                                     width : 300
+                                },
+                                {
+                                    xtype: 'Column',
+                                    xns: Roo.form
                                 }
                             ]
                         }

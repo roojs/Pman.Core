@@ -136,6 +136,10 @@
                                     "width": 300,
                                     "xtype": "TextArea",
                                     "|xns": "Roo.form"
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "Column"
                                 }
                             ]
                         }
