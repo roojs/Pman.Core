@@ -136,7 +136,7 @@ Pman.Dialog.CoreCompanies = {
                                             qtip : "Select type",
                                             queryParam : 'query[name]',
                                             selectOnFocus : true,
-                                            tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
+                                            tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> : {display_name}</div>',
                                             triggerAction : 'all',
                                             typeAhead : false,
                                             valueField : 'name',
