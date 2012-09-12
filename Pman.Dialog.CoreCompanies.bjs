@@ -21,7 +21,7 @@
                 {
                     "*prop": "center",
                     "alwaysShowTabs": false,
-                    "autoScroll": true,
+                    "autoScroll": false,
                     "closeOnTab": true,
                     "hideTabs": true,
                     "titlebar": true,

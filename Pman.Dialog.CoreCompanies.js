@@ -49,7 +49,7 @@ Pman.Dialog.CoreCompanies = {
                 xtype: 'LayoutRegion',
                 xns: Roo,
                 alwaysShowTabs : false,
-                autoScroll : true,
+                autoScroll : false,
                 closeOnTab : true,
                 hideTabs : true,
                 titlebar : true
