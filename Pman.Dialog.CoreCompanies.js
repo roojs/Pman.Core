@@ -111,8 +111,6 @@ Pman.Dialog.CoreCompanies = {
                                     }
                                    
                                     if (act.type == 'load') {
-                                        
-                                        
                                         _this.data = act.result.data;
                                         var meth = _this.data.isOwner || !Pman.Login.isOwner() ? 'disable' : 'enable';
                                      
