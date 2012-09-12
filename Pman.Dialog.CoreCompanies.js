@@ -123,7 +123,7 @@ Pman.Dialog.CoreCompanies = {
                                                 }
                                             },
                                             alwaysQuery : true,
-                                            displayField : 'comptype_name',
+                                            displayField : 'name',
                                             emptyText : "Select Type",
                                             fieldLabel : 'Type',
                                             forceSelection : true,
@@ -139,7 +139,7 @@ Pman.Dialog.CoreCompanies = {
                                             tpl : '<div class="x-grid-cell-text x-btn button"><b>{comptype_name}</b> </div>',
                                             triggerAction : 'all',
                                             typeAhead : false,
-                                            valueField : 'val',
+                                            valueField : 'name',
                                             width : 200,
                                             store : {
                                                 xtype: 'Store',
