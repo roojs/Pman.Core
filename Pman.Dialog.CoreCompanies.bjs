@@ -151,8 +151,10 @@
                                     "|xns": "Roo.form",
                                     "items": [
                                         {
-                                            "|xns": "Roo.form",
-                                            "xtype": "TextField"
+                                            "fieldLabel": "Backgroud Colour",
+                                            "name": "",
+                                            "xtype": "TextField",
+                                            "|xns": "Roo.form"
                                         }
                                     ]
                                 }
