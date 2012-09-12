@@ -44,7 +44,7 @@
                             "fileUpload": true,
                             "labelWidth": 160,
                             "xtype": "Form",
-                            "|url": "baseURL + '/Roo/Person.php'",
+                            "|url": "baseURL + '/Roo/Companies.php'",
                             "|xns": "Roo.form",
                             "items": [
                                 {
