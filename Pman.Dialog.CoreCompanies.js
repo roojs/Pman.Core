@@ -205,7 +205,13 @@ Pman.Dialog.CoreCompanies = {
                                         },
                                         {
                                             xtype: 'FieldSet',
-                                            xns: Roo.form
+                                            xns: Roo.form,
+                                            items : [
+                                                {
+                                                    xtype: 'DisplayField',
+                                                    xns: Roo.form
+                                                }
+                                            ]
                                         }
                                     ]
                                 }

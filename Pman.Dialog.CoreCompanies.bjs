@@ -158,7 +158,13 @@
                                         },
                                         {
                                             "|xns": "Roo.form",
-                                            "xtype": "FieldSet"
+                                            "xtype": "FieldSet",
+                                            "items": [
+                                                {
+                                                    "|xns": "Roo.form",
+                                                    "xtype": "DisplayField"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
