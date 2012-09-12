@@ -145,8 +145,9 @@
                                     ]
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "Column"
+                                    "width": 200,
+                                    "xtype": "Column",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }

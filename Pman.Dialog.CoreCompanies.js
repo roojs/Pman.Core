@@ -193,7 +193,8 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'Column',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    width : 200
                                 }
                             ]
                         }
