@@ -86,6 +86,7 @@
                                     "allowBlank": true,
                                     "fieldLabel": "Company Name",
                                     "name": "name",
+                                    "qtip": "Enter Company Name",
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
                                 }
