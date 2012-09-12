@@ -144,7 +144,7 @@ Pman.Dialog.CoreCompanies = {
                                     allowBlank : true,
                                     fieldLabel : 'Phone',
                                     name : 'tel',
-                                    qtip : "Enter Company Name",
+                                    qtip : "Enter Phone Number",
                                     width : 300
                                 }
                             ]
