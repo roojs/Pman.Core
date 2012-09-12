@@ -107,11 +107,7 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'ComboBox',
-                                    xns: Roo.form,
-                                    store : {
-                                        xtype: 'Store',
-                                        xns: Roo.data
-                                    }
+                                    xns: Roo.form
                                 }
                             ]
                         }
