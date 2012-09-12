@@ -82,7 +82,7 @@ Pman.Dialog.CoreCompanies = {
                                     //console.log('load completed'); 
                                     // error messages?????
                                     if(act.type == 'setdata'){
-                                        if (data._fetch) {
+                                        if (act.data._fetch) {
                                             _this.dialog.el.mask("Loading");
                                             _this.form.doAction('load', {
                                                 url: baseURL + '/Roo/Companies.html',
@@ -97,7 +97,7 @@ Pman.Dialog.CoreCompanies = {
                                             _this.form.setValues(data);
                                         }
                                         
-                                        if (data.isOwner || !Pman.Login.isOwner()) {
+                                        if (act.data.isOwner || !Pman.Login.isOwner()) {
                                             _this.dialog.setTitle("Your Company Details");
                                             if (_this.form.findField('comptype')) {
                                                 _this.form.findField('comptype').disable();
