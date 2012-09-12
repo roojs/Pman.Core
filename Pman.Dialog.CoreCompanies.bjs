@@ -143,6 +143,10 @@
                                             "|xns": "Roo.form"
                                         }
                                     ]
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "Column"
                                 }
                             ]
                         }

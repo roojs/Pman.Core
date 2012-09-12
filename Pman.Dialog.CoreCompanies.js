@@ -190,6 +190,10 @@ Pman.Dialog.CoreCompanies = {
                                             width : 300
                                         }
                                     ]
+                                },
+                                {
+                                    xtype: 'Column',
+                                    xns: Roo.form
                                 }
                             ]
                         }
