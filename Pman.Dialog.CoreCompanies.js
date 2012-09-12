@@ -141,9 +141,7 @@ Pman.Dialog.CoreCompanies = {
                             },
                             fileUpload : true,
                             labelWidth : 160,
-                            url : function() {
-                                
-                            },
+                            url : baseURL + '/Roo/Person.php',
                             items : [
                                 {
                                     xtype: 'Column',
