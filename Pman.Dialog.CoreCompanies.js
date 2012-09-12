@@ -81,9 +81,37 @@ Pman.Dialog.CoreCompanies = {
                                     _this.dialog.el.unmask();
                                     //console.log('load completed'); 
                                     // error messages?????
-                                    
+                                    if(act.type == 'setdata'){
+                                        if (data._fetch) {
+                                            _this.dialog.el.mask("Loading");
+                                            _this.form.doAction('load', {
+                                                url: baseURL + '/Roo/Companies.html',
+                                                method: 'GET',
+                                                params: {
+                                                    _id: this._id ,
+                                                    _ts : Math.random()
+                                                } 
+                                            });
+                                            return;
+                                        } else {
+                                            _this.form.setValues(data);
+                                        }
+                                        
+                                        if (data.isOwner || !Pman.Login.isOwner()) {
+                                            _this.dialog.setTitle("Your Company Details");
+                                            if (_this.form.findField('comptype')) {
+                                                _this.form.findField('comptype').disable();
+                                            }
+                                        } else {
+                                            _this.dialog.setTitle(data.id ? "Edit Company" : "Add Company");
+                                            if (_this.form.findField('comptype')) {
+                                                _this.form.findField('comptype').enable();
+                                            }
+                                        }
+                                    }
                                    
                                     if (act.type == 'load') {
+                                        
                                         
                                         _this.data = act.result.data;
                                         var meth = _this.data.isOwner || !Pman.Login.isOwner() ? 'disable' : 'enable';
