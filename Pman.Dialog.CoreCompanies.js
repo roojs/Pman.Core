@@ -123,7 +123,7 @@ Pman.Dialog.CoreCompanies = {
                                                 }
                                             },
                                             alwaysQuery : true,
-                                            displayField : 'name',
+                                            displayField : 'display_name',
                                             emptyText : "Select Type",
                                             fieldLabel : 'Type',
                                             forceSelection : true,
