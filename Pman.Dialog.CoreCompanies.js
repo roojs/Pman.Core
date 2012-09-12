@@ -103,7 +103,7 @@ Pman.Dialog.CoreCompanies = {
                                     fieldLabel : 'Company ID (for filing Ref.)',
                                     name : 'code',
                                     qtip : "Enter code",
-                                    width : 100
+                                    width : 150
                                 }
                             ]
                         }

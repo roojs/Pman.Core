@@ -51,7 +51,7 @@
                                     "fieldLabel": "Company ID (for filing Ref.)",
                                     "name": "code",
                                     "qtip": "Enter code",
-                                    "width": 100,
+                                    "width": 150,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
                                 }
