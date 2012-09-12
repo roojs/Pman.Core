@@ -53,6 +53,10 @@ Pman.Dialog.CoreCompanies = {
                 {
                     xtype: 'Button',
                     xns: Roo
+                },
+                {
+                    xtype: 'Button',
+                    xns: Roo
                 }
             ]
         });
