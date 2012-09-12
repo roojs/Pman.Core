@@ -24,7 +24,7 @@
                     "autoScroll": false,
                     "closeOnTab": true,
                     "hideTabs": true,
-                    "titlebar": true,
+                    "titlebar": false,
                     "xtype": "LayoutRegion",
                     "|xns": "Roo"
                 },

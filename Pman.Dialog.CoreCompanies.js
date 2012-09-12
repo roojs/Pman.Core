@@ -52,7 +52,7 @@ Pman.Dialog.CoreCompanies = {
                 autoScroll : false,
                 closeOnTab : true,
                 hideTabs : true,
-                titlebar : true
+                titlebar : false
             },
             buttons : [
                 {
