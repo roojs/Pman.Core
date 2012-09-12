@@ -34,7 +34,7 @@
                     "items": [
                         {
                             "fileUpload": true,
-                            "labelWidth": 0,
+                            "labelWidth": 150,
                             "xtype": "Form",
                             "|xns": "Roo.form"
                         }

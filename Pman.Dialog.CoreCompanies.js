@@ -48,7 +48,7 @@ Pman.Dialog.CoreCompanies = {
                             xtype: 'Form',
                             xns: Roo.form,
                             fileUpload : true,
-                            labelWidth : 0
+                            labelWidth : 150
                         }
                     ]
                 }
