@@ -131,7 +131,8 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'TextField',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    name : 'name'
                                 }
                             ]
                         }

@@ -83,8 +83,9 @@
                                     ]
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
+                                    "name": "name",
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }
