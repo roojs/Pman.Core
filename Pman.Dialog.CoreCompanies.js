@@ -110,7 +110,7 @@ Pman.Dialog.CoreCompanies = {
                                     xns: Roo.form,
                                     allowBlank : false,
                                     displayField : 'desc',
-                                    editable : true,
+                                    editable : false,
                                     emptyText : "",
                                     hiddenName : 'comptype',
                                     listWidth : 250,
@@ -118,7 +118,7 @@ Pman.Dialog.CoreCompanies = {
                                     qtip : "Select Company type",
                                     selectOnFocus : true,
                                     triggerAction : '',
-                                    typeAhead : true,
+                                    typeAhead : false,
                                     valueField : 'val',
                                     width : 200,
                                     store : {
