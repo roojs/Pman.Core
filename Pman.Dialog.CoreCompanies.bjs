@@ -161,7 +161,7 @@
                                             "xtype": "FieldSet",
                                             "items": [
                                                 {
-                                                    "icon": "Roo.rootURL + 'images/default/dd/drop-add.gif'",
+                                                    "icon": "rootURL + 'images/default/dd/drop-add.gif'",
                                                     "xtype": "DisplayField",
                                                     "|xns": "Roo.form"
                                                 }
