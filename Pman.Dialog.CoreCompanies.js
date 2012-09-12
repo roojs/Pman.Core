@@ -206,7 +206,7 @@ Pman.Dialog.CoreCompanies = {
                                         {
                                             xtype: 'DisplayField',
                                             xns: Roo.form,
-                                            style : '',
+                                            style : 'border: 1px solid #ccc;',
                                             fieldLabel : 'Logo Image',
                                             height : 170,
                                             icon : 'rootURL + \'images/default/dd/drop-add.gif\'',
