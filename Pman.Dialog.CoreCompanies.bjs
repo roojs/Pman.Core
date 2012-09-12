@@ -67,7 +67,7 @@
                                                 "select": "function (combo, record, index)\n{\n    _this.grid.footer.onClick('first');\n}"
                                             },
                                             "alwaysQuery": true,
-                                            "displayField": "name",
+                                            "displayField": "comptype_name",
                                             "emptyText": "Select Type",
                                             "fieldLabel": "Type",
                                             "forceSelection": true,
