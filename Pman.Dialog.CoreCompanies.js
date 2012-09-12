@@ -97,7 +97,10 @@ Pman.Dialog.CoreCompanies = {
                             items : [
                                 {
                                     xtype: 'TextField',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    allowBlank : false,
+                                    fieldLabel : '',
+                                    name : ''
                                 }
                             ]
                         }

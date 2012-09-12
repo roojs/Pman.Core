@@ -46,8 +46,11 @@
                             "|xns": "Roo.form",
                             "items": [
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "TextField"
+                                    "allowBlank": false,
+                                    "fieldLabel": "",
+                                    "name": "",
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
                                 }
                             ]
                         }
