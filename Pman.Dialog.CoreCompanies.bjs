@@ -63,8 +63,7 @@
                                         },
                                         {
                                             "listeners": {
-                                                "render": "function (_self)\n{\n    _this.etypeCombo = _self;\n}",
-                                                "select": "function (combo, record, index)\n{\n    _this.grid.footer.onClick('first');\n}"
+                                                "render": "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
                                             },
                                             "alwaysQuery": true,
                                             "displayField": "comptype_name",

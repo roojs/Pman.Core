@@ -120,10 +120,6 @@ Pman.Dialog.CoreCompanies = {
                                                 render : function (_self)
                                                 {
                                                     _this.etypeCombo = _self;
-                                                },
-                                                select : function (combo, record, index)
-                                                {
-                                                    _this.grid.footer.onClick('first');
                                                 }
                                             },
                                             alwaysQuery : true,
