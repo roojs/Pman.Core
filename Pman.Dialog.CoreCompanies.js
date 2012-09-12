@@ -156,7 +156,7 @@ Pman.Dialog.CoreCompanies = {
                                             emptyText : "Select pulldown",
                                             fieldLabel : 'Type',
                                             forceSelection : true,
-                                            listWidth : 400,
+                                            listWidth : 250,
                                             loadingText : "Searching...",
                                             minChars : 2,
                                             pageSize : 20,
