@@ -82,7 +82,7 @@
                                             "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{comptype_name}</b> </div>",
                                             "triggerAction": "all",
                                             "typeAhead": false,
-                                            "valueField": "name",
+                                            "valueField": "comptype",
                                             "width": 200,
                                             "xtype": "ComboBox",
                                             "|xns": "Roo.form",
