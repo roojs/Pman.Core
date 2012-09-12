@@ -146,6 +146,15 @@ Pman.Dialog.CoreCompanies = {
                                     name : 'tel',
                                     qtip : "Enter Phone Number",
                                     width : 300
+                                },
+                                {
+                                    xtype: 'TextField',
+                                    xns: Roo.form,
+                                    allowBlank : true,
+                                    fieldLabel : 'Phone',
+                                    name : 'tel',
+                                    qtip : "Enter Phone Number",
+                                    width : 300
                                 }
                             ]
                         }
