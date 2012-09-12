@@ -46,7 +46,9 @@ Pman.Dialog.CoreCompanies = {
                     items : [
                         {
                             xtype: 'Form',
-                            xns: Roo.form
+                            xns: Roo.form,
+                            fileUpload : true,
+                            labelWidth : 0
                         }
                     ]
                 }

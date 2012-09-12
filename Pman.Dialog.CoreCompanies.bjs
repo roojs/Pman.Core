@@ -33,8 +33,10 @@
                     "xtype": "ContentPanel",
                     "items": [
                         {
-                            "|xns": "Roo.form",
-                            "xtype": "Form"
+                            "fileUpload": true,
+                            "labelWidth": 0,
+                            "xtype": "Form",
+                            "|xns": "Roo.form"
                         }
                     ]
                 },
