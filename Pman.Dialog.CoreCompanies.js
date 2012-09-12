@@ -178,7 +178,7 @@ Pman.Dialog.CoreCompanies = {
                                     xtype: 'TextArea',
                                     xns: Roo.form,
                                     allowBlank : true,
-                                    fieldLabel : '',
+                                    fieldLabel : 'Remarks',
                                     height : 40,
                                     name : '',
                                     qtip : "",
