@@ -168,8 +168,9 @@
                                     ]
                                 },
                                 {
-                                    "|xns": "Roo.form",
-                                    "xtype": "Hidden"
+                                    "name": "isOwner",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
                                 },
                                 {
                                     "name": "id",

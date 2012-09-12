@@ -216,7 +216,8 @@ Pman.Dialog.CoreCompanies = {
                                 },
                                 {
                                     xtype: 'Hidden',
-                                    xns: Roo.form
+                                    xns: Roo.form,
+                                    name : 'isOwner'
                                 },
                                 {
                                     xtype: 'Hidden',
