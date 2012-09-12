@@ -173,6 +173,10 @@ Pman.Dialog.CoreCompanies = {
                                     name : 'address',
                                     qtip : "Enter Address",
                                     width : 300
+                                },
+                                {
+                                    xtype: 'TextArea',
+                                    xns: Roo.form
                                 }
                             ]
                         }

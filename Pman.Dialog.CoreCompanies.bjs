@@ -126,6 +126,10 @@
                                     "width": 300,
                                     "xtype": "TextField",
                                     "|xns": "Roo.form"
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextArea"
                                 }
                             ]
                         }
