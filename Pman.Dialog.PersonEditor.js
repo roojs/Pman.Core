@@ -720,7 +720,7 @@ Pman.Dialog.PersonEditor.prototype = {
              
             var c = ar[i];
             i++;
-            Pman.request({
+            new Pman.Request({
                 url : baseURL+'/Core/SendIntro.html',
                 method : 'POST',
                 params: c,
