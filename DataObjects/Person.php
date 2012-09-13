@@ -348,6 +348,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function active()
     {
+        //if active == 2, that account is pending
         return $this->active;
     }
     function authUserName($n) // set username prior to acheck user exists query.
