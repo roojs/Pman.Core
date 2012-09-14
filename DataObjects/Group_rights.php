@@ -157,9 +157,9 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             }
             
         }
-        $Pman_DataObjects_Group_Right = $ret;
+        $Pman_DataObjects_Group_Right[$this->group_id] = $ret;
        // print_r($ret);
-        return $Pman_DataObjects_Group_Right;
+        return $Pman_DataObjects_Group_Right[$this->group_id];
          
         
     }
