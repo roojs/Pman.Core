@@ -80,7 +80,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
                 continue;
             }
             // not set contition...
-            if ($only_public) {
+            if (!$isOwner) {
                 $r[$k] = '';
                 continue;
             }
