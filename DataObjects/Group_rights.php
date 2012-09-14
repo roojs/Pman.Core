@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             
             if (isset($ret[$k])) {
                 if (empty($ret[$k]) && $isAdmin) {
-                    $r[$k] = $isOwner ? $v[0] : '' ; // if it's public, the get no default rights
+                    $r[$k] = $v[0] ; // -- it's admin they get rights... can not be disabled..
                     continue;
                 }
                 
