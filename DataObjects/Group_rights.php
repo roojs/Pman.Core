@@ -75,7 +75,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
                     $r[$k] = $v[0] ; // -- it's admin they get rights... can not be disabled..
                     continue;
                 }
-                
+                // in theory non-owners could sneak in rights here..??
                 $r[$k] = $ret[$k];
                 continue;
             }
