@@ -453,7 +453,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         // ------ STANDARD PERMISSION HANDLING.
-        
+        $isOwner = $this->company()->comptype == 'OWNER';
         $g = DB_DataObject::Factory('group_members');
         $grps = $g->listGroupMembership($this);
        //var_dump($grps);
@@ -462,7 +462,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // the load all the perms for those groups, and add them all together..
         // then load all those 
         $g = DB_DataObject::Factory('group_rights');
-        $ret =  $g->listPermsFromGroupIds($grps, $isAdmin);
+        $ret =  $g->listPermsFromGroupIds($grps, $isAdmin, $isOwner);
         //echo '<PRE>';print_r($ret);
         return $ret;
          
