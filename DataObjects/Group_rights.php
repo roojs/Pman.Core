@@ -41,21 +41,10 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         $t->autoJoin();
         $t->find();
         
-        $only_public = -1;
-        $ret = array();
+         $ret = array();
         while($t->fetch()) {
             
-            switch($only_public) {
-                case -1:
-                    $only_public  = $t->group_id_type == 2 ? 1 : 0;
-                    break;
-                case 1:
-                    $only_public  = $t->group_id_type == 2 ? $only_public : 0;
-                    break;
-                case 0:
-                    break;
-                    
-            }
+           
             
             
             if (isset($ret[$t->rightname])) {
@@ -83,7 +72,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             
             if (isset($ret[$k])) {
                 if (empty($ret[$k]) && $isAdmin) {
-                    $r[$k] = $only_public ? '' :  $v[0]; // if it's public, the get no default rights
+                    $r[$k] = $isOwner ? $v[0] : '' ; // if it's public, the get no default rights
                     continue;
                 }
                 
