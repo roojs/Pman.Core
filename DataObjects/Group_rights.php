@@ -113,6 +113,8 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         
         
         static $Pman_DataObjects_Group_Right = array();
+        
+        
         if (!empty($Pman_DataObjects_Group_Right[$this->group_id])) {
             return $Pman_DataObjects_Group_Right[$this->group_id];
         }
