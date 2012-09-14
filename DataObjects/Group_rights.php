@@ -170,7 +170,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
     {
         // all groups must have the minimum privaligess..
         // admin group must have all the privaliges
-        $g = DB_DataObject::Factory('Groups');
+        $g = DB_DataObject::Factory('groups');
         $g->get($this->group_id);
         $defs = $this->defaultPermData();
         switch($g->name) {
