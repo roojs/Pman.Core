@@ -34,7 +34,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
     
     var $fullRights = "ADESPIM";
     
-    function listPermsFromGroupIds($grps, $isAdmin=false) {
+    function listPermsFromGroupIds($grps, $isAdmin=false, $isOwner = false) {
         
         $t = clone($this);
         $t->whereAdd('group_id IN ('. implode(',', $grps).')');
