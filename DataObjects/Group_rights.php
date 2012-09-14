@@ -38,9 +38,26 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         
         $t = clone($this);
         $t->whereAdd('group_id IN ('. implode(',', $grps).')');
+        $t->autoJoin();
         $t->find();
+        
+        $only_public = -1;
         $ret = array();
         while($t->fetch()) {
+            
+            switch($only_public) {
+                case -1:
+                    $only_public  = $t->group_id_type == 2 ? 1 : 0;
+                    break;
+                case 1:
+                    $only_public  = $t->group_id_type == 2 ? $only_public : 0;
+                    break;
+                case 0:
+                    break;
+                    
+            }
+            
+            
             if (isset($ret[$t->rightname])) {
                 $ret[$t->rightname] = $this->mergeMask($ret[$t->rightname], $t->accessmask);
                 continue;
@@ -49,9 +66,15 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         }
         // blank out rights that are disabled by the system..
         $defs = $this->defaultPermData();
+        
         //echo "<PRE>";print_r($defs);
         $r = array();
         foreach($defs as $k=>$v) {
+            
+            if ($only_public) {
+                $v = '';
+            }
+            
             if (empty($v[0])) { // delete right if not there..
                 $r[$k] = '';
                 continue;
@@ -60,7 +83,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             
             if (isset($ret[$k])) {
                 if (empty($ret[$k]) && $isAdmin) {
-                    $r[$k] = $v[0];
+                    $r[$k] = $only_public ? '' :  $v[0]; // if it's public, the get no default rights
                     continue;
                 }
                 
