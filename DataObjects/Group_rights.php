@@ -111,17 +111,20 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         // M????
         
         
-        
+        $gid = empty($this->group_id) ? 0 : $this->group_id;
         static $Pman_DataObjects_Group_Right = array();
         
         
-        if (!empty($Pman_DataObjects_Group_Right[$this->group_id])) {
-            return $Pman_DataObjects_Group_Right[$this->group_id];
+        if (!empty($Pman_DataObjects_Group_Right[$gid])) {
+            return $Pman_DataObjects_Group_Right[$gid];
+        }
+        $has_admin = true; ///?? not sure..
+        if ($gid) {
+            $g = DB_DataObject::factory('groups');
+            $g->get($this->group_id);
+            $has_admin = $g->type  == 2 ? false : true;
         }
         
-        $g = DB_DataObject::factory('groups');
-        $g->get($this->group_id);
-        $has_admin = $g->type  == 2 ? false : true;
         
         
         $ff = HTML_FlexyFramework::get();
@@ -159,9 +162,9 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             }
             
         }
-        $Pman_DataObjects_Group_Right[$this->group_id] = $ret;
+        $Pman_DataObjects_Group_Right[$gid] = $ret;
        // print_r($ret);
-        return $Pman_DataObjects_Group_Right[$this->group_id];
+        return $Pman_DataObjects_Group_Right[$gid];
          
         
     }
