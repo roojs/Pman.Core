@@ -71,9 +71,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         $r = array();
         foreach($defs as $k=>$v) {
             
-            if ($only_public) {
-                $v = '';
-            }
+            
             
             if (empty($v[0])) { // delete right if not there..
                 $r[$k] = '';
