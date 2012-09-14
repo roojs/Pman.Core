@@ -67,6 +67,8 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         // blank out rights that are disabled by the system..
         $defs = $this->defaultPermData();
         
+        
+        
         //echo "<PRE>";print_r($defs);
         $r = array();
         foreach($defs as $k=>$v) {
@@ -89,6 +91,10 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
                 continue;
             }
             // not set contition...
+            if ($only_public) {
+                $r[$k] = '';
+                continue;
+            }
             
             $r[$k] = $isAdmin ? $v[0] : $v[1];
             
