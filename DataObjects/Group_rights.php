@@ -113,9 +113,14 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         
         
         static $Pman_DataObjects_Group_Right = array();
-        if (!empty($Pman_DataObjects_Group_Right)) {
-            return $Pman_DataObjects_Group_Right;
+        if (!empty($Pman_DataObjects_Group_Right[$this->group_id])) {
+            return $Pman_DataObjects_Group_Right[$this->group_id];
         }
+        
+        $g = DB_DataObject::factory('groups');
+        $g->get($this->group_id);
+        $has_admin = $g->type  == 2 ? false : true;
+        
         
         $ff = HTML_FlexyFramework::get();
         //print_R($ff);
@@ -126,6 +131,11 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         $ret = array();
          //echo '<PRE>';print_r($enabled);
         foreach($enabled as $module) {
+            
+            if (($module == 'Admin') && !$has_admin) {
+                continue;
+            }
+            
             $fn = $pman. $module.  '/'.$module. '.perms.json';
             if (!file_exists($fn)) {
                 continue;
