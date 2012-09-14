@@ -16,7 +16,7 @@ ALTER TABLE Companies ADD COLUMN    email varchar(128)  default NULL;
 ALTER TABLE Companies ADD COLUMN    isOwner int(11) default NULL;
 ALTER TABLE Companies ADD COLUMN    logo_id INT(11)  NOT NULL DEFAULT 0;;
 ALTER TABLE Companies ADD COLUMN    background_color varchar(8)  NOT NULL;
-ALTER TABLE Companies ADD COLUMN    comptype varchar(8)  NOT NULL DEFAULT '';
+ALTER TABLE Companies ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT '';
 ALTER TABLE Companies ADD COLUMN    url varchar(254)  NOT NULL DEFAULT '';
 ALTER TABLE Companies ADD COLUMN    main_office_id int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE Companies ADD COLUMN    created_by int(11)  NOT NULL DEFAULT 0;
@@ -30,6 +30,7 @@ ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
+ALTER TABLE Companies CHANGE COLUMN comptype comptype  VARCHAR(32) DEFAULT '';
 -- postres
 ALTER TABLE Companies ALTER isOwner TYPE int(11);
 ALTER TABLE Companies ALTER owner_id SET DEFAULT 0;
