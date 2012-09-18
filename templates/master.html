@@ -88,11 +88,11 @@
        
         
 {if:bootLoader.Pman[roo_debug]}                  
-        <script type="text/javascript" src="{rootURL}/roojs1/roojs-debug.js"></script>
-        <script type="text/javascript" src="{rootURL}/roojs1/ux/Iscroll.js"></script>  
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-debug.js?ts={version}"></script>
+        <!-- <script type="text/javascript" src="{rootURL}/roojs1/ux/Iscroll.js"></script>  -->
          
 {else:}                  
-        <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js"></script>
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js?ts={version}"></script>
                  
 {end:}                  
         <flexy:toJSON 
