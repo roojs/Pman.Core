@@ -340,7 +340,7 @@ class Pman_Core_Images extends Pman
         $attr_url = $attr[$attr_name];
         $umatch  = false;
         if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
-            continue;
+            return $html;
         }
         $id = $umatch[2];
         $img = DB_DataObject::factory('Images');
