@@ -563,7 +563,7 @@ Pman = new Roo.Document(
                 tab.grid.getView().mainWrap.mask("Deleting");
                 new Pman.Request({
                     url: baseURL + '/Roo/'+tbl+'.php',
-                    method: 'GET',
+                    method: 'POST',
                     params: {
                         _delete : r.join(',')
                     },
