@@ -64,7 +64,7 @@ Pman.Download = function(cfg)
         (function() {
             this.submit = true;
             this.csvFrame.src = cfg.url;
-            this.cleanup.defer(cfg.timeout || 30000,this);
+            //this.cleanup.defer(cfg.timeout || 30000,this);
         }).defer(100, this);
         
        
