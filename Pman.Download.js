@@ -152,7 +152,7 @@ Roo.apply(Pman.Download.prototype, {
        //     return;
         //} // n
         if (!this.submit) {
-            return false;
+            return true;
         }
         
       
@@ -181,7 +181,7 @@ Roo.apply(Pman.Download.prototype, {
             Roo.log(e);
         }
         // we can not actually do anything with the frame... as it may actually still be downloading..
-        return false;
+        return true;
     
         this.cleanup();
         
