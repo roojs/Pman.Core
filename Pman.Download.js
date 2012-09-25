@@ -180,7 +180,9 @@ Roo.apply(Pman.Download.prototype, {
             Roo.log(e.toString());
             Roo.log(e);
         }
+        // we can not actually do anything with the frame... as it may actually still be downloading..
         return;
+    
         this.cleanup();
         
         // this will never fire.. see 
