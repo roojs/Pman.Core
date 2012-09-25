@@ -152,7 +152,7 @@ Roo.apply(Pman.Download.prototype, {
        //     return;
         //} // n
         if (!this.submit) {
-            return true;
+            return;
         }
         
       
