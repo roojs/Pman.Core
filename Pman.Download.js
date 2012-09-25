@@ -49,7 +49,7 @@ Pman.Download = function(cfg)
    
     
     
-    this.submit = false;
+    var submit = false;
     this.createCsvFrame();
     
     var requested = 0;
@@ -62,9 +62,9 @@ Pman.Download = function(cfg)
     
     if (this.method == 'GET' && !this.params) {
         (function() {
-            this.submit = true;
+            submit = true;
             this.csvFrame.src = cfg.url;
-            //this.cleanup.defer(cfg.timeout || 30000,this);
+            this.cleanup.defer(cfg.timeout || 30000,this);
         }).defer(100, this);
         
        
@@ -101,9 +101,9 @@ Pman.Download = function(cfg)
     }
     
     (function() {
-        this.submit = true;
+        submit = true;
         this.form.dom.submit();
-        //this.cleanup.defer(this.timeout || 30000,this);
+        this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
     
      
@@ -151,11 +151,10 @@ Roo.apply(Pman.Download.prototype, {
        // if (requested < 2) {
        //     return;
         //} // n
-        Roo.log('onload?');
         if (!this.submit) {
-            return false;
+            return;
         }
-        return false;
+        
       
         var frame = this.csvFrame;
         var success  = true; 
@@ -181,9 +180,7 @@ Roo.apply(Pman.Download.prototype, {
             Roo.log(e.toString());
             Roo.log(e);
         }
-        // we can not actually do anything with the frame... as it may actually still be downloading..
-        return true;
-    
+        
         this.cleanup();
         
         // this will never fire.. see 
@@ -192,7 +189,7 @@ Roo.apply(Pman.Download.prototype, {
             
             this.success();
         }
-        return false;
+       
         
 
     },
@@ -200,7 +197,6 @@ Roo.apply(Pman.Download.prototype, {
     // private - clean up download elements.
     cleanup :function()
     {
-        Roo.log('cleanup?');
         if (this.form) {
             this.form.remove();
             this.form= false;
