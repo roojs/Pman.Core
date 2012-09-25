@@ -151,6 +151,7 @@ Roo.apply(Pman.Download.prototype, {
        // if (requested < 2) {
        //     return;
         //} // n
+        Roo.log('onload?');
         if (!this.submit) {
             return false;
         }
@@ -199,6 +200,7 @@ Roo.apply(Pman.Download.prototype, {
     // private - clean up download elements.
     cleanup :function()
     {
+        Roo.log('cleanup?');
         if (this.form) {
             this.form.remove();
             this.form= false;
