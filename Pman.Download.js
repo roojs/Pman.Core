@@ -49,7 +49,7 @@ Pman.Download = function(cfg)
    
     
     
-    var submit = false;
+    this.submit = false;
     this.createCsvFrame();
     
     var requested = 0;
@@ -62,7 +62,7 @@ Pman.Download = function(cfg)
     
     if (this.method == 'GET' && !this.params) {
         (function() {
-            submit = true;
+            this.submit = true;
             this.csvFrame.src = cfg.url;
             this.cleanup.defer(cfg.timeout || 30000,this);
         }).defer(100, this);
@@ -101,7 +101,7 @@ Pman.Download = function(cfg)
     }
     
     (function() {
-        submit = true;
+        this.submit = true;
         this.form.dom.submit();
         this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
