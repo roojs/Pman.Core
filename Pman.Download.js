@@ -180,7 +180,7 @@ Roo.apply(Pman.Download.prototype, {
             Roo.log(e.toString());
             Roo.log(e);
         }
-        
+        return;
         this.cleanup();
         
         // this will never fire.. see 
