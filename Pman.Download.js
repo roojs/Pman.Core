@@ -191,7 +191,7 @@ Roo.apply(Pman.Download.prototype, {
             
             this.success();
         }
-       
+        return false;
         
 
     },
