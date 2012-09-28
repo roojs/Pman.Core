@@ -390,6 +390,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     }
     
+    
+    
     function onInsert($request,$roo)
     {
         $ff  = HTML_FlexyFramework::get();
