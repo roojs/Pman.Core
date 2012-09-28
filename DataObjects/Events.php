@@ -407,7 +407,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         } else {
             $user = getenv('USERNAME'); // windows.
         }
-        print_r($this);
+        //print_r($this);
         $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file),0700,true);
