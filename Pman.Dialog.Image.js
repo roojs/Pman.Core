@@ -180,6 +180,7 @@ Pman.Dialog.Image = {
                             labelWidth : 140,
                             method : 'POST',
                             style : 'margin:10px;',
+                            timeout : 300,
                             url : baseURL + '/Roo/Images.php',
                             items : [
                                 {
