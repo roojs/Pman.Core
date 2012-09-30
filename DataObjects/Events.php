@@ -396,7 +396,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         $ff  = HTML_FlexyFramework::get();
         if (empty($ff->Pman['event_log_dir'])) {
-            //return $e;
+            return false;
         }
         
         // add user (eg. www-data or local user if not..)
