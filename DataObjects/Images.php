@@ -151,8 +151,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function onInsert($request,$roo)
     {
-        
-        
         if(!empty($this->imgtype)){
             $c = DB_DataObject::factory('Companies');
 
@@ -169,7 +167,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $c->logo_id = $this->id;
             $c->update();
         }
-        
     }
      
     /**
