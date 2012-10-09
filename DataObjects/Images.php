@@ -148,26 +148,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         ));
           
     }
-    
-    function onInsert($request,$roo)
-    {
-        if(!empty($this->imgtype)){
-            $c = DB_DataObject::factory('Companies');
-
-            if(!$c->get($this->onid)){
-                return;
-            }
-
-            if(!empty($c->logo_id)){
-                $xx = DB_DataObject::factory('Images');
-                $xx->get($c->logo_id);
-                $xx->delete();
-            }
-
-            $c->logo_id = $this->id;
-            $c->update();
-        }
-    }
      
     /**
      * deletes all the image instances of it...
