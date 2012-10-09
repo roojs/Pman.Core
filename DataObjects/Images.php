@@ -26,7 +26,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $linkurl;                         // string(254)  not_null
     public $descript;                        // blob(65535)  not_null blob
     public $title;                           // string(128)  not_null
-    public $is_main;                           // int(11)
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
