@@ -425,9 +425,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             'GET' => empty($_GET) ? array() : $_GET,
             'POST' =>$p,
         )));
-        
     }
     
+    function writeEventLog()
+    {
+        
+    }
     
     
 }
