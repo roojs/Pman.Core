@@ -394,37 +394,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function onInsert($request,$roo)
     {
-        $ff  = HTML_FlexyFramework::get();
-        if (empty($ff->Pman['event_log_dir'])) {
-            return false;
-        }
-        
-        // add user (eg. www-data or local user if not..)
-        if (function_exists('posix_getpwuid')) {
-            $uinfo = posix_getpwuid( posix_getuid () ); 
-         
-            $user = $uinfo['name'];
-        } else {
-            $user = getenv('USERNAME'); // windows.
-        }
-        //print_r($this);
-        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
-        if (!file_exists(dirname($file))) {
-            mkdir(dirname($file),0700,true);
-        }
-        // Remove all the password from logs...
-        $p =  empty($_POST) ? array() : $_POST;
-        foreach(array('passwd', 'password', 'passwd2', 'password2') as $rm) {
-            if (isset($p[$rm])) {
-                $p['passwd'] = '******';
-            }
-        }
-         
-        file_put_contents($file, json_encode(array(
-            'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
-            'GET' => empty($_GET) ? array() : $_GET,
-            'POST' =>$p,
-        )));
+        $this->writeEventLog();
     }
     
     function writeEventLog()
