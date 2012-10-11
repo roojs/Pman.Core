@@ -404,6 +404,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return false;
         }
         print_r(123123123);
+        exit;
         // add user (eg. www-data or local user if not..)
         if (function_exists('posix_getpwuid')) {
             $uinfo = posix_getpwuid( posix_getuid () ); 
