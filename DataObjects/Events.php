@@ -417,6 +417,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file),0700,true);
         }
+        
         // Remove all the password from logs...
         $p =  empty($_POST) ? array() : $_POST;
         foreach(array('passwd', 'password', 'passwd2', 'password2') as $rm) {
