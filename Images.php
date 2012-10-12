@@ -82,7 +82,7 @@ class Pman_Core_Images extends Pman
             $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
             header ('Content-Type: image/jpeg');
             if(!empty($bits[2]) && $bits[2] == 'download'){
-                header("Content-Disposition: attachment; filename=\"".basename($file).".jpg\";" );
+                header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
                 ob_clean();
                 flush();
                 readfile($file);
