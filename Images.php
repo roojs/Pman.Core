@@ -79,10 +79,10 @@ class Pman_Core_Images extends Pman
             
         } else if (!empty($bits[0]) && $bits[0] == 'events') {
             $popts = PEAR::getStaticProperty('Pman','options');
-            $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
+            $file = "{$popts['event_log_dir']}/{$bits[1]}";
             header ('Content-Type: image/jpeg');
             if(!empty($bits[2]) && $bits[2] == 'download'){
-                header("Content-Disposition: attachment; filename=\"".$file."\";" );
+                header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
                 ob_clean();
                 flush();
                 readfile($file);
