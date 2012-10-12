@@ -429,6 +429,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         foreach ($_FILES as $k=>$f){
             
         }
+        
         file_put_contents($file, json_encode(array(
             'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
             'GET' => empty($_GET) ? array() : $_GET,
