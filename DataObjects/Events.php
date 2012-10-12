@@ -431,7 +431,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $i++;
             $files[$k] = $f;
             $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
-            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".file_$i.jpg";
+            $nf = $ff->Pman['event_log_dir']. '/'. $this->id . ".file_$i.jpg";
             if (!copy($f['tmp_name'], $nf)) {
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
