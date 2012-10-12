@@ -425,8 +425,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $p['passwd'] = '******';
             }
         }
-         $i=0;
-         $files = array();
+        $i=0;
+        $files = array();
         foreach ($_FILES as $k=>$f){
             $i++;
             $files[$k] = $f;
