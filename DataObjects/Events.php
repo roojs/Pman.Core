@@ -430,7 +430,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         foreach ($_FILES as $k=>$f){
             $i++;
             $files[$k] = $f;
-            $files[$k]['tmp_name'] = $this->id . '.' . 'file_'. $i.'.jpg';
+            $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
             $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".file_$i.jpg";
             if (!copy($f['tmp_name'], $nf)) {
                 echo "failed to copy {$f['tmp_name']}...\n";
