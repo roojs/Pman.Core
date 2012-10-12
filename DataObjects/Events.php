@@ -425,14 +425,18 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $p['passwd'] = '******';
             }
         }
-         
+         $i=0;
+         $files = array();
         foreach ($_FILES as $k=>$f){
-            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".file_{$f['name']}";
+            $i++;
+            $files[$k] = $f;
+            $files[$k]['tmp_name'] = $this->id . '.' . 'file_'. $i;
+            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".file_$i";
             if (!copy($f['tmp_name'], $nf)) {
                 echo "failed to copy $file...\n";
             }
         }
-        print_r($_FILES);
+        print_r($files);
         file_put_contents($file, json_encode(array(
             'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
             'GET' => empty($_GET) ? array() : $_GET,
