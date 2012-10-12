@@ -77,7 +77,10 @@ class Pman_Core_Images extends Pman
             $this->size = empty($bits[2]) ? '0x0' : $bits[2];
             $id = empty($bits[3]) ? 0 :   $bits[3];
             
+        } else if (!empty($bits[0]) && $bits[0] == 'Download') {
+            
         } else {
+        
             $id = empty($bits[0]) ? 0 :  $bits[0];
         }
         
