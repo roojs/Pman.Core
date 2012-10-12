@@ -77,8 +77,9 @@ class Pman_Core_Images extends Pman
             $this->size = empty($bits[2]) ? '0x0' : $bits[2];
             $id = empty($bits[3]) ? 0 :   $bits[3];
             
-        } else if (!empty($bits[0]) && $bits[0] == 'Download') {
-            
+        } else if (!empty($bits[0]) && $bits[0] == 'events') {
+            $popts = PEAR::getStaticProperty('Pman','options');
+            $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
         } else {
         
             $id = empty($bits[0]) ? 0 :  $bits[0];
