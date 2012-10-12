@@ -87,7 +87,7 @@ class Pman_Core_Images extends Pman
                 flush();
                 readfile($file);
             }else{
-                $fh = fopen($file.'.jpg','r');
+                $fh = fopen($file,'r');
                 echo fread($fh,filesize($file));
             }
             exit;
