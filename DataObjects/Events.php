@@ -418,7 +418,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             mkdir(dirname($file),0700,true);
         }
         
-        //$_FILES
+        print_r($_FILES);
+        exit;
         
         // Remove all the password from logs...
         $p =  empty($_POST) ? array() : $_POST;
