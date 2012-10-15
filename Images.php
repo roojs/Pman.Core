@@ -241,6 +241,7 @@ class Pman_Core_Images extends Pman
         if (!file_exists($fn)) {
             $fn = $img->getStoreName()  . '.'. $this->size . '.'. $img->fileExt();
         }
+        
         if (!file_exists($fn)) {            
             
             $this->validateSize();
