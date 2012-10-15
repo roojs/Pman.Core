@@ -232,11 +232,17 @@ class Pman_Core_Images extends Pman
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
         
+        
+        
         // if the mimetype is not converted..
         // then the filename should be original.{size}.jpeg
         $fn = $img->getStoreName() . '.'. $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
-       var_dump($fn);
+        
         if (!file_exists($fn)) {
+            $fn = $img->getStoreName()  . '.'. $this->size . '.'. $img->fileExt();
+        }
+        if (!file_exists($fn)) {            
+            
             $this->validateSize();
         }
         
