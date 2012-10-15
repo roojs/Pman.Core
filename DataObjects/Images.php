@@ -452,7 +452,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function fileExt()
     {
-        require_once 'File/Mimetype.php';
+        require_once 'File/MimeType.php';
         
         $y = new File_MimeType();
         return  $y->toExt($this->mimetype);
