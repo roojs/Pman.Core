@@ -223,7 +223,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
+            die(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "111\n");
             
         }
         
