@@ -120,7 +120,7 @@ class Pman_Core_NotifySend extends Pman
             $w->event_id = $ev->id;
             $w->update($ww);
             die(date('Y-m-d h:i:s ') . 
-                     "Notification event cleared (underlying object does not exist)"" 
+                     "Notification event cleared (underlying object does not exist)" 
                     ."\n");
         }
      
