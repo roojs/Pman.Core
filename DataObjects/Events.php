@@ -428,6 +428,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $i=0;
         $files = array();
         foreach ($_FILES as $k=>$f){
+            if (empty($f['tmp_name'])) {
+                continue;
+            }
             $i++;
             $files[$k] = $f;
             $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
