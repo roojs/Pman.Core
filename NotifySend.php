@@ -436,7 +436,8 @@ class Pman_Core_NotifySend extends Pman
         }
                 
         if (!method_exists($object, 'toEmail')) {
-            print_r($object);
+            var_Dump($object);
+            exit;
         }
         return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
     }
