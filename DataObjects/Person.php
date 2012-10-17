@@ -505,150 +505,150 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
-        if (!empty($q['query']['person_not_internal'])) {
-            $this->whereAdd(" join_company_id_id.isOwner = 0 ");
-        }
-        
-        
-        if (!empty($q['query']['person_internal_only_all'])) {
-            
-            
-            // must be internal and not current user (need for distribution list)
-            // user has a projectdirectory entry and role is not blank.
-            //DB_DataObject::DebugLevel(1);
-            $pd = DB_DataObject::factory('ProjectDirectory');
-            $pd->whereAdd("role != ''");
-            $pd->selectAdd();
-            $pd->selectAdd('distinct(person_id) as person_id');
-            $roled = $pd->fetchAll('person_id');
-            $rs = $roled  ? "  OR
-                    {$this->tableName()}.id IN (".implode(',', $roled) . ") 
-                    " : '';
-            $this->whereAdd(" join_company_id_id.comptype = 'OWNER' $rs ");
-            
-        }
-        // -- for distribution
-        if (!empty($q['query']['person_internal_only'])) {
-            // must be internal and not current user (need for distribution list)
-            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
-            
-            //$this->whereAdd(($this->tableName() == 'Person' ? 'Person' : "join_person_id_id") .
-            //    ".id  != ".$au->id);
-            $this->whereAdd("Person.id != {$au->id}");
-        } 
-        
-        if (!empty($q['query']['comptype_or_company_id'])) {
-           // DB_DataObject::debugLevel(1);
-            $bits = explode(',', $q['query']['comptype_or_company_id']);
-            $id = (int) array_pop($bits);
-            $ct = $this->escape($bits[0]);
-            
-            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR Person.company_id = $id");
-            
-        }
-        
-        
-        // staff list..
-        if (!empty($q['query']['person_inactive'])) {
-           // DB_Dataobject::debugLevel(1);
-            $this->active = 1;
-        }
-        $tn_p = $this->tableName();
-        $tn_gm = DB_DataObject::Factory('group_members')->tableName();
-        $tn_g = DB_DataObject::Factory('Groups')->tableName();
-
-        ///---------------- Group views --------
-        if (!empty($q['query']['in_group'])) {
-            // DB_DataObject::debugLevel(1);
-            $ing = (int) $q['query']['in_group'];
-            if ($q['query']['in_group'] == -1) {
-             
-                // list all staff who are not in a group.
-                $this->whereAdd("Person.id NOT IN (
-                    SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
-                        $tn_g ON $tn_g.id = $tn_gm.group_id
-                        WHERE $tn_g.type = ".$q['query']['type']."
-                    )");
-                
-                
-            } else {
-                
-                $this->whereAdd("$tn_p.id IN (
-                    SELECT distinct(user_id) FROM $tn_gm
-                        WHERE group_id = $ing
-                    )");
-               }
-            
-        }
-        
-        if (!empty($q['query']['not_in_directory'])) { 
-            // it's a Person list..
-            // DB_DATaobjecT::debugLevel(1);
-            
-            // specific to project directory which is single comp. login
-            //
-            $owncomp = DB_DataObject::Factory('Companies');
-            $owncomp->get('comptype', 'OWNER');
-            if ($q['company_id'] == $owncomp->id) {
-                $this->active =1;
-            }
-            
-            
-
-            if ( $q['query']['not_in_directory'] > -1) {
-                $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
-                // can list current - so that it does not break!!!
-                $this->whereAdd("$tn_p.id NOT IN 
-                    ( SELECT distinct person_id FROM $tn_pd WHERE
-                        project_id = " . $q['query']['not_in_directory'] . " AND 
-                        company_id = " . $this->company_id . ')');
-            }
-        }
-           
-        if (!empty($q['query']['role'])) { 
-            // it's a Person list..
-            // DB_DATaobjecT::debugLevel(1);
-            
-            // specific to project directory which is single comp. login
-            //
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
-                // can list current - so that it does not break!!!
-            $this->whereAdd("$tn_p.id IN 
-                    ( SELECT distinct person_id FROM $tn_pd WHERE
-                        role = '". $this->escape($q['query']['role']) ."'
-            )");
-        
-        }
-        
-        
-        if (!empty($q['query']['project_member_of'])) {
-               // this is also a flag to return if they are a member..
-            //DB_DataObject::debugLevel(1);
-            $do = DB_DataObject::factory('ProjectDirectory');
-            $do->project_id = $q['query']['project_member_of'];
-            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
-            $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
-            $this->selectAdd("IF($tn_pd.id IS NULL, 0,  $tn_pd.id )  as is_member");
-                
-                
-            if (!empty($q['query']['project_member_filter'])) {
-                $this->having('is_member !=0');
-            
-            }
-            
-        }
-        
-        
-        if (!empty($q['query']['search'])) {
-            $s = $this->escape($q['query']['search']);
-                    $this->whereAdd("
-                        $tn_p.name LIKE '%$s%'  OR
-                        $tn_p.email LIKE '%$s%'  OR
-                        $tn_p.role LIKE '%$s%'  OR
-                        $tn_p.remarks LIKE '%$s%' 
-                        
-                    ");
-        }
+//        if (!empty($q['query']['person_not_internal'])) {
+//            $this->whereAdd(" join_company_id_id.isOwner = 0 ");
+//        }
+//        
+//        
+//        if (!empty($q['query']['person_internal_only_all'])) {
+//            
+//            
+//            // must be internal and not current user (need for distribution list)
+//            // user has a projectdirectory entry and role is not blank.
+//            //DB_DataObject::DebugLevel(1);
+//            $pd = DB_DataObject::factory('ProjectDirectory');
+//            $pd->whereAdd("role != ''");
+//            $pd->selectAdd();
+//            $pd->selectAdd('distinct(person_id) as person_id');
+//            $roled = $pd->fetchAll('person_id');
+//            $rs = $roled  ? "  OR
+//                    {$this->tableName()}.id IN (".implode(',', $roled) . ") 
+//                    " : '';
+//            $this->whereAdd(" join_company_id_id.comptype = 'OWNER' $rs ");
+//            
+//        }
+//        // -- for distribution
+//        if (!empty($q['query']['person_internal_only'])) {
+//            // must be internal and not current user (need for distribution list)
+//            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
+//            
+//            //$this->whereAdd(($this->tableName() == 'Person' ? 'Person' : "join_person_id_id") .
+//            //    ".id  != ".$au->id);
+//            $this->whereAdd("Person.id != {$au->id}");
+//        } 
+//        
+//        if (!empty($q['query']['comptype_or_company_id'])) {
+//           // DB_DataObject::debugLevel(1);
+//            $bits = explode(',', $q['query']['comptype_or_company_id']);
+//            $id = (int) array_pop($bits);
+//            $ct = $this->escape($bits[0]);
+//            
+//            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR Person.company_id = $id");
+//            
+//        }
+//        
+//        
+//        // staff list..
+//        if (!empty($q['query']['person_inactive'])) {
+//           // DB_Dataobject::debugLevel(1);
+//            $this->active = 1;
+//        }
+//        $tn_p = $this->tableName();
+//        $tn_gm = DB_DataObject::Factory('group_members')->tableName();
+//        $tn_g = DB_DataObject::Factory('Groups')->tableName();
+//
+//        ///---------------- Group views --------
+//        if (!empty($q['query']['in_group'])) {
+//            // DB_DataObject::debugLevel(1);
+//            $ing = (int) $q['query']['in_group'];
+//            if ($q['query']['in_group'] == -1) {
+//             
+//                // list all staff who are not in a group.
+//                $this->whereAdd("Person.id NOT IN (
+//                    SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
+//                        $tn_g ON $tn_g.id = $tn_gm.group_id
+//                        WHERE $tn_g.type = ".$q['query']['type']."
+//                    )");
+//                
+//                
+//            } else {
+//                
+//                $this->whereAdd("$tn_p.id IN (
+//                    SELECT distinct(user_id) FROM $tn_gm
+//                        WHERE group_id = $ing
+//                    )");
+//               }
+//            
+//        }
+//        
+//        if (!empty($q['query']['not_in_directory'])) { 
+//            // it's a Person list..
+//            // DB_DATaobjecT::debugLevel(1);
+//            
+//            // specific to project directory which is single comp. login
+//            //
+//            $owncomp = DB_DataObject::Factory('Companies');
+//            $owncomp->get('comptype', 'OWNER');
+//            if ($q['company_id'] == $owncomp->id) {
+//                $this->active =1;
+//            }
+//            
+//            
+//
+//            if ( $q['query']['not_in_directory'] > -1) {
+//                $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+//                // can list current - so that it does not break!!!
+//                $this->whereAdd("$tn_p.id NOT IN 
+//                    ( SELECT distinct person_id FROM $tn_pd WHERE
+//                        project_id = " . $q['query']['not_in_directory'] . " AND 
+//                        company_id = " . $this->company_id . ')');
+//            }
+//        }
+//           
+//        if (!empty($q['query']['role'])) { 
+//            // it's a Person list..
+//            // DB_DATaobjecT::debugLevel(1);
+//            
+//            // specific to project directory which is single comp. login
+//            //
+//            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+//                // can list current - so that it does not break!!!
+//            $this->whereAdd("$tn_p.id IN 
+//                    ( SELECT distinct person_id FROM $tn_pd WHERE
+//                        role = '". $this->escape($q['query']['role']) ."'
+//            )");
+//        
+//        }
+//        
+//        
+//        if (!empty($q['query']['project_member_of'])) {
+//               // this is also a flag to return if they are a member..
+//            //DB_DataObject::debugLevel(1);
+//            $do = DB_DataObject::factory('ProjectDirectory');
+//            $do->project_id = $q['query']['project_member_of'];
+//            $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
+//            $this->joinAdd($do,array('joinType' => 'LEFT', 'useWhereAsOn' => true));
+//            $this->selectAdd("IF($tn_pd.id IS NULL, 0,  $tn_pd.id )  as is_member");
+//                
+//                
+//            if (!empty($q['query']['project_member_filter'])) {
+//                $this->having('is_member !=0');
+//            
+//            }
+//            
+//        }
+//        
+//        
+//        if (!empty($q['query']['search'])) {
+//            $s = $this->escape($q['query']['search']);
+//                    $this->whereAdd("
+//                        $tn_p.name LIKE '%$s%'  OR
+//                        $tn_p.email LIKE '%$s%'  OR
+//                        $tn_p.role LIKE '%$s%'  OR
+//                        $tn_p.remarks LIKE '%$s%' 
+//                        
+//                    ");
+//        }
         
         //
     }
