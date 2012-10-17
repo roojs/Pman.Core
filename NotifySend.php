@@ -109,6 +109,23 @@ class Pman_Core_NotifySend extends Pman
         
         
         $o = $w->object();
+        
+        if ($o === false)  {
+            
+            $ev = $this->addEvent('NOTIFY', $w,
+                            "Notification event cleared (underlying object does not exist)" );;
+            $ww = clone($w);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s ') . 
+                     "Notification event cleared (not required any more)" 
+                    ."\n");
+        }
+     
+        
+        
         $p = $w->person();
         
         if (isset($p->active) && empty($p->active)) {
