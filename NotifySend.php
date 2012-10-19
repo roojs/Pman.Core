@@ -226,12 +226,14 @@ class Pman_Core_NotifySend extends Pman
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
-        if (!empty($opts['send-to'])) {
-            $p->email = $opts['send-to'];
-        }
+       
         if (!empty($email['send-to'])) {
             $p->email = $email['send-to'];
         }
+         if (!empty($opts['send-to'])) {
+            $p->email = $opts['send-to'];
+        }
+        
         //print_r($p);
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
