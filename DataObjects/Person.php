@@ -82,6 +82,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             (isset($ff->HTTP_HOST) ? $ff->HTTP_HOST : 'localhost');
             
         /* use the regex compiler, as it doesnt parse <tags */\
+        
         $tops = array(
             'compiler'    => 'Flexy',
             'nonHTML' => true,
