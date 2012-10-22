@@ -156,6 +156,7 @@ Ext.form.Form.prototype.stackFind = function(id)
 };
 
 // This is in Roo???
+/*
 Ext.form.Hidden = function(config){
     Ext.form.Hidden.superclass.constructor.call(this, config);
 };
@@ -172,7 +173,8 @@ Ext.extend(Ext.form.Hidden, Ext.form.TextField, {
 
 
 });
-/*
+
+
  Why is this here.. it does not work very well...
 Ext.form.DateField.prototype.getValue = function(fmt) {
     var r = this.parseDate(Ext.form.DateField.superclass.getValue.call(this)) || '';
