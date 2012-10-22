@@ -81,7 +81,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $_SERVER["HTTP_HOST"] :
             (isset($ff->HTTP_HOST) ? $ff->HTTP_HOST : 'localhost');
             
-        /* use the regex compiler, as it doesnt parse <tags */\
+        /* use the regex compiler, as it doesnt parse <tags */
+        
+        $tops = array(
+            'compiler'    => 'Flexy',
+            'nonHTML' => true,
+            'filters' => array('SimpleTags','Mail'),
+            //     'debug'=>1,
+        );
+        
         
         
         if (!empty($args['templateDir'])) {
