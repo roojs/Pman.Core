@@ -83,12 +83,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
         /* use the regex compiler, as it doesnt parse <tags */\
         
-        $tops = array(
-            'compiler'    => 'Flexy',
-            'nonHTML' => true,
-            'filters' => array('SimpleTags','Mail'),
-            //     'debug'=>1,
-        );
+        
         if (!empty($args['templateDir'])) {
             $tops['templateDir'] = $args['templateDir'];
         }
