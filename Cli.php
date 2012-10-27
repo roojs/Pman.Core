@@ -24,5 +24,8 @@ class Pman_Core_Cli extends Pman
         die("this is only used as a base class for Cli based commands - extend to use.");
     }
  
-    
+    function output()
+    {
+        die("CLI - output exit")
+    }
 }
