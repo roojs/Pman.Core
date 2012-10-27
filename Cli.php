@@ -26,6 +26,6 @@ class Pman_Core_Cli extends Pman
  
     function output()
     {
-        die("CLI - output exit");
+        die("CLI - output exit\n");
     }
 }
