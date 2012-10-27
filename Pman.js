@@ -625,51 +625,8 @@ Pman = new Roo.Document(
      * 
      */
     request : function(c) {
-        //return new Pman.Request(c);
-         
-        var r= new Roo.data.Connection({
-            timeout : typeof(c.timeout) == 'undefined' ?  30000 : c.timeout
-        });
-        r.request({
-            url: c.url,
-            method : c.method,
-            params: c.params,
-            xmlData : c.xmlData,
-            success:  function(response, opts)  {  // check successfull...
-               
-                var res = Pman.processResponse(response);
-                
-                if (!res.success) { // error!
-                    if (c.failure) {
-                        if (true === c.failure.call(this,response, opts)) {
-                            return;
-                        }
-                    }
-                    Roo.MessageBox.hide();
-                    Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : "Error Sending");
-                    return;
-                }
-                
-                c.success.call(this, res.data);
-                
-                return; 
-            },
-            failure :  function(response, opts)  {  // check successfull...
-                
-                if (c.failure) {
-                    if (true === c.failure.call(this,response, opts)) {
-                        return;
-                    }
-                }
-                Roo.MessageBox.hide();
-                Roo.MessageBox.alert("Error", "Connection timed out sending");
-                Roo.log(response);
-                
-            },
-            scope: this
-            
-        });
-         
+        return new Pman.Request(c);
+          
     },
     
     
