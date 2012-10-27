@@ -13,7 +13,10 @@ Roo.form.ColorField = function(config){
 };
 Roo.extend(Roo.form.ColorField, Roo.form.TriggerField , {
      
+     
     defaultAutoCreate : {tag: 'input', type: 'text', size: '6',   autocomplete: 'off'},
+    
+    triggerClass : 'x-form-arrow-trigger',
     validateValue : function(value){
         this.setBgColor(value);
         return true;
@@ -55,7 +58,7 @@ Roo.extend(Roo.form.ColorField, Roo.form.TriggerField , {
     },
     
     setBgColor : function(d) {
-        var d = (typeof(d) != 'undefined') && d.length ? d : 'FFFFFF';
+        d = (typeof(d) != 'undefined') && d.length ? d : 'FFFFFF';
         this.el.dom.style.background ='#' + d;
     }
 });

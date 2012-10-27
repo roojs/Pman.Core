@@ -16,7 +16,7 @@ ALTER TABLE Companies ADD COLUMN    email varchar(128)  default NULL;
 ALTER TABLE Companies ADD COLUMN    isOwner int(11) default NULL;
 ALTER TABLE Companies ADD COLUMN    logo_id INT(11)  NOT NULL DEFAULT 0;;
 ALTER TABLE Companies ADD COLUMN    background_color varchar(8)  NOT NULL;
-ALTER TABLE Companies ADD COLUMN    comptype varchar(8)  NOT NULL DEFAULT '';
+ALTER TABLE Companies ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT '';
 ALTER TABLE Companies ADD COLUMN    url varchar(254)  NOT NULL DEFAULT '';
 ALTER TABLE Companies ADD COLUMN    main_office_id int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE Companies ADD COLUMN    created_by int(11)  NOT NULL DEFAULT 0;
@@ -30,6 +30,7 @@ ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
+ALTER TABLE Companies CHANGE COLUMN comptype comptype  VARCHAR(32) DEFAULT '';
 -- postres
 ALTER TABLE Companies ALTER isOwner TYPE int(11);
 ALTER TABLE Companies ALTER owner_id SET DEFAULT 0;
@@ -106,23 +107,30 @@ ALTER TABLE core_event_audit ADD COLUMN       old_audit_id int(11)  NOT NULL DEF
 ALTER TABLE core_event_audit ADD COLUMN       newvalue BLOB  NOT NULL DEFAULT '';
 ALTER TABLE core_event_audit ADD   INDEX lookup(event_id, name, old_audit_id);
 
-CREATE TABLE  Group_Members  (
-    id int(11)  NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (id)
-);
-ALTER TABLE Group_Members ADD COLUMN  group_id int(11) default NULL;
-ALTER TABLE Group_Members ADD COLUMN   user_id int(11) NOT NULL default 0;
+-- BC name..
+RENAME TABLE Group_Members TO group_members;
 
-CREATE TABLE  Group_Rights  (
+CREATE TABLE  group_members  (
     id int(11)  NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (id)
 );
-ALTER TABLE Group_Rights ADD COLUMN    rightname varchar(64)  NOT NULL DEFAULT '';
-ALTER TABLE Group_Rights ADD COLUMN     group_id int(11) NOT NULL DEFAULT 0;
-ALTER TABLE Group_Rights ADD COLUMN   accessmask varchar(10)  NOT NULL DEFAULT '';
+ALTER TABLE group_members ADD COLUMN  group_id int(11) default NULL;
+ALTER TABLE group_members ADD COLUMN   user_id int(11) NOT NULL default 0;
+
+-- BC name..
+RENAME TABLE Group_Rights TO group_rights;
+
+
+CREATE TABLE  group_rights  (
+    id int(11)  NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
+);
+ALTER TABLE group_rights ADD COLUMN    rightname varchar(64)  NOT NULL DEFAULT '';
+ALTER TABLE group_rights ADD COLUMN     group_id int(11) NOT NULL DEFAULT 0;
+ALTER TABLE group_rights ADD COLUMN   accessmask varchar(10)  NOT NULL DEFAULT '';
 
 #old mysql.
-ALTER TABLE Group_Rights CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
+ALTER TABLE group_rights CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
 
 
 
@@ -310,14 +318,16 @@ CREATE TABLE   core_enum (
  
 );
  
-alter table  core_enum ADD COLUMN etype varchar(32)  NOT NULL DEFAULT '';
+alter table  core_enum ADD COLUMN  etype varchar(32)  NOT NULL DEFAULT '';
 alter table  core_enum ADD COLUMN  name varchar(255)  NOT NULL DEFAULT '';
-alter table  core_enum ADD COLUMN   active int(2)  NOT NULL DEFAULT 1;
+alter table  core_enum ADD COLUMN  active int(2)  NOT NULL DEFAULT 1;
 alter table  core_enum ADD COLUMN  seqid int(11)  NOT NULL DEFAULT 0;
 alter table  core_enum ADD COLUMN  seqmax int(11)  NOT NULL DEFAULT 0;
+alter table  core_enum ADD COLUMN  display_name varchar(255)  NOT NULL DEFAULT '';
 
 alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
- 
+
+UPDATE core_enum SET display_name = name WHERE display_name = '';
 
 
 

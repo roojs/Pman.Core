@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-131",
+    "id": "roo-file-28",
     "name": "Pman.Dialog.CoreProject",
     "parent": "",
     "title": "",
-    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreProject.bjs",
+    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CoreProject.bjs",
     "items": [
         {
             "closable": false,
@@ -26,15 +26,15 @@
                     "|xns": "Roo",
                     "items": [
                         {
-                            "|xns": "Roo.form",
-                            "xtype": "Form",
                             "listeners": {
                                 "|actioncomplete": "function(_self,action)\n{\n    if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, _this.form.getValues());\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
                                 "|rendered": "function (form)\n{\n    _this.form= form;\n}\n"
                             },
                             "method": "POST",
                             "style": "margin:10px;",
+                            "xtype": "Form",
                             "|url": "baseURL + '/Roo/Projects.php'",
+                            "|xns": "Roo.form",
                             "items": [
                                 {
                                     "fieldLabel": "Code",
@@ -310,5 +310,6 @@
             ]
         }
     ],
-    "permname": ""
+    "permname": "",
+    "modOrder": "001"
 }

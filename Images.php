@@ -59,6 +59,7 @@ class Pman_Core_Images extends Pman
         
         $bits= explode('/', $s);
         $id = 0;
+        
         // without id as first part...
         if (!empty($bits[0]) && $bits[0] == 'Thumb') {
             $this->thumb = true;
@@ -76,7 +77,24 @@ class Pman_Core_Images extends Pman
             $this->size = empty($bits[2]) ? '0x0' : $bits[2];
             $id = empty($bits[3]) ? 0 :   $bits[3];
             
+        } else if (!empty($bits[0]) && $bits[0] == 'events') {
+            $popts = PEAR::getStaticProperty('Pman','options');
+            
+            header ('Content-Type: image/jpeg');
+            if(!empty($bits[2]) && $bits[2] == 'download'){
+                $file = "{$popts['event_log_dir']}/{$bits[1]}";
+                header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
+                ob_clean();
+                flush();
+                readfile($file);
+            }else{
+                $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
+                $fh = fopen($file,'r');
+                echo fread($fh,filesize($file));
+            }
+            exit;
         } else {
+        
             $id = empty($bits[0]) ? 0 :  $bits[0];
         }
         
@@ -214,11 +232,19 @@ class Pman_Core_Images extends Pman
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
         
+        
+        
         // if the mimetype is not converted..
         // then the filename should be original.{size}.jpeg
         $fn = $img->getStoreName() . '.'. $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
-      // var_dump($fn);
+        
         if (!file_exists($fn)) {
+            $fn = $img->getStoreName()  . '.'. $this->size . '.'. $img->fileExt();
+            $this->as_mimetype = $img->mimetype;
+        }
+        
+        if (!file_exists($fn)) {            
+            
             $this->validateSize();
         }
         
@@ -340,7 +366,7 @@ class Pman_Core_Images extends Pman
         $attr_url = $attr[$attr_name];
         $umatch  = false;
         if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
-            continue;
+            return $html;
         }
         $id = $umatch[2];
         $img = DB_DataObject::factory('Images');

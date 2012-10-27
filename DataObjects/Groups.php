@@ -28,8 +28,8 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     function beforeDelete()
     {
         $x = DB_DataObject::factory('Groups');
-        $x->query("DELETE FROM Group_Rights WHERE group_id = {$this->id}");
-        $x->query("DELETE FROM Group_Members WHERE group_id = {$this->id}");
+        $x->query("DELETE FROM group_rights WHERE group_id = {$this->id}");
+        $x->query("DELETE FROM group_members WHERE group_id = {$this->id}");
     }
     /**
      * check who is trying to access this. false == access denied..
@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $pi = DB_DataObject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $pi->get($this->leader);
             
-        $p = DB_DataObject::factory('Group_Members');
+        $p = DB_DataObject::factory('group_members');
         $p->group_id = $this->id;
         $p->user_id = $this->leader;
         //$p->type = 1; //???????
@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function memberIds()
     {
-        $gm = DB_Dataobject::factory('Group_Members');
+        $gm = DB_Dataobject::factory('group_members');
         $gm->group_id = $this->id;
         return $gm->fetchAll('user_id');
         
@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function addMember($person)
     {
-        $gm = DB_Dataobject::factory('Group_Members');
+        $gm = DB_Dataobject::factory('group_members');
         $gm->group_id = $this->id;
         $gm->user_id = $person->id;
         if (!$gm->count()) {

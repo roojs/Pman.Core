@@ -123,8 +123,11 @@ class Pman_Core_Notify extends Pman
         $w = DB_DataObject::factory($this->table);
         
         if (!$showold) {
-            $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
             
+            // standard
+            
+            $w->whereAdd('act_when > sent'); // eg.. sent is not valid..
+            $w->whereAdd('act_start > NOW() - INTERVAL 14 DAY'); // ignore the ones stuck in the queue
             if (!$this->force) {
                 $w->whereAdd('act_when < NOW()'); // eg.. not if future..
             }

@@ -109,6 +109,23 @@ class Pman_Core_NotifySend extends Pman
         
         
         $o = $w->object();
+        
+        if ($o === false)  {
+            
+            $ev = $this->addEvent('NOTIFY', $w,
+                            "Notification event cleared (underlying object does not exist)" );;
+            $ww = clone($w);
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s ') . 
+                     "Notification event cleared (underlying object does not exist)" 
+                    ."\n");
+        }
+     
+        
+        
         $p = $w->person();
         
         if (isset($p->active) && empty($p->active)) {
@@ -209,10 +226,15 @@ class Pman_Core_NotifySend extends Pman
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
-        if (!empty($opts['send-to'])) {
+       
+        if (!empty($email['send-to'])) {
+            $p->email = $email['send-to'];
+        }
+         if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
         
+        //print_r($p);
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
             $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
@@ -261,6 +283,17 @@ class Pman_Core_NotifySend extends Pman
             // older that 1 day.
             $retry = 120;
         }
+        if (strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
+            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s') . " - FAILED -  GAVE UP TO OLD - {$p->email} \n");
+        }
+        
+        
+        
         $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
@@ -415,13 +448,16 @@ class Pman_Core_NotifySend extends Pman
     function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
     {
         $m = 'notify'. $notify->evtype;
-        var_dump($m);
+        //var_dump($m);
         
         if (!empty($notify->evtype) && method_exists($object,$m)) {
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
                 
-        
+        if (!method_exists($object, 'toEmail')) {
+            //var_Dump($object);
+            //exit;
+        }
         return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
     }
     

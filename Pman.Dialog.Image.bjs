@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-29",
+    "id": "roo-file-101",
     "name": "Pman.Dialog.Image",
     "parent": "",
     "title": "",
-    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
+    "path": "/home/alan/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
     "items": [
         {
             "listeners": {
@@ -44,6 +44,7 @@
                             "labelWidth": 140,
                             "method": "POST",
                             "style": "margin:10px;",
+                            "timeout": 300,
                             "xtype": "Form",
                             "|url": "baseURL + '/Roo/Images.php'",
                             "|xns": "Roo.form",

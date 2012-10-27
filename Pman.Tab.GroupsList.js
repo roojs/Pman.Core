@@ -223,7 +223,7 @@ Pman.Tab.GroupsList.prototype = {
                     sels.push(data.selections[i].data.id);
                 }
                 
-                Pman.request({
+                new Pman.Request({
                     url: baseURL + '/Core/GroupMembers.php',
                     params: {
                         action : action,

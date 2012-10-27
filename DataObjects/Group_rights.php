@@ -16,12 +16,12 @@
 require_once 'DB/DataObject.php';
 
  
-class Pman_Core_DataObjects_Group_Rights extends DB_DataObject 
+class Pman_Core_DataObjects_Group_rights extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'Group_Rights';                    // table name
+    public $__table = 'group_rights';                    // table name
     public $rightname;                       // string(64)  not_null
     public $group_id;                        // int(11)  not_null
     public $accessmask;                      // string(10)  not_null
@@ -34,13 +34,19 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     
     var $fullRights = "ADESPIM";
     
-    function listPermsFromGroupIds($grps, $isAdmin=false) {
+    function listPermsFromGroupIds($grps, $isAdmin=false, $isOwner = false) {
         
         $t = clone($this);
         $t->whereAdd('group_id IN ('. implode(',', $grps).')');
+        $t->autoJoin();
         $t->find();
-        $ret = array();
+        
+         $ret = array();
         while($t->fetch()) {
+            
+           
+            
+            
             if (isset($ret[$t->rightname])) {
                 $ret[$t->rightname] = $this->mergeMask($ret[$t->rightname], $t->accessmask);
                 continue;
@@ -49,9 +55,15 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         }
         // blank out rights that are disabled by the system..
         $defs = $this->defaultPermData();
+        
+        
+        
         //echo "<PRE>";print_r($defs);
         $r = array();
         foreach($defs as $k=>$v) {
+            
+            
+            
             if (empty($v[0])) { // delete right if not there..
                 $r[$k] = '';
                 continue;
@@ -60,14 +72,18 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             
             if (isset($ret[$k])) {
                 if (empty($ret[$k]) && $isAdmin) {
-                    $r[$k] = $v[0];
+                    $r[$k] = $v[0] ; // -- it's admin they get rights... can not be disabled..
                     continue;
                 }
-                
+                // in theory non-owners could sneak in rights here..??
                 $r[$k] = $ret[$k];
                 continue;
             }
             // not set contition...
+            if (!$isOwner) {
+                $r[$k] = '';
+                continue;
+            }
             
             $r[$k] = $isAdmin ? $v[0] : $v[1];
             
@@ -111,11 +127,21 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         // M????
         
         
-        
+        $gid = empty($this->group_id) ? 0 : $this->group_id;
         static $Pman_DataObjects_Group_Right = array();
-        if (!empty($Pman_DataObjects_Group_Right)) {
-            return $Pman_DataObjects_Group_Right;
+        
+        
+        if (!empty($Pman_DataObjects_Group_Right[$gid])) {
+            return $Pman_DataObjects_Group_Right[$gid];
         }
+        $has_admin = true; ///?? not sure..
+        if ($gid) {
+            $g = DB_DataObject::factory('groups');
+            $g->get($this->group_id);
+            $has_admin = $g->type  == 2 ? false : true;
+        }
+        
+        
         
         $ff = HTML_FlexyFramework::get();
         //print_R($ff);
@@ -126,6 +152,11 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         $ret = array();
          //echo '<PRE>';print_r($enabled);
         foreach($enabled as $module) {
+            
+            if (($module == 'Admin') && !$has_admin) {
+                continue;
+            }
+            
             $fn = $pman. $module.  '/'.$module. '.perms.json';
             if (!file_exists($fn)) {
                 continue;
@@ -147,9 +178,9 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
             }
             
         }
-        $Pman_DataObjects_Group_Right = $ret;
+        $Pman_DataObjects_Group_Right[$gid] = $ret;
        // print_r($ret);
-        return $Pman_DataObjects_Group_Right;
+        return $Pman_DataObjects_Group_Right[$gid];
          
         
     }
@@ -170,7 +201,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
     {
         // all groups must have the minimum privaligess..
         // admin group must have all the privaliges
-        $g = DB_DataObject::Factory('Groups');
+        $g = DB_DataObject::Factory('groups');
         $g->get($this->group_id);
         $defs = $this->defaultPermData();
         switch($g->name) {
@@ -217,7 +248,7 @@ class Pman_Core_DataObjects_Group_Rights extends DB_DataObject
         //echo '<PRE>';print_r($defs);
         //$usecol = 1;
         foreach($defs as $rightname => $defdata) {
-            $gr = DB_DataObject::Factory('Group_Rights');
+            $gr = DB_DataObject::Factory('group_rights');
             $gr->rightname  = $rightname;
             $gr->group_id = $g->id;
             if (!$gr->find(true)) {

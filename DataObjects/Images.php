@@ -26,7 +26,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     public $linkurl;                         // string(254)  not_null
     public $descript;                        // blob(65535)  not_null blob
     public $title;                           // string(128)  not_null
-
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -149,7 +148,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         ));
           
     }
-
      
     /**
      * deletes all the image instances of it...
@@ -451,6 +449,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $fc;
         
     }
+    
+    function fileExt()
+    {
+        require_once 'File/MimeType.php';
+        
+        $y = new File_MimeType();
+        return  $y->toExt($this->mimetype);
+        
+        
+    }
+    
     /**
      *
      *

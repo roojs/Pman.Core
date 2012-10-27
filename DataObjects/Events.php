@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAdd("count($tn.id) as qty");
             $this->selectAdd("count( distinct $tn.on_id) as uqty");
             $this->whereAdd('LENGTH(join_person_id_id.name) > 0 ');
-            $this->groupBy('person_id');
+            $this->groupBy('person_id,join_person_id_id.name,join_person_id_id.email');
         }
          if (isset($q['query']['table_sum'])) {
             //DB_DataObject::debugLevel(1);
@@ -389,4 +389,65 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $x->insert();
     
     }
+    
+    
+    
+    function onInsert($request,$roo)
+    {
+        $this->writeEventLog();
+    }
+    
+    function writeEventLog()
+    {
+        $ff  = HTML_FlexyFramework::get();
+        if (empty($ff->Pman['event_log_dir'])) {
+            return false;
+        }
+        
+        // add user (eg. www-data or local user if not..)
+        if (function_exists('posix_getpwuid')) {
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+         
+            $user = $uinfo['name'];
+        } else {
+            $user = getenv('USERNAME'); // windows.
+        }
+        //print_r($this);
+        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
+        if (!file_exists(dirname($file))) {
+            mkdir(dirname($file),0700,true);
+        }
+        
+        // Remove all the password from logs...
+        $p =  empty($_POST) ? array() : $_POST;
+        foreach(array('passwd', 'password', 'passwd2', 'password2') as $rm) {
+            if (isset($p[$rm])) {
+                $p['passwd'] = '******';
+            }
+        }
+        $i=0;
+        $files = array();
+        foreach ($_FILES as $k=>$f){
+            if (empty($f['tmp_name']) || !file_exists($f['tmp_name'])) {
+                continue;
+            }
+            $i++;
+            $files[$k] = $f;
+            $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
+            $nf = $ff->Pman['event_log_dir']. '/'. $this->id . ".file_$i.jpg";
+            if (!copy($f['tmp_name'], $nf)) {
+                print_r("failed to copy {$f['tmp_name']}...\n");
+            }
+        }
+        
+        file_put_contents($file, json_encode(array(
+            'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
+            'GET' => empty($_GET) ? array() : $_GET,
+            'POST' =>$p,
+            'FILES' => $files,
+        )));
+        
+    }
+    
+    
 }

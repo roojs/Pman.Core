@@ -417,13 +417,14 @@ Pman = new Roo.Document(
     onLoadTrackCall : function(id,cb, cls) {
         Roo.get(document.body).mask("Loading Document details");
 
-        Pman.request({
+        new Pman.Request({
             url: baseURL + '/Roo/Documents.html',  
             params: {
                 _id: id
             },  
             method: 'GET',  
-            success : function(data) {
+            success : function(res) {
+                var data = res.data;
                 Roo.get(document.body).unmask();
              
                 
@@ -562,7 +563,7 @@ Pman = new Roo.Document(
                 tab.grid.getView().mainWrap.mask("Deleting");
                 new Pman.Request({
                     url: baseURL + '/Roo/'+tbl+'.php',
-                    method: 'GET',
+                    method: 'POST',
                     params: {
                         _delete : r.join(',')
                     },
