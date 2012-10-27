@@ -1,11 +1,11 @@
 <?php
 /*
 
- 
+ Base class for CLI only commands
 
 */
 
-
+require_once 'Pman.php';
 class Pman_Core_Cli extends Pman
 {
     static $cli_desc = "Base class for CLI only commands";
@@ -23,5 +23,6 @@ class Pman_Core_Cli extends Pman
     {
         die("this is only used as a base class for Cli based commands - extend to use.");
     }
+ 
     
 }
