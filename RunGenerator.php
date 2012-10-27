@@ -11,8 +11,10 @@
 require_once 'Pman.php';
 class Pman_Core_RunGenerator extends Pman
 {     
-    static $cli_desc = "Generate DataObjects (runs updatedatabase first)";
-   
+    static $cli_desc = "Generate DataObjects (runs updatedatabase first)  
+                     does not change files, just shows you want would happen";
+        
+        
     static $cli_opts = array(
         'module' => array(
             'desc' => 'Module (if new tables are found, they will be put in the modules database directory',

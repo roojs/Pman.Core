@@ -16,7 +16,13 @@ require_once 'Pman.php';
 class Pman_Core_Notify extends Pman
 {
     
-    static $cli_desc = "Send out notification emails (usually from cron)";
+    static $cli_desc = "Runs the notification queue (usually from cron)
+                        Normally used to sends out emails to anyone in the notification list.
+    
+                        /etc/cron.d/pman-core-notify
+                        * *  * * *     www-data     /usr/bin/php /home/gitlive/web.mtrack/admin.php  Core/Notify > /dev/null
+    
+";
     
     static $cli_opts = array(
         'debug' => array(

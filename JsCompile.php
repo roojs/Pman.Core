@@ -17,7 +17,10 @@ require_once 'Pman.php';
 class Pman_Core_JsCompile  extends Pman
 {
     
-    static $cli_desc = "Wrapper around Javascript compression tools";
+    static $cli_desc = "Wrapper around Javascript compression tools
+                        Runs the javascript compiler - merging all the JS files so the load faster.
+                        Note: cfg option Pman_Builder['jspacker'] must be set to location of jstoolkit code 
+";
     
     var $cli = false;
     function getAuth()

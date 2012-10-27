@@ -619,13 +619,13 @@ Pman = new Roo.Document(
     },
     /**
      * Depreciated - USE new Pman.Request
-    * 
+    *  We need to replace all the uses with this, however the api is slightly different,
+    *  the success argument is res.data, not res..
      * 
      */
     request : function(c) {
-        return new Pman.Request(c);
-        /*
-        
+        //return new Pman.Request(c);
+         
         var r= new Roo.data.Connection({
             timeout : typeof(c.timeout) == 'undefined' ?  30000 : c.timeout
         });
@@ -668,7 +668,7 @@ Pman = new Roo.Document(
             scope: this
             
         });
-        */
+         
     },
     
     
