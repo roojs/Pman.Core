@@ -85,10 +85,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if ($whereAdd !== false) { 
             $w->whereAdd($whereAdd  );
         }
-        $w->selectAdd();
-        $w->selectAdd('distinct(person_id) as person_id');
+        //$w->selectAdd();
+        //$w->selectAdd('distinct(person_id) as person_id');
         
-        foreach($w->fetchAll() as $w) { 
+        fore//ch($w->fetchAll() as $w) { 
             if (!$w->person_id) { // no people??? bugs in watch table
                 continue;
             }
