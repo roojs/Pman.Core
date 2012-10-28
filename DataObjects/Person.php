@@ -152,13 +152,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($htmlbody !== false) {
             require_once 'Mail/mime.php';
             $mime = new Mail_mime(array('eol' => "\n"));
-            $mime->setHeaders($headers);
             $mime->setTXTBody($body);
             $mime->setHTMLBody($htmlbody);
             // I think there might be code in mediaoutreach toEmail somewhere
             // h embeds images here..
             $body = $mime->get();
-            $headers = $mime->headers($hdrs);
+            $headers = $mime->headers($headers);
             
         }
         
