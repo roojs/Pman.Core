@@ -97,20 +97,19 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $nn->ontable = $ontable;
             $nn->onid = $onid;
             $nn->evtype = $w->medium;
-            $n = clone($nn);
-            $n->person_id = $p;
-            $nf = clone($n);
+            $nn->person_id = $p;
+            
+            $nf = clone($nn);
             $nf->whereAdd('sent < act_when');
             if ($nf->count()) {
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-                $n->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
-                $n->evtype = $
-                $n->insert();
+            $nn->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
+            $n->insert();
                 
-                
-            }
+            
+        }
          
     }
     // static really...
