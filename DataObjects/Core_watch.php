@@ -107,7 +107,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             }
             $nn->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
             $n->insert();
-                
             
         }
          
