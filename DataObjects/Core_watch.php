@@ -99,7 +99,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $nn->ontable = $ontable;
             $nn->onid = $onid;
             $nn->evtype = $w->medium;
-            $nn->person_id = $p;
+            $nn->person_id = $w->person_id;
             
             $nf = clone($nn);
             $nf->whereAdd('sent < act_when');
