@@ -149,8 +149,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         $headers['Date'] = date('r');
         
-        
         if ($htmlbody !== false) {
+            require_once 'Mail/mime.php';
             $mime = new Mail_mime(array('eol' => "\n"));
             $mime->setHeaders($headers);
             $mime->setTXTBody($body);
