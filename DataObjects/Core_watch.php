@@ -77,11 +77,14 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     /**
      * Generate a notify event based on watches (matching whereAdd)
      *
+     * Usage: $core_watch->notify('mtrack_repos', 1, '1=1')
      */
-    function notify($ontable , $onid, $whereAdd)
+    function notify($ontable , $onid, $whereAdd = false)
     {
         $w = DB_DataObject::factory('core_watch');
-        $w->whereAdd($whereAdd);
+        if ($whereAdd !== false) { 
+            $w->whereAdd($whereAdd  );
+        }
         $w->selectAdd();
         $w->selectAdd('distinct(person_id) as person_id');
         $people = $w->fetchAll('person_id');
