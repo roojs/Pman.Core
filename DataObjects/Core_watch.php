@@ -87,15 +87,16 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
         $w->selectAdd();
         $w->selectAdd('distinct(person_id) as person_id');
-        $people = $w->fetchAll('person_id');
         
-        $nn = DB_DataObject::Factory('core_notify');
-        $nn->ontable = $ontable;
-        $nn->onid = $onid;
-        foreach($people as $p) {
-            if (!$p) { // no people??? bugs in watch table
+        foreach($w->fetchAll() as $w) { 
+            if (!$w->person_id) { // no people??? bugs in watch table
                 continue;
             }
+         
+            $nn = DB_DataObject::Factory('core_notify');
+            $nn->ontable = $ontable;
+            $nn->onid = $onid;
+            $nn->evtype = $w->medium;
             $n = clone($nn);
             $n->person_id = $p;
             $nf = clone($n);
@@ -104,11 +105,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-            $n->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
-            $n->insert();
-            
-            
-        }
+                $n->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
+                $n->evtype = $
+                $n->insert();
+                
+                
+            }
          
     }
     // static really...
