@@ -142,10 +142,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         if ($htmlbody !== false) {
             $mime = new Mail_mime(array('eol' => "\n"));
+            $mime->setHeaders($headers);
             $mime->setTXTBody($body);
             $mime->setHTMLBody($htmlbody);
             // I think there might be code in mediaoutreach toEmail somewhere
-            // that embeds images here..
+            // h embeds images here..
             $body = $mime->get();
             $hdrs = $mime->headers($hdrs);
             
