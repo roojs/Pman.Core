@@ -77,9 +77,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     /**
      * Generate a notify event based on watches (matching whereAdd)
      *
-     * Usage: $core_watch->notify('mtrack_repos', 1, '1=1')
+     * Usage: $core_watch->notify('mtrack_repos', 1, false, date()
      */
-    function notify($ontable , $onid, $whereAdd = false)
+    function notify($ontable , $onid, $whereAdd = false, $when=false)
     {
         $w = DB_DataObject::factory('core_watch');
         if ($whereAdd !== false) { 
@@ -104,7 +104,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-            $n->act_start( date("Y-m-d H:i:s") );
+            $n->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
             $n->insert();
             
             
