@@ -126,6 +126,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        
         if (PEAR::isError($parts)) {
             return $parts;
             //echo "PROBLEM: {$parts->message}";
@@ -137,6 +138,22 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $recipents =array_merge($recipents, $content->bcc);
         }
         $headers['Date'] = date('r');
+        
+        
+        if ($htmlbody !== false) {
+            $mime = new Mail_mime(array('eol' => "\n"));
+            $mime->setTXTBody($body);
+            $mime->setHTMLBody($htmlbody);
+            // I think there might be code in mediaoutreach toEmail somewhere
+            // that embeds images here..
+            $body = $mime->get();
+            $hdrs = $mime->headers($hdrs);
+            
+        }
+        
+        
+        
+        
         
         return array(
             'recipients' => $recipents,
