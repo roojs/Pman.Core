@@ -105,15 +105,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         /* use variables from this object to ouput data. */
         $mailtext = $template->bufferedOutputObject($content);
         
+        $htmlbody = false;
         // if a html file with the same name exists, use that as the body
         // I've no idea where this code went, it was here before..
         if (false !== $template->resolvePath ( "mail/$templateFile.html" )) {
             $tops['nonHTML'] = false;
             $template = new HTML_Template_Flexy( $tops );
             $template->compile("mail/$templateFile.html");
-       
             $htmlbody = $template->bufferedOutputObject($content);
-            
             
         }
         
