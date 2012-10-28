@@ -148,7 +148,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // I think there might be code in mediaoutreach toEmail somewhere
             // h embeds images here..
             $body = $mime->get();
-            $hdrs = $mime->headers($hdrs);
+            $headers = $mime->headers($hdrs);
             
         }
         
