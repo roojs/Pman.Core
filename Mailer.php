@@ -46,6 +46,7 @@ class Pman_Core_Mailer {
     var $template       = false; /* string */
     var $replaceImages  = false; /* boolean */
     var $rcpts   = false;
+    var $templateDir = false;
     
     var $images         = array(); // generated list of cid images for sending
     
