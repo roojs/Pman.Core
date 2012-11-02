@@ -83,7 +83,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         }
         $c->selectAdd();
         // people may have multiple roles for a project..
-        $c->selectAdd('distinct(project_id) as project_id');
+        $c->selectAdd("distinct({this->tableName()}.project_id) as project_id");
         return $c->fetchAll('project_id');
     }
         /**
