@@ -97,7 +97,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         //echo '<PRE>';print_R($this);exit;
         
         if (is_array($pr)) {
-            $c->whereAddIn("{$this.tableName()}.project_id", $pr, 'int');
+            $c->whereAddIn("{$this->tableName()}.project_id", $pr, 'int');
         } else {
             $c->project_id = $pr->id;
         }
