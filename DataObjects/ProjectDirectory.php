@@ -100,6 +100,8 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         } else {
             $c->project_id = $pr->id;
         }
+        $c->selectAdd();
+        $c->selectAdd('person_id)';
         return $c->fetchAll('person_id');
         
          
