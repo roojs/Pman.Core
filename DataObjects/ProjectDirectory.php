@@ -102,7 +102,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
             $c->project_id = $pr->id;
         }
         $c->selectAdd();
-        $c->selectAdd"'{$this->tableName()}.person_id as person_id");
+        $c->selectAdd("{$this->tableName()}.person_id as person_id");
         return $c->fetchAll('person_id');
         
          
