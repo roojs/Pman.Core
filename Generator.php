@@ -155,6 +155,9 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                 continue;
             }
             foreach(scandir($options['rootDir'].'/'.$m) as $f) {
+                
+                echo "SCAN $f\n";
+                
                 if (!strlen($f) || $f[0] == '.') {
                     continue;
                 }
