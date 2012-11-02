@@ -91,8 +91,14 @@ class Pman_Core_Mailer {
         
         require_once 'HTML/Template/Flexy.php';
         
+        $tmp_opts = array();
+        if (isset($this->templateDir)) {
+            $tmp_opts['templateDir'] = $this->templateDir;
+        }
+        
+        
         $htmlbody = false;
-        $htmltemplate = new HTML_Template_Flexy(  );
+        $htmltemplate = new HTML_Template_Flexy( $tmp_opts );
 
         if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
             // then we have a multi-part email...
@@ -105,14 +111,12 @@ class Pman_Core_Mailer {
             
             $htmlbody = $this->htmlbodytoCID($htmlbody);
             
-             
+              
         }
         
+        $tmp_opts['nonHTML'] = true;
         
-        
-        $template = new HTML_Template_Flexy( array(
-                'nonHTML' => true,
-        ));
+        $template = new HTML_Template_Flexy(  $tmp_opts );
         
         $template->compile('mail/'. $templateFile.'.txt');
         
