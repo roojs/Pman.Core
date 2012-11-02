@@ -94,6 +94,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     function people($pr)
     {
         $c = clone ($this);
+        $c->autoJoin();
         if (is_array($pr)) {
             $c->whereAddIn('project_id', $pr, 'int');
         } else {
