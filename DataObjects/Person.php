@@ -41,19 +41,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     ###END_AUTOCODE
     /**
      *
-     * Build an email to sent do user
      *
-     * key 'args'
      *
-     * no_auth => disable authentication check on
-     * templateDir => alternative template directory.
-     * HTTP_HOST
      *
-     * expects mail/TMPLATE.txt (if .html exists, it will be the html body version)
-     * 
-     * @param {String} $templateFile  (mail/XXXXXXX.txt) exclude the mail and .txt bit.
-     * @param {Array|Object} $args   data to send out..
-     * @return {Array|PEAR_Error} array of $recipents, $header, $body 
+     *  FIXME !!!! -- USE Pman_Core_Mailer !!!!!
+     *
+     *
+     *
+     *  
      */
     function buildMail($templateFile, $args)
     {
