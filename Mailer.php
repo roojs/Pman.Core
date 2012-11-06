@@ -202,7 +202,7 @@ class Pman_Core_Mailer {
         } 
         $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
         
-        if (!empty($this->contents->bcc) && is_array($this->contents->bcc)) {
+        if (!empty($this->contents['bcc']) && is_array($this->contents['bcc'])) {
             $rcpts =array_merge($rcpts, $this->contents->bcc);
         }
         
