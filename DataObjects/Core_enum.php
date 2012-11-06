@@ -51,7 +51,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $ce->etype = $etype;
         $ce->name = $name;
         if ($ce->find(true)) {
-            return $ce->id
+            return $ce->id;
         }
         return 0;
         
