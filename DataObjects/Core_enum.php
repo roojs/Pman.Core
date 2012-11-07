@@ -59,15 +59,23 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function lookupObject($etype,$name, $create= false)
     {
+        
+        static $cache = array();
+        $key = "$etype:$name";
+        if (isset($cache[$key]) ) {
+            return $cache[$key];
+        }
         $ce = DB_DataObject::Factory('core_enum');
         $ce->etype = $etype;
         $ce->name = $name;
         if ($ce->find(true)) {
+            $cache[$key] = $ce;
             return $ce;
         }
         if ($create) {
             $ce->active = 1;
             $ce->insert();
+            $cache[$key] = $ce;
             return $ce->id;
             
         }
