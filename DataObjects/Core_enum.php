@@ -57,5 +57,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
+    function lookupObject($etype,$name) {
+        $ce = DB_DataObject::Factory('core_enum');
+        $ce->etype = $etype;
+        $ce->name = $name;
+        if ($ce->find(true)) {
+            return $ce;
+        }
+        return false;
+        
+    }
     
 }
