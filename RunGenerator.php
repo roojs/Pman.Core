@@ -65,7 +65,7 @@ class Pman_Core_RunGenerator extends Pman
     function get($args, $opts)
     {
         //print_r($opts);exit;
-        if (empty($opts['n'])) {
+        if (empty($opts['noupdate'])) {
             HTML_FlexyFramework::run('Core/UpdateDatabase');
         }
         
