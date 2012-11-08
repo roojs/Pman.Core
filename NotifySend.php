@@ -99,7 +99,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         
-        if (!$force && !empty($w->msgid)) {
+        if (!$force && (!empty($w->msgid) || (strtotime($w->sent) > strtotime('2000-01-01'))) {
             $ww = clone($w);
             $w->sent = $w->sqlValue("NOW()");
             $w->update($ww);
