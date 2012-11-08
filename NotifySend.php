@@ -349,7 +349,16 @@ class Pman_Core_NotifySend extends Pman
                     
                 }
                 
-                
+                if (!empty($email['bcc'])) {
+                    $mailer = Mail::factory('smtp', array(
+                       //'host'    => $dom ,
+                      //  'debug' => true
+                    ));
+                    $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
+                    $mailer->send($email['bcc'],
+                                  $email['headers'], $email['body']);
+                    
+                }
                 
                 
                 die(date('Y-m-d h:i:s') . " - SENT\n");
