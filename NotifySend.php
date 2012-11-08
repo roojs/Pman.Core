@@ -98,12 +98,13 @@ class Pman_Core_NotifySend extends Pman
             print_r($w);
         }
         
-        
-        if (!$force && (!empty($w->msgid) || (strtotime($w->sent) > strtotime('2000-01-01'))) {
+        $sent = preg_match('/^0000/', $w->sent) ? false : true;
+        if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
-            $w->sent = $w->sqlValue("NOW()");
-            $w->update($ww);
-            
+            if (!$sent) { 
+                $w->sent = $w->sqlValue("NOW()");
+                $w->update($ww);
+            }    
             die("message has been sent already.\n");
         }
         
@@ -217,7 +218,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
          
-        if (!isset($email['headers']['Message-Id'])) {
+        if (empty($email['headers']['Message-Id'])) {
             $HOST = gethostname();
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
@@ -233,6 +234,9 @@ class Pman_Core_NotifySend extends Pman
          if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
+        
+         
+        
         
         //print_r($p);
         require_once 'Validate.php';
@@ -299,8 +303,7 @@ class Pman_Core_NotifySend extends Pman
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
         $w->update($ww);
         
-        
-        
+        $ww = clone($w);   
         
         $fail = false;
         require_once 'Mail.php';
@@ -321,9 +324,7 @@ class Pman_Core_NotifySend extends Pman
                   //  'debug' => true
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-            
-            
-            
+             
             
             if ($res === true) {
                 // success....
