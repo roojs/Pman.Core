@@ -31,6 +31,14 @@ class Pman_Core_RunGenerator extends Pman
             'min' => 1,
             'max' => -1,
             
+        ),
+        'noupdate' => array(
+            'desc' => 'Do not update the database using sql',
+            'default' => '',
+            'short' => 'n',
+            'min' => 1,
+            'max' => -1,
+            
         )
         
     );
@@ -57,8 +65,10 @@ class Pman_Core_RunGenerator extends Pman
     function get($args, $opts)
     {
         //print_r($opts);exit;
+        if (empty($opts['n'])) {
+            HTML_FlexyFramework::run('Core/UpdateDatabase');
+        }
         
-        HTML_FlexyFramework::run('Core/UpdateDatabase');
         
          
         
