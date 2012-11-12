@@ -123,6 +123,8 @@ Roo.apply(Pman.Download.prototype, {
     // private
     form : false,
     
+    limit : 9999,
+    
     // private..
     createCsvFrame: function()
     {
@@ -236,7 +238,7 @@ Roo.apply(Pman.Download.prototype, {
         if (this.grid.loadMask) {
             this.grid.loadMask.onLoad();
         }
-        this.params.limit = 9999;
+        this.params.limit = this.limit;
         
         
     }
