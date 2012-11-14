@@ -144,9 +144,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             if (isset($old[$time])) {
                 // we already have it...
                 
-                $oo = clone($old[$time]);
+                $oo = DB_DataObject::Factory('core_notify');
+                $oo->get($old[$time]);
+                $oc = clone($oo);
                 $oo->evtype = $this->method()->name;
-                $oo->update($old[$time]);
+                $oo->update($oc);
                 
                 unset($old[$time]);
                 continue;
