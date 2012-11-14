@@ -29,8 +29,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $onid;                            // int(11)  not_null
     public $ontable;                         // string(128)  not_null
     public $last_event_id;                   // int(11)  
-    public $method;                         // string(128)  not_null
-    
+    public $method;                         // depricated.
+    public $method_id;                         // string(128)  not_null   
     ###END_AUTOCODE
     
     
