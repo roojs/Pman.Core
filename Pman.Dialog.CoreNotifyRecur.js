@@ -284,11 +284,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                 renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
                                 editor : {
                                     xtype: 'GridEditor',
-                                    xns: Roo.grid,
-                                    field : {
-                                        xtype: 'DateField',
-                                        xns: Roo.form
-                                    }
+                                    xns: Roo.grid
                                 }
                             },
                             {

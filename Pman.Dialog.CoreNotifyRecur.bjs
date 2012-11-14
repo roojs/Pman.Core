@@ -122,14 +122,7 @@
                                         {
                                             "|xns": "Roo.grid",
                                             "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "|xns": "Roo.form",
-                                                    "xtype": "DateField",
-                                                    "*prop": "field"
-                                                }
-                                            ]
+                                            "*prop": "editor"
                                         }
                                     ]
                                 },
