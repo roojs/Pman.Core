@@ -307,7 +307,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         pageSize : 20,
                                         qtip : "Select core_enum",
                                         selectOnFocus : true,
-                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
+                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{display_name}</b> </div>',
                                         triggerAction : 'all',
                                         typeAhead : true,
                                         valueField : 'id',
