@@ -278,7 +278,7 @@ Pman.Dialog.CoreNotifyRecur = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                dataIndex : 'method',
+                                dataIndex : 'method_id_title',
                                 header : 'From',
                                 width : 75,
                                 renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
