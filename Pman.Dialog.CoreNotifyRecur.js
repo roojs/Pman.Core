@@ -315,14 +315,15 @@ Pman.Dialog.CoreNotifyRecur = {
                                         store : {
                                             xtype: 'Store',
                                             xns: Roo.data,
-                                            remoteSort : true,
-                                            sortInfo : { direction : 'ASC', field: 'id' },
                                             listeners : {
                                                 beforeload : function (_self, o){
                                                     o.params = o.params || {};
                                                     // set more here
+                                                    o.params.etype = 'core_notify_recur';
                                                 }
                                             },
+                                            remoteSort : true,
+                                            sortInfo : { direction : 'ASC', field: 'id' },
                                             proxy : {
                                                 xtype: 'HttpProxy',
                                                 xns: Roo.data,
