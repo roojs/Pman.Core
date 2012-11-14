@@ -278,6 +278,22 @@ Pman.Dialog.CoreNotifyRecur = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
+                                dataIndex : 'method',
+                                header : 'From',
+                                width : 75,
+                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
+                                editor : {
+                                    xtype: 'GridEditor',
+                                    xns: Roo.grid,
+                                    field : {
+                                        xtype: 'DateField',
+                                        xns: Roo.form
+                                    }
+                                }
+                            },
+                            {
+                                xtype: 'ColumnModel',
+                                xns: Roo.grid,
                                 dataIndex : 'dtstart',
                                 header : 'From',
                                 width : 75,
