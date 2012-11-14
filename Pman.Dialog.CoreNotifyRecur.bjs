@@ -112,7 +112,7 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "method_id_title",
+                                    "dataIndex": "method_id_display_name",
                                     "header": "From",
                                     "width": 75,
                                     "xtype": "ColumnModel",
