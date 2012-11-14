@@ -287,7 +287,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
-                                     : {
+                                    field : {
                                         xtype: 'ComboBox',
                                         xns: Roo.form,
                                         allowBlank : 'false',

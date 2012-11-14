@@ -125,7 +125,7 @@
                                             "*prop": "editor",
                                             "items": [
                                                 {
-                                                    "*prop": "",
+                                                    "*prop": "field",
                                                     "allowBlank": "false",
                                                     "displayField": "",
                                                     "editable": "false",
