@@ -287,58 +287,56 @@ Pman.Dialog.CoreNotifyRecur = {
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
-                                    items : [
-                                        {
-                                            xtype: 'ComboBox',
-                                            xns: Roo.form,
-                                            allowBlank : 'false',
-                                            editable : 'false',
-                                            emptyText : "Select core_enum",
-                                            forceSelection : true,
-                                            listWidth : 400,
-                                            loadingText : "Searching...",
-                                            minChars : 2,
-                                            pageSize : 20,
-                                            qtip : "Select core_enum",
-                                            selectOnFocus : true,
-                                            triggerAction : 'all',
-                                            typeAhead : true,
-                                            width : 300,
-                                            tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
-                                            queryParam : '',
-                                            fieldLabel : 'core_enum',
-                                            valueField : 'id',
-                                            displayField : '',
-                                            hiddenName : '',
-                                            name : '',
-                                            store : {
-                                                xtype: 'Store',
-                                                xns: Roo.data,
-                                                remoteSort : true,
-                                                sortInfo : { direction : 'ASC', field: 'id' },
-                                                listeners : {
-                                                    beforeload : function (_self, o){
-                                                        o.params = o.params || {};
-                                                        // set more here
-                                                    }
-                                                },
-                                                proxy : {
-                                                    xtype: 'HttpProxy',
-                                                    xns: Roo.data,
-                                                    method : 'GET',
-                                                    url : baseURL + '/Roo/core_enum.php'
-                                                },
-                                                reader : {
-                                                    xtype: 'JsonReader',
-                                                    xns: Roo.data,
-                                                    id : 'id',
-                                                    root : 'data',
-                                                    totalProperty : 'total',
-                                                    fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}]
+                                     : {
+                                        xtype: 'ComboBox',
+                                        xns: Roo.form,
+                                        allowBlank : 'false',
+                                        displayField : '',
+                                        editable : 'false',
+                                        emptyText : "Select core_enum",
+                                        fieldLabel : 'core_enum',
+                                        forceSelection : true,
+                                        hiddenName : '',
+                                        listWidth : 400,
+                                        loadingText : "Searching...",
+                                        minChars : 2,
+                                        name : '',
+                                        pageSize : 20,
+                                        qtip : "Select core_enum",
+                                        queryParam : '',
+                                        selectOnFocus : true,
+                                        tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
+                                        triggerAction : 'all',
+                                        typeAhead : true,
+                                        valueField : 'id',
+                                        width : 300,
+                                        store : {
+                                            xtype: 'Store',
+                                            xns: Roo.data,
+                                            remoteSort : true,
+                                            sortInfo : { direction : 'ASC', field: 'id' },
+                                            listeners : {
+                                                beforeload : function (_self, o){
+                                                    o.params = o.params || {};
+                                                    // set more here
                                                 }
+                                            },
+                                            proxy : {
+                                                xtype: 'HttpProxy',
+                                                xns: Roo.data,
+                                                method : 'GET',
+                                                url : baseURL + '/Roo/core_enum.php'
+                                            },
+                                            reader : {
+                                                xtype: 'JsonReader',
+                                                xns: Roo.data,
+                                                id : 'id',
+                                                root : 'data',
+                                                totalProperty : 'total',
+                                                fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}]
                                             }
                                         }
-                                    ]
+                                    }
                                 }
                             },
                             {
