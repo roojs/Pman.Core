@@ -304,7 +304,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         listWidth : 400,
                                         loadingText : "Searching...",
                                         minChars : 2,
-                                        name : '',
+                                        name : 'method_id_display_name',
                                         pageSize : 20,
                                         qtip : "Select core_enum",
                                         queryParam : '',
