@@ -281,7 +281,9 @@ Pman.Dialog.CoreNotifyRecur = {
                                 dataIndex : 'method_id',
                                 header : 'From',
                                 width : 75,
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); },
+                                renderer : function(v,x,r) {
+                                     return String.format('{0}', r.data.method_id_display_name); 
+                                 },
                                 editor : {
                                     xtype: 'GridEditor',
                                     xns: Roo.grid,
