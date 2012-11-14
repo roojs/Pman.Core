@@ -12,7 +12,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $__table = 'core_notify_recur';    // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $person_id;                       // int(11)  not_null
-    public $recur_id;                       //INT(11) not_null
     
     public $dtstart;                         // datetime(19)  not_null binary
     public $dtend;                           // datetime(19)  not_null binary
@@ -30,8 +29,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     public $ontable;                         // string(128)  not_null
     public $last_event_id;                   // int(11)  
     public $method;                         // depricated.
-    public $method_id;                         // string(128)  not_null   
+    public $method_id;                         // string(128)  not_null
+    
+    public $recur_id;                       //INT(11) not_null
+
+    
     ###END_AUTOCODE
+    //NOTE recur_id and method are depricated.
     
     
     /*
