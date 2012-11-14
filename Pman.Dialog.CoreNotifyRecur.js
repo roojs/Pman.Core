@@ -295,7 +295,7 @@ Pman.Dialog.CoreNotifyRecur = {
                                         xtype: 'ComboBox',
                                         xns: Roo.form,
                                         allowBlank : 'false',
-                                        displayField : '',
+                                        displayField : 'display_name',
                                         editable : 'false',
                                         emptyText : "Select core_enum",
                                         fieldLabel : 'core_enum',
