@@ -116,7 +116,7 @@
                                     "header": "From",
                                     "width": 75,
                                     "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) {\n     return String.format('{0}', r.data.method_id_display_name); \n }",
+                                    "|renderer": "function(v,x,r) {\n     return String.format('{0}', r.data.method_id_display_name); \n}",
                                     "|xns": "Roo.grid",
                                     "items": [
                                         {
