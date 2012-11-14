@@ -36,7 +36,7 @@ Pman.Dialog.CoreNotifyRecur = {
                     _this.grid.ds.load({});
                 }
             },
-            height : 500,
+            height : 550,
             modal : true,
             resizable : false,
             title : "Modify Recurrent Notifications",

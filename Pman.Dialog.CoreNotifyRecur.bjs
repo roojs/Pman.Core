@@ -9,7 +9,7 @@
             "listeners": {
                 "show": "function (_self)\n{\n    _this.grid.ds.load({});\n}"
             },
-            "height": 500,
+            "height": 550,
             "modal": true,
             "resizable": false,
             "title": "Modify Recurrent Notifications",
