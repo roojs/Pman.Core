@@ -216,7 +216,11 @@ Pman.Dialog.CoreNotifyRecur = {
                                                 tz : 'Asia/Hong_Kong',
                                                 onid : _this.data.onid,
                                                 ontable : _this.data.ontable,
-                                                method : _this.data.method,
+                                                method : _this.data.method, // default...
+                                                
+                                                method_id : _this.data.method_id, // default...
+                                                method_id_display_name : _this.data.method_id_display_name, // default...        
+                                                
                                                 last_event_id : 0,
                                                 freq_day_name : '',
                                                 freq_hour_name : '',
