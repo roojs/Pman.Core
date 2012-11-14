@@ -60,7 +60,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         $e = DB_DataObject::Factory('core_enum');
         $e->get($this->method_id);
-        
+        return $e;
     }
     
     function notifytimes($advance)
