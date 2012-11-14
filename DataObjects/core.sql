@@ -432,6 +432,7 @@ ALTER TABLE  core_notify_recur  ADD COLUMN ontable varchar(128)  NOT NULL defaul
 ALTER TABLE  core_notify_recur  ADD COLUMN last_event_id  int(11)  default 0;
 ALTER TABLE  core_notify_recur  ADD COLUMN method varchar(128) default '';     
 
+ALTER TABLE  core_notify_recur  ADD COLUMN method_id  int(11)  default 0;
 
 ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, max_applied_dt, updated_dt, last_applied_dt);
 
