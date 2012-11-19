@@ -234,8 +234,8 @@ class Pman_Core_NotifySend extends Pman
          if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
-        
-         
+        // since some of them have spaces?!?!
+        $p->email = trim($p->email);
         
         
         //print_r($p);
