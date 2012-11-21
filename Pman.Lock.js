@@ -98,7 +98,7 @@ Roo.apply(Pman.Lock.prototype, {
     
     
     unlock : function() {
-        Pman.Request({
+        new Pman.Request({
             url : baseURL + '/Core/Lock/unlock',
             params : {
                 id : this.id
