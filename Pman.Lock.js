@@ -49,7 +49,7 @@ Roo.apply(Pman.Lock.prototype, {
         Roo.log('callLock');
         force = force || 0;
         var _t = this
-        Pman.Request({
+        new Pman.Request({
             url : baseURL + '/Core/Lock/lock',
             params : {
                 on_table : this.cfg.table,
