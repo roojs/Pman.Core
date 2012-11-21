@@ -59,9 +59,9 @@ Roo.apply(Pman.Lock.prototype, {
             failure : function() {
                 Roo.MessageBox.alert("Error", "Lock Request failed, please try again");
             },
-            success : function(data)
+            success : function(res)
             {
-                
+                var data = res.data;
                Roo.log(data);
                 if (!force && typeof(data) == 'object') {
                     _t.confirmBreak(data);
