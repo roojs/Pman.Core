@@ -48,7 +48,7 @@ Roo.apply(Pman.Lock.prototype, {
     {
         Roo.log('callLock');
         force = force || 0;
-        var _t = this
+        var _t = this;
         new Pman.Request({
             url : baseURL + '/Core/Lock/lock',
             params : {
