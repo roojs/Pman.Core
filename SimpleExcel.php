@@ -93,6 +93,7 @@ class Pman_Core_SimpleExcel extends Pman
         
         // Creating a worksheet
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
+        print_R($worksheet);
         $worksheet->setInputEncoding('UTF-8'); 
          
          
