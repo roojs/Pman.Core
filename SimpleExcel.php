@@ -114,11 +114,22 @@ class Pman_Core_SimpleExcel extends Pman
             
             
          
-         
-         
+        foreach($cfg['cols'] as $c=>$col_cfg) {
+            if (is_string($col_cfg)) {
+                $cfg['cols'][$c] = array(
+                    'header' => $col_cfg,
+                    'dataIndex' => $col_cfg,
+                    'width' => 50,
+                    
+                );
+            }
+        }
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
+            
+            
+            
             $worksheet->write($start_row, $c, $col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
