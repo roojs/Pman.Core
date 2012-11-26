@@ -87,7 +87,7 @@ class Pman_Core_SimpleExcel extends Pman
          
     }
     
-    function buildpage($data,$cfg)
+    function buildpage($workbook,  $formats , $data,$cfg)
     {
         
         
