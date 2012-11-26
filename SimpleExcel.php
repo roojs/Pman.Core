@@ -81,8 +81,18 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         
+        
+        $workbook->close();
+        $this->outfile2 = $outfile2;
+         
+    }
+    
+    function buildpage($data,$cfg)
+    {
+        
+        
         // Creating a worksheet
-        $worksheet =& $workbook->addWorksheet($cfg['workbook']);
+        $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         $worksheet->setInputEncoding('UTF-8'); 
          
          
@@ -184,16 +194,6 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
             
-        
-        
-        $workbook->close();
-        $this->outfile2 = $outfile2;
-         
-    }
-    
-    function buildpage($data,$cfg)
-    {
-        
         
         
         
