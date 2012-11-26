@@ -26,7 +26,10 @@
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb')
             ),
-            
+        
+        // if this is set then it will add a tab foreach one.
+        workbooks = array(
+            workbook ->
             
             
             
@@ -66,6 +69,17 @@ class Pman_Core_SimpleExcel extends Pman
         }
          
 
+        if (empty($cfg['workbooks'])) {
+            $this->buildpage( $workbook,  $formats , $data,$cfg);
+        } else {
+            foreach($cfg['workbooks'] as $i =>$wcfg) {
+                $this->buildpage( $workbook,  $formats , $data[$i],$wcfg);
+            }
+            
+        }
+         
+         
+         
         
         // Creating a worksheet
         $worksheet =& $workbook->addWorksheet($cfg['workbook']);
@@ -176,6 +190,17 @@ class Pman_Core_SimpleExcel extends Pman
         $this->outfile2 = $outfile2;
          
     }
+    
+    function buildpage($data,$cfg)
+    {
+        
+        
+        
+        
+        
+    }
+    
+    
     
     function send($fn)
     {
