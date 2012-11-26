@@ -89,12 +89,14 @@ class Pman_Core_SimpleExcel extends Pman
     
     function buildpage($workbook,  $formats , $data,$cfg)
     {
-        echo '<PRE>';
-        print_R($cfg);
+        //echo '<PRE>';        print_R($cfg);
         
         // Creating a worksheet
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
-        print_R($worksheet);
+        if (is_a($worksheet, 'PEAR_Error')) {
+            die($worksheet->toString());
+        }
+        //print_R($worksheet);
         $worksheet->setInputEncoding('UTF-8'); 
          
          
