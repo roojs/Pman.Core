@@ -221,11 +221,12 @@ class Pman_Core_SimpleExcel extends Pman
     {
         
      
-       print_r($fn);
-        exit;
+       
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
         $fn = $fc->convert("application/vnd.ms-excel"); 
+        print_r($fn);
+        exit;
         $fc->serve('attachment',$fn); // can fix IE Mess
     }
      
