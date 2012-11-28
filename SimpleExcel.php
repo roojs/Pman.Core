@@ -221,7 +221,7 @@ class Pman_Core_SimpleExcel extends Pman
     {
         
      
-       print_r('test ');
+       print_r($fn);
         exit;
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
