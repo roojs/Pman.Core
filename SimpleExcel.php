@@ -48,7 +48,6 @@ class Pman_Core_SimpleExcel extends Pman
     {
      //  print_r($cfg);
         require_once 'Spreadsheet/Excel/Writer.php';
-        $pman = new Pman();
         // Creating a workbook
         $outfile2 = $this->tempName('xls');
        // var_dump($outfile2);
