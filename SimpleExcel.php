@@ -219,9 +219,6 @@ class Pman_Core_SimpleExcel extends Pman
     
     function send($fn)
     {
-        
-     
-       
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
         $fn = $fc->convert("application/vnd.ms-excel"); 
