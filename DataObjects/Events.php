@@ -35,6 +35,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au ,$roo)
     {
+        print_r(1);
         $tn = $this->tableName();
         if (!empty($q['query']['from'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['from']));
