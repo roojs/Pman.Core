@@ -154,8 +154,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
         
         $w->whereAdd('person_id != '. (int) $event->person_id);
-
-        
+ 
         $watches = $w->fetchAll();
         
         //print_R($watches);exit;
