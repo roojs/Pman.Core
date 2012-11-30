@@ -102,14 +102,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $nn->person_id = $w->person_id;
             
             $nf = clone($nn);
-            $nf->whereAdd('sent < act_when');
+            $nf->whereAdd('sent < act_when - INTERVAL 1 HOUR');
             if ($nf->count()) {
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
             $nn->act_start( date("Y-m-d H:i:s", $when !== false ? strtotime($when) : time()) );
             $nn->insert();
-        }     
+        }
+        
     }
     // static really...
     /**
