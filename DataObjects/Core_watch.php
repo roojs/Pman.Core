@@ -85,6 +85,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if ($whereAdd !== false) { 
             $w->whereAdd($whereAdd  );
         }
+        $w->ontable = $ontable;
         //$w->selectAdd();
         //$w->selectAdd('distinct(person_id) as person_id');
         
