@@ -111,6 +111,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $nn->insert();
         }
         
+        
     }
     // static really...
     /**
