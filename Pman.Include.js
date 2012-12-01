@@ -23,7 +23,8 @@ Pman.Include.script = function(sp,cached) {
     
     var script = document.createElement("script");
     script.setAttribute("src",  rootURL + sp    +
-              ( cached ? '' :     '?ts=' + Math.random() ));
+              ( cached ? '' :     '?ts=' + Math.random() )
+            );
     script.setAttribute("type", "text/javascript");
     //script.setAttribute("id", trans.scriptId);
     head.appendChild(script);
