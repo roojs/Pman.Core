@@ -28,5 +28,5 @@ Pman.Include.script = function(sp,cached) {
     //script.setAttribute("id", trans.scriptId);
     head.appendChild(script);
     
-    Roo.get(documen.body).appendChild()
+    Roo.get(documen.body).appendChild();
 )
