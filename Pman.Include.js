@@ -6,22 +6,27 @@
 
 
 Pman.Include = function(sp) {
+    
+    Pman.Include.script(sp, true)
+    
+     
+)
+
+Pman.Include.cached = function(sp) {
+    Pman.Include.script(sp, false)
+     
+)
+
+Pman.Include.script = function(sp,cached) {
     var head = document.getElementsByTagName("head")[0];
  
     
     var script = document.createElement("script");
-    script.setAttribute("src",  rootURL + sp    +'?ts=' + Math.random() );
+    script.setAttribute("src",  rootURL + sp    +
+              ( cached ? '' :     '?ts=' + Math.random() ));
     script.setAttribute("type", "text/javascript");
     //script.setAttribute("id", trans.scriptId);
     head.appendChild(script);
     
     Roo.get(documen.body).appendChild()
-     
-)
-
-Pman.Include.cached = function(sp) {
-    var tag = '<script type="text/javascript"  src="' +
-        rootURL + sp     
-    Roo.get(documen.body).appendChild()
-     
 )
