@@ -28,4 +28,4 @@ Pman.Include.script = function(sp,cached) {
     //script.setAttribute("id", trans.scriptId);
     head.appendChild(script);
      
-)
+}
