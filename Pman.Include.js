@@ -7,15 +7,14 @@
 
 Pman.Include = function(sp) {
     
-    Pman.Include.script(sp, true)
-    
+    Pman.Include.script(sp, true);     
      
-)
+}
 
 Pman.Include.cached = function(sp) {
-    Pman.Include.script(sp, false)
+    Pman.Include.script(sp, false);
      
-)
+}
 
 Pman.Include.script = function(sp,cached) {
     var head = document.getElementsByTagName("head")[0];
