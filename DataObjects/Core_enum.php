@@ -43,7 +43,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $tn = $this->tableName();
         $x = $this->factory($tn);
         
-        
         $x->whereAdd("etype = '{$request['etype']}' AND name = '{$request['name']}'");
         $x->find(true);
         if($x->count() > 0){
