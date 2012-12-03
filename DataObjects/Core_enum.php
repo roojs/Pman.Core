@@ -40,14 +40,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     }
     function beforeInsert($req, $roo)
     {
-        $x = $this->factory($this->tableName());
+        $tn = $this->tableName();
+        $x = $this->factory($tn);
         
         if(empty($req['etype'])){
             if($x->get('name', $req['name'])){
                 $roo->jerr('name is exsiting');
             }
         }else{
-            $x->whereAdd("etype = {$req['etype']} AND name = {$req['name']}");
+            $x->whereAdd("$tn.etype = {$req['etype']} AND $tn.name = {$req['name']}");
             $x->find(true);
             if($x->count() > 0){
                 $roo->jerr('is exsiting');
