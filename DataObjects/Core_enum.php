@@ -45,6 +45,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if($x->get('etype', $req['etype'])){
             $roo->jerr('etype is exsiting');
         }
+        if($x->get('name', $req['name'])){
+            $roo->jerr('etype is exsiting');
+        }
     }
     function onInsert($req)
     {
