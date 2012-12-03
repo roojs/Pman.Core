@@ -42,7 +42,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        print_r($old);
+        //print_r($old);
         
         if($old->etype == $request['etype'] && $old->name == $request['name']){
             $roo->jerr('is exsiting');
