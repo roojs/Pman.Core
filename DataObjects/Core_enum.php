@@ -38,11 +38,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         
     }
-    function beforeInsert($req)
+    function beforeInsert($req, $roo)
     {
         $x = $this->factory($this->tableName());
         print_r($req);
-        //$x->get('etype', $req[''])
+        if($x->get('etype', $req['etype'])){
+            $roo->jerr('etype is exsiting');
+        }
     }
     function onInsert($req)
     {
