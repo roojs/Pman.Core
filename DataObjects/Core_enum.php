@@ -38,7 +38,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         
     }
-    
+    function beforeInsert()
+    {
+        
+    }
     function onInsert($req)
     {
         $x = $this->factory($this->tableName());
