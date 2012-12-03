@@ -40,7 +40,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     }
     function beforeInsert($req)
     {
-        
+        $x = $this->factory($this->tableName());
+        print_r($req);
+        //$x->get('etype', $req[''])
     }
     function onInsert($req)
     {
