@@ -50,17 +50,17 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $x->whereAdd("etype = {$req['etype']} AND name = {$req['name']}");
             $x->find(true);
             if($x->count() > 0){
-                $roo->jerr('etype is exsiting');
+                $roo->jerr('is exsiting');
             }
         }
-        
-        //print_r($req);
-        if($x->get('etype', $req['etype']) && !empty($req['etype'])){
-            $roo->jerr('etype is exsiting');
-        }
-        if($x->get('name', $req['name'])){
-            $roo->jerr('name is exsiting');
-        }
+//        
+//        //print_r($req);
+//        if($x->get('etype', $req['etype']) && !empty($req['etype'])){
+//            $roo->jerr('etype is exsiting');
+//        }
+//        if($x->get('name', $req['name'])){
+//            $roo->jerr('name is exsiting');
+//        }
     }
     function onInsert($req)
     {
