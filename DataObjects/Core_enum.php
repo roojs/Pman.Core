@@ -38,6 +38,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         
     }
+    function beforeUpdate($old, $request,$roo)
+    {
+        
+    }
     function beforeInsert($req, $roo)
     {
         $tn = $this->tableName();
