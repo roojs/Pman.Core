@@ -45,12 +45,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         print_r($old);
 //        $x->whereAdd("etype = '{$req['etype']}' AND name = '{$req['name']}'");
         
-        $x->whereAdd("etype = '{$request['etype']}' AND name = '{$request['name']}'");
-        $x->find(true);
-        if($x->count() > 0){
-            $roo->jerr('is exsiting');
-        }
+        if($old->etype == $request['etype'] && $old->name == $request['name']){
             
+        }else{
+            $x->whereAdd("etype = '{$request['etype']}' AND name = '{$request['name']}'");
+            $x->find(true);
+            if($x->count() > 0){
+                $roo->jerr('is exsiting');
+            }
+        }
 //        if($old->etype == $request['etype'] && $old->name == $request['name']){
 //            $roo->jerr('is exsiting');
 //        }
