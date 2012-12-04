@@ -681,8 +681,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
         }
         
-        print_r($q);
-        exit;
         if (!empty($q['query']['search'])) {
             $s = $this->escape($q['query']['search']);
                     $this->whereAdd("
