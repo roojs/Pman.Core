@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
         $w->active =1;
         
-         $w->whereAdd('onid = 0 OR onid='. ((int) $onid));
+        $w->whereAdd('onid = 0 OR onid='. ((int) $onid));
        
         
         $w->ontable = $ontable;
