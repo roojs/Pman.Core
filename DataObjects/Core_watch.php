@@ -20,6 +20,9 @@
  *        medium = "REVIEW" << eg. review needed..
  *        
  *
+ *  if onid == 0 then it will monitor all changes to that table..
+ *
+ *
  * 
  * 
  */
