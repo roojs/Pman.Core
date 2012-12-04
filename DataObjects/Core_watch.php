@@ -133,20 +133,16 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      *
      * This get's called by roo->jok()
      *
+     * And searches for matching '$watch->event' == $event->action
+     *  along with id/table etc..
      *
      * it's basic usage is to fill in core_notify after an event has happend.
      *
      * We can also use it to notify other modules if something has happend.
      *  = eg. mtrack_ticket * watch will notify mtrack_jira::
      *
-     *  in that example:
-     *     public $ontable;                         // string(128)  not_null
-            public $onid;                            // int(11)  not_null
-            public $person_id;                       // int(11)  not_null
-            public $event;                           // string(128)  not_null
-            public $medium;                          // string(128)  not_null
-            public $active;                          // int(11)  not_null
-
+     * @param Pman_Core_DataObject_Events $event - the Pman event dataobject that was created
+     * 
      */
     
     function notifyEvent($event)
