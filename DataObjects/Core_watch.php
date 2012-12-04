@@ -103,7 +103,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $nn->person_id = $w->person_id;
             
             $nf = clone($nn);
-            $nf->whereAdd("sent > '2000-01-01'");
+            $nf->whereAdd("sent < '2000-01-01'");
             if ($nf->count()) {
                 // we have a item in the queue for that waiting to be sent..
                 continue;
