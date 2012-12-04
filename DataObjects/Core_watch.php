@@ -78,10 +78,20 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      * Generate a notify event based on watches (matching whereAdd)
      *
      * Usage: $core_watch->notify('mtrack_repos', 1, false, date()
+     *
+     * This can match any 'event' type - eg. it can be blank etc...
+     *   Generally used by non-event driven notifications, like our
+     *   Daily commit message.
+     *
+     *  @param string $ontable - the database table that has been updated/changed etc.
+     *  @param int    $onid    - the id of the row changed
+     *  @param string  $whereAdd (optiona) - a DB whereAdd() condition to filter the search for watches
+     *  @param datetime    $when   (default now)  - date/time to create the notification for (Eg. end of day..)
+     * 
      */
     function notify($ontable , $onid, $whereAdd = false, $when=false)
     {
-        $w = DB_DataObject::factory('core_watch');
+        $w = DB_DataObject::factory('core_watch');   
         if ($whereAdd !== false) { 
             $w->whereAdd($whereAdd  );
         }
