@@ -125,12 +125,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      *  = eg. mtrack_ticket * watch will notify mtrack_jira::
      *
      *  in that example:
-     *     ublic $ontable;                         // string(128)  not_null
-    public $onid;                            // int(11)  not_null
-    public $person_id;                       // int(11)  not_null
-    public $event;                           // string(128)  not_null
-    public $medium;                          // string(128)  not_null
-    public $active;                          // int(11)  not_null
+     *     public $ontable;                         // string(128)  not_null
+            public $onid;                            // int(11)  not_null
+            public $person_id;                       // int(11)  not_null
+            public $event;                           // string(128)  not_null
+            public $medium;                          // string(128)  not_null
+            public $active;                          // int(11)  not_null
 
      */
     
