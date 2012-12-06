@@ -18,6 +18,7 @@
             [ "a", "b" ]
             [],
             [ "A", "B" ]
+            [ "a",  ["test", "left"]  ] << sub array [text, formatname]
         ],
  *     cols :  array(
             array(
