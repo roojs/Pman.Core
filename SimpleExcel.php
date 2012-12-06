@@ -87,6 +87,15 @@ class Pman_Core_SimpleExcel extends Pman
          
     }
     
+    
+    function date($str)
+    {
+        
+        return (strtotime($str) +  (86400 *  25569)) / 86400;
+        
+    }
+    
+    
     function buildpage($workbook,  $formats , $data,$cfg)
     {
         //echo '<PRE>';        print_R($cfg);
