@@ -105,6 +105,11 @@ class Pman_Core_SimpleExcel extends Pman
         if (!empty($cfg['head'])) {
             foreach($cfg['head'] as $row) { 
                 foreach($row as $c => $col) {
+                    if (is_array($col)) {
+                        $worksheet->write($start_row, $c, $col[0], $col[1]);
+                        continue;
+                    }
+                    
                     $worksheet->write($start_row, $c, $col);
                     
                 }
@@ -199,6 +204,10 @@ class Pman_Core_SimpleExcel extends Pman
             foreach($cfg['foot'] as $row) { 
                 foreach($row as $c => $col) {
                     // if it's an array? - formated ???
+                    if (is_array($col)) {
+                        $worksheet->write($start_row, $c, $col[0], $col[1]);
+                        continue;
+                    }
                     $worksheet->write($start_row, $c, $col);
                     
                 }
