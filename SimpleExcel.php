@@ -88,7 +88,7 @@ class Pman_Core_SimpleExcel extends Pman
     }
     
     
-    function date($str)
+    static function date($str)
     {
         
         return (strtotime($str) +  (86400 *  25569)) / 86400;
