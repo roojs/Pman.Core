@@ -177,7 +177,7 @@ Pman.I18n = {
         xtype: 'Store',
         proxy: {
             xtype: 'HttpProxy',
-            url: baseURL + '/I18N/Country.html',
+            url: baseURL + '/Core/I18n/Country.html',
             method: 'GET'
         },
         
@@ -199,7 +199,7 @@ Pman.I18n = {
         xtype: 'Store',
         proxy: {
             xtype: 'HttpProxy',
-            url: baseURL + '/I18N/Lang.html',
+            url: baseURL + '/Core/I18n/Lang.html',
             method: 'GET'
         },
         
@@ -220,7 +220,7 @@ Pman.I18n = {
         xtype: 'Store',
         proxy: {
             xtype: 'HttpProxy',
-            url: baseURL + '/I18N/Currency.html',
+            url: baseURL + '/Core/I18n/Currency.html',
             method: 'GET'
         },
         
