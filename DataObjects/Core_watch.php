@@ -201,7 +201,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             // does this watch already have a flag...
             $nf = clone($n);
-            $nf->whereAdd("sent ><'2000-01-01'");
+            $nf->whereAdd("sent < '2000-01-01'");
             //$nf->whereAdd('sent < act_when');
             if ($nf->count()) {
                 // we have a item in the queue for that waiting to be sent..
