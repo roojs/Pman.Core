@@ -412,7 +412,7 @@ CREATE TABLE core_notify_recur (
   id int(11)  NOT NULL AUTO_INCREMENT,
 
   PRIMARY KEY (id)
-) ;
+);
  
 
 ALTER TABLE  core_notify_recur  ADD COLUMN person_id int(11)  NOT NULL;
