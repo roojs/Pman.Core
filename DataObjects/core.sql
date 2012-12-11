@@ -193,7 +193,10 @@ ALTER TABLE Person ADD COLUMN   deleted_dt DATETIME ;
 ALTER TABLE Person ADD COLUMN   firstname varchar(128) NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   lastname varchar(128) NOT NULL DEFAULT '';
 
-ALTER TABLE `clipping_dev`.`Person` ADD COLUMN `name_facebook` VARCHAR(128) NULL  AFTER `crm_type_id` , ADD COLUMN `url_blog` VARCHAR(256) NULL  AFTER `name_facebook` , ADD COLUMN `url_twitter` VARCHAR(256) NULL  AFTER `url_blog` , ADD COLUMN `url_linkedin` VARCHAR(256) NULL  AFTER `url_twitter` ;
+ALTER TABLE Person ADD COLUMN `name_facebook` VARCHAR(128) NULL;
+ALTER TABLE Person ADD COLUMN `url_blog` VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN `url_twitter` VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN `url_linkedin` VARCHAR(256) NULL ;
 
 
 
