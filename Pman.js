@@ -804,8 +804,8 @@ Pman = new Roo.Document(
         }
         
         if (typeof(obj.parent) == 'undefined') {
-            console.log("Parent is undefined");
-            console.log(obj);
+            Roo.log("Parent is undefined");
+            Roo.log(obj);
             obj.disabled = true;
             return;
         }
@@ -813,8 +813,8 @@ Pman = new Roo.Document(
             
         if (obj.parent === false) {
             obj.disabled = true;
-            console.log('ignoring top level object (as parent===false found)');
-            console.log(obj);
+            Roo.log('ignoring top level object (as parent===false found)');
+            Roo.log(obj);
             return;
         }
         // this is an error condition - the parent does not exist..
