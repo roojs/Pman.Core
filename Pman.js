@@ -585,9 +585,14 @@ Pman = new Roo.Document(
                     },
                     failure: function(act) {
                         Roo.log(act);
-                        
+                        var msg = '';
+                        try {
+                            msg = act.errorMsg;
+                        } catch(e) {
+                            msg = "Error deleting";
+                        }
                         tab.grid.getView().mainWrap.unmask();
-                        Roo.MessageBox.alert("Error", "Error Deleting");
+                        Roo.MessageBox.alert("Error",  msg);
                     }
                     
                 });
