@@ -584,6 +584,8 @@ Pman = new Roo.Document(
                         
                     },
                     failure: function(act) {
+                        Roo.log(act);
+                        
                         tab.grid.getView().mainWrap.unmask();
                         Roo.MessageBox.alert("Error", "Error Deleting");
                     }
