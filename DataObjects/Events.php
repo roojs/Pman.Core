@@ -76,17 +76,17 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         // if not empty on_table
-//        if(!empty($q['person_table'])){
-//            $jt = DB_DataObject::factory($q['person_table']);
-//        
-//            //$jt = DB_DataObjec factory person_ontable
-//            
-//            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_{$jt->tableName()}_id_id ON (join_{$jt->tableName()}_id_id.id=Events.person_id)";
-//            
-//            //$this->person_table = $q['person_table'];
-//            // $this->_join
-//        
-//        }
+        if(!empty($q['person_table'])){
+            $jt = DB_DataObject::factory($q['person_table']);
+        
+            //$jt = DB_DataObjec factory person_ontable
+            
+            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_{$jt->tableName()}_id_id ON (join_{$jt->tableName()}_id_id.id=Events.person_id)";
+            
+            //$this->person_table = $q['person_table'];
+            // $this->_join
+        
+        }
         
         if (isset($q['query']['person_sum'])) {
             //DB_DataObject::debugLevel(1);
