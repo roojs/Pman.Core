@@ -114,7 +114,15 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
             //$ret[] = array( 'id' => 999999, 'name' => 'ADMINISTRATORS');
 
     }
+    
+    function initGroups()
+    {
         
+        
+        
+        
+    }
+    
      
     
 }
