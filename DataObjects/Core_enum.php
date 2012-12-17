@@ -129,9 +129,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 'display_name' =>  'Company Types',
                 'cn' => array(
                     array(
-                            'name' => 'OWNER',
-                            'display_name' => 'Owner',
-                            'seqid' => 999, // last...
+                        'name' => 'OWNER',
+                        'display_name' => 'Owner',
+                        'seqid' => 999, // last...
                     )
                     
                 )
