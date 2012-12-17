@@ -134,7 +134,7 @@ Pman.Dialog.CoreProject = {
                                     listeners : {
                                         add : function (combo)
                                         {
-                                         Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
+                                         Pman.Dialog.CoreCompanies.show( {  id: 0 },  function(data) {
                                                     _this.form.setValues({ 
                                                         client_id : data.id,
                                                         client_id_name : data.name
