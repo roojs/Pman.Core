@@ -815,6 +815,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // this seems a bit risky...
             
             $g = DB_DataObject::factory('Groups');
+            $g->initGroups();
             $g->type = 0;
             $g->get('name', 'Administrators');
             
