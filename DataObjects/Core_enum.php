@@ -150,15 +150,32 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $this->initEnums($this->baseEnums());
             return;
         }
+        $seq_id = 0;
+        if (!empty($base['etype'])) {
+            $seq_id = 1;
+            $t = DB_DAtaObject::Factory('core_enum');
+            $t->etype = $base['etype'];
+            $t->selectAdD();
+            $t->selectAdD('max(seqid) as seqid');
+            if ($t->find(true)) {
+                $seq_id = $t->seqid+1;
+            }
+ 
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
             
             $t->setFrom($row);
             $t->setFrom($base);
-            
+            if (!empty($base['etype']) && empty($row['seq_id']) {
+                $t->seqid = $seq_id;
+                $seq_id++;
+            }
             
             
             if (!$t->find(true)) {
+                
+                
+                
                 $t->insert();
             }
             if (!empty($row['cn'])) {
