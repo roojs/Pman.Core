@@ -212,7 +212,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         // since roo does not support autojoin yet..
         if (!isset($q['_distinct'])) {
-            $this->autoJoinExtra();
+            //$this->autoJoinExtra();
         }
         
         
