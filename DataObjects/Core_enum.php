@@ -125,12 +125,14 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         //
         return array(
             array(
-                'etype' => 'company_type',
+                'name' => 'company_type',
                 'display_name' =>  'Company Types',
                 'cn' => array(
-                    'name' => 'OWNER',
-                    'display_name' => 'Owner',
-                    'seqid' => 999, // last...
+                    array(
+                            'name' => 'OWNER',
+                            'display_name' => 'Owner',
+                            'seqid' => 999, // last...
+                    )
                     
                 )
             )
@@ -149,10 +151,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
             $t->setFrom($row);
+            $t->setFrom($base);
             if (!$t->find(true)) {
-                $t->inserT();
+                $t->insert();
             }
-            if (!empty($cn))
+            if (!empty($row['cn'])) {
+                $this->initEnums($row['cn'], array('etype', $this->name)
+            }
         
         
     }
