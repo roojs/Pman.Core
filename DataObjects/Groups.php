@@ -118,7 +118,13 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     function initGroups()
     {
         
-        
+        $g = DB_DataObject::factory('Groups');
+        $g->type = 0;
+        $g->name = 'Administrators';
+        if ($g->count()) {
+            return;
+        }
+        $g->insert();
         
         
     }
