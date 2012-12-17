@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
             //$jt = DB_DataObjec factory person_ontable
             
-            // $this->_join = 'LEFT JOIN $jt->tableName() ';
+            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.id=Events.person_id)";
             // $this->_join
         
         }
