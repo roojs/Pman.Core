@@ -37,6 +37,20 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
      
         $tn = $this->tableName();
+        
+        // if not empty on_table
+        if(!empty($q['person_table'])){
+            $jt = DB_DataObject::factory($q['person_table']);
+        
+            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.id=Events.person_id)";
+            $this->selectAdd();
+            $this->selectAs();
+            
+            $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
+        
+        }
+        
+        
         if (!empty($q['query']['from'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['from']));
             $this->whereAdd(" {$tn}.event_when >=  '$dt' ");
@@ -75,17 +89,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->whereAdd("$tn.on_table = ''");
         }
         
-        // if not empty on_table
-        if(!empty($q['person_table'])){
-            $jt = DB_DataObject::factory($q['person_table']);
         
-            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.id=Events.person_id)";
-            $this->selectAdd();
-            $this->selectAs();
-            
-            $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
-        
-        }
         
         if (isset($q['query']['person_sum'])) {
             //DB_DataObject::debugLevel(1);
