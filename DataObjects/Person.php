@@ -810,7 +810,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function onInsert($req, $roo)  
     {
          
-        
+        $p = DB_DataObject::factory('person');
         if ($roo->authUser->id < 0 && $p->count() == 1) {
             // this seems a bit risky...
             
