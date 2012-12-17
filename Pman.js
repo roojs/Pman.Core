@@ -382,6 +382,7 @@ Pman = new Roo.Document(
             Pman.Login.authUser.company_id_id  = data.id;
             Pman.Login.authUser.company_id  = data.id;
             Pman.Login.authUser.company_id_name  = data.name;
+            Roo.log("forcing admin");
             forceAdmin();
         }
         
