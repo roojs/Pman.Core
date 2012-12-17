@@ -1,4 +1,8 @@
-
+/**
+ *
+ * BC compatible..
+ *
+ */
 
 Pman.Dialog.Companies =   new Roo.util.Observable({
     
