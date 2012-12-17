@@ -309,6 +309,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $u = DB_DataObject::factory('Person');
         $u->whereAdd(' LENGTH(passwd) > 0');
         if (!$u->count()){
+            
+            // fake person - open system..
+            $ce = DB_DataObject::factory('core_enum');
+            $ce->initEnums();
+            
+            
             $u = DB_DataObject::factory('Person');
             $u->id = -1;
             return $u;
