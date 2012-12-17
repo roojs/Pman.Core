@@ -36,6 +36,11 @@ ALTER TABLE Companies ALTER isOwner TYPE int(11);
 ALTER TABLE Companies ALTER owner_id SET DEFAULT 0;
 ALTER TABLE Companies ALTER url SET DEFAULT '';
 
+ALTER TABLE Companies ADD COLUMN    address1 text ;
+ALTER TABLE Companies ADD COLUMN    address2 text ;
+ALTER TABLE Companies ADD COLUMN    address3 text ;
+
+
 
 ALTER TABLE Companies ADD INDEX name_lookup (name);
 
