@@ -76,15 +76,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         // if not empty on_table
-        if(!empty($q['person_table']))
-            $jt = DB_DataObject::factory('person_ontable');
+        if(!empty($q['person_table'])){
+            $jt = DB_DataObject::factory($q['person_table']);
         
             //$jt = DB_DataObjec factory person_ontable
             
             // $this->_join = 'LEFT JOIN $jt->tableName() ';
             // $this->_join
         
-        
+        }
         
         if (isset($q['query']['person_sum'])) {
             //DB_DataObject::debugLevel(1);
