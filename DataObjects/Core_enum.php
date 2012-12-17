@@ -126,7 +126,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         return array(
             array(
                 'etype' => '',
-                'name' => 'company_type',
+                'name' => 'COMPTYPE',
                 'display_name' =>  'Company Types',
                 'cn' => array(
                     array(
