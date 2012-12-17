@@ -328,7 +328,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
            // $au = DB_DataObject::Factory('Person'); // not always a person..
            // $au->get($obj->person_id);
         } 
-          
+          print_r('ininin');exit;
         $this->person_name = $au && !empty($au->name) ? $au->name : '';
         $this->person_id = $au ? $au->id : -1;
         $this->person_table = $au ? $au->tableName() : '';
