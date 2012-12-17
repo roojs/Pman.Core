@@ -281,7 +281,7 @@ Pman.Dialog.CoreCompanies = {
                                             text : "Add Image"
                                         }
                                     ]
-                                } 
+                                },
                                 {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
