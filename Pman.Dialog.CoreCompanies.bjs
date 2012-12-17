@@ -206,7 +206,7 @@
                                             "|xns": "Roo"
                                         }
                                     ]
-                                } 
+                                },
                                 {
                                     "name": "id",
                                     "xtype": "Hidden",
