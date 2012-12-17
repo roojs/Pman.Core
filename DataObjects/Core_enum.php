@@ -144,6 +144,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function initEnums($data = false, $base = array())
     {
+        DB_DataObject::DebugLevel(1);
         if ($data === false) {
             $this->initEnums($this->baseEnums());
             return;
