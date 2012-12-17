@@ -372,7 +372,9 @@ Pman = new Roo.Document(
                 return;
             }
             if (!data || !data.id) {
-                Pman.Dialog.Companies.show( { id : 0, isOwner : 1, comptype: 'OWNER' }, function(data) {
+                Pman.Dialog.Companies.show( { id : 0, comptype: 'OWNER' }, function(data) {
+                    Roo.log("company dialog returned");
+                    Roo.log(data);
                     forceCompany(data);
                 });
                 return;
