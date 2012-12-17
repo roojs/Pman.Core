@@ -152,8 +152,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
-            print_r(array_merge($base, $row ));
-            $t->setFrom(array_merge($base, $row ));
+            
+            $t->setFrom($row);
+            $t->setFrom($base);
             
             echo '<PRE>';print_r($t);
             
