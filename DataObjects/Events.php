@@ -90,7 +90,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
 //                    join_crm_action_updated.id = join_person_id_id.crm_updated_action_id
 //            ';
             //$item = DB_DataObject::Factory('crm_action');
-            $this->selectAs($jt, 'join_person_id_id_%s', 'join_person_id_id');
+            $this->selectAs($jt, 'person_id_id_%s', 'join_person_id_id');
 
             //$this->person_table = $q['person_table'];
             // $this->_join
