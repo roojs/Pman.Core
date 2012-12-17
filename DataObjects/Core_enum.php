@@ -153,6 +153,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t = DB_DAtaObject::Factory('core_enum');
             $t->setFrom($row);
             $t->setFrom($base);
+            print_r($base);
+            
             if (!$t->find(true)) {
                 $t->insert();
             }
