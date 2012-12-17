@@ -263,7 +263,7 @@ Pman.Dialog.PersonEditor.prototype = {
                     adderclick : function()
                     {
                         var cb = this;
-                        Pman.Dialog.Companies.show( {  id: 0 },  function(data) {
+                        Pman.Dialog.CoreCompanies.show( {  id: 0 },  function(data) {
                             cb.setFromData(data);
                         }); 
                     }
