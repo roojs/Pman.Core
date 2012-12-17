@@ -809,8 +809,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     }
     function onInsert($req, $roo)  
     {
-        
-        if ($roo->authUser->id < 0) {
+        $p = DB_DataObject::factory('Person');
+        if ($roo->authUser->id < 0 && $p->count() == 1) {
+            // this seems a bit risky...
+            
             $g = DB_DataObject::factory('Groups');
             $g->type = 0;
             $g->get('name', 'Administrators');
