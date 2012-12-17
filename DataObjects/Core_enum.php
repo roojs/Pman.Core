@@ -112,5 +112,50 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         return false;
         
     }
+    /**
+     * The base enums that the system always needs,
+     * If we need to add modular enums, then this can be extended, and the two
+     * base data applied.
+     *
+     * This might be moved to an external file later? - eg json...
+     *
+     */
+    function baseEnums()
+    {
+        //
+        return array(
+            array(
+                'etype' => 'company_type',
+                'display_name' =>  'Company Types',
+                'cn' => array(
+                    'name' => 'OWNER',
+                    'display_name' => 'Owner',
+                    'seqid' => 999, // last...
+                    
+                )
+            )
+        );  
+        
+        
+        
+    }
+    
+    function initEnums($data = false, $base = array())
+    {
+        if ($data === false) {
+            $this->initEnums($this->baseEnums());
+            return;
+        }
+        foreach($data as $row) {
+            $t = DB_DAtaObject::Factory('core_enum');
+            $t->setFrom($row);
+            if (!$t->find(true)) {
+                $t->inserT();
+            }
+            if (!empty($cn))
+        
+        
+    }
+    
     
 }
