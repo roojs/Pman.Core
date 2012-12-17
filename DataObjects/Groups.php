@@ -125,7 +125,9 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
             return;
         }
         $g->insert();
-        
+        $gr = DB_DataObject::factory('group_rights');
+        $gr->genDefault();
+    
         
     }
     
