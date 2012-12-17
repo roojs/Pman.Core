@@ -82,7 +82,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             //$jt = DB_DataObjec factory person_ontable
             
             $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.id=Events.person_id)";
-            
+            $item = DB_DataObject::factory('')
+            $this->_join .= '
+                LEFT JOIN
+                    crm_action as join_crm_action_updated
+                ON
+                    join_crm_action_updated.id = join_person_id_id.crm_updated_action_id
+            ';
+            //$item = DB_DataObject::Factory('crm_action');
+            $this->selectAs($jt, 'join_person_id_id_%s', 'join_crm_action_updated');
+
             //$this->person_table = $q['person_table'];
             // $this->_join
         
