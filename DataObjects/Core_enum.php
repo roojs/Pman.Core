@@ -156,9 +156,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $t->insert();
             }
             if (!empty($row['cn'])) {
-                $this->initEnums($row['cn'], array('etype', $this->name)
+                $this->initEnums($row['cn'], array('etype', $t->name));
             }
-        
+        }
         
     }
     
