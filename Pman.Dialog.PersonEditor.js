@@ -232,7 +232,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         beforeload : function(st,o)
                         {
                         
-                            o.params.comptype = 'OWNER';
+                            o.params['!comptype'] = 'OWNER';
                         },
                         loadexception : Pman.loadException
                     
