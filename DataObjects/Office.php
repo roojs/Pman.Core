@@ -14,6 +14,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     public $company_id;                      // int(11)  not_null
     public $name;                            // string(64)  not_null
     public $address;                         // blob(65535)  not_null blob
+    public $address2;                         // blob(65535)  not_null blob
+    public $address3;                         // blob(65535)  not_null blob
     public $phone;                           // string(32)  not_null
     public $fax;                             // string(32)  not_null
     public $email;                           // string(128)  not_null
