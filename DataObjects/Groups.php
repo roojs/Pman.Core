@@ -105,6 +105,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         //$p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         // groups databse is hard coded to person.. so this should not be used for other tables.????
         $p = DB_Dataobject::factory( 'Person' );
+        
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
         return $p->fetchAll($what);
