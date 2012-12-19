@@ -88,11 +88,16 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
             $gm->insert();
         }
     }
+    /**
+     *
+     *  grab a list of members - default is the array of person objects..
+     *  @param $what  = set to 'email' to get a list of email addresses.
+     *
+     *
+     */
     
-    function members()
+    function members($what = false)
     {
-        
-        
         $ids = $this->memberIds();
         if (!$ids) {
             return array();
@@ -100,7 +105,8 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
-        return $p->fetchAll();
+        return $p->fetchAll($what);
+    
      
         
         
