@@ -102,7 +102,8 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         if (!$ids) {
             return array();
         }
-        $p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
+        //$p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
+        $p = DB_Dataobject::factory( 'Person' );
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
         return $p->fetchAll($what);
