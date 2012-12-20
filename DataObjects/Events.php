@@ -49,7 +49,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
         
         } else {
-            $this->person_table = 'Person'; // default to  our standard.. - unless otherwise requested..
+            $this->whereAdd("person_table  = 'Person' OR person_table = '' OR person_table IS NULL"); // default to  our standard.. - unless otherwise requested..
         }
         
         
