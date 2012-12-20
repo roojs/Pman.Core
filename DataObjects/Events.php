@@ -222,66 +222,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
             
     }
-     
-//    function autoJoinExtra()
-//    {
-//        //$ret = parent::autoJoin();
-//        // DB_DataObject::debugLevel(1);
-//        
-//        // now try and magically join person_table to the right table..
-//        return;
-//        // this does not work on postgres.. 
-//        $tn = $this->tableName();
-//        $pt = DB_DataObject::Factory($this->tableName());
-//        $pt->selectAdD();
-//        $pt->selectAdD('distinct(person_table) as person_table');
-//        $pt->whereAdd('person_table IS NOT NULL AND LENGTH(person_table) > 0');
-//        $tbls = $pt->fetchAll('person_table');
-//        $pers = DB_DataObject::Factory('Person');
-//        $ptbl = $pers->tableName();
-//        if (!in_array($ptbl,$tbls)) {
-//            $tbls[] = $ptbl;
-//            
-//        }
-//        foreach($tbls as $tbl) {
-//            
-//            // find all the columns from the joined table..
-//            $st = DB_DataObject::Factory($tbl);
-//            $tcols = array_keys($st->table());
-//            
-//            $cond = "{$tn}.person_table = '{$tbl}'";
-//            if ($tbl == $ptbl) {
-//                $cond = "( $cond OR {$tn}.person_table  = '')";
-//            }
-//            
-//            foreach($tcols as $col) {
-//                if ($col == 'passwd') {
-//                    continue;
-//                }
-//                $cols[$col]  = isset($cols[$col] ) ? $cols[$col]  : array();
-//                $cols[$col][] = "WHEN $cond  THEN join_person_table_{$tbl}.{$col}";
-//            }
-//            // id's are hard coded...
-//            
-//            $this->_join .= "
-//                LEFT JOIN {$tbl} AS  join_person_table_{$tbl}
-//                    ON {$tn}.person_id = join_person_table_{$tbl}.id
-//                        AND $cond
-//            ";
-//        }
-//        foreach($cols as $col=>$whens) {
-//            
-//            $this->selectAdd("
-//                    CASE
-//                        ". implode("\n", $whens) ." 
-//                        ELSE ''
-//                    END
-//                    as person_table_{$col}"
-//            );
-//        }
-//        //return $ret;
-//         
-//    }
+      
     
     
     /**
