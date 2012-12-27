@@ -27,6 +27,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if (!empty($q['query']['empty_etype'])) {
             $this->whereAdd("etype = ''");
         }
+        
+        
+        
     }
     
     function onUpdate($old, $req)
@@ -167,10 +170,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->setFrom($row);
             $t->setFrom($base);
             
-            
-            
             if (!$t->find(true)) {
-                if (!empty($base['etype']) && empty($row['seq_id'])) {
+                if (!empty($base['etype']) && empty($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
                 }
