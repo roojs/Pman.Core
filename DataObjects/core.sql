@@ -171,6 +171,7 @@ ALTER TABLE Office ADD COLUMN    phone varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Office ADD COLUMN    fax varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Office ADD COLUMN    email varchar(128)  NOT NULL  DEFAULT '';
 ALTER TABLE Office ADD COLUMN    role varchar(32)  NOT NULL  DEFAULT '';
+ALTER TABLE Office ADD COLUMN country VARCHAR(4) NULL;
 
 
 CREATE TABLE Person (
