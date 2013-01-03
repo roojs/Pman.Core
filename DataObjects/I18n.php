@@ -294,7 +294,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $lbits = explode('_', strtoupper($lang));
         $lang = $lbits[0];
-        
+        print_r($lbits);
         if (!isset($cache[$lang])) {
             require_once 'I18Nv2/Country.php';
             require_once 'I18Nv2/Language.php';
