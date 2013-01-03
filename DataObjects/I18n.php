@@ -290,11 +290,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (empty($k)) {
             return '??';
         }
-        print_r($k);
+        //print_r($k);
         
         $lbits = explode('_', strtoupper($lang));
         $lang = $lbits[0];
-        print_r($lbits);
+        //print_r($lbits);
         
         if (!isset($cache[$lang])) {
             require_once 'I18Nv2/Country.php';
@@ -315,7 +315,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         if ($type == 'l') {
             $tolang = explode('_', $k);
-         
+            print_r($tolang);
             $ret = $cache[$lang][$type]->getName($tolang[0]);
             if (count($tolang) > 1) {
                 $ret.= '('.$tolang[1].')'; 
