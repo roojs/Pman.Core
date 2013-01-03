@@ -203,8 +203,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         foreach ($ret as $k=>$v) {
             $ret[$k] = ($t=='l') ? $ret[$k] : strtoupper($v);
         }
-        if($t=='l')
-        print_r($ret);
+//        if($t=='l')
+//        print_r($ret);
         return $ret;
     }
     
