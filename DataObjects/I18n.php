@@ -177,7 +177,12 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             case 'l':
                 require_once 'I18Nv2/Language.php';
                 $c = new I18Nv2_Language('en');
-                $ret =  array_keys($c->codes);
+                $ret =  array_keys($c->codes); // we need to make sure these are lowercase!!!
+                print_r($ret);
+                foreach($ret as $k){
+                    
+                }
+                        $ret[$i] = strol
                  
                 if (!empty($cfg['add_l'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_l']));
@@ -250,7 +255,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
             $x = DB_DataObject::factory('I18n');
             $x->ltype = $ltype;
-            $x->lkey = $lkey;
+            $x->lkey = $lkey;  
             $x->inlang= $inlang;
             if ($x->find(true)) {
                 $xx= clone($x);
