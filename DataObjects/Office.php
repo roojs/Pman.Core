@@ -35,7 +35,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     {
         $this->_join .= '
             LEFT JOIN
-                i18n as join_country
+                i18n AS join_country
             ON
                 (join_country.lkey = Office.country)
         ';
