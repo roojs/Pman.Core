@@ -215,11 +215,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB('m');
             return;
         }
-        print_r('in2');
+        
         if ($inlang == '**') {
             return; // dont bother building generic..
         }
-        print_r('in3');
+        
         
         if ($inlang === false) {
             // do we want to add our 'configured ones..'
@@ -231,7 +231,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
             return;
         }
-        print_r('in4');
+        
         
         //DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('I18n');
