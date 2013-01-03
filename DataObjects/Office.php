@@ -34,9 +34,9 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     {
         $this->_join .= '
             LEFT JOIN
-                Companies as join_company
+                i18n as join_country
             ON
-                join_company.id = join_person_id_id.company_id
+                join_country.lkey = Office.country
         ';
         $item = DB_DataObject::Factory('Companies');
         $this->selectAs($item, 'company_id_%s', 'join_company');
