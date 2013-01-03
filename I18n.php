@@ -170,7 +170,7 @@ class Pman_Core_I18n extends Pman
             DB_DataObject::debugLevel(1);
         }
         $i = DB_DataObject::Factory('I18n');
-        $i->buildDb();
+        $i->buildDB();
       
        
         $i = DB_DataObject::Factory('I18n');
