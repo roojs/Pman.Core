@@ -305,6 +305,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         if ($type == 'l') {
             $tolang = explode('_', $k);
+            $tolang[0] = strtolower($tolang[0]);
             print_r($tolang);
             $ret = $cache[$lang][$type]->getName($tolang[0]);
             if (count($tolang) > 1) {
