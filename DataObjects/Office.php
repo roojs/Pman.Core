@@ -29,7 +29,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         //DB_DataObject::debugLevel(1);
         //$this->joinAddCountry();
         print_r($au);
-        $this->selectAdd("(SELECT lval FROM i18n WHERE lkey = Office.country AND ltype = 'c' AND inlang = 'en') AS country_name");
+        $this->selectAdd("(SELECT lval FROM i18n WHERE lkey = Office.country AND ltype = 'c' AND inlang = {$au->lang}) AS country_name");
        
     }
     
