@@ -233,7 +233,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         
         //DB_DataObject::debugLevel(1);
-        $x = DB_DataObject::factory('i18n');
+        $x = DB_DataObject::factory('I18n');
         $x->inlang= $inlang;
         $x->ltype = $ltype;
         
@@ -247,7 +247,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             if (in_array($lkey, $complete)) {
                 continue;
             }
-            $x = DB_DataObject::factory('i18n');
+            $x = DB_DataObject::factory('I18n');
             $x->ltype = $ltype;
             $x->lkey = $lkey;
             $x->inlang= $inlang;
