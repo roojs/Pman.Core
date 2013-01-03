@@ -27,6 +27,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     function applyFilters($q, $au)
     {
        //$this->joinAddCountry();
+       DB_DataObject::debugLevel(1);
     }
     
     function joinAddCountry()
