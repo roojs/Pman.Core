@@ -179,10 +179,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 $c = new I18Nv2_Language('en');
                 $ret =  array_keys($c->codes); // we need to make sure these are lowercase!!!
                 print_r($ret);
-                foreach($ret as $k){
-                    
-                }
-                        $ret[$i] = strol
+//                foreach($ret as $k){
+//                    
+//                }
+//                        $ret[$i] = strol
                  
                 if (!empty($cfg['add_l'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_l']));
