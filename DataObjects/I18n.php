@@ -161,7 +161,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         $ret = array();
         $cfg = $this->cfg();
-        print_r($cfg['add_l']);
+        print_r($cfg['l']);
         switch ($t) {
             case 'c':
                 require_once 'I18Nv2/Country.php';
@@ -185,7 +185,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
 //                        $ret[$i] = strol
                  
                 if (!empty($cfg['add_l'])) {
-                    $ret = array_merge($ret, array_keys($cfg['add_l']));
+                    $ret = array_merge($ret, array_keys($cfg['l']));
                 }
                 print_r('<PRE>');
                 print_r($ret);
