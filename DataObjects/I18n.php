@@ -161,7 +161,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         $ret = array();
         $cfg = $this->cfg();
-        
+        print_r($cfg);
         switch ($t) {
             case 'c':
                 require_once 'I18Nv2/Country.php';
