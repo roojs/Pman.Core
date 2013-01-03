@@ -38,13 +38,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         // languages available
         'l' => array(
             
-            'en', 'zh_CN',   'zh_HK',  'zh_TW', 'th', 'ko', 'ja', 'ms', 
-            'id', // indonesian
-            'tl', // tagalog
-            'vi', //vietnamise
-            'hi', // hindi
-            'ta', // tamil
-            '**', // other
+            'en', 'zh_CN',   'zh_HK',  'zh_TW', //'th', 'ko', 'ja', 'ms', 
+            //'id', // indonesian
+           // 'tl', // tagalog
+           // 'vi', //vietnamise
+          //  'hi', // hindi
+          //  'ta', // tamil
+          //  '**', // other
         ),
         'c' => array(
              'AU', 'CN', 'HK', 'IN', 'ID', 'JP', 'MY', 'NZ', 'TW', 'SG', 'TH', 'KR', 'US', 'PH', 'VN','**'
