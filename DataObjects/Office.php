@@ -27,7 +27,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     function applyFilters($q, $au)
     {
         //DB_DataObject::debugLevel(1);
-        $this->joinAddCountry();
+        //$this->joinAddCountry();
+        $this->selectAdd("(SELECT lval FROM i18n WHERE lkey = {$this->country}) AS country_name");
        
     }
     
