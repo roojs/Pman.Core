@@ -37,7 +37,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             LEFT JOIN
                 i18n as join_country
             ON
-                join_country.lkey = Office.country
+                (join_country.lkey = Office.country)
         ';
         $item = DB_DataObject::Factory('I18n');
         $this->selectAs($item, 'country_id_%s', 'join_country');
