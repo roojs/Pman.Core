@@ -27,7 +27,14 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     
     function joinAddCountry()
     {
-        
+        $this->_join .= '
+            LEFT JOIN
+                Companies as join_company
+            ON
+                join_company.id = join_person_id_id.company_id
+        ';
+        $item = DB_DataObject::Factory('Companies');
+        $this->selectAs($item, 'company_id_%s', 'join_company');
     }
     function toEventString() {
         return $this->name;
