@@ -38,8 +38,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             ON
                 join_country.lkey = Office.country
         ';
-        $item = DB_DataObject::Factory('Companies');
-        $this->selectAs($item, 'company_id_%s', 'join_company');
+        $item = DB_DataObject::Factory('I18n');
+        $this->selectAs($item, 'country_id_%s', 'join_country');
     }
     function toEventString() {
         return $this->name;
