@@ -290,7 +290,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (empty($k)) {
             return '??';
         }
-        print_r($lang);
+        print_r($type);
         print_r($k);
         $lbits = explode('_', strtoupper($lang));
         $lang = $lbits[0];
