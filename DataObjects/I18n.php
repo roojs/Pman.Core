@@ -161,8 +161,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         $ret = array();
         $cfg = $this->cfg();
-//        print_r('<PRE>');
-//        print_r($t);
+
         switch ($t) {
             case 'c':
                 require_once 'I18Nv2/Country.php';
@@ -179,17 +178,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 require_once 'I18Nv2/Language.php';
                 $c = new I18Nv2_Language('en');
                 $ret =  array_keys($c->codes); // we need to make sure these are lowercase!!!
-                
-//                foreach($ret as $k){
-//                    
-//                }
-//                        $ret[$i] = strol
                  
                 if (!empty($cfg['add_l'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_l']));
                 }
-//                print_r('<PRE>');
-//                print_r($ret);
+
                 $ret[] = '**';
                 break;
             case 'm':
@@ -206,10 +199,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         foreach ($ret as $k=>$v) {
             $ret[$k] = ($t=='l') ? $ret[$k] : strtoupper($v);
         }
-        if($t=='l'){
-//        print_r('<PRE>');
-//        print_r($ret);
-            }
+
         return $ret;
     }
     
@@ -252,7 +242,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $list =  $this->availableCodes($ltype);
         
-        //print_r($list); 
+        
         foreach($list as $lkey) {
             // skip ones we know we have done...
             if (in_array($lkey, $complete)) {
@@ -290,13 +280,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (empty($k)) {
             return '??';
         }
-        //print_r($k);
         
         //$lbits = explode('_', strtoupper($lang));
         $lbits = explode('_', $lang);
-        
+         
         $lang = $lbits[0];
-        //print_r($lbits);
         
         if (!isset($cache[$lang])) {
             require_once 'I18Nv2/Country.php';
@@ -317,7 +305,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         if ($type == 'l') {
             $tolang = explode('_', $k);
-            //print_r($tolang);
+            
             $ret = $cache[$lang][$type]->getName($tolang[0]);
             if (count($tolang) > 1) {
                 $ret.= '('.$tolang[1].')'; 
@@ -329,7 +317,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             
         }
         
-        //print_r(array($k, $ret));
         return $ret;
         
         
