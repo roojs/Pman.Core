@@ -318,8 +318,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             if (count($tolang) > 1) {
                 $ret.= '('.$tolang[1].')'; 
             }
-            print_r(11111);
-             print_r($ret);
         }
         // our wierd countries/langs etc..
         if (isset($cfg['add_' . $type][$k])) {
