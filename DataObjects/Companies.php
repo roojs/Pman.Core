@@ -88,7 +88,14 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         }
         
         $this->selectAdd("
-            (SELECT display_name from core_enum where etype='comptype' AND name={$tn}.comptype) as comptype_display_name
+            (SELECT display_name
+                FROM
+                    core_enum
+                WHERE
+                    etype='comptype'
+                    AND
+                    name={$tn}.comptype
+            ) as comptype_display_name
         ");
         
          
