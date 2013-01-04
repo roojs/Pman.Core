@@ -95,7 +95,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
                     etype='comptype'
                     AND
                     name={$tn}.comptype
-            ) as comptype_display_name
+                LIMIT 1
+                ) as comptype_display_name
         ");
         
          
