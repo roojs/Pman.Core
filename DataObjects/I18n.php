@@ -254,6 +254,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             if (in_array($lkey, $complete)) {
                 continue;
             }
+            if (empty($lkey)) {
+                continue;
+            }
             $x = DB_DataObject::factory('I18n');
             $x->ltype = $ltype;
             $x->lkey = $lkey;  
