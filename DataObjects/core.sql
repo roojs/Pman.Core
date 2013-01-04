@@ -31,6 +31,7 @@ ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
 ALTER TABLE Companies CHANGE COLUMN comptype comptype  VARCHAR(32) DEFAULT '';
+ALTER TABLE Companies ADD COLUMN comptype_id INT(11) DEFAULT 0;
 -- postres
 ALTER TABLE Companies ALTER isOwner TYPE int(11);
 ALTER TABLE Companies ALTER owner_id SET DEFAULT 0;
@@ -45,7 +46,8 @@ ALTER TABLE Companies ADD COLUMN    address3 text ;
 ALTER TABLE Companies ADD INDEX name_lookup (name);
 
 
-UPDATE Companies set comptype='OWNER' where isOwner=1;
+-- our new code should have this fixed now..
+-- UPDATE Companies set comptype='OWNER' where isOwner=1;
 
 -- // core comapy types - use core enums (Company Type)
 DROP TABLE core_company_type;
