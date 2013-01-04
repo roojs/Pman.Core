@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-        
+        $tn = $this->tableName();
         //DB_DataObject::debugLevel(1);
         $x = DB_DataObject::factory('Companies');
         $x->comptype= 'OWNER';
@@ -86,6 +86,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
             
         }
+        
+        $this->selectAdd("
+            (SELECT display_name from core_enum where etype='comptype' AND name={$tn}.comptype) 
+                         ")
+        
          
     }
     function toEventString() {
