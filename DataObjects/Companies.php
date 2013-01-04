@@ -86,7 +86,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
             
         }
-        
+        // ADD comptype_display name.. = for combos..
         $this->selectAdd("
             (SELECT display_name
                 FROM
