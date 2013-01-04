@@ -27,9 +27,10 @@ ALTER TABLE Companies ADD COLUMN    dispatch_port varchar(255) NOT NULL DEFAULT 
 ALTER TABLE Companies ADD COLUMN    province varchar(255) NOT NULL DEFAULT '';
 ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
--- comptype is quasi depricated???
+
 ALTER TABLE Companies ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT '';
-ALTER TABLE Companies ADD COLUMN    comptype_id INT(11) DEFAULT 0;
+-- not sure if this needs to change..
+--ALTER TABLE Companies ADD COLUMN    comptype_id INT(11) DEFAULT 0;
 
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
