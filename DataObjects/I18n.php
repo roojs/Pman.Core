@@ -95,7 +95,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function applyFilters($q, $au)
     {
         
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         if (!empty($q['query']['_with_en'])) {
             
             $this->buildDB(); // ensure we have the full database...
