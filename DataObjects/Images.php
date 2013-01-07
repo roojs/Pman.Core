@@ -118,6 +118,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             // you can normally solve this by giving the storedirectory better perms
             // if needed on a dedicated server..
             $oldumask = umask(0);
+            print_r($dest);
             mkdir($dest, 0775, true);
             umask($oldumask);  
         }
