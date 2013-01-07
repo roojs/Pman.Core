@@ -241,7 +241,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($this->id) {
             $this->beforeDelete();
         }
-        if ( empty($this->ontable) && $this->ontable !== false) {
+        if ( empty($this->ontable)) {
             $this->err = "Missing  ontable";
             return false;
         }
