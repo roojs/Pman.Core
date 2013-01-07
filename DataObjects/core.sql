@@ -211,6 +211,8 @@ ALTER TABLE Person ADD COLUMN url_blog VARCHAR(256) NULL ;
 ALTER TABLE Person ADD COLUMN url_twitter VARCHAR(256) NULL ;
 ALTER TABLE Person ADD COLUMN url_linkedin VARCHAR(256) NULL ;
 
+ALTER TABLE Person ADD COLUMN   phone_mobile varchar(32)  NOT NULL  DEFAULT '';
+ALTER TABLE Person ADD COLUMN   phone_direct varchar(32)  NOT NULL  DEFAULT '';
 
 
 # old mysql
