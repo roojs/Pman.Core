@@ -38,6 +38,10 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             $officeIds = $p->fetchAll('office_id');
             $this->whereAddIn('Office.id', $officeIds, 'INT', 'AND');
             
+            $this->whereAdd("
+                    Office.id = $officeIds
+                ");
+            
             $this->joinAddCountryWithPerson();
         }
     }
