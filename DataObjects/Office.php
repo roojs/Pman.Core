@@ -42,8 +42,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
 //                    Office.id = $id
 //                ");
 //            }
-            //$this->selectAdd();
-            //$this->selectAdd("DISTINCT(country) as country");
+            $this->selectAdd();
+            $this->selectAdd("DISTINCT(country) as country");
             $this->joinAddCountryWithPerson();
         }
     }
