@@ -51,7 +51,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
                 (join_country.lkey = Office.country AND join_country.inlang = 'en')
             GROUP BY
                 Office.country
-                AND
+                WHERE
                 Office.id IN (2,6)
         ";
         $item = DB_DataObject::Factory('I18n');
