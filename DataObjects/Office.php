@@ -30,7 +30,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         //$this->joinAddCountry();
         $tn = $this->tableName();
         //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
-        
+        $p = DB_DataObject::factory('Person');
+        $p->whereAdd("id > 0");
         $this->whereAdd("
                 {$tn}.id = (SELECT DISTINCT(office_id) FROM Person WHERE Person.office_id > 0)
             ");
