@@ -28,8 +28,6 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     {
         //DB_DataObject::debugLevel(1);
         
-        $tn = $this->tableName();
-        //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
         if(!empty($q['_join_country_with_person'])){
             $this->joinAddCountry();
         }
