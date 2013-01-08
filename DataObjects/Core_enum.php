@@ -35,13 +35,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     core_enum.name NOT IN ('$name')
                 ");
             }
-            
-            //$this->whereAddIn('name', $names, 'string', 'NOT');
-            
-            //print_r(11);
         }
-        
-        
     }
     
     function onUpdate($old, $req)
