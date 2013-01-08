@@ -33,7 +33,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $this->whereAdd("
                     name NOT IN ({$q['!name']})
                 ");
-            $this->whereAddIn('name', $names, 'string', 'NOT');
+            //$this->whereAddIn('name', $names, 'string', 'NOT');
             
             //print_r(11);
         }
