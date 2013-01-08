@@ -29,12 +29,11 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         //DB_DataObject::debugLevel(1);
         
         if(!empty($q['_join_country_with_person'])){
-            $this->joinAddCountry();
+            $this->joinAddCountryWithPerson();
         }
-
     }
     
-    function joinAddCountry()
+    function joinAddCountryWithPerson()
     {
         $this->_join .= "
             LEFT JOIN
