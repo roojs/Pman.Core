@@ -26,7 +26,18 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     ###END_AUTOCODE
     function applyFilters($q, $au)
     {
-        $this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
+        
+        $this->joinAddCountry();
+        $tn = $this->tableName();
+        //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
+        
+        $this->whereAdd("
+                {$tn}.id = (SELECT DISTINCT(office_id) FROM Person WHERE Person.office_id > 0)
+            ");
+        
+//        $this->selectAdd("
+//                SELECT DISTINCT(office_id) FROM Person WHERE Person.office_id > 0
+//            ");
     }
     
     function joinAddCountry()
