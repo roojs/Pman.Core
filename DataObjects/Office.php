@@ -31,7 +31,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         $tn = $this->tableName();
         //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
         $p = DB_DataObject::factory('Person');
-        $p->whereAdd("DISTINECT(Person.office_id) > 0");
+        $p->whereAdd("Person.office_id > 0");
+        $p->selectAdd("DISTINECT(Person.office_id)");
         $officeIds = $p->fetchAll('office_id');
         $this->whereAddIn('id', $officeIds, 'INT');
         
