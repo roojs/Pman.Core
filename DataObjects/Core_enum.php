@@ -28,6 +28,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $this->whereAdd("etype = ''");
         }
         
+        if(!empty($q['!name'])){
+            print_r(11);
+        }
         
         
     }
