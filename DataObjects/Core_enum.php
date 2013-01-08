@@ -30,7 +30,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
         if(!empty($q['!name'])){
             $names = explode($q['!name']);
-            $this->whereAddIn('name', $names, 'string');
+            $this->whereAddIn('name', $names, 'string', 'NOT');
+            
             //print_r(11);
         }
         
