@@ -56,7 +56,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             ON
                 (join_country.lkey = Office.country)
             WHERE
-                join_country.inlang = 'en'
+                (join_country.inlang = 'en')
         ";
         $item = DB_DataObject::Factory('I18n');
         $this->selectAs($item, 'country_id_%s', 'join_country');
