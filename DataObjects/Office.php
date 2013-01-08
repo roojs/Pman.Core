@@ -26,7 +26,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     ###END_AUTOCODE
     function applyFilters($q, $au)
     {
-        
+        DB_DataObject::debugLevel(1);
         //$this->joinAddCountry();
         $tn = $this->tableName();
         //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
