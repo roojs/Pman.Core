@@ -36,7 +36,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             $p->selectAdd();
             $p->selectAdd("DISTINCT(office_id) as office_id");
             $officeIds = $p->fetchAll('office_id');
-            //$this->whereAddIn('Office.id', $officeIds, 'INT');
+            $this->whereAddIn('Office.id', $officeIds, 'INT');
+            
             $this->joinAddCountryWithPerson();
         }
     }
