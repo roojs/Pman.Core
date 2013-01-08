@@ -52,6 +52,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
                 Office.country
         ";
         $item = DB_DataObject::Factory('I18n');
+        $this->selectAs();
         $this->selectAs($item, 'country_id_%s', 'join_country');
     }
     function toEventString() {
