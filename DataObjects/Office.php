@@ -26,7 +26,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     ###END_AUTOCODE
     function applyFilters($q, $au)
     {
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         
         if(!empty($q['_join_country_with_person'])){
             $tn = $this->tableName();
