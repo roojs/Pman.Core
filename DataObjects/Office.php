@@ -30,20 +30,15 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         
         if(!empty($q['_join_country_with_person'])){
             $tn = $this->tableName();
-            //$this->selectAdd(" i18n_translate('c' , 'CN', 'en') as country_name");
+            
             $p = DB_DataObject::factory('Person');
             $p->whereAdd("office_id > 0");
             $p->selectAdd();
             $p->selectAdd("DISTINCT(office_id) as office_id");
             $officeIds = $p->fetchAll('office_id');
-            $this->whereAddIn('Office.id', $officeIds, 'INT');
-//            foreach($officeIds as $id){
-//                $this->whereAdd("
-//                    Office.id = $id
-//                ");
-//            }
+            $this->whereAddIn($tn.'.id', $officeIds, 'INT');
             $this->selectAdd();
-            $this->selectAdd("DISTINCT(Office.country) as country");
+            $this->selectAdd("DISTINCT({$tn}.country) as country");
             $this->joinAddCountryWithPerson();
         }
     }
