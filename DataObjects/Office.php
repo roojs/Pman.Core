@@ -36,7 +36,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         $p->selectAdd("DISTINCT(office_id) as office_id");
         $officeIds = $p->fetchAll('office_id');
         $this->whereAddIn("$tn.id", $officeIds, 'INT');
-        $this->selectAdd("DISTINCT(country) as country");
+        //$this->selectAdd("DISTINCT(country) as country");
         $this->joinAddCountry();
         //$this->selectAdd("DISTINCT(id)");
         
@@ -56,6 +56,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
                 i18n AS join_country
             ON
                 (join_country.lkey = Office.country AND join_country.inlang = 'en')
+                GROUP BY joincountry.lkey
         ";
         $item = DB_DataObject::Factory('I18n');
         $this->selectAs($item, 'country_id_%s', 'join_country');
