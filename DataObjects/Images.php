@@ -74,6 +74,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->loadMap($r);
             $r->limit(1);
             $r->find(true);
+            print_r($r->URL(-1,'/Images'));
             $roo->jok($r->toArray());
         }
         
