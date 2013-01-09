@@ -32,7 +32,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
 //            $tn = $this->tableName();
 ////            $this->selectAdd();
 //            $this->selectAdd(" i18n_translate('c' , Office.country, 'en') as office_id_country_name");
-//            $this->_extra_col = array('office_country_name');
+            $this->_extra_col = array('office_country_name');
 //            $this->_distinct= 'office_id_country&cols=office_id_country,office_id_country_name';
             //then the query should be _distinct=office_id_country&cols=office_id_country,office_id_country_name
 //            $p = DB_DataObject::factory('Person');
