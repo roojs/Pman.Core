@@ -57,7 +57,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeInsert($q, $roo) 
     {
         if (isset($q['_remote_upload'])) {
-            $fn = $this->remoteUpload($roo, $q['_remote_upload']);
+            //$fn = $this->remoteUpload($roo, $q['_remote_upload']);
+            
+            // load the file..
             $this->createFrom($fn);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
