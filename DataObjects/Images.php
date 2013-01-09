@@ -61,6 +61,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             // load the file..
             $fn = file_get_contents($q['_remote_upload']);
+            $this->setFrom(array(
+                'onid' => $q['onid'],
+                'ontable' => $q['ontable']
+            ));
             $this->createFrom($fn);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
