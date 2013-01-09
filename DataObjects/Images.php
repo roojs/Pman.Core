@@ -118,7 +118,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (empty($this->filename)) {
             $this->filename = basename($filename);
         }
-        print_r($this);
+        
         //DB_DataObject::debugLevel(1);
         if (!$this->id) {
             $this->insert();
