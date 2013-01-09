@@ -57,11 +57,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeInsert($q, $roo) 
     {
         if (isset($q['_remote_upload'])) {
-            //$fn = $this->remoteUpload($roo, $q['_remote_upload']);
-            
-            // load the file..
-            $fn = file_get_contents($q['_remote_upload']);
-            $this->createFrom($fn);
+            require_once 'System.php';
+            $tmpdir  = System::mktemp("-d remote_upload");
+            $imageInfo = getimagesize($q['_remote_upload']);
+            $ext = explode('/', $imageInfo['mime']);
+            $path = $tmpdir . '/' . time() . '.' . $ext[1];
+            if(!file_exists($path)){
+               file_put_contents($path, file_get_contents($q['_remote_upload'])); 
+            }
+            $this->createFrom($path);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
         
