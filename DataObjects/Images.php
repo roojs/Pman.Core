@@ -64,7 +64,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
             #attachment-'.  $r->id
-            $path = $tmpdir . '/' . time() . '#attachment. ' . $ext;
+            $path = $tmpdir . '/' . time() . '#attachment.' . $ext;
             print_r($path);
             exit;
             if(!file_exists($path)){
