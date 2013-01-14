@@ -85,7 +85,7 @@ class Pman_Core_Mailer {
         
         $content->HTTP_HOST = $http_host;
         
-        print_r($content);exit;
+        
         
         // this should be done by having multiple template sources...!!!
         
@@ -123,7 +123,7 @@ class Pman_Core_Mailer {
         $mailtext = $template->bufferedOutputObject($content);
         
         
-        
+        print_r($mailtext);exit;
         
         
         //echo "<PRE>";print_R($mailtext);
