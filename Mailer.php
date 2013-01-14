@@ -69,7 +69,7 @@ class Pman_Core_Mailer {
         $args = $this->contents;
         
         $content  = clone($this->page);
-        
+        print_r($content);
         foreach((array)$args as $k=>$v) {
             $content->$k = $v;
         }
