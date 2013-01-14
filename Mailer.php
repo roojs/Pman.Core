@@ -177,7 +177,7 @@ class Pman_Core_Mailer {
         
         }
         
-        
+        print_r($parts);exit;
         
        // list($recipents,$headers,$body) = $parts;
         return array(
