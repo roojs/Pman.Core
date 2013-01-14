@@ -124,11 +124,6 @@ class Pman_Core_Mailer {
         $mailtext = $template->bufferedOutputObject($content);
         
         
-        print_r($mailtext);exit;
-        
-        
-        
-        
         
         
         
