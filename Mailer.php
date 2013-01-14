@@ -113,7 +113,6 @@ class Pman_Core_Mailer {
             
               
         }
-        print_r($content);exit;
         $tmp_opts['nonHTML'] = true;
         
         $template = new HTML_Template_Flexy(  $tmp_opts );
