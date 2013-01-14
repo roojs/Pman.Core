@@ -124,7 +124,7 @@ class Pman_Core_Mailer {
         $mailtext = $template->bufferedOutputObject($content);
         
         
-        
+        print_r($mailtext);
         
         
         
@@ -172,13 +172,10 @@ class Pman_Core_Mailer {
                     $cdata['contentid']
                 );
             }
-            print_r($parts);exit;
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         
         }
-        
-        //print_r($parts);exit;
         
        // list($recipents,$headers,$body) = $parts;
         return array(
