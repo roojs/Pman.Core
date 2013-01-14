@@ -64,7 +64,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
             #attachment-'.  $r->id
-            $path = $tmpdir . '/' . time() . '#attachment.' . $ext;
+            $path = $tmpdir . '/' . time() . '.' . $ext;
             if(!file_exists($path)){
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
