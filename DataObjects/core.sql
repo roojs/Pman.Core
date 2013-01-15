@@ -296,7 +296,7 @@ ALTER TABLE Images    ALTER COLUMN   mimetype mimetype  varchar(128) NOT NULL de
 
 ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
-
+ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid);
  
 #// old core image type - merged into enum.
 DROP TABLE core_image_type;
