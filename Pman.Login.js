@@ -105,8 +105,8 @@ Pman.Login =  new Roo.util.Observable({
             return;
         }
         this.sending = true;
-        
-        Roo.Ajax.request({  
+        var c = new Roo.data.Connection();
+        c.request({
             url: baseURL + '/Login.js',  
             params: {
                 getAuthUser: true
