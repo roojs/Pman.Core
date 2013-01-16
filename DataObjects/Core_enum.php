@@ -153,13 +153,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function initEnums($data = false, $base = array())
+    function initEnums($data, $base = array())
     {
         
-        if ($data === false) {
-            $this->initEnums($this->baseEnums());
-            return;
-        }
+         
         $seq_id = 0;
         if (!empty($base['etype'])) {
             $seq_id = 1;
