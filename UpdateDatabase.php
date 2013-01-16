@@ -41,7 +41,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function get()
     {
         $this->importSQL();
-        $this->runUpdateDatabaseModules();
+        $this->runUpdateModulesData();
          
     }
     function output() {
@@ -67,7 +67,9 @@ class Pman_Core_UpdateDatabase extends Pman
      * mysql - does not support conversions.
      * 
      *
-     */ 
+     */
+    
+    
     
     function importmysql($url)
     {
