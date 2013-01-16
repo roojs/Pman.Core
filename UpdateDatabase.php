@@ -15,7 +15,7 @@ require_once 'Pman.php';
 class Pman_Core_UpdateDatabase extends Pman
 {
     
-    static $cli_desc = "Update SQL - Beta";
+    static $cli_desc = "Update SQL - Beta (it will run updateData of all modules except core)";
  
  
     
@@ -286,23 +286,23 @@ class Pman_Core_UpdateDatabase extends Pman
         
         return $fn;
     }
+    
     function runUpdateModulesData()
     {
-        /*
-        foreach of the modules (except core)
-        
-        does {module}/UpdateDatabase.php exist
-        
-        require it.
-        
-        create an instance of it eg. $x = new ......
-        call $x->updateData();
-        
-          
+        $modules = $this->modulesList();
+        foreach ($modules as $module){
+            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
+            if($module == 'Core' || !file_exists($file)){
+                continue;
+            }
+            require_once $file;
+            $class = "Pman_{$module}_UpdateDatabase";
+            $x = new $class;
+            if(!method_exists($x, 'updateData')){
+                continue;
+            };
+            $x->updateData();
         }
-        */
-        
-        
                 
     }
     
@@ -323,13 +323,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     
                 )
             )
-        );  
-        
-        
-        
+        ); 
     }
-        
-         
     
     
 }
