@@ -64,6 +64,16 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if(!file_exists($path)){
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
+            
+            $imageInfo = getimagesize($path);
+            require_once 'File/MimeType.php';
+            $y = new File_MimeType();
+            $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
+            
+            if (!preg_match("/\." . $ext."$/", $path, $matches)) {
+                rename($path,$path.$ext);
+            }
+            
             $this->createFrom($path);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
