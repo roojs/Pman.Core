@@ -41,6 +41,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function get()
     {
         $this->importSQL();
+        $this->runUpdateDatabaseModules();
          
     }
     function output() {
@@ -283,6 +284,49 @@ class Pman_Core_UpdateDatabase extends Pman
         
         return $fn;
     }
+    function runUpdateModulesData()
+    {
+        $this->updateData();
+        /*
+        foreach of the modules (except core)
+        
+        does {module}/UpdateDatabase.php exist
+        
+        require it.
+        
+        
+          
+        }
+        */
+        
+        
                 
+    }
+    function updateData()
+    {
+        $enum = DB_DataObject::Factory('core_enum');
+        $enum->initEnums(
+            array(
+                'etype' => '',
+                'name' => 'COMPTYPE',
+                'display_name' =>  'Company Types',
+                'cn' => array(
+                    array(
+                        'name' => 'OWNER',
+                        'display_name' => 'Owner',
+                        'seqid' => 999, // last...
+                    )
+                    
+                )
+            )
+        ));  
+        
+        
+        
+    }
+        
+        
+    }
+    
     
 }
