@@ -286,7 +286,6 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     function runUpdateModulesData()
     {
-        $this->updateData();
         /*
         foreach of the modules (except core)
         
@@ -294,6 +293,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         require it.
         
+        create an instance of it eg. $x = new ......
+        call $x->updateData();
         
           
         }
@@ -302,6 +303,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
                 
     }
+    
     function updateData()
     {
         $enum = DB_DataObject::Factory('core_enum');
