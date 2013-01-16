@@ -173,8 +173,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             
             $t->setFrom($row);
             $t->setFrom($base);
+            unset($t->seqid); // these might have been changed
+            unset($t->displayName); // these might have been changed
             
-            if (!$t->find(true)) {
+            
+            if (!$t->find(true))
+            {
+                $t->setFrom($row);
+                $t->setFrom($base);
+            
                 if (!empty($base['etype']) && empty($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
