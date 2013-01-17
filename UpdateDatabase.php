@@ -15,7 +15,7 @@ require_once 'Pman.php';
 class Pman_Core_UpdateDatabase extends Pman
 {
     
-    static $cli_desc = "Update SQL - Beta (it will run updateData of all modules except core)";
+    static $cli_desc = "Update SQL - Beta (it will run updateData of all modules)";
  
  
     
@@ -289,6 +289,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function runUpdateModulesData()
     {
+        $this->updateData();
         $modules = $this->modulesList();
         foreach ($modules as $module){
             $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
