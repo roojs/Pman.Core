@@ -193,8 +193,8 @@ class Pman_Core_I18n extends Pman
             $ar[$lang]['m'] = $i->toTransList('m', $rlang);
         }
         //echo '<PRE>';print_r($ar);
-        header('Content-type: text/javascript');
-        echo 'Pman.I18n.Data = ' .  json_encode($ar);
+//        header('Content-type: text/javascript');
+//        echo 'Pman.I18n.Data = ' .  json_encode($ar);
         exit;
         
         
