@@ -179,6 +179,7 @@ class Pman_Core_SimpleExcel extends Pman
                     }
                   //  var_dump($v);
                 }
+                print_r('run');exit;
                 if (isset($col_cfg['renderer'])) {
                     $hasRender = true;
                     continue;
