@@ -77,6 +77,5 @@ class Pman_Core_JsonToExcel extends Pman
         $fc->serve('attachment','excel-'.date('Y-m-d-H-i-s').'.xls'); // can fix IE Mess
         unlink($outfile2); 
     }
-    
-    
+     
 }
