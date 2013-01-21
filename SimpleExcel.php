@@ -184,8 +184,9 @@ class Pman_Core_SimpleExcel extends Pman
                     $hasRender = true;
                     continue;
                 }
-                print_r('run');exit;
+                
                 $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
+                print_r('run');exit;
                 $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
                 
           //    echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c,$v), true));
