@@ -46,6 +46,15 @@ class Pman_Core_JsonToExcel extends Pman
         }
         $json = json_decode($_POST['_json']);
         
+        
+        require_once 'Spreadsheet/Excel/Writer.php';
+        // Creating a workbook
+        $outfile2 = $this->tempName('xls');
+       // var_dump($outfile2);
+        $workbook = new Spreadsheet_Excel_Writer($outfile2);
+        //$workbook = new Spreadsheet_Excel_Writer();
+        $workbook->setVersion(8);
+        // sending HTTP headers
         $worksheet =  $workbook->addWorksheet("Sheet 1");
         if (is_a($worksheet, 'PEAR_Error')) {
             die($worksheet->toString());
@@ -60,7 +69,7 @@ class Pman_Core_JsonToExcel extends Pman
             }
             
         }
-        
+         $workbook->close();
         
          
           
