@@ -99,7 +99,7 @@ class Pman_Core_SimpleExcel extends Pman
     function buildpage($workbook,  $formats , $data,$cfg)
     {
         //echo '<PRE>';        print_R($cfg);
-        print_r($cfg);exit;
+      //  print_r($cfg);exit;
         // Creating a worksheet
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
