@@ -51,7 +51,9 @@ class Pman_Core_JsonToExcel extends Pman
             die($worksheet->toString());
         }
         //print_R($worksheet);
-        $worksheet->setInputEncoding('UTF-8'); 
+        $worksheet->setInputEncoding('UTF-8');
+        
+        
          
           
     }
