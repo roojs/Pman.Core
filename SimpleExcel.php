@@ -239,8 +239,8 @@ class Pman_Core_SimpleExcel extends Pman
     {
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
-        $f = $fc->convert("application/vnd.ms-excel"); 
-        $fc->serve('attachment',$f); // can fix IE Mess
+        $fn = $fc->convert("application/vnd.ms-excel"); 
+        $fc->serve('attachment',$fn); // can fix IE Mess
     }
      
     
