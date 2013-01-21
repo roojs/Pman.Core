@@ -46,6 +46,13 @@ class Pman_Core_JsonToExcel extends Pman
         }
         $_json = $_POST['_json'];
         
+        $worksheet =  $workbook->addWorksheet($cfg['workbook']);
+        if (is_a($worksheet, 'PEAR_Error')) {
+            die($worksheet->toString());
+        }
+        //print_R($worksheet);
+        $worksheet->setInputEncoding('UTF-8'); 
+         
           
     }
     
