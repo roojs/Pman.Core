@@ -44,7 +44,7 @@ class Pman_Core_JsonToExcel extends Pman
             header("HTTP/1.0 400 Internal Server Error");
             die("Missing json attribute");
         }
-        $_json = $_POST['_json'];
+        $json = json_decode($_POST['_json']);
         
         $worksheet =  $workbook->addWorksheet("Sheet 1");
         if (is_a($worksheet, 'PEAR_Error')) {
@@ -52,6 +52,14 @@ class Pman_Core_JsonToExcel extends Pman
         }
         //print_R($worksheet);
         $worksheet->setInputEncoding('UTF-8');
+        
+        for ($r = 0; $r < count($json); $r++) {
+            $row = $json[$r];
+            for ($c = 0; $c < count($row); $c++) {
+                $worksheet->write($r, $c, $row[$c]);
+            }
+            
+        }
         
         
          
