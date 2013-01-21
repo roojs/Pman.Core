@@ -71,7 +71,10 @@ class Pman_Core_JsonToExcel extends Pman
         }
          $workbook->close();
         
-         
+        require_once 'File/Convert.php';
+        $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
+        $fn = $fc->convert("application/vnd.ms-excel"); 
+        $fc->serve('attachment',$fn); // can fix IE Mess
           
     }
     
