@@ -40,9 +40,9 @@ class Pman_Core_JsonToExcel extends Pman
             die(  $ml ? "Suhosin Patch enabled - try and disable it!!!" : 'no JSON sent');
         }
         
-        if (empty($_POST['xml'])) {
+        if (empty($_POST['_json'])) {
             header("HTTP/1.0 400 Internal Server Error");
-            die("Missing XML attribute");
+            die("Missing json attribute");
         }
         $xml = $_POST['xml'];
         
