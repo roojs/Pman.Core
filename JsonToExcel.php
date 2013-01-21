@@ -34,8 +34,8 @@ class Pman_Core_JsonToExcel extends Pman
     }
     function post($fname) {
         
-          $ml = (int) ini_get('suhosin.post.max_value_length');
-        if (empty($_POST['xml'])) {
+        $ml = (int) ini_get('suhosin.post.max_value_length');
+        if (empty($_POST['_json'])) {
             header("HTTP/1.0 400 Internal Server Error");
             die(  $ml ? "Suhosin Patch enabled - try and disable it!!!" : 'no XML sent');
         }
