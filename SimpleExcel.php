@@ -146,13 +146,13 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
-            print_r($col_cfg['header']);
+            
             
             
             $worksheet->write($start_row, $c, $col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
-        }exit;
+        }
         $start_row++;
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
