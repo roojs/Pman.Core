@@ -158,6 +158,7 @@ class Pman_Core_SimpleExcel extends Pman
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$clo) {
             print_r($clo);exit;
+            print_r($r);exit;
             $cl = $clo;
             if (is_object($clo)) {
                 $cl = (array)$clo; // lossless converstion..
