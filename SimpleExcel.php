@@ -146,7 +146,7 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
-            print_r($col_cfg);
+            print_r($col_cfg['header']);
             
             
             $worksheet->write($start_row, $c, $col_cfg['header']);
