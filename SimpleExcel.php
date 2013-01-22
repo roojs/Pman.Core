@@ -167,6 +167,7 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
+                print_r($col_cfg['format']);
                 $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
                 if (empty($cl[$col_cfg['dataIndex']])) {
                     continue;
