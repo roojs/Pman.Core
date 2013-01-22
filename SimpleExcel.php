@@ -150,7 +150,7 @@ class Pman_Core_SimpleExcel extends Pman
             print_r($start_row);
             print_r('<br/>');
             print_r($c);
-            
+            print_r('<br/>');
             $worksheet->write($start_row, $c, $col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
