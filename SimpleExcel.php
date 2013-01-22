@@ -167,7 +167,6 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
-                print_r($col_cfg['format']);exit;
                 $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
                 if (empty($cl[$col_cfg['dataIndex']])) {
                     continue;
@@ -187,7 +186,7 @@ class Pman_Core_SimpleExcel extends Pman
                 
                 $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
                 $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
-                
+                print_r($format);exit;
           //    echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c,$v), true));
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
