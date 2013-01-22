@@ -27,7 +27,8 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     function applyFilters($q, $au)
     {
         //DB_DataObject::debugLevel(1);
-        $this->selectAdd("   i18n_translate('c' , Office.country, 'en') as office_id_country_name");
+        $tn  = $this->tableName();
+        $this->selectAdd("   i18n_translate('c' , {$tn }.country, 'en') as office_id_country_name");
     }
     
     function joinAddCountryWithPerson()
