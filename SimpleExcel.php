@@ -155,6 +155,7 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
         }
+        exit;
         $start_row++;
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
