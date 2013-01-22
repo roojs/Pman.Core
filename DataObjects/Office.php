@@ -31,17 +31,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         $this->selectAdd("   i18n_translate('c' , {$tn }.country, 'en') as office_id_country_name");
     }
     
-    function joinAddCountryWithPerson()
-    {
-        $this->_join .= "
-            LEFT JOIN
-                i18n AS join_country
-            ON
-                (join_country.lkey = Office.country AND join_country.inlang = 'en')
-        ";
-        $item = DB_DataObject::Factory('I18n');
-        $this->selectAs($item, 'country_id_%s', 'join_country');
-    }
+    
     function toEventString() {
         return $this->name;
     }
