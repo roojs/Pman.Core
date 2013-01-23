@@ -180,17 +180,8 @@ class Pman_Core_SimpleExcel extends Pman
                 
                 $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
                 
-                $format = false;
-                if(isset($col_cfg['format'])){
-                    $format = $formats[$col_cfg['format']];
-                }
-                if(isset($data['color'])){
-                    if($format === false){
-                        $format = $formats[$data['color']];
-                    }else{
-                        $format = array_merge($format,$formats[$data['color']]);
-                    }
-                }
+                $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
+                
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
