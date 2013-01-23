@@ -161,11 +161,16 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
-                $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
-                if (empty($cl[$col_cfg['dataIndex']])) {
+                if(isset($cl[$col_cfg['dataIndex']])){
+                    $v = $cl[$col_cfg['dataIndex']];
+                }else{
                     if(isset($col_cfg['fillBlank'])){
                         $worksheet->write($start_row+$r, $c, '', $formats[$col_cfg['fillBlank']]);
                     }
+                    continue;
+                }
+                
+                if (empty($cl[$col_cfg['dataIndex']])) {
                     continue;
                 }
                 if (isset($col_cfg['txtrenderer'])) {
