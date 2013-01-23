@@ -186,9 +186,9 @@ class Pman_Core_SimpleExcel extends Pman
                 }
                 if(isset($data['color'])){
                     if($format === false){
-                        $format = $data['color'];
+                        $format = $formats[$data['color']];
                     }else{
-                        $format = array_merge($format,$data['color']);
+                        $format = array_merge($format,$formats[$data['color']]);
                     }
                 }
                 $worksheet->write($start_row+$r, $c, $v, $format);
