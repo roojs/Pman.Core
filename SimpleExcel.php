@@ -78,7 +78,7 @@ class Pman_Core_SimpleExcel extends Pman
             
         }
          
-         
+         print_r($data);exit;
          
         
         
