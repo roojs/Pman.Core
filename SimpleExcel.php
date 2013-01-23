@@ -157,7 +157,7 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             if (isset($cfg['row_height'])) {
-                $worksheet->setRow($start_row +$r, $cfg['row_height'],$formats['gray']);
+                $worksheet->setRow($start_row +$r, $cfg['row_height']);
             }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
