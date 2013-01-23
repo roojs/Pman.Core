@@ -146,6 +146,7 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
+            
             $worksheet->write($start_row, $c, $col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
              
@@ -153,7 +154,6 @@ class Pman_Core_SimpleExcel extends Pman
         $start_row++;
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
-           print_r($data);exit;
         foreach($data as $r=>$clo) {
             $cl = $clo;
             if (is_object($clo)) {
