@@ -25,7 +25,9 @@
                 'header'=> "Thumbnail",
                 'dataIndex'=> 'id',
                 'width'=>  75,
-                'renderer' => array($this, 'getThumb')
+                'renderer' => array($this, 'getThumb'),
+ *              'color' => 'yellow', // set color for the cell which is a header element
+ *              'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
         
         // if this is set then it will add a tab foreach one.
@@ -161,6 +163,7 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             foreach($cfg['cols']  as $c=>$col_cfg) {
+                
                 if(isset($cl[$col_cfg['dataIndex']])){
                     $v = $cl[$col_cfg['dataIndex']];
                 }else{
