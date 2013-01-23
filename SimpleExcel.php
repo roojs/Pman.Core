@@ -77,10 +77,6 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
         }
-         
-         print_r($data);exit;
-         
-        
         
         $workbook->close();
         $this->outfile2 = $outfile2;
@@ -183,9 +179,18 @@ class Pman_Core_SimpleExcel extends Pman
                 }
                 
                 $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
-                $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
                 
-          //    echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c,$v), true));
+                $format = false;
+                if(isset($col_cfg['format'])){
+                    $format = $formats[$col_cfg['format']];
+                }
+                if(isset($data['color'])){
+                    if($format === false){
+                        $format = $data['color'];
+                    }else{
+                        $format = array_merge($format,$data['color']);
+                    }
+                }
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
