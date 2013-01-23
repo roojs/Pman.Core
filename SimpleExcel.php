@@ -159,12 +159,12 @@ class Pman_Core_SimpleExcel extends Pman
             if (isset($cfg['row_height'])) {
                 $worksheet->setRow($start_row +$r, $cfg['row_height']);
             }
-            print_r($col_cfg);exit;
+            
             foreach($cfg['cols']  as $c=>$col_cfg) {
                 $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
                 if (empty($cl[$col_cfg['dataIndex']])) {
-                    if(isset($cl['fillBlank'])){
-                        $worksheet->write($start_row+$r, $c, '', $formats[$cl['fillBlank']]);
+                    if(isset($col_cfg['fillBlank'])){
+                        $worksheet->write($start_row+$r, $c, '', $formats[$col_cfg['fillBlank']]);
                     }
                     continue;
                 }
