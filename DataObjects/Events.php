@@ -288,7 +288,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->action = $act;
         $this->on_table = $obj ? $obj->tableName() : '';
         $pk = $obj ? $obj->keys()  : false;
-        print_r($obj);exit;
         $this->on_id  = $obj && $pk ? $obj->{$pk[0]}: 0;
         $rem  = array();
         // should this really go in remarks? - 
