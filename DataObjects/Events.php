@@ -35,7 +35,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au ,$roo)
     {
-     
+        DB_DataObject::debugLevel(1);
         $tn = $this->tableName();
         // if not empty on_table
         if(!empty($q['person_table'])){
