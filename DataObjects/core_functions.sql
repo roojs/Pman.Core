@@ -16,7 +16,7 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS i18n_translate_with_title;
 DELIMITER $$
-CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inlang varchar(8), in_lval VARCHAR(64)) 
+CREATE FUNCTION i18n_translate_with_title(in_ltype  varchar(1) , in_lkey varchar(8), in_inlang varchar(8), in_lval VARCHAR(64)) 
         RETURNS VARCHAR(64) DETERMINISTIC
     BEGIN
         DECLARE ret  VARCHAR(64);
