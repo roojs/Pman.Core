@@ -14,28 +14,6 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
     END $$
 DELIMITER ;
 
-DROP FUNCTION IF EXISTS i18n_translate_with_title;
-DELIMITER $$
-CREATE FUNCTION i18n_translate_with_title(in_ltype  varchar(1) , in_lkey varchar(8), in_inlang varchar(8), in_lval VARCHAR(64)) 
-        RETURNS VARCHAR(64) DETERMINISTIC
-    BEGIN
-        DECLARE ret  VARCHAR(64);
-        SET ret  = '';
-        SELECT lval INTO ret FROM i18n
-            WHERE
-                ltype=in_ltype
-            AND
-                lkey=in_lkey
-            AND
-                inlang=in_inlang
-            AND
-                lval LIKE '%in_val%'
-            LIMIT 1;
-        RETURN ret;
-        
-    END $$
-DELIMITER ;
-
 DROP FUNCTION IF EXISTS core_enum_seqmax_update;
 DELIMITER $$
 CREATE FUNCTION core_enum_seqmax_update( in_etype varchar(128))
