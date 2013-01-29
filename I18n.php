@@ -292,9 +292,10 @@ class Pman_Core_I18n extends Pman
             if (!strlen($f)) {
                 $target = dirname(__FILE__).'/eurofxref-daily.xml';
                 
-                return false;
+                
+            } else {
+                file_put_contents($target,$f);
             }
-            file_put_contents($target,$f);
         } 
         $dom = simplexml_load_file($target);
         $this->rates['EUR'] = 1.0;
