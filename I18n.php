@@ -287,6 +287,7 @@ class Pman_Core_I18n extends Pman
         }
         $target = ini_get('session.save_path').'/eurofxref-daily.xml';
         if (!file_exists($target) || filemtime($target) < (time() - 60*60*24)) {
+            // this may fail...
             $f = @file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
             if (!strlen($f)) {
                 return false;
