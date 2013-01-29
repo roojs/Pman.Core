@@ -290,6 +290,8 @@ class Pman_Core_I18n extends Pman
             // this may fail...
             $f = @file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
             if (!strlen($f)) {
+                $target = dirname(__FILE__).'eurofxref-daily.xml';
+                
                 return false;
             }
             file_put_contents($target,$f);
