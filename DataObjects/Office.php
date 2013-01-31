@@ -41,5 +41,13 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     function checkPerm($lvl, $au) 
     {
         return $au->hasPerm("Core.Offices", $lvl);    
-    } 
+    }
+    
+    function company()
+    {
+        $c = DB_DataObject::Factory('Companies');
+        $c->get($this->company_id);
+        return $c;
+        
+    }
 }
