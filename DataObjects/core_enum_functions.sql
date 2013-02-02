@@ -1,4 +1,7 @@
 
+
+-- also update the pgsql version of these!?
+
 DROP FUNCTION IF EXISTS core_enum_display_name;
 DELIMITER $$
 CREATE FUNCTION core_enum_display_name(in_id INT(11))
@@ -11,6 +14,10 @@ CREATE FUNCTION core_enum_display_name(in_id INT(11))
         RETURN ret;
     END $$
 DELIMITER ;
+
+
+
+
 
 DROP FUNCTION IF EXISTS core_enum_name;
 DELIMITER $$
