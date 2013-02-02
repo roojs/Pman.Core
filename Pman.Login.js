@@ -36,6 +36,8 @@ Pman.Login =  new Roo.util.Observable({
     versionWarn: false,
     sending : false,
     
+    checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
+    
     onLoad : function() // called on page load...
     {
         // load 
@@ -105,8 +107,10 @@ Pman.Login =  new Roo.util.Observable({
             return;
         }
         this.sending = true;
-        var c = new Roo.data.Connection();
-        c.request({
+        if (!this.checkConnection) {
+            this.checkConnection = new Roo.data.Connection();
+        }
+        this.checkConnection.request({
             url: baseURL + '/Login.js',  
             params: {
                 getAuthUser: true
