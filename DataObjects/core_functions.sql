@@ -12,7 +12,7 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         SELECT id, lval  INTO v_id, ret FROM i18n
             WHERE ltype=in_ltype AND lkey=in_lkey and inlang=in_inlang LIMIT 1;
 
-        IF id > 0 THEN 
+        IF v_id  > 0 THEN 
             RETURN ret;
         END IF;
 
@@ -21,7 +21,7 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         SELECT id, lval  INTO v_id, ret FROM i18n
             WHERE ltype=in_ltype AND lkey=in_lkey and inlang='en' LIMIT 1;
 
-        IF id > 0 THEN 
+        IF v_id > 0 THEN 
             RETURN ret;
         END IF;
         
