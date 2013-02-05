@@ -6,16 +6,16 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         RETURNS VARCHAR(64) DETERMINISTIC
     BEGIN
         DECLARE ret  VARCHAR(64);
-        DECLARE v_id INTEGER
+--         DECLARE v_id INTEGER
         SET ret  = '';
-        SET v_id = 0;
+--         SET v_id = 0;
         SELECT lval, id  INTO ret ,v_id FROM i18n
             WHERE ltype=in_ltype AND lkey=in_lkey and inlang=in_inlang LIMIT 1;
 
         IF NOT FOUND THEN
             
         END IF;
-        --if (v_id < 1) THEN
+--         if (v_id < 1) THEN
         
 
 
