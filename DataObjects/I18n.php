@@ -323,7 +323,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 $ret.= '('.$tolang[1].')'; 
             }
         }
-        print_r($orig_lang);
+        
         if ($orig_lang == 'zh_HK') {
             // then translation is by default in simplified.
             $ret = iconv('UTF-8', 'GB', $ret);
