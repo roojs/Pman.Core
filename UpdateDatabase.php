@@ -309,6 +309,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateData()
     {
+        // fill i18n data..
+        
         $enum = DB_DataObject::Factory('core_enum');
         $enum->initEnums(
             array(
