@@ -6,11 +6,27 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         RETURNS VARCHAR(64) DETERMINISTIC
     BEGIN
         DECLARE ret  VARCHAR(64);
+        DECLARE v_id INTEGER;
         SET ret  = '';
-        SELECT CASE in_inlang WHEN 'zh_TW' THEN 'zh_HK' ELSE 'en' END;
-        SELECT lval  INTO ret FROM i18n
+        SET id = 0;
+        SELECT id, lval  INTO v_id, ret FROM i18n
             WHERE ltype=in_ltype AND lkey=in_lkey and inlang=in_inlang LIMIT 1;
-        RETURN ret;
+
+        IF id > 0 THEN 
+            RETURN ret;
+        END IF;
+
+        -- we do not have it  - return the english.
+        
+        SELECT id, lval  INTO v_id, ret FROM i18n
+            WHERE ltype=in_ltype AND lkey=in_lkey and inlang='en' LIMIT 1;
+
+        IF id > 0 THEN 
+            RETURN ret;
+        END IF;
+        
+
+        RETURN '??';
         
     END $$
 DELIMITER ;
