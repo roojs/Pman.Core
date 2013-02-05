@@ -333,6 +333,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             
             $ret = iconv('BIG5', 'UTF-8', $ret);
             print_r($ret);
+            exit;
         }
         
         
