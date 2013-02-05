@@ -292,7 +292,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         //$lbits = explode('_', strtoupper($lang));
         $lbits = explode('_', $lang);
-         
+        $orig_lang = $lang;
         $lang = $lbits[0];
         
         if (!isset($cache[$lang])) {
@@ -312,6 +312,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
         $ret = $cache[$lang][$type]->getName($k);
         
+        // for languages if we get zh_HK then we write out Chinese ( HK )
+        
+        
         if ($type == 'l') {
             $tolang = explode('_', $k);
             
@@ -320,6 +323,19 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 $ret.= '('.$tolang[1].')'; 
             }
         }
+        if ($orig_lang == 'zh_HK') {
+            // then translation is by default in simplified.
+            iconv
+            $ret = iconv('UTF-8', 'GB', $ret);
+            $ret = iconv('GB', 'BIG5', $ret);
+            $ret = iconv('BIG5', 'UTF-8', $ret);
+            C
+            
+            
+        }
+        
+        
+        
         // our wierd countries/langs etc..
         if (isset($cfg['add_' . $type][$k])) {
             return $cfg['add_' . $type][$k];
