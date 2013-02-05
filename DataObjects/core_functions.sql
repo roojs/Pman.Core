@@ -8,12 +8,14 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         DECLARE ret  VARCHAR(64);
 --         DECLARE v_id INTEGER
         SET ret  = '';
+        SELECT CASE inlang WHEN in_inlang='zh_TW' THEN in_inlang='zh_HK' END
+        FROM i18n;
 --         SET v_id = 0;
         SELECT lval  INTO ret FROM i18n
             WHERE ltype=in_ltype AND lkey=in_lkey and inlang=in_inlang LIMIT 1;
 
         IF NOT FOUND THEN
-            
+            SELECT CASE WHEN in_inlang='zh_TW' THEN 'zh_HK'
         END IF;
 --         if (v_id < 1) THEN
         
