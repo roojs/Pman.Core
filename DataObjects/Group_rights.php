@@ -34,6 +34,19 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
     
     var $fullRights = "ADESPIM";
     
+    
+    function groupsWithRights($rightname, $right)
+    {
+        $t = clone($this);
+        $t->rightname = $rightname;
+        $t->whereAdd("accessmask like '{$this->escape($right)}'");
+        $t->selectAdd();
+        $t->selectAdd('distinct(group_id) as group_id');
+        return $t->fetchAll('group_id');
+         
+    }
+    
+    
     function listPermsFromGroupIds($grps, $isAdmin=false, $isOwner = false) {
         
         $t = clone($this);
