@@ -98,6 +98,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     function fetchAllByType($etype, $fetchArg1=false, $fetchArg2=false, $fetchArg3=false)
     {
         $x = DB_DataObject::factory('core_enum');
+        $x->etype = $etype;
         $x->active = 1;
         return $x->fetchAll($fetchArg1, $fetchArg2, $fetchArg3);
     }
