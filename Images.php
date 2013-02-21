@@ -240,7 +240,10 @@ class Pman_Core_Images extends Pman
         
         if (!file_exists($fn)) {
             $fn = $img->getStoreName()  . '.'. $this->size . '.'. $img->fileExt();
-            $this->as_mimetype = $img->mimetype;
+            // if it's an image, convert into the same type for thumnail..
+            if (preg_match('#^image/#', $img->mimetype)) {
+               $this->as_mimetype = $img->mimetype;
+            }
         }
         
         if (!file_exists($fn)) {            
