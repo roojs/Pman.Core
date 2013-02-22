@@ -226,7 +226,7 @@ class Pman_Core_SimpleExcel extends Pman
         $formats    = $this->formats;
         $worksheet  = $this->worksheet;
         
-        print_R($cfg);exit;
+        
         
         $hasRender   = false;
         $r = 0;
@@ -270,7 +270,7 @@ class Pman_Core_SimpleExcel extends Pman
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
             $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
-            
+            print_R(array($start_row+$r, $c, $v, $format));exit;
             $worksheet->write($start_row+$r, $c, $v, $format);
         }
         $this->start_row++;
