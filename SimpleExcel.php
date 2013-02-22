@@ -170,48 +170,9 @@ class Pman_Core_SimpleExcel extends Pman
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$clo) {
-            $cl = $clo;
-            if (is_object($clo)) {
-                $cl = (array)$clo; // lossless converstion..
-            }
             
-            if (isset($cfg['row_height'])) {
-                $worksheet->setRow($start_row +$r, $cfg['row_height']);
-            }
-            
-            foreach($cfg['cols']  as $c=>$col_cfg) {
-                
-                if(isset($cl[$col_cfg['dataIndex']])){
-                    $v = $cl[$col_cfg['dataIndex']];
-                }else{
-                    if(isset($col_cfg['fillBlank'])){
-                        $worksheet->write($start_row+$r, $c, '', $formats[$col_cfg['fillBlank']]);
-                    }
-                    continue;
-                }
-                
-                if (empty($cl[$col_cfg['dataIndex']])) {
-                    continue;
-                }
-                if (isset($col_cfg['txtrenderer'])) {
-                    $v = call_user_func($col_cfg['txtrenderer'], 
-                            $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
-                    if ($v === false) {
-                        continue;
-                    }
-                  //  var_dump($v);
-                }
-                if (isset($col_cfg['renderer'])) {
-                    $hasRender = true;
-                    continue;
-                }
-                
-                $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
-                
-                $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
-                
-                $worksheet->write($start_row+$r, $c, $v, $format);
-            }
+            $this->addLine($cfg['workbook'], $clo);
+             
         }
         /// call user render on any that are defined..
         if ($hasRender) {
