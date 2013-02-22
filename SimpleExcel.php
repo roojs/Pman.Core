@@ -120,7 +120,7 @@ class Pman_Core_SimpleExcel extends Pman
         //print_R($worksheet);
         $worksheet->setInputEncoding('UTF-8'); 
          
-         
+        $this->worksheet = $worksheet;
          
         $start_row = 0;
         
@@ -252,7 +252,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
             
         $this->formats = $formats;
-        $this->worksheet = $worksheet;
+        
         
         
         
@@ -260,9 +260,11 @@ class Pman_Core_SimpleExcel extends Pman
     
     function addLine($worksheet_name, $clo)
     {
-        $cfg = $this->workSheetCfg[$worksheet_name];
-        $start_row = $this->start_row;
-        $formats = $this->formats;
+        $cfg        = $this->workSheetCfg[$worksheet_name];
+        $start_row  = $this->start_row;
+        $formats    = $this->formats;
+        $worksheet  = $this->worksheet;
+        
         $r = 0;
        
         $cl = $clo;
