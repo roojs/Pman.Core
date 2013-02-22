@@ -185,6 +185,7 @@ class Pman_Core_SimpleExcel extends Pman
                         continue;
                     }
                     if (isset($col_cfg['renderer'])) {
+                        // not sure if row is correct here...!!!?
                         call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
                         
                     }
