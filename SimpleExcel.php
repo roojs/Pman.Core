@@ -248,7 +248,7 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
             
-        
+        $this->formats = $formats;
         
         
         
