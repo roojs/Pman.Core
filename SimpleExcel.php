@@ -226,6 +226,7 @@ class Pman_Core_SimpleExcel extends Pman
         $formats    = $this->formats;
         $worksheet  = $this->worksheet;
         
+        $hasRender   = false;
         $r = 0;
        
         $cl = $clo;
