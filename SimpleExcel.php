@@ -45,7 +45,7 @@
 class Pman_Core_SimpleExcel extends Pman
 {
     
-    
+    var $workSheetCfg = array();
     
     function Pman_Core_SimpleExcel($data,$cfg)
     {
@@ -105,6 +105,8 @@ class Pman_Core_SimpleExcel extends Pman
         //echo '<PRE>';        print_R($cfg);
       //  print_r($cfg);exit;
         // Creating a worksheet
+        
+        $this->worksheetCfg $worksheet_name
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
             die($worksheet->toString());
