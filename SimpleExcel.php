@@ -46,6 +46,7 @@ class Pman_Core_SimpleExcel extends Pman
 {
     
     var $workSheetCfg = array();
+    var $workSheetColCfg = array();
     
     function Pman_Core_SimpleExcel($data,$cfg)
     {
