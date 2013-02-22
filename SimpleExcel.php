@@ -109,7 +109,7 @@ class Pman_Core_SimpleExcel extends Pman
         //echo '<PRE>';        print_R($cfg);
       //  print_r($cfg);exit;
         // Creating a worksheet
-        
+        print_R($cfg);exit;
         // copy the config and alias so that book can be written to..
         $this->worksheetCfg[$cfg['workbook']] = &$cfg;
         
