@@ -45,7 +45,7 @@
 class Pman_Core_SimpleExcel extends Pman
 {
     
-    var $workSheetCfg = array();
+    var $worksheet_cfg = array();
     var $start_row = 0;
     var $formats = array();
     var $workbook = false;
@@ -111,7 +111,7 @@ class Pman_Core_SimpleExcel extends Pman
         // Creating a worksheet
         //print_R($cfg);exit;
         // copy the config and alias so that book can be written to..
-        $this->worksheetCfg[$cfg['workbook']] = &$cfg;
+        $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
@@ -223,7 +223,7 @@ class Pman_Core_SimpleExcel extends Pman
     
     function addLine($worksheet_name, $clo)
     {
-        $cfg        = $this->worksheetCfg[$worksheet_name];
+        $cfg        = $this->worksheet_cfg[$worksheet_name];
         $start_row  = $this->start_row;
         $formats    = $this->formats;
         $worksheet  = $this->worksheet;
