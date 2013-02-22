@@ -273,7 +273,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
         $this->start_row++;
         
-        
+        return $hasRender;
     }
     
     
