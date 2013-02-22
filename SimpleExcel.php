@@ -257,6 +257,7 @@ class Pman_Core_SimpleExcel extends Pman
     function addLine($worksheet_name, $data)
     {
         $cfg = $this->workSheetCfg[$worksheet_name];
+        $start_row = &$this->start_row;
         
         foreach($data as $r=>$clo) {
             $cl = $clo;
