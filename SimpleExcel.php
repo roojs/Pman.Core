@@ -223,7 +223,7 @@ class Pman_Core_SimpleExcel extends Pman
     
     function addLine($worksheet_name, $clo)
     {
-        $cfg        = $this->workSheetCfg[$worksheet_name];
+        $cfg        = $this->worksheetCfg[$worksheet_name];
         $start_row  = $this->start_row;
         $formats    = $this->formats;
         $worksheet  = $this->worksheet;
