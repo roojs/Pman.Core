@@ -283,8 +283,10 @@ class Pman_Core_SimpleExcel extends Pman
     
     function send($fn)
     {
-        if (empty($cfg['leave_open'])) {
-                $this->
+        if (!empty($this->workbook)) {
+            $this->workbook->close();
+            $this->workbook = false
+        }
         
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
