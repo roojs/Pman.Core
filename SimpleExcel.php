@@ -142,9 +142,7 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
             
-            
-            
-         
+               
         foreach($cfg['cols'] as $c=>$col_cfg) {
             if (is_string($col_cfg)) {
                 $cfg['cols'][$c] = array(
