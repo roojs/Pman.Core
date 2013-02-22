@@ -80,6 +80,12 @@ class Pman_Core_SimpleExcel extends Pman
             
         }
         
+        if (empty($cfg['leave_open'])) {
+            
+            $this->outfile2 = $outfile2;
+            return;
+        }
+        
         $workbook->close();
         $this->outfile2 = $outfile2;
          
