@@ -106,7 +106,8 @@ class Pman_Core_SimpleExcel extends Pman
       //  print_r($cfg);exit;
         // Creating a worksheet
         
-        $this->worksheetCfg $worksheet_name
+        $this->worksheetCfg[$cfg['workbook']] = &$cfg;
+        
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
             die($worksheet->toString());
