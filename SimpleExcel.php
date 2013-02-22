@@ -34,7 +34,7 @@
         workbooks = array(
             workbook ->
             
-            
+        'leave_open' => false  
             
  */
  
