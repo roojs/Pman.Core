@@ -48,6 +48,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $workSheetCfg = array();
     var $start_row = 0;
     var $formats = array();
+    var $workbook = false;
     
     function Pman_Core_SimpleExcel($data,$cfg)
     {
@@ -314,6 +315,9 @@ class Pman_Core_SimpleExcel extends Pman
     
     function send($fn)
     {
+        if (empty($cfg['leave_open'])) {
+                $this->
+        
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
         $fn = $fc->convert("application/vnd.ms-excel"); 
