@@ -246,6 +246,16 @@ class Pman_Core_SimpleExcel extends Pman
         
     }
     
+    function addLine($worksheet, $data)
+    {
+        
+        
+        
+    }
+    
+    
+    
+    
     function send($fn)
     {
         require_once 'File/Convert.php';
