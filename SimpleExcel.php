@@ -285,7 +285,7 @@ class Pman_Core_SimpleExcel extends Pman
     {
         if (!empty($this->workbook)) {
             $this->workbook->close();
-            $this->workbook = false
+            $this->workbook = false;
         }
         
         require_once 'File/Convert.php';
