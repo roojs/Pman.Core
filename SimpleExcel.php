@@ -258,7 +258,7 @@ class Pman_Core_SimpleExcel extends Pman
     {
         $cfg = $this->workSheetCfg[$worksheet_name];
         $start_row = $this->start_row;
-        
+        $formats = $this->formats;
         $r = 0;
        
         $cl = $clo;
