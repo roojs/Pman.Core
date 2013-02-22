@@ -161,6 +161,9 @@ class Pman_Core_SimpleExcel extends Pman
              
         }
         $start_row++;
+        $this->start_row = &$start_row;
+        
+        
         $hasRender  = false;
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$clo) {
