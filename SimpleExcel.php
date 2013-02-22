@@ -171,7 +171,7 @@ class Pman_Core_SimpleExcel extends Pman
            //     DB_DataObject::debugLevel(1);
         foreach($data as $r=>$clo) {
             
-            $this->addLine($cfg['workbook'], $clo);
+            $hasRender = $this->addLine($cfg['workbook'], $clo);
              
         }
         /// call user render on any that are defined..
