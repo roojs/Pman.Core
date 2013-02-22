@@ -252,6 +252,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
             
         $this->formats = $formats;
+        $this->worksheet = $worksheet;
         
         
         
