@@ -118,11 +118,17 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $x = DB_DataObject::factory('i18n');
         $x->ltype = $ltype;
-        $x->inlang= $inlang;
         $x->lkey = $kval;
+        $x->inlang= $inlang;
+        $fallback = clone($x);
+        
         $x->limit(1);
-        $x->find(true);
-        return $x->lval;
+        if ($x->find(true)) {
+            return $x->lval;
+        }
+        $fallback->inlang = 'en';
+        $fallback->find(true);
+        return $fallback->lval;
         
     }
     

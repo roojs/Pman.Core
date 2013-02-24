@@ -182,7 +182,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->setFrom($row);
             $t->setFrom($base);
             unset($t->seqid); // these might have been changed
-            unset($t->displayName); // these might have been changed
+            unset($t->display_name); // these might have been changed
             
             
             if (!$t->find(true))
