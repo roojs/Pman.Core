@@ -112,7 +112,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
     }
     
-    
     function translate($inlang,$ltype,$kval)
     {
         
@@ -123,13 +122,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $fallback = clone($x);
         
         $x->limit(1);
-        if ($x->find(true)) {
+        if ($x->find(true) && !empty($x->lval)) {
             return $x->lval;
         }
         $fallback->inlang = 'en';
-        $fallback->find(true);
-        return $fallback->lval;
-        
+        if ($fallback->find(true) && !empty($fallback->lval)) {
+           return $fallback->lval;
+        }
+        return $kval;
     }
     
     
