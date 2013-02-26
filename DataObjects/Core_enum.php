@@ -39,6 +39,21 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
     }
     
+    function postListFilter($data, $authUser, $q) {
+        
+        if(!empty($q['cmsTab'])){
+            $ret = array();
+            foreach($data as $k=>$v){
+                if($v['name'] == 'page'){
+                    $data[$k]['display_name'] = $v['display_name'].' / Elements';
+                }
+            }
+        }
+        
+        return $data;
+        
+    }
+    
     function onUpdate($old, $req)
     {
         $x = $this->factory($this->tableName());
