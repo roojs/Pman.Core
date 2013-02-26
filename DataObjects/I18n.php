@@ -217,7 +217,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
         if (!empty($cfg[$t]) && is_array($cfg[$t])) {
             // then there is a filter.
-            return array_intersect($cfg[$t], $ret);
+            return $cfg[$t]; //array_intersect($cfg[$t], $ret);
             
         }
         
