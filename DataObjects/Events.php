@@ -401,7 +401,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             $i++;
             $files[$k] = $f;
-            $ext = $y->toExt($f['type']);
+            $name = basename($f['name']);
+            if (empty($name)) {
+                $name = 'unknown.txt';
+            }
             
             $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
             $nf = $ff->Pman['event_log_dir']. '/'. $this->id . ".file_$i.jpg";
