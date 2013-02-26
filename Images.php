@@ -83,7 +83,9 @@ class Pman_Core_Images extends Pman
             if (!$ev->get($bits[1])) {
                 die("could not find event id");
             }
-            //header ('Content-Type: image/jpeg');
+            
+            
+            header ('Content-Type: application/octet-stream');
             if(!empty($bits[0]) && $bits[2] == 'download'){
                 
                 
