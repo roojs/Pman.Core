@@ -86,22 +86,24 @@ class Pman_Core_Images extends Pman
             
             
             header ('Content-Type: application/octet-stream');
-            if(!empty($bits[0]) && $bits[2] == 'download'){
-                
-                
-                
-                $file = "{$popts['event_log_dir']}/{$bits[1]}";
-                header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
-                ob_clean();
-                flush();
-                readfile($file);
-            }else{
-               die("previews 
-                
-                $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
-                $fh = fopen($file,'r');
-                echo fread($fh,filesize($file));
-            }
+            
+            //$source = 
+            //if(!empty($bits[0]) && $bits[2] == 'download'){
+            //    
+            //    
+            //    
+            //    $file = "{$popts['event_log_dir']}/{$bits[1]}";
+            //    header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
+            //    ob_clean();
+            //    flush();
+            //    readfile($file);
+            //}else{
+            //   die("previews 
+            //    
+            //    $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
+            //    $fh = fopen($file,'r');
+            //    echo fread($fh,filesize($file));
+            //}
             exit;
         } else {
         
