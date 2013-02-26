@@ -346,7 +346,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $ret = $cache[$lang][$type]->getName($k);
         }
         
-        if ($orig_lang == 'zh_HK') {
+        if ($orig_lang == 'zh_HK' || $orig_lang == 'zh_TW' ) {
             // then translation is by default in simplified.
             //print_r($ret);
             $ret = @iconv("UTF-8", "GB2312//IGNORE", $ret);
