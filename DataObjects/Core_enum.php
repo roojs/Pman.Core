@@ -52,6 +52,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 }
                 $ret[] = $ary;
             }
+            $data = $ret;
         }
         
         return $data;
