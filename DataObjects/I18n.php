@@ -187,7 +187,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 
                 
                 foreach ($cfg['add_l'] as $k=>$v){
-                    // make sure that add_l is formated correctly..
+                    // make sure that add_l is formated correctly.. (lower_UPPER?)
                     $tolang = explode('_', $k);
                     $tolang[0] = strtolower($tolang[0]);
                     $tolang = implode('_', $tolang);
