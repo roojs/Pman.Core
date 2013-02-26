@@ -177,6 +177,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 if (!empty($cfg['add_c'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_c']));
                 }
+                
+                 
+                
                 $ret[] = '**';
                 break;
             
@@ -213,9 +216,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 break;
         }
         
-        foreach ($ret as $k=>$v) {
-            $ret[$k] = ($t=='l') ? $ret[$k] : strtoupper($v);
-        }
+        // why upper case everyting?!?!?
+        //foreach ($ret as $k=>$v) {
+        //    $ret[$k] = ($t=='l') ? $ret[$k] : strtoupper($v);
+        //}
 
         return $ret;
     }
