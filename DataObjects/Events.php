@@ -390,12 +390,19 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         $i=0;
         $files = array();
+        require_once 'File/MimeType.php';
+        
+        $mt = new File_MimeType();
+//var_dump($y->toExt('application/x-pdf'));
+
         foreach ($_FILES as $k=>$f){
             if (empty($f['tmp_name']) || !file_exists($f['tmp_name'])) {
                 continue;
             }
             $i++;
             $files[$k] = $f;
+            $ext = $y->toExt($f['type']);
+            
             $files[$k]['tmp_name'] = $this->id . '.file_'. $i.'.jpg';
             $nf = $ff->Pman['event_log_dir']. '/'. $this->id . ".file_$i.jpg";
             if (!copy($f['tmp_name'], $nf)) {
