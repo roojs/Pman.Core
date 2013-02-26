@@ -111,6 +111,11 @@ class Pman_Core_I18n extends Pman
      
         $lbits = $this->guessUsersLanguage();
          
+        if ($this->authUser && !empty($_REQUEST['debug'])) {
+            DB_DataObject::debugLevel(1);
+        }
+        
+        
         
         $i = DB_DataObject::Factory('I18n');
         
