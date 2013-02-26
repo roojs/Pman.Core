@@ -44,9 +44,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if(!empty($q['cmsTab'])){
             $ret = array();
             foreach($data as $k=>$v){
-                if($v['name'] != 'element'){
-                    $ary = $v;
+                if($v['name'] == 'element'){
+                    continue;
                 }
+                $ary = $v;
                 if($ary['name'] == 'page'){
                     $ary['display_name'] = $v['display_name'].' / Elements';
                 }
