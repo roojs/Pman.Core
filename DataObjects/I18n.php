@@ -296,6 +296,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
       
         static $cache;
+        
+        
         $cfg = $this->cfg();
         if (empty($k)) {
             return '??';
@@ -321,18 +323,17 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if ($k == '**') {
             return 'Other / Unknown';
         }
-        $ret = $cache[$lang][$type]->getName($k);
+        
         
         // for languages if we get zh_HK then we write out Chinese ( HK )
         
         
-        if ($type == 'l') {
+        if ($type == 'l' && strpos($k, '_') > -1) {
             $tolang = explode('_', $k);
-            
-            $ret = $cache[$lang][$type]->getName(strtolower($tolang[0]));
-            if (count($tolang) > 1) {
-                $ret.= '('.$tolang[1].')'; 
+            $ret = $cache[$lang][$type]->getName(strtolower($tolang[0])) .  '('.$tolang[1].')'; 
             }
+        } else {
+            $ret = $cache[$lang][$type]->getName($k);
         }
         
         if ($orig_lang == 'zh_HK') {
@@ -354,6 +355,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             return $cfg['add_' . $type][$k];
             
         }
+        if ()
         
         return $ret;
         
