@@ -329,7 +329,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if ($type == 'l') {
             $tolang = explode('_', $k);
             
-            $ret = $cache[$lang][$type]->getName($tolang[0]);
+            $ret = $cache[$lang][$type]->getName(strtolower($tolang[0]));
             if (count($tolang) > 1) {
                 $ret.= '('.$tolang[1].')'; 
             }
