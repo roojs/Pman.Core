@@ -192,7 +192,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                     $tolang[0] = strtolower($tolang[0]);
                     $tolang = implode('_', $tolang);
                     
-                    unset($cfg['add_l'][$k]);
+                    unset($cfg['add_l'][$k]); // if they match..unset first.. then set
+                    
                     $cfg['add_l'][$tolang] = $v;
                 }
                 if (!empty($cfg['add_l'])) {
