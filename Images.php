@@ -83,28 +83,37 @@ class Pman_Core_Images extends Pman
             if (!$ev->get($bits[1])) {
                 die("could not find event id");
             }
+            // technically same user only.. -- normally www-data..
+            if (function_exists('posix_getpwuid')) {
+                $uinfo = posix_getpwuid( posix_getuid () ); 
+             
+                $user = $uinfo['name'];
+            } else {
+                $user = getenv('USERNAME'); // windows.
+            }
+            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
+            $filesJ = json_decode(file_get_contents($file));
+         
+         
+         
+            foreach($filesJ->FILES as $k=>$f){
+                if ($f->tmp_name == $bits[2]) {
+                    continue;
+                }
+                
+                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').  $f->tmp_name ;
+                if (!file_exists($src)) {
+                    die("file was not saved");
+                }
+                header ('Content-Type: ' . $f->mimetype);
             
-            
-            header ('Content-Type: application/octet-stream');
-            
-            //$source = 
-            //if(!empty($bits[0]) && $bits[2] == 'download'){
-            //    
-            //    
-            //    
-            //    $file = "{$popts['event_log_dir']}/{$bits[1]}";
-            //    header("Content-Disposition: attachment; filename=\"".basename($file)."\";" );
-            //    ob_clean();
-            //    flush();
-            //    readfile($file);
-            //}else{
-            //   die("previews 
-            //    
-            //    $file = "{$popts['event_log_dir']}/{$bits[1]}.jpg";
-            //    $fh = fopen($file,'r');
-            //    echo fread($fh,filesize($file));
-            //}
-            exit;
+                header("Content-Disposition: attachment; filename=\"".basename($f->filename)."\";" );
+                ob_clean();
+                flush();
+                readfile($src);
+                exit;
+            }
+            die ("unknown file?"); 
         } else {
         
             $id = empty($bits[0]) ? 0 :  $bits[0];
