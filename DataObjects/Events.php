@@ -385,16 +385,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $p =  empty($_POST) ? array() : $_POST;
         foreach(array('passwd', 'password', 'passwd2', 'password2') as $rm) {
             if (isset($p[$rm])) {
-                $p['passwd'] = '******';
+                $p[$rm] = '******';
             }
         }
+        
+        
         $i=0;
         $files = array();
-        require_once 'File/MimeType.php';
-        
-        $mt = new File_MimeType();
-//var_dump($y->toExt('application/x-pdf'));
-
+         
+        $i = 0;
         foreach ($_FILES as $k=>$f){
             // does not handle any other file[] arrary very well..
             if (empty($f['tmp_name']) || !file_exists($f['tmp_name'])) {
@@ -402,13 +401,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             $i++;
             $files[$k] = $f;
-            $name = basename($f['name']);
-            if (empty($name)) {
-                $name = 'unknown.txt';
-            }
             
-            $files[$k]['tmp_name'] = $this->id . '-'. $name;
-            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').  $this->id . '-'. $name; 
+             
+            $files[$k]['tmp_name'] =  $this->id . '-'. $i;
+            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').   $files[$k]['tmp_name']; 
             if (!copy($f['tmp_name'], $nf)) {
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
