@@ -191,8 +191,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                     $tolang = explode('_', $k);
                     $tolang[0] = strtolower($tolang[0]);
                     $tolang = implode('_', $tolang);
-                    $cfg['add_l'][$tolang] = $v;
+                    
                     unset($cfg['add_l'][$k]);
+                    $cfg['add_l'][$tolang] = $v;
                 }
                 if (!empty($cfg['add_l'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_l']));
