@@ -184,7 +184,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 require_once 'I18Nv2/Language.php';
                 $c = new I18Nv2_Language('en');
                 $ret =  array_keys($c->codes); // we need to make sure these are lowercase!!!
+                
+                
                 foreach ($cfg['add_l'] as $k=>$v){
+                    // make sure that add_l is formated correctly..
                     $tolang = explode('_', $k);
                     $tolang[0] = strtolower($tolang[0]);
                     $tolang = implode('_', $tolang);
