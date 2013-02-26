@@ -215,8 +215,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 $ret[] = '**';
                 break;
         }
+        if (!empty($cfg[$t]) && is_array($cfg[$t])) {
+            // then there is a filter.
+            return array_intersect($cfg[$t], $ret);
+            
+        }
         
         // why upper case everyting?!?!?
+        
         //foreach ($ret as $k=>$v) {
         //    $ret[$k] = ($t=='l') ? $ret[$k] : strtoupper($v);
         //}
