@@ -269,7 +269,7 @@ class Pman_Core_SimpleExcel extends Pman
             
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
-            $format = isset($formats[$col_cfg['format']] ) &&  ? $formats[$col_cfg['format']] : false;
+            $format = isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
             $worksheet->write($start_row+$r, $c, $v, $format);
         }
