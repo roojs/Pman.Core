@@ -277,9 +277,7 @@ class Pman_Core_SimpleExcel extends Pman
         
         return $hasRender;
     }
-    
-    
-    
+     
     
     function send($fn)
     {
