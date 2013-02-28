@@ -283,7 +283,7 @@ class Pman_Core_JsCompile  extends Pman
              "$seed {$o['jspacker']}/pack.js " :
              "$gjs -I{$o['jspacker']} -I{$o['jspacker']}/JSDOC -- -- {$o['jspacker']}/pack.js " 
               
-             ). $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
+             ) . " $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
