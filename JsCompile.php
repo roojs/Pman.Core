@@ -190,8 +190,8 @@ class Pman_Core_JsCompile  extends Pman
         $seed= System::which('seed');
         $gjs = System::which('gjs');
         
-        if (!$seed) {
-            echo '<!-- seed not installed -->';
+        if (!$seed && !$gjs) {
+            echo '<!-- seed or gjs are  not installed -->';
             return false;
             
         }
