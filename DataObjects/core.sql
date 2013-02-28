@@ -294,7 +294,8 @@ ALTER TABLE  Images ADD COLUMN descript TEXT DEFAULT '' NOT NULL;
 ALTER TABLE  Images ADD COLUMN title VARCHAR(128) DEFAULT '' NOT NULL;
 
 ALTER TABLE Images    CHANGE COLUMN   mimetype mimetype  varchar(128) NOT NULL default '';
-ALTER TABLE Images    ALTER COLUMN   mimetype  varchar(128) NOT NULL default '';
+-- postgres
+ALTER TABLE Images    ALTER COLUMN   mimetype  TYPE  varchar(128) ;
 
 ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
