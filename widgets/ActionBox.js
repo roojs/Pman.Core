@@ -185,7 +185,7 @@ Roo.extend(Roo.box.KeyValShort, Roo.box.Link , {
         this.id = Roo.id();
         this.edid = Roo.id();
         return  String.format('<div id="{3}" class="x-action-prop-col-div">' + 
-                '<span style="font-weight: bolder;">{0}: </span><span id="{2}">{1}</span></div>', 
+                '<span style="font-weight: bolder;">{0}: </span><span id="{2}">{1}</span></div>', 
             this.key, this.value, this.edid,this.id);
     }
 }); 
