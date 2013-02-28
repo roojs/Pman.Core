@@ -209,7 +209,10 @@ class Pman_Core_JsCompile  extends Pman
             mkdir(dirname($output), 0755, true);
         }
         $eoutput = escapeshellarg($output);
-        $cmd = "$seed {$o['cssminify']}  $eoutput " . implode($ofiles, ' ');
+        $cmd = $seed ?
+            ("$seed {$o['cssminify']}  $eoutput " . implode($ofiles, ' ')) :
+            ("$gjs {$o['cssminify']}  $eoutput " . implode($ofiles, ' ')) :
+            ;
         //echo "<PRE>$cmd\n"; echo `$cmd`; exit;
         `$cmd`;
         
