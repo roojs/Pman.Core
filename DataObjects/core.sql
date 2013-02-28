@@ -294,12 +294,13 @@ ALTER TABLE  Images ADD COLUMN descript TEXT DEFAULT '' NOT NULL;
 ALTER TABLE  Images ADD COLUMN title VARCHAR(128) DEFAULT '' NOT NULL;
 
 ALTER TABLE Images    CHANGE COLUMN   mimetype mimetype  varchar(128) NOT NULL default '';
+ALTER TABLE Images    ALTER COLUMN   mimetype  varchar(128) NOT NULL default '';
 
 ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
 ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid);
  
-#// old core image type - merged into enum.
+--// old core image type - merged into enum.
 DROP TABLE core_image_type;
 
 
