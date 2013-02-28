@@ -245,7 +245,7 @@ ALTER TABLE  Projects  ADD COLUMN open_date date default NULL;
 ALTER TABLE  Projects  ADD COLUMN open_by int(11) NOT NULL default '0';
 ALTER TABLE  Projects  ADD COLUMN updated_dt DATETIME NOT NULL;
 
-# these should be removed, as they are code specific..
+-- these should be removed, as they are code specific..
 ALTER TABLE Projects ADD COLUMN countries varchar(128)  NOT NULL DEFAULT '';
 ALTER TABLE Projects  ADD COLUMN languages varchar(128)  NOT NULL DEFAULT '';
 ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
@@ -253,9 +253,9 @@ ALTER TABLE  Projects ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 ALTER TABLE Projects ADD INDEX plookup (code);
  
 
-#-- we duplicate office_id and company_id here...
-#-- not sure if we should keep doing that in the new design...
-#-- we should improve our links code to handle this..
+-- we duplicate office_id and company_id here...
+-- not sure if we should keep doing that in the new design...
+-- we should improve our links code to handle this..
 
 
 CREATE TABLE ProjectDirectory (
