@@ -186,7 +186,10 @@ class Pman_Core_JsCompile  extends Pman
             return false;
         }
         require_once 'System.php';
+        
         $seed= System::which('seed');
+        $gjs = System::which('gjs');
+        
         if (!$seed) {
             echo '<!-- seed not installed -->';
             return false;
