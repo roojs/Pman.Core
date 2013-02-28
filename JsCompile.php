@@ -211,7 +211,7 @@ class Pman_Core_JsCompile  extends Pman
         $eoutput = escapeshellarg($output);
         $cmd = $seed ?
             ("$seed {$o['cssminify']}  $eoutput " . implode($ofiles, ' ')) :
-            ("$gjs {$o['cssminify']}  $eoutput " . implode($ofiles, ' ')); 
+            ("$gjs {$o['cssminify']} -- -- $eoutput " . implode($ofiles, ' ')); 
         //echo "<PRE>$cmd\n"; echo `$cmd`; exit;
         `$cmd`;
         
