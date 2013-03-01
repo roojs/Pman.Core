@@ -51,7 +51,7 @@ Pman.I18n = {
         if (code.indexOf('_') > -1) {
             var clang = code.split('_').shift();
             var cc = code.split('_').pop();
-            return this.toName('l', clang.toUpperCase()) + ' (' +  this.toName('c', cc.toUpperCase()) + ')';
+            return this.toName('l', clang.toLowerCase()) + ' (' +  this.toName('c', cc.toUpperCase()) + ')';
         }
         
         
