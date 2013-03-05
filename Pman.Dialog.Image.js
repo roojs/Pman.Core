@@ -149,6 +149,9 @@ Pman.Dialog.Image = {
                                         }
                                         return; 
                                     }
+                                    
+                                
+                                    
                                 },
                                 rendered : function (form)
                                 {
