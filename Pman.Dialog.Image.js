@@ -166,6 +166,7 @@ Pman.Dialog.Image = {
                                     if (act.type == 'submit') {
                                         Roo.log("Upload error");
                                         Roo.log(act);
+                                        
                                         try {
                                             Roo.MessageBox.alert("Error", act.result.errorMsg.split(/\n/).join('<BR/>'));
                                         } catch(e) {
