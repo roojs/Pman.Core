@@ -168,7 +168,7 @@ Pman.Dialog.Image = {
                                         Roo.log(act);
                                         
                                         try {
-                                            Roo.MessageBox.alert("Error", act.result.errorMsg.split(/\n/).join('<BR/>'));
+                                            Roo.MessageBox.alert("Error -x", act.result.errorMsg.split(/\n/).join('<BR/>'));
                                         } catch(e) {
                                           //  Roo.log(e);
                                             Roo.MessageBox.alert("Error", "Saving failed = fix errors and try again");        
