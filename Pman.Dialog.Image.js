@@ -159,6 +159,8 @@ Pman.Dialog.Image = {
                                 },
                                 actionfailed : function (_self, act)
                                 {
+                                   
+                                   
                                     _this.dialog.uploadComplete = true;
                                    // _this.dialog.el.unmask();
                                     // error msg???
