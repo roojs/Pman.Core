@@ -365,7 +365,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     } 
     function checkPassword($val)
     {
-        
+        print_r($val);
         if (substr($this->passwd,0,1) == '$') {
             return crypt($val,$this->passwd) == $this->passwd ;
         }
