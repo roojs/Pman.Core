@@ -370,7 +370,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             return crypt($val,$this->passwd) == $this->passwd ;
         }
-        print_r($this->passwd);
+        print_r($this);
         // old style md5 passwords...- cant be used with courier....
         return md5($val) == $this->passwd;
     }
