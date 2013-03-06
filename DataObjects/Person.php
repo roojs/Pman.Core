@@ -365,10 +365,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     } 
     function checkPassword($val)
     {
-        print_r($val);
+        
         if (substr($this->passwd,0,1) == '$') {
+            
             return crypt($val,$this->passwd) == $this->passwd ;
         }
+        print_r($val);
         // old style md5 passwords...- cant be used with courier....
         return md5($val) == $this->passwd;
     }
