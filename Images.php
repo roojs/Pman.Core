@@ -59,7 +59,7 @@ class Pman_Core_Images extends Pman
         
         $bits= explode('/', $s);
         $id = 0;
-        
+        print_r($s);exit;
         // without id as first part...
         if (!empty($bits[0]) && $bits[0] == 'Thumb') {
             $this->thumb = true;
