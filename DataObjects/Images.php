@@ -274,7 +274,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $this->err = "Missing  ontable";
             return false;
         }
-        
+        print_r($this);exit;
         if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
             // then its an upload 
             $img  = DB_DataObject::factory('Images');
