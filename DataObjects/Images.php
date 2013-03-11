@@ -399,7 +399,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
          
-         
+         print_r($ret);exit;
         return $ret;
     }
     
