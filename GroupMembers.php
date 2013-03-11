@@ -129,6 +129,13 @@ class Pman_Core_GroupMembers extends Pman
                 $p = DB_DataObject::factory('group_members');
                 $p->group_id = (int)$_POST['group_id'];
                 $p->user_id = $uid;
+                
+                
+                if (($pi->company()->comptype != 'OWNER') && !$g->type) {
+                    $this->jerr("can not add non-owner contact to system group");
+                }
+                
+                
                 //$p->type = (int)$_POST['type'];
                 $p->find(true);
                 if (($ac == 'sub') && $p->id) {
