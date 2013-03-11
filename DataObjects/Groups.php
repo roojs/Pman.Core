@@ -109,11 +109,18 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
         return $p->fetchAll($what);
-    
-     
-        
-        
     }
+    
+    function lookup($k,$v = false) {
+        if ($v === false) {
+            $v = $k;
+            $k = 'id';
+        }
+        $this->get($k,$v);
+
+        return $this;
+    } 
+    
     function postListFilter($ar, $au, $req)
     {      
         
