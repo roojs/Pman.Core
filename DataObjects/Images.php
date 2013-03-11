@@ -550,7 +550,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->jerr("IMAGE UPLOAD PERMISSION DENIED");
         }
         
-        print_r($ar);exit;
+        
         
         if (!isset($_FILES['imageUpload'])) {
             return; // standard update...
