@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // not sure why we do this.. 
         
         
-        print_r($this);exit;
+        
         
         
         // if imgtype starts with '-' ? then we set the 'old' (probably to delete later)
