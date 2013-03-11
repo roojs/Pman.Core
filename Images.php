@@ -146,7 +146,7 @@ class Pman_Core_Images extends Pman
             
         }
         $id = (int) $id;
-        
+        print_r($id);exit;
         // depreciated - should use ontable:onid:type here...
         if (!empty($_REQUEST['ontable'])) {
 
