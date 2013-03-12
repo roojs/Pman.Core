@@ -98,7 +98,7 @@ class Pman_Core_Images extends Pman
             print_r($filesJ);
          
             foreach($filesJ->FILES as $k=>$f){
-                if ($f->tmp_name == $bits[2]) {
+                if ($f->tmp_name != $bits[2]) {
                     continue;
                 }
                 
