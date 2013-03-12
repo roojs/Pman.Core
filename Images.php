@@ -95,7 +95,7 @@ class Pman_Core_Images extends Pman
             $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $ev->id . ".json";
             $filesJ = json_decode(file_get_contents($file));
          
-         
+            print_r($filesJ);
          
             foreach($filesJ->FILES as $k=>$f){
                 if ($f->tmp_name == $bits[2]) {
