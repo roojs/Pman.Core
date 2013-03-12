@@ -106,7 +106,7 @@ class Pman_Core_Images extends Pman
                 if (!file_exists($src)) {
                     die("file was not saved");
                 }
-                header ('Content-Type: ' . $f->mimetype);
+                header ('Content-Type: ' . $f->type);
             
                 header("Content-Disposition: attachment; filename=\"".basename($f->filename)."\";" );
                 ob_clean();
