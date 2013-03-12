@@ -109,7 +109,7 @@ class Pman_Core_Images extends Pman
                 header ('Content-Type: ' . $f->type);
             
                 header("Content-Disposition: attachment; filename=\"".basename($f->name)."\";" );
-                ob_clean();
+                @ob_clean();
                 flush();
                 readfile($src);
                 exit;
