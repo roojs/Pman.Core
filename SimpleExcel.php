@@ -66,7 +66,7 @@ class Pman_Core_SimpleExcel extends Pman
         $formats = array();
        
         $cfg['formats'] = isset($cfg['formats']) ? $cfg['formats'] : array();
-        echo '<PRE>';print_r($cfg);exit;
+        
         foreach($cfg['formats'] as $f=>$fcfg) {
             $formats[$f] = & $workbook->addFormat();
             foreach($fcfg as $k=>$v) {
