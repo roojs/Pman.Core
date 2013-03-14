@@ -174,6 +174,7 @@ class Pman_Core_SimpleExcel extends Pman
             $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
              
         }
+        exit;
         /// call user render on any that are defined..
         if ($hasRender) {
             foreach($data as $r=>$cl) {
