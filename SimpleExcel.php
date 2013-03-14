@@ -114,6 +114,8 @@ class Pman_Core_SimpleExcel extends Pman
         // copy the config and alias so that book can be written to..
         $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
+        $this->formats = $formats;
+        
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
             die($worksheet->toString());
@@ -212,9 +214,6 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
             
-        $this->formats = $formats;
-        
-        
         
         
     }
