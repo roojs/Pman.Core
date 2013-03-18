@@ -17,7 +17,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         $this->transObj = DB_DataObject::Factory('invhist_transfer');
         
         $this->transObj->query('BEGIN');
-        $this->jerr('IN');
+        print_r('run');exit;
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         
         $img = DB_DataObject::Factory('images');
