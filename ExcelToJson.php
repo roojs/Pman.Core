@@ -66,7 +66,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 foreach($n as $k) {
                     $cols[] = strtoupper(trim($k));
                 }
-                print_r($cols);exit;
+                
                 if (empty($cols)) {
                     continue;
                 }
