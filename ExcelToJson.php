@@ -110,7 +110,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 'itemsite_qty' => $r['QUANTITY']
             );
         }
-        
+        print_r($ret);exit;
         $this->jok($ret);
         
         
