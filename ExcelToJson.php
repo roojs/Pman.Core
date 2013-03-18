@@ -93,7 +93,11 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         
         fclose($fh);
         
-        
+        foreach ($rows['TRANSFER ITEMS'] as $r){
+            $itemsite = DB_DataObject::factory('itemsite');
+            $itemsite->autoJoin();
+            print_r($itemsite);exit;
+        }
         
         
         
