@@ -93,7 +93,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         
         fclose($fh);
         
-        print_r($rows);
+        
         
         
         
