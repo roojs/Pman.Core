@@ -42,14 +42,20 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $this->jerr("invalid file");
         }
         
+        $cols[] = false;
         $rows = array();
         $header = false;
+        
         while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
             if(!array_filter($n)){
                 $header = true;
             }
             if(!$header){
-                
+               $rows[$n[0]] = $n[1];
+               continue;
+            }
+            foreach($n as $k) {
+                $cols[] = strtoupper(trim($k));
             }
         }
         exit;
