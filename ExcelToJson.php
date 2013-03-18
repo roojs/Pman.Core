@@ -60,17 +60,17 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                $rows[$n[0]] = $n[1];
                continue;
             }
-            print_r($n);exit;
+            
             if(!$cols){
                 $cols = array();
                 foreach($n as $k) {
                     $cols[] = strtoupper(trim($k));
                 }
-                print_r($cols);exit;
+            
                 if (empty($cols)) {
                     continue;
                 }
-                print_r($cols);exit;
+               
                 foreach($req as $r) {
                     if (!in_array($r,$cols)) {
                         print_r($r);
@@ -87,7 +87,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $rows[] = $row;
             
         }
-         exit;
+        
         if (empty($cols)) {
             $this->jerr("could not find a row with " . implode(' / ', $req));
         }
