@@ -94,6 +94,20 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         
         fclose($fh);
         
+        $lc = DB_DataObject::facotry('location');
+        if($lc->get('location_name', $ret['From'])){
+            $this->jerr('error occur on getting location with reference ' . $ret['From']);
+        }
+        $ret['invhist_transfer_from'] = $lc->pid();
+        $ret['invhist_transfer_from_location_name'] = $lc->location_name;
+        
+        $lt = DB_DataObject::facotry('location');
+        if($lt->get('location_name', $ret['To'])){
+            $this->jerr('error occur on getting location with reference ' . $ret['From']);
+        }
+        $ret['invhist_transfer_to'] = $lc->pid();
+        $ret['invhist_transfer_to_location_name'] = $lc->location_name;
+        
         foreach ($rows as $r){
             $itemsite = DB_DataObject::factory('itemsite');
             $itemsite->autoJoin();
