@@ -59,7 +59,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                $rows[$n[0]] = $n[1];
                continue;
             }
-            print_r($cols);exit;
+            
             if(!$cols){
                 $cols = array();
                 foreach($n as $k) {
@@ -71,13 +71,14 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 }
                 foreach($req as $r) {
                     if (!in_array($r,$cols)) {
+                        print_r($r);
                         $cols = false;
                         break;
                     }
                 }
                 continue;
             }
-            print_r('run');exit;
+            
             foreach($cols as $i=>$k) {
                 $row[$k] = $n[$i];
             }
