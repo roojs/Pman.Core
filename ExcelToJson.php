@@ -97,6 +97,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $itemsite = DB_DataObject::factory('itemsite');
             $itemsite->autoJoin();
             $itemsite->get('item_number', $r['ITEM CODE']);
+            print_r($itemsite);exit;
         }
         
         
