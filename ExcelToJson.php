@@ -107,8 +107,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 'itemsite_id' => $itemsite->pid(),
                 'itemsite_item_id_item_number' => $r['ITEM CODE'],
                 'itemsite_item_id_item_descrip1' => $r['DESCRIPTION'],
-                'itemsite_qty' => $r['QUANTITY'],
-                'avail_at_location' => ''
+                'itemsite_qty' => $r['QUANTITY']
             );
         }
        
