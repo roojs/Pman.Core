@@ -97,7 +97,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         foreach ($rows['TRANSFER ITEMS'] as $r){
             $itemsite = DB_DataObject::factory('itemsite');
 //            $itemsite->autoJoin();
-            if(!$itemsite->get('itemsite_id', $r['ITEM CODE'])){
+            if(!$itemsite->get('itemsite_id', 5583)){
                 $this->jerr("error occur on getting item with reference " . $r['ITEM CODE']);
             }
             print_r($itemsite);exit;
