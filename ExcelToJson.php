@@ -84,7 +84,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             foreach($cols as $i=>$k) {
                 $row[$k] = $n[$i];
             }
-            $rows['TRANSFER ITEMS'][] = $row;
+            $rows[] = $row;
             
         }
         
@@ -94,7 +94,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         
         fclose($fh);
         
-        foreach ($rows['TRANSFER ITEMS'] as $r){
+        foreach ($rows as $r){
             $itemsite = DB_DataObject::factory('itemsite');
             $itemsite->autoJoin();
             $itemsite->whereAdd("join_itemsite_item_id_item_id.item_number = '{$itemsite->escape($r['ITEM CODE'])}'");
