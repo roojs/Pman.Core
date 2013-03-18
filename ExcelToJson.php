@@ -69,6 +69,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 if (empty($cols)) {
                     continue;
                 }
+                print_r($cols);exit;
                 foreach($req as $r) {
                     if (!in_array($r,$cols)) {
                         print_r($r);
