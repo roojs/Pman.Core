@@ -99,7 +99,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $itemsite->selectAdd();
             $itemsite->autoJoin();
             
-            $itemsite->whereAdd("join_itemsite_item_id_item_id.item_number = {$itemsite->escape($r['ITEM CODE'])}");
+            $itemsite->whereAdd("join_itemsite_item_id_item_id.item_number = '{$itemsite->escape($r['ITEM CODE'])}'");
             $itemsite->find(true);
             print_r($itemsite);exit;
 //            if(!$itemsite->get('join_itemsite_item_id_item_id.item_number', )){
