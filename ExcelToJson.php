@@ -103,7 +103,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             }
             
             $itemsite->invhist_transfer_item_qty = $r['QUANTITY'];
-            
+            print_r($itemsite);exit;
             $ret[] = $itemsite->toArray();
         }
        
