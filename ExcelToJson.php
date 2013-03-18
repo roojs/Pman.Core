@@ -47,8 +47,9 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         );
         
         $cols = false;
-        $rows = array();
         $header = false;
+        $rows = array();
+        $ret = array();
         
         while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
             if(!array_filter($n)){
@@ -99,7 +100,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             if(!$itemsite->get('join_itemsite_item_id_item_id.item_number', $r['ITEM CODE'])){
                 $this->jerr("error occur on getting item with reference " . $r['ITEM CODE']);
             }
-            print_r($itemsite);exit;
+            print_r($itemsite->toArray());
         }
         
         
