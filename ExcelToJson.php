@@ -43,7 +43,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         }
         
         $req = array(
-            'LINE', 'ITEM CODE', 'DESCRIPTION', 'QUANTITY'
+            'LINE', 'ITEM CODE', 'DESCRIPTION', 'QUANTITY', 'AA'
         );
         
         $cols[] = false;
