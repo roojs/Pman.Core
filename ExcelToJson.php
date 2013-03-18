@@ -46,7 +46,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             'LINE', 'ITEM CODE', 'DESCRIPTION', 'QUANTITY', 'AA'
         );
         
-        $cols[] = false;
+        $cols = false;
         $rows = array();
         $header = false;
         
