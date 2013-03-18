@@ -111,7 +111,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             );
         }
         
-        print_r($ret);
+        $this->jok($ret);
         
         
         exit;
