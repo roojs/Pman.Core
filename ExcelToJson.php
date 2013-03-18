@@ -102,7 +102,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                 $this->jerr("error occur on getting item with reference " . $r['ITEM CODE']);
             }
             
-            $ret['data'] = array(
+            $ret['data'][] = array(
                 'itemsite_item_id' => $itemsite->itemsite_item_id,
                 'itemsite_id' => $itemsite->pid(),
                 'itemsite_item_id_item_number' => $r['ITEM CODE'],
