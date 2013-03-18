@@ -90,7 +90,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         if (empty($cols)) {
             $this->jerr("could not find a row with " . implode(' / ', $req));
         }
-        
+        print_r($cols);
         fclose($fh);
         
         exit;
