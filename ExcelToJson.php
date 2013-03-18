@@ -57,7 +57,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             }
             
             if(!$header){
-               $rows[$n[0]] = $n[1];
+               $rows[strtoupper($n[0])] = $n[1];
                continue;
             }
             
