@@ -42,9 +42,6 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $this->jerr("invalid file");
         }
         
-        $req = array(
-            
-        );
         
         $cols = false;
         $rows = array();
