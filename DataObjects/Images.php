@@ -56,7 +56,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function beforeInsert($q, $roo) 
     {
-        print_r( 'run');exit;
         if (isset($q['_remote_upload'])) {
             require_once 'System.php';
             $tmpdir  = System::mktemp("-d remote_upload");
@@ -74,7 +73,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (!preg_match("/\." . $ext."$/", $path, $matches)) {
                 rename($path,$path.$ext);
             }
-            
+            print_r('run');exit;
             $this->createFrom($path);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
