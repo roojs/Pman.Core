@@ -22,7 +22,7 @@ if (typeof(_T) == 'undefined') { _T={};}
 Roo.XComponent.on('register', function(e) { if (typeof(Pman) != 'undefined') { return Pman.xregister(e); } return true;  });
 Roo.XComponent.on('beforebuild', function(e) { if (typeof(Pman) != 'undefined') { return Pman.xbeforebuild(e); } return true; });
 
-Roo.XComponent.on('buildComplete',  
+Roo.XComponent.on('buildcomplete',  
     function() {
         Pman.building = false;   
         Pman.layout.getRegion('center').showPanel(0);
