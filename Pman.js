@@ -23,8 +23,8 @@ Roo.XComponent.on('register', function(e) { if (typeof(Pman) != 'undefined') { r
 Roo.XComponent.on('beforebuild', function(e) { if (typeof(Pman) != 'undefined') { return Pman.xbeforebuild(e); } return true; });
 
 Roo.XComponent.on('buildComplete',  
-     function() {
-       Pman.building = false;   
+    function() {
+        Pman.building = false;   
         Pman.layout.getRegion('center').showPanel(0);
         Pman.layout.endUpdate(); 
         Pman.addTopToolbar();  
