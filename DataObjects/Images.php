@@ -73,7 +73,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (!preg_match("/\." . $ext."$/", $path, $matches)) {
                 rename($path,$path.$ext);
             }
-           
+            
             $this->createFrom($path);
             
             $roo->addEvent("ADD", $this, $this->toEventString());
