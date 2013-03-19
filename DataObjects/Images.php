@@ -291,7 +291,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         
-        print_r('run');exit;
+        
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
         $this->mimetype = $_FILES['imageUpload']['type'];
