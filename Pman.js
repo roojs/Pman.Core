@@ -24,7 +24,7 @@ Roo.XComponent.on('beforebuild', function(e) { if (typeof(Pman) != 'undefined') 
 
 Roo.XComponent.on('buildComplete',  
      function() {
-                    
+       Pman.building = false;   
         Pman.layout.getRegion('center').showPanel(0);
         Pman.layout.endUpdate(); 
         Pman.addTopToolbar();  
