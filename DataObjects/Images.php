@@ -295,7 +295,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
         $this->mimetype = $_FILES['imageUpload']['type'];
-        if (in_array($this->mimetype, array('text/application', 'application/octet-stream'))) { // weird tyeps..
+        if (in_array($this->mimetype, array(
+                        'text/application',
+                        'application/octet-stream',
+                        'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???    
+                ))) { // weird tyeps..
             $inf = pathinfo($_FILES['imageUpload']['name']);
             $this->mimetype  = $y->fromExt($inf['extension']);
         }
