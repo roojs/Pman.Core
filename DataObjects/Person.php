@@ -270,13 +270,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return true; 
         }
         
-        
-        
+        if (!empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
+             return false;
+        }
         
         // not in session or not matched...
         $u = DB_DataObject::factory('Person');
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
+        $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $n;
         $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
         if ($error) {
             die($error->toString()); // not really a good thing to do...
