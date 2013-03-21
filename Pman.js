@@ -2,13 +2,7 @@
 
 /**
  * 
- * >>> Pman.layout.getRegion('center').tabs.stripWrap
- * ==> tab.???
- * var tbh = Pman.layout.getRegion('center').tabs.stripWrap.child('div').createChild(
- * 
- * {tag: 'div', style: 'display:block;position:absolute;top:2;left:300;width:100%;height:25px'});
- * 
- * 
+ *  
  *  CHANGES
  *  - gtranslate moved to Pman.GoogleTranslate
  * 
