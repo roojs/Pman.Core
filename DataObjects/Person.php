@@ -308,11 +308,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
              
         }
         
-        
-        
-        $u = DB_DataObject::factory('Person');
-        $u->whereAdd(' LENGTH(passwd) > 0');
-        if (!$u->count()){
+        if (empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
+            $u = DB_DataObject::factory('Person');
+            $u->whereAdd(' LENGTH(passwd) > 0');
+             $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $u->count();
+        }
+                
+             
+        if (empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
             
             // fake person - open system..
             //$ce = DB_DataObject::factory('core_enum');
