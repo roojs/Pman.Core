@@ -42,10 +42,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             $this->jerr("invalid file");
         }
         
-        $req = array(
-            'LINE', 'ITEM CODE', 'DESCRIPTION', 'QUANTITY'
-        );
-        
+         
         $cols = false;
         $header = false;
         $rows = array();
@@ -72,12 +69,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
                     continue;
                 }
                
-                foreach($req as $r) {
-                    if (!in_array($r,$cols)) {
-                        $cols = false;
-                        break;
-                    }
-                }
+                 
                 continue;
             }
             
