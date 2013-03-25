@@ -30,12 +30,12 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         require_once 'File/Convert.php';
         $fc = new File_Convert($img->getStoreName(), $img->mimetype );
         $csv = $fc->convert('text/csv');
-        $data = $this->importCsv($this->walkrows($csv));
+        $data = $this->importCsv($csv);
         $this->jdata($data);
         
     }
     
-    function walkrows($csv)
+    function importCsv($csv)
     {
         ini_set("auto_detect_line_endings", true);
         
