@@ -289,7 +289,7 @@ class Pman_Core_I18n extends Pman
      * if it can load rates from europe or a cache it will update them.
      * otherwise it will alwasy return a rate.
      * -- should not be used to do perfect rates.
-     * -- as it may fail...
+     * -- as it may fail... and use backup rates
      *
      *
      */
