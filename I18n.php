@@ -304,12 +304,13 @@ class Pman_Core_I18n extends Pman
         $this->rates['EUR'] = 1.0;
         $this->rates['TWD'] = 46.7008412;
         $this->rates['VND'] = 26405.3;
-         $this->rates['RMB'] = $this->rates['CNY'] ;
+       
        
         foreach($dom->Cube->Cube->Cube as $c) {
            //echo '<PRE>';print_r($c );
             $this->rates[(string)$c['currency']] = (string)$c['rate'];
         }
+        $this->rates['RMB'] = $this->rates['CNY'] ;
         // now try loading from latest..
         $target = ini_get('session.save_path').'/eurofxref-daily.xml';
         
