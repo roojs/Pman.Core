@@ -284,6 +284,15 @@ class Pman_Core_I18n extends Pman
         return $this->rates[$to] * $base;
     
     }
+    /**
+     * load Rates - uses our base rates as default,
+     * if it can load rates from europe or a cache it will update them.
+     * otherwise it will alwasy return a rate.
+     * -- should not be used to do perfect rates.
+     * -- as it may fail...
+     *
+     *
+     */
     var $rates = array();
     function loadRates()
     {
