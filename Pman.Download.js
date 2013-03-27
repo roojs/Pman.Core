@@ -222,10 +222,24 @@ Roo.apply(Pman.Download.prototype, {
     buildFromGrid : function()
     {
         // get the params from beforeLoad
-        this.grid.ds.fireEvent('beforeload', this.grid.ds, {
+        var ds = this.grid.ds;
+        ds.fireEvent('beforeload', ds, {
             params : this.params
             
         });
+        
+         if(ds.sortInfo && ds.remoteSort){
+            var pn = ds.paramNames;
+            this.params[pn["sort"]] = ds.sortInfo.field;
+            this.params[pn["dir"]] = ds.sortInfo.direction;
+        }
+        if (ds.multiSort) {
+            var pn = ds.paramNames;
+            this.params[pn["multisort"]] = Roo.encode( { sort : ds.sortToggle, order: ds.sortOrder });
+        }
+        
+        
+        
         this.url = this.grid.ds.proxy.conn.url;
         this.method = this.grid.ds.proxy.conn.method ;
         var t = this;
@@ -235,6 +249,7 @@ Roo.apply(Pman.Download.prototype, {
             t.params['csvTitles['+i+']'] = c.header;
             
         });
+        
         if (this.grid.loadMask) {
             this.grid.loadMask.onLoad();
         }
