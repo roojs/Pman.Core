@@ -314,16 +314,18 @@ class Pman_Core_UpdateDatabase extends Pman
         $enum = DB_DataObject::Factory('core_enum');
         $enum->initEnums(
             array(
-                'etype' => '',
-                'name' => 'COMPTYPE',
-                'display_name' =>  'Company Types',
-                'cn' => array(
-                    array(
-                        'name' => 'OWNER',
-                        'display_name' => 'Owner',
-                        'seqid' => 999, // last...
+                array(
+                    'etype' => '',
+                    'name' => 'COMPTYPE',
+                    'display_name' =>  'Company Types',
+                    'cn' => array(
+                        array(
+                            'name' => 'OWNER',
+                            'display_name' => 'Owner',
+                            'seqid' => 999, // last...
+                        )
+                        
                     )
-                    
                 )
             )
         ); 
