@@ -43,7 +43,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function owner()
     {
         $p = DB_DataObject::Factory('Person');
-        $p->get($this->owner);
+        $p->get($this->owner_id);
         return $p;
     }
     
