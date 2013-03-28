@@ -36,6 +36,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     public $deleted_by;                      // int(11)  not_null
     public $deleted_dt;                      // datetime(19)  binary
 
+
+    public $name_facebook; // VARCHAR(128) NULL;
+    public $url_blog; // VARCHAR(256) NULL ;
+    public $url_twitter; // VARCHAR(256) NULL ;
+    public $url_linkedin; // VARCHAR(256) NULL ;
+    
+    public $phone_mobile; // varchar(32)  NOT NULL  DEFAULT '';
+    public $phone_direct; // varchar(32)  NOT NULL  DEFAULT '';
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
