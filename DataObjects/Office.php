@@ -50,4 +50,12 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         return $c;
         
     }
+    
+    function beforeDelete($dependants_array, $roo)
+    {
+        print_R($dependants_array);
+        exit;
+    }
+    
+    
 }
