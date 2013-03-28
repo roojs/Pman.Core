@@ -53,7 +53,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
-        if (count($dependants_array != 1)) {
+        if (count($dependants_array) != 1) {
             $roo->jerr("more than one person..");
             return true; // standard error message.
         }
