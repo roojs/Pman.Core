@@ -53,6 +53,10 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
+        if (count($dependants_array != 1)) {
+            return false; // standard error message.
+        }
+        
         print_R($dependants_array);
         exit;
     }
