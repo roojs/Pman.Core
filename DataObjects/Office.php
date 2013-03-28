@@ -65,7 +65,11 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         $p = $dependants_array[0];
         $old = clone($p);
         $p->office_id = 0;
+        print_R($p);
         $p->update($old);
+        
+        
+        
         $roo->jerr("updated person?..");
         return true;
     }
