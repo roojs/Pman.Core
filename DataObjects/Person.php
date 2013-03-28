@@ -39,6 +39,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    function owner()
+    {
+        $p = DB_DataObject::Factory('Person');
+        $p->get($this->owner);
+        return $p;
+    }
+    
     /**
      *
      *
