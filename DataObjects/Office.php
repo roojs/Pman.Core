@@ -62,11 +62,12 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             $roo->jerr("dep is not a person..");
             return true;
         }
-        $p = $dependants_array[0];
-        $old = clone($p);
-        $p->office_id = 0;
-        print_R($p);
-        $p->update($old);
+        
+        $x = $dependants_array[0];
+        $old = clone($x);
+        $x->office_id = 0;
+        print_R($x);
+        $x->update($old);
         
         
         
