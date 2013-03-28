@@ -53,10 +53,11 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
-         if (count($dependants_array) != 1) {
-            //$roo->jerr("more than one person..");
+        if (count($dependants_array) != 1) {
+            //$roo->jerr("more than one dependant type....");
             return true; // standard error message.
         }
+        
         $p = DB_DAtaObject::Factory('Person');
         $p->office_id = $this->id;
         if ($p->count() > 1) {
