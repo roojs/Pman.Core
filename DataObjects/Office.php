@@ -59,33 +59,20 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         }
         
         $p = DB_DAtaObject::Factory('Person');
+        
+        if (!is_a($dependants_array[0], get_class($p))) {
+            $roo->jerr("dep is not a person..");
+            return true;
+        }
+        
         $p->office_id = $this->id;
         if ($p->count() > 1) {
             return true; // default err..
         }
         $p->find(true);
         $pp = clone($p);
-        $p->office_id = $this->
-        
-        
-        
-        
-       
-         $p = DB_DAtaObject::Factory('Person');
-        if (!is_a($dependants_array[0], get_class($p))) {
-            $roo->jerr("dep is not a person..");
-            return true;
-        }
-        print_R($dep)
-        $x = $dependants_array[0];
-        $old = clone($x);
-        $x->office_id = 0;
-        print_R($x);
-        $x->update($old);
-        
-        
-        
-        $roo->jerr("updated person?..");
+        $p->office_id = 0;
+        $p->update($pp);
         return true;
     }
     
