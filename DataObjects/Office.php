@@ -56,6 +56,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         if (count($dependants_array != 1)) {
             return true; // standard error message.
         }
+        DB_DataObject::DebugLevel(1);
         $p = DB_DAtaObject::Factory('Person');
         if (!is_a($dependants_array[0], get_class($p))) {
             return true;
