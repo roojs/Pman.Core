@@ -56,9 +56,15 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         if (count($dependants_array != 1)) {
             return false; // standard error message.
         }
-        
-        print_R($dependants_array);
-        exit;
+        $p = DB_DAtaObject::Factory('Person');
+        if (!is_a($dependants_array[0], get_class($p))) {
+            return false;
+        }
+        $p = $dependants_array[0];
+        $old = clone($p);
+        $p->office_id = 0;
+        $p->update($old);
+        return true;
     }
     
     
