@@ -54,11 +54,11 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     function beforeDelete($dependants_array, $roo)
     {
         if (count($dependants_array != 1)) {
-            return false; // standard error message.
+            return true; // standard error message.
         }
         $p = DB_DAtaObject::Factory('Person');
         if (!is_a($dependants_array[0], get_class($p))) {
-            return false;
+            return true;
         }
         $p = $dependants_array[0];
         $old = clone($p);
