@@ -15,7 +15,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     public $company_id;                      // int(11)  
     public $office_id;                       // int(11)  
-    
+    public $honor; // VARCHAR(256) NULL;    
     public $name;                            // string(128)  not_null
     public $firstname;                            // string(128)  not_null
     public $lastname;                            // string(128)  not_null
