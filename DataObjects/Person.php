@@ -350,6 +350,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $this->isAuth(); // force session start..
         $this->verifyAuth();
         $db = $this->getDatabaseConnection();
+        
+        
+        // open up iptables at login..
+        $dbname = $this->database();
+        touch( '/tmp/run_pman_admin_iptables-'.$dbname);
+         
         // refresh admin group if we are logged in as one..
         //DB_DataObject::debugLevel(1);
         $g = DB_DataObject::factory('Groups');
