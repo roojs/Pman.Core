@@ -32,7 +32,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         $csv = $fc->convert('text/csv');
         $ret = $this->importCsv($csv);
         
-        print_R($ret);exit;
+       
         
         $this->jdata($ret['data'], false, isset($ret['extra']) ? $ret['extra'] : array() );
         
