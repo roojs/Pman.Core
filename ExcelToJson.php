@@ -30,8 +30,8 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         require_once 'File/Convert.php';
         $fc = new File_Convert($img->getStoreName(), $img->mimetype );
         $csv = $fc->convert('text/csv');
-        $data = $this->importCsv($csv);
-        $this->jdata($data['data'], false, isset($data['extra']) ? $data['extra'] : array() );
+        $ret = $this->importCsv($csv);
+        $this->jdata($ret['data'], false, isset($ret['extra']) ? $ret['extra'] : array() );
         
     }
     
