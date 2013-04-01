@@ -269,7 +269,13 @@ class Pman_Core_SimpleExcel extends Pman
             
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
-            $worksheet->write($start_row+$r, $c, $v, $format);
+          // handle 0 prefixes..
+            if (is_numeric($v) && substr($v,0,1) == '0') {
+                $worksheet->writeString($start_row+$r, $c, $v, $format);
+            } else {
+          
+                $worksheet->write($start_row+$r, $c, $v, $format);
+            }
         }
         $this->start_row++;
         
