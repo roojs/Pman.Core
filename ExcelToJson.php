@@ -89,6 +89,9 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         }
         fclose($fh);
         
+        $ret = array('extra' => $extra, 'data' => $rows);
+        echo 'about to return?';print_R($ret);exit;
+        
         return array('extra' => $extra, 'data' => $rows);;
     }
 }
