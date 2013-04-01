@@ -51,7 +51,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         $cols = false;
         $header = false;
         $rows = array();
-        $ret = array();
+        $extra = array();
         
         while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
             if(!array_filter($n)){
@@ -63,7 +63,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
             }
             
             if(!$header){
-               $ret[preg_replace(array('/\s/', '/\:/'), '', $n[0])] = $n[1];
+               $extra[preg_replace(array('/\s/', '/\:/'), '', $n[0])] = $n[1];
                continue;
             }
             
@@ -89,6 +89,6 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         }
         fclose($fh);
         
-        return array('extra' => $ret, 'data' => $rows);;
+        return array('extra' => $extra, 'data' => $rows);;
     }
 }
