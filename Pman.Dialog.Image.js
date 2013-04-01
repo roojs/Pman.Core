@@ -145,7 +145,7 @@ Pman.Dialog.Image = {
                                         Roo.log(act);
                                         //console.log(act);
                                         if (_this.callback) {
-                                            _this.callback.call(this, act.result.data);
+                                            _this.callback.call(this, act.result.data, act.result.extra);
                                         }
                                         return; 
                                     }
