@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Pman.php';
+
 class Pman_Core_Tests_I18n extends Pman
 {
     function getAuth()
