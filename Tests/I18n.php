@@ -20,6 +20,10 @@ class Pman_Core_Tests_I18n extends Pman
         
         
     }
+    function output()
+    {
+        die("done");
+    }
     
     
 }
