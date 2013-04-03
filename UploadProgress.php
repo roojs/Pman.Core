@@ -23,7 +23,8 @@ class Pman_Core_UploadProgress extends Pman
            }
         if (!empty($_GET['id'])) {
            // var_dump(uploadprogress_get_info($_GET['id']));
-            $this->jok(uploadprogress_get_info($_GET['id']));
+           $ret = uploadprogress_get_info($_GET['id']);
+            $this->jok($ret);
         }
         $this->jerr("no data");
     }
