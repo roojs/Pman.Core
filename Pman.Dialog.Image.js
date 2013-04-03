@@ -97,7 +97,7 @@ Pman.Dialog.Image = {
                             Roo.MessageBox.updateProgress(1,
                                 "Upload Complete - processing"
                             );
-                        
+                            return;
                         }
                         dlg.uploadProgress.defer(2000,dlg);
                     },
