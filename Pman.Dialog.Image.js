@@ -124,6 +124,10 @@ Pman.Dialog.Image = {
                                     if (act.type == 'setdata') { 
                                         this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
                                         this.el.dom.action = this.url;
+                                        if (typeof(_this.data.timeout) != 'undefined') {
+                                            this.timeout = _this.data.timeout;
+                                        }
+                                        
                                         this.findField('UPLOAD_IDENTIFIER').setValue(
                                             (new Date() * 1) + '' + Math.random());
                                             
