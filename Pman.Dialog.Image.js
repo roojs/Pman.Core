@@ -93,6 +93,11 @@ Pman.Dialog.Image = {
                             Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,
                                 Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'
                             );
+                        } else {
+                            Roo.MessageBox.updateProgress(1,
+                                "Upload Complete - processing"
+                            );
+                        
                         }
                         dlg.uploadProgress.defer(2000,dlg);
                     },
