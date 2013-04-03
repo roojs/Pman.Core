@@ -6,7 +6,8 @@ class Pman_Core_Tests_I18n extends Pman
 {
     function getAuth()
     {
-        if (!$this->cli) {
+        print_R($this);exit;
+        if (!$this->bootcli) {
             die("not cli?");
         }
         
