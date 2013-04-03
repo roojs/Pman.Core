@@ -19,7 +19,8 @@ class Pman_Core_Tests_I18n extends Pman
          $ret = $i->convertCurrency(100,"HKD","USD");
         var_dump($ret); 
         
-        
+         $ret = $i->convertCurrency(100,"INR","USD");
+        var_dump($ret); 
     }
     function output()
     {
