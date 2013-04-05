@@ -283,6 +283,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->person_id = $au ? $au->id : -1;
         $this->person_table = $au ? $au->tableName() : '';
         $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $this->ipaddr = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        
         $this->action = $act;
         $this->on_table = $obj ? $obj->tableName() : '';
         $pk = $obj ? $obj->keys()  : false;
