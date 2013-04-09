@@ -248,7 +248,7 @@ class Pman_Core_SimpleExcel extends Pman
                 continue;
             }
             
-            if (empty($cl[$col_cfg['dataIndex']])) {
+            if (!isset($cl[$col_cfg['dataIndex']])) {
                 continue;
             }
             if (isset($col_cfg['txtrenderer'])) {
