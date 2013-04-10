@@ -92,7 +92,7 @@ class Pman_Core_Images extends Pman
                 $user = getenv('USERNAME'); // windows.
             }
             $ff = HTML_FlexyFramework::get();
-            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',$ev->event_when). $ev->id . ".json";
+            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
             $filesJ = json_decode(file_get_contents($file));
          
             //print_r($filesJ);
@@ -102,7 +102,7 @@ class Pman_Core_Images extends Pman
                     continue;
                 }
                 
-                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').  $f->tmp_name ;
+                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
                 if (!file_exists($src)) {
                     die("file was not saved");
                 }
