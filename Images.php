@@ -78,6 +78,7 @@ class Pman_Core_Images extends Pman
             $id = empty($bits[3]) ? 0 :   $bits[3];
             
         } else if (!empty($bits[0]) && $bits[0] == 'events') {
+            
             $popts = PEAR::getStaticProperty('Pman','options');
             $ev = DB_DAtaObject::Factory('events');
             if (!$ev->get($bits[1])) {
@@ -86,13 +87,12 @@ class Pman_Core_Images extends Pman
             // technically same user only.. -- normally www-data..
             if (function_exists('posix_getpwuid')) {
                 $uinfo = posix_getpwuid( posix_getuid () ); 
-             
                 $user = $uinfo['name'];
             } else {
                 $user = getenv('USERNAME'); // windows.
             }
             $ff = HTML_FlexyFramework::get();
-            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $ev->id . ".json";
+            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',$ev->event_when). $ev->id . ".json";
             $filesJ = json_decode(file_get_contents($file));
          
             //print_r($filesJ);
