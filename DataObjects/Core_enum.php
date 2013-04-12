@@ -38,13 +38,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 ");
             }
         }
-        if(!empty($q['search']['display_name')){
+        if(!empty($q['search']['display_name'])) {
+            $name = $this->escape($q['search']['display_name']);
+            // ilike on postgres?!?
+            $this->whereAdd("
+                core_enum.display_name LIKE '{$name}%'
+            ");
             
-            foreach($names as $name){
-                $this->whereAdd("
-                    core_enum.name NOT IN ('$name')
-                ");
-            }
         }
         
     }
