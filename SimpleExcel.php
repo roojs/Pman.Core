@@ -142,7 +142,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $start_row++;
             }
             // add a spacer..
-            $start_row++;
+            //$start_row++;
         }
             
                
