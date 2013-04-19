@@ -102,9 +102,9 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
          
     }
     
-    function updated_dt($format)
+    function featured_dt($format)
     {
-        return ($this->updated_dt) ? date($format, strtotime($this->updated_dt)) : null;
+        return ($this->featured_dt) ? date($format, strtotime($this->featured_dt)) : null;
     }
     
     function toEventString() {
