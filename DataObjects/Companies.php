@@ -101,6 +101,12 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         
          
     }
+    
+    function updated_dt($format)
+    {
+        return;
+    }
+    
     function toEventString() {
         return $this->name;
     }
