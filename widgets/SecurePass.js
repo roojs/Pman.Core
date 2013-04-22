@@ -71,14 +71,12 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
     initEvents : function(){
-        Roo.log('initEvents');
         Ext.form.SecurePass.superclass.initEvents.call(this);
 		this.el.on('keyup', this.checkStrength, this, {buffer:50});
 	},
 
 	// private
 	onRender : function(ct, position){
-             Roo.log('onRender');
 		Ext.form.SecurePass.superclass.onRender.call(this, ct, position);
 		this.wrap = this.el.wrap({cls: 'x-form-field-wrap'});
 		this.trigger = this.wrap.createChild({tag: 'div', cls: 'StrengthMeter '+this.triggerClass});
@@ -120,7 +118,6 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
 	// private
 	onDestroy : function(){
-            Roo.log('onDestroy');
 		if(this.trigger){
 			this.trigger.removeAllListeners();
 			this.trigger.remove();
@@ -133,7 +130,6 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     
 	// private
 	checkStrength : function(){
-            Roo.log('checkStrength');
 		var pwd = this.el.getValue();
 		if (pwd == this._lastPwd) {
 			return;
@@ -161,7 +157,6 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 		this._lastPwd = pwd;
 	},
     reset : function(){
-        Roo.log('reset');
         Ext.form.SecurePass.superclass.reset.call(this);
         this._lastPwd = '';
         var pm = this.trigger.child('div/div/div').dom;
@@ -170,7 +165,6 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
 	validateValue : function(value){
-            Roo.log('validateValue');
 		if (!Ext.form.TextField.superclass.validateValue.call(this, value)){
             return false;
         }
@@ -227,14 +221,12 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
 	CharacterSetChecks : function(type){
-            Roo.log('CharacterSetChecks');
 		this.type = type;
 		this.fResult = false;
 	},
 
     // private
 	isctype : function(character, type){
-            Roo.log('isctype');
 		switch (type) { //why needed break after return in js ? very odd bug
 			case this.kCapitalLetter: if (character >= 'A' && character <= 'Z') { return true; } break;
 			case this.kSmallLetter: if (character >= 'a' && character <= 'z') { return true; } break;
@@ -247,13 +239,11 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
 	IsLongEnough : function(pwd, size){
-            Roo.log('IsLongEnough');
 		return !(pwd == null || isNaN(size) || pwd.length < size);
 	},
 
     // private
 	SpansEnoughCharacterSets : function(word, nb){
-            Roo.log('SpansEnoughCharacterSets');
 		if (!this.IsLongEnough(word, nb))
 		{
 			return false;
@@ -286,19 +276,16 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
 	ClientSideStrongPassword : function(pwd){
-            Roo.log('ClientSideStrongPassword');
 		return this.IsLongEnough(pwd, 8) && this.SpansEnoughCharacterSets(pwd, 3);
 	},
 
     // private
 	ClientSideMediumPassword : function(pwd){
-            Roo.log('ClientSideMediumPassword');
 		return this.IsLongEnough(pwd, 7) && this.SpansEnoughCharacterSets(pwd, 2);
 	},
 
     // private
 	ClientSideWeakPassword : function(pwd){
-            Roo.log('ClientSideWeakPassword');
 		return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
 	}
 })
