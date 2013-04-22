@@ -102,11 +102,6 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
          
     }
     
-    function featured_dt($format)
-    {
-        return ($this->featured_dt) ? date($format, strtotime($this->featured_dt)) : null;
-    }
-    
     function toEventString() {
         return $this->name;
     }
