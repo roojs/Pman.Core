@@ -19,7 +19,7 @@ Ext.form.SecurePass = function(config) {
     Ext.form.SecurePass.superclass.constructor.call(this, config);
 }
 
-Ext.extend(Ext.form.SecurePass, Ext.form.Field, {
+Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 	/**
 	 * @cfg {String/Object} errors A Error spec, or true for a default spec (defaults to
 	 * {
