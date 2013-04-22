@@ -140,8 +140,6 @@ Pman.Dialog.PersonEditor.prototype = {
                             }
 
                         }
-                        Roo.log('run');
-                        Roo.log(_this.form.findField('passwd1').allowBlank);
                         return;
                     } 
                     
