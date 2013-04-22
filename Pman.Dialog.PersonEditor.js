@@ -455,7 +455,16 @@ Pman.Dialog.PersonEditor.prototype = {
                 xtype : 'TextField',
                 width : 300
             },
-            
+            passwd1 : {
+                name : 'passwd1',
+                fieldLabel : "New Password ",
+                value : '',
+                allowBlank : true, // must be filled in as we rely on it for login details..
+                inputType: 'password',
+                xtype : 'SecurePass',
+                width : 220,
+                imageRoot : rootURL + '/Pman/templates/images'
+            },
             passwd2 : {
                 
                 name : 'passwd2',
