@@ -165,8 +165,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
 	validateValue : function(value){
-		
-		return true;
+            Roo.log(value);
 	},
 
     // private
