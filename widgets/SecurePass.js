@@ -3,7 +3,6 @@
 
 
 Ext.form.SecurePass = function(config) {
-    Roo.log(config);
 	// these go here, so the translation tool can replace them..
     this.errors = {
 		PwdEmpty: "Please type a password, and then retype it to confirm.",
