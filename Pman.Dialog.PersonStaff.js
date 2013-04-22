@@ -9,7 +9,7 @@ Pman.on('beforeload', function() {
     Pman.Dialog.PersonStaff  = new Pman.Dialog.PersonEditor({
         type : 'staff',
         dialogConfig : {
-            title: "Add / Edit "
+            title: "Add / Edit Staff"
         },
         itemList : [
             
