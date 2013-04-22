@@ -298,7 +298,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (in_array($this->mimetype, array(
                         'text/application',
                         'application/octet-stream',
-                        'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???    
+                        'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
+                        'application/csv-tab-delimited-table', // windows again!!?
                 ))) { // weird tyeps..
             $inf = pathinfo($_FILES['imageUpload']['name']);
             $this->mimetype  = $y->fromExt($inf['extension']);
