@@ -475,6 +475,53 @@ Pman.Dialog.PersonEditor.prototype = {
                 xtype : 'TextField',
                 width : 220
             },
+            project_id_fs : {
+                xtype : 'FieldSetEx',
+                name: 'project_id_fs',
+                value: 0,
+                labelWidth: 100,
+                expanded: false,
+                style: 'width:420px;',
+                legend : "Always File Messages from this Person in Project",
+                items : [
+                    Pman.Std.project_id({
+                        width: 300,
+                        fieldLabel : "Project",
+                        allowBlank : true
+                    }),
+                    {
+                      xtype: 'ComboBox',
+                        name : 'action_type_str',
+                        selectOnFocus:true,
+                        qtip : "Action Type",
+                        fieldLabel : "Action Required",
+
+                        allowBlank : true,
+                        width: 50,
+                        
+                        
+                        store: new Ext.data.SimpleStore({
+                              // load using HTTP
+                            fields: [ 'code', 'desc' ],
+                            data:  [[ 'ACTION_REQUIRED', "Yes"] , [ 'NOTIFY', "No"] ]
+                        }),
+                        displayField:'desc',
+                        editable : false,
+                        valueField : 'code',
+                        hiddenName:  'action_type',
+                        value : 'ACTION_REQUIRED',
+                        forceSelection: true,
+                        mode: 'local',
+                        triggerAction: 'all' 
+                       // queryParam: 'query[project]',
+                       // loadingText: "Searching...",
+                        //listWidth: 400
+                       
+                         
+                       
+                    }
+                ]
+            },
             
             id : { name : 'id', value : '', xtype : 'Hidden' },
             save_send : { name : '_save_send', value : 0, xtype : 'Hidden' },
