@@ -134,10 +134,10 @@ Pman.Dialog.PersonEditor.prototype = {
                         if (this.type == 'staff') {
                             _this.form.findField('passwd1').allowBlank = false;
                             _this.form.findField('passwd2').allowBlank = false;
-                            if (data.id > 0) {
-                                _this.form.findField('passwd1').allowBlank = true;
-                                _this.form.findField('passwd2').allowBlank = true;
-                            }
+//                            if (data.id > 0) {
+//                                _this.form.findField('passwd1').allowBlank = true;
+//                                _this.form.findField('passwd2').allowBlank = true;
+//                            }
 
                         }
                         return;
