@@ -165,57 +165,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
 	validateValue : function(value){
-		if (!Ext.form.TextField.superclass.validateValue.call(this, value)){
-            return false;
-        }
-		if (value.length == 0) {
-            if (this.allowBlank) {
-                this.clearInvalid();
-                return true;
-            }
-            
-			this.markInvalid(this.errors.PwdEmpty);
-            return false;
-		}
-		if ('[\x21-\x7e]*'.match(value)) {
-			this.markInvalid(this.errors.PwdBadChar);
-            return false;
-		}
-		if (value.length < 6) {
-			this.markInvalid(this.errors.PwdShort);
-            return false;
-		}
-		if (value.length > 16) {
-			this.markInvalid(this.errors.PwdLong);
-            return false;
-		}
-        var strength;
-		if (this.ClientSideStrongPassword(value)) {
-			strength = 3;
-		} else if(this.ClientSideMediumPassword(value)) {
-			strength = 2;
-		} else if(this.ClientSideWeakPassword(value)) {
-			strength = 1;
-		} else {
-			strength = 0;
-		}
-        if (strength < 2) {
-			this.markInvalid(this.errors.TooWeak);
-            return false;
-		}
-        /*
-		for (var index = 0; index < this.fieldsFilter.length; ++index) {
-			filter = document.getElementById(this.fieldsFilter[index][0]).value;
-			if (filter != '')
-			{
-				re = new RegExp(filter);
-				if (re.test(value)) {
-					this.markInvalid(eval('this.errors.'+ this.fieldsFilter[index][1]));
-					return false;
-				}
-			}
-		}
-        */
+		
 		return true;
 	},
 
