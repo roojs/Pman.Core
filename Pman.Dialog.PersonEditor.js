@@ -140,6 +140,7 @@ Pman.Dialog.PersonEditor.prototype = {
                             }
 
                         }
+                        Roo.log(_this.form);
                         return;
                     } 
                     
