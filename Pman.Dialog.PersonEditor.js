@@ -134,10 +134,10 @@ Pman.Dialog.PersonEditor.prototype = {
                         if (this.type == 'staff') {
                             _this.form.findField('passwd1').allowBlank = false;
                             _this.form.findField('passwd2').allowBlank = false;
-//                            if (data.id > 0) {
-//                                _this.form.findField('passwd1').allowBlank = true;
-//                                _this.form.findField('passwd2').allowBlank = true;
-//                            }
+                            if (data.id > 0) {
+                                _this.form.findField('passwd1').allowBlank = true;
+                                _this.form.findField('passwd2').allowBlank = true;
+                            }
 
                         }
                         return;
@@ -459,9 +459,9 @@ Pman.Dialog.PersonEditor.prototype = {
                 name : 'passwd1',
                 fieldLabel : "New Password ",
                 value : '',
-                allowBlank : false, // must be filled in as we rely on it for login details..
-                //inputType: 'password',
-                xtype : 'TextField',
+                allowBlank : true, // must be filled in as we rely on it for login details..
+                inputType: 'password',
+                xtype : 'SecurePass',
                 width : 220,
                 imageRoot : rootURL + '/Pman/templates/images'
             },
@@ -470,7 +470,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 name : 'passwd2',
                 fieldLabel : "Password (type again to confirm)",
                 value : '',
-                allowBlank : false, // must be filled in as we rely on it for login details..
+                allowBlank : true, // must be filled in as we rely on it for login details..
                 inputType: 'password',
                 xtype : 'TextField',
                 width : 220
