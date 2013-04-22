@@ -459,7 +459,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 name : 'passwd1',
                 fieldLabel : "New Password ",
                 value : '',
-                allowBlank : true, // must be filled in as we rely on it for login details..
+                allowBlank : false, // must be filled in as we rely on it for login details..
                 //inputType: 'password',
                 xtype : 'TextField',
                 width : 220,
@@ -470,8 +470,8 @@ Pman.Dialog.PersonEditor.prototype = {
                 name : 'passwd2',
                 fieldLabel : "Password (type again to confirm)",
                 value : '',
-                allowBlank : true, // must be filled in as we rely on it for login details..
-                //inputType: 'password',
+                allowBlank : false, // must be filled in as we rely on it for login details..
+                inputType: 'password',
                 xtype : 'TextField',
                 width : 220
             },
