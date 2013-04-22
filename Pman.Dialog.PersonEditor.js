@@ -461,7 +461,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 value : '',
                 allowBlank : true, // must be filled in as we rely on it for login details..
                 inputType: 'password',
-              //  xtype : 'SecurePass',
+                xtype : 'SecurePass',
                 width : 220,
                 imageRoot : rootURL + '/Pman/templates/images'
             },
@@ -472,7 +472,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 value : '',
                 allowBlank : true, // must be filled in as we rely on it for login details..
                 inputType: 'password',
-            //    xtype : 'TextField',
+                xtype : 'TextField',
                 width : 220
             },
             project_id_fs : {
