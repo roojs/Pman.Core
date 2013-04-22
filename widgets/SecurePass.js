@@ -33,5 +33,259 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 	 * })
 	 */
 	// private
+	errors : {},
+    
+    imageRoot: '/',
 	
+	/**
+	 * @cfg {String/Object} Label for the strength meter (defaults to
+	 * 'Password strength:')
+	 */
+	// private
+	meterLabel : '',
+
+	/**
+	 * @cfg {String/Object} pwdStrengths A pwdStrengths spec, or true for a default spec (defaults to
+	 * ['Weak', 'Medium', 'Strong'])
+	 */
+	// private
+	pwdStrengths : [],
+
+	/**
+	 * @cfg {String/Object} fieldsFilter A fieldsFilter spec, as [['field_name', 'error_id'], ...]
+	 */
+	// private
+	fieldsFilter : [],
+
+	// private
+	strength : 0,
+
+	// private
+	_lastPwd : null,
+    
+	// private
+	kCapitalLetter : 0,
+	kSmallLetter : 1,
+	kDigit : 2,
+	kPunctuation : 3,
+
+    // private
+    initEvents : function(){
+        Ext.form.SecurePass.superclass.initEvents.call(this);
+		this.el.on('keyup', this.checkStrength, this, {buffer:50});
+	},
+
+	// private
+	onRender : function(ct, position){
+		Ext.form.SecurePass.superclass.onRender.call(this, ct, position);
+		this.wrap = this.el.wrap({cls: 'x-form-field-wrap'});
+		this.trigger = this.wrap.createChild({tag: 'div', cls: 'StrengthMeter '+this.triggerClass});
+		 
+		this.trigger.createChild({
+            tag: 'div',  
+            style: {
+                'margin-bottom': '10px',
+                width: this.width + 'px'
+            },
+            cn: {
+                tag: 'div', 
+                style: {
+                    width: this.width + 'px',
+                    height: '9px',
+                    'background-image' : 'url(\''+this.imageRoot+'/password_meter_grey.gif\')',
+                    'background-position' : 'center center',
+                    'background-repeat': 'no-repeat'
+                },
+                cn : {
+                    //id: 'PwdMeter',
+                    tag: 'div',
+                    style:  {
+                        width: 0,
+                        height: '9px',
+                        'background-image': 'url(\''+this.imageRoot+'/password_meter.gif\')',
+                        'background-position': 'center center',
+                        'background-repeat': 'no-repeat',
+                        'font-size': '9px'
+                    }
+                }
+            }
+        });
+		if(this.hideTrigger){
+			this.trigger.setDisplayed(false);
+		}
+		this.setSize(this.width||'', this.height||'');
+	},
+
+	// private
+	onDestroy : function(){
+		if(this.trigger){
+			this.trigger.removeAllListeners();
+			this.trigger.remove();
+		}
+		if(this.wrap){
+			this.wrap.remove();
+		}
+		Ext.form.TriggerField.superclass.onDestroy.call(this);
+	},
+    
+	// private
+	checkStrength : function(){
+		var pwd = this.el.getValue();
+		if (pwd == this._lastPwd) {
+			return;
+		}
+
+		var strength;
+		if (this.ClientSideStrongPassword(pwd)) {
+			strength = 3;
+		} else if(this.ClientSideMediumPassword(pwd)) {
+			strength = 2;
+		} else if(this.ClientSideWeakPassword(pwd)) {
+			strength = 1;
+		} else {
+			strength = 0;
+		}
+        var pm = this.trigger.child('div/div/div').dom;
+        
+		pm.style.width = (this.width/3) * strength +'px';
+		//if(this.pwdStrengths != null && strength > 0) {
+        pm.innerHTML = this.meterLabel + '&nbsp;'+ this.pwdStrengths[strength];
+		//} else {
+		//	pm.innerHTML = '';
+		//}
+
+		this._lastPwd = pwd;
+	},
+    reset : function(){
+        Ext.form.SecurePass.superclass.reset.call(this);
+        this._lastPwd = '';
+        var pm = this.trigger.child('div/div/div').dom;
+        pm.style.width = 0;
+        pm.innerHTML = '';
+    },
+    // private
+	validateValue : function(value){
+		if (!Ext.form.TextField.superclass.validateValue.call(this, value)){
+            return false;
+        }
+		if (value.length == 0) {
+            if (this.allowBlank) {
+                this.clearInvalid();
+                return true;
+            }
+            
+			this.markInvalid(this.errors.PwdEmpty);
+            return false;
+		}
+		if ('[\x21-\x7e]*'.match(value)) {
+			this.markInvalid(this.errors.PwdBadChar);
+            return false;
+		}
+		if (value.length < 6) {
+			this.markInvalid(this.errors.PwdShort);
+            return false;
+		}
+		if (value.length > 16) {
+			this.markInvalid(this.errors.PwdLong);
+            return false;
+		}
+        var strength;
+		if (this.ClientSideStrongPassword(value)) {
+			strength = 3;
+		} else if(this.ClientSideMediumPassword(value)) {
+			strength = 2;
+		} else if(this.ClientSideWeakPassword(value)) {
+			strength = 1;
+		} else {
+			strength = 0;
+		}
+        if (strength < 2) {
+			this.markInvalid(this.errors.TooWeak);
+            return false;
+		}
+        /*
+		for (var index = 0; index < this.fieldsFilter.length; ++index) {
+			filter = document.getElementById(this.fieldsFilter[index][0]).value;
+			if (filter != '')
+			{
+				re = new RegExp(filter);
+				if (re.test(value)) {
+					this.markInvalid(eval('this.errors.'+ this.fieldsFilter[index][1]));
+					return false;
+				}
+			}
+		}
+        */
+		return true;
+	},
+
+    // private
+	CharacterSetChecks : function(type){
+		this.type = type;
+		this.fResult = false;
+	},
+
+    // private
+	isctype : function(character, type){
+		switch (type) { //why needed break after return in js ? very odd bug
+			case this.kCapitalLetter: if (character >= 'A' && character <= 'Z') { return true; } break;
+			case this.kSmallLetter: if (character >= 'a' && character <= 'z') { return true; } break;
+			case this.kDigit: if (character >= '0' && character <= '9') { return true; } break;
+			case this.kPunctuation: if ('!@#$%^&*()_+-=\'";:[{]}|.>,</?`~'.indexOf(character) >= 0) { return true; } break;
+			default: return false;
+		}
+        
+	},
+
+    // private
+	IsLongEnough : function(pwd, size){
+		return !(pwd == null || isNaN(size) || pwd.length < size);
+	},
+
+    // private
+	SpansEnoughCharacterSets : function(word, nb){
+		if (!this.IsLongEnough(word, nb))
+		{
+			return false;
+		}
+
+		var characterSetChecks = new Array(
+			new this.CharacterSetChecks(this.kCapitalLetter), new this.CharacterSetChecks(this.kSmallLetter),
+			new this.CharacterSetChecks(this.kDigit), new this.CharacterSetChecks(this.kPunctuation));
+		for (var index = 0; index < word.length; ++index) {
+			for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+				if (!characterSetChecks[nCharSet].fResult && this.isctype(word.charAt(index), characterSetChecks[nCharSet].type)) {
+					characterSetChecks[nCharSet].fResult = true;
+					break;
+				}
+			}
+		}
+
+		var nCharSets = 0;
+		for (var nCharSet = 0; nCharSet < characterSetChecks.length; ++nCharSet) {
+			if (characterSetChecks[nCharSet].fResult) {
+				++nCharSets;
+			}
+		}
+
+		if (nCharSets < nb) {
+			return false;
+		}
+		return true;
+	},
+
+    // private
+	ClientSideStrongPassword : function(pwd){
+		return this.IsLongEnough(pwd, 8) && this.SpansEnoughCharacterSets(pwd, 3);
+	},
+
+    // private
+	ClientSideMediumPassword : function(pwd){
+		return this.IsLongEnough(pwd, 7) && this.SpansEnoughCharacterSets(pwd, 2);
+	},
+
+    // private
+	ClientSideWeakPassword : function(pwd){
+		return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
+	}
 })
