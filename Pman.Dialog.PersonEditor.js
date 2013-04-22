@@ -81,7 +81,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 actioncomplete: function(f, act) {
                     _this.dialog.el.unmask();
                     if (act.type == 'load') {
-                        _this.data = act.result.data;
+                      //  _this.data = act.result.data;
                          
                     }
                     
