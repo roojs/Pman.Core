@@ -471,7 +471,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 fieldLabel : "Password (type again to confirm)",
                 value : '',
                 allowBlank : true, // must be filled in as we rely on it for login details..
-                inputType: 'password', // << if comment out this input type, it should be ok
+                inputType: 'text', // << if comment out this input type, it should be ok
                 xtype : 'TextField',
                 width : 220
             },
