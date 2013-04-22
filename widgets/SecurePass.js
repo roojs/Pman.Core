@@ -72,7 +72,8 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
     initEvents : function(){
         Ext.form.SecurePass.superclass.initEvents.call(this);
-		//this.el.on('keyup', this.checkStrength, this, {buffer:50});
+                Roo.log('run');
+		this.el.on('keyup', this.checkStrength, this, {buffer:50});
 	},
 
 	// private
