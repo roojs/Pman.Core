@@ -78,7 +78,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
                         event.preventDefault();
                         this.setValue('');
                     };
-                },this, {buffer:50});
+                },this);
             }
             Ext.form.SecurePass.superclass.initEvents.call(this);
             this.el.on('keyup', this.checkStrength, this, {buffer:50});
