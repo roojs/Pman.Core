@@ -299,11 +299,8 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         
     // private
         SafariOnKeyDown : function(event){
-            Roo.log(this.el);
-            Roo.log('start : ' + this.el.dom.selectionStart);
-            Roo.log('end : ' + this.el.dom.selectionEnd);
-            Roo.log('length : ' + this.getValue().length);
-            if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1){ // backspace and delete key
+            var isSelectAll = this.el.dom.selectionEnd - this.el.dom.selectionStart - this.getValue().length;
+            if(((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1) || isSelectAll == 0){ // backspace and delete key
                 event.preventDefault();
                 this.setValue('');
             };
