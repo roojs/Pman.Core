@@ -72,13 +72,8 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
     initEvents : function(){
             
-            if(this.el.is('input[type=password]')){
-                this.el.on('keydown',function(event){
-                    Roo.log(Roo.isSafari);
-                    if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1){ // backspace and delete key
-                        event.preventDefault();
-                        this.setValue('');
-                    };
+            if(this.el.is('input[type=password]') && Roo.isSafari){
+                this.el.on('keydown',
                 },this);
             }
             Ext.form.SecurePass.superclass.initEvents.call(this);
@@ -297,5 +292,13 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
 	ClientSideWeakPassword : function(pwd){
 		return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
-	}
+	},
+        
+    // private
+        SafariOnKeyDown : function(event){
+            if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1){ // backspace and delete key
+                event.preventDefault();
+                this.setValue('');
+            };
+        }
 })
