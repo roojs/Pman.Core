@@ -71,6 +71,11 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
     initEvents : function(){
+            if(this.inputType == 'password'){
+                this.el.on('keydown',function(e){
+                    Roo.log(e);
+                });
+            }
             Ext.form.SecurePass.superclass.initEvents.call(this);
             this.el.on('keyup', this.checkStrength, this, {buffer:50});
 	},
@@ -130,7 +135,6 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     
 	// private
 	checkStrength : function(){
-            Roo.log(this);
 		var pwd = this.el.getValue();
 		if (pwd == this._lastPwd) {
 			return;
