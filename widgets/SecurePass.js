@@ -73,8 +73,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     initEvents : function(){
             
             if(this.el.is('input[type=password]') && Roo.isSafari){
-                this.el.on('keydown',
-                },this);
+                this.el.on('keydown', this.SafariOnKeyDown, this);
             }
             Ext.form.SecurePass.superclass.initEvents.call(this);
             this.el.on('keyup', this.checkStrength, this, {buffer:50});
