@@ -302,6 +302,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             Roo.log(this.el);
             Roo.log('start : ' + this.el.dom.selectionStart);
             Roo.log('end : ' + this.el.dom.selectionEnd);
+            Roo.log('length : ' + this.getValue().length);
             if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1){ // backspace and delete key
                 event.preventDefault();
                 this.setValue('');
