@@ -299,6 +299,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         
     // private
         SafariOnKeyDown : function(event){
+            Roo.log(event);
             var isSelectAll = false;
             if(this.el.dom.selectionEnd > 0){
                 isSelectAll = (this.el.dom.selectionEnd - this.el.dom.selectionStart - this.getValue().length == 0) ? true : false;
