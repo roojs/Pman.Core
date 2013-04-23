@@ -130,6 +130,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     
 	// private
 	checkStrength : function(){
+            Roo.log(this);
 		var pwd = this.el.getValue();
 		if (pwd == this._lastPwd) {
 			return;
