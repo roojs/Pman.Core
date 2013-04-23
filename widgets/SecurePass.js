@@ -74,7 +74,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             if(this.inputType == 'password'){
                 this.el.on('keydown',function(event){
                     Roo.log(event.getKey());
-                    if(event.getKey() == 8){
+                    if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length == 1){ // backspace and delete key
                         event.preventDefault();
                         this.setValue('');
                     };
