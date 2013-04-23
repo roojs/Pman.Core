@@ -300,7 +300,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
         SafariOnKeyDown : function(event){
             Roo.log(this.el);
-            Roo.log(this.el.selectionStart);
+            Roo.log(this.el.dom.selectionStart);
             if((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1){ // backspace and delete key
                 event.preventDefault();
                 this.setValue('');
