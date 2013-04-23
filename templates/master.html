@@ -94,7 +94,11 @@
 {else:}                  
         <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js?ts={version}"></script>
                  
-{end:}                  
+{end:}    
+
+    <!-- testing password bug only -->
+    <script type="text/javascript" src="../../Roo/form/TextField.js"></script>
+
         <flexy:toJSON 
             baseURL="baseURL" 
             rootURL="rootURL" 
