@@ -76,7 +76,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
                     Roo.log(this);
                     if(event.getKey() == 8){
                         event.preventDefault();
-                        //this.setValue('');
+                        this.setValue('');
                     };
                 },this);
             }
