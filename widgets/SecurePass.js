@@ -302,7 +302,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             }
             if(((event.getKey() == 8 || event.getKey() == 46) && this.getValue().length ==1) || isSelectAll){ // backspace and delete key
                 event.preventDefault();
-                this.setValue('');
+                //this.setValue('');
             };
         }
 })
