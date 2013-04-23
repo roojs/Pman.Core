@@ -299,6 +299,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         
     // private
         SafariOnKeyDown : function(event){
+            Roo.log(event);
             Roo.log('NAV : ' + event.isNavKeyPress());
             Roo.log('Special : ' + event.isSpecialKey());
             Roo.log('getCharCode : ' + event.getCharCode());
