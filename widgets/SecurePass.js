@@ -71,9 +71,14 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 
     // private
     initEvents : function(){
-        Roo.log('in??');
-        Ext.form.SecurePass.superclass.initEvents.call(this);
-		this.el.on('keyup', this.checkStrength, this, {buffer:50});
+            $('input[type="password"]').on('keydown',function(event){
+                if(event.which == 8){ // backspace
+                    event.preventDefault();
+                    $(this).val('');
+                }
+            });
+            Ext.form.SecurePass.superclass.initEvents.call(this);
+            this.el.on('keyup', this.checkStrength, this, {buffer:50});
 	},
 
 	// private
