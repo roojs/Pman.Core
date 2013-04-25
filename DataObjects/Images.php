@@ -428,7 +428,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $baseURL = '';
         }
        
-        if ($size < 0) {
+        if (empty($size)) {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
             return $baseURL . $provider . "/{$this->id}/{$this->filename}";
