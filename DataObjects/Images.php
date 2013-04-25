@@ -436,6 +436,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //-- max?
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
+        // the size should 200x150 to convert
+        $fc = $this->toFileConvert();
+        $fc->convert($this->mimetype, $size);
         
         
         return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
