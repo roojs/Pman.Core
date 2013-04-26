@@ -441,11 +441,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if(empty($size[1])){
             $size[1] = 0;
         }
+        $size = implode('x', $size);
         $fc = $this->toFileConvert();
-        $fc->convert($this->mimetype, implode('x', $size));
+        $fc->convert($this->mimetype, $size);
         
         
-        return $baseURL . $provider . "/implode('x', $size)/{$this->id}/{$this->filename}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
     /**
      * size could be 123x345
