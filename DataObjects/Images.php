@@ -445,7 +445,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc->convert($this->mimetype, implode('x', $size));
         
         
-        return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
+        return $baseURL . $provider . "/implode('x', $size)/{$this->id}/{$this->filename}";
     }
     /**
      * size could be 123x345
