@@ -219,7 +219,7 @@ class Pman_Core_Notify extends Pman
                     // it's been pushed to the end, and nothing has
                     // been pushed since.s
                     // give up, let the next run sort it out.
-                    continue;
+                    sleep(3);
                     continue;
                 }
                 
