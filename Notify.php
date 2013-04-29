@@ -65,7 +65,7 @@ class Pman_Core_Notify extends Pman
         ),
          'limit' => array(
             'desc' => 'Limit search for no. to send to ',
-            'default' => 50,
+            'default' => 1000,
             'short' => 'L',
             'min' => 0,
             'max' => 999,
