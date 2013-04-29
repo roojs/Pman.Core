@@ -203,6 +203,8 @@ class Pman_Core_Notify extends Pman
             echo "BATCH SIZE: ".  count($ar) . "\n";
             
             if (empty($ar)) {
+                echo "COMPLETED MAIN QUEUE - running delated\n";
+                
                 if (empty($pushed)) {
                     break;
                 }
