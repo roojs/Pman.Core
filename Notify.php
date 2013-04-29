@@ -164,6 +164,9 @@ class Pman_Core_Notify extends Pman
             }
     
             $w->orderBy('act_when ASC'); // oldest first.
+            
+            echo "QUEUE is {$w->count()}\n";
+            
             $w->limit($opts['limit']); // we can run 1000 ...
         } else {
             $w->orderBy('act_when DESC'); // latest first
