@@ -174,7 +174,7 @@ class Pman_Core_Notify extends Pman
             $p = array_shift($ar);
             if (!$this->poolfree()) {
                 array_unshift($ar,$p); /// put it back on..
-                sleep(3);
+                //sleep(3);
                 continue;
             }
             if ($this->poolHasDomain($p->person_id_email)) {
@@ -190,7 +190,7 @@ class Pman_Core_Notify extends Pman
                 $pushed[] = $p->person_id_email;
                 
                 echo "domain {$p->person_id_email} already on queue, pushing to end.\n";
-                sleep(3);
+                //sleep(3);
                 continue;
             }
             
@@ -203,7 +203,7 @@ class Pman_Core_Notify extends Pman
         // we should have a time limit here...
         while(count($this->pool)) {
             $this->poolfree();
-            sleep(3);
+            //sleep(3);
         }
         
         die("DONE\n");
