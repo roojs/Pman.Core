@@ -65,14 +65,14 @@ class Pman_Core_Notify extends Pman
         ),
          'limit' => array(
             'desc' => 'Limit search for no. to send to ',
-            'default' => '',
+            'default' => 50,
             'short' => 'L',
             'min' => 0,
             'max' => 999,
         ),
           'limit' => array(
             'desc' => 'Dry run - do not send.',
-            'default' => '',
+            'default' => -,
             'short' => 'D',
             'min' => 0,
             'max' => 0,
