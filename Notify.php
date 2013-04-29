@@ -70,6 +70,13 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 999,
         ),
+          'limit' => array(
+            'desc' => 'Dry run - do not send.',
+            'default' => '',
+            'short' => 'D',
+            'min' => 0,
+            'max' => 0,
+        ),
     );
     
     var $max_pool_size = 10;
