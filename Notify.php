@@ -197,6 +197,7 @@ class Pman_Core_Notify extends Pman
         
         //echo "BATCH SIZE: ".  count($ar) . "\n";
         $pushed = array();
+        $requeue = array();
         while (true) {
             
             
@@ -209,7 +210,7 @@ class Pman_Core_Notify extends Pman
                     break;
                 }
                 $ar = $pushed;
-                $pushed = array();
+                $pushed = false;
                 continue;
             }
             
@@ -222,6 +223,11 @@ class Pman_Core_Notify extends Pman
             }
             if ($this->poolHasDomain($p->person_id_email)) {
                 
+                if ($pushed === false) {
+                    // we only try once to requeue..
+                    $requeue[] = $p;
+                    continue;
+                }
                 $pushed[] = $p;
                 
                 
