@@ -203,6 +203,11 @@ class Pman_Core_Notify extends Pman
             echo "BATCH SIZE: ".  count($ar) . "\n";
             
             if (empty($ar)) {
+                if (empty($pushed)) {
+                    break;
+                }
+                $ar = $pushed;
+                $pushed = array();
                 break;
             }
             
@@ -214,17 +219,10 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             if ($this->poolHasDomain($p->person_id_email)) {
-                $ar[] = $p; // push it on the end..
-                if (in_array($p->person_id_email, $pushed)) {
-                    // it's been pushed to the end, and nothing has
-                    // been pushed since.s
-                    // give up, let the next run sort it out.
-                    sleep(3);
-                    continue;
-                }
+                
+                $pushed[] = $p;
                 
                 
-                echo "domain {$p->person_id_email} already on queue, pushing to end.\n";
                 //sleep(3);
                 continue;
             }
@@ -233,8 +231,6 @@ class Pman_Core_Notify extends Pman
             $this->run($p->id,$p->person_id_email);
             
             
-            
-            $pushed = array();
             
         }
         
