@@ -118,7 +118,7 @@ class Pman_Core_Notify extends Pman
         }
         
         if (empty($opts['limit'])) {
-            $opts['limit'] = '1000';
+            $opts['limit'] = '1000'; // not sure why it's not picking up the defautl..
         }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
