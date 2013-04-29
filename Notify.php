@@ -63,6 +63,13 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 1,
         ),
+         'limit' => array(
+            'desc' => 'Limit search for no. to send to ',
+            'default' => '',
+            'short' => 'L',
+            'min' => 0,
+            'max' => 999,
+        ),
     );
     
     var $max_pool_size = 10;
