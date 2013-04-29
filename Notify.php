@@ -203,7 +203,7 @@ class Pman_Core_Notify extends Pman
         // we should have a time limit here...
         while(count($this->pool)) {
             $this->poolfree();
-            //sleep(3);
+             sleep(1);
         }
         
         die("DONE\n");
