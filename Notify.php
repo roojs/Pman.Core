@@ -195,7 +195,7 @@ class Pman_Core_Notify extends Pman
             exit;
         }
         
-        
+        echo "BATCH SIZE: ".  count($ar) . "\n");
         $pushed = array();
         while (true) {
             if (empty($ar)) {
@@ -238,7 +238,7 @@ class Pman_Core_Notify extends Pman
         // we should have a time limit here...
         while(count($this->pool)) {
             $this->poolfree();
-             sleep(1);
+             sleep(3);
         }
         
         die("DONE\n");
