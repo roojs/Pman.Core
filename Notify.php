@@ -113,7 +113,7 @@ class Pman_Core_Notify extends Pman
             print_r($opts);
         }
         $this->opts = $opts;
-        
+        $this->max_pool_size = $opts['poolsize'];
         
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
