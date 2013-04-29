@@ -254,6 +254,13 @@ class Pman_Core_Notify extends Pman
        
         $pipe = array();
         echo "call proc_open $cmd\n";
+        
+        
+        if (!empty($this->opts['dryrun'])) {
+            echo "DRY RUN\n";
+            return;
+        }
+        
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
         $info =  proc_get_status($p);
         $this->pool[] = array(
