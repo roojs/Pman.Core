@@ -195,7 +195,7 @@ class Pman_Core_Notify extends Pman
             exit;
         }
         
-        echo "BATCH SIZE: ".  count($ar) . "\n");
+        echo "BATCH SIZE: ".  count($ar) . "\n";
         $pushed = array();
         while (true) {
             if (empty($ar)) {
