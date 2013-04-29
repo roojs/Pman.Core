@@ -105,6 +105,8 @@ class Pman_Core_Notify extends Pman
             DB_DataObject::debugLevel($opts['debug']);
             print_r($opts);
         }
+        
+        
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
         $showold = !empty($opts['old']);
@@ -152,7 +154,7 @@ class Pman_Core_Notify extends Pman
             $w->limit(1000); // we can run 1000 ...
         } else {
             $w->orderBy('act_when DESC'); // latest first
-            $w->limit(50); // we can run 1000 ...
+            $w->limit($opts['limit'); // we can run 1000 ...
         }
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
