@@ -210,7 +210,7 @@ class Pman_Core_Notify extends Pman
                 }
                 $ar = $pushed;
                 $pushed = array();
-                break;
+                continue;
             }
             
             
