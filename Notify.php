@@ -302,7 +302,7 @@ class Pman_Core_Notify extends Pman
             //var_dump($info);
             
             // update if necessday.
-            if ($info['pid']) {
+            if ($info['pid'] && $p['pid'] != $info['pid']) {
                 echo "CHANING PID FROM " . $p['pid']  .  "  TO ". $info['pid']. "\n";
                 $p['pid'] = $info['pid'];
             }
