@@ -65,7 +65,7 @@ class Pman_Core_Notify extends Pman
         ),
     );
     
-    
+    var $max_pool_size = 10;
     
     var $table = 'core_notify';
     var $target = 'Core/NotifySend';
@@ -180,7 +180,7 @@ class Pman_Core_Notify extends Pman
             if ($this->poolHasDomain($p->person_id_email)) {
                 if (in_array($p->person_id_email, $pushed)) {
                     // it's been pushed to the end, and nothing has
-                    // been pushed since.
+                    // been pushed since.s
                     // give up, let the next run sort it out.
                     break;
                 }
@@ -196,6 +196,9 @@ class Pman_Core_Notify extends Pman
             
             
             $this->run($p->id,$p->person_id_email);
+            
+            
+            
             $pushed = array();
             
         }
@@ -309,7 +312,7 @@ class Pman_Core_Notify extends Pman
         }
         echo "POOL SIZE: ". count($pool) ."\n";
         $this->pool = $pool;
-        if (count($pool) < 10) {
+        if (count($pool) < $this->max_pool_size) {
             return true;
         }
         return false;
