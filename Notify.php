@@ -206,7 +206,7 @@ class Pman_Core_Notify extends Pman
             $p = array_shift($ar);
             if (!$this->poolfree()) {
                 array_unshift($ar,$p); /// put it back on..
-                sleep(1);
+                sleep(3);
                 continue;
             }
             if ($this->poolHasDomain($p->person_id_email)) {
