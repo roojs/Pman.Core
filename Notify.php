@@ -77,6 +77,13 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 0,
         ),
+        'poolsize' => array(
+            'desc' => 'Pool size',
+            'default' => 10,
+            'short' => 'P',
+            'min' => 0,
+            'max' => 100,
+        ),
     );
     
     var $max_pool_size = 10;
