@@ -113,8 +113,13 @@ class Pman_Core_Notify extends Pman
             print_r($opts);
         }
         $this->opts = $opts;
-        $this->max_pool_size = $opts['poolsize'];
+        if (!empty($opts['poolsize'])) {
+            $this->max_pool_size = $opts['poolsize'];
+        }
         
+        if (empty($opts['limit'])) {
+            $opts['limit'] = '1000';
+        }
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
         $showold = !empty($opts['old']);
