@@ -214,14 +214,18 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             if ($this->poolHasDomain($p->person_id_email)) {
+                
+                
+                
                 if (in_array($p->person_id_email, $pushed)) {
                     // it's been pushed to the end, and nothing has
                     // been pushed since.s
                     // give up, let the next run sort it out.
-                    break;
+                    $ar[] = $p; // push it on the end..
+                    continue;
                 }
                 
-                $ar[] = $p; // push it on the end..
+                
                 
                 $pushed[] = $p->person_id_email;
                 
