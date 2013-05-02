@@ -254,7 +254,6 @@ Roo.apply(Pman.Download.prototype, {
             this.grid.loadMask.onLoad();
         }
         this.params.limit = this.limit;
-     //   Roo.apply(this.params, cfg.params);
         
     }
     
