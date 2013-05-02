@@ -37,7 +37,7 @@ Pman.Download = function(cfg)
     
     if (this.grid) {
         
-        this.buildFromGrid();
+        this.buildFromGrid(cfg);
         Roo.log(this);
     }
     
@@ -219,7 +219,7 @@ Roo.apply(Pman.Download.prototype, {
          
     },
     
-    buildFromGrid : function()
+    buildFromGrid : function(cfg)
     {
         // get the params from beforeLoad
         var ds = this.grid.ds;
@@ -254,7 +254,7 @@ Roo.apply(Pman.Download.prototype, {
             this.grid.loadMask.onLoad();
         }
         this.params.limit = this.limit;
-        
+        Roo.apply(this.params, cfg.params);
         
     }
     
