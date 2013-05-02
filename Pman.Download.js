@@ -34,7 +34,8 @@ Pman.Download = function(cfg)
     this.params = {};
     
     Roo.apply(this, cfg);
-     
+    Roo.log('////');
+    Roo.log(cfg);
     if (this.grid) {
         
         this.buildFromGrid();
