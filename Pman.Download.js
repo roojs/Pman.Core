@@ -34,7 +34,7 @@ Pman.Download = function(cfg)
     this.params = {};
     
     Roo.apply(this, cfg);
-    
+     
     if (this.grid) {
         
         this.buildFromGrid();
@@ -254,6 +254,7 @@ Roo.apply(Pman.Download.prototype, {
             this.grid.loadMask.onLoad();
         }
         this.params.limit = this.limit;
+        
         
     }
     
