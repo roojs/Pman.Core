@@ -78,10 +78,10 @@ class Pman_Core_SimpleExcel extends Pman
          
 
         if (!isset($cfg['workbooks'])) {
-            $this->buildpage(   $formats , $data,$cfg);
+            $this->buildPage(   $formats , $data,$cfg);
         } elseif (!empty($cfg['workbooks'])) {
             foreach($cfg['workbooks'] as $i =>$wcfg) {
-                $this->buildpage(   $formats , $data[$i],$wcfg);
+                $this->buildPage(   $formats , $data[$i],$wcfg);
             }
             
         }
@@ -109,7 +109,7 @@ class Pman_Core_SimpleExcel extends Pman
     }
     
     
-    function buildpage( $formats , $data, $cfg)
+    function buildPage( $formats , $data, $cfg)
     {
         $workbook = $this->workbook;
         //echo '<PRE>';        print_R($cfg);
