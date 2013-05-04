@@ -157,7 +157,6 @@ class Pman_Core_SimpleExcel extends Pman
                     'header' => $col_cfg,
                     'dataIndex' => $col_cfg,
                     'width' => 50,
-                    
                 );
             }
         }
