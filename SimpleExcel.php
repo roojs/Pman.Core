@@ -174,16 +174,8 @@ class Pman_Core_SimpleExcel extends Pman
         
         
         $hasRender  = false;
+         
         
-        
-        if (is_object($data)) {
-            while ($data->fetch()) {
-                $hasRenderRow = $this->addLine($cfg['workbook'], $data->toArray());
-                $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
-             
-            }
-           //     DB_DataObject::debugLevel(1);
-        } else 
         foreach($data as $r=>$clo) {
             $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
             $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
