@@ -62,7 +62,8 @@ class Pman_Core_SimpleExcel extends Pman
         //$workbook = new Spreadsheet_Excel_Writer();
         $workbook->setVersion(8);
         // sending HTTP headers
-        
+        $this->workbook = $workbook;
+            
         $formats = array();
        
         $cfg['formats'] = isset($cfg['formats']) ? $cfg['formats'] : array();
@@ -86,7 +87,6 @@ class Pman_Core_SimpleExcel extends Pman
         }
         
         if (!empty($cfg['leave_open'])) {
-            $this->workbook = $workbook;
             $this->outfile2 = $outfile2;
             return;
         }
@@ -97,6 +97,8 @@ class Pman_Core_SimpleExcel extends Pman
     }
     
     
+    
+    
     static function date($str)
     {
         
@@ -105,7 +107,7 @@ class Pman_Core_SimpleExcel extends Pman
     }
     
     
-    function buildpage($workbook,  $formats , $data,$cfg)
+    function buildpage($workbook,  $formats , $data, $cfg)
     {
         //echo '<PRE>';        print_R($cfg);
       //  print_r($cfg);exit;
