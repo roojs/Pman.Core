@@ -77,14 +77,16 @@ class Pman_Core_SimpleExcel extends Pman
         }
          
 
-        if (empty($cfg['workbooks'])) {
+        if (!isset($cfg['workbooks'])) {
             $this->buildpage(   $formats , $data,$cfg);
-        } else {
+        } elseif (!empty($cfg['workbooks'])) {
             foreach($cfg['workbooks'] as $i =>$wcfg) {
                 $this->buildpage(   $formats , $data[$i],$wcfg);
             }
             
         }
+        // if workbooks == false - > the user can call buildpage..
+        
         
         if (!empty($cfg['leave_open'])) {
             $this->outfile2 = $outfile2;
@@ -172,7 +174,16 @@ class Pman_Core_SimpleExcel extends Pman
         
         
         $hasRender  = false;
+        
+        
+        if (is_object($data)) {
+            while ($data->fetch()) {
+                $hasRenderRow = $this->addLine($cfg['workbook'], $data->toArray());
+                $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
+             
+            }
            //     DB_DataObject::debugLevel(1);
+        } else 
         foreach($data as $r=>$clo) {
             $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
             $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
