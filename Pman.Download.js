@@ -128,6 +128,7 @@ Roo.apply(Pman.Download.prototype, {
     // private..
     createCsvFrame: function()
     {
+        Roo.log('///');
         Roo.log(this);
         if (this.csvFrame) {
             document.body.removeChild(this.csvFrame);
