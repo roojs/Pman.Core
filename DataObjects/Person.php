@@ -313,6 +313,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
         
+        print_r($_SESSION);exit;
+        
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
