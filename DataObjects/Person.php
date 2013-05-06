@@ -243,8 +243,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         
         @session_start();
-        print_r($_SESSION);exit;
-        
+         
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
