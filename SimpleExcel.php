@@ -120,7 +120,11 @@ class Pman_Core_SimpleExcel extends Pman
         $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
         $this->formats = $formats;
+<<<<<<< Updated upstream
         //var_dump($cfg['workbook']);
+=======
+//        var_dump($cfg['workbook']);
+>>>>>>> Stashed changes
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
         if (is_a($worksheet, 'PEAR_Error')) {
             die($worksheet->toString());
