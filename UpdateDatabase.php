@@ -193,7 +193,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cmd = "$psql_cmd  < " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
                 
                 echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
-                
+                exit;
                 
                 passthru($cmd);
                 
