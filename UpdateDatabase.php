@@ -158,7 +158,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $psql = System::which('psql');
         
         $ar = $this->modulesList();
-        print_r($ar);exit;
+        
         if (!empty($url['pass'])) { 
             putenv("PGPASSWORD=". $url['pass']);
         }
