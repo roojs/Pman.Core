@@ -168,7 +168,7 @@ class Pman_Core_UpdateDatabase extends Pman
             ' -U' . escapeshellarg($url['user']) .
              ' ' . basename($url['path']);
         echo $psql_cmd . "\n" ;
-        
+        exit;
         
         
         
