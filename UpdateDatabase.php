@@ -292,7 +292,6 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         $this->updateData();
         $modules = $this->modulesList();
-        print_r($modules);exit;
         foreach ($modules as $module){
             $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
             if($module == 'Core' || !file_exists($file)){
