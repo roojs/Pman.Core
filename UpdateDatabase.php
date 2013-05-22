@@ -26,7 +26,6 @@ class Pman_Core_UpdateDatabase extends Pman
             'max' => 1,
         ),
         
-        
     );
     
     var $cli = false;
