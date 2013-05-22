@@ -898,7 +898,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // set up groups
             // if $person->groups is set.. then
             // add this person to that group eg. groups : [ 'Administrator' ] 
-            
+            if(!empty($person['groups'])){
+                
+            }
             
             $p->onInsert(array(), $roo);
             
