@@ -324,7 +324,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $companies = DB_DataObject::factory('companies');
         $companies->setFrom(array(
             'name' => $name,
-            'comptype' => $type
+            'comptype' => $type,
+            'background_color' => ''
         ));
         
         $companies->insert();
