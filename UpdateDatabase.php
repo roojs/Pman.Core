@@ -112,7 +112,7 @@ class Pman_Core_UpdateDatabase extends Pman
             ));
 
             $companies->insert();
-            $companies->onInsert(array(), $roo);
+            $companies->onInsert(array(), '');
             
             die("DONE! \n");
         }
