@@ -17,7 +17,15 @@ class Pman_Core_UpdateDatabase extends Pman
     
     static $cli_desc = "Update SQL - Beta (it will run updateData of all modules)";
  
- 
+    static $cli_opts = array(
+        'source' => array(
+            'desc' => 'Source directory for json files.',
+            'short' => 'f',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
+    );
     
     var $cli = false;
     function getAuth() {
