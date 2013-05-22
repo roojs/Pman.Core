@@ -67,8 +67,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("can not found person json file : $file\n");
             }
             
+            $persons = json_decode(file_get_contents($file),true);
             
-            
+            print_r($persons);exit;
             die("DONE!");
         }
         $this->importSQL();
