@@ -103,7 +103,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if(empty($opt['name']) || empty($opt['comptype'])){
                 die("Missing company name or type! Try --name=[the name of company] -- comptype=[the type of company] \n");
             }
-            
+            print_r($opt['name']);exit;
             DB_DataObject::factory('companies')->initCompanies(HTML_Flexyframework::get()->page, $opt['name'], $opt['comptype']);
             
             die("DONE! \n");
