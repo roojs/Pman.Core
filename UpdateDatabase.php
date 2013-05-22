@@ -32,6 +32,20 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'name' => array(
+            'desc' => 'name of the company',
+            'short' => 'n',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
+        'comptype' => array(
+            'desc' => 'the type of company',
+            'short' => 't',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         
     );
     
@@ -82,6 +96,14 @@ class Pman_Core_UpdateDatabase extends Pman
             $accounts = json_decode(file_get_contents($opt['source']),true);
             
             DB_DataObject::factory('accnt')->importFromArray($accounts);
+            die("DONE! \n");
+        }
+        
+        if($args == 'Company'){
+            if(empty($opt['name']) || empty($opt['comptype'])){
+                die("Missing company name or type! Try --name [the name of company] -- comptype [the type of company] \n");
+            }
+            
             die("DONE! \n");
         }
         
