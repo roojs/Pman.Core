@@ -891,6 +891,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             $p->setFrom($person);
             
+            $companies = DB_DataObject::facotry('companies');
+            if(!$companies->get('comptype', 'OWNER')){
+                $roo->jerr("Missing OWNER companies!");
+            }
+            $p->company_id = $companies->pid();
             // strip the 'spaces etc.. make lowercase..
             $name = strtolower(str_replace(' ', '', $person['name']));
             $p->setPassword("$prefix$name");
