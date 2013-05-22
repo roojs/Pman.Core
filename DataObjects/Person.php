@@ -891,7 +891,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             $p->setFrom($person);
             
-            $companies = DB_DataObject::facotry('companies');
+            $companies = DB_DataObject::factory('companies');
             if(!$companies->get('comptype', 'OWNER')){
                 $roo->jerr("Missing OWNER companies!");
             }
