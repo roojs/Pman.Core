@@ -62,7 +62,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             DB_DataObject::factory('person')->importFromJson($opt['source'], $opt['prefix']);
-            die("DONE!");
+            die("DONE! \n");
         }
         
         if($args == 'Account'){
