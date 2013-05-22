@@ -71,7 +71,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             DB_DataObject::factory('accnt')->importFromJson($opt['source']);
-            die("DONE!");
+            die("DONE! \n");
         }
         
         $this->importSQL();
