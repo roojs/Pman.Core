@@ -49,7 +49,7 @@ class Pman_Core_UpdateDatabase extends Pman
      
     function get()
     {
-     //   $this->importSQL();
+        $this->importSQL();
         $this->runUpdateModulesData();
          
     }
