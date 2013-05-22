@@ -25,6 +25,13 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'prefix' => array(
+            'desc' => 'prefix for the passwrod',
+            'short' => 'p',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         
     );
     
