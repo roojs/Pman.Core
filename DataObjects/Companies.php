@@ -328,7 +328,6 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         ));
         
         $companies->insert();
-        print_r($companies);exit;
         $companies->onInsert(array(), $roo);
     }
     
