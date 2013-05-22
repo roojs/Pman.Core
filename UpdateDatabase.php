@@ -54,8 +54,11 @@ class Pman_Core_UpdateDatabase extends Pman
         return true;
     }
      
-    function get()
+    function get($args, $opt)
     {
+        if($args == 'Person'){
+            print_r($opt);exit;
+        }
         $this->importSQL();
         $this->runUpdateModulesData();
          
