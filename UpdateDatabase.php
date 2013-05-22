@@ -61,6 +61,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("Missing Source directory for json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
             }
             
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+            $file = $uinfo['dir'] ."/gitlive/Pman.Xtuple.Migrate/base_install_data/{$opt['source']}";
+            if (!file_exists($file)) {
+                die("can not found person json file : $file\n");
+            }
+            
             
             
             die("DONE!");
