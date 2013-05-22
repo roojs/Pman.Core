@@ -325,7 +325,9 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $companies->setFrom(array(
             'name' => $name,
             'comptype' => $type,
-            'background_color' => ''
+            'background_color' => '',
+            'created_dt' => 'NOW()',
+            'updated_dt' => 'NOW()'
         ));
         
         $companies->insert();
