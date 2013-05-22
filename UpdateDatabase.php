@@ -369,6 +369,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 )
             )
         ); 
+        
+        $groups = DB_DataObject::factory('groups');
+        $groups->initGroups();
     }
     
     
