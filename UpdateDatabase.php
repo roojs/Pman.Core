@@ -104,7 +104,15 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("Missing company name or type! Try --name=[the name of company] -- comptype=[the type of company] \n");
             }
             
-            DB_DataObject::factory('companies')->initCompanies(HTML_Flexyframework::get()->page, $opt['name'], $opt['comptype']);
+           // DB_DataObject::factory('companies')->initCompanies(HTML_Flexyframework::get()->page, $opt['name'], $opt['comptype']);
+            $companies = DB_DataObject::factory('companies');
+            $companies->setFrom(array(
+                'name' => $name,
+                'comptype' => $type
+            ));
+
+            $companies->insert();
+            $companies->onInsert(array(), $roo);
             
             die("DONE! \n");
         }
