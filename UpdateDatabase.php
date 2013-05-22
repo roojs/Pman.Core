@@ -47,8 +47,12 @@ class Pman_Core_UpdateDatabase extends Pman
         return true;
     }
      
-    function get()
+    function get($args, $opt)
     {
+        print_r('$args : ');
+        print_r($args);
+        print_r('$opt :');
+        print_r($opt);exit;
         $this->importSQL();
         $this->runUpdateModulesData();
          
