@@ -319,9 +319,15 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         return $ret;
     }
     
-    function initCompanies($name, $type)
+    function initCompanies($name, $type, $roo)
     {
-        
+        $companies = DB_DataObject::factory('companies');
+        $companies->setFrom(array(
+            'name' => $name,
+            'comptype' => $type
+        ));
+        $companies->insert();
+        $companies->onInsert(array(), $roo);
     }
     
 }
