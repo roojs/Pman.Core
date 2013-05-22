@@ -60,6 +60,8 @@ class Pman_Core_UpdateDatabase extends Pman
             if(empty($opt['source']) || empty($opt['prefix'])){
                 die("Missing Source directory for json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
             }
+            
+            die("DONE!");
         }
         $this->importSQL();
         $this->runUpdateModulesData();
