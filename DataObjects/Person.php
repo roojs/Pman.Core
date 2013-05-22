@@ -890,8 +890,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 continue;
             }
             $p->setFrom($person);
+            $name = strtolower(str_replace(' ', '', $person['name']));
             // strip the 'spaces etc.. make lowercase..
-            $p->setPassword("$prefix{$person['name']}");
+            $p->setPassword("$prefix$name");
             $p->insert();
             // set up groups
             // if $person->groups is set.. then
