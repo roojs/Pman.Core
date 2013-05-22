@@ -899,13 +899,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // if $person->groups is set.. then
             // add this person to that group eg. groups : [ 'Administrator' ] 
             if(!empty($person['groups'])){
-                
+                $groups = DB_DataObject::factory('groups');
+                if(!$groups->get('name', $person['groups'])){
+                    $roo->jerr("Missing groups : {$person['groups']}");
+                }
+                $gm = DB_DataObject::factory('group_members');
+                $gm->change($p, $groups, true);
             }
             
             $p->onInsert(array(), $roo);
-            
-            
-            //$p->syncUser();
         }
     }
  }
