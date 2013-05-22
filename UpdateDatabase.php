@@ -107,8 +107,8 @@ class Pman_Core_UpdateDatabase extends Pman
            // DB_DataObject::factory('companies')->initCompanies(HTML_Flexyframework::get()->page, $opt['name'], $opt['comptype']);
             $companies = DB_DataObject::factory('companies');
             $companies->setFrom(array(
-                'name' => $name,
-                'comptype' => $type
+                'name' => $opt['name'],
+                'comptype' => $opt['comptype']
             ));
 
             $companies->insert();
