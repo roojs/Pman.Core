@@ -70,7 +70,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("Missing Source directory for account json files! Try -f [JSON file path] \n");
             }
             
-            DB_DataObject::factory('accnt')->importFromJson($opt);
+            DB_DataObject::factory('accnt')->importFromJson($opt['source']);
             die("DONE!");
         }
         
