@@ -881,4 +881,27 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
     }
+    
+    function importFromArray($roo, $persons, $prefix)
+    {
+        foreach($persons as $person){
+            $p = DB_DataObject::factory('person');
+            if($p->get('name', $person['name'])){
+                continue;
+            }
+            $p->setFrom($person);
+            // strip the 'spaces etc.. make lowercase..
+            $p->setPassword("$prefix{$person['name']}");
+            $p->insert();
+            // set up groups
+            // if $person->groups is set.. then
+            // add this person to that group eg. groups : [ 'Administrator' ] 
+            
+            
+            $p->onInsert(array(), $roo);
+            
+            
+            //$p->syncUser();
+        }
+    }
  }
