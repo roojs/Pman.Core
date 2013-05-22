@@ -319,5 +319,9 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         return $ret;
     }
     
+    function initCompanies($name, $type)
+    {
+        
+    }
     
 }
