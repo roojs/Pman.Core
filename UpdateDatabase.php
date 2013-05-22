@@ -64,7 +64,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("can not found person json file : {$opt['source']} \n");
             }
             
-            $persons = json_decode(file_get_contents($source),true);
+            $persons = json_decode(file_get_contents($opt['source']),true);
             
             DB_DataObject::factory('person')->importFromArray(HTML_Flexyframework::get()->page, $persons, $opt['prefix']);
             die("DONE! \n");
