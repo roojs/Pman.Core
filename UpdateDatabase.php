@@ -60,8 +60,10 @@ class Pman_Core_UpdateDatabase extends Pman
             if(empty($opt['source']) || empty($opt['prefix'])){
                 die("Missing Source directory for person json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
             }
-            
-            DB_DataObject::factory('person')->importFromJson($opt['source'], $opt['prefix']);
+            if (!file_exists($opt['source'])) {
+                die("can not found person json file : {$opt['source']} \n");
+            }
+            DB_DataObject::factory('person')->importFromArray(HTML_Flexyframework::get()->page,$opt['source'], $opt['prefix']);
             die("DONE! \n");
         }
         
