@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             'name' => $name,
             'comptype' => $type
         ));
-        
+        print_r($companies);exit;
         $companies->insert();
         $companies->onInsert(array(), $roo);
     }
