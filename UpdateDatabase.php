@@ -61,7 +61,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("Missing Source directory for json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
             }
             
-            DB_DataObject::factory('person')->createPerson();
+            DB_DataObject::factory('person')->createPerson($opt);
             die("DONE!");
         }
         $this->importSQL();
