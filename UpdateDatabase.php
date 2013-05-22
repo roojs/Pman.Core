@@ -58,12 +58,22 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         if($args == 'Person'){
             if(empty($opt['source']) || empty($opt['prefix'])){
-                die("Missing Source directory for json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
+                die("Missing Source directory for person json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
             }
             
             DB_DataObject::factory('person')->createPerson($opt);
             die("DONE!");
         }
+        
+        if($args == 'Account'){
+            if(empty($opt['source'])){
+                die("Missing Source directory for account json files! Try -f [JSON file path] \n");
+            }
+            
+            DB_DataObject::factory('person')->createPerson($opt);
+            die("DONE!");
+        }
+        
         $this->importSQL();
         $this->runUpdateModulesData();
          
