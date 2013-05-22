@@ -57,7 +57,9 @@ class Pman_Core_UpdateDatabase extends Pman
     function get($args, $opt)
     {
         if($args == 'Person'){
-            print_r($opt);exit;
+            if(empty($opt['source']) || empty($opt['prefix'])){
+                die("Missing Source directory for json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix]");
+            }
         }
         $this->importSQL();
         $this->runUpdateModulesData();
