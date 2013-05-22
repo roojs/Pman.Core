@@ -79,9 +79,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("can not found account json file : {$opt['source']} \n");
             }
 
-            $accounts = json_decode(file_get_contents($source),true);
+            $accounts = json_decode(file_get_contents($opt['source']),true);
             
-            DB_DataObject::factory('accnt')->importFromJson($opt['source']);
+            DB_DataObject::factory('accnt')->importFromArray($accounts);
             die("DONE! \n");
         }
         
