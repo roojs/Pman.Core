@@ -45,7 +45,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'default' => '',
             'min' => 1,
             'max' => 1,
-        ),
+        )
         
     );
     
