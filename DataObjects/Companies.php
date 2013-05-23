@@ -326,8 +326,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             'name' => $name,
             'comptype' => $type,
             'background_color' => '',
-            'created_dt' => 'NOW()',
-            'updated_dt' => 'NOW()'
+            'created_dt' => $this->sqlValue('NOW()'),
+            'updated_dt' => $this->sqlValue('NOW()')
         ));
         
         $companies->insert();
