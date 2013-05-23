@@ -84,21 +84,6 @@ class Pman_Core_UpdateDatabase extends Pman
             die("DONE! \n");
         }
         
-        if($args == 'Account'){
-            if(empty($opt['source'])){
-                die("Missing Source directory for account json files! Try -f [JSON file path] \n");
-            }
-            
-            if (!file_exists($opt['source'])) {
-                die("can not found account json file : {$opt['source']} \n");
-            }
-
-            $accounts = json_decode(file_get_contents($opt['source']),true);
-            
-            DB_DataObject::factory('accnt')->importFromArray($accounts);
-            die("DONE! \n");
-        }
-        
         if($args == 'Company'){
             if(empty($opt['name']) || empty($opt['comptype'])){
                 die("Missing company name or type! Try --name=[the name of company] -- comptype=[the type of company] \n");
