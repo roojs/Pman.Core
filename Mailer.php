@@ -40,7 +40,7 @@
  */
 
 class Pman_Core_Mailer {
-    
+    var $debug          = false;
     var $page           = false; /* usually a html_flexyframework_page */
     var $contents       = false; /* object or array */
     var $template       = false; /* string */
@@ -183,6 +183,9 @@ class Pman_Core_Mailer {
         $email = $this->toData();
         if (is_a($email, 'PEAR_Error')) {
             return $email;
+        }
+        if ($this->debug) {
+            echo '<PRE>';echo htmlspecialchars(print_r($data,true));
         }
         ///$recipents = array($this->email);
         $mailOptions = PEAR::getStaticProperty('Mail','options');
