@@ -80,7 +80,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $persons = json_decode(file_get_contents($opt['source']),true);
             
-            DB_DataObject::factory('person')->importFromArray(HTML_Flexyframework::get()->page, $persons, $opt['prefix']);
+            DB_DataObject::factory('person')->importFromArray($this, $persons, $opt['prefix']);
             die("DONE! \n");
         }
         
@@ -89,7 +89,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 die("Missing company name or type! Try --name=[the name of company] -- comptype=[the type of company] \n");
             }
             
-            DB_DataObject::factory('companies')->initCompanies(HTML_Flexyframework::get()->page, $opt['name'], $opt['comptype']);
+            DB_DataObject::factory('companies')->initCompanies($this, $opt['name'], $opt['comptype']);
             
             die("DONE! \n");
         }
