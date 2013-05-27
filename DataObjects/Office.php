@@ -29,6 +29,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         //DB_DataObject::debugLevel(1);
         $tn  = $this->tableName();
         $this->selectAdd("   i18n_translate('c' , {$tn}.country, 'en') as office_id_country_name");
+        $this->_extra_cols = array()'office_id_country_name');
     }
     
     
