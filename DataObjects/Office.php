@@ -28,7 +28,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     {
         //DB_DataObject::debugLevel(1);
         $tn  = $this->tableName();
-        if (isset($q['_distinct']) && in_array('office_id_country_name', explode(',', $q['_distinct'])))
+        if (isset($q['_distinct']) && in_array('office_id_country_name', explode(',', $q['_distinct']))) {
             $this->selectAdd("   distinct( i18n_translate('c' , {$tn}.country, 'en')) as  office_id_country_name");
         } else {
             $this->selectAdd("   i18n_translate('c' , {$tn}.country, 'en') as office_id_country_name");
