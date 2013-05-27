@@ -345,7 +345,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function runUpdateModulesData()
     {
         // runs core...
-        $this->updateData();
+        $this->updateData(); 
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
