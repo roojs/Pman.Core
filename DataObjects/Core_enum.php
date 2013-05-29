@@ -126,7 +126,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     }
     
     /**
-     *
+     * 
+     * 
+     * 
      * @param string $etype
      * @param array $name array of name
      * @return array ID of core_enum 
