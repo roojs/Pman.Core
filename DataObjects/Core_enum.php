@@ -123,7 +123,24 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             return $ce->id;
         }
         return 0;
+    }
+    
+    /**
+     *
+     * @param string $etype
+     * @param array $name array of name
+     * @return array ID of core_enum 
+     */
+    
+    function lookupAllByName($etype,$name) {
+        $ce = DB_DataObject::Factory('core_enum');
+        $ce->etype = $etype;
+        $ce->whereAddIn('name', $name, 'string');
         
+        if ($ce->count() > 0) {
+            return $ce->fetchAll('id');
+        }
+        return 0;
     }
     
     function fetchAllByType($etype, $fetchArg1=false, $fetchArg2=false, $fetchArg3=false)
