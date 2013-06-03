@@ -142,7 +142,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if ($ce->count() > 0) {
             return $ce->fetchAll('id');
         }
-        return 0;
+        return array();
     }
     
     function fetchAllByType($etype, $fetchArg1=false, $fetchArg2=false, $fetchArg3=false)
