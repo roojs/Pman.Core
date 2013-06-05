@@ -301,6 +301,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         if(this.el.dom.selectionEnd > 0){
             isSelectAll = (this.el.dom.selectionEnd - this.el.dom.selectionStart - this.getValue().length == 0) ? true : false;
         }
+            Roo.log(event);
             event.preventDefault();
             return;
         
