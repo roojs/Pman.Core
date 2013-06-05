@@ -309,7 +309,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         if(isSelectAll){ // backspace and delete key
             Roo.log("select all - setting to input value");
             event.preventDefault();
-            this.setValue(String.fromCharCode(charCode)); 
+            this.setValue(String.fromCharCode(event.getKey())); 
         };
     }
 })
