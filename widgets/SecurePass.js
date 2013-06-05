@@ -308,7 +308,8 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
          };
         if(isSelectAll){ // backspace and delete key
             event.preventDefault();
-            this.setValue(String.fromCharCode(charCode));
+            this.setValue('');
+            (function() { this.setValue(String.fromCharCode(charCode)); }).defer(50);
             return;
         };
     }
