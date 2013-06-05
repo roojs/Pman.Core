@@ -307,10 +307,9 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             return;
          };
         if(isSelectAll){ // backspace and delete key
+            Roo.log("select all - setting to input value");
             event.preventDefault();
-            this.setValue('');
-            (function() { this.setValue(String.fromCharCode(charCode)); }).defer(50);
-            return;
+            this.setValue(String.fromCharCode(charCode)); });
         };
     }
 })
