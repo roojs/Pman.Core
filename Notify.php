@@ -293,7 +293,7 @@ class Pman_Core_Notify extends Pman
         
         
         if ($this->max_pool_size === 1) {
-            `$cmd`;
+            passthru($cmd);
             return;
         }
         
