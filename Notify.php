@@ -265,7 +265,7 @@ class Pman_Core_Notify extends Pman
     function run($id, $email, $cmdOpts="")
     {
         
-        static $renice = fase;
+        static $renice = false;
         if (!$renice) {
             require_once 'System.php';
             $renice = System::which('renice');
