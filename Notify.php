@@ -311,7 +311,7 @@ class Pman_Core_Notify extends Pman
         $info =  proc_get_status($p);
         
         if ($this->nice_level !== false) { 
-            $rcmd = "$renice 19 {$info['pid']}";
+            $rcmd = "$renice {$this->nice_level} {$info['pid']}";
             `$rcmd`;
         } 
         $this->pool[] = array(
