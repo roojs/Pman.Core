@@ -309,6 +309,11 @@ class Pman_Core_Notify extends Pman
         
         $p = proc_open($cmd, $descriptorspec, $pipes, $cwd );
         $info =  proc_get_status($p);
+        
+        if ($this->nice_level !== false) { 
+            $rcmd = "$renice 19 {$info['pid']}";
+            `$rcmd`;
+        } 
         $this->pool[] = array(
                 'proc' => $p,
                 'pid' => $info['pid'],
