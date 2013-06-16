@@ -265,7 +265,11 @@ class Pman_Core_Notify extends Pman
     function run($id, $email, $cmdOpts="")
     {
         
-       
+        static $renice = fase;
+        if (!$renice) {
+            require_once 'System.php';
+            $renice = System::which('renice');
+        }
         
         // phpinfo();exit;
         $tn = tempnam(ini_get('session.save_path'),'stdout') . '.stdout';
