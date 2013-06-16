@@ -264,7 +264,10 @@ class Pman_Core_Notify extends Pman
     
     function run($id, $email, $cmdOpts="")
     {
-       // phpinfo();exit;
+        
+       
+        
+        // phpinfo();exit;
         $tn = tempnam(ini_get('session.save_path'),'stdout') . '.stdout';
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
@@ -287,6 +290,12 @@ class Pman_Core_Notify extends Pman
        
         $pipe = array();
         echo "call proc_open $cmd\n";
+        
+        
+        if ($this->max_pool_size === 1) {
+            `$cmd`;
+            return;
+        }
         
         
         if (!empty($this->opts['dryrun'])) {
