@@ -86,6 +86,7 @@ class Pman_Core_Notify extends Pman
         ),
     );
     
+    
     var $max_pool_size = 10;
     
     var $table = 'core_notify';
