@@ -231,7 +231,7 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            if ($this->poolHasDomain($p->person_id_email)) {
+            if ($this->poolHasDomain($p->person_id_email) > $this->max_to_domain) {
                 
                 if ($pushed === false) {
                     // we only try once to requeue..
