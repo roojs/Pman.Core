@@ -252,7 +252,7 @@ class Pman_Core_Notify extends Pman
         
         foreach($requeue as $p) {
             $pp = clone($p);
-            $p->event_when = strtotime($p->event_when .  ' + 1 MINUTE');
+            $p->act_when = strtotime($p->act_when .  ' + 1 MINUTE');
             $p->update($pp);
             
         }
