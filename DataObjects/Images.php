@@ -440,7 +440,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
         // the size should 200x150 to convert
-        $size = explode('x', $size);
+        $size = preg_split('/(x|c)/', $size);
         if(empty($size[1])){
             $size[1] = 0;
         }
