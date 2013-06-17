@@ -248,8 +248,7 @@ class Pman_Core_Notify extends Pman
             $this->poolfree();
              sleep(3);
         }
-        
-        
+         
         foreach($requeue as $p) {
             $pp = clone($p);
             $p->act_when = strtotime($p->act_when .  ' + 1 MINUTE');
@@ -400,14 +399,15 @@ class Pman_Core_Notify extends Pman
      */
     function poolHasDomain($email)
     {
+        $ret = 0;
         $dom = strtolower(array_pop(explode('@',$email)));
         foreach($this->pool as $p) {
             $mdom = strtolower(array_pop(explode('@',$p['email'])));
             if ($mdom == $dom) {
-                return true;
+                $ret++;
             }
         }
-        return false;
+        return $ret;
         
     }
 
