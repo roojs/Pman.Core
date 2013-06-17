@@ -85,9 +85,17 @@ class Pman_Core_Notify extends Pman
             'max' => 100,
         ),
     );
-    
+    /**
+     * @var $nice_level Unix 'nice' level to stop it jamming server up.
+     */
     var $nice_level = false;
+    /**
+     * @var $max_pool_size maximum runners to start at once.
+     */
     var $max_pool_size = 10;
+    /**
+     * @var $max_to_domain maximum connections to make to a single domain
+     */
     var $max_to_domain = 10;
     
     var $table = 'core_notify';
