@@ -215,6 +215,7 @@ ALTER TABLE Person ADD COLUMN url_linkedin VARCHAR(256) NULL ;
 ALTER TABLE Person ADD COLUMN   phone_mobile varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   phone_direct varchar(32)  NOT NULL  DEFAULT '';
 
+ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
 
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
