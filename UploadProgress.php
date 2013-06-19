@@ -15,7 +15,8 @@ class Pman_Core_UploadProgress extends Pman
         return true; 
     }
     function get()
-    {   
+    {
+        $this->sessionState(0); // turn off the session..
         header("Cache-Control: no-cache, must-revalidate");
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         if (  !function_exists('uploadprogress_get_info')) {
