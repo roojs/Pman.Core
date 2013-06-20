@@ -30,7 +30,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         
         if(!empty($q['!name'])){
-            $names = explode(',', $q['!name']);
+            $names = is_array($q['name']) ? $q['name'] : explode(',', $q['!name']);
             foreach($names as $name){
                 $name  = $this->escape($name);
                 $this->whereAdd("
