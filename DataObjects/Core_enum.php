@@ -29,6 +29,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $this->whereAdd("etype = ''");
         }
         
+        // this should be handled by roo... using '!name[0]' ....
         if(!empty($q['!name'])){
             $names = is_array($q['!name']) ? $q['!name'] : explode(',', $q['!name']);
             foreach($names as $name){
