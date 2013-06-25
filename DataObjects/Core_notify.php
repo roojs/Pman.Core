@@ -122,24 +122,24 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events' . 'core_watch'))) {
-            // this will only work on tables not joined to ours.
-            
-            //DB_DAtaObject::DebugLevel(1);
-            // then we can build a join..
-            $d = DB_DataObject::Factory($q['ontable']);
-            $d->autoJoin();
-            $this->selectAdd($d->_query['data_select']);
-            $this->_join .= "
-                LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
-                {$d->_join}
-            "; 
-        } 
-        if (isset($q['query']['person_id_name']) ) {
-            $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
-             
-        }
-        
+//        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events' . 'core_watch'))) {
+//            // this will only work on tables not joined to ours.
+//            
+//            //DB_DAtaObject::DebugLevel(1);
+//            // then we can build a join..
+//            $d = DB_DataObject::Factory($q['ontable']);
+//            $d->autoJoin();
+//            $this->selectAdd($d->_query['data_select']);
+//            $this->_join .= "
+//                LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
+//                {$d->_join}
+//            "; 
+//        } 
+//        if (isset($q['query']['person_id_name']) ) {
+//            $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
+//             
+//        }
+//        
         
         
         
