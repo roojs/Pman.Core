@@ -132,7 +132,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             $this->selectAdd($d->_query['data_select']);
             $this->_join .= "
                 LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
-                {$d->_join}
+              
             "; 
         } 
         if (isset($q['query']['person_id_name']) ) {
