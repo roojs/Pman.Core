@@ -129,12 +129,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
             $d->autoJoin();
-            $this->selectAdd($d->_query['data_select']);
+            //$this->selectAdd($d->_query['data_select']);
             $this->_join .= "
                 LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
                 {$d->_join}
             "; 
-//            $this->selectAs($d, 'core_notify_%s');
+            $this->selectAs($d, 'core_notify_%s');
         } 
         if (isset($q['query']['person_id_name']) ) {
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
