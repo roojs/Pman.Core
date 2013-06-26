@@ -85,7 +85,7 @@ class Pman_Core_NotifySend extends Pman
         $force = empty($opts['force']) ? 0 : 1;
         
         $w = DB_DataObject::factory($this->table);
-        print_r($id);
+        
         if (!$w->get($id)) {
             die("invalid id\n");
         }
