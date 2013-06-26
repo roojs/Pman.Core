@@ -166,7 +166,7 @@ class Pman_Core_Notify extends Pman
             // standard
             
             //$w->whereAdd('act_when > sent'); // eg.. sent is not valid..
-            $w->whereAdd("sent < '1970-01-01'"); // eg.. sent is not valid..
+            $w->whereAdd("sent < '1970-01-01' OR sent IS NULL"); // eg.. sent is not valid..
             
             $w->whereAdd('act_start > NOW() - INTERVAL 14 DAY'); // ignore the ones stuck in the queue
             if (!$this->force) {
