@@ -306,7 +306,7 @@ class Pman_Core_NotifySend extends Pman
         
         $fail = false;
         require_once 'Mail.php';
-        
+        print_r($email);exit;
         foreach($mxs as $dom) {
             
             
