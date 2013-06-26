@@ -64,7 +64,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             $path = $tmpdir . '/' . basename($q['_remote_upload']);
-            
+            print_r($path);exit;
             if(!file_exists($path)){
                 // use HTTP_Request
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
@@ -77,10 +77,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
             
             if (!preg_match("/\." . $ext."$/", $path, $matches)) {
-                print_r('in??');exit;
                 rename($path,$path.$ext);
             }
-            print_r('out');exit;
             if (!$this->createFrom($path)) {
                 $roo->jerr("erro making image" . $q['_remote_upload']);
             }
