@@ -57,7 +57,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeInsert($q, $roo) 
     {
         if (isset($q['_remote_upload'])) {
-            print_r($q);
             require_once 'System.php';
             static $tmpdir = false;
             if (!$tmpdir) {
@@ -65,9 +64,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             $path = $tmpdir . '/' . basename($q['_remote_upload']);
-            $fetch  = false;
             if(!file_exists($path)){
-                $fetch = true;
                 // use HTTP_Request
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
@@ -82,7 +79,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             if (!$this->createFrom($path)) {
-                $roo->jerr("erro making image" . $q['_remote_upload'] . "??? " . ((int) $fetch));
+                $roo->jerr("erro making image" . $q['_remote_upload']);
             }
             
             $roo->addEvent("ADD", $this, $this->toEventString());
