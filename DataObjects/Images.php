@@ -71,7 +71,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             $imageInfo = getimagesize($path);
-            print_r($imageInfo);exit;
+            
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
