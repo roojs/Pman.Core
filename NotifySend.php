@@ -98,7 +98,7 @@ class Pman_Core_NotifySend extends Pman
             print_r($w);
         }
         
-        $sent = preg_match('/^0000/', $w->sent) ? false : true;
+        $sent = (empty($w->sent) || preg_match('/^0000/', $w->sent)) ? false : true;
         
         if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
