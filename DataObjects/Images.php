@@ -69,8 +69,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 // use HTTP_Request
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
-            exit;
+            
             $imageInfo = getimagesize($path);
+            print_r($imageInfo);exit;
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
