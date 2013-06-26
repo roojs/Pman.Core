@@ -75,10 +75,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
             
-            if (!preg_match("/\." . $ext."$/", $path, $matches)) {
-                rename($path,$path.$ext);
-                print_r($path);exit;
-            }
+//            if (!preg_match("/\." . $ext."$/", $path, $matches)) {
+//                rename($path,$path.$ext);
+//            }
             
             if (!$this->createFrom($path)) {
                 $roo->jerr("erro making image" . $q['_remote_upload']);
