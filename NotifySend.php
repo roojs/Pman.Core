@@ -109,7 +109,7 @@ class Pman_Core_NotifySend extends Pman
             die("message has been sent already.\n");
         }
         
-        print_r('run??');exit;
+        print_r('run??');
         $o = $w->object();
         print_r('abacsdf??');exit;
         if ($o === false)  {
