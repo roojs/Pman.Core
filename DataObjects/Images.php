@@ -80,7 +80,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             if (!$this->createFrom($path)) {
-                $roo->jerr("erro making image" . $q['_remote_upload']);
+                $roo->jerr("erro making image" . $q['_remote_upload'] . "??? " . ((int) $fetch));
             }
             
             $roo->addEvent("ADD", $this, $this->toEventString());
