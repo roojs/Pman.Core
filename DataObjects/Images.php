@@ -69,7 +69,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 // use HTTP_Request
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
-            
+            print_r(filesize($path));
             $imageInfo = getimagesize($path);
             
             require_once 'File/MimeType.php';
@@ -79,7 +79,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (!preg_match("/\." . $ext."$/", $path, $matches)) {
                 rename($path,$path.$ext);
             }
-            print_r($path);exit;
+            
             if (!$this->createFrom($path)) {
                 $roo->jerr("erro making image" . $q['_remote_upload']);
             }
