@@ -40,6 +40,7 @@
  
  
  
+require_once 'Pman.php';
 
 
 class Pman_Core_SimpleExcel extends Pman
