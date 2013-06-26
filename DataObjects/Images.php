@@ -58,10 +58,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         if (isset($q['_remote_upload'])) {
             require_once 'System.php';
-            static $tmpdir = false;
-            if (!$tmpdir) {
-                $tmpdir  = System::mktemp("-d remote_upload");
-            }
+            
+            $tmpdir  = System::mktemp("-d remote_upload");
             
             $path = $tmpdir . '/' . basename($q['_remote_upload']);
             
