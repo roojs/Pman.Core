@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         if (isset($q['_remote_upload'])) {
             require_once 'System.php';
-            static $tmpdir = '/tmp';
+            static $tmpdir = false;
             if (!$tmpdir) {
                 $tmpdir  = System::mktemp("-d remote_upload");
             }
@@ -71,7 +71,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             $imageInfo = getimagesize($path);
-            print_r($imageInfo);exit;
+            
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
             $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
