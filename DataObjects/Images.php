@@ -57,6 +57,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeInsert($q, $roo) 
     {
         if (isset($q['_remote_upload'])) {
+            print_r($q);
             require_once 'System.php';
             static $tmpdir = false;
             if (!$tmpdir) {
