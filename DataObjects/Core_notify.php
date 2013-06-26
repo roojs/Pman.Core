@@ -68,7 +68,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return $c; // empty dataobject.
         }
         
-        $c->autoJoin();
+     //   $c->autoJoin();
         
         if ($c->get($this->onid)) {
             return $c;
