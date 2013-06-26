@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             
             if (!$this->createFrom($path)) {
-                $this->jerr("erro making image");
+                $roo->jerr("erro making image");
             }
             
             $roo->addEvent("ADD", $this, $this->toEventString());
