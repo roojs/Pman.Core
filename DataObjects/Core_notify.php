@@ -68,9 +68,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($this->onid == 0) {
             return $c; // empty dataobject.
         }
-        $test = DB_DataObject::factory('crm_mailing_list_queue');
-        $test->get(1);
-        print_r($test);exit;
+        
         $c->autoJoin();
         
         if ($c->get($this->onid)) {
