@@ -67,6 +67,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $fetch  = false;
             if(!file_exists($path)){
                 $fetch = true;
+                // use HTTP_Request...
                file_put_contents($path, file_get_contents($q['_remote_upload'])); 
             }
             
