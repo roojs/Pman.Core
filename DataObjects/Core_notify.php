@@ -64,6 +64,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return $set;
         }
         $c = DB_DataObject::factory($this->ontable);
+        print_r($this);exit;
         if ($this->onid == 0) {
             return $c; // empty dataobject.
         }
