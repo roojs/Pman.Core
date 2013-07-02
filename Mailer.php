@@ -151,8 +151,8 @@ class Pman_Core_Mailer {
         if ($htmlbody !== false) {
             require_once 'Mail/mime.php';
             $mime = new Mail_mime(array('eol' => "\n",
+                                    'html_encoding' => 'base64',
                                     'html_charset' => 'utf-8',
-                'html_encoding' => 'base64',
                                     'text_charset' => 'utf-8',
                                     'head_charset' => 'utf-8'
                 ));
