@@ -150,11 +150,11 @@ class Pman_Core_Mailer {
         
         if ($htmlbody !== false) {
             require_once 'Mail/mime.php';
-            $mime = new Mail_mime(array('eol' => "\n"));
+            $mime = new Mail_mime(array('eol' => "\n", 'html_charset' => 'utf-8'));
             
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
-            var_dump($mime);exit;
+//            var_dump($mime);exit;
             foreach($this->images as $cid=>$cdata) { 
             
                 $mime->addHTMLImage(
