@@ -152,9 +152,9 @@ class Pman_Core_Mailer {
             require_once 'Mail/mime.php';
             $mime = new Mail_mime(array('eol' => "\n",
                                     'html_charset' => 'utf-8',
-                                    'html_charset' => 'utf-8',
-                                                                        'html_charset' => 'utf-8'));
-));
+                                    'text_charset' => 'utf-8',
+                                    'head_charset' => 'utf-8'
+                ));
             
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
