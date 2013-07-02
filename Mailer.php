@@ -270,6 +270,7 @@ class Pman_Core_Mailer {
         
         // CACHE???
         // 2 files --- the info file.. and the actual file...
+        // add user
         $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
             $ret =  json_decode($cache);
