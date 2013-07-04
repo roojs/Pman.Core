@@ -276,7 +276,11 @@ class Pman_Core_Mailer {
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         // add user
-        $cache = ini_get('session.save_path').'/Pman_Core_Mailer/' . md5($url);
+        // unix only...
+        $uinfo = posix_getpwuid( posix_getuid () ); 
+        $user = $uinfo['name'];
+        
+        $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
             $ret =  json_decode($cache);
             $ret['file'] = $cache . '.data';
