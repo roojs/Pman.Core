@@ -278,7 +278,7 @@ class Pman_Core_Mailer {
         // add user
         // unix only...
         $uinfo = posix_getpwuid( posix_getuid () ); 
-        $user = $uinfo['name'];
+        $user = $uinfo['name']; 
         
         $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
