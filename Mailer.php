@@ -287,7 +287,7 @@ class Pman_Core_Mailer {
             return $ret;
         }
         if (!file_exists(dirname($cache))) {
-            mkdir(dirname($cache),0666, true);
+            mkdir(dirname($cache),0700, true);
         }
         
         require_once 'HTTP/Request.php';
