@@ -237,7 +237,8 @@ class Pman_Core_Mailer {
     {
         
         if ($url[0] == '/') {
-            $file = $this->page->rootDir . $url;
+            $ff = HTML_FlexyFramework::get();
+            $file = $ff->rootDir . $url;
             require_once 'File/MimeType.php';
             $m  = new File_MimeType();
             $mt = $m->fromFilename($file);
