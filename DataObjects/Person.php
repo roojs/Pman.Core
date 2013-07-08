@@ -746,11 +746,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             $str =  $x->toSQL(array(
                 'default' => $props,
-                'map' => array(),
-                    //'language' => 'Clipping.language',
+                'map' => array(
+                    'company' => 'join_company_id_id.name',
                     //'country' => 'Clipping.country',
                     //  'media' => 'Clipping.media_name',
-                
+                ),
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
