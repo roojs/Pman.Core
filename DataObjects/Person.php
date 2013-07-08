@@ -741,6 +741,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                     "$tn_p.role",
                     "$tn_p.phone",
                     "$tn_p.remarks",
+                    "join_company_id_id.name"
             );
             
             $str =  $x->toSQL(array(
