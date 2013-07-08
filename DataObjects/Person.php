@@ -732,7 +732,27 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             // use our magic search builder...
             
+             require_once 'Text/SearchParser.php';
+            $x = new Text_SearchParser($q['query']['search']);
             
+            $props = array(
+                    "$tn_p.name",
+                    "$tn_p.email",
+                    "$tn_p.role",
+                    "$tn_p.phone",
+                    "$tn_p.remarks",
+            );
+            
+            $str =  $x->toSQL(array(
+                'default' => $props,
+                'map' => array(),
+                    //'language' => 'Clipping.language',
+                    //'country' => 'Clipping.country',
+                    //  'media' => 'Clipping.media_name',
+                ),
+                'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
+
+            ));
             
             $s = $this->escape($q['query']['search']);
                     $this->whereAdd("
