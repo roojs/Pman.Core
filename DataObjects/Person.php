@@ -729,6 +729,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         if (!empty($q['query']['search'])) {
+            
+            // use our magic search builder...
+            
+            
+            
             $s = $this->escape($q['query']['search']);
                     $this->whereAdd("
                         $tn_p.name LIKE '%$s%'  OR
