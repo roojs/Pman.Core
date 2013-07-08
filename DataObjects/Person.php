@@ -749,7 +749,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                     //'language' => 'Clipping.language',
                     //'country' => 'Clipping.country',
                     //  'media' => 'Clipping.media_name',
-                ),
+                
                 'escape' => array($this->getDatabaseConnection(), 'escapeSimple'), /// pear db or mdb object..
 
             ));
