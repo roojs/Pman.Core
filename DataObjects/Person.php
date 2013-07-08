@@ -754,15 +754,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
 
             ));
             
-            $s = $this->escape($q['query']['search']);
-                    $this->whereAdd("
+            
+            $this->whereAdd($str); /*
                         $tn_p.name LIKE '%$s%'  OR
                         $tn_p.email LIKE '%$s%'  OR
                         $tn_p.role LIKE '%$s%'  OR
                         $tn_p.phone LIKE '%$s%' OR
                         $tn_p.remarks LIKE '%$s%' 
                         
-                    ");
+                    ");*/
         }
         
         //
