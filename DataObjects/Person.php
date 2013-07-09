@@ -910,6 +910,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function importFromArray($roo, $persons, $prefix)
     {
+        if (!is_array($persons) || empty($persons)) {
+            $roo->jerr("error in the person data. - empty on not valid");
+        }
         foreach($persons as $person){
             $p = DB_DataObject::factory('person');
             if($p->get('name', $person['name'])){
