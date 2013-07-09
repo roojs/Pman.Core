@@ -913,6 +913,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!is_array($persons) || empty($persons)) {
             $roo->jerr("error in the person data. - empty on not valid");
         }
+        DB_DataObject::factory('groups')->initGroups();
+        
         foreach($persons as $person){
             $p = DB_DataObject::factory('person');
             if($p->get('name', $person['name'])){
