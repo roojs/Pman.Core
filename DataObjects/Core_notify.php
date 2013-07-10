@@ -109,7 +109,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     {
         switch($this->event_id) {
             case -1:
-                return 'DELIVERED';  / //not valid..
+                return 'DELIVERED';   //not valid..
             case 0:
                 return 'PENDING';
             default:
@@ -146,7 +146,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             switch ($q['query']['status']) {
                 
                 case 'SUCCESS';
-                    $this->whereAdd("event_id < 0");
+                    $this->whereAdd("msg_id  != ''");
                     break;
                 case 'FAILED';
                     $this->whereAdd('event_id > 0 AND act_when <= NOW() ');
