@@ -192,6 +192,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if (!empty($base['etype'])) {
             $seq_id = 1;
             $t = DB_DAtaObject::Factory('core_enum');
+            $t->is_system_enum = 1;
             $t->etype = $base['etype'];
             $t->selectAdD();
             $t->selectAdD('max(seqid) as seqid');
@@ -201,7 +202,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
-            
+            $t->is_system_enum = 1;
             $t->setFrom($row);
             $t->setFrom($base);
             unset($t->seqid); // these might have been changed
