@@ -353,6 +353,7 @@ alter table  core_enum ADD COLUMN  display_name varchar(255)  NOT NULL DEFAULT '
 alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 
 UPDATE core_enum SET display_name = name WHERE display_name = '';
+ALTER TABLE core_enum ADD COLUMN is_system_enum INT(2) NOT NULL DEFAULT 0;
 
 
 
