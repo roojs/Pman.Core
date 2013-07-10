@@ -109,7 +109,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     {
         switch($this->event_id) {
             case -1:
-                return 'DELIVERED';
+                return 'DELIVERED';  / //not valid..
             case 0:
                 return 'PENDING';
             default:
