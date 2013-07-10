@@ -192,7 +192,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if (!empty($base['etype'])) {
             $seq_id = 1;
             $t = DB_DAtaObject::Factory('core_enum');
-            $t->is_system_enum = 1;
             $t->etype = $base['etype'];
             $t->selectAdD();
             $t->selectAdD('max(seqid) as seqid');
