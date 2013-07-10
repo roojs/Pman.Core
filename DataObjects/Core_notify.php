@@ -149,7 +149,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     $this->whereAdd("msg_id  != ''");
                     break;
                 case 'FAILED';
-                    $this->whereAdd('event_id > 0 AND act_when <= NOW() ');
+                    
+                    $this->whereAdd('msg_id  = '' AND event_id > 0  ');
                     
                     break;
                 case 'PENDING';
