@@ -202,9 +202,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
-            $t->is_system_enum = 1;
+            
             $t->setFrom($row);
             $t->setFrom($base);
+            $t->is_system_enum = 1;
             unset($t->seqid); // these might have been changed
             unset($t->display_name); // these might have been changed
             
