@@ -71,15 +71,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function onUpdate($old, $req)
-    {
-        $x = $this->factory($this->tableName());
-        $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')");
-        if ($old->etype != $this->etype) {
-            $x->query("SELECT core_enum_seqmax_update('". $this->escape($old->etype) ."')");
-        }
-        
-    }
+    
     function beforeUpdate($old, $request,$roo)
     {
         $tn = $this->tableName();
@@ -109,12 +101,22 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
         }
     }
+    
     function onInsert($req)
     {
         $x = $this->factory($this->tableName());
         $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')");
          
     }
+    function onUpdate($old, $req)
+    {
+        $x = $this->factory($this->tableName());
+        $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')");
+        if ($old->etype != $this->etype) {
+            $x->query("SELECT core_enum_seqmax_update('". $this->escape($old->etype) ."')");
+        }
+    }
+    
     
     function lookup($etype,$name) {
         $ce = DB_DataObject::Factory('core_enum');
