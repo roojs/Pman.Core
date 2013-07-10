@@ -146,11 +146,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             switch ($q['query']['status']) {
                 
                 case 'SUCCESS';
-                    $this->whereAdd("msg_id  != ''");
+                    $this->whereAdd("msgid  != ''");
                     break;
                 case 'FAILED';
                     
-                    $this->whereAdd("msg_id  = '' AND event_id > 0 AND act_when < NOW()");
+                    $this->whereAdd("msgid  = '' AND event_id > 0 AND act_when < NOW()");
                     
                     break;
                 case 'PENDING';
