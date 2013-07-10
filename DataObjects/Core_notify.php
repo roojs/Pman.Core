@@ -102,7 +102,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     }
     function delivered()
     {
-        return !empty($msgid);
+        return !empty($this->msgid);
     }
     
     function status() // used by commandline reporting at present..
@@ -141,6 +141,23 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if (isset($q['query']['person_id_name']) ) {
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
              
+        }
+         if (!empty($q['query']['status'])) {
+            switch ($q['query']['status']) {
+                
+                case 'SUCCESS';
+                    $this->is_active = 1;
+                    break;
+                case 'FAILED';
+                    $this->is_active = 0;
+                    break;
+                case 'PENDING';  
+                    $this->is_active = 0;
+                    break;
+                case 'ALL':
+                default:
+                    break;
+            }
         }
         
         
