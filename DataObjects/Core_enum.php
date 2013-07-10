@@ -213,7 +213,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             {
                 $t->setFrom($row);
                 $t->setFrom($base);
-            
+                $t->is_system_enum = 1;
                 if (!empty($base['etype']) && empty($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
