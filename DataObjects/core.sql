@@ -189,7 +189,10 @@ ALTER TABLE Person ADD COLUMN   office_id int(11) default '0';
 ALTER TABLE Person ADD COLUMN   name varchar(128)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   phone varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   fax varchar(32)  NOT NULL DEFAULT '';
-ALTER TABLE Person ADD COLUMN   email varchar(128)  NOT NULL DEFAULT '';
+
+ALTER TABLE Person ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   alt_email VARCHAR(256) NULL ;
+
 ALTER TABLE Person ADD COLUMN   company_id int(11) default '0';
 ALTER TABLE Person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   active int(11) NOT NULL  default 1;
@@ -207,10 +210,12 @@ ALTER TABLE Person ADD COLUMN   deleted_dt DATETIME ;
 ALTER TABLE Person ADD COLUMN   firstname varchar(128) NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   lastname varchar(128) NOT NULL DEFAULT '';
 
-ALTER TABLE Person ADD COLUMN name_facebook VARCHAR(128) NULL;
-ALTER TABLE Person ADD COLUMN url_blog VARCHAR(256) NULL ;
-ALTER TABLE Person ADD COLUMN url_twitter VARCHAR(256) NULL ;
-ALTER TABLE Person ADD COLUMN url_linkedin VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN   name_facebook VARCHAR(128) NULL;
+ALTER TABLE Person ADD COLUMN   url_blog VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN   url_twitter VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN   url_linkedin VARCHAR(256) NULL ;
+ALTER TABLE Person ADD COLUMN   alt_email VARCHAR(256) NULL ;
+
 
 ALTER TABLE Person ADD COLUMN   phone_mobile varchar(32)  NOT NULL  DEFAULT '';
 ALTER TABLE Person ADD COLUMN   phone_direct varchar(32)  NOT NULL  DEFAULT '';
@@ -220,6 +225,7 @@ ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
 alter table Person change role role varchar(254) NOT NULL DEFAULT '';
+alter table Person change email email varchar(254) NOT NULL DEFAULT '';
 
 
 
