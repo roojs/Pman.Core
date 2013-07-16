@@ -91,7 +91,9 @@ class Pman_Core_Mailer {
         
         require_once 'HTML/Template/Flexy.php';
         
-        $tmp_opts = array();
+        $tmp_opts = array(
+            'forceCompile' => true,
+        );
         if (!empty($this->templateDir)) {
             $tmp_opts['templateDir'] = $this->templateDir;
         }
