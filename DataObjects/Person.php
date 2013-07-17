@@ -256,7 +256,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
               
                 $u->verifyAuth();
                 
-  die("verify");
+   
                 return true;
             }
             
