@@ -229,6 +229,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             (!$this->company_id || ($ff->Pman['auth_comptype'] != $this->company()->comptype))
            ){
             
+            // force a logout - without a check on the isAuth - as this is called from there..
+            $db = $this->getDatabaseConnection();
+            $sesPrefix = get_class($this) .'-'.$db->dsn['database'] ;
+            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
             return false;
             
             $ff->page->jerr("Login not permited to outside companies");
