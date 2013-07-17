@@ -229,7 +229,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             (!$this->company_id || ($ff->Pman['auth_comptype'] != $this->company()->comptype))
            ){
             
-            
+            return false;
             
             $ff->page->jerr("Login not permited to outside companies");
         }
