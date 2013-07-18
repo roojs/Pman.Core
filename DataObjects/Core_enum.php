@@ -204,10 +204,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             
             $t->setFrom($row);
             $t->setFrom($base);
-            $t->is_system_enum = 1;
+            
             unset($t->seqid); // these might have been changed
             unset($t->display_name); // these might have been changed
-            
             
             if (!$t->find(true))
             {
@@ -219,6 +218,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     $seq_id++;
                 }
                 $t->insert();
+            }else{
+                $t->is_system_enum = 1;
+                $t->update();
             }
             if (!empty($row['cn'])) {
                 $this->initEnums($row['cn'], array('etype' => $t->name));
