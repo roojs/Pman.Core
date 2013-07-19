@@ -223,7 +223,8 @@ class Pman_Core_Mailer {
     function htmlbodytoCID($html)
     {
         $dom = new DOMDocument();
-        $dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+        // this may raise parse errors as some html may be a component..
+        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $imgs= $dom->getElementsByTagName('img');
         
         foreach ($imgs as $i=>$img) {
