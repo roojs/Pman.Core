@@ -87,6 +87,7 @@ class Pman_Core_Mailer {
         
         
         
+        
         // this should be done by having multiple template sources...!!!
         
         require_once 'HTML/Template/Flexy.php';
@@ -98,7 +99,10 @@ class Pman_Core_Mailer {
         if (!empty($this->templateDir)) {
             $tmp_opts['templateDir'] = $this->templateDir;
         }
-        
+        $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
+        if (!empty($fopts['DB_DataObject_translator'])) {
+            $tmp_opts['DB_DataObject_translator'] = $fopts['DB_DataObject_translator'];
+        }
         
         $htmlbody = false;
         $htmltemplate = new HTML_Template_Flexy( $tmp_opts );
