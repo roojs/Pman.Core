@@ -103,6 +103,9 @@ class Pman_Core_Mailer {
         if (!empty($fopts['DB_DataObject_translator'])) {
             $tmp_opts['DB_DataObject_translator'] = $fopts['DB_DataObject_translator'];
         }
+         if (!empty($fopts['locale'])) {
+            $tmp_opts['locale'] = $fopts['locale'];
+        }
         
         $htmlbody = false;
         $htmltemplate = new HTML_Template_Flexy( $tmp_opts );
