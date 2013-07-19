@@ -93,7 +93,7 @@ class Pman_Core_Mailer {
         require_once 'HTML/Template/Flexy.php';
         
         $tmp_opts = array(
-            'forceCompile' => true,
+           // 'forceCompile' => true,
             'site_prefix' => false,
         );
         if (!empty($this->templateDir)) {
