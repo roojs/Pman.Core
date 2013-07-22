@@ -273,11 +273,13 @@ class Pman_Core_SimpleExcel extends Pman
             
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
-            
+            $dataFormat = empty($col_cfg['dataFormat']) ? '' $col_cfg['dataFormat']: 
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
           // handle 0 prefixes..
-            if (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' ) {
+            if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.') 
+                    || 
+                    $dataFormat == 'string' ) {
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
             } else {
           
