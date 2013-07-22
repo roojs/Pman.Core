@@ -24,6 +24,7 @@
             array(
                 'header'=> "Thumbnail",
                 'dataIndex'=> 'id',
+ *              'dataFormat' => 'string' // to force a string..
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb'),
  *              'color' => 'yellow', // set color for the cell which is a header element
