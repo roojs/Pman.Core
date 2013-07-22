@@ -289,7 +289,7 @@ class Pman_Core_SimpleExcel extends Pman
     }
      
     
-    function send($fn)
+    function send($fname)
     {
         if (!empty($this->workbook)) {
             $this->workbook->close();
@@ -299,7 +299,7 @@ class Pman_Core_SimpleExcel extends Pman
         require_once 'File/Convert.php';
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
         $fn = $fc->convert("application/vnd.ms-excel"); 
-        $fc->serve('attachment',$fn); // can fix IE Mess
+        $fc->serve('attachment',$fname); // can fix IE Mess
     }
      
     
