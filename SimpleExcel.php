@@ -289,7 +289,7 @@ class Pman_Core_SimpleExcel extends Pman
     }
      
     
-    function send($fn)
+    function send($fname)
     {
         if (!empty($this->workbook)) {
             $this->workbook->close();
