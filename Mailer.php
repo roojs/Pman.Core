@@ -21,6 +21,7 @@
        contents
        template
        replaceImages => true|false,
+       locale => 'en' .... or zh_hk....
        rcpts => array()   // override recipients..
     ]
  *
@@ -47,6 +48,7 @@ class Pman_Core_Mailer {
     var $replaceImages  = false; /* boolean */
     var $rcpts   = false;
     var $templateDir = false;
+    var $locale = false; // eg. 'en' or 'zh_HK'
     
     var $images         = array(); // generated list of cid images for sending
     
