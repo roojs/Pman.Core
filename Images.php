@@ -286,6 +286,10 @@ class Pman_Core_Images extends Pman
     function validateSize()
     {
         
+        if ($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') {
+            return true;
+        }
+        
         // DEFAULT allowed - override with $cfg['sizes'];
         
         $sizes = array(
