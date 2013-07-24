@@ -107,6 +107,11 @@ class Pman_Core_Mailer {
             $tmp_opts['locale'] = $fopts['locale'];
         }
         
+        // local opt's overwrite
+        if (!empty($this->locale)) {
+            $tmp_opts['locale'] = $this->locale;
+        }
+        
         $htmlbody = false;
         $htmltemplate = new HTML_Template_Flexy( $tmp_opts );
 
@@ -124,6 +129,9 @@ class Pman_Core_Mailer {
               
         }
         $tmp_opts['nonHTML'] = true;
+        
+        
+        
         // $tmp_opts['force'] = true;
         $template = new HTML_Template_Flexy(  $tmp_opts );
         
