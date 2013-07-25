@@ -159,8 +159,14 @@ class Pman_Core_Mailer {
             //exit;
         } 
         
-        
-        
+        require_once 'Mail/mime.php';
+        $mime = new Mail_mime(array('eol' => "\n",
+//                                    'html_encoding' => 'base64',
+                                    'html_charset' => 'utf-8',
+                                    'text_charset' => 'utf-8',
+                                    'head_charset' => 'utf-8'
+        // clean up the headers...
+        $parts[1] = $mime->headers($parts[1]);
         
         $parts[1]['Message-Id'] = '<' .   $content->msgid   .
                                      '@' . $content->HTTP_HOST .'>';
@@ -169,13 +175,8 @@ class Pman_Core_Mailer {
         
         
         if ($htmlbody !== false) {
-            require_once 'Mail/mime.php';
-            $mime = new Mail_mime(array('eol' => "\n",
-//                                    'html_encoding' => 'base64',
-                                    'html_charset' => 'utf-8',
-                                    'text_charset' => 'utf-8',
-                                    'head_charset' => 'utf-8'
-                ));
+            // got a html headers...
+            
             
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
