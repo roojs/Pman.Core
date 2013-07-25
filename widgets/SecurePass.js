@@ -294,7 +294,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
 		return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
 	},
         
-    // private
+    // private -- see TextFiedl... - not sure why we are duping the code?
     SafariOnKeyDown : function(event){
         
         var isSelectAll = false;
