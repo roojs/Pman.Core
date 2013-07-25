@@ -285,7 +285,7 @@ class Pman_Core_NotifySend extends Pman
             // older that 1 day.
             $retry = 120;
         }
-        if (strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
+        if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
