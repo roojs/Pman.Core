@@ -139,7 +139,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             echo '<PRE>';print_R($ji);
             // get cols
             foreach($ji['join_names'] as $cname=>$fname) {
-                //$this->selectAdd($fname . ' as ontable_id_' . $cname );
+                 $this->selectAdd($fname . ' as ontable_id_' . $cname );
             }
             
             //$this->selectAdd($d->_query['data_select']); -- this will cause the same dataIndex...
