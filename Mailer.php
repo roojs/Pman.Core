@@ -177,7 +177,9 @@ class Pman_Core_Mailer {
         if ($htmlbody !== false) {
             // got a html headers...
             
-            
+            if (isset($parts[1]['Content-Type'])) {
+                unset($parts[1]['Content-Type']);
+            }
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
 //            var_dump($mime);exit;
