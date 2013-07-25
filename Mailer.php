@@ -168,14 +168,12 @@ class Pman_Core_Mailer {
             'head_charset' => 'utf-8',
         ));
         // clean up the headers...
-        $parts[1] = $mime->headers($parts[1]);
+        
         
         $parts[1]['Message-Id'] = '<' .   $content->msgid   .
                                      '@' . $content->HTTP_HOST .'>';
         
-        
-        
-        
+          
         if ($htmlbody !== false) {
             // got a html headers...
             
@@ -194,7 +192,7 @@ class Pman_Core_Mailer {
                 );
             }
             $parts[2] = $mime->get();
-            
+            $parts[1] = $mime->headers($parts[1]);
         
         }
         
