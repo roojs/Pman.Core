@@ -136,10 +136,10 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
             $ji = $d->autoJoin();
-            //print_R($jinfo);
+            echo '<PRE>';print_R($jinfo);
             // get cols
             foreach($ji['cols'] as $cname=>$fname) {
-                $this->selectAdd($fname . ' as ontable_id_' . $cname );
+                //$this->selectAdd($fname . ' as ontable_id_' . $cname );
             }
             
             //$this->selectAdd($d->_query['data_select']); -- this will cause the same dataIndex...
