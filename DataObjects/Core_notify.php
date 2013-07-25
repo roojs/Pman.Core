@@ -138,7 +138,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             $ji = $d->autoJoin();
             echo '<PRE>';print_R($ji);
             // get cols
-            foreach($ji['cols'] as $cname=>$fname) {
+            foreach($ji['join_names'] as $cname=>$fname) {
                 //$this->selectAdd($fname . ' as ontable_id_' . $cname );
             }
             
