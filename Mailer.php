@@ -160,11 +160,12 @@ class Pman_Core_Mailer {
         } 
         
         require_once 'Mail/mime.php';
-        $mime = new Mail_mime(array('eol' => "\n",
-//                                    'html_encoding' => 'base64',
-                                    'html_charset' => 'utf-8',
-                                    'text_charset' => 'utf-8',
-                                    'head_charset' => 'utf-8',
+        $mime = new Mail_mime(array(
+            'eol' => "\n",
+            //'html_encoding' => 'base64',
+            'html_charset' => 'utf-8',
+            'text_charset' => 'utf-8',
+            'head_charset' => 'utf-8',
         ));
         // clean up the headers...
         $parts[1] = $mime->headers($parts[1]);
