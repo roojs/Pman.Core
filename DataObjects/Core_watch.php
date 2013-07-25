@@ -225,7 +225,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             }
             $t = DB_DataObject::Factory($this->tableName());
             $t->setFrom($dd);
-            if ($dd->find(true)) {
+            if ($t->find(true)) {
                 continue;
             }
             $t = DB_DataObject::Factory($this->tableName());
