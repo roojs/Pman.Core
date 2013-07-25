@@ -164,7 +164,8 @@ class Pman_Core_Mailer {
 //                                    'html_encoding' => 'base64',
                                     'html_charset' => 'utf-8',
                                     'text_charset' => 'utf-8',
-                                    'head_charset' => 'utf-8'
+                                    'head_charset' => 'utf-8',
+        ));
         // clean up the headers...
         $parts[1] = $mime->headers($parts[1]);
         
