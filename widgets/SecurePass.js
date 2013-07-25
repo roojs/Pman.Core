@@ -292,7 +292,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
 	ClientSideWeakPassword : function(pwd){
 		return this.IsLongEnough(pwd, 6) || !this.IsLongEnough(pwd, 0);
-	},
+	}/*,
         
     // private -- see TextFiedl... - not sure why we are duping the code?
     SafariOnKeyDown : function(event){
@@ -313,5 +313,5 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
                     this.shiftKey ? event.getKey() : event.getKey().toLowerCase()
             ));  
         };
-    }
+    } */
 })
