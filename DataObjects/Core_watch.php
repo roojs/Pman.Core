@@ -217,6 +217,24 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
         
     }
+    function initDatabase($roo, $data) {
+        foreach($data as $d) {
+            $dd = $d;
+            if (isset($dd['active'])) {
+                unset($dd['active']);
+            }
+            $t = DB_DataObject::Factory($this->tableName());
+            $t->setFrom($dd);
+            if ($dd->find(true)) {
+                continue;
+            }
+            $t = DB_DataObject::Factory($this->tableName());
+            $t->setFrom($d);
+            $t->insert();
+            
+            
+        }
+    }
     
      
 }
