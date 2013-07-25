@@ -309,7 +309,9 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         if(isSelectAll){ // backspace and delete key
             
             event.preventDefault();
-            this.setValue(String.fromCharCode(event.getKey())); 
+             this.setValue(String.fromCharCode(
+                    this.shiftKey ? event.getKey() : event.getKey().toLowerCase()
+            ));  
         };
     }
 })
