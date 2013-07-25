@@ -135,7 +135,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             //DB_DAtaObject::DebugLevel(1);
             // then we can build a join..
             $d = DB_DataObject::Factory($q['ontable']);
-            $d->autoJoin();
+            $jinfo = $d->autoJoin();
+            print_R($jinfo);
+            
             //$this->selectAdd($d->_query['data_select']); -- this will cause the same dataIndex...
             $this->_join .= "
                 LEFT JOIN {$d->tableName()} ON {$this->tableName()}.onid = {$d->tableName()}.id
