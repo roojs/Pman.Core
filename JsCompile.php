@@ -269,11 +269,11 @@ class Pman_Core_JsCompile  extends Pman
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($ofiles, $lsort);
         
-        $eoutput = " -o " . escapeshellarg($output) ;
+        $eoutput = " -k  -o " . escapeshellarg($output) ;
             
                    
         if (  $translation_base) {
-            $toutput = " -k -t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
+            $toutput = " -t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
                     " -p " . escapeshellarg($translation_base) ;//." -k "; // this kills the compression.
                     
         }
