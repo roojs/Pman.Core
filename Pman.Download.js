@@ -254,6 +254,9 @@ Roo.apply(Pman.Download.prototype, {
         }
         this.params.limit = this.limit;
         
+        // do it as a post, as args can get long..
+        this.params._get = 1;
+        this.method = 'POST';
         
     }
     
