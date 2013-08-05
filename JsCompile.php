@@ -269,8 +269,8 @@ class Pman_Core_JsCompile  extends Pman
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($ofiles, $lsort);
         
-        $eoutput = " -k  -o " . escapeshellarg($output) ;
-            
+        //$eoutput = " -k  -o " . escapeshellarg($output) ; // with whitespace..
+        $eoutput = "  -o " . escapeshellarg($output) ;
                    
         if (  $translation_base) {
             $toutput = " -t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
