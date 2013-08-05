@@ -110,6 +110,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return !empty($this->msgid);
     }
     
+    function whereAddUndelivered()
+    {
+        $tn = $this->tableName();
+        $this->whereAdd("$tn.msgid IS NULL OR $tn.msgid = ''");
+    }
+    
     function status() // used by commandline reporting at present..
     {
         switch($this->event_id) {
