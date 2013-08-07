@@ -211,7 +211,7 @@ class Pman_Core_Images extends Pman
         
         $xml = simplexml_load_string($_REQUEST['data']);
         
-        print_r($xml->saveXML());exit;
+        print_r($xml->toXML());exit;
         
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
