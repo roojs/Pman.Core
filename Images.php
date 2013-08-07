@@ -207,7 +207,7 @@ class Pman_Core_Images extends Pman
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
         $src_ext = $y->toExt( $this->mimetype );
-        
+        $test_temp = '/var/lib/php5/ClippingTMPh3cFeo.svg';
         
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
@@ -215,7 +215,7 @@ class Pman_Core_Images extends Pman
         
         
         require_once 'File/Convert.php';
-        $cv = new File_Convert($tmp, $this->mimetype);
+        $cv = new File_Convert($test_temp, $this->mimetype);
         
         $fn = $cv->convert(
                 $this->as_mimetype ,
