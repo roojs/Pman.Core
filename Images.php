@@ -200,7 +200,7 @@ class Pman_Core_Images extends Pman
             $this->jerr("missing data");
         }
         
-        print_r($_REQUEST['data']);exit;
+        
         
         $this->as_mimetype = $_REQUEST['as'];
         $this->mimetype = $_REQUEST['mimetype'];
@@ -211,6 +211,8 @@ class Pman_Core_Images extends Pman
         
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
+        
+        print_r($tmp);exit;
         
         require_once 'File/Convert.php';
         $cv = new File_Convert($tmp, $this->mimetype);
