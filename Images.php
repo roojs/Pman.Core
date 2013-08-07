@@ -216,12 +216,13 @@ class Pman_Core_Images extends Pman
         
         require_once 'File/Convert.php';
         $cv = new File_Convert($tmp, $this->mimetype);
-        print_r($cv);exit;
+        
         $fn = $cv->convert(
                 $this->as_mimetype ,
                 empty($_REQUEST['width']) ? 0 : $_REQUEST['width'],
                 empty($_REQUEST['height']) ? 0 : $_REQUEST['height']
         );
+        print_r($fn);exit;
         if (!empty($_REQUEST['as_data'])) {
             $this->jok(base64_encode(file_get_contents($fn)));
         }
