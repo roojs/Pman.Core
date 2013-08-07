@@ -222,7 +222,7 @@ class Pman_Core_Images extends Pman
                 empty($_REQUEST['width']) ? 0 : $_REQUEST['width'],
                 empty($_REQUEST['height']) ? 0 : $_REQUEST['height']
         );
-//        print_r($fn);exit;
+        print_r($fn);exit;
         if (!empty($_REQUEST['as_data'])) {
             $this->jok(base64_encode(file_get_contents($fn)));
         }
