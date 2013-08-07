@@ -211,7 +211,7 @@ class Pman_Core_Images extends Pman
         
         $xml = new SimpleXMLElement($_REQUEST['data']);
         
-        print_r($xml->svg);exit;
+        print_r($xml);exit;
         
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
