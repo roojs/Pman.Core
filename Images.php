@@ -201,32 +201,24 @@ class Pman_Core_Images extends Pman
         }
         
         
-        
         $this->as_mimetype = $_REQUEST['as'];
         $this->mimetype = $_REQUEST['mimetype'];
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
         $src_ext = $y->toExt( $this->mimetype );
-        $test_temp = '/var/lib/php5/ClippingTMPh3cFeo.svg';
         
-        $xml = new SimpleXMLElement($_REQUEST['data']);
-        
-        print_r($xml);exit;
         
         $tmp = $this->tempName($src_ext);
         file_put_contents($tmp, $_REQUEST['data']);
         
-        
-        
         require_once 'File/Convert.php';
-        $cv = new File_Convert($test_temp, $this->mimetype);
+        $cv = new File_Convert($tmp, $this->mimetype);
         
         $fn = $cv->convert(
                 $this->as_mimetype ,
                 empty($_REQUEST['width']) ? 0 : $_REQUEST['width'],
                 empty($_REQUEST['height']) ? 0 : $_REQUEST['height']
         );
-//        print_r($tmp);exit;
         if (!empty($_REQUEST['as_data'])) {
             $this->jok(base64_encode(file_get_contents($fn)));
         }
