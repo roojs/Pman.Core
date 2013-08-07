@@ -209,7 +209,7 @@ class Pman_Core_Images extends Pman
         $src_ext = $y->toExt( $this->mimetype );
         $test_temp = '/var/lib/php5/ClippingTMPh3cFeo.svg';
         
-        $xml = simplexml_load_string($_REQUEST['data']);
+        $xml = new SimpleXMLElement($_REQUEST['data']);
         
         print_r($xml);exit;
         
