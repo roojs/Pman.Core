@@ -200,7 +200,7 @@ class Pman_Core_Images extends Pman
             $this->jerr("missing data");
         }
         
-        print_r($_REQUEST['data']);
+        print_r($_REQUEST['data']);exit;
         
         $this->as_mimetype = $_REQUEST['as'];
         $this->mimetype = $_REQUEST['mimetype'];
