@@ -1,6 +1,14 @@
 <?php
 /**
  * Table Definition for Groups
+ *
+ *group types
+ *
+ * 0 = permission group..
+ * 1 = team
+ * 2 = contact group
+ *
+ * 
  */
 require_once 'DB/DataObject.php';
 
@@ -147,6 +155,20 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         
     }
     
+    function initDatabase($roo, $data)
+    {
+        $this->initGroups();
+        foreach($data as $gi) {
+            $g = DB_DataObject::factory('Groups');
+            $g->setFrom($gi);
+            if ($g->count()) {
+                continue;
+            }
+            $g->insert();
+            
+            
+        }
      
+    }
     
 }
