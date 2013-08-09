@@ -4,6 +4,7 @@
  */
 require_once 'DB/DataObject.php';
 
+
 class Pman_Core_DataObjects_Person extends DB_DataObject 
 {
     ###START_AUTOCODE
@@ -458,15 +459,19 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $this->whereAdd('LENGTH(passwd) > 1'); 
         $this->email = $n;
     }
-    function lang($val)
+    function lang()
     {
+        if (!func_num_args()) {
+            return $this->lang;
+        }
+        $val = array_shift(func_num_args());
         if ($val == $this->lang) {
             return;
         }
         $uu = clone($this);
         $this->lang = $val;
         $this->update($uu);
-
+        return $this->lang;
     }
             
     
