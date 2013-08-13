@@ -120,7 +120,10 @@ class Pman_Core_Mailer {
 
         if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
             // then we have a multi-part email...
-            
+            $html_tmp_opts = $tmp_opts;
+            if (!empty($this->html_locale)) {
+                $html_tmp_opts['locale'] = $this->html_locale;
+            }
             
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
             $htmlbody =  $htmltemplate->bufferedOutputObject($content);
