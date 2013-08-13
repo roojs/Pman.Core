@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "show": "function (_self)\n{\n\n    // this does not really work - escape on the borders works..\n    // resize to fit.. if we have styled stuff...\n    \n    \n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n    \n}"
+                "show": "function (_self)\n{\n\n    // this does not really work - escape on the borders works..\n    // resize to fit.. if we have styled stuff...\n    \n    \n    \n    \n    var d = this;\n    \n    var pad =     d.el.getSize().height - (d.header.getSize().height +\n        d.footer.getSize().height +        \n        d.layout.getRegion('center').getPanel(0).height\n        )\n    \n    var height = (\n        pad + \n        d.header.getSize().height +\n        d.footer.getSize().height +        \n        d.layout.getRegion('center').getPanel(0).el.child('div').getSize().height\n    );\n    this.resizeTo(d.getSize().width, height);\n    \n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n    \n}"
             },
             "closable": false,
             "collapsible": false,

@@ -38,6 +38,23 @@ Pman.Dialog.Image = {
                     // resize to fit.. if we have styled stuff...
                     
                     
+                    
+                    
+                    var d = this;
+                    
+                    var pad =     d.el.getSize().height - (d.header.getSize().height +
+                        d.footer.getSize().height +        
+                        d.layout.getRegion('center').getPanel(0).height
+                        )
+                    
+                    var height = (
+                        pad + 
+                        d.header.getSize().height +
+                        d.footer.getSize().height +        
+                        d.layout.getRegion('center').getPanel(0).el.child('div').getSize().height
+                    );
+                    this.resizeTo(d.getSize().width, height);
+                    
                     if (this.keylistener) {
                         return;
                     }
