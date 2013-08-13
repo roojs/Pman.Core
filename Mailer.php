@@ -50,6 +50,7 @@ class Pman_Core_Mailer {
     var $templateDir = false;
     var $locale = false; // eg. 'en' or 'zh_HK'
     
+    var $html_locale = false; // eg. 'en' or 'zh_HK'
     var $images         = array(); // generated list of cid images for sending
     
     
