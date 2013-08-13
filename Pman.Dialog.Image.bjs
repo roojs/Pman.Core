@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "show": "function (_self)\n{\n    // this does not really work - escape on the borders works..\n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n    \n}"
+                "show": "function (_self)\n{\n\n    // this does not really work - escape on the borders works..\n    // resize to fit.. if we have styled stuff...\n    \n    \n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n    \n}"
             },
             "closable": false,
             "collapsible": false,
