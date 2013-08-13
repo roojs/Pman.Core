@@ -53,7 +53,7 @@ Pman.Dialog.Image = {
                         d.footer.getSize().height +        
                         d.layout.getRegion('center').getPanel(0).el.child('div').getSize().height
                     );
-                    this.resizeTo(d.getSize().width, height);
+                    this.resizeTo(d.el.getSize().width, height);
                     
                     if (this.keylistener) {
                         return;
