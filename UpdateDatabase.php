@@ -404,7 +404,16 @@ class Pman_Core_UpdateDatabase extends Pman
          
         $c->initEnums($ctb);
         
-        
+        $c = DB_DataObject::Factory('Companies');
+        $c->query("
+            UPDATE Companies 
+                SET
+                    comptype_id = (SELECT id FROM core_enum where etype='comptype' and name=Companies.comptype)
+                WHERE
+                    comptype_id = 0
+                  
+                  
+                  ");
         
         
         
