@@ -186,6 +186,11 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
      
+    function initDatabase($roo, $data)
+    {
+        $this->initEnums($data);
+    }
+    
     
     function initEnums($data, $base = array())
     {
