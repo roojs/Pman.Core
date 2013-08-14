@@ -404,6 +404,7 @@ class Pman_Core_UpdateDatabase extends Pman
          
         $c->initEnums($ctb);
         
+        // fix comptypeid
         $c = DB_DataObject::Factory('Companies');
         $c->query("
             UPDATE Companies 
