@@ -185,7 +185,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         return false;
         
     }
-     
+     // fixme - all calls should be to initDatabase, we need to remove initEnums
     function initDatabase($roo, $data)
     {
         $this->initEnums($data);
