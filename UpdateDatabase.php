@@ -413,7 +413,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $c = DB_DataObject::Factory('core_enum');
          
         $c->initEnums($ctb);
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         // fix comptypeid
         $c = DB_DataObject::Factory('Companies');
         $c->query("
