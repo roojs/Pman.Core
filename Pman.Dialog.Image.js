@@ -45,7 +45,7 @@ Pman.Dialog.Image = {
                     var pad =     d.el.getSize().height - (d.header.getSize().height +
                         d.footer.getSize().height +        
                         d.layout.getRegion('center').getPanel(0).el.getSize().height
-                        )
+                        );
                     
                     var height = (
                         pad + 
