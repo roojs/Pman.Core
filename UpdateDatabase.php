@@ -392,6 +392,16 @@ class Pman_Core_UpdateDatabase extends Pman
         $groups = DB_DataObject::factory('groups');
         $groups->initGroups();
         
+         $g->initDatabase($this,array(
+            array(
+                'name' => 'bcc-email', // group who are bcc'ed on all requests.
+                'type' => 0, // system
+            ),
+            
+        ));
+        
+        
+        
         // fix comptypes enums..
         $c = DB_DataObject::Factory('Companies');
         $c->selectAdd();
