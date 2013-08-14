@@ -400,9 +400,14 @@ class Pman_Core_UpdateDatabase extends Pman
            $ctb[0]['cn'][] = array( 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
         }
-         $c = DB_DataObject::Factory('core_enum');
+        $c = DB_DataObject::Factory('core_enum');
          
         $c->initEnums($ctb);
+        
+        
+        
+        
+        
         
     }
     
