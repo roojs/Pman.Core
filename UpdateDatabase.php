@@ -412,6 +412,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     comptype_id = (SELECT id FROM core_enum where etype='comptype' and name=Companies.comptype)
                 WHERE
                     comptype_id = 0
+                    AND
+                    LENGTH(comptype) > 0
                   
                   
                   ");
