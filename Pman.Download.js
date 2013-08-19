@@ -125,6 +125,7 @@ Roo.apply(Pman.Download.prototype, {
     
     limit : 9999,
     
+    newWindow : false,
     
     method : 'GET',
     
