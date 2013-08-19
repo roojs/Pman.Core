@@ -42,7 +42,7 @@ Pman.Download = function(cfg)
     }
     
     
-    if (cfg.newWindow && this.method == 'GET') {
+    if (this.newWindow && this.method == 'GET') {
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
         return ; 
@@ -81,7 +81,7 @@ Pman.Download = function(cfg)
         tag: 'form',
         method : this.method,
         action : this.url,
-        target : this.csvFrame.id,
+        target : this.newWindow ? '_new' : this.csvFrame.id,
         enctype : 'multipart/form-data'
 
 
