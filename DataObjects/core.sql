@@ -417,13 +417,16 @@ ALTER TABLE core_notify ADD COLUMN  event_id int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  watch_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  trigger_person_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  trigger_event_id INT(11) NOT NULL DEFAULT 0;
-ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
+
 ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
-ALTER TABLE core_notify ADD   INDEX lookup_a(onid, ontable, person_id, act_when, msgid, to_email);
+
 
 #old mysql..
 ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
-  
+
+ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
+ALTER TABLE core_notify ADD   INDEX lookup_a(onid, ontable, person_id, act_when, msgid, to_email);  
+alter table core_notify add   INDEX lookup_b (sent, person_id, msgid, ontable);
 
 
 
