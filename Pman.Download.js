@@ -125,6 +125,9 @@ Roo.apply(Pman.Download.prototype, {
     
     limit : 9999,
     
+    
+    method : 'GET',
+    
     // private..
     createCsvFrame: function()
     {
