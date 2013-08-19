@@ -42,7 +42,7 @@ Pman.Download = function(cfg)
     }
     
     
-    if (cfg.newWindow) {
+    if (cfg.newWindow && this.method == 'GET') {
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
         return ; 
