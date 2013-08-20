@@ -172,6 +172,7 @@ class Pman_Core_Images extends Pman
         
        
         $img = DB_DataObjecT::factory('Images');
+        print_r($img);
         if (!$id || !$img->get($id)) {
              
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
@@ -243,7 +244,7 @@ class Pman_Core_Images extends Pman
                 urlencode("Original file was missing : " . $img->getStoreName()));
     
         }
-        print_r($img);exit;
+//        print_r($img);exit;
         $x = $img->toFileConvert();
         if (empty($this->as_mimetype)) {
             $this->as_mimetype  = $img->mimetype;
