@@ -32,8 +32,5 @@ Roo.form.HtmlEditor.ToolbarContext.store = {
            sortInfo: {
                field: 'display_name', direction: 'ASC'
            }
-                },
-    
-    
-   }
+    } 
 }
