@@ -174,10 +174,10 @@ class Pman_Core_Images extends Pman
         $img = DB_DataObjecT::factory('Images');
         
         if (!$id || !$img->get($id)) {
-             
+             print_r($id);exit;
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
                 urlencode("image has been removed or deleted."));
-            print_r($id);exit;
+            
         }
         $this->serve($img);
         exit;
