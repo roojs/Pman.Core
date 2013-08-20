@@ -4,10 +4,10 @@ Roo.form.HtmlEditor.ToolbarContext.store = {
              // load using HTTP
             proxy: {
                xtype : 'HttpProxy',
-               url: baseURL + '/Roo/core_enum.html',
+               url: baseURL + '/Roo/Core_enum',
                method: 'GET'
             },
-             reader : {
+            reader : {
                 xtype: 'JsonReader',
                 xns: Roo.data,
                 id : 'id',
