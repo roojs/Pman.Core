@@ -172,7 +172,7 @@ class Pman_Core_Images extends Pman
         
        
         $img = DB_DataObjecT::factory('Images');
-        print_r($id);exit;
+        
         if (!$id || !$img->get($id)) {
              
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
@@ -237,7 +237,7 @@ class Pman_Core_Images extends Pman
     function serve($img)
     {
         $this->sessionState(0); // turn off session... - locking...
-        
+        print_r($id);exit;
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
             //print_r($img);exit;
