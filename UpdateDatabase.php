@@ -388,7 +388,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 ),
                 array(
                     'etype' => '',
-                    'name' => 'HtmlEditor.ToolbarContext.font-family',
+                    'name' => 'HtmlEditor.font-family',
                     'display_name' =>  'HTML Editor font families',
                     'cn' => array(
                         array(
