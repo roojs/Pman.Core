@@ -213,7 +213,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->etype = isset($base['etype']) ? $base['etype'] : $t->etype ;
             
             $t->name = isset($row['name']) ? $row['name'] : '';
-            $t->name = isset($base['name']) ? $base['name'] : $t->name;
+ 
             
             if (!$t->count()) {
                 
