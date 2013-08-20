@@ -446,8 +446,13 @@ class Pman_Core_UpdateDatabase extends Pman
         $c->selectAdd();
         $c->selectAdd('distinct(comptype) as comptype');
         $c->whereAdd("comptype != ''");
+        
+        $ctb = array();
         foreach($c->fetchAll('comptype') as $cts) {
-           $ctb[0][0]['cn'][] = array( 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
+            
+            
+            
+           $ctb[]= array( 'etype'=>'COMPTYPE', 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
         }
         
