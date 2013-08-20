@@ -215,28 +215,27 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->name = isset($row['name']) ? $row['name'] : '';
             $t->name = isset($base['name']) ? $base['name'] : $t->name;
             
-            
-            
-            
-            $t->setFrom($row);
-            $t->setFrom($base);
-            
-            unset($t->seqid); // these might have been changed
-            unset($t->display_name); // these might have been changed
-            
-            if (!$t->find(true))
-            {
+            if (!$t->count()) {
+                
                 $t->setFrom($row);
                 $t->setFrom($base);
-                $t->is_system_enum = 1;
+                
+                
+                //$t->is_system_enum = 1; // this should be on the caller..
+                
                 if (!empty($base['etype']) && empty($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
                 }
+                
                 $t->insert();
             }else{
-                $t->is_system_enum = 1;
-                $t->update();
+                if (isset($base['is_system_enum']) || isset($row['is_system_enum'])) {
+                    $t->is_system_enum = isset($base['is_system_enum']) ? $base['is_system_enum'] : 0;
+                    $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
+                    
+                    $t->update();
+                }
             }
             if (!empty($row['cn'])) {
                 $this->initEnums($row['cn'], array('etype' => $t->name));
