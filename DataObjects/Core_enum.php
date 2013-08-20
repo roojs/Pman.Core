@@ -222,7 +222,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             if (!$t->count()) {
                 
                 $t->setFrom($row);
-                $t->setFrom($base);
+                
                 
                 
                 //$t->is_system_enum = 1; // this should be on the caller..
