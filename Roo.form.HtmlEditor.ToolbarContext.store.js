@@ -1,5 +1,7 @@
 Roo.form.HtmlEditor.ToolbarContext.stores = {
+   
    'font-family' :  {
+      
             xtype : 'Store',
              // load using HTTP
             proxy: {
@@ -36,4 +38,4 @@ Roo.form.HtmlEditor.ToolbarContext.stores = {
                field: 'display', direction: 'ASC'
            }
     } 
-}
+};
