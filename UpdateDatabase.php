@@ -392,10 +392,28 @@ class Pman_Core_UpdateDatabase extends Pman
                     'display_name' =>  'HTML Editor font families',
                     'cn' => array(
                         array(
-                            'name' => 'OWNER',
-                            'display_name' => 'Owner',
-                            'seqid' => 999, // last...
-                        )
+                            'name' => 'Helvetica,Arial,sans-serif',
+                            'display_name' => 'Helvetica',
+                        ),
+                        
+                        array(
+                            'name' => 'Courier New',
+                            'display_name' => 'Courier',
+                        ),
+                        array(
+                            'name' => 'Tahoma',
+                            'display_name' => 'Tahoma',
+                        ),
+                        array(
+                            'name' => 'Times New Roman,serif',
+                            'display_name' => 'Times',
+                        ),
+                        array(
+                            'name' => 'Verdana',
+                            'display_name' => 'Verdana',
+                        ),
+                        
+                            
                         
                     )
                 ),
