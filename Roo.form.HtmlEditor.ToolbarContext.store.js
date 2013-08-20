@@ -13,7 +13,7 @@ Roo.form.HtmlEditor.ToolbarContext.stores = {
                 id : 'id',
                 root : 'data',
                 totalProperty : 'total',
-                metaFromRemote : true,
+                
                 fields : [
                     { name:'id','type':'int'},
                     { name : 'val' , mapping: 'name'} ,
