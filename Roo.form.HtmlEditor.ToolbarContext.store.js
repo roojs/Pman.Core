@@ -15,8 +15,8 @@ Roo.form.HtmlEditor.ToolbarContext.stores = {
                 totalProperty : 'total',
                 fields : [
                     { name:'id','type':'int'},
-                    { name : 'name' , mapping: 'val'} ,
-                    { name:'display_name', mapping: 'display'}
+                    { name : 'val' , mapping: 'name'} ,
+                    { name:'display', mapping: 'display_name'}
                 ]
             },
            listeners : {
