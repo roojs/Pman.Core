@@ -397,28 +397,28 @@ class Pman_Core_UpdateDatabase extends Pman
                         array(
                             'name' => 'Helvetica,Arial,sans-serif',
                             'display_name' => 'Helvetica',
-                            'is_system_enum' => 0,
+                            
                         ),
                         
                         array(
                             'name' => 'Courier New',
                             'display_name' => 'Courier',
-                            'is_system_enum' => 0,
+                             
                         ),
                         array(
                             'name' => 'Tahoma',
                             'display_name' => 'Tahoma',
-                            'is_system_enum' => 0,
+                            
                         ),
                         array(
                             'name' => 'Times New Roman,serif',
                             'display_name' => 'Times',
-                            'is_system_enum' => 0,
+                           
                         ),
                         array(
                             'name' => 'Verdana',
                             'display_name' => 'Verdana',
-                            'is_system_enum' => 0,
+                            
                         ),
                         
                             
