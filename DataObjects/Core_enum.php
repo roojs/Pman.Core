@@ -220,9 +220,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
             
             if (!$t->count()) {
-                
+                // base already gave it the etype..
                 $t->setFrom($row);
-                
                 
                 
                 //$t->is_system_enum = 1; // this should be on the caller..
