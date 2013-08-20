@@ -14,6 +14,10 @@ class Pman_Core_RooConfig extends Pman {
     
     function get()
     {
+        // at present these are public core enums..
+        // if we want to include private ones, we will have to load them after the page has loaded..
+        
+        
         $fonts = DB_DataObject::factory('core_enum')->fetchAllByType('HtmlEditor.font-family');
         $ar = array();
         foreach($fonts as $f) {
