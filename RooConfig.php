@@ -19,7 +19,9 @@ class Pman_Core_RooConfig extends Pman {
         foreach($fonts as $f) {
             $ar[] = array( $f->name, $f->display_name );
         }
-        
+        if (!empty($ar)) { 
+            echo "Roo.form.HtmlEditor.ToolbarContext.options['font-family'] = " . json_encode($ar) .";\n";
+        }
         
         
     }
