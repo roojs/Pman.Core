@@ -1,4 +1,4 @@
-Roo.form.HtmlEditor.ToolbarContext.store = {
+Roo.form.HtmlEditor.ToolbarContext.stores = {
    'font-family' : {
             xtype : 'Store',
              // load using HTTP
