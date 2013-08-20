@@ -227,16 +227,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 
                 //$t->is_system_enum = 1; // this should be on the caller..
                 
-                if (!empty($base['etype']) && empty($row['seqid'])) {
+                if (!empty($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
                 }
                 
                 $t->insert();
             }else{
-                if (isset($base['is_system_enum']) || isset($row['is_system_enum'])) {
-                    $t->is_system_enum = isset($base['is_system_enum']) ? $base['is_system_enum'] : 0;
-                    $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
+                if ( isset($row['is_system_enum'])) {
+                     $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
                     
                     $t->update();
                 }
