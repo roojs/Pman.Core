@@ -209,6 +209,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
             
+            $t->etype = isset($row['etype']) ? $row['etype'] : '';
+            $t->etype = isset($base['etype']) ? $base['etype'] : $t->etype ;
+            
+            $t->name = isset($row['name']) ? $row['name'] : '';
+            $t->name = isset($base['name']) ? $base['name'] : $t->name;
+            
+            
+            
+            
             $t->setFrom($row);
             $t->setFrom($base);
             
