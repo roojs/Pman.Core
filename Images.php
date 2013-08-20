@@ -237,7 +237,7 @@ class Pman_Core_Images extends Pman
     function serve($img)
     {
         $this->sessionState(0); // turn off session... - locking...
-        print_r($id);exit;
+        print_r($img);exit;
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
             //print_r($img);exit;
