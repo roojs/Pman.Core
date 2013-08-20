@@ -26,6 +26,7 @@ Roo.form.HtmlEditor.ToolbarContext.stores = {
                    // compnay myst be set..
                     o.params.etype = 'HtmlEditor.font-family'
                     o.params.active = 1;
+                    o.params._requestMeta=0;
                },
                loadexception : Pman.loadException
            
