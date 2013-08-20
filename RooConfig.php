@@ -22,7 +22,7 @@ class Pman_Core_RooConfig extends Pman {
         if (!empty($ar)) { 
             echo "Roo.form.HtmlEditor.ToolbarContext.options['font-family'] = " . json_encode($ar) .";\n";
         }
-        
+        /// add any other generic data in here..
         
     }
 }
