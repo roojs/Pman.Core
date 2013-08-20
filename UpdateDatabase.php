@@ -445,6 +445,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $c = DB_DataObject::Factory('Companies');
         $c->selectAdd();
         $c->selectAdd('distinct(comptype) as comptype');
+        $c->whereAdd("comptype != ''");
         foreach($c->fetchAll('comptype') as $cts) {
            $ctb[0]['cn'][] = array( 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
