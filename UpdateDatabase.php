@@ -382,6 +382,7 @@ class Pman_Core_UpdateDatabase extends Pman
                             'name' => 'OWNER',
                             'display_name' => 'Owner',
                             'seqid' => 999, // last...
+                            'is_system' => 1,
                         )
                         
                     )
