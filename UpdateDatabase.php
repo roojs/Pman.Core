@@ -377,12 +377,13 @@ class Pman_Core_UpdateDatabase extends Pman
                     'etype' => '',
                     'name' => 'COMPTYPE',
                     'display_name' =>  'Company Types',
+                    'is_system_enum' => 1,
                     'cn' => array(
                         array(
                             'name' => 'OWNER',
                             'display_name' => 'Owner',
                             'seqid' => 999, // last...
-                            'is_system' => 1,
+                            'is_system_enum' => 1,
                         )
                         
                     )
@@ -391,6 +392,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     'etype' => '',
                     'name' => 'HtmlEditor.font-family',
                     'display_name' =>  'HTML Editor font families',
+                    'is_system_enum' => 1,
                     'cn' => array(
                         array(
                             'name' => 'Helvetica,Arial,sans-serif',
