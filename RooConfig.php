@@ -14,7 +14,11 @@ class Pman_Core_RooConfig extends Pman {
     
     function get()
     {
-        $c = DB_DataObject::factory('core_enum')->fetchAllByType('comptype'); // array of object.s
+        $fonts = DB_DataObject::factory('core_enum')->fetchAllByType('HtmlEditor.font-family');
+        $ar = array();
+        foreach($fonts as $f) {
+            $ar[] = array( $f->name, $f->display_name );
+        }
         
         
         
