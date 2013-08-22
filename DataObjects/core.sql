@@ -231,6 +231,7 @@ alter table Person change email email varchar(254) NOT NULL DEFAULT '';
 
 ALTER TABLE Person ADD INDEX lookup_a(email, active);
 ALTER TABLE Person ADD INDEX lookup_b(email, active, company_id);
+alter table Person add index lookup_owner(owner_id);
 
 
 
