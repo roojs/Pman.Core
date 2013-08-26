@@ -155,6 +155,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = DB_DataObject::factory('core_enum');
         $x->etype = $etype;
         $x->active = 1;
+        $x->orderBy('seqid ASC');
         return $x->fetchAll($fetchArg1, $fetchArg2, $fetchArg3);
     }
     
