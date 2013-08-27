@@ -122,6 +122,10 @@ class Pman_Core_SimpleExcel extends Pman
         $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
         $this->formats = $formats;
+        
+        if (isset($cfg['formats']) && empty($formats)) {
+            $this->formats = $cfg['formats'];
+        }
         //var_dump($cfg['workbook']);
 
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
