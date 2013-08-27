@@ -180,6 +180,10 @@ class Pman_Core_SimpleExcel extends Pman
         
         $hasRender  = false;
          
+        if (empty($data)) {
+            return;
+        }
+        
         
         foreach($data as $r=>$clo) {
             $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
