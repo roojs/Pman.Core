@@ -110,7 +110,9 @@ class Pman_Core_JsCompile  extends Pman
                 $ofiles [] = $f . '/'. basename($fx);
             }
         }
-        
+        $ofiles = usort($ofiles,function($a,$b) {
+            
+        });
         $output = md5(serialize($arfiles)) .'.js';
         
         if ( $compile && !file_exists($basedir.'/_cache_/'.$output)) {
