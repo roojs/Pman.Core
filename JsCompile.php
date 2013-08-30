@@ -118,7 +118,7 @@ class Pman_Core_JsCompile  extends Pman
             }
             return ($a > $b) ? +1 : -1;
         });
-        print_R($ofiles);
+        //print_R($ofiles);
         
         $output = md5(serialize($arfiles)) .'.js';
         
