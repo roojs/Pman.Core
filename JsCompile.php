@@ -100,10 +100,12 @@ class Pman_Core_JsCompile  extends Pman
             if (!is_dir($basedir .'/' .$f)) {
                 
                 $arfiles[$basedir .'/' .$f] = filemtime($basedir .'/' .$f);
-                 $ofiles[] = $f;
+                $ofiles[] = $f;
                 continue;
             }
+            print_r(glob($basedir .'/' .$f.'/*.js'));
             foreach(glob($basedir .'/' .$f.'/*.js') as $fx) {
+                
                 $arfiles[$fx] = filemtime($fx);
                 $ofiles [] = $f . '/'. basename($fx);
             }
