@@ -111,8 +111,8 @@ class Pman_Core_JsCompile  extends Pman
             }
         }
        usort($ofiles,function($a,$b) {
-            $a = substr($a, -3);
-            $b=  substr($b, -3);
+            $a = substr($a, 0, -3);
+            $b=  substr($b, 0, -3);
             if ($a == $b) {
                 return 0;
             }
