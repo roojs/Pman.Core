@@ -103,7 +103,7 @@ class Pman_Core_JsCompile  extends Pman
                 $ofiles[] = $f;
                 continue;
             }
-            print_r(glob($basedir .'/' .$f.'/*.js'));
+            
             foreach(glob($basedir .'/' .$f.'/*.js') as $fx) {
                 
                 $arfiles[$fx] = filemtime($fx);
@@ -111,8 +111,15 @@ class Pman_Core_JsCompile  extends Pman
             }
         }
         $ofiles = usort($ofiles,function($a,$b) {
-            
+            $a = substr($a, -3);
+            $b=  substr($b, -3);
+            if ($a == $b) {
+                return 0;
+            }
+            return ($a > $b) ? +1 : -1;
         });
+        print_R($ofiles);
+        
         $output = md5(serialize($arfiles)) .'.js';
         
         if ( $compile && !file_exists($basedir.'/_cache_/'.$output)) {
