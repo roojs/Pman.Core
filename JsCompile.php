@@ -110,7 +110,7 @@ class Pman_Core_JsCompile  extends Pman
                 $ofiles [] = $f . '/'. basename($fx);
             }
         }
-        $ofiles = usort($ofiles,function($a,$b) {
+       usort($ofiles,function($a,$b) {
             $a = substr($a, -3);
             $b=  substr($b, -3);
             if ($a == $b) {
