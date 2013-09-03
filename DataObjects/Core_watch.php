@@ -172,7 +172,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
  
         $watches = $w->fetchAll();
         
-        print_R($watches);exit;
+//        print_R($watches);exit;
         
         $nn = DB_DataObject::Factory('core_notify');
         $nn->ontable    = $event->on_table;
