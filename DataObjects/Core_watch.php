@@ -179,6 +179,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $nn->onid       = $event->on_id;
         
         foreach($watches as $watch) {
+            $n = clone($nn);
             if (!$watch->person_id) { // no people??? bugs in watch table
                 $dom = explode(':',$watch->medium);
                 if (count($dom) != 2) {
@@ -203,7 +204,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
             }
             
-            $n = clone($nn);
+            
             $n->trigger_person_id = $event->person_id;
             $n->trigger_event_id = $event->id;
             $n->person_id = $watch->person_id;
