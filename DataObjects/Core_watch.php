@@ -194,9 +194,13 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 if (!method_exists($do,$dom[1])) {
                     continue;
                 }
-                $do->{$dom[1]}($event);
+                // the triggered method, can either do something
+                // or modify 
+                if ($do->{$dom[1]}($event, $n) !== false) {
+                    continue;
+                }
                 
-                continue;
+                
             }
             
             $n = clone($nn);
