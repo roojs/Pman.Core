@@ -195,6 +195,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 if (!method_exists($do,$dom[1])) {
                     continue;
                 }
+                echo "calling {$watch->medium}\n";
                 // the triggered method, can either do something
                 // or modify the notify event..
                 if ($do->{$dom[1]}($event, $n) !== false) {
