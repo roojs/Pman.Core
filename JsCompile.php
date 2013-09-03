@@ -81,7 +81,7 @@ class Pman_Core_JsCompile  extends Pman
      *
      */
     
-    function jsSort($a,$b)
+    static function jsSort($a,$b)
     {
         $a = substr($a, 0, -3);
         $b=  substr($b, 0, -3);
