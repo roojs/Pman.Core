@@ -199,7 +199,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // the triggered method, can either do something
                 // or modify the notify event..
                 if ($do->{$dom[1]}($event, $n) !== false) {
-                    echo "method did not return false?";
+                    //echo "method did not return false?";
                     continue;
                 }
                 
@@ -220,7 +220,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-            echo "inserting notify?";
+            //echo "inserting notify?";
             $n->act_start( date("Y-m-d H:i:s") );
             $n->insert();
             
