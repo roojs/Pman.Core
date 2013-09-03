@@ -184,6 +184,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 if (count($dom) != 2) {
                     continue;
                 }
+                // in some scenarios (like watching for new articles)
+                // we need to create a core, notify on the medium..
+                // in which case we set the  set $nn->evtype = medium..
+                // in that case - just let the called method generate the notify..
+                
+                
                 $do = DB_DataObject::factory($dom[0]);
                 if (!method_exists($do,$dom[1])) {
                     continue;
