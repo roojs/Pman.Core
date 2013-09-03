@@ -195,7 +195,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     continue;
                 }
                 // the triggered method, can either do something
-                // or modify 
+                // or modify the notify event..
                 if ($do->{$dom[1]}($event, $n) !== false) {
                     continue;
                 }
