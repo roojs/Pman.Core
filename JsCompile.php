@@ -81,6 +81,16 @@ class Pman_Core_JsCompile  extends Pman
      *
      */
     
+    function jsSort($a,$b)
+    {
+        $a = substr($a, 0, -3);
+        $b=  substr($b, 0, -3);
+        if ($a == $b) {
+            return 0;
+        }
+        return ($a > $b) ? +1 : -1;
+    }
+    
     
     function packScript($basedir, $files,  $output_url, $compile=true)
     {
@@ -110,15 +120,10 @@ class Pman_Core_JsCompile  extends Pman
                 $ofiles [] = $f . '/'. basename($fx);
             }
         }
+        $tf = 
         // sort exc. the .js
-        usort($ofiles,function($a,$b) {
-            $a = substr($a, 0, -3);
-            $b=  substr($b, 0, -3);
-            if ($a == $b) {
-                return 0;
-            }
-            return ($a > $b) ? +1 : -1;
-        });
+        usort($ofiles,create_function('$a,$b', 'return Pman_Core_JsCompile($a,$b);'));
+        
         //print_R($ofiles);
         
         $output = md5(serialize($arfiles)) .'.js';
