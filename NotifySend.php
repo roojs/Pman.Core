@@ -253,22 +253,15 @@ class Pman_Core_NotifySend extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
+        
         $dom = array_pop(explode('@', $p->email));
         
         $mxs = $this->mxs($dom);
         $ww = clone($w);
 
-        if ($mxs === false) {
-            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
-            $w->sent = date('Y-m-d H:i:s');
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->update($ww);
-            die(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
-            
-            
-        }
-        
+        // we might fail doing this...
+        // need to handle temporary failure..
+       
         
           // we try for 3 days..
         $retry = 5;
@@ -285,6 +278,28 @@ class Pman_Core_NotifySend extends Pman
             // older that 1 day.
             $retry = 120;
         }
+        
+        if ($mxs === false) {
+            if ($retry < 120) {
+                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom . ' ' . $res->toString());
+                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+                $w->update($ww);
+                die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
+            }
+            
+            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
+            $w->sent = date('Y-m-d H:i:s');
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            die(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
+            
+            
+        }
+        
+        
+        
+        
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
             $w->sent = date('Y-m-d H:i:s');
