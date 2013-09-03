@@ -105,6 +105,19 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         return false;
         
     }
+    
+    function triggerEvent()
+    {
+
+        $c = DB_DataObject::factory('Events');
+        
+        if ($c->get($this->trigger_event_id)) {
+            return $c;
+        }
+        return false;
+        
+    }
+    
     function delivered()
     {
         return !empty($this->msgid);
