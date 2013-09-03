@@ -122,7 +122,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         $tf = 
         // sort exc. the .js
-        usort($ofiles,create_function('$a,$b', 'return Pman_Core_JsCompile($a,$b);'));
+        usort($ofiles,create_function('$a,$b', 'return Pman_Core_JsCompile::jsSort($a,$b);'));
         
         //print_R($ofiles);
         
