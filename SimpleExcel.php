@@ -71,7 +71,7 @@ class Pman_Core_SimpleExcel extends Pman
         $cfg['formats'] = isset($cfg['formats']) ? $cfg['formats'] : array();
         
         foreach($cfg['formats'] as $f=>$fcfg) {
-            $formats[$f] = (array) $fcfg;
+            
             $formats[$f] = & $workbook->addFormat();
             foreach((array)$fcfg as $k=>$v) {
                 $formats[$f]->{'set' . $k}($v);
@@ -122,11 +122,25 @@ class Pman_Core_SimpleExcel extends Pman
         // copy the config and alias so that book can be written to..
         $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
-        $this->formats = (array)$formats;
+        
+        //$this->formats = (array)$formats;
         
         if (isset($cfg['formats']) && empty($formats)) {
-            $this->formats = $cfg['formats'];
+            
+            foreach($cfg['formats'] as $f=>$fcfg) {
+                
+                $formats[$f] = & $workbook->addFormat();
+                foreach((array)$fcfg as $k=>$v) {
+                    $formats[$f]->{'set' . $k}($v);
+                }
+                 
+            }
+            
+            $this->formats = $formats;
         }
+        
+        
+        
         //var_dump($cfg['workbook']);
 
         $worksheet =  $workbook->addWorksheet($cfg['workbook']);
