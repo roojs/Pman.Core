@@ -122,7 +122,7 @@ class Pman_Core_SimpleExcel extends Pman
         // copy the config and alias so that book can be written to..
         $this->worksheet_cfg[$cfg['workbook']] = &$cfg;
         
-        $this->formats = $formats;
+        $this->formats = (array)$formats;
         
         if (isset($cfg['formats']) && empty($formats)) {
             $this->formats = $cfg['formats'];
