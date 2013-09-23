@@ -286,7 +286,7 @@ class Pman_Core_Notify extends Pman
             1 => array("file", $tn, 'w'),  // stdout is a pipe that the child will write to
             2 => array("pipe", "w") // stderr is a file to write to
          );
-        $php = $_SERVER["_"];
+        $php = $_ENV["_"];
         $sn =  $_SERVER["SCRIPT_NAME"];
         
         $cwd = $sn[0] == '/' ? dirname($sn) : dirname(realpath(getcwd() . '/'. $sn)); // same as run on.. (so script should end up being same relatively..)
