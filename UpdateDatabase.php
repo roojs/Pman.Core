@@ -138,7 +138,7 @@ class Pman_Core_UpdateDatabase extends Pman
             ' -u' . escapeshellarg($dburl['user']) .
             (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
             ' ' . basename($dburl['path']);
-        echo $mysql_cmd . "\n" ;
+        //echo $mysql_cmd . "\n" ;
        
        
         foreach(glob($dir.'/*.sql') as $fn) {
