@@ -126,6 +126,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importmysqldir($dburl, $dir)
     {
+        echo "Import MYSQL :: $dir\n";
+        
         
         require_once 'System.php';
         $cat = System::which('cat');
