@@ -134,7 +134,7 @@ class Pman_Core_UpdateDatabase extends Pman
        
            
         $mysql_cmd = $mysql .
-            ' -h ' . $url['host'] .
+            ' -h ' . $dburl['host'] .
             ' -u' . escapeshellarg($dburl['user']) .
             (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
             ' ' . basename($dburl['path']);
