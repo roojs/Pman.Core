@@ -153,7 +153,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 ) { // skip migration scripts at present..
                     continue;
                 }
-                if (!strlen($fn)) {
+                if (!strlen(triem($fn))) {
                     continue;
                 }
                 
