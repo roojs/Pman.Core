@@ -124,34 +124,24 @@ class Pman_Core_UpdateDatabase extends Pman
      */
     
     
-    
-    function importmysql($url)
+    function importmysqldir($dburl, $dir)
     {
-        
-        // hide stuff for web..
         
         require_once 'System.php';
         $cat = System::which('cat');
         $mysql = System::which('mysql');
         
-        $ar = $this->modulesList();
-        
+       
            
         $mysql_cmd = $mysql .
             ' -h ' . $url['host'] .
-            ' -u' . escapeshellarg($url['user']) .
-            (!empty($url['pass']) ? ' -p' . escapeshellarg($url['pass'])  :  '') .
-            ' ' . basename($url['path']);
+            ' -u' . escapeshellarg($dburl['user']) .
+            (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
+            ' ' . basename($dburl['path']);
         echo $mysql_cmd . "\n" ;
-        
-        
-        // old -- DAtaObjects/*.sql
-        
-        foreach($ar as $m) {
-            
-            $fd = $this->rootDir. "/Pman/$m/DataObjects";
-            
-            foreach(glob($fd.'/*.sql') as $fn) {
+       
+       
+        foreach(glob($dir.'/*.sql') as $fn) {
                 
                  
                 if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
@@ -170,29 +160,37 @@ class Pman_Core_UpdateDatabase extends Pman
                 passthru($cmd);
             
                 
-            }
+        }
+       
+        
+        
+    }
+    
+    
+    
+    function importmysql($dburl)
+    {
+        
+        // hide stuff for web..
+        $ar = $this->modulesList();
+        
+         
+        
+        // old -- DAtaObjects/*.sql
+        
+        foreach($ar as $m) {
+            
+            $fd = $this->rootDir. "/Pman/$m/DataObjects";
+            
+            $this->importmysqldir($dburl, $fd);
+            
             // new -- sql directory..
             // new style will not support migrate ... they have to go into mysql-migrate.... directories..
             // new style will not support pg.sql etc.. naming - that's what the direcotries are for..
-            $fd = $this->rootDir. "/Pman/$m/sql";
             
-            foreach(glob($fd.'/*.sql') as $fn) {
-                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
-                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
-                passthru($cmd);
-            }
-            $fd = $this->rootDir. "/Pman/$m/mysql";
-            
-            foreach(glob($fd.'/*.sql') as $fn) {
-                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
-                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
-                passthru($cmd);
-            }
+            $this->importmysqldir($dburl, $this->rootDir. "/Pman/$m/sql");
+            $this->importmysqldir($dburl, $this->rootDir. "/Pman/$m/mysql");
               
-            
-            
-            
-            
             
         }
         
