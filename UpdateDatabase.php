@@ -366,10 +366,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 
     }
     
-    function updateData()
+    
+    function updateDataEnums()
     {
-        // fill i18n data..
-        
         $enum = DB_DataObject::Factory('core_enum');
         $enum->initEnums(
             array(
@@ -428,6 +427,10 @@ class Pman_Core_UpdateDatabase extends Pman
             )
         ); 
         
+    }
+    function updateDataGroups()
+    {
+         
         $groups = DB_DataObject::factory('groups');
         $groups->initGroups();
         
@@ -439,8 +442,11 @@ class Pman_Core_UpdateDatabase extends Pman
             
         ));
         
-        
-        
+    }
+    
+    function updateDataCompanies()
+    {
+         
         // fix comptypes enums..
         $c = DB_DataObject::Factory('Companies');
         $c->selectAdd();
@@ -455,9 +461,7 @@ class Pman_Core_UpdateDatabase extends Pman
            $ctb[]= array( 'etype'=>'COMPTYPE', 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
         }
-        
-         
-        $c = DB_DataObject::Factory('core_enum');
+         $c = DB_DataObject::Factory('core_enum');
          
         $c->initEnums($ctb);
         //DB_DataObject::debugLevel(1);
@@ -476,6 +480,20 @@ class Pman_Core_UpdateDatabase extends Pman
                   ");
          
         
+        
+    }
+    
+    function updateData()
+    {
+        // fill i18n data..
+        
+        $this->updateDataEnums();
+        $this->updateDataGroups();
+        $this->updateDataCompanies();
+        
+       
+         
+       
         
         
     }
