@@ -153,6 +153,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 ) { // skip migration scripts at present..
                     continue;
                 }
+                if (!strlen($fn)) {
+                    continue;
+                }
+                
                 $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
                 
                 echo basename($dir).'/'. basename($fn) .    '::' .  $cmd. ($this->cli ? "\n" : "<BR>\n");
