@@ -612,18 +612,4 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$p->toEventString();
     }
     
-    function toRooSingleArray($au, $q) {
-        // Roo/Hopedb_doc.jpg?thumb=500x?_id=343434
-        
-        if (isset($q['thumb'])) {
-            $fc = $this->toFileConvert();
-            $fc->convert('image/jpeg', $q['thumb']);
-            $fc->serve();
-            exit;
-        }
-        
-            
-        return $this->toArray();
-        
-    }
  }
