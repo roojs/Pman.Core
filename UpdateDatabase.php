@@ -298,7 +298,6 @@ class Pman_Core_UpdateDatabase extends Pman
         $fn = $this->tempName('sql');
         
         $ret = array( ); // pad it a bit.
-        $unique = array();
         $extra = array("", "" );
         
         $tbl = false;
@@ -341,19 +340,19 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
             }
             
-            // UNIQUE KEY
+            // UNIQUE KEY .. ignore
             if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
-                preg_match('#UNIQUE\s+KEY\s+([\w]+)\s+([\w|\W]+)#i',  $l, $m);
-                            
-                $unique[] = 'CREATE UNIQUE INDEX ' . $m[1] . '_idx ON "' . $tbl . '" USING btree ' . $m[2] . ';';
+//                preg_match('#UNIQUE\s+KEY\s+([\w]+)\s+([\w|\W]+)#i',  $l, $m);
+//                            
+//                $unique[] = 'CREATE UNIQUE INDEX ' . $m[1] . '_idx ON "' . $tbl . '" USING btree ' . $m[2] . ';';
                 $last = array_pop($ret);
                 $ret[] = trim($last, ",");
                 continue;
             }
             
-            // INDEX lookup
+            // INDEX lookup ..ignore
             if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
-               $unique[] = 'CREATE INDEX lookup_idx ON "' . $tbl . '" USING btree ' . $m[1] . ';';
+//               $unique[] = 'CREATE INDEX lookup_idx ON "' . $tbl . '" USING btree ' . $m[1] . ';';
                $last = array_pop($ret);
                $ret[] = trim($last, ",");
                continue;
