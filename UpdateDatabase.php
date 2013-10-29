@@ -375,7 +375,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $l = preg_replace('#tinyint#i', 'BOOLEAN', $l);
             
             if(preg_match('#([\w]+)([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l)){
-                $l = preg_replace('#([\w]+)#i', '"\1" ', $l);
+                $l = preg_replace('#([\w]+)\s+([\w|\W]+)#i', '"\1" ', $l);
             }
             
             
