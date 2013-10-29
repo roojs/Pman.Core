@@ -320,7 +320,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if (preg_match('#enum\(#i',  $l, $m)) {
-                print_r($l);exit;
+                print_r($m);exit;
                // $extra[]  =   "drop table {$tbl};";
              }
             //if () // find enum , then 
