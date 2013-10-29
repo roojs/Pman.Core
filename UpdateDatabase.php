@@ -234,7 +234,7 @@ class Pman_Core_UpdateDatabase extends Pman
        
           
     }
-    function importpgsqldir($dburl, $dir)
+    function importpgsqldir($url, $dir)
     {
         require_once 'System.php';
         $cat = System::which('cat');
