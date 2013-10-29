@@ -337,7 +337,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // tinyINT
             if ($tbl && preg_match('#tinyint#i',  $l, $m)) {
-              print_r($l);exit;
+              //print_r($l);exit;
             }
             
             
