@@ -320,7 +320,9 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if (preg_match('/alter\s+table\s+/i',  $l, $m)) {
-                
+                if (preg_match('/column\s+[\w]+/i',  $l, $m)) {
+                    print_r($m);
+                }
                 if (preg_match('/enum\([.]+\)/i',  $l, $m)) {
                     print_r($m);
                 }
