@@ -353,7 +353,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $l = preg_replace('# datetime #i', ' TIMESTAMP WITHOUT TIME ZONE ', $l);
             $l = preg_replace('# blob #i', ' TEXT ', $l);
-             $l = preg_replace('# longtext #i', ' TEXT ', $l);
+            $l = preg_replace('# longtext #i', ' TEXT ', $l);
             $l = preg_match('#tinyint#i', 'BOOLEAN', $l);
                             
             $ret[] = $l;
