@@ -370,9 +370,16 @@ class Pman_Core_UpdateDatabase extends Pman
             $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
             
             $l = preg_replace('# datetime#i', ' TIMESTAMP WITHOUT TIME ZONE ', $l);
-            $l = preg_replace('# blob #i', ' TEXT ', $l);
-            $l = preg_replace('# longtext #i', ' TEXT ', $l);
+            $l = preg_replace('# blob#i', ' TEXT ', $l);
+            $l = preg_replace('# longtext#i', ' TEXT ', $l);
             $l = preg_replace('#tinyint#i', 'BOOLEAN', $l);
+            
+            preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m);
+                    print_r($m);
+            if(preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l,$m)){
+                $l = preg_replace('#([\w]+)\s+[\w|\W]+#i', '"\1"', $l);
+            }
+            
             
             $ret[] = $l;
             
