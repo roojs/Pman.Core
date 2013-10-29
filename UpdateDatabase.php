@@ -332,7 +332,6 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 if (preg_match('#enum\([\w|\W]+\)#i',  $l, $m)) {
                     $l = preg_replace('#enum\([\w|\W]+\)#i', "{$name} {$tbl}_enum", $l);
-                    
                 }
             }
             
