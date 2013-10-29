@@ -318,7 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            
+            $l = "{$name} {$tbl}_enum";
             if (preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 if (preg_match('#column\s+[\w]+#i',  $l, $m)) {
                     $name = explode(" ", $m[0]);
@@ -329,16 +329,16 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 
             }
-//            if (preg_match('#enum\(#i',  $l, $m)) {
-//                
-//                $ll = explode(" ", $l);
-//                $name = array_shift($ll);
-//                $value = trim(implode(" ", $ll));
-//                $value = trim($value,",");
-//                $l = "{$name}{$tbl}_enum";
-//                $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
-//                
-//             }
+            if (preg_match('#enum\([\w|\W]+#i',  $l, $m)) {
+                $name = substr($l, 0, (strlen($l) - strlen($m[0])));
+                $ll = explode(" ", $l);
+                $name = array_shift($ll);
+                $value = trim(implode(" ", $ll));
+                $value = trim($value,",");
+                $l = "{$name}{$tbl}_enum";
+                $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
+                
+             }
             
             $m = array();
             if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
