@@ -349,6 +349,14 @@ class Pman_Core_UpdateDatabase extends Pman
                 continue;
             }
             
+            // INDEX lookup
+            if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
+                preg_match('#UNIQUE\s+KEY\s+([\w]+)\s+([\w|\W]+)#i',  $l, $m);
+                $extra[] = "CREATE UNIQUE INDEX {$m[1]}_idx  ON {$tbl} USING btree {$m[2]};";
+                $last = array_pop($ret);
+                $ret[] = trim($last, ",");
+                continue;
+            }
             
             $m = array();
             if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
