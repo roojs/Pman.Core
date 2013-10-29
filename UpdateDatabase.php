@@ -295,7 +295,7 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         //echo "Convert $src\n";
         if(!preg_match('#CategoryMember#i',  $l, $m)){
-            continue;
+            return;
         }       
         $fn = $this->tempName('sql');
         
