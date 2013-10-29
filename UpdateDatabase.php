@@ -298,6 +298,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $fn = $this->tempName('sql');
         
         $ret = array( ); // pad it a bit.
+        $unique = array();
         $extra = array("", "" );
         
         $tbl = false;
