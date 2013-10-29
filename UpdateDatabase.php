@@ -318,7 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            if () // find enum , then 
+            //if () // find enum , then 
                 // add creat type enum ... to extra
                 // and replace the enum ..... with the new enum tpe
                 
