@@ -294,8 +294,9 @@ class Pman_Core_UpdateDatabase extends Pman
     function convertToPG($src)
     {
         //echo "Convert $src\n";
-        if(!preg_match('#CategoryMember#i',  $l, $m))            
-                continue;
+        if(!preg_match('#CategoryMember#i',  $l, $m)){
+            continue;
+        }       
         $fn = $this->tempName('sql');
         
         $ret = array( ); // pad it a bit.
