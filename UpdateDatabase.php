@@ -325,8 +325,8 @@ class Pman_Core_UpdateDatabase extends Pman
                 $name = array_shift($ll);
                 $value = trim(implode(" ", $ll));
                 $value = trim($value,",");
-                
-                $extra = "CREATE TYPE {$tbl}_enum AS ENUM ('sad', 'ok', 'happy')";
+                $l = "{$name}{$tbl}_enum";
+                $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
                 
                // $extra[]  =   "drop table {$tbl};";
              }
