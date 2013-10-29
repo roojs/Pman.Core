@@ -262,7 +262,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             $fn = false;
 
-            if (basename($dir) == 'sql') {
+            if (basename($dir) != 'pgsql') {
                  if ( !preg_match('#\.pg\.sql$#', basename($bfn))) {
                     $fn = $this->convertToPG($bfn);
                 }
