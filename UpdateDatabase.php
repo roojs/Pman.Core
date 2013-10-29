@@ -296,7 +296,7 @@ class Pman_Core_UpdateDatabase extends Pman
         //echo "Convert $src\n";
         
         $fn = $this->tempName('sql');
-        
+        print_r($src);exit;
         $ret = array( ); // pad it a bit.
         $extra = array("", "" );
         
