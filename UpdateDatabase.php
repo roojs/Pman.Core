@@ -362,7 +362,9 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $m = array();
             if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
-               $l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
+                print_r($m);exit;
+               //$l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
+                
              }
             // ALTER TABLE core_event_audit ADD     INDEX looku
             // CREATE INDEX 
@@ -375,6 +377,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $l = preg_replace('# longtext#i', ' TEXT', $l);
             $l = preg_replace('# tinyint#i', ' BOOLEAN', $l);
             
+            // keyword handle...
             if(preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l)){
                 $l = '"' . $m[1] . '" ' . $m[2];
             }
