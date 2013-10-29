@@ -227,14 +227,27 @@ class Pman_Core_UpdateDatabase extends Pman
              ' ' . basename($url['path']);
         echo $psql_cmd . "\n" ;
         
-        
-        
-        
-        foreach($ar as $m) {
+         foreach($ar as $m) {
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
-            foreach(glob($fd.'/*.sql') as $bfn) {
+            $this->importpgsqldir($dburl, $fd);
+            
+            // new -- sql directory..
+            // new style will not support migrate ... they have to go into mysql-migrate.... directories..
+            // new style will not support pg.sql etc.. naming - that's what the direcotries are for..
+            
+            $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/sql");
+            $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql");
+              
+            
+        }
+       
+          
+    }
+    function importpgsqldir($dburl, $dir)
+           
+            foreach(glob($dir.'/*.sql') as $bfn) {
                 
                  
                 if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
@@ -245,7 +258,15 @@ class Pman_Core_UpdateDatabase extends Pman
                 ) { // skip migration scripts at present..
                     continue;
                 }
-                // files ending in .pg.sql are native postgres files..
+                $fn = false;
+                
+                if (basename($dir) == 'sql') {
+                     if ( !preg_match('#\.pg\.sql$#', basename($bfn))) {
+                        $fn = $this->convertToPG($bfn);
+                    }
+                }
+                
+                // files ending in .pg.sql are native postgres files.. ## depricated
                 $fn = preg_match('#\.pg\.sql$#', basename($bfn)) ? false : $this->convertToPG($bfn);
                 
                 $cmd = "$psql_cmd  < " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
