@@ -348,6 +348,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
         }
+        print_r($extra);
         print_r($ret);exit;
         $ret = array_merge($extra,$ret);
         print_r($ret);exit;
