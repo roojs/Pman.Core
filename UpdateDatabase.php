@@ -323,7 +323,6 @@ class Pman_Core_UpdateDatabase extends Pman
 //                print_r($l);exit;
                 $ll = explode(" ", $l);
                 $name = array_shift($ll);
-                
                 $value = trim(implode(" ", $ll));
                 $value = trim($value,",");
                 
