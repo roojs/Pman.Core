@@ -309,7 +309,6 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             $m = array();
             if (preg_match('#create\s+table\s+([a-z0-9_]+)#i',  $l, $m)) {
-                print_r($m);exit;
                 $tbl = $m[1];
                 $l = preg_replace('#create\s+table\s+([a-z0-9_]+)#i', 'CREATE TABLE "\1"', $l);
                // $extra[]  =   "drop table {$tbl};";
