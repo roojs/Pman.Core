@@ -365,7 +365,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 print_r($m);exit;
                //$l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
                 
-             }
+             }exit;
             // ALTER TABLE core_event_audit ADD     INDEX looku
             // CREATE INDEX 
             
