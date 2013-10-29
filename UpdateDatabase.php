@@ -343,11 +343,7 @@ class Pman_Core_UpdateDatabase extends Pman
             // UNIQUE KEY
             if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
                 preg_match('#UNIQUE\s+KEY\s+([\w]+)\s+([\w|\W]+)#i',  $l, $m);
-                print_r($m);exit;
-                $name = array_pop(explode(" ", trim($m[0])));
-                preg_match('#\([\w|\W]+\)#i',  $l, $m);
-                
-                $extra[] = "CREATE UNIQUE INDEX {$name}_idx  ON {$tbl} USING btree {$m[0]};";
+                $extra[] = "CREATE UNIQUE INDEX {$m[1]}_idx  ON {$tbl} USING btree {$m[2]};";
                 $last = array_pop($ret);
                 $ret[] = trim($last, ",");
                 continue;
