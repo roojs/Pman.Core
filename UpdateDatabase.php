@@ -318,7 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-//            $l = "{$name} {$tbl}_enum";
+
             if (preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 if (preg_match('#column\s+[\w]+#i',  $l, $m)) {
                     $name = explode(" ", $m[0]);
@@ -331,7 +331,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }else{
                 if (preg_match('#enum\([\w|\W]+#i',  $l, $m)) {
                     $name = trim(substr($l, 0, (strlen($l) - strlen($m[0]))));
-                    print_r($name);
+                    $l = "{$name} {$tbl}_enum";
                 }
             }
             
