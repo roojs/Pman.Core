@@ -112,7 +112,6 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_Flexyframework::get();
         
         $url = parse_url($ff->DB_DataObject['database']);
-        print_r($url);exit;
         
         $this->{'import' . $url['scheme']}($url);
         
