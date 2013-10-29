@@ -318,7 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            
+            print_r($l);
             if (preg_match('#alter\s#i',  $l, $m)) {
                 print_r($l."\n");
                 
