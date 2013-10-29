@@ -208,7 +208,6 @@ class Pman_Core_UpdateDatabase extends Pman
      */
     function importpgsql($url)
     {
-        print_r($url);exit;
         // hide stuff for web..
         
         require_once 'System.php';
