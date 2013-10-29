@@ -328,12 +328,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $l = "{$name}{$tbl}_enum";
                 $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
                 
-               // $extra[]  =   "drop table {$tbl};";
              }
-            //if () // find enum , then 
-                // add creat type enum ... to extra
-                // and replace the enum ..... with the new enum tpe
-                
             
             $m = array();
             if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
