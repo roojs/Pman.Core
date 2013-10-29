@@ -318,6 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
+            
             //if () // find enum , then 
                 // add creat type enum ... to extra
                 // and replace the enum ..... with the new enum tpe
@@ -347,6 +348,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
         }
+        print_r($ret);exit;
         $ret = array_merge($extra,$ret);
         print_r($ret);exit;
         //echo implode("\n", $ret); //exit;
