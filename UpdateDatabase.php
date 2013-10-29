@@ -345,7 +345,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
                 preg_match('#UNIQUE\s+KEY\s+([\w]+)\s+([\w|\W]+)#i',  $l, $m);
                             
-                $extra[] = 'CREATE UNIQUE INDEX ' . $m[1] . '_idx ON "' . $tbl . '" USING btree ' . $m[2] . ';';
+                $unique[] = 'CREATE UNIQUE INDEX ' . $m[1] . '_idx ON "' . $tbl . '" USING btree ' . $m[2] . ';';
                 $last = array_pop($ret);
                 $ret[] = trim($last, ",");
                 continue;
@@ -353,7 +353,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // INDEX lookup
             if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
-               $extra[] = 'CREATE INDEX lookup_idx ON "' . $tbl . '" USING btree ' . $m[1] . ';';
+               $unique[] = 'CREATE INDEX lookup_idx ON "' . $tbl . '" USING btree ' . $m[1] . ';';
                $last = array_pop($ret);
                $ret[] = trim($last, ",");
                continue;
@@ -390,6 +390,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
         }
         $ret = array_merge($extra,$ret);
+        $ret = array_merge($ret, $unique);
 //        echo implode("\n", $ret); exit;
         
         file_put_contents($fn, implode("\n", $ret));
