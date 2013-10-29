@@ -377,7 +377,7 @@ class Pman_Core_UpdateDatabase extends Pman
             preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m);
                     print_r($m);
             if(preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l,$m)){
-                $l = preg_replace('#([\w]+)\s+([\w|\W]+)#i', '"\1" ', $l);
+                $l = preg_replace('#([\w]+)\s+([\w|\W]+)#i', '"\1"', $l);
             }
             
             
