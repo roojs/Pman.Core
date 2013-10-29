@@ -321,10 +321,11 @@ class Pman_Core_UpdateDatabase extends Pman
             
             if (preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 if (preg_match('#column\s+[\w]+#i',  $l, $m)) {
-                    print_r($m);
+                    $name = explode(" ", $m[0]);
+                    $name = $name[0];
                 }
                 if (preg_match('#enum\([\w|\W]+#i',  $l, $m)) {
-                    print_r($m);
+                    $extra[] = "CREATE TYPE {$tbl}_enum AS {$m[0]}";
                 }
                 
             }
