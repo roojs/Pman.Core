@@ -318,21 +318,21 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            print_r($l);
+            
             if (preg_match('#alter\s#i',  $l, $m)) {
                 print_r($l."\n");
                 
-            }exit;
-            if (preg_match('#enum\(#i',  $l, $m)) {
-                
-                $ll = explode(" ", $l);
-                $name = array_shift($ll);
-                $value = trim(implode(" ", $ll));
-                $value = trim($value,",");
-                $l = "{$name}{$tbl}_enum";
-                $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
-                
-             }
+            }
+//            if (preg_match('#enum\(#i',  $l, $m)) {
+//                
+//                $ll = explode(" ", $l);
+//                $name = array_shift($ll);
+//                $value = trim(implode(" ", $ll));
+//                $value = trim($value,",");
+//                $l = "{$name}{$tbl}_enum";
+//                $extra[] = "CREATE TYPE {$tbl}_enum AS {$value}";
+//                
+//             }
             
             $m = array();
             if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
@@ -357,7 +357,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             
-        }
+        }exoit;
         print_r($extra);
         print_r($ret);exit;
         $ret = array_merge($extra,$ret);
