@@ -293,7 +293,7 @@ class Pman_Core_UpdateDatabase extends Pman
      */
     function convertToPG($src)
     {
-        echo "Convert $src\n";
+        //echo "Convert $src\n";
         
         $fn = $this->tempName('sql');
         
