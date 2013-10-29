@@ -374,7 +374,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $l = preg_replace('# longtext #i', ' TEXT ', $l);
             $l = preg_replace('#tinyint#i', 'BOOLEAN', $l);
             
-            print_r($l);
+            print_r($l . "\n");
             
             $ret[] = $l;
             
