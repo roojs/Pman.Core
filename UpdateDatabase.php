@@ -319,6 +319,10 @@ class Pman_Core_UpdateDatabase extends Pman
               
             }
             
+            if (preg_match('#enum#i',  $l, $m)) {
+                
+               // $extra[]  =   "drop table {$tbl};";
+             }
             //if () // find enum , then 
                 // add creat type enum ... to extra
                 // and replace the enum ..... with the new enum tpe
