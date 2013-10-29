@@ -324,7 +324,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     print_r($m);
                 }
                 if (preg_match('/enum\([\.+]\)/i',  $l, $m)) {
-                    
+                    print_r($m);
                 }
                 
             }
