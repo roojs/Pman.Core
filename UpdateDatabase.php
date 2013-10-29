@@ -321,6 +321,10 @@ class Pman_Core_UpdateDatabase extends Pman
             
             if (preg_match('#enum\(#i',  $l, $m)) {
                 print_r($l);exit;
+                $ll = explode(" ", $l);
+                $name = array_shift($ll);
+                print_r($ll);exit;
+                
                 $extra = "CREATE TYPE {$tbl}_enum AS ENUM ('sad', 'ok', 'happy')";
                 
                // $extra[]  =   "drop table {$tbl};";
