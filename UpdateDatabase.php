@@ -335,9 +335,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
             }
             
-            // tinyINT
-            if ($tbl && preg_match('#tinyint#i',  $l, $m)) {
-              //print_r($l);exit;
+            // UNIQUE KEY
+            if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
+                preg_match('#UNIQUE\s+KEY\s+[\w]+\s#i',  $l, $m);
+                print_r($m);
+                
+                $extra[] = "CREATE UNIQUE INDEX {$ll[2]}_idx  ON {$tbl} USING btree ;";
             }
             
             
@@ -364,7 +367,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             
-        }
+        }exit;
         $ret = array_merge($extra,$ret);
         //echo implode("\n", $ret); //exit;
         
