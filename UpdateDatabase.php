@@ -211,22 +211,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // hide stuff for web..
         
-        require_once 'System.php';
-        $cat = System::which('cat');
-        $psql = System::which('psql');
+        
+       
         
         $ar = $this->modulesList();
-        
-        if (!empty($url['pass'])) { 
-            putenv("PGPASSWORD=". $url['pass']);
-        }
-           
-        $psql_cmd = $psql .
-            ' -h ' . $url['host'] .
-            ' -U' . escapeshellarg($url['user']) .
-             ' ' . basename($url['path']);
-        echo $psql_cmd . "\n" ;
-        
+       
          foreach($ar as $m) {
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
@@ -246,65 +235,56 @@ class Pman_Core_UpdateDatabase extends Pman
           
     }
     function importpgsqldir($dburl, $dir)
-           
-            foreach(glob($dir.'/*.sql') as $bfn) {
-                
-                 
-                if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
-                    continue;
-                }
-                if (preg_match('#\.[a-z]{2}\.sql#i', basename($bfn))
-                    && !preg_match('#\.pg\.sql#i', basename($bfn))
-                ) { // skip migration scripts at present..
-                    continue;
-                }
-                $fn = false;
-                
-                if (basename($dir) == 'sql') {
-                     if ( !preg_match('#\.pg\.sql$#', basename($bfn))) {
-                        $fn = $this->convertToPG($bfn);
-                    }
-                }
-                
-                // files ending in .pg.sql are native postgres files.. ## depricated
-                $fn = preg_match('#\.pg\.sql$#', basename($bfn)) ? false : $this->convertToPG($bfn);
-                
-                $cmd = "$psql_cmd  < " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
-                
-                echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
-                
-                
-                passthru($cmd);
-                
-                if ($fn) {
-                    unlink($fn);
-                }
-            }
-            
-            
-            
-            $fd = $this->rootDir. "/Pman/$m/sql";
-            // sql directory  - we try to convert..
-            foreach(glob($fd.'/*.sql') as $bfn) {
-                $fn =  $this->convertToPG($bfn);
-                $cmd = "$psql_cmd  < " . escapeshellarg($fn) ;
-                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
-                passthru($cmd);
-            }
-            
-            // postgres specific directory..
-            
-            $fd = $this->rootDir. "/Pman/$m/pgsql";
-            
-            foreach(glob($fd.'/*.sql') as $fn) {
-                $cmd = "$psql_cmd   < " . escapeshellarg($fn) ;
-                echo $cmd. ($this->cli ? "\n" : "<BR>\n");
-                passthru($cmd);
-            }
-            
-            
-            
+        require_once 'System.php';
+        $cat = System::which('cat');
+        $psql = System::which('psql');
+        
+         
+        if (!empty($url['pass'])) { 
+            putenv("PGPASSWORD=". $url['pass']);
         }
+           
+        $psql_cmd = $psql .
+            ' -h ' . $url['host'] .
+            ' -U' . escapeshellarg($url['user']) .
+             ' ' . basename($url['path']);
+        echo $psql_cmd . "\n" ;
+        foreach(glob($dir.'/*.sql') as $bfn) {
+
+
+            if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
+                continue;
+            }
+            if (preg_match('#\.[a-z]{2}\.sql#i', basename($bfn))
+                && !preg_match('#\.pg\.sql#i', basename($bfn))
+            ) { // skip migration scripts at present..
+                continue;
+            }
+            $fn = false;
+
+            if (basename($dir) == 'sql') {
+                 if ( !preg_match('#\.pg\.sql$#', basename($bfn))) {
+                    $fn = $this->convertToPG($bfn);
+                }
+            }
+
+            // files ending in .pg.sql are native postgres files.. ## depricated
+
+
+            $cmd = "$psql_cmd  < " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
+
+            echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
+
+
+            passthru($cmd);
+
+            if ($fn) {
+                unlink($fn);
+            }
+        }
+
+              
+             
         
     }
     /**
