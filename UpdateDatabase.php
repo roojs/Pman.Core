@@ -318,21 +318,26 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-
-            if (preg_match('#alter\s+table\s+#i',  $l, $m)) {
-                if (preg_match('#column\s+[\w]+#i',  $l, $m)) {
+            // enum value
+            if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
+                if ($tbl && preg_match('#column\s+[\w]+#i',  $l, $m)) {
                     $name = explode(" ", $m[0]);
                     $name = $name[0];
                 }
-                if (preg_match('#enum\([\w|\W]+\)#i',  $l, $m)) {
+                if ($tbl && preg_match('#enum\([\w|\W]+\)#i',  $l, $m)) {
                     $extra[] = "CREATE TYPE {$tbl}_enum AS {$m[0]};";
                 }
                 
             }else{
                 
-                if (preg_match('#enum\([\w|\W]+\)#i',  $l, $m)) {
+                if ($tbl && preg_match('#enum\([\w|\W]+\)#i',  $l, $m)) {
                     $l = preg_replace('#enum\([\w|\W]+\)#i', "{$name} {$tbl}_enum", $l);
                 }
+            }
+            
+            // tinyINT
+            if ($tbl && preg_match('#tinyint#i',  $l, $m)) {
+              print_r($l);exit;
             }
             
             
