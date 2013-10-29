@@ -319,7 +319,7 @@ class Pman_Core_UpdateDatabase extends Pman
               
             }
             
-            if (preg_match('#alter#i',  $l, $m)) {
+            if (preg_match('#alter\s#i',  $l, $m)) {
                 print_r($l."\n");
                 
             }exit;
