@@ -351,7 +351,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // INDEX lookup
             if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
-                print_r($m);exit;
+               $extra[] = "CREATE INDEX lookup_idx ON {$tbl} USING btree {$m[1]};";
             }
             
             $m = array();
