@@ -330,7 +330,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 
             }else{
                 if (preg_match('#enum\([\w|\W]+#i',  $l, $m)) {
-                    $name = substr($l, 0, (strlen($l) - strlen($m[0])));
+                    $name = trim(substr($l, 0, (strlen($l) - strlen($m[0]))));
                     print_r($name);
                 }
             }
