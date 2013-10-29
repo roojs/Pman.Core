@@ -329,8 +329,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 
             }else{
-                print_r($l);exit;
+                
                 if (preg_match('#enum\([\w|\W]+#i',  $l, $m)) {
+                    print_r($l);exit;
                     $name = trim(substr($l, 0, (strlen($l) - strlen($m[0]))));
                     $l = "{$name} {$tbl}_enum,";
                 }
