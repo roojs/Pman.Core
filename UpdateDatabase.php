@@ -391,7 +391,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         $ret = array_merge($extra,$ret);
         $ret = array_merge($ret, $unique);
-        echo implode("\n", $ret); exit;
+//        echo implode("\n", $ret); exit;
         
         file_put_contents($fn, implode("\n", $ret));
         
