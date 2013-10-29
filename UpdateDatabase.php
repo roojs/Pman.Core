@@ -374,6 +374,11 @@ class Pman_Core_UpdateDatabase extends Pman
             $l = preg_replace('# longtext #i', ' TEXT ', $l);
             $l = preg_replace('#tinyint#i', 'BOOLEAN', $l);
             
+            if(preg_match('#([\w]+)([\w|\W]+)#i',  $l, $m) && !preg_match('#[CREATE TABLE|PRIMARY|ALERT]#i', $l)){
+                print_r($m);
+            }
+            
+            
             $ret[] = $l;
             
             
