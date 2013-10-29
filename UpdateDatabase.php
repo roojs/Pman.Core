@@ -361,7 +361,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             $m = array();
-            if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([^(]+)(.*)$#i',  $l, $m)) {
+            if (preg_match('#alter\s+table\s+([a-z0-9_]+)\s+add\s+index\s+([\w]+)\s+([\w|\W]+)$#i',  $l, $m)) {
                 print_r($m);exit;
                //$l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
                 
