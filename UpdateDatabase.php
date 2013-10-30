@@ -377,6 +377,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // keyword handle...
             if(preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l)){
+                
                 $l = '"' . $m[1] . '" ' . $m[2];
             }
             
