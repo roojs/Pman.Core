@@ -325,6 +325,10 @@ class Pman_Core_UpdateDatabase extends Pman
               
             }
             
+            if (preg_match('#alter\s+table\s+(\`[a-z0-9_]+\`)#i',  $l, $m)){
+                    
+            }
+            
             // enum value
             if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 
@@ -332,11 +336,6 @@ class Pman_Core_UpdateDatabase extends Pman
                     $extra[] = "CREATE TYPE {$tbl}_{$m[1]}_enum AS {$m[2]};";
                     continue;
                 }
-                
-                if (preg_match('#(\`[a-z0-9_]+\`)#i',  $l, $m)){
-                    
-                }
-                
             }else{
                 
                 if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
