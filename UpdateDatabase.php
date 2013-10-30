@@ -312,13 +312,15 @@ class Pman_Core_UpdateDatabase extends Pman
                 $tbl = $m[1];
              }
             if (preg_match('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i',  $l, $m)) {
-                print_r($m);exit;
-                $tbl = $m[1];
+                
+                $tbl = 'shop_' . strtolower($m[1]);
                 if(strtolower($m[1]) == 'user' || strtolower($m[1]) == 'order'){
                     $l = preg_replace('#create\s+table\s+([a-z0-9_]+)#i', 'CREATE TABLE shop_\1', $l);
                 }
+                
                // $extra[]  =   "drop table {$tbl};";
              }
+             print_r($l);exit;
             // autoinc
             if ($tbl && preg_match('#auto_increment#i',  $l, $m)) {
                 $l = preg_replace('#auto_increment#i', "default nextval('{$tbl}_seq')", $l);
