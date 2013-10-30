@@ -332,8 +332,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
                     $extra[] = "CREATE TYPE {$tbl}_{$m[1]}_enum AS {$m[2]};";
+                    continue;
                 }
-                continue;
+                
                 
             }else{
                 
