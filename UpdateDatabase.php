@@ -350,8 +350,6 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if ($tbl && preg_match('#RENAME\s+TO#i',  $l, $m)) {
-                $last = array_pop($ret);
-                $ret[] = trim($last, ",");
                 continue;
             }
             
