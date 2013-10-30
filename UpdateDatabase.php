@@ -314,9 +314,8 @@ class Pman_Core_UpdateDatabase extends Pman
             if (preg_match('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i',  $l, $m)) {
                 
                 $tbl = 'shop_' . strtolower($m[1]);
-                if(strtolower($m[1]) == 'user' || strtolower($m[1]) == 'order'){
-                    $l = preg_replace('#create\s+table\s+([a-z0-9_]+)#i', 'CREATE TABLE shop_\1', $l);
-                }
+                $l = preg_replace('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i', "CREATE TABLE {$tbl}", $l);
+                
                 
                // $extra[]  =   "drop table {$tbl};";
              }
