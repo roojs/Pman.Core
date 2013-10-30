@@ -309,6 +309,9 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             $m = array();
             if (preg_match('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i',  $l, $m)) {
+                $tbl = $m[1];
+             }
+            if (preg_match('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i',  $l, $m)) {
                 print_r($m);exit;
                 $tbl = $m[1];
                 if(strtolower($m[1]) == 'user' || strtolower($m[1]) == 'order'){
