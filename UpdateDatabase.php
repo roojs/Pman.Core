@@ -377,6 +377,9 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // keyword handle...
             if(preg_match('#([\w]+)\s+([\w|\W]+)#i',  $l, $m) && !preg_match('#CREATE|PRIMARY|ALERT#i', $l)){
+                if($m[1] == 'group'){
+                    $m[1] = 'group_name';
+                }
                 
                 $l = '"' . $m[1] . '" ' . $m[2];
             }
@@ -386,7 +389,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
         }
         $ret = array_merge($extra,$ret);
-        //echo implode("\n", $ret); exit;
+        echo implode("\n", $ret); exit;
         
         file_put_contents($fn, implode("\n", $ret));
         
