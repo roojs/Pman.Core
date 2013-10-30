@@ -368,7 +368,7 @@ class Pman_Core_UpdateDatabase extends Pman
              }
              
             // basic types..
-            $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
+            $l = preg_replace('#int\([0-9]+\)#i', 'INTEGER', $l);
             
             $l = preg_replace('# datetime#i', ' TIMESTAMP WITHOUT TIME ZONE', $l);
             $l = preg_replace('# blob#i', ' TEXT', $l);
