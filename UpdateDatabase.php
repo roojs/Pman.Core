@@ -349,6 +349,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 continue;
             }
             
+            if ($tbl && preg_match('#RENAME\s+TO#i',  $l, $m)) {
+                $last = array_pop($ret);
+                $ret[] = trim($last, ",");
+                continue;
+            }
+            
             // INDEX lookup ..ignore
             if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
                $last = array_pop($ret);
