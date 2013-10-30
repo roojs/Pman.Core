@@ -319,7 +319,7 @@ class Pman_Core_UpdateDatabase extends Pman
                      $l = preg_replace('#\`([a-z0-9_]+)\`#i', "{$m[1]}_name", $l);
                  }
              }
-             
+             print_r($tbl);exit;
             // autoinc
             if ($tbl && preg_match('#auto_increment#i',  $l, $m)) {
                 $l = preg_replace('#auto_increment#i', "default nextval('{$tbl}_seq')", $l);
