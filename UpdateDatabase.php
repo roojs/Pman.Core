@@ -312,12 +312,8 @@ class Pman_Core_UpdateDatabase extends Pman
                 $tbl = $m[1];
              }
             if (preg_match('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i',  $l, $m)) {
-                
                 $tbl = 'shop_' . strtolower($m[1]);
                 $l = preg_replace('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i', "CREATE TABLE {$tbl}", $l);
-                
-                
-               // $extra[]  =   "drop table {$tbl};";
              }
              print_r($l);exit;
             // autoinc
