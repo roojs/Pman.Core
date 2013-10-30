@@ -310,8 +310,9 @@ class Pman_Core_UpdateDatabase extends Pman
             $m = array();
             if (preg_match('#create\s+table\s+([a-z0-9_]+)#i',  $l, $m)) {
                 $tbl = $m[1];
-                if(strtolower($m[1]) == 'user' || strtolower($m[1]) == 'order')
-                $l = preg_replace('#create\s+table\s+([a-z0-9_]+)#i', 'CREATE TABLE shop_\1', $l);
+                if(strtolower($m[1]) == 'user' || strtolower($m[1]) == 'order'){
+                    $l = preg_replace('#create\s+table\s+([a-z0-9_]+)#i', 'CREATE TABLE shop_\1', $l);
+                }
                // $extra[]  =   "drop table {$tbl};";
              }
             // autoinc
