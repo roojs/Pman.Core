@@ -353,6 +353,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 continue;
             }
             
+            if ($tbl && preg_match('#change\s+column#i',  $l, $m)) {
+                continue;
+            }
+            
             // INDEX lookup ..ignore
             if ($tbl && preg_match('#INDEX lookup+([\w|\W]+)#i',  $l, $m)) {
                $last = array_pop($ret);
