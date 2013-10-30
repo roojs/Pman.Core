@@ -330,7 +330,7 @@ class Pman_Core_UpdateDatabase extends Pman
             // enum value
             if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 
-                if ($tbl && preg_match('#([\w]+)\s+(enum\([\w]+\))#i',  $l, $m)) {
+                if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
                     print_r($m);exit;
                     $name = explode(" ", $m[0]);
                     $name = $name[0];
