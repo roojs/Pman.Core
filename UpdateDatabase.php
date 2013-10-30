@@ -326,8 +326,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if (preg_match('#alter\s+table\s+(\`[a-z0-9_]+\`)#i',  $l, $m)){
-                print_r($m);exit;
-                    $l = preg_replace('#alter\s+table\s+(\`[a-z0-9_]+\`)#i', "ALTER TABLE {$m[1]}", $l);
+                $l = preg_replace('#alter\s+table\s+(\`[a-z0-9_]+\`)#i', "ALTER TABLE {$tbl}", $l);
             }
             
             // enum value
