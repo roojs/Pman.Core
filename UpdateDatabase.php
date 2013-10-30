@@ -303,7 +303,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $tbl = false;
         foreach(file($src) as $l) {
             $l = trim($l);
-            print_r($l."\n");
+            
             if (!strlen($l) || $l[0] == '#') {
                 continue;
             }
@@ -362,7 +362,7 @@ class Pman_Core_UpdateDatabase extends Pman
 //               $l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
                 continue;
              }
-             
+             print_r($l."\n");
             // basic types..
             $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
             
