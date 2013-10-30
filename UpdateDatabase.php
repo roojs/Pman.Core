@@ -333,6 +333,10 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 
+                if (preg_match('#(\`[a-z0-9_]+\`)#i',  $l, $m)){
+                    
+                }
+                
             }else{
                 
                 if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
