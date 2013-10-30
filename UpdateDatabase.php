@@ -381,7 +381,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $m[1] = 'group_name';
                 }
                 
-                $l = '"' . $m[1] . '" ' . $m[2];
+                $l = "{$m[1]} {$m[2]}";
             }
             
             
