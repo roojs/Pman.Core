@@ -326,7 +326,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            print_r($l."\n");
+            
             // enum value
             if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 
@@ -334,7 +334,6 @@ class Pman_Core_UpdateDatabase extends Pman
                     $extra[] = "CREATE TYPE {$tbl}_{$m[1]}_enum AS {$m[2]};";
                     continue;
                 }
-                
                 
             }else{
                 
