@@ -303,7 +303,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $tbl = false;
         foreach(file($src) as $l) {
             $l = trim($l);
-            
+            print_r($l);
             if (!strlen($l) || $l[0] == '#') {
                 continue;
             }
