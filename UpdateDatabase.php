@@ -318,6 +318,7 @@ class Pman_Core_UpdateDatabase extends Pman
                  if (preg_match('#\`([a-z0-9_]+)\`#i',  $l, $m)) {
                     
                      $l = preg_replace('#\`([a-z0-9_]+)\`#i', "{$m[1]}_name", $l);
+                     print_r($l);exit;
                  }
              }
              
