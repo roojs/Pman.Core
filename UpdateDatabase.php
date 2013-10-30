@@ -341,7 +341,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $l = preg_replace('#enum\([\w|\W]+\)#i', "{$tbl}_{$m[1]}_enum", $l);
                 }
             }
-            
+            print_r($l."\n");
             // UNIQUE KEY .. ignore
             if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
                 $last = array_pop($ret);
@@ -362,7 +362,7 @@ class Pman_Core_UpdateDatabase extends Pman
 //               $l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
                 continue;
              }
-             print_r($l."\n");
+             
             // basic types..
             $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
             
