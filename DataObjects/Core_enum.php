@@ -130,6 +130,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         return 0;
     }
     
+    
+    function lookupId($id) {
+        $ce = DB_DataObject::Factory('core_enum');
+        $ce->get($id);
+        return $ce;
+    }
+    
     /**
      * 
      * 
