@@ -315,7 +315,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $tbl = 'shop_' . strtolower($m[1]);
                 $l = preg_replace('#create\s+table\s+\`{0,1}([a-z0-9_]+)\`{0,1}#i', "CREATE TABLE {$tbl}", $l);
              }
-             print_r($l);exit;
+             
             // autoinc
             if ($tbl && preg_match('#auto_increment#i',  $l, $m)) {
                 $l = preg_replace('#auto_increment#i', "default nextval('{$tbl}_seq')", $l);
