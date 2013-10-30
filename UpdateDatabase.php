@@ -362,9 +362,7 @@ class Pman_Core_UpdateDatabase extends Pman
 //               $l = "CREATE INDEX  {$m[1]}_{$m[2]} ON {$m[1]} {$m[3]}";
                 continue;
              }
-            // ALTER TABLE core_event_audit ADD     INDEX looku
-            // CREATE INDEX 
-            
+             
             // basic types..
             $l = preg_replace('#int\([0-9]+\)#i', 'INT', $l);
             
