@@ -319,6 +319,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
+            
             // enum value
             if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
                 $l = preg_replace('#alter\s+table\s+([a-z0-9_]+)#i', 'ALTER TABLE shop_\1', $l);
