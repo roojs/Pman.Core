@@ -330,17 +330,9 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             // enum value
-            if ($tbl && preg_match('#alter\s+table\s+#i',  $l, $m)) {
-                
-                if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
-                    $extra[] = "CREATE TYPE {$tbl}_{$m[1]}_enum AS {$m[2]};";
-                    continue;
-                }
-            }else{
-                
-                if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
-                    $l = preg_replace('#enum\([\w|\W]+\)#i', "{$tbl}_{$m[1]}_enum", $l);
-                }
+            
+            if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
+                $l = preg_replace('#enum\([\w|\W]+\)#i', "TEXT", $l);
             }
             
             // UNIQUE KEY .. ignore
