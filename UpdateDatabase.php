@@ -329,7 +329,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $l = preg_replace('#alter\s+table\s+(\`[a-z0-9_]+\`)#i', "ALTER TABLE {$tbl}", $l);
             }
             
-            // enum value
+            // enum value -- use the text instead..
             
             if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
                 $l = preg_replace('#enum\([\w|\W]+\)#i', "TEXT", $l);
