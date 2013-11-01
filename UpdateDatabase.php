@@ -334,6 +334,10 @@ class Pman_Core_UpdateDatabase extends Pman
             if ($tbl && preg_match('#([\w]+)\s+(enum\([\w|\W]+\))#i',  $l, $m)) {
                 $l = preg_replace('#enum\([\w|\W]+\)#i', "TEXT", $l);
             }
+            // ignore the alter enum
+            if ($tbl && preg_match('#alter\s+table\s+([\w|\W]+)\s+enum\([\w|\W]+\)#i',  $l, $m)) {
+                continue;
+            }
             
             // UNIQUE KEY .. ignore
             if ($tbl && preg_match('#UNIQUE KEY#i',  $l, $m)) {
