@@ -86,15 +86,15 @@ Pman.Download = function(cfg)
         target : this.newWindow ? '_new' : this.csvFrame.id,
         enctype : 'multipart/form-data'
     });
-    
-    if(this.doctype == 'pdf'){
-        this.pdfEmbed = b.createChild({
-            tag: 'embed',
-            src : this.url,
-            pluginspage : 'http://www.adobe.com/products/acrobat/readstep2.html',
-            alt: this.doctype
-        });
-    }
+//    
+//    if(this.doctype == 'pdf'){
+//        this.pdfEmbed = b.createChild({
+//            tag: 'embed',
+//            src : this.url,
+//            pluginspage : 'http://www.adobe.com/products/acrobat/readstep2.html',
+//            alt: this.doctype
+//        });
+//    }
  
  
     for(var i in this.params) {
