@@ -82,7 +82,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         foreach($opts as $k=>$v) {
             
             if ($v == '*') { // everything..
-                self::$cfg[$k] = $i->availableCodes($k);
+                self::$cfg[$k] = $i->availableCodes($k, false);
                 continue;
             }
             self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
