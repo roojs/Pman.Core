@@ -166,7 +166,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     
     // returns a list of all countries/languages etc.. (with '*')
-    function availableCodes($t)
+    function availableCodes($t, $filtered = true)
     {
         $ret = array();
         $cfg = $this->cfg();
@@ -218,7 +218,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 $ret[] = '**';
                 break;
         }
-        if (!empty($cfg[$t]) && is_array($cfg[$t])) {
+        
+        
+        
+        if ($filtered  && !empty($cfg[$t]) && is_array($cfg[$t])) {
             // then there is a filter. - we should include all of them, even if they are not relivatn??
             return $cfg[$t]; //array_intersect($cfg[$t], $ret);
             
