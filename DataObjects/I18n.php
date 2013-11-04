@@ -75,7 +75,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
          
-         var_dump($opts);exit;
+       //  var_dump($opts);exit;
         
         $i = DB_DataObject::Factory('I18n');
         // load the cofiguration
