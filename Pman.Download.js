@@ -8,6 +8,7 @@ var t = new Pman.Download({
     url: baseURL + '/Images/Download/0/myfile.jpg',
     newWindow : false,
     params: { .... },
+    doctype: 'pdf' 
     success : function() {
         Roo.MessageBox.alert("File has downloaded");
     }
@@ -20,6 +21,7 @@ var t = new Pman.Download({
 * @cfg {String} url     Location to download from.
 * @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
 * @cfg {Boolean} newWindow (optional) download to new window
+* @cfg {String} doctype (optional) download PDF to new window
 * @cfg {Boolean limit (optional) limit for grid downloads.
  
 * @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
@@ -83,10 +85,12 @@ Pman.Download = function(cfg)
         action : this.url,
         target : this.newWindow ? '_new' : this.csvFrame.id,
         enctype : 'multipart/form-data'
-
-
-        
     });
+    
+    if(this.doctype == 'pdf'){
+        
+    }
+ 
  
     for(var i in this.params) {
         
@@ -262,12 +266,11 @@ Roo.apply(Pman.Download.prototype, {
         this.params._get = 1;
         this.method = 'POST';
         
+    },
+    
+    createPdfEmbed : function()
+    {
+        
     }
-    
-    
-    
-    
-    
-     
      
 });
