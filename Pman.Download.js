@@ -270,12 +270,6 @@ Roo.apply(Pman.Download.prototype, {
         // do it as a post, as args can get long..
         this.params._get = 1;
         this.method = 'POST';
-        
-    },
-    
-    createPdfEmbed : function()
-    {
-        
     }
      
 });
