@@ -88,7 +88,12 @@ Pman.Download = function(cfg)
     });
     
     if(this.doctype == 'pdf'){
-        
+        b.createChild({
+            tag: 'embed',
+            src : this.url,
+            pluginspage : 'http://www.adobe.com/products/acrobat/readstep2.html',
+            alt: this.doctype
+        });
     }
  
  
