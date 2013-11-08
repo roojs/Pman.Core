@@ -186,7 +186,7 @@ class Pman_Core_Images extends Pman
     
     function post()
     {
-        
+        $this->jerr("run");
         if (!$this->authUser) {
             $this->jerr("image conversion only allowed by registered users");
         }
