@@ -147,7 +147,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         $f = $this->getStoreName();
-        print_r($f);exit;
+        
         $dest = dirname($f);
         if (!file_exists($dest)) {
             // currently this is 0775 due to problems using shared hosing (FTP)
