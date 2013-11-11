@@ -224,7 +224,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $ar = $this->modulesList();
        
-         foreach($ar as $m) {
+        foreach($ar as $m) {
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
