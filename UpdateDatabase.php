@@ -57,6 +57,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
     );
     
+    var $cli_options = false;
+    
     var $cli = false;
     function getAuth() {
         
@@ -78,6 +80,9 @@ class Pman_Core_UpdateDatabase extends Pman
      
     function get($args, $opt)
     {
+        
+        $this->cli_options = $opt;
+        
         if($args == 'Person'){
             if(empty($opt['source']) || empty($opt['prefix'])){
                 die("Missing Source directory for person json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
@@ -91,6 +96,8 @@ class Pman_Core_UpdateDatabase extends Pman
             DB_DataObject::factory('person')->importFromArray($this, $persons, $opt['prefix']);
             die("DONE! \n");
         }
+        
+        
         
         if($args == 'Company'){
             if(empty($opt['name']) || empty($opt['comptype'])){
@@ -225,6 +232,17 @@ class Pman_Core_UpdateDatabase extends Pman
         $ar = $this->modulesList();
        
         foreach($ar as $m) {
+            
+            // if init has been called
+            // look in pgsql.ini
+            if (!empty($this->cli_options['init'])) {
+                $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.init");
+                $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata", );
+            
+                
+            }
+            
+            
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
