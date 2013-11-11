@@ -221,7 +221,7 @@ class Pman_Core_UpdateDatabase extends Pman
     /**
      * postgresql import..
      */
-    function importpgsql($url)
+    function importpgsql($dburl)
     {
         
         // hide stuff for web..
