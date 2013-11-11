@@ -237,7 +237,7 @@ class Pman_Core_UpdateDatabase extends Pman
             // look in pgsql.ini
             if (!empty($this->cli_options['init'])) {
                 $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.init");
-                $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata", );
+                $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata");
             
                 
             }
