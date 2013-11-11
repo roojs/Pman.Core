@@ -45,7 +45,15 @@ class Pman_Core_UpdateDatabase extends Pman
             'default' => '',
             'min' => 1,
             'max' => 1,
-        )
+        ),
+        'init' => array(
+            'desc' => 'Initialize the database (pg only supported)',
+            'short' => 'i',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
+        
         
     );
     
@@ -249,7 +257,10 @@ class Pman_Core_UpdateDatabase extends Pman
             ' -h ' . $url['host'] .
             ' -U' . escapeshellarg($url['user']) .
              ' ' . basename($url['path']);
+        
+        
         echo $psql_cmd . "\n" ;
+        echo "scan : $dir\n";
         foreach(glob($dir.'/*.sql') as $bfn) {
 
 
