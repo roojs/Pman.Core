@@ -203,6 +203,11 @@ class Pman_Core_Mailer {
         
         }
         
+        if($this->attachments){
+            
+        }
+        
+        
        // list($recipents,$headers,$body) = $parts;
         return array(
             'recipents' => $parts[0],
