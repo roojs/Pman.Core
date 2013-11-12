@@ -228,6 +228,7 @@ $str = "
 Content-Type: multipart/alternative; boundary=alt-$random_hash
 
 --alt-$random_hash
+$contentType
 {$parts[2]}
 
 --alt-$random_hash--
