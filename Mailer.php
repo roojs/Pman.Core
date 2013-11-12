@@ -235,8 +235,9 @@ Content-Type: multipart/alternative; boundary=alt-$random_hash
 foreach($this->attachments as $attch){
 $str .= "
 --mixed-$random_hash
-Content-Type: {$attch['mimetype']}; ".(empty($attch['name'])) ? '' : "name=\"{$attch['name']}\"
-Content-Transfer-Encoding: base64 
+Content-Type: {$attch['mimetype']}; ".
+((empty($attch['name'])) ? '' : "name=\"{$attch['name']}\"") .
+"Content-Transfer-Encoding: base64 
 Content-Disposition: attachment
 
 {$attch['file']}
