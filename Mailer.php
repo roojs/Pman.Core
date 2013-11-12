@@ -223,7 +223,7 @@ class Pman_Core_Mailer {
                 --alt-$random_hash--
 
                 --mixed-$random_hash
-                Content-Type: {{$this->attachments[0]['mimetype']}; name=\"{$this->attachments[0]['name']}\"
+                Content-Type: {$this->attachments[0]['mimetype']}; name=\"{$this->attachments[0]['name']}\"
                 Content-Transfer-Encoding: base64 
                 Content-Disposition: attachment
 
