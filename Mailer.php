@@ -210,6 +210,27 @@ class Pman_Core_Mailer {
             if (isset($parts[1]['Content-Type'])) {
                 unset($parts[1]['Content-Type']);
             }
+            $random_hash = md5(date('r', time()));
+            $parts[1]['Content-Type'] = "multipart/mixed; boundary=mixed-$random_hash";
+            
+//            --mixed-{t.random_hash}
+//Content-Type: multipart/alternative; boundary=alt-{t.random_hash}
+//
+//--alt-{t.random_hash}
+//Content-Type: text/plain; charset=utf-8
+//Content-Transfer-Encoding: 7bit
+//
+//{t.msg}
+//
+//--alt-{t.random_hash}--
+//
+//--mixed-{t.random_hash}
+//Content-Type: application/pdf; name="doc.pdf"
+//Content-Transfer-Encoding: base64 
+//Content-Disposition: attachment
+//
+//{t.attach}
+//--mixed-{t.random_hash}--
         }
         
         
