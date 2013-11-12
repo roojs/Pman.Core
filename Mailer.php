@@ -213,23 +213,23 @@ class Pman_Core_Mailer {
             $random_hash = md5(date('r', time()));
             $parts[1]['Content-Type'] = "multipart/mixed; boundary=mixed-$random_hash";
             
-            $str = "
-                --mixed-$random_hash
-                Content-Type: multipart/alternative; boundary=alt-$random_hash
+$str = "
+--mixed-$random_hash
+Content-Type: multipart/alternative; boundary=alt-$random_hash
 
-                --alt-$random_hash
-                {$parts[2]}
+--alt-$random_hash
+{$parts[2]}
 
-                --alt-$random_hash--
+--alt-$random_hash--
 
-                --mixed-$random_hash
-                Content-Type: {$this->attachments[0]['mimetype']}; name=\"{$this->attachments[0]['name']}\"
-                Content-Transfer-Encoding: base64 
-                Content-Disposition: attachment
+--mixed-$random_hash
+Content-Type: {$this->attachments[0]['mimetype']}; name=\"{$this->attachments[0]['name']}\"
+Content-Transfer-Encoding: base64 
+Content-Disposition: attachment
 
-                {$this->attachments[0]['file']}
-                --mixed-$random_hash--
-            ";
+{$this->attachments[0]['file']}
+--mixed-$random_hash--
+";
             $parts[2] = $str;
 //            --mixed-{t.random_hash}
 //Content-Type: multipart/alternative; boundary=alt-{t.random_hash}
