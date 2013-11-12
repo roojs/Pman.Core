@@ -23,6 +23,14 @@
        replaceImages => true|false,
        locale => 'en' .... or zh_hk....
        rcpts => array()   // override recipients..
+       attachments => array(
+        array(
+          file: 
+          name : (optional) - uses basename of file
+          mimetype : 
+        ), 
+        ......
+  
     ]
  *
  *  recipents is gathered from the resulting template
@@ -227,7 +235,7 @@ Content-Type: multipart/alternative; boundary=alt-$random_hash
 foreach($this->attachments as $attch){
 $str .= "
 --mixed-$random_hash
-Content-Type: {$attch['mimetype']}; name=\"{$attch['name']}\"
+Content-Type: {$attch['mimetype']}; 
 Content-Transfer-Encoding: base64 
 Content-Disposition: attachment
 
