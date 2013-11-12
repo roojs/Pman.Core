@@ -215,7 +215,9 @@ class Pman_Core_Mailer {
 //        print_r($parts);exit;
         if($this->attachments){
             //if got a attachments
+            $contentType = 'Content-Type: text/plain; charset=utf-8';
             if (isset($parts[1]['Content-Type'])) {
+                $contentType = $parts[1]['Content-Type'];
                 unset($parts[1]['Content-Type']);
             }
             $random_hash = md5(date('r', time()));
