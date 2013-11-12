@@ -228,8 +228,16 @@ Content-Transfer-Encoding: base64
 Content-Disposition: attachment
 
 {$this->attachments[0]['file']}
+
+--mixed-$random_hash
+Content-Type: {$this->attachments[0]['mimetype']}; name=\"{$this->attachments[0]['name']}\"
+Content-Transfer-Encoding: base64 
+Content-Disposition: attachment
+
+{$this->attachments[0]['file']}
 --mixed-$random_hash--
 ";
+
             $parts[2] = $str;
 //            --mixed-{t.random_hash}
 //Content-Type: multipart/alternative; boundary=alt-{t.random_hash}
