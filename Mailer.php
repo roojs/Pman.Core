@@ -202,9 +202,9 @@ class Pman_Core_Mailer {
             $parts[1] = $mime->headers($parts[1]);
         
         }
-        echo '<PRE>';
-        print_r('parts');
-        print_r($parts);exit;
+//        echo '<PRE>';
+//        print_r('parts');
+//        print_r($parts);exit;
         if($this->attachments){
             //if got a attachments
             if (isset($parts[1]['Content-Type'])) {
