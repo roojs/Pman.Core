@@ -105,6 +105,7 @@ ALTER TABLE Events add index lookup_on_table (on_table);
 
 ALTER TABLE Events add index lookup_action_person (action, person_id);
 
+ alter table Events add index lookup_actions ( person_id, person_table, action);
 
 CREATE TABLE  core_event_audit  (
     id int(11)  NOT NULL AUTO_INCREMENT,
