@@ -246,7 +246,7 @@ class Pman_Core_Mailer {
         }
         echo '<PRE>';
         print_r('parts');
-        print_r($parts[1]);
+        print_r($parts[2]);
         exit;
        // list($recipents,$headers,$body) = $parts;
         return array(
