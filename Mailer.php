@@ -208,8 +208,8 @@ class Pman_Core_Mailer {
                     $cdata['contentid']
                 );
             }
-            $parts[2] = $mime->get();
-            $parts[1] = $mime->headers($parts[1]);
+            $isMine = true;
+            
         
         }
         echo '<PRE>';
@@ -226,51 +226,17 @@ class Pman_Core_Mailer {
             foreach($this->attachments as $attch){
                 $mine->addAttachment(
                         $attch['file'],
-                        $attch['mimetype']
+                        $attch['mimetype'],
                         $attch['name']
-                        
                 );
-
             }
-            
-            
-            
-            /*
-            $random_hash = md5(date('r', time()));
-            $parts[1]['Content-Type'] = "multipart/mixed; boundary=mixed-$random_hash";
-            
-$str = "
---mixed-$random_hash
-Content-Type: multipart/alternative; boundary=alt-$random_hash
-
---alt-$random_hash
-Content-Type: $contentType
-
-{$parts[2]}
-
---alt-$random_hash--
-
-";
-
-foreach($this->attachments as $attch){
-$str .= "
---mixed-$random_hash
-Content-Type: {$attch['mimetype']}; ".
-((empty($attch['name'])) ? '' : "name=\"{$attch['name']}\"") .
-"Content-Transfer-Encoding: base64 
-Content-Disposition: attachment
-
-{$attch['file']}
-";
-}
-            $str .= "--mixed-$random_hash--";
-
-            $parts[2] = $str;
-             * 
-             */
+            $isMine = true;
         }
         
-        $isMine;
+        if($isMine){
+            $parts[2] = $mime->get();
+            $parts[1] = $mime->headers($parts[1]);
+        }
         
        // list($recipents,$headers,$body) = $parts;
         return array(
