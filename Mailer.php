@@ -214,9 +214,9 @@ class Pman_Core_Mailer {
         if($this->attachments){
             //if got a attachments
             
-            if (isset($parts[1]['Content-Type'])) {
-                unset($parts[1]['Content-Type']);
-            }
+//            if (isset($parts[1]['Content-Type'])) {
+//                unset($parts[1]['Content-Type']);
+//            }
             
             $header = $mime->headers($parts[1]);
             
