@@ -220,9 +220,11 @@ class Pman_Core_Mailer {
                 unset($parts[1]['Content-Type']);
             }
             $header = $mime->headers($parts[1]);
-            $mime->setTXTBody($parts[2]);
+            
             if(preg_match('/text\/html/', $header['Content-Type'])){
                 $mime->setHTMLBody($parts[2]);
+            }else{
+                $mime->setTXTBody($parts[2]);
             }
 //            print_r($mime->headers($parts[1]));
 //            $mime->setHTMLBody($parts[2]);
