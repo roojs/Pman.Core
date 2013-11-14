@@ -209,8 +209,6 @@ class Pman_Core_Mailer {
                 );
             }
             $isMine = true;
-            
-        
         }
         
         if($this->attachments){
