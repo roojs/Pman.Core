@@ -230,7 +230,7 @@ class Pman_Core_Mailer {
                 
             }
             
-            print_r($mine);
+            print_r($mime);
             $isMine = true;
         }
         
