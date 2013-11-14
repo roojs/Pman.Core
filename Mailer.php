@@ -215,7 +215,7 @@ class Pman_Core_Mailer {
         
         if($this->attachments){
             //if got a attachments
-            print_r($mime->headers($parts[1]));
+            
             if (isset($parts[1]['Content-Type'])) {
                 unset($parts[1]['Content-Type']);
             }
@@ -227,8 +227,7 @@ class Pman_Core_Mailer {
             }else{
                 $mime->setTXTBody($parts[2]);
             }
-//            print_r($mime->headers($parts[1]));
-//            $mime->setHTMLBody($parts[2]);
+            
             foreach($this->attachments as $attch){
                 $mime->addAttachment(
                         $attch['file'],
@@ -238,7 +237,6 @@ class Pman_Core_Mailer {
                 );
             }
             
-//            print_r($mime);
             $isMine = true;
         }
         
@@ -246,10 +244,10 @@ class Pman_Core_Mailer {
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         }
-        echo '<PRE>';
-        print_r('parts');
-        print_r($parts[2]);
-        exit;
+//        echo '<PRE>';
+//        print_r('parts');
+//        print_r($parts[2]);
+//        exit;
        // list($recipents,$headers,$body) = $parts;
         return array(
             'recipents' => $parts[0],
