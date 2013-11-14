@@ -222,6 +222,20 @@ class Pman_Core_Mailer {
                 $contentType = $parts[1]['Content-Type'];
                 unset($parts[1]['Content-Type']);
             }
+            
+            foreach($this->attachments as $attch){
+                $mine->addAttachment(
+                        $attch['file'],
+                        $attch['mimetype']
+                        $attch['name']
+                        
+                );
+
+            }
+            
+            
+            
+            /*
             $random_hash = md5(date('r', time()));
             $parts[1]['Content-Type'] = "multipart/mixed; boundary=mixed-$random_hash";
             
@@ -252,26 +266,11 @@ Content-Disposition: attachment
             $str .= "--mixed-$random_hash--";
 
             $parts[2] = $str;
-//            --mixed-{t.random_hash}
-//Content-Type: multipart/alternative; boundary=alt-{t.random_hash}
-//
-//--alt-{t.random_hash}
-//Content-Type: text/plain; charset=utf-8
-//Content-Transfer-Encoding: 7bit
-//
-//{t.msg}
-//
-//--alt-{t.random_hash}--
-//
-//--mixed-{t.random_hash}
-//Content-Type: application/pdf; name="doc.pdf"
-//Content-Transfer-Encoding: base64 
-//Content-Disposition: attachment
-//
-//{t.attach}
-//--mixed-{t.random_hash}--
+             * 
+             */
         }
         
+        $isMine;
         
        // list($recipents,$headers,$body) = $parts;
         return array(
