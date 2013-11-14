@@ -212,9 +212,7 @@ class Pman_Core_Mailer {
             
         
         }
-        echo '<PRE>';
-        print_r('parts');
-        print_r($parts);exit;
+        
         if($this->attachments){
             //if got a attachments
             
@@ -237,7 +235,9 @@ class Pman_Core_Mailer {
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         }
-        
+        echo '<PRE>';
+        print_r('parts');
+        print_r($parts);exit;
        // list($recipents,$headers,$body) = $parts;
         return array(
             'recipents' => $parts[0],
