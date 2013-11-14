@@ -222,7 +222,7 @@ class Pman_Core_Mailer {
             }
             
             print_r($mime->headers($parts[1]));
-            $mime->setTXTBody($parts[2]);
+            $mime->setHTMLBody($parts[2]);
             foreach($this->attachments as $attch){
                 $mime->addAttachment(
                         $attch['file'],
