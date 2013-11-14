@@ -223,6 +223,7 @@ class Pman_Core_Mailer {
 //            $mime->setTXTBody($parts[2]);
             if(preg_match('/text\/html/', $header['Content-Type'])){
                 $mime->setHTMLBody($parts[2]);
+                print_r('in html?');
             }
 //            print_r($mime->headers($parts[1]));
             $mime->setHTMLBody($parts[2]);
