@@ -172,6 +172,8 @@ class Pman_Core_Mailer {
             //exit;
         } 
         
+        $isMine = false;
+        
         require_once 'Mail/mime.php';
         $mime = new Mail_mime(array(
             'eol' => "\n",
