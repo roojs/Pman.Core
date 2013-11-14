@@ -227,8 +227,10 @@ class Pman_Core_Mailer {
                         $attch['mimetype'],
                         $attch['name']
                 );
-                print_r('in?');
+                
             }
+            
+            print_r($mine);
             $isMine = true;
         }
         
