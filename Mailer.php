@@ -233,7 +233,6 @@ class Pman_Core_Mailer {
                         $attch['name'],
                         false
                 );
-                
             }
             
 //            print_r($mime);
