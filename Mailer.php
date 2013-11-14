@@ -231,7 +231,7 @@ class Pman_Core_Mailer {
                 
             }
             
-            print_r($mime);
+//            print_r($mime);
             $isMine = true;
         }
         
