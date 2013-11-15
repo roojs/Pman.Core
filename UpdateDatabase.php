@@ -78,8 +78,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
         }
-        print_r($ret);
-        exit;
+        
         return $ret;
     }
     
