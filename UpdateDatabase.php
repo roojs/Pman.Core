@@ -571,6 +571,38 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
-    
+    function fixSequencesPgsql()
+    {
+        DB_DataObject::debugLevel(1);
+        $cs = DB_DataObject::factory('core_enum');
+         $cs->query("
+               SELECT  'SELECT SETVAL(' ||
+                         quote_literal(quote_ident(nspname) || '.' || quote_ident(S.relname)) ||
+                        ', MAX(' || quote_ident(C.attname)|| ') )  FROM ' || nspname || '.' || quote_ident(T.relname)|| ';' as cmd 
+                FROM pg_class AS S,
+                    pg_depend AS D,
+                    pg_class AS T,
+                    pg_attribute AS C,
+                    pg_namespace AS NS
+                WHERE S.relkind = 'S'
+                    AND S.oid = D.objid
+                    AND D.refobjid = T.oid
+                    AND D.refobjid = C.attrelid
+                    AND D.refobjsubid = C.attnum
+                    AND NS.oid = T.relnamespace
+                ORDER BY S.relname;     
+        ");
+        while ($cs->fetch()) {
+            $cmds[] = $cs->cmd;
+        }
+        foreach($cmds as $cmd) {
+            $cs = DB_DataObject::factory('core_enum');
+            $cs->query($cmd);
+        }
+        
+         
+        
+        
+    }
     
 }
