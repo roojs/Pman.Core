@@ -54,10 +54,15 @@ class Pman_Core_UpdateDatabase extends Pman
             'max' => 1,
         ),
         
-        
     );
     
+    function cli_opts()
+    {
+        return self::$cli_opts;
+    }
+    
     var $cli_options = false;
+    
     
     var $cli = false;
     function getAuth() {
