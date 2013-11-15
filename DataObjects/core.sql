@@ -29,8 +29,8 @@ ALTER TABLE Companies ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 
 
 ALTER TABLE Companies ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT '';
--- not sure if this needs to change..
---ALTER TABLE Companies ADD COLUMN    comptype_id INT(11) DEFAULT 0;
+-- not sure if this needs to change.. << there is code in core/update that fills this in??
+ALTER TABLE Companies ADD COLUMN    comptype_id INT(11) DEFAULT 0;
 
 
 ALTER TABLE Companies CHANGE COLUMN isOwner isOwner int(11);
