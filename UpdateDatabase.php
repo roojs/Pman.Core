@@ -254,8 +254,10 @@ class Pman_Core_UpdateDatabase extends Pman
             $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql");
             
             
-            if (!empty($this->cli_options['init'])) {
+            
+            if (!empty($this->cli_options['init']) && file_exists($this->rootDir. "/Pman/$m/pgsql.initdata")) {
                 HTML_FlexyFramework::get()->generateDataobjectsCache();
+                
                 $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata");
                 $this->fixSequencesPgsql();
                 
