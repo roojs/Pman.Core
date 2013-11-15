@@ -111,7 +111,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // ask all the modules to verify the opts
         
-        $this->checkOpts();
+        $this->checkOpts($opt);
         
         
         
