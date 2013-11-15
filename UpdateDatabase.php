@@ -63,7 +63,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_FlexyFramework::get();
         $a = new Pman();
         $mods = $a->modulesList();
-        foreach($ar as $m) {
+        foreach($mods as $m) {
             
             $fd = $ff->rootDir. "/Pman/$m/UpdateDatabase.php";
             if (!file_exists($fd)) {
@@ -77,7 +77,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
         }
         print_r($ret);
-        
+        exit;
         return $ret;
     }
     
