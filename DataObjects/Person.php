@@ -959,7 +959,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $p->company_id = $companies->pid();
             // strip the 'spaces etc.. make lowercase..
             $name = strtolower(str_replace(' ', '', $person['name']));
-            $p->setPassword("$prefix$name");
+            $p->setPassword("{$opts['prefix']}{$name}");
             $p->insert();
             // set up groups
             // if $person->groups is set.. then
