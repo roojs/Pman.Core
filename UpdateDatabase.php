@@ -256,7 +256,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             if (!empty($this->cli_options['init']) && file_exists($this->rootDir. "/Pman/$m/pgsql.initdata")) {
-                HTML_FlexyFramework::get()->generateDataobjectsCache();
+                HTML_FlexyFramework::get()->generateDataobjectsCache(true);
                 
                 $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata");
                 $this->fixSequencesPgsql();
@@ -427,6 +427,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function runUpdateModulesData()
     {
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+               
+        
         // runs core...
         $this->updateData(); 
         $modules = array_reverse($this->modulesList());
