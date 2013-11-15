@@ -58,7 +58,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     static function cli_opts()
     {
-        die("query")
+        die("query cli_opts")
         return self::$cli_opts;
     }
     
