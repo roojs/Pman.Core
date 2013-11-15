@@ -485,8 +485,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $sy = $sz[1];
         }
         // create it?
-         
-        return '<img src="' . $this->URL($size, $provider) . '" width="'. $sx . '" height="'. $sy . '">';
+        $extra = '';
+        if (strlen($this->title) {
+            $extra = ' title="'. htmlspecialchars($this->title) . '"'
+        })
+        
+        return '<img src="' . $this->URL($size, $provider) .
+                $extra .
+                '" width="'. $sx .
+                '" height="'. $sy . '">';
         
         
     }
