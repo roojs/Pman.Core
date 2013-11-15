@@ -307,9 +307,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $ret = $this->toArray();
        // DB_DataObject::debugLevel(1);
         // get the comptype display
-        $e = DB_DataObject::Factory('core_enum');
-        $e->etype = 'COMPTYPE';
-        $e->name = $this->comptype;
+        $e = DB_DataObject::Factory('core_enum')->lookupObject('COMPTYPE', $this->comptype);
+        
         $ret['comptype_display'] = $ret['comptype'];
         if ($e->find(true) && !empty($e->name_display)) {
             $ret['comptype_display'] = $e->name_display;
@@ -326,6 +325,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
                 empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type']
         );
         
+        // check that 
         $companies->setFrom(array(
             'name' => $opts['add-company'],
             'comptype' => $type,
