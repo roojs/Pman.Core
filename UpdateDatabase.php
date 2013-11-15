@@ -47,7 +47,13 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
-       
+        'only-module-sql' => array(
+            'desc' => 'Only run sql import on this modules - eg. Core',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
+        
         'json-person' => array(
             'desc' => 'Person JSON file',
             'default' => '',
