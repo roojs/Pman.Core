@@ -127,6 +127,10 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         $this->importSQL();
+        if (!empty($opts['only-module-sql'])) {
+            return;
+        }
+        
         $this->runUpdateModulesData();
          
     }
