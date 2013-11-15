@@ -257,7 +257,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $ar = $this->modulesList();
        
         foreach($ar as $m) {
-            
+             echo "Importing SQL from module $m\n";
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
