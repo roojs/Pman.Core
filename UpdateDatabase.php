@@ -222,6 +222,10 @@ class Pman_Core_UpdateDatabase extends Pman
         
         foreach($ar as $m) {
             
+            if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
+                continue;
+            }
+            
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
             $this->importmysqldir($dburl, $fd);
