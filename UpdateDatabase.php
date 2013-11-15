@@ -115,7 +115,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->checkOpts($opts);
         
         
-        if (!empty($opts['add-company')) {
+        if (!empty($opts['add-company'])) {
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
         
