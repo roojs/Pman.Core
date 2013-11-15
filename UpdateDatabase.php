@@ -504,7 +504,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
                 
     }
-    function jsonImportFromArray($opts)
+    static function jsonImportFromArray($opts)
     {
         foreach($this->opts as $o=>$v) {
             if (!preg_match('/^json-/', $o) || empty($v)) {
