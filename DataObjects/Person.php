@@ -934,8 +934,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
     }
     
-    function importFromArray($roo, $persons, $prefix)
+    function importFromArray($roo, $persons, $opts)
     {
+        if (empty($opts['prefix'])) {
+            $roo->jerr("opts[prefix] is empty - you can not just create passwords based on the user names");
+        }
+        
         if (!is_array($persons) || empty($persons)) {
             $roo->jerr("error in the person data. - empty on not valid");
         }
