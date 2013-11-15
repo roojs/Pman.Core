@@ -69,6 +69,8 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!file_exists($fd)) {
                 continue;
             }
+            require_once $fd;
+            
             
             
         }
