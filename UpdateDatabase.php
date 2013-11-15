@@ -76,9 +76,9 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
         }
+        print_r($ret);
         
-        
-        return self::$cli_opts;
+        return $ret;
     }
     
     var $cli_options = false;
