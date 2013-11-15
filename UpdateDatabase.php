@@ -27,14 +27,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'max' => 1,
         ),
         'add-company' => array(
-            'desc' => 'name of the company',
+            'desc' => 'add a company name of the company',
             'short' => 'n',
             'default' => '',
             'min' => 1,
             'max' => 1,
         ),
         'add-company-with-type' => array(
-            'desc' => 'the type of company',
+            'desc' => 'the type of company (default OWNER)',
             'short' => 't',
             'default' => '',
             'min' => 1,
