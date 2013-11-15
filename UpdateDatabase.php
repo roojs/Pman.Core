@@ -512,7 +512,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             $type = str_replace('_', '-', substr($o,6));
             $data= json_decode(file_get_contents($file),true);
-            DB_DataObject::factory($type)->importFromArray($data);
+            DB_DataObject::factory($type)->importFromArray($this,$data,$opts);
             
         }
         
