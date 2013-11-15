@@ -258,6 +258,10 @@ class Pman_Core_UpdateDatabase extends Pman
        
         foreach($ar as $m) {
             
+            if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
+                continue;
+            }
+            
             // if init has been called
             // look in pgsql.ini
             if (!empty($this->opts['init'])) {
