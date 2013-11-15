@@ -261,7 +261,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
-            
+            echo "Importing SQL from module $m\n";
             // if init has been called
             // look in pgsql.ini
             if (!empty($this->opts['init'])) {
