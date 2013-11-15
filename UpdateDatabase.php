@@ -474,6 +474,17 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function checkOpts($opts)
     {
+        
+        
+        foreach($opts as $o=>$v) {
+            if (!preg_match('/^json-/', $o) || empty($v)) {
+                continue;
+            }
+            if (!file_exists($v)) {
+                die("File does not exist : OPTION --{$o} = {$v} \n");
+            }
+        }
+        
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
