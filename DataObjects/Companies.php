@@ -323,7 +323,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     {
         $companies = DB_DataObject::factory('companies');
         $enum = DB_DataObject::Factory('core_enum')->lookup('comptype',
-                empty($opts['add-company-with-type']) ? 'OWNER' : $opts['type);
+                empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type']
+        );
         
         $companies->setFrom(array(
             'name' => $opts['add-company'],
