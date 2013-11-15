@@ -490,10 +490,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $extra = ' title="'. htmlspecialchars($this->title) . '"';
         }
         
-        return '<img src="' . $this->URL($size, $provider) .
+        return '<img src="' . $this->URL($size, $provider) . '"' .
                 $extra .
-                '" width="'. $sx .
-                '" height="'. $sy . '">';
+                ' width="'. $sx . '"'
+                ' height="'. $sy . '">';
         
         
     }
