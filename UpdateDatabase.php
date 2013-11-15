@@ -693,7 +693,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $cs = DB_DataObject::factory('core_enum');
         $cs->query("
          SELECT 'ALTER SEQUENCE '|| quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
-       ||' OWNED BY '|| quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';' as cmd
+       ||' OWNED BY '|| quote_ident(min(schema_name)) || '.' || quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';' as cmd
 FROM (
          
           SELECT 
