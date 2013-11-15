@@ -319,7 +319,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         return $ret;
     }
     
-    function initCompanies($roo, $name, $type)
+    function initCompanies($roo, $opts)
     {
         $companies = DB_DataObject::factory('companies');
         $enum = DB_DataObject::Factory('core_enum')->lookup('comptype', $opts['type']);
