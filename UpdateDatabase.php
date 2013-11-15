@@ -693,27 +693,28 @@ class Pman_Core_UpdateDatabase extends Pman
         $cs = DB_DataObject::factory('core_enum');
         $cs->query("
          SELECT 'ALTER SEQUENCE '|| quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
-       ||' OWNED BY '|| quote_ident(min(schema_name)) || '.' || quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';' as cmd
-FROM (
-         
-          SELECT 
-        n.nspname AS schema_name,
-        c.relname AS table_name,
-        a.attname AS column_name, 
-        regexp_replace(regexp_replace(d.adsrc, E'nextval\\\\(+[''\"]*', ''),E'[''\"]*::.*\$','') AS seq_name 
-    FROM pg_class c 
-    JOIN pg_attribute a ON (c.oid=a.attrelid) 
-    JOIN pg_attrdef d ON (a.attrelid=d.adrelid AND a.attnum=d.adnum) 
-    JOIN pg_namespace n ON (c.relnamespace=n.oid)
-    WHERE has_schema_privilege(n.oid,'USAGE')
-      AND n.nspname NOT LIKE 'pg!_%' escape '!'
-      AND has_table_privilege(c.oid,'SELECT')
-      AND (NOT a.attisdropped)
-      AND d.adsrc ~ '^nextval'
- 
-) seq
-GROUP BY seq_name HAVING count(*)=1
-");
+                    ||' OWNED BY '|| quote_ident(min(schema_name)) || '.' ||
+                    quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';' as cmd
+             FROM (
+                      
+                       SELECT 
+                     n.nspname AS schema_name,
+                     c.relname AS table_name,
+                     a.attname AS column_name, 
+                     regexp_replace(regexp_replace(d.adsrc, E'nextval\\\\(+[''\"]*', ''),E'[''\"]*::.*\$','') AS seq_name 
+                 FROM pg_class c 
+                 JOIN pg_attribute a ON (c.oid=a.attrelid) 
+                 JOIN pg_attrdef d ON (a.attrelid=d.adrelid AND a.attnum=d.adnum) 
+                 JOIN pg_namespace n ON (c.relnamespace=n.oid)
+                 WHERE has_schema_privilege(n.oid,'USAGE')
+                   AND n.nspname NOT LIKE 'pg!_%' escape '!'
+                   AND has_table_privilege(c.oid,'SELECT')
+                   AND (NOT a.attisdropped)
+                   AND d.adsrc ~ '^nextval'
+              
+             ) seq
+             GROUP BY seq_name HAVING count(*)=1
+             ");
         $cmds = array();
         while ($cs->fetch()) {
             $cmds[] = $cs->cmd;
