@@ -105,27 +105,20 @@ class Pman_Core_UpdateDatabase extends Pman
         return true;
     }
      
-    function get($args, $opt)
+    function get($args, $opts)
     {
         $this->fixSequencesPgsql();exit;
-        $this->opts = $opt;
+        $this->opts = $opts;
         
         // ask all the modules to verify the opts
         
-        $this->checkOpts($opt);
+        $this->checkOpts($opts);
         
         
-         
-        
-        if($args == 'Company'){
-            if(empty($opt['name']) || empty($opt['comptype'])){
-                die("Missing company name or type! Try --name=[the name of company] -- comptype=[the type of company] \n");
-            }
-            
-            DB_DataObject::factory('companies')->initCompanies($this, $opt['name'], $opt['comptype']);
-            
-            die("DONE! \n");
+        if (!empty($opts['add-company')) {
+            DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
+        
         
         $this->importSQL();
         $this->runUpdateModulesData();
