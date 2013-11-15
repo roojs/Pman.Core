@@ -457,6 +457,30 @@ class Pman_Core_UpdateDatabase extends Pman
         return $fn;
     }
     
+    
+    function checkOpts()
+    {
+        $modules = array_reverse($this->modulesList());
+        
+        // move 'project' one to the end...
+        
+        foreach ($modules as $module){
+            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
+            if($module == 'Core' || !file_exists($file)){
+                continue;
+            }
+            require_once $file;
+            $class = "Pman_{$module}_UpdateDatabase";
+            $x = new $class;
+            if(!method_exists($x, 'checkOpts')){
+                continue;
+            };
+            $x->checkOpts();
+        }
+                
+    }
+    
+    
     function runUpdateModulesData()
     {
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
