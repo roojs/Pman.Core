@@ -714,7 +714,7 @@ FROM (
 ) seq
 GROUP BY seq_name HAVING count(*)=1
 ");
-        
+        $cmds = array();
         while ($cs->fetch()) {
             $cmds[] = $cs->cmd;
         }
@@ -738,6 +738,7 @@ GROUP BY seq_name HAVING count(*)=1
                     AND NS.oid = T.relnamespace
                 ORDER BY S.relname;     
         ");
+         $cmds = array();
         while ($cs->fetch()) {
             $cmds[] = $cs->cmd;
         }
