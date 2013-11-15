@@ -325,9 +325,9 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $enum = DB_DataObject::Factory('core_enum')->lookup('comptype', $opts['type']);
         
         $companies->setFrom(array(
-            'name' => $name,
+            'name' => $opts['add-company'],
             'comptype' => $type,
-            'comptype_id' => $enum
+            'comptype_id' => $enum,
             'background_color' => '',
             'created_dt' => $this->sqlValue('NOW()'),
             'updated_dt' => $this->sqlValue('NOW()')
