@@ -719,7 +719,7 @@ GROUP BY seq_name HAVING count(*)=1
             $cmds[] = $cs->cmd;
         }
         print_r($cmds);exit;
-        DB_DataObject::debugLevel(1);
+       
         $cs = DB_DataObject::factory('core_enum');
          $cs->query("
                SELECT  'SELECT SETVAL(' ||
