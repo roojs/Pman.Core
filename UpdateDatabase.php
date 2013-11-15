@@ -109,6 +109,12 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->cli_options = $opt;
         
+        // ask all the modules to verify the opts
+        
+        
+        
+        
+        
         if($args == 'Person'){
             if(empty($opt['source']) || empty($opt['prefix'])){
                 die("Missing Source directory for person json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
