@@ -691,6 +691,36 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         DB_DataObject::debugLevel(1);
         $cs = DB_DataObject::factory('core_enum');
+        $cs->query("
+         SELECT 'ALTER SEQUENCE '|| quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
+       ||' OWNED BY '|| quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';'
+FROM (
+         
+          SELECT 
+        n.nspname AS schema_name,
+        c.relname AS table_name,
+        a.attname AS column_name, 
+        regexp_replace(regexp_replace(d.adsrc, E'nextval\\(+[''\"]*', ''),E'[''\"]*::.*\$','') AS seq_name 
+    FROM pg_class c 
+    JOIN pg_attribute a ON (c.oid=a.attrelid) 
+    JOIN pg_attrdef d ON (a.attrelid=d.adrelid AND a.attnum=d.adnum) 
+    JOIN pg_namespace n ON (c.relnamespace=n.oid)
+    WHERE has_schema_privilege(n.oid,'USAGE')
+      AND n.nspname NOT LIKE 'pg!_%' escape '!'
+      AND has_table_privilege(c.oid,'SELECT')
+      AND (NOT a.attisdropped)
+      AND d.adsrc ~ '^nextval'
+ 
+) seq
+GROUP BY seq_name HAVING count(*)=1
+");
+        
+        while ($cs->fetch()) {
+            $cmds[] = $cs->cmd;
+        }
+        print_r($cmds);exit;
+        DB_DataObject::debugLevel(1);
+        $cs = DB_DataObject::factory('core_enum');
          $cs->query("
                SELECT  'SELECT SETVAL(' ||
                          quote_literal(quote_ident(nspname) || '.' || quote_ident(S.relname)) ||
@@ -715,10 +745,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $cs = DB_DataObject::factory('core_enum');
             $cs->query($cmd);
         }
-        
-         
-        
-        
+       
     }
     
 }
