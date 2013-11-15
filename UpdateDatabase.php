@@ -69,9 +69,11 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!file_exists($fd)) {
                 continue;
             }
+            
             require_once $fd;
             
             $cls = new ReflectionClass('Pman_'. $m . '_UpdateDatabase');
+            echo $cls->name;
             array_merge($ret, $cls->getStaticPropertyValue('cli_opts'));
             
             
