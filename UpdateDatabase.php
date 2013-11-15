@@ -458,7 +458,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     
-    function checkOpts()
+    function checkOpts($opts)
     {
         $modules = array_reverse($this->modulesList());
         
@@ -475,7 +475,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if(!method_exists($x, 'checkOpts')){
                 continue;
             };
-            $x->checkOpts();
+            $x->checkOpts($opts);
         }
                 
     }
