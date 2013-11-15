@@ -26,14 +26,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
-        'name' => array(
+        'add-company' => array(
             'desc' => 'name of the company',
             'short' => 'n',
             'default' => '',
             'min' => 1,
             'max' => 1,
         ),
-        'comptype' => array(
+        'add-company-with-type' => array(
             'desc' => 'the type of company',
             'short' => 't',
             'default' => '',
@@ -122,22 +122,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->checkOpts($opt);
         
         
-        
-        if($args == 'Person'){
-            if(empty($opt['source']) || empty($opt['prefix'])){
-                die("Missing Source directory for person json files or prefix for the passwrod! Try -f [JSON file path] -p [prefix] \n");
-            }
-            if (!file_exists($opt['source'])) {
-                die("can not found person json file : {$opt['source']} \n");
-            }
-            
-            $persons = json_decode(file_get_contents($opt['source']),true);
-            
-            DB_DataObject::factory('person')->importFromArray($this, $persons, $opt['prefix']);
-            die("DONE! \n");
-        }
-        
-        
+         
         
         if($args == 'Company'){
             if(empty($opt['name']) || empty($opt['comptype'])){
