@@ -700,7 +700,7 @@ FROM (
         n.nspname AS schema_name,
         c.relname AS table_name,
         a.attname AS column_name, 
-        regexp_replace(regexp_replace(d.adsrc, E'nextval\\(+[''\"]*', ''),E'[''\"]*::.*\$','') AS seq_name 
+        regexp_replace(regexp_replace(d.adsrc, E'nextval\\\\(+[''\"]*', ''),E'[''\"]*::.*\$','') AS seq_name 
     FROM pg_class c 
     JOIN pg_attribute a ON (c.oid=a.attrelid) 
     JOIN pg_attrdef d ON (a.attrelid=d.adrelid AND a.attnum=d.adnum) 
