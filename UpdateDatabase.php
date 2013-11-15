@@ -82,7 +82,7 @@ class Pman_Core_UpdateDatabase extends Pman
         return $ret;
     }
     
-    var $cli_options = false;
+    var $opts = false;
     
     
     var $cli = false;
@@ -107,7 +107,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function get($args, $opt)
     {
         
-        $this->cli_options = $opt;
+        $this->opts = $opt;
         
         // ask all the modules to verify the opts
         
@@ -267,7 +267,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             // if init has been called
             // look in pgsql.ini
-            if (!empty($this->cli_options['init'])) {
+            if (!empty($this->opts['init'])) {
                 $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.init");
                 
             }
@@ -287,7 +287,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             
-            if (!empty($this->cli_options['init']) && file_exists($this->rootDir. "/Pman/$m/pgsql.initdata")) {
+            if (!empty($this->opts['init']) && file_exists($this->rootDir. "/Pman/$m/pgsql.initdata")) {
                 HTML_FlexyFramework::get()->generateDataobjectsCache(true);
                 
                 $this->importpgsqldir($dburl, $this->rootDir. "/Pman/$m/pgsql.initdata");
