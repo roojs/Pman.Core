@@ -504,7 +504,21 @@ class Pman_Core_UpdateDatabase extends Pman
         }
                 
     }
-    
+    function jsonImportFromArray($opts)
+    {
+        foreach($this->opts as $o=>$v) {
+            if (!preg_match('/^json-/', $o) || empty($v)) {
+                continue;
+            }
+            $type = str_replace('_', '-', substr($o,6));
+            $data= json_decode(file_get_contents($file),true);
+            DB_DataObject::factory($type)->importFromArray($data);
+            
+        }
+        
+        
+        
+    }
     
     function runUpdateModulesData()
     {
