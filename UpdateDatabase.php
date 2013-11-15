@@ -718,8 +718,10 @@ GROUP BY seq_name HAVING count(*)=1
         while ($cs->fetch()) {
             $cmds[] = $cs->cmd;
         }
-        print_r($cmds);exit;
-       
+        foreach($cmds as $cmd) {
+            $cs = DB_DataObject::factory('core_enum');
+            $cs->query($cmd);
+        }
         $cs = DB_DataObject::factory('core_enum');
          $cs->query("
                SELECT  'SELECT SETVAL(' ||
