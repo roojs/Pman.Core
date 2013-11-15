@@ -58,7 +58,22 @@ class Pman_Core_UpdateDatabase extends Pman
     
     static function cli_opts()
     {
-        die("query cli_opts");
+        
+        $ret = self::$cli_opts;
+        $ff = HTML_FlexyFramework::get();
+        $a = new Pman();
+        $mods = $a->modulesList();
+        foreach($ar as $m) {
+            
+            $fd = $ff->rootDir. "/Pman/$m/UpdateDatabase.php";
+            if (!file_exists($fd)) {
+                continue;
+            }
+            
+            
+        }
+        
+        
         return self::$cli_opts;
     }
     
