@@ -689,7 +689,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     function fixSequencesPgsql()
     {
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         $cs = DB_DataObject::factory('core_enum');
         $cs->query("
          SELECT 'ALTER SEQUENCE '|| quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
