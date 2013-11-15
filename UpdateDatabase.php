@@ -120,7 +120,7 @@ class Pman_Core_UpdateDatabase extends Pman
      
     function get($args, $opt)
     {
-        
+        $this->fixSequencesPgsql();exit;
         $this->opts = $opt;
         
         // ask all the modules to verify the opts
