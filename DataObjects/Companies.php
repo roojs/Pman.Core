@@ -321,12 +321,22 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function initCompanies($roo, $opts)
     {
         $companies = DB_DataObject::factory('companies');
-        $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE',
-                empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type']
-        );
+        
+        $ctype = empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type'];
+        
+        $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', $ctype  );
         if (empty($emum)) {
             $roo->jerr("invalid company type");
         }
+        if ($ctype =='OWNER') {
+            $companies = DB_DataObject::factory('companies');
+            $companies->comptype_id = $emum;
+            if ($companies->count()) {
+                $roo->jerr("Ownere company already exists");
+            }
+        }
+        $companies = DB_DataObject::factory('companies');
+        
         // check that 
         $companies->setFrom(array(
             'name' => $opts['add-company'],
