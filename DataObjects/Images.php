@@ -103,7 +103,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function createFrom($file, $filename=false)
     {
-        print_r('run');exit;
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             return false;
