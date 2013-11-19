@@ -56,7 +56,7 @@ class Pman_Core_Images extends Pman
     function get($s) // determin what to serve!!!!
     {
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
-        
+        print_r($s);exit;
         $bits= explode('/', $s);
         $id = 0;
 //        var_dump($bits);die('in');
