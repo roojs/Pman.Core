@@ -164,7 +164,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         /* thumbnails */
         
-     exit;
        // $this->createThumbnail(0,50);
         return true;
         
