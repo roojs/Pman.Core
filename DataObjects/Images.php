@@ -3,7 +3,7 @@
  * Table Definition for Images
  */
 require_once 'DB/DataObject.php';
-
+die('here');
 class Pman_Core_DataObjects_Images extends DB_DataObject 
 {
     ###START_AUTOCODE
