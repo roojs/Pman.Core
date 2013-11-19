@@ -26,6 +26,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'data-only' => array(
+            'desc' => 'only run the updateData - do not run import the tables and procedures.',
+            'short' => 'p',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+            
+        )
         'add-company' => array(
             'desc' => 'add a company name of the company',
             'short' => 'n',
