@@ -33,7 +33,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
             
-        )
+        ),
         'add-company' => array(
             'desc' => 'add a company name of the company',
             'short' => 'n',
@@ -133,8 +133,9 @@ class Pman_Core_UpdateDatabase extends Pman
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
         
-        
-        $this->importSQL();
+        if (empty($opts['data-only'])) {
+            $this->importSQL();
+        }
         if (!empty($opts['only-module-sql'])) {
             return;
         }
