@@ -164,6 +164,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         /* thumbnails */
         
+     
        // $this->createThumbnail(0,50);
         return true;
         
@@ -601,8 +602,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $roo->loadMap($r);
         $r->limit(1);
         $r->find(true);
-        
-        $roo->jok($r->toArray());exit;
+        $roo->jok($r->toArray());
          
     }
     
