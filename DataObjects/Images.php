@@ -178,7 +178,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function getStoreName() 
     {
         $opts = HTML_FlexyFramework::get()->Pman;
-        print_r($this->filename);exit;
+        
         $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
         print_r($fn);exit;
         return implode( '/', array(
