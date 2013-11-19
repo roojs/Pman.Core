@@ -211,7 +211,7 @@ class Pman_Core_Mailer {
             $isMine = true;
         }
         
-        if($this->attachments){
+        if(!empty($this->attachments)){
             //if got a attachments
             
             $header = $mime->headers($parts[1]);
