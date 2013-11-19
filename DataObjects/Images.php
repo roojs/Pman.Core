@@ -602,7 +602,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $r->limit(1);
         $r->find(true);
         
-        $roo->jok($r->toArray());
+        $roo->jok($r->toArray());exit;
          
     }
     
