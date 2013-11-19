@@ -193,7 +193,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeDelete()
     {
         $fn = $this->getStoreName();
-        print_r($fn);exit;
         if (file_exists($fn)) {
             unlink($fn);
         }
