@@ -51,7 +51,8 @@ class Pman_Core_Tests_Mailer extends Pman
                 )
             )
         ));
-        $r->send();
+        $res = $r->send();
+        var_dump($res);
         
         die("done?");
         
