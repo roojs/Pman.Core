@@ -213,12 +213,12 @@ class Pman_Core_Mailer {
         
         if(!empty($this->attachments)){
             //if got a attachments
+            $header = $mime->headers($parts[1]);
             
             if (isset($parts[1]['Content-Type'])) {
                 unset($parts[1]['Content-Type']);
             }
             
-            $header = $mime->headers($parts[1]);
             if (!$isMime) {
             
                 if(preg_match('/text\/html/', $header['Content-Type'])){
