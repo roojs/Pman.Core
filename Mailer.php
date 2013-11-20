@@ -234,7 +234,7 @@ class Pman_Core_Mailer {
                         $attch['file'],
                         $attch['mimetype'],
                         $attch['name'],
-                        false
+                        
                 );
             }
             
