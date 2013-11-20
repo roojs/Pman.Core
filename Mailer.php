@@ -233,8 +233,8 @@ class Pman_Core_Mailer {
                 $mime->addAttachment(
                         $attch['file'],
                         $attch['mimetype'],
-                        $attch['name']
-                        
+                        $attch['name'],
+                        true
                 );
             }
             
