@@ -172,7 +172,7 @@ class Pman_Core_Mailer {
             //exit;
         } 
         
-        $isMine = false;
+        $isMime = false;
         
         require_once 'Mail/mime.php';
         $mime = new Mail_mime(array(
