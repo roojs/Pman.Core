@@ -44,7 +44,7 @@ class Pman_Core_Tests_Mailer extends Pman
             'attachments' => array(
                 array(
                
-                    'file' => '/home/alan/Documents/Nestplaytimespjadcover.pdf',
+                    'file' => '/home/alan/Documents/Nestplaytimespjadcover.pdf', // pass the file path DOES NOT pass the file content
                     'name' => 'Nestplaytimespjadcover.pdf',
                     'mimetype' => 'application/pdf'
                     
