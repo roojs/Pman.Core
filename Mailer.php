@@ -208,20 +208,23 @@ class Pman_Core_Mailer {
                     $cdata['contentid']
                 );
             }
-            $isMine = true;
+            $isMime = true;
         }
         
         if(!empty($this->attachments)){
             //if got a attachments
             
             $header = $mime->headers($parts[1]);
+            if (!$isMime) {
             
-            if(preg_match('/text\/html/', $header['Content-Type'])){
-                $mime->setHTMLBody($parts[2]);
-            }else{
-                $mime->setTXTBody($parts[2]);
+                if(preg_match('/text\/html/', $header['Content-Type'])){
+                    $mime->setHTMLBody($parts[2]);
+                    $mime->setTXTBody('This message is in HTML only');
+                }else{
+                    $mime->setTXTBody($parts[2]);
+                    $mime->setHTMLBody('<PRE>'.htmlspecialchars($parts[2]).'</PRE>');
+                }
             }
-            
             foreach($this->attachments as $attch){
                 $mime->addAttachment(
                         $attch['file'],
@@ -231,10 +234,10 @@ class Pman_Core_Mailer {
                 );
             }
             
-            $isMine = true;
+            $isMime = true;
         }
         
-        if($isMine){
+        if($isMime){
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         }
