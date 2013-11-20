@@ -51,9 +51,8 @@ class Pman_Core_Tests_Mailer extends Pman
                 )
             )
         ));
-        return $r->send();
+        $r->send();
         
-        $this->sendTemplate('test',array());
         die("done?");
         
     }
