@@ -36,7 +36,7 @@ class Pman_Core_Tests_Mailer extends Pman
             $this->test[$i] = $i;
             
         }
-          require_once 'Pman/Core/Mailer.php';
+        require_once 'Pman/Core/Mailer.php';
         $r = new Pman_Core_Mailer(array(
             'template'=> 'test',
             'contents' => array(),
