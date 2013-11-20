@@ -45,7 +45,7 @@ class Pman_Core_Tests_Mailer extends Pman
                 array(
                
                     'file' => '/home/alan/Documents/Nestplaytimespjadcover.pdf',
-          
+                    'name' => 'Nestplaytimespjadcover.pdf',
                     'mimetype' => 'application/pdf'
                     
                 )
