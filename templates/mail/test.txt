@@ -1,7 +1,6 @@
 From: "{t.authUser.name}" <test@test.com>
 To: {t.rcpts}
 Subject: {t.subject}
-Content-Type: text/html; charset="utf-8"
 Message-Id: {t.full_msgid}
 Mime-Version: 1.0
 
