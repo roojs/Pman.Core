@@ -198,7 +198,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         // delete thumbs..
         $b = basename($fn);
-        print_r($b);
+        
         $d = dirname($fn);
         
         if (file_exists($d)) {
