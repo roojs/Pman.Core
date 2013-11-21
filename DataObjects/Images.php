@@ -201,7 +201,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $b = basename($fn);
         
         $d = dirname($fn);
-        print_r($d);
+        print_r($d);exit;
         if (file_exists($d)) {
                 
             $dh = opendir($d);
