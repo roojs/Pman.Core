@@ -109,7 +109,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $filename = empty($filename) ? $file : $filename;
-        print_r('in ??'); eixt;
+        
         if (empty($this->mimetype)) {
             require_once 'File/MimeType.php';
             $y = new File_MimeType();
