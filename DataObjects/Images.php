@@ -533,10 +533,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         // not sure why we do this.. 
         
-        
-        $roo->jerr($ar);
-        
-        
         // if imgtype starts with '-' ? then we set the 'old' (probably to delete later)
         if (!empty($ar['imgtype']) && !empty($ar['ontable']) && !empty($ar['onid']) && ($ar['imgtype'][0] == '-')) {
             $this->setFrom($ar);
