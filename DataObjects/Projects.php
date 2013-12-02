@@ -307,4 +307,13 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
     {
         return $au->hasPerm("Core.Projects_Member_Of",$lvl) || $au->hasPerm("Core.Projects_All",$lvl);
     }
+    
+    function keywords()
+    {
+        $k = DB_DAtaObject::Factory('clipping_keywords');
+        $k->project_id = $this->id;
+        return $k->fetchAll();
+        
+        
+    }
 }
