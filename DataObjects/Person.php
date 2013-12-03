@@ -273,15 +273,35 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
         }
         // local auth - 
+        $default_admin = false;
+        if (!empty($ff->Pman['local_autoauth']) && 
+            ($ff->Pman['local_autoauth'] === true) &&
+            (!empty($_SERVER['SERVER_ADDR'])) &&
+            ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
+            ($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
+        ) {
+            $group = DB_DataObject::factory('Groups');
+            $group->get('name', 'Administrators');
+            
+            $member = DB_DataObject::factory('group_members');
+            $member->group_id = $group->id;
+            if($member->find(true)){
+                $default_admin = DB_DataObject::factory('Perosn');
+                if(!$default_admin->get($member->user_id)){
+                    $default_admin = false;
+                }
+            }
+        }
+        
         $u = DB_DataObject::factory('Person');
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['local_autoauth']) && 
             (!empty($_SERVER['SERVER_ADDR'])) &&
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
-            $u->get('email', $ff->Pman['local_autoauth'])
+            ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
-            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
+            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
             return true;
         }
            
