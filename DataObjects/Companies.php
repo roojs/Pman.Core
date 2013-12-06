@@ -341,7 +341,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         // check that 
         $companies->setFrom(array(
             'name' => $opts['add-company'],
-            'comptype' => $type,
+            'comptype' => $ctype,
             'comptype_id' => $enum,
         ));
         if ($companies->find(true)) {
