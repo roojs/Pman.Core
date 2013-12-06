@@ -242,6 +242,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 
                 $t->insert();
             }else{
+                $t->find(true); // fetch it..
                 if ( isset($row['is_system_enum'])) {
                      $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
                     
