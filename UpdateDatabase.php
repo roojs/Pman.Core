@@ -121,6 +121,10 @@ class Pman_Core_UpdateDatabase extends Pman
      
     function get($args, $opts)
     {
+        
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+   
+        
         //$this->fixSequencesPgsql();exit;
         $this->opts = $opts;
         
@@ -129,10 +133,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->checkOpts($opts);
         
         
-        if (!empty($opts['add-company'])) {
-            DB_DataObject::factory('companies')->initCompanies($this, $opts);
-        }
-        
+     
         if (empty($opts['data-only'])) {
             $this->importSQL();
         }
@@ -141,6 +142,11 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         $this->runUpdateModulesData();
+        
+        
+        if (!empty($opts['add-company'])) {
+            DB_DataObject::factory('companies')->initCompanies($this, $opts);
+        }
          
     }
     function output() {
