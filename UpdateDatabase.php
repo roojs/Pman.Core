@@ -689,8 +689,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function fixSequencesPgsql()
     {
      
-    ALTER SEQUENCE xtpos."public.taxhist_taxhist_id_seq" OWNED BY xtpos.saleitemtax.taxhist_id;
-    
+     
         //DB_DataObject::debugLevel(1);
         $cs = DB_DataObject::factory('core_enum');
         $cs->query("
