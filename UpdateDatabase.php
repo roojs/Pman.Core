@@ -743,7 +743,7 @@ class Pman_Core_UpdateDatabase extends Pman
          $cs->query("
                SELECT  'SELECT SETVAL(' ||
                          quote_literal(quote_ident(nspname) || '.' || quote_ident(S.relname)) ||
-                        ', MAX(' || quote_ident(C.attname)|| ') )  FROM ' || nspname || '.' || quote_ident(T.relname)|| ';' as cmd 
+                        ', MAX(' || quote_ident(C.attname)|| ')::integer )  FROM ' || nspname || '.' || quote_ident(T.relname)|| ';' as cmd 
                 FROM pg_class AS S,
                     pg_depend AS D,
                     pg_class AS T,
