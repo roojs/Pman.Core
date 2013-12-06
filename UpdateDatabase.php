@@ -726,7 +726,7 @@ class Pman_Core_UpdateDatabase extends Pman
                      substring(seq_name, 1,strpos(seq_name,'.')-1)
                 ELSE
                     schema_name
-                END - schema_name
+                END = schema_name
              
              GROUP BY seq_name HAVING count(*)=1
              ");
