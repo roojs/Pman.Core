@@ -125,7 +125,7 @@ class Pman_Core_UpdateDatabase extends Pman
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         
-        $this->fixSequencesPgsql();exit;
+        //$this->fixSequencesPgsql();exit;
         $this->opts = $opts;
         
         // ask all the modules to verify the opts
