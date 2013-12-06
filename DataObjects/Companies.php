@@ -357,5 +357,14 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $companies->insert();
         $companies->onInsert(array(), $roo);
     }
-    
+    function    lookupOwner()
+    {
+        $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', $ctype  );
+        $companies = DB_DataObject::factory('companies');
+        $companies->comptype_id = $enum;
+        if ($companies->find(true)) {
+            return $companies;
+        }
+        return false;
+    }
 }
