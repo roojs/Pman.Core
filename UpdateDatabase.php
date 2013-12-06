@@ -511,8 +511,8 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!preg_match('/^json-/', $o) || empty($v)) {
                 continue;
             }
-            $type = str_replace('_', '-', substr($o,6));
-            var_dump($type);
+            $type = str_replace('_', '-', substr($o,5));
+            
             $data= json_decode(file_get_contents($v),true);
             
             DB_DataObject::factory($type)->importFromArray($this,$data,$opts);
