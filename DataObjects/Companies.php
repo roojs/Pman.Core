@@ -333,7 +333,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             $companies = DB_DataObject::factory('companies');
             $companies->comptype_id = $emum;
             if ($companies->count()) {
-                $roo->jerr("Ownere company already exists");
+                $roo->jerr("Owner  company already exists");
             }
         }
         $companies = DB_DataObject::factory('companies');
