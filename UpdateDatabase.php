@@ -44,7 +44,7 @@ class Pman_Core_UpdateDatabase extends Pman
         'add-company-with-type' => array(
             'desc' => 'the type of company (default OWNER)',
             'short' => 't',
-            'default' => '',
+            'default' => 'OWNER',
             'min' => 1,
             'max' => 1,
         ),
