@@ -695,7 +695,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $cs->query("
          SELECT
                     'ALTER SEQUENCE '||
-                    WHEN strpos(seq_name, '.') > 0 THEN
+                    CASE WHEN strpos(seq_name, '.') > 0 THEN
                         quote_ident(min(seq_name))
                     ELSE 
                         quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
