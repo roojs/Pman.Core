@@ -720,7 +720,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         foreach($cmds as $cmd) {
             $cs = DB_DataObject::factory('core_enum');
-            echo $cmd;
+            echo "$cmd\n";
             $cs->query($cmd);
         }
         $cs = DB_DataObject::factory('core_enum');
@@ -747,7 +747,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         foreach($cmds as $cmd) {
             $cs = DB_DataObject::factory('core_enum');
-            echo $cmd;
+            echo "$cmd\n";
             $cs->query($cmd);
         }
        
