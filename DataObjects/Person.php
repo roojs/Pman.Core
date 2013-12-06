@@ -365,7 +365,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
             $u = DB_DataObject::factory('Person');
             $u->whereAdd(' LENGTH(passwd) > 0');
-             $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $u->count();
+            $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $u->count();
         }
                 
              
@@ -378,6 +378,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             $u = DB_DataObject::factory('Person');
             $u->id = -1;
+            
+            // if a company has been created fill that in in company_id_id
+            $c = DB_DAtaObject::factory('Companies')->lookupOwner();
+            if ($c) {
+                $u->company_id_id = $c->pid();
+            }
+            
             return $u;
             
         }
