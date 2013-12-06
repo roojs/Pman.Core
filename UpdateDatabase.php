@@ -146,7 +146,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         if (!empty($opts['add-company'])) {
             // make sure we have a good cache...?
-            HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+           
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
          
@@ -559,6 +559,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateDataEnums()
     {
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         $enum = DB_DataObject::Factory('core_enum');
         $enum->initEnums(
             array(
