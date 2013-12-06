@@ -145,7 +145,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         if (!empty($opts['add-company'])) {
-             HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+            // make sure we have a good cache...?
+            HTML_FlexyFramework::get()->generateDataobjectsCache(true);
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
          
