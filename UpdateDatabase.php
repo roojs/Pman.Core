@@ -688,10 +688,20 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     function fixSequencesPgsql()
     {
+     
+    ALTER SEQUENCE xtpos."public.taxhist_taxhist_id_seq" OWNED BY xtpos.saleitemtax.taxhist_id;
+    
         //DB_DataObject::debugLevel(1);
         $cs = DB_DataObject::factory('core_enum');
         $cs->query("
-         SELECT 'ALTER SEQUENCE '|| quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
+         SELECT
+                    'ALTER SEQUENCE '||
+                    WHEN strpos(seq_name, '.') > 0 THEN
+                        quote_ident(min(seq_name))
+                    ELSE 
+                        quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
+                    END 
+                    
                     ||' OWNED BY '|| quote_ident(min(schema_name)) || '.' ||
                     quote_ident(min(table_name)) ||'.'|| quote_ident(min(column_name)) ||';' as cmd
              FROM (
