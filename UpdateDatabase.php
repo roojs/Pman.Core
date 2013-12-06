@@ -561,7 +561,7 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         
         $enum = DB_DataObject::Factory('core_enum');
-        DB_DAtaObject::debugLevel(1);
+        //DB_DAtaObject::debugLevel(1);
         $enum->initEnums(
             array(
                 array(
