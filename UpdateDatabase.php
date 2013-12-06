@@ -696,7 +696,7 @@ class Pman_Core_UpdateDatabase extends Pman
          SELECT
                     'ALTER SEQUENCE '||
                     CASE WHEN strpos(seq_name, '.') > 0 THEN
-                        quote_ident(min(seq_name))
+                        min(seq_name)
                     ELSE 
                         quote_ident(min(schema_name)) ||'.'|| quote_ident(min(seq_name))
                     END 
