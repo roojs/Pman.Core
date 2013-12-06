@@ -721,6 +721,13 @@ class Pman_Core_UpdateDatabase extends Pman
                    AND d.adsrc ~ '^nextval'
               
              ) seq
+             WHERE
+                 CASE WHEN strpos(seq_name, '.') > 0 THEN
+                     substring(seq_name, 1,strpos(seq_name,'.')-1)
+                ELSE
+                    schema_name
+                END - schema_name
+             
              GROUP BY seq_name HAVING count(*)=1
              ");
         $cmds = array();
