@@ -325,6 +325,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $ctype = empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type'];
         
         $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', $ctype  );
+        var_dump($enum);
         if (empty($emum)) {
             $roo->jerr("invalid company type '$ctype'");
         }
