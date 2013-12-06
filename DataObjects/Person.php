@@ -383,6 +383,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $c = DB_DAtaObject::factory('Companies')->lookupOwner();
             if ($c) {
                 $u->company_id_id = $c->pid();
+                $u->company_id= $c->pid();
             }
             
             return $u;
