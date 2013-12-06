@@ -514,8 +514,8 @@ class Pman_Core_UpdateDatabase extends Pman
             $type = str_replace('_', '-', substr($o,5));
             
             $data= json_decode(file_get_contents($v),true);
-            
-            DB_DataObject::factory($type)->importFromArray($this,$data,$opts);
+            $pg = HTML_FlexyFramework::get()->page;
+            DB_DataObject::factory($type)->importFromArray($pg ,$data,$opts);
             
         }
         
