@@ -336,7 +336,7 @@ class Pman_Core_UpdateDatabase extends Pman
         echo "scan : $dir\n";
         
         $files = glob($dir.'/*.sql');
-        sort($files);
+        uksort($files, 'strcasecmp');
         //$lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         //usort($files, $lsort);
         
