@@ -152,10 +152,10 @@ CREATE TABLE Groups (
 );
 
 ALTER TABLE Groups ADD COLUMN name varchar(64)  NOT NULL DEFAULT '';
-ALTER TABLE Groups ADD COLUMN   type int(11) default NOT NULL DEFAULT 0;
+ALTER TABLE Groups ADD COLUMN   type int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE Groups ADD COLUMN leader int(11)  NOT NULL default 0;
 #old mysql..
-update groups set type=0 where type is null;
+update Groups set type=0 where type is null;
 
 ALTER TABLE Groups CHANGE COLUMN type type int(11)  NOT NULL  default 0;
 
