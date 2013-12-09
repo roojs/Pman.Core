@@ -337,12 +337,12 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $files = glob($dir.'/*.sql');
         sort($files);
-        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
-        usort($files, $lsort);
+        //$lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        //usort($files, $lsort);
         
         
         
-        foreach(glob($dir.'/*.sql') as $bfn) {
+        foreach($files as $bfn) {
 
 
             if (preg_match('/migrate/i', basename($bfn))) { // skip migration scripts at present..
