@@ -321,7 +321,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         if (!empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
-            return false;
+            return true;
         }
         
         // not in session or not matched...
