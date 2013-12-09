@@ -293,6 +293,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
         }
         
+        die("HERE");
+        
         $u = DB_DataObject::factory('Person');
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['local_autoauth']) && 
