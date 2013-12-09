@@ -320,8 +320,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
-        var_dump(session_id());
-        var_dump($_SESSION[__CLASS__]);
+        //var_dump(session_id());
+        //var_dump($_SESSION[__CLASS__]);
         
         if (!empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
             return false;
