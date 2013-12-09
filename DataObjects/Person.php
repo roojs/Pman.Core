@@ -431,7 +431,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
-        $_SESSION[__CLASS__][$sesPrefix .'-empty'] = "";
+        unset($_SESSION[__CLASS__]);
         
     }    
     function genPassKey ($t) 
