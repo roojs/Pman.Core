@@ -433,7 +433,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
-        unset($_SESSION[__CLASS__]);
+       
         
        
         
