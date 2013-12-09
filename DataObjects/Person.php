@@ -359,7 +359,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {
                 return clone($u);
             }
-             
+            unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
         }
         
         if (empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
@@ -383,7 +383,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $c = DB_DAtaObject::factory('Companies')->lookupOwner();
             if ($c) {
                 $u->company_id_id = $c->pid();
-                $u->company_id= $c->pid();
+                $u->company_id = $c->pid();
             }
             
             return $u;
