@@ -269,7 +269,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 return true;
             }
             
-            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = '';
+            unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
         }
         // local auth - 
