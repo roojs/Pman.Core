@@ -432,6 +432,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
 
         $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
         unset($_SESSION[__CLASS__]);
+        session_regenerate_id ( true );
         
     }    
     function genPassKey ($t) 
