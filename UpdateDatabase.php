@@ -194,9 +194,12 @@ class Pman_Core_UpdateDatabase extends Pman
             (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
             ' ' . basename($dburl['path']);
         //echo $mysql_cmd . "\n" ;
+        
+        $files = glob($dir.'/*.sql');
+        uksort($files, 'strcasecmp');
+        
        
-       
-        foreach(glob($dir.'/*.sql') as $fn) {
+        foreach($files as $fn) {
                 
                  
                 if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
