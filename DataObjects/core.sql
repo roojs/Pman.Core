@@ -155,7 +155,7 @@ ALTER TABLE Groups ADD COLUMN name varchar(64)  NOT NULL DEFAULT '';
 ALTER TABLE Groups ADD COLUMN   type int(11) default NOT NULL DEFAULT 0;
 ALTER TABLE Groups ADD COLUMN leader int(11)  NOT NULL default 0;
 #old mysql..
-ALTER TABLE Groups CHANGE COLUMN type type int(11) default 0;
+ALTER TABLE Groups CHANGE COLUMN type type int(11)  NOT NULL  default 0;
 
 
 
