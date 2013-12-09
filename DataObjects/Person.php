@@ -321,6 +321,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             return true; 
         }
         
+        die("got here");
+        
         if (!empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
             return false;
         }
