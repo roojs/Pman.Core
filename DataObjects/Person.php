@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
             return false;
         }
-        
+        die("got this far?");
         // not in session or not matched...
         $u = DB_DataObject::factory('Person');
         $u->whereAdd(' LENGTH(passwd) > 0');
