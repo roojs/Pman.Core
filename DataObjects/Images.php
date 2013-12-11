@@ -144,12 +144,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $this->update();
         }
         
-        if(file_exists($file)){
-            print_r('in');
-        }else{
-            print_('not');
-        }
-        exit;
         $f = $this->getStoreName();
         $dest = dirname($f);
         if (!file_exists($dest)) {
