@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!file_exists($file) || !filesize($file)) {
             return false;
         }
-        print_r($file);exit;
+        
         $filename = empty($filename) ? $file : $filename;
         
         if (empty($this->mimetype)) {
@@ -147,8 +147,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         $f = $this->getStoreName();
+        print_r($f);exit;
         $dest = dirname($f);
-        
         if (!file_exists($dest)) {
             // currently this is 0775 due to problems using shared hosing (FTP)
             // it makes all the files unaccessable..
@@ -158,7 +158,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             mkdir($dest, 0775, true);
             umask($oldumask);  
         }
-        print_r($file);exit;
+        
         copy($file,$f);
         
         // fill in details..
