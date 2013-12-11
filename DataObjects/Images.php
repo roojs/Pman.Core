@@ -590,7 +590,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ( !$this->onUpload($this)) { 
             $roo->jerr("File upload failed : ". (!empty($this->err) ? $this->err : ''));
         }
-        print_r($this->toEventString());exit;
+        print_r('run');exit;
         $roo->addEvent("ADD", $this, $this->toEventString());
         
         $r = DB_DataObject::factory($this->tableName());
