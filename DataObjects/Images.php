@@ -159,7 +159,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         copy($file,$f);
-        
+        exit;
         // fill in details..
         
         /* thumbnails */
