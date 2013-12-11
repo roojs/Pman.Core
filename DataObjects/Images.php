@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!file_exists($file) || !filesize($file)) {
             return false;
         }
-        
+        print_r($file);exit;
         $filename = empty($filename) ? $file : $filename;
         
         if (empty($this->mimetype)) {
