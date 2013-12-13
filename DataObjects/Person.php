@@ -247,6 +247,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function isAuth()
     {
         $db = $this->getDatabaseConnection();
+        print_r($db);exit;
         // we combine db + project names,
         // otherwise if projects use different 'auth' objects
         // then we get unserialize issues.
