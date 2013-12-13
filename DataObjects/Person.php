@@ -272,6 +272,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
         }
+        exit;
         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
