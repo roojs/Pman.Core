@@ -94,7 +94,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
-    
+     
     /**
      * create an email from file.
      * these must have been set first.
