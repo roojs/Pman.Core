@@ -334,7 +334,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $n;
         $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
         if ($error) {
-            print_r('in');exit;
             die($error->toString()); // not really a good thing to do...
         }
         if (!$n){ // authenticated as there are no users in the system...
