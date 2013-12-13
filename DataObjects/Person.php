@@ -251,6 +251,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // otherwise if projects use different 'auth' objects
         // then we get unserialize issues.
         $ff= HTML_FlexyFramework::get();
+        echo '<PRE>';
+        print_r($ff);exit;
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
         
@@ -272,7 +274,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
         }
-        exit;
         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
