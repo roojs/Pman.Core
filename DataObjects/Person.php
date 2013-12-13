@@ -317,11 +317,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
-            print_r('run');
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
-        exit;
         //var_dump(session_id());
         //var_dump($_SESSION[__CLASS__]);
         
@@ -335,6 +333,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $n = $u->count();
         $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $n;
         $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        print_r($error);exit;
         if ($error) {
             die($error->toString()); // not really a good thing to do...
         }
