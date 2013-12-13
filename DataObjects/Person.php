@@ -293,7 +293,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 }
             }
         }
-        
+        exit;
          
         $u = DB_DataObject::factory('Person');
         $ff = HTML_FlexyFramework::get();
