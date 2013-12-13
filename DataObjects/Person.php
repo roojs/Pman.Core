@@ -280,7 +280,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
         ) {
-            print_r('run');
             $group = DB_DataObject::factory('Groups');
             $group->get('name', 'Administrators');
             
@@ -293,7 +292,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 }
             }
         }
-        exit;
+        
          
         $u = DB_DataObject::factory('Person');
         $ff = HTML_FlexyFramework::get();
@@ -318,9 +317,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
+            print_r('run');
             $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
+        exit;
         //var_dump(session_id());
         //var_dump($_SESSION[__CLASS__]);
         
