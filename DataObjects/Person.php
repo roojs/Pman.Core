@@ -280,6 +280,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
         ) {
+            print_r('run');
             $group = DB_DataObject::factory('Groups');
             $group->get('name', 'Administrators');
             
