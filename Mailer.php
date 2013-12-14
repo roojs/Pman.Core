@@ -278,6 +278,9 @@ class Pman_Core_Mailer {
         $mail = Mail::factory("SMTP",$mailOptions);
         $headers['Date'] = date('r'); 
         if (PEAR::isError($mail)) {
+             $pg->addEvent("COREMAILER-FAIL",  false, "mail factory failed"); 
+      
+            
             return $mail;
         } 
         $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
