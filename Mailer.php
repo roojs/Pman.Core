@@ -297,7 +297,7 @@ class Pman_Core_Mailer {
                     'To: ' . implode(', ', $rcpts) .
                     'Subject '  . $headers['subject']
             ); 
-             
+        }  
        
         return $ret;
     }
