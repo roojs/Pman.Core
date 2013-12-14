@@ -259,11 +259,14 @@ class Pman_Core_Mailer {
     function send()
     {
         
-        $ff = HTML_FlexyFramework::get()->page;
+        $pg = HTML_FlexyFramework::get()->page;
         
         
         $email = $this->toData();
         if (is_a($email, 'PEAR_Error')) {
+            $pg->addEvent("COREMAILER-FAIL",  false, "email toData failed"); 
+      
+            
             return $email;
         }
         if ($this->debug) {
