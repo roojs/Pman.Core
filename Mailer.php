@@ -295,7 +295,7 @@ class Pman_Core_Mailer {
         if ($ret === true) { 
             $pg->addEvent("COREMAILER-SENT",  false,
                     'To: ' . implode(', ', $rcpts) .
-                    'Subject '  . $headers['Subject']
+                    'Subject '  . @$headers['Subject']
             ); 
         }  
        
