@@ -259,6 +259,9 @@ class Pman_Core_Mailer {
     function send()
     {
         
+        $ff = HTML_FlexyFramework::get()->page;
+        
+        
         $email = $this->toData();
         if (is_a($email, 'PEAR_Error')) {
             return $email;
