@@ -276,7 +276,7 @@ class Pman_Core_Mailer {
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         //print_R($mailOptions);exit;
         $mail = Mail::factory("SMTP",$mailOptions);
-        $headers['Date'] = date('r'); 
+        $email['headers']['Date'] = date('r'); 
         if (PEAR::isError($mail)) {
              $pg->addEvent("COREMAILER-FAIL",  false, "mail factory failed"); 
       
@@ -295,7 +295,7 @@ class Pman_Core_Mailer {
         if ($ret === true) { 
             $pg->addEvent("COREMAILER-SENT",  false,
                 'To: ' .  ( is_array($rcpts) ? implode(', ', $rcpts) : $rcpts ) .
-                'Subject '  . @$headers['Subject']
+                'Subject: '  . @$headers['Subject']
             ); 
         }  
        
