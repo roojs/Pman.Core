@@ -552,7 +552,7 @@ Pman = new Roo.Document(
         }
         
         for(var i = 0; i < s.length; i++) {
-            r.push(s[i].data.id);
+            r.push(tab.grid.reader.getId(s[i]));
         }
     
         Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
