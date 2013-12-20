@@ -18,7 +18,7 @@
 	"Groups"                    : [ "ADEPS", "" , "Group Management"] ,
         
 	"Events"                    : [ "PS",     "", "Event Log"] ,
-    "ChangePassword"                    : [ "S",     "", "User can change Password"] ,
+    "ChangePassword"                    : [ "S",     "S", "User can change Password"] 
 }
             
             
