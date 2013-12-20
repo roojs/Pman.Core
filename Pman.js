@@ -246,20 +246,23 @@ Pman = new Roo.Document(
             var tbl = se.child('table', true);
             tbl.setAttribute('width', '100%');
         }
-        lotb.add(
-            new Roo.Toolbar.Fill(), 
-     
-            {
-                text: "Change Password",
-                cls: 'x-btn-text-icon',
-                icon: rootURL + '/Pman/templates/images/change-password.gif',
-                handler : function(){
-                    Pman.PasswordChange.show({});
-                }
-            }, '-'
-        );
-         
         
+        if (Pman.hasPerm('Core.ChangePassword','S')) {
+            
+            lotb.add(
+                new Roo.Toolbar.Fill(), 
+         
+                {
+                    text: "Change Password",
+                    cls: 'x-btn-text-icon',
+                    icon: rootURL + '/Pman/templates/images/change-password.gif',
+                    handler : function(){
+                        Pman.PasswordChange.show({});
+                    }
+                }, '-'
+            );
+        }     
+            
         if (this.topMenuItems.length) {
             
             Roo.each(this.topMenuItems, function (mi) {
