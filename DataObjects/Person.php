@@ -290,6 +290,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 if(!$default_admin->get($member->user_id)){
                     $default_admin = false;
                 }
+                print_r($default_admin);exit;
             }
         }
         
