@@ -284,7 +284,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $group->get('name', 'Administrators');
             
             $member = DB_DataObject::factory('group_members');
+            $member->autoJoin();
             $member->group_id = $group->id;
+            print_r($member);exit;
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory('Person');
                 if(!$default_admin->get($member->user_id)){
