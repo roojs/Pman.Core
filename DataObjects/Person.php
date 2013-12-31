@@ -291,8 +291,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ");
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory('Person');
-                if(!$default_admin->get($member->user_id)){
-                    $default_admin = false;
+                if($default_admin->get($member->user_id)){
+                    $default_admin = true;
                 }
             }
         }
