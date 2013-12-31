@@ -110,7 +110,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $o = $w->object();
-        
+        print_r($o);exit;
         if ($o === false)  {
             
             $ev = $this->addEvent('NOTIFY', $w,
