@@ -173,7 +173,7 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
-        print_r('run1');exit;
+        print_r($email);exit;
         
         if ($email === true)  {
             
