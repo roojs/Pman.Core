@@ -76,7 +76,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts)
     {
-        print_r($this);exit;
         if ($opts['DB_DataObject-debug']) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
