@@ -375,6 +375,7 @@ class Pman_Core_NotifySend extends Pman
                     
                 }
                 
+                $this->log();
                 
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
