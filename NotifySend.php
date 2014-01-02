@@ -128,7 +128,7 @@ class Pman_Core_NotifySend extends Pman
         
         
         $p = $w->person();
-        print_r('run');exit;
+        
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (not user not active any more)" );;
@@ -170,7 +170,7 @@ class Pman_Core_NotifySend extends Pman
             $next_try_min = floor((time() - strtotime($last_event)) / 60) * 2;
         }
         $next_try = $next_try_min . ' MINUTES';
-         
+         print_r('run');exit;
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
         
