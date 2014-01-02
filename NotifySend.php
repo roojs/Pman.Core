@@ -476,7 +476,7 @@ class Pman_Core_NotifySend extends Pman
         //var_dump($m);
         
         if (!empty($notify->evtype) && method_exists($object,$m)) {
-            print_r($rcpt);exit;
+            print_r('A');exit;
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
                 
