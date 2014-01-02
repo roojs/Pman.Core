@@ -99,15 +99,15 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $sent = (empty($w->sent) || preg_match('/^0000/', $w->sent)) ? false : true;
-//        
-//        if (!$force && (!empty($w->msgid) || $sent)) {
-//            $ww = clone($w);
-//            if (!$sent) { 
-//                $w->sent = $w->sqlValue("NOW()");
-//                $w->update($ww);
-//            }    
-//            die("message has been sent already.\n");
-//        }
+        
+        if (!$force && (!empty($w->msgid) || $sent)) {
+            $ww = clone($w);
+            if (!$sent) { 
+                $w->sent = $w->sqlValue("NOW()");
+                $w->update($ww);
+            }    
+            die("message has been sent already.\n");
+        }
         
         $o = $w->object();
         
