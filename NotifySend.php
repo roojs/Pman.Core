@@ -76,7 +76,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts)
     {
-        print_r($this->authUser->id);exit;
         if ($opts['DB_DataObject-debug']) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
@@ -376,7 +375,7 @@ class Pman_Core_NotifySend extends Pman
                     
                 }
                 
-                $p->deliveredLog($this);
+                $p->deliveredLog();
                 
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
