@@ -173,7 +173,7 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
-        print_r($p);exit;
+        print_r("\n");exit;
         
         if ($email === true)  {
             
@@ -474,6 +474,7 @@ class Pman_Core_NotifySend extends Pman
     function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
     {
         $m = 'notify'. $notify->evtype;
+        print_r($m);
         //var_dump($m);
         
         if (!empty($notify->evtype) && method_exists($object,$m)) {
