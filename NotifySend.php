@@ -372,8 +372,6 @@ class Pman_Core_NotifySend extends Pman
                     
                 }
                 
-                $p->deliveredLog($email);
-                
                 die(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
