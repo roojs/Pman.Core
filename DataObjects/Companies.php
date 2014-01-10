@@ -231,6 +231,13 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         
     }
     
+    function beforeUpdate($old, $q,$roo)
+    {
+        if($this->is_system == 1){
+            $roo->jerr('This company is not allow to editing...');
+        }
+    }
+    
     function beforeDelete()
     {
         // should check for members....
