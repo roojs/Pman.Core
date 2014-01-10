@@ -345,6 +345,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             if(!$com->find(true)){
                 $com->created_dt = Date('Y-m-d H:i:s');
                 $com->updated_dt = Date('Y-m-d H:i:s');
+                $com->is_system = 1;
                 $com->insert();
             }
         }
