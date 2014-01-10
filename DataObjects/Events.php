@@ -223,7 +223,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         if(!empty($q['query']['action'])) {
-            
+            $act = $this->escape($q['query']['action']);
+            $this->whereAdd("Events.action LIKE '%{$act}%'");
         }
         
             
