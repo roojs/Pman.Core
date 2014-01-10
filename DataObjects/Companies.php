@@ -236,7 +236,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         if(!empty($this->is_system) && 
             ($old->code != $this->code || $old->name != $this->name)
         ){
-            $roo->jerr('This company is not allow to editing...');
+            $roo->jerr('This company is not allow to editing Ref. or Company Name...');
         }
     }
     
