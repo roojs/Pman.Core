@@ -328,19 +328,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
      */
     function initCompaniesArray($roo, $data)
     {
-        
-        $comtype_id = DB_DataObject::factory('core_enum')->lookup('COMPTYPE','SUPPLIER');
         $tn = $this->tableName();
         
-        foreach($data as $code=>$name){
-            $tmp = array(
-                'code' => $code,
-                'name' => $name,
-                'comptype' => 'SUPPLIER',
-                'comtype_id' => $comtype_id,
-            );
+        foreach($data as $d){
             $com = DB_DataObject::factory($tn);
-            $com->setForm($tmp);
+            $com->setForm($d);
             if(!$com->find(true)){
                 $com->created_dt = Date('Y-m-d H:i:s');
                 $com->updated_dt = Date('Y-m-d H:i:s');
