@@ -33,7 +33,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     public $dispatch_port;                   // string(255)  not_null
     public $province;                        // string(255)  not_null
     public $country;                         // string(4)  not_null
-
+    public $is_system;                       // int(2)
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
