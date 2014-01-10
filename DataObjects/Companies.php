@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         }
     }
     
-    function beforeDelete()
+    function beforeDelete($req, $roo)
     {
         // should check for members....
         if(!empty($this->is_system) && 
