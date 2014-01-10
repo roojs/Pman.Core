@@ -227,7 +227,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->whereAdd("Events.action LIKE '%{$act}%'");
         }
         
-            
+        if(!empty($q['query']['on_table'])) {
+            $tnb = $this->escape($q['query']['on_table']);
+            $this->whereAdd("Events.on_table LIKE '%{$act}%'");
+        } 
     }
       
     
