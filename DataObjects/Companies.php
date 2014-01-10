@@ -243,7 +243,11 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function beforeDelete()
     {
         // should check for members....
-        
+        if(!empty($this->is_system) && 
+            ($old->code != $this->code || $old->name != $this->name)
+        ){
+            $roo->jerr('This company is not allow to delete');
+        }
         $img = DB_DataObject::factory('Images');
         $img->ontable = 'Companies';
         $img->onid = $this->id;
