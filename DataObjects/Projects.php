@@ -208,7 +208,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         $olddir =  $opts['storedir'] . '/' . $old->code;
         $newdir =  $opts['storedir'] . '/' . $this->code;
         if ( file_exists($olddir)) {
-            move ($olddir, $newdir);
+            move($olddir, $newdir);
         }
          
         
