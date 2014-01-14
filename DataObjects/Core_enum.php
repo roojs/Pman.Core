@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     function onUpdate($old, $req)
     {
         $x = $this->factory($this->tableName());
-        $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')");
+        $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')"); // no idea why need to do this!!??
         if ($old->etype != $this->etype) {
             $x->query("SELECT core_enum_seqmax_update('". $this->escape($old->etype) ."')");
         }
