@@ -50,13 +50,21 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function autoJoinCmsTranslate()
+    function autoJoinCmsTranslate($lang)
     {
         $this->join .= "
             LEFT JOIN cms_templatestr ON 
                 
         ";
-        
+        $l = $this->escape($lang);
+        $this->selectAdd("
+            CASE WHEN 
+                '$lang' = 'en' THEN display_name 
+            ELSE
+                cms_templatestr.txt
+            END as  display_name_tr 
+
+        ");
         
     }
     
