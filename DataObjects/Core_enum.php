@@ -50,6 +50,16 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
+    function autoJoinCmsTranslate()
+    {
+        $this->join .= "
+            LEFT JOIN cms_templatestr ON 
+                
+        ";
+        
+        
+    }
+    
     function postListFilter($data, $authUser, $q) {
         
         if(!empty($q['cmsTab'])){
