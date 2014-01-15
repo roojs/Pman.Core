@@ -54,7 +54,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $l = $this->escape($lang);
         
-        $this->join .= "
+        $this->_join .= "
             LEFT JOIN 
                 cms_templatestr 
             ON
