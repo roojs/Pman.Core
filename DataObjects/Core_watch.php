@@ -134,7 +134,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     // static really...
     /**
      *
-     * This get's called by roo->jok()
+     * This get's called by roo->addEvent()
      *
      * And searches for matching '$watch->event' == $event->action
      *  along with id/table etc..
