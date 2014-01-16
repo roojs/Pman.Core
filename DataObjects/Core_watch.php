@@ -191,7 +191,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // in which case we set the  set $nn->evtype = medium..
                 // in that case - just let the called method generate the notify..
                 
-                
+                print_R($dom);
                 $do = DB_DataObject::factory($dom[0]);
                 if (!method_exists($do,$dom[1])) {
                     continue;
