@@ -553,9 +553,9 @@ Pman = new Roo.Document(
             Roo.MessageBox.alert("Error", "Select at least one Row to delete" );
             return '';
         }
-        
+        var reader = tab.grid.reader || tab.grid.ds.reader;
         for(var i = 0; i < s.length; i++) {
-            r.push(tab.grid.reader.getId(s[i]));
+            r.push(reader.getId(s[i]));
         }
     
         Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
