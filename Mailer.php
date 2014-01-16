@@ -20,6 +20,7 @@
        page => 
        contents
        template
+       html_locale => 'en' == always use the 'english translated verison'
        replaceImages => true|false,
        locale => 'en' .... or zh_hk....
        rcpts => array()   // override recipients..
