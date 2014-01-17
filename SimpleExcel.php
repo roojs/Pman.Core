@@ -252,9 +252,6 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
         
-        // merge cell
-        
-        
         
     }
     
