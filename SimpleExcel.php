@@ -23,7 +23,7 @@
  *     merged_ranges : array(
  *                          array($first_row, $first_col, $last_row, $last_col),
  * *                        array($first_row, $first_col, $last_row, $last_col),
- *                      )
+ *                      ),
  *     cols :  array(
             array(
                 'header'=> "Thumbnail",
