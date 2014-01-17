@@ -193,7 +193,7 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         foreach($cfg['cols'] as $c=>$col_cfg) {
-            $format = isset($col_cfg['format']) ? $formats[$col_cfg['format']] : false;
+            $format = isset($col_cfg['color']) ? $formats[$col_cfg['color']] : false;
             $worksheet->write($start_row, $c, $col_cfg['header'],$format);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
         }
