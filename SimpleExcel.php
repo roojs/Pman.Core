@@ -243,8 +243,12 @@ class Pman_Core_SimpleExcel extends Pman
             // add a spacer..
             $start_row++;
         }
-            
         
+        // merge cell
+        
+        if(!empty($cfg['merged_ranges'])){
+            $this->_merged_ranges = $cfg['merged_ranges'];
+        }
         
     }
     
