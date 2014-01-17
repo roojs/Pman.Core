@@ -253,7 +253,6 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->_merged_ranges = $cfg['merged_ranges'];
         }
         
-        $worksheet->setBorder(1);
         
     }
     
