@@ -245,7 +245,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
         
         // merge cell
-        
+        print_r($cfg);exit;
         if(!empty($cfg['merged_ranges'])){
             $this->_merged_ranges = $cfg['merged_ranges'];
         }
