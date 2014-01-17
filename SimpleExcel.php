@@ -154,7 +154,9 @@ class Pman_Core_SimpleExcel extends Pman
         //print_R($worksheet);
         $worksheet->setInputEncoding('UTF-8'); 
          
-        
+        if(!empty($cfg['merged_ranges'])){ // merge cell
+            $worksheet->_merged_ranges = $cfg['merged_ranges'];
+        }
         
         $this->worksheet = $worksheet;
          
@@ -250,9 +252,7 @@ class Pman_Core_SimpleExcel extends Pman
             $start_row++;
         }
         
-        if(!empty($cfg['merged_ranges'])){ // merge cell
-            $worksheet->_merged_ranges = $cfg['merged_ranges'];
-        }
+        
     }
     
     function addLine($worksheet_name, $clo)
