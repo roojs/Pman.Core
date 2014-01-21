@@ -117,7 +117,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if (!empty($q['_filtered']) && !empty($this->ltype)) {
             $cfg = $this->cfg();
             $filter = $cfg[$this->ltype];
-            print_R($filter);exit;
+            $this->whereAddIn('lkey', $filter, 'string'); 
             
             
         }
