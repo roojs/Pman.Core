@@ -113,6 +113,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
             $this->whereAdd("lval LIKE '". $this->escape($q['query']['name']). "%'");
         }
+        
+        if (!empty($q['_filtered']) && !empty($this->ltype)) {
+            $cfg = $this->cfg();
+            $filter = $cfg[$this->ltype];
+            print_R($filter);exit;
+            
+            
+        }
     }
     
     function translate($inlang,$ltype,$kval)
