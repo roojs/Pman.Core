@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-60",
+    "id": "roo-file-144",
     "name": "Pman.Dialog.Image",
     "parent": "",
     "title": "",
-    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
+    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
     "items": [
         {
             "listeners": {
