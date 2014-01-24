@@ -48,6 +48,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             
         }
         
+        if(!empty($q['id'])){
+            $this->id = $q['id'];
+        }
+        
     }
     
     function autoJoinCmsTranslate($lang)
