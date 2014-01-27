@@ -106,6 +106,20 @@ class Pman_Core_Lock extends Pman
             'on_table' => strtolower($_REQUEST['on_table'])
         ));
         
+        // remove old locks..
+        $llc = clone($curlock);
+        $exp = date('Y-m-d', strtotime('NOW - 1 WEEK'));
+        $llc->whereAdd("created < '$exp'");
+        if ($llc->count()) {
+            $llc->find();
+            while($llc->fetch()) {
+                $llcd = clone($llc);
+                $llcd->delete();
+           
+            }
+        }
+        
+        
         $curlock_ex = clone($curlock);
         $curlock->person_id = $this->authUser->id;
         
