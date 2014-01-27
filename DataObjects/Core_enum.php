@@ -47,7 +47,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             ");
             
         }
+        
         $this->autoJoin();
+        
         if(!empty($q['id'])){
             $this->id = $q['id'];
         }
