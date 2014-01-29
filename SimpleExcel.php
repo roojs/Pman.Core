@@ -176,7 +176,7 @@ class Pman_Core_SimpleExcel extends Pman
             foreach($cfg['head'] as $row) { 
                 foreach($row as $c => $col) {
                     if (is_array($col)) {
-                        $format = isset($formats[$col[1]] ) ? $formats[$col[1]] : false;
+                        $format = isset($this->formats[$col[1]] ) ?$this->formats[$col[1]] : false;
                         $worksheet->write($start_row, $c, $col[0], $format);
                         continue;
                     }
