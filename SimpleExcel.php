@@ -76,7 +76,7 @@ class Pman_Core_SimpleExcel extends Pman
         
         foreach($cfg['formats'] as $f=>$fcfg) {
             
-             $this->formats[$f] = & $workbook->addFormat();
+            $this->formats[$f] = & $workbook->addFormat();
             foreach((array)$fcfg as $k=>$v) {
                  $this->formats[$f]->{'set' . $k}($v);
             }
