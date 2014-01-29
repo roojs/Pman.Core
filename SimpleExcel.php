@@ -129,14 +129,17 @@ class Pman_Core_SimpleExcel extends Pman
         
         //$this->formats = (array)$formats;
         
-        foreach($formats as $k=>$v) {
+        foreach($formats as $k=>$fcfg) {
             if (!isset($this->formats[$f])) {
                 $this->formats[$f] = & $workbook->addFormat();
             }
-            if (is_object($v)) {
+            if (is_object($fcfg)) {
                 continue; // skip!?!?
             }
             // not an object..
+            foreach((array)$fcfg as $k=>$v) {
+                $this->formats[$f]->{'set' . $k}($v);
+            }
         }
         
         if (isset($cfg['formats'])) {
