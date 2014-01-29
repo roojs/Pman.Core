@@ -265,8 +265,7 @@ class Pman_Core_SimpleExcel extends Pman
             // add a spacer..
             $start_row++;
         }
-        
-        
+         
     }
     
     function addLine($worksheet_name, $clo)
