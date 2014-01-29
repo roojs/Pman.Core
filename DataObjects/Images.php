@@ -500,12 +500,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     /**
      * 
-     * 
+     * #2142 [new] CMS - image link urls
      * 
      * 
      * 
      */
-    
+    function toLinkHTML($size, $provider = '/Images/Thumb')
+    {
+        if(empty($this->linkurl)){
+            return $this->toHTML($size, $provider = '/Images/Thumb');
+        }
+    }
     
     
     /**
