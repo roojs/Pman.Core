@@ -80,7 +80,7 @@ class Pman_Core_SimpleExcel extends Pman
             foreach((array)$fcfg as $k=>$v) {
                 $formats[$f]->{'set' . $k}($v);
             }
-             
+            $this->formats = $formats;
         }
          
          
