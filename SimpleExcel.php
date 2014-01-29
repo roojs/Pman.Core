@@ -136,6 +136,7 @@ class Pman_Core_SimpleExcel extends Pman
             if (is_object($v)) {
                 continue; // skip!?!?
             }
+            // not an object..
         }
         
         if (isset($cfg['formats'])) {
