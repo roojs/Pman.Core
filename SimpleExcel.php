@@ -133,7 +133,7 @@ class Pman_Core_SimpleExcel extends Pman
             if (!isset($this->formats[$f])) {
                 $this->formats[$f] = & $workbook->addFormat();
             }
-            if (is_a($fcfg.'Spreadsheet_Excel_Writer_Format')) {
+            if (is_a($fcfg,'Spreadsheet_Excel_Writer_Format')) {
                 continue; // skip!?!?
             }
             // not an object..
