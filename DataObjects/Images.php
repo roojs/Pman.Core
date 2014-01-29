@@ -510,6 +510,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if(empty($this->linkurl)){
             return $this->toHTML($size, $provider = '/Images/Thumb');
         }
+        
+        return '<a href="'.$this->linkurl.'" target="_blank">'.$this->toHTML($size, $provider = '/Images/Thumb').'</a>';
+        
     }
     
     
