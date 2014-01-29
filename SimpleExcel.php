@@ -129,7 +129,14 @@ class Pman_Core_SimpleExcel extends Pman
         
         //$this->formats = (array)$formats;
         
-        
+        foreach($formats as $k=>$v) {
+            if (!isset($this->formats[$f])) {
+                $this->formats[$f] = & $workbook->addFormat();
+            }
+            if (is_object($v)) {
+                continue; // skip!?!?
+            }
+        }
         
         if (isset($cfg['formats'])) {
             
