@@ -22,7 +22,12 @@ var t = new Pman.Download({
 * @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
 * @cfg {Boolean} newWindow (optional) download to new window
 * @cfg {String} doctype (optional) download PDF to new window
-* @cfg {Boolean limit (optional) limit for grid downloads.
+* @cfg {Boolean} limit (optional) limit for grid downloads.
+ 
+ * @cfg {String} csvCols  - use '*' to override grid coluns
+ * @cfg {String} csvTitles - use '*' to override grid coluns
+
+ 
  
 * @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
 * @cfg {Number} timeout (optional) in milliseconds before it gives up (default 30000 = 30s)
