@@ -290,7 +290,7 @@ class Pman_Core_SimpleExcel extends Pman
         
         foreach($cfg['cols']  as $c=>$col_cfg) {
             
-            if(isset($cl[$col_cfg['dataIndex']])){
+            if(isset($col_cfg['dataIndex']) && isset($cl[$col_cfg['dataIndex']])){
                 $v = $cl[$col_cfg['dataIndex']];
             }else{
                 if(isset($col_cfg['fillBlank'])){
