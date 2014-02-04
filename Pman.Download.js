@@ -256,12 +256,18 @@ Roo.apply(Pman.Download.prototype, {
         this.method = this.grid.ds.proxy.conn.method ;
         var t = this;
         // work out the cols
-        Roo.each(this.grid.cm.config, function(c,i) {
-            t.params['csvCols['+i+']'] = c.dataIndex;
-            t.params['csvTitles['+i+']'] = c.header;
-            
-        });
         
+        if (this.csvCols) {
+            t.params.csvCols = this.csvCols;
+            t.params.csvTitles = this.csvTitles;
+        } else {
+            
+            Roo.each(this.grid.cm.config, function(c,i) {
+                t.params['csvCols['+i+']'] = c.dataIndex;
+                t.params['csvTitles['+i+']'] = c.header;
+                
+            });
+        }
         if (this.grid.loadMask) {
             this.grid.loadMask.onLoad();
         }
