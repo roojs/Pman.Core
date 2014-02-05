@@ -257,13 +257,13 @@ class Pman_Core_Mailer {
             'body' => $parts[2]
         );
     }
-    function send()
+    function send($email = false)
     {
         
         $pg = HTML_FlexyFramework::get()->page;
         
         
-        $email = $this->toData();
+        $email = is_array($email)  ? $email : $this->toData();
         if (is_a($email, 'PEAR_Error')) {
             $pg->addEvent("COREMAILER-FAIL",  false, "email toData failed"); 
       
