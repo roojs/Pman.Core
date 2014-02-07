@@ -68,7 +68,7 @@ class Pman_Core_Notify extends Pman
             'default' => 1000,
             'short' => 'L',
             'min' => 0,
-            'max' => 999,
+            'max' => 1000,
         ),
         'dryrun' => array(
             'desc' => 'Dry run - do not send.',
