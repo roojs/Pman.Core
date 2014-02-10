@@ -217,6 +217,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function getEmailFrom()
     {
+        if (empty($this->name)) {
+            return $this->email;
+        }
         return '"' . addslashes($this->name) . '" <' . $this->email . '>';
     }
     function toEventString() 
