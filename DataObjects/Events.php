@@ -46,6 +46,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
         
+            if (method_exists($jt,'nameColumn')) {
+                $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
+            }
+        
+        
         } else {
             $jt = DB_DataObject::factory('Person');
             $this->whereAdd("
