@@ -190,6 +190,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 case 'PENDING';
                     $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
                     break;
+                case 'OPENED';
+                    $this->whereAdd('is_open > 0');
+                    break;
                 case 'ALL':
                 default:
                     break;
