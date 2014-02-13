@@ -152,7 +152,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events' . 'core_watch'))) {
+        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events',  'core_watch'))) {
             // this will only work on tables not joined to ours.
             
             //DB_DAtaObject::DebugLevel(1);
@@ -190,9 +190,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 case 'PENDING';
                     $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
                     break;
+                
                 case 'OPENED';
                     $this->whereAdd('is_open > 0');
                     break;
+                
                 case 'ALL':
                 default:
                     break;
