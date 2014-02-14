@@ -76,7 +76,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             CASE WHEN 
                 '$l' = 'en' THEN display_name 
             ELSE
-                CASE WHEN cms_templatestr.txt IS NOT NULL OR cms_templatestr.txt = '' THEN
+                CASE WHEN cms_templatestr.txt IS NOT NULL THEN
                     cms_templatestr.txt
                 ELSE
                     display_name
