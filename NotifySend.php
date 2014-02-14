@@ -408,7 +408,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
-                        $p->email . ' ' . $errmsg);
+                       $errmsg);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
