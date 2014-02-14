@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     function autoJoinCmsTranslate($lang)
     {
         $l = $this->escape($lang);
-        
+        DB_DataObject::debugLevel(1);
         $this->_join .= "
             LEFT JOIN 
                 cms_templatestr 
