@@ -390,9 +390,12 @@ class Pman_Core_NotifySend extends Pman
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
-                
+                $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
+                if (isset($res->userinfo['smtptext'])) {
+                    $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+                }
                 //print_r($res);
-                $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
+                $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
