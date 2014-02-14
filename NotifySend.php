@@ -402,11 +402,13 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            print_R($res);
+            $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR";
+            if (isset($res->userinfo['smtptext'])) {
+                $errmsg=  $res->userinfo['smtpcode'] . ' ' . $res->userinfo['smtptext'];
+            }
             
             $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
-                        $p->email . ' ' .
-                        ($fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR"));
+                        $p->email . ' ' . $errmsg);
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
