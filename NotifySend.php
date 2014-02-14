@@ -402,7 +402,7 @@ class Pman_Core_NotifySend extends Pman
         }
         if ($fail || $next_try_min > (2*24*60)) {
         // fail.. = log and give up..
-            $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ' : ' .$res->toString()) :  " - UNKNOWN ERROR";
+            $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
