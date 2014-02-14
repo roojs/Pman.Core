@@ -395,7 +395,7 @@ class Pman_Core_NotifySend extends Pman
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
                 //print_r($res);
-                $this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $errmsg);
+                $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
