@@ -4,12 +4,7 @@
     "parent": "",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreMailingListMessage.bjs",
-    "items": [
-        {
-            "|xns": "Roo",
-            "xtype": "LayoutDialog"
-        }
-    ],
+    "items": [],
     "permname": "",
     "modOrder": "001"
 }
