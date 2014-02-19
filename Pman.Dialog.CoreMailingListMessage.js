@@ -167,7 +167,12 @@ Pman.Dialog.CoreMailingListMessage = {
                                 listeners : {
                                     select : function (combo, record, index)
                                     {
-                                        Roo.log(record);
+                                        (function() { 
+                                            combo.setValue('');
+                                        }).defer(100);
+                                        
+                                        _this.form.findField('bodytext').setValue(record.data.content);
+                                    
                                     }
                                 },
                                 allowBlank : true,
