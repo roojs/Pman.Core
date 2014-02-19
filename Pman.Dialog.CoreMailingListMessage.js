@@ -162,6 +162,86 @@ Pman.Dialog.CoreMailingListMessage = {
                                 }
                             },
                             {
+                                xtype: 'ComboBox',
+                                xns: Roo.form,
+                                listeners : {
+                                    render : function (_self)
+                                    {
+                                        _this.page_type = _self;
+                                        _self.selectedIndex = 0;
+                                        new Pman.request({
+                                            method : 'GET',
+                                            url : baseURL + '/Roo/core_enum',
+                                            params : {
+                                                etype : 'cms_page_type',
+                                                _columns : 'id,display_name',
+                                                sort : 'id',
+                                                dir : 'ASC'
+                                            },
+                                            success : function(res) {
+                                               var first = res.data[0];
+                                               _self.setValue(first.id);
+                                               _self.el.dom.value = first.display_name;
+                                            }
+                                       });
+                                    },
+                                    select : function (combo, record, index)
+                                    {
+                                        _this.grid.footer.onClick('first');
+                                        _this.category_type.hide();
+                                        if(record.data.name == 'blog'){
+                                            _this.category_type.show();
+                                        }
+                                        
+                                    }
+                                },
+                                alwaysQuery : true,
+                                displayField : 'display_name',
+                                editable : 'false',
+                                emptyText : "Select Status Type",
+                                fieldLabel : 'Page Type',
+                                forceSelection : true,
+                                hiddenName : 'page_type',
+                                listWidth : 400,
+                                loadingText : "Searching...",
+                                minChars : 2,
+                                pageSize : 20,
+                                qtip : "Select Page Type",
+                                queryParam : '',
+                                selectOnFocus : true,
+                                tpl : '<div class="x-grid-cell-text x-btn button"><b>{display_name}</b> </div>',
+                                triggerAction : 'all',
+                                typeAhead : false,
+                                valueField : 'id',
+                                store : {
+                                    xtype: 'Store',
+                                    xns: Roo.data,
+                                    listeners : {
+                                        beforeload : function (_self, o){
+                                            o.params = o.params || {};
+                                            // set more here
+                                            o.params.etype = 'cms_page_type'; 
+                                        }
+                                    },
+                                    remoteSort : true,
+                                    sortInfo : { direction : 'ASC', field: 'id' },
+                                    proxy : {
+                                        xtype: 'HttpProxy',
+                                        xns: Roo.data,
+                                        method : 'GET',
+                                        url : baseURL + '/Roo/core_enum.php'
+                                    },
+                                    reader : {
+                                        xtype: 'JsonReader',
+                                        xns: Roo.data,
+                                        id : 'id',
+                                        root : 'data',
+                                        totalProperty : 'total',
+                                        fields : [{"name":"id","type":"int"},{"name":"display_name","type":"string"}]
+                                    }
+                                }
+                            },
+                            {
                                 xtype: 'Fill',
                                 xns: Roo.Toolbar
                             },
