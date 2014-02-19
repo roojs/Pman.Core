@@ -109,7 +109,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             $href = $img->getAttribute('src');
             //var_dump($href);
             $matches = array();
-            if (preg_match("/Images\/([0-9]+)\/([^#]+)\#attachment\-([0-9]+)$/", $href, $matches)) {
+            if (preg_match("/Images\/([0-9]+)\/([^#]+)\#image\-([0-9]+)$/", $href, $matches)) {
                  
                 $oid = $matches[1];
                 
@@ -118,7 +118,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
                     continue;
                 }
                 $nid = $map[$oid];
-                $nstr = "/Images/$nid/{$matches[2]}/#attachment-{$nid}";
+                $nstr = "/Images/$nid/{$matches[2]}/#image-{$nid}";
                 $img->setAttribute('src',  str_replace($href, $matches[0], $nstr ));
                     
                  
