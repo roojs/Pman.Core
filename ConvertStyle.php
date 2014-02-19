@@ -120,10 +120,10 @@ class Pman_Core_ConvertStyle extends Pman
                 $href = $l->getAttribute('href');
                 
                 if(!preg_match("/^http(.*)$/", $href, $matches)){
-                    if(!empty($url)){
-                        $href = $this->relPath($url,  $href);
+                    if(empty($url)){
+                        $this->jerr('Please use the absolutely url for link href!');
                     }
-                    $this->jerr('Please use the absolutely url for link href!');
+                    $href = $this->relPath($url,  $href);
                 }
                 
                 $this->styleSheets[$href] = $this->replaceImageUrl(file_get_contents($href),$href);
