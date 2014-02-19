@@ -146,7 +146,7 @@
                                                     "root": "data",
                                                     "totalProperty": "total",
                                                     "xtype": "JsonReader",
-                                                    "|fields": "[{\"name\":\"bankaccnt_id\",\"type\":\"int\"},\"bankaccnt_name\"]",
+                                                    "|fields": "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"body\",\"type\":\"string\"}]",
                                                     "|xns": "Roo.data"
                                                 }
                                             ]

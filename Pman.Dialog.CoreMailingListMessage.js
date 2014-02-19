@@ -207,7 +207,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                         id : 'bankaccnt_id',
                                         root : 'data',
                                         totalProperty : 'total',
-                                        fields : [{"name":"bankaccnt_id","type":"int"},"bankaccnt_name"]
+                                        fields : [{"name":"name","type":"string"},{"name":"body","type":"string"}]
                                     }
                                 }
                             },
