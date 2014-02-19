@@ -35,7 +35,7 @@
                             "method": "POST",
                             "style": "margin:10px;",
                             "xtype": "Form",
-                            "|url": "baseURL + '/Crm/ImportHtml.php'",
+                            "|url": "baseURL",
                             "|xns": "Roo.form",
                             "items": [
                                 {

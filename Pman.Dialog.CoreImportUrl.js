@@ -80,7 +80,7 @@ Pman.Dialog.CoreImportUrl = {
                             },
                             method : 'POST',
                             style : 'margin:10px;',
-                            url : baseURL + '/Crm/ImportHtml.php',
+                            url : baseURL,
                             items : [
                                 {
                                     xtype: 'TextField',
