@@ -61,7 +61,7 @@
                                             "*prop": "proxy",
                                             "method": "GET",
                                             "xtype": "HttpProxy",
-                                            "|url": "baseURL + '/Pman/Core/MailTemplateList.php'",
+                                            "|url": "baseURL + '/Core/MailTemplateList.php'",
                                             "|xns": "Roo.data"
                                         },
                                         {
