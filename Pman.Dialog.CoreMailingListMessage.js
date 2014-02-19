@@ -179,10 +179,10 @@ Pman.Dialog.CoreMailingListMessage = {
                                 pageSize : 20,
                                 qtip : "Select Template",
                                 selectOnFocus : true,
-                                tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
+                                tpl : '<div class="x-grid-cell-text x-btn button"><b>{file}</b> </div>',
                                 triggerAction : 'all',
                                 typeAhead : true,
-                                valueField : 'name',
+                                valueField : 'file',
                                 width : 200,
                                 store : {
                                     xtype: 'Store',
