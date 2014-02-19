@@ -93,45 +93,44 @@ class Pman_Core_ConvertStyle extends Pman
         $doc->formatOutput = true;
         
         $xpath = new DOMXpath($doc);
-//        foreach ($xpath->query('//img[@src]') as $img) {
-//            $href = $img->getAttribute('src');
-//            if (!preg_match("/^http(.*)$/", $href, $matches)) {
-//                if(!empty($url)){
-//                    $img->setAttribute('src',  $this->relPath($url,  $href));
-//                    continue;
-//                }
-//                $this->jerr('Please use the absolutely url for image src!');
-//            }
-//        }
+        foreach ($xpath->query('//img[@src]') as $img) {
+            $href = $img->getAttribute('src');
+            if (!preg_match("/^http(.*)$/", $href, $matches)) {
+                if(!empty($url)){
+                    $img->setAttribute('src',  $this->relPath($url,  $href));
+                    continue;
+                }
+                $this->jerr('Please use the absolutely url for image src!');
+            }
+        }
         
         
-//        foreach ($xpath->query('//a[@href]') as $a) {
-//            $href = $a->getAttribute('href');
-//            if (!preg_match("/^http|mailto|#(.*)$/", $href, $matches)) {
-//                if(!empty($url)){
-//                    $a->setAttribute('href', $this->relPath($url,  $href));
-//                    continue;
-//                }
-//                $this->jerr('Please use the absolutely url for a href!');
-//            }
-//        }
+        foreach ($xpath->query('//a[@href]') as $a) {
+            $href = $a->getAttribute('href');
+            if (!preg_match("/^http|mailto|#(.*)$/", $href, $matches)) {
+                if(!empty($url)){
+                    $a->setAttribute('href', $this->relPath($url,  $href));
+                    continue;
+                }
+                $this->jerr('Please use the absolutely url for a href!');
+            }
+        }
         
-//        foreach ($xpath->query('//link[@href]') as $l) {
-//            if($l->getAttribute('rel') == 'stylesheet'){
-//                $href = $l->getAttribute('href');
-//                
-//                
-//                if (empty($url) && !preg_match("/^http(.*)$/", $href, $matches)) {
-//                    // import from file , must use absolutely url
-//                    $this->jerr('Please use the absolutely url for link href!');
-//                }
-//                if (!empty($url)) {
-//                    // import from URL
-//                    $href = $this->relPath($url,  $href);
-//                }
-//                $this->styleSheets[$href] = $this->replaceImageUrl(file_get_contents($href),$href);
-//            }
-//        }
+        foreach ($xpath->query('//link[@href]') as $l) {
+            if($l->getAttribute('rel') == 'stylesheet'){
+                $href = $l->getAttribute('href');
+                
+                if (empty($url) && !preg_match("/^http(.*)$/", $href, $matches)) {
+                    // import from file , must use absolutely url
+                    $this->jerr('Please use the absolutely url for link href!');
+                }
+                if (!empty($url)) {
+                    // import from URL
+                    $href = $this->relPath($url,  $href);
+                }
+                $this->styleSheets[$href] = $this->replaceImageUrl(file_get_contents($href),$href);
+            }
+        }
         
         foreach ($xpath->query('//style') as $s){
             $this->styleSheets[] = $this->replaceImageUrl($s->nodeValue, $url);
