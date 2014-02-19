@@ -183,7 +183,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     });
                                                 }
                                             },
-                                            text : "Responsive Email (1)"
+                                            text : "Email Template"
                                         }
                                     ]
                                 }
