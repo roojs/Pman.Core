@@ -45,10 +45,8 @@ class Pman_Core_MailTemplateList extends Pman
             
         }
         
-        $this->jdata(array(array('name' => 'aa', 'body'=> 'test')));
+        $this->jdata($ret);
         
-        print_r(array_unique($fopts->templateDir));
-        exit;
     }
      
 }
