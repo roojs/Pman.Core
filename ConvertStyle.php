@@ -80,24 +80,8 @@ class Pman_Core_ConvertStyle extends Pman
             if (!trim(strlen($data))) {
                 $this->jerr("url returned an empty string");
             }
-           // $this->jerr($url);
-            /*require_once 'HTTP/Request.php';
-            $a = new HTTP_Request($url, array(
-                    'allowRedirects' => true,
-                    'maxRedirects' => 2, 
-                    'userAgent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4',
-                    ));
-            $a->sendRequest();
-            // if this results in an errorr or redirect..
-            // we should log that somewhere.. and display it on the feed...
-            
-            $data =  $a->getResponseBody();
-            */
-            
-            //$this->jerr($data);
-            
-        //    $data = file_get_contents($url);
         }
+        
         if(file_exists($file))
         {
             $data = file_get_contents($file);
@@ -107,8 +91,6 @@ class Pman_Core_ConvertStyle extends Pman
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8">'.$data);
         $doc->formatOutput = true;
-
-      
         
         $xpath = new DOMXpath($doc);
         foreach ($xpath->query('//img[@src]') as $img) {
