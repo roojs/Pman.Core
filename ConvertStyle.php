@@ -18,8 +18,7 @@ class Pman_Core_ConvertStyle extends Pman
     }
     
     function relPath($base, $url)
-    {   
-        //var_dump(array($base,$url));        
+    {      
         if (preg_match('/^(http|https|mailto):/',$url)) {
             return $url;
         }
@@ -46,42 +45,6 @@ class Pman_Core_ConvertStyle extends Pman
         /// not sure if this will work...
         return $ui['scheme'] .'://'.$ui['host']. $ui['path'] . '/../'. $url;
         
-    }
-    
-    
-    function post()
-    {
-        // Import from URL
-        if(isset($_REQUEST['importUrl']))
-        {
-            $this->checkHeader($_REQUEST['importUrl']);
-            $data = $this->convertStyle($_REQUEST['importUrl'], '');
-            $this->jok($data);
-        }
-     
-        // Import from file
-        $htmlFile = DB_DataObject::factory('images');
-        $htmlFile->setFrom(array(
-               'onid' => 0,
-               'ontable' =>'crm_mailing_list_message'
-        ));
-        $htmlFile->onUpload(false);
-       // print_r($htmlFile);
-        if($htmlFile->mimetype != 'text/html')
-        {
-            $this->jerr('accept html file only!');
-        }
-        if(!file_exists($htmlFile->getStoreName()))
-        {
-            $this->jerr('update failed!');
-        }
-        
-        $data = $this->convertStyle('', $htmlFile->getStoreName());
-        
-        $htmlFile->delete();
-        unlink($htmlFile->getStoreName()) or die('Unable to delete the file');
-        
-        $this->jok($data);
     }
     
     function checkHeader($url)
