@@ -164,7 +164,10 @@ Pman.Dialog.CoreMailingListMessage = {
                                             listeners : {
                                                 click : function (_self, e)
                                                 {
-                                                
+                                                    var l = document.location;
+                                                    
+                                                    Roo.log(l);
+                                                /*
                                                     var l = document.location;
                                                     new Pman.Request({
                                                 
@@ -181,6 +184,8 @@ Pman.Dialog.CoreMailingListMessage = {
                                                         }
                                                   
                                                     });
+                                                    
+                                                    */
                                                 }
                                             },
                                             text : "Email Template"
