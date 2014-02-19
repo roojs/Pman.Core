@@ -130,7 +130,7 @@
                                             "*prop": "store",
                                             "remoteSort": true,
                                             "xtype": "Store",
-                                            "|sortInfo": "{ direction : 'DESC', field: 'bankaccnt_id' }",
+                                            "|sortInfo": "{ direction : 'DESC', field: 'name' }",
                                             "|xns": "Roo.data",
                                             "items": [
                                                 {

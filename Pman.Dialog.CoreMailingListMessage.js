@@ -194,7 +194,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                         }
                                     },
                                     remoteSort : true,
-                                    sortInfo : { direction : 'DESC', field: 'bankaccnt_id' },
+                                    sortInfo : { direction : 'DESC', field: 'name' },
                                     proxy : {
                                         xtype: 'HttpProxy',
                                         xns: Roo.data,
