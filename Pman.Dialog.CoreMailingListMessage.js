@@ -166,7 +166,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 xns: Roo.form,
                                 allowBlank : true,
                                 alwaysQuery : true,
-                                displayField : 'name',
+                                displayField : 'file',
                                 editable : false,
                                 emptyText : "Select Template",
                                 fieldLabel : 'Template',
