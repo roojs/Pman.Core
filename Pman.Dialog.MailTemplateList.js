@@ -69,7 +69,7 @@ Pman.Dialog.MailTemplateList = {
                                 }
                             }
                         },
-                        autoExpandColumn : 'publication',
+                        autoExpandColumn : 'name',
                         loadMask : true,
                         dataSource : {
                             xtype: 'Store',
