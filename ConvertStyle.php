@@ -133,7 +133,7 @@ class Pman_Core_ConvertStyle extends Pman
 //            }
 //        }
         
-        foreach ($xpath->query('//style') as $s){
+        foreach ($xpath->evaluate('//style') as $s){
             
             
 //            $this->styleSheets[] = $this->$this->replaceImageUrl($s)
