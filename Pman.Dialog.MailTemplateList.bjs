@@ -6,7 +6,6 @@
     "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.MailTemplateList.bjs",
     "items": [
         {
-            "background": false,
             "closable": false,
             "collapsible": false,
             "height": 500,
