@@ -135,7 +135,7 @@ class Pman_Core_ConvertStyle extends Pman
         
         foreach ($xpath->query('//style') as $s){
             $style = $doc->saveHTML($s);
-            
+            print_r($style);
 //            $this->styleSheets[] = $this->$this->replaceImageUrl($s)
             echo '<br/>';
         }
