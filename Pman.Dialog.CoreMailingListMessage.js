@@ -164,9 +164,9 @@ Pman.Dialog.CoreMailingListMessage = {
                                             listeners : {
                                                 click : function (_self, e)
                                                 {
-                                                    var l = document.location;
+                                                    Pman.Dialog.MailTemplateList.show({}, function(){
                                                     
-                                                    Roo.log(l);
+                                                    });
                                                 /*
                                                     var l = document.location;
                                                     new Pman.Request({
