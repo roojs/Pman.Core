@@ -13,7 +13,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
         
         $base = 'http://' . $fopts['host'] . $this->rootURL;
         
-//        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/orderDetails.body.html';
+//        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/orderShipment.body.html';
 //        
 //        $data = $this->convertStyle($base, $path, false);
 //        
