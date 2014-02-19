@@ -2,18 +2,9 @@
 
 require_once 'ConvertStyle.php';
 
-class Pman_Core_MailTemplateList extends Pman
+class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
 {
-    function getAuth()
-    {
-        $au = $this->getAuthUser();
-        if (!$au) {
-            die("NOT authenticated");
-        }
-        $this->authUser = $au;
-        return true;
-    }
-
+    
     function get()
     {
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
