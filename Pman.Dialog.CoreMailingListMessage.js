@@ -157,38 +157,6 @@ Pman.Dialog.CoreMailingListMessage = {
                                                 }
                                             },
                                             text : "Responsive Email (1)"
-                                        },
-                                        {
-                                            xtype: 'Item',
-                                            xns: Roo.menu,
-                                            listeners : {
-                                                click : function (_self, e)
-                                                {
-                                                    Pman.Dialog.MailTemplateList.show({}, function(data){
-                                                        Roo.log(data);
-                                                    });
-                                                /*
-                                                    var l = document.location;
-                                                    new Pman.Request({
-                                                
-                                                        url : baseURL + '/Crm/ImportHtml.php',
-                                                
-                                                        method: 'POST',
-                                                        mask : "Loading",
-                                                        params : {
-                                                              importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html',
-                                                       },
-                                                        success : function (res) {
-                                                
-                                                         _this.form.findField('bodytext').setValue(res.data);
-                                                        }
-                                                  
-                                                    });
-                                                    
-                                                    */
-                                                }
-                                            },
-                                            text : "Email Template"
                                         }
                                     ]
                                 }
