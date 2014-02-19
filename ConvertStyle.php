@@ -134,9 +134,11 @@ class Pman_Core_ConvertStyle extends Pman
 //        }
         
         foreach ($xpath->query('//style') as $s){
-            
+            print_r($s);
+            echo '<br/>';
         }
         
+        exit;
         $data = $doc->saveHTML();
         
         $htmldoc = new HTML_CSS_InlineStyle($data);
