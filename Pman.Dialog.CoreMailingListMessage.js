@@ -97,7 +97,6 @@ Pman.Dialog.CoreMailingListMessage = {
                                                         if  (data) {
                                                           //  Roo.log(data);
                                                             _this.form.findField('bodytext').setValue(data);
-                                                
                                                         }
                                                     });
                                                 }
