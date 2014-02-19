@@ -403,7 +403,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "beforeload": "function (_self, options)\n{\n    options.params = options.params || {};\n    if (typeof(_this.data) == 'undefined') {\n        return false;\n    }\n    if(_this.data.id * 1 >= 0)\n    {\n        options.params.onid = _this.data.id;\n        options.params.ontable = 'Crm_mailing_list_message';\n    }\n}"
+                                        "beforeload": "function (_self, options)\n{\n    options.params = options.params || {};\n    if (typeof(_this.data) == 'undefined') {\n        return false;\n    }\n    if(_this.data.id * 1 >= 0)\n    {\n        options.params.onid = _this.data.id;\n        options.params.ontable = 'Core_mailing_list_message';\n    }\n}"
                                     },
                                     "*prop": "dataSource",
                                     "remoteSort": true,
