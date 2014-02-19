@@ -119,7 +119,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
                 $nid = $map[$oid];
                 $nstr = "/Images/$nid/{$matches[2]}/#image-{$nid}";
                 print_r($href);exit;
-                $img->setAttribute('src',  str_replace($href, $matches[0], $nstr ));
+                $img->setAttribute('src',  str_replace($matches[0], $nstr, $href ));
                     
                  
             }
