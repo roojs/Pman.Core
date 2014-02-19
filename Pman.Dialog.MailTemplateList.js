@@ -251,10 +251,6 @@ Pman.Dialog.MailTemplateList = {
                 titlebar : false,
                 width : 400
             },
-            west : {
-                xtype: 'LayoutRegion',
-                xns: Roo
-            },
             buttons : [
                 {
                     xtype: 'Button',

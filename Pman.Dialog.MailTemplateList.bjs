@@ -26,11 +26,6 @@
                     "|xns": "Roo"
                 },
                 {
-                    "*prop": "west",
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
-                },
-                {
                     "listeners": {
                         "|activate": "function() {\n    _this.panel = this;\n    if (_this.grid) {\n        _this.grid.ds.load({});\n    }\n}"
                     },
