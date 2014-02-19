@@ -53,7 +53,7 @@ Pman.Dialog.CoreMailingListMessage = {
                     if(bdtext.resizeEl){
                         bdtext.width = elw-100;
                         bdtext.resizeEl.resizeTo.defer(110, bdtext.resizeEl,[ bdtext.width, bdtext.height  ] );
-                        ptext.setSize(bdtext.width , 50);
+                        ptext.setSize(bdtext.width , bdtext.heigh);
                     }
                     
                 }
