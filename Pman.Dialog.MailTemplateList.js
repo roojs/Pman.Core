@@ -54,7 +54,7 @@ Pman.Dialog.MailTemplateList = {
                     fitContainer : true,
                     fitToframe : true,
                     region : 'west',
-                    tableName : 'clipping_journalist',
+                    tableName : 'ignore',
                     title : "Publication Lists",
                     grid : {
                         xtype: 'Grid',

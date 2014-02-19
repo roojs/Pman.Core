@@ -38,7 +38,7 @@
                     "fitContainer": true,
                     "fitToframe": true,
                     "region": "west",
-                    "tableName": "clipping_journalist",
+                    "tableName": "ignore",
                     "title": "Publication Lists",
                     "xtype": "GridPanel",
                     "|xns": "Roo",
