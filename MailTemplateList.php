@@ -32,7 +32,7 @@ class Pman_Core_MailTemplateList extends Pman
                         continue;
                     }
                     
-                    echo "$entry\n";
+                    echo "$entry<br/>";
                 }
                 
                 closedir($handle);
