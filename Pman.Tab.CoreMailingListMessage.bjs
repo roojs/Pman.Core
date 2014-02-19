@@ -41,7 +41,7 @@
                             "fitToframe": true,
                             "region": "center",
                             "tableName": "core_mailing_list_message",
-                            "title": "crm_mailing_list_message",
+                            "title": "core_mailing_list_message",
                             "xtype": "GridPanel",
                             "|xns": "Roo",
                             "items": [

@@ -39,7 +39,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
                         fitToframe : true,
                         region : 'center',
                         tableName : 'core_mailing_list_message',
-                        title : "crm_mailing_list_message",
+                        title : "core_mailing_list_message",
                         grid : {
                             xtype: 'Grid',
                             xns: Roo.grid,
