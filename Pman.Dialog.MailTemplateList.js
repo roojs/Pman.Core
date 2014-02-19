@@ -50,7 +50,7 @@ Pman.Dialog.MailTemplateList = {
                             }
                         }
                     },
-                    background : true,
+                    background : false,
                     fitContainer : true,
                     fitToframe : true,
                     region : 'west',
