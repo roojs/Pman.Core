@@ -91,7 +91,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                             listeners : {
                                                 click : function (_self, e)
                                                 {
-                                                    Pman.Dialog.CrmImportURL.show({
+                                                    Pman.Dialog.CoreImportURL.show({
                                                     }, function(data) {
                                                         if  (data) {
                                                           //  Roo.log(data);
