@@ -326,7 +326,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                             }
                                             mkimg();
                                         },
-                                        url : baseURL + '/Roo/Crm_mailing_list_message.php',
+                                        url : baseURL + '/Roo/Core_mailing_list_message.php',
                                         items : [
                                             {
                                                 xtype: 'Row',
