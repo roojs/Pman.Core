@@ -20,25 +20,31 @@ class Pman_Core_MailTemplateList extends Pman
         
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
+        $ret = array();
+        
         foreach ($templateDir as $dir){
-            echo "$dir <br/>";
+            
             if(!file_exists($dir . '/mail')){
                 continue;
             }
             
             if ($handle = opendir($dir . '/mail')) {
                 while (false !== ($entry = readdir($handle))) {
-                    if ($entry == "." || $entry == "..") {
+                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
                         continue;
                     }
                     
-                    echo "$entry <br/>";
+                    $ret[] = array(
+                        'file' => $entry,
+                        'content' => file_get_contents("$dir/mail/$entry")
+                    );
                 }
                 
                 closedir($handle);
             }
             
         }
+        print_r($ret);exit;
         exit;
         $this->jdata(array(array('name' => 'aa', 'body'=> 'test')));
         
