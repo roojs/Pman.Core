@@ -57,7 +57,6 @@ class Pman_Core_ConvertStyle extends Pman
             $this->checkHeader($_REQUEST['importUrl']);
             $data = $this->convertStyle($_REQUEST['importUrl'], '');
             $this->jok($data);
-            
         }
      
         // Import from file
