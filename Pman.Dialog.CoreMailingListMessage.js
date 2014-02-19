@@ -875,7 +875,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                     listeners : {
                                         click : function()
                                         {
-                                            Pman.Dialog.Image.show( { id : 0, onid: _this.data.id, ontable: 'crm_mailing_list_message' }, function() {
+                                            Pman.Dialog.Image.show( { id : 0, onid: _this.data.id, ontable: 'Core_mailing_list_message' }, function() {
                                                 _this.igrid.getDataSource().load({});
                                             }); 
                                         }

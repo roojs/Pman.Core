@@ -436,7 +436,7 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "|click": "function()\n{\n    Pman.Dialog.Image.show( { id : 0, onid: _this.data.id, ontable: 'crm_mailing_list_message' }, function() {\n        _this.igrid.getDataSource().load({});\n    }); \n}\n"
+                                                "|click": "function()\n{\n    Pman.Dialog.Image.show( { id : 0, onid: _this.data.id, ontable: 'Core_mailing_list_message' }, function() {\n        _this.igrid.getDataSource().load({});\n    }); \n}\n"
                                             },
                                             "cls": "x-btn-text-icon",
                                             "text": "Add",
