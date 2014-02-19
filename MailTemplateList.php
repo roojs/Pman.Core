@@ -1,17 +1,22 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once 'Pman.php';
 
-/**
- * Description of MailTemplateList
- *
- * @author edward
- */
-class MailTemplateList {
-    //put your code here
+class Pman_Core_MailTemplateList extends Pman
+{
+    function getAuth()
+    {
+        $au = $this->getAuthUser();
+        if (!$au) {
+            die("NOT authenticated");
+        }
+        $this->authUser = $au;
+        return true;
+    }
+
+    function get()
+    {
+        print_r('run');
+    }
+     
 }
-
-?>
