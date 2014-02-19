@@ -17,9 +17,9 @@ class Pman_Core_MailTemplateList extends Pman
     function get()
     {
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
-        print_r($fopts);exit;
-        $templateDir = explode(PATH_SEPARATOR, $fopts->templateDir);
         
+        $templateDir = explode(PATH_SEPARATOR, $fopts->templateDir);
+        print_r($templateDir);exit;
         foreach ($templateDir as $dir){
             if(!file_exists($dir . '/mail')){
                 continue;
