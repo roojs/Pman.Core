@@ -7,10 +7,10 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
     
     function get()
     {
-//        print_r($this);exit;
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
         
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
+        print_r($fopts);exit;
         
         $ret = array();
         
@@ -20,21 +20,22 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                 continue;
             }
               
-            echo dir($dir);
-//            if ($handle = opendir($dir . '/mail')) {
-//                while (false !== ($entry = readdir($handle))) {
-//                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
-//                        continue;
-//                    }
-//                    echo "$dir/mail/$entry<br/>";
-////                    $ret[] = array(
-////                        'file' => $entry,
-////                        'content' => $this->convertStyle("$dir/mail/$entry")
-////                    );
-//                }
-//                
-//                closedir($handle);
-//            }
+            if ($handle = opendir($dir . '/mail')) {
+                while (false !== ($entry = readdir($handle))) {
+                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
+                        continue;
+                    }
+                    
+                    $path = "$dir/mail/$entry";
+                    
+                    $ret[] = array(
+                        'file' => $entry,
+                        'content' => $this->convertStyle()
+                    );
+                }
+                
+                closedir($handle);
+            }
             
         }
         exit;
