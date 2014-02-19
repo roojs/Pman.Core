@@ -4,7 +4,137 @@
     "parent": "",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.MailTemplateList.bjs",
-    "items": false,
+    "items": [
+        {
+            "closable": false,
+            "collapsible": false,
+            "height": 140,
+            "resizable": false,
+            "title": "Edit / Create Groups",
+            "width": 400,
+            "modal": true,
+            "xtype": "LayoutDialog",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "LayoutRegion",
+                    "*prop": "center"
+                },
+                {
+                    "region": "center",
+                    "xtype": "ContentPanel",
+                    "|xns": "Roo",
+                    "items": [
+                        {
+                            "|xns": "Roo.form",
+                            "xtype": "Form",
+                            "listeners": {
+                                "|actioncomplete": "function(_self,action)\n{\n    if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, _this.form.getValues());\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
+                                "|rendered": "function (form)\n{\n    _this.form= form;\n}\n"
+                            },
+                            "method": "POST",
+                            "style": "margin:10px;",
+                            "|url": "baseURL + '/Roo/Groups.php'",
+                            "items": [
+                                {
+                                    "fieldLabel": "Name",
+                                    "name": "name",
+                                    "width": 200,
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextField"
+                                },
+                                {
+                                    "fieldLabel": "Type",
+                                    "name": "type",
+                                    "width": 75,
+                                    "|xns": "Roo.form",
+                                    "xtype": "TextField"
+                                },
+                                {
+                                    "|xns": "Roo.form",
+                                    "xtype": "ComboBox",
+                                    "allowBlank": false,
+                                    "editable": false,
+                                    "emptyText": "Select Person",
+                                    "forceSelection": true,
+                                    "listWidth": 400,
+                                    "loadingText": "Searching...",
+                                    "minChars": 2,
+                                    "pageSize": 20,
+                                    "qtip": "Select Person",
+                                    "selectOnFocus": true,
+                                    "triggerAction": "all",
+                                    "typeAhead": true,
+                                    "width": 300,
+                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+                                    "queryParam": "query[name]",
+                                    "fieldLabel": "Leader",
+                                    "valueField": "id",
+                                    "displayField": "name",
+                                    "hiddenName": "leader",
+                                    "name": "leader_name",
+                                    "items": [
+                                        {
+                                            "*prop": "store",
+                                            "xtype": "Store",
+                                            "|xns": "Roo.data",
+                                            "remoteSort": true,
+                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
+                                            "listeners": {
+                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
+                                            },
+                                            "items": [
+                                                {
+                                                    "*prop": "proxy",
+                                                    "xtype": "HttpProxy",
+                                                    "method": "GET",
+                                                    "|xns": "Roo.data",
+                                                    "|url": "baseURL + '/Roo/Person.php'"
+                                                },
+                                                {
+                                                    "*prop": "reader",
+                                                    "xtype": "JsonReader",
+                                                    "|xns": "Roo.data",
+                                                    "id": "id",
+                                                    "root": "data",
+                                                    "totalProperty": "total",
+                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "id",
+                                    "|xns": "Roo.form",
+                                    "xtype": "Hidden"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Cancel",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Save",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                }
+            ]
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
