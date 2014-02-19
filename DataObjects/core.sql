@@ -457,5 +457,39 @@ ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, 
 
 -- old design..
 ALTER TABLE  core_notify_recur  CHANGE COLUMN tz  tz varchar(64)  NOT NULL;
+
+
+
+CREATE  TABLE core_mailing_list_message (
+  id INT(11) NOT NULL AUTO_INCREMENT ,
+  subject TEXT NULL ,
+  bodytext TEXT NULL ,
+  plaintext TEXT NULL ,
+  name VARCHAR(255) NOT NULL DEFAULT '',
+  updated_dt DATETIME NOT NULL ,
+  from_email VARCHAR(254) NULL DEFAULT ''
+  from_name VARCHAR(254) NULL DEFAULT '',
+  owner_id INT(11) NOT NULL DEFAULT 0,
+  is_system INT(2) NOT NULL DEFAULT 1,
+  PRIMARY KEY (id)
+);
+
+ALTER TABLE crm_mailing_list_message ADD COLUMN plaintext TEXT NULL;
+ALTER TABLE crm_mailing_list_message ADD COLUMN name VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE crm_mailing_list_message ADD COLUMN updated_dt DATETIME NOT NULL;
+-- ALTER TABLE crm_mailing_list_message ADD COLUMN exclude_list VARCHAR(254) NULL DEFAULT '';
+
+ALTER TABLE crm_mailing_list_message ADD COLUMN from_email VARCHAR(254) NULL DEFAULT '';
+
+ALTER TABLE crm_mailing_list_message ADD COLUMN from_name VARCHAR(254) NULL DEFAULT '';
+
+ALTER TABLE crm_mailing_list_message ADD COLUMN owner_id INT(11) NOT NULL DEFAULT 0 ;
+
+
+-- drop the useless column
+ALTER TABLE crm_mailing_list_message DROP COLUMN issue_dt;
+ALTER TABLE crm_mailing_list_message DROP COLUMN notify_generated;
+ALTER TABLE crm_mailing_list_message DROP COLUMN status_id;
+ALTER TABLE crm_mailing_list_message DROP COLUMN exclude_list;
  
 
