@@ -29,8 +29,6 @@ class Pman_Core_ConvertStyle extends Pman
             return $ui['scheme'] .':' .  $url;
         }
         
-        
-        
         if (substr($url,0,1) == '/') {
             return $ui['scheme'] .'://'.$ui['host']. $url;
         }
