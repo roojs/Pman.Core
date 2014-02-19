@@ -34,7 +34,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                     }
                     
                     $path = "$dir/mail/$entry";
-                    print_r($path);exit;
+                    
                     $ret[] = array(
                         'file' => $entry,
                         'content' => $this->convertStyle($base, $path, false)
