@@ -715,7 +715,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                     if(_this.data.id * 1 >= 0)
                                     {
                                         options.params.onid = _this.data.id;
-                                        options.params.ontable = 'Core_mailing_list_message';
+                                        options.params.ontable = 'core_mailing_list_message';
                                     }
                                 }
                             },
