@@ -36,7 +36,7 @@ Pman.Dialog.MailTemplateList = {
             height : 500,
             modal : true,
             resizable : false,
-            title : "Manage Journalists",
+            title : "Email Templates",
             width : 600,
             items : [
                 {
