@@ -645,7 +645,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                             {
                                                                 xtype: 'TextArea',
                                                                 xns: Roo.form,
-                                                                height : 150,
+                                                                height : 50,
                                                                 name : 'plaintext'
                                                             }
                                                         ]

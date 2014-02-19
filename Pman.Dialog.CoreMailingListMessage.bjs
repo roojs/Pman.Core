@@ -355,7 +355,7 @@
                                                             "|xns": "Roo.form",
                                                             "items": [
                                                                 {
-                                                                    "height": 150,
+                                                                    "height": 50,
                                                                     "name": "plaintext",
                                                                     "xtype": "TextArea",
                                                                     "|xns": "Roo.form"
