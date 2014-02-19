@@ -44,9 +44,9 @@ Pman.Dialog.MailTemplateList = {
                     xns: Roo,
                     listeners : {
                         activate : function() {
-                            _this.wpanel = this;
-                            if (_this.wgrid) {
-                                _this.wgrid.footer.onClick('first');
+                            _this.panel = this;
+                            if (_this.grid) {
+                                _this.grid.footer.onClick('first');
                             }
                         }
                     },
