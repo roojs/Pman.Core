@@ -52,51 +52,12 @@ class Pman_Core_ConvertStyle extends Pman
     function post()
     {
         
-        if(isset($_REQUEST['_convertToPlain']))
-        {
-            require_once 'System.php';
-            $tmpdir  = System::mktemp("-d convertPlain");
-            $path = $tmpdir . '/' . time() . '.html';
-            
-            if(isset($_REQUEST['_check_unsubscribe'])){
-                libxml_use_internal_errors (true);
-                $doc = new DOMDocument('1.0', 'UTF-8');
-                $doc->loadHTML($_REQUEST['bodytext']);
-                $xpath = new DOMXpath($doc);
-                foreach ($xpath->query('//a[@href]') as $a) { 
-                    $href = $a->getAttribute('href');
-                    
-                    if(!preg_match('/^#unsubscribe/', $href)){
-                        continue;
-                    }
-                    $a->parentNode->replaceChild($doc->createTextNode($a->nodeValue . ' {unsubscribe_link}'), $a);
-                }
-                
-                $_REQUEST['bodytext'] = $doc->saveHTML();
-                libxml_use_internal_errors (false);
-            }
-            
-            if(!file_exists($path)){
-               file_put_contents($path, $_REQUEST['bodytext']); 
-            }
-            require_once 'File/Convert.php';
-            $fc = new File_Convert($path, 'text/html');
-            $plain = $fc->convert('text/plain');
-            $this->jok(file_get_contents($plain));
-        }
-        // Import from URL
+        
         if(isset($_REQUEST['importUrl']))
         {
-           // $host = parse_url($_REQUEST['importUrl']);
-//            if($host['host'] != 'localhost' && $host['host'] != 'roojs-edward.com' && $host['host'] != $_SERVER['HTTP_HOST'])
-//            {
-//                $this->jerr('Invalid URL!');
-//            }
             $this->checkHeader($_REQUEST['importUrl']);
             $data = $this->convertStyle($_REQUEST['importUrl'], '');
-         //   print_r($data);exit;
             $this->jok($data);
-            
         }
      
         // Import from file
