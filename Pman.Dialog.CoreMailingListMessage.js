@@ -241,11 +241,9 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     if(_this.data.id*1 > 0){
                                                         _this.dialog.el.mask("Loading");
                                                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
-                                                        _this.plain_preview.show();
                                                         _this.html_preview.show();
                                                         _this.preview_btn.show();
                                                     } else {
-                                                        _this.plain_preview.hide();
                                                         _this.html_preview.hide();
                                                         _this.preview_btn.hide();
                                                         _this.form.setValues({
