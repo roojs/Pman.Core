@@ -47,7 +47,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
                                 render : function() 
                                 {
                                     _this.grid = this; 
-                                    _this.dialog = Pman.Dialog.CrmMailingListMessage;
+                                    _this.dialog = Pman.Dialog.CoreMailingListMessage;
                                     if (_this.panel.active) {
                                        _this.grid.footer.onClick('first');
                                     }
