@@ -30,7 +30,7 @@ Pman.Dialog.MailTemplateList = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
-            background : false,
+            background : true,
             closable : false,
             collapsible : false,
             height : 500,
