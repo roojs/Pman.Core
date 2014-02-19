@@ -20,7 +20,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                 continue;
             }
               
-            echo dir($dir . '/mail');
+            echo dir($dir);
 //            if ($handle = opendir($dir . '/mail')) {
 //                while (false !== ($entry = readdir($handle))) {
 //                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
