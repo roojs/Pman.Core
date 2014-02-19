@@ -4,7 +4,7 @@
  */
 require_once 'DB/DataObject.php';
 
-class Pman_Crm_DataObjects_Core_mailing_list_message extends DB_DataObject 
+class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
