@@ -102,7 +102,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "select": "function (combo, record, index)\n{\n/*\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n*/    \n    _this.form.findField('bodytext').setValue(record.data.content);\n\n}"
+                                        "select": "function (combo, record, index)\n{\n    Roo.log(record);\n/*\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n*/    \n    _this.form.findField('bodytext').setValue(record.data.content);\n\n}"
                                     },
                                     "allowBlank": true,
                                     "alwaysQuery": true,

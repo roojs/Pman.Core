@@ -167,6 +167,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 listeners : {
                                     select : function (combo, record, index)
                                     {
+                                        Roo.log(record);
                                     /*
                                         (function() { 
                                             combo.setValue('');
