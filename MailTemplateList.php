@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman.php';
+require_once 'ConvertStyle.php';
 
 class Pman_Core_MailTemplateList extends Pman
 {
