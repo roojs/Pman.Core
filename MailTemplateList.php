@@ -17,6 +17,7 @@ class Pman_Core_MailTemplateList extends Pman
     function get()
     {
         print_r('run');
+        exit;
     }
      
 }
