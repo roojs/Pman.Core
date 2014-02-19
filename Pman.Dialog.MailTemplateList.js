@@ -46,7 +46,7 @@ Pman.Dialog.MailTemplateList = {
                         activate : function() {
                             _this.panel = this;
                             if (_this.grid) {
-                                _this.grid.footer.onClick('first');
+                                _this.grid.ds.load({});
                             }
                         }
                     },
