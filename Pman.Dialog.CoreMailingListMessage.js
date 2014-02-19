@@ -91,7 +91,8 @@ Pman.Dialog.CoreMailingListMessage = {
                                             listeners : {
                                                 click : function (_self, e)
                                                 {
-                                                    Pman.Dialog.CoreImportURL.show({target : 'aaa.php'
+                                                    Pman.Dialog.CoreImportURL.show({
+                                                        target : 'aaa.php'
                                                     }, function(data) {
                                                         if  (data) {
                                                           //  Roo.log(data);
