@@ -46,7 +46,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             $i->delete();
         }
         
-        $mlq = DB_DataObject::factory('crm_mailing_list_queue');
+        $mlq = DB_DataObject::factory($this->tableName());
         $mlq->message_id = $this->id;
         $mlq->find();
         while ($mlq->fetch()){
