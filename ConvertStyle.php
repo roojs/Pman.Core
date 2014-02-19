@@ -124,7 +124,7 @@ class Pman_Core_ConvertStyle extends Pman
                     // import from file , must use absolutely url
                     $this->jerr('Please use the absolutely url for link href!');
                 }
-                if (!empty($url)) {
+                if (!empty($url) && !preg_match("/^http(.*)$/", $href, $matches)) {
                     // import from URL
                     $href = $this->relPath($url,  $href);
                 }
