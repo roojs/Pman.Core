@@ -195,7 +195,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                         }
                                     },
                                     remoteSort : true,
-                                    sortInfo : { direction : 'DESC', field: 'name' },
+                                    sortInfo : { direction : 'DESC', field: 'file' },
                                     proxy : {
                                         xtype: 'HttpProxy',
                                         xns: Roo.data,

@@ -131,7 +131,7 @@
                                             "*prop": "store",
                                             "remoteSort": true,
                                             "xtype": "Store",
-                                            "|sortInfo": "{ direction : 'DESC', field: 'name' }",
+                                            "|sortInfo": "{ direction : 'DESC', field: 'file' }",
                                             "|xns": "Roo.data",
                                             "items": [
                                                 {
