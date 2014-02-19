@@ -36,7 +36,7 @@ class Pman_Core_MailTemplateList extends Pman
                     
                     $ret[] = array(
                         'file' => $entry
-//                        'content' => file_get_contents("$dir/mail/$entry")
+                        'content' => file_get_contents("$dir/mail/$entry")
                     );
                 }
                 
