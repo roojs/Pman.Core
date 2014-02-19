@@ -51,7 +51,7 @@ Pman.Dialog.CoreImportUrl = {
                                 actioncomplete : function (_self, action)
                                 {
                                      if (action.type == 'setdata') {
-                                        if(!_this.data.target){
+                                        if(_this.data.target){
                                             _this.form.url = baseURL + _this.data.target;
                                         }
                                        // _this.dialog.el.mask("Loading");
