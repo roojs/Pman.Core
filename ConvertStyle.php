@@ -33,7 +33,7 @@ class Pman_Core_ConvertStyle extends Pman
         if (substr($url,0,1) == '/') {
             return $ui['scheme'] .'://'.$ui['host']. $url;
         }
-        print_r($ui);exit;
+        print_r($url);exit;
         if (substr($ui['path'], -1) == '/') {
            return $ui['scheme'] .'://'.$ui['host']. $ui['path'] . $url;
         }
