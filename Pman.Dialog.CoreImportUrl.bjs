@@ -4,7 +4,73 @@
     "parent": "",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreImportUrl.bjs",
-    "items": [],
+    "items": [
+        {
+            "closable": false,
+            "collapsible": false,
+            "draggable": false,
+            "height": 140,
+            "modal": true,
+            "resizable": false,
+            "title": "Import URL",
+            "width": 500,
+            "xtype": "LayoutDialog",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "LayoutRegion",
+                    "*prop": "center"
+                },
+                {
+                    "region": "center",
+                    "xtype": "ContentPanel",
+                    "|xns": "Roo",
+                    "items": [
+                        {
+                            "listeners": {
+                                "actioncomplete": "function (_self, action)\n{\n     if (action.type == 'setdata') {\r\n       // _this.dialog.el.mask(\"Loading\");\r\n       // if(_this.data.id*1 > 0)\r\n       //     this.load({ method: 'GET', params: { '_id' : _this.data.id }});\r\n       \r\n       return;\r\n    }\r\n    if (action.type == 'load') {\r\n \r\n        return;\r\n    }\r\n    if (action.type =='submit') {\r\n    \r\n        //action.result.data\r\n        _this.dialog.hide();\r\n    //    Roo.log(_this.callback);\r\n         if (_this.callback) {\r\n            _this.callback.call(_this, action.result.data);\r\n         }\r\n         _this.form.reset();\r\n         return;\r\n    }\n}",
+                                "rendered": "function (form)\n{\n    _this.form= form;\n}"
+                            },
+                            "method": "POST",
+                            "style": "margin:10px;",
+                            "xtype": "Form",
+                            "|url": "baseURL + '/Crm/ImportHtml.php'",
+                            "|xns": "Roo.form",
+                            "items": [
+                                {
+                                    "fieldLabel": "URL",
+                                    "name": "importUrl",
+                                    "vtype": "url",
+                                    "width": 250,
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "Cancel",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                },
+                {
+                    "listeners": {
+                        "click": "function (_self, e)\n{\n    _this.form.doAction(\"submit\");\n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "OK",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                }
+            ]
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
