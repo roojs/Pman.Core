@@ -21,7 +21,7 @@ class Pman_Core_MailTemplateList extends Pman
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
         foreach ($templateDir as $dir){
-            echo "$dir \n";
+            echo "$dir <br/>";
             if(!file_exists($dir . '/mail')){
                 continue;
             }
