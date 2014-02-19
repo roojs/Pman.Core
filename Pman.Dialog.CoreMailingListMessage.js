@@ -464,7 +464,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                                                     {
                                                                                         var id = _this.form.findField('id').getValue() * 1;    
                                                                                         if (!id) {
-                                                                                            Roo.MessageBox.alert("Error", "Save press release first");
+                                                                                            Roo.MessageBox.alert("Error", "Save email template first");
                                                                                             return false;
                                                                                         }
                                                                                     }

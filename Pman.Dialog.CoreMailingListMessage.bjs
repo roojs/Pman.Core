@@ -231,7 +231,7 @@
                                                                                     "listeners": {
                                                                                         "render": "function (_self)\n{\n    _this.extendimgselect = _self;\n}",
                                                                                         "select": "function (combo, record, index)\n{\n    Roo.log(record);\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n    var editor = _this.form.findField('bodytext');\n    editor.insertAtCursor(\n            String.format('<img src=\"{0}/Images/{1}/{2}#image-{1}\">',\n            baseURL,  record.data.id, record.data.filename\n            )\n     );\n\n    \n }",
-                                                                                        "beforequery": "function (combo, query, forceAll, cancel, e)\n{\n    var id = _this.form.findField('id').getValue() * 1;    \n    if (!id) {\n        Roo.MessageBox.alert(\"Error\", \"Save press release first\");\n        return false;\n    }\n}"
+                                                                                        "beforequery": "function (combo, query, forceAll, cancel, e)\n{\n    var id = _this.form.findField('id').getValue() * 1;    \n    if (!id) {\n        Roo.MessageBox.alert(\"Error\", \"Save email template first\");\n        return false;\n    }\n}"
                                                                                     },
                                                                                     "*prop": "btns[]",
                                                                                     "alwaysQuery": true,
