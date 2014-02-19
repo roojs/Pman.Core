@@ -137,7 +137,7 @@
                                                     "*prop": "proxy",
                                                     "method": "GET",
                                                     "xtype": "HttpProxy",
-                                                    "|url": "baseURL + '/Roo/bankaccnt.php'",
+                                                    "|url": "baseURL + '/Core/MailTemplateList'",
                                                     "|xns": "Roo.data"
                                                 },
                                                 {
