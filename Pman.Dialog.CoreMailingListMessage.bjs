@@ -79,7 +79,7 @@
                                     ]
                                 },
                                 {
-                                    "text": "Use template",
+                                    "text": "Email template",
                                     "xtype": "Button",
                                     "|xns": "Roo.Toolbar",
                                     "items": [

@@ -126,7 +126,7 @@ Pman.Dialog.CoreMailingListMessage = {
                             {
                                 xtype: 'Button',
                                 xns: Roo.Toolbar,
-                                text : "Use template",
+                                text : "Email template",
                                 menu : {
                                     xtype: 'Menu',
                                     xns: Roo.menu,
