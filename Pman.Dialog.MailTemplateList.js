@@ -55,7 +55,7 @@ Pman.Dialog.MailTemplateList = {
                     fitToframe : true,
                     region : 'west',
                     tableName : 'ignore',
-                    title : "Publication Lists",
+                    title : "Template name",
                     grid : {
                         xtype: 'Grid',
                         xns: Roo.grid,

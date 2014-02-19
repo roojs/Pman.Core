@@ -39,7 +39,7 @@
                     "fitToframe": true,
                     "region": "west",
                     "tableName": "ignore",
-                    "title": "Publication Lists",
+                    "title": "Template name",
                     "xtype": "GridPanel",
                     "|xns": "Roo",
                     "items": [
