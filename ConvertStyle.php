@@ -64,23 +64,23 @@ class Pman_Core_ConvertStyle extends Pman
     
     function convertStyle($url, $file)
     {
-        if(!empty($url))
-        {
-            $host = parse_url($url);
-            require_once 'System.php';
-            $wget = System::which('wget');
-            if (!$wget) {
-                $this->jerr("no wget");
-            }
-            $cmd =  $wget . ' -q -O -  ' . escapeshellarg($url);
-            
-            //echo $cmd; exit;
-            $data = `$cmd`;
-            
-            if (!trim(strlen($data))) {
-                $this->jerr("url returned an empty string");
-            }
-        }
+//        if(!empty($url))
+//        {
+//            $host = parse_url($url);
+//            require_once 'System.php';
+//            $wget = System::which('wget');
+//            if (!$wget) {
+//                $this->jerr("no wget");
+//            }
+//            $cmd =  $wget . ' -q -O -  ' . escapeshellarg($url);
+//            
+//            //echo $cmd; exit;
+//            $data = `$cmd`;
+//            
+//            if (!trim(strlen($data))) {
+//                $this->jerr("url returned an empty string");
+//            }
+//        }
         
         if(file_exists($file))
         {
