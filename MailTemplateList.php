@@ -10,7 +10,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
         
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
-        
+        print_r($_SERVER['SERVER_NAME']);exit;
         $base = 'http://' . $fopts['host'] . $this->rootURL;
         
 //        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/orderShipment.body.html';
