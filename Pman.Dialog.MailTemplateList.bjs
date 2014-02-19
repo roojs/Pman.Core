@@ -65,8 +65,8 @@
                                     "items": [
                                         {
                                             "*prop": "proxy",
-                                            "xtype": "HttpProxy",
                                             "method": "GET",
+                                            "xtype": "HttpProxy",
                                             "|url": "baseURL + '/Roo/Groups.php'",
                                             "|xns": "Roo.data"
                                         },
