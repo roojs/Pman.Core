@@ -16,6 +16,7 @@ class Pman_Core_MailTemplateList extends Pman
 
     function get()
     {
+        $this->jdata(array('name' => 'aa', 'body'=> 'test'));
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
         print_r(array_unique($fopts->templateDir));
         exit;
