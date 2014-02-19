@@ -101,6 +101,9 @@
                                     ]
                                 },
                                 {
+                                    "listeners": {
+                                        "select": "function (combo, record, index)\n{\n    Roo.log(record);\n}"
+                                    },
                                     "allowBlank": true,
                                     "alwaysQuery": true,
                                     "displayField": "file",

@@ -164,6 +164,12 @@ Pman.Dialog.CoreMailingListMessage = {
                             {
                                 xtype: 'ComboBox',
                                 xns: Roo.form,
+                                listeners : {
+                                    select : function (combo, record, index)
+                                    {
+                                        Roo.log(record);
+                                    }
+                                },
                                 allowBlank : true,
                                 alwaysQuery : true,
                                 displayField : 'file',
