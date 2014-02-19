@@ -225,7 +225,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
                                         listeners : {
                                             click : function()
                                             {
-                                                Pman.genericDelete(_this, 'crm_mailing_list_message');
+                                                Pman.genericDelete(_this, 'core_mailing_list_message');
                                                 
                                             }
                                         },
