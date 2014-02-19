@@ -51,13 +51,13 @@ class Pman_Core_ConvertStyle extends Pman
     
     function post()
     {
-        
-        
+        // Import from URL
         if(isset($_REQUEST['importUrl']))
         {
             $this->checkHeader($_REQUEST['importUrl']);
             $data = $this->convertStyle($_REQUEST['importUrl'], '');
             $this->jok($data);
+            
         }
      
         // Import from file
