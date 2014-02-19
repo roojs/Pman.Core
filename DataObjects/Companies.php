@@ -323,7 +323,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $e = DB_DataObject::Factory('core_enum')->lookupObject('COMPTYPE', $this->comptype);
         
         $ret['comptype_display'] = $ret['comptype'];
-        if ($e->find(true) && !empty($e->name_display)) {
+        if ($e && $e->find(true) && !empty($e->name_display)) {
             $ret['comptype_display'] = $e->name_display;
         }
         
