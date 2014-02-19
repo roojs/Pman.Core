@@ -95,7 +95,6 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         }
         
         
-        
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8"><HTML><BODY>'.$this->bodytext.'</BODY></HTML>');
@@ -110,7 +109,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             //var_dump($href);
             $matches = array();
             if (preg_match("/Images\/([0-9]+)\/([^#]+)\#image\-([0-9]+)$/", $href, $matches)) {
-                 print_r($matches);exit;
+                 
                 $oid = $matches[1];
                 
                 if (!isset($map[$oid])) {
@@ -119,6 +118,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
                 }
                 $nid = $map[$oid];
                 $nstr = "/Images/$nid/{$matches[2]}/#image-{$nid}";
+                print_r($href);exit;
                 $img->setAttribute('src',  str_replace($href, $matches[0], $nstr ));
                     
                  
