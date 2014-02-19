@@ -98,7 +98,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.MailTemplateList.show({}, function(){\n    \n    });\n/*\n    var l = document.location;\n    new Pman.Request({\n\n        url : baseURL + '/Crm/ImportHtml.php',\n\n        method: 'POST',\n        mask : \"Loading\",\n        params : {\n              importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html',\n       },\n        success : function (res) {\n\n         _this.form.findField('bodytext').setValue(res.data);\n        }\n  \n    });\n    \n    */\n}"
+                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.MailTemplateList.show({}, function(data){\n        Roo.log(data);\n    });\n/*\n    var l = document.location;\n    new Pman.Request({\n\n        url : baseURL + '/Crm/ImportHtml.php',\n\n        method: 'POST',\n        mask : \"Loading\",\n        params : {\n              importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html',\n       },\n        success : function (res) {\n\n         _this.form.findField('bodytext').setValue(res.data);\n        }\n  \n    });\n    \n    */\n}"
                                                     },
                                                     "text": "Email Template",
                                                     "xtype": "Item",
