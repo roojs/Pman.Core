@@ -60,7 +60,7 @@
                                             "items": [
                                                 {
                                                     "listeners": {
-                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.CoreImportURL.show({\n        target : 'aaa.php'\n    }, function(data) {\n        if  (data) {\n          //  Roo.log(data);\n            _this.form.findField('bodytext').setValue(data);\n        }\n    });\n}"
+                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.CoreImportUrl.show({\n        target : 'aaa.php'\n    }, function(data) {\n        if  (data) {\n          //  Roo.log(data);\n            _this.form.findField('bodytext').setValue(data);\n        }\n    });\n}"
                                                     },
                                                     "text": "URL",
                                                     "xtype": "Item",
