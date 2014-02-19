@@ -101,62 +101,6 @@
                                     ]
                                 },
                                 {
-                                    "listeners": {
-                                        "render": "function (_self)\n{\n    _this.page_type = _self;\n    _self.selectedIndex = 0;\n    new Pman.request({\r\n        method : 'GET',\r\n        url : baseURL + '/Roo/core_enum',\r\n        params : {\r\n            etype : 'cms_page_type',\n            _columns : 'id,display_name',\n            sort : 'id',\n            dir : 'ASC'\r\n        },\n        success : function(res) {\n           var first = res.data[0];\n           _self.setValue(first.id);\n           _self.el.dom.value = first.display_name;\n        }\r\n   });\n}",
-                                        "select": "function (combo, record, index)\n{\n    _this.grid.footer.onClick('first');\n    _this.category_type.hide();\n    if(record.data.name == 'blog'){\n        _this.category_type.show();\n    }\n    \n}"
-                                    },
-                                    "alwaysQuery": true,
-                                    "displayField": "display_name",
-                                    "editable": "false",
-                                    "emptyText": "Select Status Type",
-                                    "fieldLabel": "Page Type",
-                                    "forceSelection": true,
-                                    "hiddenName": "page_type",
-                                    "listWidth": 400,
-                                    "loadingText": "Searching...",
-                                    "minChars": 2,
-                                    "pageSize": 20,
-                                    "qtip": "Select Page Type",
-                                    "queryParam": "",
-                                    "selectOnFocus": true,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
-                                    "triggerAction": "all",
-                                    "typeAhead": false,
-                                    "valueField": "id",
-                                    "xtype": "ComboBox",
-                                    "|xns": "Roo.form",
-                                    "items": [
-                                        {
-                                            "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'cms_page_type'; \n}\n"
-                                            },
-                                            "*prop": "store",
-                                            "remoteSort": true,
-                                            "xtype": "Store",
-                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                            "|xns": "Roo.data",
-                                            "items": [
-                                                {
-                                                    "*prop": "proxy",
-                                                    "xtype": "HttpProxy",
-                                                    "method": "GET",
-                                                    "|xns": "Roo.data",
-                                                    "|url": "baseURL + '/Roo/core_enum.php'"
-                                                },
-                                                {
-                                                    "*prop": "reader",
-                                                    "id": "id",
-                                                    "root": "data",
-                                                    "totalProperty": "total",
-                                                    "xtype": "JsonReader",
-                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"display_name\",\"type\":\"string\"}]",
-                                                    "|xns": "Roo.data"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
                                     "|xns": "Roo.Toolbar",
                                     "xtype": "Fill"
                                 },
