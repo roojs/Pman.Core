@@ -208,7 +208,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                         id : 'name',
                                         root : 'data',
                                         totalProperty : 'total',
-                                        fields : [{"name":"name","type":"string"},{"name":"body","type":"string"}]
+                                        fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}]
                                     }
                                 }
                             },

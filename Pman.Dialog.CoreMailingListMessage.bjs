@@ -147,7 +147,7 @@
                                                     "root": "data",
                                                     "totalProperty": "total",
                                                     "xtype": "JsonReader",
-                                                    "|fields": "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"body\",\"type\":\"string\"}]",
+                                                    "|fields": "[{\"name\":\"file\",\"type\":\"string\"},{\"name\":\"content\",\"type\":\"string\"}]",
                                                     "|xns": "Roo.data"
                                                 }
                                             ]
