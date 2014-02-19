@@ -62,7 +62,7 @@ class Pman_Core_ConvertStyle extends Pman
     
     var $styleSheets = array();
     
-    function convertStyle($base, $data, $is_url = false)
+    function convertStyle($base, $path, $is_url = false)
     {
 //        if(!empty($url))
 //        {
@@ -82,10 +82,10 @@ class Pman_Core_ConvertStyle extends Pman
 //            }
 //        }
         
-        if(file_exists($file))
-        {
-            $data = file_get_contents($file);
+        if(!$is_url){
+            $data = file_get_contents($path);
         }
+        
         
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
