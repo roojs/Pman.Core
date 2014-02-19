@@ -11,7 +11,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
         
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
-        $base = 'http://' . $fopts['host'] . $this->rootURL;
+        $base = 'http://' . $fopts['host'] . $this->rootURL . '/';
         
         print_r($base);exit;
         $ret = array();
