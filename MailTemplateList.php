@@ -45,8 +45,8 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
             }
             
         }
-        exit;
-//        $this->jok($ret);
+
+        $this->jok($ret);
         
     }
      
