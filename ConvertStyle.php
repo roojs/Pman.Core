@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Pman.php';
-
+require_once 'HTML/CSS/InlineStyle.php';
 
 class Pman_Core_ConvertStyle extends Pman 
 {
