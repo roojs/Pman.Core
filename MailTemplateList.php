@@ -26,7 +26,7 @@ class Pman_Core_MailTemplateList extends Pman
                 continue;
             }
             
-            if ($handle = opendir($dir . '/')) {
+            if ($handle = opendir($dir . '/mail')) {
                 while (false !== ($entry = readdir($handle))) {
                     if ($entry == "." || $entry == "..") {
                         continue;
