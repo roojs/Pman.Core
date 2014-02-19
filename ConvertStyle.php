@@ -83,7 +83,7 @@ class Pman_Core_ConvertStyle extends Pman
 //        }
         
         if(!$is_url){
-            $data = file_get_contents($path);
+            $data = file_get_contents($file);
         }
         
         
