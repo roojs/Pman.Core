@@ -35,7 +35,7 @@ class Pman_Core_MailTemplateList extends Pman
                     }
                     
                     $ret[] = array(
-                        'file' => $entry
+                        'file' => $entry,
                         'content' => file_get_contents("$dir/mail/$entry")
                     );
                 }
@@ -44,8 +44,7 @@ class Pman_Core_MailTemplateList extends Pman
             }
             
         }
-        print_r($ret);exit;
-        exit;
+        
         $this->jdata(array(array('name' => 'aa', 'body'=> 'test')));
         
         print_r(array_unique($fopts->templateDir));
