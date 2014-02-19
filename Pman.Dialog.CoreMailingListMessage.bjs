@@ -102,6 +102,7 @@
                                 },
                                 {
                                     "allowBlank": true,
+                                    "alwaysQuery": true,
                                     "displayField": "name",
                                     "editable": false,
                                     "emptyText": "Select Template",

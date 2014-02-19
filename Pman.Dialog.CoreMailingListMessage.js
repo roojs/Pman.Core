@@ -165,6 +165,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 xtype: 'ComboBox',
                                 xns: Roo.form,
                                 allowBlank : true,
+                                alwaysQuery : true,
                                 displayField : 'name',
                                 editable : false,
                                 emptyText : "Select Template",
