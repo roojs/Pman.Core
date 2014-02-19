@@ -27,7 +27,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                     
                     $ret[] = array(
                         'file' => $entry,
-                        'content' => file_get_contents("$dir/mail/$entry")
+                        'content' => $this->convertStyle("$dir/mail/$entry")
                     );
                 }
                 
