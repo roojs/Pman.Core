@@ -199,7 +199,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                         xtype: 'HttpProxy',
                                         xns: Roo.data,
                                         method : 'GET',
-                                        url : baseURL + '/Core/MailTemplateList'
+                                        url : baseURL + '/Core/MailTemplateList.php'
                                     },
                                     reader : {
                                         xtype: 'JsonReader',
