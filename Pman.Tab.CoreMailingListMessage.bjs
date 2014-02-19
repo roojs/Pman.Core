@@ -7,7 +7,7 @@
     "items": [
         {
             "region": "center",
-            "title": "Email Messages",
+            "title": "Email Template",
             "xtype": "NestedLayoutPanel",
             "|xns": "Roo",
             "items": [

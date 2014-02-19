@@ -18,7 +18,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
             xtype: 'NestedLayoutPanel',
             xns: Roo,
             region : 'center',
-            title : "Email Messages",
+            title : "Email Template",
             layout : {
                 xtype: 'BorderLayout',
                 xns: Roo,
