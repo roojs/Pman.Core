@@ -176,7 +176,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
                                         listeners : {
                                             click : function()
                                             {
-                                              var sel = _this.grid.selModel.getSelected()
+                                              var sel = _this.grid.selModel.getSelected();
                                               if (!sel) {
                                                     Roo.MessageBox.alert("Error", "Select a message to copy");
                                                     return;
