@@ -83,7 +83,7 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "publication",
+                                    "dataIndex": "name",
                                     "header": "Publication Lists",
                                     "width": 200,
                                     "xtype": "ColumnModel",

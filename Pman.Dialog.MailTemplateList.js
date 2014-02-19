@@ -235,7 +235,7 @@ Pman.Dialog.MailTemplateList = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                dataIndex : 'publication',
+                                dataIndex : 'name',
                                 header : 'Publication Lists',
                                 width : 200,
                                 renderer : function(v) { return String.format('{0}', v); }
