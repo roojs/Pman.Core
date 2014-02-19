@@ -162,6 +162,57 @@ Pman.Dialog.CoreMailingListMessage = {
                                 }
                             },
                             {
+                                xtype: 'ComboBox',
+                                xns: Roo.form,
+                                allowBlank : false,
+                                displayField : 'bankaccnt_name',
+                                editable : false,
+                                emptyText : "Select Bank Accnt",
+                                fieldLabel : 'Post to',
+                                forceSelection : true,
+                                hiddenName : 'checkhead_bankaccnt_id',
+                                listWidth : 400,
+                                loadingText : "Searching...",
+                                minChars : 2,
+                                name : 'checkhead_bankaccnt_id_name',
+                                pageSize : 20,
+                                qtip : "Select Bank Accnt",
+                                queryParam : 'query[bankaccnt_name]',
+                                selectOnFocus : true,
+                                tpl : '<div class="x-grid-cell-text x-btn button"><b>{bankaccnt_name} - {bankaccnt_descrip}</b> </div>',
+                                triggerAction : 'all',
+                                typeAhead : true,
+                                valueField : 'bankaccnt_id',
+                                width : 200,
+                                store : {
+                                    xtype: 'Store',
+                                    xns: Roo.data,
+                                    listeners : {
+                                        beforeload : function (_self, o){
+                                            o.params = o.params || {};
+                                            // set more here
+                                           
+                                        }
+                                    },
+                                    remoteSort : true,
+                                    sortInfo : { direction : 'DESC', field: 'bankaccnt_id' },
+                                    proxy : {
+                                        xtype: 'HttpProxy',
+                                        xns: Roo.data,
+                                        method : 'GET',
+                                        url : baseURL + '/Roo/bankaccnt.php'
+                                    },
+                                    reader : {
+                                        xtype: 'JsonReader',
+                                        xns: Roo.data,
+                                        id : 'bankaccnt_id',
+                                        root : 'data',
+                                        totalProperty : 'total',
+                                        fields : [{"name":"bankaccnt_id","type":"int"},"bankaccnt_name"]
+                                    }
+                                }
+                            },
+                            {
                                 xtype: 'Fill',
                                 xns: Roo.Toolbar
                             },

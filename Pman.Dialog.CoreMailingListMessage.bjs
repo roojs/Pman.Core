@@ -101,6 +101,60 @@
                                     ]
                                 },
                                 {
+                                    "allowBlank": false,
+                                    "displayField": "bankaccnt_name",
+                                    "editable": false,
+                                    "emptyText": "Select Bank Accnt",
+                                    "fieldLabel": "Post to",
+                                    "forceSelection": true,
+                                    "hiddenName": "checkhead_bankaccnt_id",
+                                    "listWidth": 400,
+                                    "loadingText": "Searching...",
+                                    "minChars": 2,
+                                    "name": "checkhead_bankaccnt_id_name",
+                                    "pageSize": 20,
+                                    "qtip": "Select Bank Accnt",
+                                    "queryParam": "query[bankaccnt_name]",
+                                    "selectOnFocus": true,
+                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{bankaccnt_name} - {bankaccnt_descrip}</b> </div>",
+                                    "triggerAction": "all",
+                                    "typeAhead": true,
+                                    "valueField": "bankaccnt_id",
+                                    "width": 200,
+                                    "xtype": "ComboBox",
+                                    "|xns": "Roo.form",
+                                    "items": [
+                                        {
+                                            "listeners": {
+                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n   \n}\n"
+                                            },
+                                            "*prop": "store",
+                                            "remoteSort": true,
+                                            "xtype": "Store",
+                                            "|sortInfo": "{ direction : 'DESC', field: 'bankaccnt_id' }",
+                                            "|xns": "Roo.data",
+                                            "items": [
+                                                {
+                                                    "*prop": "proxy",
+                                                    "method": "GET",
+                                                    "xtype": "HttpProxy",
+                                                    "|url": "baseURL + '/Roo/bankaccnt.php'",
+                                                    "|xns": "Roo.data"
+                                                },
+                                                {
+                                                    "*prop": "reader",
+                                                    "id": "bankaccnt_id",
+                                                    "root": "data",
+                                                    "totalProperty": "total",
+                                                    "xtype": "JsonReader",
+                                                    "|fields": "[{\"name\":\"bankaccnt_id\",\"type\":\"int\"},\"bankaccnt_name\"]",
+                                                    "|xns": "Roo.data"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
                                     "|xns": "Roo.Toolbar",
                                     "xtype": "Fill"
                                 },
