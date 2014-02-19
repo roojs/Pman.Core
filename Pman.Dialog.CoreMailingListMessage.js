@@ -170,7 +170,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 emptyText : "Select Template",
                                 fieldLabel : 'Template',
                                 forceSelection : true,
-                                hiddenName : '',
+                                hiddenName : 'template',
                                 listWidth : 400,
                                 loadingText : "Searching...",
                                 minChars : 2,
