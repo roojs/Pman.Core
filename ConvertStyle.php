@@ -23,8 +23,7 @@ class Pman_Core_ConvertStyle extends Pman
             return $url;
         }
         $ui = parse_url($base);
-        // if it starts with '/'...
-        // we do not handle ports...
+        
         if (substr($url,0,2) == '//') {
             return $ui['scheme'] .':' .  $url;
         }
@@ -42,7 +41,7 @@ class Pman_Core_ConvertStyle extends Pman
             return $ui['scheme'] .'://'.$ui['host']. '/' . $url;
            
         }
-        /// not sure if this will work...
+        
         return $ui['scheme'] .'://'.$ui['host']. $ui['path'] . '/../'. $url;
         
     }
