@@ -551,7 +551,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                                                                 return false;
                                                                                             }
                                                                                             o.params.onid = id
-                                                                                            o.params.ontable = 'crm_mailing_list_message';
+                                                                                            o.params.ontable = 'core_mailing_list_message';
                                                                                             
                                                                                            // o.params.imgtype = 'PressRelease';
                                                                                             //o.params['query[imagesize]'] = '150x150';
