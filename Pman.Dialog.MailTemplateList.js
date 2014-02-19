@@ -86,7 +86,7 @@ Pman.Dialog.MailTemplateList = {
                                 xtype: 'HttpProxy',
                                 xns: Roo.data,
                                 method : 'GET',
-                                url : baseURL + '/Roo/MailTemplateList.php'
+                                url : baseURL + '/Pman/Core/MailTemplateList.php'
                             },
                             reader : {
                                 xtype: 'JsonReader',
