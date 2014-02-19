@@ -18,8 +18,7 @@ class Pman_Core_ConvertStyle extends Pman
     }
     
     function relPath($base, $url)
-    {
-        
+    {   
         //var_dump(array($base,$url));        
         if (preg_match('/^(http|https|mailto):/',$url)) {
             return $url;
