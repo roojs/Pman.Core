@@ -312,7 +312,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     method : 'POST',
                                                     params : {
                                                         onid : _this.form.findField('id').getValue(),
-                                                        ontable : 'crm_mailing_list_message' ,
+                                                        ontable : 'core_mailing_list_message' ,
                                                         _remote_upload : i.src
                                                     },
                                                     success : function(res){
