@@ -62,7 +62,7 @@ class Pman_Core_ConvertStyle extends Pman
     
     var $styleSheets = array();
     
-    function convertStyle($base, $path, $is_url = false)
+    function convertStyle($url, $file, $is_url = false)
     {
 //        if(!empty($url))
 //        {
@@ -134,10 +134,7 @@ class Pman_Core_ConvertStyle extends Pman
 //        }
         
         foreach ($xpath->query('//style') as $s){
-//            $ss = $doc->saveHTML($s);
-            print_r($s->nodeValue);
-//            $this->styleSheets[] = $this->$this->replaceImageUrl($s)
-            echo '<br/>';
+            $this->styleSheets[] = $this->$this->replaceImageUrl($s->nodeValue, $url);
         }
         
         exit;
