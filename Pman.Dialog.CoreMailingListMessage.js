@@ -168,7 +168,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 displayField : 'name',
                                 editable : false,
                                 emptyText : "Select Template",
-                                fieldLabel : 'Post to',
+                                fieldLabel : 'template',
                                 forceSelection : true,
                                 hiddenName : '',
                                 listWidth : 400,
