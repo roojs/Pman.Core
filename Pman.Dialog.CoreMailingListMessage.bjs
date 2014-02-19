@@ -107,7 +107,7 @@
                                     "emptyText": "Select Bank Accnt",
                                     "fieldLabel": "Post to",
                                     "forceSelection": true,
-                                    "hiddenName": "checkhead_bankaccnt_id",
+                                    "hiddenName": "",
                                     "listWidth": 400,
                                     "loadingText": "Searching...",
                                     "minChars": 2,
