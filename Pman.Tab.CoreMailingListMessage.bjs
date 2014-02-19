@@ -1,5 +1,5 @@
 {
-    "id": "roo-file-314",
+    "id": "roo-file-183",
     "name": "Pman.Tab.CoreMailingListMessage",
     "parent": "Pman.Tab.Admin",
     "title": "",
@@ -137,7 +137,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "|click": "function()\n{\n  var sel = _this.grid.selModel.getSelected();\n  if (!sel) {\n        Roo.MessageBox.alert(\"Error\", \"Select a message to copy\");\n        return;\n    }\nnew Pman.Request({\n    url : baseURL + '/Roo/Crm_mailing_list_message',\n    method : 'POST',\n    params : {\n        id : sel.data.id,\n        _make_copy : 1\n    },\n    success : function() {\n        _this.grid.footer.onClick('refresh');\n    }\n});\n  \n}\n"
+                                                        "|click": "function()\n{\n  var sel = _this.grid.selModel.getSelected();\n  if (!sel) {\n        Roo.MessageBox.alert(\"Error\", \"Select a message to copy\");\n        return;\n    }\nnew Pman.Request({\n    url : baseURL + '/Roo/Core_mailing_list_message',\n    method : 'POST',\n    params : {\n        id : sel.data.id,\n        _make_copy : 1\n    },\n    success : function() {\n        _this.grid.footer.onClick('refresh');\n    }\n});\n  \n}\n"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Copy",
