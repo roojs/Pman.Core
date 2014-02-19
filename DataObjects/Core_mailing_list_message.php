@@ -110,7 +110,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             //var_dump($href);
             $matches = array();
             if (preg_match("/Images\/([0-9]+)\/([^#]+)\#image\-([0-9]+)$/", $href, $matches)) {
-                 
+                 print_r($matches);exit;
                 $oid = $matches[1];
                 
                 if (!isset($map[$oid])) {
