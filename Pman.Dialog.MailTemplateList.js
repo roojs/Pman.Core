@@ -36,7 +36,7 @@ Pman.Dialog.MailTemplateList = {
             modal : true,
             resizable : false,
             title : "Email Templates",
-            width : 600,
+            width : 500,
             items : [
                 {
                     xtype: 'GridPanel',
