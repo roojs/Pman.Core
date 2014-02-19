@@ -62,7 +62,7 @@ class Pman_Core_ConvertStyle extends Pman
     
     var $styleSheets = array();
     
-    function convertStyle($url, $file)
+    function convertStyle($base, $data, $is_url)
     {
 //        if(!empty($url))
 //        {
