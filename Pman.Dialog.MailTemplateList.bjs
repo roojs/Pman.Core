@@ -82,15 +82,6 @@
                                     ]
                                 },
                                 {
-                                    "*prop": "footer",
-                                    "displayInfo": true,
-                                    "displayMsg": "Displaying Publication{0} - {1} of {2}",
-                                    "emptyMsg": "Nothing found",
-                                    "pageSize": 25,
-                                    "xtype": "PagingToolbar",
-                                    "|xns": "Roo"
-                                },
-                                {
                                     "*prop": "colModel[]",
                                     "dataIndex": "publication",
                                     "header": "Publication Lists",

@@ -231,14 +231,6 @@ Pman.Dialog.MailTemplateList = {
                                 ]
                             }
                         },
-                        footer : {
-                            xtype: 'PagingToolbar',
-                            xns: Roo,
-                            displayInfo : true,
-                            displayMsg : "Displaying Publication{0} - {1} of {2}",
-                            emptyMsg : "Nothing found",
-                            pageSize : 25
-                        },
                         colModel : [
                             {
                                 xtype: 'ColumnModel',
