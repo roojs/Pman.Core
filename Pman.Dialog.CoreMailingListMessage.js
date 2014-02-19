@@ -204,7 +204,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                     reader : {
                                         xtype: 'JsonReader',
                                         xns: Roo.data,
-                                        id : 'bankaccnt_id',
+                                        id : 'name',
                                         root : 'data',
                                         totalProperty : 'total',
                                         fields : [{"name":"name","type":"string"},{"name":"body","type":"string"}]

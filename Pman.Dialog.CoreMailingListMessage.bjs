@@ -142,7 +142,7 @@
                                                 },
                                                 {
                                                     "*prop": "reader",
-                                                    "id": "bankaccnt_id",
+                                                    "id": "name",
                                                     "root": "data",
                                                     "totalProperty": "total",
                                                     "xtype": "JsonReader",
