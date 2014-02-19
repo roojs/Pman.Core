@@ -167,7 +167,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 allowBlank : false,
                                 displayField : 'name',
                                 editable : false,
-                                emptyText : "Select Bank Accnt",
+                                emptyText : "Select Template",
                                 fieldLabel : 'Post to',
                                 forceSelection : true,
                                 hiddenName : '',
