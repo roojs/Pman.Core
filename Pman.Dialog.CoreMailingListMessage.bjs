@@ -101,6 +101,28 @@
                                     ]
                                 },
                                 {
+                                    "text": "Use template",
+                                    "xtype": "Button",
+                                    "|xns": "Roo.Toolbar",
+                                    "items": [
+                                        {
+                                            "|xns": "Roo.menu",
+                                            "xtype": "Menu",
+                                            "*prop": "menu",
+                                            "items": [
+                                                {
+                                                    "listeners": {
+                                                        "click": "function (_self, e)\n{\n\n    var l = document.location;\n    new Pman.Request({\n\n        url : baseURL + '/Crm/ImportHtml.php',\n\n        method: 'POST',\n        mask : \"Loading\",\n        params : {\n              importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html',\n       },\n        success : function (res) {\n\n         _this.form.findField('bodytext').setValue(res.data);\n        }\n  \n    });\n}"
+                                                    },
+                                                    "text": "Responsive Email (1)",
+                                                    "xtype": "Item",
+                                                    "|xns": "Roo.menu"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
                                     "|xns": "Roo.Toolbar",
                                     "xtype": "Fill"
                                 },
