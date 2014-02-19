@@ -19,21 +19,22 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
             if(!file_exists($dir . '/mail')){
                 continue;
             }
-            
-            if ($handle = opendir($dir . '/mail')) {
-                while (false !== ($entry = readdir($handle))) {
-                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
-                        continue;
-                    }
-                    
-                    $ret[] = array(
-                        'file' => $entry,
-                        'content' => $this->convertStyle("$dir/mail/$entry")
-                    );
-                }
-                
-                closedir($handle);
-            }
+            echo "$dir/mail/$entry<br/>";
+//            
+//            if ($handle = opendir($dir . '/mail')) {
+//                while (false !== ($entry = readdir($handle))) {
+//                    if ($entry == "." || $entry == ".." || !preg_match('/\.html$/', $entry)) {
+//                        continue;
+//                    }
+//                    
+//                    $ret[] = array(
+//                        'file' => $entry,
+//                        'content' => $this->convertStyle("$dir/mail/$entry")
+//                    );
+//                }
+//                
+//                closedir($handle);
+//            }
             
         }
         
