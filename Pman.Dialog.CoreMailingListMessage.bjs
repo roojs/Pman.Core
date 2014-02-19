@@ -310,7 +310,7 @@
                                                                                     "items": [
                                                                                         {
                                                                                             "listeners": {
-                                                                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n    var id = _this.form.findField('id').getValue() * 1;    \n    if (!id) {\n        Roo.MessageBox.alert(\"Error\", \"Save press release first\");\n        return false;\n    }\n    o.params.onid = id\n    o.params.ontable = 'crm_mailing_list_message';\n    \n   // o.params.imgtype = 'PressRelease';\n    //o.params['query[imagesize]'] = '150x150';\n    // set more here\n}\n"
+                                                                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n    var id = _this.form.findField('id').getValue() * 1;    \n    if (!id) {\n        Roo.MessageBox.alert(\"Error\", \"Save email template first\");\n        return false;\n    }\n    o.params.onid = id\n    o.params.ontable = 'crm_mailing_list_message';\n    \n   // o.params.imgtype = 'PressRelease';\n    //o.params['query[imagesize]'] = '150x150';\n    // set more here\n}\n"
                                                                                             },
                                                                                             "*prop": "store",
                                                                                             "remoteSort": true,
