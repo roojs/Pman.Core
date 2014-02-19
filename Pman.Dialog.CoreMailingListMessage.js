@@ -33,7 +33,7 @@ Pman.Dialog.CoreMailingListMessage = {
             listeners : {
                 show : function (_self)
                 {
-                     
+                     return;
                     _self.layout.getRegion('center').showPanel(0);
                     var w = Roo.lib.Dom.getViewWidth();
                     var h = Roo.lib.Dom.getViewHeight();        this.resizeTo(w-50, h-50);
