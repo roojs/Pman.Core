@@ -24,7 +24,7 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         $ui = parse_url($base);
-        
+        print_r($ui);exit;
         if (substr($url,0,2) == '//') {
             return $ui['scheme'] .':' .  $url;
         }
