@@ -148,9 +148,6 @@ class Pman_Core_ConvertStyle extends Pman
             return "INSTALL TIDY ON SERVER " . $html;
         }
         
-        // finally clean it up... using tidy...
-       
- 
         $html = tidy_repair_string(
                 $html,
                 array(
