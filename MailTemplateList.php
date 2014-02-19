@@ -45,7 +45,7 @@ class Pman_Core_MailTemplateList extends Pman
             
         }
         
-        $this->jdata($ret);
+        $this->jok($ret);
         
     }
      
