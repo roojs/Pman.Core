@@ -52,7 +52,7 @@ Pman.Dialog.MailTemplateList = {
                     background : false,
                     fitContainer : true,
                     fitToframe : true,
-                    region : 'west',
+                    region : 'center',
                     tableName : 'ignore',
                     title : "Template name",
                     grid : {
