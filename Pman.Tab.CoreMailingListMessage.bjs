@@ -1,10 +1,10 @@
 {
     "id": "roo-file-314",
     "name": "Pman.Tab.CoreMailingListMessage",
-    "parent": "",
+    "parent": "Pman.Tab.Admin",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Tab.CoreMailingListMessage.bjs",
-    "items": false,
+    "items": [],
     "permname": "",
-    "modOrder": "001"
+    "modOrder": "999"
 }
