@@ -101,7 +101,7 @@
                                     ]
                                 },
                                 {
-                                    "allowBlank": false,
+                                    "allowBlank": true,
                                     "displayField": "name",
                                     "editable": false,
                                     "emptyText": "Select Template",
@@ -114,7 +114,6 @@
                                     "name": "template",
                                     "pageSize": 20,
                                     "qtip": "Select Template",
-                                    "queryParam": "query[bankaccnt_name]",
                                     "selectOnFocus": true,
                                     "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
                                     "triggerAction": "all",

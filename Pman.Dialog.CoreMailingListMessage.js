@@ -164,7 +164,7 @@ Pman.Dialog.CoreMailingListMessage = {
                             {
                                 xtype: 'ComboBox',
                                 xns: Roo.form,
-                                allowBlank : false,
+                                allowBlank : true,
                                 displayField : 'name',
                                 editable : false,
                                 emptyText : "Select Template",
@@ -177,7 +177,6 @@ Pman.Dialog.CoreMailingListMessage = {
                                 name : 'template',
                                 pageSize : 20,
                                 qtip : "Select Template",
-                                queryParam : 'query[bankaccnt_name]',
                                 selectOnFocus : true,
                                 tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> </div>',
                                 triggerAction : 'all',
