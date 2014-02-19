@@ -118,7 +118,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     });
                                                 }
                                             },
-                                            text : "File"
+                                            text : "Html File"
                                         }
                                     ]
                                 }

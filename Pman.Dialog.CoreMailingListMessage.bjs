@@ -70,7 +70,7 @@
                                                     "listeners": {
                                                         "click": "function (_self, e)\n{\n    Pman.Dialog.Image.show({\n        _url : baseURL + '/Crm/ImportHtml.php'\n    }, function(data) {\n        if  (data) {\n            _this.form.findField('bodytext').setValue(data);\n        }\n    });\n}"
                                                     },
-                                                    "text": "File",
+                                                    "text": "Html File",
                                                     "xtype": "Item",
                                                     "|xns": "Roo.menu"
                                                 }
