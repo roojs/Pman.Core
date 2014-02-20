@@ -33,7 +33,7 @@ Pman.Dialog.CoreMailingListMessagePreview = {
             listeners : {
                 show : function (_self)
                 {
-                    Roo.log(_self.data);
+                    Roo.log(_this.data);
                     var m = 'Core';
                     
                     if(_this.data.module = 'crm'){
