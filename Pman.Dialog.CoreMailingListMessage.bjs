@@ -546,7 +546,7 @@
                 },
                 {
                     "listeners": {
-                        "click": "function (_self, e)\n{\n    //_this.dialog.hide();\n    Roo.log(_this.data.module);\n    Pman.Dialog.CoreMailingListMessagePreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });\n}",
+                        "click": "function (_self, e)\n{\n    //_this.dialog.hide();\n    Roo.log(_this.data.module);\n    Pman.Dialog.CoreMailingListMessagePreview.show({ id : _this.form.findField('id').getValue()});\n}",
                         "render": "function (_self)\n{\n    _this.preview_btn = _self;\n}"
                     },
                     "*prop": "buttons[]",
