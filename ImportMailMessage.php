@@ -25,6 +25,7 @@ class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle
     
     function post()
     {
+        print_r('run');exit;
         if(isset($_REQUEST['_convertToPlain']))
         {
             require_once 'System.php';
