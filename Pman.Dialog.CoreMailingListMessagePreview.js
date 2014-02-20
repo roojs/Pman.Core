@@ -33,16 +33,22 @@ Pman.Dialog.CoreMailingListMessagePreview = {
             listeners : {
                 show : function (_self)
                 {
+                    var m = 'Core';
+                    
+                    if(_this.data.module = 'crm'){
+                        M = 'Crm';
+                    }
+                    
                     _self.layout.getRegion('center').showPanel(0);
                     _this.panel.load({ 
-                        url: baseURL + '/Crm/MessagePreview', 
+                        url: baseURL + '/' + m + '/MessagePreview', 
                         params  : {
                             _id : _this.data.id
                         },
                         method : 'GET'
                     });
                     _this.hpanel.load({ 
-                        url: baseURL + '/Crm/MessagePreview', 
+                        url: baseURL + '/' + m + '/MessagePreview', 
                         params  : {
                             _as_html : 1,
                             _id : _this.data.id
