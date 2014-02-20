@@ -292,6 +292,7 @@ Content-Transfer-Encoding: 7bit
         $imageCache = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         $ids = $this->attachmentIds();
+        print_r($ids);exit;
         //$this->jerr(print_r($ids,true));
         
          
