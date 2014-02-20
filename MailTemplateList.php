@@ -11,7 +11,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
         
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
-        $base = 'http://' . $_SERVER['SERVER_NAME'] . $this->rootURL;
+//        $base = 'http://' . $_SERVER['SERVER_NAME'] . $this->rootURL;
         
 //        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/orderShipment.body.html';
 //        
@@ -37,7 +37,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                     
                     $ret[] = array(
                         'file' => $entry,
-                        'content' => $this->convertStyle($base, $path, false)
+                        'content' => $this->convertStyle('', $path, false)
                     );
                 }
                 
