@@ -232,7 +232,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         
         $this->cachedImages($random_hash);
         
-        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
+        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
           
         if (!$force && $this->isGenerated($cachePath)) {
             return;
