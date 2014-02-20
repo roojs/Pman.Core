@@ -336,7 +336,10 @@ class Pman_Core_Mailer {
             $m  = new File_MimeType();
             $mt = $m->fromFilename($file);
             $ext = $m->toExt($mt); 
-            
+            print_r($mt);
+            echo "<br/>";
+            print_r($ext);
+            echo "<br/>";exit;
             return array(
                     'mimetype' => $mt,
                    'ext' => $ext,
