@@ -279,8 +279,6 @@ Content-Transfer-Encoding: 7bit
 --alt-{$random_hash}--
 ");
         fclose($fh);
-      
-        $this->cachedImages($random_hash);
         
     }
     
