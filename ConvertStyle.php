@@ -62,9 +62,9 @@ class Pman_Core_ConvertStyle extends Pman
     
     var $styleSheets = array();
     
-    function convertStyle($url, $file, $is_url = true)
+    function convertStyle($url = '', $file = false, $is_external = true)
     {
-        if($is_url && !empty($url))
+        if(!empty($url))
         {
             $host = parse_url($url);
             require_once 'System.php';
@@ -82,7 +82,7 @@ class Pman_Core_ConvertStyle extends Pman
             }
         }
         
-        if(!$is_url){
+        if(!empty($file)){
             $data = file_get_contents($file);
         }
         
@@ -100,7 +100,9 @@ class Pman_Core_ConvertStyle extends Pman
                     $img->setAttribute('src',  $this->relPath($url,  $href));
                     continue;
                 }
-                $this->jerr('Please use the absolutely url for image src!');
+                if($is_external){
+                    $this->jerr('Please use the absolutely url for image src!');
+                }
             }
         }
         
