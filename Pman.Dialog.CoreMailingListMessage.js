@@ -141,7 +141,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     var l = document.location;
                                                     new Pman.Request({
                                                 
-                                                        url : baseURL + '/Crm/ImportHtml.php',
+                                                        url : baseURL + '/Core/ImportMailMessage.php',
                                                 
                                                         method: 'POST',
                                                         mask : "Loading",
