@@ -199,7 +199,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         
         require_once 'Pman/Core/Mailer.php';
         
-        $templateDir = session_save_path() . '/email-cache-' . get_current_user() ;
+        $templateDir = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') ;
         $r = new Pman_Core_Mailer(array(
             'template'=> $q->id,
             'templateDir' => $templateDir,
@@ -210,7 +210,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         
         $ret = $r->toData();
         
-        $images = file_get_contents(session_save_path() . '/email-cache-' . get_current_user() . '/mail/' . $q->id . '-images.txt');
+        $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $q->id . '-images.txt');
         
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
