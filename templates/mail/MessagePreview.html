@@ -1,14 +1,12 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<code>From : "{msg.from_name}" &lt;{msg.from_email}&gt;</code>
+<br/>
+<code>Subject : {msg.subject}</code>
+<br/>
+{if:!showHtml}
+<br>
+<code>{msg.plaintext:b}</code>
+{else:}
+<br/>
+{msg.bodytext:h}
+{end:}
+    
