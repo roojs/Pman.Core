@@ -239,8 +239,17 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $this->processRelacements($replace_links);
         
         $test = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.html';
-        $fh = fopen($test, 'w');
+        if (!file_exists(dirname($test))) {
+            mkdir(dirname($test), 0700, true);
+        }
         
+        file_put_contents($test, $this->bodytext);
+        
+        $f = new HTML_Template_Flexy();
+        $f->compile($test);
+        $body = $f->bufferedOutputObject();
+        echo "<PRE>";
+        print_r($body);exit;
         $fh = fopen($cachePath, 'w');
 
         fwrite($fh, implode("\n", array(
