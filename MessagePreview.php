@@ -2,7 +2,7 @@
 
 require_once 'Pman.php';
 
-class Pman_Crm_MessagePreview extends Pman
+class Pman_Core_MessagePreview extends Pman
 {
     var $masterTemplate = 'mail/MessagePreview.html';
     
@@ -20,9 +20,11 @@ class Pman_Crm_MessagePreview extends Pman
     
     function get()
     {
-        if(empty($_REQUEST['_id'])){
-            $this->jerr('id got error');
+        if(empty($_REQUEST['_id']) || empty($_REQUEST['_module'])){
+            $this->jerr('missing options!');
         }
+        
+        
         $mlq = DB_DataObject::factory('crm_mailing_list_message');
         
         $mlq->get($_REQUEST['_id']);
