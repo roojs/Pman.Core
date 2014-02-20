@@ -1089,7 +1089,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                 mask: 'Sending',
                                 params : {
                                     _id : id,
-                                    _action : 'html'
+                                    _ontable : (_this.data.module) ? _this.data.module + '_mailing_list_message' : 'core_mailing_list_message'
                                 }, 
                                 success : function(res) { 
                                     if(res.data == 'SUCCESS'){
