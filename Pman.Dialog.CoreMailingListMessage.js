@@ -173,6 +173,9 @@ Pman.Dialog.CoreMailingListMessage = {
                                             combo.setValue('');
                                         }).defer(100);
                                     */    
+                                        if(!record){
+                                            return;
+                                        }
                                         _this.form.findField('bodytext').setValue(record.data.content);
                                     
                                     }
