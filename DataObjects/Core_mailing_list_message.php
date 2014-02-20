@@ -200,14 +200,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     {    
         $contents = (array)$obj;
         
-        $q = DB_DataObject::factory('crm_mailing_list_queue');
-        $q->id = 'test-message-'. $this->id;
-        $q->message_id = $this->id;
-        $q->message_id_subject = $this->subject;
-        $q->message_id_from_email = $this->from_email;
-        $q->message_id_from_name = $this->from_name;
-        
-        $q->cachedMailWithOutImages(true, false);
+        $this->cachedMailWithOutImages(true, false);
         
         $contents['subject'] = $this->subject;
         
@@ -235,6 +228,28 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
         return $r->send($ret);
+    }
+    
+    function getMailerObject($person, $last_sent_date, $notify_object, $force)
+    {
+        if($notify_object && !isset($notify_object->to_email)){
+            $person->email = $notify_object->to_email;
+        }
+        
+        require_once 'Pman/Core/Mailer.php';
+        
+        $templateDir = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') ;
+        
+        $r = new Pman_Core_Mailer(array(
+            'template'=> $this->tableName() . '-' . $this->id,
+            'templateDir' => $templateDir,
+            'page' => $this,
+            'contents' => array(
+                'person' => $person,
+                'subject' => $this-subject,
+            )
+        ));
+        return $r;
     }
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
