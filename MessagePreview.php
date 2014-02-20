@@ -33,10 +33,8 @@ class Pman_Core_MessagePreview extends Pman
         $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
         
     }
-    
+     
     function post()
-    {
-        function post()
     {
         if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
