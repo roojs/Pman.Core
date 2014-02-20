@@ -677,7 +677,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                                 var p = _this.form.findField('plaintext');
                                                                 
                                                                 new Pman.Request({
-                                                                    url : baseURL + '/Crm/ImportHtml.php',
+                                                                    url : baseURL + '/Core/ImportMailMessage.php',
                                                                     method : 'POST',
                                                                     params : {
                                                                       bodytext : h,

@@ -391,7 +391,7 @@
                                                     "items": [
                                                         {
                                                             "listeners": {
-                                                                "click": "function (_self, e)\n{\n    var h = _this.form.findField('bodytext').getValue();\n    var p = _this.form.findField('plaintext');\n    \n    new Pman.Request({\r\n        url : baseURL + '/Crm/ImportHtml.php',\r\n        method : 'POST',\r\n        params : {\n          bodytext : h,\r\n          _convertToPlain : true,\n          _check_unsubscribe : true\r\n        }, \r\n        success : function(res) {\r\n            if(res.success == true){\n               p.setValue(res.data);\n            }\r\n        }\r\n    });  \n    \n}"
+                                                                "click": "function (_self, e)\n{\n    var h = _this.form.findField('bodytext').getValue();\n    var p = _this.form.findField('plaintext');\n    \n    new Pman.Request({\r\n        url : baseURL + '/Core/ImportMailMessage.php',\r\n        method : 'POST',\r\n        params : {\n          bodytext : h,\r\n          _convertToPlain : true,\n          _check_unsubscribe : true\r\n        }, \r\n        success : function(res) {\r\n            if(res.success == true){\n               p.setValue(res.data);\n            }\r\n        }\r\n    });  \n    \n}"
                                                             },
                                                             "text": "Convert Html to Text",
                                                             "xtype": "Button",
