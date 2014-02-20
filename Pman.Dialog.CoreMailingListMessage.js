@@ -1084,12 +1084,11 @@ Pman.Dialog.CoreMailingListMessage = {
                             }
                            
                             new Pman.Request({
-                                url : baseURL + '/Core/MessagePreview',
+                                url : baseURL + '/Crm/MessagePreview',
                                 method : 'POST',
                                 mask: 'Sending',
                                 params : {
-                                    _id : id,
-                                    _table : (_this.data.module) ? _this.data.module + '_mailing_list_message' : 'core_mailing_list_message'
+                                    _id : id
                                 }, 
                                 success : function(res) { 
                                     if(res.data == 'SUCCESS'){
