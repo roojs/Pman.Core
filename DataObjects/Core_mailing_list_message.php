@@ -215,6 +215,12 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         ));
         
         $ret = $r->toData();
+        print_r($ret);exit;
+        $person = $contents['person'];
+        
+        if(!is_object($person)){
+            
+        }
         
         $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt');
         
