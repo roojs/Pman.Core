@@ -210,7 +210,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $r = new Pman_Core_Mailer(array(
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
-            'page' => $q,
+            'page' => $this,
             'contents' => $contents
         ));
         
