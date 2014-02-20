@@ -1060,7 +1060,7 @@ Pman.Dialog.CoreMailingListMessage = {
                         {
                             //_this.dialog.hide();
                             
-                            Pman.Dialog.CoreMailingListMessagePreview.show({ id : _this.form.findField('id').getValue() });
+                            Pman.Dialog.CrmMailingListMessagePreview.show({ id : _this.form.findField('id').getValue() });
                         },
                         render : function (_self)
                         {
