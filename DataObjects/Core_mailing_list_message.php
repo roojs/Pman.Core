@@ -181,6 +181,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         
         return;
     }
+    
     function send($obj)
     {    
         $contents = (array)$obj;
