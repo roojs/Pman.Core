@@ -237,4 +237,92 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         return $r->send($ret);
     }
     
+    function cachedMailWithOutImages($force = false, $replace_links = true)
+    {  
+        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->id . '.txt';
+          
+        if (!$force && $this->isGenerated($cachePath)) {
+            //die("generated?");
+            
+            return;
+        }
+        if (!file_exists(dirname($cachePath))) {
+            mkdir(dirname($cachePath), 0700, true);
+        }
+        
+       
+        $message = $this->message();
+        
+        
+        
+        $message->processRelacements($replace_links);
+        
+        $fh = fopen($cachePath, 'w');
+
+        fwrite($fh, implode("\n", array(
+            "From: {t.messageFrom():h} ",
+            "To: {t.person.getEmailFrom():h} ",
+            "Subject: {t.subject} ",
+            "X-Message-ID: {t.id} "
+        ))."\n");
+        
+        
+        $random_hash = md5(date('r', time()));
+        
+// note the extra space to finish the last line..
+        fwrite($fh, " " . "
+Content-Type: multipart/alternative; boundary=alt-{$random_hash}
+
+--alt-{$random_hash}
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+{$message->plaintext}
+    
+--alt-{$random_hash}
+Content-Type: multipart/related; boundary=rel-{$random_hash}
+
+--rel-{$random_hash}
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+{$message->bodytext}
+
+");  
+
+        fwrite($fh,"%Images%
+--rel-{$random_hash}--
+
+--alt-{$random_hash}--
+");
+        fclose($fh);
+      
+        $this->cachedImages($random_hash);
+        
+    }
+    
+    function isGenerated($cachePath)
+    {
+        if (!file_exists($cachePath) || !filesize($cachePath)) {
+            return false;
+        }
+        
+        
+        $ctime = filemtime($cachePath);
+        $mtime = array();
+        $mtime[] = $this->updated_dt;
+        $i = DB_DataObject::factory('Images');
+        $i->onid = $this->id;
+        $i->ontable = $this->tableName();
+        $i->selectAdd();
+        $i->selectAdd('max(created) as created');
+        $i->find(true);
+        $mtime[] = $i->created;
+        if($ctime >= strtotime(max($mtime))){
+            return true;
+        }
+        
+        return false;
+    }
+    
 }
