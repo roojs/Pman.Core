@@ -249,12 +249,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             mkdir(dirname($cachePath), 0700, true);
         }
         
-       
-        $message = $this->message();
-        
-        
-        
-        $message->processRelacements($replace_links);
+        $this->processRelacements($replace_links);
         
         $fh = fopen($cachePath, 'w');
 
@@ -322,6 +317,14 @@ Content-Transfer-Encoding: 7bit
         }
         
         return false;
+    }
+    
+    function messageFrom()
+    {
+        
+        return '"' . addslashes($this->from_name) . '" <' . $this->from_email. '>'  ;
+        
+        
     }
     
 }
