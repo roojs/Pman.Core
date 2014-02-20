@@ -295,6 +295,42 @@ Content-Transfer-Encoding: 7bit
         
     }
     
+    function cachedImages($random_hash)
+    {
+        $imageCache = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        
+        $ids = $this->attachmentIds();
+        //$this->jerr(print_r($ids,true));
+        
+         
+        $fh = fopen($imageCache, 'w');
+        
+        $i = DB_DataObject::factory('Images');
+        $i->onid = $this->id;
+        $i->ontable = $this->tableName();
+        $i->whereAddIn('id', $ids, 'int');
+        $i->find();
+        while ($i->fetch()){
+            if (!file_exists($i->getStoreName()) || !filesize($i->getStoreName())) {
+                continue;
+            }
+            $out = chunk_split(base64_encode(file_get_contents($i->getStoreName())));
+            if (empty($out)) {
+                continue;
+            }
+            $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
+            fwrite($fh, "--rel-{$random_hash}
+Content-Type: {$i->mimetype}; name={$imgfn}
+Content-Transfer-Encoding: base64
+Content-ID: <attachment-{$i->id}>
+Content-Disposition: inline; filename={$imgfn}
+
+" . $out  . "");
+
+            }
+        
+    }
+    
     function isGenerated($cachePath)
     {
         if (!file_exists($cachePath) || !filesize($cachePath)) {
@@ -321,10 +357,9 @@ Content-Transfer-Encoding: 7bit
     
     function messageFrom()
     {
-        
         return '"' . addslashes($this->from_name) . '" <' . $this->from_email. '>'  ;
-        
-        
     }
+    
+    
     
 }
