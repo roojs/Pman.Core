@@ -232,7 +232,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         
         $this->cachedImages($random_hash);
         
-        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
+        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
           
         if (!$force && $this->isGenerated($cachePath)) {
             return;
@@ -241,8 +241,6 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-        
-        $this->processRelacements($replace_links);
         
         $fh = fopen($cachePath, 'w');
 
@@ -253,6 +251,17 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             "X-Message-ID: {t.id} "
         ))."\n");
         
+        fclose($fh);
+        
+        $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
+        
+        if (!file_exists(dirname($cachePath))) {
+            mkdir(dirname($cachePath), 0700, true);
+        }
+        
+        $this->processRelacements($replace_links);
+        
+        $fh = fopen($cachePath, 'w');
         
 // note the extra space to finish the last line..
         fwrite($fh, " " . "
