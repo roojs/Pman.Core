@@ -24,8 +24,7 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
     }
     
     function post()
-    
-        
+    {   
         if(isset($_REQUEST['_convertToPlain']))
         {
             require_once 'System.php';
