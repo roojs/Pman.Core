@@ -24,7 +24,7 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr('Missing Options');
         }
         
-        $mlq = DB_DataObject::factory($_REQUEST['_table']);
+        $mlq = DB_DataObject::factory('core_mailing_list_message');
         
         $mlq->get($_REQUEST['_id']);
         
