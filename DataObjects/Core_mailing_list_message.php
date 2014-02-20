@@ -205,18 +205,12 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             'templateDir' => $templateDir,
             'page' => $q,
             'contents' => $contents
-            //array(
-            //    'person' => $person,
-            //    'subject' => $this->message_id_subject,
-           // )
+            
         ));
         
-        
-         
-        ///print_r($r->toData());
         $ret = $r->toData();
+        
         $images = file_get_contents(session_save_path() . '/email-cache-' . get_current_user() . '/mail/' . $q->id . '-images.txt');
-       // var_dump($images);exit;
         
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
