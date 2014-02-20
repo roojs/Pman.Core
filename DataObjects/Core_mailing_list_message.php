@@ -204,7 +204,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $q->id = 'test-message-'. $this->id;
         $q->message_id = $this->id;
         $q->message_id_subject = $this->subject;
-        $q->message_id_from_email = $this->from_email;
+        $q->message_id_from_email = 'manesh@hk.com';
         $q->message_id_from_name = $this->from_name;
         
         $q->cachedMailWithOutImages(true, false);
