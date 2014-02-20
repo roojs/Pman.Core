@@ -2,7 +2,7 @@
 
 require_once 'ConvertStyle.php';
 
-class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle 
+class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle 
 {
     function getAuth()
     {
