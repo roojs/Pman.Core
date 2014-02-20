@@ -124,6 +124,18 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $roo->jok("duplicated");
     }
     
+    function onInsert($request,$roo)
+    {   
+        $i = DB_DataObject::factory('Images');
+        $i->whereAdd('onid = 0');
+        $i->find();
+        while ($i->fetch()){
+            $i->onid = $this->id;
+            $i->update();
+        }
+       
+    }
+    
     function attachmentIds()
     {
         
