@@ -952,7 +952,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                             
                                             var ontable = (_this.data.module) ? _this.data.module + '_mailing_list_message' : 'crm_mailing_list_message';
                                             
-                                            Pman.Dialog.Image.show( { id : 0, onid: _this.data.id, ontable: ontable }, function() {
+                                            Pman.Dialog.Image.show( { id : 0, onid: id, ontable: ontable }, function() {
                                                 _this.igrid.getDataSource().load({});
                                             }); 
                                         }
