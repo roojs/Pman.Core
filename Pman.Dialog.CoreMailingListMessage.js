@@ -304,6 +304,8 @@ Pman.Dialog.CoreMailingListMessage = {
                                                 
                                                     _this.data.module = _this.data.module || 'crm';
                                                     
+                                                    _this.form.url = baseURL + '/Roo/' + _this.data.module + '_mailing_list_message.php';
+                                                    
                                                     if(_this.data.id*1 > 0){
                                                         _this.dialog.el.mask("Loading");
                                                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
