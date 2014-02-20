@@ -301,6 +301,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                             {
                                                
                                                 if (action.type == 'setdata') {
+                                                
                                                     _this.data.module = _this.data.module || 'crm';
                                                     
                                                     if(_this.data.id*1 > 0){
