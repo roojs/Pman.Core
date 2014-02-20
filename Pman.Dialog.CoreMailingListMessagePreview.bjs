@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "show": "function (_self)\n{\n    var m = 'Core';\n    \n    if(_this.data.module = 'crm'){\n        m = 'Crm';\n    }\n\n    _self.layout.getRegion('center').showPanel(0);\n    _this.panel.load({ \n        url: baseURL + '/' + m + '/MessagePreview', \n        params  : {\n            _id : _this.data.id\n        },\n        method : 'GET'\n    });\n    _this.hpanel.load({ \n        url: baseURL + '/' + m + '/MessagePreview', \n        params  : {\n            _as_html : 1,\n            _id : _this.data.id\n        },\n        method : 'GET'\n    });\n        \n}"
+                "show": "function (_self)\n{\n    Roo.log(_this.data);\n    var m = 'Core';\n    \n    if(_this.data.module = 'crm'){\n        m = 'Crm';\n    }\n\n    _self.layout.getRegion('center').showPanel(0);\n    _this.panel.load({ \n        url: baseURL + '/' + m + '/MessagePreview', \n        params  : {\n            _id : _this.data.id\n        },\n        method : 'GET'\n    });\n    _this.hpanel.load({ \n        url: baseURL + '/' + m + '/MessagePreview', \n        params  : {\n            _as_html : 1,\n            _id : _this.data.id\n        },\n        method : 'GET'\n    });\n        \n}"
             },
             "autoScroll": true,
             "closable": true,
