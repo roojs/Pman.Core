@@ -350,6 +350,11 @@ Content-Disposition: inline; filename={$imgfn}
         return '"' . addslashes($this->from_name) . '" <' . $this->from_email. '>'  ;
     }
     
+    function formatDate($dt, $format = 'd/M/Y')
+    {
+        return date($format, strtotime($dt));
+    } 
+    
     
     
 }
