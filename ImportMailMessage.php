@@ -1,17 +1,100 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once 'ConvertStyle.php';
 
-/**
- * Description of ImportMailMessage
- *
- * @author edward
- */
-class ImportMailMessage {
-    //put your code here
+class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle 
+{
+    function getAuth()
+    {
+        if (HTML_FlexyFramework::get()->cli) {
+            return true;
+        }
+        $this->authUser = $this->getAuthUser();
+        if (!$this->authUser) {
+            return false;
+        }
+        return true;
+    }
+    
+    function get()
+    {
+        $this->post();
+        
+        return $this->jerr("not allowed");
+    }
+    
+    function post()
+    {
+        if(isset($_REQUEST['_convertToPlain']))
+        {
+            require_once 'System.php';
+            $tmpdir  = System::mktemp("-d convertPlain");
+            $path = $tmpdir . '/' . time() . '.html';
+            
+            if(isset($_REQUEST['_check_unsubscribe'])){
+                libxml_use_internal_errors (true);
+                $doc = new DOMDocument('1.0', 'UTF-8');
+                $doc->loadHTML($_REQUEST['bodytext']);
+                $xpath = new DOMXpath($doc);
+                foreach ($xpath->query('//a[@href]') as $a) { 
+                    $href = $a->getAttribute('href');
+                    
+                    if(!preg_match('/^#unsubscribe/', $href)){
+                        continue;
+                    }
+                    $a->parentNode->replaceChild($doc->createTextNode($a->nodeValue . ' {unsubscribe_link}'), $a);
+                }
+                
+                $_REQUEST['bodytext'] = $doc->saveHTML();
+                libxml_use_internal_errors (false);
+            }
+            
+            if(!file_exists($path)){
+               file_put_contents($path, $_REQUEST['bodytext']); 
+            }
+            require_once 'File/Convert.php';
+            $fc = new File_Convert($path, 'text/html');
+            $plain = $fc->convert('text/plain');
+            $this->jok(file_get_contents($plain));
+        }
+        // Import from URL
+        if(isset($_REQUEST['importUrl']))
+        {
+           // $host = parse_url($_REQUEST['importUrl']);
+//            if($host['host'] != 'localhost' && $host['host'] != 'roojs-edward.com' && $host['host'] != $_SERVER['HTTP_HOST'])
+//            {
+//                $this->jerr('Invalid URL!');
+//            }
+            $this->checkHeader($_REQUEST['importUrl']);
+            $data = $this->convertStyle($_REQUEST['importUrl'], '', true);
+         //   print_r($data);exit;
+            $this->jok($data);
+            
+        }
+     
+        // Import from file
+        $htmlFile = DB_DataObject::factory('images');
+        $htmlFile->setFrom(array(
+               'onid' => 0,
+               'ontable' =>'crm_mailing_list_message'
+        ));
+        $htmlFile->onUpload(false);
+       // print_r($htmlFile);
+        if($htmlFile->mimetype != 'text/html')
+        {
+            $this->jerr('accept html file only!');
+        }
+        if(!file_exists($htmlFile->getStoreName()))
+        {
+            $this->jerr('update failed!');
+        }
+        
+        $data = $this->convertStyle('', $htmlFile->getStoreName(), false);
+        
+        $htmlFile->delete();
+        unlink($htmlFile->getStoreName()) or die('Unable to delete the file');
+        
+        $this->jok($data);
+    }
+    
 }
-
-?>
