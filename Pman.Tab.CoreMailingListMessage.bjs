@@ -48,7 +48,7 @@
                                 {
                                     "listeners": {
                                         "|render": "function() \n{\n    _this.grid = this; \n    _this.dialog = Pman.Dialog.CoreMailingListMessage;\n    if (_this.panel.active) {\n       _this.grid.footer.onClick('first');\n    }\n}",
-                                        "|rowdblclick": "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    var data = this.getDataSource().getAt(rowIndex).data;\n    _this.dialog.show( data , function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n",
+                                        "|rowdblclick": "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    var data = this.getDataSource().getAt(rowIndex).data;\n    _this.dialog.show( {id : data.id, module : 'core'} , function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n",
                                         "rowclick": "function (_self, rowIndex, e)\n{\n   // _this.grid.ds.load({});\n    _this.viewPanel.view.store.load({});\n}"
                                     },
                                     "*prop": "grid",

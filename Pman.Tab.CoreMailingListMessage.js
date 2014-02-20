@@ -56,7 +56,7 @@ Pman.Tab.CoreMailingListMessage = new Roo.XComponent({
                                 {
                                     if (!_this.dialog) return;
                                     var data = this.getDataSource().getAt(rowIndex).data;
-                                    _this.dialog.show( data , function() {
+                                    _this.dialog.show( {id : data.id, module : 'core'} , function() {
                                         _this.grid.footer.onClick('first');
                                     }); 
                                 },
