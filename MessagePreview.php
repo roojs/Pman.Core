@@ -4,7 +4,7 @@ require_once 'Pman.php';
 
 class Pman_Crm_MessagePreview extends Pman
 {
-    var $masterTemplate = 'mail/rich_sample.html';
+    var $masterTemplate = 'mail/MessagePreview.html';
     
     function getAuth()
     {
