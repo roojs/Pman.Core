@@ -254,8 +254,6 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         ))."\n");
         
         
-        
-        
 // note the extra space to finish the last line..
         fwrite($fh, " " . "
 Content-Type: multipart/alternative; boundary=alt-{$random_hash}
