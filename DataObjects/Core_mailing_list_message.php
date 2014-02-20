@@ -131,8 +131,9 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $i->ontable = $this->tableName();
         $i->find();
         while ($i->fetch()){
+            $ii = clone ($i);
             $i->onid = $this->id;
-            $i->update();
+            $i->update($ii);
         }
        
     }
