@@ -33,11 +33,11 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
                         continue;
                     }
                     
-                    $path = "$dir/mail/$entry";
+                    $file = "$dir/mail/$entry";
                     
                     $ret[] = array(
                         'file' => $entry,
-                        'content' => $this->convertStyle('', $path, false)
+                        'content' => $this->convertStyle('', $file, false)
                     );
                 }
                 
