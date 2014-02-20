@@ -196,39 +196,4 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         return;
     }
     
-    function send($obj)
-    {    
-        $contents = (array)$obj;
-        
-        $q = DB_DataObject::factory('crm_mailing_list_queue');
-        $q->id = 'test-message-'. $this->id;
-        $q->message_id = $this->id;
-        $q->message_id_subject = $this->subject;
-        $q->message_id_from_email = $this->from_email;
-        $q->message_id_from_name = $this->from_name;
-        
-        $q->cachedMailWithOutImages(true, false);
-        
-        $contents['subject'] = $this->subject;
-        
-        require_once 'Pman/Core/Mailer.php';
-        
-        $templateDir = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') ;
-        $r = new Pman_Core_Mailer(array(
-            'template'=> $q->id,
-            'templateDir' => $templateDir,
-            'page' => $q,
-            'contents' => $contents
-            
-        ));
-        
-        $ret = $r->toData();
-        
-        $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $q->id . '-images.txt');
-        
-        $ret['body'] = str_replace('%Images%', $images, $ret['body']);
-        
-        return $r->send($ret);
-    }
-    
 }
