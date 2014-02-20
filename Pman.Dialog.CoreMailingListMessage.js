@@ -313,9 +313,9 @@ Pman.Dialog.CoreMailingListMessage = {
                                                         _this.dialog.el.mask("Loading");
                                                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
                                                         if(_this.data.module == 'crm'){
-                                                            _this.preview_btn.show();
                                                             _this.html_preview.show();
                                                         }
+                                                        _this.preview_btn.show();
                                                         
                                                     } else {
                                                         _this.form.setValues({
