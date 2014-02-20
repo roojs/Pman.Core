@@ -200,31 +200,16 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     {    
         $contents = (array)$obj;
         
+        $person = !empty($contents['person']) ? $contents['person'] : $this->authUser;
+        
         $this->cachedMailWithOutImages(true, false);
         
-        $contents['subject'] = $this->subject;
+        $this->getMailerObject($person, false, false, true);
         
-        require_once 'Pman/Core/Mailer.php';
-        
-        $templateDir = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') ;
-        $r = new Pman_Core_Mailer(array(
-            'template'=> $q->id,
-            'templateDir' => $templateDir,
-            'page' => $q,
-            'contents' => $contents
-            //array(
-            //    'person' => $person,
-            //    'subject' => $this->message_id_subject,
-           // )
-        ));
-        
-        
-         
-        ///print_r($r->toData());
         $ret = $r->toData();
-        $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $q->id . '-images.txt');
-       // var_dump($images);exit;
         
+        $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt');
+       
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
         return $r->send($ret);
