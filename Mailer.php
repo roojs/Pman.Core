@@ -326,20 +326,15 @@ class Pman_Core_Mailer {
     }
     function fetchImage($url)
     {
-        print_r($url);exit;
+        
         if ($url[0] == '/') {
             $ff = HTML_FlexyFramework::get();
             $file = $ff->rootDir . $url;
-            print_r($file);
-            echo "<br/>";
             require_once 'File/MimeType.php';
             $m  = new File_MimeType();
             $mt = $m->fromFilename($file);
             $ext = $m->toExt($mt); 
-            print_r($mt);
-            echo "<br/>";
-            print_r($ext);
-            echo "<br/>";exit;
+            
             return array(
                     'mimetype' => $mt,
                    'ext' => $ext,
