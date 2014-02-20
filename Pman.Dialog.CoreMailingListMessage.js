@@ -315,8 +315,6 @@ Pman.Dialog.CoreMailingListMessage = {
                                                         }
                                                         
                                                     } else {
-                                                        _this.html_preview.hide();
-                                                        _this.preview_btn.hide();
                                                         _this.form.setValues({
                                                             'from_name' : Pman.Login.authUser.name,
                                                             'from_email' : Pman.Login.authUser.email
