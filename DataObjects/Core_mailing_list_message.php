@@ -26,11 +26,13 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        $tn = $this->tableName();
+        
         if(!empty($q['search']['nameortitle'])){
             $this->whereAdd("
-                name LIKE '%{$this->escape($q['search']['nameortitle'])}%'
+                $tn.name LIKE '%{$this->escape($q['search']['nameortitle'])}%'
                 OR
-                subject LIKE '%{$this->escape($q['search']['nameortitle'])}%'
+                $tn.subject LIKE '%{$this->escape($q['search']['nameortitle'])}%'
             ");
         }
     }
