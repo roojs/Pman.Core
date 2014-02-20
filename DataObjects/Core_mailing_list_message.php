@@ -55,8 +55,6 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             $this->makeCopy($roo);
             
         }
-         
-       
     }
     
     function makeCopy($roo)
