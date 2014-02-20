@@ -1084,7 +1084,7 @@ Pman.Dialog.CoreMailingListMessage = {
                             }
                            
                             new Pman.Request({
-                                url : baseURL + '/Crm/MessagePreview',
+                                url : baseURL + '/Core/MessagePreview',
                                 method : 'POST',
                                 mask: 'Sending',
                                 params : {
