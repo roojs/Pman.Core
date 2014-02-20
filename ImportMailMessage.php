@@ -57,6 +57,7 @@ class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle
             $plain = $fc->convert('text/plain');
             $this->jok(file_get_contents($plain));
         }
+        print_r($_REQUEST);exit;
         // Import from URL
         if(isset($_REQUEST['importUrl']))
         {
