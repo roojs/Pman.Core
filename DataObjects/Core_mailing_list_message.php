@@ -206,7 +206,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         $q->message_id_subject = $this->subject;
         $q->message_id_from_email = 'admin@madeinnewzealand.com.hk';
         $q->message_id_from_name = $this->from_name;
-        print_r($contents);exit;
+        print_r($q);exit;
         $q->cachedMailWithOutImages(true, false);
         
         $contents['subject'] = $this->subject;
