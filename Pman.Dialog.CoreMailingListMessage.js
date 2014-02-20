@@ -306,6 +306,9 @@ Pman.Dialog.CoreMailingListMessage = {
                                                     
                                                     _this.form.url = baseURL + '/Roo/' + _this.data.module + '_mailing_list_message.php';
                                                     
+                                                    _this.html_preview.hide();
+                                                    _this.preview_btn.hide();
+                                                        
                                                     if(_this.data.id*1 > 0){
                                                         _this.dialog.el.mask("Loading");
                                                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
