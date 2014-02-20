@@ -1074,7 +1074,7 @@ Pman.Dialog.CoreMailingListMessage = {
                             var id = _this.form.findField('id').getValue();
                             
                             if(id*1 < 1){
-                                Roo.MessageBox.alert('Error', 'Please select a queue to send');
+                                Roo.MessageBox.alert('Error', 'Please save the message frist!');
                                 return;
                             }
                            
