@@ -140,9 +140,6 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     
     function attachmentIds()
     {
-        
-         $roo = HTML_FlexyFramework::get()->page;
-        
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8">'.$this->bodytext);
@@ -162,7 +159,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             }
             $ret[] = $cid[1];
         }
-       // print_r($ret);
+        print_r($ret);
         return $ret;
     }
     /**
