@@ -159,7 +159,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
             }
             $ret[] = $cid[1];
         }
-        print_r($ret);
+        
         return $ret;
     }
     /**
