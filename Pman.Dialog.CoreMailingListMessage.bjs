@@ -68,7 +68,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.Image.show({\n        _url : baseURL + '/Crm/ImportHtml.php'\n    }, function(data) {\n        if  (data) {\n            _this.form.findField('bodytext').setValue(data);\n        }\n    });\n}"
+                                                        "click": "function (_self, e)\n{\n    Pman.Dialog.Image.show({\n        _url : baseURL + '/Core/ImportMailMessage.php'\n    }, function(data) {\n        if  (data) {\n            _this.form.findField('bodytext').setValue(data);\n        }\n    });\n}"
                                                     },
                                                     "text": "Html File",
                                                     "xtype": "Item",

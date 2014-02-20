@@ -110,7 +110,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                 click : function (_self, e)
                                                 {
                                                     Pman.Dialog.Image.show({
-                                                        _url : baseURL + '/Crm/ImportHtml.php'
+                                                        _url : baseURL + '/Core/ImportMailMessage.php'
                                                     }, function(data) {
                                                         if  (data) {
                                                             _this.form.findField('bodytext').setValue(data);
