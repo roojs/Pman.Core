@@ -60,14 +60,9 @@ class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle
         // Import from URL
         if(isset($_REQUEST['importUrl']))
         {
-           // $host = parse_url($_REQUEST['importUrl']);
-//            if($host['host'] != 'localhost' && $host['host'] != 'roojs-edward.com' && $host['host'] != $_SERVER['HTTP_HOST'])
-//            {
-//                $this->jerr('Invalid URL!');
-//            }
             $this->checkHeader($_REQUEST['importUrl']);
             $data = $this->convertStyle($_REQUEST['importUrl'], '', true);
-         //   print_r($data);exit;
+         
             $this->jok($data);
             
         }
