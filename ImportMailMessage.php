@@ -74,7 +74,7 @@ class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle
                'ontable' =>'crm_mailing_list_message'
         ));
         $htmlFile->onUpload(false);
-       // print_r($htmlFile);
+       
         if($htmlFile->mimetype != 'text/html')
         {
             $this->jerr('accept html file only!');
@@ -87,6 +87,7 @@ class Pman_Crm_ImportHtml extends Pman_Core_ConvertStyle
         $data = $this->convertStyle('', $htmlFile->getStoreName(), false);
         
         $htmlFile->delete();
+        
         unlink($htmlFile->getStoreName()) or die('Unable to delete the file');
         
         $this->jok($data);
