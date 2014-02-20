@@ -228,6 +228,8 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
+        $random_hash = md5(date('r', time()));
+        
         $this->cachedImages($random_hash);
         
         $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
@@ -252,7 +254,7 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
         ))."\n");
         
         
-        $random_hash = md5(date('r', time()));
+        
         
 // note the extra space to finish the last line..
         fwrite($fh, " " . "
