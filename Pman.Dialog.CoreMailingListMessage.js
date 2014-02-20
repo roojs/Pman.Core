@@ -301,8 +301,8 @@ Pman.Dialog.CoreMailingListMessage = {
                                             {
                                                
                                                 if (action.type == 'setdata') {
-                                                   // _this.loaded_data = _this.form.getValues();
-                                            
+                                                    _this.data.module = _this.data.module || 'crm';
+                                                    
                                                     if(_this.data.id*1 > 0){
                                                         _this.dialog.el.mask("Loading");
                                                         this.load({ method: 'GET', params: { '_id' : _this.data.id }});
