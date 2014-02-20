@@ -36,9 +36,9 @@ Pman.Dialog.CoreMailingListMessagePreview = {
                     var m = 'Core';
                     
                     if(_this.data.module = 'crm'){
-                        M = 'Crm';
+                        m = 'Crm';
                     }
-                    
+                
                     _self.layout.getRegion('center').showPanel(0);
                     _this.panel.load({ 
                         url: baseURL + '/' + m + '/MessagePreview', 
