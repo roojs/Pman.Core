@@ -92,7 +92,7 @@ Pman.Dialog.CoreMailingListMessage = {
                                                 click : function (_self, e)
                                                 {
                                                     Pman.Dialog.CoreImportUrl.show({
-                                                        target : '/Crm/ImportHtml.php'
+                                                        target : '/Core/ImportMailMessage.php'
                                                     }, function(data) {
                                                         if  (data) {
                                                           //  Roo.log(data);
