@@ -38,14 +38,11 @@ class Pman_Core_MessagePreview extends Pman
     {
         function post()
     {
-        if(empty($_REQUEST['_id'])){
-            $this->jerr('id got error');
-        }
-        if(empty($_REQUEST['_action'])){
-            $this->jerr('preview type not set');
+        if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
+            $this->jerr('Missing Options');
         }
         
-        $msg = DB_DataObject::factory('crm_mailing_list_message');
+        $msg = DB_DataObject::factory($_REQUEST['_table']);
         
         $msg->get($_REQUEST['_id']);
         
