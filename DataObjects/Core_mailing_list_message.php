@@ -228,6 +228,8 @@ class Pman_Core_DataObjects_Core_mailing_list_message extends DB_DataObject
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
+        $this->cachedImages($random_hash);
+        
         $cachePath = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
           
         if (!$force && $this->isGenerated($cachePath)) {
