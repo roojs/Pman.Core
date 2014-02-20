@@ -356,6 +356,8 @@ Pman.Dialog.CoreMailingListMessage = {
                                             
                                             var s = Roo.get(_this.form.findField('bodytext').doc.documentElement);
                                             
+                                        
+                                            
                                             var nodes = [];
                                             s.select('img[src]').each(function(i) {
                                                 nodes.push(i.dom);
