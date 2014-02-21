@@ -405,6 +405,7 @@ class Pman_Core_Mailer {
         
         file_put_contents($cache, json_encode($ret));
         $ret['file'] = $cache . '.data';
+        print_r($ret);exit;
         return $ret;
     }  
     
