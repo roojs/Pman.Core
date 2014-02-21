@@ -258,7 +258,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         return;
     }
     
-    function send($obj, $send = true)
+    function send($obj, $force = true, $send = true)
     {   
         $contents = (array)$obj;
         
@@ -277,7 +277,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
         
         if(!$this->isGenerated($cachePath)){
-            $this->cachedMailWithOutImages(true, false);
+            $this->cachedMailWithOutImages($force, false);
         }
          
         require_once 'Pman/Core/Mailer.php';
