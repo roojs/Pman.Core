@@ -216,8 +216,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         $r = new Pman_Core_Mailer(array(
-            'template'=> 'register',
-//            'templateDir' => $templateDir,
+            'template'=> $this->tableName() . '-' . $this->id,
+            'templateDir' => $templateDir,
             'page' => $this,
             'contents' => $contents
         ));
@@ -323,15 +323,15 @@ Content-Transfer-Encoding: 7bit
             
             $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
             
-//            $images['file'] = 
-//            
-//            $mime->addHTMLImage(
-//                    $cdata['file'],
-//                     $cdata['mimetype'],
-//                     $cid.'.'.$cdata['ext'],
-//                    true,
-//                    $cdata['contentid']
-//                );
+            $images['file'] = 
+            
+            $mime->addHTMLImage(
+                    $cdata['file'],
+                     $cdata['mimetype'],
+                     $cid.'.'.$cdata['ext'],
+                    true,
+                    $cdata['contentid']
+                );
             
             
             fwrite($fh, "--rel-{$random_hash}
