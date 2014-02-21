@@ -210,9 +210,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $contents['subject'] = $this->subject;
         
-        require_once 'Pman/Core/Mailer.php';
-        
         $ui = posix_getpwuid(posix_geteuid());
+        
+        require_once 'Pman/Core/Mailer.php';
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         $r = new Pman_Core_Mailer(array(
@@ -222,11 +222,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'contents' => $contents
         ));
         
+        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        
+        if(file_exists($imageCache) && filesize($imageCache)){
+            $images = json_decode(file_get_contents($imageCache));
+            array_merge($r->images, $images);
+        }
+        
         $ret = $r->toData();
         
-        $ui = posix_getpwuid(posix_geteuid());
         
-        $images = file_get_contents(session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt');
         
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
