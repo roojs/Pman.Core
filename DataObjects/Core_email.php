@@ -26,11 +26,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        $content = array(
-            'template'      => 'REGISTER'
-        );
+        $c = DB_DataObject::factory($this->tableName());
+        $c->get(5);
         
-        $this->send($content);
+        $c->send($content);
         
         exit;
         
