@@ -367,7 +367,7 @@ class Pman_Core_Mailer {
             );
             
         }
-        
+        print_r($url);exit;
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         // add user
