@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {  
         $random_hash = md5(date('r', time()));
         
-        $this->cachedImages($random_hash);
+        $this->cachedImages();
         
         $ui = posix_getpwuid(posix_geteuid());
         
@@ -290,7 +290,7 @@ Content-Transfer-Encoding: 7bit
         
     }
     
-    function cachedImages($random_hash)
+    function cachedImages()
     {
         $ui = posix_getpwuid(posix_geteuid());
         
@@ -316,13 +316,6 @@ Content-Transfer-Encoding: 7bit
             if (!file_exists($i->getStoreName()) || !filesize($i->getStoreName())) {
                 continue;
             }
-//            $out = chunk_split(base64_encode(file_get_contents($i->getStoreName())));
-//            if (empty($out)) {
-//                continue;
-//            }
-            
-//            $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
-            
             
             $images["attachment-$i->id"] = array(
                 'file' => $i->getStoreName(),
@@ -330,19 +323,9 @@ Content-Transfer-Encoding: 7bit
                 'ext' => $y->toExt($i->mimetype),
                 'contentid' => "attachment-$i->id"
             );
-//            
-//            
-//            fwrite($fh, "--rel-{$random_hash}
-//Content-Type: {$i->mimetype}; name={$imgfn}
-//Content-Transfer-Encoding: base64
-//Content-ID: <attachment-{$i->id}>
-//Content-Disposition: inline; filename={$imgfn}
-//
-//" . $out  . "");
-
-            }
+        }
             
-            file_put_contents($imageCache, json_encode($images));
+        file_put_contents($imageCache, json_encode($images));
         
     }
     
