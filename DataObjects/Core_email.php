@@ -135,6 +135,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $i->onid = $this->id;
             $i->update($ii);
         }
+        
+        $this->cachedMailWithOutImages(true, false);
        
     }
     
