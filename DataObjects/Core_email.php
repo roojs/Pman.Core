@@ -9,7 +9,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
   
-    public $__table = 'core_mailing_list_message';    // table name
+    public $__table = 'core_email';    // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // 
     public $subject;                         // blob(65535)  blob
