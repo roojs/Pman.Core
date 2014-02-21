@@ -206,7 +206,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {    
         $contents = (array)$obj;
         
-//        $this->cachedMailWithOutImages(true, false);
+        $this->cachedMailWithOutImages(true, false);
         
         $contents['subject'] = $this->subject;
         
