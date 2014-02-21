@@ -258,7 +258,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         return;
     }
     
-    function send($obj)
+    function send($obj, $send = true)
     {   
         $contents = (array)$obj;
         
@@ -298,6 +298,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $ret = $r->toData();
+        
+        if(!$send){
+            return $ret;
+        }
         
         return $r->send($ret);
     }
