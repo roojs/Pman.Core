@@ -226,7 +226,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         if(file_exists($imageCache) && filesize($imageCache)){
             $images = json_decode(file_get_contents($imageCache));
-            array_merge($r->images, $images);
+            $r->images = array_merge($r->images, $images);
         }
         
         $ret = $r->toData();
