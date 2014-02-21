@@ -277,10 +277,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
         
         if(!$this->isGenerated($cachePath)){
-            print_r('run');exit;
             $this->cachedMailWithOutImages(true, false);
         }
-         print_r('out');exit;
+         
         require_once 'Pman/Core/Mailer.php';
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
