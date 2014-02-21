@@ -272,11 +272,11 @@ Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 {$this->plaintext}
-    
-%Images%
 
 --alt-{$random_hash}
 Content-Type: multipart/related; boundary=rel-{$random_hash}
+
+%Images%
 
 --rel-{$random_hash}
 Content-Type: text/html; charset=utf-8
