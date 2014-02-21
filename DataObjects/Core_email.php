@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for core_mailinglist_message
+ * Table Definition for core_email
  */
 require_once 'DB/DataObject.php';
 
