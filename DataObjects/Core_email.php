@@ -213,7 +213,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $ret = $r->toData();
         
-        $images = file_get_contents(session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt');
+        $ui = posix_getpwuid(posix_geteuid());
+        
+        $images = file_get_contents(session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt');
         
         $ret['body'] = str_replace('%Images%', $images, $ret['body']);
         
