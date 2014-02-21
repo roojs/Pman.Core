@@ -182,7 +182,7 @@ Pman.Tab.CoreEmail = new Roo.XComponent({
                                                     return;
                                                 }
                                             new Pman.Request({
-                                                url : baseURL + '/Roo/Core_mailing_list_message',
+                                                url : baseURL + '/Roo/Core_email',
                                                 method : 'POST',
                                                 params : {
                                                     id : sel.data.id,
