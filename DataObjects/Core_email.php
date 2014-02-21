@@ -235,14 +235,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if(!empty($unsubscribe)){
-            $element = $doc->createElement('img');
-        
-            $element->setAttribute('src', $cfg ['server_baseurl']  . '/Crm/Open/' . $this->id . '/{person.id}.html');
-            $element->setAttribute('width', '1');
-            $element->setAttribute('height', '1');
-
-            $html = $doc->getElementsByTagName('html');
-            $html->item(0)->appendChild($element);
+//            $element = $doc->createElement('img');
+//        
+//            $element->setAttribute('src', $cfg ['server_baseurl']  . '/Crm/Open/' . $this->id . '/{person.id}.html');
+//            $element->setAttribute('width', '1');
+//            $element->setAttribute('height', '1');
+//
+//            $html = $doc->getElementsByTagName('html');
+//            $html->item(0)->appendChild($element);
             
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, $this->plaintext);
         }
