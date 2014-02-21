@@ -12,8 +12,9 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
         $base = 'http://' . $_SERVER['SERVER_NAME'] . $this->rootURL;
+        print_r($)
         
-//        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/orderShipment.body.html';
+//        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/register.body.html';
 //        
 //        $data = $this->convertStyle($base, $path, false);
 //        
