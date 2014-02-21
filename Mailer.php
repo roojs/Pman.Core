@@ -199,6 +199,7 @@ class Pman_Core_Mailer {
             $mime->setTXTBody($parts[2]);
             $mime->setHTMLBody($htmlbody);
 //            var_dump($mime);exit;
+            print_r($this->images);exit;
             foreach($this->images as $cid=>$cdata) { 
             
                 $mime->addHTMLImage(
