@@ -576,7 +576,7 @@ Pman.Dialog.CoreEmail = {
                                                                                                 return false;
                                                                                             }
                                                                                             o.params.onid = id
-                                                                                            o.params.ontable = 'core_mailing_list_message';
+                                                                                            o.params.ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';
                                                                                             
                                                                                            // o.params.imgtype = 'PressRelease';
                                                                                             //o.params['query[imagesize]'] = '150x150';
