@@ -206,7 +206,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {   
         $contents = (array)$obj;
         
-        $this->get('name', 'SHIPMENT');
+        $this->get('name', $contents['template']);
         
         if(empty($this->id)){
             return false;
