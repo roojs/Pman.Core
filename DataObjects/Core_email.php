@@ -238,9 +238,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
-        $random_hash = md5(date('r', time()));
         
-        $this->cachedImages();
         
         $ui = posix_getpwuid(posix_geteuid());
         
@@ -254,7 +252,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             mkdir(dirname($cachePath), 0700, true);
         }
         
-        $this->processRelacements($replace_links);
+        $random_hash = md5(date('r', time()));
+        
+        $this->cachedImages();
         
         $fh = fopen($cachePath, 'w');
 
