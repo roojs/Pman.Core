@@ -316,6 +316,7 @@ class Pman_Core_Mailer {
                 continue;
             }
             $conv = $this->fetchImage($url);
+            print_r($conv);exit;
             $this->images[$conv['contentid']] = $conv;
             
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
