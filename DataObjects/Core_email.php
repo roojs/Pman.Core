@@ -212,6 +212,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function send($obj)
     {    
+        print_r($obj);exit;
         $contents = (array)$obj;
         
         $this->cachedMailWithOutImages(true, false);
