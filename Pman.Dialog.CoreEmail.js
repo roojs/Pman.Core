@@ -305,7 +305,7 @@ Pman.Dialog.CoreEmail = {
                                                
                                                 if (action.type == 'setdata') {
                                                 
-                                                    _this.data.module = _this.data.module || 'crm';
+                                                    _this.data.module = _this.data.module || 'crm_mailing_list_message';
                                                     
                                                     _this.form.url = baseURL + '/Roo/' + _this.data.module + '_mailing_list_message.php';
                                                     
