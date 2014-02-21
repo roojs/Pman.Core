@@ -203,7 +203,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         require_once 'Pman/Core/Mailer.php';
         
-        $templateDir = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') ;
+        $ui = posix_getpwuid(posix_geteuid());
+        
+        $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         $r = new Pman_Core_Mailer(array(
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
