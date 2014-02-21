@@ -403,7 +403,7 @@ Pman.Dialog.CoreEmail = {
                                             }
                                             mkimg();
                                         },
-                                        url : baseURL + '/Roo/Core_mailing_list_message.php',
+                                        url : baseURL + '/Roo/crm_mailing_list_message.php',
                                         items : [
                                             {
                                                 xtype: 'Row',
