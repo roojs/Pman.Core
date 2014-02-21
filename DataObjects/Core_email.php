@@ -273,24 +273,23 @@ Content-Transfer-Encoding: 7bit
 
 {$this->plaintext}
     
-%Images%
+--alt-{$random_hash}
+Content-Type: multipart/related; boundary=rel-{$random_hash}
+
+--rel-{$random_hash}
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+{$this->bodytext}
+
 ");  
 
-//        fwrite($fh,"%Images%
-//--rel-{$random_hash}--
-//
-//--alt-{$random_hash}--
-//");
+        fwrite($fh,"%Images%
+--rel-{$random_hash}--
+
+--alt-{$random_hash}--
+");
         fclose($fh);
-        
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
-          
-        
-        if (!file_exists(dirname($cachePath))) {
-            mkdir(dirname($cachePath), 0700, true);
-        }
-        
-        file_put_contents($cachePath, $this->bodytext);
         
     }
     
