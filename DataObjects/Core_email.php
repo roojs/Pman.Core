@@ -26,6 +26,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        $content = array(
+            'template'      => 'REGISTER'
+        );
+        
+        $this->send($content);
+        
+        exit;
+        
         $tn = $this->tableName();
         
         if(!empty($q['search']['nameortitle'])){
