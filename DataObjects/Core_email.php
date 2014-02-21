@@ -245,7 +245,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {  
         $random_hash = md5(date('r', time()));
         
-        $this->cachedImages($random_hash);
+//        $this->cachedImages($random_hash);
         
         $ui = posix_getpwuid(posix_geteuid());
         
@@ -298,6 +298,15 @@ Content-Transfer-Encoding: 7bit
 //--alt-{$random_hash}--
 //");
         fclose($fh);
+        
+        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
+        
+        if (!file_exists(dirname($cachePath))) {
+            mkdir(dirname($cachePath), 0700, true);
+        }
+        
+        file_put_contents($cachePath, $this->bodytext);
+        
         
     }
     
