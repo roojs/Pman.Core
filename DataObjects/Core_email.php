@@ -296,7 +296,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $ret = $r->toData();
-        
+        exit;
         return $r->send($ret);
     }
     
