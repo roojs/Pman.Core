@@ -26,7 +26,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        print_r(posix_getpwuid(posix_geteuid()));exit;
         $tn = $this->tableName();
         
         if(!empty($q['search']['nameortitle'])){
