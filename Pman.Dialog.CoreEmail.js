@@ -1063,7 +1063,7 @@ Pman.Dialog.CoreEmail = {
                         {
                             //_this.dialog.hide();
                             Roo.log(_this.data.module);
-                            Pman.Dialog.CoreMailingListMessagePreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
+                            Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
                         },
                         render : function (_self)
                         {
