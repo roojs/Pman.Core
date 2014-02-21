@@ -206,7 +206,7 @@ Pman.Tab.CoreEmail = new Roo.XComponent({
                                             click : function()
                                             {
                                                 if (!_this.dialog) return;
-                                                _this.dialog.show( { id : 0, module : 'core' } , function() {
+                                                _this.dialog.show( { id : 0, module : 'core_email' } , function() {
                                                     _this.grid.footer.onClick('first');
                                                }); 
                                             }
