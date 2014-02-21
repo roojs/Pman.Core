@@ -29,7 +29,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $c = DB_DataObject::factory($this->tableName());
         $c->get(5);
         
-        $c->send($content);
+        $c->send(array());
         
         exit;
         
