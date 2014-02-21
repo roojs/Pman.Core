@@ -275,8 +275,6 @@ Content-Transfer-Encoding: 7bit
     
 
 
-
-
 ");  
 
 //        fwrite($fh,"%Images%
