@@ -301,8 +301,6 @@ Content-Transfer-Encoding: 7bit
         
         $ids = $this->attachmentIds();
         
-        //$this->jerr(print_r($ids,true));
-        
          
         $fh = fopen($imageCache, 'w');
         
