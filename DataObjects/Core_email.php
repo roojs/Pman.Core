@@ -178,6 +178,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function processRelacements($replace_links = true)
     {   
+        $cfg = HTML_FlexyFramework::get()->Pman_Crm;
+        
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8">'.$this->bodytext);
@@ -192,12 +194,68 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
         }
         
+        $unsubscribe = false;
+        
+        if(!empty($cfg)){
+            $unsubscribe = $cfg ['server_baseurl'] . '/Crm/Unsubscribe/' . $this->id . '/{person.id}';
+        }
+       
+        foreach ($xpath->query('//a[@href]') as $a) { 
+            
+            $href = $a->getAttribute('href');
+            
+            if(preg_match('/#unsubscribe/', $href) && !empty($unsubscribe)){
+                $a->setAttribute('href', $unsubscribe);
+                continue;
+            }
+            
+            if(!preg_match('/^http(.*)/', $href)){
+                continue;
+            }
+            if (!$replace_links) {
+                continue;
+            }
+            $link = DB_DataObject::factory('crm_mailing_list_link');
+            $link->setFrom(array(
+                'url' => $href
+            ));
+            
+            if(!$link->find(true)){
+                $link->insert();
+            }
+            
+            if(!$link->id){
+                continue;
+            }
+            
+            $l = $cfg ['server_baseurl'] . '/Crm/Link/' .$this->id . '/' . $link->id . '/{person.id}.html';
+            
+            $a->setAttribute('href', $l);
+            
+        }
+        
+        if(!empty($unsubscribe)){
+            $element = $doc->createElement('img');
+        
+            $element->setAttribute('src', $cfg ['server_baseurl']  . '/Crm/Open/' . $this->id . '/{person.id}.html');
+            $element->setAttribute('width', '1');
+            $element->setAttribute('height', '1');
+
+            $html = $doc->getElementsByTagName('html');
+            $html->item(0)->appendChild($element);
+            
+            $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, $this->plaintext);
+        }
+        
+        
         $this->bodytext = $doc->saveHTML();
         
         libxml_use_internal_errors (false);
         
         $this->bodytext = str_replace('%7B', '{', $this->bodytext ); // kludge as template is not interpretated as html.
         $this->bodytext = str_replace('%7D', '}', $this->bodytext ); // kludge as template is not interpretated as html.
+         
+        
         
         return;
     }
