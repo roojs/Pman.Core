@@ -25,7 +25,11 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         $ui = parse_url($base);
-        print_r($ui);exit;
+        
+        if($ui['host'] == 'localhost'){
+            return $ui['scheme'] .'://'.$ui['host']. $ui['path'] . '/'. $url;
+        }
+        
         if (substr($url,0,2) == '//') {
             return $ui['scheme'] .':' .  $url;
         }
