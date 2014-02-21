@@ -368,6 +368,7 @@ class Pman_Core_Mailer {
             
         }
         
+        $url = 'http://www.google.com.hk/images/srpr/logo11w.png';
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         // add user
