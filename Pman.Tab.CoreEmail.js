@@ -120,7 +120,7 @@ Pman.Tab.CoreEmail = new Roo.XComponent({
                                 xns: Roo,
                                 displayInfo : true,
                                 displayMsg : "Displaying Message{0} - {1} of {2}",
-                                emptyMsg : "No Mailing List Message found",
+                                emptyMsg : "Nothing found",
                                 pageSize : 25
                             },
                             toolbar : {
