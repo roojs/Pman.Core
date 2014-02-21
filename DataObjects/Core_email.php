@@ -278,11 +278,7 @@ Content-Type: multipart/related; boundary=rel-{$random_hash}
 
 %Images%
 
---rel-{$random_hash}
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
 
-{$this->bodytext}
 
 ");  
 
