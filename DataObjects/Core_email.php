@@ -273,8 +273,7 @@ Content-Transfer-Encoding: 7bit
 
 {$this->plaintext}
     
-
-
+%Images%
 ");  
 
 //        fwrite($fh,"%Images%
