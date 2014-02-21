@@ -95,7 +95,7 @@ Pman.Tab.CoreEmail = new Roo.XComponent({
                                     xtype: 'HttpProxy',
                                     xns: Roo.data,
                                     method : 'GET',
-                                    url : baseURL + '/Roo/Core_mailing_list_message.php'
+                                    url : baseURL + '/Roo/Core_email.php'
                                 },
                                 reader : {
                                     xtype: 'JsonReader',

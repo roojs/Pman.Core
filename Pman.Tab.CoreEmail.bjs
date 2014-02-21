@@ -77,7 +77,7 @@
                                                     "*prop": "proxy",
                                                     "method": "GET",
                                                     "xtype": "HttpProxy",
-                                                    "|url": "baseURL + '/Roo/Core_mailing_list_message.php'",
+                                                    "|url": "baseURL + '/Roo/Core_email.php'",
                                                     "|xns": "Roo.data"
                                                 },
                                                 {
