@@ -316,7 +316,6 @@ class Pman_Core_Mailer {
                 continue;
             }
             $conv = $this->fetchImage($url);
-            print_r($conv);exit;
             $this->images[$conv['contentid']] = $conv;
             
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
@@ -380,7 +379,6 @@ class Pman_Core_Mailer {
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
             $ret =  json_decode($cache);
             $ret['file'] = $cache . '.data';
-            print_r($ret);exit;
             return $ret;
         }
         if (!file_exists(dirname($cache))) {
