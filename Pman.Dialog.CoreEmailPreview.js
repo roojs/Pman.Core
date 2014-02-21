@@ -35,7 +35,7 @@ Pman.Dialog.CoreEmailPreview = {
                 {
                     var m = 'Core';
                     
-                    if(_this.data.module == 'crm'){
+                    if(_this.data.module == 'crm_mailing_list_message'){
                         m = 'Crm';
                     }
                 
