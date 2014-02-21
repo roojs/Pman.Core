@@ -294,7 +294,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $images = json_decode(file_get_contents($imageCache), true);
             $r->images = $images;
         }
-        print_r('run');exit;
+        
         $ret = $r->toData();
         
         return $r->send($ret);
