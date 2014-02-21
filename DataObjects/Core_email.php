@@ -309,6 +309,9 @@ Content-Transfer-Encoding: 7bit
         $i->ontable = $this->tableName();
         $i->whereAddIn('id', $ids, 'int');
         $i->find();
+        
+        $images = array();
+        
         while ($i->fetch()){
             if (!file_exists($i->getStoreName()) || !filesize($i->getStoreName())) {
                 continue;
@@ -317,7 +320,20 @@ Content-Transfer-Encoding: 7bit
             if (empty($out)) {
                 continue;
             }
+            
             $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
+            
+            $images['file'] = 
+            
+            $mime->addHTMLImage(
+                    $cdata['file'],
+                     $cdata['mimetype'],
+                     $cid.'.'.$cdata['ext'],
+                    true,
+                    $cdata['contentid']
+                );
+            
+            
             fwrite($fh, "--rel-{$random_hash}
 Content-Type: {$i->mimetype}; name={$imgfn}
 Content-Transfer-Encoding: base64
