@@ -280,7 +280,9 @@ Content-Transfer-Encoding: 7bit
     
     function cachedImages($random_hash)
     {
-        $imageCache = session_save_path() . '/email-cache-' . getenv('APACHE_RUN_USER') . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        $ui = posix_getpwuid(posix_geteuid());
+        
+        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         $ids = $this->attachmentIds();
         
