@@ -258,7 +258,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-        print_r($this->bodytext);exit;
+//        print_r($this->bodytext);exit;
 //        $this->processRelacements($replace_links);
         
         $fh = fopen($cachePath, 'w');
@@ -288,7 +288,7 @@ Content-Type: multipart/related; boundary=rel-{$random_hash}
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
-{$this->bodytext}
+
 
 ");  
 
