@@ -315,7 +315,6 @@ class Pman_Core_Mailer {
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
-            print_r($url);exit;
             $conv = $this->fetchImage($url);
             $this->images[$conv['contentid']] = $conv;
             
