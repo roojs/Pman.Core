@@ -556,7 +556,7 @@
                 },
                 {
                     "listeners": {
-                        "click": "function (_self, e)\n{\n    //_this.dialog.hide();\n    \n    var id = _this.form.findField('id').getValue();\n    \n    if(id*1 < 1){\n        Roo.MessageBox.alert('Error', 'Please save the message frist!');\n        return;\n    }\n   \n    new Pman.Request({\n        url : baseURL + '/Crm/MessagePreview',\n        method : 'POST',\n        mask: 'Sending',\n        params : {\n            _id : id\n        }, \n        success : function(res) { \n            if(res.data == 'SUCCESS'){\n                Roo.MessageBox.alert(\"Email Sent\", 'The report was sent to your email (HTML format).');\n            }\n        }\n    });\n}",
+                        "click": "function (_self, e)\n{\n    //_this.dialog.hide();\n    \n    var id = _this.form.findField('id').getValue();\n    \n    if(id*1 < 1){\n        Roo.MessageBox.alert('Error', 'Please save the message frist!');\n        return;\n    }\n   \n    new Pman.Request({\n        url : baseURL + '/Core/MessagePreview',\n        method : 'POST',\n        mask: 'Sending',\n        params : {\n            _id : id,\n            _table : _this.data.module\n        }, \n        success : function(res) { \n            if(res.data == 'SUCCESS'){\n                Roo.MessageBox.alert(\"Email Sent\", 'The report was sent to your email (HTML format).');\n            }\n        }\n    });\n}",
                         "render": "function (_self)\n{\n    _this.html_preview = _self;\n}"
                     },
                     "*prop": "buttons[]",

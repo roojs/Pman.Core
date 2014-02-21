@@ -1086,11 +1086,12 @@ Pman.Dialog.CoreEmail = {
                             }
                            
                             new Pman.Request({
-                                url : baseURL + '/Crm/MessagePreview',
+                                url : baseURL + '/Core/MessagePreview',
                                 method : 'POST',
                                 mask: 'Sending',
                                 params : {
-                                    _id : id
+                                    _id : id,
+                                    _table : _this.data.module
                                 }, 
                                 success : function(res) { 
                                     if(res.data == 'SUCCESS'){
