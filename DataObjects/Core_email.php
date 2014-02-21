@@ -323,15 +323,15 @@ Content-Transfer-Encoding: 7bit
             
             $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
             
-            $images['file'] = 
-            
-            $mime->addHTMLImage(
-                    $cdata['file'],
-                     $cdata['mimetype'],
-                     $cid.'.'.$cdata['ext'],
-                    true,
-                    $cdata['contentid']
-                );
+//            $images['file'] = 
+//            
+//            $mime->addHTMLImage(
+//                    $cdata['file'],
+//                     $cdata['mimetype'],
+//                     $cid.'.'.$cdata['ext'],
+//                    true,
+//                    $cdata['contentid']
+//                );
             
             
             fwrite($fh, "--rel-{$random_hash}
