@@ -41,7 +41,7 @@
                             "fitToframe": true,
                             "region": "center",
                             "tableName": "core_email",
-                            "title": "core_mailing_list_message",
+                            "title": "core_email",
                             "xtype": "GridPanel",
                             "|xns": "Roo",
                             "items": [

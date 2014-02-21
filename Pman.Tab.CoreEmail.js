@@ -39,7 +39,7 @@ Pman.Tab.CoreEmail = new Roo.XComponent({
                         fitToframe : true,
                         region : 'center',
                         tableName : 'core_email',
-                        title : "core_mailing_list_message",
+                        title : "core_email",
                         grid : {
                             xtype: 'Grid',
                             xns: Roo.grid,
