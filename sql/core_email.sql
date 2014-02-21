@@ -1,4 +1,4 @@
-CREATE  TABLE core_mailing_list_message (
+CREATE  TABLE core_email (
   id INT(11) NOT NULL AUTO_INCREMENT ,
   subject TEXT NULL ,
   bodytext TEXT NULL ,
