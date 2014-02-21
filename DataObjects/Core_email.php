@@ -215,7 +215,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $contents = (array)$obj;
         
         $this->cachedMailWithOutImages(true, false);
-        
+        exit;
         $contents['subject'] = $this->subject;
         
         require_once 'Pman/Core/Mailer.php';
@@ -245,12 +245,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {  
         $random_hash = md5(date('r', time()));
         
-//        $this->cachedImages($random_hash);
+        $this->cachedImages($random_hash);
         
         $ui = posix_getpwuid(posix_geteuid());
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
-          
+          print_r($cachePath);exit;
         if (!$force && $this->isGenerated($cachePath)) {
             return;
         }
@@ -258,14 +258,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-//        print_r($this->bodytext);exit;
-//        $this->processRelacements($replace_links);
+        
+        $this->processRelacements($replace_links);
         
         $fh = fopen($cachePath, 'w');
 
         fwrite($fh, implode("\n", array(
             "From: {t.messageFrom():h} ",
-            "To: edward@roojs.com ",
+            "To: {t.person.getEmailFrom():h} ",
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} "
         ))."\n");
@@ -288,25 +288,16 @@ Content-Type: multipart/related; boundary=rel-{$random_hash}
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
-
+{$this->bodytext}
 
 ");  
 
-//        fwrite($fh,"%Images%
-//--rel-{$random_hash}--
-//
-//--alt-{$random_hash}--
-//");
+        fwrite($fh,"%Images%
+--rel-{$random_hash}--
+
+--alt-{$random_hash}--
+");
         fclose($fh);
-        
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
-        
-        if (!file_exists(dirname($cachePath))) {
-            mkdir(dirname($cachePath), 0700, true);
-        }
-        
-        file_put_contents($cachePath, $this->bodytext);
-        
         
     }
     
