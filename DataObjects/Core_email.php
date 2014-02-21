@@ -136,13 +136,13 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $i->update($ii);
         }
         
-        $this->cachedMailWithOutImages(true, false);
+        $this->cachedMailWithOutImages(true, (get_class($this) == 'Pman_Core_DataObjects_Core_email') ? false : true);
        
     }
     
     function onUpdate($old, $q,$roo)
     {
-        $this->cachedMailWithOutImages(true, false);
+        $this->cachedMailWithOutImages(true, (get_class($this) == 'Pman_Core_DataObjects_Core_email') ? false : true);
     }
 
 
