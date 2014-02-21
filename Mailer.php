@@ -368,7 +368,6 @@ class Pman_Core_Mailer {
             
         }
         
-        $url = 'http://www.google.com.hk/images/srpr/logo11w.png';
         // CACHE???
         // 2 files --- the info file.. and the actual file...
         // add user
@@ -406,7 +405,6 @@ class Pman_Core_Mailer {
         
         file_put_contents($cache, json_encode($ret));
         $ret['file'] = $cache . '.data';
-        print_r($ret);exit;
         return $ret;
     }  
     
