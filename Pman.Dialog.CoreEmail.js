@@ -792,7 +792,7 @@ Pman.Dialog.CoreEmail = {
                                     {
                                         options.params.onid = _this.data.id;
                                 
-                                        options.params.ontable = (_this.data.module) ? _this.data.module + '_mailing_list_message' : 'crm_mailing_list_message';
+                                        options.params.ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';
                                     }
                                 }
                             },
