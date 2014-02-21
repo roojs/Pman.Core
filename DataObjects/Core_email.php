@@ -312,37 +312,40 @@ Content-Transfer-Encoding: 7bit
         
         $images = array();
         
+        require_once 'File/MimeType.php';
+        $y = new File_MimeType();
+        
         while ($i->fetch()){
             if (!file_exists($i->getStoreName()) || !filesize($i->getStoreName())) {
                 continue;
             }
-            $out = chunk_split(base64_encode(file_get_contents($i->getStoreName())));
-            if (empty($out)) {
-                continue;
-            }
+//            $out = chunk_split(base64_encode(file_get_contents($i->getStoreName())));
+//            if (empty($out)) {
+//                continue;
+//            }
             
-            $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
-            
-            $images['file'] = 
-            
-            $mime->addHTMLImage(
-                    $cdata['file'],
-                     $cdata['mimetype'],
-                     $cid.'.'.$cdata['ext'],
-                    true,
-                    $cdata['contentid']
-                );
+//            $imgfn = urlencode(preg_replace('/#.*$/i', '' , $i->filename));
             
             
-            fwrite($fh, "--rel-{$random_hash}
-Content-Type: {$i->mimetype}; name={$imgfn}
-Content-Transfer-Encoding: base64
-Content-ID: <attachment-{$i->id}>
-Content-Disposition: inline; filename={$imgfn}
-
-" . $out  . "");
+            $images["attachment-$i->id"] = array(
+                'file' => $i->getStoreName(),
+                'mimetype' => $i->mimetype,
+                'ext' => $y->toExt($i->mimetype),
+                'contentid' => "attachment-$i->id"
+            );
+//            
+//            
+//            fwrite($fh, "--rel-{$random_hash}
+//Content-Type: {$i->mimetype}; name={$imgfn}
+//Content-Transfer-Encoding: base64
+//Content-ID: <attachment-{$i->id}>
+//Content-Disposition: inline; filename={$imgfn}
+//
+//" . $out  . "");
 
             }
+            
+            file_put_contents($imageCache, json_encode($images));
         
     }
     
