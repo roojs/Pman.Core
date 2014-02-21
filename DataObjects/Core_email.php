@@ -273,6 +273,8 @@ Content-Transfer-Encoding: 7bit
 
 {$this->plaintext}
     
+%Images%
+
 --alt-{$random_hash}
 Content-Type: multipart/related; boundary=rel-{$random_hash}
 
@@ -284,7 +286,7 @@ Content-Transfer-Encoding: 7bit
 
 ");  
 
-        fwrite($fh,"%Images%
+        fwrite($fh,"
 --rel-{$random_hash}--
 
 --alt-{$random_hash}--
