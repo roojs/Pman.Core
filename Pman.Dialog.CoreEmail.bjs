@@ -493,7 +493,7 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "|click": "function()\n{\n    var id = _this.form.findField('id').getValue();\n    \n    if(id*1 < 1){\n        Roo.MessageBox.alert('Error', 'Please save the email template first');\n        return;\n    }\n    \n    var ontable = (_this.data.module) ? _this.data.module + '_mailing_list_message' : 'crm_mailing_list_message';\n    \n    Pman.Dialog.Image.show( { id : 0, onid: id, ontable: ontable }, function() {\n        _this.igrid.getDataSource().load({});\n    }); \n}\n"
+                                                "|click": "function()\n{\n    var id = _this.form.findField('id').getValue();\n    \n    if(id*1 < 1){\n        Roo.MessageBox.alert('Error', 'Please save the email template first');\n        return;\n    }\n    \n    var ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';\n    \n    Pman.Dialog.Image.show( { id : 0, onid: id, ontable: ontable }, function() {\n        _this.igrid.getDataSource().load({});\n    }); \n}\n"
                                             },
                                             "cls": "x-btn-text-icon",
                                             "text": "Add",
