@@ -271,18 +271,20 @@ Content-Type: multipart/alternative; boundary=alt-{$random_hash}
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-test
-
+{$this->plaintext}
+    
 --alt-{$random_hash}
 Content-Type: multipart/related; boundary=rel-{$random_hash}
 
-%Images%
+--rel-{$random_hash}
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
 
-
+{$this->bodytext}
 
 ");  
 
-        fwrite($fh,"
+        fwrite($fh,"%Images%
 --rel-{$random_hash}--
 
 --alt-{$random_hash}--
