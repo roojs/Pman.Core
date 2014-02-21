@@ -206,12 +206,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {    
         $contents = (array)$obj;
         
-//        $this->cachedMailWithOutImages(true, false);
-        
         $contents['subject'] = $this->subject;
         
         $ui = posix_getpwuid(posix_geteuid());
         
+        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
+        
+        if(!$this->isGenerated($cachePath)){
+            $this->cachedMailWithOutImages(true, false);
+        }
+         
         require_once 'Pman/Core/Mailer.php';
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
