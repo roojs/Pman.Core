@@ -225,7 +225,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         if(file_exists($imageCache) && filesize($imageCache)){
-            $images = json_decode(file_get_contents($imageCache));
+            $images = json_decode(file_get_contents($imageCache), true);
             echo "<PRE>";print_r($images);exit;
             $r->images = array_merge($r->images, $images);
         }
