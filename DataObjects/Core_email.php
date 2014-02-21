@@ -204,6 +204,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function send($obj)
     {    
+        $this->get('name', 'REGISTER');
+        
+        print_r($this);exit;
+        
         $contents = (array)$obj;
         
         $contents['subject'] = $this->subject;
