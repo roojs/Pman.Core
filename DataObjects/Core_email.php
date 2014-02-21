@@ -203,12 +203,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     }
     
     function send($obj)
-    {    
-        $this->get('name', 'REGISTER');
-        
-        print_r($this);exit;
-        
+    {   
         $contents = (array)$obj;
+        
+        $this->get('name', $contents['template']);
+        
+        if(empty($this->id)){
+            return false;
+        }
         
         $contents['subject'] = $this->subject;
         
