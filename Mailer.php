@@ -374,7 +374,7 @@ class Pman_Core_Mailer {
         // unix only...
         $uinfo = posix_getpwuid( posix_getuid () ); 
         $user = $uinfo['name']; 
-        print_r(md5($url));exit;
+        
         $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
             $ret =  json_decode($cache);
