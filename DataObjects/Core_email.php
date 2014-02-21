@@ -292,11 +292,11 @@ Content-Transfer-Encoding: 7bit
 
 ");  
 
-        fwrite($fh,"%Images%
---rel-{$random_hash}--
-
---alt-{$random_hash}--
-");
+//        fwrite($fh,"%Images%
+//--rel-{$random_hash}--
+//
+//--alt-{$random_hash}--
+//");
         fclose($fh);
         
     }
