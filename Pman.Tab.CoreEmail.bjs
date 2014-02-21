@@ -161,7 +161,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "|click": "function()\n{\n    Pman.genericDelete(_this, 'core_mailing_list_message');\n    \n}\n"
+                                                        "|click": "function()\n{\n    Pman.genericDelete(_this, 'core_email');\n    \n}\n"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Delete",
