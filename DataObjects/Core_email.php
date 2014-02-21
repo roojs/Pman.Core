@@ -255,8 +255,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $this->bodytext = str_replace('%7B', '{', $this->bodytext ); // kludge as template is not interpretated as html.
         $this->bodytext = str_replace('%7D', '}', $this->bodytext ); // kludge as template is not interpretated as html.
          
-        
-        
         return;
     }
     
