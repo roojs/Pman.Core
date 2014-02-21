@@ -40,18 +40,12 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr('Missing Options');
         }
         
-        $mid = $_REQUEST['_id'];
-        
-        $mlq = DB_DataObject::factory($_REQUEST['_table']);
-        
-        $mlq->get($_REQUEST['_id']);
-        
         $content = array(
             'template' => $mlq->name,
             'person' => $this->authUser
         );
         
-        $sent = DB_DataObject::factory('crm_mailing_list_message')->send($content);
+        $sent = DB_DataObject::factory($_REQUEST['_table'])->send($content);
         
         if(!is_object($sent)){
             $this->jok('SUCCESS');
