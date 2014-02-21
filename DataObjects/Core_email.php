@@ -232,9 +232,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $ret = $r->toData();
         
         
-        
-        $ret['body'] = str_replace('%Images%', $images, $ret['body']);
-        
         return $r->send($ret);
     }
     
