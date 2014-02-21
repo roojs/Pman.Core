@@ -279,8 +279,9 @@ Content-Transfer-Encoding: 7bit
 ");
         fclose($fh);
         
+        $this->processRelacements($replace_links);
+        
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
-          
         
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
