@@ -26,13 +26,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        $c = DB_DataObject::factory($this->tableName());
-        $c->get(5);
-        
-        $c->send(array());
-        
-        exit;
-        
         $tn = $this->tableName();
         
         if(!empty($q['search']['nameortitle'])){
@@ -211,7 +204,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function send($obj)
     {    
-        
         $contents = (array)$obj;
         
         $this->cachedMailWithOutImages(true, false);
@@ -265,7 +257,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 
         fwrite($fh, implode("\n", array(
             "From: {t.messageFrom():h} ",
-            "To: edward@roojs.com ",
+            "To: {t.person.getEmailFrom():h} ",
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} "
         ))."\n");
