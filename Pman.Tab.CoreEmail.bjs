@@ -1,10 +1,10 @@
 {
     "id": "roo-file-314",
     "name": "Pman.Tab.CoreEmail",
-    "parent": "",
+    "parent": "Pman.Tab.Admin",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Tab.CoreEmail.bjs",
-    "items": false,
+    "items": [],
     "permname": "",
-    "modOrder": "001"
+    "modOrder": "999"
 }
