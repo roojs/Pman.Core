@@ -51,7 +51,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function beforeUpdate($old, $request,$roo)
     {   
-        print_r(get_class($this));exit;
         if (!empty($request['_make_copy'])) {
             $this->makeCopy($roo);
             
