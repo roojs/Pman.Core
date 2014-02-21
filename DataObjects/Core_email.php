@@ -273,12 +273,7 @@ Content-Transfer-Encoding: 7bit
 
 {$this->plaintext}
     
---alt-{$random_hash}
-Content-Type: multipart/related; boundary=rel-{$random_hash}
 
---rel-{$random_hash}
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: 7bit
 
 
 
