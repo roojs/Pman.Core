@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $roo->jok("duplicated");
     }
     
-    function onInsert($request,$roo)
+    function onInsert($q,$roo)
     {   
         $i = DB_DataObject::factory('Images');
         $i->onid = 0;
@@ -140,6 +140,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
        
     }
     
+    function onUpdate($old, $q,$roo)
+    {
+        $this->cachedMailWithOutImages(true, false);
+    }
+
+
     function attachmentIds()
     {
         libxml_use_internal_errors (true);
