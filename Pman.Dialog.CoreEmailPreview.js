@@ -33,25 +33,22 @@ Pman.Dialog.CoreEmailPreview = {
             listeners : {
                 show : function (_self)
                 {
-                    var m = 'Core';
                     
-                    if(_this.data.module == 'crm_mailing_list_message'){
-                        m = 'Crm';
-                    }
-                
                     _self.layout.getRegion('center').showPanel(0);
                     _this.panel.load({ 
-                        url: baseURL + '/' + m + '/MessagePreview', 
+                        url: baseURL + '/Core/MessagePreview', 
                         params  : {
-                            _id : _this.data.id
+                            _id : _this.data.id,
+                            _table : _this.data.module
                         },
                         method : 'GET'
                     });
                     _this.hpanel.load({ 
-                        url: baseURL + '/' + m + '/MessagePreview', 
+                        url: baseURL + '/Core/MessagePreview', 
                         params  : {
                             _as_html : 1,
-                            _id : _this.data.id
+                            _id : _this.data.id,
+                            _table : _this.data.module
                         },
                         method : 'GET'
                     });
