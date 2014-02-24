@@ -267,6 +267,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if(empty($this->id)){
+            
             return false;
         }
         
