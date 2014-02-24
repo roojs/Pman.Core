@@ -267,8 +267,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if(empty($this->id)){
-            
-            return false;
+            return PEAR::raiseError("template [{$contents['template']}]has not been set");
         }
         
         $contents['subject'] = $this->subject;
