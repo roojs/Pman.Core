@@ -1,1 +1,2 @@
+
 ALTER TABLE i18n ADD COLUMN is_active int(1) NOT NULL DEFAULT 1;
