@@ -1,1 +1,3 @@
 ALTER TABLE i18n ADD COLUMN is_active INT(1)  NOT NULL DEFAULT 1;
+
+ALTER TABLE i18n ADD INDEX lookup (is_active);
