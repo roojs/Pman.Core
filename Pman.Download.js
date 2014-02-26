@@ -48,7 +48,7 @@ Pman.Download = function(cfg)
         Roo.log(this);
     }
     
-    
+    Roo.log(this);
     if (this.newWindow && this.method == 'GET') {
         // as ie seems buggy...
         var url = cfg.url || this.url;
