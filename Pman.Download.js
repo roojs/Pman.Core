@@ -37,7 +37,7 @@ var t = new Pman.Download({
 
 Pman.Download = function(cfg)
 {
-    
+    Roo.log(cfg);
     this.params = {};
     
     Roo.apply(this, cfg);
