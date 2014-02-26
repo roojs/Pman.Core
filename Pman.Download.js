@@ -51,7 +51,7 @@ Pman.Download = function(cfg)
     
     if (this.newWindow && this.method == 'GET') {
             // as ie seems buggy...
-        window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
+        window.open( this.url + '?' + Roo.urlEncode(this.params || {}), '_blank');
         return ; 
         
     }
