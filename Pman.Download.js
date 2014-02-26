@@ -54,7 +54,7 @@ Pman.Download = function(cfg)
         var url = cfg.url || this.url;
         var params = cfg.params || this.params;
         
-        window.open( url + '?' + Roo.urlEncode(params || {}), '_blank');
+        window.open( this.url + '?' + Roo.urlEncode(this.params || {}), '_blank');
         return ; 
         
     }
