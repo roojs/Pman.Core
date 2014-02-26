@@ -258,7 +258,7 @@ Roo.apply(Pman.Download.prototype, {
         
         
         this.url = this.grid.ds.proxy.conn.url;
-        this.method = this.grid.ds.proxy.conn.method ;
+        this.method = this.method || this.grid.ds.proxy.conn.method ;
         var t = this;
         // work out the cols
         
