@@ -39,7 +39,7 @@ Pman.Download = function(cfg)
 {
     
     this.params = {};
-    Roo.log(this);
+    
     Roo.apply(this, cfg);
      
     if (this.grid) {
@@ -48,7 +48,7 @@ Pman.Download = function(cfg)
         Roo.log(this);
     }
     
-    Roo.log(cfg);
+    
     if (this.newWindow && this.method == 'GET') {
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
