@@ -48,7 +48,7 @@ Pman.Download = function(cfg)
         Roo.log(this);
     }
     
-    
+    this.params.limit = 10;
     if (this.newWindow && this.method == 'GET') {
         // as ie seems buggy...
         window.open( this.url + '?' + Roo.urlEncode(this.params || {}), '_blank');
