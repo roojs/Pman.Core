@@ -37,7 +37,7 @@ var t = new Pman.Download({
 
 Pman.Download = function(cfg)
 {
-    Roo.log(cfg);
+    
     this.params = {};
     
     Roo.apply(this, cfg);
@@ -50,6 +50,8 @@ Pman.Download = function(cfg)
     
     
     if (this.newWindow && this.method == 'GET') {
+        Roo.log('in');
+        Roo.log(cfg);
             // as ie seems buggy...
         window.open( cfg.url + '?' + Roo.urlEncode(cfg.params || {}), '_blank');
         return ; 
