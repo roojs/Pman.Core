@@ -47,6 +47,12 @@ class Pman_Core_Generator extends DB_DataObject_Generator
     
     static $cli_desc = "Generate the dataobjects";
     
+    function getAuth()
+    {
+        if (!$this->cli) {
+            die("cli not set");
+        }
+    }
    
     // inherrited..
     // $tablekeys
