@@ -49,9 +49,9 @@ class Pman_Core_Generator extends DB_DataObject_Generator
     
     function getAuth()
     {
-        if (!HTML_FlexyFramework::get()->cli) {
-            die("cli not set");  
-        }
+         
+        die("do not use this directly..");  
+        
     }
    
     // inherrited..
