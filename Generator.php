@@ -45,7 +45,8 @@ $this->def['forms'][$table][$t->name] = $form;
 class Pman_Core_Generator extends DB_DataObject_Generator
 {
     
-
+    static $cli_desc = "Generate the dataobjects";
+    
    
     // inherrited..
     // $tablekeys
