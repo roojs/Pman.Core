@@ -222,12 +222,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
             //echo "inserting notify?";
-            if (empty($n->act_start)) {
-                $n->act_start( date("Y-m-d H:i:s") );
-            }
+            $n->act_start( empty($n->act_start) ? date("Y-m-d H:i:s") : $n->act_start );
             $n->insert();
-            
-            
         }
         
         
