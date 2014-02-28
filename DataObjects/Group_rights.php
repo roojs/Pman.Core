@@ -192,7 +192,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             
         }
         $Pman_DataObjects_Group_Right[$gid] = $ret;
-        print_r($ret);
+        print_r($ret);exit;
         return $Pman_DataObjects_Group_Right[$gid];
          
         
