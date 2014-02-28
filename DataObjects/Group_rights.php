@@ -179,7 +179,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
                 // since these are critical files.. die'ing with error is ok.
                 die("invalid json file: " . $fn);
                }
-            echo '<PRE>';print_r($ar);
+           // echo '<PRE>';print_r($ar);
             foreach($ar as $k=> $perm) {
                 if ($k[0] == '/') {
                     continue; // it's a comment..
