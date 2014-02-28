@@ -114,6 +114,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             //DB_DataObject::debugLevel(1);
             $this->_extra_cols = array('qty' , 'uqty');
             $this->selectAdd("count($tn.id) as qty");
+//            $this->selectAdd("count( distinct $tn.on_table, $tn.on_id) as uqty");
             $this->selectAdd("count($tn.on_id) as uqty");
             
             $this->groupBy('on_table');
