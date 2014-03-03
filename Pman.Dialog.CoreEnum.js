@@ -56,11 +56,6 @@ Pman.Dialog.CoreEnum = {
                             xtype: 'Form',
                             xns: Roo.form,
                             listeners : {
-                                actionfailed : function (_self, action)
-                                {
-                                    _this.dialog.el.unmask(); 
-                                    Pman.standardActionFailed(_self, action);
-                                },
                                 actioncomplete : function (_self, action)
                                 {
                                   if (action.type == 'setdata') {

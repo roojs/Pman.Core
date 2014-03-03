@@ -36,7 +36,6 @@
                     "items": [
                         {
                             "listeners": {
-                                "|actionfailed": "function (_self, action)\n{\n    _this.dialog.el.unmask(); \n    Pman.standardActionFailed(_self, action);\n}\n",
                                 "|actioncomplete": "function (_self, action)\n{\n  if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       \n       // this is 'new' only!!!\n\n       \n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type == 'submit' ) {\n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n\n        if (_this.callback) {\n           _this.callback.call(_this, action.result.data);\n        }\n        _this.form.reset();\n    }\n}\n",
                                 "|rendered": "function (form)\n{\n   _this.form = form;\n}"
                             },
