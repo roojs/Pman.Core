@@ -63,7 +63,7 @@
                                 },
                                 {
                                     "boxLabel": "Yes/No",
-                                    "fieldLabel": "Is shown on site?",
+                                    "fieldLabel": "Active",
                                     "inputValue": 1,
                                     "name": "visible",
                                     "value": 0,
