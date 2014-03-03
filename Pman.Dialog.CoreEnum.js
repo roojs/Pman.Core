@@ -120,6 +120,11 @@ Pman.Dialog.CoreEnum = {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'id'
+                                },
+                                {
+                                    xtype: 'Hidden',
+                                    xns: Roo.form,
+                                    name : 'id'
                                 }
                             ]
                         }
