@@ -64,7 +64,7 @@
                                 {
                                     "fieldLabel": "Active",
                                     "inputValue": 1,
-                                    "name": "visible",
+                                    "name": "active",
                                     "value": 0,
                                     "valueOff": 0,
                                     "xtype": "Checkbox",

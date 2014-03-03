@@ -117,7 +117,7 @@ Pman.Dialog.CoreEnum = {
                                     xns: Roo.form,
                                     fieldLabel : 'Active',
                                     inputValue : 1,
-                                    name : 'visible',
+                                    name : 'active',
                                     value : 0,
                                     valueOff : 0
                                 },
