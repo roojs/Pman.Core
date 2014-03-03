@@ -71,13 +71,13 @@
                     ]
                 },
                 {
-                    "text": "Cancel",
-                    "xtype": "Button",
-                    "|xns": "Roo",
                     "listeners": {
                         "|click": "function() {\n    _this.form.reset();\n    _this.dialog.hide();\n}"
                     },
-                    "*prop": "buttons[]"
+                    "*prop": "buttons[]",
+                    "text": "Cancel",
+                    "xtype": "Button",
+                    "|xns": "Roo"
                 },
                 {
                     "listeners": {

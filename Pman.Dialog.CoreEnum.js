@@ -124,13 +124,13 @@ Pman.Dialog.CoreEnum = {
                 {
                     xtype: 'Button',
                     xns: Roo,
-                    text : "Cancel",
                     listeners : {
                         click : function() {
                             _this.form.reset();
                             _this.dialog.hide();
                         }
-                    }
+                    },
+                    text : "Cancel"
                 },
                 {
                     xtype: 'Button',
