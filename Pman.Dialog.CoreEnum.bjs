@@ -1,0 +1,97 @@
+{
+    "id": "roo-file-323",
+    "name": "Pman.Dialog.CoreEnum",
+    "parent": "",
+    "title": "",
+    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreEnum.bjs",
+    "items": [
+        {
+            "listeners": {
+                "show": "function (_self)\n{\n    \n}"
+            },
+            "background": true,
+            "closable": false,
+            "collapsible": false,
+            "height": 100,
+            "modal": true,
+            "resizable": false,
+            "title": "Add / Edit Core Enum",
+            "width": 400,
+            "xtype": "LayoutDialog",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "xtype": "LayoutRegion",
+                    "*prop": "center",
+                    "titlebar": false,
+                    "|xns": "Roo"
+                },
+                {
+                    "xtype": "ContentPanel",
+                    "background": true,
+                    "fitToFrame": true,
+                    "region": "center",
+                    "listeners": {},
+                    "|xns": "Roo",
+                    "items": [
+                        {
+                            "listeners": {
+                                "|actionfailed": "function (_self, action)\n{\n    _this.dialog.el.unmask(); \n    Pman.standardActionFailed(_self, action);\n}\n",
+                                "|actioncomplete": "function (_self, action)\n{\n  if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       \n       // this is 'new' only!!!\n\n       \n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type == 'submit' ) {\n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n\n        if (_this.callback) {\n           _this.callback.call(_this, action.result.data);\n        }\n        _this.form.reset();\n    }\n}\n",
+                                "|rendered": "function (form)\n{\n   _this.form = form;\n}"
+                            },
+                            "method": "POST",
+                            "style": "margin: 5px",
+                            "xtype": "Form",
+                            "|url": "baseURL + '/Roo/core_enum.php'",
+                            "|xns": "Roo.form",
+                            "items": [
+                                {
+                                    "allowBlank": false,
+                                    "fieldLabel": "Name",
+                                    "name": "name",
+                                    "width": 200,
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "allowBlank": false,
+                                    "fieldLabel": "Industry Name",
+                                    "name": "display_name",
+                                    "width": 200,
+                                    "xtype": "TextField",
+                                    "|xns": "Roo.form"
+                                },
+                                {
+                                    "name": "id",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "text": "Cancel",
+                    "xtype": "Button",
+                    "|xns": "Roo",
+                    "listeners": {
+                        "|click": "function() {\n    _this.form.reset();\n    _this.dialog.hide();\n}"
+                    },
+                    "*prop": "buttons[]"
+                },
+                {
+                    "listeners": {
+                        "|click": "function() {\n\n    var name =     _this.form.findField('display_name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n\n \n    _this.form.doAction('submit');\n    \n}"
+                    },
+                    "*prop": "buttons[]",
+                    "text": "OK",
+                    "xtype": "Button",
+                    "|xns": "Roo"
+                }
+            ]
+        }
+    ],
+    "permname": "",
+    "modOrder": "001"
+}
