@@ -67,6 +67,11 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
+                                    "name": "etype",
+                                    "xtype": "Hidden",
+                                    "|xns": "Roo.form"
+                                },
+                                {
                                     "name": "id",
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
