@@ -98,7 +98,7 @@
                 },
                 {
                     "listeners": {
-                        "|click": "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n\n \n    _this.form.doAction('submit');\n    \n}"
+                        "|click": "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
                     },
                     "*prop": "buttons[]",
                     "text": "OK",

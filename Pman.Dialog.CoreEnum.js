@@ -169,7 +169,6 @@ Pman.Dialog.CoreEnum = {
                                 return;
                             }
                             _this.form.findField('name').setValue(name);
-                        
                          
                             _this.form.doAction('submit');
                             
