@@ -60,7 +60,7 @@ Pman.Dialog.CoreEnum = {
                                 {
                                   if (action.type == 'setdata') {
                                         Roo.log(_this.data);
-                                        if(typeof(_this.data.etype == 'undefined') || !_this.data.etype.length){
+                                        if((typeof(_this.data.etype) == 'undefined') || !_this.data.etype.length){
                                             Roo.MessageBox.alert('Error', 'Missing etype');
                                             _this.dialog.hide();
                                             return;
