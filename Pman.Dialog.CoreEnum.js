@@ -113,6 +113,16 @@ Pman.Dialog.CoreEnum = {
                                     width : 200
                                 },
                                 {
+                                    xtype: 'Checkbox',
+                                    xns: Roo.form,
+                                    boxLabel : 'Yes/No',
+                                    fieldLabel : 'Is shown on site?',
+                                    inputValue : 1,
+                                    name : 'visible',
+                                    value : 0,
+                                    valueOff : 0
+                                },
+                                {
                                     xtype: 'Hidden',
                                     xns: Roo.form,
                                     name : 'etype'
