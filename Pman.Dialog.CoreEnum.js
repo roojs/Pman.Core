@@ -39,7 +39,7 @@ Pman.Dialog.CoreEnum = {
             background : true,
             closable : false,
             collapsible : false,
-            height : 300,
+            height : 150,
             modal : true,
             resizable : false,
             title : "Add / Edit Core Enum",
