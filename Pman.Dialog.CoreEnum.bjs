@@ -74,6 +74,7 @@
                                 },
                                 {
                                     "name": "seqid",
+                                    "value": 0,
                                     "xtype": "Hidden",
                                     "|xns": "Roo.form"
                                 },
