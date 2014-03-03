@@ -59,11 +59,10 @@ Pman.Dialog.CoreEnum = {
                                 actioncomplete : function (_self, action)
                                 {
                                   if (action.type == 'setdata') {
-                                       //_this.dialog.el.mask("Loading");
-                                       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});
-                                       
-                                       // this is 'new' only!!!
-                                
+                                        if(_this.data.id){
+                                            _this.dialog.el.mask("Loading");
+                                            this.load({ method: 'GET', params: { '_id' : _this.data.id }}); 
+                                        }
                                        
                                        return;
                                     }
