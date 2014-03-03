@@ -59,6 +59,12 @@ Pman.Dialog.CoreEnum = {
                                 actioncomplete : function (_self, action)
                                 {
                                   if (action.type == 'setdata') {
+                                        
+                                        if(typeof(_this.data.etype == 'undefined') || !_this.data.etype.length){
+                                            Roo.MessageBox.alert('Error', 'Missing etype');
+                                            return;
+                                        }
+                                  
                                         if(_this.data.id){
                                             _this.dialog.el.mask("Loading");
                                             this.load({ method: 'GET', params: { '_id' : _this.data.id }}); 
