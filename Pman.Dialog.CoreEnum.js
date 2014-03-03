@@ -108,7 +108,7 @@ Pman.Dialog.CoreEnum = {
                                     xtype: 'TextField',
                                     xns: Roo.form,
                                     allowBlank : false,
-                                    fieldLabel : 'Industry Name',
+                                    fieldLabel : 'Display Name',
                                     name : 'display_name',
                                     width : 200
                                 },

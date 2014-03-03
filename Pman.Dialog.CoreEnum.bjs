@@ -55,7 +55,7 @@
                                 },
                                 {
                                     "allowBlank": false,
-                                    "fieldLabel": "Industry Name",
+                                    "fieldLabel": "Display Name",
                                     "name": "display_name",
                                     "width": 200,
                                     "xtype": "TextField",
