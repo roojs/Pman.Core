@@ -54,7 +54,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if (!empty($q['_list_actions'])) {
             $this->listActions($roo,$q);
         }
-        die("apply filters");
+        //die("apply filters");
         if (!empty($q['_split_event_name'])) {
             $this->selectAdd("
                 
