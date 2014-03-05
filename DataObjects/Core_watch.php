@@ -69,7 +69,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
     }
     
-    function toRooArraySingle($q)
+    function toRooSingleArray($au,$q)
     {
         die("here");
         
