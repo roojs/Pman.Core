@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $this->selectAdd("
                 
                 substr( event, substring_index(event, '.')) as event_left,
-                substr( event, substring_index(event, '.')) as event_right        
+                substr( event, 0, substring_index(event, '.')) as event_right        
                              
             ");
             
