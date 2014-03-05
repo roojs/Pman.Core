@@ -58,7 +58,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $this->selectAdd("
                 
                 substr( event, 1, LOCATE( '.',event) -1) as event_left,
-                substr( event,   LOCATE( '.',event) +1) as event_right        
+                substr( event,   LOCATE( '.',event) +1) as event_right,
+                (SELECT
+                    display_name FROM core_enum where etype = '{$this->escape($q['_split_event_name'])}'
+                    AND name = substr( event,   LOCATE( '.',event) +1)
+                )
                              
             ");
             
