@@ -48,11 +48,39 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     ###END_AUTOCODE
     /** make sure there is a watch for this user.. */
     
+    
+    function applyFilters($q,$au, $roo)
+    {
+        if (!empty($q['_list_actions'])) {
+            $this->listActions($roo,$q);
+        }
+        
+        
+    }
+    function listActions($roo, $q) {
+        
+        $d = DB_DataObject::Factory($q['on_table']);
+        $ret = array();
+        foreach(get_class_methods($d) as $m) {
+            if (!preg_match('/^notify/', $m)) {
+                continue;
+            }
+            $ret[] = array(
+                'display_name' => preg_replace('/^notify/', '' , $m),
+                'name' => $q['on_table'] .':'. $m
+            )
+        }
+        $roo->jdata($ret);
+    }
+    
     /**
      *
      * Create a watch...
      *
      */
+    
+    
+    
     
     function ensureNotify(  $ontable, $onid, $person_id, $whereAdd)
     {
