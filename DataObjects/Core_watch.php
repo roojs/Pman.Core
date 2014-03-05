@@ -62,7 +62,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 (SELECT
                     display_name FROM core_enum where etype = '{$this->escape($q['_split_event_name'])}'
                     AND name = substr( event,   LOCATE( '.',event) +1)
-                )
+                ) as event_right_display_name
                              
             ");
             
