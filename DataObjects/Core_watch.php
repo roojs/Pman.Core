@@ -80,8 +80,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $ret['event_right'] = $bits[1];
         // check core enu.
         if (!empty($ret['event_right'])) {
-            $ce = DB_DataObject::factory('core_enum')->lookup($q['_split_event_name'], $ret['event_right']);
-            $ret['event_right_display_name'] = $ce;
+            $ce = DB_DataObject::factory('core_enum')->lookupObject($q['_split_event_name'], $ret['event_right']);
+            $ret['event_right_display_name'] = $ce->display_name;
         }
         
         
