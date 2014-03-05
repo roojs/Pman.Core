@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $ret = array();
         
         foreach(get_class_methods($d) as $m) {
-            echo $m;
+            var_dump($m);
             if (!preg_match('/^notify/', $m)) {
                 continue;
             }
