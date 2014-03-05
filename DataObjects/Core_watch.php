@@ -84,7 +84,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $ret['event_right_display_name'] = $ce->display_name;
         }
         
-        
+        return $ret;
         
         
     }
