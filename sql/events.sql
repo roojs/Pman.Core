@@ -32,20 +32,6 @@ ALTER TABLE Events CHANGE COLUMN Host ipaddr VARCHAR(16);
 ALTER TABLE Events CHANGE COLUMN ItemID on_id INT(11);
 ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 
-
-ALTER TABLE Events ADD INDEX lookup (on_id, on_table, person_id, event_when);
-
-ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when);
-
-ALTER TABLE Events ADD INDEX lookuppt ( person_table);
-
---# speeding up lookups. 
-ALTER TABLE Events ADD INDEX lookup_when( person_id, event_when );
-
-ALTER TABLE Events add index lookup_event_when (event_when);
-ALTER TABLE Events add index lookup_action (action);
-ALTER TABLE Events add index lookup_on_table (on_table);
-
-ALTER TABLE Events add index lookup_action_person (action, person_id);
-
- alter table Events add index lookup_actions ( person_id, person_table, action);
+ 
+ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
+  
