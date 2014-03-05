@@ -52,7 +52,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         
         } else {
-            $jt = DB_DataObject::factory('Person');
+            $person = 'Person';
+            $cfg = HTML_FlexyFramework::get()->Pman;
+            if (!empty($cfg['authTable'])) {
+                $person =$cfg['authTable'];
+            }
+            
+            $jt = DB_DataObject::factory($person);
             $this->whereAdd("
                     person_table  = '{$jt->tableName()}'
                     OR
