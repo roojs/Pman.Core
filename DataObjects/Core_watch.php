@@ -61,7 +61,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
         $d = DB_DataObject::Factory($q['on_table']);
         $ret = array();
+        
         foreach(get_class_methods($d) as $m) {
+            echo $m;
             if (!preg_match('/^notify/', $m)) {
                 continue;
             }
