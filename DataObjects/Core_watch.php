@@ -58,8 +58,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if (!empty($q['_split_event_name'])) {
             $this->selectAdd("
                 
-                substr( event, LOCATE(event, '.')) as event_left,
-                substr( event, 0, LOCATE(event, '.')) as event_right        
+                substr( event, 1, LOCATE(event, '.')) as event_left,
+                substr( event,   LOCATE(event, '.')) as event_right        
                              
             ");
             
