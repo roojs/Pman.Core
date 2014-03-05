@@ -71,7 +71,21 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     
     function toRooSingleArray($au,$q)
     {
-        die("here");
+        $ret = $this->toArray();
+        if (empty($q['_split_event_name'])) {
+            return $ret;
+        }
+        $bits = explode('.', $this->event);
+        $ret['event_left'] = $bits[0];
+        $ret['event_right'] = $bits[1];
+        // check core enu.
+        if (!empty($ret['event_right'])) {
+            $ce = DB_DataObject::factory('core_enum')->lookup($q['_split_event_name'], $ret['event_right']);
+            print_r($ce);
+        }
+        
+        
+        
         
     }
     
