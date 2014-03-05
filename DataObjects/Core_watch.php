@@ -59,6 +59,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     }
     function listActions($roo, $q) {
         
+        print_r($q);
         $d = DB_DataObject::Factory($q['on_table']);
         $ret = array();
         
