@@ -68,7 +68,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $ret[] = array(
                 'display_name' => preg_replace('/^notify/', '' , $m),
                 'name' => $q['on_table'] .':'. $m
-            )
+            );
         }
         $roo->jdata($ret);
     }
