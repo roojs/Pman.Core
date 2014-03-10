@@ -158,7 +158,7 @@ class Pman_Core_Notify extends Pman
             
         }
      
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         
         if (!$showold) {
