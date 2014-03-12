@@ -322,7 +322,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $validator = $this->workbook->addValidator();
                 $validator->setFormula1('speaker.$A$1:$A$15');
 
-                $worksheet->setValidation(5,5, 6,6,$validator);
+                $worksheet->setValidation(5,5, 5,5,$validator);
             $this->start_row++;
         
         return $hasRender;
