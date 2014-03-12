@@ -315,7 +315,7 @@ class Pman_Core_SimpleExcel extends Pman
                 continue;
             }
             
-            $v = '=$speaker.$A$2:$A$15';
+            $v = '=speaker!$A$2:$A$15';
             
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
