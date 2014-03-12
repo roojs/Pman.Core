@@ -318,7 +318,7 @@ class Pman_Core_SimpleExcel extends Pman
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
-            
+            if($worksheet_name == 'event'){
             $validator = $this->workbook->addValidator();
             $validator->setFormula1('speaker!$A$1:$A$15');
             print_r($worksheet_name);
@@ -327,7 +327,7 @@ class Pman_Core_SimpleExcel extends Pman
             $this->start_row++;
         
         return $hasRender;
-        
+            }
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
           // handle 0 prefixes..
