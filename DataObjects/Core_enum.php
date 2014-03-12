@@ -182,10 +182,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
      * @return array ID of core_enum 
      */
     
-    function lookupAllByName($etype,$name) {
+    function lookupAllByName($etype,$names) {
         $ce = DB_DataObject::Factory('core_enum');
         $ce->etype = $etype;
-        $ce->whereAddIn('name', $name, 'string');
+        $ce->whereAddIn('name', $names, 'string');
         
         if ($ce->count() > 0) {
             return $ce->fetchAll('id');
