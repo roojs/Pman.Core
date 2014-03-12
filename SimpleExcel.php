@@ -315,7 +315,7 @@ class Pman_Core_SimpleExcel extends Pman
                 continue;
             }
             
-            $v = '@$speaker!$A$2:$A$15';
+//            $v = '@$speaker!$A$2:$A$15';
             
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
@@ -331,7 +331,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $dataFormat == 'string' ) {
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
             } else {
-                print_r('here');
+          
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
