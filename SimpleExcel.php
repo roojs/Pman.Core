@@ -316,7 +316,7 @@ class Pman_Core_SimpleExcel extends Pman
             }
             
             $v = '@$speaker!$A$2:$A$15';
-            print_r($v);
+            print_r($v);exit;
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
