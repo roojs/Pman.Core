@@ -331,7 +331,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $dataFormat == 'string' ) {
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
             } else {
-          
+                print_r($v);exit;
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
         }
