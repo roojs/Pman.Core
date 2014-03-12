@@ -320,7 +320,7 @@ class Pman_Core_SimpleExcel extends Pman
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
             if($worksheet_name == 'event'){
             $validator = $this->workbook->addValidator();
-            $validator->setFormula1('=$speaker.$A$1:$A$15');
+            $validator->setFormula1('=speaker!$A$1:$A$15');
             
             $worksheet->setValidation(2,2,2,2,$validator);
             
