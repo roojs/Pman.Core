@@ -320,7 +320,7 @@ class Pman_Core_SimpleExcel extends Pman
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
             
             $validator = $this->workbook->addValidator();
-            $test = $v->setFormula1('speaker.$A$1:$A$15');
+            $test = $validator->setFormula1('speaker.$A$1:$A$15');
             print_r($test);exit;
             
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
