@@ -339,10 +339,11 @@ class Pman_Core_SimpleExcel extends Pman
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
             
+        }
+        
             $this->start_row++;
         
         return $hasRender;
-        }
         
     }
      
