@@ -318,8 +318,10 @@ class Pman_Core_SimpleExcel extends Pman
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
-             ;
             
+            $validator = $this->workbook->addValidator();
+            $test = $v->setFormula1('speaker.$A$1:$A$15');
+            print_r($test);exit;
             
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
