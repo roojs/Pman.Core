@@ -323,9 +323,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $validator->setFormula1('speaker!$A$1:$A$15');
 
                 $worksheet->setValidation(5,5, 5,5,$validator);
-            $this->start_row++;
-        
-        return $hasRender;
+            
             }
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
