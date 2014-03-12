@@ -321,7 +321,7 @@ class Pman_Core_SimpleExcel extends Pman
             if($worksheet_name == 'event'){
             $validator = $this->workbook->addValidator();
             $validator->setFormula1('speaker!$A$1:$A$15');
-            print_r($worksheet_name);
+            
             $worksheet->setValidation(2,2,2,2,$validator);
             
             $this->start_row++;
