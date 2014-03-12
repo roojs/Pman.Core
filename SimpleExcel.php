@@ -318,7 +318,6 @@ class Pman_Core_SimpleExcel extends Pman
             $v = @iconv('UTF-8', 'UTF-8//IGNORE', $v);
             
             $dataFormat = empty($col_cfg['dataFormat']) ? '' : $col_cfg['dataFormat'];
-             ;
             
             
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
