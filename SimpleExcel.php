@@ -331,7 +331,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $validator = $this->workbook->addValidator();
 //                    $validator->setList("a b c");
 //                    $validator->_fixedList = 1;
-                    $validator->setList('Q2:Q10');
+                    $validator->setList('=Q2:Q10');
                     
                     $this->worksheet->setValidation(2,1,2,1,$validator);
                     $this->start_row++;
