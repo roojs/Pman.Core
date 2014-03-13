@@ -327,25 +327,7 @@ class Pman_Core_SimpleExcel extends Pman
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.') 
                     || 
                     $dataFormat == 'string' ) {
-                if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
-                    $validator = $this->workbook->addValidator();
-//                    $validator->setList("a b c");
-                    $validator->_fixedList = 1;
-                    $validator->_type = 3;
-                    $validator->_incell=true;
-                    $validator->setFormula1('H10');
-                    
-//                    $validator->setList('Q2:Q10');
-                    
-                    $this->worksheet->setValidation(2,1,2,1,$validator);
-                    $this->worksheet->_storeDataValidity();
-                    $this->start_row++;
-        
-                    return $hasRender;
-                }
-                
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
-                
             } else {
           
                 $worksheet->write($start_row+$r, $c, $v, $format);
