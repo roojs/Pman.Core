@@ -332,7 +332,7 @@ class Pman_Core_SimpleExcel extends Pman
 //                    $validator->setList("a b c");
                     $validator->_fixedList = 1;
                     $validator->_type = 3;
-                    $validator->_incell=true;
+                    $validator->_incell=flase;
                     $validator->setFormula1('$D$2:$D$6');
                     
 //                    $validator->setList('Q2:Q10');
