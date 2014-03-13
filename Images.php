@@ -126,7 +126,6 @@ class Pman_Core_Images extends Pman
                 die("Bad url");
             }
             //DB_DataObject::debugLevel(1);
-            print_r($onbits);exit;
             $img = DB_DataObject::factory('Images');
             $img->ontable = $onbits[0];
             $img->onid = $onbits[1];
