@@ -333,7 +333,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $validator->_fixedList = 1;
                     $validator->_type = 3;
                     $validator->_incell=true;
-                    $validator->setFormula1('INDEX(B9:B10,\'\',LEN(B9:B10),0),1)');
+                    $validator->setFormula1('INDEX(B9:B10,LEN(B9:B10),1)');
                     
 //                    $validator->setList('Q2:Q10');
                     
