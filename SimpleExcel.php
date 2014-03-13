@@ -331,7 +331,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $validator = $this->workbook->addValidator();
 //                    $validator->setList("a b c");
                     $validator->_fixedList = 1;
-                    $validator->_style = 1;
+                    $validator->_style = 2;
                     $validator->_type = 3;
                     $validator->_incell=true;
                     
