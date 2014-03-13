@@ -328,8 +328,12 @@ class Pman_Core_SimpleExcel extends Pman
                     || 
                     $dataFormat == 'string' ) {
                 if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
-                    $worksheet->writeString($start_row+$r, $c, $v, $format);
+                    $this->start_row++;
+        
+                    return $hasRender;
                 }
+                
+                $worksheet->writeString($start_row+$r, $c, $v, $format);
                 
             } else {
           
