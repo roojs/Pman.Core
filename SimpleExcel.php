@@ -329,7 +329,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $dataFormat == 'string' ) {
                 if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
                     $validator = $this->workbook->addValidator();
-//                    print_r($validator);exit;
+                    $this->worksheet->setValidation(2,1,2,1,$validator);
                     $this->start_row++;
         
                     return $hasRender;
