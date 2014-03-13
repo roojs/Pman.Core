@@ -119,7 +119,7 @@ class Pman_Core_Images extends Pman
         
             $id = empty($bits[0]) ? 0 :  $bits[0];
         }
-        print_r($id);exit;
+        
         if (strpos($id,':') > 0) {  // id format  tablename:id:-imgtype
             $onbits = explode(':', $id);
             if ((count($onbits) < 2)   || empty($onbits[1]) || !is_numeric($onbits[1]) || !strlen($onbits[0])) {
