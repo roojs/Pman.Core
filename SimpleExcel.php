@@ -327,7 +327,7 @@ class Pman_Core_SimpleExcel extends Pman
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.') 
                     || 
                     $dataFormat == 'string' ) {
-                if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
+                if($start_row == 2 && $c == 1){
                     $validator = $this->workbook->addValidator();
 //                    $validator->setList("a b c");
                     $validator->_fixedList = 1;
