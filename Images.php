@@ -65,7 +65,6 @@ class Pman_Core_Images extends Pman
             $this->thumb = true;
             $this->as_mimetype = 'image/jpeg';
             $this->size = empty($bits[1]) ? '0x0' : $bits[1];
-            print_r($bits);exit;
             $id = empty($bits[2]) ? 0 :   $bits[2];
             
         } else if (!empty($bits[0]) && $bits[0] == 'Download') {
