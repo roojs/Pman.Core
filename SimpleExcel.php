@@ -333,7 +333,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $validator->_fixedList = 1;
                     $validator->_type = 3;
                     $validator->_incell=true;
-                    $validator->setFormula1('={a,b,c d}');
+                    $validator->setFormula1('$D$2:$D$6');
 //                    $validator->setList('Q2:Q10');
                     
                     $this->worksheet->setValidation(2,1,2,1,$validator);
