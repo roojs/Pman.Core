@@ -335,7 +335,8 @@ class Pman_Core_SimpleExcel extends Pman
                     $validator->_incell=true;
 //                    $validator->setFormula1('a,b,c');
 //                    $validator->setList('Q2:Q10');
-                    
+                    $source = "Q2:Q10";
+                    $this->_formula1 = pack("CCC", 0x17, strlen($source), 0x0c) . $source;
                     $this->worksheet->setValidation(2,1,2,1,$validator);
                     $this->worksheet->_storeDataValidity();
                     $this->start_row++;
