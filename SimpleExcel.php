@@ -330,8 +330,9 @@ class Pman_Core_SimpleExcel extends Pman
                 if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
                     $validator = $this->workbook->addValidator();
 //                    $validator->setList("a b c");
-//                    $validator->_fixedList = 1;
-                    $validator->setList('Q2:Q10');
+                    $validator->_fixedList = 1;
+                    $validator->_type = 1;
+//                    $validator->setList('Q2:Q10');
                     
                     $this->worksheet->setValidation(2,1,2,1,$validator);
                     $this->worksheet->_storeDataValidity();
