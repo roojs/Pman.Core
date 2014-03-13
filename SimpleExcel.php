@@ -327,16 +327,15 @@ class Pman_Core_SimpleExcel extends Pman
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.') 
                     || 
                     $dataFormat == 'string' ) {
-                if($start_row == 2 && $c == 1){
+                if($worksheet_name == 'event' && $start_row == 2 && $c == 1){
                     $validator = $this->workbook->addValidator();
 //                    $validator->setList("a b c");
                     $validator->_fixedList = 1;
                     $validator->_type = 3;
                     $validator->_incell=true;
 //                    $validator->setFormula1('a,b,c');
-                    $validator->setFormula1('$event.$O$2:$O$12');
-//                    $source = "Q2:Q10";
-//                    $this->_formula1 = pack("CCC", 0x17, strlen($source), 0x0c) . $source;
+//                    $validator->setList('Q2:Q10');
+                    
                     $this->worksheet->setValidation(2,1,2,1,$validator);
                     $this->worksheet->_storeDataValidity();
                     $this->start_row++;
