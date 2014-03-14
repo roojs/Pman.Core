@@ -82,6 +82,7 @@ class Pman_Core_Images extends Pman
             $this->downloadEvent($bits);
             
             die ("unknown file?"); 
+            
         } else {
         
             $id = empty($bits[0]) ? 0 :  $bits[0];
