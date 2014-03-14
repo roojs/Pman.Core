@@ -423,4 +423,43 @@ class Pman_Core_Images extends Pman
          
     }
     
+    function downloadEvent($bits)
+    {
+        $popts = PEAR::getStaticProperty('Pman','options');
+        $ev = DB_DAtaObject::Factory('events');
+        if (!$ev->get($bits[1])) {
+            die("could not find event id");
+        }
+        // technically same user only.. -- normally www-data..
+        if (function_exists('posix_getpwuid')) {
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+            $user = $uinfo['name'];
+        } else {
+            $user = getenv('USERNAME'); // windows.
+        }
+        $ff = HTML_FlexyFramework::get();
+        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+        $filesJ = json_decode(file_get_contents($file));
+
+        //print_r($filesJ);
+
+        foreach($filesJ->FILES as $k=>$f){
+            if ($f->tmp_name != $bits[2]) {
+                continue;
+            }
+
+            $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
+            if (!file_exists($src)) {
+                die("file was not saved");
+            }
+            header ('Content-Type: ' . $f->type);
+
+            header("Content-Disposition: attachment; filename=\"".basename($f->name)."\";" );
+            @ob_clean();
+            flush();
+            readfile($src);
+            exit;
+        }
+    }
+    
 }
