@@ -482,32 +482,12 @@ Pman.Dialog.PersonEditor.prototype = {
                     valueField : 'id',
                     width : 280,
                     store : {
-                        xtype: 'Store',
+                        xtype: 'SimpleStore',
                         xns: Roo.data,
-                        listeners : {
-                            beforeload : function (_self, o){
-                                o.params = o.params || {};
-                                o.params.campaign_id = _this.data.project_id;
-                            }
-                        },
-                        isLocal : false,
-                        proxy : {
-                            xtype: 'HttpProxy',
-                            xns: Roo.data,
-                            method : 'GET',
-                            url : baseURL + '/Roo/Clipping_journalist.php'
-                        },
-                        reader : {
-                            xtype: 'JsonReader',
-                            xns: Roo.data,
-                            id : 'id',
-                            root : 'data',
-                            totalProperty : 'total',
-                            fields : [
-                                {"name":"id","type":"int"},
-                                {"name":"name","type":"string"}
-                            ]
-                        }
+                        data : (function() {
+                            return Pman.I18n.simpleStoreData('c');
+                        })(),
+                        fields : [  'code', 'title' ]
                     }
                 }
             },
