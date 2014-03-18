@@ -465,20 +465,6 @@ Pman.Dialog.PersonEditor.prototype = {
                 combo : {
                     xtype: 'ComboBox',
                     xns: Roo.form,
-                    listeners : {
-                        add : function (combo)
-                        {
-                            Pman.Dialog.ClippingJournalist.show({
-                                id:0,
-                                _clipping_id : _this.form.findField('id').getValue(),
-                                publication : _this.data.media_name,
-                                country : _this.data.country,
-                                campaign_id : _this.data.project_id,
-                                campaign_name : _this.data.project_id_name
-
-                            });
-                        }
-                    },
                     allowBlank : true,
                     alwaysQuery : true,
                     displayField : 'name',
