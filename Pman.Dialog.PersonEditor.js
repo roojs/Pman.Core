@@ -470,7 +470,6 @@ Pman.Dialog.PersonEditor.prototype = {
                     displayField : 'title',
                     editable : false,
                     emptyText : "Select Country",
-                    fieldLabel : 'Journalist',
                     forceSelection : true,
                     idField : 'id',
                     triggerAction : 'all',
