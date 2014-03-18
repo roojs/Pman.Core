@@ -1,16 +1,16 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of GroupCountries
  *
  * @author chris
  */
-class GroupCountries {
+require_once 'Pman.php';
+
+class Pman_Core_GroupCountries extends Pman
+{
     //put your code here
+    
+    
+    
 }
