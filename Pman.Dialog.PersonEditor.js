@@ -81,8 +81,8 @@ Pman.Dialog.PersonEditor.prototype = {
                 actioncomplete: function(f, act) {
                     _this.dialog.el.unmask();
                     if (act.type == 'load') {
+                        _this.form.findField('countries').setValue();// set empty array by default...
                         _this.data = act.result.data;
-                         
                     }
                     
                                 
@@ -141,7 +141,7 @@ Pman.Dialog.PersonEditor.prototype = {
 
                         }
                         
-                        _this.form.findField('countries').setValue();// set empty array by default...
+                        
                         return;
                     } 
                     
