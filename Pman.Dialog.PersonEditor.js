@@ -140,6 +140,8 @@ Pman.Dialog.PersonEditor.prototype = {
                             }
 
                         }
+                        
+                        _this.form.findField('countries').setValue();
                         return;
                     } 
                     
