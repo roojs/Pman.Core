@@ -174,6 +174,10 @@ ALTER TABLE Person ADD COLUMN   phone_direct varchar(32)  NOT NULL  DEFAULT '';
 
 ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
 
+ALTER TABLE Person ADD COLUMN countries VARCHAR(128) NULL AFTER;
+
+
+
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
 alter table Person change role role varchar(254) NOT NULL DEFAULT '';
