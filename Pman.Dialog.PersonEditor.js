@@ -456,68 +456,74 @@ Pman.Dialog.PersonEditor.prototype = {
                 width : 300
             },
             country : {
-                
-                xtype: 'ComboBoxAdder',
-                fieldLabel: "Country",
+                xtype: 'ComboBoxArray',
+                xns: Roo.form,
+                fieldLabel : 'Journalist',
+                hiddenName : 'country_id',
                 name : 'country',
-                selectOnFocus:true,
-                qtip : "Select Country",
-                allowBlank : false,
-                width: 300,
-                
-                store: {
-                    xtype : 'Store',
-                      // load using HTTP
-                    proxy:{
-                        xtype:  'HttpProxy',
-                        url: baseURL + '/Roo/Companies.html',
-                        method: 'GET'
-                    },
-                    reader: Pman.Readers.Companies,
+                width : 520,
+                combo : {
+                    xtype: 'ComboBox',
+                    xns: Roo.form,
                     listeners : {
-                        beforeload : function(st,o)
+                        add : function (combo)
                         {
-                        
-                            o.params['!comptype'] = 'OWNER';
-                        },
-                        loadexception : Pman.loadException
-                    
+                            Pman.Dialog.ClippingJournalist.show({
+                                id:0,
+                                _clipping_id : _this.form.findField('id').getValue(),
+                                publication : _this.data.media_name,
+                                country : _this.data.country,
+                                campaign_id : _this.data.project_id,
+                                campaign_name : _this.data.project_id_name
+
+                            });
+                        }
                     },
-                    sortInfo: {
-                        field: 'name', direction: 'ASC'
-                    }
-                },
-                displayField:'name',
-                valueField : 'id',
-                hiddenName:  'country_id',
-                typeAhead: true,
-                forceSelection: true,
-                //mode: 'local',
-                triggerAction: 'all',
-                tpl: new Ext.Template(
-                    '<div class="x-grid-cell-text x-btn button">',
-                        '<b>{name}</b> {address}',
-                    '</div>'
-                ),
-                queryParam: 'query[name]',
-                loadingText: "Searching...",
-                listWidth: 400,
-               
-                minChars: 2,
-                pageSize:20,
-                listeners : {
-                    adderclick : function()
-                    {
-                        var cb = this;
-                        Pman.Dialog.CoreCompanies.show( {  id: 0 },  function(data) {
-                            cb.setFromData(data);
-                        }); 
+                    allowBlank : true,
+                    alwaysQuery : true,
+                    displayField : 'name',
+                    editable : false,
+                    emptyText : "Select News",
+                    fieldLabel : 'Journalist',
+                    forceSelection : true,
+                    idField : 'id',
+                    loadingText : "Searching...",
+                    minChars : 2,
+                    pageSize : 20,
+                    tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b>,  {publication}, {country_tr}</div>',
+                    triggerAction : 'all',
+                    typeAhead : true,
+                    valueField : 'id',
+                    width : 480,
+                    store : {
+                        xtype: 'Store',
+                        xns: Roo.data,
+                        listeners : {
+                            beforeload : function (_self, o){
+                                o.params = o.params || {};
+                                o.params.campaign_id = _this.data.project_id;
+                            }
+                        },
+                        isLocal : false,
+                        proxy : {
+                            xtype: 'HttpProxy',
+                            xns: Roo.data,
+                            method : 'GET',
+                            url : baseURL + '/Roo/Clipping_journalist.php'
+                        },
+                        reader : {
+                            xtype: 'JsonReader',
+                            xns: Roo.data,
+                            id : 'id',
+                            root : 'data',
+                            totalProperty : 'total',
+                            fields : [
+                                {"name":"id","type":"int"},
+                                {"name":"name","type":"string"}
+                            ]
+                        }
                     }
                 }
-               
-                 
-                 
-                 
             },
             passwd1 : {
                 name : 'passwd1',
