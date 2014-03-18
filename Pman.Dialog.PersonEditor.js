@@ -455,6 +455,70 @@ Pman.Dialog.PersonEditor.prototype = {
                 xtype : 'TextField',
                 width : 300
             },
+            country : {
+                
+                xtype: 'ComboBoxAdder',
+                fieldLabel: "Company",
+                name : 'company_id_name',
+                selectOnFocus:true,
+                qtip : "Select Company",
+                allowBlank : false,
+                width: 300,
+                
+                store: {
+                    xtype : 'Store',
+                      // load using HTTP
+                    proxy:{
+                        xtype:  'HttpProxy',
+                        url: baseURL + '/Roo/Companies.html',
+                        method: 'GET'
+                    },
+                    reader: Pman.Readers.Companies,
+                    listeners : {
+                        beforeload : function(st,o)
+                        {
+                        
+                            o.params['!comptype'] = 'OWNER';
+                        },
+                        loadexception : Pman.loadException
+                    
+                    },
+                    sortInfo: {
+                        field: 'name', direction: 'ASC'
+                    }
+                },
+                displayField:'name',
+                valueField : 'id',
+                hiddenName:  'company_id',
+                typeAhead: true,
+                forceSelection: true,
+                //mode: 'local',
+                triggerAction: 'all',
+                tpl: new Ext.Template(
+                    '<div class="x-grid-cell-text x-btn button">',
+                        '<b>{name}</b> {address}',
+                    '</div>'
+                ),
+                queryParam: 'query[name]',
+                loadingText: "Searching...",
+                listWidth: 400,
+               
+                minChars: 2,
+                pageSize:20,
+                listeners : {
+                    adderclick : function()
+                    {
+                        var cb = this;
+                        Pman.Dialog.CoreCompanies.show( {  id: 0 },  function(data) {
+                            cb.setFromData(data);
+                        }); 
+                    }
+                }
+               
+                 
+                 
+                 
+            },
             passwd1 : {
                 name : 'passwd1',
                 fieldLabel : "New Password ",
