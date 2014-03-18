@@ -12,7 +12,7 @@ Pman.on('beforeload', function() {
         type : 'edit',
         dialogConfig : {
             title: "Edit Contact Details",
-            height: 350 // slightly taller..
+            height: 400 // slightly taller..
             
         },
         itemList : [
