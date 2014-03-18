@@ -460,7 +460,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 xns: Roo.form,
                 fieldLabel : 'Country',
                 hiddenName : 'countries',
-                name : 'country_name',
+                name : 'countries_name',
                 width : 300,
                 combo : {
                     xtype: 'ComboBox',
