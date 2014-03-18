@@ -11,7 +11,7 @@ Pman.on('beforeload', function() {
         type : 'new',
         dialogConfig : {
             title: "New Contact Details",
-            height: 350 // slightly taller..
+            height: 400 // slightly taller..
         },
         itemList : [
             'company_id_name',
