@@ -956,7 +956,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function beforeUpdate($old,$q,$roo)
     {
-        
+        print_r($q);
     }
     
     function onInsert($req, $roo)
