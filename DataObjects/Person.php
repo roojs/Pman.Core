@@ -846,8 +846,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                     ");*/
         }
         
-        
-        //
     }
     function setFromRoo($ar, $roo)
     {
@@ -955,7 +953,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         return false;
     }
-    function onInsert($req, $roo)  
+    
+    function beforeUpdate($old,$q,$roo)
+    {
+        
+    }
+    
+    function onInsert($req, $roo)
     {
          
         $p = DB_DataObject::factory('person');
