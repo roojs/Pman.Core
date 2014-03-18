@@ -480,7 +480,7 @@ Pman.Dialog.PersonEditor.prototype = {
                     triggerAction : 'all',
                     typeAhead : true,
                     valueField : 'id',
-                    width : 300,
+                    width : 280,
                     store : {
                         xtype: 'Store',
                         xns: Roo.data,
