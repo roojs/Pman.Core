@@ -489,7 +489,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 },
                 displayField:'name',
                 valueField : 'id',
-                hiddenName:  'company_id',
+                hiddenName:  'country_id',
                 typeAhead: true,
                 forceSelection: true,
                 //mode: 'local',
