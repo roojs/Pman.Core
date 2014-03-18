@@ -37,7 +37,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 title: 'Edit Contact Details',
                 modal: true,
                 width:  530,
-                height: 350,
+                height: 400,
                 shadow:true,
                 minWidth:200,
                 minHeight:180,
