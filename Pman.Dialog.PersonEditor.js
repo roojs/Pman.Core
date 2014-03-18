@@ -459,7 +459,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 
                 xtype: 'ComboBoxAdder',
                 fieldLabel: "Company",
-                name : 'company_id_name',
+                name : 'country',
                 selectOnFocus:true,
                 qtip : "Select Company",
                 allowBlank : false,
