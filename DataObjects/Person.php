@@ -742,27 +742,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($q['query']['in_country'])) {
             // DB_DataObject::debugLevel(1);
             $inc = $q['query']['in_country'];
-            
             $this->whereAdd("$tn_p.countries LIKE '%{$inc}%'");
-            
-//            if ($q['query']['in_group'] == -1) {
-//             
-//                // list all staff who are not in a group.
-//                $this->whereAdd("Person.id NOT IN (
-//                    SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
-//                        $tn_g ON $tn_g.id = $tn_gm.group_id
-//                        WHERE $tn_g.type = ".$q['query']['type']."
-//                    )");
-//                
-//                
-//            } else {
-//                
-//                $this->whereAdd("$tn_p.id IN (
-//                    SELECT distinct(user_id) FROM $tn_gm
-//                        WHERE group_id = $ing
-//                    )");
-//               }
-            
         }
         
         if (!empty($q['query']['not_in_directory'])) { 
