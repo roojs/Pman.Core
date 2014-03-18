@@ -81,7 +81,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 actioncomplete: function(f, act) {
                     _this.dialog.el.unmask();
                     if (act.type == 'load') {
-                        _this.form.findField('countries').setValue();// set empty array by default...
+                        
                         _this.data = act.result.data;
                     }
                     
@@ -90,6 +90,9 @@ Pman.Dialog.PersonEditor.prototype = {
                         var data = _this.data;
                         // we dont have  a form where company name is sent in - and is editable..
                         //this.form.findField('office_id')
+                        if(!data.countries){
+                            _this.form.findField('countries').setValue();// set empty array by default...
+                        }
                         
                         if (_this.form.findField('company_id') && _this.form.findField('company_id').setFromData) {
                             _this.form.findField('company_id').setFromData( data.company_id ? {
