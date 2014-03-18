@@ -46,6 +46,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     public $phone_mobile; // varchar(32)  NOT NULL  DEFAULT '';
     public $phone_direct; // varchar(32)  NOT NULL  DEFAULT '';
     public $countries; // VARCHAR(128) NULL;
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
