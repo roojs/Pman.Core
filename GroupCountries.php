@@ -23,13 +23,15 @@ class Pman_Core_GroupCountries extends Pman
         $this->authUser = $au;
         return true;
     }
+    
     function get()
     {
         $this->post();
     }
+    
     function post()
     {
-        
+        print_r($_REQUEST);
     }
     
 }
