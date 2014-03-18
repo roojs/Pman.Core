@@ -31,6 +31,10 @@ class Pman_Core_GroupCountries extends Pman
     
     function post()
     {
+        if (!$this->hasPerm( 'Core.Groups','E')) { // editing groups..
+            $this->jerr("PERMISSION DENIED");
+        }
+        
         print_r($_REQUEST);
     }
     
