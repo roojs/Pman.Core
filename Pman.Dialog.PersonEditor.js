@@ -469,7 +469,7 @@ Pman.Dialog.PersonEditor.prototype = {
                     alwaysQuery : true,
                     displayField : 'name',
                     editable : false,
-                    emptyText : "Select News",
+                    emptyText : "Select Country",
                     fieldLabel : 'Journalist',
                     forceSelection : true,
                     idField : 'id',
