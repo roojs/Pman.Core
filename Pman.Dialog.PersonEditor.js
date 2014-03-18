@@ -57,7 +57,7 @@ Pman.Dialog.PersonEditor.prototype = {
         
         this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
         if (this.itemList.indexOf('save_send') > -1 ) {
-            this.dialog.addButton("Send Introduction Mail1", this.saveSend, this);
+            this.dialog.addButton("Send Introduction Mail", this.saveSend, this);
         }
         
         this.dialog.addButton("Cancel", this.dialog.hide, this.dialog);
