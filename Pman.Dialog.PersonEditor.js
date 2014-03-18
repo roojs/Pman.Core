@@ -141,7 +141,7 @@ Pman.Dialog.PersonEditor.prototype = {
 
                         }
                         
-                        _this.form.findField('countries').setValue();
+                        _this.form.findField('countries').setValue();// set empty array by default...
                         return;
                     } 
                     
