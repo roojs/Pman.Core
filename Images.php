@@ -140,7 +140,8 @@ class Pman_Core_Images extends Pman
         
        
         $img = DB_DataObjecT::factory('Images');
-        print_r($img->get($id));exit;
+         $img->get($id);
+         print_r($img);exit;
         if (!$id || !$img->get($id)) {
              
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
