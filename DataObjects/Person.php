@@ -666,7 +666,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $this->whereAdd(" join_company_id_id.isOwner = 0 ");
         }
         
-        
+        exit;
         if (!empty($q['query']['person_internal_only_all'])) {
             
             
