@@ -71,9 +71,9 @@ class Pman_Core_GroupCountries extends Pman
                 unset($c[$key]);
             }
             sort($c);
-            print_r($c);
-//            $p->countries = implode(',', $c);
-//            $p->update();
+//            print_r($c);
+            $p->countries = implode(',', $c);
+            $p->update();
         }
         
     }
