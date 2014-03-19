@@ -60,6 +60,20 @@ class Pman_Core_GroupCountries extends Pman
     
     function supPersonToCountry($users)
     {
+        foreach($users as $id){
+            $p = DB_DataObject::factory('Person');
+            if(!$p->get($id)){
+                $this->jerr('This Person is not exsiting');
+            }
+            $c = explode(',', $p->countries);
+            if(($key = array_search($_REQUEST['country'], $c)) !== false) {
+                unset($c[$key]);
+            }
+            ksort($c);
+            print_r($c);
+//            $p->countries = implode(',', $c);
+//            $p->update();
+        }
         
     }
     
