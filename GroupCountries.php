@@ -54,7 +54,6 @@ class Pman_Core_GroupCountries extends Pman
             $c[] = $_REQUEST['country'];
             $p->countries = implode(',', $c);
             $p->update();
-            
         }
     }
     
