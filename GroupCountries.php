@@ -59,7 +59,7 @@ class Pman_Core_GroupCountries extends Pman
         }
     }
     
-    function supPersonToCountry($users)
+    function subPersonToCountry($users)
     {
         foreach($users as $id){
             $p = DB_DataObject::factory('Person');
