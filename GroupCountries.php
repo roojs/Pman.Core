@@ -52,6 +52,7 @@ class Pman_Core_GroupCountries extends Pman
             }
             $c = explode(',', $p->countries);
             $c[] = $_REQUEST['country'];
+            ksort($c);
             $p->countries = implode(',', $c);
             $p->update();
         }
