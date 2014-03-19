@@ -37,18 +37,22 @@ class Pman_Core_GroupCountries extends Pman
         
         $users = explode(',', $_REQUEST['user_ids']);
         
-        switch($_REQUEST['action']){
-            case 'add':
-                $this->addPersonToCountry();
-                break;
-            case 'sup':
-                $this->supPersonToCountry();
-                break;
-        }
+        $cls = $_REQUEST['action'].'PersonToCountry';
+        $this->$cls($users);
         
         print_r($_REQUEST);
     }
     
+    function addPersonToCountry()
+    {
+        foreach($users as $id){
+            
+        }
+    }
     
+    function supPersonToCountry()
+    {
+        
+    }
     
 }
