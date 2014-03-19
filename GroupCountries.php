@@ -57,6 +57,7 @@ class Pman_Core_GroupCountries extends Pman
             $p->countries = implode(',', $c);
             $p->update();
         }
+        $this->jok(true);
     }
     
     function subPersonToCountry($users)
@@ -75,7 +76,7 @@ class Pman_Core_GroupCountries extends Pman
             $p->countries = implode(',', $c);
             $p->update();
         }
-        
+        $this->jok(true);
     }
     
 }
