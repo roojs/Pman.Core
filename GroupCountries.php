@@ -37,20 +37,28 @@ class Pman_Core_GroupCountries extends Pman
         
         $users = explode(',', $_REQUEST['user_ids']);
         
-        $cls = $_REQUEST['action'].'PersonToCountry';
+        $cls = $_REQUEST['action'].'PersonToCountry';// add or sup
         $this->$cls($users);
         
         print_r($_REQUEST);
     }
     
-    function addPersonToCountry()
+    function addPersonToCountry($users)
     {
         foreach($users as $id){
+            $p = DB_DataObject::factory('Person');
+            if(!$p->get($id)){
+                $this->jerr('This Person is not exsiting');
+            }
+            $c = explode(',', $p->countries);
+            $c[] = $_REQUEST['country'];
+            $p->countries = implode(',', $c);
+            $p->update();
             
         }
     }
     
-    function supPersonToCountry()
+    function supPersonToCountry($users)
     {
         
     }
