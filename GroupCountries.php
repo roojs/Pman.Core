@@ -71,7 +71,7 @@ class Pman_Core_GroupCountries extends Pman
             if(($key = array_search($_REQUEST['country'], $c)) !== false) {
                 unset($c[$key]);
             }
-            sort($c);
+            sort($c); 
 //            print_r($c);
             $p->countries = implode(',', $c);
             $p->update();
