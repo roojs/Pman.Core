@@ -8,7 +8,7 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
     function get()
     {
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
-        
+        print_r($fopts);exit;
         $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
         $base = 'http://' . $_SERVER['SERVER_NAME'] . $this->rootURL;
