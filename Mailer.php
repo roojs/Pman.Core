@@ -266,7 +266,7 @@ class Pman_Core_Mailer {
         
         
         $email = is_array($email)  ? $email : $this->toData();
-        print_r($email);exit;
+        print_r('run');exit;
         if (is_a($email, 'PEAR_Error')) {
             $pg->addEvent("COREMAILER-FAIL",  false, "email toData failed"); 
       
