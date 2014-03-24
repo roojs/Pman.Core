@@ -8,9 +8,9 @@ class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
     function get()
     {
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
-        print_r($fopts);exit;
-        $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
         
+        $templateDir = explode(PATH_SEPARATOR, $fopts['templateDir']);
+        print_r($templateDir);exit;
         $base = 'http://' . $_SERVER['SERVER_NAME'] . $this->rootURL;
         
 //        $path = '/home/edward/gitlive/web.madeinnz/Pman/Shop/templates/mail/register.body.html';
