@@ -48,7 +48,20 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         *
     /* the code above is auto generated do not remove the tag below */
     
-    
+    function applyFilters($q, $au, $roo)
+    {
+        
+        if (isset($q['query']['person_id_name']) ) {
+            $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
+             
+        }
+         
+        
+        
+        
+        
+        
+    }
     function notifytimesRange($advance) {
         
         $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
