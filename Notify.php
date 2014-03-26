@@ -431,7 +431,8 @@ class Pman_Core_Notify extends Pman
 
     function output()
     {
-        die("Done\n");
+        $this->logecho("DONE");
+        exit;
     }
     function logecho($str)
     {
