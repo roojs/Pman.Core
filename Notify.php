@@ -267,8 +267,8 @@ class Pman_Core_Notify extends Pman
         }
         
         
-        
-        die("DONE\n");
+        $this->logecho("DONE");
+        exit;
     }
     
     function run($id, $email, $cmdOpts="")
