@@ -176,7 +176,7 @@ class Pman_Core_Notify extends Pman
     
             $w->orderBy('act_when ASC'); // oldest first.
             
-            $this->Log("QUEUE is {$w->count()}");
+            $this->echolog("QUEUE is {$w->count()}");
             
             $w->limit($opts['limit']); // we can run 1000 ...
         } else {
