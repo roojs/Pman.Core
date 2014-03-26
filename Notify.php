@@ -200,7 +200,7 @@ class Pman_Core_Notify extends Pman
                 $o = $w->object();
                 
                 
-                $this->log("$w->id : $w->person_id_email email    : ".
+                $this->logecho("$w->id : $w->person_id_email email    : ".
                         $o->toEventString()."    ". $w->status()  );
             }
             exit;
@@ -212,10 +212,10 @@ class Pman_Core_Notify extends Pman
         while (true) {
             
             
-            $this->log("BATCH SIZE: ".  count($ar) );
+            $this->logecho("BATCH SIZE: ".  count($ar) );
             
             if (empty($ar)) {
-                $this->log("COMPLETED MAIN QUEUE - running delated");
+                $this->logecho("COMPLETED MAIN QUEUE - running delated");
                 
                 if (empty($pushed)) {
                     break;
@@ -310,7 +310,7 @@ class Pman_Core_Notify extends Pman
         
        
         $pipe = array();
-        $this->log("call proc_open $cmd");
+        $this->logecho("call proc_open $cmd");
         
         
         if ($this->max_pool_size === 1) {
@@ -320,7 +320,7 @@ class Pman_Core_Notify extends Pman
         
         
         if (!empty($this->opts['dryrun'])) {
-            $this->log("DRY RUN");
+            $this->logecho("DRY RUN");
             return;
         }
         
@@ -342,7 +342,7 @@ class Pman_Core_Notify extends Pman
             
                 
         );
-        $this->log("RUN ({$info['pid']}) $cmd ");
+        $this->logecho("RUN ({$info['pid']}) $cmd ");
     }
     
     function poolfree()
@@ -359,7 +359,7 @@ class Pman_Core_Notify extends Pman
             
             // update if necessday.
             if ($info['pid'] && $p['pid'] != $info['pid']) {
-                $this->log("CHANING PID FROM " . $p['pid']  .  "  TO ". $info['pid']);
+                $this->logecho("CHANING PID FROM " . $p['pid']  .  "  TO ". $info['pid']);
                 $p['pid'] = $info['pid'];
             }
             
@@ -376,7 +376,7 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
-                    $this->log("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
+                    $this->logecho("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
                     @unlink($p['out']);
                     
                     continue;
@@ -398,11 +398,11 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->log("ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
+            $this->logecho("ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
             @unlink($p['out']);
             //unlink($p['out']);
         }
-        $this->log("POOL SIZE: ". count($pool) );
+        $this->logecho("POOL SIZE: ". count($pool) );
         $this->pool = $pool;
         if (count($pool) < $this->max_pool_size) {
             return true;
@@ -433,7 +433,7 @@ class Pman_Core_Notify extends Pman
     {
         die("Done\n");
     }
-    function log($str)
+    function logecho($str)
     {
         echo date("Y-m-d H:i:s - $str\n");
     }
