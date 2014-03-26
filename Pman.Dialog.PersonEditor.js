@@ -90,7 +90,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         var data = _this.data;
                         // we dont have  a form where company name is sent in - and is editable..
                         //this.form.findField('office_id')
-                        if(!data.countries){
+                        if(!data.countries && _this.form.findField('countries')){
                             _this.form.findField('countries').setValue();// set empty array by default...
                         }
                         
