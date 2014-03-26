@@ -435,6 +435,6 @@ class Pman_Core_Notify extends Pman
     }
     function logecho($str)
     {
-        echo date("Y-m-d H:i:s - $str\n");
+        echo date("Y-m-d H:i:s - ") . $str . "\n";
     }
 }
