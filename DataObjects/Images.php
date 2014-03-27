@@ -82,6 +82,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $roo->jerr("erro making image" . $q['_remote_upload']);
             }
             
+            if(!empty($q['_return_after_create'])){
+                return;
+            }
+            
             $roo->addEvent("ADD", $this, $this->toEventString());
         
             $r = DB_DataObject::factory($this->tableName());
@@ -631,6 +635,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         return $this->filename .' - on ' . $this->ontable . ':' . $this->onid;
         //$p->toEventString();
+    }
+    
+    function remoteUpload()
+    {
+        
     }
     
  }
