@@ -144,7 +144,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             success: function(o)
             {
-                if (!o.data) {
+                if (!o) {
                     return o;
                 }
                 if(typeof(o.data.error) != 'undefined'){
