@@ -146,6 +146,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return o;
                 }
                 if(typeof(o.data.error) != 'undefined'){
+                    Roo.get(document.body).unmask();
                     Roo.MessageBox.alert("Failure ", o.data.error.message);
                     return;
                 }
