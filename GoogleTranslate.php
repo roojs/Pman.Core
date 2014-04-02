@@ -50,7 +50,7 @@ class Pman_Core_GoogleTranslate extends Pman
  
         $response = curl_exec($handle);
         
-        print_r(http_build_query($param));
+//        print_r(http_build_query($param));
         
         $responseDecoded = json_decode($response, true);
         curl_close($handle);
