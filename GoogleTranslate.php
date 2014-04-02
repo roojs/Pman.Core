@@ -38,7 +38,9 @@ class Pman_Core_GoogleTranslate extends Pman
             'key' => $pc['googlekey'],
             'q' => rawurlencode($_REQUEST['text']),
             'source' => $_REQUEST['src'],
-            'target' => $_REQUEST['dest']
+            'target' => $_REQUEST['dest'],
+            'ie' => 'UTF-8',
+            'oe' => 'UTF-8',
         );
         
         $url = 'https://www.googleapis.com/language/translate/v2';
