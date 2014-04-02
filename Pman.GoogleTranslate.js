@@ -127,10 +127,24 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         src = src.replace('_','-');
         dest = dest.replace('_','-');
         // google does not recognize HK...
-        if (src  == 'zh')  src = 'zh-CN';
-        if (dest  == 'zh')  dest = 'zh-CN';
-        if (src  == 'zh-HK')  src = 'zh-TW';
-        if (dest == 'zh-HK') dest = 'zh-TW';
+        
+        switch(dest){
+            case 'zh':
+                src = 'zh-CN';
+                break;
+            case 'zh-HK':
+                src = 'zh-TW';
+                break;
+        }
+        
+        switch(dest){
+            case 'zh':
+                dest = 'zh-CN';
+                break;
+            case 'zh-HK':
+                dest = 'zh-TW';
+                break;
+        }
         
         new Pman.Request({
             url : baseURL + '/Core/GoogleTranslate.php',
