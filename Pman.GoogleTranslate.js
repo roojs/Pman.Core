@@ -152,7 +152,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     Roo.MessageBox.alert("Failure ", o.data.error.message);
                     return;
                 }
-//                Roo.MessageBox.alert("Success", "We logged in OK")
+                Roo.MessageBox.alert("Success", "We logged in OK");
                 return o.data.translatedText;
             },
             failure: function (res) {
