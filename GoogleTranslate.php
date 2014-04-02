@@ -31,7 +31,9 @@ class Pman_Core_GoogleTranslate extends Pman
         if (empty($pc['googlekey'])) {
             $this->jerr("Google API Key not configured");
         }
-        
+        if (!strlen(trim($_REQUEST['text']))) {
+            $this->jok("");
+        }
         $param = array(
             'key' => $pc['googlekey'],
             'q' => rawurlencode($_REQUEST['text']),
