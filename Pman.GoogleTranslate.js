@@ -144,15 +144,18 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             success: function(o)
             {
+                Roo.log('in?');
                 if (!o.data) {
                     return o;
                 }
+                Roo.log('in2?');
                 if(typeof(o.data.error) != 'undefined'){
                     Roo.get(document.body).unmask();
                     Roo.MessageBox.alert("Failure ", o.data.error.message);
                     return;
                 }
-                Roo.MessageBox.alert("Success", "We logged in OK");
+                Roo.log('in3?');
+                
                 return o.data.translatedText;
             },
             failure: function (res) {
