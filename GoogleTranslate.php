@@ -43,9 +43,10 @@ class Pman_Core_GoogleTranslate extends Pman
 
         $handle = curl_init();
         curl_setopt($handle,CURLOPT_URL, $url);
-//        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        
         curl_setopt($handle, CURLOPT_POST, count($param));
         curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($param));
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($handle);                 
         $responseDecoded = json_decode($response, true);
         curl_close($handle);
