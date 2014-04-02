@@ -58,8 +58,8 @@ class Pman_Core_GoogleTranslate extends Pman
         $responseDecoded = json_decode(utf8_decode(urldecode($testStr)));
 //        curl_close($handle);
 //        print_r($responseDecoded->data->data->translations[0]->translatedText);
-        $responseDecoded->data->data->translations[0]->translatedText = utf8_decode(urldecode($responseDecoded->data->data->translations[0]->translatedText));
-        $this->jok($responseDecoded->data->data->translations[0]);
+//        $responseDecoded->data->data->translations[0]->translatedText = utf8_decode(urldecode($responseDecoded->data->data->translations[0]->translatedText));
+//        $this->jok($responseDecoded->data->data->translations[0]);
         
     }
     
