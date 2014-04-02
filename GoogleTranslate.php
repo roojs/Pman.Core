@@ -54,7 +54,7 @@ class Pman_Core_GoogleTranslate extends Pman
         $testStr = '{"success":true,"total":1,"data":{"data":{"translations":[{"translatedText":"Alessi %E6 %96 %B0 %E5 %93 %81 %E7% 99% BC% E5% B8% 83% E3% 80% 80% E6% 99% 82% E5% B0% 9A% E5% AF% A6% E7% 94% A8% E5% 85% BC% E5% 82% 99"}]}}}';
 //        mb_convert_encoding($testStr, 'HTML-ENTITIES', "UTF-8");
 //        print_R(utf8_decode(urldecode($testStr)));
-        print_r(rawurlencode('Alessi新品發布　時尚實用兼備'));
+        print_r(rawurldecode('Alessi%E6%96%B0%E5%93%81%E7%99%BC%E5%B8%83%E3%80%80%E6%99%82%E5%B0%9A%E5%AF%A6%E7%94%A8%E5%85%BC%E5%82%99'));
 //        $responseDecoded = json_decode(utf8_decode(urldecode($testStr)));
 //        curl_close($handle);
 //        print_r($responseDecoded->data->data->translations[0]->translatedText);
