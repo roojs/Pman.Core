@@ -156,7 +156,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 }
                 Roo.log('in3?');
                 
-                return o.data.translatedText;
+                ret = o.data.translatedText;
             },
             failure: function (res) {
                 Roo.log(res);
@@ -164,7 +164,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             }
         });
         
-//        return ret;
+        return ret;
         
 //        
 //        x.load(
