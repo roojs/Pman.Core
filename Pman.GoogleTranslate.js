@@ -17,32 +17,32 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         var complete = '';
         
         
-        if (!Pman.GoogleTranslate.key) {
-            
-            new Pman.Request({
-                method : 'POST',
-                url : baseURL + '/Core/GoogleKey',
-                success : function(data)
-                {
-                    Pman.GoogleTranslate.key = data.data;
-                    
-                    Pman.GoogleTranslate(str, src, dest, cb, force);
-                    
-                },
-                failure : function() {
-                    Roo.log("Google key fetch failed");
-                    // do not display error message...
-                    return true;
-                }
-                
-                
-            });
-            
-            
-            
-            
-            return;
-        }
+//        if (!Pman.GoogleTranslate.key) {
+//            
+//            new Pman.Request({
+//                method : 'POST',
+//                url : baseURL + '/Core/GoogleKey',
+//                success : function(data)
+//                {
+//                    Pman.GoogleTranslate.key = data.data;
+//                    
+//                    Pman.GoogleTranslate(str, src, dest, cb, force);
+//                    
+//                },
+//                failure : function() {
+//                    Roo.log("Google key fetch failed");
+//                    // do not display error message...
+//                    return true;
+//                }
+//                
+//                
+//            });
+//            
+//            
+//            
+//            
+//            return;
+//        }
         
         
         function escapeDecode(encodedString) {
@@ -111,19 +111,19 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             transbits();
             return;
         }
-                
-                
-                
-                
-          
-        var x = new Roo.data.ScriptTagProxy({ 
-            url:   'https://www.googleapis.com/language/translate/v2',
-                  //'http://ajax.googleapis.com/ajax/services/language/translate', 
-            callbackParam : 'callback'
-            
-            
-        });
-        
+//                
+//                
+//                
+//                
+//          
+//        var x = new Roo.data.ScriptTagProxy({ 
+//            url:   'https://www.googleapis.com/language/translate/v2',
+//                  //'http://ajax.googleapis.com/ajax/services/language/translate', 
+//            callbackParam : 'callback'
+//            
+//            
+//        });
+//        
         src = src.replace('_','-');
         dest = dest.replace('_','-');
         // google does not recognize HK...
@@ -143,8 +143,8 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             success: function(o)
             {
                 if (!o.data) {
-                        return o;
-                    }
+                    return o;
+                }
 //                Roo.MessageBox.alert("Success", "We logged in OK")
                 return o.data.translations[0].translatedText;
             },
