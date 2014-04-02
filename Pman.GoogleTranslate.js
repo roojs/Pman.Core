@@ -130,7 +130,26 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         if (src  == 'zh-HK')  src = 'zh-TW';
         if (dest == 'zh-HK') dest = 'zh-TW';
      
-         
+        new Pman.Request({
+            url : baseURL + '/Roo/GoogleTranslate.php',
+            method :'POST',
+            mask : 'Translating',
+            maskEl : document.body,
+            params : {
+                text : str,
+                src  : src,
+                dest : dest,
+            },
+            success: function()
+            {
+                Roo.MessageBox.alert("Success", "We logged in OK")
+
+            },
+            failure: function (res) {
+                Roo.log(res);
+                Roo.MessageBox.alert("Failure", "Failed?")
+            }
+        });
         
         x.load(
             {
