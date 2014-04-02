@@ -153,32 +153,32 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 Roo.MessageBox.alert("Failure", "Failed?")
             }
         });
-        
-        x.load(
-            {
-                key :  Pman.GoogleTranslate.key,
-              //  v: '1.0',
-                q : str,
-                source : src,
-                target : dest
-                //langpair : src + '|' +dest
-            }, // end params.
-            { // reader
-                readRecords : function (o) {
-                    Roo.log(o);
-                    if (!o.data) {
-                        return o;
-                    }
-                    return o.data.translations[0].translatedText;
-                    //return escapeDecode(o.data.translations[0].translatedText);
-                }
-            }, 
-            function (result) {
-                cb(result);
-            },
-            this,
-            []
-        );
+//        
+//        x.load(
+//            {
+//                key :  Pman.GoogleTranslate.key,
+//              //  v: '1.0',
+//                q : str,
+//                source : src,
+//                target : dest
+//                //langpair : src + '|' +dest
+//            }, // end params.
+//            { // reader
+//                readRecords : function (o) {
+//                    Roo.log(o);
+//                    if (!o.data) {
+//                        return o;
+//                    }
+//                    return o.data.translations[0].translatedText;
+//                    //return escapeDecode(o.data.translations[0].translatedText);
+//                }
+//            }, 
+//            function (result) {
+//                cb(result);
+//            },
+//            this,
+//            []
+//        );
         
             
         
