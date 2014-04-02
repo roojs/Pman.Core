@@ -56,8 +56,11 @@ class Pman_Core_GoogleTranslate extends Pman
         if(!empty($responseDecoded->error)){
             $this->jerr($responseDecoded->error->message);
         }
-        print_r($responseDecoded);
-        $responseDecoded->data->translations[0]->translatedText = rawurldecode($responseDecoded->data->data->translations[0]->translatedText);
+//        print_r($responseDecoded);
+        if(empty($responseDecoded->data->translations[0]->translatedText)){
+            $this->jerr('does not have translated text.');
+        }
+        $responseDecoded->data->translations[0]->translatedText = rawurldecode($responseDecoded->data->translations[0]->translatedText);
         $this->jok($responseDecoded->data->translations[0]);
         
     }
