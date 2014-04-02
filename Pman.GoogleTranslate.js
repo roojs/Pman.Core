@@ -155,16 +155,16 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return;
                 }
                 Roo.log('in3?');
-                
-                ret = o.data.translatedText;
+                cb(o.data.translatedText);
+//                ret = o.data.translatedText;
             },
             failure: function (res) {
                 Roo.log(res);
                 Roo.MessageBox.alert("Failure ", res.data.error.message);
             }
         });
-        Roo.log(ret);
-        return ret;
+//        Roo.log(ret);
+//        return;
         
 //        
 //        x.load(
