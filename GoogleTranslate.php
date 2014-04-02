@@ -42,7 +42,6 @@ class Pman_Core_GoogleTranslate extends Pman
             'format' => 'text',
         );
         
-        
         $url = 'https://www.googleapis.com/language/translate/v2';
 
         $handle = curl_init();
@@ -60,16 +59,6 @@ class Pman_Core_GoogleTranslate extends Pman
         header("content-type: text/json");
         echo $response;
         exit;
-        if(!empty($responseDecoded->error)){
-            $this->jerr($responseDecoded->error->message);
-        }
-//        print_r($responseDecoded);
-        if(empty($responseDecoded->data->translations[0]->translatedText)){
-            $this->jerr('does not have translated text.', print_r($responseDecoded, true));
-        }
-//        var_dump($responseDecoded->data->translations[0]->translatedText);
-        $responseDecoded->data->translations[0]->translatedText = rawurldecode(str_replace(' ', '', $responseDecoded->data->translations[0]->translatedText));
-        $this->jok($responseDecoded->data->translations[0]);
         
     }
     
