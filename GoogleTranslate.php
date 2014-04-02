@@ -47,7 +47,6 @@ class Pman_Core_GoogleTranslate extends Pman
         $responseDecoded = json_decode($response, true);
         curl_close($handle);
     
-        
         $this->jdata($responseDecoded);
         
     }
