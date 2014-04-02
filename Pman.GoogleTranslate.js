@@ -140,8 +140,11 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 src  : src,
                 dest : dest,
             },
-            success: function()
+            success: function(o)
             {
+                if (!o.data) {
+                        return o;
+                    }
 //                Roo.MessageBox.alert("Success", "We logged in OK")
                 return o.data.translations[0].translatedText;
             },
