@@ -46,7 +46,8 @@ class Pman_Core_GoogleTranslate extends Pman
         curl_setopt($handle, CURLOPT_POST, count($param));
         curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($param));
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        
+        curl_setopt($handle, CURLOPT_HTTPHEADER, array('X-HTTP-Method-Override: GET'));
+ 
         $response = curl_exec($handle);
         
         print_r(http_build_query($param));
