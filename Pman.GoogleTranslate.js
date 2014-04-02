@@ -128,6 +128,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         dest = dest.replace('_','-');
         // google does not recognize HK...
         if (src  == 'zh')  src = 'zh-CN';
+        if (dest  == 'zh')  dest = 'zh-CN';
         if (src  == 'zh-HK')  src = 'zh-TW';
         if (dest == 'zh-HK') dest = 'zh-TW';
         
