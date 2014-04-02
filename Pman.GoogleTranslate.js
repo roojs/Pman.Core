@@ -158,7 +158,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             failure: function (res) {
                 Roo.log(res);
-                Roo.MessageBox.alert("Failure ", res.data.error.message);
+                Roo.MessageBox.alert("Failure ", res.message);
             }
         });
 //        Roo.log(ret);
