@@ -52,9 +52,12 @@ class Pman_Core_GoogleTranslate extends Pman
 
         $response = curl_exec($handle);
 
-        $responseDecoded = json_decode($response);
+//        $responseDecoded = json_decode($response);
         curl_close($handle);
         
+        header("content-type: text/json");
+        echo $response;
+        exit;
         if(!empty($responseDecoded->error)){
             $this->jerr($responseDecoded->error->message);
         }
