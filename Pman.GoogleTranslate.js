@@ -144,7 +144,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             success: function(o)
             {
-                if (!o) {
+                if (!o.data) {
                     return o;
                 }
                 if(typeof(o.data.error) != 'undefined'){
@@ -153,7 +153,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return;
                 }
 //                Roo.MessageBox.alert("Success", "We logged in OK")
-                return o.translatedText;
+                return o.data.translatedText;
             },
             failure: function (res) {
                 Roo.log(res);
