@@ -163,7 +163,22 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             failure: function (res) {
                 Roo.log(res);
-                Roo.MessageBox.alert("Failure ", res.message);
+                if (!res.data) {
+                    return res;
+                }
+
+                if(typeof(res.data.error) != 'undefined'){
+                    Roo.get(document.body).unmask();
+                    Roo.MessageBox.alert("Failure ", res.data.error.message);
+                    return;
+                }
+
+                if(typeof(res.data.translations[0].translatedText) == 'undefined'){
+                    Roo.MessageBox.alert("Failure ", "Does not found the translated text.");
+                }
+                cb(res.data.translations[0].translatedText);
+                
+                //Roo.MessageBox.alert("Failure ", res.message);
             }
         });
 //        Roo.log(ret);
