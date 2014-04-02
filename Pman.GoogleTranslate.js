@@ -144,22 +144,18 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             success: function(o)
             {
-//                Roo.log('in?');
                 if (!o.data) {
                     return o;
                 }
-//                Roo.log('in2?');
                 if(typeof(o.data.error) != 'undefined'){
                     Roo.get(document.body).unmask();
                     Roo.MessageBox.alert("Failure ", o.data.error.message);
                     return;
                 }
-//                Roo.log('in3?');
                 if(typeof(o.data.translations[0].translatedText) == 'undefined'){
                     Roo.MessageBox.alert("Failure ", "Does not found the translated text.");
                 }
                 cb(o.data.translations[0].translatedText);
-//                ret = o.data.translatedText;
             },
             failure: function (res) {
                 Roo.log(res);
@@ -181,37 +177,6 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 //Roo.MessageBox.alert("Failure ", res.message);
             }
         });
-//        Roo.log(ret);
-//        return;
-        
-//        
-//        x.load(
-//            {
-//                key :  Pman.GoogleTranslate.key,
-//              //  v: '1.0',
-//                q : str,
-//                source : src,
-//                target : dest
-//                //langpair : src + '|' +dest
-//            }, // end params.
-//            { // reader
-//                readRecords : function (o) {
-//                    Roo.log(o);
-//                    if (!o.data) {
-//                        return o;
-//                    }
-//                    return o.data.translations[0].translatedText;
-//                    //return escapeDecode(o.data.translations[0].translatedText);
-//                }
-//            }, 
-//            function (result) {
-//                cb(result);
-//            },
-//            this,
-//            []
-//        );
-        
-            
         
     };
             
