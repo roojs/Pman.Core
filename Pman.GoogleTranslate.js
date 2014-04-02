@@ -8,7 +8,7 @@
  * @param str {String} input string
  * @param src {String} source language (or '' for autoguess)
  * @param str {String} target language
- * @param str {String} callback - calls back with result or an error object.
+ * @param cb {String} callback - calls back with result or an error object.
  */
 Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         // load script: 
