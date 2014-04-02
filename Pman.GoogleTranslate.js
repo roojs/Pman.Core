@@ -147,11 +147,11 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return o;
                 }
                 Roo.log('in2?');
-                if(typeof(o.data.error) != 'undefined'){
-                    Roo.get(document.body).unmask();
-                    Roo.MessageBox.alert("Failure ", o.data.error.message);
-                    return;
-                }
+//                if(typeof(o.data.error) != 'undefined'){
+//                    Roo.get(document.body).unmask();
+//                    Roo.MessageBox.alert("Failure ", o.data.error.message);
+//                    return;
+//                }
                 Roo.log('in3?');
                 cb(o.data.translatedText);
 //                ret = o.data.translatedText;
