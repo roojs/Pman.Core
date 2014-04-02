@@ -32,9 +32,6 @@ class Pman_Core_GoogleTranslate extends Pman
             $this->jerr("Google API Key not configured");
         }
         
-        $apiKey = $pc['googlekey'];
-    
-        $text = 'Hello world!';
         $param = array(
             'key' => $pc['googlekey'],
             'q' => rawurlencode($_REQUEST['text']),
@@ -42,11 +39,7 @@ class Pman_Core_GoogleTranslate extends Pman
             'target' => $_REQUEST['dest']
         );
         
-        $url = 'https://www.googleapis.com/language/translate/v2?key='.
-                $apiKey.
-                '&q='.
-                rawurlencode($text).
-                '&source=en&target=fr';
+        $url = 'https://www.googleapis.com/language/translate/v2?'.http_build_query($param);
 
         $handle = curl_init($url);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
@@ -55,7 +48,7 @@ class Pman_Core_GoogleTranslate extends Pman
         curl_close($handle);
     
         
-        $this->jdata($key);
+        $this->jdata($responseDecoded);
         
     }
     
