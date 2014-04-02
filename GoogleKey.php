@@ -2,6 +2,14 @@
 
 require_once 'Pman.php';
 
+
+/**
+ * 
+ * NOT IN USED NOW!!!
+ * 
+ * 
+ * 
+ */
 class Pman_Core_GoogleKey extends Pman
 {
     function getAuth()
