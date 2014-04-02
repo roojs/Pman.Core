@@ -146,7 +146,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return o;
                 }
                 if(typeof(o.data.error) != 'undefined'){
-                    Roo.MessageBox.alert("Failure ", res.data.error.message);
+                    Roo.MessageBox.alert("Failure ", o.data.error.message);
                     return;
                 }
 //                Roo.MessageBox.alert("Success", "We logged in OK")
