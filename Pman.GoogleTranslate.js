@@ -145,12 +145,16 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 if (!o.data) {
                     return o;
                 }
+                if(typeof(o.data.error) != 'undefined'){
+                    Roo.MessageBox.alert("Failure ", res.data.error.message);
+                    return;
+                }
 //                Roo.MessageBox.alert("Success", "We logged in OK")
                 return o.data.translations[0].translatedText;
             },
             failure: function (res) {
                 Roo.log(res);
-                Roo.MessageBox.alert("Failure ", 'Got error');
+                Roo.MessageBox.alert("Failure ", res.data.error.message);
             }
         });
 //        
