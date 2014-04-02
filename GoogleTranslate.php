@@ -39,8 +39,7 @@ class Pman_Core_GoogleTranslate extends Pman
             'q' =>  $_REQUEST['text'],
             'source' => $_REQUEST['src'],
             'target' => $_REQUEST['dest'],
-            'ie' => 'UTF-8',
-            'oe' => 'UTF-8',
+            'format' => 'text',
         );
         
         
