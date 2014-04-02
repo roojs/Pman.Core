@@ -52,12 +52,13 @@ class Pman_Core_GoogleTranslate extends Pman
 
         $responseDecoded = json_decode($response);
         curl_close($handle);
+        
         if(!empty($responseDecoded->error)){
             $this->jerr($responseDecoded->error->message);
         }
         
-        $responseDecoded->data->data->translations[0]->translatedText = rawurldecode($responseDecoded->data->data->translations[0]->translatedText);
-        $this->jok($responseDecoded->data->data->translations[0]);
+        $responseDecoded->data->translations[0]->translatedText = rawurldecode($responseDecoded->data->data->translations[0]->translatedText);
+        $this->jok($responseDecoded->data->translations[0]);
         
     }
     
