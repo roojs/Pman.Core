@@ -36,19 +36,20 @@ class Pman_Core_GoogleTranslate extends Pman
         }
         $param = array(
             'key' => $pc['googlekey'],
-            'q' => rawurlencode($_REQUEST['text']),
+            'q' =>  $_REQUEST['text'],
             'source' => $_REQUEST['src'],
             'target' => $_REQUEST['dest'],
             'ie' => 'UTF-8',
             'oe' => 'UTF-8',
         );
         
+        
         $url = 'https://www.googleapis.com/language/translate/v2';
 
         $handle = curl_init();
         curl_setopt($handle, CURLOPT_URL, $url);
         curl_setopt($handle, CURLOPT_POST, count($param));
-        curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($param));
+        curl_setopt($handle, CURLOPT_POSTFIELDS, $param);
         curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($handle, CURLOPT_HTTPHEADER, array('X-HTTP-Method-Override: GET'));
 

@@ -49,7 +49,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
     function getAuth()
     {
          
-        die("do not use this directly..");  
+        die("do not use this directly.. - use Core/RunGenerator");  
         
     }
    
