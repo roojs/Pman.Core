@@ -163,7 +163,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                 Roo.MessageBox.alert("Failure ", res.data.error.message);
             }
         });
-        
+        Roo.log(ret);
         return ret;
         
 //        
