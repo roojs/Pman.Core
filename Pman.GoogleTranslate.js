@@ -131,7 +131,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
         if (dest == 'zh-HK') dest = 'zh-TW';
      
         new Pman.Request({
-            url : baseURL + '/Pman/Core/GoogleTranslate.php',
+            url : baseURL + '/Core/GoogleTranslate.php',
             method :'POST',
             mask : 'Translating',
             maskEl : document.body,
