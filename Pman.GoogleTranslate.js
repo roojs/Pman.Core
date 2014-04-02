@@ -155,7 +155,10 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
                     return;
                 }
 //                Roo.log('in3?');
-                cb(o.data.translatedText);
+                if(typeof(o.data.translations[0].translatedText) == 'undefined'){
+                    Roo.MessageBox.alert("Failure ", "Does not found the translated text.");
+                }
+                cb(o.data.translations[0].translatedText);
 //                ret = o.data.translatedText;
             },
             failure: function (res) {
