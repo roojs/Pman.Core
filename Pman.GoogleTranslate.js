@@ -150,7 +150,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             },
             failure: function (res) {
                 Roo.log(res);
-                Roo.MessageBox.alert("Failure", "Failed?")
+                Roo.MessageBox.alert("Failure", res.data.error.message);
             }
         });
 //        
