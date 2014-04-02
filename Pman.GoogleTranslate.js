@@ -161,7 +161,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             }
         });
         
-        return ret;
+//        return ret;
         
 //        
 //        x.load(
