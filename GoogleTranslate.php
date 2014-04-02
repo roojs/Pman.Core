@@ -39,7 +39,7 @@ class Pman_Core_GoogleTranslate extends Pman
             'target' => $_REQUEST['dest']
         );
         
-        $url = 'https://www.googleapis.com/language/translate/v2'.http_build_query($param);
+        $url = 'https://www.googleapis.com/language/translate/v2';
 
         $handle = curl_init();
         curl_setopt($handle,CURLOPT_URL, $url);
