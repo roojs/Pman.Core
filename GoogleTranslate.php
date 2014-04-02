@@ -41,21 +41,21 @@ class Pman_Core_GoogleTranslate extends Pman
         
         $url = 'https://www.googleapis.com/language/translate/v2';
 //
-//        $handle = curl_init();
-//        curl_setopt($handle, CURLOPT_URL, $url);
-//        curl_setopt($handle, CURLOPT_POST, count($param));
-//        curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($param));
-//        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-//        curl_setopt($handle, CURLOPT_HTTPHEADER, array('X-HTTP-Method-Override: GET'));
-//
-//        $response = curl_exec($handle);
+        $handle = curl_init();
+        curl_setopt($handle, CURLOPT_URL, $url);
+        curl_setopt($handle, CURLOPT_POST, count($param));
+        curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($param));
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($handle, CURLOPT_HTTPHEADER, array('X-HTTP-Method-Override: GET'));
+
+        $response = curl_exec($handle);
 //        utf8_decode('{"success":true,"total":1,"data":{"data":{"translations":[{"translatedText":"Alessi%E6%96%B0%E5%93%81%E7%99%BC%E5%B8%83%E3%80%80%E6%99%82%E5%B0%9A%E5%AF%A6%E7%94%A8%E5%85%BC%E5%82%99"}]}}}');
         
-        $testStr = '{"success":true,"total":1,"data":{"data":{"translations":[{"translatedText":"Alessi%E6%96%B0%E5%93%81%E7%99%BC%E5%B8%83%E3%80%80%E6%99%82%E5%B0%9A%E5%AF%A6%E7%94%A8%E5%85%BC%E5%82%99"}]}}}';
+//        $testStr = '{"success":true,"total":1,"data":{"data":{"translations":[{"translatedText":"Alessi%E6%96%B0%E5%93%81%E7%99%BC%E5%B8%83%E3%80%80%E6%99%82%E5%B0%9A%E5%AF%A6%E7%94%A8%E5%85%BC%E5%82%99"}]}}}';
 //        mb_convert_encoding($testStr, 'HTML-ENTITIES', "UTF-8");
 //        print_R(utf8_decode(urldecode($testStr)));
 //        print_r(rawurldecode('Alessi%E6%96%B0%E5%93%81%E7%99%BC%E5%B8%83%E3%80%80%E6%99%82%E5%B0%9A%E5%AF%A6%E7%94%A8%E5%85%BC%E5%82%99'));
-        $responseDecoded = json_decode($testStr);
+        $responseDecoded = json_decode($response);
 //        curl_close($handle);
 //        print_r($responseDecoded->data->data->translations[0]->translatedText);
         $responseDecoded->data->data->translations[0]->translatedText = rawurldecode($responseDecoded->data->data->translations[0]->translatedText);
