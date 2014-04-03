@@ -46,9 +46,10 @@
                             "|xns": "Roo.form",
                             "items": [
                                 {
-                                    "hidden": true,
+                                    "actionMode": "fieldEl",
                                     "allowBlank": false,
                                     "fieldLabel": "Name",
+                                    "hidden": true,
                                     "name": "name",
                                     "width": 200,
                                     "xtype": "TextField",
