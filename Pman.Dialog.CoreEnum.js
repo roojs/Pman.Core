@@ -109,6 +109,13 @@ Pman.Dialog.CoreEnum = {
                                 {
                                     xtype: 'TextField',
                                     xns: Roo.form,
+                                    listeners : {
+                                        keyup : function (_self, e)
+                                        {
+                                            _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());
+                                            
+                                        }
+                                    },
                                     allowBlank : false,
                                     fieldLabel : 'Display Name',
                                     name : 'display_name',

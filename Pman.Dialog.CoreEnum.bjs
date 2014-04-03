@@ -56,6 +56,9 @@
                                     "|xns": "Roo.form"
                                 },
                                 {
+                                    "listeners": {
+                                        "keyup": "function (_self, e)\n{\n    _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());\n    \n}"
+                                    },
                                     "allowBlank": false,
                                     "fieldLabel": "Display Name",
                                     "name": "display_name",
