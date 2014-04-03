@@ -1,5 +1,5 @@
 {
-    "id": "roo-file-205",
+    "id": "roo-file-206",
     "name": "Pman.Dialog.CoreEnum",
     "parent": "",
     "title": "",
@@ -51,6 +51,7 @@
                                     "name": "name",
                                     "width": 200,
                                     "xtype": "TextField",
+                                    "|hidden": "function() {\n    \n}\n",
                                     "|xns": "Roo.form"
                                 },
                                 {

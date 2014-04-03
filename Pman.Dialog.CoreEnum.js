@@ -102,7 +102,10 @@ Pman.Dialog.CoreEnum = {
                                     allowBlank : false,
                                     fieldLabel : 'Name',
                                     name : 'name',
-                                    width : 200
+                                    width : 200,
+                                    hidden : function() {
+                                        
+                                    }
                                 },
                                 {
                                     xtype: 'TextField',
