@@ -51,7 +51,7 @@
                                     "name": "name",
                                     "width": 200,
                                     "xtype": "TextField",
-                                    "|hidden": "true",
+                                    "hidden": "true",
                                     "|xns": "Roo.form"
                                 },
                                 {
