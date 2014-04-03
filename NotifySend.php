@@ -476,7 +476,7 @@ class Pman_Core_NotifySend extends Pman
     function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
     {
         $m = 'notify'. $notify->evtype;
-        var_dump($m);
+        var_dump(get_class($object) . '::' .$m);
         
         if (!empty($notify->evtype) && method_exists($object,$m)) {
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
