@@ -102,7 +102,7 @@ Pman.Dialog.CoreEnum = {
                                     actionMode : 'fieldEl',
                                     allowBlank : false,
                                     fieldLabel : 'Name',
-                                    hidden : false,
+                                    hidden : true,
                                     name : 'name',
                                     width : 200
                                 },
