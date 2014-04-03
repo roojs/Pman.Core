@@ -41,8 +41,12 @@ ALTER TABLE Person ADD COLUMN   phone_direct varchar(32)  NOT NULL  DEFAULT '';
 
 ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
 
-ALTER TABLE Person ADD COLUMN countries VARCHAR(128) NOT NULL DEFAULT '';
+# this is store the person interest countries...
+ALTER TABLE Person ADD COLUMN countries VARCHAR(128) NOT NULL DEFAULT ''; 
 
+# this is store the person location
+ALTER TABLE Person ADD COLUMN country TEXT NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN city TEXT NOT NULL DEFAULT ''; 
 
 
 # old mysql
