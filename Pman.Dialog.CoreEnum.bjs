@@ -46,6 +46,7 @@
                             "|xns": "Roo.form",
                             "items": [
                                 {
+                                    "hidden": true,
                                     "allowBlank": false,
                                     "fieldLabel": "Name",
                                     "name": "name",
