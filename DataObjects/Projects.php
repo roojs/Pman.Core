@@ -164,16 +164,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
         
         
     }
-    function whereAddIn($key, $list, $type) {
-        $ar = array();
-        foreach($list as $k) {
-            $ar[] = $type =='int' ? (int)$k : $this->escape($k);
-        }
-        if (!$ar) {
-            return;
-        }
-        $this->whereAdd("$key IN (". implode(',', $ar). ')');
-    }
+ 
     function onInsert()
     {
         $oo = clone($this);
