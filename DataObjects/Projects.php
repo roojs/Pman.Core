@@ -112,11 +112,8 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             
                
             $pf = empty($q['query']['project_filter']) ? 'P,N,U' : $q['query']['project_filter'];
-            $bits= explode(',' ,$pf);
-            foreach($bits as $i=>$k) {
-                $bits[$i] = $this->escape($k);
-            }
-            $this->whereAdd("Projects.type in ('". implode("','", $bits) . "')");
+
+            $this->whereAddIn("Projects.type", explode(',', $pf), 'string');
         }
          // user projects!!!! - make sure they can only see project they are suppsed to..
          // only applies to document stuff..
