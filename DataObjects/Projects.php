@@ -112,7 +112,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             
                
             $pf = empty($q['query']['project_filter']) ? 'P,N,U' : $q['query']['project_filter'];
-
+        
             $this->whereAddIn("Projects.type", explode(',', $pf), 'string');
         }
          // user projects!!!! - make sure they can only see project they are suppsed to..
