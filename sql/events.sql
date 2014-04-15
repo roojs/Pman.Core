@@ -10,12 +10,12 @@ CREATE TABLE Events (
 ALTER TABLE Events ADD COLUMN   person_name varchar(128)  default NULL;
 
 ALTER TABLE Events ADD COLUMN   event_when DATETIME default NULL;
-ALTER TABLE Events ADD COLUMN   action varchar(64)  default '' NOT NULL;
-ALTER TABLE Events ADD COLUMN   ipaddr varchar(16)  default NULL;
-ALTER TABLE Events ADD COLUMN   on_id int(11) default NULL;
-ALTER TABLE Events ADD COLUMN   on_table varchar(64)  default NULL;
-ALTER TABLE Events ADD COLUMN   person_id int(11) default NULL;
-ALTER TABLE Events ADD COLUMN   person_table varchar(64) default NULL;
+ALTER TABLE Events ADD COLUMN   action varchar(64)  NOT NULL default '' ;
+ALTER TABLE Events ADD COLUMN   ipaddr varchar(16)  NOT NULL default '';
+ALTER TABLE Events ADD COLUMN   on_id int(11) NOT NULL default 0;
+ALTER TABLE Events ADD COLUMN   on_table varchar(64) NOT NULL default '';
+ALTER TABLE Events ADD COLUMN   person_id int(11) NOT NULL default 0;
+ALTER TABLE Events ADD COLUMN   person_table varchar(64) NOT NULL default '';
 
 ALTER TABLE Events ADD COLUMN   remarks text ;
  
