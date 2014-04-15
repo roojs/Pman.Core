@@ -32,6 +32,8 @@ ALTER TABLE Events CHANGE COLUMN Host ipaddr VARCHAR(16);
 ALTER TABLE Events CHANGE COLUMN ItemID on_id INT(11);
 ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 
- 
+-- make action larger..
+ALTER TABLE Events CHANGE COLUMN action action varchar(64)  default NULL;
+
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
   
