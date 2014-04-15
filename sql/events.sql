@@ -7,7 +7,7 @@ CREATE TABLE Events (
 
 
 
-ALTER TABLE Events ADD COLUMN   person_name varchar(128)  default NULL;
+ALTER TABLE Events ADD COLUMN   person_name varchar(128)  NOT NULL default '';
 
 ALTER TABLE Events ADD COLUMN   event_when DATETIME default NULL;
 ALTER TABLE Events ADD COLUMN   action varchar(64)  NOT NULL default '' ;
