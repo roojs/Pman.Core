@@ -662,6 +662,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au, $roo)
     {
+        print_r('run');exit;
         //DB_DataObject::DebugLevel(1);
         if (!empty($q['query']['person_not_internal'])) {
             $this->whereAdd(" join_company_id_id.isOwner = 0 ");
