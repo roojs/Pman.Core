@@ -127,7 +127,7 @@ Pman.Dialog.CoreCompanies = {
                                             emptyText : "Select Type",
                                             fieldLabel : 'Type',
                                             forceSelection : true,
-                                            hiddenName : 'comptype_id',
+                                            hiddenName : 'comptype',
                                             listWidth : 250,
                                             loadingText : "Searching...",
                                             minChars : 2,
