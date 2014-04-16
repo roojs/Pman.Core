@@ -34,7 +34,6 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     public $province;                        // string(255)  not_null
     public $country;                         // string(4)  not_null
     public $is_system;                       // int(2)
-    public $description;                     // text
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
