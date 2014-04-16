@@ -1,7 +1,4 @@
 
--- our new code should have this fixed now..
--- UPDATE Companies set comptype='OWNER' where isOwner=1;
-
 -- // core comapy types - use core enums (Company Type)
 DROP TABLE core_company_type;
 
