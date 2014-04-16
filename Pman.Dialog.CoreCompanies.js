@@ -139,7 +139,7 @@ Pman.Dialog.CoreCompanies = {
                                             tpl : '<div class="x-grid-cell-text x-btn button"><b>{name}</b> : {display_name}</div>',
                                             triggerAction : 'all',
                                             typeAhead : false,
-                                            valueField : 'name',
+                                            valueField : 'id',
                                             width : 200,
                                             store : {
                                                 xtype: 'Store',
