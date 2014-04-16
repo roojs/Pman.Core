@@ -44,6 +44,7 @@ ALTER TABLE Companies ADD COLUMN    address2 text ;
 ALTER TABLE Companies ADD COLUMN    address3 text ;
 ALTER TABLE Companies ADD COLUMN is_system INT(2) NOT NULL DEFAULT 0;-- #2028
 
+ALTER TABLE Companies ADD COLUMN description TEXT NOT NULL DEFAULT '' ;
 
 ALTER TABLE Companies ADD INDEX name_lookup (name);
 
