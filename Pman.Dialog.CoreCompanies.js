@@ -210,6 +210,15 @@ Pman.Dialog.CoreCompanies = {
                                             xtype: 'TextField',
                                             xns: Roo.form,
                                             allowBlank : true,
+                                            fieldLabel : 'Email',
+                                            name : 'email',
+                                            qtip : "Enter Email Address",
+                                            width : 300
+                                        },
+                                        {
+                                            xtype: 'TextField',
+                                            xns: Roo.form,
+                                            allowBlank : true,
                                             fieldLabel : 'Address',
                                             name : 'address',
                                             qtip : "Enter Address",
