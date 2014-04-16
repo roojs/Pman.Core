@@ -131,7 +131,7 @@ Pman.Dialog.CoreCompanies = {
                                             listWidth : 250,
                                             loadingText : "Searching...",
                                             minChars : 2,
-                                            name : 'comptype_display',
+                                            name : 'comptype_display_name',
                                             pageSize : 20,
                                             qtip : "Select type",
                                             queryParam : 'query[name]',
