@@ -237,6 +237,12 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         
     }
     
+    function beforeInsert($request,$roo)
+    {
+        $roo->jerr('ERROR');
+        
+    }
+    
     function beforeUpdate($old, $q,$roo)
     {
         if(!empty($this->is_system) && 
