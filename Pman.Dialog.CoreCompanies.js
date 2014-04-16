@@ -71,8 +71,8 @@ Pman.Dialog.CoreCompanies = {
                                         var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';
                                      
                                             
-                                        if (_this.form.findField('comptype')) {
-                                            _this.form.findField('comptype')[meth]();
+                                        if (_this.form.findField('comptype_id')) {
+                                            _this.form.findField('comptype_id')[meth]();
                                         }
                                          
                                        // _this.loaded();
