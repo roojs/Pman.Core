@@ -212,7 +212,7 @@ Pman.Dialog.CoreCompanies = {
                                             allowBlank : true,
                                             fieldLabel : 'Url',
                                             name : 'url',
-                                            qtip : "Enter Email Address",
+                                            qtip : "Enter Url",
                                             width : 300
                                         },
                                         {
