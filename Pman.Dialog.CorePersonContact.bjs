@@ -1,9 +1,9 @@
 {
-    "id": "roo-file-33",
+    "id": "roo-file-209",
     "name": "Pman.Dialog.CorePersonContact",
     "parent": "",
     "title": "",
-    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CorePersonContact.bjs",
+    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CorePersonContact.bjs",
     "items": [
         {
             "closable": false,
