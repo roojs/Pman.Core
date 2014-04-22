@@ -47,6 +47,7 @@ ALTER TABLE Person ADD COLUMN countries VARCHAR(128) NOT NULL DEFAULT '';
 # this is store the person location
 ALTER TABLE Person ADD COLUMN country TEXT NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN city TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN state TEXT NOT NULL DEFAULT ''; 
 
 
 # old mysql
@@ -59,3 +60,8 @@ alter table Person change email email varchar(254) NOT NULL DEFAULT '';
 ALTER TABLE Person ADD INDEX lookup_a(email, active);
 ALTER TABLE Person ADD INDEX lookup_b(email, active, company_id);
 ALTER TABLE Person add index lookup_owner(owner_id);
+
+ALTER TABLE Person ADD COLUMN chosen_title TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN url_google_plus TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN url_blog2 TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN url_blog3 TEXT NOT NULL DEFAULT ''; 
