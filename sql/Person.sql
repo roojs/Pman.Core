@@ -47,7 +47,7 @@ ALTER TABLE Person ADD COLUMN countries VARCHAR(128) NOT NULL DEFAULT '';
 # this is store the person location
 ALTER TABLE Person ADD COLUMN country TEXT NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN city TEXT NOT NULL DEFAULT ''; 
-ALTER TABLE Person ADD COLUMN state TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN addr_state TEXT NOT NULL DEFAULT ''; 
 
 
 # old mysql
