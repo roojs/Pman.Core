@@ -98,6 +98,10 @@ class Pman_Core_Notify extends Pman
      */
     var $max_to_domain = 10;
     
+    /**
+     * @var $maxruntime - maximum time a child is allowed to run - defaut 2 minutes
+     */
+    var $maxruntime = 120; 
     var $table = 'core_notify';
     var $target = 'Core/NotifySend';
     var $evtype = ''; // any notification...
