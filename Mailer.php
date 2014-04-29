@@ -16,7 +16,7 @@
  *
  *  $x= new Pman_Core_Mailer($opts)
  *
- *  $opts[
+ *  $x= Pman_Core_Mailer(array(
        page => 
        contents
        template
@@ -32,7 +32,7 @@
         ), 
         ......
   
-    ]
+    )
  *
  *  recipents is gathered from the resulting template
  *   -- eg.
