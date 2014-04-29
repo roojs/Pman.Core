@@ -101,7 +101,8 @@ class Pman_Core_Notify extends Pman
     /**
      * @var $maxruntime - maximum time a child is allowed to run - defaut 2 minutes
      */
-    var $maxruntime = 120; 
+    var $maxruntime = 120;
+    
     var $table = 'core_notify';
     var $target = 'Core/NotifySend';
     var $evtype = ''; // any notification...
@@ -353,8 +354,7 @@ class Pman_Core_Notify extends Pman
     {
         $pool = array();
         clearstatcache();
-        $maxruntime = 2 * 60; // 2 minutes.. ?? should be long enoguh
-        
+         
         foreach($this->pool as $p) {
              
             //echo "CHECK PID: " . $p['pid'] . "\n";
@@ -374,7 +374,7 @@ class Pman_Core_Notify extends Pman
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
                 //echo "RUNTIME ({$p['pid']}): $runtime\n";
-                if ($runtime > $maxruntime) {
+                if ($runtime > $this->maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
                     //fclose($p['pipes'][1]);
