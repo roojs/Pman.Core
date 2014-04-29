@@ -42,7 +42,7 @@
  *  if the file     '
  * 
  * 
- *  $x->asData(); // returns data needed for notify?? - notify should really
+ *  $x->toData(); // returns data needed for notify?? - notify should really
  *                  // just use this to pass around later..
  *
  *  $x->send();
