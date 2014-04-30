@@ -637,9 +637,4 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$p->toEventString();
     }
     
-    function remoteUpload()
-    {
-        
-    }
-    
  }
