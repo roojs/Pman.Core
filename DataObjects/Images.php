@@ -363,7 +363,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!empty($mime_like)) {
             $c->whereAdd("Images.mimetype LIKE '". $c->escape($mime_like) ."'");
         }
-        print_r($c->fetchAll());exit;
+
         return $c->fetchAll();
     }
      
