@@ -119,7 +119,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $roo->addEvent("AUTOSAVE", $this, $this->toEventString());
             
-            $this->jok("OK");
+            $roo->jok("OK");
         }
         
     }
