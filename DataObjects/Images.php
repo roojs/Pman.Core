@@ -103,17 +103,21 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $path = $tmpdir . '/' . time();
             
-            if(!file_exists($path)){
-               file_put_contents($path, $q['_source']); 
-            }
+            $source = array(
+                'source' => $q['_source']
+            );
             
-            $this->setFrom($q);
-            
-            if (!$this->createFrom($path)) {
-                $roo->jerr("error on auto save making image");
-            }
-            
-            $roo->addEvent("AUTOSAVE", $this, $this->toEventString());
+//            if(!file_exists($path)){
+//               file_put_contents($path, $q['_source']); 
+//            }
+//            
+//            $this->setFrom($q);
+//            
+//            if (!$this->createFrom($path)) {
+//                $roo->jerr("error on auto save making image");
+//            }
+//            
+//            $roo->addEvent("AUTOSAVE", $this, $this->toEventString());
             
             $this->jok("OK");
         }
@@ -131,7 +135,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
-            print_r('errror?????');exit;
             return false;
         }
         
