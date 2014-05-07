@@ -101,22 +101,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $tmpdir  = System::mktemp("-d auto_save");
             
-            $path = $tmpdir . '/' . time() . '.json';
+            $path = $tmpdir . '/' . time();
             
             if(!file_exists($path)){
                file_put_contents($path, $q['_source']); 
             }
             
-             $imageInfo = getimagesize($path);
-            
-            require_once 'File/MimeType.php';
-            $y = new File_MimeType();
-            $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
-            
-            if (!preg_match("/\." . $ext."$/", $path, $matches)) {
-                rename($path,$path.".".$ext);
-                $path.= ".".$ext;
-            }
+            $this->ontable = $q['ontable'];
+            $this->onid = $q['onid'];
             
             if (!$this->createFrom($path)) {
                 $roo->jerr("error on auto save making image");
