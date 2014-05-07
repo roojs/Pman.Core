@@ -86,7 +86,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 return;
             }
             
-            $roo->addEvent(!empty($q['_action'])? $q['_action'] : "ADD", $this, $this->toEventString());
+            $roo->addEvent("ADD", $this, $this->toEventString());
         
             $r = DB_DataObject::factory($this->tableName());
             $r->id = $this->id;
