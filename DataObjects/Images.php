@@ -106,18 +106,18 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $source = array(
                 'source' => $q['_source']
             );
-            print_r(json_encode($source));exit;
-//            if(!file_exists($path)){
-//               file_put_contents($path, $q['_source']); 
-//            }
-//            
-//            $this->setFrom($q);
-//            
-//            if (!$this->createFrom($path)) {
-//                $roo->jerr("error on auto save making image");
-//            }
-//            
-//            $roo->addEvent("AUTOSAVE", $this, $this->toEventString());
+            
+            if(!file_exists($path)){
+               file_put_contents($path, json_encode($source)); 
+            }
+            
+            $this->setFrom($q);
+            
+            if (!$this->createFrom($path)) {
+                $roo->jerr("error on auto save making image");
+            }
+            
+            $roo->addEvent("AUTOSAVE", $this, $this->toEventString());
             
             $this->jok("OK");
         }
