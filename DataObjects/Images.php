@@ -131,6 +131,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
+            print_r('errror?????');exit;
             return false;
         }
         
