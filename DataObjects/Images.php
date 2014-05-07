@@ -96,6 +96,20 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->jok($r->URL(-1,'/Images') . '#attachment-'.  $r->id);
         }
         
+        if(isset($q['_auto_save'])){
+            require_once 'System.php';
+            
+            $tmpdir  = System::mktemp("-d auto_save");
+            
+            $path = $tmpdir . '/' . time() . '.json';
+            
+            if(!file_exists($path)){
+               file_put_contents($path, $q['_source']); 
+            }
+            
+            
+        }
+        
     }
     
      
