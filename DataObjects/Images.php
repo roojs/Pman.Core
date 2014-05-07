@@ -106,7 +106,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $source = array(
                 'source' => $q['_source']
             );
-            
+            print_r($source);exit;
 //            if(!file_exists($path)){
 //               file_put_contents($path, $q['_source']); 
 //            }
