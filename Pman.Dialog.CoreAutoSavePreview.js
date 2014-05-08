@@ -141,6 +141,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                     var sm = _this.grid.getSelectionModel();
                                     if (!sm.getSelections().length) {
                                         sm.selectFirstRow();
+                                        
                                     }
                                 }
                             },
