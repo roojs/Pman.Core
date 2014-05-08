@@ -445,5 +445,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    
+    function postListFilter($data, $authUser, $request)
+    {
+        if(empty($q['_retrieve_file'])){
+            return $data;
+        }
+        
+        print_r($data);exit;
+    }
 }
