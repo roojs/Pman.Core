@@ -119,42 +119,10 @@ Pman.Dialog.CoreAutoSavePreview = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Language',
-                                width : 200,
-                                dataIndex : 'language',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Parent image',
-                                width : 75,
-                                dataIndex : 'parent_image_id',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
                                 header : 'Created',
                                 width : 75,
                                 dataIndex : 'created',
                                 renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Imgtype',
-                                width : 200,
-                                dataIndex : 'imgtype',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Linkurl',
-                                width : 200,
-                                dataIndex : 'linkurl',
-                                renderer : function(v) { return String.format('{0}', v); }
                             },
                             {
                                 xtype: 'ColumnModel',
