@@ -458,7 +458,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            $file = $images->getStoreName();
+            $file = file_get_contents($images->getStoreName());
             print_r($file);exit;
         }
     }
