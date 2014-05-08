@@ -105,7 +105,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         this.removeAll();
                                         return false;
                                     }
-                                    
+                                    Roo.log(_this.data);
                                     o.params.action = 'AUTOSAVE';
                                 }
                             },
