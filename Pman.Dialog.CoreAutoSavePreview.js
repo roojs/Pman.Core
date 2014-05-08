@@ -119,38 +119,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Width',
-                                width : 75,
-                                dataIndex : 'width',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Height',
-                                width : 75,
-                                dataIndex : 'height',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Filesize',
-                                width : 75,
-                                dataIndex : 'filesize',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Displayorder',
-                                width : 75,
-                                dataIndex : 'displayorder',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
                                 header : 'Language',
                                 width : 200,
                                 dataIndex : 'language',
