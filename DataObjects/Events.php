@@ -451,6 +451,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $data;
         }
         
-        print_r($data);exit;
+        foreach ($data as $k => $v){
+            $images = DB_DataObject::factory('Images');
+            if(!$images->get($data['on_id'])){
+                unset($data[$k]);
+                continue;
+            }
+            
+            
+            
+        }
     }
 }
