@@ -30,6 +30,14 @@ Pman.Dialog.CoreAutoSavePreview = {
         this.dialog = Roo.factory({
             xtype: 'LayoutDialog',
             xns: Roo,
+            listeners : {
+                show : function (_self)
+                {
+                    if(typeof(_this.data) != 'undefined'){
+                        _this.grid.footer.onClick('first');
+                    }
+                }
+            },
             background : false,
             closable : false,
             collapsible : false,

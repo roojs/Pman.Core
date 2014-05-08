@@ -6,6 +6,9 @@
     "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreAutoSavePreview.bjs",
     "items": [
         {
+            "listeners": {
+                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n}"
+            },
             "background": false,
             "closable": false,
             "collapsible": false,
