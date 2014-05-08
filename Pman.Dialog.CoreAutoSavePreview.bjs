@@ -327,15 +327,6 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "on_table",
-                                    "header": "Affected",
-                                    "width": 100,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v, x, r) {                     \n            return v ? String.format('{0}({1})', v,  r.data.on_id)  : '';  \n   }",
-                                    "|xns": "Roo.grid"
-                                },
-                                {
-                                    "*prop": "colModel[]",
                                     "dataIndex": "remarks",
                                     "header": "Remarks",
                                     "width": 300,
