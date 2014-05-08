@@ -81,7 +81,6 @@
                                 {
                                     "*prop": "footer",
                                     "displayInfo": false,
-                                    "emptyMsg": "No Images found",
                                     "pageSize": 25,
                                     "xtype": "PagingToolbar",
                                     "|xns": "Roo"
