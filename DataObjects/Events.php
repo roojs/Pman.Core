@@ -471,7 +471,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(empty($q['_retrieve_source'])){
             return $ret;
         }
-        print_r('run??');exit;
+        
         
         return 'HERE IS THE RESOURCE';
     }
