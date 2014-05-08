@@ -246,7 +246,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
                                 dataIndex : 'remarks',
-                                header : 'Affected',
+                                header : 'Parts',
                                 width : 100,
                                 renderer : function(v) {                     
                                     return String.format('{0})', v ? v : '');  
