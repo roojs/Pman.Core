@@ -36,7 +36,7 @@ Pman.Dialog.CoreEventsPreview = {
             height : 500,
             modal : true,
             resizable : false,
-            title : "Manage Journalists",
+            title : "Saved Version",
             width : 600,
             items : [
                 {
