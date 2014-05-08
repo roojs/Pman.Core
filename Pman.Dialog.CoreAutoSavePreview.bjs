@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n    if (!_this.grid.getSelectionModel().getSelected()) {\n        _this.source = '';\n        _this.viewPanel.setContent(\"Please select a version on the left\");\n    }\n    \n    \n    \n}"
+                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n    if (!_this.grid.getSelectionModel().getSelected()) {\n        _this.source = '';\n        _this.viewPanel.setContent(\"Please select a version on the left\");\n    }\n    \n}"
             },
             "background": false,
             "closable": false,
