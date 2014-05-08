@@ -68,7 +68,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                     fitContainer : true,
                     fitToframe : true,
                     region : 'west',
-                    tableName : 'Images',
+                    tableName : 'Events',
                     title : "Images",
                     grid : {
                         xtype: 'Grid',
