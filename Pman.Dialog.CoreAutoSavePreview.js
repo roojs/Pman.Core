@@ -92,6 +92,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                     
                                     if(!selected){
                                        _this.viewPanel.setContent("Please select an saved version on the left"); 
+                                       return;
                                     }
                                     
                                     _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){
