@@ -170,6 +170,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                             _this.viewPanel = _self;
                         }
                     },
+                    autoScroll : true,
                     background : false,
                     fitContainer : true,
                     fitToFrame : true,

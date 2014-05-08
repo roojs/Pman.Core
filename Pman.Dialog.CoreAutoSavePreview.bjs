@@ -117,6 +117,7 @@
                     "listeners": {
                         "render": "function (_self)\n{\n    _this.viewPanel = _self;\n}"
                     },
+                    "autoScroll": true,
                     "background": false,
                     "fitContainer": true,
                     "fitToFrame": true,
