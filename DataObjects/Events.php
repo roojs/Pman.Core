@@ -464,8 +464,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function toRooSingleArray($authUser, $request)
+    function toRooSingleArray($au, $q)
     {
+        $ret = $this->toArray();
         
+        if(empty($q['_retrieve_source'])){
+            return $ret;
+        }
+        
+        
+        return 'HERE IS THE RESOURCE';
     }
 }
