@@ -373,7 +373,7 @@ Pman.Dialog.CoreEventsPreview = {
                 titlebar : false,
                 width : 400
             },
-            west : {
+            east : {
                 xtype: 'LayoutRegion',
                 xns: Roo
             },
