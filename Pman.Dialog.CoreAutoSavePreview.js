@@ -220,7 +220,9 @@ Pman.Dialog.CoreAutoSavePreview = {
                     xns: Roo,
                     listeners : {
                         click : function() {
+                            Roo.log(_this.source);
                             _this.dialog.hide();
+                        
                         }
                     },
                     text : "OK"

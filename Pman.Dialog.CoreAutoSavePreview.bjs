@@ -136,7 +136,7 @@
                 },
                 {
                     "listeners": {
-                        "|click": "function() {\n    _this.dialog.hide();\n}"
+                        "|click": "function() {\n    Roo.log(_this.source);\n    _this.dialog.hide();\n\n}"
                     },
                     "*prop": "buttons[]",
                     "text": "OK",
