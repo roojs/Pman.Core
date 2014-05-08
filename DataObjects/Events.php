@@ -453,7 +453,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         foreach ($data as $k => $v){
             $images = DB_DataObject::factory('Images');
-            if(!$images->get($data['on_id'])){
+            if(!$images->get($v['on_id'])){
                 unset($data[$k]);
                 continue;
             }
