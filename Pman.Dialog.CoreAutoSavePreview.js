@@ -36,6 +36,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                     if(typeof(_this.data) != 'undefined'){
                         _this.grid.footer.onClick('first');
                     }
+                    
                 }
             },
             background : false,
