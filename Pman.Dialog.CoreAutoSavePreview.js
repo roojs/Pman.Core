@@ -92,137 +92,16 @@ Pman.Dialog.CoreAutoSavePreview = {
                             reader : {
                                 xtype: 'JsonReader',
                                 xns: Roo.data,
-                                totalProperty : 'total',
-                                root : 'data',
                                 id : 'id',
+                                root : 'data',
+                                totalProperty : 'total',
                                 fields : [
                                     {
                                         'name': 'id',
                                         'type': 'int'
                                     },
                                     {
-                                        'name': 'filename',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'ontable',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'onid',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'mimetype',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'width',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'height',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'filesize',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'displayorder',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'language',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'created',
-                                        'type': 'date',
-                                        'dateFormat': 'Y-m-d'
-                                    },
-                                    {
-                                        'name': 'imgtype',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'linkurl',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'descript',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'title',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_id',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_filename',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_ontable',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_onid',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_mimetype',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_width',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_height',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_filesize',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_displayorder',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_language',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_parent_image_id',
-                                        'type': 'int'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_created',
-                                        'type': 'date'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_imgtype',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_linkurl',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_descript',
-                                        'type': 'string'
-                                    },
-                                    {
-                                        'name': 'parent_image_id_title',
+                                        'name': 'event_when',
                                         'type': 'string'
                                     }
                                 ]
