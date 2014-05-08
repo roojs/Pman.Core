@@ -93,22 +93,12 @@
                                 },
                                 {
                                     "*prop": "footer",
-                                    "xtype": "PagingToolbar",
-                                    "pageSize": 25,
                                     "displayInfo": true,
                                     "displayMsg": "Displaying Events  {0} - {1} of {2}",
                                     "emptyMsg": "No Events found",
-                                    "|xns": "Roo",
-                                    "items": [
-                                        {
-                                            "listeners": {
-                                                "click": "function (_self, e)\n{\n    \n    var params = {\n        'sort' : 'event_when',\n        'dir' : 'DESC',\n        'start' : 0,\n        'limit' : 900,\n        person_id : _this.personSel.getValue(), \n        'csvTitles[0]' : 'When',   'csvCols[0]' : 'event_when', \n        'csvTitles[1]' : 'Staff',   'csvCols[1]' : 'person_id_name', \n        'csvTitles[2]' : 'Action',   'csvCols[2]' : 'action', \n        'csvTitles[3]' : 'Record ID',   'csvCols[3]' : 'on_id'       ,\n        'csvTitles[4]' : 'Record Type',   'csvCols[4]' : 'on_table',\n        'csvTitles[5]' : 'Remarks',   'csvCols[5]' : 'remarks'        \n    }\n        \n    params.person_id = _this.personSel.getValue();\n    var act = _this.actionSel.getValue();\n    if (act.length) {\n        params.action = act;\n    }\n    var tbl = _this.affectSel.getValue();\n    if (tbl.length) {\n        params.on_table = tbl;\n    }\n    act = _this.dateFrom.getValue();\n    if (act.format) {\n        params['query[from]'] = act.format('Y-m-d');\n    }\n    act = _this.dateTo.getValue();\n    if (act.format) {\n        params['query[to]'] = act.format('Y-m-d');\n    }\n    params.limit = 9999;\n    \n\n    new Pman.download({\n        url : baseURL + '/Roo/Events.php',\n        params : params ,\n        newWindow: true\n        \n    });\n}"
-                                            },
-                                            "text": "Download to Excel",
-                                            "xtype": "Button",
-                                            "|xns": "Roo.Toolbar"
-                                        }
-                                    ]
+                                    "pageSize": 25,
+                                    "xtype": "PagingToolbar",
+                                    "|xns": "Roo"
                                 },
                                 {
                                     "*prop": "toolbar",

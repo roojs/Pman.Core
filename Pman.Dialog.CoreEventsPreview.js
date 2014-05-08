@@ -272,63 +272,10 @@ Pman.Dialog.CoreEventsPreview = {
                         footer : {
                             xtype: 'PagingToolbar',
                             xns: Roo,
-                            pageSize : 25,
                             displayInfo : true,
                             displayMsg : "Displaying Events  {0} - {1} of {2}",
                             emptyMsg : "No Events found",
-                            items : [
-                                {
-                                    xtype: 'Button',
-                                    xns: Roo.Toolbar,
-                                    listeners : {
-                                        click : function (_self, e)
-                                        {
-                                            
-                                            var params = {
-                                                'sort' : 'event_when',
-                                                'dir' : 'DESC',
-                                                'start' : 0,
-                                                'limit' : 900,
-                                                person_id : _this.personSel.getValue(), 
-                                                'csvTitles[0]' : 'When',   'csvCols[0]' : 'event_when', 
-                                                'csvTitles[1]' : 'Staff',   'csvCols[1]' : 'person_id_name', 
-                                                'csvTitles[2]' : 'Action',   'csvCols[2]' : 'action', 
-                                                'csvTitles[3]' : 'Record ID',   'csvCols[3]' : 'on_id'       ,
-                                                'csvTitles[4]' : 'Record Type',   'csvCols[4]' : 'on_table',
-                                                'csvTitles[5]' : 'Remarks',   'csvCols[5]' : 'remarks'        
-                                            }
-                                                
-                                            params.person_id = _this.personSel.getValue();
-                                            var act = _this.actionSel.getValue();
-                                            if (act.length) {
-                                                params.action = act;
-                                            }
-                                            var tbl = _this.affectSel.getValue();
-                                            if (tbl.length) {
-                                                params.on_table = tbl;
-                                            }
-                                            act = _this.dateFrom.getValue();
-                                            if (act.format) {
-                                                params['query[from]'] = act.format('Y-m-d');
-                                            }
-                                            act = _this.dateTo.getValue();
-                                            if (act.format) {
-                                                params['query[to]'] = act.format('Y-m-d');
-                                            }
-                                            params.limit = 9999;
-                                            
-                                        
-                                            new Pman.download({
-                                                url : baseURL + '/Roo/Events.php',
-                                                params : params ,
-                                                newWindow: true
-                                                
-                                            });
-                                        }
-                                    },
-                                    text : "Download to Excel"
-                                }
-                            ]
+                            pageSize : 25
                         },
                         toolbar : {
                             xtype: 'Toolbar',
