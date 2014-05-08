@@ -115,7 +115,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         _this.source = _this.data.successFn(res);
                                 
                                         _this.viewPanel.setContent(_this.source);
-                                        _this.data.successFn();
                                         
                                     });
                                 }
