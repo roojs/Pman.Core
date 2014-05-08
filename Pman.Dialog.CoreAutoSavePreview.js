@@ -255,6 +255,10 @@ Pman.Dialog.CoreAutoSavePreview = {
                             }
                         ]
                     }
+                },
+                {
+                    xtype: 'ContentPanel',
+                    xns: Roo
                 }
             ],
             center : {

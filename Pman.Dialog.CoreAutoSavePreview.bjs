@@ -123,6 +123,10 @@
                     ]
                 },
                 {
+                    "|xns": "Roo",
+                    "xtype": "ContentPanel"
+                },
+                {
                     "listeners": {
                         "|click": "function() {\n    _this.dialog.hide();\n}"
                     },
