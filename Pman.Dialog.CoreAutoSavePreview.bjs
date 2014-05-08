@@ -171,43 +171,6 @@
                                     "|xns": "Roo"
                                 },
                                 {
-                                    "*prop": "toolbar",
-                                    "xtype": "Toolbar",
-                                    "|xns": "Roo",
-                                    "items": [
-                                        {
-                                            "text": "Add",
-                                            "xtype": "Button",
-                                            "cls": "x-btn-text-icon",
-                                            "|icon": "Roo.rootURL + 'images/default/dd/drop-add.gif'",
-                                            "listeners": {
-                                                "|click": "function()\n{\n    if (!_this.dialog) return;\n    _this.dialog.show( { id : 0 } , function() {\n        _this.grid.footer.onClick('first');\n   }); \n}\n"
-                                            },
-                                            "|xns": "Roo.Toolbar"
-                                        },
-                                        {
-                                            "text": "Edit",
-                                            "xtype": "Button",
-                                            "cls": "x-btn-text-icon",
-                                            "|icon": "Roo.rootURL + 'images/default/tree/leaf.gif'",
-                                            "listeners": {
-                                                "|click": "function()\n{\n    var s = _this.grid.getSelectionModel().getSelections();\n    if (!s.length || (s.length > 1))  {\n        Roo.MessageBox.alert(\"Error\", s.length ? \"Select only one Row\" : \"Select a Row\");\n        return;\n    }\n    if (!_this.dialog) return;\n    _this.dialog.show(s[0].data, function() {\n        _this.grid.footer.onClick('first');\n    }); \n    \n}\n"
-                                            },
-                                            "|xns": "Roo.Toolbar"
-                                        },
-                                        {
-                                            "text": "Delete",
-                                            "cls": "x-btn-text-icon",
-                                            "|icon": "rootURL + '/Pman/templates/images/trash.gif'",
-                                            "xtype": "Button",
-                                            "listeners": {
-                                                "|click": "function()\n{\n     Pman.genericDelete(_this, 'Images'); \n}\n        "
-                                            },
-                                            "|xns": "Roo.Toolbar"
-                                        }
-                                    ]
-                                },
-                                {
                                     "xtype": "ColumnModel",
                                     "header": "Id",
                                     "width": 75,
