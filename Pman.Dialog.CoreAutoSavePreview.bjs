@@ -118,6 +118,7 @@
                     },
                     "background": false,
                     "fitContainer": true,
+                    "region": "center",
                     "xtype": "ContentPanel",
                     "|xns": "Roo"
                 },

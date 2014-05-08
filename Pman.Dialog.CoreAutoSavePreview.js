@@ -255,7 +255,8 @@ Pman.Dialog.CoreAutoSavePreview = {
                         }
                     },
                     background : false,
-                    fitContainer : true
+                    fitContainer : true,
+                    region : 'center'
                 }
             ],
             center : {
