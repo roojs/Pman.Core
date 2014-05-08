@@ -95,7 +95,8 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 {
                                     Roo.log(_this.data);
                                     o.params = o.parmas || {};
-                                    o.action = 'AUTOSAVE'
+                                    o.action = 'AUTOSAVE';
+                                    
                                 }
                             },
                             remoteSort : true,
