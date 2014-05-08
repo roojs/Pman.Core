@@ -378,7 +378,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     }
     
-    
+    function beforeInsert($request,$roo)
+    {
+        if(empty($this->event_when)){
+            $this->event_when = $this->sqlValue("NOW()");
+        }
+        print_r($roo);exit;
+        if(empty($this->person_id)){
+            
+        }
+    }
     
     function onInsert($request,$roo)
     {
