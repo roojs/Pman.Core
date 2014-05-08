@@ -480,7 +480,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $source = json_decode(file_get_contents($file));
         
-        return $source;
+        return 'No record?!';
     }
     
     function retrieveEventLog()
