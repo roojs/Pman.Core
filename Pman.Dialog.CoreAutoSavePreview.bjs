@@ -64,7 +64,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "|beforeload": "function (_self, o)\n{\n    o.params = o.parmas || {};\n    o.action = 'AUTOSAVE'\n}"
+                                        "|beforeload": "function (_self, o)\n{\n    Roo.log(_this.data);\n    o.params = o.parmas || {};\n    o.action = 'AUTOSAVE'\n}"
                                     },
                                     "*prop": "dataSource",
                                     "remoteSort": true,

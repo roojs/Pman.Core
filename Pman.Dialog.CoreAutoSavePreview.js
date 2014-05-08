@@ -94,6 +94,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                             listeners : {
                                 beforeload : function (_self, o)
                                 {
+                                    Roo.log(_this.data);
                                     o.params = o.parmas || {};
                                     o.action = 'AUTOSAVE'
                                 }
