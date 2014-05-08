@@ -122,7 +122,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 dataIndex : 'event_when',
                                 header : 'Date',
                                 width : 100,
-                                renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
+                                renderer : function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }
                             }
                         ]
                     }
