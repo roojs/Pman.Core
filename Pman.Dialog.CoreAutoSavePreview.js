@@ -133,8 +133,11 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         this.removeAll();
                                         return false;
                                     }
-                                    Roo.log(_this.data);
-                                    o.params.action = 'AUTOSAVE';
+                                
+                                    var d = _this.data;
+                                    delete d.successFn;
+                                    Roo.apply(o.params, d);
+                                    
                                 }
                             },
                             remoteSort : true,
