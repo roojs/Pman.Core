@@ -37,7 +37,7 @@ Pman.Dialog.CoreEventsPreview = {
             modal : true,
             resizable : false,
             title : "Saved Version",
-            width : 600,
+            width : 800,
             items : [
                 {
                     xtype: 'GridPanel',
