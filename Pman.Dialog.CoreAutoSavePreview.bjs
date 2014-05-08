@@ -136,7 +136,7 @@
                 },
                 {
                     "listeners": {
-                        "|click": "function() {\n\n    _this.dialog.hide();\n    \n\n}"
+                        "|click": "function() {\n\n    _this.dialog.hide();\n    \n    if (_this.callback) {\n        _this.callback.call(this, act.result.data);\n    }\n}"
                     },
                     "*prop": "buttons[]",
                     "text": "OK",
