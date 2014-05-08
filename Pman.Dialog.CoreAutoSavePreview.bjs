@@ -54,6 +54,11 @@
                             "|xns": "Roo.grid",
                             "items": [
                                 {
+                                    "|xns": "Roo.grid",
+                                    "xtype": "RowSelectionModel",
+                                    "*prop": "sm"
+                                },
+                                {
                                     "*prop": "dataSource",
                                     "xtype": "Store",
                                     "remoteSort": true,

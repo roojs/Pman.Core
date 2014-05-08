@@ -75,6 +75,10 @@ Pman.Dialog.CoreAutoSavePreview = {
                         },
                         autoExpandColumn : 'filename',
                         loadMask : true,
+                        sm : {
+                            xtype: 'RowSelectionModel',
+                            xns: Roo.grid
+                        },
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
