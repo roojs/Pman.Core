@@ -36,7 +36,8 @@ Pman.Dialog.CoreAutoSavePreview = {
                     if(typeof(_this.data) != 'undefined'){
                         _this.grid.footer.onClick('first');
                     }
-                    
+                    Roo.log('call show?');
+                    Roo.log(_this.grid.getSelectionModel().getSelected());
                     if (!_this.grid.getSelectionModel().getSelected()) {
                         _this.source = '';
                         _this.viewPanel.setContent("Please select a version on the left");
