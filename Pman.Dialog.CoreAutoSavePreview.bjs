@@ -1,5 +1,5 @@
 {
-    "id": "roo-file-348",
+    "id": "roo-file-208",
     "name": "Pman.Dialog.CoreAutoSavePreview",
     "parent": "",
     "title": "",
@@ -110,7 +110,7 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "on_table",
+                                    "dataIndex": "remarks",
                                     "header": "Affected",
                                     "width": 100,
                                     "xtype": "ColumnModel",
