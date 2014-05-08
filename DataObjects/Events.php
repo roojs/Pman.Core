@@ -451,6 +451,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function retrieveAutoSave($q, $au, $roo)
     {
-        
+        $events = DB_DataObject::factory('Events');
+        $events->_join .= "
+            LEFT JOIN
+                Event.on_table AS linked_table
+            ON
+                linked_table.id = Event.on_id
+        ";
+        print_r($events);exit;
     }
 }
