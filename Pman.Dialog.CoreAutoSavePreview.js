@@ -123,7 +123,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 xtype: 'HttpProxy',
                                 xns: Roo.data,
                                 method : 'GET',
-                                url : baseURL + '/Roo/Images.php'
+                                url : baseURL + '/Roo/Events.php'
                             },
                             reader : {
                                 xtype: 'JsonReader',
