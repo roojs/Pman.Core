@@ -222,6 +222,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                         click : function() {
                         
                             _this.dialog.hide();
+                            
                         
                         }
                     },
