@@ -1131,22 +1131,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                header : 'Action',
-                                width : 100,
-                                dataIndex : 'action',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'IP',
-                                width : 100,
-                                dataIndex : 'ipaddr',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
                                 dataIndex : 'on_table',
                                 header : 'Affected',
                                 width : 100,

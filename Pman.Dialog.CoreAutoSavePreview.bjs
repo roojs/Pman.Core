@@ -326,25 +326,6 @@
                                     "|xns": "Roo.grid"
                                 },
                                 {
-                                    "xtype": "ColumnModel",
-                                    "header": "Action",
-                                    "width": 100,
-                                    "dataIndex": "action",
-                                    "|renderer": "function(v) { return String.format('{0}', v); }",
-                                    "|xns": "Roo.grid",
-                                    "*prop": "colModel[]"
-                                },
-                                {
-                                    "xtype": "ColumnModel",
-                                    "header": "IP",
-                                    "width": 100,
-                                    "dataIndex": "ipaddr",
-                                    "|renderer": "function(v) { return String.format('{0}', v); }",
-                                    "listeners": {},
-                                    "|xns": "Roo.grid",
-                                    "*prop": "colModel[]"
-                                },
-                                {
                                     "*prop": "colModel[]",
                                     "dataIndex": "on_table",
                                     "header": "Affected",
