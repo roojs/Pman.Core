@@ -88,11 +88,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 {
                                     var selected = this.getSelected();
                                     
-                                    if (!selected) {
-                                        _this.viewPanel.setContent("Nothing Selected");
-                                        return;
-                                    }
-                                    
                                     _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){
                                         
                                         _this.source = '';
