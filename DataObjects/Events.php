@@ -459,7 +459,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $source = json_decode(file_get_contents($images->getStoreName())).source;
-            print_r($file);exit;
+            print_r($source);exit;
         }
     }
 }
