@@ -103,8 +103,14 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         if(!bSuccess || !res.success){
                                             _this.viewPanel.setContent("Load data failed?!");
                                         }
+                                
+                                        if(typeof(res.data) !== 'string'){
+                                            _this.viewPanel.setContent(res.data);
+                                            return;
+                                        }
                                         
-                                        Roo.log(res.data);
+                                        _this.source = res.data.POST.source;
+                                        _this.viewPanel.setContent(_this.source);
                                         
                                     });
                                 }
