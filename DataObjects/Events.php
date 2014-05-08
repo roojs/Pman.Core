@@ -383,9 +383,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(empty($this->event_when)){
             $this->event_when = $this->sqlValue("NOW()");
         }
-        print_r($roo);exit;
+        
         if(empty($this->person_id)){
-            
+            $this->person_id = $roo->authUser->id;
+            $this->person_name = $roo->authUser->name;
+            $this->person_table = $roo->authUser->tableName();
         }
     }
     
