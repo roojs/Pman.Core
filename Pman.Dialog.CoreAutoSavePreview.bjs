@@ -54,6 +54,9 @@
                             "|xns": "Roo.grid",
                             "items": [
                                 {
+                                    "listeners": {
+                                        "afterselectionchange": "function (_self)\n{\n    var selected = this.getSelected();\n    \n    if (!selected) {\n        _this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    Roo.log(selected);\n    _this.viewPanel.setContent(\"Data Selected\");\n}"
+                                    },
                                     "*prop": "sm",
                                     "singleSelect": true,
                                     "xtype": "RowSelectionModel",

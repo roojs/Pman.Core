@@ -78,6 +78,19 @@ Pman.Dialog.CoreAutoSavePreview = {
                         sm : {
                             xtype: 'RowSelectionModel',
                             xns: Roo.grid,
+                            listeners : {
+                                afterselectionchange : function (_self)
+                                {
+                                    var selected = this.getSelected();
+                                    
+                                    if (!selected) {
+                                        _this.viewPanel.setContent("Nothing Selected");
+                                        return;
+                                    }
+                                    Roo.log(selected);
+                                    _this.viewPanel.setContent("Data Selected");
+                                }
+                            },
                             singleSelect : true
                         },
                         dataSource : {
