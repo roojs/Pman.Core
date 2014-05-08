@@ -96,7 +96,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         return;
                                     }
                                     Roo.log(selected);
-                                    _this.viewPanel.setContent("<div><h1>Data Selected</h1></div>");
+                                    _this.viewPanel.load( { url : baseURL + "/Roo/Events/" + id + ".html" });
                                 }
                             },
                             singleSelect : true
