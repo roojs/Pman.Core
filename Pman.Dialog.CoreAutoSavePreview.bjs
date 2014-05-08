@@ -92,7 +92,7 @@
                                 },
                                 {
                                     "*prop": "footer",
-                                    "displayInfo": false,
+                                    "displayInfo": true,
                                     "pageSize": 25,
                                     "xtype": "PagingToolbar",
                                     "|xns": "Roo"
