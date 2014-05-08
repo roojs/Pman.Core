@@ -458,6 +458,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             ON
                 linked_table.id = Event.on_id
         ";
-        print_r($events);exit;
+        $events->action = 'AUTOSAVE';
+        
+        print_r($events->fetchAll());exit;
     }
 }
