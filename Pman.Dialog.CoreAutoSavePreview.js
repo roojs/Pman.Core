@@ -37,6 +37,10 @@ Pman.Dialog.CoreAutoSavePreview = {
                         _this.grid.footer.onClick('first');
                     }
                     
+                    _this.source = '';
+                    
+                    _this.viewPanel.setContent("");
+                    
                 }
             },
             background : false,
