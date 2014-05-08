@@ -258,7 +258,13 @@ Pman.Dialog.CoreAutoSavePreview = {
                 },
                 {
                     xtype: 'ContentPanel',
-                    xns: Roo
+                    xns: Roo,
+                    listeners : {
+                        render : function (_self)
+                        {
+                            _this.viewPanel = _self;
+                        }
+                    }
                 }
             ],
             center : {

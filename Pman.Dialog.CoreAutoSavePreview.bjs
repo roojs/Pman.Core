@@ -122,8 +122,11 @@
                     ]
                 },
                 {
-                    "|xns": "Roo",
-                    "xtype": "ContentPanel"
+                    "listeners": {
+                        "render": "function (_self)\n{\n    _this.viewPanel = _self;\n}"
+                    },
+                    "xtype": "ContentPanel",
+                    "|xns": "Roo"
                 },
                 {
                     "listeners": {
