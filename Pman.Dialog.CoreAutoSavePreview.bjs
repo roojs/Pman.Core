@@ -19,7 +19,6 @@
             "items": [
                 {
                     "*prop": "center",
-                    "titlebar": false,
                     "xtype": "LayoutRegion",
                     "|xns": "Roo"
                 },
