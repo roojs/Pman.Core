@@ -96,6 +96,19 @@ Pman.Dialog.CoreAutoSavePreview = {
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
+                            listeners : {
+                                beforeload : function (_self, o)
+                                {
+                                    o.params = o.params || {};
+                                    
+                                    if(typeof(_this.data) == 'undefined'){
+                                        this.removeAll();
+                                        return false;
+                                    }
+                                    
+                                    o.params.action = 'AUTOSAVE';
+                                }
+                            },
                             remoteSort : true,
                             sortInfo : { field : 'filename', direction: 'ASC' },
                             proxy : {

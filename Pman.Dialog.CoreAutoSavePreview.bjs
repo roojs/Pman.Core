@@ -63,9 +63,12 @@
                                     "|xns": "Roo.grid"
                                 },
                                 {
+                                    "listeners": {
+                                        "beforeload": "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    if(typeof(_this.data) == 'undefined'){\n        this.removeAll();\n        return false;\n    }\n    \n    o.params.action = 'AUTOSAVE';\n}"
+                                    },
                                     "*prop": "dataSource",
-                                    "xtype": "Store",
                                     "remoteSort": true,
+                                    "xtype": "Store",
                                     "|sortInfo": "{ field : 'filename', direction: 'ASC' }",
                                     "|xns": "Roo.data",
                                     "items": [
