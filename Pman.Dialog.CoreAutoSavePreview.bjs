@@ -44,7 +44,7 @@
                     "items": [
                         {
                             "listeners": {
-                                "|render": "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}",
+                                "|render": "function() \n{\n    _this.grid = this; \n    \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}",
                                 "|rowdblclick": "function (_self, rowIndex, e)\n{\n\n}\n"
                             },
                             "*prop": "grid",
