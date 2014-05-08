@@ -47,7 +47,7 @@
                                 "|render": "function() { \n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}"
                             },
                             "*prop": "grid",
-                            "autoExpandColumn": "remarks",
+                            "autoExpandColumn": "event_when",
                             "loadMask": true,
                             "xtype": "Grid",
                             "|xns": "Roo.grid",
@@ -106,15 +106,6 @@
                                     "width": 100,
                                     "xtype": "ColumnModel",
                                     "|renderer": "function(v) { return v ? v.dateFormat('d/m/Y H:i') : ''; }",
-                                    "|xns": "Roo.grid"
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "remarks",
-                                    "header": "Parts",
-                                    "width": 100,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) {                     \n    return String.format('{0})', v ? v : '');  \n}",
                                     "|xns": "Roo.grid"
                                 }
                             ]

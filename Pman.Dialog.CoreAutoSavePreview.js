@@ -68,7 +68,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 }
                             }
                         },
-                        autoExpandColumn : 'remarks',
+                        autoExpandColumn : 'event_when',
                         loadMask : true,
                         sm : {
                             xtype: 'RowSelectionModel',
@@ -241,16 +241,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 header : 'Date',
                                 width : 100,
                                 renderer : function(v) { return v ? v.dateFormat('d/m/Y H:i') : ''; }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                dataIndex : 'remarks',
-                                header : 'Parts',
-                                width : 100,
-                                renderer : function(v) {                     
-                                    return String.format('{0})', v ? v : '');  
-                                }
                             }
                         ]
                     }
