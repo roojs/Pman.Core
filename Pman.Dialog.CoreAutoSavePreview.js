@@ -373,7 +373,8 @@ Pman.Dialog.CoreAutoSavePreview = {
             },
             west : {
                 xtype: 'LayoutRegion',
-                xns: Roo
+                xns: Roo,
+                split : true
             },
             buttons : [
                 {

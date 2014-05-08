@@ -25,6 +25,7 @@
                 },
                 {
                     "*prop": "west",
+                    "split": true,
                     "xtype": "LayoutRegion",
                     "|xns": "Roo"
                 },
