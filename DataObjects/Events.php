@@ -472,7 +472,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $ret;
         }
         
+        $file = $this->retrieveEventLog();
         
+        if(!$file){
+            return 'No record?!';
+        }
+        print_r($file);exit;
         $source = json_decode($json);
         
         return 'HERE IS THE RESOURCE';
