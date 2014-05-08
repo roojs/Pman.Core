@@ -96,7 +96,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         return;
                                     }
                                     Roo.log(selected);
-                                    _this.viewPanel.setContent("Data Selected");
+                                    _this.viewPanel.setContent("<div><h1>Data Selected</h1></div>");
                                 }
                             },
                             singleSelect : true
