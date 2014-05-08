@@ -62,6 +62,15 @@
                                     "|xns": "Roo.grid"
                                 },
                                 {
+                                    "*prop": "footer",
+                                    "xtype": "PagingToolbar",
+                                    "pageSize": 25,
+                                    "displayInfo": true,
+                                    "displayMsg": "Displaying Images{0} - {1} of {2}",
+                                    "emptyMsg": "No Images found",
+                                    "|xns": "Roo"
+                                },
+                                {
                                     "listeners": {
                                         "|beforeload": "function (_self, o)\n{\n    Roo.log(_this.data);\n    o.params = o.parmas || {};\n    o.params.action = 'AUTOSAVE';\n    \n}"
                                     },
@@ -89,12 +98,6 @@
                                             "|xns": "Roo.data"
                                         }
                                     ]
-                                },
-                                {
-                                    "*prop": "footer",
-                                    "pageSize": 25,
-                                    "xtype": "PagingToolbar",
-                                    "|xns": "Roo"
                                 },
                                 {
                                     "*prop": "colModel[]",

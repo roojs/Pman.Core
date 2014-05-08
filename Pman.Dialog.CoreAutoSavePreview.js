@@ -89,6 +89,14 @@ Pman.Dialog.CoreAutoSavePreview = {
                             },
                             singleSelect : true
                         },
+                        footer : {
+                            xtype: 'PagingToolbar',
+                            xns: Roo,
+                            pageSize : 25,
+                            displayInfo : true,
+                            displayMsg : "Displaying Images{0} - {1} of {2}",
+                            emptyMsg : "No Images found"
+                        },
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
@@ -227,11 +235,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 method : 'GET',
                                 url : baseURL + '/Roo/Events.php'
                             }
-                        },
-                        footer : {
-                            xtype: 'PagingToolbar',
-                            xns: Roo,
-                            pageSize : 25
                         },
                         colModel : [
                             {
