@@ -456,10 +456,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             LEFT JOIN
                 Images AS join_images
             ON
-                Images.id = Events.on_id
+                join_images.id = Events.on_id
         ";
         $images = DB_DataObject::Factory('Images');
+        
         $events->selectAs($images, 'join_images_%s', 'join_images');
+        
         $events->action = 'AUTOSAVE';
         
         print_r($events->fetchAll());exit;
