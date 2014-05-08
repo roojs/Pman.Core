@@ -110,10 +110,9 @@ Pman.Dialog.CoreAutoSavePreview = {
                         footer : {
                             xtype: 'PagingToolbar',
                             xns: Roo,
-                            pageSize : 25,
-                            displayInfo : true,
-                            displayMsg : "Displaying Images{0} - {1} of {2}",
-                            emptyMsg : "No Images found"
+                            displayInfo : false,
+                            emptyMsg : "No Images found",
+                            pageSize : 25
                         },
                         colModel : [
                             {
