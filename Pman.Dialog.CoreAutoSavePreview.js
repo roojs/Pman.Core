@@ -88,13 +88,13 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 {
                                     var selected = this.getSelected();
                                     
+                                    _this.source = '';
+                                    
                                     if(!selected){
-                                        
+                                       _this.viewPanel.setContent("Please select an saved version on the left"); 
                                     }
                                     
                                     _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){
-                                        
-                                        _this.source = '';
                                         
                                         var res = Roo.decode(oResponse.responseText);
                                         
