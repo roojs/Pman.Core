@@ -53,7 +53,7 @@ Pman.Dialog.CoreEventsPreview = {
                     background : false,
                     fitContainer : true,
                     fitToframe : true,
-                    region : 'east',
+                    region : 'west',
                     tableName : 'Events',
                     title : "Events",
                     grid : {
