@@ -72,7 +72,7 @@
                                     "*prop": "dataSource",
                                     "remoteSort": true,
                                     "xtype": "Store",
-                                    "|sortInfo": "{ field : 'filename', direction: 'ASC' }",
+                                    "|sortInfo": "{ field : 'event_when', direction: 'DESC' }",
                                     "|xns": "Roo.data",
                                     "items": [
                                         {

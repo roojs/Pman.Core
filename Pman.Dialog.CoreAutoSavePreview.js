@@ -118,7 +118,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 }
                             },
                             remoteSort : true,
-                            sortInfo : { field : 'filename', direction: 'ASC' },
+                            sortInfo : { field : 'event_when', direction: 'DESC' },
                             proxy : {
                                 xtype: 'HttpProxy',
                                 xns: Roo.data,
