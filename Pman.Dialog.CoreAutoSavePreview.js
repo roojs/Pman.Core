@@ -142,6 +142,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                     if (!sm.getSelections().length) {
                                         sm.selectFirstRow();
                                         
+                                        sm.fireEvent('afterselectionchange', sm);
                                     }
                                 }
                             },
