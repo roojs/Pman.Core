@@ -230,7 +230,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                             xtype: 'PagingToolbar',
                             xns: Roo,
                             displayInfo : false,
-                            emptyMsg : "Nothing found",
                             pageSize : 25
                         },
                         colModel : [

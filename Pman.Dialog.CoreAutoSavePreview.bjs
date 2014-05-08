@@ -93,7 +93,6 @@
                                 {
                                     "*prop": "footer",
                                     "displayInfo": false,
-                                    "emptyMsg": "Nothing found",
                                     "pageSize": 25,
                                     "xtype": "PagingToolbar",
                                     "|xns": "Roo"
