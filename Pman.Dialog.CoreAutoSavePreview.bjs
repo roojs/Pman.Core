@@ -64,7 +64,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "|beforeload": "function (_self, o)\n{\n    if (!Pman.buildCompleted) {\n        return false;\n    }\n   \n   \n   if (! _this.personSel) {\n    return false;\n    }\n    o.params = o.params || {};\n    o.params.person_id = _this.personSel.getValue();\n    var act = _this.actionSel.getValue();\n    if (act.length) {\n        o.params.action = act;\n    }\n    var tbl = _this.affectSel.getValue();\n    if (tbl.length) {\n        o.params.on_table = tbl;\n    }\n    act = _this.dateFrom.getValue();\n    if (act.format) {\n        o.params['query[from]'] = act.format('Y-m-d');\n    }\n    act = _this.dateTo.getValue();\n    if (act.format) {\n        o.params['query[to]'] = act.format('Y-m-d');\n    }\n \n    \n    /*\n    act = _this.groupedCombo.getValue();\n    o.params['query[grouped]'] = act;\n    if (o.params['query[grouped]'] == 'gr') {\n    \n        if (!tbl.length) {\n            Roo.MessageBox.alert(\"Error\", \"Select a table to group results on\");\n            return false;\n        }\n//        o.params['_columns']  = \n        o.params['_distinct'] = 'on_id';\n        \n        \n    }\n    \n    */\n\n    \n}"
+                                        "|beforeload": "function (_self, o)\n{\n    o.params = o.parmas || {};\n    o.action = 'AUTOSAVE'\n}"
                                     },
                                     "*prop": "dataSource",
                                     "remoteSort": true,

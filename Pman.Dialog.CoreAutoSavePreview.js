@@ -94,52 +94,8 @@ Pman.Dialog.CoreAutoSavePreview = {
                             listeners : {
                                 beforeload : function (_self, o)
                                 {
-                                    if (!Pman.buildCompleted) {
-                                        return false;
-                                    }
-                                   
-                                   
-                                   if (! _this.personSel) {
-                                    return false;
-                                    }
-                                    o.params = o.params || {};
-                                    o.params.person_id = _this.personSel.getValue();
-                                    var act = _this.actionSel.getValue();
-                                    if (act.length) {
-                                        o.params.action = act;
-                                    }
-                                    var tbl = _this.affectSel.getValue();
-                                    if (tbl.length) {
-                                        o.params.on_table = tbl;
-                                    }
-                                    act = _this.dateFrom.getValue();
-                                    if (act.format) {
-                                        o.params['query[from]'] = act.format('Y-m-d');
-                                    }
-                                    act = _this.dateTo.getValue();
-                                    if (act.format) {
-                                        o.params['query[to]'] = act.format('Y-m-d');
-                                    }
-                                 
-                                    
-                                    /*
-                                    act = _this.groupedCombo.getValue();
-                                    o.params['query[grouped]'] = act;
-                                    if (o.params['query[grouped]'] == 'gr') {
-                                    
-                                        if (!tbl.length) {
-                                            Roo.MessageBox.alert("Error", "Select a table to group results on");
-                                            return false;
-                                        }
-                                //        o.params['_columns']  = 
-                                        o.params['_distinct'] = 'on_id';
-                                        
-                                        
-                                    }
-                                    
-                                    */
-                                
-                                    
+                                    o.params = o.parmas || {};
+                                    o.action = 'AUTOSAVE'
                                 }
                             },
                             remoteSort : true,
