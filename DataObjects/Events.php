@@ -448,22 +448,4 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         
     }
-    
-    function retrieveAutoSave($q, $au, $roo)
-    {
-        $events = DB_DataObject::factory('Events');
-        $events->_join .= "
-            LEFT JOIN
-                Images AS join_images
-            ON
-                join_images.id = Events.on_id
-        ";
-        $images = DB_DataObject::Factory('Images');
-        
-        $events->selectAs($images, 'join_images_%s', 'join_images');
-        
-        $events->action = 'AUTOSAVE';
-        
-        print_r($events->fetchAll());exit;
-    }
 }
