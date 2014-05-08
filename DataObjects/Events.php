@@ -242,6 +242,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $tnb = $this->escape($q['query']['on_table']);
             $this->whereAdd("Events.on_table LIKE '%{$tnb}%'");
         } 
+        
+        if(!empty($q['_retrieve_autosave'])){
+            $this->retrieveAutoSave($q, $au, $roo);
+        }
     }
       
     
