@@ -123,22 +123,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 width : 75,
                                 dataIndex : 'created',
                                 renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Descript',
-                                width : 200,
-                                dataIndex : 'descript',
-                                renderer : function(v) { return String.format('{0}', v); }
-                            },
-                            {
-                                xtype: 'ColumnModel',
-                                xns: Roo.grid,
-                                header : 'Title',
-                                width : 200,
-                                dataIndex : 'title',
-                                renderer : function(v) { return String.format('{0}', v); }
                             }
                         ]
                     }
