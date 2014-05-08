@@ -119,9 +119,9 @@ Pman.Dialog.CoreAutoSavePreview = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
+                                dataIndex : 'event_when',
                                 header : 'Created',
                                 width : 75,
-                                dataIndex : 'created',
                                 renderer : function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }
                             }
                         ]
