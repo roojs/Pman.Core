@@ -77,7 +77,8 @@ Pman.Dialog.CoreAutoSavePreview = {
                         loadMask : true,
                         sm : {
                             xtype: 'RowSelectionModel',
-                            xns: Roo.grid
+                            xns: Roo.grid,
+                            singleSelect : true
                         },
                         dataSource : {
                             xtype: 'Store',

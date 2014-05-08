@@ -54,9 +54,10 @@
                             "|xns": "Roo.grid",
                             "items": [
                                 {
-                                    "|xns": "Roo.grid",
+                                    "*prop": "sm",
+                                    "singleSelect": true,
                                     "xtype": "RowSelectionModel",
-                                    "*prop": "sm"
+                                    "|xns": "Roo.grid"
                                 },
                                 {
                                     "*prop": "dataSource",
