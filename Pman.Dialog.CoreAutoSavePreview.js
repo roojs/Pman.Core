@@ -76,14 +76,13 @@ Pman.Dialog.CoreAutoSavePreview = {
                             listeners : {
                                 afterselectionchange : function (_self)
                                 {
-                                    // load detail log in _this.viewPanel;
+                                    
                                     if (!this.getSelected()) {
                                         this.viewPanel.setContent("Nothing Selected");
                                         return;
                                     }
-                                    var id = this.getSelected().data.id;
-                                    _this.viewPanel.load( { url : baseURL + "/Admin/EventView/" + id + ".html" });
                                     
+                                    this.viewPanel.setContent("data");
                                 }
                             },
                             singleSelect : true

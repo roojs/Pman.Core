@@ -54,7 +54,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "afterselectionchange": "function (_self)\n{\n    // load detail log in _this.viewPanel;\n    if (!this.getSelected()) {\n        this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    var id = this.getSelected().data.id;\n    _this.viewPanel.load( { url : baseURL + \"/Admin/EventView/\" + id + \".html\" });\n    \n}"
+                                        "afterselectionchange": "function (_self)\n{\n    \n    if (!this.getSelected()) {\n        this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    \n    this.viewPanel.setContent(\"data\");\n}"
                                     },
                                     "*prop": "sm",
                                     "singleSelect": true,
