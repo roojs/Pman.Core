@@ -50,7 +50,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                             }
                         }
                     },
-                    background : true,
+                    background : false,
                     fitContainer : true,
                     fitToframe : true,
                     region : 'west',
