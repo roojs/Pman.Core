@@ -59,8 +59,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                     grid : {
                         xtype: 'Grid',
                         xns: Roo.grid,
-                        autoExpandColumn : 'filename',
-                        loadMask : true,
                         listeners : {
                             render : function() 
                             {
@@ -72,12 +70,11 @@ Pman.Dialog.CoreAutoSavePreview = {
                             },
                             rowdblclick : function (_self, rowIndex, e)
                             {
-                                if (!_this.dialog) return;
-                                _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {
-                                    _this.grid.footer.onClick('first');
-                                }); 
+                            
                             }
                         },
+                        autoExpandColumn : 'filename',
+                        loadMask : true,
                         dataSource : {
                             xtype: 'Store',
                             xns: Roo.data,
