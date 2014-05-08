@@ -66,7 +66,7 @@
                                 },
                                 {
                                     "listeners": {
-                                        "beforeload": "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    if(typeof(_this.data) == 'undefined'){\n        this.removeAll();\n        return false;\n    }\n\n    var d = _this.data;\n    delete d.successFn;\n    Roo.apply(o.params, d);\n    \n}"
+                                        "beforeload": "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    if(typeof(_this.data) == 'undefined'){\n        this.removeAll();\n        return false;\n    }\n\n    var d = _this.data;\n    delete d.successFn;\n    \n    Roo.apply(o.params, d);\n    \n}"
                                     },
                                     "*prop": "dataSource",
                                     "remoteSort": true,

@@ -136,6 +136,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 
                                     var d = _this.data;
                                     delete d.successFn;
+                                    
                                     Roo.apply(o.params, d);
                                     
                                 }
