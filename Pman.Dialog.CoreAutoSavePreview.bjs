@@ -54,7 +54,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "afterselectionchange": "function (_self)\n{\n    \n    if (!this.getSelected()) {\n        this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    \n    this.viewPanel.setContent(\"data\");\n}"
+                                        "afterselectionchange": "function (_self)\n{\n    \n    if (!this.getSelected()) {\n        _this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    \n    _this.viewPanel.setContent(\"data\");\n}"
                                     },
                                     "*prop": "sm",
                                     "singleSelect": true,

@@ -78,11 +78,11 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 {
                                     
                                     if (!this.getSelected()) {
-                                        this.viewPanel.setContent("Nothing Selected");
+                                        _this.viewPanel.setContent("Nothing Selected");
                                         return;
                                     }
                                     
-                                    this.viewPanel.setContent("data");
+                                    _this.viewPanel.setContent("data");
                                 }
                             },
                             singleSelect : true
