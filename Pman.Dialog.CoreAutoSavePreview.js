@@ -75,14 +75,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 if (_this.panel.active) {
                                    this.footer.onClick('first');
                                 }
-                            },
-                            rowdblclick : function (_self, rowIndex, e)
-                            {
-                                _this.dialog.hide();
-                                
-                                if (_this.callback) {
-                                    _this.callback.call(this, _this.source);
-                                }
                             }
                         },
                         autoExpandColumn : 'filename',
