@@ -473,6 +473,66 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         
+        $source = json_decode($json);
+        
         return 'HERE IS THE RESOURCE';
+    }
+    
+    function retrieveEventLog()
+    {
+        $ff  = HTML_FlexyFramework::get();
+        if (empty($ff->Pman['event_log_dir'])) {
+            return false;
+        }
+        
+        if (function_exists('posix_getpwuid')) {
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+         
+            $user = $uinfo['name'];
+        } else {
+            $user = getenv('USERNAME'); // windows.
+        }
+        
+        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
+        if (!file_exists(dirname($file))) {
+            return false;
+        }
+        
+        // Remove all the password from logs...
+        $p =  empty($_POST) ? array() : $_POST;
+        foreach(array('passwd', 'password','passwd1',  'passwd2','password1', 'password2') as $rm) {
+            if (isset($p[$rm])) {
+                $p[$rm] = '******';
+            }
+        }
+        
+        
+        $i=0;
+        $files = array();
+         
+        $i = 0;
+        foreach ($_FILES as $k=>$f){
+            // does not handle any other file[] arrary very well..
+            if (empty($f['tmp_name']) || !file_exists($f['tmp_name'])) {
+                continue;
+            }
+            $i++;
+            $files[$k] = $f;
+            
+             
+            $files[$k]['tmp_name'] =  $this->id . '-'. $i;
+            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').   $files[$k]['tmp_name']; 
+            if (!copy($f['tmp_name'], $nf)) {
+                print_r("failed to copy {$f['tmp_name']}...\n");
+            }
+        }
+        
+        file_put_contents($file, json_encode(array(
+            'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
+            'HTTP_USER_AGENT' => empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'],
+            'GET' => empty($_GET) ? array() : $_GET,
+            'POST' =>$p,
+            'FILES' => $files,
+        )));
     }
 }
