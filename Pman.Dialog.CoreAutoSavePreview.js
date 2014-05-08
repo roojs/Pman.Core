@@ -248,12 +248,6 @@ Pman.Dialog.CoreAutoSavePreview = {
                 {
                     xtype: 'GridPanel',
                     xns: Roo,
-                    title : "Images",
-                    fitToframe : true,
-                    fitContainer : true,
-                    tableName : 'Images',
-                    background : true,
-                    region : 'center',
                     listeners : {
                         activate : function() {
                             _this.panel = this;
@@ -262,6 +256,12 @@ Pman.Dialog.CoreAutoSavePreview = {
                             }
                         }
                     },
+                    background : true,
+                    fitContainer : true,
+                    fitToframe : true,
+                    region : 'west',
+                    tableName : 'Images',
+                    title : "Images",
                     grid : {
                         xtype: 'Grid',
                         xns: Roo.grid,
