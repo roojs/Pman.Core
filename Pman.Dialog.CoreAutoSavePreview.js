@@ -77,7 +77,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 }
                             }
                         },
-                        autoExpandColumn : 'filename',
+                        autoExpandColumn : 'event_when',
                         loadMask : true,
                         sm : {
                             xtype: 'RowSelectionModel',

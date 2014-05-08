@@ -50,7 +50,7 @@
                                 "|render": "function() \n{\n    _this.grid = this; \n    \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}"
                             },
                             "*prop": "grid",
-                            "autoExpandColumn": "filename",
+                            "autoExpandColumn": "event_when",
                             "loadMask": true,
                             "xtype": "Grid",
                             "|xns": "Roo.grid",
