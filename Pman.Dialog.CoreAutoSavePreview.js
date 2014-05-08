@@ -229,8 +229,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                         footer : {
                             xtype: 'PagingToolbar',
                             xns: Roo,
-                            displayInfo : true,
-                            displayMsg : "{0} - {1} of {2}",
+                            displayInfo : false,
                             emptyMsg : "Nothing found",
                             pageSize : 25
                         },
