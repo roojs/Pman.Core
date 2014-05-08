@@ -37,9 +37,12 @@ Pman.Dialog.CoreAutoSavePreview = {
                         _this.grid.footer.onClick('first');
                     }
                     
-                    _this.source = '';
+                    if (!_this.grid.getSelectionModel().getSelected()) {
+                        _this.source = '';
+                        _this.viewPanel.setContent("Please select a version on the left");
+                    }
                     
-                    _this.viewPanel.setContent("Please select a version on the left");
+                    
                     
                 }
             },
