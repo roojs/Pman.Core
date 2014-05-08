@@ -230,7 +230,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                         
                             _this.dialog.hide();
                             
-                            if (_this.callback) {
+                            if (_this.callback && _this.source != '') {
                                 _this.callback.call(this, _this.source);
                             }
                         }
