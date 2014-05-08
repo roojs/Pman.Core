@@ -327,11 +327,11 @@
                                 },
                                 {
                                     "*prop": "colModel[]",
-                                    "dataIndex": "remarks",
-                                    "header": "Remarks",
-                                    "width": 300,
+                                    "dataIndex": "on_table",
+                                    "header": "Affected",
+                                    "width": 100,
                                     "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('<span qtip=\"{1}\">{0}</span>', v, Roo.util.Format.htmlEncode(v)); }",
+                                    "|renderer": "function(v) {                     \n    return String.format('{0})', v ? v : '');  \n}",
                                     "|xns": "Roo.grid"
                                 }
                             ]

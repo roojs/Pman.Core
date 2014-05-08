@@ -1131,10 +1131,12 @@ Pman.Dialog.CoreAutoSavePreview = {
                             {
                                 xtype: 'ColumnModel',
                                 xns: Roo.grid,
-                                dataIndex : 'remarks',
-                                header : 'Remarks',
-                                width : 300,
-                                renderer : function(v) { return String.format('<span qtip="{1}">{0}</span>', v, Roo.util.Format.htmlEncode(v)); }
+                                dataIndex : 'on_table',
+                                header : 'Affected',
+                                width : 100,
+                                renderer : function(v) {                     
+                                    return String.format('{0})', v ? v : '');  
+                                }
                             }
                         ]
                     }
