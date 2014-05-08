@@ -46,6 +46,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                         activate : function() {
                             _this.panel = this;
                             if (_this.grid) {
+                            Roo.log(2);
                                 _this.grid.footer.onClick('first');
                             }
                         }
