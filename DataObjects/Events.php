@@ -478,7 +478,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return 'No record?!';
         }
         
-        $source = json_decode(file_get_contents($file))->POST;
+        $source = json_decode(file_get_contents($file))->POST->source;
         print_r($source);exit;
         return $source;
     }
