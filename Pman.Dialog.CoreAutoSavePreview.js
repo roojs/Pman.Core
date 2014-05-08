@@ -224,7 +224,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                             _this.dialog.hide();
                             
                             if (_this.callback) {
-                                _this.callback.call(this, act.result.data);
+                                _this.callback.call(this, _this.source);
                             }
                         }
                     },
