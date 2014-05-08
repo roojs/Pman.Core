@@ -33,7 +33,7 @@
                     "listeners": {
                         "|activate": "function() {\n    _this.panel = this;\n    if (_this.grid) {\n    Roo.log(2);\n        _this.grid.footer.onClick('first');\n    }\n}"
                     },
-                    "background": false,
+                    "background": true,
                     "fitContainer": true,
                     "fitToframe": true,
                     "region": "west",
