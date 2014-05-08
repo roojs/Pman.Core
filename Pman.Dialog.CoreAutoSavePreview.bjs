@@ -7,7 +7,7 @@
     "items": [
         {
             "listeners": {
-                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n    _this.source = '';\n    \n    _this.viewPanel.setContent(\"\");\n    \n}"
+                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n    _this.source = '';\n    \n    _this.viewPanel.setContent(\"Please select a version on the left\");\n    \n}"
             },
             "background": false,
             "closable": false,

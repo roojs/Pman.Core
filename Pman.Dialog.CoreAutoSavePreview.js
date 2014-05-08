@@ -39,7 +39,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                     
                     _this.source = '';
                     
-                    _this.viewPanel.setContent("");
+                    _this.viewPanel.setContent("Please select a version on the left");
                     
                 }
             },
