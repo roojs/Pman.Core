@@ -94,12 +94,27 @@ Pman.Dialog.CoreAutoSavePreview = {
                                     
                                     _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){
                                         
+                                        _this.source = '';
+                                        
                                         var res = Roo.decode(oResponse.responseText);
                                         
                                         if(!bSuccess || !res.success){
                                             _this.viewPanel.setContent("Load data failed?!");
                                         }
+                                        
+                                        if(typeof(res.data) === 'string'){
+                                            _this.viewPanel.setContent(res.data);
+                                            return;
+                                        }
+                                        
+                                        if(!_this.data.successFn){
+                                            Roo.MessageBox.alert('Error', 'Please setup the successFn');
+                                            return;
+                                        }
+                                        
+                                        _this.source = _this.data.successFn(res);
                                 
+                                        _this.viewPanel.setContent(_this.source);
                                         _this.data.successFn();
                                         
                                     });
