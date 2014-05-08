@@ -462,5 +462,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $data[$k]['source'] = $source;
         }
+        
+        return $data;
     }
 }
