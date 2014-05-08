@@ -445,24 +445,24 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function postListFilter($data, $au, $q)
-    {
-        if(empty($q['_retrieve_file'])){
-            return $data;
-        }
-        
-        foreach ($data as $k => $v){
-            $images = DB_DataObject::factory('Images');
-            if(!$images->get($v['on_id'])){
-                unset($data[$k]);
-                continue;
-            }
-            
-            $source = json_decode(file_get_contents($images->getStoreName()))->source;
-            
-            $data[$k]['source'] = $source;
-        }
-        
-        return $data;
-    }
+//    function postListFilter($data, $au, $q)
+//    {
+//        if(empty($q['_retrieve_file'])){
+//            return $data;
+//        }
+//        
+//        foreach ($data as $k => $v){
+//            $images = DB_DataObject::factory('Images');
+//            if(!$images->get($v['on_id'])){
+//                unset($data[$k]);
+//                continue;
+//            }
+//            
+//            $source = json_decode(file_get_contents($images->getStoreName()))->source;
+//            
+//            $data[$k]['source'] = $source;
+//        }
+//        
+//        return $data;
+//    }
 }
