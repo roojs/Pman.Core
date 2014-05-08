@@ -116,6 +116,7 @@
                     "listeners": {
                         "render": "function (_self)\n{\n    _this.viewPanel = _self;\n}"
                     },
+                    "background": false,
                     "xtype": "ContentPanel",
                     "|xns": "Roo"
                 },
