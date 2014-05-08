@@ -96,9 +96,11 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         return;
                                     }
                                     Roo.log(selected);
-                                    _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(res){
+                                    _this.viewPanel.load( { url : baseURL + "/Roo/Events", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){
                                         Roo.log('res is here after load');
-                                        Roo.log(res);
+                                        Roo.log(oElement);
+                                        Roo.log(bSuccess);
+                                        Roo.log(oResponse);
                                     
                                     });
                                 }

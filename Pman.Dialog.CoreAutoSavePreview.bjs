@@ -58,7 +58,7 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "afterselectionchange": "function (_self)\n{\n    var selected = this.getSelected();\n    \n    if (!selected) {\n        _this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    Roo.log(selected);\n    _this.viewPanel.load( { url : baseURL + \"/Roo/Events\", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(res){\n        Roo.log('res is here after load');\n        Roo.log(res);\n    \n    });\n}"
+                                        "afterselectionchange": "function (_self)\n{\n    var selected = this.getSelected();\n    \n    if (!selected) {\n        _this.viewPanel.setContent(\"Nothing Selected\");\n        return;\n    }\n    Roo.log(selected);\n    _this.viewPanel.load( { url : baseURL + \"/Roo/Events\", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){\n        Roo.log('res is here after load');\n        Roo.log(oElement);\n        Roo.log(bSuccess);\n        Roo.log(oResponse);\n    \n    });\n}"
                                     },
                                     "*prop": "sm",
                                     "singleSelect": true,
