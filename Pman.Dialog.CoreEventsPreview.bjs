@@ -26,7 +26,7 @@
                     "|xns": "Roo"
                 },
                 {
-                    "*prop": "east",
+                    "*prop": "west",
                     "xtype": "LayoutRegion",
                     "|xns": "Roo"
                 },
