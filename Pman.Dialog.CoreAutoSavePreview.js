@@ -135,6 +135,13 @@ Pman.Dialog.CoreAutoSavePreview = {
                                 
                                     Roo.apply(o.params, d);
                                     
+                                },
+                                load : function (_self, records, options)
+                                {
+                                    var sm = _this.grid.getSelectionModel();
+                                    if (!sm.getSelections().length) {
+                                        sm.selectFirstRow();
+                                    }
                                 }
                             },
                             remoteSort : true,
