@@ -454,9 +454,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $events = DB_DataObject::factory('Events');
         $events->_join .= "
             LEFT JOIN
-                Images
+                Events.on_table AS linked_table
             ON
-                Images.id = Event.on_id
+                linked_table.id = Events.on_id
         ";
         $events->action = 'AUTOSAVE';
         
