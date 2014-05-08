@@ -110,6 +110,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                                         }
                                         
                                         _this.source = res.data.POST.source;
+                                        Roo.log(_this.source);
                                         _this.viewPanel.setContent(_this.source);
                                         
                                     });
