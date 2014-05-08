@@ -13,7 +13,7 @@
             "modal": true,
             "resizable": false,
             "title": "Saved Version",
-            "width": 600,
+            "width": 800,
             "xtype": "LayoutDialog",
             "|xns": "Roo",
             "items": [
@@ -21,7 +21,6 @@
                     "*prop": "center",
                     "split": true,
                     "titlebar": false,
-                    "width": 400,
                     "xtype": "LayoutRegion",
                     "|xns": "Roo"
                 },

@@ -37,7 +37,7 @@ Pman.Dialog.CoreAutoSavePreview = {
             modal : true,
             resizable : false,
             title : "Saved Version",
-            width : 600,
+            width : 800,
             items : [
                 {
                     xtype: 'GridPanel',
@@ -370,8 +370,7 @@ Pman.Dialog.CoreAutoSavePreview = {
                 xtype: 'LayoutRegion',
                 xns: Roo,
                 split : true,
-                titlebar : false,
-                width : 400
+                titlebar : false
             },
             west : {
                 xtype: 'LayoutRegion',
