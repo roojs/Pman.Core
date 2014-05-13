@@ -60,6 +60,37 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $cols = false;
         
+        while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
+            if(!array_filter($n)){ // empty row
+                continue;
+            }
+            
+            if (!$cols) {
+                $cols = array();
+                foreach($n as $k) {
+                    $cols[] = strtoupper(trim($k));
+                }
+                
+                if (empty($cols)) {
+                    continue;
+                }
+                foreach($req as $r) {
+                    if (!in_array($r,$cols)) {
+                        $cols = false;
+                        break;
+                    }
+                }
+                continue;
+            }
+            
+            $row = array();
+            
+            foreach($cols as $i=>$k) {
+                $row[$k] = $n[$i];
+            }
+            
+        }
+        
     }
     
     
