@@ -168,6 +168,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             
             $this->processBlock($row);
             
+            $this->processed++;
+            
+            $this->processStatus();
+            
         }
         
     }
