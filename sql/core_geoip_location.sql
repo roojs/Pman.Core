@@ -1,9 +1,8 @@
 CREATE  TABLE core_geoip_location (
     id INT(11) NOT NULL AUTO_INCREMENT ,
-    start_ip TEXT NOT NULL DEFAULT ''
-    mask_length INT(11) NOT NULL DEFAULT 0,
-    postal_code INT(11) NOT NULL DEFAULT 0,
-    
+    city_id INT(11) NOT NULL DEFAULT 0
+    latitude INT(11) NOT NULL DEFAULT 0,
+    longitude INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
 
