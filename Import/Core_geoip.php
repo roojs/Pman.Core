@@ -98,13 +98,11 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     {
         $continent = $this->processContinent($row['CONTINENT_CODE'], $row['CONTINENT_NAME']);
         
-        $continent_id = (!empty($continent) && !empty($continent->id)) ? $continent->id : 0;
-        
-        $country = $this->processCountry($row['COUNTRY_ISO_CODE'], $row['COUNTRY_NAME'], $continent_id);
+        $country = $this->processCountry($row['COUNTRY_ISO_CODE'], $row['COUNTRY_NAME'], $continent);
         
         $division = $this->processDivision($row['SUBDIVISION_ISO_CODE'], $row['SUBDIVISION_NAME']);
         
-        
+        $city = $this->processCity($row['CITY_NAME'], $row['METRO_CODE'], $row['TIME_ZONE'], $country, $division);
         
     }
     
@@ -127,7 +125,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         return $continent;
     }
     
-    function processCountry($code, $name, $continent_id)
+    function processCountry($code, $name, $continent)
     {
         if(empty($code)){
             return false;
@@ -138,7 +136,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $country->setFrom(array(
                 'code' => $code,
                 'name' => (!empty($name)) ? $name : $code,
-                'continent_id' => $continent_id
+                'continent_id' => (!empty($continent) && !empty($continent->id)) ? $continent->id : 0
             ));
 
             $country->insert();
