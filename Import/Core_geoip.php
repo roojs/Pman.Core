@@ -47,6 +47,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     function insertLocation($csv)
     {
         $fh = fopen($csv, 'r');
+        if (!$fh) {
+            $this->jerr("invalid location file");
+        }
+        
     }
     
     
