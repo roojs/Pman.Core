@@ -164,7 +164,27 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         return $division;
     }
     
-    function processCity($name, $metro_code, $time_zone, $country, $division);
+    function processCity($name, $metro_code, $time_zone, $country, $division)
+    {
+        if(empty($name)){
+            return false;
+        }
+        
+        $city = DB_DataObject::factory('core_geoip_city');
+        
+        if($city->get('name', $name)){
+            return $city;
+        }
+        
+        $city->setFrom(array(
+            'name' => $name,
+            'metro_code' => $metro_code,
+            'time_zone' => $time_zone,
+            'country_id' => (!empty($country) && !empty($country->id)) ? $country->id : 0,
+            'division_id' => (!empty($division) && !empty($division->id)) ? $division->id : 0
+        ));
+        
+    }
     
     
     
