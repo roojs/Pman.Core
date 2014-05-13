@@ -141,7 +141,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
                 $row[$k] = trim($n[$i]);
             }
             
-            $this->processLocation($row);
+            $this->processBlock($row);
         }
         
     }
