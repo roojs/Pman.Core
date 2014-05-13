@@ -11,8 +11,8 @@ class Pman_Core_DataObjects_Core_geoip_continent extends DB_DataObject
 
     public $__table = 'core_geoip_continent';                       // table name
     public $id;
-    public $continent_code;
-    public $continent_name;
+    public $code;
+    public $name;
 
 
     /* the code above is auto generated do not remove the tag below */
