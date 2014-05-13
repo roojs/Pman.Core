@@ -94,14 +94,36 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
     }
     
-    function precessLocation($row)
+    function processLocation($row)
     {
-//         && !empty($row['CONTINENT_NAME'])
+        $continent = false;
+        
         if(!empty($row['CONTINENT_CODE'])){
-            $continent = DB_DataObject::factory('core_geoip_continent');
-            $continent->get('code', $row['CONTINENT_CODE'])
+            
             
         }
+        
+        
+        
+    }
+    
+    function processContinent($code, $name)
+    {
+        if(empty($code)){
+            return false;
+        }
+        
+        $continent = DB_DataObject::factory('core_geoip_continent');
+        if(!$continent->get('code', $code)){
+            $continent->setFrom(array(
+                'code' => $code,
+                'name' => (!empty($name)) ? $name : $code
+            ));
+
+            $continent->insert();
+        }
+        
+        return $continent;
     }
     
     
