@@ -98,6 +98,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     {
         $continent = $this->processContinent($row['CONTINENT_CODE'], $row['CONTINENT_NAME']);
         
+        $continent_id = (!empty($continent) && !empty($continent->id)) ? $continent->id : 0;
+        
+        $country = $this->processCountry($row['COUNTRY_ISO_CODE'], $row['COUNTRY_NAME'], $continent_id);
+        
         
         
         
@@ -121,6 +125,26 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         }
         
         return $continent;
+    }
+    
+    function processCountry($code, $name, $continent_id)
+    {
+        if(empty($code)){
+            return false;
+        }
+        
+        $country = DB_DataObject::factory('core_geoip_country');
+        if(!$country->get('code', $code)){
+            $country->setFrom(array(
+                'code' => $code,
+                'name' => (!empty($name)) ? $name : $code,
+                'continent_id' => $continent_id
+            ));
+
+            $country->insert();
+        }
+        
+        return $country;
     }
     
     
