@@ -14,8 +14,12 @@ class Pman_Core_DataObjects_Core_geoip_network_mapping extends DB_DataObject
     public $start_ip;
     public $mask_length;
     public $city_id;
-    
-        
+    public $is_anonymous_proxy;
+    public $is_satellite_provider;
+
+
+
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
