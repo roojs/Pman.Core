@@ -5,5 +5,5 @@ CREATE  TABLE core_geoip_continent (
     PRIMARY KEY (id)
 );
 
-CREATE INDEX continent_code_idx ON core_geoip_country (continent_code) USING BTREE;
-CREATE INDEX continent_name_idx ON core_geoip_country (continent_name) USING BTREE;
+CREATE INDEX code_idx ON core_geoip_country (code) USING BTREE;
+CREATE INDEX name_idx ON core_geoip_country (name) USING BTREE;
