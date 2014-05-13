@@ -1,6 +1,6 @@
 CREATE  TABLE core_geoip_city (
     id INT(11) NOT NULL AUTO_INCREMENT ,
-    name TEXT NOT NULL DEFAULT ''
+    name TEXT NOT NULL DEFAULT '',
     country_id INT(11) NOT NULL DEFAULT 0,
     division_id INT(11) NOT NULL DEFAULT 0,
     postal_code INT(11) NOT NULL DEFAULT 0,
