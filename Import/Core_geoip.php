@@ -25,6 +25,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         $this->get();
     }
     
+    var $processed = 0;
+    var $total = 0;
+    var $echo = '';
+    
     function get()
     {
         
@@ -69,6 +73,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $cols = false;
         
+        $processed = 0
+        
         while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
             if(!array_filter($n)){ // empty row
                 continue;
@@ -99,6 +105,25 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             }
             
             $this->processLocation($row);
+            
+            echo "\033[K"; // Erase to end of line:
+            
+            $echo = '';
+            
+            if (strlen($echo)) {
+                echo "\033[".strlen($echo)."D";    // Move $length characters backward
+            }
+            
+            $echo = str_pad(ROUND(($this->processed / $this->total),2) * 100, 3, ' ', STR_PAD_LEFT) .
+                " % (" . str_pad(($this->processed), strlen($this->total), ' ', STR_PAD_LEFT) .
+                " / {$this->total}) - out {$this->out_count}";
+
+
+            echo $this->echo;
+
+            if($this->processed == $this->total){
+                echo "\n";
+            }
         }
         
     }
