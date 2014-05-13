@@ -8,7 +8,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     static $cli_opts = array();
     
-    var $id_mapping = array();
+    var static $id_mapping = array();
     
     function getAuth()
     {
