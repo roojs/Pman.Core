@@ -3,6 +3,8 @@ CREATE  TABLE core_geoip_network_mapping (
     start_ip TEXT NOT NULL DEFAULT '',
     mask_length INT(11) NOT NUL DEFAULT 0,
     city_id INT(11) NOT NULL DEFAULT 0,
+    is_anonymous_proxy INT(2) NOT NULL DEFAULT 0,
+    is_satellite_provider INT(2) NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
 
