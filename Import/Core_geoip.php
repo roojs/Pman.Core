@@ -108,6 +108,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             
             $this->processLocation($row);
             
+            $this->processed++;
+            
             $this->processStatus();
         }
         
