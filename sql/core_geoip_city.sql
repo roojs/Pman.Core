@@ -7,4 +7,5 @@ CREATE  TABLE core_geoip_city (
 );
 
 CREATE INDEX country_id_idx ON core_geoip_country (country_id) USING BTREE;
+CREATE INDEX network_ip_id_idx ON core_geoip_country (network_ip_id) USING BTREE;
 CREATE INDEX city_name_idx ON core_geoip_country (city_name) USING BTREE;
