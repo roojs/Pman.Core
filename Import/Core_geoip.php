@@ -314,6 +314,21 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     function processStatus()
     {
-        echo "$str \n";
+        echo "\033[K"; // Erase to end of line:
+            
+        if (strlen($this->echo)) {
+            echo "\033[".strlen($this->echo)."D";    // Move $length characters backward
+        }
+
+        $this->echo = str_pad(ROUND(($this->processed / $this->total),2) * 100, 3, ' ', STR_PAD_LEFT) .
+            " % (" . str_pad(($this->processed), strlen($this->total), ' ', STR_PAD_LEFT) .
+            " / {$this->total})";
+
+
+        echo $this->echo;
+
+        if($this->processed == $this->total){
+            echo "\n";
+        }
     }
 }
