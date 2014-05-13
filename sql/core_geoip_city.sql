@@ -5,7 +5,7 @@ CREATE  TABLE core_geoip_city (
     division_id INT(11) NOT NULL DEFAULT 0,
     postal_code INT(11) NOT NULL DEFAULT 0,
     metro_code INT(11) NOT NULL DEFAULT 0,
-    time_zone TEXT NOT NULL DEFAULT ''
+    time_zone TEXT NOT NULL DEFAULT '',
     PRIMARY KEY (id)
 );
 

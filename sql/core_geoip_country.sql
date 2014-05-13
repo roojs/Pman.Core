@@ -1,7 +1,7 @@
 CREATE  TABLE core_geoip_country (
     id INT(11) NOT NULL AUTO_INCREMENT ,
     code TEXT NOT NULL DEFAULT '',
-    name TEXT NOT NULL DEFAULT ''
+    name TEXT NOT NULL DEFAULT '',
     continent_id INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
