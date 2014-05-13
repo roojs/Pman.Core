@@ -58,7 +58,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             'TIME_ZONE'
         );
         
-        $rows = array();
+        $cols = false;
         
     }
     
