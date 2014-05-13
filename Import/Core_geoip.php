@@ -97,7 +97,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     function precessLocation($row)
     {
         if(!empty($row['CONTINENT_CODE']) && !empty($row['CONTINENT_NAME'])){
-            
+            $continent = DB_DataObject::factory('core_geoip_continent');
         }
     }
     
