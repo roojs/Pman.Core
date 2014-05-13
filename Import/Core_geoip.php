@@ -10,6 +10,32 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     var $id_mapping = array();
     
+    var $mask_lenght = array(
+        '100' => 268435456,
+        '101' => 134217728,
+        '102' => 67108864,
+        '103' => 33554432,
+        '104' => 16777216,
+        '105' => 8388608,
+        '106' => 4194304,
+        '107' => 2097152,
+        '108' => 1048576,
+        '109' => 524288,
+        '110' => 262144,
+        '111' => 131072,
+        '112' => 131072,
+        '113' => 131072,
+        '114' => 131072,
+        '115' => 131072,
+        '116' => 131072,
+        '117' => 131072,
+        '118' => 131072,
+        '119' => 131072,
+        '120' => 131072,
+        
+        
+    );
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -249,6 +275,13 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     function processBlock($row)
     {
+        $network_mapping = DB_DataObject::factory('core_geoip_network_mapping');
+        
+        $start_ip = array_pop(explode(":", $row['NETWORK_START_IP']));
+        
+        $network_mapping->setFrom(array(
+            
+        ));
         
     }
     
