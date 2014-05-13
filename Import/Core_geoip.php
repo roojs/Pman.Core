@@ -254,11 +254,18 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         $start_ip = array_pop(explode(":", $row['NETWORK_START_IP']));
         
         $network_mapping->setFrom(array(
-            
+            'start_ip' => $start_ip,
+            'mask_length' => pow(2, (128 - $row['NETWORK_MASK_LENGTH'])),
+            'city_id' => $this->id_mapping[$row['GEONAME_ID']]
         ));
         
+        if(!$network_mapping->find(true)){
+            $network_mapping->insert();
+        }
+        
+        
+        
     }
-    
     
     
     function log($str)
