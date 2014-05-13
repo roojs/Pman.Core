@@ -8,6 +8,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     static $cli_opts = array();
     
+    static $id_mapping = array();
     
     function getAuth()
     {
@@ -36,10 +37,13 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $this->jerr('GeoLite2-City-Locations.csv OR GeoLite2-City-Blocks.csv does not exists?!');
         }
         
+        
+        
         $this->insertLocation($location);
         
         $this->insertBlock($block);
     }
+    
     
     
     function log($str)
