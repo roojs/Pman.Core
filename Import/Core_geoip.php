@@ -86,7 +86,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $row = array();
             
             foreach($cols as $i=>$k) {
-                $row[$k] = $n[$i];
+                $row[$k] = trim($n[$i]);
             }
             
             $this->processLocation($row);
@@ -96,8 +96,11 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     function precessLocation($row)
     {
-        if(!empty($row['CONTINENT_CODE']) && !empty($row['CONTINENT_NAME'])){
+//         && !empty($row['CONTINENT_NAME'])
+        if(!empty($row['CONTINENT_CODE'])){
             $continent = DB_DataObject::factory('core_geoip_continent');
+            $continent->get('code', $row['CONTINENT_CODE'])
+            
         }
     }
     
