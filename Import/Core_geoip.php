@@ -26,7 +26,11 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         $location = '/tmp/GeoLite2-City-Locations.csv';
         $block = '/tmp/GeoLite2-City-Blocks.csv';
         
+        if(!file_exists($location) || !file_exists($block)){
+            $this->jerr('GeoLite2-City-Locations.csv OR GeoLite2-City-Blocks.csv does not exists?!');
+        }
         
+        $this->jerr('exists');
 //        $fc = new File_Convert($cp, 'application/vnd.ms-excel');
 //        //var_Dump($img->getStoreName());
 //        $csv = $fc->convert('text/csv');
