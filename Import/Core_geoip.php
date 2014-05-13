@@ -42,6 +42,11 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         $this->insertBlock($block);
     }
     
+    function insertLocation($location)
+    {
+        
+    }
+    
     
     
     function log($str)
