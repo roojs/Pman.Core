@@ -37,6 +37,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         static $id_mapping = array();
         
+        ini_set("auto_detect_line_endings", true);
+        
         $this->insertLocation($location);
         
         $this->insertBlock($block);
