@@ -51,6 +51,13 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $this->jerr("invalid location file");
         }
         
+        $req = array(
+            'GEONAME_ID', 'CONTINENT_CODE', 'CONTINENT_NAME',
+            'COUNTRY_ISO_CODE', 'COUNTRY_NAME', 'SUBDIVISION_ISO_CODE',
+            'SUBDIVISION_NAME', 'CITY_NAME', 'METRO_CODE',
+            'TIME_ZONE'
+        );
+        
     }
     
     
