@@ -342,4 +342,9 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             echo "\n";
         }
     }
+    
+    function log($str)
+    {
+        echo "$str \n";
+    }
 }
