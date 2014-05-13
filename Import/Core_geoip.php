@@ -94,6 +94,60 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
     }
     
+    function insertBlock($csv)
+    {
+        ini_set("auto_detect_line_endings", true);
+        
+        $fh = fopen($csv, 'r');
+        if (!$fh) {
+            $this->jerr("invalid location file");
+        }
+        
+        $req = array(
+            'NETWORK_START_IP', 'NETWORK_MASK_LENGTH', 'GEONAME_ID',
+            'REGISTERED_COUNTRY_GEONAME_ID', 'REPRESENTED_COUNTRY_GEONAME_ID', 'POSTAL_CODE',
+            'LATITUDE', 'LONGITUDE', 'IS_ANONYMOUS_PROXY',
+            'IS_SATELLITE_PROVIDER'
+        );
+        
+        $cols = false;
+        
+        while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
+            if(!array_filter($n)){ // empty row
+                continue;
+            }
+            
+            if (!$cols) {
+                $cols = array();
+                foreach($n as $k) {
+                    $cols[] = strtoupper(trim($k));
+                }
+                
+                if (empty($cols)) {
+                    continue;
+                }
+                foreach($req as $r) {
+                    if (!in_array($r,$cols)) {
+                        $cols = false;
+                        break;
+                    }
+                }
+                continue;
+            }
+            
+            $row = array();
+            
+            foreach($cols as $i=>$k) {
+                $row[$k] = trim($n[$i]);
+            }
+            
+            $this->processLocation($row);
+        }
+        
+    }
+    
+    
+    
     function processLocation($row)
     {
         $continent = $this->processContinent($row['CONTINENT_CODE'], $row['CONTINENT_NAME']);
