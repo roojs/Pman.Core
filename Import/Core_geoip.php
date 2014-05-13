@@ -38,7 +38,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         }
         $this->log(pow(2, 1));
         $this->log(pow(2, 2));
-        $this->log(pow(2, 10));
+        $this->log(pow(2, 20));
         exit;
 //        $this->insertLocation($location);
         
