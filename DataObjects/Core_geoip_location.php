@@ -15,6 +15,7 @@ class Pman_Core_DataObjects_Core_geoip_location extends DB_DataObject
     public $longitude;
     public $city_id;
     
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
