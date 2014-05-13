@@ -133,6 +133,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $cols = false;
         
+        $this->processed = 0;
+        $this->total = count(file($csv));
+        $this->echo = '';
+        
         while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
             if(!array_filter($n)){ // empty row
                 continue;
@@ -163,6 +167,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             }
             
             $this->processBlock($row);
+            
         }
         
     }
