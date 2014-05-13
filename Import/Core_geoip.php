@@ -53,9 +53,14 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         ini_set("auto_detect_line_endings", true);
         
         $fh = fopen($csv, 'r');
+        
         if (!$fh) {
             $this->jerr("invalid location file");
         }
+        
+        $line = trim(fgets($fh));
+        
+        print_r($line);exit;
         
         $req = array(
             'GEONAME_ID', 'CONTINENT_CODE', 'CONTINENT_NAME',
