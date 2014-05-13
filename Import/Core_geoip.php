@@ -251,6 +251,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     {
         if(empty($this->id_mapping[$row['GEONAME_ID']])){
             $this->log("Missing mapping for {$row['GEONAME_ID']}");
+            return;
         }
         
         $network_mapping = DB_DataObject::factory('core_geoip_network_mapping');
