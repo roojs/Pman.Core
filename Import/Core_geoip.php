@@ -140,7 +140,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             foreach($cols as $i=>$k) {
                 $row[$k] = trim($n[$i]);
             }
-            print_r($row);exit;
+            
             $this->processBlock($row);
         }
         
