@@ -104,6 +104,9 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $city = $this->processCity($row['CITY_NAME'], $row['METRO_CODE'], $row['TIME_ZONE'], $country, $division);
         
+        if(!empty($city) && !empty($city->id)){
+            $this->id_mapping[$row['GEONAME_ID']] = $city->id;
+        }
     }
     
     function processContinent($code, $name)
