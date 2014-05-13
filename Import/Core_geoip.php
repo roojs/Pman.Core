@@ -263,6 +263,17 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $network_mapping->insert();
         }
         
+        if(!empty($row['POSTAL_CODE'])){
+            $city = DB_DataObject::factory('core_geoip_city');
+            if($city->get($network_mapping->city_id)){
+                return;
+            }
+
+            $oc = clone($city);
+            $city->postal_code = $row['POSTAL_CODE'];
+            
+            $city->update($oc);
+        }
         
         
     }
