@@ -1,10 +1,10 @@
 <?php
 /**
- * Table Definition for Companies
+ * Table Definition for core_geoip_continent
  */
 require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_Companies extends DB_DataObject 
+class Pman_Core_DataObjects_Core_geoip_continent extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
