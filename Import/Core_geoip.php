@@ -102,7 +102,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $country = $this->processCountry($row['COUNTRY_ISO_CODE'], $row['COUNTRY_NAME'], $continent_id);
         
-        
+        $division = $this->processDivision($row['SUBDIVISION_ISO_CODE'], $row['SUBDIVISION_NAME']);
         
         
         
@@ -145,6 +145,25 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         }
         
         return $country;
+    }
+    
+    function processDivision($code, $name)
+    {
+        if(empty($code)){
+            return false;
+        }
+        
+        $division = DB_DataObject::factory('core_geoip_division');
+        if(!$division->get('code', $code)){
+            $division->setFrom(array(
+                'code' => $code,
+                'name' => (!empty($name)) ? $name : $code
+            ));
+
+            $division->insert();
+        }
+        
+        return $division;
     }
     
     
