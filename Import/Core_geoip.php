@@ -96,12 +96,9 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     function processLocation($row)
     {
-        $continent = false;
+        $continent = $this->processContinent($row['CONTINENT_CODE'], $row['CONTINENT_NAME']);
         
-        if(!empty($row['CONTINENT_CODE'])){
-            
-            
-        }
+        
         
         
         
