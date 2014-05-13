@@ -285,9 +285,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $city->update($oc);
         }
         
-        
     }
-    
     
     function log($str)
     {
