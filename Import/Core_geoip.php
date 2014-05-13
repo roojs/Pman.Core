@@ -164,6 +164,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         return $division;
     }
     
+    function processCity($name, $metro_code, $time_zone, $country, $division);
+    
     
     
     function log($str)
