@@ -37,7 +37,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $this->jerr('GeoLite2-City-Locations.csv OR GeoLite2-City-Blocks.csv does not exists?!');
         }
         
-        $this->insertLocation($location);
+//        $this->insertLocation($location);
         
         $this->insertBlock($block);
     }
@@ -140,7 +140,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             foreach($cols as $i=>$k) {
                 $row[$k] = trim($n[$i]);
             }
-            
+            print_r($row);exit;
             $this->processBlock($row);
         }
         
