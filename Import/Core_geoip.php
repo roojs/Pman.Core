@@ -184,6 +184,10 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             'division_id' => (!empty($division) && !empty($division->id)) ? $division->id : 0
         ));
         
+        $city->insert();
+        
+        return $city;
+        
     }
     
     
