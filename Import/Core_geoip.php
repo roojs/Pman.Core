@@ -8,7 +8,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     static $cli_opts = array();
     
-    $id_mapping = array();
+    var $id_mapping = array();
     
     function getAuth()
     {
@@ -36,6 +36,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         if(!file_exists($location) || !file_exists($block)){
             $this->jerr('GeoLite2-City-Locations.csv OR GeoLite2-City-Blocks.csv does not exists?!');
         }
+        
+        print_r($this->id_mapping);exit;
         
         ini_set("auto_detect_line_endings", true);
         
