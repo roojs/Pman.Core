@@ -52,6 +52,8 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     {
         ini_set("auto_detect_line_endings", true);
         
+        $linecount = count(file($csv));
+        
         $fh = fopen($csv, 'r');
         
         if (!$fh) {
