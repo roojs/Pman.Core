@@ -39,7 +39,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         
         $this->log("Insert location data start");
         
-//        $this->insertLocation($location);
+        $this->insertLocation($location);
         
         $this->log("Insert Block data start");
         
@@ -57,10 +57,6 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
         if (!$fh) {
             $this->jerr("invalid location file");
         }
-        
-        $linecount = count(file($csv));
-        
-        print_r($linecount);exit;
         
         $req = array(
             'GEONAME_ID', 'CONTINENT_CODE', 'CONTINENT_NAME',
@@ -108,10 +104,6 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     function insertBlock($csv)
     {
         ini_set("auto_detect_line_endings", true);
-        
-        $linecount = count(file($csv));
-        
-        print_r($linecount);exit;
         
         $fh = fopen($csv, 'r');
         if (!$fh) {
