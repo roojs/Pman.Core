@@ -155,9 +155,7 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
     
     
     function processLocation($row)
-    {
-        $this->log("Processing Location : Continent - {$row['CONTINENT_NAME']}({$row['CONTINENT_CODE']}) | Country - {$row['COUNTRY_NAME']}({$row['COUNTRY_ISO_CODE']}) | Division - {$row['SUBDIVISION_ISO_CODE']}({$row['SUBDIVISION_NAME']}) | City - {$row['CITY_NAME']}");
-        
+    {   
         $continent = $this->processContinent($row['CONTINENT_CODE'], $row['CONTINENT_NAME']);
         
         $country = $this->processCountry($row['COUNTRY_ISO_CODE'], $row['COUNTRY_NAME'], $continent);
@@ -262,8 +260,6 @@ class Pman_Core_Import_Core_geoip extends Pman_Roo
             $this->log("IP : {$row['NETWORK_START_IP']}");
             return;
         }
-        
-        $this->log("Processing Block : IP - {$row['NETWORK_START_IP']} | City_id - {$this->id_mapping[$row['GEONAME_ID']]}");
         
         $network_mapping = DB_DataObject::factory('core_geoip_network_mapping');
         
