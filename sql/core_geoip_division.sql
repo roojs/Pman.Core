@@ -1,7 +1,7 @@
 CREATE  TABLE core_geoip_division (
     id INT(11) NOT NULL AUTO_INCREMENT ,
-    code TEXT NOT NULL DEFAULT '',
-    name TEXT NOT NULL DEFAULT '',
+    code VARCHAR(32) NOT NULL DEFAULT '',
+    name VARCHAR(255) NOT NULL DEFAULT '',
     PRIMARY KEY (id)
 );
 
