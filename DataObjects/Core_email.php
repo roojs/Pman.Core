@@ -332,7 +332,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 
         fwrite($fh, implode("\n", array(
             "From: {t.messageFrom():h} ",
-            "To: {t.person.getEmailFrom():h} ",
+            "To: {if t.person}{t.person.getEmailFrom():h}{end:} ",
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} "
         ))."\n");
