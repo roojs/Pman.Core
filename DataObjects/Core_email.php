@@ -291,7 +291,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'page' => $this,
             'contents' => $contents
         ));
-        
+        print_r($r);exit;
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         if(file_exists($imageCache) && filesize($imageCache)){
