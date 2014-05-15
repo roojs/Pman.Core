@@ -356,7 +356,7 @@ Pman.Dialog.CoreEmail = {
                                             Roo.MessageBox.progress("Uploading Images", "Uploading");
                                             var html = _this.form.findField('bodytext').getValue();
                                             
-                                            var s = Roo.get(_this.form.findField('bodytext').doc.documentElement);
+                                            var s = Roo.get(_this.form.findField('bodytext').editorcore.doc.documentElement);
                                             
                                             var ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';
                                             
