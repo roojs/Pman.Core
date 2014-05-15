@@ -252,7 +252,7 @@ class Pman_Core_Mailer {
 //        print_r('parts');
 //        print_r($parts[2]);
 //        exit;
-       // list($recipents,$headers,$body) = $parts;
+        list($recipents,$headers,$body) = $parts;
         return array(
             'recipents' => $parts[0],
             'headers' => $parts[1],
