@@ -299,7 +299,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $ret = $r->toData();
-//        print_r($ret);exit;
+        print_r($ret);exit;
         if(!$send){
             return $ret;
         }
@@ -331,7 +331,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 
         fwrite($fh, implode("\n", array(
             "From: {t.messageFrom():h} ",
-            "To: {t.person.getEmailFrom():h}",
+            "To: {if:t.person}{t.person.getEmailFrom():h}{else:}{foreach:rcpts,v}{v:h};{end:}{end:}",
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} "
         ))."\n");
