@@ -18,5 +18,9 @@ class Pman_Core_DataObjects_Core_geoip_country extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    function applyFilters($q, $au, $roo)
+    {
+        
+    }
     
 }
