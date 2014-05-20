@@ -310,7 +310,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
                 }
                 if (empty($mods)) {
                 
-                    print_r($this);
+                    print_r($this->_newConfig);
                    die("No existing DataObject file found for table {$this->table} 
             
 - either add it to Pman_Builder[skip_tables] or\n
