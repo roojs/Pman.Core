@@ -13,9 +13,13 @@ class Pman_Core_DataObjects_Core_geoip_division extends DB_DataObject
     public $id;
     public $code;
     public $name;
-    
-    
-        
+    public $country_id;
+
+
+
+
+
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
