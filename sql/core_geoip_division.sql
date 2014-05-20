@@ -8,3 +8,4 @@ CREATE  TABLE core_geoip_division (
 
 CREATE INDEX code_idx ON core_geoip_division (code) USING BTREE;
 CREATE INDEX name_idx ON core_geoip_division (name) USING BTREE;
+CREATE INDEX country_id_idx ON core_geoip_division (country_id) USING BTREE;
