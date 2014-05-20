@@ -2,6 +2,7 @@ CREATE  TABLE core_geoip_division (
     id INT(11) NOT NULL AUTO_INCREMENT ,
     code VARCHAR(32) NOT NULL DEFAULT '',
     name VARCHAR(255) NOT NULL DEFAULT '',
+    country_id INT(11) NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
 );
 
