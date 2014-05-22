@@ -25,11 +25,11 @@ class Pman_Core_DatabaseColumns extends Pman {
     function get($table) {
         $d = DB_DAtaObject::Factory($table);
         $re = $d->autoJoin();
-        
+        $ret = raray();
         foreach($re['cols'] as $c=>$f {
             $ret[]  = array(
                 'name' => $c,
-                'val' =>$v
+                'val' =>$f
             );
             
         }
