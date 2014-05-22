@@ -25,6 +25,7 @@ class Pman_Core_DatabaseColumns extends Pman {
     function get($table) {
         $d = DB_DAtaObject::Factory($table);
         $re = $d->autoJoin();
+        echo '<PRE>';
         print_r($re);
         exit;
         
