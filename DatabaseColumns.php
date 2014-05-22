@@ -27,7 +27,7 @@ class Pman_Core_DatabaseColumns extends Pman {
         $re = $d->autoJoin();
         echo '<PRE>';print_r($re);
         $ret = array ();
-        foreach($re['cols'] as $c=>$f) {
+        foreach($re['join_names'] as $c=>$f) {
             $ret[]  = array(
                 'name' => $c,
                 'val' => $f
