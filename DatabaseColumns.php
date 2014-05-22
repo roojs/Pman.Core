@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Pman.php';
+
 class Pman_Core_DatabaseColumns extends Pman {
     
     
