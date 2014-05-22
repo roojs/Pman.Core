@@ -19,4 +19,13 @@ class Pman_Core_DatabaseColumns extends Pman {
         $this->authUser = $au;
         return true;
     }
+    
+    function get($table) {
+        $d = DB_DAtaObject::Factory($table);
+        $re = $d->autoJoin();
+        print_r($re);
+        exit;
+        
+        
+    }
 }
