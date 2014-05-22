@@ -24,16 +24,20 @@ class Pman_Core_DatabaseColumns extends Pman {
     
     function get($table) {
         $d = DB_DAtaObject::Factory($table);
-        $re = $d->autoJoin();
-        //echo '<PRE>';print_r($re);
-        $ret = array ();
-        
-        foreach($re['join_names'] as $c=>$f) {
-            $re['cols'][$c] = $f;
+        if (method_exists($d, 'availableColumns')) {
+            $cols = $d->availableColumns();
+        } else {
+            
+            $re = $d->autoJoin();
+            //echo '<PRE>';print_r($re);
+            $cols = $re['cols'] ;
+            
+            foreach($re['join_names'] as $c=>$f) {
+                $cols[$c] = $f;
+            }
         }
-        
-        
-        foreach($re['cols'] as $c=>$f) {
+            
+        foreach($cols as $c=>$f) {
             $ret[]  = array(
                 'name' => $c,
                 'val' => $f
