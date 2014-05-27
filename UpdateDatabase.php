@@ -682,7 +682,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $c->query("
             UPDATE Companies 
                 SET
-                    comptype_id = (SELECT id FROM core_enum where etype='comptype' and name=Companies.comptype)
+                    comptype_id = (SELECT id FROM core_enum where etype='comptype' and name=Companies.comptype LIMIT 1)
                 WHERE
                     comptype_id = 0
                     AND
