@@ -115,7 +115,7 @@ class Pman_Core_Notify extends Pman
             die("access denied");
         }
         $sig = $_SERVER["SCRIPT_NAME"] .'|'. __FILE__;
-        echo "SIG: $sig\n";
+        //echo "SIG: $sig\n";
         HTML_FlexyFramework::ensureSingle($sig, $this);
         return true;
     }
