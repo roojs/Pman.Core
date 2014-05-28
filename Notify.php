@@ -114,8 +114,9 @@ class Pman_Core_Notify extends Pman
         if (!$ff->cli) {
             die("access denied");
         }
-       
-        HTML_FlexyFramework::ensureSingle($_SERVER["SCRIPT_NAME"] .'|'. __FILE__, $this);
+        $sig = $_SERVER["SCRIPT_NAME"] .'|'. __FILE__;
+        echo "$sig\n";
+        HTML_FlexyFramework::ensureSingle($sig, $this);
         return true;
         
     }
