@@ -122,6 +122,7 @@ class Pman_Core_Notify extends Pman
     
     function get($r,$opts)    
     {
+        print_r($r);exit;
         if ($opts['debug']) {
             DB_DataObject::debugLevel($opts['debug']);
             print_r($opts);
