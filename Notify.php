@@ -122,7 +122,6 @@ class Pman_Core_Notify extends Pman
     
     function get($r,$opts)    
     {
-        print_r($r);exit;
         if ($opts['debug']) {
             DB_DataObject::debugLevel($opts['debug']);
             print_r($opts);
@@ -313,7 +312,7 @@ class Pman_Core_Notify extends Pman
         }
         $cmd = 'exec ' . $php . ' ' . $app . ' ' . $cmdOpts; //. ' &';
         
-        print_r($cmd);exit;
+       
         $pipe = array();
         $this->logecho("call proc_open $cmd");
         
