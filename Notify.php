@@ -311,7 +311,7 @@ class Pman_Core_Notify extends Pman
             $app .= ' --sent-to='.escapeshellarg($this->send_to);
         }
         $cmd = 'exec ' . $php . ' ' . $app . ' ' . $cmdOpts; //. ' &';
-        
+        print_r($cmd);exit;
        
         $pipe = array();
         $this->logecho("call proc_open $cmd");
