@@ -195,7 +195,7 @@ class Pman_Core_Notify extends Pman
         
         
         $ar = $w->fetchAll();
-        print_r($ar);exit;
+        
         if (!empty($opts['list'])) {
             if (empty($ar)) {
                 die("Nothing in Queue\n");
