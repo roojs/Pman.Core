@@ -483,9 +483,12 @@ class Pman_Core_NotifySend extends Pman
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
         
-        if(!empty($notify->evtype) && $notify->evtype == 'campaign_detail::drawWinner'){
-            echo "calling :" . $notify->evtype . "\n";
-            return $object->drawWinner($rcpt, $last_sent_date, $notify, $force);
+        $type = explode('::', $notify->evtype);
+        
+        if(!empty($type[1]) && method_exists($object,$type[1])){
+            $m = $type[1];
+            echo "calling :" . get_class($object) . '::' .$m . "\n";
+            return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
                 
         if (!method_exists($object, 'toEmail')) {
