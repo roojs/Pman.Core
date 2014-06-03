@@ -191,10 +191,6 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        if(!empty($r)){
-            $w->id = $r;
-        }
-        
         $w->autoJoin();
         
         
