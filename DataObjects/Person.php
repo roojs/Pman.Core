@@ -42,6 +42,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     public $url_blog; // VARCHAR(256) NULL ;
     public $url_twitter; // VARCHAR(256) NULL ;
     public $url_linkedin; // VARCHAR(256) NULL ;
+    public $linkedin_id; // VARCHAR(256) NULL ;
     
     public $phone_mobile; // varchar(32)  NOT NULL  DEFAULT '';
     public $phone_direct; // varchar(32)  NOT NULL  DEFAULT '';
