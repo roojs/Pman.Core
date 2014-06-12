@@ -65,4 +65,21 @@ class Pman_Core_DatabaseColumns extends Pman {
         
         $this->jdata($ret);
     }
+    
+    function typeToName($t)
+    {
+        switch(true) {
+            case ($t & 64): return 'text';
+            case ($t & 32): return 'text';
+            case ($t & 4 && $t & 8): return 'datetime';
+            case ($t & 4): return 'date';
+            case ($t & 8): return 'time';
+            case ($t & 16): return 'bool';
+            case ($t & 2): return 'varchar';
+            case ($t & 1): return 'number';
+                
+        }
+        return '??';
+        
+    }
 }
