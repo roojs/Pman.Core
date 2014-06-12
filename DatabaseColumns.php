@@ -32,11 +32,21 @@ class Pman_Core_DatabaseColumns extends Pman {
             echo '<PRE>';print_r($re);
             $cols = $re['cols'] ;
             
+            $d->cols();
+            
+            $schemas = array();
+            
             foreach($re['join_names'] as $c=>$f) {
+                
+                
+                
                 $cols[$c] = $f;
             }
-        }
             
+        }
+        
+        
+        
         foreach($cols as $c=>$f) {
             $ret[]  = array(
                 'name' => $c,
