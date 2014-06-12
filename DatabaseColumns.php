@@ -32,7 +32,9 @@ class Pman_Core_DatabaseColumns extends Pman {
             echo '<PRE>';print_r($re);
             $cols = $re['cols'] ;
             
-            $d->cols();
+            
+            $types = $d->table();
+            print_r($types);exit;
             
             $schemas = array();
             
