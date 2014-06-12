@@ -34,6 +34,7 @@ class Pman_Core_DatabaseColumns extends Pman {
             
             
             $types = array();
+            $tables = array();
             $schemas = array($table => $d->table());
             
             foreach($cols as $name=>$table_col) {
@@ -42,8 +43,7 @@ class Pman_Core_DatabaseColumns extends Pman {
                     $schemas[$tbl] = DB_DataObject::Factory($tbl)->table();
                 }
                 $types[$name] = $schemas[$tbl][$col];
-                
-                
+                $tables[$name] = $tbl;
             }
              
             foreach($re['join_names'] as $c=>$f) {
@@ -59,6 +59,7 @@ class Pman_Core_DatabaseColumns extends Pman {
                 'name' => $c,
                 'val' => $f,
                 'type' => isset($types[$c]) ? $this->typeToName($types[$c]) : -1,
+                'table' => isset($tables[$c]) ? $tables[$c] : "",
             );
             
         }
