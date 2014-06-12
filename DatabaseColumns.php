@@ -29,7 +29,7 @@ class Pman_Core_DatabaseColumns extends Pman {
         } else {
             
             $re = $d->autoJoin();
-            //echo '<PRE>';print_r($re);
+            echo '<PRE>';print_r($re);
             $cols = $re['cols'] ;
             
             foreach($re['join_names'] as $c=>$f) {
