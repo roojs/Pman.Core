@@ -41,7 +41,7 @@ class Pman_Core_DatabaseColumns extends Pman {
                 if (!isset($schemas[$tbl])) {
                     $schemas[$tbl] = DB_DataObject::Factory($tbl)->table();
                 }
-                $types[$name] = $schemas[$tbl][$table_col];
+                $types[$name] = $schemas[$tbl][$col];
                 
                 
             }
