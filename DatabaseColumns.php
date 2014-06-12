@@ -29,19 +29,24 @@ class Pman_Core_DatabaseColumns extends Pman {
         } else {
             
             $re = $d->autoJoin();
-            echo '<PRE>';print_r($re);
+            //echo '<PRE>';print_r($re);
             $cols = $re['cols'] ;
             
             
-            $types = $d->table();
-            print_r($types);exit;
+            $types = array();
+            $schemas = array($table => $d->table());
             
-            $schemas = array();
-            
+            foreach($cols as $name=>$table_col) {
+                list($tbl, $col) = explode('.', $table_col);
+                if (!isset($schemas[$tbl])) {
+                    $schemas[$tbl] = DB_DataObject::Factory($tbl)->table();
+                }
+                $types[$name] = $schemas[$tbl][$table_col];
+                
+                
+            }
+             
             foreach($re['join_names'] as $c=>$f) {
-                
-                
-                
                 $cols[$c] = $f;
             }
             
@@ -52,7 +57,8 @@ class Pman_Core_DatabaseColumns extends Pman {
         foreach($cols as $c=>$f) {
             $ret[]  = array(
                 'name' => $c,
-                'val' => $f
+                'val' => $f,
+                'type' => isset($types[$c]) ? $types[$c] : -1,
             );
             
         }
