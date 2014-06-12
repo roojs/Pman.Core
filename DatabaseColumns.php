@@ -58,7 +58,7 @@ class Pman_Core_DatabaseColumns extends Pman {
             $ret[]  = array(
                 'name' => $c,
                 'val' => $f,
-                'type' => isset($types[$c]) ? $types[$c] : -1,
+                'type' => isset($types[$c]) ? $this->typeToName($types[$c]) : -1,
             );
             
         }
