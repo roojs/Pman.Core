@@ -264,6 +264,7 @@ class Pman_Core_Images extends Pman
         
         $sizes = array(
                 '50',
+                '50x50',
                 '100', 
                 '100x100', 
                 '150', 
