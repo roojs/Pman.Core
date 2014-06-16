@@ -263,6 +263,7 @@ class Pman_Core_Images extends Pman
         // DEFAULT allowed - override with $cfg['sizes'];
         
         $sizes = array(
+                '50',
                 '100', 
                 '100x100', 
                 '150', 
