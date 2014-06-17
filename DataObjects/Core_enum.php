@@ -48,8 +48,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             
         }
         
-        if(!empty($q['query']['name'])) {
-            $name = $this->escape($q['query']['name']);
+        if(!empty($q['query']['search'])) {
+            $name = $this->escape($q['query']['search']);
             // ilike on postgres?!?
             $this->whereAdd("
                     core_enum.name LIKE '%{$name}%'
