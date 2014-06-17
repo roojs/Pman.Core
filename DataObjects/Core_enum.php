@@ -23,45 +23,45 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-        
-//        DB_DataObject::debugLevel(1);
-        if (!empty($q['query']['empty_etype'])) {
-            $this->whereAdd("etype = ''");
-        }
-        
-        // this should be handled by roo... using '!name[0]' ....
-        if(!empty($q['!name'])){
-            $names = is_array($q['!name']) ? $q['!name'] : explode(',', $q['!name']);
-            foreach($names as $name){
-                $name  = $this->escape($name);
-                $this->whereAdd("
-                    core_enum.name NOT IN ('$name')
-                ");
-            }
-        }
-        if(!empty($q['search']['display_name'])) {
-            $name = $this->escape($q['search']['display_name']);
-            // ilike on postgres?!?
-            $this->whereAdd("
-                core_enum.display_name LIKE '{$name}%'
-            ");
-            
-        }
-        
-        if(!empty($q['query']['name'])) {
-            $name = $this->escape($q['query']['name']);
-            // ilike on postgres?!?
-            $this->whereAdd("
-                    core_enum.name LIKE '%{$name}%'
-                OR
-                    core_enum.display_name LIKE '%{$name}%'
-            ");
-        }
-        
-//        print_r($this);
-        if(!empty($q['id'])){
-            $this->id = $q['id'];
-        }
+//        
+////        DB_DataObject::debugLevel(1);
+//        if (!empty($q['query']['empty_etype'])) {
+//            $this->whereAdd("etype = ''");
+//        }
+//        
+//        // this should be handled by roo... using '!name[0]' ....
+//        if(!empty($q['!name'])){
+//            $names = is_array($q['!name']) ? $q['!name'] : explode(',', $q['!name']);
+//            foreach($names as $name){
+//                $name  = $this->escape($name);
+//                $this->whereAdd("
+//                    core_enum.name NOT IN ('$name')
+//                ");
+//            }
+//        }
+//        if(!empty($q['search']['display_name'])) {
+//            $name = $this->escape($q['search']['display_name']);
+//            // ilike on postgres?!?
+//            $this->whereAdd("
+//                core_enum.display_name LIKE '{$name}%'
+//            ");
+//            
+//        }
+//        
+//        if(!empty($q['query']['name'])) {
+//            $name = $this->escape($q['query']['name']);
+//            // ilike on postgres?!?
+//            $this->whereAdd("
+//                    core_enum.name LIKE '%{$name}%'
+//                OR
+//                    core_enum.display_name LIKE '%{$name}%'
+//            ");
+//        }
+//        
+////        print_r($this);
+//        if(!empty($q['id'])){
+//            $this->id = $q['id'];
+//        }
         
     }
     
