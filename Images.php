@@ -273,7 +273,6 @@ class Pman_Core_Images extends Pman
                 '400x0',
                 '300x100', // logo on login.
                 '500',
-                '1000'
             );
         
         // this should be configurable...
