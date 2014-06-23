@@ -120,7 +120,7 @@ class Pman_Core_Notify extends Pman
     
     var $pool = array();
     
-    function get($r,$opts)    
+    function parseArgs(&$opts)
     {
         if ($opts['debug']) {
             DB_DataObject::debugLevel($opts['debug']);
@@ -134,8 +134,6 @@ class Pman_Core_Notify extends Pman
         if (empty($opts['limit'])) {
             $opts['limit'] = '1000'; // not sure why it's not picking up the defautl..
         }
-        //date_default_timezone_set('UTC');
-       // phpinfo();exit;
         $showold = !empty($opts['old']);
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
@@ -146,6 +144,16 @@ class Pman_Core_Notify extends Pman
         if (!empty($opts['send-to'])) {
             $this->send_to = $opts['send-to'];
         }
+    }
+    
+    
+    function get($r,$opts)    
+    {
+        $this->parseArgs($opts); 
+         
+        //date_default_timezone_set('UTC');
+       // phpinfo();exit;
+        
      
         
         $w = DB_DataObject::factory('core_notify_recur');
