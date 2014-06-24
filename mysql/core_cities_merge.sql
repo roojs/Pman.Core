@@ -68,10 +68,11 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS core_cities_merge_division;
 DELIMITER $$
-CREATE FUNCTION core_cities_merge_division()  RETURNS TEXT DETERMINISTIC
+CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
     BEGIN
         DECLARE re_done INT DEFAULT FALSE;
 
+        DECLARE v_count INT DEFAULT 0;
         DECLARE v_id INT DEFAULT 0;
         DECLARE v_iso TEXT DEFAULT '';
         DECLARE v_local_name TEXT DEFAULT '';
@@ -96,11 +97,15 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS TEXT DETERMINISTIC
         WHERE
             type = 'RE';
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET re_done = TRUE;
+        
+        SET v_count = 0;
 
         OPEN re_csr;
         re_loop: LOOP
             FETCH re_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
+            SET v_count = v_count + 1;
+
             SET v_id_tmp = 0;
 
             SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name;
@@ -125,7 +130,7 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS TEXT DETERMINISTIC
         END LOOP;
         CLOSE re_csr;
 
-        RETURN 'DONE';
+        RETURN v_count;
     END $$
 DELIMITER ; 
 
