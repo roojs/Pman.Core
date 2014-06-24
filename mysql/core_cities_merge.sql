@@ -50,7 +50,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
             SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
 
-            IF(v_id > 0) THEN
+            IF(v_id = 0) THEN
                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
             END IF;
 
@@ -69,10 +69,14 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             
             SET v_id = 0;
 
-            SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+            SELECT id INTO v_id FROM core_geoip_division WHERE name = v_local_name;
 
-            IF(v_id > 0) THEN
-                INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
+            IF(v_id = 0) THEN
+                IF v_in_location IS NOT NULL THEN
+                    SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+                END IF;
+                
+                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id);
             END IF;
 
 --             ITERATE re_loop;
