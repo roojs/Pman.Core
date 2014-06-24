@@ -26,11 +26,12 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
             IF v_type = 'CO' THEN
                 SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
-                IF(id > 0) THEN
-                    ITERATE read_loop;
+                IF(id = 0) THEN
+                    INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
                 END IF;
 
-                INSERT INTO core_geoip_country
+                ITERATE read_loop;
+                
             END IF;
                     
 
