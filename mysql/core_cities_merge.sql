@@ -11,10 +11,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE csr CURSOR FOR 
         SELECT 
-            iso INTO v_iso,
-            local_name INTO v_local_name,
-            type INTO v_type,
-            in_location INTO v_in_location
+            iso INTO v_iso
         FROM 
             meta_location
         LIMIT 1;
