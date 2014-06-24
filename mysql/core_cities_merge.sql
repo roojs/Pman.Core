@@ -103,7 +103,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN ci_csr;
         ci_loop: LOOP
-            FETCH ci_csr INTO v_id,v_iso,v_local_name,v_in_location;
+            FETCH ci_csr INTO v_id,v_iso,v_local_name,v_in_location,v_geo_lat,v_geo_lng;
             
             SET v_id_tmp = 0;
             SET v_id_tmp_tmp = 0;
@@ -133,8 +133,12 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                     
                 END IF;
 
-                IF 
-                v_id_tmp = SELECT LAST_INSERT_ID();
+                IF v_geo_lat IS NOT NULL OR v_geo_lng IS NOT NULL THEN
+                    SET v_id_tmp = SELECT LAST_INSERT_ID();
+
+                    INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_geo_lat, v_geo_lng, v_id_tmp);
+                END IF;
+                
                 
             END IF;
 
