@@ -1,0 +1,8 @@
+-- CREATE TABLE core_oauth_users (
+--     username VARCHAR(255) NOT NULL, 
+--     password VARCHAR(2000), 
+--     first_name VARCHAR(255), 
+--     last_name VARCHAR(255), 
+--     CONSTRAINT username_pk 
+--     PRIMARY KEY (username)
+-- );
