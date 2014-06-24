@@ -76,17 +76,18 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             FETCH re_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
             SET v_id_tmp = 0;
-            SET v_id_tmp = 0;
 
-            SELECT id INTO v_id FROM core_geoip_city WHERE name = v_local_name;
+            SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name;
 
-            IF(v_id = 0) THEN
+            IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = 
-                    SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
+                    
+                    SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+
                 END IF;
                 
-                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id);
+                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id_tmp);
             END IF;
 
 --             ITERATE re_loop;
