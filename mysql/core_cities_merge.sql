@@ -158,10 +158,14 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
             type = 'CI';
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET ci_done = TRUE;
 
+        SET v_count = 0;
+
         OPEN ci_csr;
         ci_loop: LOOP
             FETCH ci_csr INTO v_id,v_iso,v_local_name,v_in_location,v_geo_lat,v_geo_lng;
             
+            SET v_count = v_count + 1;
+
             SET v_id_tmp = 0;
             SET v_id_tmp_tmp = 0;
 
