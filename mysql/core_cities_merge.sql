@@ -8,6 +8,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         DECLARE v_local_name TEXT DEFAULT '';
         DECLARE v_type TEXT DEFAULT '';
         DECLARE v_in_location INT DEFAULT 0;
+        DECLARE v_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
         SELECT 
