@@ -25,7 +25,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
 
         DECLARE co_csr CURSOR FOR 
         SELECT 
-            id,iso,local_name
+            id,iso,local_name,in_location
         FROM 
             meta_location
         WHERE
@@ -36,7 +36,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
 
         OPEN co_csr;
         co_loop: LOOP
-            FETCH co_csr INTO v_id,v_iso,v_local_name;
+            FETCH co_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
             SET v_count = v_count + 1;
 
