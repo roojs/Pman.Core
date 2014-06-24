@@ -29,7 +29,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         END LOOP;
         CLOSE csr;
 
-        RETURN v_iso;
+        RETURN local_name;
     END $$
 DELIMITER ; 
 
