@@ -18,6 +18,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         FROM 
             meta_location
         LIMIT 1;
+
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
         OPEN csr;
