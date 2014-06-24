@@ -30,6 +30,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             meta_location
         WHERE
             type = 'CO';
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET co_done = TRUE;
 
         DECLARE re_csr CURSOR FOR 
         SELECT 
@@ -38,6 +39,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             meta_location
         WHERE
             type = 'RE';
+        DECLARE CONTINUE HANDLER FOR NOT FOUND SET re_done = TRUE;
 
         DECLARE ci_csr CURSOR FOR 
         SELECT 
@@ -46,9 +48,6 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             meta_location
         WHERE
             type = 'CI';
-
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET co_done = TRUE;
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET re_done = TRUE;
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET ci_done = TRUE;
 
 
