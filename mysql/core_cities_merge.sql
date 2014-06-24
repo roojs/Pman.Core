@@ -61,7 +61,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             END IF;
 
         END LOOP;
-        CLOSE csr;
+        CLOSE co_csr;
 
         RETURN v_local_name;
     END $$
