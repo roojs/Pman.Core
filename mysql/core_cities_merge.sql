@@ -35,3 +35,4 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         RETURN v_iso;
     END $$
 DELIMITER ; 
+
