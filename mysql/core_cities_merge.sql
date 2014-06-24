@@ -110,12 +110,27 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
+                    SELECT id INTO v_id_tmp, iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
                     
-                    SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+                    
+                    IF v_type_tmp = 'CO' THEN
+                        SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+                        
+                        INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
+                    END IF;
+
+                    IF v_type_tmp = 'RE' THEN
+                        SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name_tmp;
+                        
+                        
+                        
+                        INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
+                    END IF;
+                    
+                    
                 END IF;
                 
-                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id);
+                
             END IF;
 
 --             ITERATE ci_loop;
