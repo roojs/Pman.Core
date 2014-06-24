@@ -6,6 +6,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
         DECLARE co_done INT DEFAULT FALSE;
 
         DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
 
         DECLARE v_id INT DEFAULT 0;
         DECLARE v_iso TEXT DEFAULT '';
@@ -30,7 +31,8 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
             meta_location
         WHERE
             type = 'CO';
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET co_done = TRUE;
+        
+        SELECT COUNT(id) INTO v_total FROM meta_location WHERE type = 'CO';
 
         SET v_count = 0;
 
@@ -42,7 +44,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
 
             SET v_id_tmp = 0;
 
---             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
+            SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
 
 --             IF(v_id_tmp = 0) THEN
 --                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
