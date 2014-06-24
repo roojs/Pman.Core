@@ -54,6 +54,27 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
             END IF;
 
+--             ITERATE co_loop;
+                
+            IF co_done THEN
+              LEAVE co_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE co_csr;
+
+        OPEN re_csr;
+        re_loop: LOOP
+            FETCH co_csr INTO v_iso,v_local_name,v_type,v_in_location;
+            
+            SET v_id = 0;
+
+            SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+
+            IF(v_id > 0) THEN
+                INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
+            END IF;
+
 --             ITERATE read_loop;
                 
             IF done THEN
