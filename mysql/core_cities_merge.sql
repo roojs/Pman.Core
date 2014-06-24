@@ -34,6 +34,8 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
         
         SELECT COUNT(id) INTO v_total FROM meta_location WHERE type = 'CO';
 
+        RETURN v_total;
+
         SET v_count = 0;
 
         OPEN co_csr;
