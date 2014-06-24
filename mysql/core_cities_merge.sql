@@ -70,6 +70,9 @@ DELIMITER $$
 CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
     BEGIN
         DECLARE re_done INT DEFAULT FALSE;
+        
+        DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
 
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_id INT DEFAULT 0;
@@ -95,8 +98,9 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
             meta_location
         WHERE
             type = 'RE';
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET re_done = TRUE;
         
+        SELECT COUNT(id) INTO v_total FROM meta_location WHERE type = 'RE';
+
         SET v_count = 0;
 
         OPEN re_csr;
