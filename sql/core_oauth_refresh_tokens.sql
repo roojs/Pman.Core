@@ -1,4 +1,4 @@
-CREATE TABLE oauth_refresh_tokens (
+CREATE TABLE core_oauth_refresh_tokens (
     refresh_token VARCHAR(40) NOT NULL, 
     client_id VARCHAR(80) NOT NULL, 
     user_id VARCHAR(255), 
