@@ -167,8 +167,8 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
+
                     SELECT iso, local_name, type, in_location INTO v_iso_tmp, v_local_name_tmp, v_type_tmp, v_in_location_tmp FROM meta_location WHERE id = v_in_location;
-                    
                     
                     IF v_type_tmp = 'CO' THEN
                         SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
@@ -189,7 +189,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
                 END IF;
 
                 IF v_geo_lat IS NOT NULL OR v_geo_lng IS NOT NULL THEN
-                    SET v_id_tmp = SELECT LAST_INSERT_ID();
+                    SET v_id_tmp = LAST_INSERT_ID();
 
                     INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_geo_lat, v_geo_lng, v_id_tmp);
                 END IF;
