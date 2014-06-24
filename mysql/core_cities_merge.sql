@@ -33,6 +33,9 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET co_done = TRUE;
 
 
+        SELECT count(id) INTO v_id FROM meta_location WHERE type = 'CO';
+        RETURN v_id;
+
         SET v_count = 0;
 
         OPEN co_csr;
