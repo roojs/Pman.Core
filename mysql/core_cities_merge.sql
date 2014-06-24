@@ -21,6 +21,9 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         read_loop: LOOP
             FETCH csr INTO v_iso,v_local_name,v_type,v_in_location;
             
+            IF v_type = 'CO' THEN
+                
+
             IF done THEN
               LEAVE read_loop;
             END IF;
