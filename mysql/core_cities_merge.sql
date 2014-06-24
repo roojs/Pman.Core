@@ -110,7 +110,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
+                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_in_location;
                     
                     
                     IF v_type_tmp = 'CO' THEN
