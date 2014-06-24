@@ -77,11 +77,11 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             
             SET v_id_tmp = 0;
 
-            SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name;
+            SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name;
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
+                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_in_location;
                     
                     SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
 
@@ -110,7 +110,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT id INTO v_id_tmp, iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
+                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_id;
                     
                     
                     IF v_type_tmp = 'CO' THEN
