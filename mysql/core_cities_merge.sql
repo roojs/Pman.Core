@@ -206,7 +206,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
         END LOOP;
         CLOSE re_csr;
 
-        RETURN v_local_name;
+        RETURN 'DONE';
     END $$
 DELIMITER ; 
 
