@@ -1,9 +1,11 @@
 
 DROP FUNCTION IF EXISTS core_cities_merge_country;
 DELIMITER $$
-CREATE FUNCTION core_cities_merge_country()  RETURNS TEXT DETERMINISTIC
+CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
     BEGIN
         DECLARE co_done INT DEFAULT FALSE;
+
+        DECLARE v_count INT DEFAULT 0;
 
         DECLARE v_id INT DEFAULT 0;
         DECLARE v_iso TEXT DEFAULT '';
@@ -31,10 +33,14 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS TEXT DETERMINISTIC
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET co_done = TRUE;
 
 
+        SET v_count = 0;
+
         OPEN co_csr;
         co_loop: LOOP
             FETCH co_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
+            SET v_count = v_count + 1;
+
             SET v_id_tmp = 0;
 
             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
