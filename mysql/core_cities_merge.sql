@@ -101,7 +101,7 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS TEXT DETERMINISTIC
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_in_location;
+                    SELECT iso INTO v_iso_tmp,local_name INTO v_local_name_tmp,type INTO v_type_tmp FROM meta_location WHERE id = v_in_location;
                     
                     SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
 
@@ -149,7 +149,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
 
         DECLARE ci_csr CURSOR FOR 
         SELECT 
-            id,iso,local_name,type,in_location,geo_lat,geo_lng
+            id,iso,local_name,in_location,geo_lat,geo_lng
         FROM 
             meta_location
         WHERE
