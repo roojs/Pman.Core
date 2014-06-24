@@ -126,7 +126,7 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
 --             ITERATE re_loop;
                 
             IF v_count = v_total THEN
-              LEAVE co_loop;
+              LEAVE re_loop;
             END IF;
 
         END LOOP;
