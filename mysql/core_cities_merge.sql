@@ -59,7 +59,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
         CLOSE co_csr;
 
 
-        RETURN 'DONE';
+        RETURN v_count;
     END $$
 DELIMITER ; 
 
