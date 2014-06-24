@@ -74,7 +74,6 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
 
-        DECLARE v_count INT DEFAULT 0;
         DECLARE v_id INT DEFAULT 0;
         DECLARE v_iso TEXT DEFAULT '';
         DECLARE v_local_name TEXT DEFAULT '';
