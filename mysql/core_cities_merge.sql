@@ -203,8 +203,6 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
                 
             END IF;
 
---             ITERATE ci_loop;
-                
             IF ci_done THEN
               LEAVE ci_loop;
             END IF;
@@ -212,7 +210,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
         END LOOP;
         CLOSE ci_csr;
 
-        RETURN 'DONE';
+        RETURN v_count;
     END $$
 DELIMITER ; 
 
