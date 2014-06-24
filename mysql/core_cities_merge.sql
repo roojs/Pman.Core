@@ -7,15 +7,23 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         DECLARE re_done INT DEFAULT FALSE;
         DECLARE ci_done INT DEFAULT FALSE;
 
+        DECLARE v_id INT DEFAULT 0;
         DECLARE v_iso TEXT DEFAULT '';
         DECLARE v_local_name TEXT DEFAULT '';
-        DECLARE v_type TEXT DEFAULT '';
+--         DECLARE v_type TEXT DEFAULT '';
         DECLARE v_in_location INT DEFAULT 0;
-        DECLARE v_id INT DEFAULT 0;
+
+        DECLARE v_id_tmp INT DEFAULT 0;
+        DECLARE v_iso_tmp TEXT DEFAULT '';
+        DECLARE v_local_name_tmp TEXT DEFAULT '';
+        DECLARE v_type_tmp TEXT DEFAULT '';
+        DECLARE v_in_location_tmp INT DEFAULT 0;
+
+        DECLARE v_id_tmp_tmp INT DEFAULT 0;
 
         DECLARE co_csr CURSOR FOR 
         SELECT 
-            iso,local_name,type,in_location
+            iso,local_name,in_location
         FROM 
             meta_location
         WHERE
@@ -44,7 +52,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN co_csr;
         co_loop: LOOP
-            FETCH co_csr INTO v_iso,v_local_name,v_type,v_in_location;
+            FETCH co_csr INTO v_iso,v_local_name,v_in_location;
             
             SET v_id = 0;
 
@@ -65,14 +73,16 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN re_csr;
         re_loop: LOOP
-            FETCH re_csr INTO v_iso,v_local_name,v_type,v_in_location;
+            FETCH re_csr INTO v_iso,v_local_name,v_in_location;
             
             SET v_id = 0;
+            SET v_id_tmp = 0;
 
-            SELECT id INTO v_id FROM core_geoip_division WHERE name = v_local_name;
+            SELECT id INTO v_id FROM core_geoip_city WHERE name = v_local_name;
 
             IF(v_id = 0) THEN
                 IF v_in_location IS NOT NULL THEN
+                    SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = 
                     SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
                 END IF;
                 
@@ -83,6 +93,31 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                 
             IF re_done THEN
               LEAVE re_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE re_csr;
+
+        OPEN ci_csr;
+        ci_loop: LOOP
+            FETCH ci_csr INTO v_iso,v_local_name,v_in_location;
+            
+            SET v_id = 0;
+
+            SELECT id INTO v_id FROM core_geoip_city WHERE name = v_local_name;
+
+            IF(v_id = 0) THEN
+                IF v_in_location IS NOT NULL THEN
+                    SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+                END IF;
+                
+                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id);
+            END IF;
+
+--             ITERATE ci_loop;
+                
+            IF ci_done THEN
+              LEAVE ci_loop;
             END IF;
 
         END LOOP;
