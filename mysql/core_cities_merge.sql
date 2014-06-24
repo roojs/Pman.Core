@@ -204,7 +204,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
             END IF;
 
         END LOOP;
-        CLOSE re_csr;
+        CLOSE ci_csr;
 
         RETURN 'DONE';
     END $$
