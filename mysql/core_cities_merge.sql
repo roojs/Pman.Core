@@ -46,7 +46,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
 
             IF(v_id_tmp = 0) THEN
-                INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
+                -- INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
             END IF;
                 
             IF co_done THEN
