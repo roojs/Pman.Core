@@ -39,7 +39,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE ci_csr CURSOR FOR 
         SELECT 
-            id,iso,local_name,type,in_location
+            id,iso,local_name,type,in_location,geo_lat,geo_lng
         FROM 
             meta_location
         WHERE
@@ -130,6 +130,9 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                     END IF;
                     
                 END IF;
+
+                IF 
+                v_id_tmp = SELECT LAST_INSERT_ID();
                 
             END IF;
 
