@@ -14,7 +14,6 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
             iso,local_name,type,in_location
         FROM 
             meta_location
-        LIMIT 1;
 
         DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
@@ -33,5 +32,3 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
     END $$
 DELIMITER ; 
 
-
-SELECT core_cities_merge();
