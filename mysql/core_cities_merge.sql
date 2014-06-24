@@ -50,7 +50,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
 --                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
 --             END IF;
                 
-            IF co_done THEN
+            IF v_count = v_total THEN
               LEAVE co_loop;
             END IF;
 
