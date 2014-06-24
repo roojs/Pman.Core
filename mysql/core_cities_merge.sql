@@ -179,7 +179,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
                     IF v_type_tmp = 'RE' THEN
                         SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name_tmp;
                         
-                        SELECT iso INTO v_iso_tmp, local_name INTO v_local_name_tmp, type INTO v_type_tmp FROM meta_location WHERE id = v_in_location_tmp;
+                        SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location_tmp;
                         
                         SELECT id INTO v_id_tmp_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
                         
