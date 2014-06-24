@@ -65,7 +65,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN re_csr;
         re_loop: LOOP
-            FETCH co_csr INTO v_iso,v_local_name,v_type,v_in_location;
+            FETCH re_csr INTO v_iso,v_local_name,v_type,v_in_location;
             
             SET v_id = 0;
 
@@ -75,14 +75,14 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
             END IF;
 
---             ITERATE read_loop;
+--             ITERATE re_loop;
                 
-            IF done THEN
-              LEAVE read_loop;
+            IF re_done THEN
+              LEAVE re_loop;
             END IF;
 
         END LOOP;
-        CLOSE co_csr;
+        CLOSE re_csr;
 
         RETURN v_local_name;
     END $$
