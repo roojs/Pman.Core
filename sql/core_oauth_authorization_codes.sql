@@ -1,4 +1,4 @@
-CREATE TABLE oauth_authorization_codes (
+CREATE TABLE core_oauth_authorization_codes (
     authorization_code VARCHAR(40) NOT NULL, 
     client_id VARCHAR(80) NOT NULL, 
     user_id VARCHAR(255), 
