@@ -23,7 +23,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE co_csr CURSOR FOR 
         SELECT 
-            iso,local_name,in_location
+            id,iso,local_name,in_location
         FROM 
             meta_location
         WHERE
@@ -31,7 +31,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE re_csr CURSOR FOR 
         SELECT 
-            iso,local_name,type,in_location
+            id,iso,local_name,type,in_location
         FROM 
             meta_location
         WHERE
@@ -39,7 +39,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE ci_csr CURSOR FOR 
         SELECT 
-            iso,local_name,type,in_location
+            id,iso,local_name,type,in_location
         FROM 
             meta_location
         WHERE
