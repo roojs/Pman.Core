@@ -29,7 +29,9 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         END LOOP;
         CLOSE csr;
 
-        RETURN local_name;
+        RETURN v_local_name;
     END $$
 DELIMITER ; 
 
+
+SELECT core_cities_merge();
