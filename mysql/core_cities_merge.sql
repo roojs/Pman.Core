@@ -218,7 +218,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
                 
             END IF;
 
-            IF ci_done THEN
+            IF v_count = v_total THEN
               LEAVE ci_loop;
             END IF;
 
