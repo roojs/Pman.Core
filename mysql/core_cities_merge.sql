@@ -126,12 +126,10 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
                         
                         SELECT id INTO v_id_tmp_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
                         
-                        INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
+                        INSERT INTO core_geoip_city (name, country_id, division_id) VALUES (v_local_name, v_id_tmp_tmp, v_id_tmp);
                     END IF;
                     
-                    
                 END IF;
-                
                 
             END IF;
 
