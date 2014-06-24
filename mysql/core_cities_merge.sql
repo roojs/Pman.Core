@@ -163,7 +163,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS TEXT DETERMINISTIC
             SET v_id_tmp = 0;
             SET v_id_tmp_tmp = 0;
 
-            SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name;
+            SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name LIMIT 1;
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
