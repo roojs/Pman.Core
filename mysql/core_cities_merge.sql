@@ -11,7 +11,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         DECLARE csr CURSOR FOR 
         SELECT 
-            *
+            iso,local_name,type,in_location
         FROM 
             meta_location
         LIMIT 1;
@@ -20,7 +20,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN csr;
         read_loop: LOOP
-            FETCH csr;
+            FETCH csr INTO ;
             
             IF done THEN
               LEAVE read_loop;
