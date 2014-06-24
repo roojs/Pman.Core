@@ -22,8 +22,17 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         read_loop: LOOP
             FETCH csr INTO v_iso,v_local_name,v_type,v_in_location;
             
+            SET v_id = 0;
+
             IF v_type = 'CO' THEN
-                
+                SELECT id INTO v_id FROM core_geoip_country WHERE code = v_iso;
+                IF(id > 0) THEN
+                    CONTINUE;
+                END IF;
+
+                INSERT INTO core_geoip_country
+            END IF;
+                    
 
             IF done THEN
               LEAVE read_loop;
