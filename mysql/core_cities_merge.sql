@@ -31,5 +31,6 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
         END LOOP;
         CLOSE csr;
 
+        RETURN v_iso;
     END $$
 DELIMITER ; 
