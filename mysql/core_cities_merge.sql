@@ -52,7 +52,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN co_csr;
         co_loop: LOOP
-            FETCH co_csr INTO v_iso,v_local_name,v_in_location;
+            FETCH co_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
             SET v_id = 0;
 
@@ -73,7 +73,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN re_csr;
         re_loop: LOOP
-            FETCH re_csr INTO v_iso,v_local_name,v_in_location;
+            FETCH re_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
             SET v_id = 0;
             SET v_id_tmp = 0;
@@ -100,7 +100,7 @@ CREATE FUNCTION core_cities_merge()  RETURNS TEXT DETERMINISTIC
 
         OPEN ci_csr;
         ci_loop: LOOP
-            FETCH ci_csr INTO v_iso,v_local_name,v_in_location;
+            FETCH ci_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
             SET v_id = 0;
 
