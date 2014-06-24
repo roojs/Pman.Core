@@ -5,5 +5,6 @@ CREATE FUNCTION core_cities_merge()  RETURNS VARCHAR(128) DETERMINISTIC
     BEGIN
         
 
+
     END $$
 DELIMITER ; 
