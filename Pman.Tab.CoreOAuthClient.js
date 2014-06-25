@@ -224,7 +224,8 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         xns: Roo.grid,
                                         field : {
                                             xtype: 'TextField',
-                                            xns: Roo.form
+                                            xns: Roo.form,
+                                            allowBlank : false
                                         }
                                     }
                                 },
