@@ -25,7 +25,7 @@
                         },
                         {
                             "listeners": {
-                                "|activate": "function() {\n    _this.panel = this;\n    \n    \n    var pid = _this.form.findField('pohead_id').getValue() * 1;\n    if (pid < 1) {\n        Roo.MessageBox.alert(\"Save First\", \"Please save the purchase order first, before adding items\");\n        _this.dialog.layout.getRegion('center').showPanel(0);\n        return;\n    }\n    \n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}",
+                                "|activate": "function() {\n    _this.panel = this;\n    \n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}",
                                 "deactivate": "function (_self)\n{\n     if(_this.grid){\n        var ar = [];\n\n        _this.grid.ds.each(function(r) {\n            ar.push({\n                poitem_id : r.data.poitem_id,\n                poitem_itemsite_id : r.data.poitem_itemsite_id,\n                poitem_unitprice : r.data.poitem_unitprice,\n                poitem_qty_ordered : r.data.poitem_qty_ordered\n            });\n                \n        });\n        \n        _this.form.findField('items').setValue(JSON.stringify(ar));\n    }\n    _this.dontClose = true;\n    _this.form.doAction(\"submit\");\n\n}"
                             },
                             "background": true,

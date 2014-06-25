@@ -30,14 +30,6 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                             activate : function() {
                                 _this.panel = this;
                                 
-                                
-                                var pid = _this.form.findField('pohead_id').getValue() * 1;
-                                if (pid < 1) {
-                                    Roo.MessageBox.alert("Save First", "Please save the purchase order first, before adding items");
-                                    _this.dialog.layout.getRegion('center').showPanel(0);
-                                    return;
-                                }
-                                
                                 if (_this.grid) {
                                     _this.grid.footer.onClick('first');
                                 }
