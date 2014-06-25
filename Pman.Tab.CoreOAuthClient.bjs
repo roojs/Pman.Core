@@ -114,8 +114,8 @@
                                         {
                                             "*prop": "colModel[]",
                                             "dataIndex": "client_id",
-                                            "header": "Vouchered",
-                                            "width": 65,
+                                            "header": "Client ID",
+                                            "width": 150,
                                             "xtype": "ColumnModel",
                                             "|renderer": "function(v,x,r) { \n    return String.format(\n        r.data.poitem_qty_ordered != v ? '<span style=\"color:red\">{0}</span>':  '{0}',\n         v);\n}",
                                             "|xns": "Roo.grid",
