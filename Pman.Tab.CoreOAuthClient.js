@@ -54,12 +54,11 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 },
                                 afteredit : function (e)
                                 {
-                                    Roo.log(e);
                                     if(e.originalValue == e.value || !e.value.length){
                                         return false;
                                     }
                                     
-                                    Roo.log('commit');
+                                    e.record.commit();
                                 }
                             },
                             autoExpandColumn : 'redirect_uri',
