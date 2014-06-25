@@ -38,7 +38,8 @@
                             "items": [
                                 {
                                     "listeners": {
-                                        "|render": "function() \n{\n    _this.grid = this; \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}"
+                                        "|render": "function() \n{\n    _this.grid = this; \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}",
+                                        "afteredit": "function (e)\n{\n    Roo.log(e);\n}"
                                     },
                                     "*prop": "grid",
                                     "autoExpandColumn": "redirect_uri",

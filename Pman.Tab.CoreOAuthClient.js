@@ -51,6 +51,10 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     if (_this.panel.active) {
                                        this.footer.onClick('first');
                                     }
+                                },
+                                afteredit : function (e)
+                                {
+                                    Roo.log(e);
                                 }
                             },
                             autoExpandColumn : 'redirect_uri',
