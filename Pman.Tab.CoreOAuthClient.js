@@ -86,27 +86,16 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         if (!record.data.client_id.length || !record.data.client_secret.length) {
                                             return;
                                         }
-                                        /*
+                                        
                                         new Pman.Request({
-                                            url : baseURL + '/Roo/Core_enum.php',
+                                            url : baseURL + '/Roo/Core_oauth_clients.php',
                                             method : 'POST',
-                                            params : {
-                                                id : record.data.id,
-                                                etype : _this.data.etype,
-                                                name :  record.data.name,
-                                                active : record.data.active,
-                                                seqid : record.data.seqid,
-                                                display_name : record.data.display_name
-                                            }, 
+                                            params : record.data,
                                             success : function(res) {
-                                                //Roo.log(data);
-                                                // update the ID if it's not set..
-                                                if (record.data.id * 1 < 1) {
-                                                    record.set('id', res.data.id);
-                                                }
+                                                _this.gird.footer.onClick('refresh');
                                             }
                                         });
-                                     */   
+                                        
                                     }
                                 },
                                 remoteSort : true,
