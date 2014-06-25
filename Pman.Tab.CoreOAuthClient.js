@@ -110,6 +110,10 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     totalProperty : 'total',
                                     fields : [
                                         {
+                                            'name': 'id',
+                                            'type': 'int'
+                                        },
+                                        {
                                             'name': 'client_id',
                                             'type': 'string'
                                         },
