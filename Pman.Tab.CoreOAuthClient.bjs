@@ -4,7 +4,30 @@
     "parent": "",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Tab.CoreOAuthClient.bjs",
-    "items": [],
+    "items": [
+        {
+            "region": "center",
+            "title": "Email Template",
+            "xtype": "NestedLayoutPanel",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "|xns": "Roo",
+                    "xtype": "BorderLayout",
+                    "*prop": "layout",
+                    "items": [
+                        {
+                            "*prop": "center",
+                            "autoScroll": false,
+                            "split": true,
+                            "xtype": "LayoutRegion",
+                            "|xns": "Roo"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
