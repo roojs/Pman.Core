@@ -31,7 +31,7 @@
                             "fitContainer": true,
                             "fitToframe": true,
                             "region": "center",
-                            "tableName": "poitem",
+                            "tableName": "core_oauth_clients",
                             "title": "Order Items",
                             "xtype": "GridPanel",
                             "|xns": "Roo",
