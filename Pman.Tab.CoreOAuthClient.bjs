@@ -136,8 +136,31 @@
                                         },
                                         {
                                             "*prop": "colModel[]",
-                                            "dataIndex": "client_id",
-                                            "header": "Client ID",
+                                            "dataIndex": "client_secret",
+                                            "header": "Client Secret",
+                                            "width": 150,
+                                            "xtype": "ColumnModel",
+                                            "|renderer": "function(v) { \n    return String.format('{0}', v ? v : '');\n}",
+                                            "|xns": "Roo.grid",
+                                            "items": [
+                                                {
+                                                    "|xns": "Roo.grid",
+                                                    "xtype": "GridEditor",
+                                                    "*prop": "editor",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "field",
+                                                            "xtype": "TextField",
+                                                            "|xns": "Roo.form"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "*prop": "colModel[]",
+                                            "dataIndex": "client_secret",
+                                            "header": "Client Secret",
                                             "width": 150,
                                             "xtype": "ColumnModel",
                                             "|renderer": "function(v) { \n    return String.format('{0}', v ? v : '');\n}",
