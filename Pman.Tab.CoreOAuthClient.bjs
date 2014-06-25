@@ -84,7 +84,7 @@
                                             "items": [
                                                 {
                                                     "listeners": {
-                                                        "|click": "function()\n{\n    \n    var nr = _this.grid.ds.reader.newRow({\n        client_id : '',\n        client_secret : '',\n        redirect_uri : ''\n    });\n    \n    _this.grid.stopEditing();\n    _this.grid.ds.insert(_this.grid.ds.getCount(), nr); \n    _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);\n}\n"
+                                                        "|click": "function()\n{\n    \n    var nr = _this.grid.ds.reader.newRow({\n        id : 0,\n        client_id : '',\n        client_secret : '',\n        redirect_uri : ''\n    });\n    \n    _this.grid.stopEditing();\n    _this.grid.ds.insert(_this.grid.ds.getCount(), nr); \n    _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);\n}\n"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Add",

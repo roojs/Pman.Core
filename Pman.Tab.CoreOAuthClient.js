@@ -140,6 +140,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                             {
                                                 
                                                 var nr = _this.grid.ds.reader.newRow({
+                                                    id : 0,
                                                     client_id : '',
                                                     client_secret : '',
                                                     redirect_uri : ''
