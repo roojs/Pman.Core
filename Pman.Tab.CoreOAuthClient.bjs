@@ -61,7 +61,6 @@
                                                 {
                                                     "*prop": "proxy",
                                                     "method": "GET",
-                                                    "timeout": 90000,
                                                     "xtype": "HttpProxy",
                                                     "|url": "baseURL + '/Xtuple/Roo/Poitem.php'",
                                                     "|xns": "Roo.data"

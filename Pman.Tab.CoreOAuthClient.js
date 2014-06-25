@@ -89,7 +89,6 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     xtype: 'HttpProxy',
                                     xns: Roo.data,
                                     method : 'GET',
-                                    timeout : 90000,
                                     url : baseURL + '/Xtuple/Roo/Poitem.php'
                                 },
                                 reader : {
