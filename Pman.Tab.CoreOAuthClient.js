@@ -206,10 +206,8 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     dataIndex : 'client_id',
                                     header : 'Client ID',
                                     width : 150,
-                                    renderer : function(v,x,r) { 
-                                        return String.format(
-                                            r.data.poitem_qty_ordered != v ? '<span style="color:red">{0}</span>':  '{0}',
-                                             v);
+                                    renderer : function(v) { 
+                                        return String.format('{0}', v ? v : '');
                                     },
                                     editor : {
                                         xtype: 'GridEditor',
