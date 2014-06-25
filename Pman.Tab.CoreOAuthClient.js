@@ -71,7 +71,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     
                                 }
                             },
-                            autoExpandColumn : 'item_descrip1',
+                            autoExpandColumn : 'redirect_uri',
                             clicksToEdit : 1,
                             loadMask : true,
                             dataSource : {

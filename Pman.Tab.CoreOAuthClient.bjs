@@ -42,7 +42,7 @@
                                         "beforeedit": "function (e)\n{\n    var r = e.record.data.poitem_qty_received * 1;\n    \n    if(r > 0){\n        Roo.MessageBox.alert(\"Error\", \"This item has been receipted\");\n        return false;\n    }\n    \n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return false;\n    }\n    \n    \n}"
                                     },
                                     "*prop": "grid",
-                                    "autoExpandColumn": "item_descrip1",
+                                    "autoExpandColumn": "redirect_uri",
                                     "clicksToEdit": 1,
                                     "loadMask": true,
                                     "xtype": "EditorGrid",
