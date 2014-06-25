@@ -170,27 +170,15 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         xns: Roo.Toolbar,
                                         listeners : {
                                             click : function ()
-                                            {
-                                                var status = _this.form.findField('pohead_status').getValue();
-                                                
-                                                if(status == 'C'){
-                                                    Roo.MessageBox.alert("Error", "This PO has been closed");
-                                                    return;
-                                                }
-                                                
+                                            {   
                                                 var cs = _this.grid.getSelectionModel().getSelectedCell();
                                                 if (!cs) {
                                                     Roo.MessageBox.alert("Error", "Select a cell");
                                                     return;
                                                 }
                                                 _this.grid.stopEditing();
+                                             
                                                 var r = _this.grid.ds.getAt(cs[0]);
-                                                
-                                                if(r.data.poitem_qty_received * 1 > 0){
-                                                    Roo.MessageBox.alert("Error", "This item has been receipted");
-                                                    return;
-                                                }
-                                                
                                                 
                                                 _this.grid.ds.remove(r);
                                                

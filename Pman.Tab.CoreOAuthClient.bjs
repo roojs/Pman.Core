@@ -94,7 +94,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "|click": "function ()\n{\n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return;\n    }\n    \n    var cs = _this.grid.getSelectionModel().getSelectedCell();\n    if (!cs) {\n        Roo.MessageBox.alert(\"Error\", \"Select a cell\");\n        return;\n    }\n    _this.grid.stopEditing();\n    var r = _this.grid.ds.getAt(cs[0]);\n    \n    if(r.data.poitem_qty_received * 1 > 0){\n        Roo.MessageBox.alert(\"Error\", \"This item has been receipted\");\n        return;\n    }\n    \n    \n    _this.grid.ds.remove(r);\n   \n}"
+                                                        "|click": "function ()\n{   \n    var cs = _this.grid.getSelectionModel().getSelectedCell();\n    if (!cs) {\n        Roo.MessageBox.alert(\"Error\", \"Select a cell\");\n        return;\n    }\n    _this.grid.stopEditing();\n \n    var r = _this.grid.ds.getAt(cs[0]);\n    \n    _this.grid.ds.remove(r);\n   \n}"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Remove",
