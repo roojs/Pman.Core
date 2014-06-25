@@ -50,8 +50,7 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "beforeload": "function (_self, o){\n    o.params = o.params || {};\n    var hid = _this.form.findField('pohead_id').getValue();\n    \n    if(!hid.length){\n        return false;\n    }\n    \n    o.params.poitem_pohead_id = hid;\n    o.params._with_item = 1;\n    o.params._roo_office = _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2);\n\n}\n",
-                                                "load": "function (_self, records, options)\n{\n    _this.grid.footer.updateSummary();\n}"
+                                                "beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n}\n"
                                             },
                                             "*prop": "dataSource",
                                             "remoteSort": true,

@@ -80,20 +80,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 listeners : {
                                     beforeload : function (_self, o){
                                         o.params = o.params || {};
-                                        var hid = _this.form.findField('pohead_id').getValue();
-                                        
-                                        if(!hid.length){
-                                            return false;
-                                        }
-                                        
-                                        o.params.poitem_pohead_id = hid;
-                                        o.params._with_item = 1;
-                                        o.params._roo_office = _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2);
                                     
-                                    },
-                                    load : function (_self, records, options)
-                                    {
-                                        _this.grid.footer.updateSummary();
                                     }
                                 },
                                 remoteSort : true,
