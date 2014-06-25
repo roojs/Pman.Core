@@ -18,7 +18,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
             xtype: 'NestedLayoutPanel',
             xns: Roo,
             region : 'center',
-            title : "Email Template",
+            title : "Oauth2 Clients",
             layout : {
                 xtype: 'BorderLayout',
                 xns: Roo,

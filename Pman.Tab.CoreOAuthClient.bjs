@@ -7,7 +7,7 @@
     "items": [
         {
             "region": "center",
-            "title": "Email Template",
+            "title": "Oauth2 Clients",
             "xtype": "NestedLayoutPanel",
             "|xns": "Roo",
             "items": [
