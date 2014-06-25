@@ -94,7 +94,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 reader : {
                                     xtype: 'JsonReader',
                                     xns: Roo.data,
-                                    id : 'poitem_id',
+                                    id : 'id',
                                     root : 'data',
                                     totalProperty : 'total',
                                     fields : [

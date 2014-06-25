@@ -67,7 +67,7 @@
                                                 },
                                                 {
                                                     "*prop": "reader",
-                                                    "id": "poitem_id",
+                                                    "id": "id",
                                                     "root": "data",
                                                     "totalProperty": "total",
                                                     "xtype": "JsonReader",
