@@ -109,7 +109,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         {
                                             'name': 'redirect_uri',
                                             'type': 'string'
-                                        },
+                                        }
                                     ]
                                 }
                             },

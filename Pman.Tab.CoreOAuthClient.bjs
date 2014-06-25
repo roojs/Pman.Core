@@ -71,7 +71,7 @@
                                                     "root": "data",
                                                     "totalProperty": "total",
                                                     "xtype": "JsonReader",
-                                                    "|fields": "[\n    {\n        'name': 'client_id',\n        'type': 'string'\n    },\n    {\n        'name': 'client_secret',\n        'type': 'string'\n    },\n    {\n        'name': 'redirect_uri',\n        'type': 'string'\n    },\n]",
+                                                    "|fields": "[\n    {\n        'name': 'client_id',\n        'type': 'string'\n    },\n    {\n        'name': 'client_secret',\n        'type': 'string'\n    },\n    {\n        'name': 'redirect_uri',\n        'type': 'string'\n    }\n]",
                                                     "|xns": "Roo.data"
                                                 }
                                             ]
