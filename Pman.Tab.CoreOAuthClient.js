@@ -55,7 +55,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 afteredit : function (e)
                                 {
                                     if(e.originalValue == e.value || !e.value.length){
-                                        return false;
+                                        return;
                                     }
                                     
                                     Roo.log('commit');

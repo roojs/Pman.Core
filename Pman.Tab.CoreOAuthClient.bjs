@@ -39,7 +39,7 @@
                                 {
                                     "listeners": {
                                         "|render": "function() \n{\n    _this.grid = this; \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}",
-                                        "afteredit": "function (e)\n{\n    if(e.originalValue == e.value || !e.value.length){\n        return false;\n    }\n    \n    Roo.log('commit');\n}"
+                                        "afteredit": "function (e)\n{\n    if(e.originalValue == e.value || !e.value.length){\n        return;\n    }\n    \n    Roo.log('commit');\n}"
                                     },
                                     "*prop": "grid",
                                     "autoExpandColumn": "redirect_uri",
