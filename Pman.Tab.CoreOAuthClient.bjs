@@ -159,8 +159,8 @@
                                         },
                                         {
                                             "*prop": "colModel[]",
-                                            "dataIndex": "client_secret",
-                                            "header": "Client Secret",
+                                            "dataIndex": "redirect_uri",
+                                            "header": "Redirect URI",
                                             "width": 150,
                                             "xtype": "ColumnModel",
                                             "|renderer": "function(v) { \n    return String.format('{0}', v ? v : '');\n}",

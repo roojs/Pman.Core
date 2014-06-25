@@ -239,8 +239,8 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 {
                                     xtype: 'ColumnModel',
                                     xns: Roo.grid,
-                                    dataIndex : 'client_secret',
-                                    header : 'Client Secret',
+                                    dataIndex : 'redirect_uri',
+                                    header : 'Redirect URI',
                                     width : 150,
                                     renderer : function(v) { 
                                         return String.format('{0}', v ? v : '');
