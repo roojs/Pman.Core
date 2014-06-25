@@ -88,7 +88,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                             method : 'POST',
                                             params : record.data,
                                             success : function(res) {
-                                                _this.gird.footer.onClick('refresh');
+                                                _this.grid.footer.onClick('refresh');
                                             }
                                         });
                                         
