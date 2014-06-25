@@ -78,11 +78,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         if (operation != Roo.data.Record.COMMIT) {
                                             return;
                                         }
-                                        Roo.log(record);
                                     
-                                        if (typeof(_this.data._hide_name) != 'undefined') {
-                                            record.set('name', record.data.display_name);
-                                        }
                                         if (!record.data.client_id.length || !record.data.client_secret.length) {
                                             return;
                                         }

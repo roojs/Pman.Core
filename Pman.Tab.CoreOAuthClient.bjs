@@ -51,7 +51,7 @@
                                         {
                                             "listeners": {
                                                 "beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n}\n",
-                                                "update": "function (_self, record, operation)\n{\n    if (operation != Roo.data.Record.COMMIT) {\n        return;\n    }\n    Roo.log(record);\n\n    if (typeof(_this.data._hide_name) != 'undefined') {\n        record.set('name', record.data.display_name);\n    }\n    if (!record.data.client_id.length || !record.data.client_secret.length) {\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_oauth_clients.php',\n        method : 'POST',\n        params : record.data,\n        success : function(res) {\n            _this.gird.footer.onClick('refresh');\n        }\n    });\n    \n}"
+                                                "update": "function (_self, record, operation)\n{\n    if (operation != Roo.data.Record.COMMIT) {\n        return;\n    }\n\n    if (!record.data.client_id.length || !record.data.client_secret.length) {\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_oauth_clients.php',\n        method : 'POST',\n        params : record.data,\n        success : function(res) {\n            _this.gird.footer.onClick('refresh');\n        }\n    });\n    \n}"
                                             },
                                             "*prop": "dataSource",
                                             "remoteSort": true,
