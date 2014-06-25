@@ -84,7 +84,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         }
                                         
                                         new Pman.Request({
-                                            url : baseURL + '/Core/Core_oauth_clients.php',
+                                            url : baseURL + '/Roo/Core_oauth_clients.php',
                                             method : 'POST',
                                             params : record.data,
                                             success : function(res) {
