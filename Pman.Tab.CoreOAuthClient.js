@@ -33,27 +33,6 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 if (_this.grid) {
                                     _this.grid.footer.onClick('first');
                                 }
-                            },
-                            deactivate : function (_self)
-                            {
-                                 if(_this.grid){
-                                    var ar = [];
-                            
-                                    _this.grid.ds.each(function(r) {
-                                        ar.push({
-                                            poitem_id : r.data.poitem_id,
-                                            poitem_itemsite_id : r.data.poitem_itemsite_id,
-                                            poitem_unitprice : r.data.poitem_unitprice,
-                                            poitem_qty_ordered : r.data.poitem_qty_ordered
-                                        });
-                                            
-                                    });
-                                    
-                                    _this.form.findField('items').setValue(JSON.stringify(ar));
-                                }
-                                _this.dontClose = true;
-                                _this.form.doAction("submit");
-                            
                             }
                         },
                         background : true,

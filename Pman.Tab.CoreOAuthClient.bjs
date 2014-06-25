@@ -25,8 +25,7 @@
                         },
                         {
                             "listeners": {
-                                "|activate": "function() {\n    _this.panel = this;\n    \n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}",
-                                "deactivate": "function (_self)\n{\n     if(_this.grid){\n        var ar = [];\n\n        _this.grid.ds.each(function(r) {\n            ar.push({\n                poitem_id : r.data.poitem_id,\n                poitem_itemsite_id : r.data.poitem_itemsite_id,\n                poitem_unitprice : r.data.poitem_unitprice,\n                poitem_qty_ordered : r.data.poitem_qty_ordered\n            });\n                \n        });\n        \n        _this.form.findField('items').setValue(JSON.stringify(ar));\n    }\n    _this.dontClose = true;\n    _this.form.doAction(\"submit\");\n\n}"
+                                "|activate": "function() {\n    _this.panel = this;\n    \n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}"
                             },
                             "background": true,
                             "fitContainer": true,
