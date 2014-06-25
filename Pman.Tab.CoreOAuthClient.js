@@ -56,7 +56,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 {
                                     Roo.log(e);
                                     if(e.originalValue == e.value || !e.value.length){
-                                        return;
+                                        return false;
                                     }
                                     
                                     Roo.log('commit');
@@ -205,7 +205,8 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         xns: Roo.grid,
                                         field : {
                                             xtype: 'TextField',
-                                            xns: Roo.form
+                                            xns: Roo.form,
+                                            allowBlank : false
                                         }
                                     }
                                 },
