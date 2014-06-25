@@ -197,31 +197,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 xns: Roo,
                                 displayInfo : true,
                                 emptyMsg : "No Item found",
-                                pageSize : 100,
-                                updateSummary : function() {
-                                
-                                    var f = this;
-                                    new Pman.Request({
-                                        url : baseURL + '/Xtuple/Roo/Poitem',
-                                        method : 'GET',
-                                        params : {
-                                            _roo_office : _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2),
-                                            _totals : 1,
-                                            poitem_pohead_id : _this.form.findField('pohead_id').getValue()
-                                        },
-                                        success : function(d) {
-                                            Roo.log(d);
-                                            f.displayEl.update(String.format(
-                                                "{0} items | Total : {1} {2}",
-                                                d.data[0].count_item,
-                                                _this.form.findField('pohead_curr_id').el.dom.value,
-                                                d.data[0].totals
-                                            ));
-                                                
-                                        }
-                                    });
-                                
-                                }
+                                pageSize : 25
                             },
                             colModel : [
                                 {

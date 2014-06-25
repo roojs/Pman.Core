@@ -107,9 +107,8 @@
                                             "*prop": "footer",
                                             "displayInfo": true,
                                             "emptyMsg": "No Item found",
-                                            "pageSize": 100,
+                                            "pageSize": 25,
                                             "xtype": "PagingToolbar",
-                                            "|updateSummary": "function() {\n\r\n    var f = this;\r\n    new Pman.Request({\r\n        url : baseURL + '/Xtuple/Roo/Poitem',\r\n        method : 'GET',\r\n        params : {\n            _roo_office : _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2),\r\n            _totals : 1,\r\n            poitem_pohead_id : _this.form.findField('pohead_id').getValue()\r\n        },\r\n        success : function(d) {\n            Roo.log(d);\r\n            f.displayEl.update(String.format(\r\n                \"{0} items | Total : {1} {2}\",\r\n                d.data[0].count_item,\r\n                _this.form.findField('pohead_curr_id').el.dom.value,\r\n                d.data[0].totals\r\n            ));\r\n                \r\n        }\r\n    });\r\n\n}\n",
                                             "|xns": "Roo"
                                         },
                                         {
