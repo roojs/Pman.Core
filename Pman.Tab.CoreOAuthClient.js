@@ -54,19 +54,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 },
                                 beforeedit : function (e)
                                 {
-                                    var r = e.record.data.poitem_qty_received * 1;
-                                    
-                                    if(r > 0){
-                                        Roo.MessageBox.alert("Error", "This item has been receipted");
-                                        return false;
-                                    }
-                                    
-                                    var status = _this.form.findField('pohead_status').getValue();
-                                    
-                                    if(status == 'C'){
-                                        Roo.MessageBox.alert("Error", "This PO has been closed");
-                                        return false;
-                                    }
+                                    Roo.log(e);
                                     
                                     
                                 }
