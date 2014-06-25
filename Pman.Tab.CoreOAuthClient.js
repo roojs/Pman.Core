@@ -170,7 +170,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                              
                                                 var r = _this.grid.ds.getAt(cs[0]);
                                                 
-                                                _this.grid.ds.remove(r);
+                                                Roo.log(r);
                                                
                                             }
                                         },
