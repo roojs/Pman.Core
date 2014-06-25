@@ -24,9 +24,4 @@ class Pman_Core_DataObjects_Core_oauth_clients extends DB_DataObject
     /** make sure there is a watch for this user.. */
     
     
-    function applyFilters($q,$au, $roo)
-    {
-        
-    }
-    
 }
