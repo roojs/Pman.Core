@@ -170,17 +170,22 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                              
                                                 var r = _this.grid.ds.getAt(cs[0]);
                                                 
-                                                new Pman.Request({
-                                                    url : baseURL + '/Roo/Core_oauth_clients',
-                                                    method : 'POST',
-                                                    params : {
-                                                        _delete : r.data.id
-                                                    },
-                                                    success : function(res) {
-                                                        _this.grid.footer.onClick('refresh');
+                                                Roo.MessageBox.confirm("Confirm", "Are sure you want to delete this client?", function (v){
+                                                    if (v != 'yes') {
+                                                        return;
                                                     }
+                                                    
+                                                    new Pman.Request({
+                                                        url : baseURL + '/Roo/Core_oauth_clients',
+                                                        method : 'POST',
+                                                        params : {
+                                                            _delete : r.data.id
+                                                        },
+                                                        success : function(res) {
+                                                            _this.grid.footer.onClick('refresh');
+                                                        }
+                                                    });
                                                 });
-                                               
                                             }
                                         },
                                         cls : 'x-btn-text-icon',
