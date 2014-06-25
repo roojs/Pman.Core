@@ -149,27 +149,11 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         listeners : {
                                             click : function()
                                             {
-                                                var status = _this.form.findField('pohead_status').getValue();
-                                                
-                                                if(status == 'C'){
-                                                    Roo.MessageBox.alert("Error", "This PO has been closed");
-                                                    return;
-                                                }
-                                                
-                                                var ct  =    _this.grid.ds.getCount();
-                                                
-                                                var last = ct ? _this.grid.ds.getAt(ct-1).data.poitem_linenumber * 1 + 1 : 1;
-                                                
-                                                var dt = _this.form.findField('pohead_orderdate').getValue();
                                                 
                                                 var nr = _this.grid.ds.reader.newRow({
-                                                    poitem_id : 0,
-                                                    poitem_linenumber : last,
-                                                    item_number : '',
-                                                    item_descrip1 : '',
-                                                    poitem_duedate : dt,
-                                                    poitem_qty_ordered : 1,
-                                                    poitem_unitprice : 0
+                                                    client_id : '',
+                                                    client_secret : '',
+                                                    redirect_uri : ''
                                                 });
                                                 
                                                 _this.grid.stopEditing();

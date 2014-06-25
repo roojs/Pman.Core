@@ -84,7 +84,7 @@
                                             "items": [
                                                 {
                                                     "listeners": {
-                                                        "|click": "function()\n{\n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return;\n    }\n    \n    var ct  =    _this.grid.ds.getCount();\n    \n    var last = ct ? _this.grid.ds.getAt(ct-1).data.poitem_linenumber * 1 + 1 : 1;\n    \n    var dt = _this.form.findField('pohead_orderdate').getValue();\n    \n    var nr = _this.grid.ds.reader.newRow({\n        poitem_id : 0,\n        poitem_linenumber : last,\n        item_number : '',\n        item_descrip1 : '',\n        poitem_duedate : dt,\n        poitem_qty_ordered : 1,\n        poitem_unitprice : 0\n    });\n    \n    _this.grid.stopEditing();\n    _this.grid.ds.insert(_this.grid.ds.getCount(), nr); \n    _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);\n}\n"
+                                                        "|click": "function()\n{\n    \n    var nr = _this.grid.ds.reader.newRow({\n        client_id : '',\n        client_secret : '',\n        redirect_uri : ''\n    });\n    \n    _this.grid.stopEditing();\n    _this.grid.ds.insert(_this.grid.ds.getCount(), nr); \n    _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);\n}\n"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Add",
