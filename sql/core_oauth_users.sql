@@ -1,8 +1,11 @@
 -- CREATE TABLE core_oauth_users (
+--     id INT(11) NOT NULL AUTO_INCREMENT,
 --     username VARCHAR(255) NOT NULL, 
 --     password VARCHAR(2000), 
 --     first_name VARCHAR(255), 
---     last_name VARCHAR(255), 
---     CONSTRAINT username_pk 
---     PRIMARY KEY (username)
+--     last_name VARCHAR(255),
+--     PRIMARY KEY (id)
 -- );
+-- 
+-- CREATE INDEX username_idx ON core_oauth_users (username) USING BTREE;
+-- CREATE INDEX password_idx ON core_oauth_users (password) USING BTREE;
