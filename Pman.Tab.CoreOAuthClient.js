@@ -58,6 +58,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         return false;
                                     }
                                     
+                                    Roo.log('commit it');
                                     e.record.commit();
                                 }
                             },
