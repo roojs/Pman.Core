@@ -85,8 +85,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         if (!record.data.client_id.length || !record.data.client_secret.length) {
                                             return;
                                         }
-                                        
-                                        // got commit..
+                                        /*
                                         new Pman.Request({
                                             url : baseURL + '/Roo/Core_enum.php',
                                             method : 'POST',
@@ -106,7 +105,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                                 }
                                             }
                                         });
-                                        
+                                     */   
                                     }
                                 },
                                 remoteSort : true,
