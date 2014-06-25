@@ -50,7 +50,8 @@
                                     "items": [
                                         {
                                             "listeners": {
-                                                "beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n}\n"
+                                                "beforeload": "function (_self, o){\n    o.params = o.params || {};\n\n}\n",
+                                                "update": "function (_self, record, operation)\n{\n    if (operation != Roo.data.Record.COMMIT) {\n        return;\n    }\n    Roo.log(record);\n\n    if (typeof(_this.data._hide_name) != 'undefined') {\n        record.set('name', record.data.display_name);\n    }\n    if (!record.data.client_id.length || !record.data.client_secret.length) {\n        return;\n    }\n    \n    // got commit..\n    new Pman.Request({\n        url : baseURL + '/Roo/Core_enum.php',\n        method : 'POST',\n        params : {\n            id : record.data.id,\n            etype : _this.data.etype,\n            name :  record.data.name,\n            active : record.data.active,\n            seqid : record.data.seqid,\n            display_name : record.data.display_name\n        }, \n        success : function(res) {\n            //Roo.log(data);\n            // update the ID if it's not set..\n            if (record.data.id * 1 < 1) {\n                record.set('id', res.data.id);\n            }\n        }\n    });\n    \n}"
                                             },
                                             "*prop": "dataSource",
                                             "remoteSort": true,

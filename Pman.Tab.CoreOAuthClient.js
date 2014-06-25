@@ -71,6 +71,42 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     beforeload : function (_self, o){
                                         o.params = o.params || {};
                                     
+                                    },
+                                    update : function (_self, record, operation)
+                                    {
+                                        if (operation != Roo.data.Record.COMMIT) {
+                                            return;
+                                        }
+                                        Roo.log(record);
+                                    
+                                        if (typeof(_this.data._hide_name) != 'undefined') {
+                                            record.set('name', record.data.display_name);
+                                        }
+                                        if (!record.data.client_id.length || !record.data.client_secret.length) {
+                                            return;
+                                        }
+                                        
+                                        // got commit..
+                                        new Pman.Request({
+                                            url : baseURL + '/Roo/Core_enum.php',
+                                            method : 'POST',
+                                            params : {
+                                                id : record.data.id,
+                                                etype : _this.data.etype,
+                                                name :  record.data.name,
+                                                active : record.data.active,
+                                                seqid : record.data.seqid,
+                                                display_name : record.data.display_name
+                                            }, 
+                                            success : function(res) {
+                                                //Roo.log(data);
+                                                // update the ID if it's not set..
+                                                if (record.data.id * 1 < 1) {
+                                                    record.set('id', res.data.id);
+                                                }
+                                            }
+                                        });
+                                        
                                     }
                                 },
                                 remoteSort : true,
