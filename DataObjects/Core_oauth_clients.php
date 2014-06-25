@@ -11,6 +11,7 @@ class Pman_Core_DataObjects_Core_oauth_clients extends DB_DataObject
     /* the code below is auto generated do not remove the above tag */
 
     public $__table = 'core_oauth_clients';         // table name
+    public $id;                                     // INT
     public $client_id;                              // varchar
     public $client_secret;                          // varchar
     public $redirect_uri;                           // varchar
