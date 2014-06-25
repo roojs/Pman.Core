@@ -123,19 +123,7 @@
                                                 {
                                                     "|xns": "Roo.grid",
                                                     "xtype": "GridEditor",
-                                                    "*prop": "editor",
-                                                    "items": [
-                                                        {
-                                                            "*prop": "field",
-                                                            "allowBlank": false,
-                                                            "allowDecimals": false,
-                                                            "decimalPrecision": 0,
-                                                            "minValue": 1,
-                                                            "style": "text-align:right",
-                                                            "xtype": "NumberField",
-                                                            "|xns": "Roo.form"
-                                                        }
-                                                    ]
+                                                    "*prop": "editor"
                                                 }
                                             ]
                                         }
