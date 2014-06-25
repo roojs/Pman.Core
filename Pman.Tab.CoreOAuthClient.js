@@ -40,7 +40,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                         fitToframe : true,
                         region : 'center',
                         tableName : 'core_oauth_clients',
-                        title : "Order Items",
+                        title : "Oauth2 Clients",
                         grid : {
                             xtype: 'EditorGrid',
                             xns: Roo.grid,

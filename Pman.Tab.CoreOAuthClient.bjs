@@ -32,7 +32,7 @@
                             "fitToframe": true,
                             "region": "center",
                             "tableName": "core_oauth_clients",
-                            "title": "Order Items",
+                            "title": "Oauth2 Clients",
                             "xtype": "GridPanel",
                             "|xns": "Roo",
                             "items": [
