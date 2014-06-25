@@ -4,3 +4,4 @@ CREATE TABLE core_oauth_scopes (
     is_default BOOLEAN,
     PRIMARY KEY (id)
 );
+
