@@ -94,7 +94,7 @@
                                                 },
                                                 {
                                                     "listeners": {
-                                                        "|click": "function ()\n{   \n    var cs = _this.grid.getSelectionModel().getSelectedCell();\n    if (!cs) {\n        Roo.MessageBox.alert(\"Error\", \"Select a cell\");\n        return;\n    }\n    _this.grid.stopEditing();\n \n    var r = _this.grid.ds.getAt(cs[0]);\n    \n    Roo.log(r);\n   \n}"
+                                                        "|click": "function ()\n{   \n    var cs = _this.grid.getSelectionModel().getSelectedCell();\n    if (!cs) {\n        Roo.MessageBox.alert(\"Error\", \"Select a cell\");\n        return;\n    }\n    _this.grid.stopEditing();\n \n    var r = _this.grid.ds.getAt(cs[0]);\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_oauth_clients',\n        method : 'POST',\n        params : {\n            _delete : r.data.id\n        },\n        success : function(res) {\n            _this.grid.footer.onClick('refresh');\n        }\n    });\n   \n}"
                                                     },
                                                     "cls": "x-btn-text-icon",
                                                     "text": "Remove",
