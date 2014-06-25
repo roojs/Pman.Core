@@ -84,7 +84,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                     }
                                 },
                                 remoteSort : true,
-                                sortInfo : { field : 'poitem_linenumber', direction: 'ASC' },
+                                sortInfo : { field : 'client_id', direction: 'ASC' },
                                 proxy : {
                                     xtype: 'HttpProxy',
                                     xns: Roo.data,

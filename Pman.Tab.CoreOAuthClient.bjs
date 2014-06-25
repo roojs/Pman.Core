@@ -55,7 +55,7 @@
                                             "*prop": "dataSource",
                                             "remoteSort": true,
                                             "xtype": "Store",
-                                            "|sortInfo": "{ field : 'poitem_linenumber', direction: 'ASC' }",
+                                            "|sortInfo": "{ field : 'client_id', direction: 'ASC' }",
                                             "|xns": "Roo.data",
                                             "items": [
                                                 {
