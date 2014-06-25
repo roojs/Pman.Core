@@ -203,7 +203,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 {
                                     xtype: 'ColumnModel',
                                     xns: Roo.grid,
-                                    dataIndex : 'poitem_qty_vouchered',
+                                    dataIndex : 'client_id',
                                     header : 'Vouchered',
                                     width : 65,
                                     renderer : function(v,x,r) { 

@@ -113,7 +113,7 @@
                                         },
                                         {
                                             "*prop": "colModel[]",
-                                            "dataIndex": "poitem_qty_vouchered",
+                                            "dataIndex": "client_id",
                                             "header": "Vouchered",
                                             "width": 65,
                                             "xtype": "ColumnModel",
