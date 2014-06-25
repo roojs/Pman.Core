@@ -4,9 +4,9 @@
 
 Pman.Tab.CoreOAuthClient = new Roo.XComponent({
     part     :  ["Core","OAuthClient"],
-    order    : '001-Pman.Tab.CoreOAuthClient',
+    order    : '900-Pman.Tab.CoreOAuthClient',
     region   : 'center',
-    parent   : false,
+    parent   : 'Pman.Tab.Admin',
     name     : "unnamed module",
     disabled : false, 
     permname : '', 

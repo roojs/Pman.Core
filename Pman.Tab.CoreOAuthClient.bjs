@@ -1,7 +1,7 @@
 {
     "id": "roo-file-224",
     "name": "Pman.Tab.CoreOAuthClient",
-    "parent": "",
+    "parent": "Pman.Tab.Admin",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Tab.CoreOAuthClient.bjs",
     "items": [
@@ -190,5 +190,5 @@
         }
     ],
     "permname": "",
-    "modOrder": "001"
+    "modOrder": "900"
 }
