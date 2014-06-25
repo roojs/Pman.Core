@@ -83,15 +83,20 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                             return;
                                         }
                                         
+                                        var params = {
+                                            id : record.data.id,
+                                            client_id : record.data.client_id,
+                                            client_secret : record.data.client_secret
+                                        };
+                                        
+                                        if(record.data.redirect_uri.length){
+                                            params.redirect_uri = record.data.redirect_uri;
+                                        }
+                                        
                                         new Pman.Request({
                                             url : baseURL + '/Roo/Core_oauth_clients',
                                             method : 'POST',
-                                            params : {
-                                                id : record.data.id,
-                                                client_id : record.data.client_id,
-                                                client_secret : record.data.client_secret,
-                                                redirect_uri : record.data.redirect_uri
-                                            },
+                                            params : params,
                                             success : function(res) {
                                                 _this.grid.footer.onClick('refresh');
                                             }
