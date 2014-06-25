@@ -4,7 +4,283 @@
     "parent": "",
     "title": "",
     "path": "/home/edward/gitlive/Pman.Core/Pman.Tab.CoreOAuthClient.bjs",
-    "items": [],
+    "items": [
+        {
+            "listeners": {
+                "|activate": "function() {\n    _this.panel = this;\n    \n    \n    var pid = _this.form.findField('pohead_id').getValue() * 1;\n    if (pid < 1) {\n        Roo.MessageBox.alert(\"Save First\", \"Please save the purchase order first, before adding items\");\n        _this.dialog.layout.getRegion('center').showPanel(0);\n        return;\n    }\n    \n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}",
+                "deactivate": "function (_self)\n{\n     if(_this.grid){\n        var ar = [];\n\n        _this.grid.ds.each(function(r) {\n            ar.push({\n                poitem_id : r.data.poitem_id,\n                poitem_itemsite_id : r.data.poitem_itemsite_id,\n                poitem_unitprice : r.data.poitem_unitprice,\n                poitem_qty_ordered : r.data.poitem_qty_ordered\n            });\n                \n        });\n        \n        _this.form.findField('items').setValue(JSON.stringify(ar));\n    }\n    _this.dontClose = true;\n    _this.form.doAction(\"submit\");\n\n}"
+            },
+            "background": true,
+            "fitContainer": true,
+            "fitToframe": true,
+            "region": "center",
+            "tableName": "poitem",
+            "title": "Order Items",
+            "xtype": "GridPanel",
+            "|xns": "Roo",
+            "items": [
+                {
+                    "listeners": {
+                        "|render": "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}",
+                        "beforeedit": "function (e)\n{\n    var r = e.record.data.poitem_qty_received * 1;\n    \n    if(r > 0){\n        Roo.MessageBox.alert(\"Error\", \"This item has been receipted\");\n        return false;\n    }\n    \n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return false;\n    }\n    \n    \n}"
+                    },
+                    "*prop": "grid",
+                    "autoExpandColumn": "item_descrip1",
+                    "clicksToEdit": 1,
+                    "loadMask": true,
+                    "xtype": "EditorGrid",
+                    "|xns": "Roo.grid",
+                    "items": [
+                        {
+                            "listeners": {
+                                "beforeload": "function (_self, o){\n    o.params = o.params || {};\n    var hid = _this.form.findField('pohead_id').getValue();\n    \n    if(!hid.length){\n        return false;\n    }\n    \n    o.params.poitem_pohead_id = hid;\n    o.params._with_item = 1;\n    o.params._roo_office = _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2);\n\n}\n",
+                                "load": "function (_self, records, options)\n{\n    _this.grid.footer.updateSummary();\n}"
+                            },
+                            "*prop": "dataSource",
+                            "remoteSort": true,
+                            "xtype": "Store",
+                            "|sortInfo": "{ field : 'poitem_linenumber', direction: 'ASC' }",
+                            "|xns": "Roo.data",
+                            "items": [
+                                {
+                                    "*prop": "proxy",
+                                    "method": "GET",
+                                    "timeout": 90000,
+                                    "xtype": "HttpProxy",
+                                    "|url": "baseURL + '/Xtuple/Roo/Poitem.php'",
+                                    "|xns": "Roo.data"
+                                },
+                                {
+                                    "*prop": "reader",
+                                    "id": "poitem_id",
+                                    "root": "data",
+                                    "totalProperty": "total",
+                                    "xtype": "JsonReader",
+                                    "|fields": "[\n    {\n        'name': 'poitem_id',\n        'type': 'int'\n    }\n]",
+                                    "|xns": "Roo.data"
+                                }
+                            ]
+                        },
+                        {
+                            "|xns": "Roo",
+                            "xtype": "Toolbar",
+                            "*prop": "toolbar",
+                            "items": [
+                                {
+                                    "listeners": {
+                                        "|click": "function()\n{\n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return;\n    }\n    \n    var ct  =    _this.grid.ds.getCount();\n    \n    var last = ct ? _this.grid.ds.getAt(ct-1).data.poitem_linenumber * 1 + 1 : 1;\n    \n    var dt = _this.form.findField('pohead_orderdate').getValue();\n    \n    var nr = _this.grid.ds.reader.newRow({\n        poitem_id : 0,\n        poitem_linenumber : last,\n        item_number : '',\n        item_descrip1 : '',\n        poitem_duedate : dt,\n        poitem_qty_ordered : 1,\n        poitem_unitprice : 0\n    });\n    \n    _this.grid.stopEditing();\n    _this.grid.ds.insert(_this.grid.ds.getCount(), nr); \n    _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);\n}\n"
+                                    },
+                                    "cls": "x-btn-text-icon",
+                                    "text": "Add",
+                                    "xtype": "Button",
+                                    "|icon": "Roo.rootURL + 'images/default/dd/drop-add.gif'",
+                                    "|xns": "Roo.Toolbar"
+                                },
+                                {
+                                    "listeners": {
+                                        "|click": "function ()\n{\n    var status = _this.form.findField('pohead_status').getValue();\n    \n    if(status == 'C'){\n        Roo.MessageBox.alert(\"Error\", \"This PO has been closed\");\n        return;\n    }\n    \n    var cs = _this.grid.getSelectionModel().getSelectedCell();\n    if (!cs) {\n        Roo.MessageBox.alert(\"Error\", \"Select a cell\");\n        return;\n    }\n    _this.grid.stopEditing();\n    var r = _this.grid.ds.getAt(cs[0]);\n    \n    if(r.data.poitem_qty_received * 1 > 0){\n        Roo.MessageBox.alert(\"Error\", \"This item has been receipted\");\n        return;\n    }\n    \n    \n    _this.grid.ds.remove(r);\n   \n}"
+                                    },
+                                    "cls": "x-btn-text-icon",
+                                    "text": "Remove",
+                                    "xtype": "Button",
+                                    "|icon": "rootURL + '/Pman/templates/images/trash.gif'",
+                                    "|xns": "Roo.Toolbar"
+                                }
+                            ]
+                        },
+                        {
+                            "*prop": "footer",
+                            "displayInfo": true,
+                            "emptyMsg": "No Item found",
+                            "pageSize": 100,
+                            "xtype": "PagingToolbar",
+                            "|updateSummary": "function() {\n\r\n    var f = this;\r\n    new Pman.Request({\r\n        url : baseURL + '/Xtuple/Roo/Poitem',\r\n        method : 'GET',\r\n        params : {\n            _roo_office : _this.data.office ? _this.data.office : baseURL.split('/').pop().substr(0,2),\r\n            _totals : 1,\r\n            poitem_pohead_id : _this.form.findField('pohead_id').getValue()\r\n        },\r\n        success : function(d) {\n            Roo.log(d);\r\n            f.displayEl.update(String.format(\r\n                \"{0} items | Total : {1} {2}\",\r\n                d.data[0].count_item,\r\n                _this.form.findField('pohead_curr_id').el.dom.value,\r\n                d.data[0].totals\r\n            ));\r\n                \r\n        }\r\n    });\r\n\n}\n",
+                            "|xns": "Roo"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "align": "right",
+                            "dataIndex": "poitem_linenumber",
+                            "header": "Line#",
+                            "width": 50,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', v); }",
+                            "|xns": "Roo.grid"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "dataIndex": "item_number",
+                            "header": "Item code",
+                            "width": 100,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', v); }",
+                            "|xns": "Roo.grid",
+                            "items": [
+                                {
+                                    "|xns": "Roo.grid",
+                                    "xtype": "GridEditor",
+                                    "*prop": "editor",
+                                    "items": [
+                                        {
+                                            "listeners": {
+                                                "beforeselect": "function (combo, record, index)\n{\n  var ar = _this.grid.activeEditor.record;\n  \n  (function() { \n      ar.set('item_descrip1', record.data.itemsite_item_id_item_descrip1);\n      ar.set('poitem_itemsite_id', record.data.itemsite_id);\n  }).defer(100);\n  \n}"
+                                            },
+                                            "*prop": "field",
+                                            "allowBlank": false,
+                                            "displayField": "itemsite_item_id_item_number",
+                                            "editable": true,
+                                            "emptyText": "Select item",
+                                            "forceSelection": true,
+                                            "hiddenName": "itemsite_item_id_item_number",
+                                            "listWidth": 400,
+                                            "loadingText": "Searching...",
+                                            "minChars": 2,
+                                            "name": "item_number",
+                                            "pageSize": 20,
+                                            "qtip": "Select item",
+                                            "queryParam": "query[number]",
+                                            "selectOnFocus": true,
+                                            "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{itemsite_item_id_item_number}</b> - {itemsite_item_id_item_descrip1} </div>",
+                                            "triggerAction": "all",
+                                            "typeAhead": false,
+                                            "valueField": "item_number",
+                                            "xtype": "ComboBox",
+                                            "|xns": "Roo.form",
+                                            "items": [
+                                                {
+                                                    "listeners": {
+                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {}; \n    o.params.itemsite_posupply = 1;\n}\n"
+                                                    },
+                                                    "*prop": "store",
+                                                    "remoteSort": true,
+                                                    "xtype": "Store",
+                                                    "|sortInfo": "{ direction : 'ASC', field: 'item_number' }",
+                                                    "|xns": "Roo.data",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "proxy",
+                                                            "method": "GET",
+                                                            "xtype": "HttpProxy",
+                                                            "|url": "baseURL + '/Roo/itemsite.php'",
+                                                            "|xns": "Roo.data"
+                                                        },
+                                                        {
+                                                            "*prop": "reader",
+                                                            "id": "itemsite_id",
+                                                            "root": "data",
+                                                            "totalProperty": "total",
+                                                            "xtype": "JsonReader",
+                                                            "|fields": "[{\"name\":\"item_id\",\"type\":\"int\"},\"item_number\"]",
+                                                            "|xns": "Roo.data"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "dataIndex": "item_descrip1",
+                            "header": "Item description",
+                            "width": 150,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', v); }",
+                            "|xns": "Roo.grid"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "dataIndex": "poitem_duedate",
+                            "header": "Due date",
+                            "width": 100,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', v ? v.format('Y-m-d') : ''); }",
+                            "|xns": "Roo.grid"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "align": "right",
+                            "dataIndex": "poitem_qty_ordered",
+                            "header": "Ordered",
+                            "width": 75,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', v); }",
+                            "|xns": "Roo.grid",
+                            "items": [
+                                {
+                                    "|xns": "Roo.grid",
+                                    "xtype": "GridEditor",
+                                    "*prop": "editor",
+                                    "items": [
+                                        {
+                                            "*prop": "field",
+                                            "allowDecimals": false,
+                                            "decimalPrecision": 0,
+                                            "minValue": 1,
+                                            "style": "text-align:right",
+                                            "xtype": "NumberField",
+                                            "|xns": "Roo.form"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "align": "right",
+                            "dataIndex": "poitem_qty_received",
+                            "header": "Received",
+                            "width": 75,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v,x,r) { \n    return String.format(\n        r.data.poitem_qty_ordered != (v-r.data.poitem_qty_returned) ? '<span style=\"color:red\">{0}</span>':  '{0}',\n         v - r.data.poitem_qty_returned);\n}",
+                            "|xns": "Roo.grid"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "align": "right",
+                            "dataIndex": "poitem_qty_vouchered",
+                            "header": "Vouchered",
+                            "width": 65,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v,x,r) { \n    return String.format(\n        r.data.poitem_qty_ordered != v ? '<span style=\"color:red\">{0}</span>':  '{0}',\n         v);\n}",
+                            "|xns": "Roo.grid"
+                        },
+                        {
+                            "*prop": "colModel[]",
+                            "align": "right",
+                            "dataIndex": "poitem_unitprice",
+                            "header": "Unit price",
+                            "width": 100,
+                            "xtype": "ColumnModel",
+                            "|renderer": "function(v) { return String.format('{0}', (v || v == 0) ? parseFloat(v).toFixed(3) : ''); }",
+                            "|xns": "Roo.grid",
+                            "items": [
+                                {
+                                    "|xns": "Roo.grid",
+                                    "xtype": "GridEditor",
+                                    "*prop": "editor",
+                                    "items": [
+                                        {
+                                            "*prop": "field",
+                                            "allowBlank": false,
+                                            "allowDecimals": false,
+                                            "decimalPrecision": 0,
+                                            "minValue": 1,
+                                            "style": "text-align:right",
+                                            "xtype": "NumberField",
+                                            "|xns": "Roo.form"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "permname": "",
     "modOrder": "001"
 }
