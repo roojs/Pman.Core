@@ -1,5 +1,5 @@
 {
-    "id": "roo-file-363",
+    "id": "roo-file-224",
     "name": "Pman.Tab.CoreOAuthClient",
     "parent": "",
     "title": "",
@@ -106,7 +106,7 @@
                                         {
                                             "*prop": "footer",
                                             "displayInfo": true,
-                                            "emptyMsg": "No Item found",
+                                            "emptyMsg": "No Clients found",
                                             "pageSize": 25,
                                             "xtype": "PagingToolbar",
                                             "|xns": "Roo"

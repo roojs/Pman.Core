@@ -196,7 +196,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                 xtype: 'PagingToolbar',
                                 xns: Roo,
                                 displayInfo : true,
-                                emptyMsg : "No Item found",
+                                emptyMsg : "No Clients found",
                                 pageSize : 25
                             },
                             colModel : [
