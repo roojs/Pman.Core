@@ -62,7 +62,7 @@
                                                     "*prop": "proxy",
                                                     "method": "GET",
                                                     "xtype": "HttpProxy",
-                                                    "|url": "baseURL + '/Xtuple/Roo/Poitem.php'",
+                                                    "|url": "baseURL + '/Roo/Core_oauth_clients'",
                                                     "|xns": "Roo.data"
                                                 },
                                                 {
