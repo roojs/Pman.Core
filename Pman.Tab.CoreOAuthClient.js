@@ -148,7 +148,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                                 
                                                 _this.grid.stopEditing();
                                                 _this.grid.ds.insert(_this.grid.ds.getCount(), nr); 
-                                                _this.grid.startEditing(_this.grid.ds.getCount()-1, 1);
+                                                _this.grid.startEditing(_this.grid.ds.getCount()-1, 0);
                                             }
                                         },
                                         cls : 'x-btn-text-icon',
