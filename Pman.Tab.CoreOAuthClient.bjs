@@ -123,7 +123,15 @@
                                                 {
                                                     "|xns": "Roo.grid",
                                                     "xtype": "GridEditor",
-                                                    "*prop": "editor"
+                                                    "*prop": "editor",
+                                                    "items": [
+                                                        {
+                                                            "*prop": "field",
+                                                            "allowBlank": false,
+                                                            "xtype": "TextField",
+                                                            "|xns": "Roo.form"
+                                                        }
+                                                    ]
                                                 }
                                             ]
                                         }
