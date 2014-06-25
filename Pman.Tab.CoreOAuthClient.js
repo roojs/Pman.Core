@@ -214,8 +214,25 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                         xns: Roo.grid,
                                         field : {
                                             xtype: 'TextField',
-                                            xns: Roo.form,
-                                            allowBlank : false
+                                            xns: Roo.form
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype: 'ColumnModel',
+                                    xns: Roo.grid,
+                                    dataIndex : 'client_id',
+                                    header : 'Client ID',
+                                    width : 150,
+                                    renderer : function(v) { 
+                                        return String.format('{0}', v ? v : '');
+                                    },
+                                    editor : {
+                                        xtype: 'GridEditor',
+                                        xns: Roo.grid,
+                                        field : {
+                                            xtype: 'TextField',
+                                            xns: Roo.form
                                         }
                                     }
                                 }
