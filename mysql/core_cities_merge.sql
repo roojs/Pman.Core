@@ -315,7 +315,6 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
         DECLARE v_is_satellite_provider INT DEFAULT 0;
 
         DECLARE v_country_id INT DEFAULT 0;
-        DECLARE v_continent_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
         SELECT 
