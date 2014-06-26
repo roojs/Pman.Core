@@ -255,7 +255,7 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
         FROM 
             country_locations
         
-        SELECT COUNT(*) INTO v_total FROM country_locations;
+        SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
 
         SET v_count = 0;
 
