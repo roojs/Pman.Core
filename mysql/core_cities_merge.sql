@@ -288,11 +288,11 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             END IF;
     
             IF v_count = v_total THEN
-              LEAVE co_loop;
+              LEAVE read_loop;
             END IF;
 
         END LOOP;
-        CLOSE co_csr;
+        CLOSE csr;
 
 
         RETURN v_count;
