@@ -230,3 +230,55 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
 DELIMITER ; 
 
 
+-----------------------------------------------------------------------------------------------------------------
+
+
+DROP FUNCTION IF EXISTS core_country_locations;
+DELIMITER $$
+CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
+    BEGIN
+        DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
+
+        DECLARE v_geoname_id INT DEFAULT 0;
+        DECLARE v_continent_code TEXT DEFAULT '';
+        DECLARE v_continent_name TEXT DEFAULT '';
+        DECLARE v_country_iso_code INT DEFAULT 0;
+        DECLARE v_country_name INT DEFAULT 0;
+
+        DECLARE csr CURSOR FOR 
+        SELECT 
+            geoname_id,continent_code,continent_name,country_iso_code,country_name
+        FROM 
+            country_locations
+        
+        SELECT COUNT(*) INTO v_total FROM country_locations;
+
+        SET v_count = 0;
+
+        OPEN csr;
+        read_loop: LOOP
+            FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
+            
+            SET v_count = v_count + 1;
+
+            SET v_id_tmp = 0;
+
+            SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
+
+            IF(v_id_tmp = 0) THEN
+                INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
+            END IF;
+                
+            IF v_count = v_total THEN
+              LEAVE co_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE co_csr;
+
+
+        RETURN v_count;
+    END $$
+DELIMITER ; 
+
