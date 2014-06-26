@@ -368,3 +368,76 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
 DELIMITER ; 
 
 
+
+
+
+DROP FUNCTION IF EXISTS core_city_locations;
+DELIMITER $$
+CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
+    BEGIN
+        DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
+
+        DECLARE v_geoname_id INT DEFAULT 0;
+        DECLARE v_continent_code TEXT DEFAULT '';
+        DECLARE v_continent_name TEXT DEFAULT '';
+        DECLARE v_country_iso_code TEXT DEFAULT '';
+        DECLARE v_country_name TEXT DEFAULT '';
+
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_continent_id INT DEFAULT 0;
+
+        DECLARE csr CURSOR FOR 
+        SELECT 
+            continent_code,country_iso_code,subdivision_iso_code,subdivision_name,city_name,metro_code,time_zone
+        FROM 
+            city_locations
+        WHERE
+            subdivision_name != '' OR city_name != '';
+        
+        SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
+
+        SET v_count = 0;
+
+        OPEN csr;
+        read_loop: LOOP
+            FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
+            
+            SET v_count = v_count + 1;
+            
+            SET v_country_id = 0;
+            SET v_continent_id = 0;
+            
+            IF (v_continent_code != '') THEN
+                SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
+
+                IF v_continent_id = 0 THEN
+                    INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
+                    SET v_continent_id = LAST_INSERT_ID();
+                END IF;
+                
+            END IF;
+
+            IF (v_country_iso_code != '') THEN
+                
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+
+                IF v_country_id = 0 THEN
+                    INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_country_iso_code, v_country_name, v_continent_id);
+                END IF;
+                
+            END IF;
+    
+            IF v_count = v_total THEN
+              LEAVE read_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE csr;
+
+
+        RETURN v_count;
+    END $$
+DELIMITER ; 
+
+
