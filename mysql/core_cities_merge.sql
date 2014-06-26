@@ -279,7 +279,7 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             END IF;
 
             IF (v_country_iso_code != '') THEN
-                RETURN v_country_iso_code;
+                RETURN v_geoname_id;
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
 
                 IF v_continent_id = 0 THEN
