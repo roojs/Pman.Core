@@ -487,7 +487,7 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
 
         OPEN csr;
         read_loop: LOOP
-            FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_is_anonymous_proxy,v_is_satellite_provider;
+            FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_latitude,v_longitude,v_is_anonymous_proxy,v_is_satellite_provider;
             
             SET v_count = v_count + 1;
             
