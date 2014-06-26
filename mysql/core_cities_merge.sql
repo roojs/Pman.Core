@@ -268,7 +268,13 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             SET v_country_id = 0;
             SET v_continent_id = 0;
             
-            SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
+            IF (v_continent_code != '') THEN
+                SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
+
+                
+            END IF;
+
+            
 
             IF(v_id_tmp = 0) THEN
                 INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_iso, v_local_name, 0);
