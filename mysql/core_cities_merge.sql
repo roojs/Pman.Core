@@ -332,7 +332,7 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
             AND
                 network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
         
-        SELECT COUNT(network_start_ip) INTO v_total FROM country_locations WHERE geoname_id != 0 AND registered_country_geoname_id != 0 AND geoname_id = registered_country_geoname_id AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+        SELECT COUNT(network_start_ip) INTO v_total FROM country_blocks WHERE geoname_id != 0 AND registered_country_geoname_id != 0 AND geoname_id = registered_country_geoname_id AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
 
         SET v_count = 0;
 
