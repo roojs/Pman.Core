@@ -300,3 +300,72 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
     END $$
 DELIMITER ; 
 
+
+DROP FUNCTION IF EXISTS core_country_blocks;
+DELIMITER $$
+CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
+    BEGIN
+        DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
+
+        DECLARE v_geoname_id INT DEFAULT 0;
+        DECLARE v_network_start_ip TEXT DEFAULT '';
+        DECLARE v_network_mask_length INT DEFAULT 0;
+        DECLARE v_is_anonymous_proxy INT DEFAULT 0;
+        DECLARE v_is_satellite_provider INT DEFAULT 0;
+
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_continent_id INT DEFAULT 0;
+
+        DECLARE csr CURSOR FOR 
+        SELECT 
+            network_start_ip,network_mask_length,geoname_id,is_anonymous_proxy,is_satellite_provider
+        FROM 
+            country_blocks;
+        
+        SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
+
+        SET v_count = 0;
+
+        OPEN csr;
+        read_loop: LOOP
+            FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
+            
+            SET v_count = v_count + 1;
+            
+            SET v_country_id = 0;
+            SET v_continent_id = 0;
+            
+            IF (v_continent_code != '') THEN
+                SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
+
+                IF v_continent_id = 0 THEN
+                    INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
+                    SET v_continent_id = LAST_INSERT_ID();
+                END IF;
+                
+            END IF;
+
+            IF (v_country_iso_code != '') THEN
+                
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+
+                IF v_country_id = 0 THEN
+                    INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_country_iso_code, v_country_name, v_continent_id);
+                END IF;
+                
+            END IF;
+    
+            IF v_count = v_total THEN
+              LEAVE read_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE csr;
+
+
+        RETURN v_count;
+    END $$
+DELIMITER ; 
+
+
