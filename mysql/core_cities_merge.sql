@@ -498,6 +498,7 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
             SET v_country_id = 0;
             SET v_divison_id = 0;
             SET v_city_id = 0;
+
             SET v_country_iso_code = '';
             SET v_subdivision_name = '';
             SET v_city_name = '';
@@ -505,8 +506,11 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
             SELECT country_iso_code,subdivision_iso_name,city_name INTO v_country_iso_code, v_subdivision_name v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
 
             IF (v_country_iso_code != '') THEN
-                SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+            END IF;
 
+            IF (v_subdivision_name != '') THEN
+                SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
             END IF;
 
             IF v_country_iso_code != '' THEN
