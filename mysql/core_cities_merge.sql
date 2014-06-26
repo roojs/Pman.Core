@@ -378,11 +378,13 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
 
-        DECLARE v_geoname_id INT DEFAULT 0;
         DECLARE v_continent_code TEXT DEFAULT '';
-        DECLARE v_continent_name TEXT DEFAULT '';
         DECLARE v_country_iso_code TEXT DEFAULT '';
-        DECLARE v_country_name TEXT DEFAULT '';
+        DECLARE v_subdivision_iso_code TEXT DEFAULT '';
+        DECLARE v_subdivision_name TEXT DEFAULT '';
+        DECLARE v_city_name TEXT DEFAULT '';
+        DECLARE v_metro_code TEXT DEFAULT '';
+        DECLARE v_time_zone TEXT DEFAULT '';
 
         DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_continent_id INT DEFAULT 0;
@@ -395,7 +397,7 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
         WHERE
             subdivision_name != '' OR city_name != '';
         
-        SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
+        SELECT COUNT(geoname_id) INTO v_total FROM city_locations WHERE subdivision_name != '' OR city_name != '';;
 
         SET v_count = 0;
 
