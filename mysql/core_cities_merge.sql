@@ -344,16 +344,17 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_country_id = 0;
 
-            SELECT country_iso_code INTO v_country_iso_code
-            
-            SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
+            SELECT country_iso_code INTO v_country_iso_code FROM country_locations WHERE geoname_id = v_geoname_id;
 
-            IF v_continent_id = 0 THEN
-                INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
-                SET v_continent_id = LAST_INSERT_ID();
+            IF v_country_iso_code != 0 THEN
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+
+                IF v_country_id != 0 THEN
+                    INSERT INTO core_geoip_country_network_mapping (start_ip, mask_length, country_id, is_anonymous_proxy, is_satellite_provider) VALUES (SUBSTRING_INDEX(v_network_start_ip,':','-1'), POW(2, 128-v_network_mask_length),v_country_id,v_is_anonymous_proxy,v_is_satellite_provider);
+                END IF;
+
             END IF;
             
-    
             IF v_count = v_total THEN
               LEAVE read_loop;
             END IF;
