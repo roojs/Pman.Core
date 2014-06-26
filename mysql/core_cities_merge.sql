@@ -271,6 +271,9 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             IF (v_continent_code != '') THEN
                 SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
 
+                IF v_continent_id = 0 THEN
+                    INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
+                END IF;
                 
             END IF;
 
