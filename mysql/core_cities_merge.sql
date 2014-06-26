@@ -246,6 +246,8 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
         DECLARE v_country_iso_code INT DEFAULT 0;
         DECLARE v_country_name INT DEFAULT 0;
 
+        DECLARE v_id INT DEFAULT 0;
+
         DECLARE csr CURSOR FOR 
         SELECT 
             geoname_id,continent_code,continent_name,country_iso_code,country_name
@@ -261,8 +263,6 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
             
             SET v_count = v_count + 1;
-
-            SET v_id_tmp = 0;
 
             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
 
