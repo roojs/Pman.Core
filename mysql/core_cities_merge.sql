@@ -282,7 +282,7 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
                 
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
 
-                IF v_continent_id = 0 THEN
+                IF v_country_id = 0 THEN
                     INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_country_iso_code, v_country_name, v_continent_id);
                 END IF;
                 
