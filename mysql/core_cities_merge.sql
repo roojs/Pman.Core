@@ -322,7 +322,7 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
         FROM 
             country_blocks;
         
-        SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
+        SELECT COUNT(network_start_ip) INTO v_total FROM country_locations;
 
         SET v_count = 0;
 
