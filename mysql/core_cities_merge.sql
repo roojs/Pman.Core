@@ -346,7 +346,7 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
 
             SELECT country_iso_code INTO v_country_iso_code FROM country_locations WHERE geoname_id = v_geoname_id;
 
-            IF v_country_iso_code != 0 THEN
+            IF v_country_iso_code != '' THEN
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
 
                 IF v_country_id != 0 THEN
