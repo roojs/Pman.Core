@@ -314,6 +314,8 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
         DECLARE v_is_anonymous_proxy INT DEFAULT 0;
         DECLARE v_is_satellite_provider INT DEFAULT 0;
 
+        DECLARE v_country_iso_code TEXT DEFAULT '';
+
         DECLARE v_country_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
@@ -342,25 +344,15 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_country_id = 0;
 
-            IF (v_geoname_id != 0 AND ) THEN
-                SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
+            SELECT country_iso_code INTO v_country_iso_code
+            
+            SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
 
-                IF v_continent_id = 0 THEN
-                    INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
-                    SET v_continent_id = LAST_INSERT_ID();
-                END IF;
-                
+            IF v_continent_id = 0 THEN
+                INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
+                SET v_continent_id = LAST_INSERT_ID();
             END IF;
-
-            IF (v_country_iso_code != '') THEN
-                
-                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
-
-                IF v_country_id = 0 THEN
-                    INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_country_iso_code, v_country_name, v_continent_id);
-                END IF;
-                
-            END IF;
+            
     
             IF v_count = v_total THEN
               LEAVE read_loop;
