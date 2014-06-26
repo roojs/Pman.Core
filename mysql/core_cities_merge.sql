@@ -253,7 +253,7 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
         SELECT 
             geoname_id,continent_code,continent_name,country_iso_code,country_name
         FROM 
-            country_locations
+            country_locations;
         
         SELECT COUNT(geoname_id) INTO v_total FROM country_locations;
 
