@@ -403,7 +403,7 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
 
         OPEN csr;
         read_loop: LOOP
-            FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
+            FETCH csr INTO v_continent_code,v_country_iso_code,v_subdivision_iso_code,v_subdivision_name,v_city_name,v_metro_code,v_time_zone;
             
             SET v_count = v_count + 1;
             
@@ -412,21 +412,12 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
             
             IF (v_continent_code != '') THEN
                 SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
-
-                IF v_continent_id = 0 THEN
-                    INSERT INTO core_geoip_continent (code, name) VALUES (v_continent_code, v_continent_name);
-                    SET v_continent_id = LAST_INSERT_ID();
-                END IF;
                 
             END IF;
 
             IF (v_country_iso_code != '') THEN
                 
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
-
-                IF v_country_id = 0 THEN
-                    INSERT INTO core_geoip_country (code, name, continent_id) VALUES (v_country_iso_code, v_country_name, v_continent_id);
-                END IF;
                 
             END IF;
     
