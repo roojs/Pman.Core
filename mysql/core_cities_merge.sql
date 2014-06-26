@@ -265,7 +265,8 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
-            SET v_id = 0;
+            SET v_country_id = 0;
+            SET v_continent_id = 0;
             
             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
 
