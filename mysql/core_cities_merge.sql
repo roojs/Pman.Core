@@ -328,13 +328,12 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
 
         OPEN csr;
         read_loop: LOOP
-            FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
+            FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_is_anonymous_proxy,v_is_satellite_provider;
             
             SET v_count = v_count + 1;
             
             SET v_country_id = 0;
-            SET v_continent_id = 0;
-            
+
             IF (v_continent_code != '') THEN
                 SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
 
