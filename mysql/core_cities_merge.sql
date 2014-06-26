@@ -243,8 +243,8 @@ CREATE FUNCTION core_country_locations()  RETURNS TEXT DETERMINISTIC
         DECLARE v_geoname_id INT DEFAULT 0;
         DECLARE v_continent_code TEXT DEFAULT '';
         DECLARE v_continent_name TEXT DEFAULT '';
-        DECLARE v_country_iso_code INT DEFAULT 0;
-        DECLARE v_country_name INT DEFAULT 0;
+        DECLARE v_country_iso_code TEXT DEFAULT '';
+        DECLARE v_country_name TEXT DEFAULT '';
 
         DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_continent_id INT DEFAULT 0;
@@ -262,7 +262,7 @@ CREATE FUNCTION core_country_locations()  RETURNS TEXT DETERMINISTIC
         OPEN csr;
         read_loop: LOOP
             FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
-            RETURN v_continent_code;
+            
             SET v_count = v_count + 1;
             
             SET v_country_id = 0;
@@ -279,7 +279,7 @@ CREATE FUNCTION core_country_locations()  RETURNS TEXT DETERMINISTIC
             END IF;
 
             IF (v_country_iso_code != '') THEN
-                RETURN v_geoname_id;
+                
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
 
                 IF v_continent_id = 0 THEN
