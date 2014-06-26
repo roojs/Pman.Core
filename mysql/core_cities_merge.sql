@@ -235,7 +235,7 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS core_country_locations;
 DELIMITER $$
-CREATE FUNCTION core_country_locations()  RETURNS TEXT DETERMINISTIC
+CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
     BEGIN
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
