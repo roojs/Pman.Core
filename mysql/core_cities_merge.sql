@@ -246,7 +246,8 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
         DECLARE v_country_iso_code INT DEFAULT 0;
         DECLARE v_country_name INT DEFAULT 0;
 
-        DECLARE v_id INT DEFAULT 0;
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_continent_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
         SELECT 
