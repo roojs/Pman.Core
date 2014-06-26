@@ -235,7 +235,7 @@ DELIMITER ;
 
 DROP FUNCTION IF EXISTS core_country_locations;
 DELIMITER $$
-CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
+CREATE FUNCTION core_country_locations()  RETURNS TEXT DETERMINISTIC
     BEGIN
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
@@ -262,7 +262,7 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
         OPEN csr;
         read_loop: LOOP
             FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
-            
+            RETURN v_continent_code;
             SET v_count = v_count + 1;
             
             SET v_country_id = 0;
