@@ -307,7 +307,7 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
     BEGIN
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
-
+        
         DECLARE v_geoname_id INT DEFAULT 0;
         DECLARE v_network_start_ip TEXT DEFAULT '';
         DECLARE v_network_mask_length INT DEFAULT 0;
@@ -320,9 +320,17 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
         SELECT 
             network_start_ip,network_mask_length,geoname_id,is_anonymous_proxy,is_satellite_provider
         FROM 
-            country_blocks;
+            country_blocks
+        WHERE 
+                geoname_id != 0 
+            AND 
+                registered_country_geoname_id != 0 
+            AND 
+                geoname_id = registered_country_geoname_id
+            AND
+                network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
         
-        SELECT COUNT(network_start_ip) INTO v_total FROM country_locations;
+        SELECT COUNT(network_start_ip) INTO v_total FROM country_locations WHERE geoname_id != 0 AND registered_country_geoname_id != 0 AND geoname_id = registered_country_geoname_id AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
 
         SET v_count = 0;
 
@@ -334,7 +342,7 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_country_id = 0;
 
-            IF (v_continent_code != '') THEN
+            IF (v_geoname_id != 0 AND ) THEN
                 SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
 
                 IF v_continent_id = 0 THEN
