@@ -530,7 +530,6 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
         END LOOP;
         CLOSE csr;
 
-
         RETURN v_count;
     END $$
 DELIMITER ; 
