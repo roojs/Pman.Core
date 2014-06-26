@@ -378,7 +378,6 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
         DECLARE v_count INT DEFAULT 0;
         DECLARE v_total INT DEFAULT 0;
 
-        DECLARE v_continent_code TEXT DEFAULT '';
         DECLARE v_country_iso_code TEXT DEFAULT '';
         DECLARE v_subdivision_iso_code TEXT DEFAULT '';
         DECLARE v_subdivision_name TEXT DEFAULT '';
@@ -388,10 +387,11 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
 
         DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_division_id INT DEFAULT 0;
+        DECLARE v_city_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
         SELECT 
-            continent_code,country_iso_code,subdivision_iso_code,subdivision_name,city_name,metro_code,time_zone
+            country_iso_code,subdivision_iso_code,subdivision_name,city_name,metro_code,time_zone
         FROM 
             city_locations
         WHERE
@@ -403,31 +403,38 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
 
         OPEN csr;
         read_loop: LOOP
-            FETCH csr INTO v_continent_code,v_country_iso_code,v_subdivision_iso_code,v_subdivision_name,v_city_name,v_metro_code,v_time_zone;
+            FETCH csr INTO v_country_iso_code,v_subdivision_iso_code,v_subdivision_name,v_city_name,v_metro_code,v_time_zone;
             
             SET v_count = v_count + 1;
             
             SET v_country_id = 0;
             SET v_division_id = 0;
+            SET v_city_id = 0;
             
-            IF (v_continent_code != '') THEN
-                SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
-                
-            END IF;
-
+            
             IF (v_country_iso_code != '') THEN
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
             END IF;
     
             IF v_subdivision_name != '' THEN
+                SELECT id INTO v_division_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
 
-                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_subdivision_iso_code, v_subdivision_name, v_country_id);
+                IF v_division_id = 0 THEN
+                    INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_subdivision_iso_code, v_subdivision_name, v_country_id);
+                    SET v_division_id = LAST_INSERT_ID();
+                END IF;
+                
 
             END IF;
 
             IF v_city_name != '' THEN
+                
+                SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_division_id;
+                
+                IF v_city_id = 0 THEN
+                    INSERT INTO core_geoip_city (name, country_id, division_id, metro_code, time_zone) VALUES (v_city_name, v_country_id, v_division_id, v_metro_code, v_time_zone);
 
-                INSERT INTO core_geoip_city (name, country_id, division_id, metro_code, time_zone) VALUES (v_city_name, v_country_id, v_country_id);
+                END IF;
 
             END IF;
 
