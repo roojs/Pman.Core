@@ -13,3 +13,4 @@ CREATE INDEX mask_length_idx ON core_geoip_country_network_mapping (mask_length)
 CREATE INDEX country_id_idx ON core_geoip_country_network_mapping (country_id) USING BTREE;
 CREATE INDEX is_anonymous_proxy_idx ON core_geoip_country_network_mapping (is_anonymous_proxy) USING BTREE;
 CREATE INDEX is_satellite_provider_idx ON core_geoip_country_network_mapping (is_satellite_provider) USING BTREE;
+
