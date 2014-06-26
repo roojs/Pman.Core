@@ -387,7 +387,7 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
         DECLARE v_time_zone TEXT DEFAULT '';
 
         DECLARE v_country_id INT DEFAULT 0;
-        DECLARE v_continent_id INT DEFAULT 0;
+        DECLARE v_division_id INT DEFAULT 0;
 
         DECLARE csr CURSOR FOR 
         SELECT 
@@ -408,7 +408,7 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
             SET v_count = v_count + 1;
             
             SET v_country_id = 0;
-            SET v_continent_id = 0;
+            SET v_division_id = 0;
             
             IF (v_continent_code != '') THEN
                 SELECT id INTO v_continent_id FROM core_geoip_continent WHERE code = v_continent_code;
@@ -416,11 +416,21 @@ CREATE FUNCTION core_city_locations()  RETURNS INT DETERMINISTIC
             END IF;
 
             IF (v_country_iso_code != '') THEN
-                
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
-                
             END IF;
     
+            IF v_subdivision_name != '' THEN
+
+                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_subdivision_iso_code, v_subdivision_name, v_country_id);
+
+            END IF;
+
+            IF v_city_name != '' THEN
+
+                INSERT INTO core_geoip_city (name, country_id, division_id, metro_code, time_zone) VALUES (v_city_name, v_country_id, v_country_id);
+
+            END IF;
+
             IF v_count = v_total THEN
               LEAVE read_loop;
             END IF;
