@@ -263,7 +263,9 @@ CREATE FUNCTION core_country_locations()  RETURNS INT DETERMINISTIC
             FETCH csr INTO v_geoname_id,v_continent_code,v_continent_name,v_country_iso_code,v_country_name;
             
             SET v_count = v_count + 1;
-
+            
+            SET v_id = 0;
+            
             SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso;
 
             IF(v_id_tmp = 0) THEN
