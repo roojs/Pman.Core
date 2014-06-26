@@ -468,6 +468,8 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
         DECLARE v_is_anonymous_proxy INT DEFAULT 0;
         DECLARE v_is_satellite_provider INT DEFAULT 0;
 
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_divison_id INT DEFAULT 0;
         DECLARE v_city_id INT DEFAULT 0;
         DECLARE v_country_iso_code TEXT DEFAULT '';
         DECLARE v_subdivision_name TEXT DEFAULT '';
@@ -493,12 +495,16 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
+            SET v_country_id = 0;
+            SET v_divison_id = 0;
             SET v_city_id = 0;
+            SET v_country_iso_code = '';
+            SET v_subdivision_name = '';
             SET v_city_name = '';
 
-            SELECT country_iso_code,subdivision_iso_name,city_name INTO v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
+            SELECT country_iso_code,subdivision_iso_name,city_name INTO v_country_iso_code, v_subdivision_name v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
 
-            IF (v_city_name != '') THEN
+            IF (v_country_iso_code != '') THEN
                 SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name
 
             END IF;
