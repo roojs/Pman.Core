@@ -492,6 +492,7 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
             SET v_country_id = 0;
             SET v_divison_id = 0;
             SET v_city_id = 0;
+            SET v_mapping_id = 0;
 
             SET v_country_iso_code = '';
             SET v_subdivision_name = '';
