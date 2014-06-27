@@ -114,7 +114,7 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
             SET v_local_name_tmp = '';
             SET v_type_tmp = '';
 
-            IF v_in_location IS NOT NULL
+            IF v_in_location IS NOT NULL THEN
                 SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location;
 
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
