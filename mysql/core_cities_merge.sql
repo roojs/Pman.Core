@@ -213,8 +213,6 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
 
                 IF v_type_tmp = 'CO' THEN
                     SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
-
-                   -- INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
                 END IF;
 
                 IF v_type_tmp = 'RE' THEN
