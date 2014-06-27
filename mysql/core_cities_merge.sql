@@ -212,45 +212,41 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
                 SELECT iso, local_name, type, in_location INTO v_iso_tmp, v_local_name_tmp, v_type_tmp, v_in_location_tmp FROM meta_location WHERE id = v_in_location;
 
                 IF v_type_tmp = 'CO' THEN
-                    SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+                    SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
 
-                    INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
+                   -- INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
                 END IF;
+
+                IF v_type_tmp = 'RE' THEN
+                    IF v_in_location_tmp != 0 THEN
+
+                        SELECT iso INTO v_iso_tmp FROM meta_location WHERE id = v_in_location;
+
+                        SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
+
+                    END IF;
+
+                    SELECT id INTO v_divsion_id FROM core_geoip_divsion WHERE name = v_local_name_tmp AND country_id = v_country_id;
+
+                END IF;
+
             END IF;
             
 
 
-            SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name LIMIT 1;
+            SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_local_name AND country_id = v_country_id AND division_id = v_division_id;
 
-            IF(v_id_tmp = 0) THEN
-                IF v_in_location IS NOT NULL THEN
-
-                    SELECT iso, local_name, type, in_location INTO v_iso_tmp, v_local_name_tmp, v_type_tmp, v_in_location_tmp FROM meta_location WHERE id = v_in_location;
-                    
-                    IF v_type_tmp = 'CO' THEN
-                        SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+            IF(v_city_id = 0) THEN
+                
                         
-                        INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
-                    END IF;
-
-                    IF v_type_tmp = 'RE' THEN
-                        SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name_tmp;
-                        
-                        SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location_tmp;
-                        
-                        SELECT id INTO v_id_tmp_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
-                        
-                        INSERT INTO core_geoip_city (name, country_id, division_id) VALUES (v_local_name, v_id_tmp_tmp, v_id_tmp);
-                    END IF;
-                    
-                END IF;
+                INSERT INTO core_geoip_city (name, country_id, division_id) VALUES (v_local_name, v_country_id, v_division_id);
+                   
+                SET v_city_id = LAST_INSERT_ID();
 
                 IF v_geo_lat IS NOT NULL OR v_geo_lng IS NOT NULL THEN
-                    SET v_id_tmp = LAST_INSERT_ID();
-
-                    INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_geo_lat, v_geo_lng, v_id_tmp);
+                    
+                    INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_geo_lat, v_geo_lng, v_city_id);
                 END IF;
-                
                 
             END IF;
 
