@@ -237,7 +237,6 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
             SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_local_name AND country_id = v_country_id AND division_id = v_division_id;
 
             IF(v_city_id = 0) THEN
-                
                         
                 INSERT INTO core_geoip_city (name, country_id, division_id) VALUES (v_local_name, v_country_id, v_division_id);
                    
