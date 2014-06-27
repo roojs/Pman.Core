@@ -171,13 +171,15 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
         DECLARE v_geo_lat INT DEFAULT 0;
         DECLARE v_geo_lng INT DEFAULT 0;
 
-        DECLARE v_id_tmp INT DEFAULT 0;
+        
         DECLARE v_iso_tmp TEXT DEFAULT '';
         DECLARE v_local_name_tmp TEXT DEFAULT '';
         DECLARE v_type_tmp TEXT DEFAULT '';
         DECLARE v_in_location_tmp INT DEFAULT 0;
 
-        DECLARE v_id_tmp_tmp INT DEFAULT 0;
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_division_id INT DEFAULT 0;
+        DECLARE v_city_id INT DEFAULT 0;
 
         DECLARE ci_csr CURSOR FOR 
         SELECT 
@@ -197,8 +199,26 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
 
-            SET v_id_tmp = 0;
-            SET v_id_tmp_tmp = 0;
+            SET v_country_id = 0;
+            SET v_division_id = 0;
+            SET v_city_id = 0;
+
+            SET v_iso_tmp = '';
+            SET v_local_name_tmp = '';
+            SET v_type_tmp = '';
+            SET v_in_location_tmp = 0;
+            
+            IF v_in_location IS NOT NULL THEN
+                SELECT iso, local_name, type, in_location INTO v_iso_tmp, v_local_name_tmp, v_type_tmp, v_in_location_tmp FROM meta_location WHERE id = v_in_location;
+
+                IF v_type_tmp = 'CO' THEN
+                    SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+
+                    INSERT INTO core_geoip_city (name, country_id) VALUES (v_local_name, v_id_tmp);
+                END IF;
+            END IF;
+            
+
 
             SELECT id INTO v_id_tmp FROM core_geoip_city WHERE name = v_local_name LIMIT 1;
 
