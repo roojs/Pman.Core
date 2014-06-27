@@ -121,7 +121,7 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
                 
             END IF;
 
-            SELECT id INTO v_division_id FROM core_geoip_division WHERE name = v_local_name AND country_id = v_country_id;
+            SELECT id INTO v_division_id FROM core_geoip_division WHERE (name = v_local_name OR (name LIKE (CONCAT('%', v_local_name, '%')) AND code = SUBSTRING_INDEX(v_iso, '-', -1)) AND country_id = v_country_id;
 
             IF(v_division_id = 0) THEN
                 
