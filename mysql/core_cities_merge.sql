@@ -495,6 +495,7 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
+            RETURN v_geoname_id;
 --             SET v_country_id = 0;
 --             SET v_divison_id = 0;
 --             SET v_city_id = 0;
