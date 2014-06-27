@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS core_geoip_city;
 
 CREATE  TABLE core_geoip_city (
     id INT(11) NOT NULL AUTO_INCREMENT ,
