@@ -82,13 +82,13 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
         DECLARE v_geo_lat INT DEFAULT 0;
         DECLARE v_geo_lng INT DEFAULT 0;
 
-        DECLARE v_id_tmp INT DEFAULT 0;
+        DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_iso_tmp TEXT DEFAULT '';
         DECLARE v_local_name_tmp TEXT DEFAULT '';
         DECLARE v_type_tmp TEXT DEFAULT '';
         DECLARE v_in_location_tmp INT DEFAULT 0;
 
-        DECLARE v_id_tmp_tmp INT DEFAULT 0;
+        DECLARE v_division_id INT DEFAULT 0;
 
         DECLARE re_csr CURSOR FOR 
         SELECT 
@@ -108,17 +108,24 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
 
-            SET v_id_tmp = 0;
+            SET v_country_id = 0;
+            SET v_division_id = 0;
+            SET v_iso_tmp = '';
+            SET v_local_name_tmp = '';
+            SET v_type_tmp = '';
 
             IF v_in_location IS NOT NULL
+                SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location;
 
+                SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+                
             END IF;
 
             SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name;
 
             IF(v_id_tmp = 0) THEN
                 IF v_in_location IS NOT NULL THEN
-                    SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location;
+                    
                     
                     SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
 
