@@ -495,33 +495,33 @@ CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
---             SET v_country_id = 0;
---             SET v_divison_id = 0;
---             SET v_city_id = 0;
--- 
---             SET v_country_iso_code = '';
---             SET v_subdivision_name = '';
---             SET v_city_name = '';
--- 
---             SELECT country_iso_code,subdivision_name,city_name INTO v_country_iso_code, v_subdivision_name, v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
--- 
---             IF v_country_iso_code != '' THEN
---                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
---             END IF;
--- 
---             IF v_subdivision_name != '' THEN
---                 SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
---             END IF;
--- 
---             SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
--- 
---             IF v_city_id != 0 THEN
--- 
---                 INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_latitude, v_longitude, v_city_id);
--- 
---                 INSERT INTO core_geoip_city_network_mapping (start_ip, mask_length, city_id, is_anonymous_proxy, is_satellite_provider) VALUES (SUBSTRING_INDEX(v_network_start_ip,':','-1'), POW(2, 128-v_network_mask_length),v_city_id,v_is_anonymous_proxy,v_is_satellite_provider);
---                 
---             END IF;
+            SET v_country_id = 0;
+            SET v_divison_id = 0;
+            SET v_city_id = 0;
+
+            SET v_country_iso_code = '';
+            SET v_subdivision_name = '';
+            SET v_city_name = '';
+
+            SELECT country_iso_code,subdivision_name,city_name INTO v_country_iso_code, v_subdivision_name, v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
+
+            IF v_country_iso_code != '' THEN
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+            END IF;
+
+            IF v_subdivision_name != '' THEN
+                SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
+            END IF;
+
+            SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
+
+            IF v_city_id != 0 THEN
+
+                INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_latitude, v_longitude, v_city_id);
+
+                INSERT INTO core_geoip_city_network_mapping (start_ip, mask_length, city_id, is_anonymous_proxy, is_satellite_provider) VALUES (SUBSTRING_INDEX(v_network_start_ip,':','-1'), POW(2, 128-v_network_mask_length),v_city_id,v_is_anonymous_proxy,v_is_satellite_provider);
+                
+            END IF;
             
             IF v_count = v_total THEN
               LEAVE read_loop;
