@@ -218,7 +218,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
                 IF v_type_tmp = 'RE' THEN
                     IF v_in_location_tmp != 0 THEN
 
-                        SELECT iso INTO v_iso_tmp FROM meta_location WHERE id = v_in_location;
+                        SELECT iso INTO v_iso_tmp FROM meta_location WHERE id = v_in_location_tmp;
 
                         SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
 
