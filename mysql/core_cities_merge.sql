@@ -117,21 +117,15 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
             IF v_in_location IS NOT NULL
                 SELECT iso, local_name, type INTO v_iso_tmp, v_local_name_tmp, v_type_tmp FROM meta_location WHERE id = v_in_location;
 
-                SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
                 
             END IF;
 
-            SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name;
+            SELECT id INTO v_division_id FROM core_geoip_division WHERE name = v_local_name AND country_id = v_country_id;
 
-            IF(v_id_tmp = 0) THEN
-                IF v_in_location IS NOT NULL THEN
-                    
-                    
-                    SELECT id INTO v_id_tmp FROM core_geoip_country WHERE code = v_iso_tmp;
-
-                END IF;
+            IF(v_division_id = 0) THEN
                 
-                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_id_tmp);
+                INSERT INTO core_geoip_division (code, name, country_id) VALUES (v_iso, v_local_name, v_country_id);
             END IF;
 
 --             ITERATE re_loop;
