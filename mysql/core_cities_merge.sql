@@ -452,6 +452,82 @@ DELIMITER ;
 
 
 
+DROP FUNCTION IF EXISTS core_city_blocks_mapping;
+DELIMITER $$
+CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
+    BEGIN
+        DECLARE v_count INT DEFAULT 0;
+        DECLARE v_total INT DEFAULT 0;
+        
+        
+        DECLARE v_geoname_id INT DEFAULT 0;
+
+        DECLARE v_country_id INT DEFAULT 0;
+        DECLARE v_divison_id INT DEFAULT 0;
+        DECLARE v_city_id INT DEFAULT 0;
+        DECLARE v_country_iso_code TEXT DEFAULT '';
+        DECLARE v_subdivision_name TEXT DEFAULT '';
+        DECLARE v_city_name TEXT DEFAULT '';
+
+        DECLARE csr CURSOR FOR 
+        SELECT 
+            geoname_id
+        FROM 
+            city_blocks
+        WHERE 
+                geoname_id != 0
+            AND
+                network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+        
+        SELECT COUNT(network_start_ip) INTO v_total FROM city_blocks WHERE geoname_id != 0  AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+
+        SET v_count = 0;
+
+        OPEN csr;
+        read_loop: LOOP
+            FETCH csr INTO v_geoname_id;
+            
+            SET v_count = v_count + 1;
+            
+            SET v_country_id = 0;
+            SET v_divison_id = 0;
+            SET v_city_id = 0;
+
+            SET v_country_iso_code = '';
+            SET v_subdivision_name = '';
+            SET v_city_name = '';
+
+            SELECT country_iso_code,subdivision_name,city_name INTO v_country_iso_code, v_subdivision_name, v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
+
+            IF v_country_iso_code != '' THEN
+                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
+            END IF;
+
+            IF v_subdivision_name != '' THEN
+                SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
+            END IF;
+
+            SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
+
+            IF v_city_id != 0 THEN
+
+                INSERT INTO city_blocks_mapping (geoname_id, city_id) VALUES (v_geoname_id, v_city_id);
+                
+            END IF;
+            
+            IF v_count = v_total THEN
+              LEAVE read_loop;
+            END IF;
+
+        END LOOP;
+        CLOSE csr;
+
+        RETURN v_count;
+    END $$
+DELIMITER ; 
+
+
+
 
 DROP FUNCTION IF EXISTS core_city_blocks;
 DELIMITER $$
