@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS core_geoip_network_mapping;
+DROP TABLE IF EXISTS core_geoip_city_network_mapping;
+
 CREATE  TABLE core_geoip_city_network_mapping (
     id INT(11) NOT NULL AUTO_INCREMENT ,
     start_ip VARCHAR(128) NOT NULL DEFAULT '',
