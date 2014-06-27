@@ -1,3 +1,4 @@
+
 CREATE  TABLE core_geoip_city (
     id INT(11) NOT NULL AUTO_INCREMENT ,
     name VARCHAR(255) NOT NULL DEFAULT '',
