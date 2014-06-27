@@ -465,6 +465,7 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
         DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_divison_id INT DEFAULT 0;
         DECLARE v_city_id INT DEFAULT 0;
+        DECLARE v_mapping_id INT DEFAULT 0;
         DECLARE v_country_iso_code TEXT DEFAULT '';
         DECLARE v_subdivision_name TEXT DEFAULT '';
         DECLARE v_city_name TEXT DEFAULT '';
