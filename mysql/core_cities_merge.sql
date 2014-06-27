@@ -226,7 +226,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
 
                     END IF;
 
-                    SELECT id INTO v_divsion_id FROM core_geoip_divsion WHERE name = v_local_name_tmp AND country_id = v_country_id;
+                    SELECT id INTO v_division FROM core_geoip_division WHERE name = v_local_name_tmp AND country_id = v_country_id;
 
                 END IF;
 
