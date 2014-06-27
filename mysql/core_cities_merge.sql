@@ -482,8 +482,6 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
         
         SELECT COUNT(DISTINCT(geoname_id)) INTO v_total FROM city_blocks WHERE geoname_id != 0  AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
 
-        SELECT v_total INTO outfile '/tmp/total.txt';
-
         SET v_count = 0;
 
         OPEN csr;
@@ -492,8 +490,6 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
-            SELECT v_count INTO outfile '/tmp/log.txt';
-
             SET v_country_id = 0;
             SET v_divison_id = 0;
             SET v_city_id = 0;
