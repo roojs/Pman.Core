@@ -492,6 +492,8 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
             
             SET v_count = v_count + 1;
             
+            SELECT v_count;
+
             SET v_country_id = 0;
             SET v_divison_id = 0;
             SET v_city_id = 0;
