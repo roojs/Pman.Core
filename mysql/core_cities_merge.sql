@@ -173,6 +173,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
 
         
         DECLARE v_iso_tmp TEXT DEFAULT '';
+        DECLARE v_iso_tmp_tmp TEXT DEFAULT '';
         DECLARE v_local_name_tmp TEXT DEFAULT '';
         DECLARE v_type_tmp TEXT DEFAULT '';
         DECLARE v_in_location_tmp INT DEFAULT 0;
