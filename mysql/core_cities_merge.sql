@@ -110,6 +110,10 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
 
             SET v_id_tmp = 0;
 
+            IF v_in_location IS NOT NULL
+
+            END IF;
+
             SELECT id INTO v_id_tmp FROM core_geoip_division WHERE name = v_local_name;
 
             IF(v_id_tmp = 0) THEN
