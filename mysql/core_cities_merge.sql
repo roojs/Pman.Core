@@ -510,8 +510,11 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
             SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
 
             IF v_city_id != 0 THEN
+                SELECT id INTO v_mapping_id FROM city_blocks_mapping WHERE geoname_id = v_geoname_id AND city_id = v_city_id;
 
-                INSERT INTO city_blocks_mapping (geoname_id, city_id) VALUES (v_geoname_id, v_city_id);
+                IF v_mapping_id = 0 THEN
+                    INSERT INTO city_blocks_mapping (geoname_id, city_id) VALUES (v_geoname_id, v_city_id);
+                END IF;
                 
             END IF;
             
