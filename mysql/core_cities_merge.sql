@@ -499,26 +499,28 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
             SET v_subdivision_name = '';
             SET v_city_name = '';
 
-            SELECT country_iso_code,subdivision_name,city_name INTO v_country_iso_code, v_subdivision_name, v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
+            SELECT id INTO v_mapping_id FROM city_blocks_mapping WHERE geoname_id = v_geoname_id AND city_id = v_city_id;
+            
+            IF v_mapping_id = 0 THEN
+                SELECT country_iso_code,subdivision_name,city_name INTO v_country_iso_code, v_subdivision_name, v_city_name FROM city_locations WHERE geoname_id = v_geoname_id;
 
-            IF v_country_iso_code != '' THEN
-                SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
-            END IF;
-
-            IF v_subdivision_name != '' THEN
-                SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
-            END IF;
-
-            SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
-
-            IF v_city_id != 0 THEN
-                SELECT id INTO v_mapping_id FROM city_blocks_mapping WHERE geoname_id = v_geoname_id AND city_id = v_city_id;
-
-                IF v_mapping_id = 0 THEN
-                    INSERT INTO city_blocks_mapping (geoname_id, city_id) VALUES (v_geoname_id, v_city_id);
+                IF v_country_iso_code != '' THEN
+                    SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_country_iso_code;
                 END IF;
-                
+
+                IF v_subdivision_name != '' THEN
+                    SELECT id INTO v_divison_id FROM core_geoip_division WHERE name = v_subdivision_name AND country_id = v_country_id;
+                END IF;
+
+                SELECT id INTO v_city_id FROM core_geoip_city WHERE name = v_city_name AND country_id = v_country_id AND division_id = v_divison_id;
+
+                IF v_city_id != 0 THEN
+                    INSERT INTO city_blocks_mapping (geoname_id, city_id) VALUES (v_geoname_id, v_city_id);
+                    
+                END IF;
+
             END IF;
+            
             
             IF v_count = v_total THEN
               LEAVE read_loop;
