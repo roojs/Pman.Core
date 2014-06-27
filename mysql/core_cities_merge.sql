@@ -84,7 +84,6 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
 
         DECLARE v_country_id INT DEFAULT 0;
         DECLARE v_iso_tmp TEXT DEFAULT '';
-        DECLARE v_local_name_tmp TEXT DEFAULT '';
 
         DECLARE v_division_id INT DEFAULT 0;
 
@@ -109,10 +108,9 @@ CREATE FUNCTION core_cities_merge_division()  RETURNS INT DETERMINISTIC
             SET v_country_id = 0;
             SET v_division_id = 0;
             SET v_iso_tmp = '';
-            SET v_local_name_tmp = '';
 
             IF v_in_location IS NOT NULL THEN
-                SELECT iso, local_name INTO v_iso_tmp, v_local_name_tmp FROM meta_location WHERE id = v_in_location;
+                SELECT iso INTO v_iso_tmp FROM meta_location WHERE id = v_in_location;
 
                 SELECT id INTO v_country_id FROM core_geoip_country WHERE code = v_iso_tmp;
                 
