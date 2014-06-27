@@ -16,3 +16,5 @@ CREATE INDEX postal_code_idx ON core_geoip_city (postal_code) USING BTREE;
 CREATE INDEX metro_code_idx ON core_geoip_city (metro_code) USING BTREE;
 CREATE INDEX time_zone_idx ON core_geoip_city (time_zone) USING BTREE;
 
+CREATE INDEX name_country_id_division_id_idx ON core_geoip_city (name,country_id,division_id) USING BTREE;
+
