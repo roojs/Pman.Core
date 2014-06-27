@@ -534,67 +534,67 @@ CREATE FUNCTION core_city_blocks_mapping()  RETURNS INT DETERMINISTIC
 DELIMITER ; 
 
 
-
-
-DROP FUNCTION IF EXISTS core_city_blocks;
-DELIMITER $$
-CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
-    BEGIN
-        DECLARE v_count INT DEFAULT 0;
-        DECLARE v_total INT DEFAULT 0;
-        
-        DECLARE v_network_start_ip TEXT DEFAULT '';
-        DECLARE v_network_mask_length INT DEFAULT 0;
-        DECLARE v_geoname_id INT DEFAULT 0;
-        DECLARE v_latitude DECIMAL(11,8) DEFAULT 0;
-        DECLARE v_longitude DECIMAL(11,8) DEFAULT 0;
-        DECLARE v_is_anonymous_proxy INT DEFAULT 0;
-        DECLARE v_is_satellite_provider INT DEFAULT 0;
-
-        
-        DECLARE v_city_id INT DEFAULT 0;
-        DECLARE v_mapping_id INT DEFAULT 0;
-
-        DECLARE csr CURSOR FOR 
-        SELECT 
-            network_start_ip,network_mask_length,geoname_id,latitude, longitude, is_anonymous_proxy,is_satellite_provider
-        FROM 
-            city_blocks
-        WHERE 
-                geoname_id != 0
-            AND
-                network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
-        
-        SELECT COUNT(network_start_ip) INTO v_total FROM city_blocks WHERE geoname_id != 0  AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
-
-        SET v_count = 0;
-
-        OPEN csr;
-        read_loop: LOOP
-            FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_latitude,v_longitude,v_is_anonymous_proxy,v_is_satellite_provider;
-            
-            SET v_count = v_count + 1;
-            
-            SET v_city_id = 0;
-            SET v_mapping_id = 0;
-
-            SELECT id, city_id INTO v_mapping_id, v_city_id FROM city_blocks_mapping WHERE geoname_id = v_geoname_id;
-
-            IF v_mapping_id != 0 THEN
-
-                INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_latitude, v_longitude, v_city_id);
-
-                INSERT INTO core_geoip_city_network_mapping (start_ip, mask_length, city_id, is_anonymous_proxy, is_satellite_provider) VALUES (SUBSTRING_INDEX(v_network_start_ip,':','-1'), POW(2, 128-v_network_mask_length),v_city_id,v_is_anonymous_proxy,v_is_satellite_provider);
-                
-            END IF;
-            
-            IF v_count = v_total THEN
-              LEAVE read_loop;
-            END IF;
-
-        END LOOP;
-        CLOSE csr;
-
-        RETURN v_count;
-    END $$
-DELIMITER ; 
+-- 
+-- 
+-- DROP FUNCTION IF EXISTS core_city_blocks;
+-- DELIMITER $$
+-- CREATE FUNCTION core_city_blocks()  RETURNS INT DETERMINISTIC
+--     BEGIN
+--         DECLARE v_count INT DEFAULT 0;
+--         DECLARE v_total INT DEFAULT 0;
+--         
+--         DECLARE v_network_start_ip TEXT DEFAULT '';
+--         DECLARE v_network_mask_length INT DEFAULT 0;
+--         DECLARE v_geoname_id INT DEFAULT 0;
+--         DECLARE v_latitude DECIMAL(11,8) DEFAULT 0;
+--         DECLARE v_longitude DECIMAL(11,8) DEFAULT 0;
+--         DECLARE v_is_anonymous_proxy INT DEFAULT 0;
+--         DECLARE v_is_satellite_provider INT DEFAULT 0;
+-- 
+--         
+--         DECLARE v_city_id INT DEFAULT 0;
+--         DECLARE v_mapping_id INT DEFAULT 0;
+-- 
+--         DECLARE csr CURSOR FOR 
+--         SELECT 
+--             network_start_ip,network_mask_length,geoname_id,latitude, longitude, is_anonymous_proxy,is_satellite_provider
+--         FROM 
+--             city_blocks
+--         WHERE 
+--                 geoname_id != 0
+--             AND
+--                 network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+--         
+--         SELECT COUNT(network_start_ip) INTO v_total FROM city_blocks WHERE geoname_id != 0  AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+-- 
+--         SET v_count = 0;
+-- 
+--         OPEN csr;
+--         read_loop: LOOP
+--             FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_latitude,v_longitude,v_is_anonymous_proxy,v_is_satellite_provider;
+--             
+--             SET v_count = v_count + 1;
+--             
+--             SET v_city_id = 0;
+--             SET v_mapping_id = 0;
+-- 
+--             SELECT id, city_id INTO v_mapping_id, v_city_id FROM city_blocks_mapping WHERE geoname_id = v_geoname_id;
+-- 
+--             IF v_mapping_id != 0 THEN
+-- 
+--                 INSERT INTO core_geoip_location (latitude, longitude, city_id) VALUES (v_latitude, v_longitude, v_city_id);
+-- 
+--                 INSERT INTO core_geoip_city_network_mapping (start_ip, mask_length, city_id, is_anonymous_proxy, is_satellite_provider) VALUES (SUBSTRING_INDEX(v_network_start_ip,':','-1'), POW(2, 128-v_network_mask_length),v_city_id,v_is_anonymous_proxy,v_is_satellite_provider);
+--                 
+--             END IF;
+--             
+--             IF v_count = v_total THEN
+--               LEAVE read_loop;
+--             END IF;
+-- 
+--         END LOOP;
+--         CLOSE csr;
+-- 
+--         RETURN v_count;
+--     END $$
+-- DELIMITER ; 
