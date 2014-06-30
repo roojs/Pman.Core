@@ -58,6 +58,10 @@ ALTER TABLE Person ADD COLUMN country_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE Person ADD COLUMN city_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE Person ADD COLUMN division_id INT(11) NOT NULL DEFAULT 0;
 
+ALTER TABLE Person DROP COLUMN country_id;
+ALTER TABLE Person DROP COLUMN city_id;
+ALTER TABLE Person DROP COLUMN division_id;
+
 
 # old mysql
 alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
