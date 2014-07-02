@@ -174,7 +174,7 @@ class Pman_Core_Notify extends Pman
         $w = DB_DataObject::factory($this->table);
         
         
-        if (!empty($opts['old']) {
+        if (!empty($opts['old'])) {
             
             // standard
             
