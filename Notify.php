@@ -134,7 +134,7 @@ class Pman_Core_Notify extends Pman
         if (empty($opts['limit'])) {
             $opts['limit'] = '1000'; // not sure why it's not picking up the defautl..
         }
-        
+        $showold = !empty($opts['old']);
         if (!empty($opts['old'])) {
             $opts['list'] = 1; // force listing..
         }
@@ -174,7 +174,7 @@ class Pman_Core_Notify extends Pman
         $w = DB_DataObject::factory($this->table);
         
         
-        if (!$showold) {
+        if (!empty($opts['old']) {
             
             // standard
             
