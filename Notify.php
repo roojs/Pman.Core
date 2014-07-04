@@ -42,7 +42,7 @@ class Pman_Core_Notify extends Pman
             
         ),
         'old' => array(
-            'desc' => 'Show old messages..',
+            'desc' => 'Show old messages.. (and new messages...)',
             'default' => 0,
             'short' => 'o',
             'min' => 0,
@@ -175,7 +175,12 @@ class Pman_Core_Notify extends Pman
         
         
         if (!empty($opts['old'])) {
+            // show old and new...
             
+            $w->orderBy('act_when DESC'); // latest first
+            $w->limit($opts['limit']); // we can run 
+            
+        } else {   
             // standard
             
             //$w->whereAdd('act_when > sent'); // eg.. sent is not valid..
@@ -191,10 +196,8 @@ class Pman_Core_Notify extends Pman
             $this->logecho("QUEUE is {$w->count()}");
             
             $w->limit($opts['limit']); // we can run 1000 ...
-        } else {
-            $w->orderBy('act_when DESC'); // latest first
-            $w->limit($opts['limit']); // we can run 1000 ...
         }
+        
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
