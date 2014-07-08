@@ -141,6 +141,8 @@ class Pman_Core_ConvertStyle extends Pman
         
         $data = $doc->saveHTML();
         
+        return $data;
+        
         $htmldoc = new HTML_CSS_InlineStyle($data);
         if(count($this->styleSheets) > 0){
             foreach ($this->styleSheets as $styleSheet){
