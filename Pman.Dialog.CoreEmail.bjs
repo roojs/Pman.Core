@@ -267,7 +267,6 @@
                                                             "|xns": "Roo.form",
                                                             "items": [
                                                                 {
-                                                                    "clearUp": false,
                                                                     "height": 250,
                                                                     "name": "bodytext",
                                                                     "resizable": "s",
