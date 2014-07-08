@@ -267,11 +267,12 @@
                                                             "|xns": "Roo.form",
                                                             "items": [
                                                                 {
+                                                                    "clearUp": false,
                                                                     "height": 250,
                                                                     "name": "bodytext",
                                                                     "resizable": "s",
                                                                     "xtype": "HtmlEditor",
-                                                                    "|cwhite": "[ \n    'margin',\n    'padding',\n    'text-align',\n    'background',\n    'height',\n    'width',\n    'background-color',\n    'font-size',\n    'line-height',\n    'color',\n    'outline',\n    'text-decoration',\n    'position',\n    'clear',\n    'overflow',\n    'margin-top',\n    'border-bottom',\n    'top',\n    'list-style',\n    'margin-left',\n    'border',\n    'float' ,\n    'margin-right',\n    'padding-top',\n    'min-height',\n    'left',\n    'padding-left',\n    'font-weight',\n    'font-family',\n    'display',\n    'margin-bottom',\n    'padding-bottom',\n    'vertical-align',\n    'cursor',\n    'z-index',\n    'right',\n    'style',\n ]",
+                                                                    "|cwhite": "[ \n    'margin',\n    'padding',\n    'text-align',\n    'background',\n    'height',\n    'width',\n    'background-color',\n    'font-size',\n    'line-height',\n    'color',\n    'outline',\n    'text-decoration',\n    'position',\n    'clear',\n    'overflow',\n    'margin-top',\n    'border-bottom',\n    'top',\n    'list-style',\n    'margin-left',\n    'border',\n    'float' ,\n    'margin-right',\n    'padding-top',\n    'min-height',\n    'left',\n    'padding-left',\n    'font-weight',\n    'font-family',\n    'display',\n    'margin-bottom',\n    'padding-bottom',\n    'vertical-align',\n    'cursor',\n    'z-index',\n    'right',\n ]",
                                                                     "|xns": "Roo.form",
                                                                     "items": [
                                                                         {
