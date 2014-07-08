@@ -576,7 +576,7 @@
                 },
                 {
                     "listeners": {
-                        "click": "function (_self, e)\n{\n    // do some checks?\n    _this.form.preValidate(function(res) {\n        if (!res) {\n            return; //failed.\n        }\n         _this.form.doAction(\"submit\");\n    });\n\n}"
+                        "click": "function (_self, e)\n{\n_this.form.doAction(\"submit\");\nreturn;\n    // do some checks?\n    _this.form.preValidate(function(res) {\n        if (!res) {\n            return; //failed.\n        }\n         _this.form.doAction(\"submit\");\n    });\n\n}"
                     },
                     "*prop": "buttons[]",
                     "text": "Save",
