@@ -374,8 +374,15 @@ Pman.Dialog.CoreEmail = {
                                                    //    _this.form.doAction("submit");
                                                       return;
                                                 }
-                                                var i = nodes.pop();        
-                                                var n = i.getAttribute('src').match(/^http(.*)/) && i.getAttribute('src').match(/baseURL/);
+                                                var i = nodes.pop(); 
+                                                
+                                                var skip = i.getAttribute('src').match(/baseURL/);
+                                                
+                                                if(skip){
+                                                    return;
+                                                }
+                                                       
+                                                var n = i.getAttribute('src').match(/^http(.*)/)
                                                 if(!n ){
                                                     mkimg();
                                                     return;
