@@ -502,6 +502,7 @@ Pman.Dialog.CoreEmail = {
                                                                     'cursor',
                                                                     'z-index',
                                                                     'right',
+                                                                    'style',
                                                                  ],
                                                                 toolbars : [
                                                                     {
