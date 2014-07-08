@@ -93,7 +93,6 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         if(preg_match('/^\s*<!--\s*NOT CONVERT STYLE\s*-->\s*/', $data)){
-            return 'got';
             $inLineCss = false;
         }
         
