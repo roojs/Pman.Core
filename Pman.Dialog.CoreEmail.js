@@ -462,7 +462,7 @@ Pman.Dialog.CoreEmail = {
                                                             {
                                                                 xtype: 'HtmlEditor',
                                                                 xns: Roo.form,
-                                                                cleanUpPaste : false,
+                                                                clearUp : false,
                                                                 height : 250,
                                                                 name : 'bodytext',
                                                                 resizable : 's',
