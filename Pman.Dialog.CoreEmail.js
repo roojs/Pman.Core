@@ -1125,8 +1125,7 @@ Pman.Dialog.CoreEmail = {
                     listeners : {
                         click : function (_self, e)
                         {
-                        _this.form.doAction("submit");
-                        return;
+                        
                             // do some checks?
                             _this.form.preValidate(function(res) {
                                 if (!res) {
