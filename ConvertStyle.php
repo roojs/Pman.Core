@@ -89,7 +89,7 @@ class Pman_Core_ConvertStyle extends Pman
         if(!$is_url){
             $data = file_get_contents($file);
         }
-        
+        return $data;
         
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
