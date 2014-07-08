@@ -90,8 +90,9 @@ class Pman_Core_ConvertStyle extends Pman
             $data = file_get_contents($file);
         }
         
-        if(preg_match('/^/', $subject))
-        return $data;
+        if(preg_match('/^\s<!--\sNOT CONVERT STYLE\s-->\s/', $data)){
+            return $data;
+        }
         
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
