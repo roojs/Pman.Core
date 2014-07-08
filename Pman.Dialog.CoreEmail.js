@@ -379,6 +379,7 @@ Pman.Dialog.CoreEmail = {
                                                 var skip = i.getAttribute('src').match(/baseURL/);
                                                 
                                                 if(skip){
+                                                    mkimg();
                                                     return;
                                                 }
                                                        
