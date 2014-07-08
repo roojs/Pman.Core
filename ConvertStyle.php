@@ -89,6 +89,8 @@ class Pman_Core_ConvertStyle extends Pman
         if(!$is_url){
             $data = file_get_contents($file);
         }
+        
+        if(preg_match('/^/', $subject))
         return $data;
         
         libxml_use_internal_errors (true);
@@ -140,8 +142,6 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         $data = $doc->saveHTML();
-        
-        return $data;
         
         $htmldoc = new HTML_CSS_InlineStyle($data);
         if(count($this->styleSheets) > 0){
