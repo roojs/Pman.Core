@@ -382,8 +382,9 @@ Pman.Dialog.CoreEmail = {
                                                     mkimg();
                                                     return;
                                                 }
-                                                       
-                                                var n = i.getAttribute('src').match(/^http(.*)/)
+                                                
+                                                n = i.getAttribute('src').match(/^http(.*)/)
+                                               
                                                 if(!n ){
                                                     mkimg();
                                                     return;
