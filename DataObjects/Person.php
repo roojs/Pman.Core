@@ -224,10 +224,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         return '"' . addslashes($this->name) . '" <' . $this->email . '>';
     }
+    
     function toEventString() 
     {
         return empty($this->name) ? $this->email : $this->name;
     } 
+    
     function verifyAuth()
     { 
         $ff= HTML_FlexyFramework::get();
@@ -1030,5 +1032,31 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             $p->onInsert(array(), $roo);
         }
+    }
+    
+    function getEmailName()
+    {
+        $name = array();
+        
+        if(!empty($this->honor)){
+            array_push($name, $this->honor);
+        }
+        
+        if(!empty($this->name)){
+            array_push($name, $this->name);
+            
+            return implode(' ', $name);
+        }
+        
+        if(!empty($this->firstname) || !empty($this->lastname)){
+            array_push($name, $this->firstname);
+            array_push($name, $this->lastname);
+            
+            $name = array_filter($name);
+            
+            return $name;
+        }
+        
+        return $this->email;
     }
  }
