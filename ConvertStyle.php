@@ -68,6 +68,8 @@ class Pman_Core_ConvertStyle extends Pman
     
     function convertStyle($url, $file, $is_url = true)
     {
+        $inLineCss = true;
+        
         if($is_url && !empty($url))
         {
             $host = parse_url($url);
@@ -91,7 +93,7 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         if(preg_match('/^\s<!--\sNOT CONVERT STYLE\s-->\s/', $data)){
-            return $data;
+            $inLineCss = false;
         }
         
         libxml_use_internal_errors (true);
@@ -143,6 +145,10 @@ class Pman_Core_ConvertStyle extends Pman
         }
         
         $data = $doc->saveHTML();
+        
+        if(!$inLineCss){
+            return $data;
+        }
         
         $htmldoc = new HTML_CSS_InlineStyle($data);
         if(count($this->styleSheets) > 0){
