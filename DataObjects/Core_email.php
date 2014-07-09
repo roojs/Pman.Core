@@ -199,11 +199,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(!empty($cfg)){
             $unsubscribe = $cfg ['server_baseurl'] . '/Crm/Unsubscribe/' . $this->id . '/{person.id}';
         }
-        print_r($unsubscribe);exit;
+        
         foreach ($xpath->query('//a[@href]') as $a) { 
             
             $href = $a->getAttribute('href');
-            
+            print_r($href);
             if(preg_match('/#unsubscribe/', $href) && !empty($unsubscribe)){
                 $a->setAttribute('href', $unsubscribe);
                 continue;
@@ -233,7 +233,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $a->setAttribute('href', $l);
             
         }
-        
+        exit;
         if(!empty($unsubscribe)){
             $element = $doc->createElement('img');
         
