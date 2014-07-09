@@ -310,7 +310,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
-        print_r('run');exit;
         $ui = posix_getpwuid(posix_geteuid());
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
@@ -352,7 +351,7 @@ Content-Transfer-Encoding: 7bit
         fclose($fh);
         
         // cache body
-        
+        print_r('run');exit;
         $this->processRelacements($replace_links);
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
