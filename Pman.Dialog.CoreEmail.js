@@ -376,7 +376,7 @@ Pman.Dialog.CoreEmail = {
                                                 }
                                                 var i = nodes.pop(); 
                                                 
-                                                var n = i.getAttribute('src').match(/baseURL/);
+                                                var n = i.getAttribute('src').match(/(baseURL|server_baseurl)/);
                                                 
                                                 if(n){
                                                     mkimg();
