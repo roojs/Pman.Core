@@ -249,12 +249,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         
         $this->bodytext = $doc->saveHTML();
-        print_r($this->bodytext);exit;
+        
         libxml_use_internal_errors (false);
         
         $this->bodytext = str_replace('%7B', '{', $this->bodytext ); // kludge as template is not interpretated as html.
         $this->bodytext = str_replace('%7D', '}', $this->bodytext ); // kludge as template is not interpretated as html.
-         
+         print_r($this->bodytext);exit;
         return;
     }
     
