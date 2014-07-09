@@ -279,6 +279,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         if($force || !$this->isGenerated($cachePath)){
             $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
+            print_r('run');exit;
             exit;
         }
          
