@@ -278,6 +278,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
         
         if($force || !$this->isGenerated($cachePath)){
+            print_r($contents['replace_links']);exit;
             $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
         }
          
