@@ -351,7 +351,7 @@ Content-Transfer-Encoding: 7bit
         fclose($fh);
         
         // cache body
-        print_r('run');exit;
+        
         $this->processRelacements($replace_links);
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
@@ -366,6 +366,7 @@ Content-Transfer-Encoding: 7bit
     
     function cachedImages()
     {
+        print_r('run');exit;
         $ui = posix_getpwuid(posix_geteuid());
         
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
