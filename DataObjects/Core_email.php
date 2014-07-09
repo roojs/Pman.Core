@@ -315,7 +315,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
           
-        if ($this->isGenerated($cachePath)) {
+        if (!$force || $this->isGenerated($cachePath)) {
             return;
         }
         
