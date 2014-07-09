@@ -199,7 +199,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(!empty($cfg)){
             $unsubscribe = $cfg ['server_baseurl'] . '/Crm/Unsubscribe/' . $this->id . '/{person.id}';
         }
-        
+       
         foreach ($xpath->query('//a[@href]') as $a) { 
             
             $href = $a->getAttribute('href');
@@ -254,14 +254,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $this->bodytext = str_replace('%7B', '{', $this->bodytext ); // kludge as template is not interpretated as html.
         $this->bodytext = str_replace('%7D', '}', $this->bodytext ); // kludge as template is not interpretated as html.
-         print_r($this->bodytext);exit;
+         
         return;
     }
     
     function send($obj, $force = true, $send = true)
     {   
-        $this->processRelacements(true);
-        exit;
         $contents = (array)$obj;
         
         if(empty($this->id)){
