@@ -260,6 +260,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function send($obj, $force = true, $send = true)
     {   
+        $this->processRelacements(true);
+        exit;
         $contents = (array)$obj;
         
         if(empty($this->id)){
