@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $ui = posix_getpwuid(posix_geteuid());
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
-        print_r($cachePath);exit;
+        
         if($force || !$this->isGenerated($cachePath)){
             $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
         }
@@ -361,7 +361,7 @@ Content-Transfer-Encoding: 7bit
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-        
+        print_r($this->bodytext);exit;
         file_put_contents($cachePath, $this->bodytext);
         
     }
