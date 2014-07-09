@@ -179,7 +179,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     function processRelacements($replace_links = true)
     {   
         $cfg = isset(HTML_FlexyFramework::get()->Pman_Crm) ? HTML_FlexyFramework::get()->Pman_Crm : false;
-        print_r($cfg);exit;
+        
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8">'.$this->bodytext);
@@ -199,7 +199,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(!empty($cfg)){
             $unsubscribe = $cfg ['server_baseurl'] . '/Crm/Unsubscribe/' . $this->id . '/{person.id}';
         }
-       
+        print_r($unsubscribe);exit;
         foreach ($xpath->query('//a[@href]') as $a) { 
             
             $href = $a->getAttribute('href');
