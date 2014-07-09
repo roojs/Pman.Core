@@ -310,6 +310,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
+        
         $ui = posix_getpwuid(posix_geteuid());
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
@@ -360,13 +361,12 @@ Content-Transfer-Encoding: 7bit
             mkdir(dirname($cachePath), 0700, true);
         }
         
-        file_put_contents($cachePath, 'test');
+        file_put_contents($cachePath, $this->bodytext);
         
     }
     
     function cachedImages()
     {
-        print_r('run');exit;
         $ui = posix_getpwuid(posix_geteuid());
         
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
