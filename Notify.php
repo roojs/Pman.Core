@@ -170,7 +170,7 @@ class Pman_Core_Notify extends Pman
             
         }
      
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         
         if (!empty($opts['old'])) {
@@ -205,7 +205,7 @@ class Pman_Core_Notify extends Pman
         
         
         $ar = $w->fetchAll();
-        
+        print_r($ar);exit;
         if (!empty($opts['list'])) {
             if (empty($ar)) {
                 die("Nothing in Queue\n");
