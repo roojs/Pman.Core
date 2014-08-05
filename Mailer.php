@@ -287,7 +287,7 @@ class Pman_Core_Mailer {
             return $mail;
         } 
         $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
-        
+        print_r($rcpts);exit;
         if (!empty($this->contents['bcc']) && is_array($this->contents['bcc'])) {
             $rcpts =array_merge(is_array($rcpts) ? $rcpts : array($rcpts), $this->contents['bcc']);
         }
