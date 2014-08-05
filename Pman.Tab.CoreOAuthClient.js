@@ -175,7 +175,7 @@ Pman.Tab.CoreOAuthClient = new Roo.XComponent({
                                              
                                                 var r = _this.grid.ds.getAt(cs[0]);
                                                 
-                                                Roo.MessageBox.confirm("Confirm", "Are sure you want to delete this client?", function (v){
+                                                Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete this client?", function (v){
                                                     if (v != 'yes') {
                                                         return;
                                                     }
