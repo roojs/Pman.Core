@@ -291,10 +291,10 @@ class Pman_Core_Mailer {
         if (!empty($this->contents['bcc']) && is_array($this->contents['bcc'])) {
             $rcpts =array_merge(is_array($rcpts) ? $rcpts : array($rcpts), $this->contents['bcc']);
         }
-        
+        print_r($mail);exit;
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
         $ret = $mail->send($rcpts,$email['headers'],$email['body']);
-        print_r($ret);exit;
+        
         error_reporting($oe);
         if ($ret === true) { 
             $pg->addEvent("COREMAILER-SENT",  false,
