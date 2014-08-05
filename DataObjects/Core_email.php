@@ -273,6 +273,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
            $contents['subject'] = $this->subject; 
         }
         
+        if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
+            $contents['rcpts'] = implode(',', $contents['rcpts']);
+        }
+        
         $ui = posix_getpwuid(posix_geteuid());
         
         $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
