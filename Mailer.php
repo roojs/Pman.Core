@@ -287,11 +287,11 @@ class Pman_Core_Mailer {
             return $mail;
         } 
         $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
-        print_r($email['recipents']);exit;
+        
         if (!empty($this->contents['bcc']) && is_array($this->contents['bcc'])) {
             $rcpts =array_merge(is_array($rcpts) ? $rcpts : array($rcpts), $this->contents['bcc']);
         }
-        
+        print_r($rcpts);exit;
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
         $ret = $mail->send($rcpts,$email['headers'],$email['body']);
         error_reporting($oe);
