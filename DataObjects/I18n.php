@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 break;
             }
         }
-         echo '<PRE>';print_R($opts);//exit;
+        //echo '<PRE>';print_R($opts);//exit;
         
          
        //  var_dump($opts);exit;
@@ -97,7 +97,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             echo "$k / "; //print_R($v);
             self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
         }
-        // available codes recursively calls this...
+        // available codes recursively calls this... -- so the above has to be set first..
         foreach($opts as $k=>$v) {
             
             if ($v == '*') { // everything..
@@ -107,10 +107,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
            
         }
         
-        
-        print_R(self::$cfg);exit;
-        
-        die('here');
         
         return self::$cfg;
         
