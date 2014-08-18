@@ -70,6 +70,8 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
         $loaded =true;
         $ff= HTML_FlexyFramework::get();
+        
+        // BC compatible.. if any of these are set, then we use them as the settings..
         $opts = array();
         foreach(array('Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
             if (isset($ff->$pk)) {
@@ -78,8 +80,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
         }
         
-        // since our opts array changed alot..
-        $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
          
        //  var_dump($opts);exit;
