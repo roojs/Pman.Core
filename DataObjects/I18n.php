@@ -70,7 +70,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
         $loaded =true;
         $ff= HTML_FlexyFramework::get();
-         
+        $opts = array();
+        foreach(array('Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
+            if (isset($ff->$pk)) {
+                $opts=  $ff->$pk;
+                break;
+            }
+        }
+        
         // since our opts array changed alot..
         $opts = empty($ff->Pman_Core_I18N) ? (empty($ff->Pman_I18N) ? array() : $ff->Pman_I18N)  : $ff->Pman_Core_I18N;
         
