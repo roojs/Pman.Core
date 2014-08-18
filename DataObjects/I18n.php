@@ -199,9 +199,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                     $ret = array_merge($ret, array_keys($cfg['add_c']));
                 }
                 
+                
                  
                 
                 $ret[] = '**';
+                var_dump($ret);
                 break;
             
             case 'l':
