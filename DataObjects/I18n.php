@@ -46,9 +46,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
           //  'ta', // tamil
           //  '**', // other
         ),
-        'c' => array(
-             'AU', 'CN', 'HK', 'IN', 'ID', 'JP', 'MY', 'NZ', 'TW', 'SG', 'TH', 'KR', 'US', 'PH', 'VN','**'
-        ),
+        'c' => '*', // array(
+             //'AU', 'CN', 'HK', 'IN', 'ID', 'JP', 'MY', 'NZ', 'TW', 'SG', 'TH', 'KR', 'US', 'PH', 'VN','**'
+        //),
         'm' => array(
             'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
         ),
