@@ -203,7 +203,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                  
                 
                 $ret[] = '**';
-                //print_r($ret);
+                print_r($ret); exit;
                 break;
             
             case 'l':
