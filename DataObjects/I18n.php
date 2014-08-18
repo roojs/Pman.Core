@@ -64,11 +64,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
      */
     function cfg()
     {
-        /*static $loaded  = false;
+        static $loaded  = false;
         if ($loaded) {
             return self::$cfg;
         }
-        */
+         
         $loaded =true;
         $ff= HTML_FlexyFramework::get();
         
@@ -91,12 +91,23 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         foreach($opts as $k=>$v) {
             
             if ($v == '*') { // everything..
-                self::$cfg[$k] = $i->availableCodes($k, false);
+               // self::$cfg[$k] = $i->availableCodes($k, false);
                 continue;
             }
             echo "$k / "; //print_R($v);
             self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
         }
+        // available codes recursively calls this...
+        foreach($opts as $k=>$v) {
+            
+            if ($v == '*') { // everything..
+                 self::$cfg[$k] = $i->availableCodes($k, false);
+                continue;
+            }
+           
+        }
+        
+        
         print_R(self::$cfg);exit;
         
         die('here');
