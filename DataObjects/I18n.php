@@ -95,7 +95,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
             self::$cfg[$k] = is_array($v) ? $v  : explode(',', $v);
         }
-        print_R(self::$cfg);
+        //print_R(self::$cfg);
         
         return self::$cfg;
         
