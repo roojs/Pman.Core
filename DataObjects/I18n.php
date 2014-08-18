@@ -75,11 +75,12 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $opts = array();
         foreach(array('Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
             if (isset($ff->$pk)) {
+                var_dump($pk);
                 $opts=  $ff->$pk;
                 break;
             }
         }
-        
+        print_R($opts);
         
          
        //  var_dump($opts);exit;
