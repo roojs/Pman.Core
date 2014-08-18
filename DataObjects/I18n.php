@@ -80,7 +80,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 break;
             }
         }
-        //print_R($opts);
+         echo '<PRE>';print_R($opts);exit;
         
          
        //  var_dump($opts);exit;
