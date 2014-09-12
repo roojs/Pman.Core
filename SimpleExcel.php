@@ -302,7 +302,7 @@ class Pman_Core_SimpleExcel extends Pman
         foreach($cfg['cols']  as $c=>$col_cfg) {
             
             if(isset($col_cfg['dataIndex']) && isset($cl[$col_cfg['dataIndex']])){
-                $v = 'xx' . @iconv("UTF-8", "UTF-8//IGNORE", $cl[$col_cfg['dataIndex']]) . 'xx';
+                $v =   @iconv("UTF-8", "UTF-8//IGNORE", $cl[$col_cfg['dataIndex']])  ;
                 
             }else{
                 if(isset($col_cfg['fillBlank'])){
