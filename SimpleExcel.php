@@ -31,7 +31,7 @@
  *              'dataFormat' => 'string' // to force a string..
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb'),
-                'txtrenderer' => array($this, 'getThumb'), 
+                'txtrenderer' => array($this, 'cleanValue'),   // for 
  *              'color' => 'yellow', // set color for the cell which is a header element
  *              'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
