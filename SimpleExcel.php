@@ -31,6 +31,7 @@
  *              'dataFormat' => 'string' // to force a string..
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb'),
+                'txtrenderer' => array($this, 'getThumb'), 
  *              'color' => 'yellow', // set color for the cell which is a header element
  *              'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
@@ -40,6 +41,16 @@
             workbook ->
             
         'leave_open' => false  
+            
+            
+        // callbacks: renderer
+        
+        function($value, $worksheet, $row, $col, $row_data)
+        
+        // callbacks : txtrenderer
+        function($value, $worksheet, $row, $col, $row_data)
+                        
+            
             
  */
  
