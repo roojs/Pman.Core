@@ -1059,4 +1059,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         return $this->email;
     }
+    
+    function isOwner()
+    {
+        $company = $this->company();
+        
+        return (empty($company) || empty($company->comptype) || empty($company->comptype !== 'OWNER')) ? false : true;
+    }
  }
