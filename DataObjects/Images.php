@@ -458,7 +458,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 //        print_r($size);
         $fc = $this->toFileConvert();
 //        print_r($size);
-        exit;
+//        exit;
         $fc->convert($this->mimetype, $size);
         
         
