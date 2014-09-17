@@ -445,7 +445,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
             return $baseURL . $provider . "/{$this->id}/{$this->filename}";
-        }
+        }print_r($size);
         //-- max?
         //$size = max(100, (int) $size);
         //$size = min(1024, (int) $size);
@@ -455,7 +455,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $sizear[1] = 0;
         }
         $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
-        print_r($size);
+//        print_r($size);
         $fc = $this->toFileConvert();
 //        print_r($size);
         exit;
