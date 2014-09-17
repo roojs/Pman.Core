@@ -455,9 +455,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $sizear[1] = 0;
         }
         $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
-//        print_r($size);
-        $fc = $this->toFileConvert();
         print_r($size);
+        $fc = $this->toFileConvert();
+//        print_r($size);
         exit;
         $fc->convert($this->mimetype, $size);
         
