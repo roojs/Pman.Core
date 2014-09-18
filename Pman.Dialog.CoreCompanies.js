@@ -306,7 +306,7 @@ Pman.Dialog.CoreCompanies = {
                                                 }
                                                 return String.format('<a target="_new" href="{1}"><img src="{0}" width="150"></a>', 
                                                         baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',
-                                                        baseURL + '/Images/'+v+'/logo.jpg'           
+                                                        baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..
                                                 );
                                             },
                                             icon : 'rootURL + \'images/default/dd/drop-add.gif\'',
