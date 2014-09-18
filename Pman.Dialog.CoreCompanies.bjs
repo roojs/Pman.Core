@@ -1,251 +1,250 @@
 {
-    "id": "roo-file-209",
-    "name": "Pman.Dialog.CoreCompanies",
-    "parent": "",
-    "title": "",
-    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
-    "items": [
+    "name" : "Pman.Dialog.CoreCompanies",
+    "parent" : "",
+    "title" : "",
+    "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
+    "permname" : "",
+    "modOrder" : "001",
+    "items" : [
         {
-            "autoCreate": "true",
-            "closable": false,
-            "collapsible": false,
-            "draggable": false,
-            "height": 400,
-            "modal": true,
-            "shadow": "true",
-            "title": "Add / Edit Organization",
-            "width": 750,
-            "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "items": [
+            "modal" : true,
+            "shadow" : true,
+            "collapsible" : false,
+            "title" : "Add / Edit Organization",
+            "xtype" : "LayoutDialog",
+            "autoCreate" : true,
+            "width" : 750,
+            "$ xns" : "Roo",
+            "closable" : false,
+            "height" : 400,
+            "draggable" : false,
+            "items" : [
                 {
-                    "*prop": "center",
-                    "alwaysShowTabs": false,
-                    "autoScroll": false,
-                    "closeOnTab": true,
-                    "hideTabs": true,
-                    "titlebar": false,
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
+                    "alwaysShowTabs" : false,
+                    "autoScroll" : false,
+                    "xtype" : "LayoutRegion",
+                    "hideTabs" : true,
+                    "$ xns" : "Roo",
+                    "* prop" : "center",
+                    "closeOnTab" : true,
+                    "titlebar" : false
                 },
                 {
-                    "autoCreate": "true",
-                    "fitToFrame": true,
-                    "region": "center",
-                    "xtype": "ContentPanel",
-                    "|xns": "Roo",
-                    "items": [
+                    "region" : "center",
+                    "fitToFrame" : true,
+                    "xtype" : "ContentPanel",
+                    "autoCreate" : true,
+                    "$ xns" : "Roo",
+                    "items" : [
                         {
-                            "listeners": {
-                                "actionfailed": "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
-                                "actioncomplete": "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}",
-                                "rendered": "function (form)\n{\n    _this.form = form;\n}"
+                            "listeners" : {
+                                "actionfailed" : "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
+                                "rendered" : "function (form)\n{\n    _this.form = form;\n}",
+                                "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}"
                             },
-                            "fileUpload": true,
-                            "labelWidth": 160,
-                            "xtype": "Form",
-                            "|url": "baseURL + '/Roo/Companies.php'",
-                            "|xns": "Roo.form",
-                            "items": [
+                            "$ url" : "baseURL + '/Roo/Companies.php'",
+                            "fileUpload" : true,
+                            "xtype" : "Form",
+                            "labelWidth" : 160,
+                            "$ xns" : "Roo.form",
+                            "items" : [
                                 {
-                                    "width": 500,
-                                    "xtype": "Column",
-                                    "|xns": "Roo.form",
-                                    "items": [
+                                    "xtype" : "Column",
+                                    "$ xns" : "Roo.form",
+                                    "width" : 500,
+                                    "items" : [
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Company ID (for filing Ref.)",
-                                            "name": "code",
-                                            "qtip": "Enter code",
-                                            "width": 100,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Company ID (for filing Ref.)",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 100,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "code",
+                                            "qtip" : "Enter code"
                                         },
                                         {
-                                            "listeners": {
-                                                "render": "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
+                                            "listeners" : {
+                                                "render" : "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
                                             },
-                                            "alwaysQuery": true,
-                                            "displayField": "display_name",
-                                            "emptyText": "Select Type",
-                                            "fieldLabel": "Type",
-                                            "forceSelection": true,
-                                            "hiddenName": "comptype",
-                                            "listWidth": 250,
-                                            "loadingText": "Searching...",
-                                            "minChars": 2,
-                                            "name": "comptype_display_name",
-                                            "pageSize": 20,
-                                            "qtip": "Select type",
-                                            "queryParam": "query[name]",
-                                            "selectOnFocus": true,
-                                            "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> : {display_name}</div>",
-                                            "triggerAction": "all",
-                                            "typeAhead": false,
-                                            "valueField": "name",
-                                            "width": 200,
-                                            "xtype": "ComboBox",
-                                            "|xns": "Roo.form",
-                                            "items": [
+                                            "alwaysQuery" : true,
+                                            "listWidth" : 250,
+                                            "triggerAction" : "all",
+                                            "fieldLabel" : "Type",
+                                            "forceSelection" : true,
+                                            "selectOnFocus" : true,
+                                            "pageSize" : 20,
+                                            "emptyText" : "Select Type",
+                                            "displayField" : "display_name",
+                                            "hiddenName" : "comptype",
+                                            "minChars" : 2,
+                                            "valueField" : "name",
+                                            "xtype" : "ComboBox",
+                                            "typeAhead" : false,
+                                            "width" : 200,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "comptype_display_name",
+                                            "qtip" : "Select type",
+                                            "queryParam" : "query[name]",
+                                            "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> : {display_name}</div>",
+                                            "loadingText" : "Searching...",
+                                            "items" : [
                                                 {
-                                                    "listeners": {
-                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    //o.params['query[empty_etype]'] = 1;\n    o.params.etype = 'COMPTYPE';\n}\n"
+                                                    "listeners" : {
+                                                        "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    //o.params['query[empty_etype]'] = 1;\n    o.params.etype = 'COMPTYPE';\n}\n"
                                                     },
-                                                    "*prop": "store",
-                                                    "remoteSort": true,
-                                                    "xtype": "Store",
-                                                    "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                                    "|xns": "Roo.data",
-                                                    "items": [
+                                                    "xtype" : "Store",
+                                                    "remoteSort" : true,
+                                                    "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
+                                                    "$ xns" : "Roo.data",
+                                                    "* prop" : "store",
+                                                    "items" : [
                                                         {
-                                                            "*prop": "proxy",
-                                                            "xtype": "HttpProxy",
-                                                            "method": "GET",
-                                                            "|xns": "Roo.data",
-                                                            "|url": "baseURL + '/Roo/core_enum.php'"
+                                                            "$ url" : "baseURL + '/Roo/core_enum.php'",
+                                                            "method" : "GET",
+                                                            "xtype" : "HttpProxy",
+                                                            "$ xns" : "Roo.data",
+                                                            "* prop" : "proxy"
                                                         },
                                                         {
-                                                            "*prop": "reader",
-                                                            "id": "id",
-                                                            "root": "data",
-                                                            "totalProperty": "total",
-                                                            "xtype": "JsonReader",
-                                                            "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
-                                                            "|xns": "Roo.data"
+                                                            "id" : "id",
+                                                            "root" : "data",
+                                                            "xtype" : "JsonReader",
+                                                            "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+                                                            "$ xns" : "Roo.data",
+                                                            "* prop" : "reader",
+                                                            "totalProperty" : "total"
                                                         }
                                                     ]
                                                 }
                                             ]
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Company Name",
-                                            "name": "name",
-                                            "qtip": "Enter Company Name",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Company Name",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "name",
+                                            "qtip" : "Enter Company Name"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Phone",
-                                            "name": "tel",
-                                            "qtip": "Enter Phone Number",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Phone",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "tel",
+                                            "qtip" : "Enter Phone Number"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Fax",
-                                            "name": "fax",
-                                            "qtip": "Enter Fax Number",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Fax",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "fax",
+                                            "qtip" : "Enter Fax Number"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Email",
-                                            "name": "email",
-                                            "qtip": "Enter Email Address",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Email",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "email",
+                                            "qtip" : "Enter Email Address"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Url",
-                                            "name": "url",
-                                            "qtip": "Enter Url",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Url",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "url",
+                                            "qtip" : "Enter Url"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Address",
-                                            "name": "address",
-                                            "qtip": "Enter Address",
-                                            "width": 300,
-                                            "xtype": "TextField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Address",
+                                            "xtype" : "TextField",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "name" : "address",
+                                            "qtip" : "Enter Address"
                                         },
                                         {
-                                            "allowBlank": true,
-                                            "fieldLabel": "Remarks",
-                                            "height": 120,
-                                            "name": "remarks",
-                                            "qtip": "Enter remarks",
-                                            "width": 300,
-                                            "xtype": "TextArea",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Remarks",
+                                            "xtype" : "TextArea",
+                                            "allowBlank" : true,
+                                            "width" : 300,
+                                            "$ xns" : "Roo.form",
+                                            "height" : 120,
+                                            "name" : "remarks",
+                                            "qtip" : "Enter remarks"
                                         }
                                     ]
                                 },
                                 {
-                                    "labelAlign": "top",
-                                    "width": 200,
-                                    "xtype": "Column",
-                                    "|xns": "Roo.form",
-                                    "items": [
+                                    "labelAlign" : "top",
+                                    "xtype" : "Column",
+                                    "width" : 200,
+                                    "$ xns" : "Roo.form",
+                                    "items" : [
                                         {
-                                            "fieldLabel": "Background Colour",
-                                            "name": "background_color",
-                                            "xtype": "ColorField",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Background Colour",
+                                            "xtype" : "ColorField",
+                                            "$ xns" : "Roo.form",
+                                            "name" : "background_color"
                                         },
                                         {
-                                            "fieldLabel": "Logo Image",
-                                            "height": 170,
-                                            "icon": "rootURL + 'images/default/dd/drop-add.gif'",
-                                            "name": "logo_id",
-                                            "style": "border: 1px solid #ccc;",
-                                            "width": 170,
-                                            "xtype": "DisplayField",
-                                            "|valueRenderer": "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<img src=\"{0}\" width=\"150\">', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg'\n    );\n}",
-                                            "|xns": "Roo.form"
+                                            "fieldLabel" : "Logo Image",
+                                            "style" : "border: 1px solid #ccc;",
+                                            "xtype" : "DisplayField",
+                                            "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{2}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/Thumb/'+v+'/logo.jpg',            \n    );\n}",
+                                            "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
+                                            "width" : 170,
+                                            "$ xns" : "Roo.form",
+                                            "height" : 170,
+                                            "name" : "logo_id"
                                         },
                                         {
-                                            "listeners": {
-                                                "click": "function (_self, e)\n{\n    var _t = _this.form.findField('logo_id');\n                         \n    Pman.Dialog.Image.show({\n        onid :_this.data.id,\n        ontable : 'Companies',\n        imgtype : 'LOGO'\n    }, function(data) {\n        if  (data) {\n            _t.setValue(data.id);\n        }\n        \n    });\n}"
+                                            "listeners" : {
+                                                "click" : "function (_self, e)\n{\n    var _t = _this.form.findField('logo_id');\n                         \n    Pman.Dialog.Image.show({\n        onid :_this.data.id,\n        ontable : 'Companies',\n        imgtype : 'LOGO'\n    }, function(data) {\n        if  (data) {\n            _t.setValue(data.id);\n        }\n        \n    });\n}"
                                             },
-                                            "text": "Add Image",
-                                            "xtype": "Button",
-                                            "|xns": "Roo"
+                                            "text" : "Add Image",
+                                            "xtype" : "Button",
+                                            "$ xns" : "Roo"
                                         }
                                     ]
                                 },
                                 {
-                                    "name": "id",
-                                    "xtype": "Hidden",
-                                    "|xns": "Roo.form"
+                                    "xtype" : "Hidden",
+                                    "$ xns" : "Roo.form",
+                                    "name" : "id"
                                 }
                             ]
                         }
                     ]
                 },
                 {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+                    "listeners" : {
+                        "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
                     },
-                    "*prop": "buttons[]",
-                    "text": "Cancel",
-                    "xtype": "Button",
-                    "|xns": "Roo"
+                    "text" : "Cancel",
+                    "xtype" : "Button",
+                    "$ xns" : "Roo",
+                    "* prop" : "buttons[]"
                 },
                 {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+                    "listeners" : {
+                        "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
                     },
-                    "*prop": "buttons[]",
-                    "text": "Save",
-                    "xtype": "Button",
-                    "|xns": "Roo"
+                    "text" : "Save",
+                    "xtype" : "Button",
+                    "$ xns" : "Roo",
+                    "* prop" : "buttons[]"
                 }
             ]
         }
-    ],
-    "permname": "",
-    "modOrder": "001"
+    ]
 }
