@@ -200,7 +200,7 @@
                                             "fieldLabel" : "Logo Image",
                                             "style" : "border: 1px solid #ccc;",
                                             "xtype" : "DisplayField",
-                                            "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{2}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/Thumb/'+v+'/logo.jpg',            \n    );\n}",
+                                            "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{2}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/Thumb/'+v+'/logo.jpg'           \n    );\n}",
                                             "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
                                             "width" : 170,
                                             "$ xns" : "Roo.form",
