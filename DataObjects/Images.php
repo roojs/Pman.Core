@@ -270,6 +270,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     /// ctrl not used??
     function onUpload($roo)
     {
+        print_r('onUPload');
 //        echo $_FILES['imageUpload']['type'];exit;
         if (empty($_FILES['imageUpload']['tmp_name']) || 
             empty($_FILES['imageUpload']['name']) || 
