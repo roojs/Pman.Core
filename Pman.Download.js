@@ -115,7 +115,7 @@ Pman.Download = function(cfg)
         
         
     }
-    
+    Roo.log(this.timeout || 30000);
     (function() {
         this.submit = true;
         this.form.dom.submit();
