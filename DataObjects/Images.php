@@ -107,7 +107,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function createFrom($file, $filename=false)
     {
-        print_r('createfrom');exit;
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             return false;
@@ -234,7 +233,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function onUploadWithTbl($tbl,  $fld)
     {
-        print_r('onUploadWithTbl');
         if ( $tbl->__table == 'Images') {
             return; // not upload to self...
         }
@@ -270,7 +268,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     /// ctrl not used??
     function onUpload($roo)
     {
-        print_r('onUPload');
 //        echo $_FILES['imageUpload']['type'];exit;
         if (empty($_FILES['imageUpload']['tmp_name']) || 
             empty($_FILES['imageUpload']['name']) || 
