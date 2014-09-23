@@ -282,7 +282,7 @@ class Pman_Core_Mailer {
         ///$recipents = array($this->email);
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         //print_R($mailOptions);exit;
-        $mail = Mail::factory("SMTP",$mailOptions);
+        $mail = Mail::factory($this->mail_method,$mailOptions);
         if ($this->debug) {
             $mail->debug = $this->debug;
         }
