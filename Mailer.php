@@ -279,6 +279,10 @@ class Pman_Core_Mailer {
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         //print_R($mailOptions);exit;
         $mail = Mail::factory("SMTP",$mailOptions);
+        if ($this->debug) {
+            $mail->debug = $this->debug;
+        }
+        
         $email['headers']['Date'] = date('r'); 
         if (PEAR::isError($mail)) {
             $pg->addEvent("COREMAILER-FAIL",  false, "mail factory failed"); 
