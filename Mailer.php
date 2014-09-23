@@ -31,6 +31,7 @@
           mimetype : 
         ), 
         ......
+        mail_method : (SMTP or SMTPMX)
   
     )
  *
