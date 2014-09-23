@@ -282,6 +282,12 @@ class Pman_Core_Mailer {
         ///$recipents = array($this->email);
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         //print_R($mailOptions);exit;
+        
+        if ($this->mail_method == 'SMTPMX' && empty($mailOptions['mailname'])) {
+            $pg->jerr("Mail[mailname] is not set - this is required for SMTPMX");
+            
+        }
+        
         $mail = Mail::factory($this->mail_method,$mailOptions);
         if ($this->debug) {
             $mail->debug = $this->debug;
