@@ -261,7 +261,7 @@ class Pman_Core_Mailer {
             'recipents' => $parts[0],
             'headers' => $parts[1],
             'body' => $parts[2],
-            '_mailer' => $this
+            'mailer' => $this
         );
     }
     function send($email = false)
