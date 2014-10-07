@@ -191,7 +191,28 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
+            
+            
+            // check to see if the class has
+            
+            
+            
+            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
+            if($module != 'Core' && file_exists($file)){
+                
+                require_once $file;
+                $class = "Pman_{$module}_UpdateDatabase";
+                $x = new $class;
+                if(method_exists($x, 'importSQL')){
+                    echo "Importing SQL from module $m using Module::importSQL\n";
+                    $x->importSQL();
+                    continue;
+                }
+            };
+
             echo "Importing SQL from module $m\n";
+            
+            
             // if init has been called
             // look in pgsql.ini
             if (!empty($this->opts['init'])) {
