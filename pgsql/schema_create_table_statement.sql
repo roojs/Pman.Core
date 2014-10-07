@@ -91,7 +91,7 @@ BEGIN
                       column_record.iline;
          
     END LOOP;
-
+  v_table_ddl:= v_table_ddl||chr(10);
     -- constraints...
      FOR column_record IN 
         
