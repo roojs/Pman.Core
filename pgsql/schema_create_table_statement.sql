@@ -4,7 +4,7 @@ $BODY$
 DECLARE
     v_table_ddl   text;
     column_record record;
-    v_colname text;
+    v_schema text;
 BEGIN
     FOR column_record IN 
         SELECT 
@@ -60,7 +60,7 @@ BEGIN
             
         END IF;
         -- what does this do?
-        
+        v_schema := column_record.schema_name;
          
         IF column_record.attnum <= column_record.max_attnum THEN
             v_table_ddl:= v_table_ddl||chr(10)||
@@ -68,6 +68,49 @@ BEGIN
                      ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null || ';';
         END IF;
     END LOOP;
+    
+    FOR column_record IN 
+        
+        c.relname as iname,
+        CASE c.relkind
+            WHEN 'r' THEN 'table'
+            WHEN 'v' THEN 'view'
+            WHEN 'i' THEN 'index'
+            WHEN 'S' THEN 'sequence'
+            WHEN 's' THEN 'special' END as itype,
+          
+            c2.relname as itable
+        FROM pg_catalog.pg_class c
+             JOIN pg_catalog.pg_index i ON i.indexrelid = c.oid
+             JOIN pg_catalog.pg_class c2 ON i.indrelid = c2.oid
+             LEFT JOIN pg_catalog.pg_user u ON u.usesysid = c.relowner
+             LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+        WHERE c.relkind IN ('i','')
+            AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
+            AND c2.pg_table_is_visible(c.oid)
+            AND c2.relname  = p_table_name
+        
+    LOOP
+         
+            v_table_ddl:= v_table_ddl||chr(10)||
+                     'CREATE INDEX ' ||  column_record.iname || 'ON '||v_schema||'.'||p_table_name|
+                     ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null || ';';
+        END IF;
+    END LOOP;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     --v_table_ddl:=v_table_ddl||');';
     RETURN v_table_ddl;
