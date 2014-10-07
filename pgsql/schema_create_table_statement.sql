@@ -66,7 +66,7 @@ BEGIN
         END IF;
     END LOOP;
 
-    v_table_ddl:=v_table_ddl||');';
+    --v_table_ddl:=v_table_ddl||');';
     RETURN v_table_ddl;
 END;
 $BODY$
