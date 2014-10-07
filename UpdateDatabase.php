@@ -206,6 +206,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 if(method_exists($x, 'importModuleSQL')){
                     echo "Importing SQL from module $m using Module::importModuleSQL\n";
                     $x->opts = $this->opts();
+                    $x->rootDir = $this->rootDir;
                     $x->importModuleSQL();
                     continue;
                 }
