@@ -62,7 +62,8 @@ BEGIN
         
         IF column_record.attnum <= column_record.max_attnum THEN
             v_table_ddl:= v_table_ddl||chr(10)||
-                     'ALTER TABLE  '||column_record.schema_name||'.'||column_record.table_name|| ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null;
+                     'ALTER TABLE  '||column_record.schema_name||'.'||column_record.table_name||
+                     ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null || ";";
         END IF;
     END LOOP;
 
