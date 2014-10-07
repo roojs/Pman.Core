@@ -218,7 +218,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 HTML_FlexyFramework::get()->generateDataobjectsCache(true);
                 
                 $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}.initdata");
-                $this->fixSequencesPgsql();
+                $this->{'fixSequences'. $dbtype}();
                 
             }
               
