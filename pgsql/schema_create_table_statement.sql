@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION generate_create_table_statement(p_table_name varchar)
+CREATE OR REPLACE FUNCTION schema_create_table_statement(p_table_name varchar)
   RETURNS text AS
 $BODY$
 DECLARE
@@ -54,7 +54,7 @@ BEGIN
         ORDER BY a.attnum
     LOOP
         IF column_record.attnum = 1 THEN
-            v_table_ddl:='CREATE TABLE '||column_record.schema_name||'.'||column_record.table_name||' (';
+            v_table_ddl:='CREATE TABLE '||column_record.schema_name||'.'||column_record.table_name||' ();';
         ELSE
             v_table_ddl:=v_table_ddl||',';
         END IF;
