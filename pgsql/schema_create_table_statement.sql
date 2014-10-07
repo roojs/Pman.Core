@@ -4,6 +4,7 @@ $BODY$
 DECLARE
     v_table_ddl   text;
     column_record record;
+    v_colname text;
 BEGIN
     FOR column_record IN 
         SELECT 
@@ -60,6 +61,7 @@ BEGIN
         END IF;
         -- what does this do?
         
+         
         IF column_record.attnum <= column_record.max_attnum THEN
             v_table_ddl:= v_table_ddl||chr(10)||
                      'ALTER TABLE  '||column_record.schema_name||'.'||column_record.table_name||
