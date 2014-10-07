@@ -203,9 +203,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 require_once $file;
                 $class = "Pman_{$module}_UpdateDatabase";
                 $x = new $class;
-                if(method_exists($x, 'importSQL')){
-                    echo "Importing SQL from module $m using Module::importSQL\n";
-                    $x->importSQL();
+                if(method_exists($x, 'importModuleSQL')){
+                    echo "Importing SQL from module $m using Module::importModuleSQL\n";
+                    $x->importModuleSQL();
                     continue;
                 }
             };
