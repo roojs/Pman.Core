@@ -175,7 +175,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $url = parse_url($ff->DB_DataObject['database']);
         
-        $this->{'import' . $url['scheme']}($url);
+        //$this->{'import' . $url['scheme']}($url);
         
         $dbtype = $url['scheme'];
         $dirmethod = 'import' . $url['scheme'] . '.dir';
