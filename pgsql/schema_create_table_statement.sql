@@ -111,7 +111,7 @@ BEGIN
          
             v_table_ddl:= v_table_ddl||chr(10)||
                       'ALTER TABLE ' ||v_schema||'.'||p_table_name||' ADD CONSTRAINT ' || column_record.constraint_name ||
-                          ' FOREIGN KEY (' || column_record.column_name || ') REFERENCES ' || foreign_table_name || '(' || foreign_column_name || ') MATCH SIMPLE';
+                          ' FOREIGN KEY (' || column_record.column_name || ') REFERENCES ' || column_record.foreign_table_name || '(' || column_record.foreign_column_name || ') MATCH SIMPLE';
          
     END LOOP;
 
