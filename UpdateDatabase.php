@@ -168,11 +168,17 @@ class Pman_Core_UpdateDatabase extends Pman
     function importSQL()
     {
         
+        // loop through all the modules, and see if they have a importSQL method?
+        
+        
         $ff = HTML_Flexyframework::get();
         
         $url = parse_url($ff->DB_DataObject['database']);
         
         $this->{'import' . $url['scheme']}($url);
+        
+        
+        
         
     }
     
@@ -539,6 +545,41 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
+    
+    function runModulesImportSQL()
+    {
+        
+        
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+        echo "Running runModulesImportSQL\n";
+         
+        
+        echo "Running importSQL on modules\n";
+        // runs core...
+        echo "Core\n";
+        $this->updateData(); 
+        $modules = array_reverse($this->modulesList());
+        
+        // move 'project' one to the end...
+        
+        foreach ($modules as $module){
+            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
+            if($module == 'Core' || !file_exists($file)){
+                continue;
+            }
+            
+            require_once $file;
+            $class = "Pman_{$module}_UpdateDatabase";
+            $x = new $class;
+            if(!method_exists($x, 'updateData')){
+                continue;
+            };
+            echo "$module\n";
+            $x->updateData();
+        }
+                
+    }
+    
     
     function runUpdateModulesData()
     {
