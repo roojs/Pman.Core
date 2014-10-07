@@ -70,43 +70,27 @@ BEGIN
     END LOOP;
     
     FOR column_record IN 
-        
-        c.relname as iname,
-        CASE c.relkind
-            WHEN 'r' THEN 'table'
-            WHEN 'v' THEN 'view'
-            WHEN 'i' THEN 'index'
-            WHEN 'S' THEN 'sequence'
-            WHEN 's' THEN 'special' END as itype,
-          
-            c2.relname as itable
-        FROM pg_catalog.pg_class c
-             JOIN pg_catalog.pg_index i ON i.indexrelid = c.oid
-             JOIN pg_catalog.pg_class c2 ON i.indrelid = c2.oid
-             LEFT JOIN pg_catalog.pg_user u ON u.usesysid = c.relowner
-             LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
-        WHERE c.relkind IN ('i','')
-            AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
-            AND pg_catalog.pg_table_is_visible(c.oid)
-            AND c2.relname  = p_table_name
-        
+        SELECT
+                c.oid,
+                c.relname,
+                a.attname,
+                a.attnum,
+                CASE
+                    WHEN i.indisprimary THEN 'ALTER TABLE '||v_schema||'.'||p_table_name||' ADD CONSTRAINT ' || c.relname || ' PRIMARY KEY (' || c.attname || ');'
+                    ELSE
+                    WHEN i.indisunique THEN 'CREATE UNIQUE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || );'
+                    ELSE
+                    'CREATE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || );'
+                END as iline
+            FROM pg_index AS i, pg_class AS c, pg_attribute AS a
+            WHERE i.indexrelid = c.oid AND i.indexrelid = a.attrelid AND i.indrelid = (v_schema|| '.' || p_table_name)::regclass
+
     LOOP
          
             v_table_ddl:= v_table_ddl||chr(10)||
-                     'CREATE INDEX ' ||  column_record.iname || 'ON '||v_schema||'.'||p_table_name|
-                     ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null || ';';
+                      column.record.iline;
         END IF;
     END LOOP;
-
-
-
-
-
-
-
-
-
-
 
 
 
