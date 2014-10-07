@@ -56,7 +56,7 @@ BEGIN
         IF column_record.attnum = 1 THEN
             v_table_ddl:='CREATE TABLE '||column_record.schema_name||'.'||column_record.table_name||' ();';
         ELSE
-            v_table_ddl:=v_table_ddl||',';
+            v_table_ddl:= 'ALTER TABLE '||column_record.schema_name||'.'||column_record.table_name|| ' ADD COLUMN ' || v_table_ddl||';';
         END IF;
 
         IF column_record.attnum <= column_record.max_attnum THEN
