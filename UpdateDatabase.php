@@ -772,6 +772,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
+    function fixSequencesMysql()
+    {
+        // not required...
+    }
+    
     function fixSequencesPgsql()
     {
      
