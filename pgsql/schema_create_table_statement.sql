@@ -56,7 +56,7 @@ BEGIN
         IF column_record.attnum = 1 THEN
             v_table_ddl:='CREATE TABLE '||column_record.schema_name||'.'||column_record.table_name||' ();'||chr(10)||chr(10);
         ELSE
-            v_table_ddl:= '';
+            
         END IF;
         -- what does this do?
         
