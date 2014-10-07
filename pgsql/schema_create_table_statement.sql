@@ -88,7 +88,7 @@ BEGIN
     LOOP
          
             v_table_ddl:= v_table_ddl||chr(10)||
-                      column.record.iline;
+                      column_record.iline;
         END IF;
     END LOOP;
 
