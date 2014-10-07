@@ -71,3 +71,6 @@ BEGIN
 END;
 $BODY$
   LANGUAGE 'plpgsql' COST 100.0 SECURITY INVOKER;
+  
+SELECT schema_create_table_statement('item');
+  
