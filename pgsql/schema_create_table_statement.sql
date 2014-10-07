@@ -92,6 +92,15 @@ BEGIN
          
     END LOOP;
 
+    -- constraints...
+    
+
+
+
+
+
+
+
 
     v_table_ddl:= v_table_ddl||chr(10);
 
