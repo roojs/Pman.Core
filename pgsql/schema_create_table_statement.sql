@@ -87,7 +87,7 @@ BEGIN
              LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
         WHERE c.relkind IN ('i','')
             AND n.nspname NOT IN ('pg_catalog', 'pg_toast')
-            AND c2.pg_table_is_visible(c.oid)
+            AND pg_catalog.pg_table_is_visible(c.oid)
             AND c2.relname  = p_table_name
         
     LOOP
