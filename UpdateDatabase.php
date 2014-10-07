@@ -182,64 +182,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
-    /**
-     * mysql - does not support conversions.
-     * 
-     *
-     */
-    
-    
-    function importmysqldir($dburl, $dir)
-    {
-        echo "Import MYSQL :: $dir\n";
-        
-        
-        require_once 'System.php';
-        $cat = System::which('cat');
-        $mysql = System::which('mysql');
-        
-       
-           
-        $mysql_cmd = $mysql .
-            ' -h ' . $dburl['host'] .
-            ' -u' . escapeshellarg($dburl['user']) .
-            (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
-            ' ' . basename($dburl['path']);
-        //echo $mysql_cmd . "\n" ;
-        
-        $files = glob($dir.'/*.sql');
-        uksort($files, 'strcasecmp');
-        
-       
-        foreach($files as $fn) {
-                
-                 
-                if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
-                    continue;
-                }
-                // .my.sql but not .pg.sql
-                if (preg_match('#\.[a-z]{2}\.sql#i', basename($fn))
-                    && !preg_match('#\.my\.sql#i', basename($fn))
-                ) { // skip migration scripts at present..
-                    continue;
-                }
-                if (!strlen(trim($fn))) {
-                    continue;
-                }
-                
-                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
-                
-                echo basename($dir).'/'. basename($fn) .    '::' .  $cmd. ($this->cli ? "\n" : "<BR>\n");
-                
-                passthru($cmd);
-            
-                
-        }
-       
-        
-        
-    }
-    
     
     
     function importmysql($dburl)
@@ -330,6 +272,9 @@ class Pman_Core_UpdateDatabase extends Pman
        
           
     }
+    /** -------------- code to handle importing a whole directory of files into the database  -------  **/
+    
+    
     function importpgsqldir($url, $dir, $disable_triggers = false)
     {
         require_once 'System.php';
@@ -395,6 +340,67 @@ class Pman_Core_UpdateDatabase extends Pman
              
         
     }
+    
+    
+    /**
+     * mysql - does not support conversions.
+     * 
+     *
+     */
+    
+    
+    function importmysqldir($dburl, $dir)
+    {
+        echo "Import MYSQL :: $dir\n";
+        
+        
+        require_once 'System.php';
+        $cat = System::which('cat');
+        $mysql = System::which('mysql');
+        
+       
+           
+        $mysql_cmd = $mysql .
+            ' -h ' . $dburl['host'] .
+            ' -u' . escapeshellarg($dburl['user']) .
+            (!empty($dburl['pass']) ? ' -p' . escapeshellarg($dburl['pass'])  :  '') .
+            ' ' . basename($dburl['path']);
+        //echo $mysql_cmd . "\n" ;
+        
+        $files = glob($dir.'/*.sql');
+        uksort($files, 'strcasecmp');
+        
+       
+        foreach($files as $fn) {
+                
+                 
+                if (preg_match('/migrate/i', basename($fn))) { // skip migration scripts at present..
+                    continue;
+                }
+                // .my.sql but not .pg.sql
+                if (preg_match('#\.[a-z]{2}\.sql#i', basename($fn))
+                    && !preg_match('#\.my\.sql#i', basename($fn))
+                ) { // skip migration scripts at present..
+                    continue;
+                }
+                if (!strlen(trim($fn))) {
+                    continue;
+                }
+                
+                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
+                
+                echo basename($dir).'/'. basename($fn) .    '::' .  $cmd. ($this->cli ? "\n" : "<BR>\n");
+                
+                passthru($cmd);
+            
+                
+        }
+       
+        
+        
+    }
+    
+    
     /**
      * simple regex based convert mysql to pgsql...
      */
@@ -545,50 +551,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
-    /**
-     *
-     * modular import of SQL.
-     * -- if a module implements importSQL
-     *   - then we should not run the import SQL on the children of that folder as it is handled by the module.
-     *   
-     *
-     */
-    function runModulesImportSQL()
-    {
-        
-        
-        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
-        echo "Running runModulesImportSQL\n";
-         
-        
-        echo "Running importSQL on modules\n";
-        // runs core...
-        echo "Core\n";
-        
-        
-        $modules = array_reverse($this->modulesList());
-        
-        // move 'project' one to the end...
-        
-        foreach ($modules as $module){
-            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
-            if($module == 'Core' || !file_exists($file)){
-                continue;
-            }
-            
-            require_once $file;
-            $class = "Pman_{$module}_UpdateDatabase";
-            $x = new $class;
-            if(!method_exists($x, 'updateData')){
-                continue;
-            };
-            echo "$module\n";
-            $x->updateData();
-        }
-        
-        
-                
-    }
+    
     
     
     function runUpdateModulesData()
