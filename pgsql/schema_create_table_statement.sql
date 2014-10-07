@@ -68,7 +68,7 @@ BEGIN
                      ' ADD COLUMN ' ||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null || ';';
         END IF;
     END LOOP;
-    
+      v_table_ddl:= v_table_ddl||chr(10);
     FOR column_record IN 
         SELECT
                 c.oid,
@@ -93,7 +93,7 @@ BEGIN
     END LOOP;
 
 
-
+    v_table_ddl:= v_table_ddl||chr(10);
 
 
     --v_table_ddl:=v_table_ddl||');';
