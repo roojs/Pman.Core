@@ -173,12 +173,12 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $ff = HTML_Flexyframework::get();
         
-        $url = parse_url($ff->DB_DataObject['database']);
+        $dburl = parse_url($ff->DB_DataObject['database']);
         
         //$this->{'import' . $url['scheme']}($url);
         
-        $dbtype = $url['scheme'];
-        $dirmethod = 'import' . $url['scheme'] . '.dir';
+        $dbtype = $dburl['scheme'];
+        $dirmethod = 'import' . $dburl['scheme'] . '.dir';
         
         
        
@@ -207,7 +207,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     echo "Importing SQL from module $m using Module::importModuleSQL\n";
                     $x->opts = $this->opts();
                     $x->rootDir = $this->rootDir;
-                    $x->importModuleSQL();
+                    $x->importModuleSQL($dburl);
                     continue;
                 }
             };
