@@ -545,7 +545,14 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
-    
+    /**
+     *
+     * modular import of SQL.
+     * -- if a module implements importSQL
+     *   - then we should not run the import SQL on the children of that folder as it is handled by the module.
+     *   
+     *
+     */
     function runModulesImportSQL()
     {
         
@@ -557,7 +564,8 @@ class Pman_Core_UpdateDatabase extends Pman
         echo "Running importSQL on modules\n";
         // runs core...
         echo "Core\n";
-        $this->updateData(); 
+        
+        
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
@@ -577,6 +585,8 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "$module\n";
             $x->updateData();
         }
+        
+        
                 
     }
     
