@@ -772,6 +772,9 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
+    
+    /** ------------- schema fixing ... there is an issue with data imported having the wrong sequence names... --- */
+    
     function fixSequencesMysql()
     {
         // not required...
