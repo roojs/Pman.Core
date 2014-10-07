@@ -258,6 +258,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importpgsqldir($url, $dir, $disable_triggers = false)
     {
+        $ff = HTML_FlexyFramework::get();
+        
         require_once 'System.php';
         $cat = System::which('cat');
         $psql = System::which('psql');
@@ -313,7 +315,7 @@ class Pman_Core_UpdateDatabase extends Pman
 
             $cmd = "$psql_cmd  < " . escapeshellarg($fn ? $fn : $bfn) . ' 2>&1' ;
 
-            echo "$bfn:   $cmd ". ($this->cli ? "\n" : "<BR>\n");
+            echo "$bfn:   $cmd ". ($ff->cli ? "\n" : "<BR>\n");
 
 
             passthru($cmd);
