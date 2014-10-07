@@ -58,7 +58,8 @@ BEGIN
         ELSE
             v_table_ddl:= 'ALTER TABLE '||column_record.schema_name||'.'||column_record.table_name|| ' ADD COLUMN ' || v_table_ddl||';';
         END IF;
-
+        -- what does this do?
+        
         IF column_record.attnum <= column_record.max_attnum THEN
             v_table_ddl:=v_table_ddl||chr(10)||
                      '    '||column_record.column_name||' '||column_record.column_type||' '||column_record.column_default_value||' '||column_record.column_not_null;
