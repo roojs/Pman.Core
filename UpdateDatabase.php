@@ -177,10 +177,56 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->{'import' . $url['scheme']}($url);
         
+        $dbtype = $url['scheme'];
+        $dirmethod = 'import' . $url['scheme'] . '.dir';
         
         
+       
+        
+        $ar = $this->modulesList();
+       
+        
+        foreach($ar as $m) {
+             echo "Importing SQL from module $m\n";
+            if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
+                continue;
+            }
+            echo "Importing SQL from module $m\n";
+            // if init has been called
+            // look in pgsql.ini
+            if (!empty($this->opts['init'])) {
+                $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}.init");
+                
+            }
+            
+            
+            
+            $fd = $this->rootDir. "/Pman/$m/DataObjects";
+            
+            $this->{$dirmethod}($dburl, $fd);
+            
+            // new -- sql directory..
+            // new style will not support migrate ... they have to go into mysql-migrate.... directories..
+            // new style will not support pg.sql etc.. naming - that's what the direcotries are for..
+            
+            $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/sql");
+            $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}");
+            
+            
+            
+            if (!empty($this->opts['init']) && file_exists($this->rootDir. "/Pman/$m/{$dbtype}.initdata")) {
+                HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+                
+                $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}.initdata");
+                $this->fixSequencesPgsql();
+                
+            }
+              
+            
+        }
         
     }
+    
     
     
     
