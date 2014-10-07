@@ -78,9 +78,9 @@ BEGIN
                 CASE
                     WHEN i.indisprimary THEN 'ALTER TABLE '||v_schema||'.'||p_table_name||' ADD CONSTRAINT ' || c.relname || ' PRIMARY KEY (' || c.attname || ');'
                     ELSE
-                    WHEN i.indisunique THEN 'CREATE UNIQUE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || );'
+                    WHEN i.indisunique THEN 'CREATE UNIQUE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || ');'
                     ELSE
-                    'CREATE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || );'
+                    'CREATE INDEX '|| c.relname || ' ON ' ||v_schema||'.'||p_table_name||' USING btree (' || c.attname || ' );'
                 END as iline
             FROM pg_index AS i, pg_class AS c, pg_attribute AS a
             WHERE i.indexrelid = c.oid AND i.indexrelid = a.attrelid AND i.indrelid = (v_schema|| '.' || p_table_name)::regclass
