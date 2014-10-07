@@ -197,11 +197,11 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             
-            $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
-            if($module != 'Core' && file_exists($file)){
+            $file = $this->rootDir. "/Pman/$m/UpdateDatabase.php";
+            if($m != 'Core' && file_exists($file)){
                 
                 require_once $file;
-                $class = "Pman_{$module}_UpdateDatabase";
+                $class = "Pman_{$m}_UpdateDatabase";
                 $x = new $class;
                 if(method_exists($x, 'importModuleSQL')){
                     echo "Importing SQL from module $m using Module::importModuleSQL\n";
