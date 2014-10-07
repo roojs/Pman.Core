@@ -666,6 +666,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
+        
+        if (!empty($q['query']['is_owner'])) {
+            $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
+        }
+        
         if (!empty($q['query']['person_not_internal'])) {
             $this->whereAdd(" join_company_id_id.isOwner = 0 ");
         }
