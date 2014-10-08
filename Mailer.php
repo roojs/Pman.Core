@@ -315,8 +315,10 @@ class Pman_Core_Mailer {
                 'To: ' .  ( is_array($rcpts) ? implode(', ', $rcpts) : $rcpts ) .
                 'Subject: '  . @$email['headers']['Subject']
             ); 
-        }  
-       
+        }  else {
+            $pg->addEvent("COREMAILER-FAIL",  false, $res->toString());
+        }
+        
         return $ret;
     }
     
