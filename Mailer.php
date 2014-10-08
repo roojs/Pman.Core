@@ -316,7 +316,7 @@ class Pman_Core_Mailer {
                 'Subject: '  . @$email['headers']['Subject']
             ); 
         }  else {
-            $pg->addEvent("COREMAILER-FAIL",  false, $res->toString());
+            $pg->addEvent("COREMAILER-FAIL",  false, $ret->toString());
         }
         
         return $ret;
