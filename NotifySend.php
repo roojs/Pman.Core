@@ -334,7 +334,7 @@ class Pman_Core_NotifySend extends Pman
                     'localhost' => $ff->Mail['helo'],
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
-                    'debug' => $opts['debug'],
+                    'debug' => isset($opts['debug']) ?  1 : 0,
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
              
