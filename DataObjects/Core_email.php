@@ -309,7 +309,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             return $ret;
         }
         
-        return $r->send($ret);
+        return $r->send();
     }
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
