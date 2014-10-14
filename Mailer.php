@@ -290,6 +290,7 @@ class Pman_Core_Mailer {
         }
         
         $mail = Mail::factory($this->mail_method,$mailOptions);
+        print_R($mail);exit;
         if ($this->debug) {
             $mail->debug = $this->debug;
         }
