@@ -142,6 +142,8 @@ class Pman_Core_Mailer {
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
             $htmlbody =  $htmltemplate->bufferedOutputObject($content);
             
+            $this->htmlbody = $htmlbody;
+            
             // for the html body, we may want to convert the attachments to images.
 //            var_dump($htmlbody);exit;
             if ($this->replaceImages) {
