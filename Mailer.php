@@ -172,7 +172,6 @@ class Pman_Core_Mailer {
         require_once 'Mail.php';
         
         $decoder = new Mail_mimeDecode($mailtext);
-        print_r($decoder);exit;
         $parts = $decoder->getSendArray();
         if (PEAR::isError($parts)) {
             return $parts;
