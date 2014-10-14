@@ -269,7 +269,8 @@ class Pman_Core_Mailer {
         
         $pg = HTML_FlexyFramework::get()->page;
         
-        print_R($email);exit;
+        print_R($email);
+        print_R('run');exit;
         $email = is_array($email)  ? $email : $this->toData();
         if (is_a($email, 'PEAR_Error')) {
             $pg->addEvent("COREMAILER-FAIL",  false, "email toData failed"); 
