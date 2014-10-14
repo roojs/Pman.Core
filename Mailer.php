@@ -290,7 +290,6 @@ class Pman_Core_Mailer {
         }
         
         $mail = Mail::factory($this->mail_method,$mailOptions);
-        print_R($mail);exit;
         if ($this->debug) {
             $mail->debug = $this->debug;
         }
@@ -310,6 +309,7 @@ class Pman_Core_Mailer {
         
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
         $ret = $mail->send($rcpts,$email['headers'],$email['body']);
+        print_R($ret);exit;
         error_reporting($oe);
         if ($ret === true) { 
             $pg->addEvent("COREMAILER-SENT",  false,
