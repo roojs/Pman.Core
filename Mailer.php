@@ -247,7 +247,7 @@ class Pman_Core_Mailer {
             
             $isMime = true;
         }
-        print_R($mime);exit;
+        print_R($mime->get());exit;
         if($isMime){
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
