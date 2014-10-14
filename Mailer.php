@@ -161,7 +161,7 @@ class Pman_Core_Mailer {
         
         /* use variables from this object to ouput data. */
         $mailtext = $template->bufferedOutputObject($content);
-        print_r($mailtext);exit;
+        //print_r($mailtext);exit;
        
         
         
@@ -173,6 +173,7 @@ class Pman_Core_Mailer {
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        print_r($parts);exit;
         if (PEAR::isError($parts)) {
             return $parts;
             //echo "PROBLEM: {$parts->message}";
