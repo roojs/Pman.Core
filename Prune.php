@@ -46,12 +46,8 @@ class Pman_Core_Prune extends Pman
         //DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('reader_article');
         $f->query("
-            DELETE FROM reader_article where 
-                  fetched_dt < NOW() - INTERVAL {$inM} MONTH
-                  AND
-                  fetched
-                  AND
-                  views < 1
+            DELETE FROM Events where 
+                  event_when < NOW() - INTERVAL {$inM} MONTH
                   LIMIT 100000
         ");
         // pruning is for our press project - so we do not clean up dependant tables at present..
