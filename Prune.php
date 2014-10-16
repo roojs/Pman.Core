@@ -11,7 +11,7 @@ require_once 'Pman.php';
 class Pman_Core_Prune extends Pman
 {
     //put your code here
-    static $cli_desc = "COre Prune -- remove old event data (6 months is normally a good idea).";
+    static $cli_desc = "Core Prune -- remove old event data (6 months is normally a good idea).";
     static $cli_opts = array(
         'months' => array(
             'desc' => 'How many months',
