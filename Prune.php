@@ -52,13 +52,19 @@ class Pman_Core_Prune extends Pman
         ");
         // pruning is for our press project - so we do not clean up dependant tables at present..
         
-        
+        if (function_exists('posix_getpwuid')) {
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+         
+            $user = $uinfo['name'];
+        } else {
+            $user = getenv('USERNAME'); // windows.
+        }
         
         $ff = HTML_Flexyframework::get()->Pman;
         
         $y = date("Y");
         $m = date("m");
-        $rootDir = $ff['storedir'].'/rss';
+        $rootDir = $ff['storedir'].'/_events_/'.$user;
         
         $dirs = array_filter(glob($rootDir."/*"), 'is_dir');
         foreach($dirs as $d){
