@@ -80,7 +80,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $xpath = new DOMXpath($doc);
         
-        $elements = $xpath->query("//select[@name='exch']/option");
+        $elements = $xpath->query("//table[@id='converter_table']/table");
     }
     
     function curl($url, $request = array(), $method = 'GET') 
