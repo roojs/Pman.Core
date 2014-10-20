@@ -62,7 +62,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 'date1' => date('m/d/y', strtotime("-6 MONTH")),
                 'date'=> date('m/d/y'),
                 'date_fmt' => 'us',
-                'exch' => 'CNY',
+                'exch' => $c,
                 'expr' => 'USD',
                 'margin_fixed' => 0,
                 'format'=> 'HTML'
