@@ -65,7 +65,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 'exch' => $c,
                 'expr' => 'USD',
                 'margin_fixed' => 0,
-                'format'=> 'CSV'
+                'format'=> 'HTML'
             );
         }
         
@@ -82,11 +82,9 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $ts = $xpath->query("//td[@id='content_section']");
         
-        $elements = $xpath->query("table/tr/td/pre", $ts->item(0));
+        $elements = $xpath->query("/tr[2]", $ts->item(0));
         
-        $rate = array_map("str_getcsv", explode("\n", $elements->item(0)->nodeValue));
-        
-        print_r($rate);exit;
+        print_r($elements);exit;
         
     }
     
