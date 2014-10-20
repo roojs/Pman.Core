@@ -58,7 +58,12 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         $fromDate = date('m/d/y', strtotime("-6 MONTH"));
         $toDate = date('m/d/y');
         
+        $total = count($currency);
+        
         foreach ($currency as $k => $c){
+            
+            echo "\nProcessing Currency : $c        ($k / $total)";
+            
             $params = array(
                 'lang'          => 'en',
                 'result'        => 1,
