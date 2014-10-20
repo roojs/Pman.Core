@@ -6,3 +6,7 @@ CREATE  TABLE core_curr_rate (
     to DATETIME  NOT NULL DEFAULT '1900-01-01 00:00:00',
     PRIMARY KEY (id)
 );
+
+ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_curr_lookup (curr);
+ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_from_to_lookup (from, to);
+ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_lookup (curr, from, to);
