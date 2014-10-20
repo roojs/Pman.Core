@@ -60,15 +60,15 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         foreach ($currency as $c){
             $params = array(
-                'lang' => 'en',
-                'result' => 1,
-                'date1' => $fromDate,
-                'date'=> $toDate,
-                'date_fmt' => 'us',
-                'exch' => $c,
-                'expr' => 'USD',
-                'margin_fixed' => 0,
-                'format'=> 'HTML'
+                'lang'          => 'en',
+                'result'        => 1,
+                'date1'         => $fromDate,
+                'date'          => $toDate,
+                'date_fmt'      => 'us',
+                'exch'          => $c,
+                'expr'          => 'USD',
+                'margin_fixed'  => 0,
+                'format'        => 'HTML'
             );
             
             $response = $this->curl($this->actionUrl, $params, 'POST');
@@ -97,9 +97,9 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             }
             
             $curr->setForm(array(
-                'rate' => $rate,
-                'from' => 
-                
+                'rate'  => $rate,
+                'from'  => date('Y-m-d H:i:s', strtotime($fromDate),
+                'to'    => date('Y-m-d H:i:s', strtotime($toDate),
             ));
 
         }
