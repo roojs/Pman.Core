@@ -44,6 +44,10 @@ class Pman_Core_UpdateCurrencyRate extends Pman
 //            SUBMIT:Get Table
         );
         
+        $response = $this->curl($this->actionUrl, $params, 'POST');
+        
+        print_r($response);exit;
+        
     }
     
     function curl($url, $request = array(), $method = 'GET') 
