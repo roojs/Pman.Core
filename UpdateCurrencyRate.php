@@ -30,7 +30,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get()
     {
-        print_R(date('m/d/y'));exit;
+        print_r(date('m/d/y'));exit;
+        
         echo "obtain the currency lists... \n";
         
         $currency = array();
