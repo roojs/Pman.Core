@@ -29,6 +29,10 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     {
         echo"'update currency exchange rate \n";
         
+        $response = $this->curl($this->actionUrl, array(), 'GET');
+        file_put_contents('/tmp/test.html', $response);exit;
+        
+        
         $doc = new DOMDocument();
         $doc->loadHTML($response);
         
