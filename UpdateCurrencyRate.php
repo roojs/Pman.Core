@@ -29,9 +29,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     }
     
     function get()
-    {
-        echo "obtain the currency lists... \n";
-        
+    {   
         $currency = array();
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
@@ -62,7 +60,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         foreach ($currency as $k => $c){
             
-            echo "\nProcessing Currency : $c        ($k / $total)";
+            echo "\nProcessing Currency : $c        ($k / $total) \n";
             
             $params = array(
                 'lang'          => 'en',
