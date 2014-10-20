@@ -13,8 +13,8 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     public $id;
     public $curr;
     public $rate;
-    public $from;
-    public $to;
+    public $from_dt;
+    public $to_dt;
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
