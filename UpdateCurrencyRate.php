@@ -90,7 +90,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
 
             $curr = DB_DataObject::factory('core_curr_rate');
-            print_R($curr);exit;
+            
             $curr->curr = $c;
             
             $o = false;
@@ -98,7 +98,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             if($curr->find(true)){
                 $o = clone($curr);
             }
-            
+            print_R($curr);exit;
             $curr->setFrom(array(
                 'rate'  => $rate,
                 'from'  => date('Y-m-d H:i:s', strtotime($fromDate)),
