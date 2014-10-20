@@ -86,7 +86,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $rate = str_getcsv($elements->item(0)->nodeValue);
         
-        print_r($rate);exit;
+        print_r($rate,',');exit;
         
     }
     
