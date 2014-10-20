@@ -80,7 +80,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $xpath = new DOMXpath($doc);
         
-        $ts = $xpath->query("//table[@id='converter_table']");
+        $ts = $xpath->query("//td[@id='content_section']");
         
         $elements = $xpath->query("./div", $ts->item(0));
         
