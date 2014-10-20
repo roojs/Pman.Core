@@ -13,6 +13,9 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     var $actionUrl = 'http://www.oanda.com/currency/historical-rates-classic';
     
+    var $mapping = array(
+        'RMB' => 'CNY'
+    )
     
     function getAuth() 
     {
@@ -51,6 +54,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         if(empty($currency)){
             die('no any currency');
         }
+        
+        
         
         
 //        $params = array(
