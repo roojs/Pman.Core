@@ -36,12 +36,9 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             'date'=> '10/20/14',
             'date_fmt' => 'us',
             'exch' => 'CNY',
-            'exch2' => 'COP',
             'expr' => 'USD',
-            'expr2' => 'USD',
             'margin_fixed' => 0,
-            'format'=> 'HTML',
-//            SUBMIT:Get Table
+            'format'=> 'HTML'
         );
         
         $response = $this->curl($this->actionUrl, $params, 'POST');
