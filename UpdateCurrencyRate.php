@@ -56,8 +56,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         if(empty($currency)){
             die('no any currency');
         }
-        
-        foreach ($currency as $c){
+//        
+//        foreach ($currency as $c){
 //            $params = array(
 //                'lang' => 'en',
 //                'result' => 1,
@@ -69,7 +69,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
 //                'margin_fixed' => 0,
 //                'format'=> 'HTML'
 //            );
-        }
+//        }
         
         
         
