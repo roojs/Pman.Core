@@ -101,8 +101,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             
             $curr->setFrom(array(
                 'rate'  => $rate,
-                'from'  => date('Y-m-d H:i:s', strtotime($fromDate)),
-                'to'    => date('Y-m-d H:i:s', strtotime($toDate))
+                'from_dt'  => date('Y-m-d H:i:s', strtotime($fromDate)),
+                'to_dt'    => date('Y-m-d H:i:s', strtotime($toDate))
             ));
 
             (empty($o)) ? $curr->insert() : $curr->update($o);
