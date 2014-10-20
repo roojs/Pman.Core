@@ -96,7 +96,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 $o = clone($curr);
             }
             
-            $curr->setForm(array(
+            $curr->setFrom(array(
                 'rate'  => $rate,
                 'from'  => date('Y-m-d H:i:s', strtotime($fromDate)),
                 'to'    => date('Y-m-d H:i:s', strtotime($toDate))
