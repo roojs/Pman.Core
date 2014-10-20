@@ -84,7 +84,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $elements = $xpath->query("tbody", $ts->item(0));
         
-        print_r($ts->item(0)->firstChild->firstChild->getAttributes());
+        print_r($ts->item(0)->firstChild->firstChild->getAttribute('class'));
         
     }
     
