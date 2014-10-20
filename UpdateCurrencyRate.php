@@ -69,25 +69,18 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             );
         }
         
+        $response = $this->curl($this->actionUrl, $params, 'POST');
         
+        libxml_use_internal_errors (true);
         
+        $doc = new DOMDocument();
+        $doc->loadHTML($response);
         
-//        $params = array(
-//            'lang' => 'en',
-//            'result' => 1,
-//            'date1' => '10/14/14',
-//            'date'=> '10/20/14',
-//            'date_fmt' => 'us',
-//            'exch' => 'CNY',
-//            'expr' => 'USD',
-//            'margin_fixed' => 0,
-//            'format'=> 'HTML'
-//        );
-//        
-//        $response = $this->curl($this->actionUrl, $params, 'POST');
-//        
-//        file_put_contents('/tmp/test.html', $response);
+        libxml_use_internal_errors (false);
         
+        $xpath = new DOMXpath($doc);
+        
+        $elements = $xpath->query("//select[@name='exch']/option");
     }
     
     function curl($url, $request = array(), $method = 'GET') 
