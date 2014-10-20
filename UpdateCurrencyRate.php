@@ -89,29 +89,11 @@ class Pman_Core_UpdateCurrencyRate extends Pman
 
             $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
 
-            
+            $this->processCurrRate($c, $rate, $fromDate, $toDate);
             
             if(array_key_exists($c, $this->mapping)){
-                
-                $curr = DB_DataObject::factory('core_curr_rate');
-            
-                $curr->curr = $c;
-
-                $o = false;
-
-                if($curr->find(true)){
-                    $o = clone($curr);
-                }
-
-                $curr->setFrom(array(
-                    'rate'  => $rate,
-                    'from_dt'  => date('Y-m-d H:i:s', strtotime($fromDate)),
-                    'to_dt'    => date('Y-m-d H:i:s', strtotime($toDate))
-                ));
-
-                (empty($o)) ? $curr->insert() : $curr->update($o);
+                $this->processCurrRate($this->mapping[$c], $rate, $fromDate, $toDate);
             }
-            
         }
         
         $this->jok("DONE");
