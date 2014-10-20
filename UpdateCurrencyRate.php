@@ -67,22 +67,29 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 'margin_fixed' => 0,
                 'format'=> 'HTML'
             );
+            
+            $response = $this->curl($this->actionUrl, $params, 'POST');
+        
+            libxml_use_internal_errors (true);
+
+            $doc = new DOMDocument();
+            $doc->loadHTML($response);
+
+            libxml_use_internal_errors (false);
+
+            $xpath = new DOMXpath($doc);
+
+            $elements = $xpath->query("//td[@id='content_section']/table/tr[last()]/td/table/tr[1]/td[last()]");
+
+            $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
+
+            $curr = DB_DataObject::factory('core_curr_rate');
+            
+            $curr->setFrom(array(
+                
+            ));
+
         }
-        
-        $response = $this->curl($this->actionUrl, $params, 'POST');
-        
-        libxml_use_internal_errors (true);
-        
-        $doc = new DOMDocument();
-        $doc->loadHTML($response);
-        
-        libxml_use_internal_errors (false);
-        
-        $xpath = new DOMXpath($doc);
-        
-        $elements = $xpath->query("//td[@id='content_section']/table/tr[last()]/td/table/tr[1]/td[last()]");
-        
-        $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
         
         
         
