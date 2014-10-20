@@ -106,6 +106,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             
         }
         
+        
+        
     }
     
     function curl($url, $request = array(), $method = 'GET') 
