@@ -106,6 +106,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             ));
 
             (empty($o)) ? $curr->insert() : $curr->update($o);
+            print_R($curr);exit;
             $this->jok("DONE");
         }
         
