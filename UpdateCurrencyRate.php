@@ -7,6 +7,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     static $cli_desc = "Update Currency Exchange Rate";
     
+    static $cli_opts = array();
+    
     var $cli = false; 
     
     function getAuth() 
