@@ -30,14 +30,19 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         echo"'update currency exchange rate \n";
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
-        file_put_contents('/tmp/test.html', $response);exit;
-        
         
         $doc = new DOMDocument();
         $doc->loadHTML($response);
         
         $xpath = new DOMXpath($doc);
         
+        $elements = $xpath->query("/html/body/select[@name='exch']");
+        
+        foreach($elements as $el) {
+            print_r($el);
+            echo "\n";
+        }
+        exit;
 //        $params = array(
 //            'lang' => 'en',
 //            'result' => 1,
