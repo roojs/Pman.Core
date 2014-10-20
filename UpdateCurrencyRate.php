@@ -98,8 +98,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             
             $curr->setForm(array(
                 'rate'  => $rate,
-                'from'  => date('Y-m-d H:i:s', strtotime($fromDate),
-                'to'    => date('Y-m-d H:i:s', strtotime($toDate),
+                'from'  => date('Y-m-d H:i:s', strtotime($fromDate)),
+                'to'    => date('Y-m-d H:i:s', strtotime($toDate))
             ));
 
         }
