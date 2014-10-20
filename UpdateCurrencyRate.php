@@ -102,6 +102,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 'to'    => date('Y-m-d H:i:s', strtotime($toDate))
             ));
 
+            (empty($o)) ? $curr->insert() ? $curr->update($o);
         }
         
         
