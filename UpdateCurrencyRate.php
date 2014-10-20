@@ -82,7 +82,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $ts = $xpath->query("//table[@id='converter_table']");
         
-        $elements = $xpath->query("//table]", $ts->item(0));
+        $elements = $xpath->query("//table", $ts->item(0));
         
         foreach($elements as $el) {
             print_R($el);exit;
