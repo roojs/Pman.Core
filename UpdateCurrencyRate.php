@@ -11,6 +11,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     var $cli = false; 
     
+    var $actionUrl = 'http://www.oanda.com/currency/historical-rates-classic';
+    
     function getAuth() 
     {
         $ff = HTML_FlexyFramework::get();
