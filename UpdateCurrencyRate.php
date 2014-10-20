@@ -27,7 +27,9 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get()
     {
-        echo"'update currency exchange rate \n";
+        echo "obtain the currency lists... \n";
+        
+        $currency = array();
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
         
@@ -37,6 +39,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         $xpath = new DOMXpath($doc);
         
         $elements = $xpath->query("//select[@name='exch']/option");
+        
+        
         
         foreach($elements as $el) {
             print_r($el->getAttribute('value'));
