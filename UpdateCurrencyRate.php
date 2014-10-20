@@ -52,7 +52,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             die('no any currency');
         }
         
-        print_r($currency);exit;
+        
 //        $params = array(
 //            'lang' => 'en',
 //            'result' => 1,
