@@ -36,7 +36,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $xpath = new DOMXpath($doc);
         
-        $elements = $xpath->query("//select[@name='exch']/options");
+        $elements = $xpath->query("//select[@name='exch']/option");
         
         foreach($elements as $el) {
             print_r($el);
