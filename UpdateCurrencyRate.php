@@ -98,13 +98,13 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             if($curr->find(true)){
                 $o = clone($curr);
             }
-            print_R($curr);exit;
+            
             $curr->setFrom(array(
                 'rate'  => $rate,
                 'from'  => date('Y-m-d H:i:s', strtotime($fromDate)),
                 'to'    => date('Y-m-d H:i:s', strtotime($toDate))
             ));
-
+print_R($curr);exit;
             (empty($o)) ? $curr->insert() : $curr->update($o);
             
             $this->jok("DONE");
