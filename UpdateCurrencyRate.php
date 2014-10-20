@@ -30,8 +30,6 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get()
     {
-        print_r(date('m/d/y', strtotime("-6 MONTH")));exit;
-        
         echo "obtain the currency lists... \n";
         
         $currency = array();
@@ -61,7 +59,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             $params = array(
                 'lang' => 'en',
                 'result' => 1,
-                'date1' => '10/14/14',
+                'date1' => date('m/d/y', strtotime("-6 MONTH")),
                 'date'=> date('m/d/y'),
                 'date_fmt' => 'us',
                 'exch' => 'CNY',
