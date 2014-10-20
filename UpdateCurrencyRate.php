@@ -31,7 +31,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $params = array(
             'lang' => 'en',
-//            'result' => 2,
+            'result' => 1,
             'date1' => '10/14/14',
             'date'=> '10/20/14',
             'date_fmt' => 'us',
