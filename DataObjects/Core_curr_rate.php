@@ -24,4 +24,5 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
     }
     
+    
 }
