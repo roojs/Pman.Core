@@ -33,8 +33,12 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
         
+        libxml_use_internal_errors (true);
+        
         $doc = new DOMDocument();
         $doc->loadHTML($response);
+        
+        libxml_use_internal_errors (false);
         
         $xpath = new DOMXpath($doc);
         
