@@ -90,7 +90,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
 
             $curr = DB_DataObject::factory('core_curr_rate');
-            
+            print_R($curr);exit;
             $curr->curr = $c;
             
             $o = false;
@@ -106,7 +106,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             ));
 
             (empty($o)) ? $curr->insert() : $curr->update($o);
-            print_R($curr);exit;
+            
             $this->jok("DONE");
         }
         
