@@ -13,6 +13,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     var $actionUrl = 'http://www.oanda.com/currency/historical-rates-classic';
     
+    
     function getAuth() 
     {
         $ff = HTML_FlexyFramework::get();
@@ -30,4 +31,18 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
     }
     
+    /*
+    lang:en
+    result:1
+    date1:10/14/14
+    date:10/20/14
+    date_fmt:us
+    exch:USD
+    exch2:
+    expr:EUR
+    expr2:
+    margin_fixed:0
+    format:HTML
+    SUBMIT:Get Table
+    */
 }
