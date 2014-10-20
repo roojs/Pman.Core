@@ -84,7 +84,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $elements = $xpath->query("table/tr/td/pre", $ts->item(0));
         
-        $rate = str_getcsv($elements->item(0)->nodeValue, "\n");
+        $rate = str_getcsv($elements->item(0)->nodeValue, ",", "\"", "\n");
         
         print_r($rate);exit;
         
