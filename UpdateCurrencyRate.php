@@ -31,10 +31,8 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
         
-        file_put_contents('/tmp/test.html', $response);
-        
         $doc = new DOMDocument();
-        $doc->loadHTMLFile('/tmp/test.html');
+        $doc->loadHTML($response);
         
         $xpath = new DOMXpath($doc);
         
