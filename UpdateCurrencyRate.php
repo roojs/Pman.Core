@@ -65,7 +65,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 'exch' => $c,
                 'expr' => 'USD',
                 'margin_fixed' => 0,
-                'format'=> 'HTML'
+                'format'=> 'CSV'
             );
         }
         
