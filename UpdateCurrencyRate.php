@@ -22,7 +22,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get()
     {
-        
+        print_r('update currency exchange rate');
     }
     
 }
