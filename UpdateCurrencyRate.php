@@ -58,17 +58,17 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         }
         
         foreach ($currency as $c){
-            $params = array(
-                'lang' => 'en',
-                'result' => 1,
-                'date1' => '10/14/14',
-                'date'=> date('m/d/y'),
-                'date_fmt' => 'us',
-                'exch' => 'CNY',
-                'expr' => 'USD',
-                'margin_fixed' => 0,
-                'format'=> 'HTML'
-            );
+//            $params = array(
+//                'lang' => 'en',
+//                'result' => 1,
+//                'date1' => '10/14/14',
+//                'date'=> date('m/d/y'),
+//                'date_fmt' => 'us',
+//                'exch' => 'CNY',
+//                'expr' => 'USD',
+//                'margin_fixed' => 0,
+//                'format'=> 'HTML'
+//            );
         }
         
         
