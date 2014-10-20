@@ -55,12 +55,15 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             die('no any currency');
         }
         
+        $fromDate = date('m/d/y', strtotime("-6 MONTH"));
+        $toDate = date('m/d/y');
+        
         foreach ($currency as $c){
             $params = array(
                 'lang' => 'en',
                 'result' => 1,
-                'date1' => date('m/d/y', strtotime("-6 MONTH")),
-                'date'=> date('m/d/y'),
+                'date1' => $fromDate,
+                'date'=> $toDate,
                 'date_fmt' => 'us',
                 'exch' => $c,
                 'expr' => 'USD',
@@ -85,7 +88,17 @@ class Pman_Core_UpdateCurrencyRate extends Pman
 
             $curr = DB_DataObject::factory('core_curr_rate');
             
-            $curr->setFrom(array(
+            $curr->curr = $c;
+            
+            $o = false;
+            
+            if($curr->find(true)){
+                $o = clone($curr);
+            }
+            
+            $curr->setForm(array(
+                'rate' => $rate,
+                'from' => 
                 
             ));
 
