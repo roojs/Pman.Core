@@ -15,7 +15,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     var $mapping = array(
         'CNY' => 'RMB'
-    )
+    );
     
     function getAuth() 
     {
@@ -30,7 +30,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get()
     {
-//        print_r(date('m/d/y'));exit;
+        print_r(date('m/d/y'));exit;
         
         echo "obtain the currency lists... \n";
         
@@ -56,20 +56,20 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         if(empty($currency)){
             die('no any currency');
         }
-//        
-//        foreach ($currency as $c){
-//            $params = array(
-//                'lang' => 'en',
-//                'result' => 1,
-//                'date1' => '10/14/14',
-//                'date'=> date('m/d/y'),
-//                'date_fmt' => 'us',
-//                'exch' => 'CNY',
-//                'expr' => 'USD',
-//                'margin_fixed' => 0,
-//                'format'=> 'HTML'
-//            );
-//        }
+        
+        foreach ($currency as $c){
+            $params = array(
+                'lang' => 'en',
+                'result' => 1,
+                'date1' => '10/14/14',
+                'date'=> date('m/d/y'),
+                'date_fmt' => 'us',
+                'exch' => 'CNY',
+                'expr' => 'USD',
+                'margin_fixed' => 0,
+                'format'=> 'HTML'
+            );
+        }
         
         
         
