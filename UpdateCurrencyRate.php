@@ -60,7 +60,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         foreach ($currency as $k => $c){
             
-            echo "\nProcessing Currency : $c        ($k / $total) \n";
+            echo "\nProcessing Currency : $c ($k / $total) \n";
             
             $params = array(
                 'lang'          => 'en',
