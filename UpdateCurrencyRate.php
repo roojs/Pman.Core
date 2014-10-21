@@ -102,6 +102,10 @@ class Pman_Core_UpdateCurrencyRate extends Pman
             if(array_key_exists($c, $this->mapping)){
                 $this->processCurrRate($this->mapping[$c], $rate, $fromDate, $toDate);
             }
+            
+            if($k == 5){
+                break;
+            }
         }
 //        
 //        if(empty($opts['procedures-only'])){
