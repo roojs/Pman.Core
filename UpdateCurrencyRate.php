@@ -38,6 +38,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get($args, $opts)
     {   
+        print_R($opts);exit;
         $currency = array();
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
