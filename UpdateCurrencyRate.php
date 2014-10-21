@@ -38,71 +38,71 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get($args, $opts)
     {   
-        $currency = array();
-        
-        $response = $this->curl($this->actionUrl, array(), 'GET');
-        
-        libxml_use_internal_errors (true);
-        
-        $doc = new DOMDocument();
-        $doc->loadHTML($response);
-        
-        libxml_use_internal_errors (false);
-        
-        $xpath = new DOMXpath($doc);
-        
-        $elements = $xpath->query("//select[@name='exch']/option");
-        
-        foreach($elements as $el) {
-            $currency[] = $el->getAttribute('value');
-        }
-        
-        if(empty($currency)){
-            die('no any currency');
-        }
-        
-        $fromDate = date('m/d/y', strtotime("-6 MONTH"));
-        $toDate = date('m/d/y');
-        
-        $total = count($currency);
-        
-        foreach ($currency as $k => $c){
-            
-            echo "\nProcessing Currency : $c        ($k / $total) \n";
-            
-            $params = array(
-                'lang'          => 'en',
-                'result'        => 1,
-                'date1'         => $fromDate,
-                'date'          => $toDate,
-                'date_fmt'      => 'us',
-                'exch'          => $c,
-                'expr'          => 'USD',
-                'margin_fixed'  => 0,
-                'format'        => 'HTML'
-            );
-            
-            $response = $this->curl($this->actionUrl, $params, 'POST');
-        
-            libxml_use_internal_errors (true);
-
-            $doc = new DOMDocument();
-            $doc->loadHTML($response);
-
-            libxml_use_internal_errors (false);
-
-            $xpath = new DOMXpath($doc);
-
-            $elements = $xpath->query("//td[@id='content_section']/table/tr[last()]/td/table/tr[1]/td[last()]");
-
-            $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
-
-            $this->processCurrRate($c, $rate, $fromDate, $toDate);
-            
-            if(array_key_exists($c, $this->mapping)){
-                $this->processCurrRate($this->mapping[$c], $rate, $fromDate, $toDate);
-            }
-        }
+//        $currency = array();
+//        
+//        $response = $this->curl($this->actionUrl, array(), 'GET');
+//        
+//        libxml_use_internal_errors (true);
+//        
+//        $doc = new DOMDocument();
+//        $doc->loadHTML($response);
+//        
+//        libxml_use_internal_errors (false);
+//        
+//        $xpath = new DOMXpath($doc);
+//        
+//        $elements = $xpath->query("//select[@name='exch']/option");
+//        
+//        foreach($elements as $el) {
+//            $currency[] = $el->getAttribute('value');
+//        }
+//        
+//        if(empty($currency)){
+//            die('no any currency');
+//        }
+//        
+//        $fromDate = date('m/d/y', strtotime("-6 MONTH"));
+//        $toDate = date('m/d/y');
+//        
+//        $total = count($currency);
+//        
+//        foreach ($currency as $k => $c){
+//            
+//            echo "\nProcessing Currency : $c        ($k / $total) \n";
+//            
+//            $params = array(
+//                'lang'          => 'en',
+//                'result'        => 1,
+//                'date1'         => $fromDate,
+//                'date'          => $toDate,
+//                'date_fmt'      => 'us',
+//                'exch'          => $c,
+//                'expr'          => 'USD',
+//                'margin_fixed'  => 0,
+//                'format'        => 'HTML'
+//            );
+//            
+//            $response = $this->curl($this->actionUrl, $params, 'POST');
+//        
+//            libxml_use_internal_errors (true);
+//
+//            $doc = new DOMDocument();
+//            $doc->loadHTML($response);
+//
+//            libxml_use_internal_errors (false);
+//
+//            $xpath = new DOMXpath($doc);
+//
+//            $elements = $xpath->query("//td[@id='content_section']/table/tr[last()]/td/table/tr[1]/td[last()]");
+//
+//            $rate = empty($elements->item(0)->nodeValue) ? 0 : $elements->item(0)->nodeValue * 1;
+//
+//            $this->processCurrRate($c, $rate, $fromDate, $toDate);
+//            
+//            if(array_key_exists($c, $this->mapping)){
+//                $this->processCurrRate($this->mapping[$c], $rate, $fromDate, $toDate);
+//            }
+//        }
         
         if(empty($opts['procedures-only'])){
             $this->jok("DONE");
