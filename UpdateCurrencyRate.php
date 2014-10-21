@@ -103,11 +103,11 @@ class Pman_Core_UpdateCurrencyRate extends Pman
                 $this->processCurrRate($this->mapping[$c], $rate, $fromDate, $toDate);
             }
         }
-        
-        if(empty($opts['procedures-only'])){
-            $this->jok("DONE");
-        }
-        
+//        
+//        if(empty($opts['procedures-only'])){
+//            $this->jok("DONE");
+//        }
+//        
         return;
     }
     
