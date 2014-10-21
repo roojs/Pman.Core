@@ -7,15 +7,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     static $cli_desc = "Update Currency Exchange Rate";
     
-    static $cli_opts = array(
-        'procedures-only' => array(
-            'desc' => 'Only run procedures and return',
-            'short' => 'p',
-            'default' => '',
-            'min' => 1,
-            'max' => 1,
-        ),
-    );
+    static $cli_opts = array();
     
     var $cli = false; 
     
