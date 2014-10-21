@@ -11,7 +11,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         'procedures-only' => array(
             'desc' => 'Only run procedures and return',
             'short' => 'p',
-            'default' => false,
+            'default' => '',
             'min' => 1,
             'max' => 1,
         ),
