@@ -725,6 +725,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $db->fetch();
         var_dump($db);
         
+        // I think it needs to look in the mysql directory.... to see if the idb exists..
+        
 
         
         
