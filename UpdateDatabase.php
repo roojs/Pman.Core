@@ -723,7 +723,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $db = DB_DataObject::factory('core_enum');
         $db->query("show variables like 'innodb_file_per_table'");
         $db->fetch();
-        var_dump($db);)
+        var_dump($db);
         
 
         
