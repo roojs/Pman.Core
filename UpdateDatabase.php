@@ -716,6 +716,24 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
+    function fixMysqlInnodb()
+    {
+        // innodb in single files is far more efficient that MYD or one big innodb file.
+        // first check if database is using this format.
+        $db = DB_DataObject::factory('core_enum');
+        $db->query("show variables like 'innodb_file_per_table'");
+        $db->fetch();
+        var_dump($db);)
+        
+
+        
+        
+        
+        
+        
+    }
+    
+    
     /** ------------- schema fixing ... there is an issue with data imported having the wrong sequence names... --- */
     
     function fixSequencesMysql()
