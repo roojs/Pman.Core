@@ -403,7 +403,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->writeEventLog();
     }
     
-    function writeEventLog()
+    function writeEventLog($extra_data  = '')
     {
         $ff  = HTML_FlexyFramework::get();
         if (empty($ff->Pman['event_log_dir'])) {
