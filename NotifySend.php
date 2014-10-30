@@ -335,9 +335,7 @@ class Pman_Core_NotifySend extends Pman
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
                     'debug' => isset($opts['debug']) ?  1 : 0,
-                    'debug_handler' => function($net_smtp, $message) uses ($debug_str) {
-                        $debug_str += $message;
-                    }
+                    'debug_handler' => array($this, 'debugHandler')
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
              
