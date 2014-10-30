@@ -334,7 +334,8 @@ class Pman_Core_NotifySend extends Pman
                     'localhost' => $ff->Mail['helo'],
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
-                    'debug' => isset($opts['debug']) ?  1 : 0,
+                    //'debug' => isset($opts['debug']) ?  1 : 0,
+                    'debug' => 1,
                     'debug_handler' => array($this, 'debugHandler')
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
@@ -344,7 +345,7 @@ class Pman_Core_NotifySend extends Pman
                 // success....
                 
                 $ev = $this->addEvent('NOTIFYSENT', $w, "{$w->to_email} - {$email['headers']['Subject']}");
-               
+                
                 $ev->writeEventLog($this->debug_str);
                 
                 $w->sent = date('Y-m-d H:i:s');
