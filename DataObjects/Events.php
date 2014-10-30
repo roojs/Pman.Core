@@ -452,14 +452,18 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
         }
-        
-        file_put_contents($file, json_encode(array(
+        $out = array(
             'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
             'HTTP_USER_AGENT' => empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'],
             'GET' => empty($_GET) ? array() : $_GET,
             'POST' =>$p,
             'FILES' => $files,
-        )));
+        );
+        if (!empty($extra_data)) {
+            $out['EXTRA'] = $extra_data;
+        }
+        
+        file_put_contents($file, json_encode($out));
         
         
     }
