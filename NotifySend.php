@@ -345,7 +345,7 @@ class Pman_Core_NotifySend extends Pman
                 
                 $ev = $this->addEvent('NOTIFYSENT', $w, "{$w->to_email} - {$email['headers']['Subject']}");
                
-                
+                $ev->writeEventLog($this->debug_str);
                 
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
