@@ -327,7 +327,7 @@ class Pman_Core_NotifySend extends Pman
             if (!isset($ff->Mail['helo'])) {
                 die("config Mail[helo] is not set");
             }
-            
+            $debug_str = '';
             $this->debug("Trying SMTP: $dom / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
                     'host'    => $dom ,
@@ -335,6 +335,9 @@ class Pman_Core_NotifySend extends Pman
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
                     'debug' => isset($opts['debug']) ?  1 : 0,
+                    'debug_handler' => function($net_smtp, $message) uses ($debug_str) {
+                        $debug_str += $message;
+                    }
                 ));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
              
