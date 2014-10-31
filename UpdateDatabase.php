@@ -317,7 +317,6 @@ class Pman_Core_UpdateDatabase extends Pman
 
             echo "$bfn:   $cmd ". ($ff->cli ? "\n" : "<BR>\n");
 
-            print_R($cmd);exit;
             passthru($cmd);
 
             if ($fn) {
