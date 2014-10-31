@@ -290,7 +290,7 @@ class Pman_Core_UpdateDatabase extends Pman
         //usort($files, $lsort);
         
         if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
-            print_R($url);exit;
+            print_R($dir);exit;
         }
         
         foreach($files as $bfn) {
