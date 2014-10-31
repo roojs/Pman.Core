@@ -277,7 +277,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
         echo $psql_cmd . "\n" ;
         echo "scan : $dir\n";
-        exit;
         if (is_file($dir)) {
             $files = array($dir);
 
