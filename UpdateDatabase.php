@@ -258,6 +258,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importpgsqldir($url, $dir, $disable_triggers = false)
     {
+        if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
+            print_R($dir);exit;
+        }
         $ff = HTML_FlexyFramework::get();
         
         require_once 'System.php';
@@ -289,9 +292,6 @@ class Pman_Core_UpdateDatabase extends Pman
         //$lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         //usort($files, $lsort);
         
-        if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
-            print_R($dir);exit;
-        }
         
         foreach($files as $bfn) {
 
