@@ -275,11 +275,12 @@ class Pman_Core_UpdateDatabase extends Pman
              ' ' . basename($url['path']);
         
         
-        echo $psql_cmd . "\n" ;if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
+        echo $psql_cmd . "\n" ;
+        echo "scan : $dir\n";
+        
+        if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
             print_R($dir);exit;
         }
-        
-        echo "scan : $dir\n";
         if (is_file($dir)) {
             $files = array($dir);
 
