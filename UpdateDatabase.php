@@ -258,9 +258,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importpgsqldir($url, $dir, $disable_triggers = false)
     {
-        if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
-            print_R($dir);exit;
-        }
         $ff = HTML_FlexyFramework::get();
         
         require_once 'System.php';
@@ -278,7 +275,10 @@ class Pman_Core_UpdateDatabase extends Pman
              ' ' . basename($url['path']);
         
         
-        echo $psql_cmd . "\n" ;
+        echo $psql_cmd . "\n" ;if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
+            print_R($dir);exit;
+        }
+        
         echo "scan : $dir\n";
         if (is_file($dir)) {
             $files = array($dir);
