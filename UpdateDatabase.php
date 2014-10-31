@@ -258,9 +258,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importpgsqldir($url, $dir, $disable_triggers = false)
     {
-        if($dir = '/home/edward/gitlive/web.registrar/Pman/Registrar/pgsql'){
-            print_R('run');exit;
-        }
         $ff = HTML_FlexyFramework::get();
         
         require_once 'System.php';
