@@ -38,14 +38,7 @@ class Pman_Core_Prune extends Pman
     {
         
         // prune irrelivant stuff..
-         $f = DB_DataObject::Factory('reader_article');
-        $f->query("
-            DELETE FROM Events where 
-                  event_when < NOW() - INTERVAL 6 MONTH
-                  AND
-                  action IN ('RELOAD', 'LOGIN')
-                  LIMIT 100000
-        ");
+       
         
         
         $this->prune((int)$opts['months']);
@@ -61,6 +54,17 @@ class Pman_Core_Prune extends Pman
                   event_when < NOW() - INTERVAL {$inM} MONTH
                   LIMIT 100000
         ");
+        
+        // notificication events occur alot - so we should trash them more frequently..
+        $f = DB_DataObject::Factory('reader_article');
+        $f->query("
+            DELETE FROM Events where 
+                  event_when < NOW() - INTERVAL 1 MONTH
+                  AND
+                  action IN ('RELOAD', 'LOGIN')
+                  LIMIT 100000
+        ");
+        
         // pruning is for our press project - so we do not clean up dependant tables at present..
         
         if (function_exists('posix_getpwuid')) {
