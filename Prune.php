@@ -37,13 +37,24 @@ class Pman_Core_Prune extends Pman
     function get($m="", $opts)
     {
         
+        // prune irrelivant stuff..
+         $f = DB_DataObject::Factory('reader_article');
+        $f->query("
+            DELETE FROM Events where 
+                  event_when < NOW() - INTERVAL 6 MONTH
+                  AND
+                  action IN ('RELOAD', 'LOGIN')
+                  LIMIT 100000
+        ");
+        
+        
         $this->prune((int)$opts['months']);
     }
     
     function prune($inM)
     {
         // 40 seconds ? to delete 100K records..
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('reader_article');
         $f->query("
             DELETE FROM Events where 
