@@ -47,7 +47,7 @@ class Pman_Core_Prune extends Pman
     function prune($inM)
     {
         // 40 seconds ? to delete 100K records..
-        DB_DataObject::debugLevel(1);
+       // DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('reader_article');
         $f->query("
             DELETE FROM Events where 
@@ -61,7 +61,7 @@ class Pman_Core_Prune extends Pman
             DELETE FROM Events where 
                   event_when < NOW() - INTERVAL 1 MONTH
                   AND
-                  action IN ('RELOAD', 'LOGIN')
+                  action IN ('NOTIFY')
                   LIMIT 100000
         ");
         
