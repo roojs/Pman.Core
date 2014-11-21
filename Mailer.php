@@ -371,7 +371,7 @@ class Pman_Core_Mailer {
                 echo "SKIP" . $file ."<br/>";
                 continue;
             }
-            $par = $img->parentNode();
+            $par = $link->parentNode();
             $par->removeChild($link);
             $s = $dom->createElement('style');
             $e = $dom->createTextNode(file_get_contents($file));
