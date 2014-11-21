@@ -376,7 +376,7 @@ class Pman_Core_Mailer {
             $s = $dom->createElement('style');
             $e = $dom->createTextNode(file_get_contents($file));
             $s->appendChild($e);
-            $par->appendChild($e);
+            $par->appendChild($s);
             
         }
         return $dom->saveHTML();
