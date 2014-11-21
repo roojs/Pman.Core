@@ -352,6 +352,15 @@ class Pman_Core_Mailer {
         
         
     }
+    function htmlbodyCssEmbed($html)
+    {
+        
+        
+        
+    }
+    
+    
+    
     function fetchImage($url)
     {
         
