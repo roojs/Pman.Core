@@ -151,8 +151,10 @@ class Pman_Core_Mailer {
             if ($this->replaceImages) {
                 $htmlbody = $this->htmlbodytoCID($htmlbody);    
             }
-            
+            if ($this->css_embed) {
+                $htmlbody = $this->htmlbodyCssEmbed($htmlbody);    
               
+            }
         }
         $tmp_opts['nonHTML'] = true;
         
