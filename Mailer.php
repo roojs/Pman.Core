@@ -64,6 +64,8 @@ class Pman_Core_Mailer {
     var $html_locale = false; // eg. 'en' or 'zh_HK'
     var $images         = array(); // generated list of cid images for sending
     var $attachments = false;
+    var $css_inline = false; // not supported
+    var $css_embed = false; // put the css tags into the body.
     
     var $mail_method = 'SMTP';
     
