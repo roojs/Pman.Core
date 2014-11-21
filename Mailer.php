@@ -354,7 +354,9 @@ class Pman_Core_Mailer {
     }
     function htmlbodyCssEmbed($html)
     {
+        $ff = HTML_FlexyFramework::get();
         $dom = new DOMDocument();
+        
         // this may raise parse errors as some html may be a component..
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $links = $dom->getElementsByTagName('link');
