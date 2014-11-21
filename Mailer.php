@@ -368,7 +368,7 @@ class Pman_Core_Mailer {
             $url  = $link->getAttribute('href');
             $file = $ff->rootDir . $url;
             if (!file_exists($file)) {
-                echo "SKIP" . $file ."<br/>";
+                //echo "SKIP" . $file ."<br/>";
                 continue;
             }
             $par = $link->parentNode;
