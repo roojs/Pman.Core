@@ -354,7 +354,29 @@ class Pman_Core_Mailer {
     }
     function htmlbodyCssEmbed($html)
     {
-        
+        $dom = new DOMDocument();
+        // this may raise parse errors as some html may be a component..
+        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+        $links = $dom->getElementsByTagName('link');
+        //<link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/css-mailer/mailer.css"> 
+        foreach ($links as $i=>$link) {
+            if ($link->getAttribute('rel') != 'stylesheet') {
+                continue;
+            }
+            $url  = $link->getAttribute('href');
+            $file = $ff->rootDir . $url;
+            if (!file_exists($file)) {
+                continue;
+            }
+            $par = $img->parentNode();
+            $par->removeChild($link);
+            $s = $dom->createElement('style');
+            $e = $dom->createTextNode(file_get_contents($file));
+            $s->appendChild($e);
+            $par->appendChild($e);
+            
+        }
+        return $dom->saveHTML();
         
         
     }
