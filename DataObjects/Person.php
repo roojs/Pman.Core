@@ -622,7 +622,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // then load all those 
         $g = DB_DataObject::Factory('group_rights');
         $ret =  $g->listPermsFromGroupIds($grps, $isAdmin, $isOwner);
-        print_R($ret);exit;
         //echo '<PRE>';print_r($ret);
         return $ret;
          
