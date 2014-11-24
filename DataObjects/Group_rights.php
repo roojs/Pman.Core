@@ -163,7 +163,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
         $disabled =  explode(',', $ff->disable? $ff->disable: '');
         $pman = $ff->rootDir . '/Pman/';
         $ret = array();
-         //echo '<PRE>';print_r($enabled);
+         echo '<PRE>';print_r($enabled);exit;
         foreach($enabled as $module) {
             
             if (($module == 'Admin') && !$has_admin) {
@@ -192,7 +192,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             
         }
         $Pman_DataObjects_Group_Right[$gid] = $ret;
-        print_r($ret);exit;
+       // print_r($ret);
         return $Pman_DataObjects_Group_Right[$gid];
          
         
