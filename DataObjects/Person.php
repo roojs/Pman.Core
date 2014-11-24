@@ -613,6 +613,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         // ------ STANDARD PERMISSION HANDLING.
         $isOwner = $this->company()->comptype == 'OWNER';
+        print_R($isOwner);exit;
         $g = DB_DataObject::Factory('group_members');
         $grps = $g->listGroupMembership($this);
        //var_dump($grps);
