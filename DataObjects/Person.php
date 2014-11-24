@@ -615,7 +615,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $isOwner = $this->company()->comptype == 'OWNER';
         $g = DB_DataObject::Factory('group_members');
         $grps = $g->listGroupMembership($this);
-       var_dump($grps);exit;
+        print_R($grps);exit;
+       //var_dump($grps);
         $isAdmin = $g->inAdmin;
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
