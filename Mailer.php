@@ -340,6 +340,11 @@ class Pman_Core_Mailer {
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
+            $me = $img->getAttribute('mailembed');
+            if ($me == 'no') {
+                continue;
+            }
+            
             $conv = $this->fetchImage($url);
             $this->images[$conv['contentid']] = $conv;
             
