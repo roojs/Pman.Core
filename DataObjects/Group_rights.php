@@ -66,6 +66,7 @@ class Pman_Core_DataObjects_Group_rights extends DB_DataObject
             }
             $ret[$t->rightname] = $t->accessmask;
         }
+        print_R($ret);exit;
         // blank out rights that are disabled by the system..
         $defs = $this->defaultPermData();
         
