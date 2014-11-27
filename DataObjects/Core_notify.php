@@ -90,6 +90,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         }
         
     }
+    function beforeUpdate($old, $request,$roo)
+    {
+        if (empty($request['act_when']) && !empty($request['act_start'])) {
+            $this->act_start($request['act_start']);
+        }
+    }
+    
     
     function act_start($set = false)
     {
