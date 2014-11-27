@@ -575,11 +575,11 @@ Pman = new Roo.Document(
                         tab.grid.getView().mainWrap.unmask();
                         if ( tab.paging ) {
                             tab.paging.onClick('refresh');   
-                        } else if (tab.refresh) {
-                            tab.refresh();
                         } else if (tab.grid.footer && tab.grid.footer.onClick) {
                             // new xtype built grids
                             tab.grid.footer.onClick('refresh');   
+                        } else if (tab.refresh) {
+                            tab.refresh();
                         } else {
                             tab.grid.getDataSource().load();
                         }
