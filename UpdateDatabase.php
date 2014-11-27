@@ -170,7 +170,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // loop through all the modules, and see if they have a importSQL method?
         
-        print_r('run');exit;
+        
         $ff = HTML_Flexyframework::get();
         
         $dburl = parse_url($ff->DB_DataObject['database']);
