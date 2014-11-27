@@ -83,7 +83,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             $roo->jerr("you can not delete a record of a successfull delivery");
         }
     }
-    
+    function  beforeInsert($request,$roo)
+    {
+        if (empty($request['act_when']) && !empty($request['act_start'])) {
+            $this->act_start($request['act_start']);
+        }
+        
+    }
     
     function act_start($set = false)
     {
