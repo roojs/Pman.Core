@@ -579,7 +579,7 @@ Pman = new Roo.Document(
                             // new xtype built grids
                             tab.grid.footer.onClick('refresh');   
                         } else if (tab.refresh) {
-                            tab.refresh();
+                            tab.refresh(); // this might cause problems as panels have a refresh method?
                         } else {
                             tab.grid.getDataSource().load();
                         }
