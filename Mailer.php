@@ -393,7 +393,9 @@ class Pman_Core_Mailer {
     
     function fetchImage($url)
     {
-        
+        if($this->debug) {
+            echo "FETCH : $url\n";
+        }
         if ($url[0] == '/') {
             $ff = HTML_FlexyFramework::get();
             $file = $ff->rootDir . $url;
