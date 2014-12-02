@@ -15,6 +15,7 @@ ALTER TABLE Person ADD COLUMN   chosen_title TEXT NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   remarks text;
 ALTER TABLE Person ADD COLUMN   lang varchar(8) default 'en';
+ALTER TABLE Person ADD COLUMN   country varchar(8) default '';
 
 ALTER TABLE Person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '0000-00-00';
 
