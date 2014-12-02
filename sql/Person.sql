@@ -6,9 +6,14 @@ CREATE TABLE Person (
 
 
 ALTER TABLE Person ADD COLUMN   name varchar(128)  NOT NULL  DEFAULT '';
+ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   firstname varchar(128) NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   lastname varchar(128) NOT NULL DEFAULT '';
-ALTER TABLE Person ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   firstname_alt varchar(128) NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT '';
+
+-- chose title is like a nickname 
+
 ALTER TABLE Person ADD COLUMN   chosen_title TEXT NOT NULL DEFAULT ''; 
 
 
