@@ -367,6 +367,8 @@ class Pman_Core_Mailer {
         $links = $dom->getElementsByTagName('link');
         //<link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/css-mailer/mailer.css"> 
         foreach ($links as $i=>$link) {
+            var_dump($link->getAttribute('href'));
+            
             if ($link->getAttribute('rel') != 'stylesheet') {
                 continue;
             }
