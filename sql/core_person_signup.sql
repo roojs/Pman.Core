@@ -1,7 +1,7 @@
 
 
 -- used to store signups - before they have been verified.
---
+-- once the verified link has been pressed, use a add event, copy to a person, and remove record..
 
 CREATE TABLE Person (
   id int(11) NOT NULL auto_increment,
