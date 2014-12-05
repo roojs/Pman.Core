@@ -1,7 +1,7 @@
 
 
 -- used to store signups - before they have been verified.
-
+--
 
 CREATE TABLE Person (
   id int(11) NOT NULL auto_increment,
@@ -18,3 +18,4 @@ ALTER TABLE Person ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT '';
 
 ALTER TABLE Person ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   verify_key varchar(256)  NOT NULL DEFAULT '';
+ALTER TABLE Person ADD COLUMN   created_dt DATETIME  NOT NULL;
