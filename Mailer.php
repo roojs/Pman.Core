@@ -366,13 +366,13 @@ class Pman_Core_Mailer {
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $links = $dom->getElementsByTagName('link');
         $lc = array();
-        foreach ($links as $link) {
+        foreach ($links as $link) {  // duplicate as links is dynamic and we change it..!
             $lc[] = $link;
         }
         //<link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/css-mailer/mailer.css">
         
         foreach ($lc as $i=>$link) {
-            var_dump($link->getAttribute('href'));
+            //var_dump($link->getAttribute('href'));
             
             if ($link->getAttribute('rel') != 'stylesheet') {
                 continue;
