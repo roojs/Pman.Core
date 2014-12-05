@@ -365,6 +365,7 @@ class Pman_Core_Mailer {
         // this may raise parse errors as some html may be a component..
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $links = $dom->getElementsByTagName('link');
+        print_R($links);
         //<link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/css-mailer/mailer.css"> 
         foreach ($links as $i=>$link) {
             var_dump($link->getAttribute('href'));
