@@ -1,20 +1,4 @@
-CREATE TABLE core_person_signup (
-  id int(11) NOT NULL auto_increment,
-  PRIMARY KEY  (id)
-) ;
-
-
-ALTER TABLE core_person_signup ADD COLUMN   name varchar(128)  NOT NULL  DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   honor varchar(32) NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   firstname varchar(128) NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   lastname varchar(128) NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   firstname_alt varchar(128) NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT '';
-
-ALTER TABLE core_person_signup ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   verify_key varchar(256)  NOT NULL DEFAULT '';
-ALTER TABLE core_person_signup ADD COLUMN   created_dt DATETIME  NOT NULL;
-<?php
+ <?php
 /**
  * Table Definition for Person
  */
