@@ -378,15 +378,7 @@ class Pman_Core_Mailer {
                 continue;
             }
             $url  = $link->getAttribute('href');
-            echo 'url';
-            echo "\n";
-            echo $url;
-            echo "\n";
             $file = $ff->rootDir . $url;
-            echo 'file';
-            echo "\n";
-            echo $file;
-            echo "\n";
             if (!file_exists($file)) {
                 $link->setAttribute('href', 'missing:' . $file);
                 continue;
