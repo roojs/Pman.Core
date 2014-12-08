@@ -380,7 +380,7 @@ class Pman_Core_Mailer {
             $url  = $link->getAttribute('href');
             $file = $ff->rootDir . $url;
             
-            if (!preg_match('#^http://', $url)) {
+            if (!preg_match('#^http://#', $url)) {
                 $file = $ff->rootDir . $url;
 
                 if (!file_exists($file)) {
