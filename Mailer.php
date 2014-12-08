@@ -392,10 +392,6 @@ class Pman_Core_Mailer {
                $file = $url;  
             }
             
-            if (!file_exists($file)) {
-                $link->setAttribute('href', 'missing:' . $file);
-                continue;
-            }
             $par = $link->parentNode;
             $par->removeChild($link);
             $s = $dom->createElement('style');
