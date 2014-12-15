@@ -463,6 +463,8 @@ class Pman_Core_Mailer {
         echo "\n";
         $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
         if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
+            print_R('get');
+        echo "\n";
             $ret =  json_decode(file_get_contents($cache), true);
             $ret['file'] = $cache . '.data';
             return $ret;
