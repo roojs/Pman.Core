@@ -357,7 +357,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $c = clone($this);
-        $c->whereAddIn($this->tableName() . '.ontable1', array( $obj->tableName(), $obj->__table) , 'string');
+        $c->whereAddIn($this->tableName() . '.ontable', array( $obj->tableName(), $obj->__table) , 'string');
         $c->onid = $obj->id;
         $c->autoJoin();
         if (!empty($mime_like)) {
