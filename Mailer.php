@@ -466,10 +466,13 @@ class Pman_Core_Mailer {
         if (!file_exists(dirname($cache))) {
             mkdir(dirname($cache),0700, true);
         }
-        
+        print_R($url);
+        echo "\n";
         require_once 'HTTP/Request.php';
         $a = new HTTP_Request($url);
         $a->sendRequest();
+        print_R($a->getResponseBody());
+        echo "\n";
         file_put_contents($cache .'.data', $a->getResponseBody());
         
         $mt = $a->getResponseHeader('Content-Type');
