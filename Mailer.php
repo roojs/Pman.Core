@@ -474,7 +474,8 @@ class Pman_Core_Mailer {
         $a = new HTTP_Request($url);
         $a->sendRequest();
         file_put_contents($cache .'.data', $a->getResponseBody());
-        
+        print_R($a->getResponseBody());
+        echo "\n";
         $mt = $a->getResponseHeader('Content-Type');
         
         require_once 'File/MimeType.php';
