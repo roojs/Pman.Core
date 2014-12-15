@@ -352,6 +352,7 @@ class Pman_Core_Mailer {
             
             
         }
+        print_R($this->images);exit;
         return $dom->saveHTML();
         
         
