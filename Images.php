@@ -255,7 +255,7 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
-        
+        print_r($_SERVER['REMOTE_ADDR']);exit;
         if ($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') {
             return true;
         }
