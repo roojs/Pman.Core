@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
         
-            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.id=Events.person_id)";
+            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$jt->pid()}=Events.person_id)";
             $this->selectAdd();
             $this->selectAs();
             
