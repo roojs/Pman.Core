@@ -51,6 +51,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if (method_exists($jt,'nameColumn')) {
                 $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
             }
+            
+            if (method_exists($jt,'emailColumn')) {
+                $this->selectAdd("join_person_id_id.{$jt->emailColumn()} as person_id_email");
+            }
         
         
         } else {
