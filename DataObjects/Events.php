@@ -36,6 +36,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function applyFilters($q, $au ,$roo)
     {
         $tn = $this->tableName();
+        print_r($this->keys());exit;
         // if not empty on_table
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
