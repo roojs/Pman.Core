@@ -242,7 +242,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $element->setAttribute('height', '1');
 
             $html = $doc->getElementsByTagName('html');
-            $html->item(0)->appendChild($element);
+            if ($html->length) {
+                $html->item(0)->appendChild($element);
+            }
             
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, $this->plaintext);
         }
