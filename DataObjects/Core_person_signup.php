@@ -39,6 +39,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         // and delete....
         //$this->whereAdd("verify_key = '".$key."'");
         if(!$this->get("verify_key",$key)){
+            var_dump($this);
+            exit();
             $p = DB_DataObject::factory('person');
             $p->honor = $this->honor;
             $p->name = $this->name;
