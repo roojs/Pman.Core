@@ -52,6 +52,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             //$temp_pwd = mt_rand(100000,999999);
             //$p->passwd = $temp_pwd;
             if($p->insert()){
+                log("delete ");
                 $this->delete();
 
                 //login
