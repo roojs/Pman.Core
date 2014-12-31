@@ -37,8 +37,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         // if key matches verify_key
         // copy into person or other entity...
         // and delete....
-        $this->whereAdd("verify_key = '".$key."'");
-        if($this->count() > 0 ){
+        //$this->whereAdd("verify_key = '".$key."'");
+        if($this->get("verify_key",$key)){
             $row = $this->fetch();
             $p = DB_DataObject::factory('person');
             $p->honor = $row->honor;
@@ -53,7 +53,15 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             //$p->passwd = $temp_pwd;
             if($p->insert()){
                 $this->delete();
-                return $temp_pwd;
+
+                //login
+                @session_start();
+        
+                $_SESSION['Hydra']['authUser'] = $p ? serialize($p) : false;
+
+                //mail pwd
+                mail();
+                
             }else{
                 error_log("db insert error");
                 return false;
