@@ -68,7 +68,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 
                 $name = "Roojs";
                 $email_sender = "no-reply@roojs.com";
-                $subject = "Verification Link";
+                $subject = "Congratulations";
                 $recipient_email = $email;
  
                 $headers  = "MIME-Version: 1.0\r\n";
