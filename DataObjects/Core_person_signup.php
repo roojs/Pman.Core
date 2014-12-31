@@ -39,8 +39,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         // and delete....
         //$this->whereAdd("verify_key = '".$key."'");
         if($this->get("verify_key",$key)){
-            // var_dump($this);
-            // exit();
             $p = DB_DataObject::factory('person');
             $p->honor = $this->honor;
             $p->name = $this->name;
@@ -72,9 +70,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $email_sender = "no-reply@roojs.com";
                 $subject = "Congratulations";
                 $recipient_email = $p->email;
-
-                // var_dump($p->email);
-                // exit();
  
                 $headers  = "MIME-Version: 1.0\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
