@@ -17,13 +17,13 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     public $name;                            // string(128)  not_null
     public $firstname;                            // string(128)  not_null
     public $lastname;                            // string(128)  not_null
-    public $firstname_alt;                            // string(128)  not_null
-    public $lastname_alt;                            // string(128)  not_null
+    //public $firstname_alt;                            // string(128)  not_null
+    //public $lastname_alt;                            // string(128)  not_null
     
     
     public $honor;                            // string(128)  not_null
     public $verify_key;                      // int(11)
-
+    public $verified;
     
 
     public $created_dt;                      // datetime(19)  binary
