@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 //mail pwd
                 $htmlStr = "";
                 $htmlStr .= "Dear ".$p->honor.".".$p->lastname."<br /><br />";
-                $htmlStr .= "Congratulations on Joining HydRa.<br /><br />"
+                $htmlStr .= "Congratulations on Joining HydRa.<br /><br />";
                 $htmlStr .= "If you need to access the system again please log in using the password ";
                 $htmlStr .= $temp_pwd; 
 
