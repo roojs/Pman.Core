@@ -61,7 +61,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 
                 //mail pwd
                 $htmlStr = "";
-                $htmlStr .= "Dear ".$this->honor.".".$this->lastname."<br /><br />";
+                $htmlStr .= "Dear ".$p->honor.".".$p->lastname."<br /><br />";
                 $htmlStr .= "Congratulations on Joining HydRa.<br /><br />"
                 $htmlStr .= "If you need to access the system again please log in using the password ";
                 $htmlStr .= $temp_pwd; 
@@ -69,7 +69,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $name = "Roojs";
                 $email_sender = "no-reply@roojs.com";
                 $subject = "Congratulations";
-                $recipient_email = $email;
+                $recipient_email = $p->email;
  
                 $headers  = "MIME-Version: 1.0\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
