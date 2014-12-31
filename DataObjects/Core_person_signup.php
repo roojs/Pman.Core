@@ -77,7 +77,11 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $headers .= "<";
                 $headers .= $email_sender;
                 $headers .= ">\r\n";
-                
+
+                $body = $htmlStr;
+                if(mail($recipient_email, $subject, $body, $headers)){
+                    error_log("Sending failed.");
+                }
             }else{
                 error_log("db insert error");
                 return false;
