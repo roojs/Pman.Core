@@ -14,7 +14,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $email;                           // string(128)  not_null
     
-    public $name;                            // string(128)  not_null
+    //public $name;                            // string(128)  not_null
     public $firstname;                            // string(128)  not_null
     public $lastname;                            // string(128)  not_null
     //public $firstname_alt;                            // string(128)  not_null
