@@ -39,7 +39,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         // and delete....
         //$this->whereAdd("verify_key = '".$key."'");
         $row = $this->get("verify_key",$key);
-        if(empty($row)){
+        if(!empty($row)){
             $p = DB_DataObject::factory('person');
             $p->honor = $row->honor;
             $p->name = $row->name;
@@ -60,7 +60,23 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $_SESSION['Hydra']['authUser'] = $p ? serialize($p) : false;
 
                 //mail pwd
-                mail();
+                $htmlStr = "";
+                $htmlStr .= "Dear ".$this->honor.".".$this->lastname."<br /><br />";
+                $htmlStr .= "Congratulations on Joining HydRa.<br /><br />"
+                $htmlStr .= "If you need to access the system again please log in using the password ";
+                $htmlStr .= $temp_pwd; 
+
+                $name = "Roojs";
+                $email_sender = "no-reply@roojs.com";
+                $subject = "Verification Link";
+                $recipient_email = $email;
+ 
+                $headers  = "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=utf-8\r\n";
+                $headers .= "From: {$name} ";
+                $headers .= "<";
+                $headers .= $email_sender;
+                $headers .= ">\r\n";
                 
             }else{
                 error_log("db insert error");
