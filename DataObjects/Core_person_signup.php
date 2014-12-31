@@ -70,6 +70,9 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $email_sender = "no-reply@roojs.com";
                 $subject = "Congratulations";
                 $recipient_email = $p->email;
+
+                var_dump($p->email);
+                exit();
  
                 $headers  = "MIME-Version: 1.0\r\n";
                 $headers .= "Content-type: text/html; charset=utf-8\r\n";
