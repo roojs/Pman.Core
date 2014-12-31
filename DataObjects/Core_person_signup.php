@@ -53,10 +53,11 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             //$p->passwd = $temp_pwd;
             if($p->insert()){
                 $this->delete();
+                return true;
             }else{
                 error_log("db insert error");
-            }
-            return true;
+                return false;
+            }   
         }
         return false;
         
