@@ -37,7 +37,24 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         // if key matches verify_key
         // copy into person or other entity...
         // and delete....
-        
+        $this->whereAdd("verify_key = '".$key."'");
+        if($this->count() > 0 ){
+            $row = $this->fetch();
+            $p = DB_DataObject::factory('person');
+            $p->honor = $row->honor;
+            $p->name = $row->name;
+            $p->email = $row->email;
+            $p->firstname = $row->firstname;
+            $p->lastname = $row->lastname;
+            $p->firstname_alt = $row->firstname_alt;
+            $p->lastname_alt = $row->lastname_alt;
+            $temp_pwd = $p->generatePassword();
+            //$temp_pwd = mt_rand(100000,999999);
+            //$p->passwd = $temp_pwd;
+            if($p->insert()){
+                $this->delete();
+            }
+        }
         
         
     }
