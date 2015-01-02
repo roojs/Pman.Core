@@ -457,6 +457,9 @@ Content-Transfer-Encoding: 7bit
     
     function messageFrom()
     {
+        if (empty($this->from_name)) {
+            return $this->from_email;
+        }
         return '"' . addslashes($this->from_name) . '" <' . $this->from_email. '>'  ;
     }
     
