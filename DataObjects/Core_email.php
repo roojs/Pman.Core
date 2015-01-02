@@ -353,7 +353,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $random_hash = md5(date('r', time()));
         
         $this->cachedImages();
-        var_dump($cachePath);
+        
         $fh = fopen($cachePath, 'w');
 
         fwrite($fh, implode("\n", array(
