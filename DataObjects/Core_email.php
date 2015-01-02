@@ -282,7 +282,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     function send($obj, $force = true, $send = true)
     {   
         $contents = (array)$obj;
-        error_log($this.'d');
+        error_log($this->id);
         if(empty($this->id)){
             $this->get('name', $contents['template']);
         }
