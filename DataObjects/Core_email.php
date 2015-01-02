@@ -259,7 +259,22 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
          
         return;
     }
-    
+    /**
+     *
+     * Usage:
+     * $this->rcpts = array('sales@roojs.com');
+     * // or 
+     * $this->rcpts = "Tester <sales@roojs.com>";
+     *
+     * 
+     * // then send it..
+     * $x = DB_DataObject::factory('core_enum');
+     * $x->get('name', 'NAME OF TEMPLATE');
+     * $x->send($this);
+     *
+     *
+     *
+     */
     function send($obj, $force = true, $send = true)
     {   
         $contents = (array)$obj;
