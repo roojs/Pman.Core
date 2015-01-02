@@ -315,6 +315,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
             'page' => $this,
+            'rcpts' => $contents['rcpts'],
             'contents' => $contents
         ));
         
