@@ -270,8 +270,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      * // then send it..
      * $x = DB_DataObject::factory('core_enum');
      * $x->get('name', 'NAME OF TEMPLATE');
-     * $x->send($this);
-     *
+     * $x->send(array(
+     *      'rcpts' => "Tester <sales@roojs.com>",
+     *      'page' => $this
+     *       'link' => 'http://......'
+       );
+     * // on the template use {link:h} to render the link
      *
      *
      */
