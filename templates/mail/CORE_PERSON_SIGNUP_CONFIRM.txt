@@ -1,0 +1,5 @@
+from_name:Roojs
+from_email:no-reply@Roojs.com
+subject:Verification
+name:email_verification
+bodytext:Dear {honor}<br /><br />Thank you for your interest in HydRa here is your link to create your account. Please click the following link to activate.<br /><br />{link:h}
