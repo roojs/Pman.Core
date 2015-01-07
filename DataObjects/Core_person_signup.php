@@ -40,18 +40,21 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         //$this->whereAdd("verify_key = '".$key."'");
         if($this->get("verify_key",$key)){
             $p = DB_DataObject::factory('person');
-            $p->honor = $this->honor;
-            $p->name = $this->name;
-            $p->email = $this->email;
-            $p->firstname = $this->firstname;
-            $p->lastname = $this->lastname;
-            $p->firstname_alt = $this->firstname_alt;
-            $p->lastname_alt = $this->lastname_alt;
-            $temp_pwd = $p->generatePassword();
-            //$temp_pwd = mt_rand(100000,999999);
-            //$p->passwd = $temp_pwd;
+            $p->setFrom(array(
+                'honor'=>$this->honor,
+                'name'=>$this->name,
+                'email'=>$this->email,
+                'firstname'=>$this->firstname,
+                'lastname'=>$this->lastname,
+                'firstname_alt'=>$this->firstname_alt,
+                'lastname_alt'=>$this->lastname_alt));
+
+            
+            
             if($p->insert()){
                 
+                $temp_pwd = $p->generatePassword();
+
                 $this->delete();
 
                 //login
@@ -60,28 +63,22 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 $_SESSION['Hydra']['authUser'] = $p ? serialize($p) : false;
 
                 //mail pwd
-                $htmlStr = "";
-                $htmlStr .= "Dear ".$p->honor.".".$p->lastname."<br /><br />";
-                $htmlStr .= "Congratulations on Joining HydRa.<br /><br />";
-                $htmlStr .= "If you need to access the system again please log in using the password ";
-                $htmlStr .= $temp_pwd; 
-
-                $name = "Roojs";
-                $email_sender = "no-reply@roojs.com";
-                $subject = "Congratulations";
-                $recipient_email = $p->email;
- 
-                $headers  = "MIME-Version: 1.0\r\n";
-                $headers .= "Content-type: text/html; charset=utf-8\r\n";
-                $headers .= "From: {$name} ";
-                $headers .= "<";
-                $headers .= $email_sender;
-                $headers .= ">\r\n";
-
-                $body = $htmlStr;
-                if(!mail($recipient_email, $subject, $body, $headers)){
-                    error_log("Sending failed.");
+                $c = DB_DataObject::factory('core_email');
+                if (!$c->get('name', 'CORE_PERSON_SIGNUP_CONGRATULATION')) {
+                    $this->jerr("can not find template");
                 }
+                $ret = $c->send(array(
+                   'rcpts' => $this->email,
+                   'honor' => $this->honor.". ".$this->lastname,
+                   'password' => $temp_pwd
+                ), true);
+         
+                if (is_object($ret)) {
+                    $this->addEvent('SYSERR',false, $ret->getMessage());
+                    $this->jerr($ret->getMessage());
+                }
+                $this->jok("SENT");
+                return true;
             }else{
                 error_log("db insert error");
                 return false;
