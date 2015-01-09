@@ -461,7 +461,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 //        print_r($size);
 //        exit;
         $mt = $this->mimetype;
-        if (!preg_match('#^image/#i')) {
+        if (!preg_match('#^image/#i',$mt)) {
             $mt = 'image/jpeg';
         }
         
