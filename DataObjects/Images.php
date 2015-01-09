@@ -460,8 +460,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc = $this->toFileConvert();
 //        print_r($size);
 //        exit;
-        $fc->convert($this->mimetype, $size);
+        $mt = $this->mimetype;
+        if (!preg_match('#^image/#i')) {
+            $mt = 'image/jpeg';
+        }
         
+        $fc->convert($mt, $size);
         
         return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
