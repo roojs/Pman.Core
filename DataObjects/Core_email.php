@@ -311,13 +311,17 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         //print_r($this);
-        $r = new Pman_Core_Mailer(array(
+        $cfg = array(
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
             'page' => $this,
-            'rcpts' => $contents['rcpts'],
             'contents' => $contents
-        ));
+        );
+        if (isset($contents['rcpts'])) {
+            $cfg['rcpts'] = $contents['rcpts'];
+        }
+        
+        $r = new Pman_Core_Mailer($cfg);
         
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
