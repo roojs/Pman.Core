@@ -1,5 +1,12 @@
 From: Roojs
 To: no-reply@office.roojs.com
-subject:Verification
-name:CORE_PERSON_SIGNUP_CONFIRM
-Dear {honor}<br /><br />Thank you for your interest in HydRa here is your link to create your account. Please click the following link to activate.<br /><br />{link:h}
+Subject: Verification
+Content-Type: text/plain; charset=utf-8
+
+Dear {honor}
+
+Thank you for your interest in HydRa here is your link to create your account. 
+
+Please click the following link to activate.
+
+{link:h}
