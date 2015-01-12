@@ -49,8 +49,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 'firstname_alt'=>$this->firstname_alt,
                 'lastname_alt'=>$this->lastname_alt));
 
-            
-            
             if($p->insert()){
                 
                 $temp_pwd = $p->generatePassword();
