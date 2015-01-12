@@ -72,13 +72,10 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
                 ), true);
          
                 if (is_object($ret)) {
-                    $this->addEvent('SYSERR',false, $ret->getMessage());
-                    $this->jerr($ret->getMessage());
+                    return false;
                 }
-                $this->jok("SENT");
                 return true;
             }else{
-                error_log("db insert error");
                 return false;
             }   
         }
