@@ -1,5 +1,5 @@
-from_name:Roojs
-from_email:no-reply@office.roojs.com
+From: Roojs
+To: no-reply@office.roojs.com
 subject:Verification
 name:CORE_PERSON_SIGNUP_CONFIRM
 Dear {honor}<br /><br />Thank you for your interest in HydRa here is your link to create your account. Please click the following link to activate.<br /><br />{link:h}
