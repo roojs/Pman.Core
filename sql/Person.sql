@@ -80,7 +80,7 @@ alter table Person change column active active int(11) NOT NULL DEFAULT 1 ;
 alter table Person change role role varchar(254) NOT NULL DEFAULT '';
 alter table Person change email email varchar(254) NOT NULL DEFAULT '';
 
-
+ALTER TABLE Person ADD COLUMN authorize_md5 TEXT NOT NULL DEFAULT '';
 
 ALTER TABLE Person ADD INDEX lookup_a(email, active);
 ALTER TABLE Person ADD INDEX lookup_b(email, active, company_id);
