@@ -81,6 +81,27 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         return false;
         
     }
+
+
+    function convertTo($table){
+        $t = DB_DataObject::factory($table);
+        $ret = $t->get('email',$this->email);
+        if($ret != 0){
+            return false;
+        }else{
+            $t->setFrom(array(
+                'honor'=>$this->honor,
+                'name'=>$this->name,
+                'email'=>$this->email,
+                'firstname'=>$this->firstname,
+                'lastname'=>$this->lastname,
+                'firstname_alt'=>$this->firstname_alt,
+                'lastname_alt'=>$this->lastname_alt));
+
+            $t->insert();
+            return true;
+        }
+    }
 }
 
     
