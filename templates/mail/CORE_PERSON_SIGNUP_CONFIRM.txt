@@ -1,4 +1,5 @@
 From: "Roojs" <no-reply@office.roojs.com>
+To: {recipient}
 Subject: Verification
 Content-Type: text/plain; charset=utf-8
 
