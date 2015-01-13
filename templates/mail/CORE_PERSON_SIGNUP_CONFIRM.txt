@@ -3,10 +3,19 @@ To: no-reply@office.roojs.com
 Subject: Verification
 Content-Type: text/plain; charset=utf-8
 
-Dear {honor}
+<!DOCTYPE html>
+	<head>
+	    <title></title>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div>Dear {honor}</div>
+		<br /><br />
+		<div>Thank you for your interest in HydRa here is your link to create your account.</div>
+		<br /><br />
+		<div>Please click the following link to activate.</div>
+		<br /><br />
+		<div><a href="{link:h}">{link:h}</a></div>
+	</body>
+</html>
 
-Thank you for your interest in HydRa here is your link to create your account. 
-
-Please click the following link to activate.
-
-{link:h}
