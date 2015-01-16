@@ -55,9 +55,10 @@ class Pman_Core_Images extends Pman
     
     function get($s) // determin what to serve!!!!
     {
-        if (!empty($_GET['_post'])) {
-            return $this->post();
-        }
+        // for testing only.
+        //if (!empty($_GET['_post'])) {
+        //   return $this->post();
+        //}
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
