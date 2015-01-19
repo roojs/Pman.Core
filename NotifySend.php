@@ -451,8 +451,8 @@ class Pman_Core_NotifySend extends Pman
     function mxs($fqdn)
     {
         $ff = HTML_FlexyFramework::get();
-        if (isset($ff['Core_NotifySend']['host'])) {
-            return array($ff['Core_NotifySend']['host']);
+        if (isset($ff['Pman_Core_NotifySend']['host'])) {
+            return array($ff['Pman_Core_NotifySend']['host']);
         }
         
         $mx_records = array();
