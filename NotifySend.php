@@ -239,7 +239,7 @@ class Pman_Core_NotifySend extends Pman
         }
         // since some of them have spaces?!?!
         $p->email = trim($p->email);
-        print_R($p->email);exit;
+        
         
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
