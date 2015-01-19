@@ -23,7 +23,8 @@ require_once 'Pman.php';
  * Note uses configuration
  *
  * Core_NotifySend[host] = 'localhost' << to override direct sending..
- * 
+ * Mail[helo] << helo host name
+ * Mail[socket_options] << any socket option.
  */
 
 
