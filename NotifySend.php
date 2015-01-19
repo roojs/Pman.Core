@@ -18,7 +18,11 @@ require_once 'Pman.php';
  *      recipients =>
  *      body =>
  *  )
- * 
+ *
+ *
+ * Note uses configuration
+ *
+ * Core_NotifySend[host] = 'localhost' << to override direct sending..
  * 
  */
 
@@ -445,6 +449,11 @@ class Pman_Core_NotifySend extends Pman
     }
     function mxs($fqdn)
     {
+        $ff = HTML_FlexyFramework::get();
+        if (isset($ff['Core_NotifySend']['host'])) {
+            return array($ff['Core_NotifySend']['host']);
+        }
+        
         $mx_records = array();
         $mx_weight = array();
         $mxs = array();
