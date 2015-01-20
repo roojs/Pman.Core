@@ -119,11 +119,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     
     function beforeUpdate($old, $request,$roo)
-    {   $roo->jdata(array('old'=>$old,'request'=>$request));
+    {   
         $tn = $this->tableName();
         $x = $this->factory($tn);
         if(!($old->etype == $request['etype'] && $old->name == $request['name'])){
-            $roo->jerr('here');
             $x->whereAdd("etype = '{$request['etype']}' AND name = '{$request['name']}'");
             $x->find(true);
             if($x->count() > 0){
