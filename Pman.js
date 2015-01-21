@@ -780,6 +780,7 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
+        if(obj.parent && obj.parent == 'Pman.Tab.Admin')
         Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         
         Roo.log(obj);
