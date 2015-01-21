@@ -780,10 +780,11 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        if(obj.parent && obj.parent == 'Pman.Tab.Admin')
-        Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        
-        Roo.log(obj);
+        if(obj.parent && obj.parent == 'Pman.Tab.Admin'){
+            Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
+            Roo.log(obj);
+        }
         /// design flaw
         // previously we did not a good naming policy for module and parts
         // most things that are called module here, really are 'parts'
