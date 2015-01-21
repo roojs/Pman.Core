@@ -782,6 +782,8 @@ Pman = new Roo.Document(
         
         Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         Roo.log(appDisabled);
+        
+        Roo.log(obj);
         /// design flaw
         // previously we did not a good naming policy for module and parts
         // most things that are called module here, really are 'parts'
