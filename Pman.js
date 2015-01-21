@@ -846,6 +846,7 @@ Pman = new Roo.Document(
     
     xbeforebuild : function(obj)
     {
+        Roo.log('running xbeforebuild');
         Roo.log(obj);
         if (typeof(obj.part) != 'undefined')  {
            
