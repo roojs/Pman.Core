@@ -781,7 +781,6 @@ Pman = new Roo.Document(
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
         Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        Roo.log(appDisabled);
         
         Roo.log(obj);
         /// design flaw
