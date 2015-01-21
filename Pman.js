@@ -780,7 +780,8 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        
+        Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        Roo.log(appDisabled);
         /// design flaw
         // previously we did not a good naming policy for module and parts
         // most things that are called module here, really are 'parts'
