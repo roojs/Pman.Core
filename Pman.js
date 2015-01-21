@@ -798,12 +798,12 @@ Pman = new Roo.Document(
                 // obj.moduleOwner '.' lname
            
            
-            if (appDisabled.indexOf(permname) > -1)  {
-                Roo.log(obj);
-                Roo.log(permname + " is Disabled for this site");
-                obj.disabled = true;
-                return;
-            }
+//            if (appDisabled.indexOf(permname) > -1)  {
+//                Roo.log(obj);
+//                Roo.log(permname + " is Disabled for this site");
+//                obj.disabled = true;
+//                return;
+//            }
             
             
         }
