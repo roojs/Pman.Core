@@ -780,12 +780,6 @@ Pman = new Roo.Document(
         // global supplied by master.html
         appDisabled = typeof(appDisabled) == 'undefined' ? [] : appDisabled;
         
-        if(obj.parent && obj.parent == 'Pman.Tab.Admin'){
-            Roo.log('disable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-
-            Roo.log(obj);
-        }
-        
         
         /// design flaw
         // previously we did not a good naming policy for module and parts
@@ -799,6 +793,7 @@ Pman = new Roo.Document(
            
            
             if (appDisabled.indexOf(permname) > -1)  {
+                Roo.log('disabled!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
                 Roo.log(obj);
                 Roo.log(permname + " is Disabled for this site");
                 obj.disabled = true;
