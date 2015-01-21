@@ -365,7 +365,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             "To: {if:t.person}{t.person.getEmailFrom():h}{else:}{rcpts:h}{end:}",
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} ",
-            "{if:t.replyTo}Reply-To: {t.replyTo:h}{end:}"
+            "{if:t.replyTo}Reply-To: {t.replyTo:h}{end:}",
+            "{if:t.mailgun-variables}X-Mailgun-Variables: {t.t.mailgun-variables:h}{end:}"
         ))."\n");
         
         
