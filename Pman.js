@@ -797,8 +797,9 @@ Pman = new Roo.Document(
                 // we now have permission...
                 // obj.moduleOwner '.' lname
            
-           Roo.log(obj);
+           
             if (appDisabled.indexOf(permname) > -1)  {
+                Roo.log(obj);
                 Roo.log(permname + " is Disabled for this site");
                 obj.disabled = true;
                 return;
