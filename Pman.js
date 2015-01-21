@@ -846,8 +846,6 @@ Pman = new Roo.Document(
     
     xbeforebuild : function(obj)
     {
-        Roo.log('running xbeforebuild');
-        Roo.log(obj);
         if (typeof(obj.part) != 'undefined')  {
            
             if (!obj.part[1].length) {
@@ -856,7 +854,6 @@ Pman = new Roo.Document(
             var permname = obj.part.join('.');
             
             Roo.log("CHECKING: "+ permname);
-            Roo.log(Pman.hasPermExists(permname));
             
                 // we now have permission...
                 // obj.moduleOwner '.' lname
