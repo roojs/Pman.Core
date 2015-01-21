@@ -69,7 +69,7 @@ Pman.Login =  new Roo.util.Observable({
                 if (!res.data.id) { // id=0 == login failure.
                     return this.show(true);
                 }
-                
+                Roo.log(res);
                               
                         //console.log(success);
                 this.fillAuth(res.data);   
