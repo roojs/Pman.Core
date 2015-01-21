@@ -366,7 +366,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             "Subject: {t.subject} ",
             "X-Message-ID: {t.id} ",
             "{if:t.replyTo}Reply-To: {t.replyTo:h}{end:}",
-            "{if:t.mailgun-variables}X-Mailgun-Variables: {t.mailgun-variables:h}{end:}"
+            "{if:t.mailgun}X-Mailgun-Variables: {t.mailgun-variables:h}{end:}"
         ))."\n");
         
         
