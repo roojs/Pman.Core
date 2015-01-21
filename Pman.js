@@ -793,8 +793,6 @@ Pman = new Roo.Document(
            
            
             if (appDisabled.indexOf(permname) > -1)  {
-                Roo.log('disabled!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                Roo.log(obj);
                 Roo.log(permname + " is Disabled for this site");
                 obj.disabled = true;
                 return;
