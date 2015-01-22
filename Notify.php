@@ -322,6 +322,7 @@ class Pman_Core_Notify extends Pman
         }
         $cmd = 'exec ' . $php . ' ' . $app . ' ' . $cmdOpts; //. ' &';
         
+        print_R($cmd);exit;
        
         $pipe = array();
         $this->logecho("call proc_open $cmd");
