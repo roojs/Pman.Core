@@ -227,11 +227,12 @@ class Pman_Core_NotifySend extends Pman
             
         }
         //$p->email = 'alan@akbkhome.com'; //for testing..
-        print_r($email);exit;
+        //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
        
         if (!empty($email['send-to'])) {
+            print_r($email);exit;
             $p->email = $email['send-to'];
         }
          if (!empty($opts['send-to'])) {
