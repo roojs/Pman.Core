@@ -161,7 +161,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if ($old->etype != $this->etype) {
             $x->query("SELECT core_enum_seqmax_update('". $this->escape($old->etype) ."')");
         }
-        if(empty($old->etype) && empty($this->etype)){
+        if($this->name != $old->name && empty($old->etype) && empty($this->etype)){
             $x->query("UPDATE core_enum SET etype = '". $this->escape($this->name) 
                 ."' WHERE etype = '". $this->escape($old->name)."'");
         }
