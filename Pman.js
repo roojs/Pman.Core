@@ -810,7 +810,7 @@ Pman = new Roo.Document(
         
         
         if (obj.parent === Pman || obj.parent  == 'Pman') {
-            Roo.log("PARENT OF : " + obj.name + " replacing with fake");
+            // Roo.log("PARENT OF : " + obj.name + " replacing with fake");
             obj.parent = Pman.fakeRoot;
         }
         
