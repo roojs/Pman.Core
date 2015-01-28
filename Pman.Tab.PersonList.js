@@ -276,9 +276,9 @@ Pman.Tab.PersonList.prototype = {
                  
         });
         this.panel  = this.layout.add('center',  new Roo.GridPanel(this.grid , {
-                //fitToframe: true,
-                //fitContainer: true,
-                background : false,
+                fitToframe: true,
+                fitContainer: true,
+                //background : false,
                 id: this.id, 
                 title: this.title || "Staff", 
                 controller : this 
