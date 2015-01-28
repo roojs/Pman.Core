@@ -152,8 +152,13 @@ Pman.Tab.PersonList.prototype = {
 
 
 
-        this.tab = parentLayout.add(region,  new Roo.NestedLayoutPanel(
-            this.layout, {title: this.title, background: true, controller : this}));
+        this.tab = parentLayout.add(region,
+            new Roo.NestedLayoutPanel(
+                this.layout, {
+                    title: this.title,
+                    background: true,
+                    controller : this
+        }));
 
         this.tab.on('activate', function() {
             _this.delayedCreate();
@@ -271,8 +276,9 @@ Pman.Tab.PersonList.prototype = {
                  
         });
         this.panel  = this.layout.add('center',  new Roo.GridPanel(this.grid , {
-                fitToframe: true,
-                fitContainer: true, 
+                //fitToframe: true,
+                //fitContainer: true,
+                background : false,
                 id: this.id, 
                 title: this.title || "Staff", 
                 controller : this 
