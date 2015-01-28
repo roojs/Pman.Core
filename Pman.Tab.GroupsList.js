@@ -306,7 +306,7 @@ Pman.Tab.GroupsList.prototype = {
                                 Ext.MessageBox.alert("Error", "You can not rename that group");
                                 return;
                             }
-                            if (s.data.id < 1) {
+                            if (s[0].data.id < 1) {
                                 Ext.MessageBox.alert("Error", "You can not rename that group");
                                 return;
                             }
