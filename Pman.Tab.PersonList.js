@@ -144,7 +144,7 @@ Pman.Tab.PersonList.prototype = {
             {
                
                 center: {
-                    autoScroll:true,
+                    autoScroll:false,
                     hideTabs: true
                 }
             }
