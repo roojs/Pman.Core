@@ -393,6 +393,14 @@ class Pman_Core_Notify extends Pman
                     $this->logecho("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
                     @unlink($p['out']);
                     
+                    $w = DB_DataObject::factory($this->table);
+                    $w->get($p['notify_id']);
+                    $ww = clone($w);
+                    $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT' . $errmsg);
+                    $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 30  MINUTES'));
+                    $w->update($ww);
+                    
+                    
                     continue;
                 }
                 
