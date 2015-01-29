@@ -396,7 +396,7 @@ class Pman_Core_Notify extends Pman
                     $w = DB_DataObject::factory($this->table);
                     $w->get($p['notify_id']);
                     $ww = clone($w);
-                    $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT' . $errmsg);
+                    $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
                     $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 30  MINUTES'));
                     $w->update($ww);
                     
