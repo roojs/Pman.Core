@@ -352,6 +352,7 @@ class Pman_Core_Notify extends Pman
                 'cmd' => $cmd,
                 'email' => $email,
                 'pipes' => $pipes,
+                'notify_id' => $id,
                 'started' => time()
             
                 
