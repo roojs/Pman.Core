@@ -1,5 +1,0 @@
-from_name:Roojs
-from_email:no-reply@Roojs.com
-subject:Congratulations
-name:CORE_PERSON_SIGNUP_CONGRATULATION
-bodytext:Dear {honor}<br /><br />Congratulations on Joining HydRa.<br /><br />If you need to access the system again please log in using the password {password}
