@@ -547,6 +547,12 @@ class Pman_Core_NotifySend extends Pman
     
     function errorHandler($msg)
     {
+        if(empty($this->remote)){
+            die($msg);
+        }
+        
+        return $msg;
+        
         
     }
 }
