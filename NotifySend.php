@@ -552,7 +552,5 @@ class Pman_Core_NotifySend extends Pman
         }
         
         return $msg;
-        
-        
     }
 }
