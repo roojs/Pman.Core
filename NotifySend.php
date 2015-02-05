@@ -56,7 +56,7 @@ class Pman_Core_NotifySend extends Pman
             'min' => 0,
             'max' => 0,
         ),
-        'remote' => array(
+        'referer' => array(
             'desc' => 'Return to referer rather then die',
             'default' => 0,
             'short' => 'r',
@@ -547,7 +547,7 @@ class Pman_Core_NotifySend extends Pman
     
     function errorHandler($msg)
     {
-        if(empty($this->remote)){
+        if(empty($this->referer)){
             die($msg);
         }
         
