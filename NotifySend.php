@@ -75,7 +75,7 @@ class Pman_Core_NotifySend extends Pman
         
     );
     var $table = 'core_notify';
-    var $remote = false;
+    var $referer = false;
     
     function getAuth()
     {
@@ -96,8 +96,8 @@ class Pman_Core_NotifySend extends Pman
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
         
-        if(!empty($opts['remote'])){
-            $this->remote = true;
+        if(!empty($opts['referer'])){
+            $this->referer = true;
         }
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
