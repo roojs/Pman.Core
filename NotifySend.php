@@ -72,7 +72,7 @@ class Pman_Core_NotifySend extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         if (!$ff->cli) {
-            die("access denied");
+            $this->errorHandler("access denied");
         }
         //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
         return true;
