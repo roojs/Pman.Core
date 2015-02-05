@@ -68,6 +68,8 @@ class Pman_Core_NotifySend extends Pman
         
     );
     var $table = 'core_notify';
+    var $remote = false;
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -86,6 +88,10 @@ class Pman_Core_NotifySend extends Pman
         if (!empty($opts['DB_DataObject-debug'])) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
+        
+        if(!empty($opts['remote'])){
+            $this->remote = true;
+        }
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
@@ -94,12 +100,12 @@ class Pman_Core_NotifySend extends Pman
         $w = DB_DataObject::factory($this->table);
         
         if (!$w->get($id)) {
-            die("invalid id\n");
+            $this->errorHandler("invalid id\n");
         }
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             
             
-            die("send repeat to early\n");
+            $this->errorHandler("send repeat to early\n");
         }
         if (!empty($opts['debug'])) {
             print_r($w);
@@ -113,7 +119,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->sent = $w->sqlValue("NOW()");
                 $w->update($ww);
             }    
-            die("message has been sent already.\n");
+            $this->errorHandler("message has been sent already.\n");
         }
         
         $o = $w->object();
@@ -127,7 +133,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . 
+            $this->errorHandler(date('Y-m-d h:i:s ') . 
                      "Notification event cleared (underlying object does not exist)" 
                     ."\n");
         }
@@ -144,10 +150,10 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . 
+            $this->errorHandler(date('Y-m-d h:i:s ') . 
                      "Notification event cleared (not user not active any more)" 
                     ."\n");
-            die("message has been sent already.\n");
+            $this->errorHandler("message has been sent already.\n");
         }
         
         
@@ -190,7 +196,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . 
+            $this->errorHandler(date('Y-m-d h:i:s ') . 
                      "Notification event cleared (not required any more)" 
                     ."\n");
         }
@@ -206,7 +212,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . 
+            $this->errorHandler(date('Y-m-d h:i:s ') . 
                     (isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable)
                     ."\n");
@@ -217,7 +223,7 @@ class Pman_Core_NotifySend extends Pman
             $old = clone($w);
             $w->act_when = $email['later'];
             $w->update($old);
-            die(date('Y-m-d h:i:s ') . " Delivery postponed by email creator");
+            $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator");
         }
         
          
@@ -249,7 +255,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
+            $this->errorHandler(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
             
         }
         
@@ -288,7 +294,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED\n");
             }
             
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
@@ -296,7 +302,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
+            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
             
             
         }
@@ -310,7 +316,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . " - FAILED -  GAVE UP TO OLD - {$p->email} \n");
+            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  GAVE UP TO OLD - {$p->email} \n");
         }
         
         
@@ -330,7 +336,7 @@ class Pman_Core_NotifySend extends Pman
             
             
             if (!isset($ff->Mail['helo'])) {
-                die("config Mail[helo] is not set");
+                $this->errorHandler("config Mail[helo] is not set");
             }
             $this->debug_str = '';
             $this->debug("Trying SMTP: $dom / HELO {$ff->Mail['helo']}");
@@ -382,7 +388,7 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
                 
-                die(date('Y-m-d h:i:s') . " - SENT\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT\n");
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -407,7 +413,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                die(date('Y-m-d h:i:s') . " - GREYLISTED\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED\n");
             }
             $fail = true;
             break;
@@ -425,7 +431,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
+            $this->errorHandler(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
         }
         
         // handle no host availalbe forever...
@@ -435,7 +441,7 @@ class Pman_Core_NotifySend extends Pman
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
-            die(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
+            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
             
             
         }
@@ -444,7 +450,7 @@ class Pman_Core_NotifySend extends Pman
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->update($ww);
-        die(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
+        $this->errorHandler(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
 
         
     }
@@ -522,7 +528,7 @@ class Pman_Core_NotifySend extends Pman
     }
     function output()
     {
-        die("done\n");
+        $this->errorHandler("done\n");
     }
     var $debug_str = '';
     
