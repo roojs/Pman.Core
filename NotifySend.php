@@ -83,7 +83,7 @@ class Pman_Core_NotifySend extends Pman
     {
         
         //print_r($opts);
-        if ($opts['DB_DataObject-debug']) {
+        if (!empty($opts['DB_DataObject-debug'])) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
         //DB_DataObject::debugLevel(1);
