@@ -10,11 +10,11 @@ Content-Type: text/plain; charset=utf-8
 	</head>
 	<body>
 		<div>Dear {honor}</div>
-		<br /><br />
+		<br /> 
 		<div>Thank you for your interest in XXX here is your link to create your account.</div>
-		<br /><br />
+		<br /> 
 		<div>Please click the following link to activate.</div>
-		<br /><br />
+		<br /> 
 		<div><a href="{link:h}">{link:h}</a></div>
 	</body>
 </html>
