@@ -299,6 +299,8 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setRow($start_row +$r, $cfg['row_height']);
         }
         
+        $maxHeight = 20;
+        
         foreach($cfg['cols']  as $c => $col_cfg) {
             
             if(isset($col_cfg['dataIndex']) && isset($cl[$col_cfg['dataIndex']])){
