@@ -299,7 +299,7 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setRow($start_row +$r, $cfg['row_height']);
         }
         
-        foreach($cfg['cols']  as $c=>$col_cfg) {
+        foreach($cfg['cols']  as $c => $col_cfg) {
             
             if(isset($col_cfg['dataIndex']) && isset($cl[$col_cfg['dataIndex']])){
                 $v =    $cl[$col_cfg['dataIndex']]  ;
@@ -342,6 +342,14 @@ class Pman_Core_SimpleExcel extends Pman
             } else {
           
                 $worksheet->write($start_row+$r, $c, $v, $format);
+            }
+            
+            if(isset($col_cfg['autoHeight'])){
+                $vv = explode("\n", $v);
+                
+                $height = count($vv) * 20;
+                
+                $worksheet->write($start_row+$r, $height);
             }
         }
         $this->start_row++;
