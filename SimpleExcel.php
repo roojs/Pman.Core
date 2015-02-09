@@ -186,7 +186,7 @@ class Pman_Core_SimpleExcel extends Pman
         $this->worksheet = $worksheet;
          
         $start_row = 0;
-        print_r($cfg);exit;
+        
         if (!empty($cfg['head'])) {
             foreach($cfg['head'] as $row) { 
                 foreach($row as $c => $col) {
