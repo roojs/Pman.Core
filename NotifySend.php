@@ -68,7 +68,7 @@ class Pman_Core_NotifySend extends Pman
         
     );
     var $table = 'core_notify';
-    var $referer = false;
+    var $error_handler = 'die';
     
     function getAuth()
     {
