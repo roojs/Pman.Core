@@ -4,7 +4,7 @@
 
 require_once 'Pman.php';
 
-class Pman_Hydra_Import_Core_email extends Pman 
+class Pman_Core_Import_Core_email extends Pman 
 {
     static $cli_desc = "Import an email into core_email template"; 
     
