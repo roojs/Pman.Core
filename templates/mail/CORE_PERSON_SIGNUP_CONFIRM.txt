@@ -1,6 +1,6 @@
-From: "Roojs" <no-reply@office.roojs.com>
-To: "Roojs" <no-reply@office.roojs.com>
-Subject: Verification
+From: "From Person" <no-reply@yourdomain.com>
+To: "Person Name" <no-reply@yourdomain.com>
+Subject: Your invitation to XXXXX
 Content-Type: text/plain; charset=utf-8
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ Content-Type: text/plain; charset=utf-8
 	<body>
 		<div>Dear {honor}</div>
 		<br /><br />
-		<div>Thank you for your interest in HydRa here is your link to create your account.</div>
+		<div>Thank you for your interest in XXX here is your link to create your account.</div>
 		<br /><br />
 		<div>Please click the following link to activate.</div>
 		<br /><br />
