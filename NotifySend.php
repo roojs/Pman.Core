@@ -89,9 +89,6 @@ class Pman_Core_NotifySend extends Pman
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
         
-        if(!empty($opts['referer'])){
-            $this->referer = true;
-        }
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
