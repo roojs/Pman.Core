@@ -299,7 +299,7 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setRow($start_row +$r, $cfg['row_height']);
         }
         
-        $height = 10;
+        $height = 12;
         
         foreach($cfg['cols']  as $c => $col_cfg) {
             
