@@ -38,6 +38,7 @@ class Pman_Hydra_Import_Core_email extends Pman_Roo
             $this->jerr("file does not exist : " . $opts['file']);
         }
         
+        
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
         if($ret == 0){
