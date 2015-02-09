@@ -344,13 +344,13 @@ class Pman_Core_SimpleExcel extends Pman
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
             
-//            if(isset($col_cfg['autoHeight'])){
+            if(isset($col_cfg['autoHeight'])){
                 $vv = explode("\n", $v);
                 
                 $height = count($vv) * 20;
                 
                 $worksheet->setRow($start_row+$r, $height);
-//            }
+            }
         }
         $this->start_row++;
         
