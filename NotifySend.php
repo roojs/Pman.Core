@@ -539,7 +539,6 @@ class Pman_Core_NotifySend extends Pman
     {
         if($this->error_handler == 'exception'){
             throw new Exception($msg);
-            return;
         }
         
         die($msg);
