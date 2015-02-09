@@ -52,7 +52,7 @@ class Pman_Core_Import_Core_email extends Pman
         $from_name = explode(" ", $parts[0])[0];
         $from_email = explode(" ", $parts[0])[1];
         $c->setFrom(array(
-            'from_name'     => $from_name,
+            'from_name'     => trim($from_name, '"'),
             'from_email'    => $from_email,
             'subject'       => $parts[1]['Subject'],
             'name'          => $template_name,
