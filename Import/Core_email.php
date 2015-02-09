@@ -46,7 +46,9 @@ class Pman_Core_Import_Core_email extends Pman
         
         $mailtext = file_get_contents($opts['file']);
 
-        require_once 'Mail/mimeDecode.php';  
+        require_once 'Mail/mimeDecode.php';
+        require_once 'Mail/RFC822.php';
+        
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
         
