@@ -300,7 +300,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
         
         foreach($cfg['cols']  as $c=>$col_cfg) {
-            print_r($col_cfg);exit;
+            
             if(isset($col_cfg['dataIndex']) && isset($cl[$col_cfg['dataIndex']])){
                 $v =    $cl[$col_cfg['dataIndex']]  ;
                 
