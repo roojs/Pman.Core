@@ -348,6 +348,7 @@ class Pman_Core_SimpleExcel extends Pman
             
 //            if(isset($col_cfg['autoHeight'])){
                 $vv = explode("\n", $v);
+                print_R($vv);exit;
                 $height = MAX(count($vv) * 20, $height);;
                 $worksheet->setRow($start_row+$r, $height);
 //            }
