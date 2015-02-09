@@ -537,10 +537,12 @@ class Pman_Core_NotifySend extends Pman
     
     function errorHandler($msg)
     {
-        if(empty($this->referer)){
-            die($msg);
+        if($error_handler == 'exception')){
+            throw new Exception($msg);
         }
         
-        throw new Exception($msg);
+        die($msg);
+        
+        
     }
 }
