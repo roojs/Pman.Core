@@ -49,6 +49,8 @@ class Pman_Core_Import_Core_email extends Pman
         require_once 'Mail/mimeDecode.php';  
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        print_R($parts);exit;
+        
         $from_name = explode(" ", $parts[0])[0];
         $from_email = explode(" ", $parts[0])[1];
         $c->setFrom(array(
