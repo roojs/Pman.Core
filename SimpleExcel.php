@@ -96,7 +96,6 @@ class Pman_Core_SimpleExcel extends Pman
          
          
         if (!empty($cfg['workbook'])) {
-            print_r('run');exit;
             $this->buildPage(  array(), $data,$cfg);
         } elseif (!empty($cfg['workbooks'])) {
             foreach($cfg['workbooks'] as $i =>$wcfg) {
