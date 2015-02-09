@@ -541,6 +541,6 @@ class Pman_Core_NotifySend extends Pman
             die($msg);
         }
         
-        return $msg;
+        throw new Exception($msg);
     }
 }
