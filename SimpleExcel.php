@@ -350,7 +350,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $vv = explode("\n", $v);
                 
                 $height = MAX(count($vv) * 20, $height);;
-                $worksheet->setRow($start_row+$r, $height);
+                $worksheet->setRow($start_row+$r, null);
 //            }
         }
         $this->start_row++;
