@@ -10,64 +10,13 @@ class Pman_Hydra_Import_Core_email extends Pman_Roo
     
     static $cli_opts = array(
         'file' => array(
-            'desc' => 'Turn on debugging (see DataObjects debugLevel )',
-            'default' => 0,
-            'short' => 'v',
+            'desc' => 'File to import',
+            'short' => 'f',
             'min' => 1,
             'max' => 1,
             
         ),
-        'list' => array(
-            'desc' => 'List message to send, do not send them..',
-            'default' => 0,
-            'short' => 'l',
-            'min' => 0,
-            'max' => 0,
-            
-        ),
-        'old' => array(
-            'desc' => 'Show old messages.. (and new messages...)',
-            'default' => 0,
-            'short' => 'o',
-            'min' => 0,
-            'max' => 0,
-            
-        ),
-        'force' => array(
-            'desc' => 'Force redelivery, even if it has been sent before or not queued...',
-            'default' => 0,
-            'short' => 'f',
-            'min' => 0,
-            'max' => 0,
-        ),
-        'generate' => array(
-            'desc' => 'Generate notifications for a table, eg. cash_invoice',
-            'default' => '',
-            'short' => 'g',
-            'min' => 0,
-            'max' => 1,
-        ),
-         'limit' => array(
-            'desc' => 'Limit search for no. to send to ',
-            'default' => 1000,
-            'short' => 'L',
-            'min' => 0,
-            'max' => 999,
-        ),
-        'dryrun' => array(
-            'desc' => 'Dry run - do not send.',
-            'default' => 0,
-            'short' => 'D',
-            'min' => 0,
-            'max' => 0,
-        ),
-        'poolsize' => array(
-            'desc' => 'Pool size',
-            'default' => 10,
-            'short' => 'P',
-            'min' => 0,
-            'max' => 100,
-        ),
+         
     );
     
     function getAuth()
@@ -80,9 +29,13 @@ class Pman_Hydra_Import_Core_email extends Pman_Roo
         
     }
 
-    function get(){
+    function get($part='', $opts){
         
-        $template_name = 'CORE_PERSON_SIGNUP_CONFIRM';
+        
+        $template_name = preg_replace('/\.[a-z]+$/',dirname($opts['file']),'');
+        
+        
+        
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
         if($ret == 0){
