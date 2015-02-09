@@ -56,13 +56,6 @@ class Pman_Core_NotifySend extends Pman
             'min' => 0,
             'max' => 0,
         ),
-        'referer' => array(
-            'desc' => 'Return to referer rather then die',
-            'default' => 0,
-            'short' => 'r',
-            'min' => 0,
-            'max' => 0,
-        ),
         'send-to' => array(
             'desc' => 'Send the message to this address, rather than the one listed.',
             'default' => '',
