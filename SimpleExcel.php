@@ -300,6 +300,7 @@ class Pman_Core_SimpleExcel extends Pman
         }
         
         $line_height = (isset($cfg['line_height'])) ? $cfg['line_height'] : 12;
+        $height = 0;
         
         foreach($cfg['cols']  as $c => $col_cfg) {
             
