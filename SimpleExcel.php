@@ -294,7 +294,7 @@ class Pman_Core_SimpleExcel extends Pman
         if (is_object($clo)) {
             $cl = (array)$clo; // lossless converstion..
         }
-        
+        print_R($cfg);exit;
         if (isset($cfg['row_height'])) {
             $worksheet->setRow($start_row +$r, $cfg['row_height']);
         }
