@@ -32,14 +32,16 @@ class Pman_Hydra_Import_Core_email extends Pman_Roo
     function get($part='', $opts){
         
         
-        $template_name = preg_replace('/\.[a-z]+$/',dirname($opts['file']),'');
+        $template_name = preg_replace('/\.[a-z]+$/i',dirname($opts['file']),'');
         
-        
+        if (!file_exists($opts['file'])) {
+            $this->jerr("file does not exist : " . $opts['file']);
+        }
         
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
         if($ret == 0){
-            $mailtext = file_get_contents('Pman.Core/templates/mail/'.$template_name.'.txt');
+            $mailtext = file_get_contents($opts['file']);
     
             require_once 'Mail/mimeDecode.php';  
             $decoder = new Mail_mimeDecode($mailtext);
