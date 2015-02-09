@@ -37,13 +37,14 @@ class Pman_Core_Import_Core_email extends Pman
         if (!file_exists($opts['file'])) {
             $this->jerr("file does not exist : " . $opts['file']);
         }
-        
+        var_dump($template_name); exit;
         
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
         if($ret ) {
             $this->jerr("we do not support updating the files ... - especially if the user has changed them!!");
         }
+        
         $mailtext = file_get_contents($opts['file']);
 
         require_once 'Mail/mimeDecode.php';  
