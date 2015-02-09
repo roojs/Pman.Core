@@ -299,7 +299,7 @@ class Pman_Core_SimpleExcel extends Pman
             $worksheet->setRow($start_row +$r, $cfg['row_height']);
         }
         
-        $height = 1;
+        $height = 10;
         
         foreach($cfg['cols']  as $c => $col_cfg) {
             
@@ -349,7 +349,7 @@ class Pman_Core_SimpleExcel extends Pman
 //            if(isset($col_cfg['autoHeight'])){
                 $vv = explode("\n", $v);
                 
-                $height = MAX(count($vv), $height);;
+                $height = MAX(count($vv) * 10, $height);;
                 $worksheet->setRow($start_row+$r, $height);
 //            }
         }
