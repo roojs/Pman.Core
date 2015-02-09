@@ -233,7 +233,7 @@ class Pman_Core_SimpleExcel extends Pman
             return;
         }
         
-        print_r($data);exit;
+        
         foreach($data as $r=>$clo) {
             $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
             $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
