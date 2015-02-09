@@ -224,7 +224,8 @@ class Pman_Core_SimpleExcel extends Pman
             print_R($col_cfg['header']);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
 //            $worksheet->setRow ( $start_row, $col_cfg['height'] / 5);
-        }exit;
+        }
+        exit;
         $start_row++;
         $this->start_row = &$start_row;
         
