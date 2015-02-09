@@ -32,7 +32,7 @@ class Pman_Core_Import_Core_email extends Pman
     function get($part='', $opts){
         
         
-        $template_name = preg_replace('/\.[a-z]+$/i',dirname($opts['file']),'');
+        $template_name = preg_replace('/\.[a-z]+$/i',basename($opts['file']),'');
         
         if (!file_exists($opts['file'])) {
             $this->jerr("file does not exist : " . $opts['file']);
