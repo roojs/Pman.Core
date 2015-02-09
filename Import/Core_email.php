@@ -51,7 +51,9 @@ class Pman_Core_Import_Core_email extends Pman
         $parts = $decoder->getSendArray();
         
         $headers = $parts[1];
-        $from = $headers['From'];
+        $from = new Mail_RFC822();
+        $from_str = $from->parseAddressList($headers['From']);
+        var_dump($from_str);exit;
         $from_name = explode(" ", $parts[0])[0];
         $from_email = explode(" ", $parts[0])[1];
         
