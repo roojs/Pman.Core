@@ -222,6 +222,7 @@ class Pman_Core_SimpleExcel extends Pman
             $format = isset($col_cfg['color']) && isset($this->formats[$col_cfg['color']]) ? $this->formats[$col_cfg['color']] : false;
             $worksheet->write($start_row, $c, @$col_cfg['header'],$format);
             $worksheet->setColumn ( $c, $c, $col_cfg['width'] / 5);
+            $worksheet->setRow( $start_row, 100);
         }
         $start_row++;
         $this->start_row = &$start_row;
