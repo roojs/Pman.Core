@@ -466,7 +466,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $fc->convert($mt, $size);
-        
+        return 'run??';
         return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
     }
     /**
