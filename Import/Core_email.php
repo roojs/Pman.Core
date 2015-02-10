@@ -55,13 +55,14 @@ class Pman_Core_Import_Core_email extends Pman
         $headers = $parts[1];
         $from = new Mail_RFC822();
         $from_str = $from->parseAddressList($headers['From']);
-        var_dump($from_str);exit;
-        $from_name = explode(" ", $parts[0])[0];
-        $from_email = explode(" ", $parts[0])[1];
+        
+        $from_name  = trim($from_str[0]->personal, '"');
+        
+        $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
         
         $c->setFrom(array(
-            'from_name'     => trim($from_name, '"'),
+            'from_name'     => $from_name,
             'from_email'    => $from_email,
             'subject'       => $parts[1]['Subject'],
             'name'          => $template_name,
