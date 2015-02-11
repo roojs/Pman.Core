@@ -237,6 +237,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             ");
         }
         
+        if(!empty($q['to'])){
+            $this->whereAdd("
+                act_when <= '{$q['to']}'
+            ");
+        }
+        
     }
     
 }
