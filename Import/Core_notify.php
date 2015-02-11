@@ -22,13 +22,15 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
 
     function get()
     {   
-        print_R($this->modulesList());exit;
+        
         $this->transObj = DB_DataObject::Factory('core_enum');
         
         $this->transObj->query('BEGIN');
         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         
+        $this->modules = $this->modulesList();
+        print_R($this->modules);exit;
         $this->etype();
         
         
@@ -50,10 +52,5 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         }
         
         $this->etype->insert();
-    }
-    
-    function modules()
-    {
-        
     }
 }
