@@ -65,7 +65,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
             $enum = DB_DataObject::factory('core_enum');
             $enum->setFrom(array(
                 'etype' => $this->etype->name,
-                'name' => $t,
+                'name' => $t->evtype,
                 'active' => 1
             ));
             
@@ -73,7 +73,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
                 continue;
             }
             
-            $enum->display_name = $t;
+            $enum->display_name = $t->evtype;
             $enum->insert();
         }
         
