@@ -35,24 +35,33 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
         $this->etype();
         
-        $this->defaults();
+//        $this->defaults();
+//        
+//        foreach ($this->defaults as $k => $v){
+//            $enum = DB_DataObject::factory('core_enum');
+//            $enum->setFrom(array(
+//                'etype' => $this->etype->name,
+//                'name' => $k,
+//                'active' => 1
+//            ));
+//            
+//            if($enum->find(true)){
+//                continue;
+//            }
+//            
+//            $enum->display_name = $v;
+//            $enum->insert();
+//        }
+//        
+        $notify = DB_DataObject::factory('core_notify');
+        $notify->selectAdd();
+        $notify->selectAdd("
+            DISTINCT(evtype) AS evtype
+        ");
         
-        foreach ($this->defaults as $k => $v){
-            $enum = DB_DataObject::factory('core_enum');
-            $enum->setFrom(array(
-                'etype' => $this->etype->name,
-                'name' => $k,
-                'active' => 1
-            ));
-            
-            if($enum->find(true)){
-                continue;
-            }
-            
-            $enum->display_name = $v;
-            $enum->insert();
-        }
+        $types = $notify->fetchAll();
         
+        print_r($types);exit;
         
         
         
