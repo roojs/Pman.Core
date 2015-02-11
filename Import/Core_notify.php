@@ -31,7 +31,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
         $this->modules = $this->modulesList();
         
-        $this->config();
+        $this->defaults();
         
         $this->etype();
         
@@ -56,7 +56,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         $this->etype->insert();
     }
     
-    function config()
+    function defaults()
     {
         foreach ($this->modules as $m){
             $file = $this->rootDir. "/Pman/$m/Core.NotifyType.json";
@@ -65,12 +65,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
                 continue;
             }
             
-            $config = json_decode(file_get_contents($file), true);
-            
-            print_R($config);
-            
-            
-            
+            $this->defaults[$m] = json_decode(file_get_contents($file), true);
             
         }
         exit;
