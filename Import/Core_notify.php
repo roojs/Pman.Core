@@ -59,8 +59,21 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
     function config()
     {
         foreach ($this->modules as $m){
-            $file = $this->rootDir. "/Pman/$m/NotifyType.json";
+            $file = $this->rootDir. "/Pman/$m/Core.NotifyType.json";
+            
+            if(!file_exists($file)){
+                continue;
+            }
+            
+            $config = json_decode(file_get_contents($file), true);
+            
+            print_R($config);
+            
+            
+            
+            
         }
+        exit;
     }
     
     function log($str)
