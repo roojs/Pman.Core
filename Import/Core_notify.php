@@ -69,8 +69,6 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
             
         }
         
-        
-        
     }
     
     function log($str)
