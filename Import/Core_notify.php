@@ -35,24 +35,24 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
         $this->etype();
         
-//        $this->defaults();
-//        
-//        foreach ($this->defaults as $k => $v){
-//            $enum = DB_DataObject::factory('core_enum');
-//            $enum->setFrom(array(
-//                'etype' => $this->etype->name,
-//                'name' => $k,
-//                'active' => 1
-//            ));
-//            
-//            if($enum->find(true)){
-//                continue;
-//            }
-//            
-//            $enum->display_name = $v;
-//            $enum->insert();
-//        }
-//        
+        $this->defaults();
+        
+        foreach ($this->defaults as $k => $v){
+            $enum = DB_DataObject::factory('core_enum');
+            $enum->setFrom(array(
+                'etype' => $this->etype->name,
+                'name' => $k,
+                'active' => 1
+            ));
+            
+            if($enum->find(true)){
+                continue;
+            }
+            
+            $enum->display_name = $v;
+            $enum->insert();
+        }
+        
         $notify = DB_DataObject::factory('core_notify');
         $notify->selectAdd();
         $notify->selectAdd("
@@ -61,9 +61,23 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
         $types = $notify->fetchAll();
         
-        print_r($types);exit;
+        foreach ($types as $t){
+            $enum = DB_DataObject::factory('core_enum');
+            $enum->setFrom(array(
+                'etype' => $this->etype->name,
+                'name' => $t,
+                'active' => 1
+            ));
+            
+            if($enum->find(true)){
+                continue;
+            }
+            
+            $enum->display_name = $t;
+            $enum->insert();
+        }
         
-        
+        $this->jok('DONE');
         
         
     }
