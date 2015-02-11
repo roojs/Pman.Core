@@ -108,6 +108,8 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
                 continue;
             }
             
+            $this->log("Processing $file");
+                    
             $this->defaults = array_merge($this->defaults, json_decode(file_get_contents($file), true)) ;
         }
         
