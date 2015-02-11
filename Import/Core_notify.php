@@ -22,7 +22,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
 
     function get()
     {   
-        
+        print_R($this->modulesList());exit;
         $this->transObj = DB_DataObject::Factory('core_enum');
         
         $this->transObj->query('BEGIN');
