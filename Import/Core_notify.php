@@ -58,6 +58,9 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
     
     function config()
     {
-        
+        print_R($this->modules);exit;
+        foreach ($this->modules as $m){
+            
+        }
     }
 }
