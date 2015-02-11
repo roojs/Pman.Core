@@ -20,6 +20,8 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
     }
 
+    var $defaults = array();
+    
     function get()
     {   
         
@@ -65,8 +67,7 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
                 continue;
             }
             
-            $this->defaults[$m] = json_decode(file_get_contents($file), true);
-            
+            $this->defaults = array_merge($this->defaults, json_decode(file_get_contents($file), true)) ;
         }
         
     }
