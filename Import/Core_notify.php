@@ -33,11 +33,27 @@ class Pman_Core_Import_Core_notify extends Pman_Roo
         
         $this->modules = $this->modulesList();
         
+        $this->etype();
+        
         $this->defaults();
         
-        print_r($this->defaults);exit;
+        foreach ($this->defaults as $k => $v){
+            $enum = DB_DataObject::factory('core_enum');
+            $enum->setFrom(array(
+                'etype' => $this->etype->name,
+                'name' => $k,
+                'active' => 1
+            ));
+            
+            if($enum->find(true)){
+                continue;
+            }
+            
+            $enum->display_name = $v;
+            $enum->insert();
+        }
         
-        $this->etype();
+        
         
         
         
