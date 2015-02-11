@@ -186,7 +186,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             "; 
             $this->selectAs($d, 'core_notify_%s');
         } 
-        if (isset($q['query']['person_id_name']) ) {
+        if (!empty($q['query']['person_id_name']) ) {
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
              
         }
