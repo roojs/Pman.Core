@@ -215,7 +215,19 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             }
         }
         
-        
+        $this->selectAdd("
+            (SELECT
+                    display_name
+            FROM
+                    core_enum
+            WHERE
+                    etype = 'Core.NotifyType'
+                AND
+                    name = core_notify.evtype
+                AND
+                    active = 1
+            ) AS evtype_align
+        ");
         
         
         
