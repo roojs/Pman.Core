@@ -31,6 +31,7 @@ class Pman_Core_Import_Core_email extends Pman
 
     function get($part='', $opts){
         
+        DB_DataObject::debugLevel(1);
         
         $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
         
