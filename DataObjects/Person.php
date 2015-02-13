@@ -962,6 +962,22 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         return false;
     }
     
+    function beforeInsert($req, $roo)
+    {
+        $p = DB_DataObject::factory('person');
+        if ($roo->authUser->id > -1 ||  $p->count() > 1) {
+            return;
+        }
+        $c = DB_DAtaObject::Factory('Companies');
+        $tc =$c->count();
+        if (!$tc || $tc> 1) {
+            $roo->jerr("can not create initial user as multiple companies already exist");
+        }
+        $c->find(true);
+        $this->company_id = $c->id;
+        
+    }
+    
     function onInsert($req, $roo)
     {
          
