@@ -67,7 +67,9 @@ class Pman_Core_Import_Core_email extends Pman
             'from_email'    => $from_email,
             'subject'       => $parts[1]['Subject'],
             'name'          => $template_name,
-            'bodytext'      => $parts[2]
+            'bodytext'      => $parts[2],
+            'updated_dt'     => date('Y-m-d H:i:s'),
+            'created_dt'     => date('Y-m-d H:i:s'),
         ));
         $c->insert();
         
