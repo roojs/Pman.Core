@@ -77,7 +77,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         foreach(array('Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
             if (isset($ff->$pk)) {
                 //var_dump($pk);
-                $opts=  $ff->$pk;
+                $opts =  $ff->$pk;
                 break;
             }
         }
