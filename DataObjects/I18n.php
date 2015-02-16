@@ -74,7 +74,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         // BC compatible.. if any of these are set, then we use them as the settings..
         $opts = array();
-        foreach(array('Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
+        foreach(array('Pman_Core_I18n', 'Pman_Core_I18N', 'Pman_I18N','Pman_I18n') as $pk) {
             if (isset($ff->$pk)) {
                 //var_dump($pk);
                 $opts =  $ff->$pk;
