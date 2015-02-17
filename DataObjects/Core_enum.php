@@ -23,7 +23,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-        
+        exit;
 //        DB_DataObject::debugLevel(1);
         if (!empty($q['query']['empty_etype'])) {
             $this->whereAdd("etype = ''");
