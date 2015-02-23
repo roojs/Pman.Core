@@ -268,7 +268,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
             $u = DB_DataObject::factory('Person');
-            if ($u->get($a->id)) { //&& strlen($u->passwd)) {
+            if (($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
               
                 return $u->verifyAuth();
                 
