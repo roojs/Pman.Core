@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             // force a logout - without a check on the isAuth - as this is called from there..
             $db = $this->getDatabaseConnection();
             $sesPrefix = $ff->appNameShort .'-'.get_class($this) .'-'.$db->dsn['database'] ;
-            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
             return false;
             
             $ff->page->jerr("Login not permited to outside companies");
@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 return true;
             }
             
-            unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
+            unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
         }
         // local auth - 
@@ -313,7 +313,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
             ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
-            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
             return true;
         }
            
@@ -328,7 +328,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
-            $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($u);
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
         //var_dump(session_id());
@@ -342,7 +342,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $u = DB_DataObject::factory('Person');
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
-        $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $n;
+        $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
         $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
         if ($error) {
             die($error->toString()); // not really a good thing to do...
@@ -366,24 +366,24 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
 
         
         
-        if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
-            $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
+        if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
+            $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
             $u = DB_DataObject::factory('Person');
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {
                 return clone($u);
             }
-            unset($_SESSION[__CLASS__][$sesPrefix .'-auth']);
+            unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
         }
         
-        if (empty(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] )) {
+        if (empty(   $_SESSION[get_class($this)][$sesPrefix .'-empty'] )) {
             $u = DB_DataObject::factory('Person');
             $u->whereAdd(' LENGTH(passwd) > 0');
-            $_SESSION[__CLASS__][$sesPrefix .'-empty']  = $u->count();
+            $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $u->count();
         }
                 
              
-        if (isset(   $_SESSION[__CLASS__][$sesPrefix .'-empty'] ) && $_SESSION[__CLASS__][$sesPrefix .'-empty']  < 1) {
+        if (isset(   $_SESSION[get_class($this)][$sesPrefix .'-empty'] ) && $_SESSION[get_class($this)][$sesPrefix .'-empty']  < 1) {
             
             // fake person - open system..
             //$ce = DB_DataObject::factory('core_enum');
@@ -433,7 +433,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
 
-        $_SESSION[__CLASS__][$sesPrefix .'-auth'] = serialize($this);
+        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($this);
         
     }
     function logout()
@@ -443,7 +443,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
-        $_SESSION[__CLASS__][$sesPrefix .'-auth'] = "";
+        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
        
         
        
