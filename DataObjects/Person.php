@@ -268,7 +268,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
             $u = DB_DataObject::factory('Person');
-            if (($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
+            if ($u->get($a->id)) { //&& strlen($u->passwd)) {
               
                 return $u->verifyAuth();
                 
@@ -285,7 +285,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             ($ff->Pman['local_autoauth'] === true) &&
             (!empty($_SERVER['SERVER_ADDR'])) &&
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
-            ($_SERVER['REMOTE_ADDR'] == '127.0.0.1')
+            ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
+            get_class($this) == __CLASS__
         ) {
             $group = DB_DataObject::factory('Groups');
             $group->get('name', 'Administrators');
@@ -311,6 +312,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             (!empty($_SERVER['SERVER_ADDR'])) &&
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') &&
+            get_class($this) == __CLASS__ &&
             ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
@@ -323,6 +325,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($_SERVER['PHP_AUTH_USER']) 
             &&
             !empty($_SERVER['PHP_AUTH_PW'])
+            &&
+            get_class($this) == __CLASS__
             &&
             $u->get('email', $_SERVER['PHP_AUTH_USER'])
             &&
@@ -347,7 +351,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($error) {
             die($error->toString()); // not really a good thing to do...
         }
-        if (!$n){ // authenticated as there are no users in the system...
+        if (!$n && get_class($this) == __CLASS__){ // authenticated as there are no users in the system...
             return true;
         }
         
