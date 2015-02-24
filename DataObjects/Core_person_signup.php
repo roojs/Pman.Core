@@ -104,7 +104,10 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         }
         
         $hydra_person->setFrom($this->toArray());
-//        $hydra_person->e
+        $hydra_person->employer_name = $this->company_name;
+        
+        $hydra_person->insert();
+        $hydra_person->onInsert();
     }
     
     function sendVerification($template, $roo)
