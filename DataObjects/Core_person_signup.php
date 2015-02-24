@@ -108,6 +108,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $hydra_person->insert();
         
+        $this->delete();
+        
         return $hydra_person;
     }
     
