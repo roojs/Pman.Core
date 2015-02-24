@@ -101,9 +101,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             return $hydra_person;
         }
         
-        $hydra_person->setFrom(array(
-            
-        ));
+        $hydra_person->setFrom($this->toArray());
+//        $hydra_person->e
     }
     
     function sendVerification($template, $roo)
