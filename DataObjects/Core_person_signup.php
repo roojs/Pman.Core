@@ -93,11 +93,14 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 //        }
 //    }
 
-    function sendVerification()
+    function sendVerification($roo)
     {
         
         $content = array(
-            'template'          => 'CORE_PERSON_SIGNUP_CONFIRM',
+            'template'      => 'CORE_PERSON_SIGNUP_VERIFICATION',
+            'person'        => $this,
+            'serverName'    => $_SERVER['SERVER_NAME'],
+            'baseURL'       => $roo->baseURL
         );
 
         $sent = DB_DataObject::factory('core_email')->send($content);
