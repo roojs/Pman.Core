@@ -111,5 +111,13 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         return false;
     }
+    
+    function getEmailFrom()
+    {
+        if (empty($this->name)) {
+            return $this->email;
+        }
+        return '"' . addslashes($this->name) . '" <' . $this->email . '>';
+    }
 }
 
