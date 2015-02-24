@@ -96,6 +96,17 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     function sendVerification()
     {
         
+        $content = array(
+            'template'          => 'CORE_PERSON_SIGNUP_CONFIRM',
+        );
+
+        $sent = DB_DataObject::factory('core_email')->send($content);
+        
+        if(!is_object($sent)){
+            return true;
+        }
+        
+        return false;
     }
 }
 
