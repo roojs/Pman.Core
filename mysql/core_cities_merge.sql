@@ -371,7 +371,9 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
         SET v_count = 0;
 
         OPEN csr;
+        
         read_loop: LOOP
+        
             FETCH csr INTO v_network_start_ip,v_network_mask_length,v_geoname_id,v_is_anonymous_proxy,v_is_satellite_provider;
             
             SET v_count = v_count + 1;
