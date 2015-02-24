@@ -93,11 +93,11 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 //        }
 //    }
 
-    function sendVerification($roo)
+    function sendVerification($template, $roo)
     {
         
         $content = array(
-            'template'      => 'CORE_PERSON_SIGNUP_VERIFICATION',
+            'template'      => $template,
             'person'        => $this,
             'serverName'    => $_SERVER['SERVER_NAME'],
             'baseURL'       => $roo->baseURL
