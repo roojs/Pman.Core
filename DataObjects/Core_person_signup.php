@@ -93,6 +93,19 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 //        }
 //    }
 
+    function verified()
+    {
+        $hydra_person = DB_DataObject::factory('hydra_person');
+        
+        if($hydra_person->get('email', $this->email)){
+            return $hydra_person;
+        }
+        
+        $hydra_person->setFrom(array(
+            
+        ));
+    }
+    
     function sendVerification($template, $roo)
     {
         
