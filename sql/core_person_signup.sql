@@ -19,3 +19,5 @@ ALTER TABLE core_person_signup ADD COLUMN   lastname_alt varchar(128) NOT NULL D
 ALTER TABLE core_person_signup ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';
 ALTER TABLE core_person_signup ADD COLUMN   verify_key varchar(256)  NOT NULL DEFAULT '';
 ALTER TABLE core_person_signup ADD COLUMN   created_dt DATETIME  NOT NULL;
+
+ALTER TABLE core_person_signup ADD COLUMN   company_name TEXT NOT NULL  default '';
