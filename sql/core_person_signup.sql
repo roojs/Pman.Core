@@ -21,3 +21,4 @@ ALTER TABLE core_person_signup ADD COLUMN   verify_key varchar(256)  NOT NULL DE
 ALTER TABLE core_person_signup ADD COLUMN   created_dt DATETIME  NOT NULL;
 
 ALTER TABLE core_person_signup ADD COLUMN   company_name TEXT NOT NULL  default '';
+ALTER TABLE core_person_signup ADD COLUMN   person_type TEXT NOT NULL  default '';
