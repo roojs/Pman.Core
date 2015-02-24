@@ -37,6 +37,7 @@ CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
         SET v_count = 0;
 
         OPEN co_csr;
+        
         co_loop: LOOP
             FETCH co_csr INTO v_id,v_iso,v_local_name,v_in_location;
             
@@ -261,7 +262,7 @@ CREATE FUNCTION core_cities_merge_city()  RETURNS INT DETERMINISTIC
 DELIMITER ; 
 
 
------------------------------------------------------------------------------------------------------------------
+--   ---------------------------------------------------------------------------------------------------------------
 
 
 DROP FUNCTION IF EXISTS core_country_locations;
@@ -363,7 +364,9 @@ CREATE FUNCTION core_country_blocks()  RETURNS INT DETERMINISTIC
             AND
                 network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
         
-        SELECT COUNT(network_start_ip) INTO v_total FROM country_blocks WHERE geoname_id != 0 AND registered_country_geoname_id != 0 AND geoname_id = registered_country_geoname_id AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
+        SELECT COUNT(network_start_ip) INTO v_total FROM country_blocks
+                WHERE geoname_id != 0 AND registered_country_geoname_id != 0
+                AND geoname_id = registered_country_geoname_id AND network_start_ip REGEXP '::ffff:[0-9]+.[0-9]+.[0-9]+.[0-9]+$';
 
         SET v_count = 0;
 
