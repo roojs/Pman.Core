@@ -109,15 +109,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $target->setFrom($this->toArray());
         
-        if(method_exists($target, 'beforeInsert')){
-            $target->beforeInsert(array(), $roo);
-        }
-        
         $target->insert();
-        
-        if(method_exists($target, 'onInsert')){
-            $target->onInsert(array(), $roo);
-        }
         
         $this->delete();
         
