@@ -95,23 +95,33 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
 //        }
 //    }
 
-    function verified()
+    function convertTo($target = false)
     {
-        $hydra_person = DB_DataObject::factory('hydra_person');
-        
-        if($hydra_person->get('email', $this->email)){
-            return $hydra_person;
+        if(!$target){
+            return false;
         }
         
-        $hydra_person->setFrom($this->toArray());
-        $hydra_person->employer_name = $this->company_name;
+        $roo = HTML_FlexyFramework::get()->page;
         
-        $hydra_person->beforeInsert(array(), $this);
-        $hydra_person->insert();
+        if($target->get('email', $this->email)){
+            return $target;
+        }
+        
+        $target->setFrom($this->toArray());
+        
+        if(method_exists($target, 'beforeInsert')){
+            $target->beforeInsert(array(), $roo);
+        }
+        
+        $target->insert();
+        
+        if(method_exists($target, 'onInsert')){
+            $target->onInsert(array(), $roo);
+        }
         
         $this->delete();
         
-        return $hydra_person;
+        return $target;
     }
     
     function sendVerification($template, $roo)
