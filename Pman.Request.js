@@ -33,8 +33,6 @@ Pman.Request = function(config){
     
     if (this.mask) {
         this.maskEl = this.maskEl || Roo.get(document.body);
-        Roo.log('mask EL !!!!!!!!!!!!!!!!!!!!!!!!!!11');
-        Roo.log(this.maskEl);
         Roo.get(this.maskEl).mask(this.mask);
         
     }
