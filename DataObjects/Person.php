@@ -362,6 +362,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function canInitializeSystem()
     {
+        var_dump(strcasecmp(get_class($this) , __CLASS__));
         return strcasecmp(get_class($this) , __CLASS__);
     }
     
