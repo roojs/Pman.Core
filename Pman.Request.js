@@ -97,11 +97,14 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         this.transId = false;
         var options = response.argument.options;
         response.argument = options ? options.argument : null;
-        this.fireEvent("requestexception", this, response, options, e);
-        var res = Roo.callback(options.failure, options.scope, [response, options]);
+        
         if (this.mask && this.maskEl) {
             Roo.get(this.maskEl).unmask(true);
         }
+        
+        this.fireEvent("requestexception", this, response, options, e);
+        var res = Roo.callback(options.failure, options.scope, [response, options]);
+        
         if (res !== true) {
             var decode = this.processResponse(response);
             Roo.log(decode);
