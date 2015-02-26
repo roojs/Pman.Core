@@ -359,6 +359,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         return false;
         
     }
+    
+    function canInitializeSystem()
+    {
+        return strcasecmp(get_class($this) , __CLASS__);
+    }
+    
     function getAuthUser()
     {
         if (!$this->isAuth()) {
