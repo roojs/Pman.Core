@@ -74,7 +74,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         this.fireEvent("requestcomplete", this, response, options);
         
         if (this.mask && this.maskEl) {
-            Roo.get(this.maskEl).unmask(true);
+            Roo.get(this.maskEl).unmask();
         }
         var res = this.processResponse(response);
                 
