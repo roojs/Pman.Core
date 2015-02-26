@@ -71,11 +71,13 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         this.transId = false;
         var options = response.argument.options;
         response.argument = options ? options.argument : null;
-        this.fireEvent("requestcomplete", this, response, options);
         
         if (this.mask && this.maskEl) {
             Roo.get(this.maskEl).unmask(true);
         }
+        
+        this.fireEvent("requestcomplete", this, response, options);
+        
         var res = this.processResponse(response);
                 
         if (!res.success) { // error!
