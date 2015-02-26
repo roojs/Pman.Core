@@ -279,7 +279,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
         }
-        if (!strcasecmp(get_class($this) , __CLASS__)) {
+        if (!$this->canInitializeSystem()) {
             return false;
         }
         
@@ -386,7 +386,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
         }
-        if (!strcasecmp(get_class($this) , __CLASS__)) {
+        if (!$this->canInitializeSystem()) {
             return false;
         }
         
