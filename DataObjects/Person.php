@@ -494,11 +494,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         
         if (substr($this->passwd,0,1) == '$') {
-            //var_dump(array(md5($val), md5('Cl145P3w34')));
-            //var_dump( array( 'Cl145P3w34', crypt('Cl145P3w34','$1$jYcK{[ga$5B3BIarXb5bJ4IySu/Lrj1') , '$1$jYcK{[ga$5B3BIarXb5bJ4IySu/Lrj1'));
-            //var_dump($val == 'Cl145P3w34');
-            $this->strcheck('Cl145P3w34', $val);
-            var_dump( array( $val, crypt($val,$this->passwd) , $this->passwd));
+            
             return crypt($val,$this->passwd) == $this->passwd ;
         }
         // old style md5 passwords...- cant be used with courier....
