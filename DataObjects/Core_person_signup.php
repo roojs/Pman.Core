@@ -132,7 +132,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             return true;
         }
         
-        return false;
+        return $sent;
     }
     
     function getEmailFrom()
