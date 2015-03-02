@@ -374,7 +374,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
-
+        
+        
         
         
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
@@ -386,6 +387,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
         }
+        
+        
+        
         if (!$this->canInitializeSystem()) {
             return false;
         }
