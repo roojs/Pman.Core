@@ -453,7 +453,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
         @session_start();
-        var_dump(array(get_class($this),$sesPrefix .'-auth'));
+        //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($this);
         
     }
