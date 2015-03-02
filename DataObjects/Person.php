@@ -255,7 +255,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     {
         
         @session_start();
-        print_R($_SESSION);
+       
         
         $db = $this->getDatabaseConnection();
         // we combine db + project names,
