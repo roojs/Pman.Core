@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
               
                 return $u->verifyAuth();
                 
-    ;
+    
             }
             
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
