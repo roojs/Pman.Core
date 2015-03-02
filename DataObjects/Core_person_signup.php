@@ -35,9 +35,13 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         }
         
         $roo = HTML_FlexyFramework::get()->page;
-        
+        $old = clone($this);
         // this shold not really happen...
         if($target->get('email', $this->email)){
+            
+            $this->person_id = $target->id;
+            $this->person_table = $target->tableName();
+            $this->update($old);
             
             return $target;
         }
@@ -48,7 +52,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $this->person_id = $target->id;
         $this->person_table = $target->tableName();
-        $this->update();
+        $this->update($old);
         // ok - deleting might not be a great idea.... - as we can not track already confirmed codes..
         
         //$this->delete();
