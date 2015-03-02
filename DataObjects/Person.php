@@ -265,7 +265,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-            tableName
+            print_r($a);
+            
             $u = DB_DataObject::factory($this->tableName());
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
               
