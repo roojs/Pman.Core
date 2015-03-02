@@ -27,77 +27,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     
     public $person_id;
     public $person_table;
-
-//    function verify($key) 
-//    {
-//        // if key matches verify_key
-//        // copy into person or other entity...
-//        // and delete....
-//        if ($this->get("verify_key", $key)) {
-//            $p = DB_DataObject::factory('person');
-//            $p->setFrom(array(
-//                'honor' => $this->honor,
-//                'name' => $this->name,
-//                'email' => $this->email,
-//                'firstname' => $this->firstname,
-//                'lastname' => $this->lastname,
-//                'firstname_alt' => $this->firstname_alt,
-//                'lastname_alt' => $this->lastname_alt));
-//
-//            if ($p->insert()) {
-//
-//                $temp_pwd = $p->generatePassword();
-//
-//                $this->delete();
-//
-//                //login
-//                @session_start();
-//
-//                $_SESSION['Hydra']['authUser'] = $p ? serialize($p) : false;
-//
-//                //mail pwd
-//                $c = DB_DataObject::factory('core_email');
-//                if (!$c->get('name', 'CORE_PERSON_SIGNUP_CONGRATULATION')) {
-//                    $this->jerr("can not find template");
-//                }
-//                $ret = $c->send(array(
-//                    'rcpts' => $this->email,
-//                    'honor' => $this->honor . ". " . $this->lastname,
-//                    'password' => $temp_pwd
-//                        ), true);
-//
-//                if (is_object($ret)) {
-//                    return false;
-//                }
-//                return true;
-//            } else {
-//                return false;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    function convertTo($table) 
-//    {
-//        $t = DB_DataObject::factory($table);
-//        $ret = $t->get('email', $this->email);
-//        if ($ret != 0) {
-//            return false;
-//        } else {
-//            $t->setFrom(array(
-//                'honor' => $this->honor,
-//                'name' => $this->name,
-//                'email' => $this->email,
-//                'firstname' => $this->firstname,
-//                'lastname' => $this->lastname,
-//                'firstname_alt' => $this->firstname_alt,
-//                'lastname_alt' => $this->lastname_alt));
-//
-//            $t->insert();
-//            return true;
-//        }
-//    }
-
+ 
     function convertTo($target = false)
     {
         if(!$target){
@@ -106,7 +36,9 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $roo = HTML_FlexyFramework::get()->page;
         
+        // this shold not really happen...
         if($target->get('email', $this->email)){
+            
             return $target;
         }
         
