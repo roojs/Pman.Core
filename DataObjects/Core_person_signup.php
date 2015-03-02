@@ -113,7 +113,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         // ok - deleting might not be a great idea.... - as we can not track already confirmed codes..
         
-        $this->delete();
+        //$this->delete();
         
         return $target;
     }
