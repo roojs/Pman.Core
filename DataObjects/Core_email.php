@@ -312,7 +312,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         //print_r($this);
         $cfg = array(
-            'debug'=> 1,
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
             'page' => $this,
