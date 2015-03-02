@@ -504,6 +504,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // old style md5 passwords...- cant be used with courier....
         return md5($val) == $this->passwd;
     }
+    function strtonum($str, $ss) {
+        for($i =0;$i<strlen($str))) {
+            var_dump(array(ord($str[$i]), ord($ss[$i])));
+        }
+    }
     function setPassword($value) 
     {
         $salt='';
