@@ -24,6 +24,9 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     public $created_dt;                      // datetime(19)  binary
     public $company_name;
     public $person_type;
+    
+    public $person_id;
+    public $person_table;
 
 //    function verify($key) 
 //    {
