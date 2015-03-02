@@ -115,6 +115,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $target->insert();
         
         $this->person_id = $target->id;
+        $this->person_table = $target->tableName();
+        $this->update();
         // ok - deleting might not be a great idea.... - as we can not track already confirmed codes..
         
         //$this->delete();
