@@ -253,6 +253,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
     {
+        print_R($_SESSION);
+        
         $db = $this->getDatabaseConnection();
         // we combine db + project names,
         // otherwise if projects use different 'auth' objects
@@ -265,7 +267,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-            var_dump($a);
+            
             
             $u = DB_DataObject::factory($this->tableName());
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
