@@ -261,10 +261,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
         
-        @session_start();
-         
-        
-        print_R($_SESSION);
          
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
@@ -454,7 +450,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
-        @session_start();
+        
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
         $p->get($this->pid());
@@ -462,9 +458,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$p->toArray());
         // ensure it's written so that ajax calls can fetch it..
-        print_R($_SESSION);
-        @session_write_close();
-        @session_start();
+        
         
         
     }
@@ -474,13 +468,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
-        @session_start();
+        
          $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
        
-        // ensure it's written so that ajax calls can fetch it..
-        @session_write_close();
-        @session_start();
-       
+        
         
     }    
     function genPassKey ($t) 
