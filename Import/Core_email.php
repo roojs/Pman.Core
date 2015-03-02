@@ -52,6 +52,10 @@ class Pman_Core_Import_Core_email extends Pman
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        if (is_a($parts,'PEAR_Error')) {
+            echo $parts->toString();
+            exit;
+        }
         
         $headers = $parts[1];
         $from = new Mail_RFC822();
