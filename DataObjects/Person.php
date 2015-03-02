@@ -428,7 +428,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function login()
     {
         $this->isAuth(); // force session start..
-        if (!$this->verifyAuth()) {
+        if (!$this->verifyAuth()) { // check for company valid..
             return false;
         }
         $db = $this->getDatabaseConnection();
