@@ -382,7 +382,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
             $u = DB_DataObject::factory($this->getTableName()); // allow extending this ...
-            if ($u->get($a->id)) { /// && strlen($u->passwd)) {
+            if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
                 return clone($u);
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
