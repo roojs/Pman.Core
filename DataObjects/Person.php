@@ -452,7 +452,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
-        //@session_start();
+        @session_start();
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($this);
         // ensure it's written so that ajax calls can fetch it..
@@ -468,6 +468,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
+        @session_start();
          $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
        
         // ensure it's written so that ajax calls can fetch it..
