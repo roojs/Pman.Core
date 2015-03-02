@@ -453,8 +453,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
 
         @session_start();
+        // we should not store the whole data in the session - otherwise it get's huge.
+        $p = DB_DAtaObject::Factory($this->tableName());
+        $p->get($this->pid());
+        
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
-        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($this);
+        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($p);
         // ensure it's written so that ajax calls can fetch it..
         print_R($_SESSION);
         @session_write_close();
