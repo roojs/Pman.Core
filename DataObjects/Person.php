@@ -495,7 +495,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         if (substr($this->passwd,0,1) == '$') {
             
-            var_dump( crypt($val,$this->passwd) == $this->passwd));
+            var_dump( crypt($val,$this->passwd) == $this->passwd);
             return crypt($val,$this->passwd) == $this->passwd ;
         }
         // old style md5 passwords...- cant be used with courier....
