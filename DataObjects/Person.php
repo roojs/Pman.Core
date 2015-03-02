@@ -374,12 +374,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
+        
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
        
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
-            print_r($a);
+            
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
                 return clone($u);
