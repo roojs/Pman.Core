@@ -578,7 +578,13 @@ Pman.Tab.PersonList.prototype = {
          //   id : (this.id + '-name').toLowerCase(),
             header : "Name",
             dataIndex : 'name',
-            sortable : true
+            sortable : true,
+            renderer : function(v,p,r) { 
+                if(r.data.active != 1){
+                    return String.format('<div style="text-decoration:line-through">{0}</div>', v); 
+                }
+                return String.format('{0}', v); 
+            }
           //  width : 150  
         }, cfg);
     },
