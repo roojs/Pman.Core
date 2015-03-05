@@ -269,7 +269,7 @@ Pman.Tab.PersonList.prototype = {
                         Roo.select('.x-grid-row-selected').item(1).addClass('fadeout');
                         (function(){
                             refreshPager();
-                        }).defer(5000)();
+                        }).defer(5000);
                         
                         
                     }
