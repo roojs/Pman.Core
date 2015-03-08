@@ -266,7 +266,7 @@ Pman.Tab.PersonList.prototype = {
                         
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
-                        Roo.select('.x-grid-row-selected').item(3).addClass('fadeout');
+                        Roo.select('.x-grid-row-selected').item(3).addClass('x-grid-row-fadeout');
                         (function(){
                             refreshPager();
                         }).defer(5000);
