@@ -59,11 +59,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
         
 //        print_r($this);
-        if(!empty($q['id'])){
+        if(!empty($q['id'])){ // this should never be needed?!?!?!?!??
             $this->id = $q['id'];
         }
+        
         if(!empty($q['ids'])){
-            $this->whereAdd("core_enum.id in (" .$q['ids'].")");
+            $this->whereAddIn('core_enum.id', explode(',',  $q['ids']) , 'int');
         }
         
     }
