@@ -268,7 +268,7 @@ Pman.Tab.PersonList.prototype = {
                         rec.commit();
                         Roo.select('.x-grid-row-selected').item(3).addClass('x-grid-row-fadeout');
                         (function(){
-                            Roo.select('.x-grid-row-selected').item(3).remove();
+                            _this.grid.ds.remove(rec);
                         }).defer(5000);
                         
                         
