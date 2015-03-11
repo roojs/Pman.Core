@@ -121,7 +121,7 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
          // only applies to document stuff..
         
         //&& $au->hasPerm('Documents.Documents','S') << this is dependant on the doc modules
-          
+          print_R($au->hasPerm('Core.Projects_All','S'));exit;
         if (!$au->hasPerm('Core.Projects_All','S') ) {
             
             
