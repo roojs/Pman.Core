@@ -973,6 +973,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 return false;
             }
             
+            // mtrack had the idea that all 'S' should be allowed.. - but filtered later..
+            // ???? do we want this?
+            
             // edit self... - what about other staff members...
             
             return $this->company_id == $au->company_id;
