@@ -888,6 +888,36 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                     ");*/
         }
         
+        // project directory rules -- this may distrupt things.
+        $p = DB_DataObject::factory('ProjectDirectory');
+        if ($p->count()) {
+            $p->autoJoin();
+            $pids = $p->projects($au);
+            if (isset($q['query']['project_id'])) {
+                $pid = (int)$q['query']['project_id'];
+                if (!in_array($pid, $pids)) {
+                    $roo->jerr("Project not in users valid projects");
+                }
+                $pids = array($pid);
+            }
+            // project roles..
+            if (empty($q['_anyrole'])) {
+                $p->whereAdd("{$p->tableName()}.role != ''");
+            }
+            if (!empty($q['query']['role'])) {
+                $role = $this->escape($q['query']['role']);
+               
+                $p->whereAdd("{$p->tableName()}.role LIKE '%{$role}%'");
+                 
+            }
+            
+            if (!$roo->hasPerm('Core.Projects_All', 'S')) {
+                $peps = $p->people($pids);
+                $this->whereAddIn("{$tn}.id", $peps, 'int');
+            }
+        }    
+        
+        
     }
     function setFromRoo($ar, $roo)
     {
