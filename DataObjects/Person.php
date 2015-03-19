@@ -890,6 +890,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         // project directory rules -- this may distrupt things.
         $p = DB_DataObject::factory('ProjectDirectory');
+        // if project directories are set up, then we can apply project query rules..
         if ($p->count()) {
             $p->autoJoin();
             $pids = $p->projects($au);
