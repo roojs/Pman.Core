@@ -983,7 +983,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             // edit self... - what about other staff members...
             
-            return $this->company_id == $au->company_id;
+            //return $this->company_id == $au->company_id;
         }
         
          
