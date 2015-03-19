@@ -956,8 +956,12 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         // determine if it's staff!!!
-         
-        if ($au->company()->comptype != 'OWNER') {
+        $owncomp = DB_DataObject::Factory('Companies');
+        $owncomp->get('comptype', 'OWNER');
+        $isStaff = ($this->company_id ==  $owncomp->id);
+       
+       
+        if (!$isStaff) {
             
             // - can not change company!!!
             if ($changes && 
@@ -973,6 +977,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 return false;
             }
             
+            
             // mtrack had the idea that all 'S' should be allowed.. - but filtered later..
             // ???? do we want this?
             
@@ -980,13 +985,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             return $this->company_id == $au->company_id;
         }
-         
+        
          
         // yes, only owner company can mess with this...
-        $owncomp = DB_DataObject::Factory('Companies');
-        $owncomp->get('comptype', 'OWNER');
         
-        $isStaff = ($this->company_id ==  $owncomp->id);
+        
         
     
         switch ($lvl) {
