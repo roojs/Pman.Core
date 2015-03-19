@@ -69,6 +69,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
+    function checkPerm($lvl, $au, $req=null)
+    {
+        if (!$au) {
+            return false;
+        }
+        return true;
+    }
+    
+    
     function autoJoinCmsTranslate($lang)
     {
         $l = $this->escape($lang);
