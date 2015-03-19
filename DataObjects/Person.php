@@ -950,6 +950,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($au && $au->id == -1) {
             return true;
         }
+        // if not authenticated... do not allow in???
+        if (!$au ) {
+            return false;
+        }
         
         // determine if it's staff!!!
          
