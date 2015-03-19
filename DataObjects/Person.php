@@ -894,7 +894,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if ($p->count()) {
             $p->autoJoin();
             $pids = $p->projects($au);
-            if (isset($q['query']['project_id'])) {
+            if (isset($q['query']['project_id'])) {   
                 $pid = (int)$q['query']['project_id'];
                 if (!in_array($pid, $pids)) {
                     $roo->jerr("Project not in users valid projects");
@@ -902,11 +902,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 $pids = array($pid);
             }
             // project roles..
-            if (empty($q['_anyrole'])) {
-                $p->whereAdd("{$p->tableName()}.role != ''");
-            }
-            if (!empty($q['query']['role'])) {
-                $role = $this->escape($q['query']['role']);
+            //if (empty($q['_anyrole'])) {  // should be project_directry_role
+            //    $p->whereAdd("{$p->tableName()}.role != ''");
+            // }
+            if (!empty($q['query']['role'])) {  // should be project_directry_role
+                $role = $this->escape($q['query']['role']); 
                
                 $p->whereAdd("{$p->tableName()}.role LIKE '%{$role}%'");
                  
