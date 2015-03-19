@@ -918,7 +918,27 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
         }    
         
-        
+        // fixme - this needs a more generic fix - it was from the mtrack_person code...
+        if (isset($q['query']['ticket_id'])) {  
+            // find out what state the ticket is in.
+            $t = DB_DataObject::Factory('mtrack_ticket');
+            $t->autoJoin();
+            $t->get($q['query']['ticket_id']);
+            
+            if (!$this->checkPerm('S', $au)) {
+                $roo->jerr("permssion denied to query state of ticket");
+            }
+            
+            $p = DB_DataObject::factory('ProjectDirectory');
+            $pids = array($t->project_id);
+           
+            $peps = $p->people($pids);
+            
+            $this->whereAddIn($this->tableName().'.id', $peps, 'int');
+            
+            //$this->whereAdd('join_prole != ''");
+            
+        }  
     }
     function setFromRoo($ar, $roo)
     {
