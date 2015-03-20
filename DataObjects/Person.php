@@ -1009,7 +1009,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // determine if it's staff!!!
         $owncomp = DB_DataObject::Factory('Companies');
         $owncomp->get('comptype', 'OWNER');
-        $isStaff = ($this->company_id ==  $owncomp->id);
+        $isStaff = ($au->company_id ==  $owncomp->id);
        
        
         if (!$isStaff) {
