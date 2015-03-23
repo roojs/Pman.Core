@@ -95,7 +95,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             $content->authUser = $this->getAuthUser();
             if (!$content->authUser) {
-                return PEAR::raiseError("Not authenticated1");
+                return PEAR::raiseError("Not authenticated");
             }
         }
         
