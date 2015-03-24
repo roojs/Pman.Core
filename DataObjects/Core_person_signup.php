@@ -29,7 +29,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     public $person_table;
     
     public $invite_id;
-    public $friend_table;
+    public $invite_table;
  
     function convertTo($target = false)
     {
@@ -57,8 +57,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $this->person_table = $target->tableName();
         $this->update($old);
         
-        if(!empty($this->invite_id) && !empty($this->friend_table)){
-            $friend = DB_DataObject::factory($this->friend_table);
+        if(!empty($this->invite_id) && !empty($this->invite_table)){
+            $friend = DB_DataObject::factory($this->invite_table);
             $friend->setFrom(array(
                 'person_id' => $this->invite_id,
                 'friend_id' => $target->id
