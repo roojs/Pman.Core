@@ -56,9 +56,16 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $this->person_id = $target->id;
         $this->person_table = $target->tableName();
         $this->update($old);
-        // ok - deleting might not be a great idea.... - as we can not track already confirmed codes..
         
-        //$this->delete();
+        if(!empty($this->invite_id) && !empty($this->friend_table)){
+            $friend = DB_DataObject::factory($this->friend_table);
+            $friend->setFrom(array(
+                'person_id' => $this->invite_id,
+                'friend_id' => $target->id
+            ));
+            
+            $friend->insert();
+        }
         
         return $target;
     }
