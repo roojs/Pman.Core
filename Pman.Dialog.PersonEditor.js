@@ -174,7 +174,7 @@ Pman.Dialog.PersonEditor.prototype = {
             if (typeof(il) != 'object') {
                 // no permission for Core offices.. - can not show department...
                 if (il == 'office_id_name' && !Pman.hasPerm('Core.Offices','S')) {
-                    return true;;
+                    return true;
                 }
                 
                 _this.form.addxtype(_this.itemTypes[il]);
