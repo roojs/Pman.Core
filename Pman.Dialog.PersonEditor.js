@@ -181,6 +181,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 return true;
             }
             _this.form.addxtype(Roo.apply(il, _this.itemTypes[il.name]));
+            return true;
             
         });
         var ef = this.dialog.getLayout().getEl().createChild({tag: 'div'});
