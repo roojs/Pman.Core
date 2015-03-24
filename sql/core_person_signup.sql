@@ -25,3 +25,6 @@ ALTER TABLE core_person_signup ADD COLUMN   person_type TEXT NOT NULL  default '
 
 ALTER TABLE core_person_signup ADD COLUMN   person_id int(11) NOT NULL  default 0;
 ALTER TABLE core_person_signup ADD COLUMN   person_table TEXT NOT NULL  default '';
+
+ALTER TABLE core_person_signup ADD COLUMN   invite_id int(11) NOT NULL  default 0;
+ALTER TABLE core_person_signup ADD COLUMN   friend_table TEXT NOT NULL  default '';
