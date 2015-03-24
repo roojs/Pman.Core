@@ -172,6 +172,11 @@ Pman.Dialog.PersonEditor.prototype = {
         this.loadItemTypes();
         Roo.each(this.itemList, function(il) {
             if (typeof(il) != 'object') {
+                // no permission for Core offices.. - can not show department...
+                if (il == 'office_id_name' && !Pman.hasPerm('Core.Offices','S')) {
+                    return true;;
+                }
+                
                 _this.form.addxtype(_this.itemTypes[il]);
                 return true;
             }
