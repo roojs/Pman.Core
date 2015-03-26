@@ -56,14 +56,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $this->person_table = $target->tableName();
         $this->update($old);
         
-        if(!empty($this->invite_id) && !empty($this->invite_table)){
-            $friend = DB_DataObject::factory($this->invite_table);
-            $friend->setFrom(array(
-                'person_id' => $this->invite_id,
-                'friend_id' => $target->id
-            ));
-            
-            $friend->insert();
+        if(!empty($this->inviter_id) && method_exists($target, 'createFriend')){
+            $target->createFriend($this->inviter_id);
         }
         
         return $target;
