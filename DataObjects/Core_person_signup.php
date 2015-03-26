@@ -28,8 +28,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     public $person_id;
     public $person_table;
     
-    public $invite_id;
-    public $invite_table;
+    public $inviter_id;
  
     function convertTo($target = false)
     {
