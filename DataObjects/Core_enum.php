@@ -200,6 +200,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         if ($ce->find(true)) {
             return $ce->id;
         }
+        $ce->active = 1;
         $ce->display_name = $display_name === false ? $ce->name : $display_name;
         return  $ce->insert();
         
