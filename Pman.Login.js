@@ -420,7 +420,8 @@ Pman.Login =  new Roo.util.Observable({
             },
             Pman.Login.form.el.dom.firstChild 
         ).on('error', function() {
-            this.dom.style.display = 'none';
+            this.dom.style.visibility = 'hidden';
+            this.dom.style.height = '10px';
         });
        
         var vp = this.dialog.getLayout().add('center', new Roo.ContentPanel(ef, {
