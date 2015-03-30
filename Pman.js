@@ -555,7 +555,7 @@ Pman = new Roo.Document(
         }
         var reader = tab.grid.reader || tab.grid.ds.reader;
         for(var i = 0; i < s.length; i++) {
-            r.push(reader.getId(s[i]));
+            r.push(reader.getId(s[i].json));
         }
     
         Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
