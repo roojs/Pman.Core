@@ -419,7 +419,7 @@ Pman.Login =  new Roo.util.Observable({
                 style: 'margin-bottom: 10px;'
             },
             Pman.Login.form.el.dom.firstChild 
-        ).on('error', function(this) {
+        ).on('error', function() {
             this.dom.style.display = 'none';
         });
        
