@@ -407,18 +407,21 @@ Pman.Login =  new Roo.util.Observable({
         ef.dom.style.margin = 10;
           
         this.form.render(ef.dom);
-         // logoprefix comes from base config.
+         // logoprefix comes from base config - normally the owner company logo...
+         // ??? 
          
         var img = typeof(appLogo) != 'undefined'  && appLogo.length ? appLogo :
             rootURL + '/Pman/'+appNameShort + '/templates/images/logo.gif' ;
          
-        Pman.Login.form.el.createChild({
+         Pman.Login.form.el.createChild({
                 tag: 'img', 
                 src: img,
                 style: 'margin-bottom: 10px;'
             },
             Pman.Login.form.el.dom.firstChild 
-        );
+        ).on('error', function(this) {
+            this.dom.style.display = 'none';
+        });
        
         var vp = this.dialog.getLayout().add('center', new Roo.ContentPanel(ef, {
             autoCreate : true,
