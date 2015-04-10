@@ -835,7 +835,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function fixLinks()
     {
-        $cls = 'Pman_Core_UpdateDatabase_'. 
+        
         $ff = HTML_Flexyframework::get();
         
         $dburl = parse_url($ff->DB_DataObject['database']);
