@@ -363,23 +363,23 @@ class Pman_Core_NotifySend extends Pman
                 
                 // enable cc in notify..
                 if (!empty($email['headers']['Cc'])) {
-                    $mailer = Mail::factory('smtp', array(
+                    $cmailer = Mail::factory('smtp', array(
                        //'host'    => $dom ,
                       //  'debug' => true
                     ));
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $mailer->send($email['headers']['Cc'],
+                    $cmailer->send($email['headers']['Cc'],
                                   $email['headers'], $email['body']);
                     
                 }
                 
                 if (!empty($email['bcc'])) {
-                    $mailer = Mail::factory('smtp', array(
+                    $cmailer = Mail::factory('smtp', array(
                        //'host'    => $dom ,
                       //  'debug' => true
                     ));
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $mailer->send($email['bcc'],
+                    $cmailer->send($email['bcc'],
                                   $email['headers'], $email['body']);
                     
                 }
@@ -411,6 +411,8 @@ class Pman_Core_NotifySend extends Pman
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 var_dump( $this->debug_str );
+                var_dump( $res);
+                var_dump( $mailer);
                 $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED -  $errmsg \n");
             }
             $fail = true;
