@@ -403,16 +403,15 @@ class Pman_Core_NotifySend extends Pman
                 // try again later..
                 // check last event for this item..
                 $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
-                if (isset($res->userinfo['smtptext'])) {
+                if (!empty($res->userinfo['smtptext'])) {
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
                 //print_r($res);
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                var_dump( $this->debug_str );
-                var_dump( $res);
-                var_dump( $mailer);
+                
+                
                 $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED -  $errmsg \n");
             }
             $fail = true;
