@@ -402,7 +402,8 @@ class Pman_Core_NotifySend extends Pman
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
                 // try again later..
                 // check last event for this item..
-                $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
+                //$errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
+                $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->toString()) ;
                 if (!empty($res->userinfo['smtptext'])) {
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
