@@ -410,7 +410,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED - " . $errmsg);
+                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED -  $errmsg \n");
             }
             $fail = true;
             break;
