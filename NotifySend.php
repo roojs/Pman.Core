@@ -291,7 +291,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
             }
             
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
@@ -410,7 +410,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
-                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED - " . $errmsg);
             }
             $fail = true;
             break;
