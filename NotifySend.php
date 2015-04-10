@@ -403,7 +403,7 @@ class Pman_Core_NotifySend extends Pman
                 // try again later..
                 // check last event for this item..
                 //$errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
-                $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->toString() ;
+                $errmsg=  $res->userinfo['smtpcode'] . ': ' .$res->message ;
                 if (!empty($res->userinfo['smtptext'])) {
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
