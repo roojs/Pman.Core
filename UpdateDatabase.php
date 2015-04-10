@@ -155,7 +155,7 @@ class Pman_Core_UpdateDatabase extends Pman
            
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
-         
+        $this->fixLinks();
          
          
     }
