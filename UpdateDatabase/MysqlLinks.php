@@ -346,8 +346,36 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
      */
     // type = update/insert/delete
     
-    function listTriggerFunctions($type)
-    
+    function listTriggerFunctions($table, $type)
+    {
+        static $cache = array();
+        if (!isset($cache[$table])) {
+            $cache[$table] = array();
+            $q = DB_DAtaObject::factory('core_enum');
+            $q->query("SELECT
+                            SPECIFIC_NAME
+                        FROM
+                            information_schema.ROUTINES
+                        WHERE
+                            ROUTINE_SCHEMA = '{$q->escape($q->database())}'
+                            AND
+                            ROUTINE_NAME LIKE '" . $q->escape("{$table}_trigger_")  . "%'
+                            AND
+                            ROUTINE_TYPE = 'CALL'
+                            
+            ");
+            while ($q->fetch()) {
+                $cache[$table] = $q->SPECIFIC_NAME;
+            }
+        }
+        // now see which of the procedures match the specification..
+        
+        
+        
+        
+                
+        
+        
     
 }
 
