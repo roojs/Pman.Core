@@ -341,6 +341,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     }
     /**
      * check the information schema for any methods that match the trigger criteria.
+     *   -- {tablename}_trigger_{optional_string}_before_delete_{column_name}(NEW.column)
+     *   -- {tablename}_trigger_{optional_string}_before_update_{column_name}(OLD.column, NEW.column}
+     *   -- {tablename}_trigger_{optional_string}_before_insert_{column_name}(OLD.column}
      *
      *
      */
@@ -369,12 +372,16 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             }
         }
         // now see which of the procedures match the specification..
-        
-        
-        
-        
-                
-        
+        $ret = array();
+        foreach($cache[$tables] as $cname) {
+            $bits = explode("_before_{$type}_", $cname);
+            if (count($bits) < 2) {
+                continue;
+            }
+            $ret[$cname] = $bits[1];
+        }
+        return $ret;
+    }
         
     
 }
