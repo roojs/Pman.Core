@@ -13,3 +13,5 @@ CREATE INDEX client_id_idx ON core_oauth_clients (client_id) USING BTREE;
 CREATE INDEX client_secret_idx ON core_oauth_clients (client_secret) USING BTREE;
 CREATE INDEX redirect_uri_idx ON core_oauth_clients (redirect_uri) USING BTREE;
 CREATE INDEX user_id_idx ON core_oauth_clients (user_id) USING BTREE;
+
+ALTER TABLE core_oauth_clients ENGINE=InnoDB;
