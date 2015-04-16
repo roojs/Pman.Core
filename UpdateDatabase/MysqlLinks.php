@@ -169,7 +169,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
             if (!isset($this->schema[$target_table])) {
                 echo "Skip $target_table  = table does not exist in schema\n";
-                continue;;
+                continue;
             }
         
             
@@ -196,10 +196,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $trigger .="
                     SET mid = 0;
                     SELECT count(*) into mid FROM {$source_table} WHERE {$source_col} = OLD.{$target_col} LIMIT 1;
-                    IF mid > 0 THEN
-                       
+                    IF mid > 0 THEN   
                        UPDATE `$err` SET x = 1;
-                       
                     END IF;
                 ";
             }
