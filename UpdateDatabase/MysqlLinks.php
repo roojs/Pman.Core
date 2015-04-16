@@ -158,7 +158,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $revmap[$tname]["$tbl:$k"] = "$tname:$tcol";
             }
         }
-        print_r($revmap);
+        
         
         
         
@@ -169,7 +169,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
             if (!isset($this->schema[$target_table])) {
                 echo "Skip $target_table  = table does not exist in schema\n";
-                return;
+                continue;;
             }
         
             
