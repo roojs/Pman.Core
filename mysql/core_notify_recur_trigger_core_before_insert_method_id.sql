@@ -4,8 +4,7 @@
  
 
 DROP PROCEDURE IF EXISTS core_notify_recur_trigger_core_before_insert_method_id;
-DROP TRIGGER IF EXISTS `core_notify_recur_before_insert_core` ;
-
+ 
 DELIMITER $$
  
 CREATE PROCEDURE core_notify_recur_trigger_core_before_insert_method_id ( i_id INT)
@@ -17,7 +16,6 @@ CREATE PROCEDURE core_notify_recur_trigger_core_before_insert_method_id ( i_id I
  END;
  
 $$
--- see if this can be done as a trigger
  
 
 DELIMITER ;
