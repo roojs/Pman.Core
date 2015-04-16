@@ -395,6 +395,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             while ($q->fetch()) {
                 $cache[$table] = $q->SPECIFIC_NAME;
             }
+            if ($table == 'core_notify_recur') {
+                print_r($cache($table]);
+            }
         }
         // now see which of the procedures match the specification..
         $ret = array();
