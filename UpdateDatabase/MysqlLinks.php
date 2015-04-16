@@ -393,7 +393,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                             
             ");
             while ($q->fetch()) {
-                $cache[$table] = $q->SPECIFIC_NAME;
+                $cache[$table][] = $q->SPECIFIC_NAME;
             }
             if ($table == 'core_notify_recur') {
                 print_r($cache[$table]);
