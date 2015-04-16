@@ -192,7 +192,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $err = substr("Failed Delete {$target_table} refs {$source_table}:{$source_col}", 0, 64);
                 $trigger .="
                     SET mid = 0;
-                    SELECT count(*) into mid FROM {$source_table} WHERE {$source_col} = OLD.{$target_col};
+                    SELECT count(*) into mid FROM {$source_table} WHERE {$source_col} = OLD.{$target_col} LIMIT 1;
                     IF mid > 0 THEN
                        
                        UPDATE `$err` SET x = 1;
@@ -261,7 +261,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $trigger .="
                     SET mid = 0;
                     if NEW.{$source_col} > 0 THEN
-                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col};
+                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
                         IF mid < 1 THEN
                             UPDATE `$err` SET x = 1;
                         END IF;
@@ -335,7 +335,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $trigger .="
                     SET mid = 0;
                     if NEW.{$source_col} > 0 THEN
-                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col};
+                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
                         IF mid < 1 THEN
                             UPDATE `$err` SET x = 1;
                         END IF;
