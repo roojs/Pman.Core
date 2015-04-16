@@ -27,4 +27,6 @@ ALTER TABLE Images    ALTER COLUMN   mimetype  TYPE  varchar(128) ;
 
 ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
-ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid);
+ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid
+
+ALTER TABLE Images ENGINE=InnoDB;
