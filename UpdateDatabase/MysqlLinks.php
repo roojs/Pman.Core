@@ -339,6 +339,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 $source_tbl = $tbl;
                 list($target_table , $target_col) = explode(':', $target);
+                
                 if (!isset($this->schema[$target_table])) {
                     // skip... target table does not exist
                     continue;
