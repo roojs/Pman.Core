@@ -48,3 +48,6 @@ ALTER TABLE Companies ADD INDEX name_lookup (name);
 
 -- our new code should have this fixed now..
 -- UPDATE Companies set comptype='OWNER' where isOwner=1;
+
+
+ALTER TABLE Companies ENGINE=InnoDB;
