@@ -11,3 +11,6 @@ CREATE  TABLE core_email (
   is_system INT(2) NOT NULL DEFAULT 1,
   PRIMARY KEY (id)
 );
+
+
+ALTER TABLE core_email ENGINE=InnoDB;
