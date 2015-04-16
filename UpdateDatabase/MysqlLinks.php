@@ -287,7 +287,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
             $q->query($trigger);
-             
+            echo "CREATED TRIGGER {$tbl}_before_insert\n";
             
             
             
@@ -402,9 +402,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             while ($q->fetch()) {
                 $cache[$table][] = $q->SPECIFIC_NAME;
             }
-            if ($table == 'core_notify_recur') {
-                print_r($cache[$table]);
-            }
+            
         }
         // now see which of the procedures match the specification..
         $ret = array();
