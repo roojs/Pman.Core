@@ -389,7 +389,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                             AND
                             ROUTINE_NAME LIKE '" . $q->escape("{$table}_trigger_")  . "%'
                             AND
-                            ROUTINE_TYPE = 'CALL'
+                            ROUTINE_TYPE = 'PROCEDURE'
                             
             ");
             while ($q->fetch()) {
