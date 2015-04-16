@@ -258,6 +258,13 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 $source_tbl = $tbl;
                 list($target_table , $target_col) = explode(':', $target);
+                
+                if (!isset($this->schema[$target_table])) {
+                    // skip... target table does not exist
+                    continue;
+                }
+                
+                
                 $err = substr("Fail: INSERT referenced {$tbl}:{$source_col}", 0, 64);
                 $trigger .="
                     SET mid = 0;
@@ -332,6 +339,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 $source_tbl = $tbl;
                 list($target_table , $target_col) = explode(':', $target);
+                if (!isset($this->schema[$target_table])) {
+                    // skip... target table does not exist
+                    continue;
+                }
+                
                 $err = substr("Fail: UPDATE referenced {$tbl}:$source_col", 0, 64);
                 $trigger .="
                     SET mid = 0;
