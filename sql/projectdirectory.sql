@@ -16,3 +16,4 @@ ALTER TABLE  ProjectDirectory ADD COLUMN   role varchar(32) NOT NULL DEFAULT '';
 
 ALTER TABLE ProjectDirectory ADD INDEX plookup (project_id,person_id, ispm, role);
 
+ALTER TABLE ProjectDirectory ENGINE=InnoDB;
