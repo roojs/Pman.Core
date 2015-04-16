@@ -216,7 +216,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
             $q->query($trigger);
-             
+             echo "CREATED TRIGGER {$target_table}_before_delete\n";
         }
         
         
@@ -358,7 +358,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
             $q->query($trigger);
-             
+            echo "CREATED TRIGGER {$tbl}_before_update\n";
             
             
             
