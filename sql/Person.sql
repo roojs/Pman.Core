@@ -88,3 +88,8 @@ ALTER TABLE Person ADD INDEX lookup_a(email, active);
 ALTER TABLE Person ADD INDEX lookup_b(email, active, company_id);
 ALTER TABLE Person add index lookup_owner(owner_id);
  
+ 
+ 
+ 
+ ALTER TABLE Person ENGINE=InnoDB;
+ 
