@@ -86,7 +86,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
          
         
         if (!isset($this->schema[$tbl])) {
-            echo "Skip $tbl\n";
+            echo "Skip $tbl = table does not exist in schema\n";
             return;
         }
         
@@ -165,7 +165,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
             
             if (!isset($this->schema[$target_table])) {
-                echo "Skip $tbl\n";
+                echo "Skip $target_table  = table does not exist in schema\n";
                 return;
             }
         
