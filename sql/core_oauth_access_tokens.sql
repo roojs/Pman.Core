@@ -11,3 +11,5 @@ CREATE TABLE core_oauth_access_tokens (
 CREATE INDEX access_token_idx ON core_oauth_access_tokens (access_token) USING BTREE;
 CREATE INDEX client_id_idx ON core_oauth_access_tokens (client_id) USING BTREE;
 CREATE INDEX user_id_idx ON core_oauth_access_tokens (user_id) USING BTREE;
+
+ALTER TABLE core_oauth_access_tokens ENGINE=InnoDB;
