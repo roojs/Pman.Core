@@ -5,3 +5,4 @@ CREATE TABLE core_oauth_scopes (
     PRIMARY KEY (id)
 );
 
+ALTER TABLE core_oauth_scopes ENGINE=InnoDB;
