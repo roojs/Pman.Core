@@ -37,3 +37,5 @@ ALTER TABLE Events CHANGE COLUMN action action varchar(64)  default NULL;
 
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
   
+  
+ALTER TABLE Events ENGINE=InnoDB;
