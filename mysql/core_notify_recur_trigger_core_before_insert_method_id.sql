@@ -1,25 +1,20 @@
 
 
 
-core_notify_recur_trigger_core_before_insert
+ 
 
-
-
-DROP PROCEDURE IF EXISTS core_notify_recur_trigger_core_before_insert;
+DROP PROCEDURE IF EXISTS core_notify_recur_trigger_core_before_insert_method_id;
 
 DELIMITER $$
  
-CREATE PROCEDURE core_enum_trigger_check (i_etype VARCHAR(128) , i_id INT)
+CREATE PROCEDURE core_notify_recur_trigger_core_before_insert_method_id ( i_id INT)
  BEGIN
-    DECLARE v_cnt INT;
-    SET v_cnt = 0;
-    -- should this check active???
-    
-    SELECT count(*) INTO v_cnt FROM core_enum WHERE etype = i_etype AND  id = i_id;
-    
-    IF (v_cnt < 1) THEN
-        UPDATE `Core Enum Does not exist` SET x = 1;
+    IF (i_id< 1) THEN
+        RETURN
     END IF;
+    CALL core_enum_trigger_check('core_notify_recur', i_id);
+    
+    
  END;
 $$
 
