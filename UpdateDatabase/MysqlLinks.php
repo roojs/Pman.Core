@@ -164,6 +164,13 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
             
+            if (!isset($this->schema[$target_table])) {
+                echo "Skip $tbl\n";
+                return;
+            }
+        
+            
+            
             $q = DB_DataObject::factory('core_enum');
             $q->query("
                 DROP TRIGGER IF EXISTS `{$target_table}_before_delete` ;
