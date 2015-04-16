@@ -398,7 +398,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         }
         // now see which of the procedures match the specification..
         $ret = array();
-        foreach($cache[$tables] as $cname) {
+        foreach($cache[$table] as $cname) {
             $bits = explode("_before_{$type}_", $cname);
             if (count($bits) < 2) {
                 continue;
