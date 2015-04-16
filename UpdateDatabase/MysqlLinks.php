@@ -193,6 +193,14 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                     END IF;
                 ";
             }
+            
+            $ar = $this->listTriggerFunctions($tbl, 'delete');
+            foreach($ar as $fn=>$col) {
+                $trigger .= "
+                    CALL $fn( OLD.{$col});
+                ";
+            }
+            
             $trigger .= "
             END 
            
@@ -257,7 +265,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 
             }
-              $ar = $this->listTriggerFunctions($tbl, 'update');
+            $ar = $this->listTriggerFunctions($tbl, 'insert');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn( NEW.{$col});
