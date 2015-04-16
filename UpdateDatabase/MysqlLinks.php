@@ -141,8 +141,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
         // create a list of source/targets from $this->links
-        print_R($this->links);exit;
         
+                
         $revmap = array();
         foreach($this->links as $tbl => $map) {
             if (!isset($this->schema[$tbl])) {
@@ -158,7 +158,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 $revmap[$tname]["$tbl:$k"] = "$tname:$tcol";
             }
         }
-        
+        print_r($revmap);
         
         
         
