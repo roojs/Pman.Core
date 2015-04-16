@@ -20,8 +20,8 @@
  *   -- how to add User defined modifications to triggers?
  *   -- we can CALL a stored procedure..?
  *   -- {tablename}_trigger_before_delete_{column_name}(NEW.column)
- *   -- {tablename}_trigger_before_delete_{column_name}(OLD.column, NEW.column}
- *   -- {tablename}_trigger_before_delete_{column_name}(OLD.column}
+ *   -- {tablename}_trigger_before_update_{column_name}(OLD.column, NEW.column}
+ *   -- {tablename}_trigger_before_insert_{column_name}(OLD.column}
  *
  *  
  *
