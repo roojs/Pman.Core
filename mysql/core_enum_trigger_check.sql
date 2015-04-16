@@ -1,5 +1,8 @@
 
+DROP PROCEDURE IF EXISTS core_enum_trigger_check;
 
+DELIMITER $$
+ 
 CREATE PROCEDURE core_enum_trigger_check (i_etype VARCHAR(128) , i_id INT)
  BEGIN
     DECLARE v_cnt INT;
@@ -8,4 +11,7 @@ CREATE PROCEDURE core_enum_trigger_check (i_etype VARCHAR(128) , i_id INT)
     IF (v_cnt < 1) THEN
          UPDATE `Core Enum Does not exist` SET x = 1;
  END;
+$$
+
+DELIMITER ;
 
