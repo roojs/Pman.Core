@@ -10,3 +10,6 @@ CREATE  TABLE core_curr_rate (
 ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_curr_lookup (curr);
 ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_from_to_lookup (from_dt, to_dt);
 ALTER TABLE core_curr_rate ADD INDEX core_curr_rate_lookup (curr, from_dt, to_dt);
+
+
+ALTER TABLE core_curr_rate ENGINE=InnoDB;
