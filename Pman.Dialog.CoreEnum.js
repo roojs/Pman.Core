@@ -122,6 +122,10 @@ Pman.Dialog.CoreEnum = {
                       _this.dialog.hide();
                       return;
                   }
+                  
+                  if(typeof(_this.data._title) != 'undefined' && _this.data.title.length){
+                      _this.dialog.setTitle(_this.data.title);
+                  }
             
                   if(_this.data.id){
                       _this.dialog.el.mask("Loading");
