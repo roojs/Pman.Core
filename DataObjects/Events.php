@@ -409,13 +409,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->writeEventLog();
     }
     
-    function deletedRecord($obj = false)
+    function deletedRecord($obj, $set)
     {
         static $deleted;
-        
-        if(!empty($deleted)){
-            return $deleted;
-        }
         
         if(empty($obj) && !is_a($obj, 'DB_DataObject')){
             return false;
