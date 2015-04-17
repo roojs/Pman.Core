@@ -186,7 +186,7 @@ Pman.Dialog.CoreEnum = {
           actionMode : 'fieldEl',
           checked : true,
           fieldLabel : 'Active',
-          hidden : false,
+          hidden : true,
           inputValue : 1,
           name : 'active',
           value : 1,

@@ -78,7 +78,7 @@
          "Boolean checked" : true,
          "fieldLabel" : "Active",
          "inputValue" : 1,
-         "hidden" : false,
+         "hidden" : true,
          "value" : 1,
          "xtype" : "Checkbox",
          "valueOff" : 0,
