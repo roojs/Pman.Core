@@ -430,8 +430,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $deleted = array_merge($deleted, $d);
         
         return $deleted;
-        
-        
     }
     
     function writeEventLog($extra_data  = '')
