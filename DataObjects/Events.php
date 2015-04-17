@@ -417,7 +417,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $deleted = array();
         }
         
-        if(empty($set) || (empty($obj) && !is_a($obj, 'DB_DataObject'))){
+        if(empty($set) || empty($obj) || !is_a($obj, 'DB_DataObject')){
             return $deleted;
         }
         
@@ -426,7 +426,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(method_exists($obj, 'toDeletedArray')){
             $d = $obj->toDeletedArray();
         }
-        
         
         $deleted = array_merge($deleted, $d);
         
