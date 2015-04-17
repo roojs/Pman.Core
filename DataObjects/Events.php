@@ -425,14 +425,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $deleted;
         }
         
-        $d = $obj->toArray();
-        $d['_table'] = $obj->tableName();
+        $deleted = $obj->toArray();
+        $deleted['_table'] = $obj->tableName();
 
         if(method_exists($obj, 'toDeletedArray')){
-            $d = $obj->toDeletedArray();
+            $deleted = $obj->toDeletedArray();
         }
-        
-        $deleted = array_merge($deleted, $d);
         
         return $deleted;
     }
