@@ -179,16 +179,6 @@ Pman.Dialog.CoreEnum = {
          },
          {
           '|xns' : 'Roo.form',
-          fieldLabel : 'Active',
-          inputValue : 1,
-          name : 'active',
-          value : 0,
-          valueOff : 0,
-          xns : Roo.form,
-          xtype : 'Checkbox'
-         },
-         {
-          '|xns' : 'Roo.form',
           name : 'etype',
           xns : Roo.form,
           xtype : 'Hidden'
