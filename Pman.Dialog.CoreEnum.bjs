@@ -77,7 +77,7 @@
          "String actionMode" : "fieldEl",
          "fieldLabel" : "Active",
          "inputValue" : 1,
-         "hidden" : true,
+         "hidden" : false,
          "value" : 1,
          "xtype" : "Checkbox",
          "valueOff" : 0,
