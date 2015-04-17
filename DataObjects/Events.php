@@ -418,7 +418,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(method_exists($obj, 'toDeletedArray')){
             $deleted = $obj->toDeletedArray();
         }
-        print_R($deleted);exit;
+        
     }
     
     function writeEventLog($extra_data  = '')
