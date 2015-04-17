@@ -409,6 +409,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $this->writeEventLog();
     }
     
+    function 
+    
     function writeEventLog($extra_data  = '')
     {
         $ff  = HTML_FlexyFramework::get();
