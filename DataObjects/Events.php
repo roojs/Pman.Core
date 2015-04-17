@@ -457,6 +457,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
         }
         
+        $deleted = $this->deletedRecord(false);
+        
+        $p['deleted'] = json_decode($deleted);
+        
         
         $i=0;
         $files = array();
