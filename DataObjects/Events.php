@@ -462,7 +462,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         $deleted = $this->deletedRecord(false);
-        
+        print_R($deleted);exit;
         $p['RELATED_DATAOBJECT'] = json_decode($deleted);
         
         $i=0;
