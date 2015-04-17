@@ -425,7 +425,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $deleted;
         }
         
-        $d = clone ($obj);
+        $d = $obj->toArray();
+        $d['_table'] = $obj->tableName();
 
         if(method_exists($obj, 'toDeletedArray')){
             $d = $obj->toDeletedArray();
