@@ -459,6 +459,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         // Remove all the password from logs...
         $p =  empty($_POST) ? array() : $_POST;
+        print_R($p);exit;
         foreach(array('passwd', 'password','passwd1',  'passwd2','password1', 'password2') as $rm) {
             if (isset($p[$rm])) {
                 $p[$rm] = '******';
