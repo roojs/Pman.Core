@@ -73,6 +73,7 @@
          "name" : "display_name"
         },
         {
+         "String actionMode" : "fieldEl",
          "fieldLabel" : "Active",
          "inputValue" : 1,
          "value" : 0,

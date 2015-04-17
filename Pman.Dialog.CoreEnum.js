@@ -178,6 +178,7 @@ Pman.Dialog.CoreEnum = {
          },
          {
           '|xns' : 'Roo.form',
+          actionMode : 'fieldEl',
           fieldLabel : 'Active',
           inputValue : 1,
           name : 'active',
