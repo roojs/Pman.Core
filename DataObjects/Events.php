@@ -427,7 +427,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $d = $obj->toDeletedArray();
         }
         
-        $deleted[] = $d;
+        $deleted = array_merge($deleted, $d);
         
         return $deleted;
         
