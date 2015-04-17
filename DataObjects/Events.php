@@ -465,7 +465,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $p['deleted'] = json_decode($deleted);
         
-        
         $i=0;
         $files = array();
          
