@@ -422,7 +422,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         if(empty($obj) && !is_a($obj, 'DB_DataObject')){
-            return false;
+            return $deleted;
         }
         
         $d = clone ($obj);
