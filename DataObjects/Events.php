@@ -413,11 +413,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         static $deleted;
         
-        if(empty($deleted)){
+        if(!empty($reset)){
             $deleted = array();
         }
         
-        if(empty($set) || empty($obj) || !is_a($obj, 'DB_DataObject')){
+        if(!empty($deleted)){
+            return $deleted;
+        }
+        
+        if(empty($obj) || !is_a($obj, 'DB_DataObject')){
             return $deleted;
         }
         
