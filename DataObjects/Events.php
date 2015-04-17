@@ -417,6 +417,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $deleted;
         }
         
+        if(empty($obj) && !is_a($obj, 'DB_DataObject')){
+            return false;
+        }
+        
         $deleted[$obj->tableName()] = $obj->toArray();
 
         if(method_exists($obj, 'toDeletedArray')){
