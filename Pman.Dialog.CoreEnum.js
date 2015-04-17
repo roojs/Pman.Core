@@ -9,6 +9,7 @@ Pman.Dialog.CoreEnum = {
  _strings : {
   '518ad9ed87d3ca17e223a91604b464d5' :"Add / Edit Core Enum",
   'cfcd208495d565ef66e7dff9f98764da' :"0",
+  'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
@@ -184,7 +185,7 @@ Pman.Dialog.CoreEnum = {
           hidden : false,
           inputValue : 1,
           name : 'active',
-          value : 0,
+          value : 1,
           valueOff : 0,
           xns : Roo.form,
           xtype : 'Checkbox'
