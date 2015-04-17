@@ -411,7 +411,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function deletedRecord($obj)
     {
-//        static $deleted = array();
+        static $deleted;
         
         $deleted[$obj->tableName()] = $obj->toArray();
             
