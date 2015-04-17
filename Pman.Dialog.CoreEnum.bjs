@@ -74,6 +74,15 @@
          "name" : "display_name"
         },
         {
+         "fieldLabel" : "Active",
+         "inputValue" : 1,
+         "value" : 0,
+         "xtype" : "Checkbox",
+         "valueOff" : 0,
+         "$ xns" : "Roo.form",
+         "name" : "active"
+        },
+        {
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
          "name" : "etype"
