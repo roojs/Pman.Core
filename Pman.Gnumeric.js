@@ -542,6 +542,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             Roo.log('cell not defined:' + cell);
             this.createCell(cs.r,cs.c);
         }
+        // cell might not be rendered yet... so this might not be relivant..
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
             //this.createCell(cs.r,cs.c);
