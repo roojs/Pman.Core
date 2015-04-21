@@ -411,6 +411,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     static $deleted = array();
     
+    
+    // log deleting of a record so that it can be written later..
     function logDeletedRecord($obj = false, $reset = false)
     {
         
