@@ -475,7 +475,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
         }
         
-        $deleted = $this->deletedRecord(false, false);
+        $deleted = self::$deleted;
         
         $i=0;
         $files = array();
