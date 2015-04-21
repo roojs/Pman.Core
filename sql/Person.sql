@@ -38,7 +38,8 @@ ALTER TABLE Person ADD COLUMN   alt_email VARCHAR(256) NULL ;
 
 ALTER TABLE Person ADD COLUMN   office_id int(11) NOT NULL  default '0';
 ALTER TABLE Person ADD COLUMN   company_id int(11) NOT NULL  default '0';
-
+ALTER TABLE Person CHANGE COLUMN   office_id office_id int(11) NOT NULL  default '0';
+ALTER TABLE Person CHANGE COLUMN   company_id company_id int(11) NOT NULL  default '0';
 
 
 
