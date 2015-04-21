@@ -475,7 +475,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
         }
         
-        $deleted = self::$deleted;
         
         $i=0;
         $files = array();
@@ -502,8 +501,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             'GET' => empty($_GET) ? array() : $_GET,
             'POST' =>$p,
             'FILES' => $files,
-            'DELETED_DATAOBJECTS' => $deleted
+            
         );
+        if (!empty(self::$deleted)) {
+            $out['DELETED_DATAOBJECTS'] = self::$deleted;
+        }
         if (!empty($extra_data)) {
             $out['EXTRA'] = $extra_data;
         }
