@@ -315,7 +315,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             if (typeof(_t.grid[rc[0].r][rc[0].c]) == 'undefined') {
                 Roo.log(["creating empty cell for  ",rc[0].r,  rc[0].c ]);
                 
-                _t.grid[rc[0].r][rc[0].c] =  _t.createCell(rc[0].r, c : rc[0].c ); //Roo.applyIf({ r : rc[0].r, c : rc[0].c }, _t.defaultCell);
+                _t.grid[rc[0].r][rc[0].c] =  _t.createCell(rc[0].r,  rc[0].c ); //Roo.applyIf({ r : rc[0].r, c : rc[0].c }, _t.defaultCell);
             }
                 
             _t.grid[rc[0].r][rc[0].c].colspan = (rc[1].c - rc[0].c) + 1;
