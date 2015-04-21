@@ -423,11 +423,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             foreach($obj as $o) {
                 $this->logDeletedRecord($o);
             }
-            return;
+            return true;
         }
         
         if(empty($obj) || !is_a($obj, 'DB_DataObject')){
-            return $self::$deleted; 
+            return false;
         }
         
         
@@ -435,10 +435,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $del['_table'] = $obj->tableName();
 
         if(method_exists($obj, 'toDeletedArray')){
-            $deleted = $obj->toDeletedArray();
+            $del = $obj->toDeletedArray();
         }
         
-        return $deleted;
+        self::$deleted[] = $del;
+        return $del;
     }
     
     function writeEventLog($extra_data  = '')
