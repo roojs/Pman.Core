@@ -534,21 +534,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         Roo.log( cs.r+ ',' + cs.c + ' = '+ v);
         // need to generate clell if it doe
         if (typeof(this.grid[cs.r]) == 'undefined') {
-            //Roo.log('no row:' + cell);
+            Roo.log('no row:' + cell);
             this.grid[cs.r] = []; // create a row..
             //return;
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
-            //Roo.log('cell not defined:' + cell);
+            Roo.log('cell not defined:' + cell);
             this.createCell(cs.r,cs.c);
         }
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
-            ///Roo.log('no default content for cell:' + cell);
+            Roo.log('no default content for cell:' + cell);
             this.createCell(cs.r,cs.c);
             //return;
         }
         this.grid[cs.r][cs.c].value=  v;
         this.grid[cs.r][cs.c].dom.textContent=  v;
+        
         if (typeof(vt) != 'undefined') {
             this.grid[cs.r][cs.c].valueType = vt;
             this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
