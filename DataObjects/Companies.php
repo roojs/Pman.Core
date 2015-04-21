@@ -41,7 +41,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function applyFilters($q, $au)
     {
        
-        $this->selectAdd("i18n_translate('c' ,  country, 'en') as country_display_name ");
+        $this->selectAdd("i18n_translate('c' , Companies.country, 'en') as country_display_name ");
       
         $tn = $this->tableName();
         //DB_DataObject::debugLevel(1);
