@@ -1358,7 +1358,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for (var r = 0; r < this.rmax;r++) {
             out += '<tr style="height:'+this.rowInfo[r]+'px;">';
             for (var c = 0; c < this.cmax;c++) {
-                var g = (typeof(grid[r][c]) == 'undefined') ? defaultCell  : grid[r][c];
+                var g = (typeof(grid[r][c]) == 'undefined') ? this.defaultCell  : grid[r][c];
                 
                 if (typeof(g.cls) =='undefined') g.cls = [];
                 var w= calcWidth(c,g.colspan);
