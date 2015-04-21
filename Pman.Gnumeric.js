@@ -385,6 +385,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     if (typeof(_t.grid[r][c]) == 'undefined') {
                         _t.createCell(r,c);
                         //_t.grid[r][c] = Roo.applyIf({ r: r , c : c }, _t.defaultCell);
+                    }
                     var g=_t.grid[r][c];
                     if (typeof(g.cls) =='undefined') {
                         g.cls = [];
@@ -1371,7 +1372,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         for (var r = 0; r < this.rmax;r++) {
             out += '<tr style="height:'+this.rowInfo[r]+'px;">';
             for (var c = 0; c < this.cmax;c++) {
-                var g = (typeof(grid[r][c]) == 'undefined') ? this.defaultCell  : grid[r][c];
+                if (typeof(grid[r][c]) == 'undefined')  {
+                    this.createCell(r,c);
+                    
+                }
+                var g = grid[r][c];
                 
                 if (typeof(g.cls) =='undefined') g.cls = [];
                 var w= calcWidth(c,g.colspan);
