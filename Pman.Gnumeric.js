@@ -321,9 +321,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             _t.grid[rc[0].r][rc[0].c].colspan = (rc[1].c - rc[0].c) + 1;
             _t.grid[rc[0].r][rc[0].c].rowspan = (rc[1].r - rc[0].r) + 1;
             for(var r = (rc[0].r); r < (rc[1].r+1); r++) {
-               for(var c = rc[0].c; c < (rc[1].c+1); c++) {
+               for(var cc = rc[0].c; cc < (rc[1].c+1); cc++) {
                     //Roo.log('adding alias : ' + r+','+c);
-                   _t.grid[r][c] = _t.grid[rc[0].r][rc[0].c];
+                   _t.grid[r][cc] = _t.grid[rc[0].r][rc[0].c];
                }
            }
             
