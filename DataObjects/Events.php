@@ -420,8 +420,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         
         if (is_array($obj)) {
+            $ret = false;
             foreach($obj as $o) {
-                $this->logDeletedRecord($o);
+                $aret = $this->logDeletedRecord($o);
+                $ret = $ret ? $ret : $aret;
             }
             return true;
         }
