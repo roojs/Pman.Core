@@ -106,7 +106,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             ");
         }
           if(!empty($q['search']['name_starts'])){
-            $s = $this->escape($q['search']['name']);
+            $s = $this->escape($q['search']['name_starts']);
             $this->whereAdd("
                 {$tn}.name LIKE '$s%'
             ");
