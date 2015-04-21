@@ -550,7 +550,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //return;
         }
         this.grid[cs.r][cs.c].value=  v;
-        this.grid[cs.r][cs.c].dom.textContent=  v;
+        if (this.grid[cs.r][cs.c].dom) {
+            this.grid[cs.r][cs.c].dom.textContent=  v;
+        }
+        
         
         if (typeof(vt) != 'undefined') {
             this.grid[cs.r][cs.c].valueType = vt;
