@@ -34,6 +34,8 @@ ALTER TABLE Person ADD COLUMN   alt_email VARCHAR(256) NULL ;
 
 
 -- links to other tables. ??? in postgress these might need to be allow null... but we need them as NOT NULL ?
+-- otherwise empty values will not apply to database.. (mysql)
+
 ALTER TABLE Person ADD COLUMN   office_id int(11) NOT NULL  default '0';
 ALTER TABLE Person ADD COLUMN   company_id int(11) NOT NULL  default '0';
 
