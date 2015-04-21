@@ -311,8 +311,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
         Roo.each(merge, function(c) {
             var rc = _t.rangeToRC(c.textContent);
-            //Roo.log(JSON.stringify(rc))
+            Roo.log(JSON.stringify(rc));
             if (typeof(_t.grid[rc[0].r][rc[0].c]) == 'undefined') {
+                
+                
                 _t.grid[rc[0].r][rc[0].c] =  Roo.applyIf({ r : rc[0].r, c : rc[0].c }, _t.defaultCell);
             }
                 
