@@ -33,9 +33,13 @@ ALTER TABLE Person ADD COLUMN   fax varchar(32)  NOT NULL DEFAULT '';
 ALTER TABLE Person ADD COLUMN   alt_email VARCHAR(256) NULL ;
 
 
--- links to other tables.
-ALTER TABLE Person ADD COLUMN   office_id int(11) default '0';
-ALTER TABLE Person ADD COLUMN   company_id int(11) default '0';
+-- links to other tables. ??? in postgress these might need to be allow null... but we need them as NOT NULL ?
+ALTER TABLE Person ADD COLUMN   office_id int(11) NOT NULL  default '0';
+ALTER TABLE Person ADD COLUMN   company_id int(11) NOT NULL  default '0';
+
+
+
+
 ALTER TABLE Person ADD COLUMN   owner_id int(11) NOT NULL DEFAULT 0;
 ALTER TABLE Person ADD COLUMN   active int(11) NOT NULL  default 1;
 ALTER TABLE Person ADD COLUMN   project_id int(11) default 0;
