@@ -546,6 +546,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
             Roo.log('no default content for cell:' + cell);
+            Roo.log(this.grid[cs.r][cs.c]);
             //this.createCell(cs.r,cs.c);
             //return;
         }
