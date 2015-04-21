@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             'GET' => empty($_GET) ? array() : $_GET,
             'POST' =>$p,
             'FILES' => $files,
-            'RELATED_DATAOBJECT' => $deleted
+            'DELETED_DATAOBJECTS' => $deleted
         );
         if (!empty($extra_data)) {
             $out['EXTRA'] = $extra_data;
