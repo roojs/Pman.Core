@@ -422,7 +422,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         if (is_array($obj)) {
-            
+            foreach($obj as $o) {
+                $this->deletedRecord($o);
+            }
+            return;
         }
         
         if(empty($obj) || !is_a($obj, 'DB_DataObject')){
