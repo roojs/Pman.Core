@@ -307,7 +307,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->person_id = 0;
         } else {
             $col = $au->tableName() == "Person" ? 'person_id' : $au->tableName() . '_id';
-            $this->{$col} = $au->id;
+            $this->{$col} = $au->pid();
             //$this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;
         }
         $this->person_table = $au ? $au->tableName() : '';
