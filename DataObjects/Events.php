@@ -302,11 +302,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         } 
           
         $this->person_name = $au && !empty($au->name) ? $au->name : '';
-        if (isset($au->id) && empty($au->id)) {
+        if (empty($au) || (isset($au->id) && empty($au->id))) {
             // not authenticated - and a standard id based object
             $this->person_id = 0;
         } else {
-            $this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;
+            $col = $au->tableName() == "Person" ? 'person_id' : $au->tableName() . '_id';
+            $this->{$col} = $au->id;
+            //$this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;
         }
         $this->person_table = $au ? $au->tableName() : '';
         $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
