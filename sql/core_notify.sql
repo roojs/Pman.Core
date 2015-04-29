@@ -34,3 +34,5 @@ ALTER TABLE core_notify add   index lookup_d (person_id, msgid, ontable);
 
 -- used by email / tracker to handle alises - we have to be carefull adding to this table...
 ALTER TABLE core_notify ENGINE=InnoDB;
+
+ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT '';
