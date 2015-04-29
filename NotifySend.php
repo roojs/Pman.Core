@@ -243,7 +243,6 @@ class Pman_Core_NotifySend extends Pman
         // since some of them have spaces?!?!
         $p->email = trim($p->email);
         
-        print_r($p);exit;
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
             $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
