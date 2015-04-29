@@ -323,7 +323,7 @@ class Pman_Core_NotifySend extends Pman
         $w->update($ww);
         
         $ww = clone($w);   
-        print_R($email);exit;
+        
         $fail = false;
         require_once 'Mail.php';
         
