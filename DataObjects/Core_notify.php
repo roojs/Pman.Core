@@ -42,7 +42,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $trigger_event_id;              // int(11)  
     public $evtype;                         // event type (or method to call)fall
     public $act_start;
-    
+    public $person_table;
+
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
@@ -53,7 +55,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return;
         }
         
-//        $person_table = 
+        $person_table = 
         $c = DB_DataObject::Factory('Person');
         $c->get($this->person_id);
         return $c;
