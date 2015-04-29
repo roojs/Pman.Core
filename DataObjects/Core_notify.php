@@ -55,9 +55,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return;
         }
         
-        $person_table = 
-        $c = DB_DataObject::Factory('Person');
-        $c->get($this->person_id);
+        $person_table = empty($this->person_table) ? 'Person' : $this->person_table;
+        $col = $person_table == "Person" ? 'person_id' : $person_table . '_id';
+            
+        $c = DB_DataObject::Factory($person_table);
+        $c->get($col);
         return $c;
         
     }
