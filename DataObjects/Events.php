@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
             
-            print_R($jt->table());exit;
+            print_R($this->table());exit;
             
             $keys = $jt->keys();
             
