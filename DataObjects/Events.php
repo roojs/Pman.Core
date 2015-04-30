@@ -40,24 +40,25 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
             
-            print_R($this->table());exit;
+            if(!array_key_exists("{$jt->tableName()}_id", $this->table())){
+                
+                $keys = $jt->keys();
             
-            $keys = $jt->keys();
-            
-            $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
-            $this->selectAdd();
-            $this->selectAs();
-            
-            $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
-        
-            if (method_exists($jt,'nameColumn')) {
-                $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
+                $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
+                $this->selectAdd();
+                $this->selectAs();
+
+                $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
+
+                if (method_exists($jt,'nameColumn')) {
+                    $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
+                }
+
+                if (method_exists($jt,'emailColumn')) {
+                    $this->selectAdd("join_person_id_id.{$jt->emailColumn()} as person_id_email");
+                }
+                
             }
-            
-            if (method_exists($jt,'emailColumn')) {
-                $this->selectAdd("join_person_id_id.{$jt->emailColumn()} as person_id_email");
-            }
-        
         
         } else {
             $person = 'Person';
