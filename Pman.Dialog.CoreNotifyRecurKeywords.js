@@ -172,7 +172,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
            },
            '|xns' : 'Roo.data',
            remoteSort : true,
-           sortInfo : { direction : 'DESC', field: 'pressrelease_id' },
+           sortInfo : { direction : 'DESC', field: 'id' },
            xns : Roo.data,
            xtype : 'Store',
            listeners : {
