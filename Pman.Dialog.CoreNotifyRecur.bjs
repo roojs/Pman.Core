@@ -407,6 +407,15 @@
         },
         {
          "xtype" : "ColumnModel",
+         "width" : 75,
+         "header" : "Last Sent",
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v : 'never'); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "cm[]",
+         "dataIndex" : "last_event_id"
+        },
+        {
+         "xtype" : "ColumnModel",
          "header" : "Last Sent",
          "width" : 75,
          "$ renderer" : "function(v) { return String.format('{0}', v ? v : 'never'); }",

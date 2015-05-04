@@ -703,6 +703,17 @@ Pman.Dialog.CoreNotifyRecur = {
           xtype : 'ColumnModel'
          }
        ],
+       cm : [
+         {
+          '|xns' : 'Roo.grid',
+          dataIndex : 'last_event_id',
+          header : _this._strings['b26686c0a708faee42861d8b905e882e'],
+          renderer : function(v) { return String.format('{0}', v ? v : 'never'); },
+          width : 75,
+          xns : Roo.grid,
+          xtype : 'ColumnModel'
+         }
+       ],
        listeners : {
         afteredit : function (e)
          {
