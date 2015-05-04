@@ -27,7 +27,7 @@
    "$ xns" : "Roo",
    "closable" : false,
    "resizable" : false,
-   "height" : 200,
+   "height" : 150,
    "items" : [
     {
      "xtype" : "LayoutRegion",
@@ -61,7 +61,7 @@
          "forceSelection" : true,
          "selectOnFocus" : true,
          "pageSize" : 20,
-         "Number width" : 200,
+         "Number width" : 400,
          "displayField" : "name",
          "emptyText" : "Select Campaign",
          "hiddenName" : "campaign_id",
@@ -112,13 +112,13 @@
          "fieldLabel" : "Keywords",
          "hiddenName" : "keyword_filters",
          "xtype" : "ComboBoxArray",
-         "width" : 210,
+         "width" : 410,
          "$ xns" : "Roo.form",
          "name" : "keyword_filters_name",
          "items" : [
           {
            "alwaysQuery" : true,
-           "listWidth" : 200,
+           "listWidth" : 400,
            "triggerAction" : "all",
            "fieldLabel" : "Keyword",
            "forceSelection" : true,
@@ -128,7 +128,7 @@
            "xtype" : "ComboBox",
            "allowBlank" : true,
            "editable" : true,
-           "width" : 200,
+           "width" : 400,
            "$ xns" : "Roo.form",
            "* prop" : "combo",
            "queryParam" : "query[keyword]",
