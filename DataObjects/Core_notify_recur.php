@@ -222,14 +222,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $clipping_keywords = DB_DataObject::factory('clipping_keywords');
             $clipping_keywords->whereAddIn('id', $keywords, 'int');
             
-            $ret['keywords'] = array();
-            
-            foreach ($clipping_keywords->fetchAll('id', 'keyword') as $k => $v){
-                $ret['keywords'][] = array(
-                    'id' => $k,
-                    'keyword' => $v
-                );
-            }
+            $ret['keywords'] = $clipping_keywords->fetchAll('keyword');
         }
         
         return $ret;
