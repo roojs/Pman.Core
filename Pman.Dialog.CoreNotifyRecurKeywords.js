@@ -7,7 +7,6 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreNotifyRecurKeywords = {
 
  _strings : {
-  'cfcd208495d565ef66e7dff9f98764da' :"0",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
   '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords"
@@ -138,19 +137,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           }
         },
         items : [
-         {
-          '|xns' : 'Roo.form',
-          name : 'etype',
-          xns : Roo.form,
-          xtype : 'Hidden'
-         },
-         {
-          '|xns' : 'Roo.form',
-          name : 'seqid',
-          value : 0,
-          xns : Roo.form,
-          xtype : 'Hidden'
-         },
          {
           '|xns' : 'Roo.form',
           name : 'id',
