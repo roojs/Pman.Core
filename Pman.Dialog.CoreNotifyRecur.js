@@ -725,6 +725,9 @@ Pman.Dialog.CoreNotifyRecur = {
                  return;
              }
              
+             Pman.Dialog.CoreNotifyRecurKeywords.show({}, function(res){
+                 Roo.log(res);
+             });
              
          },
         render : function() 
