@@ -157,7 +157,7 @@
                "id" : "code",
                "root" : "data",
                "xtype" : "JsonReader",
-               "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]",
+               "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"keyword\",\"type\":\"string\"}]",
                "$ xns" : "Roo.data",
                "* prop" : "reader",
                "totalProperty" : "total"

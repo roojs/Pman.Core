@@ -221,7 +221,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
             },
             reader : {
              '|xns' : 'Roo.data',
-             fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}],
+             fields : [{"name":"id","type":"int"},{"name":"keyword","type":"string"}],
              id : 'code',
              root : 'data',
              totalProperty : 'total',
