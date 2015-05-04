@@ -7,11 +7,11 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreNotifyRecurKeywords = {
 
  _strings : {
-  '518ad9ed87d3ca17e223a91604b464d5' :"Add / Edit Core Enum",
   'cfcd208495d565ef66e7dff9f98764da' :"0",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
+  'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
+  '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords"
  },
 
  dialog : false,
@@ -51,7 +51,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
     height : 150,
     modal : true,
     resizable : false,
-    title : _this._strings['518ad9ed87d3ca17e223a91604b464d5'],
+    title : _this._strings['790f855c2139f2faecb810519e90b833'],
     width : 400,
     xns : Roo,
     xtype : 'LayoutDialog',
