@@ -732,7 +732,7 @@ Pman.Dialog.CoreNotifyRecur = {
              }
              
              Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){
-                 Roo.log(res);
+                 _this.grid.ds.load({});
              });
              
          },
