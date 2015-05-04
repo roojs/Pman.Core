@@ -260,7 +260,8 @@ Pman.Login =  new Roo.util.Observable({
                 return;
             }
             Roo.Ajax.request({
-                url: baseURL + '/Login.js',  
+                url: baseURL + '/Login.js',
+                mask : "Sending Password Reset email",
                 params: {
                     passwordRequest: n
                 },
