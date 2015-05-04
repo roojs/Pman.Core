@@ -127,7 +127,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->tableName());
-//        $w->id = 117;
+        $w->id = 117;
         $w->find();
         
         while($w->fetch()){
