@@ -109,6 +109,66 @@
          ]
         },
         {
+         "fieldLabel" : "Company Types",
+         "hiddenName" : "filter_company_type",
+         "xtype" : "ComboBoxArray",
+         "width" : 210,
+         "$ xns" : "Roo.form",
+         "name" : "filter_company_type_name",
+         "items" : [
+          {
+           "alwaysQuery" : true,
+           "listWidth" : 200,
+           "idField" : "id",
+           "triggerAction" : "all",
+           "fieldLabel" : "company",
+           "forceSelection" : true,
+           "displayField" : "display_name",
+           "minChars" : 2,
+           "valueField" : "id",
+           "xtype" : "ComboBox",
+           "allowBlank" : true,
+           "editable" : true,
+           "width" : 200,
+           "$ xns" : "Roo.form",
+           "* prop" : "combo",
+           "queryParam" : "search[display_name]",
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
+           "nameField" : "display_name",
+           "items" : [
+            {
+             "listeners" : {
+              "beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'COMPTYPE';\n    o.params.active  = 1;\n}\n"
+             },
+             "xtype" : "Store",
+             "remoteSort" : true,
+             "$ sortInfo" : "{ direction : 'ASC', field: 'display_name' }",
+             "$ xns" : "Roo.data",
+             "* prop" : "store",
+             "items" : [
+              {
+               "$ url" : "baseURL + '/Roo/core_enum.php'",
+               "xtype" : "HttpProxy",
+               "method" : "GET",
+               "$ xns" : "Roo.data",
+               "* prop" : "proxy"
+              },
+              {
+               "id" : "code",
+               "root" : "data",
+               "xtype" : "JsonReader",
+               "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]",
+               "$ xns" : "Roo.data",
+               "* prop" : "reader",
+               "totalProperty" : "total"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
          "name" : "id"

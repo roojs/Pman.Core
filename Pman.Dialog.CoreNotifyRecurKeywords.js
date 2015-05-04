@@ -210,6 +210,78 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
 
          },
          {
+          combo : {
+           store : {
+            proxy : {
+             '|xns' : 'Roo.data',
+             method : 'GET',
+             url : baseURL + '/Roo/core_enum.php',
+             xns : Roo.data,
+             xtype : 'HttpProxy'
+            },
+            reader : {
+             '|xns' : 'Roo.data',
+             fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}],
+             id : 'code',
+             root : 'data',
+             totalProperty : 'total',
+             xns : Roo.data,
+             xtype : 'JsonReader'
+            },
+            '|xns' : 'Roo.data',
+            remoteSort : true,
+            sortInfo : { direction : 'ASC', field: 'display_name' },
+            xns : Roo.data,
+            xtype : 'Store',
+            listeners : {
+             beforeload : function (_self, o){
+                  o.params = o.params || {};
+                  // set more here
+                  o.params.etype = 'COMPTYPE';
+                  o.params.active  = 1;
+              }
+            },
+            items : [
+
+            ]
+
+           },
+           '|xns' : 'Roo.form',
+           allowBlank : true,
+           alwaysQuery : true,
+           displayField : 'display_name',
+           editable : true,
+           fieldLabel : 'company',
+           forceSelection : true,
+           idField : 'id',
+           listWidth : 200,
+           minChars : 2,
+           nameField : 'display_name',
+           queryParam : 'search[display_name]',
+           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>',
+           triggerAction : 'all',
+           valueField : 'id',
+           width : 200,
+           xns : Roo.form,
+           xtype : 'ComboBox',
+           items : [
+
+           ]
+
+          },
+          '|xns' : 'Roo.form',
+          fieldLabel : 'Company Types',
+          hiddenName : 'filter_company_type',
+          name : 'filter_company_type_name',
+          width : 210,
+          xns : Roo.form,
+          xtype : 'ComboBoxArray',
+          items : [
+
+          ]
+
+         },
+         {
           '|xns' : 'Roo.form',
           name : 'id',
           xns : Roo.form,
