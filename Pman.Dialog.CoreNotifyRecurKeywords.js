@@ -118,6 +118,8 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
                   return;
               }
               if (action.type == 'load') {
+                  
+              
                   _this.dialog.el.unmask();
                   return;
               }
