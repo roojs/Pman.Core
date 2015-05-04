@@ -75,7 +75,6 @@
          "allowBlank" : false,
          "typeAhead" : false,
          "editable" : true,
-         "width" : 217,
          "$ xns" : "Roo.form",
          "name" : "camapign_id_name",
          "qtip" : "Select campaign",
