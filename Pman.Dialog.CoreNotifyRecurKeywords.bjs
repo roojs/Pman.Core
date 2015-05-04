@@ -147,7 +147,7 @@
              "* prop" : "store",
              "items" : [
               {
-               "$ url" : "baseURL + '/Roo/core_enum.php'",
+               "$ url" : "baseURL + '/Roo/clipping_keywords.php'",
                "xtype" : "HttpProxy",
                "method" : "GET",
                "$ xns" : "Roo.data",
