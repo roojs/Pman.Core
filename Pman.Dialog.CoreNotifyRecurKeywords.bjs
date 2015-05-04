@@ -79,7 +79,7 @@
          "$ xns" : "Roo.form",
          "name" : "camapign_id_name",
          "qtip" : "Select campaign",
-         "queryParam" : "search[display_name]",
+         "queryParam" : "search[name]",
          "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
          "loadingText" : "Searching...",
          "items" : [
