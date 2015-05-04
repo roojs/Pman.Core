@@ -116,7 +116,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         foreach($usedays as $d){
             foreach($hours as $h){
                 $date = new DateTime($d. ' ' . $h, new DateTimeZone($this->tz));
-                $date->setTimezone(new DateTimeZone(ini_get('date.timezone')));
+                $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
                 $ret[] = $date->format('Y-m-d H:i:s');
             }
         }
@@ -127,6 +127,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->tableName());
+        $w->id = 117;
         $w->find();
         
         while($w->fetch()){
@@ -141,7 +142,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
 
         $notifytimes = $this->notifyTimes(2);
-        ////print_R($notifytimes);
+        print_R($notifytimes);exit;
         
         $newSearch = DB_DataObject::factory('core_notify');
         $newSearch->whereAdd( 'act_start > NOW()');
