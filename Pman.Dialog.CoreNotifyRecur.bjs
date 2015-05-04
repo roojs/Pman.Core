@@ -1,416 +1,433 @@
 {
-    "id": "roo-file-183",
-    "name": "Pman.Dialog.CoreNotifyRecur",
-    "parent": "",
-    "title": "",
-    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
-    "items": [
+ "name" : "Pman.Dialog.CoreNotifyRecur",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreNotifyRecur.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "strings" : {
+  "3728af837fe70019577ddb0ed7125ee5" : "Until",
+  "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
+  "023a5dfa857c4aa0156e6685231a1dbd" : "Select Type",
+  "6c768695a8efb18436d5b7b4374cdb45" : "Select core_enum",
+  "157e432ec303efd7d537b653cb255ccc" : "on day(s)",
+  "236df51bb0e6416236e255b528346fca" : "Timezone",
+  "44c68bed631ff6e62aecc4a4d32176e6" : "Select timezone",
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "b26686c0a708faee42861d8b905e882e" : "Last Sent",
+  "c1d32776cd2d2afcd2c45a52f58679f4" : "Modify Recurrent Notifications",
+  "5da618e8e4b89c66fe86e32cdafde142" : "From",
+  "ce527d7432bab413730f25c794648e46" : "at Hour(s)",
+  "c7179f16884513c990b6cbf44aef7fc3" : "core_notify_recur",
+  "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
+  "a1fa27779242b4902f7ae3bdd5c6d508" : "Type",
+  "f92965e2c8a7afb3c1b9a5c09a263636" : "Done"
+ },
+ "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    _this.grid.ds.load({});\n}"
+   },
+   "modal" : true,
+   "title" : "Modify Recurrent Notifications",
+   "xtype" : "LayoutDialog",
+   "width" : 800,
+   "$ xns" : "Roo",
+   "resizable" : false,
+   "height" : 550,
+   "items" : [
+    {
+     "loadOnce" : true,
+     "autoScroll" : true,
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "* prop" : "center"
+    },
+    {
+     "listeners" : {
+      "|activate" : "function() {\n _this.panel = this;\n    if (_this.grid) {\n//        _this.grid.footer.onClick('first');\n    }\n}"
+     },
+     "fitToFrame" : true,
+     "background" : false,
+     "region" : "center",
+     "title" : "core_notify_recur",
+     "xtype" : "GridPanel",
+     "fitContainer" : true,
+     "$ xns" : "Roo",
+     "tableName" : "core_notify_recur",
+     "items" : [
+      {
+       "listeners" : {
+        "|rowdblclick" : "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n",
+        "|render" : "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n    //   this.footer.onClick('first');\n    }\n}",
+        "afteredit" : "function (e)\n{\n   e.record.commit();\n}"
+       },
+       "autoExpandColumn" : "freq_day",
+       "xtype" : "EditorGrid",
+       "loadMask" : true,
+       "clicksToEdit" : 1,
+       "$ xns" : "Roo.grid",
+       "* prop" : "grid",
+       "items" : [
         {
-            "listeners": {
-                "show": "function (_self)\n{\n    _this.grid.ds.load({});\n}"
-            },
-            "height": 550,
-            "modal": true,
-            "resizable": false,
-            "title": "Modify Recurrent Notifications",
-            "width": 800,
-            "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "items": [
+         "listeners" : {
+          "update" : "function (_self, record, operation)\n{\n    //Roo.log(operation);\n    if (operation != 'commit') {\n        return;\n    }\n    var p = Roo.apply({}, record.data);\n    p.dtstart = record.data.dtstart.format('Y-m-d');\n    p.dtend = record.data.dtend.format('Y-m-d');    \n    \n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_notify_recur',\n        method :'POST',\n        params : p,\n        success : function(data)\n        {\n            //Roo.log(data);\n            record.set('id', data.data.id);\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"There was a problem saving\");\n        }\n    });\n       \n    \n    \n}",
+          "beforeload" : "function (_self, o)\n{\n    if (!_this.data) {\n        return false;\n    }\n    o.params =  Roo.apply(o.params || {}, {\n        person_id : _this.data.person_id,\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method\n    });\n        \n}"
+         },
+         "xtype" : "Store",
+         "remoteSort" : true,
+         "$ sortInfo" : "{ field : 'freq', direction: 'ASC' }",
+         "$ xns" : "Roo.data",
+         "* prop" : "dataSource",
+         "items" : [
+          {
+           "$ url" : "baseURL + '/Roo/core_notify_recur.php'",
+           "method" : "GET",
+           "xtype" : "HttpProxy",
+           "$ xns" : "Roo.data",
+           "* prop" : "proxy"
+          },
+          {
+           "id" : "id",
+           "root" : "data",
+           "xtype" : "JsonReader",
+           "$ fields" : "[\n    {\n        'name': 'id',\n        'type': 'int'\n    },\n    {\n        'name': 'person_id',\n        'type': 'int'\n    },\n    {\n        'name': 'dtstart',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'dtend',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'tz',\n        'type': 'float'\n    },\n    {\n        'name': 'last_applied_dt',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'freq',\n        'type': 'string'\n    },\n    {\n        'name': 'freq_day',\n        'type': 'string'\n    },\n    {\n        'name': 'freq_hour',\n        'type': 'string'\n    },\n    {\n        'name': 'last_event_id',\n        'type': 'int'\n    },\n    {\n        'name': 'method',\n        'type': 'string'\n    }\n]",
+           "$ xns" : "Roo.data",
+           "* prop" : "reader",
+           "totalProperty" : "total"
+          }
+         ]
+        },
+        {
+         "xtype" : "Toolbar",
+         "$ xns" : "Roo",
+         "* prop" : "toolbar",
+         "items" : [
+          {
+           "listeners" : {
+            "|click" : "function()\n{\n    var grid = _this.grid;\n    var r = grid.getDataSource().reader.newRow({\n    // defaults..\n        person_id : _this.data.person_id,\n        dtstart : new Date(),\n        dtend : Date.parseDate('2050-01-01', 'Y-m-d'),\n        tz : 'Asia/Hong_Kong',\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method, // default...\n        \n        method_id : _this.data.method_id, // default...\n        method_id_display_name : _this.data.method_id_display_name, // default...        \n        \n        last_event_id : 0,\n        freq_day_name : '',\n        freq_hour_name : '',\n        freq_name : ''\n        \n    \n    });\n    grid.stopEditing();\n    grid.getDataSource().insert(0, r); \n    grid.startEditing(0, 2); \n    \n\n}\n"
+           },
+           "text" : "Add",
+           "xtype" : "Button",
+           "cls" : "x-btn-text-icon",
+           "$ icon" : "Roo.rootURL + 'images/default/dd/drop-add.gif'",
+           "$ xns" : "Roo.Toolbar"
+          },
+          {
+           "xtype" : "Fill",
+           "$ xns" : "Roo.Toolbar"
+          },
+          {
+           "listeners" : {
+            "|click" : "function()\n{\n     _this.grid.stopEditing();\n     var s = _this.grid.selModel.getSelectedCell();\n     if (!s) {\n        Roo.MessageBox.alert(\"Error\", \"Select row\");\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/core_notify_recur',\n        method : 'POST',\n        params : {\n            _delete : _this.grid.ds.getAt(s[0]).data.id\n        }, \n        success : function() {\n            _this.grid.ds.load({});\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"Deleting failed - try reloading\");\n        }\n   });\n    \n}\n        "
+           },
+           "text" : "Delete",
+           "xtype" : "Button",
+           "cls" : "x-btn-text-icon",
+           "$ icon" : "rootURL + '/Pman/templates/images/trash.gif'",
+           "$ xns" : "Roo.Toolbar"
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "Type",
+         "width" : 120,
+         "$ renderer" : "function(v,x,r) {\n     return String.format('{0}', r.data.method_id_display_name); \n}",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "method_id",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "listWidth" : 400,
+             "triggerAction" : "all",
+             "fieldLabel" : "core_enum",
+             "forceSelection" : true,
+             "selectOnFocus" : true,
+             "pageSize" : 20,
+             "displayField" : "display_name",
+             "emptyText" : "Select Type",
+             "hiddenName" : "method_id",
+             "valueField" : "id",
+             "xtype" : "ComboBox",
+             "allowBlank" : false,
+             "typeAhead" : true,
+             "editable" : false,
+             "width" : 300,
+             "$ xns" : "Roo.form",
+             "* prop" : "field",
+             "name" : "method_id_display_name",
+             "qtip" : "Select core_enum",
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
+             "loadingText" : "Searching...",
+             "items" : [
+              {
+               "listeners" : {
+                "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'core_notify_recur';\n}\n"
+               },
+               "xtype" : "Store",
+               "remoteSort" : true,
+               "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store",
+               "items" : [
                 {
-                    "*prop": "center",
-                    "autoScroll": true,
-                    "loadOnce": true,
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
+                 "$ url" : "baseURL + '/Roo/core_enum.php'",
+                 "method" : "GET",
+                 "xtype" : "HttpProxy",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "proxy"
                 },
                 {
-                    "listeners": {
-                        "|activate": "function() {\n _this.panel = this;\n    if (_this.grid) {\n//        _this.grid.footer.onClick('first');\n    }\n}"
-                    },
-                    "background": false,
-                    "fitContainer": true,
-                    "fitToFrame": true,
-                    "region": "center",
-                    "tableName": "core_notify_recur",
-                    "title": "core_notify_recur",
-                    "xtype": "GridPanel",
-                    "|xns": "Roo",
-                    "items": [
-                        {
-                            "listeners": {
-                                "|render": "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n    //   this.footer.onClick('first');\n    }\n}",
-                                "|rowdblclick": "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n",
-                                "afteredit": "function (e)\n{\n   e.record.commit();\n}"
-                            },
-                            "*prop": "grid",
-                            "autoExpandColumn": "freq_day",
-                            "clicksToEdit": 1,
-                            "loadMask": true,
-                            "xtype": "EditorGrid",
-                            "|xns": "Roo.grid",
-                            "items": [
-                                {
-                                    "listeners": {
-                                        "update": "function (_self, record, operation)\n{\n    //Roo.log(operation);\n    if (operation != 'commit') {\n        return;\n    }\n    var p = Roo.apply({}, record.data);\n    p.dtstart = record.data.dtstart.format('Y-m-d');\n    p.dtend = record.data.dtend.format('Y-m-d');    \n    \n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_notify_recur',\n        method :'POST',\n        params : p,\n        success : function(data)\n        {\n            //Roo.log(data);\n            record.set('id', data.data.id);\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"There was a problem saving\");\n        }\n    });\n       \n    \n    \n}",
-                                        "beforeload": "function (_self, o)\n{\n    if (!_this.data) {\n        return false;\n    }\n    o.params =  Roo.apply(o.params || {}, {\n        person_id : _this.data.person_id,\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method\n    });\n        \n}"
-                                    },
-                                    "*prop": "dataSource",
-                                    "remoteSort": true,
-                                    "xtype": "Store",
-                                    "|sortInfo": "{ field : 'freq', direction: 'ASC' }",
-                                    "|xns": "Roo.data",
-                                    "items": [
-                                        {
-                                            "*prop": "proxy",
-                                            "xtype": "HttpProxy",
-                                            "method": "GET",
-                                            "|url": "baseURL + '/Roo/core_notify_recur.php'",
-                                            "|xns": "Roo.data"
-                                        },
-                                        {
-                                            "*prop": "reader",
-                                            "id": "id",
-                                            "root": "data",
-                                            "totalProperty": "total",
-                                            "xtype": "JsonReader",
-                                            "|fields": "[\n    {\n        'name': 'id',\n        'type': 'int'\n    },\n    {\n        'name': 'person_id',\n        'type': 'int'\n    },\n    {\n        'name': 'dtstart',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'dtend',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'tz',\n        'type': 'float'\n    },\n    {\n        'name': 'last_applied_dt',\n        'type': 'date',\n        'dateFormat': 'Y-m-d'\n    },\n    {\n        'name': 'freq',\n        'type': 'string'\n    },\n    {\n        'name': 'freq_day',\n        'type': 'string'\n    },\n    {\n        'name': 'freq_hour',\n        'type': 'string'\n    },\n    {\n        'name': 'last_event_id',\n        'type': 'int'\n    },\n    {\n        'name': 'method',\n        'type': 'string'\n    }\n]",
-                                            "|xns": "Roo.data"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "toolbar",
-                                    "xtype": "Toolbar",
-                                    "|xns": "Roo",
-                                    "items": [
-                                        {
-                                            "listeners": {
-                                                "|click": "function()\n{\n    var grid = _this.grid;\n    var r = grid.getDataSource().reader.newRow({\n    // defaults..\n        person_id : _this.data.person_id,\n        dtstart : new Date(),\n        dtend : Date.parseDate('2050-01-01', 'Y-m-d'),\n        tz : 'Asia/Hong_Kong',\n        onid : _this.data.onid,\n        ontable : _this.data.ontable,\n        method : _this.data.method, // default...\n        \n        method_id : _this.data.method_id, // default...\n        method_id_display_name : _this.data.method_id_display_name, // default...        \n        \n        last_event_id : 0,\n        freq_day_name : '',\n        freq_hour_name : '',\n        freq_name : ''\n        \n    \n    });\n    grid.stopEditing();\n    grid.getDataSource().insert(0, r); \n    grid.startEditing(0, 2); \n    \n\n}\n"
-                                            },
-                                            "cls": "x-btn-text-icon",
-                                            "text": "Add",
-                                            "xtype": "Button",
-                                            "|icon": "Roo.rootURL + 'images/default/dd/drop-add.gif'",
-                                            "|xns": "Roo.Toolbar"
-                                        },
-                                        {
-                                            "|xns": "Roo.Toolbar",
-                                            "xtype": "Fill"
-                                        },
-                                        {
-                                            "listeners": {
-                                                "|click": "function()\n{\n     _this.grid.stopEditing();\n     var s = _this.grid.selModel.getSelectedCell();\n     if (!s) {\n        Roo.MessageBox.alert(\"Error\", \"Select row\");\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/core_notify_recur',\n        method : 'POST',\n        params : {\n            _delete : _this.grid.ds.getAt(s[0]).data.id\n        }, \n        success : function() {\n            _this.grid.ds.load({});\n        },\n        failure : function() {\n            Roo.MessageBox.alert(\"Error\", \"Deleting failed - try reloading\");\n        }\n   });\n    \n}\n        "
-                                            },
-                                            "cls": "x-btn-text-icon",
-                                            "text": "Delete",
-                                            "xtype": "Button",
-                                            "|icon": "rootURL + '/Pman/templates/images/trash.gif'",
-                                            "|xns": "Roo.Toolbar"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "method_id",
-                                    "header": "Type",
-                                    "width": 120,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) {\n     return String.format('{0}', r.data.method_id_display_name); \n}",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "*prop": "field",
-                                                    "allowBlank": "false",
-                                                    "displayField": "display_name",
-                                                    "editable": false,
-                                                    "emptyText": "Select Type",
-                                                    "fieldLabel": "core_enum",
-                                                    "forceSelection": true,
-                                                    "hiddenName": "method_id",
-                                                    "listWidth": 400,
-                                                    "loadingText": "Searching...",
-                                                    "name": "method_id_display_name",
-                                                    "pageSize": 20,
-                                                    "qtip": "Select core_enum",
-                                                    "selectOnFocus": true,
-                                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
-                                                    "triggerAction": "all",
-                                                    "typeAhead": true,
-                                                    "valueField": "id",
-                                                    "width": 300,
-                                                    "xtype": "ComboBox",
-                                                    "|xns": "Roo.form",
-                                                    "items": [
-                                                        {
-                                                            "listeners": {
-                                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'core_notify_recur';\n}\n"
-                                                            },
-                                                            "*prop": "store",
-                                                            "remoteSort": true,
-                                                            "xtype": "Store",
-                                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                                            "|xns": "Roo.data",
-                                                            "items": [
-                                                                {
-                                                                    "*prop": "proxy",
-                                                                    "xtype": "HttpProxy",
-                                                                    "method": "GET",
-                                                                    "|xns": "Roo.data",
-                                                                    "|url": "baseURL + '/Roo/core_enum.php'"
-                                                                },
-                                                                {
-                                                                    "*prop": "reader",
-                                                                    "xtype": "JsonReader",
-                                                                    "|xns": "Roo.data",
-                                                                    "id": "id",
-                                                                    "root": "data",
-                                                                    "totalProperty": "total",
-                                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "dtstart",
-                                    "header": "From",
-                                    "width": 75,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "|xns": "Roo.form",
-                                                    "xtype": "DateField",
-                                                    "*prop": "field"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "dtend",
-                                    "header": "Until",
-                                    "width": 75,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "|xns": "Roo.form",
-                                                    "xtype": "DateField",
-                                                    "*prop": "field"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "freq_day",
-                                    "header": "on day(s)",
-                                    "width": 100,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) { \n    \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n        r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n    r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_day_name || v); \n    \n}",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "*prop": "field",
-                                                    "allowBlank": false,
-                                                    "displayField": "title",
-                                                    "editable": false,
-                                                    "fieldLabel": "Country",
-                                                    "hiddenName": "freq_day",
-                                                    "listWidth": 300,
-                                                    "mode": "local",
-                                                    "name": "freq_day_name",
-                                                    "pageSize": 40,
-                                                    "triggerAction": "all",
-                                                    "valueField": "code",
-                                                    "xtype": "ComboCheck",
-                                                    "|xns": "Roo.form",
-                                                    "items": [
-                                                        {
-                                                            "*prop": "store",
-                                                            "xtype": "SimpleStore",
-                                                            "|data": "(function() { \n    var ret = [];\n    Roo.each(Date.dayNames, function(d) {\n        ret.push([ d.substring(0,3).toUpperCase(), d ]);\n    });\n    return ret;\n})()",
-                                                            "|fields": "['code', 'title']",
-                                                            "|sortInfo": "{ field : 'title', direction: 'ASC' }",
-                                                            "|xns": "Roo.data"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "freq_hour",
-                                    "header": "at Hour(s)",
-                                    "width": 250,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v,x,r) { \n    \n \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n         r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n        r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "*prop": "field",
-                                                    "allowBlank": false,
-                                                    "displayField": "title",
-                                                    "editable": false,
-                                                    "fieldLabel": "Country",
-                                                    "hiddenName": "freq_hour",
-                                                    "listWidth": 300,
-                                                    "mode": "local",
-                                                    "name": "freq_hour_name",
-                                                    "pageSize": 40,
-                                                    "triggerAction": "all",
-                                                    "valueField": "code",
-                                                    "xtype": "ComboCheck",
-                                                    "|xns": "Roo.form",
-                                                    "items": [
-                                                        {
-                                                            "*prop": "store",
-                                                            "xtype": "SimpleStore",
-                                                            "|data": "(function() { \n    var ret = [];\n    for (var i = 5; i < 25; i++) {\n        var h = i < 10 ? ('0' + i) : i;\n        var mer = i < 12 || i > 23 ? 'am' : 'pm';\n        var dh = i < 13 ? i : i-12;\n        \n        ret.push([ h+':00', dh+':00' + mer ]);\n        ret.push([ h+':30', dh+':30' + mer ]);        \n    }\n    return ret;\n})()",
-                                                            "|fields": "['code', 'title']",
-                                                            "|sortInfo": "{ field : 'title', direction: 'ASC' }",
-                                                            "|xns": "Roo.data"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "tz",
-                                    "header": "Timezone",
-                                    "width": 100,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('{0}', v); }",
-                                    "|xns": "Roo.grid",
-                                    "items": [
-                                        {
-                                            "|xns": "Roo.grid",
-                                            "xtype": "GridEditor",
-                                            "*prop": "editor",
-                                            "items": [
-                                                {
-                                                    "*prop": "field",
-                                                    "allowBlank": "false",
-                                                    "displayField": "tz",
-                                                    "editable": true,
-                                                    "emptyText": "Select timezone",
-                                                    "fieldLabel": "core_enum",
-                                                    "forceSelection": true,
-                                                    "listWidth": 400,
-                                                    "loadingText": "Searching...",
-                                                    "minChars": 2,
-                                                    "name": "tz",
-                                                    "pageSize": 999,
-                                                    "qtip": "Select timezone",
-                                                    "queryParam": "q",
-                                                    "selectOnFocus": true,
-                                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{tz}</b> </div>",
-                                                    "triggerAction": "all",
-                                                    "typeAhead": true,
-                                                    "width": 300,
-                                                    "xtype": "ComboBox",
-                                                    "|xns": "Roo.form",
-                                                    "items": [
-                                                        {
-                                                            "listeners": {
-                                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
-                                                            },
-                                                            "*prop": "store",
-                                                            "remoteSort": true,
-                                                            "xtype": "Store",
-                                                            "|sortInfo": "{ direction : 'ASC', field: 'tz' }",
-                                                            "|xns": "Roo.data",
-                                                            "items": [
-                                                                {
-                                                                    "*prop": "proxy",
-                                                                    "method": "GET",
-                                                                    "xtype": "HttpProxy",
-                                                                    "|url": "baseURL + '/Core/I18n/Timezone.php'\n",
-                                                                    "|xns": "Roo.data"
-                                                                },
-                                                                {
-                                                                    "*prop": "reader",
-                                                                    "id": "id",
-                                                                    "root": "data",
-                                                                    "totalProperty": "total",
-                                                                    "xtype": "JsonReader",
-                                                                    "|fields": "[{\"name\":\"tz\",\"type\":\"string\"}]",
-                                                                    "|xns": "Roo.data"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "last_event_id",
-                                    "header": "Last Sent",
-                                    "width": 75,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('{0}', v ? v : 'never'); }",
-                                    "|xns": "Roo.grid"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "Done",
-                    "xtype": "Button",
-                    "|xns": "Roo"
+                 "id" : "id",
+                 "root" : "data",
+                 "xtype" : "JsonReader",
+                 "$ xns" : "Roo.data",
+                 "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]",
+                 "* prop" : "reader",
+                 "totalProperty" : "total"
                 }
-            ]
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "From",
+         "width" : 75,
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "dtstart",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "xtype" : "DateField",
+             "$ xns" : "Roo.form",
+             "* prop" : "field"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "Until",
+         "width" : 75,
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "dtend",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "xtype" : "DateField",
+             "$ xns" : "Roo.form",
+             "* prop" : "field"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "on day(s)",
+         "width" : 100,
+         "$ renderer" : "function(v,x,r) { \n    \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n        r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n    r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_day_name || v); \n    \n}",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "freq_day",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "listWidth" : 300,
+             "triggerAction" : "all",
+             "fieldLabel" : "Country",
+             "pageSize" : 40,
+             "displayField" : "title",
+             "hiddenName" : "freq_day",
+             "valueField" : "code",
+             "xtype" : "ComboCheck",
+             "allowBlank" : false,
+             "editable" : false,
+             "$ xns" : "Roo.form",
+             "* prop" : "field",
+             "mode" : "local",
+             "name" : "freq_day_name",
+             "items" : [
+              {
+               "| data" : "(function() { \n    var ret = [];\n    Roo.each(Date.dayNames, function(d) {\n        ret.push([ d.substring(0,3).toUpperCase(), d ]);\n    });\n    return ret;\n})()",
+               "xtype" : "SimpleStore",
+               "$ fields" : "['code', 'title']",
+               "$ sortInfo" : "{ field : 'title', direction: 'ASC' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "at Hour(s)",
+         "width" : 250,
+         "$ renderer" : "function(v,x,r) { \n    \n \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n         r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n        r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "freq_hour",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "listWidth" : 300,
+             "triggerAction" : "all",
+             "fieldLabel" : "Country",
+             "pageSize" : 40,
+             "displayField" : "title",
+             "hiddenName" : "freq_hour",
+             "valueField" : "code",
+             "xtype" : "ComboCheck",
+             "allowBlank" : false,
+             "editable" : false,
+             "$ xns" : "Roo.form",
+             "* prop" : "field",
+             "mode" : "local",
+             "name" : "freq_hour_name",
+             "items" : [
+              {
+               "| data" : "(function() { \n    var ret = [];\n    for (var i = 5; i < 25; i++) {\n        var h = i < 10 ? ('0' + i) : i;\n        var mer = i < 12 || i > 23 ? 'am' : 'pm';\n        var dh = i < 13 ? i : i-12;\n        \n        ret.push([ h+':00', dh+':00' + mer ]);\n        ret.push([ h+':30', dh+':30' + mer ]);        \n    }\n    return ret;\n})()",
+               "xtype" : "SimpleStore",
+               "$ fields" : "['code', 'title']",
+               "$ sortInfo" : "{ field : 'title', direction: 'ASC' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "Timezone",
+         "width" : 100,
+         "$ renderer" : "function(v) { return String.format('{0}', v); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "tz",
+         "items" : [
+          {
+           "xtype" : "GridEditor",
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "listWidth" : 400,
+             "triggerAction" : "all",
+             "fieldLabel" : "core_enum",
+             "forceSelection" : true,
+             "selectOnFocus" : true,
+             "pageSize" : 999,
+             "displayField" : "tz",
+             "emptyText" : "Select timezone",
+             "minChars" : 2,
+             "xtype" : "ComboBox",
+             "allowBlank" : false,
+             "typeAhead" : true,
+             "editable" : true,
+             "width" : 300,
+             "$ xns" : "Roo.form",
+             "* prop" : "field",
+             "name" : "tz",
+             "qtip" : "Select timezone",
+             "queryParam" : "q",
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{tz}</b> </div>",
+             "loadingText" : "Searching...",
+             "items" : [
+              {
+               "listeners" : {
+                "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
+               },
+               "xtype" : "Store",
+               "remoteSort" : true,
+               "$ sortInfo" : "{ direction : 'ASC', field: 'tz' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store",
+               "items" : [
+                {
+                 "$ url" : "baseURL + '/Core/I18n/Timezone.php'\n",
+                 "xtype" : "HttpProxy",
+                 "method" : "GET",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "proxy"
+                },
+                {
+                 "id" : "id",
+                 "root" : "data",
+                 "xtype" : "JsonReader",
+                 "$ fields" : "[{\"name\":\"tz\",\"type\":\"string\"}]",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "reader",
+                 "totalProperty" : "total"
+                }
+               ]
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "Last Sent",
+         "width" : 75,
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v : 'never'); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "last_event_id"
         }
-    ],
-    "permname": "",
-    "modOrder": "001"
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Done",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
 }
