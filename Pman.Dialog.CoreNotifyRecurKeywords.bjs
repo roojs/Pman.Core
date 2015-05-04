@@ -138,7 +138,7 @@
            "items" : [
             {
              "listeners" : {
-              "beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    var s = _this.form.findField('campaign_id').getValue() * 1;\n    \n    if(s < 1){\n        return false;\n    }\n    \n    o.params.is_active  = 1;\n    o.params.is_keyword = 1;\n    o.params.project_id = s;\n}\n"
+              "beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    var s = _this.form.findField('campaign_id').getValue() * 1;\n    \n    if(isNaN(s) || s < 1){\n        return false;\n    }\n    \n    o.params.is_active  = 1;\n    o.params.is_keyword = 1;\n    o.params.project_id = s;\n}\n"
              },
              "xtype" : "Store",
              "remoteSort" : true,

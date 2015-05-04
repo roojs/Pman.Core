@@ -239,7 +239,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
                   
                   var s = _this.form.findField('campaign_id').getValue() * 1;
                   
-                  if(s < 1){
+                  if(isNaN(s) || s < 1){
                       return false;
                   }
                   
