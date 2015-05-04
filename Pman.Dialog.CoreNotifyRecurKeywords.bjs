@@ -66,6 +66,7 @@
          "forceSelection" : true,
          "selectOnFocus" : true,
          "pageSize" : 20,
+         "Number width" : 200,
          "displayField" : "name",
          "emptyText" : "Select Campaign",
          "hiddenName" : "campaign_id",

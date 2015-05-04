@@ -208,6 +208,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           triggerAction : 'all',
           typeAhead : false,
           valueField : 'id',
+          width : 200,
           xns : Roo.form,
           xtype : 'ComboBox',
           items : [
