@@ -6,7 +6,7 @@
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
-  "6c768695a8efb18436d5b7b4374cdb45" : "Select core_enum",
+  "0ee0f676f631ad4e8a5844314a3a20de" : "Select campaign",
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
@@ -78,7 +78,7 @@
          "width" : 217,
          "$ xns" : "Roo.form",
          "name" : "camapign_id_name",
-         "qtip" : "Select core_enum",
+         "qtip" : "Select campaign",
          "queryParam" : "search[display_name]",
          "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
          "loadingText" : "Searching...",

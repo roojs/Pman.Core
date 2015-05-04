@@ -7,7 +7,7 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreNotifyRecurKeywords = {
 
  _strings : {
-  '6c768695a8efb18436d5b7b4374cdb45' :"Select core_enum",
+  '0ee0f676f631ad4e8a5844314a3a20de' :"Select campaign",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
@@ -201,7 +201,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           minChars : 2,
           name : 'camapign_id_name',
           pageSize : 20,
-          qtip : _this._strings['6c768695a8efb18436d5b7b4374cdb45'],
+          qtip : _this._strings['0ee0f676f631ad4e8a5844314a3a20de'],
           queryParam : 'search[display_name]',
           selectOnFocus : true,
           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>',
