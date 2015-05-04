@@ -54,11 +54,6 @@
        "$ xns" : "Roo.form",
        "items" : [
         {
-         "xtype" : "Hidden",
-         "$ xns" : "Roo.form",
-         "name" : "id"
-        },
-        {
          "alwaysQuery" : true,
          "listWidth" : 400,
          "triggerAction" : "all",
@@ -112,6 +107,11 @@
            ]
           }
          ]
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "id"
         }
        ]
       }

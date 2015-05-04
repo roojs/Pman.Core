@@ -147,12 +147,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
         },
         items : [
          {
-          '|xns' : 'Roo.form',
-          name : 'id',
-          xns : Roo.form,
-          xtype : 'Hidden'
-         },
-         {
           store : {
            proxy : {
             '|xns' : 'Roo.data',
@@ -214,6 +208,12 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
 
           ]
 
+         },
+         {
+          '|xns' : 'Roo.form',
+          name : 'id',
+          xns : Roo.form,
+          xtype : 'Hidden'
          }
         ]
 
