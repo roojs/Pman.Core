@@ -275,7 +275,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
 
           },
           '|xns' : 'Roo.form',
-          fieldLabel : 'Company Types',
+          fieldLabel : 'Keywords',
           hiddenName : 'filter_company_type',
           name : 'filter_company_type_name',
           width : 210,

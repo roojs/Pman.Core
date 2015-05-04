@@ -109,7 +109,7 @@
          ]
         },
         {
-         "fieldLabel" : "Company Types",
+         "fieldLabel" : "Keywords",
          "hiddenName" : "filter_company_type",
          "xtype" : "ComboBoxArray",
          "width" : 210,
