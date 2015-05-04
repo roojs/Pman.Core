@@ -256,7 +256,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
            '|xns' : 'Roo.form',
            allowBlank : true,
            alwaysQuery : true,
-           displayField : 'display_name',
+           displayField : 'keyword',
            editable : true,
            fieldLabel : 'company',
            forceSelection : true,
