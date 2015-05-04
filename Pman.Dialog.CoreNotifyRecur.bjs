@@ -59,7 +59,7 @@
      "items" : [
       {
        "listeners" : {
-        "cellclick" : "function (_self, rowIndex, columnIndex, e)\n{\n    var di = this.colModel.getDataIndex(columnIndex);\n    if (di != 'keyword_filters') {\n        return;\n    }\n    \n    var d = this.ds.getAt(rowIndex);\n    \n    Roo.log(d);\n    \n    return;\n    \n    Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){\n        Roo.log(res);\n    });\n    \n}",
+        "cellclick" : "function (_self, rowIndex, columnIndex, e)\n{\n    var di = this.colModel.getDataIndex(columnIndex);\n    if (di != 'keyword_filters') {\n        return;\n    }\n    \n    var d = this.ds.getAt(rowIndex);\n    \n    if(!d || d.data.id * 1 < 1){\n        return;\n    }\n    \n    Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){\n        Roo.log(res);\n    });\n    \n}",
         "|render" : "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n    //   this.footer.onClick('first');\n    }\n}",
         "afteredit" : "function (e)\n{\n   e.record.commit();\n}"
        },

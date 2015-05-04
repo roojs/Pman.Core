@@ -727,9 +727,9 @@ Pman.Dialog.CoreNotifyRecur = {
              
              var d = this.ds.getAt(rowIndex);
              
-             Roo.log(d);
-             
-             return;
+             if(!d || d.data.id * 1 < 1){
+                 return;
+             }
              
              Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){
                  Roo.log(res);
