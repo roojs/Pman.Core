@@ -76,17 +76,8 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
        xtype : 'Button',
        listeners : {
         click : function() {
-             /*
-             var name =     _this.form.findField('name').getValue();
-             name = name.toUpperCase().replace(/[^A-Z]+/g, '');
-             if (!name.length) {
-                 Roo.MessageBox.alert("Error","Please fill in a valid name");
-                 return;
-             }
-             _this.form.findField('name').setValue(name);
-          
+             
              _this.form.doAction('submit');
-             */
              
          }
        }
