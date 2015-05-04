@@ -216,7 +216,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     {
         $ret = $this->toArray();
         
-        print_R($ret);exit;
+        if(!empty($ret['keyword_filters'])){
+            $keywords = array_unique(array_filter(explode(',', $ret['keyword_filters'])));
+        }
+        
        
         return $ret;
     }
