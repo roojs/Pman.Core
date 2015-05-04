@@ -85,7 +85,7 @@
          "items" : [
           {
            "listeners" : {
-            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'crm_industry';\n    o.params.active  = 1;\n}\n"
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n}\n"
            },
            "xtype" : "Store",
            "remoteSort" : true,

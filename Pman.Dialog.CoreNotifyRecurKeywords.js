@@ -177,9 +177,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
            listeners : {
             beforeload : function (_self, o){
                  o.params = o.params || {};
-                 // set more here
-                 o.params.etype = 'crm_industry';
-                 o.params.active  = 1;
+                 
              }
            },
            items : [
