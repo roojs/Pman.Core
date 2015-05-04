@@ -9,9 +9,9 @@
   "6c768695a8efb18436d5b7b4374cdb45" : "Select core_enum",
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
-  "8145869e6b6583cbdf33dd8d10cec023" : "Select Industry",
   "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
-  "790f855c2139f2faecb810519e90b833" : "Add Notification Keywords"
+  "790f855c2139f2faecb810519e90b833" : "Add Notification Keywords",
+  "ded4cba1b04eb8236e24a3e39470d8a7" : "Select Campaign"
  },
  "items" : [
   {
@@ -62,12 +62,12 @@
          "alwaysQuery" : true,
          "listWidth" : 400,
          "triggerAction" : "all",
-         "fieldLabel" : "Industry",
+         "fieldLabel" : "Campaign",
          "forceSelection" : true,
          "selectOnFocus" : true,
          "pageSize" : 20,
-         "displayField" : "display_name",
-         "emptyText" : "Select Industry",
+         "displayField" : "name",
+         "emptyText" : "Select Campaign",
          "hiddenName" : "crm_industry_id",
          "minChars" : 2,
          "valueField" : "id",

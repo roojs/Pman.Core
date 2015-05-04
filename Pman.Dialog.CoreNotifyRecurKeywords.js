@@ -10,9 +10,9 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
   '6c768695a8efb18436d5b7b4374cdb45' :"Select core_enum",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '8145869e6b6583cbdf33dd8d10cec023' :"Select Industry",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
-  '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords"
+  '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords",
+  'ded4cba1b04eb8236e24a3e39470d8a7' :"Select Campaign"
  },
 
  dialog : false,
@@ -190,10 +190,10 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           '|xns' : 'Roo.form',
           allowBlank : false,
           alwaysQuery : true,
-          displayField : 'display_name',
+          displayField : 'name',
           editable : true,
-          emptyText : _this._strings['8145869e6b6583cbdf33dd8d10cec023'],
-          fieldLabel : 'Industry',
+          emptyText : _this._strings['ded4cba1b04eb8236e24a3e39470d8a7'],
+          fieldLabel : 'Campaign',
           forceSelection : true,
           hiddenName : 'crm_industry_id',
           listWidth : 400,
