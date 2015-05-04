@@ -701,10 +701,8 @@ Pman.Dialog.CoreNotifyRecur = {
           width : 75,
           xns : Roo.grid,
           xtype : 'ColumnModel'
-         }
-       ],
-       cm : [
-         {
+         },
+{
           '|xns' : 'Roo.grid',
           dataIndex : 'last_event_id',
           header : _this._strings['b26686c0a708faee42861d8b905e882e'],
