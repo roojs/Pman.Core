@@ -708,7 +708,7 @@ Pman.Dialog.CoreNotifyRecur = {
           dataIndex : 'keyword_filters',
           header : _this._strings['867343577fa1f33caa632a19543bd252'],
           renderer : function(v) { 
-              return String.format('{0}', v ? v : ''); 
+              return String.format('{0}', v ? r.data.keywords : ''); 
           },
           width : 75,
           xns : Roo.grid,
