@@ -132,7 +132,7 @@
            "width" : 200,
            "$ xns" : "Roo.form",
            "* prop" : "combo",
-           "queryParam" : "search[keyword]",
+           "queryParam" : "query[keyword]",
            "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{keyword}</b> </div>",
            "items" : [
             {
