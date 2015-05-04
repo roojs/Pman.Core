@@ -156,7 +156,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
            proxy : {
             '|xns' : 'Roo.data',
             method : 'GET',
-            url : baseURL + '/Roo/core_enum.php',
+            url : baseURL + '/Roo/Projects.php',
             xns : Roo.data,
             xtype : 'HttpProxy'
            },
