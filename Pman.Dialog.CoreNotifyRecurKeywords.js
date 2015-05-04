@@ -263,7 +263,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
            idField : 'id',
            listWidth : 200,
            minChars : 2,
-           nameField : 'display_name',
            queryParam : 'search[display_name]',
            tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{keyword}</b> </div>',
            triggerAction : 'all',
