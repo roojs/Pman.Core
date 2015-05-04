@@ -110,11 +110,11 @@
         },
         {
          "fieldLabel" : "Keywords",
-         "hiddenName" : "filter_company_type",
+         "hiddenName" : "keyword_filters",
          "xtype" : "ComboBoxArray",
          "width" : 210,
          "$ xns" : "Roo.form",
-         "name" : "filter_company_type_name",
+         "name" : "keyword_filters_name",
          "items" : [
           {
            "alwaysQuery" : true,
