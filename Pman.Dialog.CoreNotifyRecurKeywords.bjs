@@ -89,7 +89,7 @@
            },
            "xtype" : "Store",
            "remoteSort" : true,
-           "$ sortInfo" : "{ direction : 'ASC', field: 'display_name' }",
+           "$ sortInfo" : "{ direction : 'DESC', field: 'pressrelease_id' }",
            "$ xns" : "Roo.data",
            "* prop" : "store",
            "items" : [
