@@ -6,7 +6,10 @@
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
+  "6c768695a8efb18436d5b7b4374cdb45" : "Select core_enum",
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "8145869e6b6583cbdf33dd8d10cec023" : "Select Industry",
   "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
   "790f855c2139f2faecb810519e90b833" : "Add Notification Keywords"
  },
@@ -54,6 +57,64 @@
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
          "name" : "id"
+        },
+        {
+         "listeners" : {
+          "add" : "function (combo)\n{\n    Pman.Dialog.CrmIndustry.show({ id: 0 }, function(data) { \n    \n       \n        _this.form.setValues({\n            crm_industry_id: data.id,\n            crm_industry_id_display_name : data.display_name\n        });\n    });\n}"
+         },
+         "alwaysQuery" : true,
+         "listWidth" : 400,
+         "triggerAction" : "all",
+         "fieldLabel" : "Industry",
+         "forceSelection" : true,
+         "selectOnFocus" : true,
+         "pageSize" : 20,
+         "displayField" : "display_name",
+         "emptyText" : "Select Industry",
+         "hiddenName" : "crm_industry_id",
+         "minChars" : 2,
+         "valueField" : "id",
+         "xtype" : "ComboBox",
+         "allowBlank" : false,
+         "typeAhead" : false,
+         "editable" : true,
+         "width" : 217,
+         "$ xns" : "Roo.form",
+         "name" : "crm_industry_id_display_name",
+         "qtip" : "Select core_enum",
+         "queryParam" : "search[display_name]",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
+         "loadingText" : "Searching...",
+         "items" : [
+          {
+           "listeners" : {
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    o.params.etype = 'crm_industry';\n    o.params.active  = 1;\n}\n"
+           },
+           "xtype" : "Store",
+           "remoteSort" : true,
+           "$ sortInfo" : "{ direction : 'ASC', field: 'display_name' }",
+           "$ xns" : "Roo.data",
+           "* prop" : "store",
+           "items" : [
+            {
+             "$ url" : "baseURL + '/Roo/core_enum.php'",
+             "method" : "GET",
+             "xtype" : "HttpProxy",
+             "$ xns" : "Roo.data",
+             "* prop" : "proxy"
+            },
+            {
+             "id" : "id",
+             "root" : "data",
+             "xtype" : "JsonReader",
+             "$ xns" : "Roo.data",
+             "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"etype\",\"type\":\"string\"}]",
+             "* prop" : "reader",
+             "totalProperty" : "total"
+            }
+           ]
+          }
+         ]
         }
        ]
       }

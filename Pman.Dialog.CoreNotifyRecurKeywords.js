@@ -7,7 +7,10 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreNotifyRecurKeywords = {
 
  _strings : {
+  '6c768695a8efb18436d5b7b4374cdb45' :"Select core_enum",
+  '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
+  '8145869e6b6583cbdf33dd8d10cec023' :"Select Industry",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
   '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords"
  },
@@ -147,6 +150,84 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           name : 'id',
           xns : Roo.form,
           xtype : 'Hidden'
+         },
+         {
+          store : {
+           proxy : {
+            '|xns' : 'Roo.data',
+            method : 'GET',
+            url : baseURL + '/Roo/core_enum.php',
+            xns : Roo.data,
+            xtype : 'HttpProxy'
+           },
+           reader : {
+            '|xns' : 'Roo.data',
+            fields : [{"name":"id","type":"int"},{"name":"etype","type":"string"}],
+            id : 'id',
+            root : 'data',
+            totalProperty : 'total',
+            xns : Roo.data,
+            xtype : 'JsonReader'
+           },
+           '|xns' : 'Roo.data',
+           remoteSort : true,
+           sortInfo : { direction : 'ASC', field: 'display_name' },
+           xns : Roo.data,
+           xtype : 'Store',
+           listeners : {
+            beforeload : function (_self, o){
+                 o.params = o.params || {};
+                 // set more here
+                 o.params.etype = 'crm_industry';
+                 o.params.active  = 1;
+             }
+           },
+           items : [
+
+           ]
+
+          },
+          '|xns' : 'Roo.form',
+          allowBlank : false,
+          alwaysQuery : true,
+          displayField : 'display_name',
+          editable : true,
+          emptyText : _this._strings['8145869e6b6583cbdf33dd8d10cec023'],
+          fieldLabel : 'Industry',
+          forceSelection : true,
+          hiddenName : 'crm_industry_id',
+          listWidth : 400,
+          loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'],
+          minChars : 2,
+          name : 'crm_industry_id_display_name',
+          pageSize : 20,
+          qtip : _this._strings['6c768695a8efb18436d5b7b4374cdb45'],
+          queryParam : 'search[display_name]',
+          selectOnFocus : true,
+          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>',
+          triggerAction : 'all',
+          typeAhead : false,
+          valueField : 'id',
+          width : 217,
+          xns : Roo.form,
+          xtype : 'ComboBox',
+          listeners : {
+           add : function (combo)
+            {
+                Pman.Dialog.CrmIndustry.show({ id: 0 }, function(data) { 
+                
+                   
+                    _this.form.setValues({
+                        crm_industry_id: data.id,
+                        crm_industry_id_display_name : data.display_name
+                    });
+                });
+            }
+          },
+          items : [
+
+          ]
+
          }
         ]
 
