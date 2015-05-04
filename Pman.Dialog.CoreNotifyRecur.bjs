@@ -294,7 +294,7 @@
         {
          "xtype" : "ColumnModel",
          "header" : "at Hour(s)",
-         "width" : 250,
+         "width" : 100,
          "$ renderer" : "function(v,x,r) { \n    \n \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n         r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n        r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",

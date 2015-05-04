@@ -604,7 +604,7 @@ Pman.Dialog.CoreNotifyRecur = {
               return String.format('{0}', r.data.freq_hour_name || v); 
               
           },
-          width : 250,
+          width : 100,
           xns : Roo.grid,
           xtype : 'ColumnModel',
           items : [
