@@ -76,7 +76,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
        xtype : 'Button',
        listeners : {
         click : function() {
-         
+             /*
              var name =     _this.form.findField('name').getValue();
              name = name.toUpperCase().replace(/[^A-Z]+/g, '');
              if (!name.length) {
@@ -86,6 +86,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
              _this.form.findField('name').setValue(name);
           
              _this.form.doAction('submit');
+             */
              
          }
        }
