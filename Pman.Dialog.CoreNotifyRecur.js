@@ -725,6 +725,12 @@ Pman.Dialog.CoreNotifyRecur = {
                  return;
              }
              
+             var d = this.ds.getAt(rowIndex);
+             
+             Roo.log(d);
+             
+             return;
+             
              Pman.Dialog.CoreNotifyRecurKeywords.show({}, function(res){
                  Roo.log(res);
              });
