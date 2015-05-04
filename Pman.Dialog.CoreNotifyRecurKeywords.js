@@ -236,9 +236,16 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
             listeners : {
              beforeload : function (_self, o){
                   o.params = o.params || {};
-                  // set more here
-                  o.params.etype = 'COMPTYPE';
-                  o.params.active  = 1;
+                  
+                  var s = _this.form.findField('campaign_id').getValue() * 1;
+                  
+                  if(s < 1){
+                      return false;
+                  }
+                  
+                  o.params.is_active  = 1;
+                  o.params.is_keyword = 1;
+                  o.params.project_id = s;
               }
             },
             items : [
