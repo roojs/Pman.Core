@@ -124,6 +124,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
                   _this.data = action.result.data;
                   
                   if(typeof(_this.data.keywords) != 'undefined'){
+                      var n = Roo.decode(_this.data.keywords);
                       _this.form.findField('keyword_filters').setValue(n);
                   }
                   
