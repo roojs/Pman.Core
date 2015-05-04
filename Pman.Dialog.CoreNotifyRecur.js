@@ -718,6 +718,10 @@ Pman.Dialog.CoreNotifyRecur = {
          {
             e.record.commit();
          },
+        cellclick : function (_self, rowIndex, columnIndex, e)
+         {
+             
+         },
         render : function() 
          {
              _this.grid = this; 
