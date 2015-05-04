@@ -14,6 +14,7 @@ Pman.Dialog.CoreNotifyRecur = {
   '157e432ec303efd7d537b653cb255ccc' :"on day(s)",
   '236df51bb0e6416236e255b528346fca' :"Timezone",
   '44c68bed631ff6e62aecc4a4d32176e6' :"Select timezone",
+  '867343577fa1f33caa632a19543bd252' :"Keywords",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'b26686c0a708faee42861d8b905e882e' :"Last Sent",
   'c1d32776cd2d2afcd2c45a52f58679f4' :"Modify Recurrent Notifications",
@@ -705,8 +706,8 @@ Pman.Dialog.CoreNotifyRecur = {
 {
           '|xns' : 'Roo.grid',
           dataIndex : 'last_event_id',
-          header : _this._strings['b26686c0a708faee42861d8b905e882e'],
-          renderer : function(v) { return String.format('{0}', v ? v : 'never'); },
+          header : _this._strings['867343577fa1f33caa632a19543bd252'],
+          renderer : function(v) { return String.format('{0}', v ? v : ''); },
           width : 75,
           xns : Roo.grid,
           xtype : 'ColumnModel'
