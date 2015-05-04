@@ -232,8 +232,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             }
         }
         
-        print_R($ret);exit;
-       
         return $ret;
     }
 }
