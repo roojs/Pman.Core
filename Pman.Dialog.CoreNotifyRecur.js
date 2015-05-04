@@ -60,7 +60,7 @@ Pman.Dialog.CoreNotifyRecur = {
     '|xns' : 'Roo',
     height : 550,
     modal : true,
-    resizable : false,
+    resizable : true,
     title : _this._strings['c1d32776cd2d2afcd2c45a52f58679f4'],
     width : 800,
     xns : Roo,

@@ -34,7 +34,7 @@
    "xtype" : "LayoutDialog",
    "width" : 800,
    "$ xns" : "Roo",
-   "resizable" : false,
+   "resizable" : true,
    "height" : 550,
    "items" : [
     {
