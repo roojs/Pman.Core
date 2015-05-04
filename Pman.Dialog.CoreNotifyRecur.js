@@ -705,7 +705,7 @@ Pman.Dialog.CoreNotifyRecur = {
          },
 {
           '|xns' : 'Roo.grid',
-          dataIndex : 'last_event_id',
+          dataIndex : 'keyword_filters',
           header : _this._strings['867343577fa1f33caa632a19543bd252'],
           renderer : function(v) { return String.format('{0}', v ? v : ''); },
           width : 75,
@@ -720,6 +720,11 @@ Pman.Dialog.CoreNotifyRecur = {
          },
         cellclick : function (_self, rowIndex, columnIndex, e)
          {
+             var di = this.colModel.getDataIndex(columnIndex);
+             if (di != 'keyword_filters') {
+                 return;
+             }
+             
              
          },
         render : function() 
