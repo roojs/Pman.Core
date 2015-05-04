@@ -119,8 +119,16 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
               }
               if (action.type == 'load') {
                   
-              
                   _this.dialog.el.unmask();
+                  
+                  _this.data = action.result.data;
+                  
+                  if(typeof(_this.data.keywords) != 'undefined'){
+                      
+                      var n = Roo.decode(_this.data.keywords);
+                      _this.form.findField(c.join('_')).setValue(n);
+                  }
+                  
                   return;
               }
               if (action.type == 'submit' ) {
