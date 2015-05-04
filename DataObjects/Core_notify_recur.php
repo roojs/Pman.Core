@@ -86,7 +86,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
         }
-        
         $ret = array();
         $hours = empty($this->freq_hour) ? array() : array_unique(json_decode($this->freq_hour));
         $days = empty($this->freq_day) ? array() : json_decode($this->freq_day);
@@ -106,12 +105,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         for (  $i =0; $i < $advance +1; $i++) {
             $ut = strtotime("NOW + $i DAYS");
             $day = strtoupper(date("D", $ut));
-            
             if (in_array($day, $days)) {
                 $usedays[] = date("Y-m-d", $ut);
             }
         }
-        print_R($usedays);exit; 
+                
         //print_r($this);
         
         
