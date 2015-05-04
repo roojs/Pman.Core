@@ -419,7 +419,7 @@
          "xtype" : "ColumnModel",
          "header" : "Keywords",
          "width" : 75,
-         "$ renderer" : "function(v) { return String.format('{0}', v ? v : ''); }",
+         "$ renderer" : "function(v) { \n    return String.format('{0}', v ? v : ''); \n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
          "dataIndex" : "keyword_filters"
