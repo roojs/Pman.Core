@@ -266,6 +266,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
 
           },
           '|xns' : 'Roo.form',
+          allowBlank : false,
           fieldLabel : 'Keywords',
           hiddenName : 'keyword_filters',
           name : 'keyword_filters_name',

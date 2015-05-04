@@ -109,6 +109,7 @@
          ]
         },
         {
+         "Boolean allowBlank" : false,
          "fieldLabel" : "Keywords",
          "hiddenName" : "keyword_filters",
          "xtype" : "ComboBoxArray",
