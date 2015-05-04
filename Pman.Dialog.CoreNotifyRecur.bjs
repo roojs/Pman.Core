@@ -59,7 +59,6 @@
      "items" : [
       {
        "listeners" : {
-        "|rowdblclick" : "function (_self, rowIndex, e)\n{\n    if (!_this.dialog) return;\n    _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {\n        _this.grid.footer.onClick('first');\n    }); \n}\n",
         "|render" : "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n    //   this.footer.onClick('first');\n    }\n}",
         "afteredit" : "function (e)\n{\n   e.record.commit();\n}"
        },

@@ -725,13 +725,6 @@ Pman.Dialog.CoreNotifyRecur = {
              if (_this.panel.active) {
              //   this.footer.onClick('first');
              }
-         },
-        rowdblclick : function (_self, rowIndex, e)
-         {
-             if (!_this.dialog) return;
-             _this.dialog.show( this.getDataSource().getAt(rowIndex).data, function() {
-                 _this.grid.footer.onClick('first');
-             }); 
          }
        },
        items : [
