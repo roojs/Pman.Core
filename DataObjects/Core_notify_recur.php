@@ -218,6 +218,18 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         if(!empty($ret['keyword_filters'])){
             $keywords = array_unique(array_filter(explode(',', $ret['keyword_filters'])));
+            
+            $clipping_keywords = DB_DataObject::factory('clipping_keywords');
+            $clipping_keywords->whereAddIn('id', $keywords, 'int');
+            
+            $ret['keywords'] = array();
+            
+            foreach ($clipping_keywords->fetchAll('id', 'keyword') as $k => $v){
+                $ret['keywords'][] = array(
+                    'id' => $k,
+                    'keyword' => $v
+                );
+            }
         }
         
        
