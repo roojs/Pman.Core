@@ -109,7 +109,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
         '|xns' : 'Roo.form',
         method : 'POST',
         style : 'margin: 5px',
-        url : baseURL + '/Roo/core_enum.php',
+        url : baseURL + '/Roo/Core_notify_recur.php',
         xns : Roo.form,
         xtype : 'Form',
         listeners : {
@@ -139,17 +139,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           }
         },
         items : [
-         {
-          '|xns' : 'Roo.form',
-          actionMode : 'fieldEl',
-          allowBlank : false,
-          fieldLabel : 'Name',
-          hidden : true,
-          name : 'name',
-          width : 200,
-          xns : Roo.form,
-          xtype : 'TextField'
-         },
          {
           '|xns' : 'Roo.form',
           allowBlank : false,

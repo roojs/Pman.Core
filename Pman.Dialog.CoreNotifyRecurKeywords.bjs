@@ -46,22 +46,12 @@
         "|actioncomplete" : "function (_self, action)\n{\n  if (action.type == 'setdata') {\n\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type == 'submit' ) {\n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n\n        if (_this.callback) {\n           _this.callback.call(_this, action.result.data);\n        }\n        _this.form.reset();\n    }\n}\n",
         "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
-       "$ url" : "baseURL + '/Roo/core_enum.php'",
+       "$ url" : "baseURL + '/Roo/Core_notify_recur.php'",
        "xtype" : "Form",
        "method" : "POST",
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
-        {
-         "fieldLabel" : "Name",
-         "hidden" : true,
-         "xtype" : "TextField",
-         "allowBlank" : false,
-         "actionMode" : "fieldEl",
-         "width" : 200,
-         "$ xns" : "Roo.form",
-         "name" : "name"
-        },
         {
          "listeners" : {
           "keyup" : "function (_self, e)\n{\n    _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());\n    \n}"
