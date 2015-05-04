@@ -259,16 +259,15 @@ Pman.Login =  new Roo.util.Observable({
                 Roo.MessageBox.alert("Error", "Fill in your email address");
                 return;
             }
-            Roo.Ajax.request({
+            new Pman.Request({
                 url: baseURL + '/Login.js',
                 mask : "Sending Password Reset email",
                 params: {
                     passwordRequest: n
                 },
                 method: 'POST',  
-                success:  function(response, opts)  {  // check successfull...
+                success:  function(res)  {  // check successfull...
                 
-                    var res = Pman.processResponse(response);
                     if (!res.success) { // error!
                        Roo.MessageBox.alert("Error" , res.errorMsg ? res.errorMsg  : "Problem Requesting Password Reset");
                        return;
