@@ -731,7 +731,7 @@ Pman.Dialog.CoreNotifyRecur = {
              
              return;
              
-             Pman.Dialog.CoreNotifyRecurKeywords.show({}, function(res){
+             Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){
                  Roo.log(res);
              });
              
