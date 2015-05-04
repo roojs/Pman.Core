@@ -203,7 +203,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           qtip : _this._strings['0ee0f676f631ad4e8a5844314a3a20de'],
           queryParam : 'search[name]',
           selectOnFocus : true,
-          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>#{pressrelease_id} - {name}</b></div>',
+          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>',
           triggerAction : 'all',
           typeAhead : false,
           valueField : 'id',

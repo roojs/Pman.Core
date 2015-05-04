@@ -80,7 +80,7 @@
          "name" : "camapign_id_name",
          "qtip" : "Select campaign",
          "queryParam" : "search[name]",
-         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>#{pressrelease_id} - {name}</b></div>",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>",
          "loadingText" : "Searching...",
          "items" : [
           {
