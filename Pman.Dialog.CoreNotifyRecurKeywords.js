@@ -191,7 +191,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           listWidth : 400,
           loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'],
           minChars : 2,
-          name : 'camapign_id_name',
+          name : 'campaign_id_name',
           pageSize : 20,
           qtip : _this._strings['0ee0f676f631ad4e8a5844314a3a20de'],
           queryParam : 'query[name]',

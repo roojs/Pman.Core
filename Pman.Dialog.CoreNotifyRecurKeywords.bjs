@@ -72,7 +72,7 @@
          "typeAhead" : false,
          "editable" : true,
          "$ xns" : "Roo.form",
-         "name" : "camapign_id_name",
+         "name" : "campaign_id_name",
          "qtip" : "Select campaign",
          "queryParam" : "query[name]",
          "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>",
