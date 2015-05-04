@@ -82,7 +82,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         // it starts 24 hours ago.. or when dtstart
         
         list($start, $end) = $this->notifytimesRange($advance);
-        print_r($this->notifytimesRange($advance));exit;
+        print_r($start);exit;
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
         }
