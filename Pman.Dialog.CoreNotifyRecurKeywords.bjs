@@ -133,7 +133,7 @@
            "$ xns" : "Roo.form",
            "* prop" : "combo",
            "queryParam" : "search[display_name]",
-           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> </div>",
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{keyword}</b> </div>",
            "nameField" : "display_name",
            "items" : [
             {
