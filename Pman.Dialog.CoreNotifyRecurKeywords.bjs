@@ -27,7 +27,7 @@
    "$ xns" : "Roo",
    "closable" : false,
    "resizable" : false,
-   "height" : 150,
+   "height" : 180,
    "items" : [
     {
      "xtype" : "LayoutRegion",

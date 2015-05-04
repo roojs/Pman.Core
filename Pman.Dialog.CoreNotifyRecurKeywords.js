@@ -49,7 +49,7 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
     background : true,
     closable : false,
     collapsible : false,
-    height : 150,
+    height : 180,
     modal : true,
     resizable : false,
     title : _this._strings['790f855c2139f2faecb810519e90b833'],
