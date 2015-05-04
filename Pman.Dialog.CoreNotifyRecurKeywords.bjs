@@ -119,9 +119,8 @@
           {
            "alwaysQuery" : true,
            "listWidth" : 200,
-           "idField" : "id",
            "triggerAction" : "all",
-           "fieldLabel" : "company",
+           "fieldLabel" : "Keyword",
            "forceSelection" : true,
            "displayField" : "keyword",
            "minChars" : 2,
