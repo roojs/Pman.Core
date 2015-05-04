@@ -293,7 +293,7 @@ Pman.Dialog.CoreNotifyRecur = {
 
        },
        '|xns' : 'Roo.grid',
-       autoExpandColumn : 'freq_day',
+       autoExpandColumn : 'keyword_filters',
        clicksToEdit : 1,
        loadMask : true,
        xns : Roo.grid,
@@ -514,7 +514,7 @@ Pman.Dialog.CoreNotifyRecur = {
               return String.format('{0}', r.data.freq_day_name || v); 
               
           },
-          width : 100,
+          width : 150,
           xns : Roo.grid,
           xtype : 'ColumnModel',
           items : [
