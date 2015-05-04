@@ -7,7 +7,6 @@
  "modOrder" : "001",
  "strings" : {
   "cfcd208495d565ef66e7dff9f98764da" : "0",
-  "c4ca4238a0b923820dcc509a6f75849b" : "1",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
   "790f855c2139f2faecb810519e90b833" : "Add Notification Keywords"
@@ -52,29 +51,6 @@
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
-        {
-         "listeners" : {
-          "keyup" : "function (_self, e)\n{\n    _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());\n    \n}"
-         },
-         "fieldLabel" : "Display Name",
-         "xtype" : "TextField",
-         "allowBlank" : false,
-         "width" : 200,
-         "$ xns" : "Roo.form",
-         "name" : "display_name"
-        },
-        {
-         "String actionMode" : "fieldEl",
-         "Boolean checked" : true,
-         "fieldLabel" : "Active",
-         "inputValue" : 1,
-         "hidden" : true,
-         "value" : 1,
-         "xtype" : "Checkbox",
-         "valueOff" : 0,
-         "$ xns" : "Roo.form",
-         "name" : "active"
-        },
         {
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",

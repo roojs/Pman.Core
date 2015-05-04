@@ -8,7 +8,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
 
  _strings : {
   'cfcd208495d565ef66e7dff9f98764da' :"0",
-  'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
   '790f855c2139f2faecb810519e90b833' :"Add Notification Keywords"
@@ -139,35 +138,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           }
         },
         items : [
-         {
-          '|xns' : 'Roo.form',
-          allowBlank : false,
-          fieldLabel : 'Display Name',
-          name : 'display_name',
-          width : 200,
-          xns : Roo.form,
-          xtype : 'TextField',
-          listeners : {
-           keyup : function (_self, e)
-            {
-                _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());
-                
-            }
-          }
-         },
-         {
-          '|xns' : 'Roo.form',
-          actionMode : 'fieldEl',
-          checked : true,
-          fieldLabel : 'Active',
-          hidden : true,
-          inputValue : 1,
-          name : 'active',
-          value : 1,
-          valueOff : 0,
-          xns : Roo.form,
-          xtype : 'Checkbox'
-         },
          {
           '|xns' : 'Roo.form',
           name : 'etype',
