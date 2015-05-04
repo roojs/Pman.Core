@@ -211,19 +211,6 @@ Pman.Dialog.CoreNotifyRecurKeywords = {
           width : 217,
           xns : Roo.form,
           xtype : 'ComboBox',
-          listeners : {
-           add : function (combo)
-            {
-                Pman.Dialog.CrmIndustry.show({ id: 0 }, function(data) { 
-                
-                   
-                    _this.form.setValues({
-                        crm_industry_id: data.id,
-                        crm_industry_id_display_name : data.display_name
-                    });
-                });
-            }
-          },
           items : [
 
           ]

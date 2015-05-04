@@ -59,9 +59,6 @@
          "name" : "id"
         },
         {
-         "listeners" : {
-          "add" : "function (combo)\n{\n    Pman.Dialog.CrmIndustry.show({ id: 0 }, function(data) { \n    \n       \n        _this.form.setValues({\n            crm_industry_id: data.id,\n            crm_industry_id_display_name : data.display_name\n        });\n    });\n}"
-         },
          "alwaysQuery" : true,
          "listWidth" : 400,
          "triggerAction" : "all",
