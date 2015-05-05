@@ -212,44 +212,4 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
     
-    function toRooSingleArray($authUser, $request)
-    {
-        $ret = $this->toArray();
-        
-        if(!empty($ret['keyword_filters'])){
-            $keywords = array_unique(array_filter(explode(',', $ret['keyword_filters'])));
-            
-            $clipping_keywords = DB_DataObject::factory('clipping_keywords');
-            $clipping_keywords->whereAddIn('id', $keywords, 'int');
-            
-            $li = array();
-            
-            foreach ($clipping_keywords->fetchAll('id', 'keyword') as $k => $v){
-                $li[] = array(
-                    'id' => $k,
-                    'keyword' => $v
-                );
-            }
-            
-            $ret['keywords'] = json_encode($li);
-        }
-        
-        return $ret;
-    }
-    
-    function toRooArray($request)
-    {
-        $ret = $this->toArray();
-        
-        if(!empty($ret['keyword_filters'])){
-            $keywords = array_unique(array_filter(explode(',', $ret['keyword_filters'])));
-            
-            $clipping_keywords = DB_DataObject::factory('clipping_keywords');
-            $clipping_keywords->whereAddIn('id', $keywords, 'int');
-            
-            $ret['keywords'] = implode(',', $clipping_keywords->fetchAll('keyword'));
-        }
-        
-        return $ret;
-    }
 }

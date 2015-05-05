@@ -13,7 +13,6 @@
   "157e432ec303efd7d537b653cb255ccc" : "on day(s)",
   "236df51bb0e6416236e255b528346fca" : "Timezone",
   "44c68bed631ff6e62aecc4a4d32176e6" : "Select timezone",
-  "867343577fa1f33caa632a19543bd252" : "Keywords",
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "b26686c0a708faee42861d8b905e882e" : "Last Sent",
   "c1d32776cd2d2afcd2c45a52f58679f4" : "Modify Recurrent Notifications",
@@ -30,8 +29,8 @@
     "show" : "function (_self)\n{\n    _this.grid.ds.load({});\n}"
    },
    "modal" : true,
-   "title" : "Modify Recurrent Notifications",
    "xtype" : "LayoutDialog",
+   "title" : "Modify Recurrent Notifications",
    "width" : 800,
    "$ xns" : "Roo",
    "resizable" : true,
@@ -48,9 +47,9 @@
      "listeners" : {
       "|activate" : "function() {\n _this.panel = this;\n    if (_this.grid) {\n//        _this.grid.footer.onClick('first');\n    }\n}"
      },
+     "region" : "center",
      "fitToFrame" : true,
      "background" : false,
-     "region" : "center",
      "title" : "core_notify_recur",
      "xtype" : "GridPanel",
      "fitContainer" : true,
@@ -59,11 +58,10 @@
      "items" : [
       {
        "listeners" : {
-        "cellclick" : "function (_self, rowIndex, columnIndex, e)\n{\n    var di = this.colModel.getDataIndex(columnIndex);\n    if (di != 'keyword_filters') {\n        return;\n    }\n    \n    var d = this.ds.getAt(rowIndex);\n    \n    if(!d || d.data.id * 1 < 1){\n        return;\n    }\n    \n    Pman.Dialog.CoreNotifyRecurKeywords.show({id : d.data.id}, function(res){\n        _this.grid.ds.load({});\n    });\n    \n}",
         "|render" : "function() \n{\n    _this.grid = this; \n    //_this.dialog = Pman.Dialog.FILL_IN\n    if (_this.panel.active) {\n    //   this.footer.onClick('first');\n    }\n}",
         "afteredit" : "function (e)\n{\n   e.record.commit();\n}"
        },
-       "autoExpandColumn" : "keyword_filters",
+       "autoExpandColumn" : "freq_day",
        "xtype" : "EditorGrid",
        "loadMask" : true,
        "clicksToEdit" : 1,
@@ -83,8 +81,8 @@
          "items" : [
           {
            "$ url" : "baseURL + '/Roo/core_notify_recur.php'",
-           "method" : "GET",
            "xtype" : "HttpProxy",
+           "method" : "GET",
            "$ xns" : "Roo.data",
            "* prop" : "proxy"
           },
@@ -132,8 +130,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Type",
          "width" : 120,
+         "header" : "Type",
          "$ renderer" : "function(v,x,r) {\n     return String.format('{0}', r.data.method_id_display_name); \n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -179,8 +177,8 @@
                "items" : [
                 {
                  "$ url" : "baseURL + '/Roo/core_enum.php'",
-                 "method" : "GET",
                  "xtype" : "HttpProxy",
+                 "method" : "GET",
                  "$ xns" : "Roo.data",
                  "* prop" : "proxy"
                 },
@@ -203,8 +201,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "From",
          "width" : 75,
+         "header" : "From",
          "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -226,8 +224,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Until",
          "width" : 75,
+         "header" : "Until",
          "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('d/M/Y') : ''); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -249,8 +247,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "on day(s)",
          "width" : 150,
+         "header" : "on day(s)",
          "$ renderer" : "function(v,x,r) { \n    \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n        r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n    r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_day_name || v); \n    \n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -293,8 +291,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "at Hour(s)",
          "width" : 100,
+         "header" : "at Hour(s)",
          "$ renderer" : "function(v,x,r) { \n    \n \n    if (v.length) {\n     \n        var cm = _this.grid.colModel;\n       \n        var ci = cm.getColumnByDataIndex(this.name);\n       \n         var tv = [];\n        var vals = Roo.decode(v);\n        Roo.each(vals, function(k) {\n            var r = this.findRecord(this.valueField, k);\n            if(r){\n                tv.push(r.data[this.displayField]);\n            }else if(this.valueNotFoundText !== undefined){\n                tv.push( this.valueNotFoundText );\n            }\n        },ci.editor.field);\n\n         r.data[this.name + '_name'] = tv.join(', ');\n        return String.format('{0}',tv.join(', '));\n\n        \n    \n    }\n        r.data[this.name + '_name'] = '';\n    return String.format('{0}', r.data.freq_hour_name || v); \n    \n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -337,8 +335,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Timezone",
          "width" : 100,
+         "header" : "Timezone",
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -384,8 +382,8 @@
                "items" : [
                 {
                  "$ url" : "baseURL + '/Core/I18n/Timezone.php'\n",
-                 "xtype" : "HttpProxy",
                  "method" : "GET",
+                 "xtype" : "HttpProxy",
                  "$ xns" : "Roo.data",
                  "* prop" : "proxy"
                 },
@@ -408,21 +406,12 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 75,
          "header" : "Last Sent",
+         "width" : 75,
          "$ renderer" : "function(v) { return String.format('{0}', v ? v : 'never'); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
          "dataIndex" : "last_event_id"
-        },
-        {
-         "xtype" : "ColumnModel",
-         "header" : "Keywords",
-         "width" : 75,
-         "$ renderer" : "function(v,x,r) { \n    return String.format('{0}', v ? r.data.keywords : ''); \n}",
-         "$ xns" : "Roo.grid",
-         "* prop" : "colModel[]",
-         "dataIndex" : "keyword_filters"
         }
        ]
       }
