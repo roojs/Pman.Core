@@ -248,7 +248,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     function beforeUpdate($old, $q,$roo)
     {
         if(!empty($this->is_system) && 
-            ($old->code != $this->code || $old->name != $this->name)
+            ($old->code != $this->code  ) // used to be not allowed to change name..
         ){
             $roo->jerr('This company is not allow to editing Ref. or Company Name...');
         }
