@@ -235,8 +235,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->event  = $event->action;
         $w->active = 1;
         
-        
-        $w->whereAdd('person_id != '. (int) $event->person_id);
+        // not sure why this is here...
+        if ($event->person_id) {
+            $w->whereAdd('person_id != '. (int) $event->person_id);
+        }
  
         $watches = $w->fetchAll();
         
