@@ -217,8 +217,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     
     function notifyEvent($event)
     {
-        print_r($event);
-        DB_DataObject::DebugLevel(1);
+        //print_r($event);
+        //DB_DataObject::DebugLevel(1);
         // see if there are any watches on events..
         // notify everyone flagged except the person doing it...
         // this is very basic logic... -
@@ -235,14 +235,14 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->event  = $event->action;
         $w->active = 1;
         
-        // not sure why this is here...
+        // not sure why this is here... - it breaks on the reader article -> 
         if ($event->person_id) {
             $w->whereAdd('person_id != '. (int) $event->person_id);
         }
  
         $watches = $w->fetchAll();
         
-        print_R($watches); 
+        //print_R($watches); 
         
         $nn = DB_DataObject::Factory('core_notify');
         $nn->ontable    = $event->on_table;
