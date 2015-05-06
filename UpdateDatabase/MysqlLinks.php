@@ -115,17 +115,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         foreach($map as $k=>$v) {
             $fks[] = "$k=$v";
         }
-        
         $fkstr = $tc . ' FK(' . implode("\n", $fks) .')';
-        
-        echo "$fkstr \n $tbl";
-        
-        exit;
         if ($q->TABLE_COMMENT == $fkstr) {
             return;
         }
-        
-        
         
         $q = DB_DAtaObject::factory('core_enum');
         $q->query("ALTER TABLE $tbl COMMENT = '{$q->escape($fkstr)}'");
