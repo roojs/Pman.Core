@@ -49,7 +49,7 @@ Pman.Dialog.Image = {
     height : 140,
     modal : true,
     resizable : false,
-    shadow : TRUE,
+    shadow : true,
     title : _this._strings['2859a4ae58ae4e25abdfc530f814e42f'],
     uploadComplete : false,
     uploadProgress : function()
