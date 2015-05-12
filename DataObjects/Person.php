@@ -53,7 +53,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function owner()
     {
-        $p = DB_DataObject::Factory('Person');
+        $p = DB_DataObject::Factory($this->tableName());
         $p->get($this->owner_id);
         return $p;
     }
@@ -305,7 +305,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 join_user_id_id.id IS NOT NULL
             ");
             if($member->find(true)){
-                $default_admin = DB_DataObject::factory('Person');
+                $default_admin = DB_DataObject::factory($this->tableName());
                 if(!$default_admin->get($member->user_id)){
                     $default_admin = false;
                 }
@@ -313,7 +313,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
         
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
-        $u = DB_DataObject::factory('Person');
+        $u = DB_DataObject::factory($this->tableName());
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['local_autoauth']) && 
             (!empty($_SERVER['SERVER_ADDR'])) &&
@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         }
            
         // http basic auth..
-        $u = DB_DataObject::factory('Person');
+        $u = DB_DataObject::factory($this->tableName());
 
         if (!empty($_SERVER['PHP_AUTH_USER']) 
             &&
@@ -347,7 +347,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         //}
         //die("got this far?");
         // not in session or not matched...
-        $u = DB_DataObject::factory('Person');
+        $u = DB_DataObject::factory($this->tableName());
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
         $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
@@ -402,7 +402,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         
         if (empty(   $_SESSION[get_class($this)][$sesPrefix .'-empty'] )) {
-            $u = DB_DataObject::factory('Person');
+            $u = DB_DataObject::factory($this->tableName());
             $u->whereAdd(' LENGTH(passwd) > 0');
             $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $u->count();
         }
@@ -415,7 +415,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             //$ce->initEnums();
             
             
-            $u = DB_DataObject::factory('Person');
+            $u = DB_DataObject::factory($this->tableName());
             $u->id = -1;
             
             // if a company has been created fill that in in company_id_id
@@ -733,7 +733,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             //$this->whereAdd(($this->tableName() == 'Person' ? 'Person' : "join_person_id_id") .
             //    ".id  != ".$au->id);
-            $this->whereAdd("Person.id != {$au->id}");
+            $this->whereAdd("{$this->tableName()}.id != {$au->id}");
         } 
         
         if (!empty($q['query']['comptype_or_company_id'])) {
@@ -742,7 +742,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $id = (int) array_pop($bits);
             $ct = $this->escape($bits[0]);
             
-            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR Person.company_id = $id");
+            $this->whereAdd(" join_company_id_id.comptype = '$ct' OR {$this->tableName()}.company_id = $id");
             
         }
         
@@ -763,7 +763,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             if ($q['query']['in_group'] == -1) {
              
                 // list all staff who are not in a group.
-                $this->whereAdd("Person.id NOT IN (
+                $this->whereAdd("{$this->tableName()}.id NOT IN (
                     SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
                         $tn_g ON $tn_g.id = $tn_gm.group_id
                         WHERE $tn_g.type = ".$q['query']['type']."
@@ -957,7 +957,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (empty($this->email)) {
             return true;
         }
-        $xx = DB_Dataobject::factory('Person');
+        $xx = DB_Dataobject::factory($this->tableName());
         $xx->setFrom(array(
             'email' => $this->email,
            // 'company_id' => $x->company_id
