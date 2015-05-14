@@ -40,7 +40,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $old = clone($this);
         // this shold not really happen...
         if($target->get('email', $this->email)){
-            
             return false;
         }
         
