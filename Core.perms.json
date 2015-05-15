@@ -3,7 +3,7 @@
  
 	"/Permission Name"   :  "/ full perms (Default admin),    default perms) , description",
         
-          
+    "All"                       : [ "ADEPS",     "ADEPS" , "Global Permissions" ] ,      
 	"Projects_Member_Of"      : [ "EPS",     "S" , "Can only See projects they are member of" ] ,
 	"Projects_All"            : [ "ADEPS",   "" , "Can see All Projects"] ,
         
