@@ -259,6 +259,19 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
          
         return;
     }
+    
+    function unsubscribe_url()
+    {
+        $unsubscribe = false;
+        
+        $cfg = isset(HTML_FlexyFramework::get()->Pman_Crm) ? HTML_FlexyFramework::get()->Pman_Crm : false;
+        
+        if(!empty($cfg)){
+            $unsubscribe = $cfg ['server_baseurl'] . '/Crm/Unsubscribe/' . $this->id . '/{person.id}';
+        }
+        
+        return $unsubscribe;
+    }
     /**
      *
      * Usage:
