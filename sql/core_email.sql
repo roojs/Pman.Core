@@ -14,3 +14,6 @@ CREATE  TABLE core_email (
 
 
 ALTER TABLE core_email ENGINE=InnoDB;
+
+
+UPDATE core_email SET updated_dt = NOW();
