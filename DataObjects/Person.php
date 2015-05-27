@@ -262,7 +262,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         // otherwise if projects use different 'auth' objects
         // then we get unserialize issues.
         $ff= HTML_FlexyFramework::get();
-        $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
+        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
+        
+        $sesPrefix = $appname .'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
         print_R($sesPrefix);exit;
          
@@ -376,7 +378,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         
         $ff= HTML_FlexyFramework::get();
-        $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
+        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
+
+        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
@@ -455,8 +459,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $gr->applyDefs($g, 0);
         }
         $ff= HTML_FlexyFramework::get();
-        $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
-
+        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
+        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
+       
         
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
@@ -474,7 +479,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $this->isAuth(); // force session start..
         $db = $this->getDatabaseConnection();
         $ff= HTML_FlexyFramework::get();
-        $sesPrefix = $ff->appNameShort .'-' .get_class($this) .'-'.$db->dsn['database'] ;
+        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
+        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
          $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
        
