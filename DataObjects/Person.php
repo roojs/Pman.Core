@@ -239,7 +239,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             // force a logout - without a check on the isAuth - as this is called from there..
             $db = $this->getDatabaseConnection();
-            $sesPrefix = $ff->appNameShort .'-'.get_class($this) .'-'.$db->dsn['database'] ;
+            $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
+            $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
+       
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
             return false;
             
