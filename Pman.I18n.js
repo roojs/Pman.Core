@@ -47,7 +47,7 @@ Pman.I18n = {
     toName: function(type, code) 
     {
         var ret = code;
-        var lang = Pman.Login.authUser.lang || 'en';
+        var lang = typeof(Pman.Login.authUser.lang) == 'undefined' ? 'en' : Pman.Login.authUser.lang;
         if (code.indexOf('_') > -1) {
             var clang = code.split('_').shift();
             var cc = code.split('_').pop();
