@@ -40,8 +40,8 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-       
-        $this->selectAdd("i18n_translate('c' , Companies.country, 'en') as country_display_name ");
+       $tn = $this->tableName();
+        $this->selectAdd("i18n_translate('c' , {$tn}.country, 'en') as country_display_name ");
       
         $tn = $this->tableName();
         //DB_DataObject::debugLevel(1);
@@ -52,10 +52,10 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
             if (!empty($q['query']['company_include_self'])) {
-                $add = ' OR Companies.id = ' . $x->id;
+                $add = " OR {$tn}.id = {$x->id}";
             }
             if (!empty($q['query']['company_not_self'])) {
-                $add = ' AND Companies.id != ' . $x->id;
+                $add = " AND {$tn}.id != {$x->id}";
             }
             $pids = array();
             $pid = $q['query']['company_project_id'];
@@ -70,7 +70,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
             
             
             $pids = implode(',', $pids);
-            $this->whereAdd("Companies.id IN (
+            $this->whereAdd("{$tn}.id IN (
                 SELECT distinct(company_id) FROM ProjectDirectory where project_id IN ($pids)
             ) $add" );
              
