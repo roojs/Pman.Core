@@ -338,5 +338,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
+    function merge($id)
+    {
+        
+    }
+    
     
 }
