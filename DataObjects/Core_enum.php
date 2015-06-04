@@ -369,7 +369,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             foreach ($chk->fetchAll() as $c){
                 $cc = clone ($c);
                 $c->{$ka[1]} = $to;
-                $c->update($o);
+                $c->update($cc);
             }
         }
         
