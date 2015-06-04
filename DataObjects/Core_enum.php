@@ -338,7 +338,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function merge($id, $roo)
+    function merge($to, $roo)
     {
         $affects  = array();
         
@@ -361,24 +361,21 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $chk = DB_DataObject::factory($ka[0]);
             
             if (!is_a($chk,'DB_DataObject')) {
-                $this->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
+                $roo->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
             }
-           // print_r(array($chk->tablename() , $ka[1] ,  $xx->tablename() , $this->key ));
-            $chk->{$ka[1]} =  $xx->{$this->key};
+            
+            $chk->{$ka[1]} = $this->id;
 
-            if (count($chk->keys())) {
-                $matches = $chk->count();
-            } else {
-                //DB_DataObject::DebugLevel(1);
-                $matches = $chk->count($ka[1]);
+            foreach ($chk->fetchAll() as $c){
+                $cc = clone ($c);
+                $c->{$ka[1]} = $to;
+                $c->update($o);
             }
-
-            if ($matches) {
-                $chk->_match_key = $ka[1];
-                $match_ar[] = clone($chk);
-                continue;
-            }          
         }
+        
+        $this->delete();
+        
+        $roo->jok('Merged');
         
     }
     
