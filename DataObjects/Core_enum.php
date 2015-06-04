@@ -342,7 +342,20 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $map = $this->links();
         
-        print_R($map);exit;
+        $affects  = array();
+        
+        $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
+        print_R($all_links);exit;
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $x->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
+        }
     }
     
     
