@@ -340,8 +340,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function merge($id)
     {
-        $map = $this->links();
-        
         $affects  = array();
         
         $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
@@ -356,7 +354,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $affects[$tbl .'.' . $col] = true;
             }
         }
-        print_R($affects);exit;
+        
         
     }
     
