@@ -124,6 +124,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function beforeUpdate($old, $request,$roo)
     {   
+        if(!empty($request['_merge_with'])){
+            
+        }
+        
         $tn = $this->tableName();
         $x = $this->factory($tn);
         if(!($old->etype == $request['etype'] && $old->name == $request['name'])){
