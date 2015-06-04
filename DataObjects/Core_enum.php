@@ -125,7 +125,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     function beforeUpdate($old, $request,$roo)
     {   
         if(!empty($request['_merge_id'])){
-            $this->merge($request['_merge_id']);
+            $this->merge($request['_merge_id'], $roo);
         }
         
         $tn = $this->tableName();
@@ -338,7 +338,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function merge($id)
+    function merge($id, $roo)
     {
         $affects  = array();
         
@@ -359,6 +359,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $ka = explode('.', $k);
 
             $chk = DB_DataObject::factory($ka[0]);
+            
             if (!is_a($chk,'DB_DataObject')) {
                 $this->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
             }
