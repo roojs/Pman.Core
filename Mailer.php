@@ -461,7 +461,7 @@ class Pman_Core_Mailer {
         $user = $uinfo['name']; 
         
         $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
-        if ($this->cachee_images &&
+        if ($this->cache_images &&
                 file_exists($cache) &&
                 filemtime($cache) > strtotime('NOW - 1 WEEK')
             ) {
