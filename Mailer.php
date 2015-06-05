@@ -69,6 +69,8 @@ class Pman_Core_Mailer {
     
     var $mail_method = 'SMTP';
     
+    var $cache_images = true;
+    
     function Pman_Core_Mailer($args) {
         foreach($args as $k=>$v) {
             // a bit trusting..
@@ -458,7 +460,10 @@ class Pman_Core_Mailer {
         $user = $uinfo['name']; 
         
         $cache = ini_get('session.save_path')."/Pman_Core_Mailer-{$user}/" . md5($url);
-        if (file_exists($cache) and filemtime($cache) > strtotime('NOW - 1 WEEK')) {
+        if ($this->cachee_images &&
+                file_exists($cache) &&
+                filemtime($cache) > strtotime('NOW - 1 WEEK')
+            ) {
             $ret =  json_decode(file_get_contents($cache), true);
             $ret['file'] = $cache . '.data';
             return $ret;
