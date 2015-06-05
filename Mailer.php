@@ -21,6 +21,7 @@
        contents
        template
        html_locale => 'en' == always use the 'english translated verison'
+       cache_images => true -- defaults to caching images - set to false to disable.
        replaceImages => true|false,
        locale => 'en' .... or zh_hk....
        rcpts => array()   // override recipients..
