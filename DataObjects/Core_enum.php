@@ -338,7 +338,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
     }
     
-    function merge($to, $roo)
+    function merge($merge_to, $roo)
     {
         $affects  = array();
         
@@ -368,7 +368,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
             foreach ($chk->fetchAll() as $c){
                 $cc = clone ($c);
-                $c->{$ka[1]} = $to;
+                $c->{$ka[1]} = $merge_to;
                 $c->update($cc);
             }
         }
