@@ -354,7 +354,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $affects[$tbl .'.' . $col] = true;
             }
         }
-        
+        print_R($affects);exit;
         foreach($affects as $k => $true) {
             $ka = explode('.', $k);
 
