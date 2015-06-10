@@ -94,7 +94,7 @@
          "xtype" : "Hidden",
          "value" : 0,
          "$ xns" : "Roo.form",
-         "name" : "seqid"
+         "name" : "hydra_skill_category_id"
         },
         {
          "xtype" : "Hidden",

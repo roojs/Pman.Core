@@ -202,7 +202,7 @@ Pman.Dialog.CoreEnum = {
          },
          {
           '|xns' : 'Roo.form',
-          name : 'seqid',
+          name : 'hydra_skill_category_id',
           value : 0,
           xns : Roo.form,
           xtype : 'Hidden'
