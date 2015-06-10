@@ -35,9 +35,9 @@
      "* prop" : "center"
     },
     {
+     "background" : true,
      "region" : "center",
      "fitToFrame" : true,
-     "background" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
@@ -47,8 +47,8 @@
         "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/core_enum.php'",
-       "xtype" : "Form",
        "method" : "POST",
+       "xtype" : "Form",
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
