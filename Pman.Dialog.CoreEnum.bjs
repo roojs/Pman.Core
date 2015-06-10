@@ -98,6 +98,12 @@
         },
         {
          "xtype" : "Hidden",
+         "value" : 0,
+         "$ xns" : "Roo.form",
+         "name" : "seqid"
+        },
+        {
+         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
          "name" : "id"
         }

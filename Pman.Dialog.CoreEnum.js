@@ -209,6 +209,13 @@ Pman.Dialog.CoreEnum = {
          },
          {
           '|xns' : 'Roo.form',
+          name : 'seqid',
+          value : 0,
+          xns : Roo.form,
+          xtype : 'Hidden'
+         },
+         {
+          '|xns' : 'Roo.form',
           name : 'id',
           xns : Roo.form,
           xtype : 'Hidden'
