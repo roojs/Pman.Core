@@ -61,6 +61,8 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     kSmallLetter: 1,
     kDigit: 2,
     kPunctuation: 3,
+    
+    insecure: false,
     // private
     initEvents: function () {
         Ext.form.SecurePass.superclass.initEvents.call(this);
@@ -159,6 +161,9 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
     validateValue: function (value) {
+        if(this.insecure){
+            return true;
+        }
         if (!Ext.form.TextField.superclass.validateValue.call(this, value)) {
             return false;
         }
