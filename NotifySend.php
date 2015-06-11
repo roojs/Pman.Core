@@ -163,7 +163,7 @@ class Pman_Core_NotifySend extends Pman
         );
         $lar[strtolower($w->ontable).'_id'] = $w->{strtolower($w->ontable).'_id'};
         
-        $l->setFrom( $lar );        
+        $l->setFrom( $lar );       
         $l->whereAdd('id != '. $w->id);
         $l->orderBy('sent DESC');
         $l->limit(1);
