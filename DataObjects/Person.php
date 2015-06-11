@@ -367,13 +367,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!$this->isAuth()) {
             return false;
         }
-        $db = $this->getDatabaseConnection();
         
         $ff= HTML_FlexyFramework::get();
-        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
-
-        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
+        $sesPrefix = $this->sesPrefix();
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
        
