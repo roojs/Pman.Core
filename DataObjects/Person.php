@@ -256,15 +256,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         @session_start();
        
-        
-        $db = $this->getDatabaseConnection();
-        // we combine db + project names,
-        // otherwise if projects use different 'auth' objects
-        // then we get unserialize issues.
         $ff= HTML_FlexyFramework::get();
-        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
-        
-        $sesPrefix = $appname .'-' .get_class($this) .'-'.$db->dsn['database'] ;
+       
+        $sesPrefix = $this->sesPrefix();
         
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
