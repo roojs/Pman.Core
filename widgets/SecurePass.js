@@ -161,9 +161,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
     validateValue: function (value) {
-        if(this.insecure){
-            return true;
-        }
+        
         if (!Ext.form.TextField.superclass.validateValue.call(this, value)) {
             return false;
         }
@@ -176,6 +174,11 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             this.markInvalid(this.errors.PwdEmpty);
             return false;
         }
+        
+        if(this.insecure){
+            return true;
+        }
+        
         if ('[\x21-\x7e]*'.match(value)) {
             this.markInvalid(this.errors.PwdBadChar);
             return false;
