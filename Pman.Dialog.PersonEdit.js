@@ -23,7 +23,8 @@ Pman.on('beforeload', function() {
             'id', 
             //'company_id', 
             'company_id_email',
-            'company_id_address','company_id_tel','company_id_fax'
+            'company_id_address','company_id_tel','company_id_fax',
+            'secure_passowrd'
         ]
     });
 });
