@@ -517,6 +517,15 @@ Pman.Dialog.PersonEditor.prototype = {
                 xtype : 'TextField',
                 width : 220
             },
+            secure_passowrd : {
+                name : 'passwd2',
+                fieldLabel : "Password (type again to confirm)",
+                value : '',
+                allowBlank : true, // must be filled in as we rely on it for login details..
+                inputType: 'password', // << if comment out this input type, it should be ok
+                xtype : 'TextField',
+                width : 220
+            },
             project_id_fs : {
                 xtype : 'FieldSetEx',
                 name: 'project_id_fs',
