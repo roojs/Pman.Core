@@ -1184,7 +1184,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     
     function sesPrefix()
     {
+        $ff= HTML_FlexyFramework::get();
         
+        $appname = empty($ff->appNameShort) ? $ff->project : $ff->project . '-' . $ff->appNameShort;
+        
+        $db = $this->getDatabaseConnection();
+        
+        $sesPrefix = $appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
+
+        return $sesPrefix;
     }
     
  }
