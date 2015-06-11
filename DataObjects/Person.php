@@ -462,14 +462,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function logout()
     {
         $this->isAuth(); // force session start..
-        $db = $this->getDatabaseConnection();
-        $ff= HTML_FlexyFramework::get();
-        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
-        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
         
-         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
-       
+        $sesPrefix = $this->sesPrefix();
         
+        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
         
     }    
     function genPassKey ($t) 
