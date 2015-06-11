@@ -19,12 +19,11 @@ Pman.on('beforeload', function() {
             'company_id_name',
             'office_id_name',
             'name','role', 'phone', 'fax', 'email',
-            'passwd1', 'passwd2',
+            'passwd1', 'passwd2', 'secure_passowrd',
             'id', 
             //'company_id', 
             'company_id_email',
-            'company_id_address','company_id_tel','company_id_fax',
-            'secure_passowrd'
+            'company_id_address','company_id_tel','company_id_fax'
         ]
     });
 });
