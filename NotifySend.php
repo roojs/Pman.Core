@@ -106,6 +106,11 @@ class Pman_Core_NotifySend extends Pman
         }
         if (!empty($opts['debug'])) {
             print_r($w);
+            $ff = HTML_FlexyFramework::get();
+            if (!isset($ff->Core_Mailer)) {
+                $ff->Core_Mailer = array();
+            }
+            HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
         }
         
         $sent = (empty($w->sent) || preg_match('/^0000/', $w->sent)) ? false : true;
