@@ -518,12 +518,13 @@ Pman.Dialog.PersonEditor.prototype = {
                 width : 220
             },
             secure_passowrd : {
-                name : 'passwd2',
-                fieldLabel : "Password (type again to confirm)",
-                value : '',
-                allowBlank : true, // must be filled in as we rely on it for login details..
-                inputType: 'password', // << if comment out this input type, it should be ok
-                xtype : 'TextField',
+                name : 'secure_passowrd',
+                fieldLabel : "Secure passwords",
+                inputValue : 1,
+                valueOff : 0,
+                checked : true,
+                xtype : 'Checkbox',
+                xns : Roo.form,
                 width : 220
             },
             project_id_fs : {
