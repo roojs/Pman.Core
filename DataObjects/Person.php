@@ -429,8 +429,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!$this->verifyAuth()) { // check for company valid..
             return false;
         }
-        $db = $this->getDatabaseConnection();
-        
         
         // open up iptables at login..
         $dbname = $this->database();
@@ -447,10 +445,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $gr = DB_DataObject::Factory('group_rights');
             $gr->applyDefs($g, 0);
         }
+        
         $ff= HTML_FlexyFramework::get();
-        $appname = empty($ff->appNameShort) ? $ff->project : $ff->appNameShort;
-        $sesPrefix =$appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
-       
+        
+        $sesPrefix = $this->sesPrefix();
         
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
