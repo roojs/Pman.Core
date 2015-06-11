@@ -852,6 +852,15 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                     "$tn_p.remarks",
                     "join_company_id_id.name"
             );
+            $tbcols = $this->table();
+            foreach(array('firstname','lastname') as $k) {
+                if (isset($tbcols[$k])) {
+                    $props[] = "{$tn_p}.{$k}";
+                }
+            }
+            
+            
+            
             
             $str =  $x->toSQL(array(
                 'default' => $props,
