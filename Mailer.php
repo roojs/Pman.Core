@@ -79,6 +79,7 @@ class Pman_Core_Mailer {
         }
         // allow core mailer debug setting.
         $ff = HTML_FlexyFramework::get();
+        var_dump($ff->Core_Mailer['debug']);
         if (!empty($ff->Core_Mailer['debug'])) {
             $this->debug = $ff->Core_Mailer['debug'];
         }
