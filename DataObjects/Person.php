@@ -446,8 +446,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $gr->applyDefs($g, 0);
         }
         
-        $ff= HTML_FlexyFramework::get();
-        
         $sesPrefix = $this->sesPrefix();
         
         // we should not store the whole data in the session - otherwise it get's huge.
