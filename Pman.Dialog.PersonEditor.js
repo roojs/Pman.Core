@@ -528,9 +528,10 @@ Pman.Dialog.PersonEditor.prototype = {
                 width : 220,
                 listeners : {
                     check : function (_self, checked) {
-                        Roo.log(this.form);
-                        if(checked){
-                            
+                        this.form.findField('passwd1').insecure = false;
+                        
+                        if(!checked){
+                            this.form.findField('passwd1').insecure = true;
                         }
                     }
                 }
