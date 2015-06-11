@@ -1182,4 +1182,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         return $this->email;
     }
     
+    function sesPrefix()
+    {
+        
+    }
+    
  }
