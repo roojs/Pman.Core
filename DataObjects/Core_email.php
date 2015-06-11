@@ -188,7 +188,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         foreach ($xpath->query('//img[@src]') as $img) { // process images!
             $href = $img->getAttribute('src');
-            $cid = explode('#', $href);
+            $cid = explode('-', array_pop(explode('#', $href)));
+            // we name all our cid's as attachment-*
+            
+            
             if(isset($cid[1])){
                 $img->setAttribute('src', 'cid:' . $cid[1]);
             }
