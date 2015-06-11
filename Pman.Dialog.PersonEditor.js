@@ -525,7 +525,15 @@ Pman.Dialog.PersonEditor.prototype = {
                 checked : true,
                 xtype : 'Checkbox',
                 xns : Roo.form,
-                width : 220
+                width : 220,
+                listeners : {
+                    check : function (_self, checked) {
+                        Roo.log(this.form);
+                        if(checked){
+                            
+                        }
+                    }
+                }
             },
             project_id_fs : {
                 xtype : 'FieldSetEx',
