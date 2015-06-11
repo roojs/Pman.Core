@@ -161,7 +161,9 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
     validateValue: function (value) {
+        Roo.log('validateValue');
         if(this.insecure){
+            Roo.log('in');
             return true;
         }
         if (!Ext.form.TextField.superclass.validateValue.call(this, value)) {
