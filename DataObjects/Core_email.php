@@ -198,7 +198,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
             $cid = explode('-', $hash[1]);
             if(!empty($cid[1])){
-                $img->setAttribute('src', 'cid:' . $cid[1]);
+                $img->setAttribute('src', 'cid:attachment-' . $cid[1]);
             }
         }
         
