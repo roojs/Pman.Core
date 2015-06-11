@@ -214,7 +214,7 @@ class Pman_Core_Notify extends Pman
                 $o = $w->object();
                 
                 
-                $this->logecho("$w->id : $w->person_id_email email    : ".
+                $this->logecho("{$w->id} : {$w->person()->email} email    : ".
                         $o->toEventString()."    ". $w->status()  );
             }
             exit;
