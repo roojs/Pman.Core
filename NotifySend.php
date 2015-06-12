@@ -353,6 +353,15 @@ class Pman_Core_NotifySend extends Pman
                     'debug' => 1,
                     'debug_handler' => array($this, 'debugHandler')
                 ));
+            
+            // if the host is the mail host + it's authenticated add auth details
+            // this normally will happen if you sent  Pman_Core_NotifySend['host']
+            if (isset($ff->Mail['host']) && $ff->Mail['host'] == $dom && !empty($ff->Mail['auth'] )) {
+                $mailer->auth = true;
+                $mailer->username = $ff->Mail['username'] ;
+                $mailer->password = $ff->Mail['password'] ;        
+            }
+            
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
              
             
