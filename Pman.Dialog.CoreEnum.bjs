@@ -35,9 +35,9 @@
      "* prop" : "center"
     },
     {
+     "fitToFrame" : true,
      "background" : true,
      "region" : "center",
-     "fitToFrame" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
@@ -47,8 +47,8 @@
         "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/core_enum.php'",
-       "method" : "POST",
        "xtype" : "Form",
+       "method" : "POST",
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
@@ -89,12 +89,6 @@
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
          "name" : "etype"
-        },
-        {
-         "xtype" : "Hidden",
-         "value" : 0,
-         "$ xns" : "Roo.form",
-         "name" : "hydra_skill_category_id"
         },
         {
          "xtype" : "Hidden",
