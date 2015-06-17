@@ -7,6 +7,7 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreAutoSavePreview = {
 
  _strings : {
+  '53e5aa2c97fef1555d2511de8218c544' :"By",
   '87f9f735a1d36793ceaecd4e47124b63' :"Events",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
@@ -231,8 +232,8 @@ Pman.Dialog.CoreAutoSavePreview = {
          },
 {
           '|xns' : 'Roo.grid',
-          dataIndex : 'event_when',
-          header : _this._strings['44749712dbec183e983dcd78a7736c41'],
+          dataIndex : 'person_id_name',
+          header : _this._strings['53e5aa2c97fef1555d2511de8218c544'],
           renderer : function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); },
           width : 100,
           xns : Roo.grid,
