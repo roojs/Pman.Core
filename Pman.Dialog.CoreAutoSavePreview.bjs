@@ -122,7 +122,7 @@
          "xtype" : "ColumnModel",
          "header" : "By",
          "width" : 100,
-         "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }",
+         "$ renderer" : "function(v) { return String.format('{0}', v ); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
          "dataIndex" : "person_id_name"

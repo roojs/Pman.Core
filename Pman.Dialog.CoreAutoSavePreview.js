@@ -234,7 +234,7 @@ Pman.Dialog.CoreAutoSavePreview = {
           '|xns' : 'Roo.grid',
           dataIndex : 'person_id_name',
           header : _this._strings['53e5aa2c97fef1555d2511de8218c544'],
-          renderer : function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); },
+          renderer : function(v) { return String.format('{0}', v ); },
           width : 100,
           xns : Roo.grid,
           xtype : 'ColumnModel'
