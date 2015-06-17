@@ -1,151 +1,166 @@
 {
-    "id": "roo-file-208",
-    "name": "Pman.Dialog.CoreAutoSavePreview",
-    "parent": "",
-    "title": "",
-    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreAutoSavePreview.bjs",
-    "items": [
+ "name" : "Pman.Dialog.CoreAutoSavePreview",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreAutoSavePreview.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "strings" : {
+  "87f9f735a1d36793ceaecd4e47124b63" : "Events",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",
+  "44749712dbec183e983dcd78a7736c41" : "Date",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK"
+ },
+ "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n}"
+   },
+   "modal" : true,
+   "collapsible" : false,
+   "background" : false,
+   "title" : "Saved Version",
+   "xtype" : "LayoutDialog",
+   "width" : 800,
+   "$ xns" : "Roo",
+   "closable" : false,
+   "resizable" : false,
+   "height" : 500,
+   "items" : [
+    {
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "* prop" : "center"
+    },
+    {
+     "xtype" : "LayoutRegion",
+     "width" : 200,
+     "$ xns" : "Roo",
+     "split" : true,
+     "* prop" : "west"
+    },
+    {
+     "listeners" : {
+      "|activate" : "function() {\n    _this.panel = this;\n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}"
+     },
+     "fitToframe" : true,
+     "background" : false,
+     "region" : "west",
+     "title" : "Events",
+     "xtype" : "GridPanel",
+     "fitContainer" : true,
+     "$ xns" : "Roo",
+     "tableName" : "Events",
+     "items" : [
+      {
+       "listeners" : {
+        "|render" : "function() \n{\n    _this.grid = this; \n    \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}"
+       },
+       "autoExpandColumn" : "event_when",
+       "xtype" : "Grid",
+       "loadMask" : true,
+       "$ xns" : "Roo.grid",
+       "* prop" : "grid",
+       "items" : [
         {
-            "listeners": {
-                "show": "function (_self)\n{\n    if(typeof(_this.data) != 'undefined'){\n        _this.grid.footer.onClick('first');\n    }\n    \n}"
-            },
-            "background": false,
-            "closable": false,
-            "collapsible": false,
-            "height": 500,
-            "modal": true,
-            "resizable": false,
-            "title": "Saved Version",
-            "width": 800,
-            "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "items": [
-                {
-                    "*prop": "center",
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
-                },
-                {
-                    "*prop": "west",
-                    "split": true,
-                    "width": 200,
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "|activate": "function() {\n    _this.panel = this;\n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}"
-                    },
-                    "background": false,
-                    "fitContainer": true,
-                    "fitToframe": true,
-                    "region": "west",
-                    "tableName": "Events",
-                    "title": "Events",
-                    "xtype": "GridPanel",
-                    "|xns": "Roo",
-                    "items": [
-                        {
-                            "listeners": {
-                                "|render": "function() \n{\n    _this.grid = this; \n    \n    if (_this.panel.active) {\n       this.footer.onClick('first');\n    }\n}"
-                            },
-                            "*prop": "grid",
-                            "autoExpandColumn": "event_when",
-                            "loadMask": true,
-                            "xtype": "Grid",
-                            "|xns": "Roo.grid",
-                            "items": [
-                                {
-                                    "listeners": {
-                                        "afterselectionchange": "function (_self)\n{\n    var selected = this.getSelected();\n    \n    _this.source = '';\n    \n    if(!selected){\n       _this.viewPanel.setContent(\"Please select an saved version on the left\"); \n       return;\n    }\n    \n    _this.viewPanel.load( { url : baseURL + \"/Roo/Events\", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){\n        \n        var res = Roo.decode(oResponse.responseText);\n        \n        if(!bSuccess || !res.success){\n            _this.viewPanel.setContent(\"Load data failed?!\");\n        }\n        \n        if(typeof(res.data) === 'string'){\n            _this.viewPanel.setContent(res.data);\n            return;\n        }\n        \n        if(!_this.data.successFn){\n            Roo.MessageBox.alert('Error', 'Please setup the successFn');\n            return;\n        }\n        \n        _this.source = _this.data.successFn(res);\n\n        _this.viewPanel.setContent(_this.source);\n        \n    });\n}"
-                                    },
-                                    "*prop": "sm",
-                                    "singleSelect": true,
-                                    "xtype": "RowSelectionModel",
-                                    "|xns": "Roo.grid"
-                                },
-                                {
-                                    "listeners": {
-                                        "beforeload": "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    if(typeof(_this.data) == 'undefined'){\n        this.removeAll();\n        return false;\n    }\n\n    var d = Roo.apply({}, _this.data);\n    delete d.successFn;\n\n    Roo.apply(o.params, d);\n    \n}",
-                                        "load": "function (_self, records, options)\n{\n    var sm = _this.grid.getSelectionModel();\n    if (!sm.getSelections().length) {\n        sm.selectFirstRow();\n        \n        sm.fireEvent('afterselectionchange', sm);\n    }\n}"
-                                    },
-                                    "*prop": "dataSource",
-                                    "remoteSort": true,
-                                    "xtype": "Store",
-                                    "|sortInfo": "{ field : 'event_when', direction: 'DESC' }",
-                                    "|xns": "Roo.data",
-                                    "items": [
-                                        {
-                                            "*prop": "proxy",
-                                            "method": "GET",
-                                            "xtype": "HttpProxy",
-                                            "|url": "baseURL + '/Roo/Events.php'",
-                                            "|xns": "Roo.data"
-                                        },
-                                        {
-                                            "*prop": "reader",
-                                            "id": "id",
-                                            "root": "data",
-                                            "totalProperty": "total",
-                                            "xtype": "JsonReader",
-                                            "|fields": "[\n    {\n        'name': 'id',\n        'type': 'int'\n    },\n    {\n        'name': 'event_when',\n        'type': 'string'\n    }\n]",
-                                            "|xns": "Roo.data"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "*prop": "footer",
-                                    "displayInfo": false,
-                                    "pageSize": 25,
-                                    "xtype": "PagingToolbar",
-                                    "|xns": "Roo"
-                                },
-                                {
-                                    "*prop": "colModel[]",
-                                    "dataIndex": "event_when",
-                                    "header": "Date",
-                                    "width": 100,
-                                    "xtype": "ColumnModel",
-                                    "|renderer": "function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }",
-                                    "|xns": "Roo.grid"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "listeners": {
-                        "render": "function (_self)\n{\n    _this.viewPanel = _self;\n}"
-                    },
-                    "autoScroll": true,
-                    "background": false,
-                    "fitContainer": true,
-                    "fitToFrame": true,
-                    "region": "center",
-                    "xtype": "ContentPanel",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "|click": "function() {\n    _this.dialog.hide();\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "Cancel",
-                    "xtype": "Button",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "|click": "function() {\n\n    _this.dialog.hide();\n    \n    if (_this.callback && _this.source != '') {\n        _this.callback.call(this, _this.source);\n    }\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "OK",
-                    "xtype": "Button",
-                    "|xns": "Roo"
-                }
-            ]
+         "listeners" : {
+          "afterselectionchange" : "function (_self)\n{\n    var selected = this.getSelected();\n    \n    _this.source = '';\n    \n    if(!selected){\n       _this.viewPanel.setContent(\"Please select an saved version on the left\"); \n       return;\n    }\n    \n    _this.viewPanel.load( { url : baseURL + \"/Roo/Events\", method : 'GET' }, {_id : selected.data.id, _retrieve_source : 1}, function(oElement, bSuccess, oResponse){\n        \n        var res = Roo.decode(oResponse.responseText);\n        \n        if(!bSuccess || !res.success){\n            _this.viewPanel.setContent(\"Load data failed?!\");\n        }\n        \n        if(typeof(res.data) === 'string'){\n            _this.viewPanel.setContent(res.data);\n            return;\n        }\n        \n        if(!_this.data.successFn){\n            Roo.MessageBox.alert('Error', 'Please setup the successFn');\n            return;\n        }\n        \n        _this.source = _this.data.successFn(res);\n\n        _this.viewPanel.setContent(_this.source);\n        \n    });\n}"
+         },
+         "xtype" : "RowSelectionModel",
+         "singleSelect" : true,
+         "$ xns" : "Roo.grid",
+         "* prop" : "sm"
+        },
+        {
+         "listeners" : {
+          "beforeload" : "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    if(typeof(_this.data) == 'undefined'){\n        this.removeAll();\n        return false;\n    }\n\n    var d = Roo.apply({}, _this.data);\n    delete d.successFn;\n\n    Roo.apply(o.params, d);\n    \n}",
+          "load" : "function (_self, records, options)\n{\n    var sm = _this.grid.getSelectionModel();\n    if (!sm.getSelections().length) {\n        sm.selectFirstRow();\n        \n        sm.fireEvent('afterselectionchange', sm);\n    }\n}"
+         },
+         "xtype" : "Store",
+         "remoteSort" : true,
+         "$ sortInfo" : "{ field : 'event_when', direction: 'DESC' }",
+         "$ xns" : "Roo.data",
+         "* prop" : "dataSource",
+         "items" : [
+          {
+           "$ url" : "baseURL + '/Roo/Events.php'",
+           "xtype" : "HttpProxy",
+           "method" : "GET",
+           "$ xns" : "Roo.data",
+           "* prop" : "proxy"
+          },
+          {
+           "id" : "id",
+           "root" : "data",
+           "xtype" : "JsonReader",
+           "$ fields" : "[\n    {\n        'name': 'id',\n        'type': 'int'\n    },\n    {\n        'name': 'event_when',\n        'type': 'string'\n    }\n]",
+           "$ xns" : "Roo.data",
+           "* prop" : "reader",
+           "totalProperty" : "total"
+          }
+         ]
+        },
+        {
+         "pageSize" : 25,
+         "xtype" : "PagingToolbar",
+         "$ xns" : "Roo",
+         "displayInfo" : false,
+         "* prop" : "footer"
+        },
+        {
+         "xtype" : "ColumnModel",
+         "width" : 100,
+         "header" : "Date",
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "event_when"
+        },
+        {
+         "xtype" : "ColumnModel",
+         "header" : "Date",
+         "width" : 100,
+         "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }",
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "event_when"
         }
-    ],
-    "permname": "",
-    "modOrder": "001"
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.viewPanel = _self;\n}"
+     },
+     "autoScroll" : true,
+     "background" : false,
+     "fitToFrame" : true,
+     "region" : "center",
+     "xtype" : "ContentPanel",
+     "fitContainer" : true,
+     "$ xns" : "Roo"
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Cancel",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n\n    _this.dialog.hide();\n    \n    if (_this.callback && _this.source != '') {\n        _this.callback.call(this, _this.source);\n    }\n}"
+     },
+     "text" : "OK",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
 }
