@@ -1383,26 +1383,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var value = g.value[0] == '=' ? 'CALCULATED' : g.value;
                 
-//                if(
-//                        typeof(g.styles.firstElementChild.attributes) != 'undefined' && 
-//                        typeof(g.styles.firstElementChild.attributes[12])
-//                ){
-//                    
-//                }
-                if(value == '01/Jan/2014'){
-                    Roo.log(g.styles[0].firstElementChild.getAttribute('Format'));
-                    Roo.log(value);
-                    Roo.log(typeof(value));
-                    Roo.log(typeof(g.styles[0].firstElementChild.attributes[12].value));
-                }
-                
                 try {
                     if(
-                        g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@"
+                        g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@" &&
+                        g.value[0] != '='
                     ){
                         Roo.log(value);
                         value = 'test';
                     }
+                    
                 } catch(e) {
                     
                 }
