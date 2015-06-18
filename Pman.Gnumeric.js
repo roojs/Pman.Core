@@ -1389,6 +1389,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         g.value[0] != '='
                     ){
                         var vv = new Date(value);
+                        Roo.log(vv);
                     }
                     
                 } catch(e) {
