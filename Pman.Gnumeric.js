@@ -1388,8 +1388,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@" &&
                         g.value[0] != '='
                     ){
-                        Roo.log(value);
-                        value = 'test';
+                        var vv = new Date(value);
                     }
                     
                 } catch(e) {
