@@ -1383,6 +1383,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var value = g.value[0] == '=' ? 'CALCULATED' : g.value;
                 
+//                if(
+//                        typeof(g.styles.firstElementChild.attributes) != 'undefined' && 
+//                        typeof(g.styles.firstElementChild.attributes[12])
+//                ){
+//                    
+//                }
+                for (var i = 0; i <= g.styles.firstElementChild.attributes.length; i++){
+                    Roo.log(g.styles.firstElementChild.attributes[i]);
+                }
+                
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
                     g.colspan, g.rowspan, value,
                     'overflow:hidden;' + 
