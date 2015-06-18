@@ -1395,13 +1395,18 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     Roo.log(typeof(value));
                     Roo.log(typeof(g.styles[0].firstElementChild.attributes[12].value));
                 }
-                if(
-                         
+                
+                try {
+                    if(
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\-MMM\-YYYY;@"
-                ){
-                    Roo.log(value);
-                    value = 'test';
+                    ){
+                        Roo.log(value);
+                        value = 'test';
+                    }
+                } catch {
+                    
                 }
+                
                 
                 
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
