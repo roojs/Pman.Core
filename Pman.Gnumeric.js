@@ -1389,10 +1389,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //                ){
 //                    
 //                }
-                Roo.log(g.styles.firstElementChild);
-                for (var i = 0; i <= g.styles.firstElementChild.attributes.length; i++){
-                    Roo.log(g.styles.firstElementChild.attributes[i]);
+                if(typeof(g.styles.firstElementChild.attributes) != 'undefined'){
+                    for (var i = 0; i <= g.styles.firstElementChild.attributes.length; i++){
+                        Roo.log(g.styles.firstElementChild.attributes[i]);
+                    }
                 }
+                
                 
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
                     g.colspan, g.rowspan, value,
