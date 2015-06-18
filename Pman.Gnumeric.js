@@ -1387,6 +1387,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     if(
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@" &&
                         g.value[0] != '=' &&
+                        value.length && 
                         !isNaN(value * 1)
                     ){
                         value = new Date(value * 24 * 60 * 60 * 1000 + new Date('1900-01-01').getTime());
