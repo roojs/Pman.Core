@@ -1389,6 +1389,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //                ){
 //                    
 //                }
+                Roo.log(g.styles.firstElementChild);
                 for (var i = 0; i <= g.styles.firstElementChild.attributes.length; i++){
                     Roo.log(g.styles.firstElementChild.attributes[i]);
                 }
