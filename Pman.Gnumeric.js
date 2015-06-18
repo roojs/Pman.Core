@@ -1390,7 +1390,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //                    
 //                }
                 if(value == '01/Jan/2014'){
-                    Roo.log(g.styles[0].firstElementChild.getAttribute('format'));
+                    Roo.log(g.styles[0].firstElementChild.getAttribute('Format'));
                     Roo.log(value);
                     Roo.log(typeof(value));
                     Roo.log(typeof(g.styles[0].firstElementChild.attributes[12].value));
