@@ -1386,13 +1386,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 try {
                     if(
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@" &&
-                        g.value[0] != '='
+                        g.value[0] != '=' &&
+                        !isNaN(value * 1)
                     ){
-                        var vv = new Date(value);
-                        
-                        if(!isNaN(vv.getTime())){
-                            value = (vv.getTime() / 24 / 60 / 60 / 1000) + new Date('1900-01-01').getTime();
-                        }
+                        value = new Date(value * 24 * 60 * 60 * 1000 + new Date('1900-01-01').getTime());
                     }
                     
                 } catch(e) {
