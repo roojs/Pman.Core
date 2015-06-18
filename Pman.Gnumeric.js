@@ -1381,7 +1381,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 if (typeof(g.cls) =='undefined') g.cls = [];
                 var w= calcWidth(c,g.colspan);
                 
-                var value = g.value[0] == '=' ? 'CALCULATED' : g.value;
+                var value =  g.value;
                 
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
                     g.colspan, g.rowspan, value,
