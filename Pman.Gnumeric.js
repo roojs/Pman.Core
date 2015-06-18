@@ -1397,8 +1397,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     
                 }
                 
-                
-                
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
                     g.colspan, g.rowspan, value,
                     'overflow:hidden;' + 
