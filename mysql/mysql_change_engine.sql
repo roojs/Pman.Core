@@ -8,7 +8,6 @@ delimiter $$
 CREATE PROCEDURE mysql_change_engine(mytb TEXT)
     BEGIN
     DECLARE mydb TEXT;
-    DECLARE ConvertEngineSQL TEXT;
     
     SELECT database() INTO mydb;
     
@@ -20,7 +19,7 @@ CREATE PROCEDURE mysql_change_engine(mytb TEXT)
             CONCAT('SELECT ''',dbtb1,' is Already InnoDB'' as \"No Need to Convert\"')
         )
     INTO
-        ConvertEngineSQL
+        @ConvertEngineSQL
         
     FROM (
         SELECT
@@ -49,7 +48,7 @@ CREATE PROCEDURE mysql_change_engine(mytb TEXT)
     ) AA;
             
     -- SELECT ConvertEngineSQL; -- ???
-    PREPARE st FROM ConvertEngineSQL;
+    PREPARE st FROM @ConvertEngineSQL;
     EXECUTE st;
     DEALLOCATE PREPARE st;
 
