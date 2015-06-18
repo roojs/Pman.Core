@@ -1403,7 +1403,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         Roo.log(value);
                         value = 'test';
                     }
-                } catch {
+                } catch(e) {
                     
                 }
                 
