@@ -1393,6 +1393,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         typeof(g.styles[0].firstElementChild.attributes[12].value) != 'undefined' && 
                         g.styles[0].firstElementChild.attributes[12].value == 'D\-MMM\-YYYY;@'
                 ){
+                    Roo.log(value);
                     value = 'test';
                 }
                 
