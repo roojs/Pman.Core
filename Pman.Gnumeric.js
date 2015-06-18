@@ -1389,8 +1389,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //                ){
 //                    
 //                }
-                Roo.log(g.styles[0].firstElementChild.attributes[12].value);
-                Roo.log(value);
+                if(value == '01/Jan/2014'){
+                    Roo.log(g.styles[0].firstElementChild.attributes[12].value);
+                    Roo.log(value);
+                    Roo.log(typeof(value));
+                    Roo.log(typeof(g.styles[0].firstElementChild.attributes[12].value));
+                }
                 if(
                         typeof(g.styles[0].firstElementChild.attributes[12].value) != 'undefined' && 
                         g.styles[0].firstElementChild.attributes[12].value == 'D\-MMM\-YYYY;@'
