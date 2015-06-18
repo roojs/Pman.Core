@@ -1389,7 +1389,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         g.value[0] != '='
                     ){
                         var vv = new Date(value);
-                        Roo.log(vv);
+                        
+                        if(!isNaN(vv.getTime())){
+                            value = (vv.getTime() / 24 / 60 / 60 / 1000) + new Date('1900-01-01').getTime();
+                        }
                     }
                     
                 } catch(e) {
