@@ -1396,7 +1396,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     Roo.log(typeof(g.styles[0].firstElementChild.attributes[12].value));
                 }
                 if(
-                        typeof(g.styles[0].firstElementChild.attributes[12].value) != 'undefined' && 
+                        typeof(g.styles[0].firstElementChild.getAttribute('Format')) != 'undefined' && 
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\-MMM\-YYYY;@"
                 ){
                     Roo.log(value);
