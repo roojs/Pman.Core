@@ -1389,9 +1389,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //                ){
 //                    
 //                }
-                if(typeof(g.styles.firstElementChild.attributes) != 'undefined'){
-                    for (var i = 0; i <= g.styles.firstElementChild.attributes.length; i++){
-                        Roo.log(g.styles.firstElementChild.attributes[i]);
+                if(typeof(g.styles[0].firstElementChild.attributes) != 'undefined'){
+                    for (var i = 0; i <= g.styles[0].firstElementChild.attributes.length; i++){
+                        Roo.log(g.styles[0].firstElementChild.attributes[i]);
                     }
                 }
                 
