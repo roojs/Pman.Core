@@ -39,3 +39,4 @@ ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_
   
   
 ALTER TABLE Events ENGINE=InnoDB;
+ 
