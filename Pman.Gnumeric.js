@@ -1398,7 +1398,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 try {
                     if(
-                        g.styles[0].firstElementChild.getAttribute('Format') == "D\-MMM\-YYYY;@"
+                        g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@"
                     ){
                         Roo.log(value);
                         value = 'test';
