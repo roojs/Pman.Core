@@ -523,8 +523,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
               
             if ($obj && $obj->pid() && method_exists($obj,'toEventString')) {
                 $es = $obj->toEventString();
-                var_dump($es);
-                if (strpos($this->remarks, $es) < 0) {
+                
+                if (empty($this->remarks) || strpos($this->remarks, $es) < 0) {
                     $ret['remarks'] = $es . ' ' . $this->remarks;
                 }
             }
