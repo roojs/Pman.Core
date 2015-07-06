@@ -521,8 +521,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!empty($q['_with_obj_summary']) && !empty($this->on_id)) {
             $obj = $this->object();
             
-            var_dump(array( $obj->pid() , method_exists($obj,'toEventString')));
-            
+            v  
             if ($obj && $obj->pid() && method_exists($obj,'toEventString')) {
                 $es = $obj->toEventString();
                 var_dump($es);
