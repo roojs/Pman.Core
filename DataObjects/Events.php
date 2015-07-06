@@ -527,6 +527,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 if (empty($this->remarks) || strpos($this->remarks, $es) < 0) {
                     $ret['remarks'] = $es . ' ' . $this->remarks;
                 }
+            } else if (empty($this->remarks)){
+                $ret['remarks'] = "DELETED";
+                
             }
         }
         //print_r($ret);
