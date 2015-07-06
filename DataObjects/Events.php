@@ -518,7 +518,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $ret = $this->toArray();
         
         // fill toEventString.
-        if (!empty($q['_with_obj_summary'])) {
+        if (!empty($q['_with_obj_summary']) && !empty($this->on_id)) {
             $obj = $this->object();
             if ($obj && $obj->pid() && method_exists($obj,'toEventString')) {
                 $es = $obj->toEventString();
