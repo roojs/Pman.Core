@@ -529,6 +529,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
             }
         }
+        print_r($ret);
         return $ret;
         
     }
