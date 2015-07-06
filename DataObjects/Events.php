@@ -513,7 +513,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function toRooSingleArray($au, $q)
+    function toRooArray($au, $q)
     {
         $ret = $this->toArray();
         
@@ -527,6 +527,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
             }
         }
+        return $ret;
+        
+    }
+    
+    function toRooSingleArray($au, $q)
+    {
+        $ret = $this->toArray();
+        
+         
         
         if(empty($q['_retrieve_source'])){
             return $ret;
