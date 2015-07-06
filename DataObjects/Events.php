@@ -513,7 +513,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function toRooArray($au, $q)
+    function toRooArray( $q)
     {
         $ret = $this->toArray();
         
