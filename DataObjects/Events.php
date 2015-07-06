@@ -517,6 +517,17 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         $ret = $this->toArray();
         
+        // fill toEventString.
+        if (!empty($q['_with_obj_summary'])) {
+            $obj = $this->object();
+            if ($obj && method_exists($obj,'toEventString')) {
+                $es = $obj->toEventString();
+                if (strpos($this->remarks, $es) < 0) {
+                    $ret['remarks'] = $es . ' ' . $this->remarks;
+                }
+            }
+        }
+        
         if(empty($q['_retrieve_source'])){
             return $ret;
         }
