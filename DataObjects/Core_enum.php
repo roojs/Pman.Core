@@ -130,11 +130,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        if(!($old->etype == $request['etype'] && $old->name == $request['name'])){
+        // check if record exists?
+        if(isset($request['etype']) &&   !($old->etype == $request['etype'] && $old->name == $request['name'])){
             $x->whereAdd("etype = '{$this->escape($request['etype'])}' AND name = '{$this->escape($request['name'])}'");
             $x->find(true);
             if($x->count() > 0){
-                $roo->jerr('is exsiting');
+                $roo->jerr('record already exists');
             }
         }
     }
