@@ -604,8 +604,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $roo->jerr('Invalid url');
         }
         
+        $restored = array();
+        
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
-            
+            if(empty($d['id'] || empty($d['_table']) || isset($restored[$d['_table']][$d['id']]))){
+                continue;
+            }
         }
         
         print_R($log);exit;
