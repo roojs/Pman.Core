@@ -606,6 +606,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $restored = array();
         
+        DB_DataObject::debugLevel(1);
+        
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
             if(
                     empty($d['id']) || 
