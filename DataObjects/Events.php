@@ -600,6 +600,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $log = json_decode(file_get_contents($file), true);
         
+        
         print_R($log);exit;
         
     }
