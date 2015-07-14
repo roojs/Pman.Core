@@ -415,7 +415,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function beforeUpdate($old, $request,$roo)
     {
         if(!empty($request['_restore'])){
-            $this->restore();
+            $this->restore($roo);
         }
     }
     
