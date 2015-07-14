@@ -637,7 +637,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            $table->query("ALTER TABLE {$tableName} DISABLE TRIGGER ALL");
+            $table->query("ALTER TABLE {$tableName} DISABLE ALL TRIGGERS");
             
             $table = DB_DataObject::factory($tableName);
             
