@@ -637,10 +637,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->sequenceKey(false,false);
             
-//            $table->insert();
+            $table->insert();
              
         }
-        print_R($restored);exit;
+        
         $roo->jok('RESTORE');
         
     }
