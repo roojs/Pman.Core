@@ -639,6 +639,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->query("ALTER TABLE {$tableName} DISABLE TRIGGER USER");
             
+            
             $table = DB_DataObject::factory($tableName);
             
             $pk = $table->keys();
