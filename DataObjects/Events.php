@@ -607,7 +607,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $restored = array();
         
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
-            if(empty($d['id'] || empty($d['_table']) || isset($restored[$d['_table']][$d['id']]))){
+            if(
+                    empty($d['id']) || 
+                    empty($d['_table']) || 
+                    !empty($restored[$d['_table']]) && !empty($restored[$d['_table']][$d['id']])
+            ){
                 continue;
             }
         }
