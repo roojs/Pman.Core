@@ -606,6 +606,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $processed = array();
         $restored = array();
+        $affects  = array();
         
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
             if(
@@ -633,8 +634,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $pk = $table->keys();
             
-            $affects  = array();
-        
             $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
 
             foreach($all_links as $tbl => $links) {
