@@ -652,6 +652,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->setFrom($d);
             
+            $table->insert();
+            
             print_R($affects);exit;
             
         }
