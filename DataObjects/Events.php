@@ -636,18 +636,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $table->sequenceKey(false,false);
             
             $table->insert();
-            
-            if(!isset($restored[$table->tableName()])){
-                $restored[$table->tableName()] = array();
-            }
-            
-            $restored[$table->tableName()][$d['id']] = $table;
-            
-            $table = DB_DataObject::factory($tableName);
-            
              
         }
-        print_R($affects);exit;
+        
+        
         
     }
 }
