@@ -643,7 +643,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         continue;
                     }
 
-                    $affects[$tbl . '.' . $col] = $table->tableName() . '.' . (empty($pk)) ? 'id' : $pk[0];
+                    $affects[$tbl . '.' . $col] = $table->tableName() . '.' . ((empty($pk)) ? 'id' : $pk[0]);
                 }
             }
             
