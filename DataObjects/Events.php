@@ -600,6 +600,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $log = json_decode(file_get_contents($file), true);
         
+        if(empty($log['POST']) || empty($log['POST']['_delete']) || empty($log['DELETED_DATAOBJECTS'])){
+            $roo->jerr('Invalid url');
+        }
+        
+        foreach ($log['DELETED_DATAOBJECTS'] as $d){
+            
+        }
         
         print_R($log);exit;
         
