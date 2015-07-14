@@ -647,7 +647,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
             }
             
-            
             unset($d['_table']);
             
             $table->setFrom($d);
