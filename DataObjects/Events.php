@@ -627,6 +627,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $table = DB_DataObject::factory($d['_table']);
             
             
+            
         }
         
         print_R($log);exit;
