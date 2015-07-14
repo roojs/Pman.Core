@@ -606,7 +606,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $processed = array();
         $restored = array();
-        $affects  = array();
         
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
             if(
@@ -629,7 +628,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $processed[$tableName][] = $d['id'];
-            
             
             $table = DB_DataObject::factory($tableName);
             
