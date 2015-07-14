@@ -634,6 +634,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->setFrom($d);
             
+            /*
+             * need to use the old id
+             */
             $table->id = $d['id'];
             
             $table->sequenceKey(false,false);
