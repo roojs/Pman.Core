@@ -630,7 +630,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if (!is_a($table,'DB_DataObject')) {
                 continue;
             }
-            print_r($table->table());exit;
+            
             $pk = $table->keys();
             
             $affects  = array();
