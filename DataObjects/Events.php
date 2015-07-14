@@ -632,6 +632,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
+            $table->query("ALTER TABLE char DISABLE TRIGGER ALL");
+            
+            $table = DB_DataObject::factory($d['_table']);
+            
             $pk = $table->keys();
             
             $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
