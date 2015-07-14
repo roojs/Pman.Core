@@ -667,6 +667,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $table->setFrom($d);
+            $table->id = $d['id'];
+            $this->sequenceKey(false,false);
             
             $table->insert();
             
