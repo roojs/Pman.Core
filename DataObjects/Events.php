@@ -664,7 +664,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
 //            
 //            $restored[$table->tableName()] = $table;
             
-            print_R($restored);exit;
+
             
         }
         print_R($affects);exit;
