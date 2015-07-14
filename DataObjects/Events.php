@@ -630,6 +630,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
+            unset($d['_table']);
+            
+            $table->setFrom($d);
+            
         }
         
         print_R($log);exit;
