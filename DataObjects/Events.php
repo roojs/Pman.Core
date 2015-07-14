@@ -630,10 +630,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            unset($d['_table']);
-            
-            $table->setFrom($d);
-            
             $affects  = array();
         
             $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
@@ -648,6 +644,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     $affects[$tbl .'.' . $col] = true;
                 }
             }
+            
+            unset($d['_table']);
+            
+            $table->setFrom($d);
             
             print_R($affects);exit;
             
