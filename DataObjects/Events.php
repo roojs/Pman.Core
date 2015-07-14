@@ -618,7 +618,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            
             if(!isset($restored[$d['_table']])){
                 $restored[$d['_table']] = array();
             }
