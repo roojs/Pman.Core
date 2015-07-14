@@ -598,9 +598,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $roo->jerr('Could not retrieve the event log file');
         }
         
-        $log = file_get_contents($file);
+        $log = json_decode(file_get_contents($file));
         
-        print_r($log);exit;
+        print_R($log);exit;
         
     }
 }
