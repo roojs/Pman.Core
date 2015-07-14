@@ -662,7 +662,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->insert();
             
-            $restored[$table->tableName()] = $table;
+            if(!isset($restored[$table->tableName()])){
+                $restored[$table->tableName()] = array();
+            }
+            
+            $restored[$table->tableName()][] = $table;
             
 
             
