@@ -622,7 +622,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $restored[$d['_table']] = array();
             }
             
-            $restored[$d['_table']] = $d['id'];
+            $restored[$d['_table']][] = $d['id'];
             
             $table = DB_DataObject::factory($d['_table']);
             
