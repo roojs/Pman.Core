@@ -634,6 +634,23 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->setFrom($d);
             
+            $affects  = array();
+        
+            $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
+
+            foreach($all_links as $tbl => $links) {
+                foreach($links as $col => $totbl_col) {
+                    $to = explode(':', $totbl_col);
+                    if ($to[0] != $this->tableName()) {
+                        continue;
+                    }
+
+                    $affects[$tbl .'.' . $col] = true;
+                }
+            }
+            
+            print_R($affects);exit;
+            
         }
         
         print_R($log);exit;
