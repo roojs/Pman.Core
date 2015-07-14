@@ -610,10 +610,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if(
                     empty($d['id']) || 
                     empty($d['_table']) || 
-                    !empty($restored[$d['_table']]) && !empty($restored[$d['_table']][$d['id']])
+                    (
+                            !empty($restored[$d['_table']]) && 
+                            !empty($restored[$d['_table']][$d['id']])
+                    )
             ){
                 continue;
             }
+            
+            
         }
         
         print_R($log);exit;
