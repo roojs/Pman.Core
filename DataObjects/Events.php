@@ -629,7 +629,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if (!is_a($table,'DB_DataObject')) {
                 continue;
             }
-            print_R($table->keys());exit;
+            
+            $pk = $table->keys();
+            
             $affects  = array();
         
             $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
@@ -641,7 +643,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         continue;
                     }
 
-                    $affects[$tbl .'.' . $col] = $table->tableName();
+                    $affects[$tbl . '.' . $col] = $table->tableName() . '.' . (empty($pk)) ? 'id' : $pk[0];
                 }
             }
             
