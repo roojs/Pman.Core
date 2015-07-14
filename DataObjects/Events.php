@@ -618,8 +618,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
+            
             if(!isset($restored[$d['_table']])){
                 $restored[$d['_table']] = array();
+            }
+            
+            $table = DB_DataObject::factory($tableName);
+            
+            if (!is_a($table,'DB_DataObject')) {
+                continue;
             }
             
             unset($d['_table']);
