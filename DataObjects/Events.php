@@ -604,6 +604,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $roo->jerr('Invalid url');
         }
         
+        $processed = array();
         $restored = array();
         
         foreach ($log['DELETED_DATAOBJECTS'] as $d){
@@ -611,18 +612,18 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     empty($d['id']) || 
                     empty($d['_table']) || 
                     (
-                            !empty($restored[$d['_table']]) && 
-                            in_array($d['id'], $restored[$d['_table']])
+                            !empty($processed[$d['_table']]) && 
+                            in_array($d['id'], $processed[$d['_table']])
                     )
             ){
                 continue;
             }
             
-            if(!isset($restored[$d['_table']])){
-                $restored[$d['_table']] = array();
+            if(!isset($processed[$d['_table']])){
+                $processed[$d['_table']] = array();
             }
             
-            $restored[$d['_table']][] = $d['id'];
+            $processed[$d['_table']][] = $d['id'];
             
             $table = DB_DataObject::factory($d['_table']);
             
