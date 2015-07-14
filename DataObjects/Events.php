@@ -648,6 +648,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         $affects[$tbl] = array();
                     }
                     
+                    if(!isset($affects[$tbl][$col])){
+                        $affects[$tbl][$col] = array();
+                    }
+                    
                     $affects[$tbl][$col] = $table->tableName() . '.' . ((empty($pk)) ? 'id' : $pk[0]);
                     
                     
