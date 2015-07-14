@@ -635,33 +635,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-             
-            
-            $table = DB_DataObject::factory($tableName);
-            
-            $pk = $table->keys();
-            
-            $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
-
-            foreach($all_links as $tbl => $links) {
-                foreach($links as $col => $totbl_col) {
-                    $to = explode(':', $totbl_col);
-                    if ($to[0] != $this->tableName()) {
-                        continue;
-                    }
-                    
-                    if(!isset($affects[$tbl])){
-                        $affects[$tbl] = array();
-                    }
-                    
-                    if(!isset($affects[$tbl][$col])){
-                        $affects[$tbl][$col] = array();
-                    }
-                    
-                    $affects[$tbl][$col][$d['id']] = $table->tableName() . '.' . ((empty($pk)) ? 'id' : $pk[0]);
-                    
-                }
-            }
             
             $table->setFrom($d);
             $table->id = $d['id'];
