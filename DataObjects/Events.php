@@ -611,19 +611,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     empty($d['id']) || 
                     empty($d['_table']) || 
                     (
-                            !empty($processed[$d['_table']]) && 
-                            in_array($d['id'], $processed[$d['_table']])
+                            !empty($d['_table'][$d['_table']]) && 
+                            in_array($d['id'], $restored[$d['_table']])
                     )
             ){
                 continue;
             }
             
-            $tableName = $d['_table'];
             
-            unset($d['_table']);
-            
-            if(!isset($processed[$tableName])){
-                $processed[$tableName] = array();
+            if(!isset($restored[$d['_table']])){
+                $restored[$d['_table']] = array();
             }
             
             $processed[$tableName][] = $d['id'];
@@ -633,6 +630,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if (!is_a($table,'DB_DataObject')) {
                 continue;
             }
+            
+            unset($d['_table']);
             
             $table->setFrom($d);
             $table->id = $d['id'];
