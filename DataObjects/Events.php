@@ -659,7 +659,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->insert();
             
-            $restored[] = $table;
+            $restored[$table->tableName()] = $table;
             
             print_R($restored);exit;
             
