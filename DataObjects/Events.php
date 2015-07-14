@@ -620,21 +620,26 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            if(!isset($processed[$d['_table']])){
-                $processed[$d['_table']] = array();
+            $tableName = $d['_table'];
+            
+            unset($d['_table']);
+            
+            if(!isset($processed[$tableName])){
+                $processed[$tableName] = array();
             }
             
-            $processed[$d['_table']][] = $d['id'];
+            $processed[$tableName][] = $d['id'];
             
-            $table = DB_DataObject::factory($d['_table']);
+            
+            $table = DB_DataObject::factory($tableName);
             
             if (!is_a($table,'DB_DataObject')) {
                 continue;
             }
             
-            $table->query("ALTER TABLE char DISABLE TRIGGER ALL");
+            $table->query("ALTER TABLE {$tableName} DISABLE TRIGGER ALL");
             
-            $table = DB_DataObject::factory($d['_table']);
+            $table = DB_DataObject::factory($tableName);
             
             $pk = $table->keys();
             
@@ -660,8 +665,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
             }
             
-            unset($d['_table']);
-            
             $table->setFrom($d);
             
             $table->insert();
@@ -671,6 +674,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $restored[$table->tableName()][$d['id']] = $table;
+            
+            $table = DB_DataObject::factory($tableName);
+            
+            $table->query("ALTER TABLE {$tableName} ENABLE TRIGGER ALL");
             
         }
         print_R($affects);exit;
