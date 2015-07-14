@@ -592,6 +592,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function restore($roo)
     {
-        print_R($this->retrieveEventLog());exit;
+        $file = $this->retrieveEventLog();
+        
+        if(empty($file) || !file_exists($file)){
+            $roo->jerr('Could not retrieve the event log file');
+        }
+        
+        $log = file_get_contents($file);
+        
+        print_r($log);exit;
+        
     }
 }
