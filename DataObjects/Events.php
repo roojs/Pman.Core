@@ -641,7 +641,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         continue;
                     }
 
-                    $affects[$tbl .'.' . $col] = true;
+                    $affects[$tbl .'.' . $col] = $table->tableName();
                 }
             }
             
