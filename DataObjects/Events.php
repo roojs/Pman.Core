@@ -611,7 +611,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     empty($d['id']) || 
                     empty($d['_table']) || 
                     (
-                            !empty($d['_table'][$d['_table']]) && 
+                            !empty($restored[$d['_table']]) && 
                             in_array($d['id'], $restored[$d['_table']])
                     )
             ){
