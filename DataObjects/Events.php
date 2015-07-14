@@ -637,7 +637,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 continue;
             }
             
-            $table->query("ALTER TABLE {$tableName} DISABLE TRIGGER ALL");
+            $table->query("ALTER TABLE {$tableName} DISABLE TRIGGER USER");
             
             $table = DB_DataObject::factory($tableName);
             
@@ -677,7 +677,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table = DB_DataObject::factory($tableName);
             
-            $table->query("ALTER TABLE {$tableName} ENABLE TRIGGER ALL");
+            $table->query("ALTER TABLE {$tableName} ENABLE TRIGGER USER");
             
         }
         print_R($affects);exit;
