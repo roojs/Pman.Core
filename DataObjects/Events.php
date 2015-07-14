@@ -592,6 +592,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function restore($roo)
     {
-        
+        print_R($this);
     }
 }
