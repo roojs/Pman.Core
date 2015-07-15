@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             ");
         }
         if (isset($q['_etypes'])) {
-            $this->whereAddIn('core_enu.etype', explode(',', $q['_etypes']), 'string');
+            $this->whereAddIn('core_enum.etype', explode(',', $q['_etypes']), 'string');
         }
         
     }
