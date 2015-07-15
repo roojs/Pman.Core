@@ -57,6 +57,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     core_enum.display_name LIKE '%{$name}%'
             ");
         }
+        if (isset($q['_etypes'])) {
+            $this->whereAddIn('core_enu.etype', explode(',', $q['_etypes']), 'string');
+        }
         
     }
     
