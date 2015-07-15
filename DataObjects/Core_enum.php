@@ -138,7 +138,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $x->whereAdd("etype = '{$this->escape($request['etype'])}' AND name = '{$this->escape($request['name'])}'");
             $x->find(true);
             if($x->count() > 0){
-                $roo->jerr('record already exists');
+                $roo->jerr('a duplicaeterecord already exists');
             }
         }
     }
