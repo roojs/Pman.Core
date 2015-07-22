@@ -457,6 +457,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if(!empty($this->_extra) && is_array($this->_extra)){
             $d = array_merge($d, $this->_extra);
         }
+        print_R($d);exit;
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         // ensure it's written so that ajax calls can fetch it..
