@@ -377,7 +377,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
-//            print_R($a);exit;
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
             $u->autoJoin();
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
@@ -386,7 +385,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 if(!empty($a->_extra)){
                     $user->_extra = $a->_extra;
                 }
-                return clone($u);
+                return clone($user);
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
         }
