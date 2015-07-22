@@ -381,6 +381,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
             $u->autoJoin();
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
+                $user = clone ($u);
+                
+                if(!empty($a->_extra)){
+                    $user->_extra = $a->_extra;
+                }
                 return clone($u);
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
