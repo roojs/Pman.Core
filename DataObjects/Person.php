@@ -454,8 +454,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $d = $p->toArray();
         
-        if(!empty($this->_extra) && is_array($this->_extra)){
-            $d = array_merge($d, $this->_extra);
+        if(!empty($this->_extra)){
+            $d['_extra'] = $this->_extra;
         }
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
