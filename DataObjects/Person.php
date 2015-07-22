@@ -452,8 +452,13 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $p = DB_DAtaObject::Factory($this->tableName());
         $p->get($this->pid());
         
+        $d = $p->toArray();
+        
+        if(!empty($this->_extra) && is_array($this->_extra)){
+            $d = array_merge($d, $this->_extra);
+        }
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
-        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$p->toArray());
+        $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         // ensure it's written so that ajax calls can fetch it..
         
         
