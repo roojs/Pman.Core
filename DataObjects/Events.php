@@ -329,7 +329,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $rem  = array();
         // should this really go in remarks? - 
         if ($obj && method_exists($obj,'toEventString')) {
-            $rem[] = $obj->toEventString() ;
+            if($obj->toEventString() !== false){
+                $rem[] = $obj->toEventString();
+            }
         }
         $rem[] = $remarks;
         $this->remarks = implode(' : ', $rem);
