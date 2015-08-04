@@ -643,7 +643,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $table->sequenceKey(false,false);
             
-            $table->insert();     
+            $table->insert();
+            
+            if($table->tableName() == 'crm_mailing_list_member'){
+                
+            }
         }
         
         $roo->jok('RESTORE');
