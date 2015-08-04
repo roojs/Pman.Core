@@ -646,7 +646,20 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $table->insert();
             
             if($table->tableName() == 'crm_mailing_list_member'){
-                
+                $ml = DB_DataObject::factory('crm_mailing_list');
+                if(!$ml->get($table->mailing_list_id)){
+                    continue;
+                }
+
+                $mlm = DB_DataObject::factory('crm_mailing_list_member');
+                $mlm->setFrom(array(
+                    'mailing_list_id' => $table->mailing_list_id,
+                    'is_active' => 1
+                ));
+
+                $o = clone($ml);
+                $ml->no_members = $mlm->count();
+                $ml->update($o);
             }
         }
         
