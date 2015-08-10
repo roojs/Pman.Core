@@ -452,10 +452,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         self::$deleted[] = $del;
         return true;
     }
-    static $extra_data = '';
+    static $extra_data = array();
     
-    static function writeEventLogExtra($string) {
-        self::$extra_data = $string;
+    static function writeEventLogExtra($data) {
+        self::$extra_data = $data;
     }
     
     function writeEventLog($extra_data  = '')
