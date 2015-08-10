@@ -458,7 +458,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         self::$extra_data = $data;
     }
     
-    function writeEventLog($extra_data  = '')
+    function writeEventLog($extra_data  = false)
     {
         $ff  = HTML_FlexyFramework::get();
         if (empty($ff->Pman['event_log_dir'])) {
