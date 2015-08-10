@@ -521,7 +521,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if ($extra_data !== false) {
             $out['EXTRA'] = $extra_data;
         }
-        if ()
+        if ( self::$extra_data !== false) {
+            $out['EXTRA_DATA'] =  self::$extra_data;
+        }
         
         file_put_contents($file, json_encode($out));
         
