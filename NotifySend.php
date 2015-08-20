@@ -233,7 +233,7 @@ class Pman_Core_NotifySend extends Pman
             $old = clone($w);
             $w->act_when = $email['later'];
             $w->update($old);
-            $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to $email['later']");
+            $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
         }
         
          
