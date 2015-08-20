@@ -172,13 +172,14 @@ class Pman_Core_Notify extends Pman
      
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
+        $total = 0;
         
         if (!empty($opts['old'])) {
             // show old and new...
             
             $w->orderBy('act_when DESC'); // latest first
             $w->limit($opts['limit']); // we can run 
-            
+            $total = min($w->count(), $opts['limit']);
         } else {   
             // standard
             
@@ -191,7 +192,7 @@ class Pman_Core_Notify extends Pman
             }
     
             $w->orderBy('act_when ASC'); // oldest first.
-            
+            $total = min($w->count(), $opts['limit']);
             $this->logecho("QUEUE is {$w->count()} only running " . ((int) $opts['limit']));
             
             $w->limit($opts['limit']); // we can run 1000 ...
@@ -225,6 +226,7 @@ class Pman_Core_Notify extends Pman
         while (true) {
             if ($w->fetch()) {
                 $ar[] = clone($w);
+                $total--;
             }
             
             $this->logecho("BATCH SIZE: ".  count($ar) );
