@@ -204,7 +204,7 @@ class Pman_Core_Notify extends Pman
         $w->autoJoin();
         
         
-        $ar = $w->fetchAll();
+        $ar = array(); // $w->fetchAll();
         
         if (!empty($opts['list'])) {
             if (empty($ar)) {
@@ -224,7 +224,9 @@ class Pman_Core_Notify extends Pman
         $pushed = array();
         $requeue = array();
         while (true) {
-            
+            if ($w->fetch()) {
+                $ar[] = clone($w);
+            }
             
             $this->logecho("BATCH SIZE: ".  count($ar) );
             
