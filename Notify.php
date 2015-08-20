@@ -192,7 +192,7 @@ class Pman_Core_Notify extends Pman
     
             $w->orderBy('act_when ASC'); // oldest first.
             
-            $this->logecho("QUEUE is {$w->count()} only runing " . ((int) $opts['limit']));
+            $this->logecho("QUEUE is {$w->count()} only running " . ((int) $opts['limit']));
             
             $w->limit($opts['limit']); // we can run 1000 ...
         }
