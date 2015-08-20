@@ -166,7 +166,12 @@ class Pman_Core_NotifySend extends Pman
                 'ontable' => $w->ontable,
                 'onid' => $w->onid,
         );
-        $lar[strtolower($w->person_table).'_id'] = $w->{strtolower($w->person_table).'_id'};
+        // only newer version of the database us this..
+        $personid_col = strtolower($w->person_table).'_id';
+        if (isset($w->{$personid_col})) {
+            $lar[$personid_col] = $w->{$personid_col};
+        }
+        
         
         $l->setFrom( $lar );       
         $l->whereAdd('id != '. $w->id);
