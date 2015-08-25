@@ -21,6 +21,8 @@ class Pman_Core_Pman {
             die("group core-person-signup-bcc does not exist");
         }
         
+        
+        
     }
     
     
