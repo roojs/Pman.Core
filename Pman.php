@@ -18,6 +18,7 @@ class Pman_Core_Pman {
         $group = DB_DataObject::factory('groups');
         
         if(!$group->get('name', 'core-person-signup-bcc')){
+            die("group core-person-signup-bcc does not exist");
         }
         
     }
