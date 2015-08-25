@@ -15,7 +15,10 @@ class Pman_Core_Pman {
             return;
         }
         
+        $group = DB_DataObject::factory('groups');
         
+        if(!$group->get('name', 'core-person-signup-bcc')){
+        }
         
     }
     
