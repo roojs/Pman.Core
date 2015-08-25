@@ -60,8 +60,10 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     
     function sendVerification($template, $roo)
     {
+        $admin = array();
+        
         $group = DB_DataObject::factory('groups');
-        if($group->get('name', 'Administrators')){
+        if($group->get('name', 'core-person-signup-bcc')){
             $member = DB_DataObject::factory('group_members');
             $member->group_id = $group->id;
             $mids = $member->fetchAll('user_id');
@@ -72,7 +74,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         }
         
         if(empty($admin)){
-            $this->jerr("Please contact our administrators - system setting proble");
+            $this->jerr("Please contact our administrators - system setting problem");
         }
         
         $content = array(
