@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         $content = array(
             'template'      => $template,
             'person'        => $this,
-            'bcc' =>   $admin,
+            'bcc'           =>   $admin,
             'serverName'    => $_SERVER['SERVER_NAME'],
             'baseURL'       => $roo->baseURL
         );
