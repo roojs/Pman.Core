@@ -11,6 +11,10 @@ class Pman_Core_Pman {
     
     function init ($pg)
     {
+        if(!empty($_REQUEST['_core_skip_check'])){
+            return;
+        }
+        
         
     }
     
