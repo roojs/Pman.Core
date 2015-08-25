@@ -21,6 +21,12 @@ class Pman_Core_Pman {
             die("group core-person-signup-bcc does not exist");
         }
         
+        $member = DB_DataObject::factory('group_members');
+        $member->group_id = $group->id;
+        
+        if(!$member->count()){
+            die("group core-person-signup-bcc does not have any members");
+        }
         
         
     }
