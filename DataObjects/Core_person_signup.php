@@ -60,7 +60,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     
     function sendVerification($template, $roo)
     {
-         $group = DB_DataObject::factory('groups');
+        $group = DB_DataObject::factory('groups');
         if($group->get('name', 'Administrators')){
             $member = DB_DataObject::factory('group_members');
             $member->group_id = $group->id;
