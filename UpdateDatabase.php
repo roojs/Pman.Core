@@ -658,6 +658,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 'name' => 'system-email-from',
                 'type' => 0, // system
             ),
+            array(
+                'name' => 'core-person-signup-bcc',
+                'type' => 0, // system
+            ),
         ));
         
     }
