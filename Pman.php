@@ -17,6 +17,8 @@ class Pman_Core_Pman {
         
         $group = DB_DataObject::factory('groups');
         
+        // group should be auto created - by update-database...
+        
         if(!$group->get('name', 'core-person-signup-bcc')){
             die("group core-person-signup-bcc does not exist : add ?_core_skip_check=1 to bypass this check");
         }
