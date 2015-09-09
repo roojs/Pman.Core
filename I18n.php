@@ -108,7 +108,7 @@ class Pman_Core_I18n extends Pman
     function get($s ='')
     {
      
-        $this->sessionState(false);
+        $this->sessionState(0);
         $lbits = $this->guessUsersLanguage();
          
         if ($this->authUser && !empty($_REQUEST['_debug'])) {
