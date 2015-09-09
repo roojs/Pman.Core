@@ -74,7 +74,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         }
         
         if(empty($admin)){
-            $this->jerr("Please contact our administrators - system setting problem");
+            $roo->jerr("Please contact our administrators - system setting problem");
         }
         
         $content = array(
