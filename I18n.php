@@ -82,7 +82,7 @@ class Pman_Core_I18n extends Pman
      
     
     function guessUsersLanguage() {
-         
+        
         $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
         
         /// verify the selected language..
@@ -108,7 +108,7 @@ class Pman_Core_I18n extends Pman
     function get($s ='')
     {
      
-     
+        $this->sessionState(false);
         $lbits = $this->guessUsersLanguage();
          
         if ($this->authUser && !empty($_REQUEST['_debug'])) {
