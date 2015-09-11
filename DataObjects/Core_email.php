@@ -339,7 +339,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (isset($contents['rcpts'])) {
             $cfg['rcpts'] = $contents['rcpts'];
         }
-        print_r($cfg);exit;
+        
         $r = new Pman_Core_Mailer($cfg);
         
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
@@ -350,7 +350,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $ret = $r->toData();
-        
+        print_R($ret);exit;
         if(!$send){
             return $ret;
         }
