@@ -57,6 +57,7 @@
        "items" : [
         {
          "fieldLabel" : "Name",
+         "bool hidden" : true,
          "xtype" : "TextField",
          "allowBlank" : false,
          "actionMode" : "fieldEl",
