@@ -161,7 +161,6 @@ Pman.Dialog.CoreEnum = {
           actionMode : 'fieldEl',
           allowBlank : false,
           fieldLabel : _this._strings['49ee3087348e8d44e1feda1917443987'] /* Name */,
-          hidden : true,
           name : 'name',
           width : 200,
           xns : Roo.form,
