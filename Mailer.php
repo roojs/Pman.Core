@@ -479,6 +479,7 @@ class Pman_Core_Mailer {
                 filemtime($cache) > strtotime('NOW - 1 WEEK')
             ) {
             $ret =  json_decode(file_get_contents($cache), true);
+            $this->log("fetched from cache");
             $ret['file'] = $cache . '.data';
             return $ret;
         }
@@ -489,7 +490,10 @@ class Pman_Core_Mailer {
         require_once 'HTTP/Request.php';
         $a = new HTTP_Request($this->mapurl($url));
         $a->sendRequest();
-        file_put_contents($cache .'.data', $a->getResponseBody());
+        $data = $a->getResponseBody();
+        $this->log("got file of size " . strlen($data);)
+        file_put_contents($cache .'.data', $data);
+        
         
         $mt = $a->getResponseHeader('Content-Type');
         
