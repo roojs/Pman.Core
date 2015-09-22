@@ -404,7 +404,7 @@ class Pman_Core_Mailer {
                     continue;
                 }
             } else {
-               $file = $url;  
+               $file = $this->mapurl($url);  
             }
             
             $par = $link->parentNode;
