@@ -427,7 +427,7 @@ class Pman_Core_Mailer {
         
         
         $this->log( "FETCH : $url\n");
-        }
+        
         if ($url[0] == '/') {
             $ff = HTML_FlexyFramework::get();
             $file = $ff->rootDir . $url;
