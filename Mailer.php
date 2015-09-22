@@ -88,7 +88,7 @@ class Pman_Core_Mailer {
             $this->debug = $ff->Core_Mailer['debug'];
         }
         $this->log("URL MAP");
-        $this->log($urlmap);
+        $this->log($this->urlmap);
         
     }
      
