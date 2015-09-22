@@ -424,7 +424,7 @@ class Pman_Core_Mailer {
     
     function fetchImage($url)
     {
-        $url = $this->mapurl($url);
+        
         
         if($this->debug) {
             echo "FETCH : $url\n";
@@ -488,7 +488,7 @@ class Pman_Core_Mailer {
         }
         
         require_once 'HTTP/Request.php';
-        $a = new HTTP_Request($url);
+        $a = new HTTP_Request($this->mapurl($url));
         $a->sendRequest();
         file_put_contents($cache .'.data', $a->getResponseBody());
         
