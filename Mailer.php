@@ -87,7 +87,7 @@ class Pman_Core_Mailer {
         if (!empty($ff->Core_Mailer['debug'])) {
             $this->debug = $ff->Core_Mailer['debug'];
         }
-        
+        $this->log($this);
         
     }
      
