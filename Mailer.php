@@ -533,10 +533,10 @@ class Pman_Core_Mailer {
     
     function log($val)
     {
-        if (!$debug < 1) {
+        if (!$this->debug < 1) {
             return;
         }
-        if ($debug < 2) {
+        if ($$this->debug < 2) {
             echo '<PRE>' . $val. "\n";
         }
         $fh = fopen('/tmp/core_mailer.log', 'a');
