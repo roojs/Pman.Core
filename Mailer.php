@@ -55,7 +55,7 @@
  */
 
 class Pman_Core_Mailer {
-    var $debug          = false;
+    var $debug          = 2;
     var $page           = false; /* usually a html_flexyframework_page */
     var $contents       = false; /* object or array */
     var $template       = false; /* string */
@@ -524,7 +524,7 @@ class Pman_Core_Mailer {
          
         
     }
-    var $debug = 1;
+    
     function log($val)
     {
         if (!$debug) {
