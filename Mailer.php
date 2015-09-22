@@ -534,7 +534,7 @@ class Pman_Core_Mailer {
     
     function log($val)
     {
-        if (!$this->debug < 1) {
+        if (!$this->debug) {
             return;
         }
         if ($this->debug < 2) {
