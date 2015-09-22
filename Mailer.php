@@ -298,9 +298,9 @@ class Pman_Core_Mailer {
             
             return $email;
         }
-        if ($this->debug) {
-            echo '<PRE>';echo htmlspecialchars(print_r($email,true));
-        }
+        
+        $this->log( htmlspecialchars(print_r($email,true)));
+        
         ///$recipents = array($this->email);
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         //print_R($mailOptions);exit;
@@ -312,7 +312,7 @@ class Pman_Core_Mailer {
         
         $mail = Mail::factory($this->mail_method,$mailOptions);
         if ($this->debug) {
-            $mail->debug = $this->debug;
+            $mail->debug = (bool) $this->debug;
         }
         
         $email['headers']['Date'] = date('r'); 
@@ -426,8 +426,7 @@ class Pman_Core_Mailer {
     {
         
         
-        if($this->debug) {
-            echo "FETCH : $url\n";
+        $this->log( "FETCH : $url\n");
         }
         if ($url[0] == '/') {
             $ff = HTML_FlexyFramework::get();
@@ -527,8 +526,11 @@ class Pman_Core_Mailer {
     
     function log($val)
     {
-        if (!$debug) {
+        if (!$debug < 1) {
             return;
+        }
+        if ($debug < 2) {
+            echo '<PRE>' . $val. "\n";
         }
         $fh = fopen('/tmp/core_mailer.log', 'a');
         fwrite($fh, date('Y-m-d H:i:s -') . json_encode($val) . "\n");
