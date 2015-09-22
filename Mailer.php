@@ -299,7 +299,7 @@ class Pman_Core_Mailer {
             
             return $email;
         }
-        )
+        
         //$this->log( htmlspecialchars(print_r($email,true)));
         
         ///$recipents = array($this->email);
