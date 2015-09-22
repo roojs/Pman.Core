@@ -491,7 +491,8 @@ class Pman_Core_Mailer {
         $a = new HTTP_Request($this->mapurl($url));
         $a->sendRequest();
         $data = $a->getResponseBody();
-        $this->log("got file of size " . strlen($data);)
+        $this->log("got file of size " . strlen($data));
+        $this->log("save contentid " . md5($url));
         file_put_contents($cache .'.data', $data);
         
         
