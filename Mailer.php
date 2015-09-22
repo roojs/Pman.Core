@@ -63,6 +63,7 @@ class Pman_Core_Mailer {
     var $rcpts   = false;
     var $templateDir = false;
     var $locale = false; // eg. 'en' or 'zh_HK'
+    var $urlmap = array();
     
     
     var $html_locale = false; // eg. 'en' or 'zh_HK'
