@@ -23,6 +23,9 @@
        html_locale => 'en' == always use the 'english translated verison'
        cache_images => true -- defaults to caching images - set to false to disable.
        replaceImages => true|false,
+       urlmap => array(
+            'https://www.mysite.com/', 'http://localhost/'
+       )
        locale => 'en' .... or zh_hk....
        rcpts => array()   // override recipients..
        attachments => array(
@@ -504,6 +507,18 @@ class Pman_Core_Mailer {
         return $ret;
     }  
     
+    function mapurl($in)
+    {
+        
+        foreach($this->urlmap as $o=>$n) {
+            if (strpos($in,$o) === 0) {
+                return $n . substr($in,strlen($o));
+            }
+        }
+        return $in;
+         
+        
+    }
     
     
 }
