@@ -424,6 +424,8 @@ class Pman_Core_Mailer {
     
     function fetchImage($url)
     {
+        $url = $this->mapurl($url);
+        
         if($this->debug) {
             echo "FETCH : $url\n";
         }
