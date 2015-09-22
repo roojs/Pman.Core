@@ -527,6 +527,7 @@ class Pman_Core_Mailer {
                 return $ret;
             }
         }
+        $this->log("mapurl no change - $in");
         return $in;
          
         
