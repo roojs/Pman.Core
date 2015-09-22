@@ -537,8 +537,9 @@ class Pman_Core_Mailer {
         if (!$this->debug < 1) {
             return;
         }
-        if ($$this->debug < 2) {
+        if ($this->debug < 2) {
             echo '<PRE>' . $val. "\n";
+            return;
         }
         $fh = fopen('/tmp/core_mailer.log', 'a');
         fwrite($fh, date('Y-m-d H:i:s -') . json_encode($val) . "\n");
