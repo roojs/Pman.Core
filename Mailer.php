@@ -522,6 +522,17 @@ class Pman_Core_Mailer {
          
         
     }
-    
+    var $debug = 1;
+    function log($val)
+    {
+        if (!$debug) {
+            return;
+        }
+        $fh = fopen('/tmp/core_mailer.log', 'a');
+        fwrite($fh, date('Y-m-d H:i:s -') . json_encode($val) . "\n");
+        fclose($fh);
+        
+        
+    }
     
 }
