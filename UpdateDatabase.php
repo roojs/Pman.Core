@@ -341,6 +341,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function importmysqldir($dburl, $dir)
     {
+        
+        $this->fixMysqlInnodb(); /// run once 
+        
         echo "Import MYSQL :: $dir\n";
         
         
