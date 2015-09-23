@@ -15,8 +15,8 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
     SELECT
         IF(
             dbtb2='.',
-            CONCAT('ALTER TABLE ',dbtb1,' ENGINE=InnoDB'),
-            CONCAT('SELECT ''',dbtb1,' is Already InnoDB'' as \"No Need to Convert\"')
+            CONCAT('ALTER TABLE ',dbtb1,' CONVERT TO CHARACTER SET  \'utf8\' '),
+            CONCAT('SELECT ''',dbtb1,' is Already utf8'' as \"No Need to Convert\"')
         )
     INTO
         @ConvertEngineSQL
