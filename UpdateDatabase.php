@@ -736,12 +736,7 @@ class Pman_Core_UpdateDatabase extends Pman
         var_dump($db);
         // Value should == ON
         
-        // I think it needs to look in the mysql directory.... to see if the idb exists..
-        $db = DB_DataObject::factory('core_enum');
-        $db->query("SHOW TABLE STATUS");
-        // Engine should be InnoDB - and file XXX.idb should exist...
-        
-        
+        $done_cehck;
 
  
         
