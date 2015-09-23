@@ -14,37 +14,28 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
     
     SELECT
         IF(
-            dbtb2='.',
-            CONCAT('ALTER TABLE ',dbtb1,' CONVERT TO CHARACTER SET  \'utf8\' '),
-            CONCAT('SELECT ''',dbtb1,' is Already utf8'' as \"No Need to Convert\"')
+            csname='utf8',
+            CONCAT('SELECT ''',dbtb1,' is Already utf8'' as \"No Need to Convert\"'),
+            CONCAT('ALTER TABLE ',dbtb1,' CONVERT TO CHARACTER SET  \'utf8\' ')
+            
         )
     INTO
         @ConvertEngineSQL
         
     FROM (
         SELECT
-            CONCAT(A.db,'.',A.tb) dbtb1,
-            CONCAT(IFNULL(B.db,''),'.',IFNULL(B.tb,'')) dbtb2,engine
-        FROM
-            (
-                SELECT
-                    table_schema db,table_name tb,engine
-                FROM
-                    information_schema.tables
-                WHERE
-                    table_schema=mydb and table_name=mytb
-            ) A
-        LEFT JOIN
-            (
-                SELECT
-                    table_schema db,table_name tb
-                FROM
-                    information_schema.tables
-                WHERE
-                    table_schema=mydb and table_name=mytb AND engine='InnoDB'
-            ) B
-        USING
-            (db,tb)
+            CCSA.character_set_name csname
+            FROM
+                information_schema.`TABLES` T,
+                information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA
+            WHERE
+                CCSA.collation_name = T.table_collation
+                AND
+                T.table_schema = mydb
+                AND
+                T.table_name = mytb
+
+    
     ) AA;
             
     -- SELECT ConvertEngineSQL; -- ???
