@@ -20,4 +20,4 @@ alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 
 UPDATE core_enum SET display_name = name WHERE display_name = '';
 
-ALTER TABLE core_enum ENGINE=InnoDB;
+call mysql_change_engine('core_enum');

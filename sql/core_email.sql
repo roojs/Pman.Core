@@ -13,7 +13,7 @@ CREATE  TABLE core_email (
 );
 
 
-ALTER TABLE core_email ENGINE=InnoDB;
+call mysql_change_engine('core_email');
 
 
 UPDATE core_email SET updated_dt = NOW();

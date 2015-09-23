@@ -29,4 +29,4 @@ ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
 ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid
 
-ALTER TABLE Images ENGINE=InnoDB;
+call mysql_change_engine('Images');

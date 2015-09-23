@@ -98,5 +98,5 @@ ALTER TABLE Person add index lookup_owner(owner_id);
  
 --  finally - always innodb
  
- ALTER TABLE Person ENGINE=InnoDB;
+ call mysql_change_engine('Person');
  

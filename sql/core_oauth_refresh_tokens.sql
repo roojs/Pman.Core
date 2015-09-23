@@ -12,4 +12,4 @@ CREATE INDEX refresh_token_idx ON core_oauth_refresh_tokens (refresh_token) USIN
 CREATE INDEX client_id_idx ON core_oauth_refresh_tokens (client_id) USING BTREE;
 CREATE INDEX user_id_idx ON core_oauth_refresh_tokens (user_id) USING BTREE;
 
-ALTER TABLE core_oauth_refresh_tokens ENGINE=InnoDB;
+call mysql_change_engine('core_oauth_refresh_tokens');
