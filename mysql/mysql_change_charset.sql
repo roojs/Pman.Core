@@ -15,8 +15,8 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
     SELECT
         IF(
             csname='utf8',
-            CONCAT('SELECT ''',dbtb1,' is Already utf8'' as \"No Need to Convert\"'),
-            CONCAT('ALTER TABLE ',dbtb1,' CONVERT TO CHARACTER SET  \'utf8\' ')
+            CONCAT('SELECT ''',mytb,' is Already utf8'' as \"No Need to Convert\"'),
+            CONCAT('ALTER TABLE ',mytb,' CONVERT TO CHARACTER SET  \'utf8\' ')
             
         )
     INTO
