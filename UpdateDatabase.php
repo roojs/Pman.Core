@@ -736,6 +736,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $db = DB_DataObject::factory('core_enum');
         $db->query("show variables like 'innodb_file_per_table'");
         $db->fetch();
+        if ($db->Value == 'OFF') {
+            die("set innodb_file_per_table = ON in my.cnf");
+        }
         print_r($db);
         // Value should == ON
         exit;
