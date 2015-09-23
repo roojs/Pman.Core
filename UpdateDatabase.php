@@ -737,7 +737,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $db->query("show variables like 'innodb_file_per_table'");
         $db->fetch();
         if ($db->Value == 'OFF') {
-            die("set innodb_file_per_table = ON in my.cnf");
+            die("Error: set innodb_file_per_table = ON in my.cnf\n\n");
         }
         print_r($db);
         // Value should == ON
