@@ -735,8 +735,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $db->fetch();
         var_dump($db);
         // Value should == ON
+        exit;
         
-        $done_cehck;
+        $done_check = true;;
 
  
         
