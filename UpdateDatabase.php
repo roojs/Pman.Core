@@ -723,6 +723,11 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function fixMysqlInnodb()
     {
+        
+        static $done_check = false;
+        if ($done_check) {
+            return;
+        }
         // innodb in single files is far more efficient that MYD or one big innodb file.
         // first check if database is using this format.
         $db = DB_DataObject::factory('core_enum');
