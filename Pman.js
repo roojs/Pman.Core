@@ -236,6 +236,11 @@ Pman = new Roo.Document(
         
        
         //console.log( "t7:" + ((new Date())-stime));
+        if (!Pman.layout.getRegion('center').tabs) {
+                Roo.log("Error could not find tabs? - not adding toolbar?");
+                return;
+        }
+        
         var se = Pman.layout.getRegion('center').tabs.stripEl;
         var tbh = se.createChild( 
                 { tag: 'td', style: 'width:100%;'  });
