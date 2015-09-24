@@ -6,9 +6,8 @@
  *  - it's a bit too heavy at present - needs to go on a diet....
  */
  
+// translation..
 if (typeof(_T) == 'undefined') { _T={};}
- 
-
 
 Roo.XComponent.on('register', function(e) {
     if (typeof(Pman) != 'undefined') { return Pman.xregister(e); } return true;
