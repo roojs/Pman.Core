@@ -1,12 +1,9 @@
-//<script type="text/javascript">
-
+ 
 /**
  * 
  *  
- *  CHANGES
- *  - gtranslate moved to Pman.GoogleTranslate
- * 
- * 
+ *  This is the main Pman class
+ *  - it's a bit too heavy at present - needs to go on a diet....
  */
  
 if (typeof(_T) == 'undefined') { _T={};}
