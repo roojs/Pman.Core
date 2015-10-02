@@ -367,10 +367,10 @@ class Pman_Core_SimpleExcel extends Pman
         }
         
         require_once 'File/Convert.php';
-        var_Dump($this->outfile2);
+        //var_Dump($this->outfile2);
         $fc=  new File_Convert($this->outfile2, "application/vnd.ms-excel");
         $fn = $fc->convert("application/vnd.ms-excel");
-        print_r($fc);
+        //print_r($fc);
         $fc->serve('attachment',$fname); // can fix IE Mess
     }
      
