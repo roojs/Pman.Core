@@ -39,12 +39,19 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     function loadRates()
     {
         
+        static $checked = false;
+        if ($checked ) {
+            return true;
+        }
+        $checked  = true;
+        
         // how often do we need to know this..?
         // let's assume we do it once a week..
         $x = DB_DataObject::Factory('core_curr_rate');
         $x->whereAdd('to_date > NOW()');
         if ($x->count()) {
             // got some data for beyond today..
+            
             return;
         }
         
