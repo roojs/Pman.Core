@@ -175,6 +175,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         DB_DataObject::debugLevel(1);
         $c = DB_DAtaObject::factory('core_curr_rate');
         $c->whereAdd('from_dt < NOW() AND to_dt > NOW()');
+        $c->find();
         $ret = array();
         while($c->fetch()) {
             $ret[$c->curr] = $c->rate;
