@@ -285,12 +285,7 @@ class Pman_Core_I18n extends Pman
     
     }
     /**
-     * load Rates - uses our base rates as default,
-     * if it can load rates from europe or a cache it will update them.
-     * otherwise it will alwasy return a rate.
-     * -- should not be used to do perfect rates.
-     * -- as it may fail... and use backup rates
-     *
+     * DO NOT USE THIS -- see core_curr_rates dataobject.
      *
      */
     var $rates = array();
@@ -299,40 +294,10 @@ class Pman_Core_I18n extends Pman
         if (!empty($this->rates)) {
             return true;
         }
-        // load our default rates to start with..
-        $dom = simplexml_load_file(dirname(__FILE__).'/eurofxref-daily.xml');
-        $this->rates['EUR'] = 1.0;
-        $this->rates['TWD'] = 46.7008412;
-        $this->rates['VND'] = 26405.3;
-       
-       
-        foreach($dom->Cube->Cube->Cube as $c) {
-           //echo '<PRE>';print_r($c );
-            $this->rates[(string)$c['currency']] = (string)$c['rate'];
-        }
-        $this->rates['RMB'] = $this->rates['CNY'] ;
-        // now try loading from latest..
-        $target = ini_get('session.save_path').'/eurofxref-daily.xml';
         
-        if (!file_exists($target) || filemtime($target) < (time() - 60*60*24)) {
-            // this may fail...
-            $f = @file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
-            if (!strlen($f)) {
-                return;
-            } 
-            file_put_contents($target,$f);
+        $this->rates = DB_DAtaObject::Factory('core_curr_rates')->currentRates();
         
-        } 
-        $dom = simplexml_load_file($target);
-        $this->rates['EUR'] = 1.0;
-        $this->rates['TWD'] = 46.7008412;
-        $this->rates['VND'] = 26405.3;
-       
-        foreach($dom->Cube->Cube->Cube as $c) {
-           //echo '<PRE>';print_r($c );
-            $this->rates[(string)$c['currency']] = (string)$c['rate'];
-        }
-        $this->rates['RMB'] = $this->rates['CNY'] ;
+        
     }
     
     
