@@ -48,7 +48,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         // how often do we need to know this..?
         // let's assume we do it once a week..
         $x = DB_DataObject::Factory('core_curr_rate');
-        $x->whereAdd('to_date > NOW()');
+        $x->whereAdd('to_dt > NOW()');
         if ($x->count()) {
             // got some data for beyond today..
             
@@ -97,23 +97,23 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             $ov = DB_DataObject::Factory('core_curr_rate');
             $ov->curr = $cur;
             $nl = clone($x);
-            $ov->orderBy('to_date DESC');
+            $ov->orderBy('to_dt DESC');
             $ov->limit(1);
             
             
             $nl->from_dt = DB_DataObject::sqlValue("NOW()");
             $nl->to_dt = DB_DataObject::sqlValue("NOW() + INTERVAL 7 DAY");
             if ($ov->find(true)) {
-                if (strtotime($ov->to_date) > time()) {
+                if (strtotime($ov->to_dt) > time()) {
                     continue;
                 }
-                $nl->from_dt = $ov->to_date;
+                $nl->from_dt = $ov->to_dt;
                 
             
                 if ($ov->rate == $rate) {
                     // modify the old one to expire
                     $oo = clone($ov);
-                    $ov->to_date = $nv->to_from_dt;
+                    $ov->to_dt = $nv->from_dt;
                     $ov->update($oo);
                     continue;
                 }
