@@ -91,7 +91,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         foreach($rates as $cur=>$euro) {
             
 
-            $rate = $this->rates['USD'] * $euro;
+            $rate = $rates['USD'] * $euro;
              
             
             
