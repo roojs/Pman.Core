@@ -34,7 +34,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     function get($args, $opts)
     {   
         
-        DB_DataObject::DebugLevel(1);
+        //DB_DataObject::DebugLevel(1);
         $d = DB_DataObject::Factory('core_curr_rate');
         $d->loadRates();
         
