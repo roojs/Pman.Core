@@ -129,9 +129,17 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         
     }
-    function convertCurrency($val, $from, $to)
+    function lastRate()
     {
-        $r = $this->loadRates();
+        
+        
+    }
+    
+    function convert($val, $from, $to)
+    {
+        
+        
+        
         if ($r === false) {
             return false;
         }
