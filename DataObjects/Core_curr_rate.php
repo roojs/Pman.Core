@@ -24,6 +24,9 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
     }
     
+    
+    
+    
     /**
      * current rate fetching
      *
@@ -32,9 +35,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
      * this just get's the current rates from the ecb..
      * 
      * 
-     */
-    
-   
+     */ 
     function loadRates()
     {
         
