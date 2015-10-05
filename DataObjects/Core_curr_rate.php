@@ -95,16 +95,19 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
                     continue;
                 }
                 $nl->from_dt = $ov->to_date;
-            }
             
             
-            if ($ov->rate == $rate) {
-                // modify the old one to expire
-                $oo = clone($ov);
-                $ov->to_date = $nv->to_from_dt;
-                $ov->update($oo);
-                continue;
+            
+                if ($ov->rate == $rate) {
+                    // modify the old one to expire
+                    $oo = clone($ov);
+                    $ov->to_date = $nv->to_from_dt;
+                    $ov->update($oo);
+                    continue;
+                }
             }
+            // create a new row.
+            
             
             
             
