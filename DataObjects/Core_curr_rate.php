@@ -48,8 +48,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         // how often do we need to know this..?
         // let's assume we do it once a week..
         $x = DB_DataObject::Factory('core_curr_rate');
-        $x->whereAdd("to_dt > NOW() AND curr != ''");// ingore crap data.
-        
+        $x->whereAdd('to_dt > NOW()');
         if ($x->count()) {
             // got some data for beyond today..
             
@@ -79,7 +78,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             return false;
         }
         
-        $dom = simplexml_load_string($f);
+        $dom = simplexml_load_file($target);
         $rates['EUR'] = 1.0;
         
         foreach($dom->Cube->Cube->Cube as $c) {
@@ -91,13 +90,13 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         foreach($rates as $cur=>$euro) {
             
 
-            $rate = $rates['USD'] * $euro;
+            $rate = $this->rates['USD'] * $euro;
              
             
             
             $ov = DB_DataObject::Factory('core_curr_rate');
             $ov->curr = $cur;
-            $nl = clone($ov);
+            $nl = clone($x);
             $ov->orderBy('to_dt DESC');
             $ov->limit(1);
             
