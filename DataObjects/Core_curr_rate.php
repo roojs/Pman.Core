@@ -104,6 +104,9 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
                     $ov->update($oo);
                     continue;
                 }
+            } else {
+                // no previous record...
+                $nl->from_dt = '1970-01-01 00:00:00';
             }
             
             // create a new row.
@@ -111,16 +114,12 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             
             
             
-            
-            
-            
         }
         
         
-        
-        
-        
-        
-        
     }
+    
+    
+    
+    
 }
