@@ -89,14 +89,13 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             
             
             $nl->from_dt = DB_DataObject::sqlValue("NOW()");
-            
+            $nl->to_dt = DB_DataObject::sqlValue("NOW() + INTERVAL 7 DAY");
             if ($ov->find(true)) {
                 if (strtotime($ov->to_date) > time()) {
                     continue;
                 }
                 $nl->from_dt = $ov->to_date;
-            
-            
+                
             
                 if ($ov->rate == $rate) {
                     // modify the old one to expire
@@ -106,6 +105,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
                     continue;
                 }
             }
+            
             // create a new row.
             
             
