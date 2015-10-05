@@ -87,10 +87,10 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         }
         $rates['RMB'] = $rates['CNY'] ;
         
-        foreach($rates as $cur=>$euro) {
+        foreach($rates as $cur=>$in_euro) {
             
 
-            $rate = (1.0 / $rates['USD']) * $euro;
+            $rate = (1.0 / $rates['USD']) * $in_euro;
              
             
             
