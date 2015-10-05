@@ -168,10 +168,9 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             $tr = 1;
         }
         
-        //echo '<PRE>';print_R($this->rates);
-        $base = (1.0 / $fr) * $val;
+        return ((1.0 / $fr) * $val) * $tr;
   
-        return $tr * $base;
+        
     
     }
     
