@@ -97,7 +97,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             
             $ov = DB_DataObject::Factory('core_curr_rate');
             $ov->curr = $cur;
-            $nl = clone($x);
+            $nl = clone($ov);
             $ov->orderBy('to_dt DESC');
             $ov->limit(1);
             
