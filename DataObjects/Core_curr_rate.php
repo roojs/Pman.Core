@@ -159,6 +159,8 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         $fr = $this->rate($from, $when);
         $tr = $this->rate($to, $when);
+        
+        // crappy error handling..
         if ($fr === false) {
             $fr = 1;
         }
