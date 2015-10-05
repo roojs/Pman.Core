@@ -49,16 +49,19 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         // load our default rates to start with..
         $dom = simplexml_load_file(dirname(__FILE__).'/../eurofxref-daily.xml');
-        $this->rates['EUR'] = 1.0;
-        $this->rates['TWD'] = 46.7008412;
-        $this->rates['VND'] = 26405.3;
+        $rates['EUR'] = 1.0;
+        $rates['TWD'] = 46.7008412;
+        $rates['VND'] = 26405.3;
        
        
         foreach($dom->Cube->Cube->Cube as $c) {
            //echo '<PRE>';print_r($c );
-            $this->rates[(string)$c['currency']] = (string)$c['rate'];
+            $rates[(string)$c['currency']] = (string)$c['rate'];
         }
-        $this->rates['RMB'] = $this->rates['CNY'] ;
+        $rates['RMB'] = $rates['CNY'] ;
+        
+        
+        
         // now try loading from latest..
         $target = ini_get('session.save_path').'/eurofxref-daily.xml';
         
@@ -68,18 +71,18 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             if (!strlen($f)) {
                 return;
             } 
-            file_put_contents($target,$f);
+            
         
         } 
         $dom = simplexml_load_file($target);
-        $this->rates['EUR'] = 1.0;
-        $this->rates['TWD'] = 46.7008412;
-        $this->rates['VND'] = 26405.3;
+        $rates['EUR'] = 1.0;
+        $rates['TWD'] = 46.7008412;
+        $rates['VND'] = 26405.3;
        
         foreach($dom->Cube->Cube->Cube as $c) {
            //echo '<PRE>';print_r($c );
-            $this->rates[(string)$c['currency']] = (string)$c['rate'];
+            $rates[(string)$c['currency']] = (string)$c['rate'];
         }
-        $this->rates['RMB'] = $this->rates['CNY'] ;
+        $rates['RMB'] = $rates['CNY'] ;
     }
 }
