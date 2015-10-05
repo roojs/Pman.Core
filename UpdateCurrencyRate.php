@@ -40,7 +40,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         $hkd = $d->convert(1,'USD','HKD');
         
-        echo "1 USD is ~ $hkd HKD (should be aobut 7.8)\n ";
+        echo "1 USD is ~ $hkd HKD (should be aobut 7.75)\n ";
         
         die("done");
         
