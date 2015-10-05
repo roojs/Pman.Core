@@ -80,7 +80,17 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         }
         $rates['RMB'] = $rates['CNY'] ;
         
-        foreach($rates as $cur=>$rate) {
+        foreach($rates as $cur=>$euro) {
+            
+
+            $rate = $this->rates['USD'] * $euro;
+            
+            
+            
+            
+            
+            
+            
             
             $ov = DB_DataObject::Factory('core_curr_rate');
             $ov->curr = $cur;
@@ -119,7 +129,21 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         
     }
+    function convertCurrency($val, $from, $to)
+    {
+        $r = $this->loadRates();
+        if ($r === false) {
+            return false;
+        }
+        if (!isset($this->rates[$from]) || !isset($this->rates[$to]) ) {
+            return false;
+        }
+        //echo '<PRE>';print_R($this->rates);
+        $base = (1.0 / $this->rates[$from]) * $val;
+  
+        return $this->rates[$to] * $base;
     
+    }
     
     
     
