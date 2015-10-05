@@ -1,6 +1,6 @@
 <?php
 
-// note this no longer works
+// note this no longer works -- we could try using their JSON feed?
 
 
 require_once 'Pman.php';
@@ -33,6 +33,21 @@ class Pman_Core_UpdateCurrencyRate extends Pman
     
     function get($args, $opts)
     {   
+        
+        DB_DataObject::DebugLevel(1);
+        $d = DB_DataObject::Factory('core_curr_rate');
+        $d->loadRates();
+        die("done");
+        
+        
+        
+        
+        
+        
+        
+    }
+    function oldversion() 
+    {
         $currency = array();
         
         $response = $this->curl($this->actionUrl, array(), 'GET');
