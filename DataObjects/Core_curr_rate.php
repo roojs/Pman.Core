@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             }
             
             // create a new row.
-            
+            $nl->insert();
             
             
             
