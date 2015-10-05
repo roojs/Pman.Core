@@ -91,12 +91,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             
 
             $rate = $this->rates['USD'] * $euro;
-            
-            
-            
-            
-            
-            
+             
             
             
             $ov = DB_DataObject::Factory('core_curr_rate');
