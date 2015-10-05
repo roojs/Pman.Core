@@ -171,6 +171,13 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     
     function currentRates()
     {
+        $this->loadRates();
+        $c = DB_DAtaObject::factory('core_curr_rate');
+        $c->whereAdd('from_dt < NOW() AND to_dt > NOW()');
+        while($c->fetch()) {
+            $ret[$c->curr] = $c->rate;
+        }
+        
         
         
         
