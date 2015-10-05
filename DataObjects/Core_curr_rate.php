@@ -12,7 +12,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     public $__table = 'core_curr_rate';    // table name
     public $id;
     public $curr;
-    public $rate;
+    public $rate;  // always to USD...
     public $from_dt;
     public $to_dt;
 
