@@ -157,10 +157,10 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         // crappy error handling..
         if ($fr === false) {
-            $fr = 1;
+            return false;
         }
         if ($tr === false) {
-            $tr = 1;
+            return false;
         }
         
         return ((1.0 / $fr) * $val) * $tr;
