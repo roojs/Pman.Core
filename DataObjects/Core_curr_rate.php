@@ -47,15 +47,8 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             return;
         }
         
-        
-        
-        
-        
-        if (!empty($this->rates)) {
-            return true;
-        }
         // load our default rates to start with..
-        $dom = simplexml_load_file(dirname(__FILE__).'/eurofxref-daily.xml');
+        $dom = simplexml_load_file(dirname(__FILE__).'/../eurofxref-daily.xml');
         $this->rates['EUR'] = 1.0;
         $this->rates['TWD'] = 46.7008412;
         $this->rates['VND'] = 26405.3;
