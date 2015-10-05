@@ -39,6 +39,14 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     {
         
         // how often do we need to know this..?
+        // let's assume we do it once a week..
+        $x = DB_DataObject::Factory('core_curr_rate');
+        $x->whereAdd('from_date > NOW() - INTERVAL 7 DAY');
+        if ($x->count()) {
+            return;
+        }
+        
+        
         
         
         if (!empty($this->rates)) {
