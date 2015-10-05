@@ -50,8 +50,8 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         // load our default rates to start with..
         $dom = simplexml_load_file(dirname(__FILE__).'/../eurofxref-daily.xml');
         $rates['EUR'] = 1.0;
-        $rates['TWD'] = 46.7008412;
-        $rates['VND'] = 26405.3;
+        $rates['TWD'] = 46.7008412; // taiwan dorlar
+        $rates['VND'] = 25282.24; // veitnam dong?
        
        
         foreach($dom->Cube->Cube->Cube as $c) {
@@ -72,14 +72,37 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         $dom = simplexml_load_file($target);
         $rates['EUR'] = 1.0;
-        $rates['TWD'] = 46.7008412;
-        $rates['VND'] = 26405.3;
-       
+        
         foreach($dom->Cube->Cube->Cube as $c) {
            //echo '<PRE>';print_r($c );
             $rates[(string)$c['currency']] = (string)$c['rate'];
         }
         $rates['RMB'] = $rates['CNY'] ;
+        
+        foreach($rates as $r=>$v) {
+            
+            $x = DB_DataObject::Factory('core_curr_rate');
+            $x->curr = $c;
+            $nl = clone($x);
+            $x->orderBy('to_date DESC');
+            $x->limit(1);
+            
+            
+            
+            $$nl->from_dt = DB_DataObject::sqlValue("NOW()");
+            if ($x->find(true)) {
+                if (strtotime($x->to_date) > time()) {
+                    continue;
+                }
+                $from_date = $x->to_date;
+                
+            }
+            
+            $x->whereAdd('to_date > NOW()');
+            
+            
+            
+        }
         
         
         
