@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             return false;
         }
         
-        $dom = simplexml_load_file($target);
+        $dom = simplexml_load_string($f);
         $rates['EUR'] = 1.0;
         
         foreach($dom->Cube->Cube->Cube as $c) {
