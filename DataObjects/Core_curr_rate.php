@@ -34,7 +34,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
      * 
      */
     
-    var $rates = array();
+   
     function loadRates()
     {
         
@@ -108,7 +108,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
                 // no previous record...
                 $nl->from_dt = '1970-01-01 00:00:00';
             }
-            
+            $nl->rate = $rate;
             // create a new row.
             $nl->insert();
             
