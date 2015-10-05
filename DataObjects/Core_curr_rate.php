@@ -129,9 +129,13 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         
     }
-    function lastRate($when)
+    function rate($cur, $when)
     {
+        $this->loadRates(); // check if we have an rates.
         
+        $r = DB_DataObject::factory('core_curr_rate');
+        $r->curr = $cur;
+        $r->whereAdd('from_dt < when_dt
         
     }
     
