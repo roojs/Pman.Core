@@ -135,7 +135,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
     }
     
-    function convert($val, $from, $to)
+    function convert($val, $from, $to, $when = false)
     {
         
         
