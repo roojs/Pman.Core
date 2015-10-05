@@ -44,11 +44,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         
         die("done");
         
-        
-        
-        
-        
-        
+         
         
     }
     function oldversion() 
