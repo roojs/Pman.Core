@@ -256,32 +256,14 @@ class Pman_Core_I18n extends Pman
         return implode(', ', $ret);
     }
     /**
-     * convert rate:
-     * usage  : $i = new Pman_Core_I18n();
-     * $ret = $i->convertCurrency(100,"HKD","USD");
-     * if ($ret == false) {
-            /// something went wrong.
-     }
-     * 
-     * @param Pman_Core_DataObjects_Person $au Authenticated user
-     * @param String                      $type  c/l/m
-     * @param String                      $k     'comma' seperated list of keys to translate
+     * DO NOT USE THIS -- see core_curr_rates dataobject.
      */
     
     
     function convertCurrency($val, $from, $to)
     {
-        $r = $this->loadRates();
-        if ($r === false) {
-            return false;
-        }
-        if (!isset($this->rates[$from]) || !isset($this->rates[$to]) ) {
-            return false;
-        }
-        //echo '<PRE>';print_R($this->rates);
-        $base = (1.0 / $this->rates[$from]) * $val;
-  
-        return $this->rates[$to] * $base;
+        
+        DB_DAtaObject::Factory('core_curr_rates')->convert($val,$from,$to);
     
     }
     /**
