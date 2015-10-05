@@ -142,7 +142,9 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         $r = DB_DataObject::factory('core_curr_rate');
         $r->curr = $cur;
-        $r->whereAdd('from_dt < when_dt
+        $r->whereAdd("from_dt < '" . date('Y-m-d H:i:s', strtotime($when)) . "'");
+        $r->orderBy('to_dt ASC');
+        $r->limit(1);
         
     }
     
