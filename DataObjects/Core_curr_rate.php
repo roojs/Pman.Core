@@ -63,26 +63,25 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
         
         
         // now try loading from latest..
-        $target = ini_get('session.save_path').'/eurofxref-daily.xml';
-        
-        if (!file_exists($target) || filemtime($target) < (time() - 60*60*24)) {
-            // this may fail...
-            $f = @file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
-            if (!strlen($f)) {
-                return;
-            } 
-            
-        
-        } 
-        $dom = simplexml_load_file($target);
-        $rates['EUR'] = 1.0;
-        $rates['TWD'] = 46.7008412;
-        $rates['VND'] = 26405.3;
        
-        foreach($dom->Cube->Cube->Cube as $c) {
-           //echo '<PRE>';print_r($c );
-            $rates[(string)$c['currency']] = (string)$c['rate'];
+             // this may fail...
+        $f = @file_get_contents('http://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml');
+        if (strlen($f)) {
+            
+            $dom = simplexml_load_file($target);
+            $rates['EUR'] = 1.0;
+            $rates['TWD'] = 46.7008412;
+            $rates['VND'] = 26405.3;
+           
+            foreach($dom->Cube->Cube->Cube as $c) {
+               //echo '<PRE>';print_r($c );
+                $rates[(string)$c['currency']] = (string)$c['rate'];
+            }
+            $rates['RMB'] = $rates['CNY'] ;
         }
-        $rates['RMB'] = $rates['CNY'] ;
+        
+        
+        
+        
     }
 }
