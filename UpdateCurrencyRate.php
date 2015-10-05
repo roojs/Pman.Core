@@ -37,6 +37,11 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         DB_DataObject::DebugLevel(1);
         $d = DB_DataObject::Factory('core_curr_rate');
         $d->loadRates();
+        
+        $hkd = $d->convert(1,'USD','HKD');
+        
+        echo "1 USD is ~ $hkd HKD (should be aobut 7.8)\n ";
+        
         die("done");
         
         
