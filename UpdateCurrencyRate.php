@@ -1,5 +1,8 @@
 <?php
 
+// note this no longer works
+
+
 require_once 'Pman.php';
 
 class Pman_Core_UpdateCurrencyRate extends Pman
