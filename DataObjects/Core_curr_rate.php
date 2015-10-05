@@ -157,11 +157,19 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     {
         
         
-        $fr = $this->rate($from, $when)
+        $fr = $this->rate($from, $when);
+        $tr = $this->rate($to, $when);
+        if ($fr === false) {
+            $fr = 1;
+        }
+        if ($tr === false) {
+            $tr = 1;
+        }
+        
         //echo '<PRE>';print_R($this->rates);
-        $base = (1.0 / $this->rates[$from]) * $val;
+        $base = (1.0 / $fr) * $val;
   
-        return $this->rates[$to] * $base;
+        return $tr * $base;
     
     }
     
