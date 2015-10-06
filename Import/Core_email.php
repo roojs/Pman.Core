@@ -104,7 +104,12 @@ class Pman_Core_Import_Core_email extends Pman
         ));
         if ($c->id) {
             
-             $c->setFrom(array(
+           
+            
+            $c->update();
+        } else {
+            
+              $c->setFrom(array(
                 'from_name'     => $from_name,
                 'from_email'    => $from_email,
                 'subject'       => $parts[1]['Subject'],
@@ -114,8 +119,6 @@ class Pman_Core_Import_Core_email extends Pman
                 'created_dt'     => date('Y-m-d H:i:s'),
             ));
             
-            $c->update()
-        } else {
             $c->insert();
         }
         
