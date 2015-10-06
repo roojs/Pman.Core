@@ -24,6 +24,13 @@ class Pman_Core_Import_Core_email extends Pman
             'max' => 1,
             
         ),
+        'master' => array(
+            'desc' => 'Update template (deletes old version?)',
+            'short' => 'u',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,  
+        ),
     );
     
     function getAuth()
@@ -45,6 +52,13 @@ class Pman_Core_Import_Core_email extends Pman
         if (!file_exists($opts['file'])) {
             $this->jerr("file does not exist : " . $opts['file']);
         }
+        
+        
+        if (!empty($opts['master']) && !file_exists($opts['master'])) {
+            $this->jerr("master file does not exist : " . $opts['master']);
+        }
+        
+        
          
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
