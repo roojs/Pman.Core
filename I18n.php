@@ -263,7 +263,7 @@ class Pman_Core_I18n extends Pman
     function convertCurrency($val, $from, $to)
     {
         
-        DB_DAtaObject::Factory('core_curr_rate')->convert($val,$from,$to);
+        return DB_DAtaObject::Factory('core_curr_rate')->convert($val,$from,$to);
     
     }
     /**
