@@ -67,7 +67,13 @@ class Pman_Core_Import_Core_email extends Pman
         }
         
         $mailtext = file_get_contents($opts['file']);
-
+        
+        if (!empty($opts['master'])) {
+            $body = $mailtext;
+            $mailtext = file_get_contents($opts['master']);
+            $mailtext = str_replace('{outputBody():h}', $body, $mailtext);
+        }
+        
         require_once 'Mail/mimeDecode.php';
         require_once 'Mail/RFC822.php';
         
