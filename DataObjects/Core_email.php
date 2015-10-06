@@ -290,6 +290,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      * $x->send(array(
      *      'rcpts' => "Tester <sales@roojs.com>",
      *      'page' => $this
+     *      'mailer_opts' => array( <<< additional options, like urlmap..)
      *       'link' => 'http://......'
        );
      * // on the template use {link:h} to render the link
