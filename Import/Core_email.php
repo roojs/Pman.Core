@@ -24,7 +24,7 @@ class Pman_Core_Import_Core_email extends Pman
             'max' => 1,
             
         ),
-        'master' => array(
+        'update' => array(
             'desc' => 'Update template (deletes old version?)',
             'short' => 'u',
             'default' => '',
