@@ -93,13 +93,15 @@ class Pman_Core_Import_Core_email extends Pman
         $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
         
-        $c->setFrom(array(
-            'bodytext'      => $parts[2],
-            
-        ));
+        
         if ($c->id) {
-             
-            $c->update();
+            $cc =clone($c);
+            $c->setFrom(array(
+               'bodytext'      => $parts[2],
+               'updated_dt'     => date('Y-m-d H:i:s'),   
+            ));
+            
+            $c->update($cc);
         } else {
             
               $c->setFrom(array(
@@ -107,7 +109,7 @@ class Pman_Core_Import_Core_email extends Pman
                 'from_email'    => $from_email,
                 'subject'       => $parts[1]['Subject'],
                 'name'          => $template_name,
-               
+                'bodytext'      => $parts[2],
                 'updated_dt'     => date('Y-m-d H:i:s'),
                 'created_dt'     => date('Y-m-d H:i:s'),
             ));
