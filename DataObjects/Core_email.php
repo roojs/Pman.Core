@@ -334,7 +334,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'template'=> $this->tableName() . '-' . $this->id,
             'templateDir' => $templateDir,
             'page' => $this,
-            'contents' => $contents
+            'contents' => $contents,
+            'css_embed' => true, // we should always try and do this with emails...
         );
         if (isset($contents['rcpts'])) {
             $cfg['rcpts'] = $contents['rcpts'];
