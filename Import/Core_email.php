@@ -93,6 +93,15 @@ class Pman_Core_Import_Core_email extends Pman
         $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
         
+        // inline CSS...
+        
+        require_once 'HTML/CSS/InlineStyle.php';
+        $is  = new HTML_CSS_InlineStyle();
+        $is->loadHTML($parts[2]);
+        
+        
+        
+        
         
         if ($c->id) {
             $cc =clone($c);
