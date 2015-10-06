@@ -102,7 +102,11 @@ class Pman_Core_Import_Core_email extends Pman
             'updated_dt'     => date('Y-m-d H:i:s'),
             'created_dt'     => date('Y-m-d H:i:s'),
         ));
-        $c->insert();
+        if ($c->id) {
+            $c->update()
+        } else { 
+            $c->insert();
+        }
         
         die("done\n");
     }
