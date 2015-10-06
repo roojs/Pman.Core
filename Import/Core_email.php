@@ -62,8 +62,8 @@ class Pman_Core_Import_Core_email extends Pman
          
         $c = DB_dataObject::factory('core_email');
         $ret = $c->get('name',$template_name);
-        if($ret ) {
-            $this->jerr("we do not support updating the files ... - especially if the user has changed them!!");
+        if($ret && empty($opts['update'])) {
+            $this->jerr("use --update 1 to update the template..");
         }
         
         $mailtext = file_get_contents($opts['file']);
