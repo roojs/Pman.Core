@@ -16,7 +16,14 @@ class Pman_Core_Import_Core_email extends Pman
             'max' => 1,
             
         ),
-         
+        'master' => array(
+            'desc' => 'Master template (wrapper to body)',
+            'short' => 'm',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+            
+        ),
     );
     
     function getAuth()
