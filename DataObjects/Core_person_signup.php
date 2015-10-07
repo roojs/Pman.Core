@@ -88,6 +88,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $sent = DB_DataObject::factory('core_email')->send($content);
         print_R($sent);exit;
+        
         if(!is_object($sent)){
             return true;
         }
