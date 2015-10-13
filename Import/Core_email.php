@@ -117,7 +117,8 @@ class Pman_Core_Import_Core_email extends Pman
             
             $c->insert();
         }
-        
+    }
+    function output() {
         die("done\n");
     }
 }
