@@ -284,7 +284,7 @@ class Pman_Core_Mailer {
         if (isset($args['bcc'])) {
            $ret['bcc'] = $args['bcc'];
         }
-        return $ret;;
+        return $ret;
     }
     function send($email = false)
     {
