@@ -276,6 +276,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         return $unsubscribe;
     }
+    
+    function toMailer($obj)
+    {
+        
+        
+        
+        
+    }
+    
+    
     /**
      *
      * Usage:
