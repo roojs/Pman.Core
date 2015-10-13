@@ -280,7 +280,10 @@ class Pman_Core_Mailer {
             'body' => $parts[2],
             'mailer' => $this
         );
-        if (isset($))
+        // add bcc if necessary..
+        if (isset($args['bcc')) {
+           $ret['bcc'] = $args['bcc'];
+        }
         return $ret;;
     }
     function send($email = false)
