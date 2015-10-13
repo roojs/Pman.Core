@@ -352,19 +352,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         return $r;
     }
-        
-        $ret = $r->toData();
-        
-        if(!$send){
-            return $ret;
+    function toMailerData($obj,$force=false)
+    {   
+        $r = $this->toMailer($obj, $force);
+        if (is_a($r, 'PEAR_Error')) {
+            return $r;
         }
-        
-        return $r->send();
-        
-        
-    }
-    
-    
     /**
      *
      * Usage:
@@ -388,67 +381,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      */
     function send($obj, $force = true, $send = true)
     {   
-        $contents = (array)$obj;
-
-        if(empty($this->id)){
-            $this->get('name', $contents['template']);
+        if (!$send) {
+            return $this->toMailerData($obj,$force);
         }
-        
-        if(empty($this->id)){
-            $p = new PEAR();
-            return $p->raiseError("template [{$contents['template']}] has not been set");
-        }
-        if(empty($contents['subject'])){
-           $contents['subject'] = $this->subject; 
-        }
-        
-        if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
-            $contents['rcpts'] = implode(',', $contents['rcpts']);
-        }
-        
-        $ui = posix_getpwuid(posix_geteuid());
-        
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
-        
-        if($force || !$this->isGenerated($cachePath)){
-            $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
+        $r = $this->toMailer($obj, $force);
+        if (is_a($r, 'PEAR_Error')) {
+            return $r;
         }
          
-        require_once 'Pman/Core/Mailer.php';
-        
-        $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
-        //print_r($this);
-        
-        
-        $cfg = array(
-            'template'=> $this->tableName() . '-' . $this->id,
-            'templateDir' => $templateDir,
-            'page' => $this,
-            'contents' => $contents,
-            'css_embed' => true, // we should always try and do this with emails...
-        );
-        if (isset($contents['rcpts'])) {
-            $cfg['rcpts'] = $contents['rcpts'];
-        }
-        if (isset($contents['mailer_opts']) && is_array($contents['mailer_opts'])) {
-            $cfg = array_merge($contents['mailer_opts'], $cfg);
-        }
-        
-        
-        $r = new Pman_Core_Mailer($cfg);
-        
-        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
-        
-        if(file_exists($imageCache) && filesize($imageCache)){
-            $images = json_decode(file_get_contents($imageCache), true);
-            $r->images = $images;
-        }
-        
-        $ret = $r->toData();
-        
-        if(!$send){
-            return $ret;
-        }
         
         return $r->send();
     }
