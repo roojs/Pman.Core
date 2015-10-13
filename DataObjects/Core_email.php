@@ -285,6 +285,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      *    + replace_links
      *    + template
      *    + mailer_opts
+     *    + person << who it actually goes to..
+     *    
      * @param bool $force - force re-creation of cached version of email.
      *
      * @returns Pman_Core_Mailer
@@ -360,27 +362,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         return $r->toData();
     }
-    /**
-     *
-     * Usage:
-     * $this->rcpts = array('sales@roojs.com');
-     * // or 
-     * $this->rcpts = "Tester <sales@roojs.com>";
-     *
-     * 
-     * // then send it..
-     * $x = DB_DataObject::factory('core_enum');
-     * $x->get('name', 'NAME OF TEMPLATE');
-     * $x->send(array(
-     *      'rcpts' => "Tester <sales@roojs.com>",
-     *      'page' => $this
-     *      'mailer_opts' => array( <<< additional options, like urlmap..)
-     *       'link' => 'http://......'
-       );
-     * // on the template use {link:h} to render the link
-     *
-     *
-     */
+  
     function send($obj, $force = true, $send = true)
     {   
         if (!$send) {
