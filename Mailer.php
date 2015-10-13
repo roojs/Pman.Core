@@ -100,11 +100,11 @@ class Pman_Core_Mailer {
     {
     
         $templateFile = $this->template;
-        $args = $this->contents;
+        $args = (array)$this->contents;
         
         $content  = clone($this->page);
         
-        foreach((array)$args as $k=>$v) {
+        foreach($args as $k=>$v) {
             $content->$k = $v;
         }
         
@@ -274,17 +274,14 @@ class Pman_Core_Mailer {
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         }
-//        echo '<PRE>';
-//        print_r('parts');
-//        print_r($parts[2]);
-//        exit;
-       // list($recipents,$headers,$body) = $parts;
-        return array(
+        $ret = array(
             'recipents' => $parts[0],
             'headers' => $parts[1],
             'body' => $parts[2],
             'mailer' => $this
         );
+        if (isset($))
+        return $ret;;
     }
     function send($email = false)
     {
