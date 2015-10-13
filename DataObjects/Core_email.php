@@ -281,7 +281,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      * convert email with contents into a core mailer object. - ready to send..
      * @param Object|Array $obj Object (or array) to send @see Pman_Core_Mailer
      *    + subject
-     *    + rcpts
+     *    + rcpts || person   << if person is set - then it goes to them...
      *    + replace_links
      *    + template
      *    + mailer_opts
