@@ -281,7 +281,7 @@ class Pman_Core_Mailer {
             'mailer' => $this
         );
         // add bcc if necessary..
-        if (isset($args['bcc')) {
+        if (isset($args['bcc'])) {
            $ret['bcc'] = $args['bcc'];
         }
         return $ret;;
