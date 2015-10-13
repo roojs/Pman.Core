@@ -277,10 +277,87 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         return $unsubscribe;
     }
     
-    function toMailer($obj)
+    /**
+     * convert email with contents into a core mailer object. - ready to send..
+     * @param Object|Array $obj Object (or array) to send @see Pman_Core_Mailer
+     *    + subject
+     *    + rcpts
+     *    + replace_links
+     *    + template
+     *    + mailer_opts
+     * @param bool $force - force re-creation of cached version of email.
+     */
+    
+    function toMailer($obj,$force=false)
     {
         
+        $contents = (array)$obj;
+
+        if(empty($this->id) && !empty($contents['template'])){
+            $this->get('name', $contents['template']);
+        }
         
+        if(empty($this->id)){
+            $p = new PEAR();
+            return $p->raiseError("template [{$contents['template']}] has not been set");
+        }
+        
+        if(empty($contents['subject'])){
+           $contents['subject'] = $this->subject; 
+        }
+        
+        if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
+            $contents['rcpts'] = implode(',', $contents['rcpts']);
+        }
+        
+        $ui = posix_getpwuid(posix_geteuid());
+        
+        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
+        
+        if($force || !$this->isGenerated($cachePath)){
+            $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
+        }
+         
+        require_once 'Pman/Core/Mailer.php';
+        
+        $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
+        //print_r($this);
+        
+        
+        $cfg = array(
+            'template'=> $this->tableName() . '-' . $this->id,
+            'templateDir' => $templateDir,
+            'page' => $this,
+            'contents' => $contents,
+            'css_embed' => true, // we should always try and do this with emails...
+        );
+        if (isset($contents['rcpts'])) {
+            $cfg['rcpts'] = $contents['rcpts'];
+        }
+        if (isset($contents['mailer_opts']) && is_array($contents['mailer_opts'])) {
+            $cfg = array_merge($contents['mailer_opts'], $cfg);
+        }
+        
+        
+        $r = new Pman_Core_Mailer($cfg);
+        
+        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        
+        if(file_exists($imageCache) && filesize($imageCache)){
+            $images = json_decode(file_get_contents($imageCache), true);
+            $r->images = $images;
+        }
+        
+        return $r;
+    }
+        
+        $ret = $r->toData();
+        
+        if(!$send){
+            return $ret;
+        }
+        
+        return $r->send();
         
         
     }
