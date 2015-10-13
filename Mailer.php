@@ -76,6 +76,8 @@ class Pman_Core_Mailer {
     
     var $cache_images = true;
     
+    var $bcc = false;
+    
     function Pman_Core_Mailer($args) {
         foreach($args as $k=>$v) {
             // a bit trusting..
