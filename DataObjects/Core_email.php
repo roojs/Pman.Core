@@ -344,7 +344,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (isset($contents['mailer_opts']) && is_array($contents['mailer_opts'])) {
             $cfg = array_merge($contents['mailer_opts'], $cfg);
         }
-        
+        if (isset($contents['bcc']) ) {
+            $cfg['bcc'] = $contents['bcc'];
+        }
         
         $r = new Pman_Core_Mailer($cfg);
         
