@@ -286,6 +286,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      *    + template
      *    + mailer_opts
      * @param bool $force - force re-creation of cached version of email.
+     *
+     * @returns Pman_Core_Mailer
      */
     
     function toMailer($obj,$force=false)
