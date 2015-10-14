@@ -193,6 +193,42 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         }
         
     }
+    /**
+     * current state of process
+     *
+     * 0 = pending
+     * 1 = delivered
+     * -1 = failed
+     *
+     *
+     */
+    function state()
+    {
+           
+        if ($this->msgid != '') {
+            return 1;
+        }
+        // msgid is empty now..
+        if ($this->event_id > 0 && strtotime($this->act_when) < time()) {
+            return -1;
+        }
+        return 0; // pending
+            
+            $this->whereAdd("msgid  = '' AND event_id > 0 AND act_when < NOW()");
+            
+            break;
+        case 'PENDING';
+            $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
+            break;
+        
+        case 'OPENED';
+            $this->whereAdd('is_open > 0');
+            break;
+        
+        
+        
+    }
+    
     
     function applyFilters($q, $au, $roo)
     {
