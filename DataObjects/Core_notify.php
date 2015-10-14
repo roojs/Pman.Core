@@ -96,13 +96,14 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $x = DB_DataObject::Factory($this->tableName());
         $x->object($obj);
         $x->person($person);
-        $x->onid = $obj->id;
-        $x->ontable = $obj->tableName;
-        $x->person_table = $person->person_table;
-        $x->
-        $person_table = empty($this->person_table) ? 'Person' : $this->person_table;
-        $col = $person_table == "Person" ? 'person_id' : $person_table . '_id';
-        
+        if (!empty($evtype)) {
+            $x->evtype = $evtype;
+        }
+        if ($x->count() != 1) {
+            return false;
+        }
+        $x->find(true);
+        return $x;
         
     }
     
