@@ -208,23 +208,22 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($this->msgid != '') {
             return 1;
         }
+        
         // msgid is empty now..
-        if ($this->event_id > 0 && strtotime($this->act_when) < time()) {
+        // if act_when is greater than now, then it's still pending.
+        if (strtotime($this->act_when) > time()) {
+            return 0; 
+        }
+        
+        // event id can be filled in with a failed attempt.
+        
+        if ($this->event_id > 0) {
             return -1;
         }
+        
+        // event id is empty, and act_when is in the past... not sent yet..
+        
         return 0; // pending
-            
-            $this->whereAdd("msgid  = '' AND event_id > 0 AND act_when < NOW()");
-            
-            break;
-        case 'PENDING';
-            $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
-            break;
-        
-        case 'OPENED';
-            $this->whereAdd('is_open > 0');
-            break;
-        
         
         
     }
