@@ -1169,7 +1169,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             $name = array_filter($name);
             
-            return $name;
+            return implode(' ', $name);
         }
         
         return $this->email;
