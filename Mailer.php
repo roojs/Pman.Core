@@ -402,7 +402,7 @@ class Pman_Core_Mailer {
                 $file = $ff->rootDir . $url;
 
                 if (!file_exists($file)) {
-                    echo $file;
+//                    echo $file;
                     $link->setAttribute('href', 'missing:' . $file);
                     continue;
                 }
