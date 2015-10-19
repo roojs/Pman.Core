@@ -1150,6 +1150,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     }
     
     // this is for the To: "{getEmailName()}" <email@address>
+    // not good for Dear XXXX, - use {person.firstname} for that.
     function getEmailName()
     {
         $name = array();
