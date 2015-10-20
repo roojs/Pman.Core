@@ -64,13 +64,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         
         $group = DB_DataObject::factory('groups');
         if($group->get('name', 'core-person-signup-bcc')){
-            $member = DB_DataObject::factory('group_members');
-            $member->group_id = $group->id;
-            $mids = $member->fetchAll('user_id');
-
-            $p = DB_DataObject::factory('Person');
-            $p->whereAddIn('id', $mids, 'int');
-            $admin = $p->fetchAll('email');
+            $admin = $group->members('email');
         }
         
         if(empty($admin)){
