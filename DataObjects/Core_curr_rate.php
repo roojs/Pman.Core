@@ -112,8 +112,8 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
             
                 if ($ov->rate == $rate) {
                     // modify the old one to expire
-                    $nv = clone($ov);
-                    $ov->to_dt = $nv->from_dt;
+                    $oo = clone($ov);
+                    $ov->to_dt = $nl->from_dt;
                     $ov->update($oo);
                     continue;
                 }
