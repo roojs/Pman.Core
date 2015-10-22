@@ -268,7 +268,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $u = DB_DataObject::factory($this->tableName());
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
               
-                return $u->verifyAuth();
+                return $u->verifyAuth();  // got authentication...
                 
     
             }
