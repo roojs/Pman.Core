@@ -1,4 +1,7 @@
 
+-- not sure if this is used anywhere...
+
+
 DROP FUNCTION IF EXISTS core_cities_merge_country;
 DELIMITER $$
 CREATE FUNCTION core_cities_merge_country()  RETURNS INT DETERMINISTIC
