@@ -380,9 +380,14 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
             $u->autoJoin();
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
+                
+                $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
+                setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
+                
                 $user = clone ($u);
                 
                 return clone($user);
+            
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
         }
