@@ -243,7 +243,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
             return false;
             
-            $ff->page->jerr("Login not permited to outside companies");
+            //$ff->page->jerr("Login not permited to outside companies");
         }
         return true;
         
