@@ -454,8 +454,9 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $p->get($this->pid());
         
         $d = $p->toArray();
+        
         $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
-        setcookie('Pman.timeout', time() + (30*60));
+        setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
