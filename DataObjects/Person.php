@@ -274,6 +274,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             }
             
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
+            unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
+            setcookie('Pman.timeout', -1, time() + (30*60), '/');
             
         }
         if (!$this->canInitializeSystem()) {
