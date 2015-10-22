@@ -468,6 +468,8 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         $sesPrefix = $this->sesPrefix();
         
+        $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = -1;
+        
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
         
     }    
