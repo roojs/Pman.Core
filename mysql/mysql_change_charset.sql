@@ -31,9 +31,9 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
             WHERE
                 CCSA.collation_name = T.table_collation
                 AND
-                T.table_schema = mydb
+                T.table_schema = mydb COLLATE utf8_unicode_ci
                 AND
-                T.table_name = mytb
+                T.table_name = mytb COLLATE utf8_unicode_ci
 
     
     ) AA;
