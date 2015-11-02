@@ -41,7 +41,10 @@ CREATE PROCEDURE mysql_change_engine(mytb TEXT)
                 FROM
                     information_schema.tables
                 WHERE
-                    table_schema=mydb and table_name=mytb AND engine='InnoDB'
+                    table_schema=mydb COLLATE utf8_unicode_ci 
+                    AND 
+                    table_name=mytb COLLATE utf8_unicode_ci 
+                    AND engine='InnoDB'
             ) B
         USING
             (db,tb)
