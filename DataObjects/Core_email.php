@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         if(!empty($unsubscribe)){
             $element = $doc->createElement('img');
-        
+            $element->setAttribute('mailembed', 'no');
             $element->setAttribute('src', $cfg ['server_baseurl']  . '/Crm/Open/' . $this->id . '/{person.id}.html');
             $element->setAttribute('width', '1');
             $element->setAttribute('height', '1');
