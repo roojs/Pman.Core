@@ -541,7 +541,7 @@ class Pman_Core_Mailer {
             return;
         }
         if ($this->debug < 2) {
-            echo '<PRE>' . print_r($val,true). "\n";
+            echo '<PRE>' . print_r($val,true). "\n"; 
             return;
         }
         $fh = fopen('/tmp/core_mailer.log', 'a');
