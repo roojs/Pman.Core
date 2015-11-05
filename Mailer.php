@@ -75,8 +75,7 @@ class Pman_Core_Mailer {
     var $mail_method = 'SMTP';
     
     var $cache_images = true;
-    var $no_replace_images = array();
-    
+      
     var $bcc = false;
     
     function Pman_Core_Mailer($args) {
@@ -535,17 +534,7 @@ class Pman_Core_Mailer {
          
         
     }
-    function isIgnoreImage($url)
-    {
-        foreach($this->ignore_images as $o) {
-            if (strpos($url,$o) === 0) {
-                return true;
-            }
-        }
-        return false;
-        
-        
-    }
+ 
     
     
     function log($val)
