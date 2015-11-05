@@ -442,7 +442,7 @@ class Pman_Core_Mailer {
             return array(
                     'mimetype' => $mt,
                    'ext' => $ext,
-                   'contentid' => md5($file),  // why is contentid  an md5 of the file ... this is needed for cid mapping?
+                   'contentid' => md5($file),  // mailer makes md5 cid's' -- cid with attachment-** are done by mailer.
                    'file' => $file
             );
             
