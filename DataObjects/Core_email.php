@@ -462,7 +462,7 @@ Content-Transfer-Encoding: 7bit
                 continue;
             }
             
-            $images["attachment-$i->id"] = array(
+            $images["attachment-{$i->id}"] = array(
                 'file' => $i->getStoreName(),
                 'mimetype' => $i->mimetype,
                 'ext' => $y->toExt($i->mimetype),
