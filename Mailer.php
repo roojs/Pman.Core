@@ -535,6 +535,18 @@ class Pman_Core_Mailer {
          
         
     }
+    function is_ignore_image($url)
+    {
+        foreach($this->ignore_images as $o) {
+            if (strpos($url,$o) === 0) {
+                return true;
+            }
+        }
+        return false;
+        
+        
+    }
+    
     
     function log($val)
     {
