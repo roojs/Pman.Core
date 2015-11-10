@@ -1222,9 +1222,12 @@ Pman.Dialog.CoreEmail = {
              
              if(width > 50){
                  width = 50;
+                 Roo.log(height);
+                 Roo.log(50 / width);
+                 Roo.log(height * 50 / width);
                  height = Math.round(height * 50 / width);
              }
-             Roo.log((height));
+             
             return '<img src="' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '" width="' + width + '" height="' + height + '" />';
          },
          width : 300,
