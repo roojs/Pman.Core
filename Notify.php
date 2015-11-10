@@ -203,8 +203,6 @@ class Pman_Core_Notify extends Pman
         }
         
         $w->autoJoin();
-        
-        print_R($w->fetchAll());exit;
         $w->find();
         
         $ar = array(); // $w->fetchAll();
