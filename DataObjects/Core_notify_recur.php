@@ -154,7 +154,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $old = $newSearch->fetchAll('act_start', 'id');
         // returns array('2012-12-xx'=>12, 'date' => id....)
 
-        print_R($notifytimes);exit;
         
         foreach($notifytimes as $time){
            
