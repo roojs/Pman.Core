@@ -554,7 +554,7 @@
          "xtype" : "ColumnModel",
          "header" : "Filename",
          "width" : 300,
-         "$ renderer" : "function(v,x,r)\n{\n    var width = r.data.width;\n    var height = r.data.height;\n    \n    if(width > 50){\n        width = 50;\n        height = Math.round(height * 50 / width);\n    }\n    Roo.log((height * 50 / width));\n   return '<img src=\"' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '\" width=\"' + width + '\" height=\"' + height + '\" />';\n}",
+         "$ renderer" : "function(v,x,r)\n{\n    var width = r.data.width;\n    var height = r.data.height;\n    \n    if(width > 50){\n        width = 50;\n        height = Math.round(height * 50 / width);\n    }\n    Roo.log((height));\n   return '<img src=\"' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '\" width=\"' + width + '\" height=\"' + height + '\" />';\n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
          "dataIndex" : "filename"
