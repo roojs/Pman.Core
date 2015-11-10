@@ -1221,11 +1221,8 @@ Pman.Dialog.CoreEmail = {
              var height = r.data.height;
              
              if(width > 50){
-                 width = 50;
-                 Roo.log(height);
-                 Roo.log(50 / width);
-                 Roo.log(height * 50 / width);
                  height = Math.round(height * 50 / width);
+                 width = 50;
              }
              
             return '<img src="' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '" width="' + width + '" height="' + height + '" />';
