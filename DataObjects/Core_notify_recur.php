@@ -117,7 +117,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         foreach($usedays as $d){
             foreach($hours as $h){
                 $date = new DateTime($d. ' ' . $h, new DateTimeZone($this->tz));
-                pritn_R($date);exit;
+                print_r($date);exit;
                 $date->setTimezone(new DateTimeZone(ini_get('date.timezone')));
                 $ret[] = $date->format('Y-m-d H:i:s');
             }
