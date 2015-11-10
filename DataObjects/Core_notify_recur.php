@@ -110,7 +110,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 $usedays[] = date("Y-m-d", $ut);
             }
         }
-        print_R($usedays);exit;       
+               
         //print_r($this);
         
         
