@@ -1222,7 +1222,7 @@ Pman.Dialog.CoreEmail = {
              
              if(width > 50){
                  width = 50;
-                 height = Math.round(height *width / 50);
+                 height = Math.round(height * width / 50);
              }
              
             return '<img src="' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '" width="' + width + '" height="' + height + '" />';
