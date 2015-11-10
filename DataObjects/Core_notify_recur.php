@@ -66,6 +66,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
         $end  = date('Y-m-d H:i:s', min(strtotime("NOW + $advance DAYS"), strtotime($this->dtend)));
         
+        return array($start, $end);
     }
     
     function method()
