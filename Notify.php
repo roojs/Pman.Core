@@ -170,7 +170,7 @@ class Pman_Core_Notify extends Pman
             
         }
      
-        //DB_DataObject::debugLevel(1);
+        DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         $total = 0;
         
@@ -203,6 +203,9 @@ class Pman_Core_Notify extends Pman
         }
         
         $w->autoJoin();
+        
+        print_R($w->fetchAll());exit;
+        
         $w->find();
         
         $ar = array(); // $w->fetchAll();
