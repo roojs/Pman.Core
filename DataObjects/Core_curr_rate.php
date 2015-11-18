@@ -171,7 +171,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     
     function currentRates()
     {
-        $this->loadRates();
+//        $this->loadRates();
         return array();
        // DB_DataObject::debugLevel(1);
         $c = DB_DAtaObject::factory('core_curr_rate');
