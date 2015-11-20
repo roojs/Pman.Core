@@ -270,9 +270,11 @@ class Pman_Core_I18n extends Pman
      * DO NOT USE THIS -- see core_curr_rates dataobject.
      *
      */
-    var $rates = array();
+    
+    static $rates = array();
+    
     function loadRates()
-    {
+    {   
         if (!empty($this->rates)) {
             return true;
         }
