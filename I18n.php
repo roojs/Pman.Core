@@ -271,10 +271,12 @@ class Pman_Core_I18n extends Pman
      *
      */
     
-    static $rates = array();
+    
     
     function loadRates()
     {   
+        static $rates = array();
+        
         if (!empty($this->rates)) {
             return true;
         }
