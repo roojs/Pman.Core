@@ -277,12 +277,12 @@ class Pman_Core_I18n extends Pman
     {   
         static $rates = array();
         
-        if (!empty($this->rates)) {
-            return true;
+        if (!empty($rates)) {
+            $this->rates = $rates;
+            return;
         }
         
-        $this->rates = DB_DAtaObject::Factory('core_curr_rate')->currentRates();
-        
+        $this->rates = $rates = DB_DAtaObject::Factory('core_curr_rate')->currentRates();
         
     }
     
