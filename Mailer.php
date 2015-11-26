@@ -18,7 +18,8 @@
  *
  *  $x= Pman_Core_Mailer(array(
        page => 
-       contents
+       contents  << keys must be trusted
+          bcc -> 
        template
        html_locale => 'en' == always use the 'english translated verison'
        cache_images => true -- defaults to caching images - set to false to disable.
