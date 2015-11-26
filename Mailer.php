@@ -327,6 +327,9 @@ class Pman_Core_Mailer {
         } 
         $rcpts = $this->rcpts == false ? $email['recipents'] : $this->rcpts;
         
+        
+        
+        // this makes contents untrustable...
         if (!empty($this->contents['bcc']) && is_array($this->contents['bcc'])) {
             $rcpts =array_merge(is_array($rcpts) ? $rcpts : array($rcpts), $this->contents['bcc']);
         }
