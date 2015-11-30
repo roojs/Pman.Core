@@ -23,10 +23,14 @@ class Pman_Core_Pman {
             die("group core-person-signup-bcc does not exist : add ?_core_skip_check=1 to bypass this check");
         }
         
+        $p = DB_DataObject::factory('Person');
+        
+        
         $member = DB_DataObject::factory('group_members');
         $member->group_id = $group->id;
         
-        if(!$member->count()){
+        // only display if we have members..
+        if($p->count() && !$member->count()){
             die("group core-person-signup-bcc does not have any members : add ?_core_skip_check=1 to bypass this check");
         }
         
