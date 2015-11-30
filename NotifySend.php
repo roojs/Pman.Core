@@ -402,7 +402,7 @@ class Pman_Core_NotifySend extends Pman
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
                     $res = $cmailer->send($email['bcc'],
                                   $email['headers'], $email['body']);
-                    if (!$res) {
+                    if (!$res || is_a($res, 'PEAR_Error')) {
                         echo "could not send bcc..\n";
                     }
                 }
