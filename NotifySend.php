@@ -395,10 +395,7 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
                 if (!empty($email['bcc'])) {
-                    $cmailer = Mail::factory('smtp', array(
-                       //'host'    => $dom ,
-                      //  'debug' => true
-                    ));
+                    $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
                     $res = $cmailer->send($email['bcc'],
                                   $email['headers'], $email['body']);
