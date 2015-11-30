@@ -28,6 +28,14 @@ class Pman_Core_Pman {
         
         $member = DB_DataObject::factory('group_members');
         $member->group_id = $group->id;
+        if ($member->count()) {
+            return;
+        }
+        
+        // not got members..
+        
+        // if we only have one member - then add it .... (it's the admin, and they can modify this later..)
+        
         
         // only display if we have members..
         if($p->count() && !$member->count()){
