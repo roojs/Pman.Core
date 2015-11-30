@@ -400,9 +400,11 @@ class Pman_Core_NotifySend extends Pman
                       //  'debug' => true
                     ));
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $cmailer->send($email['bcc'],
+                    $res = $cmailer->send($email['bcc'],
                                   $email['headers'], $email['body']);
-                    
+                    if (!$res) {
+                        echo "could not send bcc..\n";
+                    }
                 }
                 
                 
