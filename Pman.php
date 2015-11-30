@@ -34,7 +34,7 @@ class Pman_Core_Pman {
         
         // not got members..
         
-        // if we only have one member - then add it .... (it's the admin, and they can modify this later..)
+        // if we only have one member - then add it .... (it's the admin, and they can modify this later.. - after they get annoyed with it..
         
         
         // only display if we have members..
