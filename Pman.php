@@ -35,12 +35,18 @@ class Pman_Core_Pman {
         // not got members..
         
         // if we only have one member - then add it .... (it's the admin, and they can modify this later.. - after they get annoyed with it..
-        
+        if ($p->count() == 1) {
+            $p->find(true);
+            $member = DB_DataObject::factory('group_members');
+            $member->group_id = $group->id;
+            $member->person_id = $p->id;
+            $member->insert();
+            return;
+        }
         
         // only display if we have members..
-        if($p->count() && !$member->count()){
-            die("group core-person-signup-bcc does not have any members : add ?_core_skip_check=1 to bypass this check");
-        }
+        die("group core-person-signup-bcc does not have any members : add ?_core_skip_check=1 to bypass this check");
+    
         
         
     }
