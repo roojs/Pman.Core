@@ -404,6 +404,8 @@ class Pman_Core_NotifySend extends Pman
                                   $email['headers'], $email['body']);
                     if (!$res || is_a($res, 'PEAR_Error')) {
                         echo "could not send bcc..\n";
+                    } else {
+                        echo "Sent BCC to {$email['bcc']}\n";
                     }
                 }
                 
