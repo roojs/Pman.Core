@@ -152,6 +152,12 @@ class Pman_Core_Images extends Pman
                 urlencode("image has been removed or deleted."));
             
         }
+        
+        if(!$this->hasPerm($img)){
+            header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
+                urlencode("image has been removed or deleted."));
+        }
+        
         $this->serve($img);
         exit;
     }
