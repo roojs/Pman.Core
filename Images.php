@@ -47,7 +47,7 @@ class Pman_Core_Images extends Pman
        // }
         
         $this->authUser = $au;
-        print_r('run??');exit;
+        
         return true;
     }
     var $thumb = false;
