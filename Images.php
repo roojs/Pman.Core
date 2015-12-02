@@ -157,7 +157,7 @@ class Pman_Core_Images extends Pman
         
         if(!$this->hasPermission($img)){
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-                urlencode("image has been removed or deleted."));
+                urlencode("access to this image/file has been denied."));
         }
         
         $this->serve($img);
