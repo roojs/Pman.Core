@@ -45,9 +45,9 @@ class Pman_Core_Images extends Pman
         //if (!$au) {
         //    die("Access denied");
        // }
-        print_r('run??');exit;
-        $this->authUser = $au;
         
+        $this->authUser = $au;
+        print_r('run??');exit;
         return true;
     }
     var $thumb = false;
