@@ -162,7 +162,8 @@ class Pman_Core_Images extends Pman
         exit;
     }
     
-    function hasPermission($img) {
+    function hasPermission($img) 
+    {
         return true;
     }
     
