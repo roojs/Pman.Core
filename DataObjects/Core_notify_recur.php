@@ -169,12 +169,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 unset($old[$time]);
                 continue;
             }
-            if (strtotime($time) < time()) {
-                // will not get deleted..
-                //echo "SKIP BEFORE NOW";
-//                unset($old[$time]);
+            
+            if (strtotime($time) < time()) { // should not happen, just in case...
                continue;
             }
+            
             // do not have a notify event... creat it..
             $add = DB_DataObject::factory('core_notify');
             $add->setFrom(array(
