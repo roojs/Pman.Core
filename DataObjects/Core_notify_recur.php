@@ -172,7 +172,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             if (strtotime($time) < time()) {
                 // will not get deleted..
                 //echo "SKIP BEFORE NOW";
-                unset($old[$time]);
+//                unset($old[$time]);
                continue;
             }
             // do not have a notify event... creat it..
