@@ -153,7 +153,7 @@ class Pman_Core_Images extends Pman
             
         }
         
-        if(!$this->hasPerm($img)){
+        if(!$this->hasPermission($img)){
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
                 urlencode("image has been removed or deleted."));
         }
@@ -162,6 +162,9 @@ class Pman_Core_Images extends Pman
         exit;
     }
     
+    function hasPermission($img) {
+        return true;
+    }
     
     function post()
     {
