@@ -304,6 +304,7 @@ class Pman_Core_Images extends Pman
         
         
         if (!in_array($this->size, $sizes)) {
+            print_r($sizes);
             die("invalid scale - ".$this->size);
         }
     }
