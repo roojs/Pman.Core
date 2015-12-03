@@ -276,7 +276,7 @@ class Pman_Core_Images extends Pman
             return true;
         }
         
-        // DEFAULT allowed - override with Pman_Core_Images => array();
+        // DEFAULT allowed - override with Pman_Core_Images[sizes] => array();
         
         $sizes = array(
                 '100', 
@@ -293,6 +293,7 @@ class Pman_Core_Images extends Pman
         
         // this should be configurable...
         $ff = HTML_FlexyFramework::get();
+        
         
         $cfg = isset($ff->Pman_Images) ? $ff->Pman_Images :
                 (isset($ff->Pman_Core_Images) ? $ff->Pman_Core_Images : array());
