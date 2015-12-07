@@ -101,7 +101,7 @@ Pman.Download = function(cfg)
 //        });
 //    }
  
- 
+    Roo.log(this.params);
     for(var i in this.params) {
         
         var el = this.form.createChild( {
