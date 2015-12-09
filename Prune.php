@@ -56,7 +56,7 @@ class Pman_Core_Prune extends Pman
         ");
         
         // notificication events occur alot - so we should trash them more frequently..
-        $f = DB_DataObject::Factory('reader_article');
+      /*  $f = DB_DataObject::Factory('reader_article');
         $f->query("
             DELETE FROM Events where 
                   event_when < NOW() - INTERVAL 1 MONTH
@@ -64,7 +64,7 @@ class Pman_Core_Prune extends Pman
                   action IN ('NOTIFY')
                   LIMIT 100000
         ");
-        
+        */
         // rather than deleting them all, it's probably best to just delete notify events that occured to often.
         // eg. when we tried to deliver multiple times without success...
         
