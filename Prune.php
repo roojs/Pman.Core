@@ -69,6 +69,11 @@ class Pman_Core_Prune extends Pman
         */
         // rather than deleting them all, it's probably best to just delete notify events that occured to often.
         // eg. when we tried to deliver multiple times without success...
+        /*
+         *
+         SELECT on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm FROM Events
+         WHERE action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK GROUP BY  on_id, on_table HAVING  mm > 2 ORDER BY mm desc;
+         */
         
         //DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('Events');
@@ -78,7 +83,7 @@ class Pman_Core_Prune extends Pman
         $f->groupBy('on_id, on_table');
         $f->having("mm > 2");
         $f->orderBy('mm desc') ;
-        $f->limit(1000);
+        $f->limit(10000);
         $ar = $f->fetchAll();
         foreach($ar as $f) {
             $q = DB_DataObject::Factory('Events');
