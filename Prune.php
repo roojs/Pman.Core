@@ -65,6 +65,11 @@ class Pman_Core_Prune extends Pman
                   LIMIT 100000
         ");
         
+        // rather than deleting them all, it's probably best to just delete notify events that occured to often.
+        // eg. when we tried to deliver multiple times without success...
+        
+        
+        
         // pruning is for our press project - so we do not clean up dependant tables at present..
         
         if (function_exists('posix_getpwuid')) {
