@@ -83,7 +83,7 @@ class Pman_Core_Prune extends Pman
             $f->query("DELETE FROM Events where 
                   action = 'NOTIFY'
                   AND
-                  event_when < NOW() - INTERVAL 2 WEEK
+                  event_when < NOW() - INTERVAL 1 WEEK
                   AND
                   on_id = {$f->on_id}
                   AND
