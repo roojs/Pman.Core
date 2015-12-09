@@ -79,11 +79,13 @@ class Pman_Core_Prune extends Pman
         $f->limit(1000);
         $ar = $f->fetchAll();
         foreach($ar as $f) {
-            $f = DB_DataObject::Factory('Events');
-            $f->query("DELETE FROM Events where 
+            $q = DB_DataObject::Factory('Events');
+            $q->query("DELETE FROM Events where 
                   action = 'NOTIFY'
                   AND
                   on_id = {$f->on_id}
+                  AND
+                  on_table = '{$q->escape($f->on_table)}'
                   AND
                   id > {$f->min_id} AND id < {$f->max_id}
             ");
