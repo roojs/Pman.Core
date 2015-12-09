@@ -70,7 +70,7 @@ class Pman_Core_Prune extends Pman
         // rather than deleting them all, it's probably best to just delete notify events that occured to often.
         // eg. when we tried to deliver multiple times without success...
         
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
         $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
