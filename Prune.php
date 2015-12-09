@@ -52,6 +52,8 @@ class Pman_Core_Prune extends Pman
         $f->query("
             DELETE FROM Events where 
                   event_when < NOW() - INTERVAL {$inM} MONTH
+                  AND
+                  action != 'NOTIFY'
                   LIMIT 100000
         ");
         
