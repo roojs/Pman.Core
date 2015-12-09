@@ -134,7 +134,10 @@
             <script type="text/javascript" src="{baseURL}/Builder/Code/{js}.js"></script>    
         {end:} 
            
-           
+        
+        {if:hasModule(#Cms#)}
+            <script type="text/javascript" src="{baseURL}/OutputTranslations/{bootLoader.locale}"></script>
+        {end:}
            
            
         <!-- finally language.. -->   
