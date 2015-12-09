@@ -71,9 +71,9 @@ class Pman_Core_Prune extends Pman
         
         $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
-        $f->selectAdd("on_id, min(id) as min_id, max(id) as max_id, count(*) as mm");
+        $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
         $f->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
-        $f->groupBy('on_id');
+        $f->groupBy('on_id, on_table');
         $f->having("mm > 2");
         $f->orderBy('mm desc') ;
         $f->limit(1000);
