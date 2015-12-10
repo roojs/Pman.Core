@@ -18,7 +18,7 @@
  *  $x= new  Pman_Core_Mailer(array(
        'page' => $this,
                 // if bcc is property of this, then it will be used (BAD DESIGN)
-       'rcpts' => array(),   // override recipients..
+       'rcpts' => array(),   -- only used by the 'send' code???.
        'template' => 'your_template.html',  // must be in templates/mail direcotry.. -- name without the .html or .txt
        
         // 'bcc' => 'xyz@abc.com,abc@xyz.com',  // string...
