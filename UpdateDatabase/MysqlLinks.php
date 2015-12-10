@@ -449,7 +449,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             $ce = DB_DataObject::factory('core_enum');
             $ce->query("CALL mysql_change_charset('{$tbl}')");
             $ce->getDatabaseConnection()->disconnect();
-             $_GLOBALS['_DB_DATAOBJECT]['CONNECTIONS'] = array();
+            $_GLOBALS['_DB_DATAOBJECT']['CONNECTIONS'] = array();
 //            $ce->free();
         }
     }
