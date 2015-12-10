@@ -11,7 +11,6 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
     
     SELECT database() INTO mydb;
     
-    
     SELECT
         IF(
             csname='utf8' AND collatename='utf8_unicode_ci',
