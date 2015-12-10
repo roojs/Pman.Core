@@ -17,8 +17,11 @@
  *  $x= new Pman_Core_Mailer($opts)
  *
  *  $x= Pman_Core_Mailer(array(
-       'page' => 
-       'contents'  => $this,    //  << keys must be trusted
+       'page' => $this,
+                // if bcc is property of this, then it will be used (BAD DESIGN)
+       'rcpts' => array(),   // override recipients..
+       //'bcc' => array(),
+       'contents'  => array(),    //  << keys must be trusted
                                 // if bcc is property of contents, then it will be used (BAD DESIGN)
        'template' => 'your_template.html', 
        'html_locale => 'en',              // always use the 'english translated verison'
@@ -28,7 +31,7 @@
       //      'https://www.mysite.com/' => 'http://localhost/'
        //)
        'locale' => 'en', // .... or zh_hk....
-       'rcpts' => array(),   // override recipients..
+       
        'attachments' => array(
             array(
               'file' => '/path/to/file', // file location
