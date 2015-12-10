@@ -16,7 +16,23 @@ RETURNS TEXT DETERMINISTIC
 
         SELECT display_name INTO v_orginal FROM core_enum WHERE id = in_id;
         
-        SELECT txt INTO v_ret FROM cms_templatestr WHERE active = 1 AND lang = in_lang AND on_id = in_id AND on_table = 'core_enum' AND on_col = 'display_name' LIMIT 1;
+        SELECT 
+                txt 
+        INTO 
+                v_ret 
+        FROM 
+                cms_templatestr 
+        WHERE 
+                active = 1 
+            AND 
+                lang = in_lang 
+            AND 
+                on_id = in_id 
+            AND 
+                on_table = 'core_enum' 
+            AND 
+                on_col = 'display_name' 
+        LIMIT 1;
 
         IF (v_ret IS NULL OR v_ret = '') THEN
             RETURN v_orginal;
