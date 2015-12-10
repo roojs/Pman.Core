@@ -439,8 +439,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     {
         foreach (array_keys($this->schema) as $tbl){
             
-            print_R(strpos('__keys', $tbl));
-            if(strpos('__keys', $tbl) !== false ){
+            if(strpos($tbl, '__keys') !== false ){
                 continue;
             }
             
