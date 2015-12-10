@@ -15,7 +15,7 @@
  *
  * 
  *  require_once 'Pman/Core/Mailer.php';
- *  $x= Pman_Core_Mailer(array(
+ *  $x= new  Pman_Core_Mailer(array(
        'page' => $this,
                 // if bcc is property of this, then it will be used (BAD DESIGN)
        'rcpts' => array(),   // override recipients..
