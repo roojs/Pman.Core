@@ -19,7 +19,10 @@
        'page' => $this,
                 // if bcc is property of this, then it will be used (BAD DESIGN)
        'rcpts' => array(),    
-       'template' => 'your_template.html',  // must be in templates/mail direcotry.. -- name without the .html or .txt
+       'template' => 'your_template',
+                // must be in templates/mail direcotry..
+                // header and plaintext verison in mail/your_template.txt
+                // if you want a html body - use  mail/your_template.body.html
        
         // 'bcc' => 'xyz@abc.com,abc@xyz.com',  // string...
         // 'contents'  => array(),              //  << keys must be trusted
