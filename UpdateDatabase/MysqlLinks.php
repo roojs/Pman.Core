@@ -438,6 +438,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     function updateCharacterSet()
     {
         foreach (array_keys($this->schema) as $tbl){
+            
+            if(strpos('__keys', $tbl) !== false ){
+                continue;
+            }
+            
             echo "CALL mysql_change_charset('{$tbl}') \n";
             DB_DataObject::factory('core_enum')->query("CALL mysql_change_charset('{$tbl}')");
         }
