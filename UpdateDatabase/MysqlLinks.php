@@ -460,7 +460,12 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                         T.table_name = '{$tbl}' COLLATE utf8_unicode_ci
             ");
                      
+            $ce->fetch();
             
+            if($ce->csname == 'utf8' && $ce->collatename == 'utf8_unicode_ci'){
+                echo "$tbl is Already utf8 \n";
+                continue;
+            }
             
             
             
