@@ -443,8 +443,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 continue;
             }
             
-            echo "CALL mysql_change_charset('{$tbl}') \n";
-            
             $ce = DB_DataObject::factory('core_enum');
             
             $ce->query("
@@ -462,8 +460,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                         T.table_name = '{$tbl}' COLLATE utf8_unicode_ci
             ");
                      
-            $ce->fetch();
-            print_r($ce);exit;
+            
             
             
             
