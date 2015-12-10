@@ -22,26 +22,26 @@
        'rcpts' => array(),   // override recipients..
        'template' => 'your_template.html',
        
-        // 'bcc' => 'xyz@abc.com,abc@xyz.com', // string...
-        // 'contents'  => array(),    //  << keys must be trusted
-                                    // if bcc is property of contents, then it will be used (BAD DESIGN)
+        // 'bcc' => 'xyz@abc.com,abc@xyz.com',  // string...
+        // 'contents'  => array(),              //  << keys must be trusted
+                                            // if bcc is property of contents, then it will be used (BAD DESIGN)
            
-        // 'html_locale => 'en',              // always use the 'english translated verison'
-        // 'cache_images => true,           // -- defaults to caching images - set to false to disable.
-        // 'replaceImages => false,         // should images be replaced.
-        // 'urlmap => array(             // map urls from template to a different location.
+        // 'html_locale => 'en',                // always use the 'english translated verison'
+        // 'cache_images => true,               // -- defaults to caching images - set to false to disable.
+        // 'replaceImages => false,             // should images be replaced.
+        // 'urlmap => array(                    // map urls from template to a different location.
         //      'https://www.mysite.com/' => 'http://localhost/',
         // ),
-        // 'locale' => 'en', // .... or zh_hk....
+        // 'locale' => 'en',                    // .... or zh_hk....
            
         // 'attachments' => array(
         //       array(
-        //        'file' => '/path/to/file', // file location
-        //        name => 'myfile.pdf', // (optional) - uses basename of file
+        //        'file' => '/path/to/file',    // file location
+        //        name => 'myfile.pdf',         // (optional) - uses basename of file
         //        mimetype : 
         //      ), 
         //  
-        // 'mail_method' =>  'SMTP', // or SMTPMX
+        // 'mail_method' =>  'SMTP',            // or SMTPMX
   
     )
  *
