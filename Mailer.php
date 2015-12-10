@@ -17,26 +17,26 @@
  *  $x= new Pman_Core_Mailer($opts)
  *
  *  $x= Pman_Core_Mailer(array(
-       page => 
-       contents  << keys must be trusted
-          bcc -> 
-       template
-       html_locale => 'en' == always use the 'english translated verison'
-       cache_images => true -- defaults to caching images - set to false to disable.
-       replaceImages => true|false,
-       urlmap => array(
-            'https://www.mysite.com/', 'http://localhost/'
-       )
-       locale => 'en' .... or zh_hk....
-       rcpts => array()   // override recipients..
-       attachments => array(
-        array(
-          file: 
-          name : (optional) - uses basename of file
-          mimetype : 
-        ), 
-        ......
-        mail_method : (SMTP or SMTPMX)
+       'page' => 
+       'contents'  => $this,    //  << keys must be trusted
+                                // if bcc is property of contents, then it will be used (BAD DESIGN)
+       'template' => 'your_template.html', 
+       'html_locale => 'en',              // always use the 'english translated verison'
+       'cache_images => true,           // -- defaults to caching images - set to false to disable.
+       'replaceImages => false,         // should images be replaced.
+        //'urlmap => array(             // map urls from template to a different location.
+      //      'https://www.mysite.com/' => 'http://localhost/'
+       //)
+       'locale' => 'en', // .... or zh_hk....
+       'rcpts' => array(),   // override recipients..
+       'attachments' => array(
+            array(
+              'file' => '/path/to/file', // file location
+              name => 'myfile.pdf', // (optional) - uses basename of file
+              mimetype : 
+            ), 
+        
+        //'mail_method' =>  'SMTP', // or SMTPMX
   
     )
  *
