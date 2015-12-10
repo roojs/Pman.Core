@@ -461,6 +461,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                     AND
                         T.table_name = {$tbl} COLLATE utf8_unicode_ci
             ");
+                     
+            $ce->fetch();
+            print_r($ce);exit;
             
             
             
