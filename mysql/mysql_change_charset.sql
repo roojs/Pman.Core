@@ -14,7 +14,7 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
     
     SELECT
         IF(
-            csname='utf8',
+            csname='utf8' AND collatename='utf8_unicode_ci',
             CONCAT('SELECT ''',mytb,' is Already utf8'' as \"No Need to Convert\"'),
             CONCAT('ALTER TABLE ',mytb,' CONVERT TO CHARACTER SET  \'utf8\' COLLATE \'utf8_unicode_ci\'')
             
@@ -24,7 +24,8 @@ CREATE PROCEDURE mysql_change_charset(mytb TEXT)
         
     FROM (
         SELECT
-            CCSA.character_set_name csname
+            CCSA.character_set_name csname,
+            CCSA.collation_name collatename
             FROM
                 information_schema.`TABLES` T,
                 information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA
