@@ -20,7 +20,7 @@
        'page' => $this,
                 // if bcc is property of this, then it will be used (BAD DESIGN)
        'rcpts' => array(),   // override recipients..
-       //'bcc' => array(),
+       //'bcc' => 'xyz@abc.com,abc@xyz.com', // string...
        'contents'  => array(),    //  << keys must be trusted
                                 // if bcc is property of contents, then it will be used (BAD DESIGN)
        'template' => 'your_template.html', 
