@@ -444,7 +444,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             }
             
             echo "CALL mysql_change_charset('{$tbl}') \n";
-            DB_DataObject::factory('core_enum')->query("CALL mysql_change_charset('{$tbl}')");
+            $ce = DB_DataObject::factory('core_enum');
+            $ce->query("CALL mysql_change_charset('{$tbl}')");
+            $ce->fetch();
         }
     }
     
