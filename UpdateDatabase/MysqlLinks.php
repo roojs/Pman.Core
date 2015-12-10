@@ -439,7 +439,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     {
 //        $this->schema = parse_ini_file($iniCache, true);
 //        $this->links
-        print_R($this->schema);exit;
+        print_R($this->links);exit;
     }
     
 }
