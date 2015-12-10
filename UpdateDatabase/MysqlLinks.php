@@ -437,7 +437,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     function updateCharacterSet()
     {
-        foreach (array_keys($this->schema) as $tbl){
+        foreach (array_reverse(array_keys($this->schema)) as $tbl){
             
             if(strpos($tbl, '__keys') !== false ){
                 continue;
