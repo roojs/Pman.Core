@@ -445,8 +445,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
             echo "CALL mysql_change_charset('{$tbl}') \n";
             
-            
             $ce = DB_DataObject::factory('core_enum');
+            
+            print_R($ce->database());exit;
+            
             $ce->query("CALL mysql_change_charset('{$tbl}')");
             
             
