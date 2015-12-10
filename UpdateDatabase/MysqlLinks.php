@@ -447,9 +447,23 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             
             $ce = DB_DataObject::factory('core_enum');
             
-            print_R($ce->database());exit;
+            $ce->query("
+                SELECT
+                        CCSA.character_set_name csname,
+                        CCSA.collation_name collatename
+                FROM
+                        information_schema.`TABLES` T,
+                        information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA
+                WHERE
+                        CCSA.collation_name = T.table_collation
+                    AND
+                        T.table_schema = mydb COLLATE utf8_unicode_ci
+                    AND
+                        T.table_name = mytb COLLATE utf8_unicode_ci
+
+            ");
             
-            $ce->query("CALL mysql_change_charset('{$tbl}')");
+            
             
             
         }
