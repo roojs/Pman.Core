@@ -467,7 +467,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 continue;
             }
             
-            
+            $ce = DB_DataObject::factory('core_enum');
+            $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_unicode_ci");
             
             
         }
