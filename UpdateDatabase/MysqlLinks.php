@@ -38,6 +38,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
           
         $this->loadIniFiles();
         $this->updateTableComments();
+        
+        $this->updateCharacterSet();
+        
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['enable_trigger_tests'])) {
             
@@ -432,6 +435,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         return $ret;
     }
         
+    function updateCharacterSet()
+    {
+        
+    }
     
 }
 
