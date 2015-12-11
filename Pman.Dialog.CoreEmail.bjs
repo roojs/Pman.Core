@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CoreEmail",
  "parent" : "",
  "title" : "",
- "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreEmail.bjs",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEmail.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -57,14 +57,14 @@
    "items" : [
     {
      "xtype" : "LayoutRegion",
-     "tabPosition" : "top",
      "$ xns" : "Roo",
+     "tabPosition" : "top",
      "* prop" : "center"
     },
     {
      "hidden" : true,
-     "title" : "Images / Attachments",
      "xtype" : "LayoutRegion",
+     "title" : "Images / Attachments",
      "width" : 500,
      "$ xns" : "Roo",
      "split" : true,
@@ -73,8 +73,8 @@
     },
     {
      "autoScroll" : false,
-     "fitToFrame" : true,
      "region" : "center",
+     "fitToFrame" : true,
      "xtype" : "NestedLayoutPanel",
      "fitContainer" : true,
      "$ xns" : "Roo",
@@ -175,8 +175,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Core/MailTemplateList.php'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -224,8 +224,8 @@
           "render" : "function (_self, width, height)\n{\n    \n      Roo.log(\"RESIZE, \" + width + ',' + height);\n    \n    var ew = Math.max(250, width-50);\n    var eh = Math.max(250,height-50) ;\n    \n   \n\n}"
          },
          "autoScroll" : false,
-         "background" : false,
          "fitToFrame" : true,
+         "background" : false,
          "region" : "center",
          "title" : "Message",
          "xtype" : "ContentPanel",
@@ -237,9 +237,9 @@
             "|actioncomplete" : "function(_self,action)\n{\n   \n    if (action.type == 'setdata') {\n    \n        _this.data.module = _this.data.module || 'crm_mailing_list_message';\n        \n        _this.form.url = baseURL + '/Roo/' + _this.data.module;\n        \n        _this.html_preview.hide();\n        _this.preview_btn.hide();\n            \n        if(_this.data.id*1 > 0){\n            _this.dialog.el.mask(\"Loading\");\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n            _this.html_preview.show();\n            _this.preview_btn.show();\n            \n        } else {\n            _this.form.setValues({\n                'from_name' : Pman.Login.authUser.name,\n                'from_email' : Pman.Login.authUser.email\n            });\n        }\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, action.result.data);\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
             "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
            },
+           "labelAlign" : "right",
            "$ preValidate" : "function(done_callback) {\n    \n    Roo.MessageBox.progress(\"Uploading Images\", \"Uploading\");\n    var html = _this.form.findField('bodytext').getValue();\n    \n    var s = Roo.get(_this.form.findField('bodytext').editorcore.doc.documentElement);\n    \n    var ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';\n    \n    var nodes = [];\n    s.select('img[src]').each(function(i) {\n        nodes.push(i.dom);\n    });\n    var total = nodes.length;\n    var mkimg = function() {\n    \n        if (!nodes.length) {\n              Roo.MessageBox.hide();\n              _this.form.findField('bodytext').syncValue();\n              done_callback(true);\n           //    _this.form.doAction(\"submit\");\n              return;\n        }\n        var i = nodes.pop(); \n        \n        var n = i.getAttribute('src').match(/(baseURL|server_baseurl)/);\n        \n        if(n){\n            mkimg();\n            return;\n        }\n        \n        n = i.getAttribute('src').match(/^http(.*)/)\n       \n        if(!n ){\n            mkimg();\n            return;\n        }\n        \n        new Pman.Request({\n            url : baseURL + '/Roo/Images.php',\n            method : 'POST',\n            params : {\n                onid : _this.form.findField('id').getValue(),\n                ontable : ontable ,\n                _remote_upload : i.src\n            },\n            success : function(res){\n                if(res.success == true){      \n                    i.setAttribute('src', res.data);\n                    Roo.MessageBox.updateProgress( (total - nodes.length) / total , \"Done \" + (total - nodes.length) + '/' + total);\n                }\n                mkimg();\n            }\n        });\n       \n    }\n    mkimg();\n}\n",
            "$ url" : "baseURL + '/Roo/crm_mailing_list_message.php'",
-           "labelAlign" : "right",
            "method" : "POST",
            "style" : "margin:10px",
            "xtype" : "Form",
@@ -297,8 +297,8 @@
              "items" : [
               {
                "hideLabels" : true,
-               "style" : "text-align:center;",
                "legend" : "Html Editor",
+               "style" : "text-align:center;",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -325,7 +325,7 @@
                      "listeners" : {
                       "render" : "function (_self)\n{\n    _this.extendimgselect = _self;\n}",
                       "beforequery" : "function (combo, query, forceAll, cancel, e)\n{\n    var id = _this.form.findField('id').getValue() * 1;    \n    if (!id) {\n        Roo.MessageBox.alert(\"Error\", \"Save message first\");\n        return false;\n    }\n}",
-                      "select" : "function (combo, record, index)\n{\n    Roo.log(record);\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n    var editor = _this.form.findField('bodytext').editorcore;\n    editor.insertAtCursor(\n            String.format('<img src=\"{0}/Images/{1}/{2}#image-{1}\">',\n            baseURL,  record.data.id, record.data.filename\n            )\n     );\n\n    \n }"
+                      "select" : "function (combo, record, index)\n{\n    Roo.log(record);\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n    var editor = _this.form.findField('bodytext').editorcore;\n    \n    var curnode = bt.editorcore.getSelectedNode()\n    if (curnode && curnode.tagName == 'IMG') {\n        curnode.src= String.format('{0}/Images/{1}/{2}#image-{1}',\n                baseURL,  record.data.id, record.data.filename\n            );\n    } else {\n    \n        editor.insertAtCursor(\n            String.format('<img src=\"{0}/Images/{1}/{2}#image-{1}\">',\n            baseURL,  record.data.id, record.data.filename\n            )\n        );\n\n    }\n    \n }"
                      },
                      "alwaysQuery" : true,
                      "listWidth" : 400,
@@ -360,8 +360,8 @@
                        "items" : [
                         {
                          "$ url" : "baseURL + '/Roo/Images.php'",
-                         "method" : "GET",
                          "xtype" : "HttpProxy",
+                         "method" : "GET",
                          "$ xns" : "Roo.data",
                          "* prop" : "proxy"
                         },
@@ -443,8 +443,8 @@
              "items" : [
               {
                "hideLabels" : true,
-               "style" : "text-align:center;",
                "legend" : "Plain Text",
+               "style" : "text-align:center;",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -476,8 +476,8 @@
       "|activate" : "function() {\n    _this.ipanel = this;\n    if (_this.igrid) {\n       _this.igrid.ds.load({});\n    }\n}"
      },
      "autoScroll" : false,
-     "background" : false,
      "fitToframe" : true,
+     "background" : false,
      "region" : "east",
      "title" : "Images / Attachments",
      "xtype" : "GridPanel",
@@ -507,8 +507,8 @@
          "items" : [
           {
            "$ url" : "baseURL + '/Roo/Images.php'",
-           "method" : "GET",
            "xtype" : "HttpProxy",
+           "method" : "GET",
            "$ xns" : "Roo.data",
            "* prop" : "proxy"
           },
@@ -552,8 +552,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Filename",
          "width" : 300,
+         "header" : "Filename",
          "$ renderer" : "function(v,x,r)\n{\n    var width = r.data.width;\n    var height = r.data.height;\n    \n    if(width > 50){\n        height = Math.round(height * 50 / width);\n        width = 50;\n    }\n    \n   return '<img src=\"' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '\" width=\"' + width + '\" height=\"' + height + '\" />';\n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -561,8 +561,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 75,
          "header" : "Displayorder",
+         "width" : 75,
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -570,8 +570,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Title",
          "width" : 75,
+         "header" : "Title",
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
