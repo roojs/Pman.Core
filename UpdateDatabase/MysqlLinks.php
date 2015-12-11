@@ -455,9 +455,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 WHERE
                         CCSA.collation_name = T.table_collation
                     AND
-                        T.table_schema = '{$ce->database()}' COLLATE utf8_unicode_ci
+                        T.table_schema = '{$ce->database()}' -- COLLATE utf8_unicode_ci
                     AND
-                        T.table_name = '{$tbl}' COLLATE utf8_unicode_ci
+                        T.table_name = '{$tbl}' -- COLLATE utf8_unicode_ci
             ");
                      
             $ce->fetch();
