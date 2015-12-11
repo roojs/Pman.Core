@@ -744,7 +744,7 @@ Pman.Dialog.CoreEmail = {
                            }).defer(100);
                            var editor = _this.form.findField('bodytext').editorcore;
                            
-                           var curnode = editor.editorcore.getSelectedNode()
+                           var curnode = editor.getSelectedNode()
                            if (curnode && curnode.tagName == 'IMG') {
                                curnode.src= String.format('{0}/Images/{1}/{2}#image-{1}',
                                        baseURL,  record.data.id, record.data.filename
