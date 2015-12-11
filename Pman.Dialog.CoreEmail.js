@@ -749,7 +749,8 @@ Pman.Dialog.CoreEmail = {
                                curnode.src= String.format('{0}/Images/{1}/{2}#image-{1}',
                                        baseURL,  record.data.id, record.data.filename
                                    );
-                               editor.owner.fireEvent('editorevent', editor);
+                                   // note -forces an update... hopefully...
+                               editor.owner.fireEvent('editorevent', editor, false);
                            } else {
                            
                                editor.insertAtCursor(
