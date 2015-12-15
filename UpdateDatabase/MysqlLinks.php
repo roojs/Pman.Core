@@ -252,7 +252,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             FOR EACH ROW
             BEGIN
                DECLARE mid INT(11);
-               
+                if (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$target_table} IS NULL ) THEN 
                
             ";
             foreach($map as $source_col=>$target) {
@@ -294,6 +294,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             }
             
             $trigger .= "
+                END IF;
             END 
            
             ";
