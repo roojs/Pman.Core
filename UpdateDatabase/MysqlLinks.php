@@ -188,8 +188,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 BEFORE DELETE ON `{$target_table}`
             FOR EACH ROW
             BEGIN
-               DECLARE mid INT(11);
-             
+                DECLARE mid INT(11);
+                if (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$target_table} IS NULL ) THEN  
                
             ";
             foreach($sources as $source=>$target) {
@@ -215,6 +215,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             }
             
             $trigger .= "
+                END IF;
             END 
            
             ";
