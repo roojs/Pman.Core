@@ -23,8 +23,17 @@
  *   -- {tablename}_trigger_{optional_string}_before_update_{column_name}(OLD.column, NEW.column}
  *   -- {tablename}_trigger_{optional_string}_before_insert_{column_name}(OLD.column}
  *
- *  
  *
+ * ------- Importing with triggers disabled.
+ *
+ *  SET @DISABLE_TRIGGER=1; (or anything you like except NULL) 
+ *  do imports
+ * SET @DISABLE_TRIGGER=NULL;
+ *
+ * ------ Call a method disabling a particular set of triggers
+ *  SET @DISABLE_TRIGGER_the_table_name=1; (or anything you like except NULL) 
+ *  do action
+ *  SET @DISABLE_TRIGGER_the_table_name=NULL;*
  */
 
 class Pman_Core_UpdateDatabase_MysqlLinks {
