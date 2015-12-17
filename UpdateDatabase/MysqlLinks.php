@@ -467,20 +467,20 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 WHERE
                         CCSA.collation_name = T.table_collation
                     AND
-                        T.table_schema = '{$ce->database()}' -- COLLATE utf8_unicode_ci
+                        T.table_schema = '{$ce->database()}' -- COLLATE utf8_general_ci
                     AND
-                        T.table_name = '{$tbl}' -- COLLATE utf8_unicode_ci
+                        T.table_name = '{$tbl}' -- COLLATE utf8_general_ci
             ");
                      
             $ce->fetch();
             
-            if($ce->csname == 'utf8' && $ce->collatename == 'utf8_unicode_ci'){
+            if($ce->csname == 'utf8' && $ce->collatename == 'utf8_general_ci'){
                 echo "$tbl is Already utf8 \n";
                 continue;
             }
             
             $ce = DB_DataObject::factory('core_enum');
-            $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_unicode_ci");
+            $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
             echo "FIXED utf8 on {$tbl}\n";
             
         }
