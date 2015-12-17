@@ -478,6 +478,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 echo "$tbl is Already utf8 \n";
                 continue;
             }
+            //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
             
             $ce = DB_DataObject::factory('core_enum');
             $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
