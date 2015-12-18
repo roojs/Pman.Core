@@ -461,8 +461,6 @@ class Pman_Core_NotifySend extends Pman
             $w->event_id = $ev->id;
             $w->update($ww);
             $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
-            
-            
         }
         
         
