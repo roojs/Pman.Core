@@ -306,7 +306,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
             }
             
-            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
+            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
@@ -320,7 +320,7 @@ class Pman_Core_NotifySend extends Pman
         
         
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
-            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - ". $p->email );
+            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
