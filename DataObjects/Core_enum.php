@@ -161,7 +161,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
     }
     
-    function onInsert($req)
+    function onInsert($req, $roo)
     {
         $x = $this->factory($this->tableName());
         $x->query("SELECT core_enum_seqmax_update('". $this->escape($this->etype) ."')"); // no idea why need to do this!!??
