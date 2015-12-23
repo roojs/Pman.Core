@@ -147,7 +147,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        DB_DataObject::debugLevel(1);
+        
         if(empty($req['etype'])){
             if($x->get('name', $req['name'])){
                 $roo->jerr('name is exsiting');
@@ -156,8 +156,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $x->whereAdd("etype = '{$this->escape($req['etype'])}' AND name = '{$this->escape($req['name'])}'");
             $x->find(true);
             if($x->count() > 0){
-                print_r($x);exit;
-                $roo->jerr('is exsiting??');
+                $roo->jerr('is exsiting');
             }
         }
     }
