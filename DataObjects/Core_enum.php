@@ -147,7 +147,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        
+        print_R($this);exit;
         if(empty($req['etype'])){
             if($x->get('name', $req['name'])){
                 $roo->jerr('name is exsiting');
