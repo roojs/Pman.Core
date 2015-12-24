@@ -3,6 +3,9 @@
  /**
   * Generic cached assset server...
   *
+  *
+  * Also includes code to generate assets...
+  *
   * Hydra generates a url for the compressed files as /Asset/css/xxxx.yyy.zzz
   *
   */
