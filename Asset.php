@@ -1,7 +1,7 @@
 <?php
  
  /**
-  * Generic cached assset server... -- No security o this..
+  * Generic cached assset server... -- No security om this.. should only return compressed CSS/JS
   *
   *
   * Also includes code to generate assets...
