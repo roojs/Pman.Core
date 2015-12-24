@@ -27,6 +27,11 @@ class Pman_Core_Asset extends Pman {
         'js' => 'text/javascript',
     );
     
+    function getAuth()
+    {
+        return true;
+    }
+    
     
     function get($s='')
     {
