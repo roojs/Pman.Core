@@ -12,7 +12,7 @@
   *
   *   then
   *   we deliver the file from
-  *       SESSION-DIR/{$www-user}-{$ff->project}-$ff->version}-{js|css}-compile';
+  *       SESSION-DIR/{$www-user}-{$ff->project}-$ff->version}-{js|css}-compile/{filename}';
   *
   *   
   */
