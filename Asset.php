@@ -204,7 +204,7 @@ trait Pman_Core_Asset_Trait {
             clearstatcache();
             if (!file_exists($compiledir.'/'.$output) ||
                 !filesize($compiledir.'/'.$output)) {
-                echo "<!-- compile did not generate files : ". basedir($compiledir)  ."/{$output} -->\n";
+                echo "<!-- compile did not generate files : ". dirname($compiledir)  ."/{$output} -->\n";
                 $this->assetArrayToHtml($files,'js');
                 return;
             } 
