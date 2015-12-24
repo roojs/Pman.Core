@@ -3,6 +3,8 @@
  /**
   * Generic cached assset server... -- No security om this.. should only return compressed CSS/JS
   *
+  * Does a few tricks with headers to improve caching...
+  *
   *
   * Also includes code to generate assets...
   *
