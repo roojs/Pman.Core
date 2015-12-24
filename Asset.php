@@ -6,12 +6,15 @@
   *
   * Also includes code to generate assets...
   *
-  * methods outputJavascriptDir / outputCssDir generate files in
-  *    SESSION-PATH/Asset/css/xxxx.yyy.zzz
-  *    SESSION-PATH/Asset/js/xxxx.yyy.zzz
+  * methods outputJavascriptDir / outputCssDir generate links to 
+  *    BASEURL/Asset/css/xxxx.yyy.zzz
+  *    BASEURL/Asset/js/xxxx.yyy.zzz
   *
+  *   then
+  *   we deliver the file from
+  *       SESSION-DIR/{$www-user}-{$ff->project}-$ff->version}-{js|css}-compile';
   *
-  *
+  *   
   */
  
 require_once 'Pman.php';
