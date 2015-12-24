@@ -287,7 +287,7 @@ trait Pman_Core_Asset_Trait {
             // got the 'module file..'
             
             if (!file_exists($dir . '/'. $f)) {
-                echo "<!-- missing {$dir}/{$f} -->\n";
+                echo "<!-- missing {$relpath}/{$f} -->\n";
                 $files[] = $relpath  . $f . '?ts='.$mtime;
                 $missing_files = true;
                 continue;
