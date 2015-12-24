@@ -106,7 +106,7 @@ class Pman_Core_Asset extends Pman {
 
 // a little experimental... we are going to use the same name as the class. for these..
 
-trait Pman_Core_Asset {
+trait Pman_Core_Asset_Trait {
     
     
     
