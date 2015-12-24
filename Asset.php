@@ -6,7 +6,11 @@
   *
   * Also includes code to generate assets...
   *
-  * Hydra generates a url for the compressed files as /Asset/css/xxxx.yyy.zzz
+  * methods outputJavascriptDir / outputCssDir generate files in
+  *    SESSION-PATH/Asset/css/xxxx.yyy.zzz
+  *    SESSION-PATH/Asset/js/xxxx.yyy.zzz
+  *
+  *
   *
   */
  
