@@ -275,7 +275,7 @@ trait Pman_Core_Asset_Trait {
         //$path = $this->rootURL ."/Pman/$mod/";
         
         //print_R($ar);exit;
-        
+        $missing_files  = false;
         $files = array();
         $arfiles = array();
         $relfiles = array(); // array of files without the path part...
@@ -285,14 +285,27 @@ trait Pman_Core_Asset_Trait {
             $relfiles[] = substr($fn, strlen($dir)+1);
             $f = basename($fn);
             // got the 'module file..'
+            
+            if (!file_exists($dir . '/'. $f)) {
+                echo "<!-- missing {$dir}/{$f}>\n";
+                $files[] = $relpath  . $f . '?ts='.$mtime;
+                $missing_files = true;
+            }
+            
             $mtime = filemtime($dir . '/'. $f);
             $maxtime = max($mtime, $maxtime);
             $arfiles[$fn] = $mtime;
-            $files[] = $relpath  . $f . '?ts='.$mtime;
+            
             
             
             
         }
+        if ($missing_files) {
+            $this->assetArrayToHtml($files, 'css');
+            return;
+            
+        }
+        
          
         //print_r($relfiles);
         
