@@ -296,7 +296,7 @@ trait Pman_Core_Asset_Trait {
             $mtime = filemtime($dir . '/'. $f);
             $maxtime = max($mtime, $maxtime);
             $arfiles[$fn] = $mtime;
-            
+            $files[] = $relpath  . $f . '?ts='.$mtime;
             
             
             
