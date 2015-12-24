@@ -244,6 +244,7 @@ trait Pman_Core_Asset_Trait {
     
     function outputCssDir($path)
     {
+         die("cssdir");
         $relpath = $this->rootURL . '/' . $path .'/';
         $ff = HTML_FlexyFramework::get();
         $dir =   $this->rootDir.'/' . $path;
