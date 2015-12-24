@@ -22,8 +22,7 @@
 require_once 'Pman.php';
 
 class Pman_Core_Asset extends Pman {
-    
-    
+     
     var $types = array(
         'css' => 'text/css',
         'js' => 'text/javascript',
