@@ -1,7 +1,7 @@
 <?php
  
  /**
-  * Generic cached assset server...
+  * Generic cached assset server... -- No security o this..
   *
   *
   * Also includes code to generate assets...
