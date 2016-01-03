@@ -404,7 +404,7 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
                 
-                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT {$w->to_email}\n");
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
