@@ -95,7 +95,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             $ce->fetch();
             
             if($ce->engine == 'InnoDB' ){
-                echo "InnoDB: SKIP $tbln";
+                echo "InnoDB: SKIP $tbl\n";
                 continue;
             }
             // this used to be utf8_unicode_ci
