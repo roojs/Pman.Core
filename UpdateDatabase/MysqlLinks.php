@@ -49,6 +49,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->updateTableComments();
         
         $this->updateCharacterSet();
+        $this->updateEngine();
         
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['enable_trigger_tests'])) {
@@ -484,6 +485,33 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             $ce = DB_DataObject::factory('core_enum');
             $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
             echo "FIXED utf8 on {$tbl}\n";
+            
+        }
+    }
+    function updateEngine()
+    {
+        foreach (array_keys($this->schema) as $tbl){
+            
+            if(strpos($tbl, '__keys') !== false ){
+                continue;
+            }
+            
+            $ce = DB_DataObject::factory('core_enum');
+            
+            $ce->query("select engine from information_schema.tables where table_schema='hydra' and table_name = 'core_enum'");
+
+            $ce->fetch();
+            
+            if($ce->engine == 'InnoDB' ){
+                echo "SKIP engine on $tbl - already InnoDB\n";
+                continue;
+            }
+            // this used to be utf8_unicode_ci
+            //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
+            
+            $ce = DB_DataObject::factory('core_enum');
+            $ce->query("ALTER TABLE $tbl ENGINE=InnoDB");
+            echo "FIXED engine on {$tbl}\n";
             
         }
     }
