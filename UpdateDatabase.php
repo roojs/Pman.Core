@@ -187,7 +187,7 @@ class Pman_Core_UpdateDatabase extends Pman
        
         
         $ar = $this->modulesList();
-       
+        var_dump($ar);
         
         foreach($ar as $m) {
              echo "Importing SQL from module $m\n";
