@@ -859,7 +859,7 @@ class Pman_Core_UpdateDatabase extends Pman
         foreach($this->extensions as $ext) {
        
             $scls = ucfirst($dbtype). $ext;
-            $cls = 'Pman_Core_UpdateDatabase_'. $scls;
+            $cls = __CLASS__ . '_'. $scls;
             $fn = implode('/',explode('_', $cls)).'.php';
             if (!file_exists(__DIR__.'/UpdateDatabase/'. $scls .'.php')) {
                 return;
