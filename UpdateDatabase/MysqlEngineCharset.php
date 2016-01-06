@@ -75,7 +75,8 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
             
             $ce = DB_DataObject::factory('core_enum');
-           $ce->query("ALTER TABLE $tbl CHARSET=utf8");
+            // not sure why, but convert to does not actually change the 'charset=' bit..
+            $ce->query("ALTER TABLE $tbl CHARSET=utf8");
             $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
             echo "utf8: FIXED {$tbl}\n";
             
