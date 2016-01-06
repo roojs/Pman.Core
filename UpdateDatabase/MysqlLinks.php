@@ -47,10 +47,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
           
         $this->loadIniFiles();
         $this->updateTableComments();
-        
-        $this->updateCharacterSet();
-        $this->updateEngine();
-        
+       
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->Pman['enable_trigger_tests'])) {
             
