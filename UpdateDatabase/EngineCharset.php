@@ -1,39 +1,6 @@
 <?php
 /**
- * our standard code relies on links.ini files for the relationships in mysql.
- *
- * as we use 'loose' relationships - eg. we allow '0' as a missing link mysql FORIEGN KEYS do not really work.
- *
- * There are a couple of ideas behind this code.
- *
- * a) put the relationships in the table comments FK(col=table:col,col=table:col)
- *  -- we can not put it in the column comments as there is no clean way to update column comments.
- *  -- This can be used by external programs to extract the Relationships.
- *
- * b) generate triggers? to protect against updates to the database..
- *
- *  -- stored procedures are named
- *     {tablename}_before_{insert|delete|update}
- *     
- *  
- *   initial code will auto generate triggers
- *   -- how to add User defined modifications to triggers?
- *   -- we can CALL a stored procedure..?
- *   -- {tablename}_trigger_{optional_string}_before_delete_{column_name}(NEW.column)
- *   -- {tablename}_trigger_{optional_string}_before_update_{column_name}(OLD.column, NEW.column}
- *   -- {tablename}_trigger_{optional_string}_before_insert_{column_name}(OLD.column}
- *
- *
- * ------- Importing with triggers disabled.
- *
- *  SET @DISABLE_TRIGGER=1; (or anything you like except NULL) 
- *  do imports
- * SET @DISABLE_TRIGGER=NULL;
- *
- * ------ Call a method disabling a particular set of triggers
- *  SET @DISABLE_TRIGGER_the_table_name=1; (or anything you like except NULL) 
- *  do action
- *  SET @DISABLE_TRIGGER_the_table_name=NULL;*
+  fixes character set and engine=InnoDB..
  */
 
 class Pman_Core_UpdateDatabase_MysqlLinks {
