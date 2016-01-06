@@ -1,6 +1,7 @@
 <?php
 /**
-  fixes character set and engine=InnoDB..
+  fixes character set and engine=InnoDB.. in Mysql
+  more efficent 
  */
 
 class Pman_Core_UpdateDatabase_MysqlLinks {
