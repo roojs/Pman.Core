@@ -92,7 +92,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             
             $ce = DB_DataObject::factory('core_enum');
             
-            $ce->query("select engine from information_schema.tables where table_schema='$ce->database()}' and table_name = '{$tbl}'");
+            $ce->query("select engine from information_schema.tables where table_schema='{$ce->database()}' and table_name = '{$tbl}'");
 
             $ce->fetch();
             
