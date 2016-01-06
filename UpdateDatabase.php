@@ -155,7 +155,8 @@ class Pman_Core_UpdateDatabase extends Pman
            
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
         }
-        $this->fixLinks();
+        
+        $this->runExtensions();
          
          
     }
@@ -841,7 +842,12 @@ class Pman_Core_UpdateDatabase extends Pman
        
     }
     
-    function fixLinks()
+    var $extensions = array(
+        'EngineCharset',
+        'Links',
+    );
+    
+    function runExtensions()
     {
         
         $ff = HTML_Flexyframework::get();
@@ -850,16 +856,18 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $dbtype = $dburl['scheme'];
        
-        $scls = ucfirst($dbtype). 'Links';
-        $cls = 'Pman_Core_UpdateDatabase_'. $scls;
-        $fn = implode('/',explode('_', $cls)).'.php';
-        if (!file_exists(__DIR__.'/UpdateDatabase/'. $scls .'.php')) {
-            return;
+        foreach($this->extensions as $ext) {
+       
+            $scls = ucfirst($dbtype). $ext;
+            $cls = 'Pman_Core_UpdateDatabase_'. $scls;
+            $fn = implode('/',explode('_', $cls)).'.php';
+            if (!file_exists(__DIR__.'/UpdateDatabase/'. $scls .'.php')) {
+                return;
+            }
+            require_once $fn;
+            $c = new $cls();
+            
         }
-        require_once $fn;
-        $c = new $cls();
-        
-        
         
     }
 }
