@@ -68,7 +68,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             $ce->fetch();
             
             if($ce->csname == 'utf8' && $ce->collatename == 'utf8_general_ci'){
-                echo "$tbl is Already utf8 \n";
+                echo "utf8: SKIP $tbl\n";
                 continue;
             }
             // this used to be utf8_unicode_ci
@@ -76,7 +76,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             
             $ce = DB_DataObject::factory('core_enum');
             $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
-            echo "FIXED utf8 on {$tbl}\n";
+            echo "utf8: FIXED {$tbl}\n";
             
         }
     }
@@ -95,7 +95,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             $ce->fetch();
             
             if($ce->engine == 'InnoDB' ){
-                echo "SKIP engine on $tbl - already InnoDB\n";
+                echo "InnoDB: SKIP $tbln";
                 continue;
             }
             // this used to be utf8_unicode_ci
@@ -103,7 +103,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             
             $ce = DB_DataObject::factory('core_enum');
             $ce->query("ALTER TABLE $tbl ENGINE=InnoDB");
-            echo "FIXED engine on {$tbl}\n";
+            echo "InnoDB: FIXED {$tbl}\n";
             
         }
     }
