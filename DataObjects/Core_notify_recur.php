@@ -146,6 +146,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
 
         $notifytimes = $this->notifyTimes(2);
+        echo "{$this->person()->email}\n";
         print_R($notifytimes);
         
         $newSearch = DB_DataObject::factory('core_notify');
