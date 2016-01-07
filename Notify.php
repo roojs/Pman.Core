@@ -153,23 +153,21 @@ class Pman_Core_Notify extends Pman
          
         //date_default_timezone_set('UTC');
        // phpinfo();exit;
-        
-     
-        
-        $w = DB_DataObject::factory('core_notify_recur');
-        if (is_a($w, 'DB_DataObject')) {
-            $w->generateNotifications();
-        }
         if (!empty($opts['generate'])) {
             $w = DB_DataObject::factory($opts['generate']);
             if (is_a($w, 'DB_DataObject')) {
                 $w->generateNotifications();
             }
             exit;
-            
-            
         }
      
+     
+        
+        $w = DB_DataObject::factory('core_notify_recur');
+        if (is_a($w, 'DB_DataObject')) {
+            $w->generateNotifications();
+        }
+        
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         $total = 0;
