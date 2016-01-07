@@ -230,7 +230,7 @@ class Pman_Core_Notify extends Pman
             $this->logecho("BATCH SIZE: ".  (count($ar) + $total) );
             
             if (empty($ar)) {
-                $this->logecho("COMPLETED MAIN QUEUE - running delated");
+                $this->logecho("COMPLETED MAIN QUEUE - running deleted");
                 
                 if (empty($pushed)) {
                     break;
