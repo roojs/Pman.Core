@@ -195,6 +195,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     }
     
+    function person()
+    {
+        $p = DB_DAtaObject::factory('Person');
+        $p->get($this->person_id);
+        return $p;
+    }
+    
     function onUpdate($old, $request,$roo)
     {
         $this->generateNotificationsSingle();
