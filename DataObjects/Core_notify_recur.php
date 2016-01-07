@@ -84,6 +84,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         list($start, $end) = $this->notifytimesRange($advance);
         var_dump(array($start, $end));
+        print_r($this);
         
         if (strtotime($start) > strtotime($end)) {
             return array(); // no data..
