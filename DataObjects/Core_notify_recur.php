@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     
     function generateNotifications()
     {
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->tableName());
         $w->find();
         
