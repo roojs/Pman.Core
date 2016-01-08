@@ -39,7 +39,7 @@ class Pman_Core_Pman {
             $p->find(true);
             $member = DB_DataObject::factory('group_members');
             $member->group_id = $group->id;
-            $member->person_id = $p->id;
+            $member->user_id = $p->id;
             $member->insert();
             return;
         }
