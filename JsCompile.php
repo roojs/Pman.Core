@@ -5,6 +5,8 @@
 * 
 *  -- we will use this later to compile on the fly...
 *
+*  -- updated to use roojspacker https://github.com/roojs/roojspacker
+*
 *
 * For general usage:
 *  $x = new Pman_Core_JsCompile();
@@ -143,6 +145,8 @@ class Pman_Core_JsCompile  extends Pman
         }
           
     }
+    
+    // this is depricated... - we can use the pear CSS library for this..
     
     function packCss($basedir, $files,   $output_url)
     {
