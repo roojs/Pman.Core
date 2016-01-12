@@ -252,7 +252,87 @@ class Pman_Core_JsCompile  extends Pman
      * @param {String} $output name fo file to output
      *
      */
+    
     function pack($files, $output, $translation_base=false)
+    {
+        
+         
+        $o = HTML_FlexyFramework::get()->Pman_Core;
+        
+        
+        require_once 'System.php';
+        $packer = System::which('roojspacker');
+        
+        
+        if (!$packer) {
+            echo '<!-- roojspacker is not installed -->';
+            return false;
+            
+        }
+        $targetm = file_exists($output) && filesize($output) ? filemtime($output) : 0;
+        $max = 0;
+        $ofiles = array();
+        foreach($files as $f => $mt) {
+            $max = max($max,$mt);
+            $ofiles[] = escapeshellarg($f);
+        }
+        if ($max < $targetm) {
+            echo '<!--  use cached compile. -->';
+            return true;
+        }
+        //var_dump($output);
+        if (!file_exists(dirname($output))) {
+            mkdir(dirname($output), 0755, true);
+        }
+        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        usort($ofiles, $lsort);
+        
+        //$eoutput = " -k  -o " . escapeshellarg($output) ; // with whitespace..
+        $eoutput = "  -o " . escapeshellarg($output) ;
+                   
+        if (  $translation_base) {
+            $toutput = " -t ". escapeshellarg(preg_replace('/\.js$/', '.__translation__.js', $output)) .
+                    " -p " . escapeshellarg($translation_base) ;//." -k "; // this kills the compression.
+                    
+        }
+        
+        
+        $cmd = ($seed ?
+             "$seed {$o['jspacker']}/pack.js " :
+             "$gjs -I {$o['jspacker']} -I {$o['jspacker']}/JSDOC  {$o['jspacker']}/pack.js -- -- " 
+              
+             ) . " $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
+        //echo "<PRE>$cmd\n";
+        //echo `$cmd`;
+        
+         echo "<!-- Compile javascript
+          
+            " . htmlspecialchars($cmd) . "
+            
+            -->";
+            
+       // return false;
+        
+        $res = `$cmd`;
+        //exit;
+        file_put_contents($output.'.log', $cmd."\n\n". $res);
+        // since this only appears when we change.. it's ok to dump it out..
+        echo "<!-- Compiled javascript
+            " . htmlspecialchars($res) . "
+            -->";
+            
+        // we should do more checking.. return val etc..
+        if (file_exists($output) && ($max < filemtime($output) ) ) {
+            
+            return true;
+        }
+        echo "<!-- JS COMPILE ERROR: packed file did not exist  -->";
+        return false;
+        
+    }
+    
+    // depricated verison using seed.
+    function packSeed($files, $output, $translation_base=false)
     {
         
          
