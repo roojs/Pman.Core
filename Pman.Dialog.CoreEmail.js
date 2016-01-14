@@ -301,7 +301,7 @@ Pman.Dialog.CoreEmail = {
                       method: 'POST',
                       mask : "Loading",
                       params : {
-                            importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html',
+                            importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html'
                      },
                       success : function (res) {
               
