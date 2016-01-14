@@ -296,7 +296,7 @@ class Pman_Core_Mailer {
         if ($this->rcpts !== false) {
             $ret['recipents'] =  $this->rcpts;
         }
-        // if 'to' is empty, then add the recipents in there...
+        // if 'to' is empty, then add the recipents in there... (must be an array?
         if (!empty($ret['recipents']) && is_array($ret['recipents']) &&
                 (empty($ret['headers']['To']) || !strlen(trim($ret['headers']['To'])))) {
             $ret['headers']['To'] = implode(',', $ret['recipents']);
