@@ -111,7 +111,7 @@ trait Pman_Core_AssetTrait {
          //   echo "<!-- file already exists: {$basedir}/{$output} -->\n";
         }
         
-        $asset = $ff->project == 'Pman' ? '/Pman/Asset/js' : '/Asset/js/';
+        $asset = $ff->project == 'Pman' ? '/Pman/Asset/js/' : '/Asset/js/';
         //$this->arrayToJsInclude(  $files);
         $this->assetArrayToHtml(  array(
             $this->baseURL.$asset. $output,
@@ -260,9 +260,11 @@ trait Pman_Core_AssetTrait {
         } else {
          //   echo "<!-- file already exists: {$basedir}/{$output} -->\n";
         }
+        
+         $asset = $ff->project == 'Pman' ? '/Pman/Asset/css/' : '/Asset/css/';
         //$this->arrayToJsInclude(  $files);
         $this->assetArrayToHtml(  array(
-            $this->baseURL.'/Asset/css/'. $output,
+            $this->baseURL.$asset. $output,
           
         ),'css');
         
