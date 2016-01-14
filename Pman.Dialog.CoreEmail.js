@@ -500,7 +500,7 @@ Pman.Dialog.CoreEmail = {
                        return;
                    }
                    
-                   n = i.getAttribute('src').match(/^http(.*)/)
+                   n = i.getAttribute('src').match(/^http(.*)/);
                   
                    if(!n ){
                        mkimg();
