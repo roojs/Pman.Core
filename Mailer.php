@@ -297,7 +297,7 @@ class Pman_Core_Mailer {
             $ret['recipents'] =  $this->rcpts;
         }
         
-        if (!empty($ret['recipents']) && (empty($ret['headers']['To']) || !strlen(trim($ret['headers']['To'])))) {
+        if (!empty($ret['recipents']) && is_array($ret['recipents']) && (empty($ret['headers']['To']) || !strlen(trim($ret['headers']['To'])))) {
             $ret['headers']['To'] = implode(',', $ret['recipents']);
         }
        
