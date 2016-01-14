@@ -683,7 +683,7 @@ Pman.Dialog.CoreEmail = {
                      'vertical-align',
                      'cursor',
                      'z-index',
-                     'right',
+                     'right'
                   ],
                  height : 250,
                  name : 'bodytext',
