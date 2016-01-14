@@ -1,4 +1,4 @@
-
+<?php
 // a little experimental... we are going to use the same name as the class. for these..
 
 trait Pman_Core_Asset_Trait {
