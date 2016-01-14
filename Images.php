@@ -347,11 +347,29 @@ class Pman_Core_Images extends Pman
             foreach($imatch[1] as $i=>$key) {
                 $attr[$key] = $imatch[2][$i];
             }
-            if (!isset($attr['src']) || 0 !== strpos($attr['src'], $baseURL)) {
+            // does it contain baseURL??? --- well what about relative paths...
+            //print_R($attr);
+            
+            if (empty($attr['src'])) {
                 continue;
             }
+            if (0 !== strpos($attr['src'], $baseURL)) {
+                // it starts with our 'new' baseURL?
+                $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
+                continue;
+            }
+            if (false !== strpos($attr['src'], '//')) {
+                // contains an absolute path.. that is probably not us...
+                continue;
+            }
+            // what about mailto or data... - just ignore?? for images...
+            
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
+            
+            
+            
         }
+        
         
         $result = array();
         preg_match_all('/<a\s+[^>]+>/i',$html, $result); 
@@ -388,7 +406,14 @@ class Pman_Core_Images extends Pman
         if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
             return $html;
         }
+        
         $id = $umatch[2];
+        $hash = '';
+        if (!empty($umatch[3]) && strpos($umatch[3],'#')) {
+            $hash = '#'. array_pop(explode('#',$umatch[3]));
+        }
+        
+        
         $img = DB_DataObject::factory('Images');
         if (!$img->get($id)) {
             return $html;
@@ -434,7 +459,7 @@ class Pman_Core_Images extends Pman
         
         $new_tag = str_replace(
             $attr_name. '="'. $attr_url . '"',
-            $attr_name .'="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . '"',
+            $attr_name .'="'. htmlspecialchars($img->URL($thumbsize, $provider, $baseURL)) . $hash .'"',
             $tag
         );
         
