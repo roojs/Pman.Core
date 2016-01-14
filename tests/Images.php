@@ -11,9 +11,10 @@ class Pman_Core_tests_Images extends Pman
         //init();
         
         $d = DB_DataObject::factory('pressrelease_entry');
-        $d->get(1990)
+        $d->get(1990);
         
         echo htmlspecialchars(Pman_Core_Images::replaceImageURLS($d->content));
+        
         exit;
         
         $ret = Pman_Core_Images::replaceImageURLS('
