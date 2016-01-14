@@ -154,7 +154,7 @@ Pman.GoogleTranslate = function(str, src, dest, cb, force) {
             params : {
                 text : str,
                 src  : src,
-                dest : dest,
+                dest : dest
             },
             success: function(o)
             {
