@@ -10,7 +10,8 @@ Pman.Dialog.Image = {
   'eb5d45750c7ab13aa8e6bacc80315a30' :"32M",
   '2859a4ae58ae4e25abdfc530f814e42f' :"Upload an Image or File",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '91412465ea9169dfd901dd5e7c96dd99' :"Upload"
+  '91412465ea9169dfd901dd5e7c96dd99' :"Upload",
+  'ea72bacd2fdfa818907bb9559e6905a1' :"Upload Image or File"
  },
 
  dialog : false,
@@ -37,12 +38,6 @@ Pman.Dialog.Image = {
  {
    var _this = this;
    this.dialog = Roo.factory({
-    center : {
-     '|xns' : 'Roo',
-     xns : Roo,
-     xtype : 'LayoutRegion'
-    },
-    '|xns' : 'Roo',
     closable : false,
     collapsible : false,
     haveProgress : false,
@@ -50,7 +45,7 @@ Pman.Dialog.Image = {
     modal : true,
     resizable : false,
     shadow : true,
-    title : _this._strings['2859a4ae58ae4e25abdfc530f814e42f'],
+    title : _this._strings['2859a4ae58ae4e25abdfc530f814e42f'] /* Upload an Image or File */,
     uploadComplete : false,
     uploadProgress : function()
     {
@@ -111,44 +106,8 @@ Pman.Dialog.Image = {
     },
     width : 500,
     xns : Roo,
+    '|xns' : 'Roo',
     xtype : 'LayoutDialog',
-    buttons : [
-      {
-       '|xns' : 'Roo',
-       text : _this._strings['ea4788705e6873b424c65e91c2846b19'],
-       xns : Roo,
-       xtype : 'Button',
-       listeners : {
-        click : function (_self, e)
-         {
-             _this.dialog.hide();
-         }
-       }
-      },
-{
-       '|xns' : 'Roo',
-       text : _this._strings['91412465ea9169dfd901dd5e7c96dd99'],
-       xns : Roo,
-       xtype : 'Button',
-       listeners : {
-        click : function (_self, e)
-         {
-             // do some checks?
-              
-             //_this.dialog.el.mask("Sending");
-             _this.dialog.uploadComplete = false;
-             _this.form.doAction('submit', {
-                 params: {
-                     ts : Math.random()
-                 } 
-             });
-             _this.dialog.haveProgress = 0; // set to show..
-             _this.dialog.uploadProgress.defer(1000, _this.dialog);
-         
-         }
-       }
-      }
-    ],
     listeners : {
      show : function (_self)
       {
@@ -181,16 +140,57 @@ Pman.Dialog.Image = {
           
       }
     },
-    items : [
+    center : {
+     xns : Roo,
+     '|xns' : 'Roo',
+     xtype : 'LayoutRegion'
+    },
+    buttons : [
      {
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
+      xns : Roo,
       '|xns' : 'Roo',
+      xtype : 'Button',
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        }
+      }
+     },
+     {
+      text : _this._strings['91412465ea9169dfd901dd5e7c96dd99'] /* Upload */,
+      xns : Roo,
+      '|xns' : 'Roo',
+      xtype : 'Button',
+      listeners : {
+       click : function (_self, e)
+        {
+            // do some checks?
+             
+            //_this.dialog.el.mask("Sending");
+            _this.dialog.uploadComplete = false;
+            _this.form.doAction('submit', {
+                params: {
+                    ts : Math.random()
+                } 
+            });
+            _this.dialog.haveProgress = 0; // set to show..
+            _this.dialog.uploadProgress.defer(1000, _this.dialog);
+        
+        }
+      }
+     }
+    ],
+    items  : [
+     {
       fitToFrame : true,
       region : 'center',
       xns : Roo,
+      '|xns' : 'Roo',
       xtype : 'ContentPanel',
-      items : [
+      items  : [
        {
-        '|xns' : 'Roo.form',
         fileUpload : true,
         labelWidth : 140,
         method : 'POST',
@@ -198,6 +198,7 @@ Pman.Dialog.Image = {
         timeout : 300,
         url : baseURL + '/Roo/Images.php',
         xns : Roo.form,
+        '|xns' : 'Roo.form',
         xtype : 'Form',
         listeners : {
          actioncomplete : function(_self,act)
@@ -272,68 +273,65 @@ Pman.Dialog.Image = {
               _this.form= form;
           }
         },
-        items : [
+        items  : [
          {
-          '|xns' : 'Roo.form',
           name : 'UPLOAD_IDENTIFIER',
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'post_max_size',
-          value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'],
+          value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'] /* 32M */,
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'upload_max_filesize',
-          value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'],
+          value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'] /* 32M */,
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
-          fieldLabel : 'Upload Image or File',
+          fieldLabel : _this._strings['ea72bacd2fdfa818907bb9559e6905a1'] /* Upload Image or File */,
           inputType : 'file',
           name : 'imageUpload',
           width : 200,
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'TextField'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'ontable',
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'onid',
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'id',
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          },
          {
-          '|xns' : 'Roo.form',
           name : 'imgtype',
           xns : Roo.form,
+          '|xns' : 'Roo.form',
           xtype : 'Hidden'
          }
         ]
-
        }
       ]
-
      }
     ]
-
    });
  }
 };
