@@ -246,7 +246,7 @@ trait Pman_Core_AssetTrait {
         // This has to be done via a 
         if (true || !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
             
-            print_r($relfiles);
+            //print_r($relfiles);
             
             require_once 'HTML/CSS/Minify.php';
             $x = new HTML_CSS_Minify(substr($relpath,0,-1), $dir, $relfiles);
