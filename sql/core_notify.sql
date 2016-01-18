@@ -24,15 +24,16 @@ ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
 
 -- old mysql..
 ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT '';
+
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
-ALTER TABLE core_notify ADD   INDEX lookup_a(onid, ontable, person_id, act_when, msgid, to_email);  
+
+-- ALTER TABLE core_notify ADD   INDEX lookup_a(onid, ontable, person_id, act_when, msgid, to_email); (too long?!)
+
+ALTER TABLE core_notify DROP INDEX lookup_a;
+
 alter table core_notify add   INDEX lookup_b (sent, person_id, msgid, ontable);
 ALTER TABLE core_notify add   index lookup_d (person_id, msgid, ontable);
-
-
-
--- used by email / tracker to handle alises - we have to be carefull adding to this table...
-call mysql_change_engine('core_notify');
-
-ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT '';
+ALTER TABLE core_notify ADD   INDEX lookup_e(onid, ontable, person_id, act_when, msgid);
+ALTER TABLE core_notify ADD   INDEX lookup_f(onid, ontable, person_id, act_when, to_email);
