@@ -230,7 +230,7 @@ trait Pman_Core_AssetTrait {
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($files, $lsort);
         usort($relfiles,$lsort);
-        print_R($relfiles);
+       // print_R($relfiles);
         
         if (!empty($this->bootLoader->isDev) && !empty($_REQUEST['isDev'])) {
             echo "<!-- CSS compile turned off (isDev on) -->\n";
