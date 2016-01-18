@@ -240,7 +240,7 @@ trait Pman_Core_AssetTrait {
         
         $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize($arfiles)) .'.css';
          
-         
+         $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
         
         // where are we going to write all of this..
         // This has to be done via a 
@@ -251,7 +251,7 @@ trait Pman_Core_AssetTrait {
             require_once 'HTML/CSS/Minify.php';
             $x = new HTML_CSS_Minify(substr($relpath,0,-1), $dir, $relfiles);
             
-            file_put_contents($compiledir.'/'.$output , $x->minify( $this->baseURL.'/Asset/css'));
+            file_put_contents($compiledir.'/'.$output , $x->minify( $this->baseURL.$asset));
             clearstatcache();
             if (!file_exists($compiledir.'/'.$output) ||
                 !filesize($compiledir.'/'.$routput)) {
@@ -264,7 +264,7 @@ trait Pman_Core_AssetTrait {
          //   echo "<!-- file already exists: {$basedir}/{$output} -->\n";
         }
         
-         $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
+         
         //$this->arrayToJsInclude(  $files);
         $this->assetArrayToHtml(  array(
             $this->baseURL.$asset. $output,
