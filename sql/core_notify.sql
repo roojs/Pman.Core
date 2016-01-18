@@ -33,6 +33,7 @@ ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
 ALTER TABLE core_notify DROP INDEX lookup_a;
 
+-- exceed 1000 characters if larger than this..
 alter table core_notify add   INDEX lookup_b (sent, person_id, msgid, ontable);
 ALTER TABLE core_notify add   index lookup_d (person_id, msgid, ontable);
 ALTER TABLE core_notify ADD   INDEX lookup_e (onid, ontable, person_id, act_when);
