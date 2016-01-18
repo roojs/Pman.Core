@@ -224,10 +224,12 @@ trait Pman_Core_AssetTrait {
         }
         
          
-        // no sorting???
-        //$lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
-        //usort($files, $lsort);
         
+        
+        // yes sort... if includes are used - they have to be in the first file...
+        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        usort($files, $lsort);
+       
         
         if (!empty($this->bootLoader->isDev) && !empty($_REQUEST['isDev'])) {
             echo "<!-- CSS compile turned off (isDev on) -->\n";
