@@ -170,7 +170,7 @@ trait Pman_Core_AssetTrait {
             echo "<!-- skipping $path - no files found -->\n";
             return;
         }
-        print_R($ar);
+        
          // cached version?? - how do we decide if it's expired?
         // while scanning the directory is slow... - it's faster than serving every file...
         
