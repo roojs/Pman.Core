@@ -642,7 +642,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$p->toEventString();
     }
     
-    function onUploadFromData($filename, $filetype, $data, $roo)
+    function onUploadFromData($data, $roo)
     {
         if (empty($filename) || empty($filetype) || empty($data)) {
             $this->err = "Missing file details";
@@ -686,7 +686,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $inf = pathinfo($filename);
             $this->mimetype  = $y->fromExt($inf['extension']);
         }
-        
         
         $ext = $y->toExt(trim((string) $this->mimetype ));
         
