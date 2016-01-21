@@ -713,7 +713,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
         }
         
-//        $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
         
         if (!$this->id) {
@@ -731,6 +730,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         file_put_contents($f, file_get_contents("data://" . $data));
+        
+        $o = clone($this);
+        
+        $this->filesize = filesize($f);
+        
+        $this->update($o);
         
         return true;
         
