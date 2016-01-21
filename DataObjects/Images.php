@@ -658,6 +658,26 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         
+        require_once 'File/MimeType.php';
+        $y = new File_MimeType();
+        
+        if (in_array($this->mimetype, array(
+                        'text/application',
+                        'application/octet-stream',
+                        'image/x-png',  // WTF does this?
+                        'image/pjpeg',  // WTF does this?
+                        'application/x-apple-msg-attachment', /// apple doing it's magic...
+                        'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
+                        'application/csv-tab-delimited-table', // windows again!!?
+                ))) { // weird tyeps..
+            $inf = pathinfo($this->filename);
+            $this->mimetype  = $y->fromExt($inf['extension']);
+        }
+        
+        $ext = $y->toExt(trim((string) $this->mimetype ));
+        
+        $this->filename = $this->filename .'.'. $ext; 
+        
         if (!$this->createFromData($data)) {
             return false;
         }
