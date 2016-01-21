@@ -659,7 +659,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
-            // then its an upload 
             $img  = DB_DataObject::factory('Images');
             $img->onid = $this->onid;
             $img->ontable = $this->ontable;
@@ -670,10 +669,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $img->beforeDelete();
                 $img->delete();
             }
-            
         }
         
+        preg_match('/^data:([.]*);/', $data, $matches);
         
+        print_r($matches);exit;
         
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
