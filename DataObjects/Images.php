@@ -715,41 +715,23 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
 //        $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
-         
         
-        if (empty($this->filename)) {
-            $this->filename = basename($filename);
-        }
-        
-        //DB_DataObject::debugLevel(1);
         if (!$this->id) {
             $this->insert();
         } else {
             $this->update();
         }
         
-        
-        
         $f = $this->getStoreName();
         $dest = dirname($f);
         if (!file_exists($dest)) {
-            // currently this is 0775 due to problems using shared hosing (FTP)
-            // it makes all the files unaccessable..
-            // you can normally solve this by giving the storedirectory better perms
-            // if needed on a dedicated server..
             $oldumask = umask(0);
             mkdir($dest, 0775, true);
             umask($oldumask);  
         }
         
-        copy($file,$f);
+        file_put_contents($f, file_get_contents("data://" . $data));
         
-        // fill in details..
-        
-        /* thumbnails */
-        
-     
-       // $this->createThumbnail(0,50);
         return true;
         
     }
