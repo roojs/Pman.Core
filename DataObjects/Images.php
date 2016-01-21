@@ -644,7 +644,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function onUploadFromData($filename, $filetype, $data, $roo)
     {
-        if (empty($filename) || empty($data)) {
+        if (empty($filename) || empty($filetype) || empty($data)) {
             $this->err = "Missing file details";
             return false;
         }
@@ -671,13 +671,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
         }
         
-        preg_match('/^data:([.]*);/', $data, $matches);
-        
-        print_r($matches);exit;
-        
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
-        $this->mimetype = $_FILES['imageUpload']['type'];
+        $this->mimetype = $filetype;
         if (in_array($this->mimetype, array(
                         'text/application',
                         'application/octet-stream',
@@ -687,7 +683,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                         'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
                         'application/csv-tab-delimited-table', // windows again!!?
                 ))) { // weird tyeps..
-            $inf = pathinfo($_FILES['imageUpload']['name']);
+            $inf = pathinfo($filename);
             $this->mimetype  = $y->fromExt($inf['extension']);
         }
         
