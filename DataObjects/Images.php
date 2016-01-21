@@ -658,18 +658,18 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         
-        if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
-            $img  = DB_DataObject::factory('Images');
-            $img->onid = $this->onid;
-            $img->ontable = $this->ontable;
-            $img->imgtype = $this->imgtype;
-            
-            $img->find();
-            while ($img->fetch()) {
-                $img->beforeDelete();
-                $img->delete();
-            }
-        }
+//        if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
+//            $img  = DB_DataObject::factory('Images');
+//            $img->onid = $this->onid;
+//            $img->ontable = $this->ontable;
+//            $img->imgtype = $this->imgtype;
+//            
+//            $img->find();
+//            while ($img->fetch()) {
+//                $img->beforeDelete();
+//                $img->delete();
+//            }
+//        }
         
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
