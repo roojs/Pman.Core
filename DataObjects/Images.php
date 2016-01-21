@@ -644,10 +644,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function onUploadFromData($filename, $data, $roo)
     {
-        if (empty($_FILES['imageUpload']['tmp_name']) || 
-            empty($_FILES['imageUpload']['name']) || 
-            empty($_FILES['imageUpload']['type'])
-        ) {
+        if (empty($filename) || empty($data)) {
             $this->err = "Missing file details";
             return false;
         }
@@ -655,7 +652,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($this->id) {
             $this->beforeDelete();
         }
-        if ( empty($this->ontable)) {
+        
+        if (empty($this->ontable)) {
             $this->err = "Missing  ontable";
             return false;
         }
