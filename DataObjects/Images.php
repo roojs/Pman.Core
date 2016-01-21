@@ -642,4 +642,71 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$p->toEventString();
     }
     
+    function onUploadFromData($filename, $data, $roo)
+    {
+//        echo $_FILES['imageUpload']['type'];exit;
+        if (empty($_FILES['imageUpload']['tmp_name']) || 
+            empty($_FILES['imageUpload']['name']) || 
+            empty($_FILES['imageUpload']['type'])
+        ) {
+            $this->err = "Missing file details";
+            return false;
+        }
+        
+        if ($this->id) {
+            $this->beforeDelete();
+        }
+        if ( empty($this->ontable)) {
+            $this->err = "Missing  ontable";
+            return false;
+        }
+        
+        if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
+            // then its an upload 
+            $img  = DB_DataObject::factory('Images');
+            $img->onid = $this->onid;
+            $img->ontable = $this->ontable;
+            $img->imgtype = $this->imgtype;
+            
+            $img->find();
+            while ($img->fetch()) {
+                $img->beforeDelete();
+                $img->delete();
+            }
+            
+        }
+        
+        
+        
+        require_once 'File/MimeType.php';
+        $y = new File_MimeType();
+        $this->mimetype = $_FILES['imageUpload']['type'];
+        if (in_array($this->mimetype, array(
+                        'text/application',
+                        'application/octet-stream',
+                        'image/x-png',  // WTF does this?
+                        'image/pjpeg',  // WTF does this?
+                        'application/x-apple-msg-attachment', /// apple doing it's magic...
+                        'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
+                        'application/csv-tab-delimited-table', // windows again!!?
+                ))) { // weird tyeps..
+            $inf = pathinfo($_FILES['imageUpload']['name']);
+            $this->mimetype  = $y->fromExt($inf['extension']);
+        }
+        
+        
+        $ext = $y->toExt(trim((string) $this->mimetype ));
+        
+        $this->filename = empty($this->filename) ? 
+            $_FILES['imageUpload']['name'] : ($this->filename .'.'. $ext); 
+        
+        
+        
+        if (!$this->createFrom($_FILES['imageUpload']['tmp_name'])) {
+            return false;
+        }
+        return true;
+         
+    }
+    
  }
