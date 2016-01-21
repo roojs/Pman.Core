@@ -644,7 +644,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function onUploadFromData($data, $roo)
     {
-        if (empty($filename) || empty($filetype) || empty($data)) {
+        if (empty($data)) {
             $this->err = "Missing file details";
             return false;
         }
