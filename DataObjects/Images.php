@@ -695,6 +695,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!$this->createFromData($data)) {
             return false;
         }
+        
         return true;
          
     }
