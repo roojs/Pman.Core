@@ -707,8 +707,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if (array_shift(explode('/', $this->mimetype)) == 'image') { 
         
-            $imgs = @getimagesize($file);
-            print_R($imgs);exit;
+            $imgs = @getimagesize($data);
+            
             if (!empty($imgs) && !empty($imgs[0]) && !empty($imgs[1])) {
                 list($this->width , $this->height)  = $imgs;
             }
