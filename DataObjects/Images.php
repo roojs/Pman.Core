@@ -690,7 +690,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ext = $y->toExt(trim((string) $this->mimetype ));
         
         $this->filename = empty($this->filename) ? 
-            ('gen-' . date('Y-m-d H:i:s') . '.' . $ext) : ($this->filename .'.'. $ext); 
+            ('image-upload-' . date('Y-m-d H:i:s') . '.' . $ext) : ($this->filename .'.'. $ext); 
         
         if (!$this->createFromData($data)) {
             return false;
