@@ -692,30 +692,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $this->filename = empty($this->filename) ? 
             ('gen-' . date('Y-m-d H:i:s') . '.' . $ext) : ($this->filename .'.'. $ext); 
         
-        
-        
-        if (!$this->createFrom($_FILES['imageUpload']['tmp_name'])) {
+        if (!$this->createFromData($data)) {
             return false;
         }
         return true;
          
     }
     
-    function createFromData($file, $filename=false)
-    {
-        // copy the file into the storage area..
-        if (!file_exists($file) || !filesize($file)) {
-            return false;
-        }
-        
-        $filename = empty($filename) ? $file : $filename;
-        
-        if (empty($this->mimetype)) {
-            require_once 'File/MimeType.php';
-            $y = new File_MimeType();
-            $this->mimetype = $y->fromFilename($filename);
-        }
-        
+    function createFromData($data)
+    {   
         $this->mimetype= strtolower($this->mimetype);
         
         if (array_shift(explode('/', $this->mimetype)) == 'image') { 
