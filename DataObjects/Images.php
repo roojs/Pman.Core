@@ -673,7 +673,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
-        $this->mimetype = $filetype;
+        
         if (in_array($this->mimetype, array(
                         'text/application',
                         'application/octet-stream',
@@ -683,14 +683,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                         'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
                         'application/csv-tab-delimited-table', // windows again!!?
                 ))) { // weird tyeps..
-            $inf = pathinfo($filename);
+            $inf = pathinfo($this->filename);
             $this->mimetype  = $y->fromExt($inf['extension']);
         }
         
         $ext = $y->toExt(trim((string) $this->mimetype ));
         
         $this->filename = empty($this->filename) ? 
-            $_FILES['imageUpload']['name'] : ($this->filename .'.'. $ext); 
+            ('gen-' . date('Y-m-d H:i:s') . '.' . $ext) : ($this->filename .'.'. $ext); 
         
         
         
