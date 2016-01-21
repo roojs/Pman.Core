@@ -709,4 +709,73 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
     }
     
+    function createFromData($file, $filename=false)
+    {
+        // copy the file into the storage area..
+        if (!file_exists($file) || !filesize($file)) {
+            return false;
+        }
+        
+        $filename = empty($filename) ? $file : $filename;
+        
+        if (empty($this->mimetype)) {
+            require_once 'File/MimeType.php';
+            $y = new File_MimeType();
+            $this->mimetype = $y->fromFilename($filename);
+        }
+        
+        $this->mimetype= strtolower($this->mimetype);
+        
+        if (array_shift(explode('/', $this->mimetype)) == 'image') { 
+        
+            $imgs = @getimagesize($file);
+            
+            if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
+                // it's a file!!!!
+            } else {
+                list($this->width , $this->height)  = $imgs;
+            }
+        }
+        
+        $this->filesize = filesize($file);
+        $this->created = date('Y-m-d H:i:s');
+         
+        
+        if (empty($this->filename)) {
+            $this->filename = basename($filename);
+        }
+        
+        //DB_DataObject::debugLevel(1);
+        if (!$this->id) {
+            $this->insert();
+        } else {
+            $this->update();
+        }
+        
+        
+        
+        $f = $this->getStoreName();
+        $dest = dirname($f);
+        if (!file_exists($dest)) {
+            // currently this is 0775 due to problems using shared hosing (FTP)
+            // it makes all the files unaccessable..
+            // you can normally solve this by giving the storedirectory better perms
+            // if needed on a dedicated server..
+            $oldumask = umask(0);
+            mkdir($dest, 0775, true);
+            umask($oldumask);  
+        }
+        
+        copy($file,$f);
+        
+        // fill in details..
+        
+        /* thumbnails */
+        
+     
+       // $this->createThumbnail(0,50);
+        return true;
+        
+    }
+    
  }
