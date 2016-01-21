@@ -701,20 +701,19 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function createFromData($data)
     {   
+        
         $this->mimetype= strtolower($this->mimetype);
         
         if (array_shift(explode('/', $this->mimetype)) == 'image') { 
         
             $imgs = @getimagesize($file);
             
-            if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
-                // it's a file!!!!
-            } else {
+            if (!empty($imgs) && !empty($imgs[0]) && !empty($imgs[1])) {
                 list($this->width , $this->height)  = $imgs;
             }
         }
         
-        $this->filesize = filesize($file);
+//        $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
          
         
