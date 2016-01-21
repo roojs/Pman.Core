@@ -658,7 +658,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         
-        if (!empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
+        if (empty($this->id) && !empty($this->imgtype) && $this->imgtype[0] == '-' && !empty($this->onid)) {
             $img  = DB_DataObject::factory('Images');
             $img->onid = $this->onid;
             $img->ontable = $this->ontable;
