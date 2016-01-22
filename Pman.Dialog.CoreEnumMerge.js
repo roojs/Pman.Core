@@ -122,9 +122,7 @@ Pman.Dialog.CoreEnumMerge = {
                   
                    var title = _this.data.title  || _this.data.etype;
                   _this.dialog.setTitle("Delete selected " + title + " and merge data with");
-                  _this.form.findField('merge_id').store.proxy.conn.url = baseURL + '/Roo/' + _this.data.table + '.php';
-                  _this.form.findField('merge_id').emptyText = "Select " + title;
-                  _this.form.findField('merge_id').reset();
+                   
                  return;
               }
               
