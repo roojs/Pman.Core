@@ -61,9 +61,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $name = $this->escape($q['query']['search_begins']);
             // ilike on postgres?!?
             $this->whereAdd("
-                    core_enum.name LIKE '%{$name}'
+                    core_enum.name LIKE '{$name}%'
                 OR
-                    core_enum.display_name LIKE '%{$name}'
+                    core_enum.display_name LIKE '{$name}%'
             ");
         }
         
