@@ -9,11 +9,11 @@ Pman.Dialog.CoreEnumMerge = {
  _strings : {
   '99b344c8ae43e3e7213862b8f35c4e51' :"Select Company",
   '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
+  'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
   '03e956f1dca2b4d525df03cb1899cb6f' :"Merge with",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '68be4837f6c739877233e527a996dd00' :"Merge",
-  'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '9675747b5ab12d05f18518761e68a533' :"Select Companies"
+  'ea4788705e6873b424c65e91c2846b19' :"Cancel"
  },
 
  dialog : false,
@@ -156,7 +156,7 @@ Pman.Dialog.CoreEnumMerge = {
           minChars : 2,
           name : '_merge_with_id_name',
           pageSize : 20,
-          qtip : _this._strings['9675747b5ab12d05f18518761e68a533'] /* Select Companies */,
+          qtip : _this._strings['bf8691517ce00a09186a05cd65863091'] /* Select Item to Merge With */,
           queryParam : 'query[name]',
           selectOnFocus : true,
           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
