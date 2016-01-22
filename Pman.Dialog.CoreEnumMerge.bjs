@@ -69,7 +69,7 @@
          "typeAhead" : true,
          "width" : 250,
          "$ xns" : "Roo.form",
-         "name" : "merge_id_name",
+         "name" : "_merge_with_id_name",
          "qtip" : "Select Companies",
          "queryParam" : "query[name]",
          "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",

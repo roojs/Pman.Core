@@ -154,7 +154,7 @@ Pman.Dialog.CoreEnumMerge = {
           listWidth : 400,
           loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
           minChars : 2,
-          name : 'merge_id_name',
+          name : '_merge_with_id_name',
           pageSize : 20,
           qtip : _this._strings['9675747b5ab12d05f18518761e68a533'] /* Select Companies */,
           queryParam : 'query[name]',
