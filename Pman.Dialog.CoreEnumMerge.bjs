@@ -40,7 +40,7 @@
      "items" : [
       {
        "listeners" : {
-        "actionfailed" : "function (_self, action)\n{\n    _this.dialog.el.unmask();\n    Pman.standardActionFailed(_self, action);\n}\n",
+        "actionfailed" : "function (_self, action)\n{\n \n    Pman.standardActionFailed(_self, action);\n}\n",
         "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n         _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        \n         var title = _this.data.title  || _this.data.etype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n         \n       return;\n    }\n    \n}\n",
         "rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },

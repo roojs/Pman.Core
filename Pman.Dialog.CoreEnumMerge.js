@@ -129,7 +129,7 @@ Pman.Dialog.CoreEnumMerge = {
           },
          actionfailed : function (_self, action)
           {
-              _this.dialog.el.unmask();
+           
               Pman.standardActionFailed(_self, action);
           },
          rendered : function (form)
