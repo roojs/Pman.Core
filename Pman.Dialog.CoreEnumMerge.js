@@ -101,7 +101,7 @@ Pman.Dialog.CoreEnumMerge = {
        {
         method : 'POST',
         style : 'margin: 10px;',
-        url : baseURL + '/Shipping/CompanyMerge.php',
+        url : baseURL + '/Roo/Core_enum.php',
         xns : Roo.form,
         '|xns' : 'Roo.form',
         xtype : 'Form',
