@@ -184,7 +184,7 @@ Pman.Dialog.CoreEnumMerge = {
            },
            proxy : {
             method : 'GET',
-            url : baseURL + '/Roo/Companies.php',
+            url : baseURL + '/Roo/Core_enum',
             xns : Roo.data,
             '|xns' : 'Roo.data',
             xtype : 'HttpProxy'

@@ -85,7 +85,7 @@
            "* prop" : "store",
            "items" : [
             {
-             "$ url" : "baseURL + '/Roo/Companies.php'",
+             "$ url" : "baseURL + '/Roo/Core_enum'",
              "xtype" : "HttpProxy",
              "method" : "GET",
              "$ xns" : "Roo.data",
