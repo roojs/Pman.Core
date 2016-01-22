@@ -5,6 +5,139 @@
  "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEnumMerge.bjs",
  "permname" : "",
  "modOrder" : "001",
+ "strings" : {
+  "99b344c8ae43e3e7213862b8f35c4e51" : "Select Company",
+  "03e956f1dca2b4d525df03cb1899cb6f" : "Merge with",
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "68be4837f6c739877233e527a996dd00" : "Merge",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "e26f3a67ad6487fd02ffcab189214302" : "Merge Supplier",
+  "9675747b5ab12d05f18518761e68a533" : "Select Companies"
+ },
  "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    if (_this.isBuilder) {\n        _this.data = { id : 2, comptype : 'SUPPLIER' }\n    }\n}"
+   },
+   "modal" : true,
+   "collapsible" : false,
+   "title" : "Merge Supplier",
+   "xtype" : "LayoutDialog",
+   "width" : 400,
+   "$ xns" : "Roo",
+   "closable" : false,
+   "resizable" : false,
+   "height" : 120,
+   "items" : [
+    {
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "* prop" : "center"
+    },
+    {
+     "region" : "center",
+     "xtype" : "ContentPanel",
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "listeners" : {
+        "actionfailed" : "function (_self, action)\n{\n    _this.dialog.el.unmask();\n    Pman.standardActionFailed(_self, action);\n}\n",
+        "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n       _this.dialog.el.unmask();\n       _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        _this.data.table = _this.data.table || 'Companies';\n        _this.form.findField('table').setValue(_this.data.table);\n         var title = _this.data.title  || _this.data.comptype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n        _this.form.findField('merge_id').store.proxy.conn.url = baseURL + '/Roo/' + _this.data.table + '.php';\n        _this.form.findField('merge_id').emptyText = \"Select \" + title;\n        _this.form.findField('merge_id').reset();\n       return;\n    }\n    \n}\n",
+        "rendered" : "function (form)\n{\n   _this.form = form;\n}"
+       },
+       "$ url" : "baseURL + '/Shipping/CompanyMerge.php'",
+       "method" : "POST",
+       "xtype" : "Form",
+       "style" : "margin: 10px;",
+       "$ xns" : "Roo.form",
+       "items" : [
+        {
+         "alwaysQuery" : true,
+         "listWidth" : 400,
+         "triggerAction" : "all",
+         "fieldLabel" : "Merge with",
+         "forceSelection" : true,
+         "selectOnFocus" : true,
+         "pageSize" : 20,
+         "displayField" : "name",
+         "emptyText" : "Select Company",
+         "hiddenName" : "merge_id",
+         "minChars" : 2,
+         "valueField" : "id",
+         "xtype" : "ComboBox",
+         "allowBlank" : false,
+         "typeAhead" : true,
+         "width" : 250,
+         "$ xns" : "Roo.form",
+         "name" : "merge_id_name",
+         "qtip" : "Select Companies",
+         "queryParam" : "query[name]",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+         "loadingText" : "Searching...",
+         "items" : [
+          {
+           "listeners" : {
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    if (_this.data.params) {\n        Roo.apply(o.params, _this.data.params);\n    }\n    \n    o.params.comptype = _this.data.comptype;\n    o.params['!id'] = _this.data.id;\n    o.params['table'] = _this.data.table || 'Companies';\n    if (_this.data.table && _this.data.table == 'Person') {\n        o.params.company_id = _this.data.company_id;\n    }\n    \n    // set more here\n}\n"
+           },
+           "xtype" : "Store",
+           "remoteSort" : true,
+           "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+           "$ xns" : "Roo.data",
+           "* prop" : "store",
+           "items" : [
+            {
+             "$ url" : "baseURL + '/Roo/Companies.php'",
+             "xtype" : "HttpProxy",
+             "method" : "GET",
+             "$ xns" : "Roo.data",
+             "* prop" : "proxy"
+            },
+            {
+             "id" : "id",
+             "root" : "data",
+             "xtype" : "JsonReader",
+             "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+             "$ xns" : "Roo.data",
+             "* prop" : "reader",
+             "totalProperty" : "total"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "table"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "id"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Cancel",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    _this.dialog.el.mask(\"Merging\");\n    _this.form.doAction(\"submit\");\n\n}"
+     },
+     "text" : "Merge",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
  ]
 }
