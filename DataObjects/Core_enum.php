@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for core company
+ * Table Definition for core enum - it's used in pulldowns or simple option lists.
  */
 require_once 'DB/DataObject.php';
 
