@@ -36,7 +36,9 @@ class Pman_Core_Asset extends Pman {
     
     function get($s='')
     {
-       
+        
+        $this->sessionState(0);
+        
         $bits = explode('/', $s);
         
         if (empty($bits[0]) || empty($bits[1])  || !isset($this->types[$bits[0]])) {
