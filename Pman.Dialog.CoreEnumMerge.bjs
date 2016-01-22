@@ -70,7 +70,7 @@
          "$ xns" : "Roo.form",
          "name" : "_merge_id_name",
          "qtip" : "Select Item to Merge With",
-         "queryParam" : "query[name]",
+         "queryParam" : "query[search_begins]",
          "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>",
          "loadingText" : "Searching...",
          "items" : [

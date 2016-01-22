@@ -156,7 +156,7 @@ Pman.Dialog.CoreEnumMerge = {
           name : '_merge_id_name',
           pageSize : 20,
           qtip : _this._strings['bf8691517ce00a09186a05cd65863091'] /* Select Item to Merge With */,
-          queryParam : 'query[name]',
+          queryParam : 'query[search_begins]',
           selectOnFocus : true,
           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>',
           triggerAction : 'all',
