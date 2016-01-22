@@ -83,7 +83,7 @@ Pman.Dialog.CoreEnumMerge = {
       listeners : {
        click : function (_self, e)
         {
-            _this.dialog.el.mask("Merging");
+             
             _this.form.doAction("submit");
         
         }

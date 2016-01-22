@@ -129,7 +129,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    _this.dialog.el.mask(\"Merging\");\n    _this.form.doAction(\"submit\");\n\n}"
+      "click" : "function (_self, e)\n{\n     \n    _this.form.doAction(\"submit\");\n\n}"
      },
      "text" : "Merge",
      "xtype" : "Button",
