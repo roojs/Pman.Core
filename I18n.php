@@ -81,7 +81,9 @@ class Pman_Core_I18n extends Pman
     }
      
     
-    function guessUsersLanguage() {
+    function guessUsersLanguage()
+    {
+        $this->sessionState(0);
         
         $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
         
