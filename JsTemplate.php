@@ -42,6 +42,8 @@ class Pman_Core_JsTemplate extends Pman {
      
     function get()
     {
+        
+        $this->sessionState(0);
         // get the modules.
         header('Content-type: text/javascript');
         
