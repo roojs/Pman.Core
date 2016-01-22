@@ -174,7 +174,7 @@ Pman.Dialog.CoreEnumMerge = {
                  
                  o.params['etype'] = _this.data.etype;
                  
-                 
+                 o.params['!id'] = _this.form.findField('id').getValue();
                  // set more here
              }
            },
