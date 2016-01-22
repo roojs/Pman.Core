@@ -61,7 +61,7 @@
          "pageSize" : 20,
          "displayField" : "name",
          "emptyText" : "Select Company",
-         "hiddenName" : "merge_id",
+         "hiddenName" : "_merge_with_id",
          "minChars" : 2,
          "valueField" : "id",
          "xtype" : "ComboBox",

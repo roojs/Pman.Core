@@ -150,7 +150,7 @@ Pman.Dialog.CoreEnumMerge = {
           emptyText : _this._strings['99b344c8ae43e3e7213862b8f35c4e51'] /* Select Company */,
           fieldLabel : _this._strings['03e956f1dca2b4d525df03cb1899cb6f'] /* Merge with */,
           forceSelection : true,
-          hiddenName : 'merge_id',
+          hiddenName : '_merge_with_id',
           listWidth : 400,
           loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
           minChars : 2,
