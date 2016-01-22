@@ -7,9 +7,8 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreEnumMerge = {
 
  _strings : {
-  '99b344c8ae43e3e7213862b8f35c4e51' :"Select Company",
-  '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
   'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
+  '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
   '03e956f1dca2b4d525df03cb1899cb6f' :"Merge with",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '68be4837f6c739877233e527a996dd00' :"Merge",
@@ -147,7 +146,7 @@ Pman.Dialog.CoreEnumMerge = {
           allowBlank : false,
           alwaysQuery : true,
           displayField : 'name',
-          emptyText : _this._strings['99b344c8ae43e3e7213862b8f35c4e51'] /* Select Company */,
+          emptyText : _this._strings['bf8691517ce00a09186a05cd65863091'] /* Select Item to Merge With */,
           fieldLabel : _this._strings['03e956f1dca2b4d525df03cb1899cb6f'] /* Merge with */,
           forceSelection : true,
           hiddenName : '_merge_with_id',
