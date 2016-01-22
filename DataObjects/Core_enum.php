@@ -57,6 +57,16 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     core_enum.display_name LIKE '%{$name}%'
             ");
         }
+        if(!empty($q['query']['search_begins'])) {
+            $name = $this->escape($q['query']['search']);
+            // ilike on postgres?!?
+            $this->whereAdd("
+                    core_enum.name LIKE '%{$name}'
+                OR
+                    core_enum.display_name LIKE '%{$name}'
+            ");
+        }
+        
         if (isset($q['_etypes'])) {
             $this->whereAddIn('core_enum.etype', explode(',', $q['_etypes']), 'string');
         }
