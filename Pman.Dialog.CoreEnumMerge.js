@@ -110,8 +110,7 @@ Pman.Dialog.CoreEnumMerge = {
           
              if (action.type =='submit') {
                  
-                 _this.dialog.el.unmask();
-                 _this.dialog.hide();
+                   _this.dialog.hide();
                  
                   if (_this.callback) {
                      _this.callback.call(_this, _this.form.getValues());
@@ -120,9 +119,8 @@ Pman.Dialog.CoreEnumMerge = {
                   return;
               }
               if (action.type == 'setdata') {
-                  _this.data.table = _this.data.table || 'Companies';
-                  _this.form.findField('table').setValue(_this.data.table);
-                   var title = _this.data.title  || _this.data.comptype;
+                  
+                   var title = _this.data.title  || _this.data.etype;
                   _this.dialog.setTitle("Delete selected " + title + " and merge data with");
                   _this.form.findField('merge_id').store.proxy.conn.url = baseURL + '/Roo/' + _this.data.table + '.php';
                   _this.form.findField('merge_id').emptyText = "Select " + title;
