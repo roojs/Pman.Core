@@ -76,7 +76,7 @@
          "items" : [
           {
            "listeners" : {
-            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    if (_this.data.params) {\n        Roo.apply(o.params, _this.data.params);\n    }\n    \n    o.params.comptype = _this.data.comptype;\n    o.params['!id'] = _this.data.id;\n    o.params['table'] = _this.data.table || 'Companies';\n    if (_this.data.table && _this.data.table == 'Person') {\n        o.params.company_id = _this.data.company_id;\n    }\n    \n    // set more here\n}\n"
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params['etype'] = _this.data.etype;\n    \n    \n    // set more here\n}\n"
            },
            "xtype" : "Store",
            "remoteSort" : true,
@@ -107,7 +107,7 @@
         {
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "table"
+         "name" : "etype"
         },
         {
          "xtype" : "Hidden",

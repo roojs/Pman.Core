@@ -176,16 +176,8 @@ Pman.Dialog.CoreEnumMerge = {
             beforeload : function (_self, o){
                  o.params = o.params || {};
                  
-                 if (_this.data.params) {
-                     Roo.apply(o.params, _this.data.params);
-                 }
+                 o.params['etype'] = _this.data.etype;
                  
-                 o.params.comptype = _this.data.comptype;
-                 o.params['!id'] = _this.data.id;
-                 o.params['table'] = _this.data.table || 'Companies';
-                 if (_this.data.table && _this.data.table == 'Person') {
-                     o.params.company_id = _this.data.company_id;
-                 }
                  
                  // set more here
              }
@@ -209,7 +201,7 @@ Pman.Dialog.CoreEnumMerge = {
           }
          },
          {
-          name : 'table',
+          name : 'etype',
           xns : Roo.form,
           '|xns' : 'Roo.form',
           xtype : 'Hidden'
