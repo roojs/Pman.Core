@@ -159,10 +159,34 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         
         if(empty($req['etype'])){
+            if (empty($req['name'])) {
+                $roo->jerr('name missing for new top level etype');
+            }
             if($x->get('name', $req['name'])){
                 $roo->jerr('name already exists');
             }
-        }else{
+        } else if (!empty($req['_bulk_names'])) {
+            
+            
+            $lines = explode("\n", $req['_bulk_names']);
+            foreach($lines as $l) {
+                $l = trim($l);
+                if (!strlen($l)) {
+                    continue;
+                }
+                $bits = explode(',', $l);
+                $x = $this->factory($tn);
+                $rr = array(
+                    'etype');
+                $rr['name'] = array_shift($bits);
+                $rr['display_name'] = empty($bits) ? $rr['name'] : $bits[0];
+                $rr[']
+                
+                
+            }
+            
+            
+        } else {
             $x->whereAdd("etype = '{$this->escape($req['etype'])}' AND name = '{$this->escape($req['name'])}'");
             $x->find(true);
             if($x->count() > 0){
