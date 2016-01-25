@@ -165,7 +165,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
             
             if($x->get('name', $req['name'])){
-                $roo->jerr('name already exists');
+                $roo->jerr("name already exists - '{$req['name']}'"  );
             }
         } else if (!empty($req['_bulk_names'])) {
             
