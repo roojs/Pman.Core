@@ -160,13 +160,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         
         if(empty($req['etype'])){
             if (empty($req['name'])) {
-                $roo->jerr('name missing for new top level etype');
+                $roo->jerr('name or etype missing');
             }
             if($x->get('name', $req['name'])){
                 $roo->jerr('name already exists');
             }
         } else if (!empty($req['_bulk_names'])) {
-            
             
             $lines = explode("\n", $req['_bulk_names']);
             foreach($lines as $l) {
@@ -177,10 +176,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $bits = explode(',', $l);
                 $x = $this->factory($tn);
                 $rr = array(
-                    'etype');
-                $rr['name'] = array_shift($bits);
+                    'etype' => $req['etype'],
+                    'name' => array_shift($bits)
+                );
+                
                 $rr['display_name'] = empty($bits) ? $rr['name'] : $bits[0];
-                $rr[']
+                
                 
                 
             }
