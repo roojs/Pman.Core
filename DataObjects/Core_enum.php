@@ -192,6 +192,10 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $roo->jok("inserted");
             
         } else {
+            if (empty($req['name']) || !strlen(trim($req['name']))) {
+                $roo->jerr('name missing');
+            }
+            
             $x->whereAdd("etype = '{$this->escape($req['etype'])}' AND name = '{$this->escape($req['name'])}'");
             $x->find(true);
             if($x->count() > 0){
