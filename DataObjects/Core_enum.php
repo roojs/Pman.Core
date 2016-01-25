@@ -174,7 +174,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     continue;
                 }
                 $bits = explode(',', $l);
-                $x = $this->factory($tn);
                 $rr = array(
                     'etype' => $req['etype'],
                     'name' => array_shift($bits)
@@ -182,10 +181,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 
                 $rr['display_name'] = empty($bits) ? $rr['name'] : $bits[0];
                 
-                
+                $x = $this->factory($tn);
+                $x->beforeInsert($rr, $roo);
+                $x->setFrom($rr);
+                $x->insert();
                 
             }
-            
+            $roo->jok("inserted");
             
         } else {
             $x->whereAdd("etype = '{$this->escape($req['etype'])}' AND name = '{$this->escape($req['name'])}'");
