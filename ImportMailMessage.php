@@ -1,5 +1,7 @@
 <?php
 
+// should be in import folder... need to know where this is used though...
+
 require_once 'ConvertStyle.php';
 
 class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle 
