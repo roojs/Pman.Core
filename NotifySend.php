@@ -253,8 +253,10 @@ class Pman_Core_NotifySend extends Pman
          if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
-        // since some of them have spaces?!?!
-        $p->email = trim($p->email);
+        if ($p) {
+            // since some of them have spaces?!?!
+            $p->email = trim($p->email);
+        }
         
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
