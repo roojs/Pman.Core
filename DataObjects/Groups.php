@@ -129,6 +129,15 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         return $this;
     } 
     
+    function lookUpMembers($name, $what=false)
+    {
+        if (!$this->get('name', $name)) {
+            return array();
+        }
+        return $this->members($what);
+        
+    }
+    
     function postListFilter($ar, $au, $req)
     {      
         
