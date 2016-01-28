@@ -249,7 +249,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         
-        if (empty($p)) {
             
         
         //$p->email = 'alan@akbkhome.com'; //for testing..
