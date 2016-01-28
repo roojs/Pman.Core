@@ -211,9 +211,14 @@ class Pman_Core_NotifySend extends Pman
                     ."\n");
         }
      
-       
+        if (empty($p) && !empty($email['rcpts'])) {
+            // make a fake person..
+            $p = (object) array(
+                'email' => $email['rcpts']
+            );
+        }
         
-        if ($email === false || isset($email['error'])) {
+        if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
@@ -242,6 +247,11 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+        
+        
+        if (empty($p)) {
+            
+        
         //$p->email = 'alan@akbkhome.com'; //for testing..
         //print_r($email);exit;
         // should we fetch the watch that caused it.. - which should contain the method to call..
@@ -253,7 +263,7 @@ class Pman_Core_NotifySend extends Pman
          if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
-        if ($p) {
+        
             // since some of them have spaces?!?!
             $p->email = trim($p->email);
         }
