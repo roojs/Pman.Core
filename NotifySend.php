@@ -210,13 +210,15 @@ class Pman_Core_NotifySend extends Pman
                      "Notification event cleared (not required any more)" 
                     ."\n");
         }
-     
+        
         if (empty($p) && !empty($email['rcpts'])) {
             // make a fake person..
             $p = (object) array(
                 'email' => $email['rcpts']
             );
         }
+        print_R($email);exit;
+        
         
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
