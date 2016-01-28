@@ -211,10 +211,10 @@ class Pman_Core_NotifySend extends Pman
                     ."\n");
         }
         
-        if (empty($p) && !empty($email['rcpts'])) {
+        if (empty($p) && !empty($email['recipients'])) {
             // make a fake person..
             $p = (object) array(
-                'email' => $email['rcpts']
+                'email' => $email['recipients']
             );
         }
         print_R($email);exit;
