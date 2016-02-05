@@ -325,7 +325,8 @@ class Pman_Core_Mailer {
         //$this->log( htmlspecialchars(print_r($email,true)));
         
         ///$recipents = array($this->email);
-        $mailOptions = PEAR::getStaticProperty('Mail','options');
+//        $mailOptions = PEAR::getStaticProperty('Mail','options');
+        $mailOptions = HTML_FlexyFramework::get()->Mail;
         //print_R($mailOptions);exit;
         
         if ($this->mail_method == 'SMTPMX' && empty($mailOptions['mailname'])) {
