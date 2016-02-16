@@ -494,7 +494,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $i = 0;
         foreach ($_FILES as $k=>$f){
             // does not handle any other file[] arrary very well..
-            if (empty($f['tmp_name']) || !file_exists($f['tmp_name'])) {
+            if (empty($f['tmp_name']) || !@file_exists($f['tmp_name'])) {
                 continue;
             }
             $i++;
