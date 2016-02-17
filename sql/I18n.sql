@@ -12,5 +12,4 @@ CREATE TABLE `i18n` (
 
 
 ALTER TABLE i18n ADD COLUMN is_active int(1) NOT NULL DEFAULT 1;
-
-call mysql_change_engine('i18n');
+ 
