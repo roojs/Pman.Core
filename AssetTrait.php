@@ -240,8 +240,8 @@ trait Pman_Core_AssetTrait {
         
         
         $smod = str_replace('/','.',$path);
-        var_dump($this->baseDir);exit;
-        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseDir, $arfiles))) .'.css';
+        
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize($arfiles)) .'.css';
          
         $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
         
