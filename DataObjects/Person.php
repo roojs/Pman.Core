@@ -519,10 +519,10 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
        
     }      
     
-    function generatePassword() // genearte a password (add set 'rawPasswd' to it's value)
+    function generatePassword($length = 5) // genearte a password (add set 'rawPasswd' to it's value)
     {
         require_once 'Text/Password.php';
-        $this->rawPasswd = strtr(ucfirst(Text_Password::create(5)).ucfirst(Text_Password::create(5)), array(
+        $this->rawPasswd = strtr(ucfirst(Text_Password::create($length)).ucfirst(Text_Password::create($length)), array(
         "a"=>"4", "e"=>"3",  "i"=>"1",  "o"=>"0", "s"=>"5",  "t"=>"7"));
         $this->setPassword($this->rawPasswd);
         return $this->rawPasswd;
