@@ -80,4 +80,4 @@ Pman.OnError = {
     }
     
 }
-
+Pman.OnError.init();
