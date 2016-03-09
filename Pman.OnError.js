@@ -8,8 +8,12 @@ Pman.OnError = {
     
     init : function()
     {
+        this.stack = [];
         window.onerror = this.handler;
+        
     },
+    
+    
     
     lock : false,
     
@@ -36,6 +40,8 @@ Pman.OnError = {
         }
         // rate limit...
         this.lock = true;
+        
+        
         
         new Pman.Request({
             url : baseURL + '/Core/JsError',
