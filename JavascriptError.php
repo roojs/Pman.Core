@@ -13,10 +13,10 @@ class Pman_Core_JavascriptError extends Pman {
        
         if (!$au) {
             
-            $this->jerr("Not authenticated", array('authFailure' => true));
+            die("authenticated Users only");
         }
         if (!$au->pid()   ) { // not set up yet..
-            $this->jerr("Not authenticated", array('authFailure' => true));
+            die("authenticated Users only");
         }
         
         
