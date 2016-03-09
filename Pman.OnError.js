@@ -15,9 +15,16 @@ Pman.OnError = {
     
     handler : function(errorMsg, url, lineNumber, column, errorObj)
     {
+        if (this.lock) {
+            return;
+        }
+        
         // note - some are not passed by all browsers.
         column = column || -1;
         var stack = errorObj ? errorObj.stack : false;
+        
+        
+        
         
         if (!errorObj) {
             var stack = [];
