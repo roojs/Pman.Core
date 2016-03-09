@@ -685,4 +685,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $roo->jok('RESTORE');
     }
+    function selectAddPersonEmail()
+    {
+        $this->selectAdd($this->tableName() . '.email as email');
+        
+    }
 }
