@@ -29,7 +29,7 @@ class Pman_Core_JavascriptError extends Pman {
     {
          
         $this->addEvent("JSERROR", false,$_REQUEST['msg']);
-        
+        $this->jok("OK");
     }
     
     
