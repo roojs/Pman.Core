@@ -51,7 +51,7 @@ Pman.OnError = {
             {
                 Pman.OnError.lock  = false;
             }
-        })
+        });
         
         
     
