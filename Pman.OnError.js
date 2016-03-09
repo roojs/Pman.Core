@@ -38,11 +38,11 @@ Pman.OnError = {
                 f = f.caller;
             }
         }
-        var last = this.stack.length  > 5 ? this.stack.shift() : false;
-        if (last && last > (new Date()).add( Date.MINUTE, 5) {
+        // 10 events max in 5 minutes
+        var last = this.stack.length  > 10 ? this.stack.shift() : false;
+        if (last && last > (new Date()).add( Date.MINUTE, 5)) {
             this.stack.unshift(last);
-            return
-            
+            return;
         }
         
         this.stack.push(new Date());
