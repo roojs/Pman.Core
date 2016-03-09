@@ -595,23 +595,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function retrieveEventLog()
     {
-        $ff  = HTML_FlexyFramework::get();
-        $logdir = $this->
-        if (empty($ff->Pman['event_log_dir'])) {
-            return false;
-        }
         
-        if (function_exists('posix_getpwuid')) {
-            $uinfo = posix_getpwuid( posix_getuid () ); 
+        $logdir = $this->logDir();
+        if (!$logdir) {
+            return false;
          
-            $user = $uinfo['name'];
-        } else {
-            $user = getenv('USERNAME'); // windows.
         }
         
         $date = date('/Y/m/d/', strtotime($this->event_when));
         
-        $file = $ff->Pman['event_log_dir']. '/'. $user. $date. $this->id . ".json";
+        $file = $logdir. $date. $this->id . ".json";
         if (!file_exists(dirname($file))) {
             return false;
         }
