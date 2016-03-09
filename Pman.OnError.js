@@ -40,7 +40,7 @@ Pman.OnError = {
         }
         // 10 events max in 5 minutes
         var last = this.stack.length  > 10 ? this.stack.shift() : false;
-        if (last && last > (new Date()).add( Date.MINUTE, 5)) {
+        if (last && last > (new Date()).add( Date.MINUTE, -5)) {
             this.stack.unshift(last);
             return;
         }
