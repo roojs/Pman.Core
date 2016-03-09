@@ -55,7 +55,7 @@ Pman.OnError = {
         
         
         new Pman.Request({
-            url : baseURL + '/Core/JsError',
+            url : baseURL + '/Core/JavascriptError',
             method  : 'POST',
             params : {
                 msg : msg,
