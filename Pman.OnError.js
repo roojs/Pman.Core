@@ -20,7 +20,7 @@ Pman.OnError = {
     handler : function(errorMsg, url, lineNumber, column, errorObj)
     {
         if (this.lock) {
-            return;
+            return false;
         }
         
         // note - some are not passed by all browsers.
@@ -42,7 +42,7 @@ Pman.OnError = {
         var last = this.sthistoryack.length  > 10 ? this.history.shift() : false;
         if (last && last > (new Date()).add( Date.MINUTE, -5)) {
             this.history.unshift(last); // put it back on, and ingore this error.
-            return;
+            return false;
         }
         
         this.history.push(new Date());
@@ -68,7 +68,7 @@ Pman.OnError = {
                 
             
         });
-        
+        return false;
         
     
     
