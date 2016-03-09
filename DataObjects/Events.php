@@ -485,20 +485,13 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function writeEventLog($extra_data  = false)
     {
         $logdir = $this->logDir();
-        if (!$this->logDir()) {
+        if (!$logdir) {
             return false;
         }
         
-        // add user (eg. www-data or local user if not..)
-        if (function_exists('posix_getpwuid')) {
-            $uinfo = posix_getpwuid( posix_getuid () ); 
          
-            $user = $uinfo['name'];
-        } else {
-            $user = getenv('USERNAME'); // windows.
-        }
         //print_r($this);
-        $file = $dir. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
+        $file = $logdir.  date('/Y/m/d/'). $this->id . ".json";
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
             
@@ -527,7 +520,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
              
             $files[$k]['tmp_name'] =  $this->id . '-'. $i;
-            $nf = $logdir . '/'. $user. date('/Y/m/d/').   $files[$k]['tmp_name']; 
+            $nf = $logdir .   date('/Y/m/d/').   $files[$k]['tmp_name']; 
             if (!copy($f['tmp_name'], $nf)) {
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
