@@ -468,14 +468,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!empty($ff->Pman['storedir'])) {
             return $ff->Pman['storedir'] .'/Events';;
         }
+        return false;
     }
     
     
     
     function writeEventLog($extra_data  = false)
     {
-        $ff  = HTML_FlexyFramework::get();
-        if (empty($ff->Pman['event_log_dir'])) {
+        $logdir = $this->logDir();
+        if (!$this->logDir()) {
             return false;
         }
         
@@ -488,7 +489,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $user = getenv('USERNAME'); // windows.
         }
         //print_r($this);
-        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
+        $file = $dir. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
         if (!file_exists(dirname($file))) {
             mkdir(dirname($file),0700,true);
         }
