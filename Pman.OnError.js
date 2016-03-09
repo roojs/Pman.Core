@@ -9,7 +9,7 @@ Pman.OnError = {
     init : function()
     {
         this.history = [];
-        window.onerror = Pman.OnError.handler.createDelegate(this);;
+        window.onerror = Pman.OnError.handler.createDelegate(this);
         
     },
     
@@ -19,7 +19,7 @@ Pman.OnError = {
     
     handler : function(errorMsg, url, lineNumber, column, errorObj)
     {
-        Roo.log(this);
+        
         if (this.lock) {
             return false;
         }
