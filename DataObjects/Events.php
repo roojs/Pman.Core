@@ -461,12 +461,20 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function logDir()
     {
         $ff  = HTML_FlexyFramework::get();
+        if (function_exists('posix_getpwuid')) {
+            $uinfo = posix_getpwuid( posix_getuid () ); 
+         
+            $user = $uinfo['name'];
+        } else {
+            $user = getenv('USERNAME'); // windows.
+        }
+        
         // DEPRICATED...
         if (!empty($ff->Pman['event_log_dir'])) {
-            return $ff->Pman['event_log_dir'];
+            return $ff->Pman['event_log_dir'] . '/'.$user;
         }
         if (!empty($ff->Pman['storedir'])) {
-            return $ff->Pman['storedir'] .'/Events';
+            return $ff->Pman['storedir'] .'/Events/'.$user;
         
         }
         return false;
@@ -519,7 +527,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
              
             $files[$k]['tmp_name'] =  $this->id . '-'. $i;
-            $nf = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/').   $files[$k]['tmp_name']; 
+            $nf = $logdir . '/'. $user. date('/Y/m/d/').   $files[$k]['tmp_name']; 
             if (!copy($f['tmp_name'], $nf)) {
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
@@ -595,6 +603,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function retrieveEventLog()
     {
         $ff  = HTML_FlexyFramework::get();
+        $logdir = $this->
         if (empty($ff->Pman['event_log_dir'])) {
             return false;
         }
