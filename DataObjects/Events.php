@@ -466,7 +466,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return $ff->Pman['event_log_dir'];
         }
         if (!empty($ff->Pman['storedir'])) {
-            return $ff->Pman['storedir'] .'/Events';;
+            return $ff->Pman['storedir'] .'/Events';
+        
         }
         return false;
     }
