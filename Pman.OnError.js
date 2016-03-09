@@ -38,6 +38,9 @@ Pman.OnError = {
                 f = f.caller;
             }
         }
+        this.stack.push(new Date());
+        
+        
         // rate limit...
         this.lock = true;
         
