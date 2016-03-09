@@ -17,7 +17,7 @@ Pman.OnError = {
     
     lock : false,
     
-    handler : function(errorMsg, url, lineNumber, column, errorObj)
+    handler : function(msg, url, line, col, errorObj)
     {
         
         if (this.lock) {
