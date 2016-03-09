@@ -24,6 +24,10 @@ class Pman_Core_JavascriptError extends Pman {
         return true;
     }
     
+    function get()
+    {
+        die("invalid url");
+    }
     
     function post()
     {
