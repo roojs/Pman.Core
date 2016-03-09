@@ -258,7 +258,10 @@ class Pman_Core_JsCompile  extends Pman
         
          
         $o = HTML_FlexyFramework::get()->Pman_Core;
-        
+        if (isset($o['Pman_Core']['jspacker'])) {
+            return $this->packSeed($files,$output,$translation_base);
+        }
+    
         
         require_once 'System.php';
         $packer = System::which('roojspacker');
