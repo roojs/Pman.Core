@@ -47,13 +47,10 @@ Pman.OnError = {
                 col : col,
                 stack : '' + stack // array??? 
             },
-            success : function()
-            {
-                Pman.OnError.lock  = false;
-            },
-            failure : function() {
+            success : this.resetLock,
+            failure : this.resetLock
                 
-            }
+            
         });
         
         
