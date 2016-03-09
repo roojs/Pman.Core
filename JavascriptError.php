@@ -25,7 +25,7 @@ class Pman_Core_JavascriptError extends Pman {
     }
     
     
-    function get()
+    function post()
     {
          
         $this->addEvent("JSERROR", false,$_REQUEST['msg']);
