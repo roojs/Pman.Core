@@ -11,11 +11,8 @@ class Pman_Core_JavascriptError extends Pman {
         parent::getAuth(); // load company!
         $au = $this->getAuthUser();
        
-        if (!$au) {
+        if (!$au || !$au->pid()) {
             
-            die("authenticated Users only");
-        }
-        if (!$au->pid()   ) { // not set up yet..
             die("authenticated Users only");
         }
         
