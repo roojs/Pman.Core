@@ -13,7 +13,7 @@ Pman.OnError = {
         
     },
     
-    stack  : false, // array of previous events...
+    history  : false, // array of previous events...
     
     lock : false,
     
@@ -39,13 +39,13 @@ Pman.OnError = {
             }
         }
         // 10 events max in 5 minutes
-        var last = this.stack.length  > 10 ? this.stack.shift() : false;
+        var last = this.sthistoryack.length  > 10 ? this.history.shift() : false;
         if (last && last > (new Date()).add( Date.MINUTE, -5)) {
-            this.stack.unshift(last);
+            this.history.unshift(last);
             return;
         }
         
-        this.stack.push(new Date());
+        this.history.push(new Date());
         
         
         // rate limit...
