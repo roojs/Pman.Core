@@ -8,7 +8,7 @@ Pman.OnError = {
     
     init : function()
     {
-        this.stack = [];
+        this.history = [];
         window.onerror = this.handler;
         
     },
