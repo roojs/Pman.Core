@@ -13,7 +13,7 @@ Pman.OnError = {
         
     },
     
-    
+    stack  : false, // array of previous events...
     
     lock : false,
     
