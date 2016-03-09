@@ -25,7 +25,7 @@ Pman.OnError = {
         }
         
         // note - some are not passed by all browsers.
-        column = column || -1;
+        col = col || -1;
         var stack = errorObj ? errorObj.stack : false;
         
         
