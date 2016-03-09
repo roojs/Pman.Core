@@ -16,12 +16,33 @@ Pman.OnError = {
     {
         // note - some are not passed by all browsers.
         column = column || -1;
-        errorObj = errorObj || false;
-        // arguments.callee.caller
+        var stack = errorObj ? errorObj.stack : false;
         
+        if (!errorObj) {
+            var stack = [];
+            var f = arguments.callee.caller;
+            while (f) {
+                stack.push(f.name);
+                f = f.caller;
+            }
+        }
+        // rate limit...
+        
+        
+        new Pman.Request({
+            url : baseURL + '/Core/JsError',
+            params : {
+                msg : msg,
+                url : url,
+                line : line,
+                col : col,
+                stack : ''  + stack // array??? 
+            }
+        })
         
         
     
     
     
     }
+}
