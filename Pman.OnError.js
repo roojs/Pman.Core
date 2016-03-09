@@ -41,7 +41,7 @@ Pman.OnError = {
         // 10 events max in 5 minutes
         var last = this.sthistoryack.length  > 10 ? this.history.shift() : false;
         if (last && last > (new Date()).add( Date.MINUTE, -5)) {
-            this.history.unshift(last);
+            this.history.unshift(last); // put it back on, and ingore this error.
             return;
         }
         
