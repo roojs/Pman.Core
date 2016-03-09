@@ -36,7 +36,7 @@ Pman.OnError = {
                 url : url,
                 line : line,
                 col : col,
-                stack : ''  + stack // array??? 
+                stack : '' + stack // array??? 
             }
         })
         
