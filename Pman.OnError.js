@@ -19,6 +19,7 @@ Pman.OnError = {
     
     handler : function(errorMsg, url, lineNumber, column, errorObj)
     {
+        Roo.log(this);
         if (this.lock) {
             return false;
         }
