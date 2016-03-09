@@ -687,7 +687,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     }
     function selectAddPersonEmail()
     {
-        $this->selectAdd($this->tableName() . '.email as email');
+        $this->selectAdd('join_person_id_id.email as email');
         
     }
 }
