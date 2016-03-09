@@ -4,12 +4,12 @@
  *
  */
 
-Pman.OnError = {
+Pman.OnJavascriptError = {
     
     init : function()
     {
         this.history = [];
-        window.onerror = Pman.OnError.handler.createDelegate(this);
+        window.onerror = this.handler.createDelegate(this);
         
     },
     
