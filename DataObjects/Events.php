@@ -492,7 +492,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         //print_r($this);
         $file = $dir. '/'. $user. date('/Y/m/d/'). $this->id . ".json";
         if (!file_exists(dirname($file))) {
-            mkdir(dirname($file),0700,true);
+            mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
+            
         }
         
         // Remove all the password from logs...
