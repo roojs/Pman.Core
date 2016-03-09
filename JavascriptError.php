@@ -1,6 +1,8 @@
 <?php
 // FIXME... auth errors need ratelimiting 
 
+require_once 'Pman.php';
+
 class Pman_Core_JavascriptError extends Pman {
     
     
