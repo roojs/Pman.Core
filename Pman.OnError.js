@@ -9,7 +9,7 @@ Pman.OnError = {
     init : function()
     {
         this.history = [];
-        window.onerror = Pman.OnError.handler;
+        window.onerror = Pman.OnError.handler.createDelegate(this);;
         
     },
     
