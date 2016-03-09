@@ -77,8 +77,8 @@ Pman.OnJavascriptError = {
     },
     resetLock : function()
     {
-        Pman.OnJavascript.lock = false;
+        Pman.OnJavascriptError.lock = false;
     }
     
 }
-Pman.OnJavascript.init();
+Pman.OnJavascriptError.init();
