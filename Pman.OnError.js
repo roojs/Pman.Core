@@ -11,6 +11,7 @@ Pman.OnError = {
         window.onerror = this.handler;
     },
     
+    lock : false,
     
     handler : function(errorMsg, url, lineNumber, column, errorObj)
     {
@@ -27,7 +28,7 @@ Pman.OnError = {
             }
         }
         // rate limit...
-        
+        this.lock = true;
         
         new Pman.Request({
             url : baseURL + '/Core/JsError',
@@ -38,6 +39,10 @@ Pman.OnError = {
                 line : line,
                 col : col,
                 stack : '' + stack // array??? 
+            },
+            success : function()
+            {
+                Pman.OnError.lock  = false;
             }
         })
         
