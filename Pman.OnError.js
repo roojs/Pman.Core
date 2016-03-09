@@ -50,6 +50,9 @@ Pman.OnError = {
             success : function()
             {
                 Pman.OnError.lock  = false;
+            },
+            failure : function() {
+                
             }
         });
         
@@ -57,5 +60,10 @@ Pman.OnError = {
     
     
     
+    },
+    resetLock : function()
+    {
+        Pman.OnError.lock = false;
     }
+    
 }
