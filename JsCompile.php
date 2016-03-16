@@ -255,10 +255,9 @@ class Pman_Core_JsCompile  extends Pman
     
     function pack($files, $output, $translation_base=false)
     {
-        
          
         $o = HTML_FlexyFramework::get()->Pman_Core;
-        if (isset($o['jspacker'])) {
+        if (isset($o['packseed'])) {
             return $this->packSeed($files,$output,$translation_base);
         }
     
@@ -338,7 +337,7 @@ class Pman_Core_JsCompile  extends Pman
          
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
-        if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
+        if (empty($o['packseed']) || !file_exists($o['jspacker'].'/pack.js')) {
             echo '<!-- JS COMPILE ERROR: option: Pman_Core[jspacker] not set to directory -->';
             return false;
             
@@ -381,8 +380,8 @@ class Pman_Core_JsCompile  extends Pman
         
         
         $cmd = ($seed ?
-             "$seed {$o['jspacker']}/pack.js " :
-             "$gjs -I {$o['jspacker']} -I {$o['jspacker']}/JSDOC  {$o['jspacker']}/pack.js -- -- " 
+             "$seed {$o['packseed']}/pack.js " :
+             "$gjs -I {$o['packseed']} -I {$o['packseed']}/JSDOC  {$o['packseed']}/pack.js -- -- " 
               
              ) . " $eoutput  $toutput " . implode($ofiles, ' ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
@@ -451,8 +450,8 @@ class Pman_Core_JsCompile  extends Pman
         
         $o = HTML_FlexyFramework::get()->Pman_Core;
         
-        if (empty($o['jspacker']) || !file_exists($o['jspacker'].'/pack.js')) {
-            $this->err ="no jstoolkit path set [Pman_Core][jspacker] to the
+        if (empty($o['packseed']) || !file_exists($o['packseed'].'/pack.js')) {
+            $this->err ="no jstoolkit path set [Pman_Core][packseed] to the
                     introspection documentation directory where pack.js is located.";
             if ($this->cli) echo $this->err;
             return false;
@@ -460,7 +459,7 @@ class Pman_Core_JsCompile  extends Pman
         
         // should we be more specirfic!??!?!?
          
-        $cmd = "$seed {$o['jspacker']}/pack.js -m $proj  -a  $src/*.js";
+        $cmd = "$seed {$o['packseed']}/pack.js -m $proj  -a  $src/*.js";
         echo "$cmd\n";
         passthru($cmd);
         // technically we should trash old compiled files.. 
