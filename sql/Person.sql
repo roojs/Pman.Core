@@ -98,3 +98,4 @@ ALTER TABLE Person add index lookup_owner(owner_id);
  
 --  finally - always innodb
   
+ALTER TABLE Person ADD COLUMN post_code VARCHAR(256) NOT NULL DEFAULT '';
