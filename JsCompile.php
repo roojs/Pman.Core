@@ -255,7 +255,11 @@ class Pman_Core_JsCompile  extends Pman
     
     function pack($files, $output, $translation_base=false)
     {
-         
+        
+        if (empty($files)) {
+            return false;
+        }
+        
         $o = HTML_FlexyFramework::get()->Pman_Core;
         if (isset($o['packseed'])) {
             return $this->packSeed($files,$output,$translation_base);
