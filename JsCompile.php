@@ -412,6 +412,9 @@ class Pman_Core_JsCompile  extends Pman
             
             return true;
         }
+        
+        echo '<script type="text/javascript"> alert('. json_encode("Error: Javascript Compile failed\n" . $res) .');</script>';
+        
         echo "<!-- JS COMPILE ERROR: packed file did not exist  -->";
         return false;
         
