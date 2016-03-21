@@ -210,6 +210,11 @@ class Pman_Core_NotifySend extends Pman
                      "Notification event cleared (not required any more)" 
                     ."\n");
         }
+        if (is_a($email, 'PEAR_Error')) {
+            $email =array(
+                'error' => $email->toString()
+            );
+        }
         
         if (empty($p) && !empty($email['recipients'])) {
             // make a fake person..
