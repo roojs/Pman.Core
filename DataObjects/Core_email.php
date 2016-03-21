@@ -362,7 +362,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         return $r->toData();
     }
-  
+    
+    /**
+     *
+     * DEPRICATED !!! - DO NOT USE THIS !!!
+     */
+    
     function send($obj, $force = true, $send = true)
     {   
         if (!$send) {
