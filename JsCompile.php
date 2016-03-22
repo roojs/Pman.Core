@@ -331,7 +331,7 @@ class Pman_Core_JsCompile  extends Pman
         clearstatcache();
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
-            
+            echo "<!-- file looks like its been generated -->\n";
             return true;
         }
         echo '<script type="text/javascript"> alert('. json_encode("Error: Javascript Compile failed\n" . $res) .');</script>';
