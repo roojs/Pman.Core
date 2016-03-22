@@ -778,7 +778,7 @@ Pman.Dialog.CoreEmail = {
                                 Roo.MessageBox.alert("Error", "Save email template first");
                                 return false;
                             }
-                            o.params.onid = id
+                            o.params.onid = id;
                             o.params.ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';
                             
                            // o.params.imgtype = 'PressRelease';
