@@ -330,7 +330,7 @@ class Pman_Core_JsCompile  extends Pman
             -->";
         clearstatcache();
         // we should do more checking.. return val etc..
-        if (file_exists($output) && ($max < filemtime($output) ) ) {
+        if (file_exists($output) && filesize($output) && ($max < filemtime($output) ) ) {
             echo "<!-- file looks like its been generated -->\n";
             return true;
         }
