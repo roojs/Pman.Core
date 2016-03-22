@@ -286,6 +286,11 @@ class Pman_Core_JsCompile  extends Pman
             echo '<!--  use cached compile. -->';
             return true;
         }
+        
+        if (file_exists($output) {
+            unlink($output);
+        }
+        
         //var_dump($output);
         if (!file_exists(dirname($output))) {
             mkdir(dirname($output), 0755, true);
@@ -323,7 +328,7 @@ class Pman_Core_JsCompile  extends Pman
         echo "<!-- Compiled javascript
             " . htmlspecialchars($res) . "
             -->";
-            
+        clearstatcache();
         // we should do more checking.. return val etc..
         if (file_exists($output) && ($max < filemtime($output) ) ) {
             
