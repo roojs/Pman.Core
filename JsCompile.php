@@ -287,7 +287,7 @@ class Pman_Core_JsCompile  extends Pman
             return true;
         }
         
-        if (file_exists($output) {
+        if (file_exists($output)) {
             unlink($output);
         }
         
