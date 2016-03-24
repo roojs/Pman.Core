@@ -233,7 +233,7 @@ trait Pman_Core_AssetTrait {
        // print_R($relfiles);
         
         $ff = HTML_FlexyFramework::get();
-       
+        print_r($ff);exit;
         if (!empty($ff->isDev) && !empty($_REQUEST['isDev'])) {
             echo "<!-- CSS compile turned off (isDev on) -->\n";
             $this->assetArrayToHtml($files,'css');
