@@ -232,7 +232,7 @@ trait Pman_Core_AssetTrait {
         usort($relfiles,$lsort);
        // print_R($relfiles);
         
-        $ff = HTML_FlexyFramework::get();
+        $ff = HTML_FlexyFramework::get()->Pman;
         print_r($ff);exit;
         if (!empty($ff->isDev) && !empty($_REQUEST['isDev'])) {
             echo "<!-- CSS compile turned off (isDev on) -->\n";
