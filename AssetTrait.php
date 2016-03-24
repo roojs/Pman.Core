@@ -78,8 +78,9 @@ trait Pman_Core_AssetTrait {
         $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
         usort($files, $lsort);
         
+        $ff = HTML_FlexyFramework::get();
         
-        if (!empty($this->bootLoader->isDev) && !empty($_REQUEST['isDev'])) {
+        if (!empty($ff->Pman['isDev']) && !empty($_REQUEST['isDev'])) {
             echo "<!-- Javascript compile turned off (isDev on) -->\n";
             $this->assetArrayToHtml($files,'js');
             return;
