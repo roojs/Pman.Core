@@ -231,10 +231,10 @@ trait Pman_Core_AssetTrait {
         usort($files, $lsort);
         usort($relfiles,$lsort);
        // print_R($relfiles);
-       var_dump($this->bootLoader->isDev);
-       var_dump($_REQUEST);exit;
+        
+        $ff = HTML_FlexyFramework::get();
        
-        if (!empty($this->bootLoader->isDev) && !empty($_REQUEST['isDev'])) {
+        if (!empty($ff->isDev) && !empty($_REQUEST['isDev'])) {
             echo "<!-- CSS compile turned off (isDev on) -->\n";
             $this->assetArrayToHtml($files,'css');
             return;
