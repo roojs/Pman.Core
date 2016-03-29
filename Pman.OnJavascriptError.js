@@ -80,5 +80,5 @@ Pman.OnJavascriptError = {
         Pman.OnJavascriptError.lock = false;
     }
     
-}
+};
 Pman.OnJavascriptError.init();
