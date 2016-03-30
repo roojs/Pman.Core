@@ -68,4 +68,41 @@ trait Pman_Core_RooTrait {
                     in_array('Administrators', $this->authUser->groups('name')); 
         
     }
+    
+    static $permitError = false;
+    
+    function onPearError($err)
+    {
+        static $reported = false;
+        if ($reported) {
+            return;
+        }
+        
+        if (Pman::$permitError) {
+             
+            return;
+            
+        }
+        
+        $reported = true;
+        $out = $err->toString();
+        
+        $ret = array();
+        $n = 0;
+        
+        foreach($err->backtrace as $b) {
+            $ret[] = @$b['file'] . '(' . @$b['line'] . ')@' .   @$b['class'] . '::' . @$b['function'];
+            if ($n > 20) {
+                break;
+            }
+            $n++;
+        }
+        //convert the huge backtrace into something that is readable..
+        $out .= "\n" . implode("\n",  $ret);
+     
+        print_R($out);exit;
+        
+        $this->jerr($out);
+        
+    }
 }
