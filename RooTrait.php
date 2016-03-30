@@ -135,11 +135,8 @@ trait Pman_Core_RooTrait {
         
     }
     
-    
-    
     function addEvent($act, $obj = false, $remarks = '') 
     {
-        
         if (!empty(HTML_FlexyFramework::get()->Pman['disable_events'])) {
             return;
         }
