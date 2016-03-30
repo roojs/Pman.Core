@@ -454,7 +454,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
                 ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
             }
-        }
+        };
         function add(e, k, v) {
             //Roo.log(k,v);
             e.gstyle[k] = v;
