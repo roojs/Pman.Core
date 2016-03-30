@@ -292,4 +292,72 @@ trait Pman_Core_RooGetTrait {
 
     
     }
+    
+    function checkDebugPost()
+    {
+        return (!empty($_GET['_post']) || !empty($_GET['_debug_post'])) && 
+                    $this->authUser && 
+                    method_exists($this->authUser,'groups') &&
+                    in_array('Administrators', $this->authUser->groups('name')); 
+        
+    }
+    
+    function selectSingle($x, $id, $req=false)
+    {
+        $_columns = !empty($req['_columns']) ? explode(',', $req['_columns']) : false;
+
+        if (!is_array($id) && empty($id)) {
+            
+            if (method_exists($x, 'toRooSingleArray')) {
+                $this->jok($x->toRooSingleArray($this->getAuthUser(), $req));
+            }
+            
+            if (method_exists($x, 'toRooArray')) {
+                $this->jok($x->toRooArray($req));
+            }
+            
+            $this->jok($x->toArray());
+        }
+       
+        
+        $this->loadMap($x, array(
+                    'columns' => $_columns,
+                     
+            ));
+        if ($req !== false) { 
+            $this->setFilters($x, $req);
+        }
+        
+        if (is_array($id)) {
+            // lookup...
+            $x->setFrom($req['lookup'] );
+            $x->limit(1);
+            if (!$x->find(true)) {
+                if (!empty($id['_id'])) {
+                    // standardize this?
+                    $this->jok($x->toArray());
+                }
+                $this->jok(false);
+            }
+            
+        } else if (!$x->get($id)) {
+            $this->jerr("selectSingle: no such record ($id)");
+        }
+        
+        // ignore perms if comming from update/insert - as it's already done...
+        if ($req !== false && !$this->checkPerm($x,'S'))  {
+            $this->jerr("PERMISSION DENIED - si");
+        }
+        // different symantics on all these calls??
+        if (method_exists($x, 'toRooSingleArray')) {
+            $this->jok($x->toRooSingleArray($this->authUser, $req));
+        }
+        if (method_exists($x, 'toRooArray')) {
+            $this->jok($x->toRooArray($req));
+        }
+        
+        $this->jok($x->toArray());
+        
+        
+    }
 }
