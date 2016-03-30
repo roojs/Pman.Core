@@ -571,6 +571,9 @@ Pman.Dialog.CoreEmail = {
                  }
                  if (action.type == 'load') {
                      _this.dialog.el.unmask();
+                     
+                     _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
+                     
                      return;
                  }
                  if (action.type =='submit') {
