@@ -251,13 +251,6 @@ trait Pman_Core_RooGetTrait {
             
         
         }
-        //die("DONE?");
-      
-        //if ($x->tableName() == 'Documents_Tracking') {
-        //    $ret = $this->replaceSubject(&$ret, 'doc_id_subject');
-       // }
-        
-        
         
         if (!empty($_REQUEST['_requestMeta']) &&  count($ret)) {
             $meta = $this->meta($x, $ret);
