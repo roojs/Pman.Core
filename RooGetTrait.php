@@ -236,7 +236,7 @@ trait Pman_Core_RooGetTrait {
         
         // filter results, and add any data that is needed...
         if (method_exists($x,'postListFilter')) {
-            $ret = $x->postListFilter($ret, $this->authUser, $_REQUEST);
+            $ret = $x->postListFilter($ret, $this->getAuthUser(), $_REQUEST);
         }
         
         
