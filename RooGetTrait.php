@@ -612,7 +612,34 @@ trait Pman_Core_RooGetTrait {
         }
         $se->send($fn .'.xls');
         exit;
+        
+    }
     
+    var $cols = array();
+    
+    function loadMap($do, $cfg =array())
+    {
+        $onlycolumns    = !empty($cfg['columns']) ? $cfg['columns'] : false;
+        $distinct       = !empty($cfg['distinct']) ? $cfg['distinct'] : false;
+        $excludecolumns = !empty($cfg['exclude']) ? $cfg['exclude'] : array();
+          
+        $excludecolumns[] = 'passwd'; // we never expose passwords
+       
+        $ret = $do->autoJoin(array(
+            'include' => $onlycolumns,
+            'exclude' => $excludecolumns,
+            'distinct' => $distinct
+        ));
+        
+      
+        
+        $this->countWhat = $ret['count'];
+        $this->cols = $ret['cols'];
+        $this->colsJname = $ret['join_names'];
+        
+        
+        return;
+        
         
         
     }
