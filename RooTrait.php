@@ -69,6 +69,24 @@ trait Pman_Core_RooTrait {
         
     }
     
+    function dataObject($tab)
+    {
+        if (is_array($this->validTables) &&  !in_array($tab, $this->validTables)) {
+            $this->jerr("Invalid url - not listed in validTables");
+        }
+        
+        $tab = str_replace('/', '',$tab); // basic protection??
+        
+        $x = DB_DataObject::factory($tab);
+        
+        if (!is_a($x, 'DB_DataObject')) {
+            $this->jerr('invalid url - no dataobject');
+        }
+    
+        return $x;
+        
+    }
+    
     /*
      * From Pman.php
      */
