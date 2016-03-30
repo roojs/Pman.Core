@@ -366,8 +366,23 @@ trait Pman_Core_RooTrait {
         
         $e->onInsert(isset($_REQUEST) ? $_REQUEST : array() , $this);
         
-       
         return $e;
         
+    }
+    
+    function getAuthUser()
+    {
+        if (!empty($this->authUser)) {
+            return $this->authUser;
+        }
+        $ff = HTML_FlexyFramework::get();
+        $tbl = empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable'];
+        
+        $u = DB_DataObject::factory( $tbl );
+        if (!$u->isAuth()) {
+            return false;
+        }
+        $this->authUser =$u->getAuthUser();
+        return $this->authUser ;
     }
 }
