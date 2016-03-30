@@ -347,6 +347,7 @@ trait Pman_Core_RooTrait {
         if (!empty(HTML_FlexyFramework::get()->Pman['disable_events'])) {
             return;
         }
+        
         $au = $this->getAuthUser();
        
         $e = DB_DataObject::factory('Events');
