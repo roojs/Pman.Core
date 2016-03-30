@@ -310,8 +310,9 @@ class Pman_Core_Mailer {
     }
     function send($email = false)
     {
+        $ff = HTML_FlexyFramework::get();
         
-        $pg = HTML_FlexyFramework::get()->page;
+        $pg = $ff->page;
         
         
         $email = is_array($email)  ? $email : $this->toData();
@@ -326,7 +327,8 @@ class Pman_Core_Mailer {
         
         ///$recipents = array($this->email);
 //        $mailOptions = PEAR::getStaticProperty('Mail','options');
-        $mailOptions = HTML_FlexyFramework::get()->Mail;
+        
+        $mailOptions = isset($ff->Mail) ? $ff->Mail : array();
         //print_R($mailOptions);exit;
         
         if ($this->mail_method == 'SMTPMX' && empty($mailOptions['mailname'])) {
