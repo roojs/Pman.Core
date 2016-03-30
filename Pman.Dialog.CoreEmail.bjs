@@ -426,7 +426,7 @@
                     },
                     {
                      "listeners" : {
-                      "click" : "function (_self, e)\n{\n    this.scope.owner.fireEvent('savedpreview', this.scope.owner);\n}"
+                      "click" : "function (_self, e)\n{\n    this.scope.owner.fireEvent('savedpreview', this.scope.owner);\n    \n}"
                      },
                      "String cls" : "x-init-enable",
                      "text" : "Saved Version",

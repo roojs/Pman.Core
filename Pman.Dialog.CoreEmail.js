@@ -972,6 +972,7 @@ Pman.Dialog.CoreEmail = {
                       click : function (_self, e)
                        {
                            this.scope.owner.fireEvent('savedpreview', this.scope.owner);
+                           
                        }
                      }
                     }
