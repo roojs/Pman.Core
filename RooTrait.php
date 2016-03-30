@@ -30,19 +30,42 @@ trait Pman_Core_RooTrait {
         
     }
     
+    function checkDebug($req = false)
+    {
+        $req =  $req === false  ? $_REQUEST : $req;
+        if (isset($req['_debug']) 
+                && 
+                $this->authUser
+                &&
+                (
+                    (
+                        method_exists($this->authUser,'canDebug')
+                        &&
+                        $this->authUser->canDebug()
+                    )
+                ||
+                    (  
+                    
+                        method_exists($this->authUser,'groups') 
+                        &&
+                        is_a($this->authUser, 'Pman_Core_DataObjects_Person')
+                        &&
+                        in_array('Administrators', $this->authUser->groups('name'))
+                    )
+                )
+                
+            ){
+            DB_DAtaObject::debuglevel((int)$req['_debug']);
+        }
+        
+    }
+    
     function checkDebugPost()
     {
         return (!empty($_GET['_post']) || !empty($_GET['_debug_post'])) && 
                     $this->authUser && 
                     method_exists($this->authUser,'groups') &&
                     in_array('Administrators', $this->authUser->groups('name')); 
-    }
-    
-    function checkDebug($req = false)
-    {
-        /*
-         * Not allow to doing this
-         */
-        return false;
+        
     }
 }
