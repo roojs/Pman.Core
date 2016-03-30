@@ -94,15 +94,9 @@ trait Pman_Core_RooGetTrait {
      */
     function get($tab)
     {
-        $this->init(); // from pman.
-        //DB_DataObject::debuglevel(1);
+        $this->init();
+        
         HTML_FlexyFramework::get()->generateDataobjectsCache($this->isDev);
-        
-   
-        
-        // debugging...
-        
-        
         
         if ( $this->checkDebugPost()) {
                     
