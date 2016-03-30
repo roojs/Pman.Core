@@ -68,15 +68,6 @@ trait Pman_Core_RooTrait {
         
     }
     
-    function checkDebugPost()
-    {
-        return (!empty($_GET['_post']) || !empty($_GET['_debug_post'])) && 
-                    $this->authUser && 
-                    method_exists($this->authUser,'groups') &&
-                    in_array('Administrators', $this->authUser->groups('name')); 
-        
-    }
-    
     function dataObject($tab)
     {
         if (is_array($this->validTables) &&  !in_array($tab, $this->validTables)) {
