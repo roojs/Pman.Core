@@ -315,7 +315,7 @@ trait Pman_Core_RooGetTrait {
         } else if (!$x->get($id)) {
             $this->jerr("selectSingle: no such record ($id)");
         }
-        
+        exit;
         // ignore perms if comming from update/insert - as it's already done...
         if ($req !== false && !$this->checkPerm($x,'S'))  {
             $this->jerr("PERMISSION DENIED - si");
