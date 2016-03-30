@@ -717,6 +717,41 @@ Pman.Dialog.CoreEmail = {
                  '|xns' : 'Roo.form',
                  xtype : 'HtmlEditor',
                  listeners : {
+                  autosave : function (_self)
+                   {
+                       Roo.log('autosave');
+                       
+                       var id = _this.form.findField('id').getValue() * 1;
+                       /*
+                       if(!_self.editorcore.sourceEditMode){
+                           _self.syncValue();
+                       }else{
+                           _self.pushValue();
+                       }
+                       */
+                       new Pman.Request({
+                           url : baseURL + '/Roo/Events.php',
+                           method :'POST',
+                           params : {
+                               id : 0,
+                               action : 'AUTOSAVE',
+                               on_id : (id > 0) ? id : 0,
+                               on_table : 'crm_mailing_list_message',
+                               remarks : 'BODY',
+                               source: _self.getValue()
+                           },
+                           success : function() {
+                               _self.originalValue = _self.getValue();
+                               
+                           },
+                           failure : function() 
+                           {
+                               //Roo.MessageBox.alert("Error", "autosave failed");
+                               Roo.log('body autosave failed?!');
+                           }
+                       });
+                       
+                   },
                   savedpreview : function (_self)
                    {
                        Roo.log('saved preview');
