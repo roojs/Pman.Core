@@ -151,7 +151,85 @@ trait Pman_Core_RooTrait {
             $this->transObj->query('ROLLBACK');
         }
         
-        return parent::jerr($str,$errors,$content_type);
+        return $this->jerror('ERROR', $str,$errors,$content_type);
+    }
     
+    function jerror($type, $str, $errors=array(), $content_type = false) // standard error reporting..
+    {
+        if ($type !== false) {
+            $this->addEvent($type, false, $str);
+        }
+         
+        $cli = HTML_FlexyFramework::get()->cli;
+        if ($cli) {
+            echo "ERROR: " .$str . "\n";
+            exit;
+        }
+        
+        
+        if ($content_type == 'text/plain') {
+            header('Content-Disposition: attachment; filename="error.txt"');
+            header('Content-type: '. $content_type);
+            echo "ERROR: " .$str . "\n";
+            exit;
+        } 
+        
+        require_once 'Services/JSON.php';
+        $json = new Services_JSON();
+        
+        // log all errors!!!
+        
+        $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
+                preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
+        
+        if ($retHTML){
+            if (isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] == 'NO') {
+                $retHTML = false;
+            }
+        } else {
+            $retHTML = isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] !='NO';
+        }
+        
+        
+        if ($retHTML) {
+            header('Content-type: text/html');
+            echo "<HTML><HEAD></HEAD><BODY>";
+            echo  $json->encodeUnsafe(array(
+                    'success'=> false, 
+                    'errorMsg' => $str,
+                    'message' => $str, // compate with exeption / loadexception.
+
+                    'errors' => $errors ? $errors : true, // used by forms to flag errors.
+                    'authFailure' => !empty($errors['authFailure']),
+                ));
+            echo "</BODY></HTML>";
+            exit;
+        }
+        
+        if (isset($_REQUEST['_debug'])) {
+            echo '<PRE>'.htmlspecialchars(print_r(array(
+                'success'=> false, 
+                'data'=> array(), 
+                'errorMsg' => $str,
+                'message' => $str, // compate with exeption / loadexception.
+                'errors' => $errors ? $errors : true, // used by forms to flag errors.
+                'authFailure' => !empty($errors['authFailure']),
+            ),true));
+            exit;
+                
+        }
+        
+        echo $json->encode(array(
+            'success'=> false, 
+            'data'=> array(), 
+            'errorMsg' => $str,
+            'message' => $str, // compate with exeption / loadexception.
+            'errors' => $errors ? $errors : true, // used by forms to flag errors.
+            'authFailure' => !empty($errors['authFailure']),
+        ));
+        
+        
+        exit;
+        
     }
 }
