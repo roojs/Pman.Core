@@ -714,7 +714,7 @@ Pman.Dialog.CoreEmail = {
                            action : 'AUTOSAVE',
                            remarks : 'BODY',
                            on_id : (id < 1) ? 0 : id,
-                           on_table : 'cms_page',
+                           on_table : 'crm_mailing_list_message',
                            successFn : successFn
                        };
                        
