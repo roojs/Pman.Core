@@ -304,6 +304,9 @@
                "$ xns" : "Roo.form",
                "items" : [
                 {
+                 "listeners" : {
+                  "savedpreview" : "function (_self)\n{\n    Roo.log('saved preview');\n    \n    var id = _this.form.findField('id').getValue() * 1;\n    \n    var successFn = function(res){\n        return res.data.POST.source;\n    };\n    \n    var params = {\n        action : 'AUTOSAVE',\n        remarks : 'BODY',\n        on_id : (id < 1) ? 0 : id,\n        on_table : 'cms_page',\n        successFn : successFn\n    };\n    \n    \n    Pman.Dialog.CoreAutoSavePreview.show(params, function(res){\n        _self.setValue(res);\n        _self.originalValue = res;\n    });\n}"
+                 },
                  "xtype" : "HtmlEditor",
                  "$ cwhite" : "[ \n    'margin',\n    'padding',\n    'text-align',\n    'background',\n    'height',\n    'width',\n    'background-color',\n    'font-size',\n    'line-height',\n    'color',\n    'outline',\n    'text-decoration',\n    'position',\n    'clear',\n    'overflow',\n    'margin-top',\n    'border-bottom',\n    'top',\n    'list-style',\n    'margin-left',\n    'border',\n    'float' ,\n    'margin-right',\n    'padding-top',\n    'min-height',\n    'left',\n    'padding-left',\n    'font-weight',\n    'font-family',\n    'display',\n    'margin-bottom',\n    'padding-bottom',\n    'vertical-align',\n    'cursor',\n    'z-index',\n    'right'\n ]",
                  "$ xns" : "Roo.form",

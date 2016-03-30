@@ -699,6 +699,32 @@ Pman.Dialog.CoreEmail = {
                  xns : Roo.form,
                  '|xns' : 'Roo.form',
                  xtype : 'HtmlEditor',
+                 listeners : {
+                  savedpreview : function (_self)
+                   {
+                       Roo.log('saved preview');
+                       
+                       var id = _this.form.findField('id').getValue() * 1;
+                       
+                       var successFn = function(res){
+                           return res.data.POST.source;
+                       };
+                       
+                       var params = {
+                           action : 'AUTOSAVE',
+                           remarks : 'BODY',
+                           on_id : (id < 1) ? 0 : id,
+                           on_table : 'cms_page',
+                           successFn : successFn
+                       };
+                       
+                       
+                       Pman.Dialog.CoreAutoSavePreview.show(params, function(res){
+                           _self.setValue(res);
+                           _self.originalValue = res;
+                       });
+                   }
+                 },
                  toolbars : [
                   {
                    xns : Roo.form.HtmlEditor,
