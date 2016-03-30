@@ -98,7 +98,6 @@ trait Pman_Core_RooTrait {
     {
         $_columns = !empty($req['_columns']) ? explode(',', $req['_columns']) : false;
 
-        //var_dump(array(!is_array($id) , empty($id)));
         if (!is_array($id) && empty($id)) {
             
             if (method_exists($x, 'toRooSingleArray')) {
