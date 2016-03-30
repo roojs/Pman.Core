@@ -757,8 +757,6 @@ Pman.Dialog.CoreEmail = {
                    },
                   savedpreview : function (_self)
                    {
-                       Roo.log('saved preview');
-                       
                        var id = _this.form.findField('id').getValue() * 1;
                        
                        var successFn = function(res){
