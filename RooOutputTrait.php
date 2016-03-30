@@ -1,5 +1,5 @@
 <?php
 
-trait Pman_Core_RooJsonOutput {
+trait Pman_Core_RooJsonOutputTrait {
     
 }

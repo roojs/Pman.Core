@@ -1,5 +1,5 @@
 <?php
 
-trait Pman_Core_RooPost {
+trait Pman_Core_RooPostTrait {
     
 }
