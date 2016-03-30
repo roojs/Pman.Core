@@ -141,7 +141,40 @@ trait Pman_Core_RooTrait {
             $this->transObj->query( connection_aborted() ? 'ROLLBACK' :  'COMMIT');
         }
         
-        return parent::jok($str);
+        $cli = HTML_FlexyFramework::get()->cli;
+        
+        if ($cli) {
+            echo "OK: " .$str . "\n";
+            exit;
+        }
+        require_once 'Services/JSON.php';
+        $json = new Services_JSON();
+        
+        $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
+                preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
+        
+        if ($retHTML){
+            if (isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] == 'NO') {
+                $retHTML = false;
+            }
+        } else {
+            $retHTML = isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] !='NO';
+        }
+        
+        if ($retHTML) {
+            header('Content-type: text/html');
+            echo "<HTML><HEAD></HEAD><BODY>";
+            // encode html characters so they can be read..
+            echo  str_replace(array('<','>'), array('\u003c','\u003e'),
+                        $json->encodeUnsafe(array('success'=> true, 'data' => $str)));
+            echo "</BODY></HTML>";
+            exit;
+        }
+        
+        
+        echo  $json->encode(array('success'=> true, 'data' => $str));
+        
+        exit;
     }
     
     
