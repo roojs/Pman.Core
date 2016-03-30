@@ -656,6 +656,7 @@ Pman.Dialog.CoreEmail = {
                xtype : 'FieldSet',
                items  : [
                 {
+                 autosave : function() { },
                  clearUp : false,
                  cwhite : [ 
                      'margin',
