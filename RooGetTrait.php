@@ -156,10 +156,10 @@ trait Pman_Core_RooGetTrait {
         
         // sets map and countWhat
         $this->loadMap($x, array(
-                    'columns' => $_columns,
-                    'distinct' => empty($_REQUEST['_distinct']) ? false:  $_REQUEST['_distinct'],
-                    'exclude' => empty($_REQUEST['_exclude_columns']) ? false:  explode(',', $_REQUEST['_exclude_columns'])
-            ));
+            'columns' => $_columns,
+            'distinct' => empty($_REQUEST['_distinct']) ? false:  $_REQUEST['_distinct'],
+            'exclude' => empty($_REQUEST['_exclude_columns']) ? false:  explode(',', $_REQUEST['_exclude_columns'])
+        ));
         
         
         $this->setFilters($x,$_REQUEST);
@@ -168,10 +168,6 @@ trait Pman_Core_RooGetTrait {
             $this->jerr("PERMISSION DENIED (g)");
         }
         
-         //print_r($x);
-        // build join if req.
-          //DB_DataObject::debugLevel(1);
-       //   var_dump($this->countWhat);
         $total = $x->count($this->countWhat);
         // sorting..
       //   
