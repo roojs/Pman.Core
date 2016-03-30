@@ -102,7 +102,7 @@ trait Pman_Core_RooTrait {
         if (!is_array($id) && empty($id)) {
             
             if (method_exists($x, 'toRooSingleArray')) {
-                $this->jok($x->toRooSingleArray($this->authUser, $req));
+                $this->jok($x->toRooSingleArray($this->getAuthUser(), $req));
             }
             
             if (method_exists($x, 'toRooArray')) {
