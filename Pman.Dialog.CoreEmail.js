@@ -471,6 +471,9 @@ Pman.Dialog.CoreEmail = {
            preValidate : function(done_callback) {
                
                Roo.MessageBox.progress("Uploading Images", "Uploading");
+               
+               
+               
                var html = _this.form.findField('bodytext').getValue();
                
                var s = Roo.get(_this.form.findField('bodytext').editorcore.doc.documentElement);
