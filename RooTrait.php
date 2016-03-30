@@ -84,7 +84,6 @@ trait Pman_Core_RooTrait {
         }
     
         return $x;
-        
     }
     
     /*
