@@ -2,6 +2,14 @@
 
 trait Pman_Core_RooTrait {
     
+    var $validTables = false; 
+    
+    var $key;
+    
+    var $transObj = false;
+    
+    var $debugEnabled = true;
+    
     function init() 
     {
         if (isset($this->_hasInit)) {
