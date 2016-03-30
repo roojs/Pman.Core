@@ -164,6 +164,6 @@ trait Pman_Core_RooTrait {
     
     function getAuthUser()
     {
-        die('Get auth user is not implement');
+        die('Get auth user is not implement.');
     }
 }
