@@ -439,9 +439,7 @@ trait Pman_Core_RooGetTrait {
                 continue;
                 
             }
-            
-            
-            
+
             switch($key) {
                     
                 // Events and remarks -- fixme - move to events/remarsk...
@@ -481,10 +479,6 @@ trait Pman_Core_RooGetTrait {
             }
         }
         if (!empty($q_filtered)) {
-            //var_dump($q_filtered);
-            
-            
-            
             $x->setFrom($q_filtered);
         }
         
