@@ -291,7 +291,6 @@ trait Pman_Core_RooGetTrait {
             
             $this->jok($x->toArray());
         }
-       
         
         $this->loadMap($x, array(
             'columns' => $_columns,
