@@ -1,6 +1,6 @@
 <?php
 
-trait Pman_Core_RooGet {
+trait Pman_Core_RooGetTrait {
     /**
      * GET method   Roo/TABLENAME.php
      *
