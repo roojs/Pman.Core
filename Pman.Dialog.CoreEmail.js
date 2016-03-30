@@ -671,7 +671,6 @@ Pman.Dialog.CoreEmail = {
                      Roo.log('body dirty, auto save!');
                      
                      body.fireEvent('autosave', body);
-                         
                     
                  },
                  clearUp : false,
