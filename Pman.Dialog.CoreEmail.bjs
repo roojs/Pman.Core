@@ -428,6 +428,7 @@
                      "listeners" : {
                       "click" : "function (_self, e)\n{\n    this.scope.owner.fireEvent('savedpreview', this.scope.owner);\n}"
                      },
+                     "String cls" : "x-init-enable",
                      "text" : "Saved Version",
                      "xtype" : "Button",
                      "$ xns" : "Roo.Toolbar",

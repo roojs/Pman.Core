@@ -963,6 +963,7 @@ Pman.Dialog.CoreEmail = {
                      xtype : 'Separator'
                     },
                     {
+                     cls : 'x-init-enable',
                      text : _this._strings['bd88a20b53a47f7b5704a83a15ff5506'] /* Saved Version */,
                      xns : Roo.Toolbar,
                      '|xns' : 'Roo.Toolbar',
