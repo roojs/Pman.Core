@@ -482,22 +482,11 @@ trait Pman_Core_RooGetTrait {
             $x->setFrom($q_filtered);
         }
         
-        
-        
-       
-        // nice generic -- let's get rid of it.. where is it used!!!!
-        // used by: 
-        // Person / Group / Comapnies.... most of my queries noww...
         if (!empty($q['query']['name'])) {
-            
-            
             if (in_array( 'name',  array_keys($x->table()))) {
                 $x->whereAdd($x->tableName().".name LIKE '". $x->escape($q['query']['name']) . "%'");
             }
         }
-        
-        // - projectdirectory staff list - persn queuy
-     
         
     }
 }
