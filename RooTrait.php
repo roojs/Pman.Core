@@ -154,6 +154,17 @@ trait Pman_Core_RooTrait {
         
     }
     
+    function checkPerm($obj, $lvl, $req= null)
+    {
+        if (!method_exists($obj, 'checkPerm')) {
+            return true;
+        }
+        if ($obj->checkPerm($lvl, $this->getAuthUser(), $req))  {
+            return true;
+        }
+        return false;
+    }
+    
     function getAuthUser()
     {
         die('Get auth user is not implement.');
