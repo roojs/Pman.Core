@@ -36,8 +36,8 @@
     },
     {
      "xtype" : "LayoutRegion",
-     "$ xns" : "Roo",
      "width" : 200,
+     "$ xns" : "Roo",
      "split" : true,
      "* prop" : "west"
     },
@@ -45,9 +45,9 @@
      "listeners" : {
       "|activate" : "function() {\n    _this.panel = this;\n    if (_this.grid) {\n        _this.grid.footer.onClick('first');\n    }\n}"
      },
+     "background" : false,
      "region" : "west",
      "fitToframe" : true,
-     "background" : false,
      "title" : "Events",
      "xtype" : "GridPanel",
      "fitContainer" : true,
@@ -86,8 +86,8 @@
          "items" : [
           {
            "$ url" : "baseURL + '/Roo/Events.php'",
-           "method" : "GET",
            "xtype" : "HttpProxy",
+           "method" : "GET",
            "$ xns" : "Roo.data",
            "* prop" : "proxy"
           },
@@ -111,8 +111,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Date",
          "width" : 100,
+         "header" : "Date",
          "$ renderer" : "function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -120,8 +120,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 100,
          "header" : "By",
+         "width" : 100,
          "$ renderer" : "function(v) { return String.format('{0}', v ); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -136,8 +136,8 @@
       "render" : "function (_self)\n{\n    _this.viewPanel = _self;\n}"
      },
      "autoScroll" : true,
-     "fitToFrame" : true,
      "background" : false,
+     "fitToFrame" : true,
      "region" : "center",
      "xtype" : "ContentPanel",
      "fitContainer" : true,
