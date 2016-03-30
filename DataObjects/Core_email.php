@@ -138,8 +138,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $this->cachedMailWithOutImages(true, (get_class($this) == 'Pman_Core_DataObjects_Core_email') ? false : true);
 //        $this->cachedMailWithOutImages(true, false);
-        
-        $this->retrieveAutoSave();
        
     }
     
