@@ -164,8 +164,17 @@ trait Pman_Core_RooTrait {
         return false;
     }
     
+    function hasPerm($name, $lvl)  // do we have a permission
+    {
+        static $pcache = array();
+        $au = $this->getAuthUser();
+        return $au && $au->hasPerm($name, $lvl);
+        
+    }
+    
     function getAuthUser()
     {
         die('Get auth user is not implement.');
     }
+    
 }
