@@ -141,8 +141,6 @@ trait Pman_Core_RooTrait {
             return;
         }
         
-        $au = $this->getAuthUser();
-       
         $e = DB_DataObject::factory('Events');
         $e->init($act,$obj,$remarks); 
          
