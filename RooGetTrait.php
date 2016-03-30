@@ -94,11 +94,6 @@ trait Pman_Core_RooGetTrait {
      */
     function get($tab)
     {
-        print_R('run????');exit;
-         //  $this->jerr("Not authenticated", array('authFailure' => true));
-       //echo '<PRE>';print_R($_GET);
-      //DB_DataObject::debuglevel(1);
-        
         $this->init(); // from pman.
         //DB_DataObject::debuglevel(1);
         HTML_FlexyFramework::get()->generateDataobjectsCache($this->isDev);
