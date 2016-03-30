@@ -134,4 +134,24 @@ trait Pman_Core_RooTrait {
         $this->jerr($out);
         
     }
+    
+    function jok($str)
+    {
+        if ($this->transObj ) {
+            $this->transObj->query( connection_aborted() ? 'ROLLBACK' :  'COMMIT');
+        }
+        
+        return parent::jok($str);
+    }
+    
+    
+    function jerr($str, $errors=array(), $content_type = false)
+    {
+        if ($this->transObj) {
+            $this->transObj->query('ROLLBACK');
+        }
+        
+        return parent::jerr($str,$errors,$content_type);
+    
+    }
 }
