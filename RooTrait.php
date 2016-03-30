@@ -162,6 +162,7 @@ trait Pman_Core_RooTrait {
         if ($obj->checkPerm($lvl, $this->getAuthUser(), $req))  {
             return true;
         }
+        
         return false;
     }
     
