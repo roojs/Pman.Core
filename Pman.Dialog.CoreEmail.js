@@ -472,7 +472,11 @@ Pman.Dialog.CoreEmail = {
                
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
-               
+               if(!_this.form.findField('bodytext').editorcore.sourceEditMode){
+                   _this.form.findField('bodytext').syncValue();
+               }else{
+                   _this.form.findField('bodytext').pushValue();
+               }
                
                var html = _this.form.findField('bodytext').getValue();
                
