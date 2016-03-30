@@ -546,7 +546,7 @@ Pman.Dialog.CoreEmail = {
                 
                  if (action.type == 'setdata') {
                  
-                     setInterval(_this.form.findField('bodytext').autosave, 60000);
+                     setInterval(_this.form.findField('bodytext').autosave, 5000);
                      
                      _this.data.module = _this.data.module || 'crm_mailing_list_message';
                      
