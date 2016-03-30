@@ -350,7 +350,7 @@ trait Pman_Core_RooGetTrait {
         }
         // different symantics on all these calls??
         if (method_exists($x, 'toRooSingleArray')) {
-            $this->jok($x->toRooSingleArray($this->authUser, $req));
+            $this->jok($x->toRooSingleArray($this->getAuthUser(), $req));
         }
         if (method_exists($x, 'toRooArray')) {
             $this->jok($x->toRooArray($req));
