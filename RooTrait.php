@@ -328,8 +328,6 @@ trait Pman_Core_RooTrait {
         exit;
     }
     
-    
-    
     /** a daily cache **/
     function jdataCache($cachekey)
     {
@@ -340,6 +338,35 @@ trait Pman_Core_RooTrait {
             exit;
         }
         return false;
+        
+    }
+    
+    function addEvent($act, $obj = false, $remarks = '') 
+    {
+        
+        if (!empty(HTML_FlexyFramework::get()->Pman['disable_events'])) {
+            return;
+        }
+        $au = $this->getAuthUser();
+       
+        $e = DB_DataObject::factory('Events');
+        $e->init($act,$obj,$remarks); 
+         
+        $e->event_when = date('Y-m-d H:i:s');
+        
+        $eid = $e->insert();
+        
+        // fixme - this should be in onInsert..
+        $wa = DB_DataObject::factory('core_watch');
+        if (method_exists($wa,'notifyEvent')) {
+            $wa->notifyEvent($e); // trigger any actions..
+        }
+        
+        
+        $e->onInsert(isset($_REQUEST) ? $_REQUEST : array() , $this);
+        
+       
+        return $e;
         
     }
 }
