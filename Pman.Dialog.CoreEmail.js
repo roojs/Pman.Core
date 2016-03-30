@@ -724,6 +724,7 @@ Pman.Dialog.CoreEmail = {
                        Roo.log('autosave');
                        
                        var id = _this.form.findField('id').getValue() * 1;
+                       
                        /*
                        if(!_self.editorcore.sourceEditMode){
                            _self.syncValue();
@@ -731,6 +732,7 @@ Pman.Dialog.CoreEmail = {
                            _self.pushValue();
                        }
                        */
+                       
                        new Pman.Request({
                            url : baseURL + '/Roo/Events.php',
                            method :'POST',
@@ -748,7 +750,6 @@ Pman.Dialog.CoreEmail = {
                            },
                            failure : function() 
                            {
-                               //Roo.MessageBox.alert("Error", "autosave failed");
                                Roo.log('body autosave failed?!');
                            }
                        });
