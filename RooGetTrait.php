@@ -196,10 +196,7 @@ trait Pman_Core_RooGetTrait {
         
         if (false === $res) {
             $this->jerr($x->_lastError->toString());
-            
         }
-        
-        
         
         $ret = array();
         
