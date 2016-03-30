@@ -69,6 +69,10 @@ trait Pman_Core_RooTrait {
         
     }
     
+    /*
+     * From Pman.php
+     */
+    
     static $permitError = false;
     
     function onPearError($err)
