@@ -108,6 +108,7 @@ trait Pman_Core_RooGetTrait {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $tab = array_shift(explode('/', $tab));
+        print_R($tab);exit;
         $x = $this->dataObject($tab);
         
         $_columns = !empty($_REQUEST['_columns']) ? explode(',', $_REQUEST['_columns']) : false;
