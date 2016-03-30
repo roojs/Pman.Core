@@ -982,7 +982,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                  
             }
             
-        }
+        };
        
         var ent = {
                 HAlign:"1",
