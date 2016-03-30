@@ -472,4 +472,53 @@ trait Pman_Core_RooGetTrait {
         }
         
     }
+    
+    function applySort($x, $sort = '', $dir ='')
+    {
+        $sort = empty($_REQUEST['sort']) ? $sort : $_REQUEST['sort'];
+        $dir = empty($_REQUEST['dir']) ? $dir : $_REQUEST['dir'];
+        $dir = $dir == 'ASC' ? 'ASC' : 'DESC';
+         
+        $ms = empty($_REQUEST['_multisort']) ? false : $_REQUEST['_multisort'];
+        //var_Dump($ms);exit;
+        $sorted = false;
+        if (method_exists($x, 'applySort')) {
+            $sorted = $x->applySort(
+                    $this->authUser,
+                    $sort,
+                    $dir,
+                    array_keys($this->cols),
+                    $ms ? json_decode($ms) : false
+            );
+        }
+        if ($ms !== false) {
+            return $this->multiSort($x);
+        }
+        
+        if ($sorted === false) {
+            
+            $cols = $x->table();
+            $excols = array_keys($this->cols);
+            
+            if (isset($x->_extra_cols)) {
+                $excols = array_merge($excols, $x->_extra_cols);
+            }
+            $sort_ar = explode(',', $sort);
+            $sort_str = array();
+          
+            foreach($sort_ar as $sort) {
+                
+                if (strlen($sort) && isset($cols[$sort]) ) {
+                    $sort_str[] =  $x->tableName() .'.'.$sort . ' ' . $dir ;
+                    
+                } else if (in_array($sort, $excols)) {
+                    $sort_str[] = $sort . ' ' . $dir ;
+                }
+            }
+             
+            if ($sort_str) {
+                $x->orderBy(implode(', ', $sort_str ));
+            }
+        }
+    }
 }
