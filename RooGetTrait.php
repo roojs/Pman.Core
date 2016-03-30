@@ -629,7 +629,7 @@ trait Pman_Core_RooGetTrait {
             'exclude' => $excludecolumns,
             'distinct' => $distinct
         ));
-        
+        exit;
         $this->countWhat = $ret['count'];
         $this->cols = $ret['cols'];
         $this->colsJname = $ret['join_names'];
