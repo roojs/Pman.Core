@@ -1032,7 +1032,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 if (v != 'italic') return;
                 ent['Italic'] = 1;
             } 
-        }
+        };
        
         var fent = {
             Unit:"10",
