@@ -177,8 +177,6 @@ trait Pman_Core_RooTrait {
         require_once 'Services/JSON.php';
         $json = new Services_JSON();
         
-        // log all errors!!!
-        
         $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
                 preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
         
@@ -189,7 +187,6 @@ trait Pman_Core_RooTrait {
         } else {
             $retHTML = isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] !='NO';
         }
-        
         
         if ($retHTML) {
             header('Content-type: text/html');
@@ -227,7 +224,6 @@ trait Pman_Core_RooTrait {
             'errors' => $errors ? $errors : true, // used by forms to flag errors.
             'authFailure' => !empty($errors['authFailure']),
         ));
-        
         
         exit;
         
