@@ -321,9 +321,10 @@ trait Pman_Core_RooGetTrait {
        
         
         $this->loadMap($x, array(
-                    'columns' => $_columns,
-                     
-            ));
+            'columns' => $_columns,
+
+        ));
+        
         if ($req !== false) { 
             $this->setFilters($x, $req);
         }
