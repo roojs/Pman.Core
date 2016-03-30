@@ -156,7 +156,6 @@ trait Pman_Core_RooTrait {
             $wa->notifyEvent($e); // trigger any actions..
         }
         
-        
         $e->onInsert(isset($_REQUEST) ? $_REQUEST : array() , $this);
         
         return $e;
