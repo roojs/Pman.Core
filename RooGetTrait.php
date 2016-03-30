@@ -638,4 +638,42 @@ trait Pman_Core_RooGetTrait {
         return;
         
     }
+    
+    function meta($x, $data)
+    {
+        $lost = 0;
+        $cols  = array_keys($data[0]);
+     
+        $options = &PEAR::getStaticProperty('DB_DataObject','options');
+        $reader = $options["ini_{$x->_database}"] .'.reader';
+        if (!file_exists( $reader )) {
+            return;
+        }
+        
+        $rdata = unserialize(file_get_contents($reader));
+        
+        $keys = $x->keys();
+        $key = empty($keys) ? 'id' : $keys[0];
+        
+        
+        $meta = array();
+        foreach($cols as $c ) {
+            if (!isset($this->cols[$c]) || !isset($rdata[$this->cols[$c]]) || !is_array($rdata[$this->cols[$c]])) {
+                $meta[] = $c;
+                continue;    
+            }
+            $add = $rdata[$this->cols[$c]];
+            $add['name'] = $c;
+            $meta[] = $add;
+        }
+        return array(
+            'totalProperty' =>  'total',
+            'successProperty' => 'success',
+            'root' => 'data',
+            'id' => $key, // was 'id'...
+            'fields' => $meta
+        );
+         
+        
+    }
 }
