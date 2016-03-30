@@ -309,7 +309,7 @@
                  },
                  "xtype" : "HtmlEditor",
                  "$ cwhite" : "[ \n    'margin',\n    'padding',\n    'text-align',\n    'background',\n    'height',\n    'width',\n    'background-color',\n    'font-size',\n    'line-height',\n    'color',\n    'outline',\n    'text-decoration',\n    'position',\n    'clear',\n    'overflow',\n    'margin-top',\n    'border-bottom',\n    'top',\n    'list-style',\n    'margin-left',\n    'border',\n    'float' ,\n    'margin-right',\n    'padding-top',\n    'min-height',\n    'left',\n    'padding-left',\n    'font-weight',\n    'font-family',\n    'display',\n    'margin-bottom',\n    'padding-bottom',\n    'vertical-align',\n    'cursor',\n    'z-index',\n    'right'\n ]",
-                 "| function autosave" : "function() { }",
+                 "| function autosave" : "function() {\n    \n    var body = _this.form.findField('bodytext');\n    \n    if(!body.wrap.isVisible(true) || body.getValue() == '' || !body.isDirty()){\n        Roo.log('body not dirty');\n        return;\n    }\n    \n    Roo.log('body dirty, auto save!');\n    \n    body.fireEvent('autosave', body);\n        \n   \n}\n",
                  "$ xns" : "Roo.form",
                  "resizable" : "s",
                  "name" : "bodytext",

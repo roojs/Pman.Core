@@ -656,7 +656,21 @@ Pman.Dialog.CoreEmail = {
                xtype : 'FieldSet',
                items  : [
                 {
-                 autosave : function() { },
+                 autosave : function() {
+                     
+                     var body = _this.form.findField('bodytext');
+                     
+                     if(!body.wrap.isVisible(true) || body.getValue() == '' || !body.isDirty()){
+                         Roo.log('body not dirty');
+                         return;
+                     }
+                     
+                     Roo.log('body dirty, auto save!');
+                     
+                     body.fireEvent('autosave', body);
+                         
+                    
+                 },
                  clearUp : false,
                  cwhite : [ 
                      'margin',
