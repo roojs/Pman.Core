@@ -445,8 +445,6 @@ trait Pman_Core_RooPostTrait {
 		 $this->jerr($p->name . " saved the record since you started editing,\nDo you really want to update it?", array('needs_confirm' => true)); 
                 
             }
-            
-            
         }
         return $lock;
         
