@@ -122,6 +122,8 @@ trait Pman_Core_RooPostTrait {
         
         $old = false;
         
+        // not sure if this is a good idea here...
+        
         if (!empty($_REQUEST['_ids'])) {
             $ids = explode(',',$_REQUEST['_ids']);
             $x->whereAddIn($this->key, $ids, 'int');
