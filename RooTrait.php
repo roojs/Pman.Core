@@ -105,7 +105,7 @@ trait Pman_Core_RooTrait {
         $this->loadMap($x, array(
             'columns' => $_columns,
         ));
-        
+        exit;
         if ($req !== false) { 
             $this->setFilters($x, $req);
         }
