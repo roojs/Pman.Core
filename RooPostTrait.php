@@ -90,16 +90,9 @@ trait Pman_Core_RooPostTrait {
      */                     
      
     function post($tab) // update / insert (?? delete??)
-    {
-        // -- why was this put in? - Roo is not related to Core.All ?
-        //if (!$this->hasPerm("Core.All", 'E'))  {
-        //        $this->jerr("PERMISSION DENIED (e)");
-        //}
-        
-        
+    {   
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
     
-        //DB_DataObject::debugLevel(1);
         $this->checkDebug();
         
         if (!empty($_REQUEST['_get'])) {
