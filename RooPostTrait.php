@@ -452,4 +452,81 @@ trait Pman_Core_RooPostTrait {
         return $lock;
         
     }
+    
+    function insert($x, $req, $with_perm_check = true)
+    {
+        
+        if (method_exists($x, 'setFromRoo')) {
+            $res = $x->setFromRoo($req, $this);
+            if (is_string($res)) {
+                $this->jerr($res);
+            }
+        } else {
+            $x->setFrom($req);
+        }
+        
+        if ( $with_perm_check &&  !$this->checkPerm($x,'A', $req))  {
+            $this->jerr("PERMISSION DENIED (i)");
+        }
+        $cols = $x->table();
+     
+        if (isset($cols['created'])) {
+            $x->created = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['created_dt'])) {
+            $x->created_dt = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['created_by'])) {
+            $x->created_by = $this->authUser->id;
+        }
+        
+     
+        if (isset($cols['modified'])) {
+            $x->modified = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['modified_dt'])) {
+            $x->modified_dt = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['modified_by'])) {
+            $x->modified_by = $this->authUser->id;
+        }
+        
+        if (isset($cols['updated'])) {
+            $x->updated = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['updated_dt'])) {
+            $x->updated_dt = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['updated_by'])) {
+            $x->updated_by = $this->authUser->id;
+        }
+        
+        if (method_exists($x, 'beforeInsert')) {
+            $x->beforeInsert($_REQUEST, $this);
+        }
+        
+        
+        $res = $x->insert();
+        if ($res === false) {
+            $this->jerr($x->_lastError->toString());
+        }
+        if (method_exists($x, 'onInsert')) {
+            $x->onInsert($_REQUEST, $this);
+        }
+        $ev = $this->addEvent("ADD", $x);
+        if ($ev) { 
+            $ev->audit($x);
+        }
+        
+        // note setFrom might handle this before hand...!??!
+        if (!empty($_FILES) && method_exists($x, 'onUpload')) {
+            $x->onUpload($this, $_REQUEST);
+        }
+        
+        return $this->selectSingle(
+            DB_DataObject::factory($x->tableName()),
+            $x->pid()
+        );
+        
+    }
 }
