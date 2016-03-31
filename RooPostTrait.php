@@ -387,7 +387,7 @@ trait Pman_Core_RooPostTrait {
         $this->permitError = true; // allow it to fail without dieing
         
         $lock = DB_DataObjecT::factory('Core_locking');
-        Pman::$permitError = false; 
+        $this->permitError = false; 
         if (is_a($lock,'DB_DataObject') && $this->authUser)  {
                  
             $lock->on_id = $x->{$this->key};
