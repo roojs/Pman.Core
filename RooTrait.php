@@ -152,7 +152,9 @@ trait Pman_Core_RooTrait {
         $excludecolumns = !empty($cfg['exclude']) ? $cfg['exclude'] : array();
           
         $excludecolumns[] = 'passwd'; // we never expose passwords
-       
+        
+        print_R($do);exit;
+        
         $ret = $do->autoJoin(array(
             'include' => $onlycolumns,
             'exclude' => $excludecolumns,
