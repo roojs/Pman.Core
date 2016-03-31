@@ -106,8 +106,6 @@ trait Pman_Core_RooTrait {
             'columns' => $_columns,
         ));
         
-        exit;
-        
         if ($req !== false) { 
             $this->setFilters($x, $req);
         }
