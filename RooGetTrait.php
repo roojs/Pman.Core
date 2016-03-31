@@ -286,7 +286,7 @@ trait Pman_Core_RooGetTrait {
         $sorted = false;
         if (method_exists($x, 'applySort')) {
             $sorted = $x->applySort(
-                    $this->getAuthUser(),
+                    $this->authUser,
                     $sort,
                     $dir,
                     array_keys($this->cols),
