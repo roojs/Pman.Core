@@ -119,11 +119,8 @@ trait Pman_Core_RooPostTrait {
             // do we really delete stuff!?!?!?
             return $this->delete($x,$_REQUEST);
         } 
-         
         
         $old = false;
-        
-        // not sure if this is a good idea here...
         
         if (!empty($_REQUEST['_ids'])) {
             $ids = explode(',',$_REQUEST['_ids']);
