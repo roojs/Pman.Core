@@ -300,4 +300,85 @@ trait Pman_Core_RooPostTrait {
         $this->jok("Deleted");
         
     }
+    
+    function update($x, $req,  $with_perm_check = true)
+    {
+        if ( $with_perm_check && !$this->checkPerm($x,'E', $req) )  {
+            $this->jerr("PERMISSION DENIED - No Edit permissions on this element");
+        }
+       
+        // check any locks..
+        // only done if we recieve a lock_id.
+        // we are very trusing here.. that someone has not messed around with locks..
+        // the object might want to check in their checkPerm - if locking is essential..
+        $lock = $this->updateLock($x,$req);
+        
+        $old = clone($x);
+        $this->old = $x;
+        // this lot is generic.. needs moving 
+        if (method_exists($x, 'setFromRoo')) {
+            $res = $x->setFromRoo($req, $this);
+            if (is_string($res)) {
+                $this->jerr($res);
+            }
+        } else {
+            $x->setFrom($req);
+        }
+      
+        
+        
+        //echo '<PRE>';print_r($old);print_r($x);exit;
+        //print_r($old);
+        
+        $cols = $x->table();
+        //print_r($cols);
+        if (isset($cols['modified'])) {
+            $x->modified = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['modified_dt'])) {
+            $x->modified_dt = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['modified_by']) && $this->authUser) {
+            $x->modified_by = $this->authUser->id;
+        }
+        
+        if (isset($cols['updated'])) {
+            $x->updated = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['updated_dt'])) {
+            $x->updated_dt = date('Y-m-d H:i:s');
+        }
+        if (isset($cols['updated_by']) && $this->authUser) {
+            $x->updated_by = $this->authUser->id;
+        }
+        
+        if (method_exists($x, 'beforeUpdate')) {
+            $x->beforeUpdate($old, $req, $this);
+        }
+        
+        if ($with_perm_check && !empty($_FILES) && method_exists($x, 'onUpload')) {
+            $x->onUpload($this, $_REQUEST);
+        }
+        
+        //DB_DataObject::DebugLevel(1);
+        $res = $x->update($old);
+        if ($res === false) {
+            $this->jerr($x->_lastError->toString());
+        }
+        
+        if (method_exists($x, 'onUpdate')) {
+            $x->onUpdate($old, $req, $this);
+        }
+        $ev = $this->addEvent("EDIT", $x);
+        if ($ev) { 
+            $ev->audit($x, $old);
+        }
+        
+        
+        return $this->selectSingle(
+            DB_DataObject::factory($x->tableName()),
+            $x->{$this->key}
+        );
+        
+    }
 }
