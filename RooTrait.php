@@ -310,7 +310,7 @@ trait Pman_Core_RooTrait {
             return;
         }
         
-        if (Pman::$permitError) {
+        if ($this->permitError) {
              
             return;
             
