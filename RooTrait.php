@@ -28,7 +28,7 @@ trait Pman_Core_RooTrait {
         $this->appDisabled = explode(',', $boot->disable);
         $this->version = $boot->version; 
         $this->uiConfig = empty($boot->Pman['uiConfig']) ? false : $boot->Pman['uiConfig']; 
-        print_R($_SERVER['SERVER_ADDR']);EXIT;
+        
         if (!empty($ff->Pman['local_autoauth']) && 
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
