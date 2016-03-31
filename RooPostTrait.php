@@ -99,7 +99,7 @@ trait Pman_Core_RooPostTrait {
             return $this->get($tab);
         }
         
-        $this->init(); // for pman.
+        $this->init();
          
         $x = $this->dataObject($tab);
         
