@@ -153,7 +153,7 @@ trait Pman_Core_RooGetTrait {
         }
        //DB_DataObject::debugLevel(1);
        
-        exit;
+        
         // sets map and countWhat
         $this->loadMap($x, array(
             'columns' => $_columns,
