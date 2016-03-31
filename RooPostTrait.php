@@ -453,8 +453,7 @@ trait Pman_Core_RooPostTrait {
     }
     
     function insert($x, $req, $with_perm_check = true)
-    {
-        
+    {   
         if (method_exists($x, 'setFromRoo')) {
             $res = $x->setFromRoo($req, $this);
             if (is_string($res)) {
