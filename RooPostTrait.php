@@ -446,6 +446,7 @@ trait Pman_Core_RooPostTrait {
                 
             }
         }
+        
         return $lock;
         
     }
