@@ -159,4 +159,146 @@ trait Pman_Core_RooPostTrait {
         
         
     }
+    
+    function delete($x, $req)
+    {
+        // do we really delete stuff!?!?!?
+        if (empty($req['_delete'])) {
+            $this->jerr("Delete Requested with no value");
+        }
+        // build a list of tables to queriy for dependant data..
+        $map = $x->links();
+        
+        $affects  = array();
+        
+        $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$x->_database];
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $x->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
+        }
+        // collect tables
+
+       // echo '<PRE>';print_r($affects);exit;
+       // DB_Dataobject::debugLevel(1);
+       
+        
+        $clean = create_function('$v', 'return (int)$v;');
+        
+        $bits = array_map($clean, explode(',', $req['_delete']));
+        
+       // print_r($bits);exit;
+         
+        // let's assume it has a key!!!
+        
+        
+        $x->whereAdd($this->key .'  IN ('. implode(',', $bits) .')');
+        if (!$x->find()) {
+            $this->jerr("Nothing found to delete");
+        }
+        $errs = array();
+        while ($x->fetch()) {
+            $xx = clone($x);
+            
+           
+            // perms first.
+            
+            if (!$this->checkPerm($x,'D') )  {
+                $this->jerr("PERMISSION DENIED (d)");
+            }
+            
+            $match_ar = array();
+            foreach($affects as $k=> $true) {
+                $ka = explode('.', $k);
+                
+                $chk = DB_DataObject::factory($ka[0]);
+                if (!is_a($chk,'DB_DataObject')) {
+                    $this->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
+                }
+               // print_r(array($chk->tablename() , $ka[1] ,  $xx->tablename() , $this->key ));
+                $chk->{$ka[1]} =  $xx->{$this->key};
+                
+                if (count($chk->keys())) {
+                    $matches = $chk->count();
+                } else {
+                    //DB_DataObject::DebugLevel(1);
+                    $matches = $chk->count($ka[1]);
+                }
+                
+                if ($matches) {
+                    $chk->_match_key = $ka[1];
+                    $match_ar[] = clone($chk);
+                    continue;
+                }          
+            }
+            
+            $has_beforeDelete = method_exists($xx, 'beforeDelete');
+            // before delte = allows us to trash dependancies if needed..
+            $match_total = 0;
+            
+            if ( $has_beforeDelete ) {
+                if ($xx->beforeDelete($match_ar, $this) === false) {
+                    $errs[] = "Delete failed ({$xx->id})\n".
+                        (isset($xx->err) ? $xx->err : '');
+                    continue;
+                }
+                // refetch affects..
+                
+                $match_ar = array();
+                foreach($affects as $k=> $true) {
+                    $ka = explode('.', $k);
+                    $chk = DB_DataObject::factory($ka[0]);
+                    if (!is_a($chk,'DB_DataObject')) {
+                        $this->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
+                    }
+                    $chk->{$ka[1]} =  $xx->{$this->key};
+                    $matches = $chk->count();
+                    $match_total += $matches;
+                    if ($matches) {
+                        $chk->_match_key = $ka[1];
+                        $match_ar[] = clone($chk);
+                        continue;
+                    }          
+                }
+                
+            }
+            
+            if (!empty($match_ar)) {
+                $chk = $match_ar[0];
+                $chk->limit(1);
+                $o = $chk->fetchAll();
+                $key = isset($chk->_match_key) ?$chk->_match_key  : '?unknown column?';
+                $desc =  $chk->tableName(). '.' . $key .'='.$xx->{$this->key} ;
+                if (method_exists($chk, 'toEventString')) {
+                    $desc .=  ' : ' . $o[0]->toEventString();
+                }
+                    
+                $this->jerr("Delete Dependant records ($match_total  found),  " .
+                             "first is ( $desc )");
+          
+            }
+            
+            DB_DataObject::Factory('Events')->logDeletedRecord($x);
+            
+            $this->addEvent("DELETE", $x);
+            
+            $xx->delete();
+            
+            if (method_exists($xx,'onDelete')) {
+                $xx->onDelete($req, $this);
+            }
+            
+            
+        }
+        if ($errs) {
+            $this->jerr(implode("\n<BR>", $errs));
+        }
+        $this->jok("Deleted");
+        
+    }
 }
