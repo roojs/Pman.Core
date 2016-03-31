@@ -153,7 +153,7 @@ trait Pman_Core_RooGetTrait {
         }
        //DB_DataObject::debugLevel(1);
        
-        
+        exit;
         // sets map and countWhat
         $this->loadMap($x, array(
             'columns' => $_columns,
@@ -161,7 +161,7 @@ trait Pman_Core_RooGetTrait {
             'exclude' => empty($_REQUEST['_exclude_columns']) ? false:  explode(',', $_REQUEST['_exclude_columns'])
         ));
         
-        exit;
+        
         $this->setFilters($x,$_REQUEST);
         
         if (!$this->checkPerm($x,'S', $_REQUEST))  {
