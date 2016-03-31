@@ -102,7 +102,7 @@ trait Pman_Core_RooGetTrait {
             $_POST  = $_GET;
             return $this->post($tab);
         }
-        exit;
+        
         $this->checkDebug();
         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
