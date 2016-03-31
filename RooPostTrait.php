@@ -505,7 +505,6 @@ trait Pman_Core_RooPostTrait {
             $x->beforeInsert($_REQUEST, $this);
         }
         
-        
         $res = $x->insert();
         if ($res === false) {
             $this->jerr($x->_lastError->toString());
