@@ -159,8 +159,6 @@ trait Pman_Core_RooTrait {
             'distinct' => $distinct
         ));
         
-        print_R($do);exit;
-        
         $this->countWhat = $ret['count'];
         $this->cols = $ret['cols'];
         $this->colsJname = $ret['join_names'];
