@@ -153,13 +153,13 @@ trait Pman_Core_RooTrait {
           
         $excludecolumns[] = 'passwd'; // we never expose passwords
         
-        print_R($do);exit;
-        
         $ret = $do->autoJoin(array(
             'include' => $onlycolumns,
             'exclude' => $excludecolumns,
             'distinct' => $distinct
         ));
+        
+        print_R($do);exit;
         
         $this->countWhat = $ret['count'];
         $this->cols = $ret['cols'];
