@@ -97,6 +97,7 @@ trait Pman_Core_RooGetTrait {
         $this->init();
         
         HTML_FlexyFramework::get()->generateDataobjectsCache($this->isDev);
+        print_R($this->isDev);
         exit;
         if ( $this->checkDebugPost()) {
             $_POST  = $_GET;
