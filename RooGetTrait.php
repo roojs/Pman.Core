@@ -464,4 +464,39 @@ trait Pman_Core_RooGetTrait {
          
         
     }
+    
+    function multiSort($x)
+    {
+        $ms = json_decode($_REQUEST['_multisort']);
+        if (!isset($ms->order) || !is_array($ms->order)) {
+            return;
+        }
+        $sort_str = array();
+        
+        $cols = $x->table();
+        
+        foreach($ms->order  as $col) {
+            if (!isset($ms->sort->{$col})) {
+                continue; // no direction..
+            }
+            $ms->sort->{$col} = $ms->sort->{$col}  == 'ASC' ? 'ASC' : 'DESC';
+            
+            if (strlen($col) && isset($cols[$col]) ) {
+                $sort_str[] =  $x->tableName() .'.'.$col . ' ' .  $ms->sort->{$col};
+                continue;
+            }
+            
+            if (in_array($col, array_keys($this->cols))) {
+                $sort_str[] = $col. ' ' . $ms->sort->{$col};
+                continue;
+            }
+            if (isset($x->_extra_cols) && in_array($col, $x->_extra_cols)) {
+                $sort_str[] = $col. ' ' . $ms->sort->{$col};
+            }
+        }
+         
+        if ($sort_str) {
+            $x->orderBy(implode(', ', $sort_str ));
+        }
+    }
 }
