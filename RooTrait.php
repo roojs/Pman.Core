@@ -171,7 +171,7 @@ trait Pman_Core_RooTrait {
     {
         if (method_exists($x, 'applyFilters')) {
            // DB_DataObject::debugLevel(1);
-            if (false === $x->applyFilters($q, $this->getAuthUser(), $this)) {
+            if (false === $x->applyFilters($q, $this->authUser(), $this)) {
                 return; 
             } 
         }
