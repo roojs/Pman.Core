@@ -85,6 +85,217 @@ trait Pman_Core_RooTrait {
         return $x;
     }
     
+    function selectSingle($x, $id, $req=false)
+    {
+        $_columns = !empty($req['_columns']) ? explode(',', $req['_columns']) : false;
+
+        if (!is_array($id) && empty($id)) {
+            
+            if (method_exists($x, 'toRooSingleArray')) {
+                $this->jok($x->toRooSingleArray($this->getAuthUser(), $req));
+            }
+            
+            if (method_exists($x, 'toRooArray')) {
+                $this->jok($x->toRooArray($req));
+            }
+            
+            $this->jok($x->toArray());
+        }
+        
+        $this->loadMap($x, array(
+            'columns' => $_columns,
+        ));
+        
+        if ($req !== false) { 
+            $this->setFilters($x, $req);
+        }
+        
+        if (is_array($id)) {
+            // lookup...
+            $x->setFrom($req['lookup'] );
+            $x->limit(1);
+            if (!$x->find(true)) {
+                if (!empty($id['_id'])) {
+                    // standardize this?
+                    $this->jok($x->toArray());
+                }
+                $this->jok(false);
+            }
+            
+        } else if (!$x->get($id)) {
+            $this->jerr("selectSingle: no such record ($id)");
+        }
+        
+        // ignore perms if comming from update/insert - as it's already done...
+        if ($req !== false && !$this->checkPerm($x,'S'))  {
+            $this->jerr("PERMISSION DENIED - si");
+        }
+        // different symantics on all these calls??
+        if (method_exists($x, 'toRooSingleArray')) {
+            $this->jok($x->toRooSingleArray($this->getAuthUser(), $req));
+        }
+        if (method_exists($x, 'toRooArray')) {
+            $this->jok($x->toRooArray($req));
+        }
+        
+        $this->jok($x->toArray());
+        
+        
+    }
+    
+    var $cols = array();
+    
+    function loadMap($do, $cfg =array())
+    {
+        $onlycolumns    = !empty($cfg['columns']) ? $cfg['columns'] : false;
+        $distinct       = !empty($cfg['distinct']) ? $cfg['distinct'] : false;
+        $excludecolumns = !empty($cfg['exclude']) ? $cfg['exclude'] : array();
+          
+        $excludecolumns[] = 'passwd'; // we never expose passwords
+       
+        $ret = $do->autoJoin(array(
+            'include' => $onlycolumns,
+            'exclude' => $excludecolumns,
+            'distinct' => $distinct
+        ));
+        
+        $this->countWhat = $ret['count'];
+        $this->cols = $ret['cols'];
+        $this->colsJname = $ret['join_names'];
+        
+        return;
+        
+    }
+    
+    function setFilters($x, $q)
+    {
+        if (method_exists($x, 'applyFilters')) {
+           // DB_DataObject::debugLevel(1);
+            if (false === $x->applyFilters($q, $this->getAuthUser(), $this)) {
+                return; 
+            } 
+        }
+        $q_filtered = array();
+        
+        $keys = $x->keys();
+        // var_dump($keys);exit;
+        foreach($q as $key=>$val) {
+            
+            if (in_array($key,$keys) && !is_array($val)) {
+               
+                $x->$key  = $val;
+            }
+            
+             // handles name[]=fred&name[]=brian => name in ('fred', 'brian').
+            // value is an array..
+            if (is_array($val) ) {
+                
+                $pref = '';
+                
+                if ($key[0] == '!') {
+                    $pref = '!';
+                    $key = substr($key,1);
+                }
+                
+                if (!in_array( $key,  array_keys($this->cols))) {
+                    continue;
+                }
+                
+                // support a[0] a[1] ..... => whereAddIn(
+                $ar = array();
+                $quote = false;
+                foreach($val as $k=>$v) {
+                    if (!is_numeric($k)) {
+                        $ar = array();
+                        break;
+                    }
+                    // FIXME: note this is not typesafe for anything other than mysql..
+                    
+                    if (!is_numeric($v) || !is_long($v)) {
+                        $quote = true;
+                    }
+                    $ar[] = $v;
+                    
+                }
+                if (count($ar)) {
+                    
+                    
+                    $x->whereAddIn($pref . (
+                        isset($this->colsJname[$key]) ? 
+                            $this->colsJname[$key] :
+                            ($x->tableName(). '.'.$key)),
+                        $ar, $quote ? 'string' : 'int');
+                }
+                
+                continue;
+            }
+            
+            
+            // handles !name=fred => name not equal fred.
+            if ($key[0] == '!' && in_array(substr($key, 1), array_keys($this->cols))) {
+                
+                $key  = substr($key, 1) ;
+                
+                $x->whereAdd(   (
+                        isset($this->colsJname[$key]) ? 
+                            $this->colsJname[$key] :
+                            $x->tableName(). '.'.$key ) . ' != ' .
+                    (is_numeric($val) ? $val : "'".  $x->escape($val) . "'")
+                );
+                continue;
+                
+            }
+
+            switch($key) {
+                    
+                // Events and remarks -- fixme - move to events/remarsk...
+                case 'on_id':  // where TF is this used...
+                    if (!empty($q['query']['original'])) {
+                      //  DB_DataObject::debugLevel(1);
+                        $o = (int) $q['query']['original'];
+                        $oid = (int) $val;
+                        $x->whereAdd("(on_id = $oid  OR 
+                                on_id IN ( SELECT distinct(id) FROM Documents WHERE original = $o ) 
+                            )");
+                        continue;
+                                
+                    }
+                    $x->on_id = $val;
+                
+                
+                default:
+                    if (strlen($val) && $key[0] != '_') {
+                        $q_filtered[$key] = $val;
+                    }
+                    
+                    // subjoined columns = check the values.
+                    // note this is not typesafe for anything other than mysql..
+                    
+                    if (isset($this->colsJname[$key])) {
+                        $quote = false;
+                        if (!is_numeric($val) || !is_long($val)) {
+                            $quote = true;
+                        }
+                        $x->whereAdd( "{$this->colsJname[$key]} = " . ($quote ? "'". $x->escape($val) ."'" : $val));
+                        
+                    }
+                    
+                    
+                    continue;
+            }
+        }
+        if (!empty($q_filtered)) {
+            $x->setFrom($q_filtered);
+        }
+        
+        if (!empty($q['query']['name'])) {
+            if (in_array( 'name',  array_keys($x->table()))) {
+                $x->whereAdd($x->tableName().".name LIKE '". $x->escape($q['query']['name']) . "%'");
+            }
+        }
+        
+    }
+    
     
     /*
      * From Pman.php
