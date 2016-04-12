@@ -301,6 +301,7 @@ trait Pman_Core_RooGetTrait {
             
             $cols = $x->table();
             $excols = array_keys($this->cols);
+            print_R($excols);
             
             if (isset($x->_extra_cols)) {
                 $excols = array_merge($excols, $x->_extra_cols);
