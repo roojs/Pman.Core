@@ -179,7 +179,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
             }
             
             foreach ($gi['members'] as $m){
-                
+                $g->addMember($m);
             }
             
         }
