@@ -474,7 +474,7 @@ Content-Transfer-Encoding: 7bit
                 'contentid' => "attachment-$i->id"
             );
         }
-        print_r('run???');exit;
+        print_r($images);exit;
         file_put_contents($imageCache, json_encode($images));
         
     }
