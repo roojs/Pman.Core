@@ -165,14 +165,22 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     function initDatabase($roo, $data)
     {
         $this->initGroups();
+        
         foreach($data as $gi) {
             $g = DB_DataObject::factory('Groups');
             $g->setFrom($gi);
-            if ($g->count()) {
+            
+            if(!$g->find(true)){
+                $g->insert();
+            }
+            
+            if(count($g->members()) || empty($gi['members'])){
                 continue;
             }
-            $g->insert();
             
+            foreach ($gi['members'] as $m){
+                
+            }
             
         }
      
