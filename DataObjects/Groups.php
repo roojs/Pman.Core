@@ -160,8 +160,6 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $g->insert();
         $gr = DB_DataObject::factory('group_rights');
         $gr->genDefault();
-    
-        
     }
     
     function initDatabase($roo, $data)
