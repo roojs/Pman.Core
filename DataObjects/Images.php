@@ -30,7 +30,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    function checkPerm($perm, $au)
+    function checkPerm($lvl, $au)
     {
         // default permissons are to
         // allow create / edit / if the user has
@@ -43,7 +43,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //print_r($o);
         if (method_exists($o, 'hasPerm')) {
             // edit permissions on related object needed...
-            return $o->hasPerm( $perm == 'S' ? 'S' : 'E' , $au);
+            return $o->hasPerm( $lvl == 'S' ? 'S' : 'E' , $au);
             
         }
         
