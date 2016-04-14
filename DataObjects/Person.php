@@ -691,6 +691,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         if (!isset($pcache[$this->id])) {
             $pcache[$this->id] = $this->getPerms();
         }
+        print_r($pcache[$this->id]);exit;
        // echo "<PRE>";print_r($pcache[$au->id]);
        // var_dump($pcache[$au->id]);
         if (empty($pcache[$this->id][$name])) {
