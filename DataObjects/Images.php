@@ -36,9 +36,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // allow create / edit / if the user has
         
         if (!$au) {
-            
-          
-            
             return false;
         }
         
