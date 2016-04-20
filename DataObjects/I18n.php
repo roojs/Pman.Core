@@ -319,7 +319,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $complete = $x->fetchAll('lkey');
         
         $list =  $this->availableCodes($ltype);
-        echo '<PRE>'; print_r($list); exit;
         
         foreach($list as $lkey) {
             // skip ones we know we have done...
