@@ -251,9 +251,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 break;
             case 't':
                 require_once 'I18Nv2/PhonePrefix.php';
-                $c = new I18Nv2_PhonePrefix();
+                $c = new I18Nv2_PhonePrefix('en');
                 $ret =  array_keys($c->codes);
-                if (!empty($cfg['add_m'])) {
+                if (!empty($cfg['add_t'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_m']));
                 }
                 $ret[] = '**';
