@@ -287,9 +287,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
-            $this->buildDB('c');
-            $this->buildDB('l');
-            $this->buildDB('m');
+//            $this->buildDB('c');
+//            $this->buildDB('l');
+//            $this->buildDB('m');
             $this->buildDB('p');
             return;
         }
