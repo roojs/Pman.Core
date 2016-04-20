@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         'add_l'=> array(), // key -> value additional languages... 
         'add_c'=> array(), // additional countries...(eg. '-R' => 'Regional' )
         'add_m'=> array(), // additional currencies...
-        'add_t'=> array(), // additional currencies...
+        'add_p'=> array(), // additional currencies...
 
         
     );
@@ -286,9 +286,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
-//            $this->buildDB('c');
-//            $this->buildDB('l');
-//            $this->buildDB('m');
+            $this->buildDB('c');
+            $this->buildDB('l');
+            $this->buildDB('m');
             $this->buildDB('t');
             return;
         }
