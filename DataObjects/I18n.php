@@ -249,6 +249,15 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 }
                 $ret[] = '**';
                 break;
+            case 't':
+                require_once 'I18Nv2/PhonePrefix.php';
+                $c = new I18Nv2_PhonePrefix();
+                $ret =  array_keys($c->codes);
+                if (!empty($cfg['add_m'])) {
+                    $ret = array_merge($ret, array_keys($cfg['add_m']));
+                }
+                $ret[] = '**';
+                break;
         }
         
         
@@ -280,6 +289,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB('c');
             $this->buildDB('l');
             $this->buildDB('m');
+            $this->buildDB('t');
             return;
         }
         
