@@ -317,7 +317,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $x->ltype = $ltype;
         
         $complete = $x->fetchAll('lkey');
-        print_R($complete);exit;
+        
         $list =  $this->availableCodes($ltype);
         
         foreach($list as $lkey) {
