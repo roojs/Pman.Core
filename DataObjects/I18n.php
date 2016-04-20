@@ -372,10 +372,12 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             require_once 'I18Nv2/Country.php';
             require_once 'I18Nv2/Language.php';
             require_once 'I18Nv2/Currency.php';
+            require_once 'I18Nv2/PhonePrefix.php';
             $cache[$lang] = array(
                 'l' =>  new I18Nv2_Language($lang, 'UTF-8'),
                 'c' => new I18Nv2_Country($lang, 'UTF-8'),
-                'm' => new I18Nv2_Currency($lang, 'UTF-8')
+                'm' => new I18Nv2_Currency($lang, 'UTF-8'),
+                't' => new I18Nv2_PhonePrefix($lang, 'UTF-8')
             );
             //echo '<PRE>';print_r(array($lang, $cache[$lang]['c']));
         }
