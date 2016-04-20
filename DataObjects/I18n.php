@@ -283,7 +283,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         $cfg = $this->cfg();
         
-        print_r($cfg);exit;
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
