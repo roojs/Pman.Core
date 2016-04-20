@@ -354,7 +354,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
      
     function defaultTranslate($lang, $type, $k) 
     {
-      
+        print_R($lang);exit;
         static $cache;
         
         
