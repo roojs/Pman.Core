@@ -290,7 +290,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB('c');
             $this->buildDB('l');
             $this->buildDB('m');
-            $this->buildDB('p');
+            $this->buildDB('p', 'en');
             return;
         }
         
