@@ -254,6 +254,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             case 'p':
                 require_once 'I18Nv2/PhonePrefix.php';
                 $c = new I18Nv2_PhonePrefix('en');
+                print_R($c);exit;
                 $ret =  array_keys($c->codes);
                 if (!empty($cfg['add_p'])) {
                     $ret = array_merge($ret, array_keys($cfg['add_p']));
