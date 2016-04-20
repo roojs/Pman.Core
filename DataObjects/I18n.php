@@ -417,7 +417,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             return $cfg['add_' . $type][$k];
             
         }
-        print_R($ret);exit;
+        
         return $ret;
         
         
