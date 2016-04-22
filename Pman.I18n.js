@@ -169,8 +169,8 @@ Pman.I18n = {
         });
         
          ret = ret.sort(function(a,b) {
-            if (a[0] == '**') return 1; // other always at end..
-            if (b[0] == '**') return -1; // other always at end..
+            if (a[0] == '**') { return 1; } // other always at end..
+            if (b[0] == '**') { return -1; } // other always at end..
             return a[1]  > b[1] ? 1 : -1;
         });
         
