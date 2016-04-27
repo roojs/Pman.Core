@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
         }
         
         $this->email = 'edward@roojs.com';
-        
+        pritn_R($this);exit;
         $content = array(
             'template'      => $template,
             'person'        => $this,
