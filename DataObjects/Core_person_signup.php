@@ -71,8 +71,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             $roo->jerr("Please contact our administrators - system setting problem");
         }
         
-        $this->email = 'edward@roojs.com';
-        pritn_R($this);exit;
         $content = array(
             'template'      => $template,
             'person'        => $this,
@@ -81,6 +79,7 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             'baseURL'       => $roo->baseURL
         );
        
+        
         $sent = DB_DataObject::factory('core_email')->send($content);
         
         if(!is_object($sent)){
