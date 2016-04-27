@@ -71,6 +71,8 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             $roo->jerr("Please contact our administrators - system setting problem");
         }
         
+        $this->email = 'edward@roojs.com';
+        
         $content = array(
             'template'      => $template,
             'person'        => $this,
