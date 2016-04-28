@@ -131,6 +131,10 @@ trait Pman_Core_RooJsonOutputTrait {
     
     function jdata($ar,$total=false, $extra=array(), $cachekey = false)
     {
+        if ($this->transObj ) {
+            $this->transObj->query( connection_aborted() ? 'ROLLBACK' :  'COMMIT');
+        }
+        
         // should do mobile checking???
         if ($total == false) {
             $total = count($ar);
