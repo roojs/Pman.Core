@@ -138,7 +138,7 @@ trait Pman_Core_RooPostTrait {
             
             
         }
-         print_r($_POST);exit;
+         
         if (!empty($_REQUEST[$this->key])) {
             // it's a create..
             if (!$x->get($this->key, $_REQUEST[$this->key]))  {
