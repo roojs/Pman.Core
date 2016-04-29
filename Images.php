@@ -284,6 +284,10 @@ class Pman_Core_Images extends Pman
         
         $project = new $ff->project();
         
+        if(isset($project->Pman_Core_Images_Size)){
+            $project->Pman_Core_Images_Size;
+        }
+        
         print_R($project);exit;
         
         $sizes = array(
