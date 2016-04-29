@@ -271,9 +271,9 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
-        if (($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
-            return true;
-        }
+//        if (($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
+//            return true;
+//        }
         
         
         $ff = HTML_FlexyFramework::get();
