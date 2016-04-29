@@ -271,12 +271,14 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
-        print_r('run???');exit;
         if (($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
             return true;
         }
         
-        // DEFAULT allowed - override with Pman_Core_Images[sizes] => array();
+        
+        $ff = HTML_FlexyFramework::get();
+        
+        print_R($ff);exit;
         
         $sizes = array(
                 '100', 
@@ -292,8 +294,6 @@ class Pman_Core_Images extends Pman
             );
         
         // this should be configurable...
-        $ff = HTML_FlexyFramework::get();
-        
         
         $cfg = isset($ff->Pman_Images) ? $ff->Pman_Images :
                 (isset($ff->Pman_Core_Images) ? $ff->Pman_Core_Images : array());
