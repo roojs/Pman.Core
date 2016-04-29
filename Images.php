@@ -280,15 +280,15 @@ class Pman_Core_Images extends Pman
         
         $project = $ff->project;
         
-        require_once $ff->project . '.php';
+        require_once 'Jobsonboats.php';
         
-        $project = new $ff->project();
+        $jobsonboats = new Jobsonboats();
         
         if(isset($project->Pman_Core_Images_Size)){
             $project->Pman_Core_Images_Size;
         }
         
-        print_R($project);exit;
+        print_R($jobsonboats->Pman_Core_Images_Size);exit;
         
         $sizes = array(
                 '100', 
