@@ -280,6 +280,12 @@ class Pman_Core_Images extends Pman
         
         $project = $ff->project;
         
+        require_once $ff->project . '.php';
+        
+        $project = new $ff->project();
+        
+        print_R($project);exit;
+        
         $sizes = array(
                 '100', 
                 '100x100', 
