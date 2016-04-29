@@ -278,7 +278,7 @@ class Pman_Core_Images extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
-        print_R($ff);exit;
+        $project = $ff->project;
         
         $sizes = array(
                 '100', 
