@@ -257,8 +257,7 @@ class Pman_Core_Images extends Pman
             }
         }
         
-        if (!file_exists($fn)) {            
-            
+        if (!file_exists($fn)) {    
             $this->validateSize();
         }
         
@@ -272,6 +271,7 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
+        print_r('run???');exit;
         if (($this->authUser && $this->authUser->company_id && $this->authUser->company()->comptype=='OWNER') || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
             return true;
         }
