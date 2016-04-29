@@ -278,16 +278,6 @@ class Pman_Core_Images extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
-        $project = $ff->project;
-        
-        require_once $ff->project . '.php';
-        
-        $project = new $ff->project();
-        
-        if(isset($project::$Pman_Core_Images_Size)){
-            $sizes = $project::$Pman_Core_Images_Size;
-        }
-        
         $sizes = array(
                 '100', 
                 '100x100', 
@@ -297,21 +287,26 @@ class Pman_Core_Images extends Pman
                 '200x0',
                 '200x200',  
                 '400x0',
-                '300x100', // logo on login.
+                '300x100',
                 '500'
             );
         
-        // this should be configurable...
-        
         $cfg = isset($ff->Pman_Images) ? $ff->Pman_Images :
                 (isset($ff->Pman_Core_Images) ? $ff->Pman_Core_Images : array());
-        
-        
         
         if (!empty($cfg['sizes'])) {
             $sizes = array_merge($sizes , $cfg['sizes']);
         }
         
+        $project = $ff->project;
+        
+        require_once $ff->project . '.php';
+        
+        $project = new $ff->project();
+        
+        if(isset($project::$Pman_Core_Images_Size)){
+            $sizes = $project::$Pman_Core_Images_Size;
+        }
         
         if (!in_array($this->size, $sizes)) {
             print_r($sizes);
