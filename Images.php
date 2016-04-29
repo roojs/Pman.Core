@@ -288,7 +288,7 @@ class Pman_Core_Images extends Pman
             $project->Pman_Core_Images_Size;
         }
         
-        print_R($jobsonboats->Pman_Core_Images_Size);exit;
+        print_R($jobsonboats::Pman_Core_Images_Size);exit;
         
         $sizes = array(
                 '100', 
