@@ -103,13 +103,12 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (this.mask && this.maskEl) {
             Roo.get(this.maskEl).unmask(true);
         }
+        if(!this.showFailtureDialog){
+            return;
+        }
         if (res !== true) {
             var decode = this.processResponse(response);
             Roo.log(decode);
-            
-            if(!this.showFailtureDialog){
-                return;
-            }
             
             if (Roo.MessageBox.isVisible()) {
                 alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data - return true from failure to remove message");
