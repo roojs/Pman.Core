@@ -106,14 +106,17 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (res !== true) {
             var decode = this.processResponse(response);
             Roo.log(decode);
+            
+            if(!this.showFailtureDialog){
+                return;
+            }
+            
             if (Roo.MessageBox.isVisible()) {
                 alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data - return true from failure to remove message");
                 return;
             }
             
-            if(this.showFailtureDialog){
-                Roo.MessageBox.alert("Error", decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
-            }
+            Roo.MessageBox.alert("Error", decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
             
         }
     }
