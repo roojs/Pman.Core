@@ -111,7 +111,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
                 return;
             }
             
-            if(!this.showFailtureDialog){
+            if(this.showFailtureDialog){
                 Roo.MessageBox.alert("Error", decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
             }
             
