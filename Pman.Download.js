@@ -116,7 +116,7 @@ Pman.Download = function(cfg)
         
     }
     
-    alert(el.dom);
+    alert(el.dom.innerHTML);
     
     (function() {
         this.submit = true;
