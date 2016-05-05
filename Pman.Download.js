@@ -116,11 +116,10 @@ Pman.Download = function(cfg)
         
         
     }
-    document.testForm.submit();
-    Roo.log(document.testForm.submit());return;
+    
     (function() {
         this.submit = true;
-        this.form.dom.submit();
+        document.testForm.submit();
         this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
     
