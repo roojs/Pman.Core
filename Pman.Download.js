@@ -164,7 +164,7 @@ Roo.apply(Pman.Download.prototype, {
             document.frames[id].name = id;
         }
         
-        print_r('test??');exit;
+        alert('run!');
         
     },
     
