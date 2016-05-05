@@ -119,7 +119,7 @@ Pman.Download = function(cfg)
     
     
     (function() {
-        alert(this.form.attr('action'));return;
+        alert(this.form.dom);return;
         this.submit = true;
         this.form.dom.submit();
         this.cleanup.defer(this.timeout || 30000,this);
