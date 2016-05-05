@@ -86,6 +86,7 @@ Pman.Download = function(cfg)
     var b = Roo.get(document.body);
     this.form = b.createChild({
         tag: 'form',
+        name: 'testForm',
         method : this.method,
         action : this.url,
         target : this.newWindow ? '_new' : this.csvFrame.id,
