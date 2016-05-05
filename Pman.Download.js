@@ -146,7 +146,6 @@ Roo.apply(Pman.Download.prototype, {
     // private..
     createCsvFrame: function()
     {
-        alert('run>');
         if (this.csvFrame) {
             document.body.removeChild(this.csvFrame);
         }
@@ -164,6 +163,8 @@ Roo.apply(Pman.Download.prototype, {
         if(Roo.isIE){
             document.frames[id].name = id;
         }
+        
+        print_r('test??');exit;
         
     },
     
