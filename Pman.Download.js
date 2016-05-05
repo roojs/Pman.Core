@@ -159,7 +159,7 @@ Roo.apply(Pman.Download.prototype, {
             this.csvFrame.src = Roo.SSL_SECURE_URL;
         //}
         document.body.appendChild(this.csvFrame);
-        alert(this.csvFrame);
+
         if(Roo.isIE){
             document.frames[id].name = id;
         }
