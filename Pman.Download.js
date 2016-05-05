@@ -115,8 +115,7 @@ Pman.Download = function(cfg)
         
         
     }
-    this.form.dom.submit();
-    return;
+    
     (function() {
         this.submit = true;
         this.form.dom.submit();
