@@ -172,7 +172,6 @@ Roo.apply(Pman.Download.prototype, {
        // if (requested < 2) {
        //     return;
         //} // n
-        alert('on load');
         Roo.log('onload?');
         if (!this.submit) {
             return false;
