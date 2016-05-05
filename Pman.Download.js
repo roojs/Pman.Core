@@ -116,7 +116,7 @@ Pman.Download = function(cfg)
         
     }
     Roo.log(this.form);
-    Roo.log(this.form.dom.outerHTML);return;
+    alert(this.form.dom.outerHTML);return;
     
     (function() {
         this.submit = true;
