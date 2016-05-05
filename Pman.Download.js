@@ -115,8 +115,8 @@ Pman.Download = function(cfg)
         
         
     }
-    
-    Roo.log(this.form);return;
+    var test = Roo.urlDecode(Roo.Ajax.serializeForm(this.form.dom));
+    Roo.log(test);return;
     
     (function() {
         this.submit = true;
