@@ -116,9 +116,10 @@ Pman.Download = function(cfg)
         
     }
     
-    alert(this.form.attr('action'));return;
+    
     
     (function() {
+        alert(this.form.attr('action'));return;
         this.submit = true;
         this.form.dom.submit();
         this.cleanup.defer(this.timeout || 30000,this);
