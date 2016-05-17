@@ -26,7 +26,7 @@
 				function(prop){
                     // ie!!!.
 					var el = this.dom, v, cs;
-					if(el == document) return null;
+					if(el == document) { return null; }
 					prop = chkCache(prop);
                     
 					return (v = el.style[prop]) ? v :
