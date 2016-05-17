@@ -558,17 +558,19 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function runUpdateModulesData()
     {
-        
-        
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
-        echo "Running jsonImportFromArray\n";
-        Pman_Core_UpdateDatabase::jsonImportFromArray($this->opts);
         
+        if(!in_array('Core', $this->disabled)){
+            echo "Running jsonImportFromArray\n";
+            Pman_Core_UpdateDatabase::jsonImportFromArray($this->opts);
+
+
+            echo "Running updateData on modules\n";
+            // runs core...
+            echo "Core\n";
+            $this->updateData(); 
+        }
         
-        echo "Running updateData on modules\n";
-        // runs core...
-        echo "Core\n";
-        $this->updateData(); 
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
