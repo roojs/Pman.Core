@@ -192,7 +192,13 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         foreach($ar as $m) {
-             echo "Importing SQL from module $m\n";
+            
+            if(in_array($m, $this->disabled)){
+                echo "module $m is disabled \n";
+                continue;
+            }
+            
+            echo "Importing SQL from module $m\n";
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
