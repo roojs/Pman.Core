@@ -574,6 +574,9 @@ class Pman_Core_UpdateDatabase extends Pman
         // move 'project' one to the end...
         
         foreach ($modules as $module){
+            if(in_array($module, $this->disabled)){
+                continue;
+            }
             $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
             if($module == 'Core' || !file_exists($file)){
                 continue;
