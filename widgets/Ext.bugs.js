@@ -35,7 +35,7 @@
 				} :
 				function(prop){
 					var el = this.dom, m, cs;
-					if(el == document) return null;
+					if(el == document) { return null; }
 					if (prop == 'opacity') {
 						if (el.style.filter.match) {
 							if(m = el.style.filter.match(opacityRe)){
