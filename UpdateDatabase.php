@@ -152,7 +152,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->runUpdateModulesData();
         
         
-        if (!empty($opts['add-company'])) {
+        if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
             // make sure we have a good cache...?
            
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
