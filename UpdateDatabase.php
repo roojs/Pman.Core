@@ -138,9 +138,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->checkOpts($opts);
         
-        $ar = $this->modulesList();
-        print_R($ar);exit;
-     
         if (empty($opts['data-only'])) {
             $this->importSQL();
         }
