@@ -105,6 +105,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     var $opts = false;
+    var $disabled = array();
     
     
     var $cli = false;
@@ -132,7 +133,7 @@ class Pman_Core_UpdateDatabase extends Pman
    
         $ff = HTML_FlexyFramework::get();
         
-        print_R(explode(',', $ff->disable));exit;
+        $this->disabled = explode(',', $ff->disable);
         
         //$this->fixSequencesPgsql();exit;
         $this->opts = $opts;
