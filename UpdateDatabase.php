@@ -148,7 +148,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['only-module-sql'])) {
             return;
         }
-        print_R('exit??');exit;
+        
         $this->runUpdateModulesData();
         
         
