@@ -236,8 +236,9 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
-            print_R($fd);exit;
+            
             $this->{$dirmethod}($dburl, $fd);
+            print_R($dirmethod);exit;
             
             // new -- sql directory..
             // new style will not support migrate ... they have to go into mysql-migrate.... directories..
