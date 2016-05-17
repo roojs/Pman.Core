@@ -236,7 +236,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
-            print_R($dirmethod);exit;
+            
             $this->{$dirmethod}($dburl, $fd);
             
             
