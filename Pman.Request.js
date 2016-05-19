@@ -103,7 +103,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (this.mask && this.maskEl) {
             Roo.get(this.maskEl).unmask(true);
         }
-        if(!this.showFailtureDialog){
+        if(!this.showFailureDialog){
             return;
         }
         if (res !== true) {
