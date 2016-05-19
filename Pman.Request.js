@@ -25,7 +25,7 @@ var t = new Pman.Request({
 *       request, a url encoded string or a function to call to get either.
 * @cfg  {Function} success  called with ( JSON decoded data of the data.. )
 * @cfg  {Function} success  called with ( JSON decoded data of the data.. )
-* @cfg {Boolean} showFailtureDialog (true|false) default true
+* @cfg {Boolean} showFailureDialog (true|false) default true
 */
 
 Pman.Request = function(config){
@@ -43,7 +43,7 @@ Pman.Request = function(config){
 
 Roo.extend(Pman.Request, Roo.data.Connection, {
     // private
-    showFailtureDialog : true,
+    showFailureDialog : true,
     
     processResponse : function(response) {
         // convert the Roo Connection response into JSON data.
