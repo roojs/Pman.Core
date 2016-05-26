@@ -61,7 +61,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
         
         } else {
-            $person = 'Person';
+            
+            $person = $au->tableName(); //'Person';  -- projects may not use person as the auth table...
             $cfg = HTML_FlexyFramework::get()->Pman;
             if (!empty($cfg['authTable'])) {
                 $person =$cfg['authTable'];
