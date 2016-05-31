@@ -224,7 +224,6 @@ class Pman_Core_Images extends Pman
         $this->sessionState(0); // turn off session... - locking...
         
         require_once 'File/Convert.php';
-        print_R($img->getStoreName());exit;
         if (!file_exists($img->getStoreName())) {
 //            print_r($img);exit;
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
