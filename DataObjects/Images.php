@@ -322,7 +322,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $_FILES['imageUpload']['name'] : ($this->filename .'.'. $ext); 
         
         
-        print_R($this);exit;
+        
         if (!$this->createFrom($_FILES['imageUpload']['tmp_name'])) {
             return false;
         }
