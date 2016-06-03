@@ -766,7 +766,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $opts = array(
                 'update' => 1,
-                'file' = $mail_template_dir. $name .'.html';
+                'file' => $mail_template_dir. $name .'.html'
             );
             
             if (!empty($data['master'])) {
