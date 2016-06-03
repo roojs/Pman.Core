@@ -296,7 +296,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      *    
      * @param bool $force - force re-creation of cached version of email.
      *
-     * @returns Pman_Core_Mailer
+     * @returns Pman_Core_Mailer||PEAR_Error
      */
     
     function toMailer($obj,$force=false)
@@ -304,18 +304,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $contents = (array)$obj;
 
-        // fill in BCC
-        if (!empty($this->bcc_group)) {
-            
-            $group = DB_DataObject::factory('groups');
-            $group->get($this->bcc_group);
-            $ar = $group->members('email');
-            if (!empty($ar)) {
-                $contents->bcc = $ar;
-            }
-        }
-        
-        
+         
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
@@ -324,6 +313,26 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $p = new PEAR();
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
+        
+        // fill in BCC
+        if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
+            
+            $group = DB_DataObject::factory('groups');
+            $group->get($this->bcc_group);
+            $ar = $group->members('email');
+            if (!empty($ar)) {
+                $contents->bcc = $ar;
+            }
+        }
+        if (!empty($contents['rcpts_group'])) {
+            
+            
+            
+        }
+        
+        
+       
+        
         
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
