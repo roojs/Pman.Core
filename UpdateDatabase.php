@@ -757,6 +757,8 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             if ($up) {
                 $cm->update($old);
+            } else {
+                $cm->insert();
             }
             
             
