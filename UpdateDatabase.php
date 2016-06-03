@@ -738,6 +738,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("missing bcc_group for template $name");
                 }
                 $g = DB_DataObject::Factory('Groups')->lookup($data['bcc_group']);
+                DB_DataObject::debugLevel(1);
                 if (!$g) {
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
