@@ -523,5 +523,30 @@ Content-Transfer-Encoding: 7bit
     } 
     
     
+     // fixme - this is now in core/udatedatabase..
+    
+    function initMail($mail_template_dir,  $name, $master='')
+    {
+        $cm = DB_DataObject::factory('core_email');
+        if ($cm->get('name', $name)) {
+            return;
+        }
+        
+//        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
+        
+        $opts = array();
+        
+        $opts['file'] = $mail_template_dir. $name .'.html';
+        if (!empty($master)) {
+            $opts['master'] = $mail_template_dir . $master .'.html';
+        }
+        print_r($opts);
+        require_once 'Pman/Core/Import/Core_email.php';
+        $x = new Pman_Core_Import_Core_email();
+        $x->get('', $opts);
+         
+    }
+    
+    
     
 }
