@@ -770,6 +770,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             if ($update) {
                 $cm->update($old);
+                echo "email: {$name} - checked\n";
                 continue; /// we do not import the body content of templates that exist...
             } else {
                 $cm->insert();
@@ -789,6 +790,8 @@ class Pman_Core_UpdateDatabase extends Pman
             require_once 'Pman/Core/Import/Core_email.php';
             $x = new Pman_Core_Import_Core_email();
             $x->get('', $opts);
+            
+            echo "email: {$name} - CREATED\n";
         }
     }
     
