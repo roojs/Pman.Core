@@ -762,6 +762,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             if ($up) {
                 $cm->update($old);
+                continue; /// we do not import the body content of templates that exist...
             } else {
                 $cm->insert();
             }
