@@ -301,7 +301,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function toMailer($obj,$force=false)
     {
-        
+        $p = new PEAR();
         $contents = (array)$obj;
 
          
@@ -310,7 +310,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if(empty($this->id)){
-            $p = new PEAR();
+            
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
         
@@ -332,9 +332,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $contents['rcpts'] = $admin;
         }
         
-        
-       
-        
+         
         
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
