@@ -303,6 +303,15 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $contents = (array)$obj;
 
+        // fill in BCC
+        if (!empty($this->bcc_group)) {
+            
+            $group = DB_DataObject::factory('groups');
+            $group->get($this->bcc_group);
+            $admin = $group->members('email');
+            
+        
+        
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
