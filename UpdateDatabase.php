@@ -753,7 +753,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (empty($data['test_class'])) {
                     $this->jerr("missing test_class for template $name");
                 }
-                $cm->test_class = $cm;
+                $cm->test_class = $data['test_class'];
             }
             require_once $cm->test_class . '.php';
             $clsname = str_replace('/','_', $cm->test_class);
