@@ -320,13 +320,17 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $group = DB_DataObject::factory('groups');
             $group->get($this->bcc_group);
             $ar = $group->members('email');
-            if (!empty($ar)) {
-                $contents->bcc = $ar;
+            if (empty($ar)) {
+                return $p->raiseError("template [{$contents['template']}] has not been set - bcc group is empty");
+                
             }
+            $contents->bcc = $ar;
         }
         if (!empty($contents['rcpts_group'])) {
             
-            
+            if (empty($admin)) {
+                $admin = DB_DAtaObject::Factory('groups')->lookupMembers('bcc-email','email');
+            }
             
         }
         
