@@ -20,6 +20,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $from_name;
     public $owner_id;
     public $is_system;
+    public $active;
+    public $bcc_group;
+    public $test_class;
+    
+
+    
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
