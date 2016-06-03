@@ -756,9 +756,16 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->test_class = $data['test_class'];
             }
             require_once $cm->test_class . '.php';
+            
             $clsname = str_replace('/','_', $cm->test_class);
-            $method = new ReflectionMethod($clsname , 'test_'. $name) ;
-            if (!$method->isStatic()) {
+            try {
+                $method = new ReflectionMethod($clsname , 'test_'. $name) ;
+                $got_it = $method->isStatic();
+            } catch($e) {
+                $got_it = false;
+                
+            }
+            if (!$got_it) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
             if ($up) {
