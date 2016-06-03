@@ -328,8 +328,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         if (!empty($contents['rcpts_group'])) {
             
+            
+            $admin = DB_DAtaObject::Factory('groups')->lookupMembers($contents['rcpts_group'],'email');
+            
             if (empty($admin)) {
-                $admin = DB_DAtaObject::Factory('groups')->lookupMembers('bcc-email','email');
+                
             }
             $contents['rcpts'] = $admin;
         }
