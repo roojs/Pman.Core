@@ -731,6 +731,7 @@ class Pman_Core_UpdateDatabase extends Pman
         foreach($emails as $name=>$data) {
             $cm = DB_DataObject::factory('core_email');
             $update = $cm->get('name', $name);
+            $old = clone($cm);
             
             if (empty($cm->bcc_group)) {
                 if (empty($data['bcc_group'])) {
@@ -754,7 +755,9 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!$method->isStatic()) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
-            
+            if ($up) {
+                $cm->update($old);
+            }
             
             
     //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
