@@ -1,15 +1,15 @@
 
-CREATE TABLE `i18n` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ltype` varchar(1) NOT NULL DEFAULT '',
-  `lkey` varchar(8) NOT NULL DEFAULT '',
-  `inlang` varchar(8) NOT NULL DEFAULT '',
-  `lval` varchar(64) NOT NULL DEFAULT '',
-  `is_active` int(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `lookup` (`ltype`,`lkey`,`inlang`)
+
+CREATE TABLE  i18n (
+  id int(11)  NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (id)
+  
 ) ENGINE=InnoDB;
 
-
+ALTER TABLE  i18n ADD COLUMN   ltype varchar(1)  NOT NULL DEFAULT '';
+ALTER TABLE  i18n ADD COLUMN   lkey varchar(8)  NOT NULL DEFAULT '';
+ALTER TABLE  i18n ADD COLUMN   inlang varchar(8)  NOT NULL DEFAULT '';
+ALTER TABLE  i18n ADD COLUMN   lval varchar(64)  NOT NULL DEFAULT '';
 ALTER TABLE i18n ADD COLUMN is_active int(1) NOT NULL DEFAULT 1;
- 
+  
+ALTER TABLE i18n ADD INDEX lookup (ltype, lkey, inlang);
