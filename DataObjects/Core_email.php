@@ -288,7 +288,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      * @param Object|Array $obj Object (or array) to send @see Pman_Core_Mailer
      *    + subject
      *    + rcpts || person   << if person is set - then it goes to them...
-     *    + rcpts_group << for admin emails..
+     *    + rcpts_group (string) << name of group - normally to send admin emails.. (if set, then bcc_group is ignored.)
      *    + replace_links
      *    + template
      *    + mailer_opts
