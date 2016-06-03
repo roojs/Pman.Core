@@ -768,7 +768,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!$got_it) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
-            if ($up) {
+            if ($update) {
                 $cm->update($old);
                 continue; /// we do not import the body content of templates that exist...
             } else {
