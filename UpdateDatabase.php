@@ -764,9 +764,11 @@ class Pman_Core_UpdateDatabase extends Pman
             
     //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
             
-            $opts = array();
+            $opts = array(
+                'update' => 1,
+                'file' = $mail_template_dir. $name .'.html';
+            );
             
-            $opts['file'] = $mail_template_dir. $name .'.html';
             if (!empty($data['master'])) {
                 $opts['master'] = $mail_template_dir . $master .'.html';
             }
