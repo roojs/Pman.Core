@@ -308,7 +308,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             
             $group = DB_DataObject::factory('groups');
             $group->get($this->bcc_group);
-            $contents->bcc = $group->members('email');
+            $ar = $group->members('email');
+            if (!empty($ar)) {
+                $contents->bcc = $ar;
+            }
         }
         
         
