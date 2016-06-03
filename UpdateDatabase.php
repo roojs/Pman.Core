@@ -767,7 +767,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $opts = array();
             
             $opts['file'] = $mail_template_dir. $name .'.html';
-            if (!empty($master)) {
+            if (!empty($data['master'])) {
                 $opts['master'] = $mail_template_dir . $master .'.html';
             }
             require_once 'Pman/Core/Import/Core_email.php';
