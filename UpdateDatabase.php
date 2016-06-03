@@ -761,7 +761,7 @@ class Pman_Core_UpdateDatabase extends Pman
             try {
                 $method = new ReflectionMethod($clsname , 'test_'. $name) ;
                 $got_it = $method->isStatic();
-            } catch($e) {
+            } catch(Exception $e) {
                 $got_it = false;
                 
             }
