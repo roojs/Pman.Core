@@ -723,6 +723,56 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
+    
+    function initEmails($templateDir, $emails)
+    {
+      
+        $pg = HTML_FlexyFramework::get()->page;
+        foreach($emails as $name=>$data) {
+            $cm = DB_DataObject::factory('core_email');
+            $update = $cm->get('name', $name);
+            
+            if (empty($cm->bcc_group)) {
+                if (empty($data['bcc_group'])) {
+                    $this->jerr("missing bcc_group for template $name");
+                }
+                $g = DB_DataObject::Factory('Groups')->lookup($data['bcc_group']);
+                if (!$g) {
+                    $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
+                }
+                $cm->bcc_group = $g->id;
+            }
+            if (empty($cm->test_class)) {
+                if (empty($data['test_class'])) {
+                    $this->jerr("missing test_class for template $name");
+                }
+                $cm->test_class = $cm;
+            }
+            require_once $cm->test_class . '.php';
+            $clsname = str_replace('/','_', $cm->test_class);
+            $method = new ReflectionMethod($clsname , 'test_'. $name) );
+            if (!$method->isStatic()) {
+                $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
+            }
+            
+            
+            
+    //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
+            
+            $opts = array();
+            
+            $opts['file'] = $mail_template_dir. $name .'.html';
+            if (!empty($master)) {
+                $opts['master'] = $mail_template_dir . $master .'.html';
+            }
+            print_r($opts);
+            require_once 'Pman/Core/Import/Core_email.php';
+            $x = new Pman_Core_Import_Core_email();
+            $x->get('', $opts);
+        }
+    }
+    
+    
     function updateData()
     {
         // fill i18n data..
