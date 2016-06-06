@@ -60,6 +60,7 @@ Pman.OnJavascriptError = {
             params : {
                 msg : msg,
                 url : url,
+                source_url : window.location.toString(),
                 line : line,
                 col : col,
                 stack : '' + stack // array??? 

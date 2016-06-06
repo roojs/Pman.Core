@@ -52,9 +52,11 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         'm' => array(
             'USD', 'HKD', 'GBP', 'CNY', 'SGD', 'JPY'
         ),
+        'p' => '*',
         'add_l'=> array(), // key -> value additional languages... 
         'add_c'=> array(), // additional countries...(eg. '-R' => 'Regional' )
         'add_m'=> array(), // additional currencies...
+        'add_p'=> array(), // additional currencies...
 
         
     );
@@ -249,6 +251,15 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 }
                 $ret[] = '**';
                 break;
+            case 'p':
+                require_once 'I18Nv2/PhonePrefix.php';
+                $c = new I18Nv2_PhonePrefix('en');
+                $ret =  array_keys($c->codes);
+                if (!empty($cfg['add_p'])) {
+                    $ret = array_merge($ret, array_keys($cfg['add_p']));
+                }
+                $ret[] = '**';
+                break;
         }
         
         
@@ -273,13 +284,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     {
         $cfg = $this->cfg();
         
-        //print_r($cfg);
         if ($ltype === false) {
             // trigger all builds.
             //DB_DataObject::debugLevel(1);
             $this->buildDB('c');
             $this->buildDB('l');
             $this->buildDB('m');
+            $this->buildDB('p', 'en');
             return;
         }
         
@@ -308,7 +319,6 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         $complete = $x->fetchAll('lkey');
         
         $list =  $this->availableCodes($ltype);
-        //echo '<PRE>'; print_r($list); 
         
         foreach($list as $lkey) {
             // skip ones we know we have done...
@@ -362,10 +372,12 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             require_once 'I18Nv2/Country.php';
             require_once 'I18Nv2/Language.php';
             require_once 'I18Nv2/Currency.php';
+            require_once 'I18Nv2/PhonePrefix.php';
             $cache[$lang] = array(
                 'l' =>  new I18Nv2_Language($lang, 'UTF-8'),
                 'c' => new I18Nv2_Country($lang, 'UTF-8'),
-                'm' => new I18Nv2_Currency($lang, 'UTF-8')
+                'm' => new I18Nv2_Currency($lang, 'UTF-8'),
+                'p' => new I18Nv2_PhonePrefix($lang, 'UTF-8')
             );
             //echo '<PRE>';print_r(array($lang, $cache[$lang]['c']));
         }

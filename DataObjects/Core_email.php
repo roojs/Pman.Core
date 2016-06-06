@@ -20,6 +20,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $from_name;
     public $owner_id;
     public $is_system;
+    public $active;
+    public $bcc_group;
+    public $test_class;
+    
+
+    
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -282,6 +288,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      * @param Object|Array $obj Object (or array) to send @see Pman_Core_Mailer
      *    + subject
      *    + rcpts || person   << if person is set - then it goes to them...
+     *    + rcpts_group (string) << name of group - normally to send admin emails.. (if set, then bcc_group is ignored.)
      *    + replace_links
      *    + template
      *    + mailer_opts
@@ -289,22 +296,43 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
      *    
      * @param bool $force - force re-creation of cached version of email.
      *
-     * @returns Pman_Core_Mailer
+     * @returns Pman_Core_Mailer||PEAR_Error
      */
     
     function toMailer($obj,$force=false)
     {
-        
+        $p = new PEAR();
         $contents = (array)$obj;
 
+         
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
         
         if(empty($this->id)){
-            $p = new PEAR();
+            
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
+        
+        // fill in BCC
+        if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
+             $admin = DB_DAtaObject::Factory('groups')->lookupMembers($this->bcc_group,'email');
+            if (empty($admin)) {
+                return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
+            }
+            $contents->bcc = $admin ;
+        }
+        if (!empty($contents['rcpts_group'])) {
+            
+            $admin = DB_DAtaObject::Factory('groups')->lookupMembers($contents['rcpts_group'],'email');
+            
+            if (empty($admin)) {
+                return $p->raiseError("Trying to send to {$contents['rcpts_group']} - group is empty");
+            }
+            $contents['rcpts'] = $admin;
+        }
+        
+         
         
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
@@ -515,6 +543,31 @@ Content-Transfer-Encoding: 7bit
     {
         return date($format, strtotime($dt));
     } 
+    
+    
+     // fixme - this is now in core/udatedatabase..
+    
+    function initMail($mail_template_dir,  $name, $master='')
+    {
+        $cm = DB_DataObject::factory('core_email');
+        if ($cm->get('name', $name)) {
+            return;
+        }
+        
+//        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
+        
+        $opts = array();
+        
+        $opts['file'] = $mail_template_dir. $name .'.html';
+        if (!empty($master)) {
+            $opts['master'] = $mail_template_dir . $master .'.html';
+        }
+        print_r($opts);
+        require_once 'Pman/Core/Import/Core_email.php';
+        $x = new Pman_Core_Import_Core_email();
+        $x->get('', $opts);
+         
+    }
     
     
     

@@ -291,7 +291,7 @@ class Pman_Core_JsCompile  extends Pman
             unlink($output);
         }
         
-        //var_dump($output);
+         
         if (!file_exists(dirname($output))) {
             mkdir(dirname($output), 0755, true);
         }

@@ -257,8 +257,7 @@ class Pman_Core_Images extends Pman
             }
         }
         
-        if (!file_exists($fn)) {            
-            
+        if (!file_exists($fn)) {    
             $this->validateSize();
         }
         
@@ -276,7 +275,8 @@ class Pman_Core_Images extends Pman
             return true;
         }
         
-        // DEFAULT allowed - override with Pman_Core_Images[sizes] => array();
+        
+        $ff = HTML_FlexyFramework::get();
         
         $sizes = array(
                 '100', 
@@ -287,26 +287,28 @@ class Pman_Core_Images extends Pman
                 '200x0',
                 '200x200',  
                 '400x0',
-                '300x100', // logo on login.
+                '300x100',
                 '500'
             );
         
-        // this should be configurable...
-        $ff = HTML_FlexyFramework::get();
-        
-        
         $cfg = isset($ff->Pman_Images) ? $ff->Pman_Images :
                 (isset($ff->Pman_Core_Images) ? $ff->Pman_Core_Images : array());
-        
-        
         
         if (!empty($cfg['sizes'])) {
             $sizes = array_merge($sizes , $cfg['sizes']);
         }
         
+        $project = $ff->project;
+        
+        require_once $ff->project . '.php';
+        
+        $project = new $ff->project();
+        
+        if(isset($project::$Pman_Core_Images_Size)){
+            $sizes = $project::$Pman_Core_Images_Size;
+        }
         
         if (!in_array($this->size, $sizes)) {
-            print_r($sizes);
             die("invalid scale - ".$this->size);
         }
     }

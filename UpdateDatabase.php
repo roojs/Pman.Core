@@ -105,6 +105,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     var $opts = false;
+    var $disabled = array();
     
     
     var $cli = false;
@@ -130,6 +131,9 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
+        $ff = HTML_FlexyFramework::get();
+        
+        $this->disabled = explode(',', $ff->disable);
         
         //$this->fixSequencesPgsql();exit;
         $this->opts = $opts;
@@ -138,8 +142,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->checkOpts($opts);
         
-        
-     
         if (empty($opts['data-only'])) {
             $this->importSQL();
         }
@@ -150,7 +152,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->runUpdateModulesData();
         
         
-        if (!empty($opts['add-company'])) {
+        if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
             // make sure we have a good cache...?
            
             DB_DataObject::factory('companies')->initCompanies($this, $opts);
@@ -190,7 +192,13 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         foreach($ar as $m) {
-             echo "Importing SQL from module $m\n";
+            
+            if(in_array($m, $this->disabled)){
+                echo "module $m is disabled \n";
+                continue;
+            }
+            
+            echo "Importing SQL from module $m\n";
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
@@ -230,6 +238,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $fd = $this->rootDir. "/Pman/$m/DataObjects";
             
             $this->{$dirmethod}($dburl, $fd);
+            
             
             // new -- sql directory..
             // new style will not support migrate ... they have to go into mysql-migrate.... directories..
@@ -550,22 +559,27 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function runUpdateModulesData()
     {
-        
-        
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
-        echo "Running jsonImportFromArray\n";
-        Pman_Core_UpdateDatabase::jsonImportFromArray($this->opts);
         
+        if(!in_array('Core', $this->disabled)){
+            echo "Running jsonImportFromArray\n";
+            Pman_Core_UpdateDatabase::jsonImportFromArray($this->opts);
+
+
+            echo "Running updateData on modules\n";
+            // runs core...
+            echo "Core\n";
+            $this->updateData(); 
+        }
         
-        echo "Running updateData on modules\n";
-        // runs core...
-        echo "Core\n";
-        $this->updateData(); 
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
         
         foreach ($modules as $module){
+            if(in_array($module, $this->disabled)){
+                continue;
+            }
             $file = $this->rootDir. "/Pman/$module/UpdateDatabase.php";
             if($module == 'Core' || !file_exists($file)){
                 continue;
@@ -708,6 +722,79 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
     }
+    
+    
+    function initEmails($templateDir, $emails)
+    {
+      
+        $pg = HTML_FlexyFramework::get()->page;
+        foreach($emails as $name=>$data) {
+            $cm = DB_DataObject::factory('core_email');
+            $update = $cm->get('name', $name);
+            $old = clone($cm);
+            
+            if (empty($cm->bcc_group)) {
+                if (empty($data['bcc_group'])) {
+                    $this->jerr("missing bcc_group for template $name");
+                }
+                $g = DB_DataObject::Factory('Groups')->lookup('name',$data['bcc_group']);
+                
+                if (!$g) {
+                    $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
+                }
+                if (!$g->members('email')) {
+                      $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
+                }
+                
+                
+                $cm->bcc_group = $g->id;
+            }
+            if (empty($cm->test_class)) {
+                if (empty($data['test_class'])) {
+                    $this->jerr("missing test_class for template $name");
+                }
+                $cm->test_class = $data['test_class'];
+            }
+            require_once $cm->test_class . '.php';
+            
+            $clsname = str_replace('/','_', $cm->test_class);
+            try {
+                $method = new ReflectionMethod($clsname , 'test_'. $name) ;
+                $got_it = $method->isStatic();
+            } catch(Exception $e) {
+                $got_it = false;
+                
+            }
+            if (!$got_it) {
+                $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
+            }
+            if ($update) {
+                $cm->update($old);
+                echo "email: {$name} - checked\n";
+                continue; /// we do not import the body content of templates that exist...
+            } else {
+                $cm->insert();
+            }
+            
+            
+    //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
+            
+            $opts = array(
+                'update' => 1,
+                'file' => $templateDir. $name .'.html'
+            );
+            
+            if (!empty($data['master'])) {
+                $opts['master'] = $templateDir . $master .'.html';
+            }
+            require_once 'Pman/Core/Import/Core_email.php';
+            $x = new Pman_Core_Import_Core_email();
+            $x->get('', $opts);
+            
+            echo "email: {$name} - CREATED\n";
+        }
+    }
+    
     
     function updateData()
     {
