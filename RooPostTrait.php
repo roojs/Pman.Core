@@ -66,7 +66,7 @@ trait Pman_Core_RooPostTrait {
      *
      * CALLS BEFORE change occurs:
      *  
-     *      beforeDelete($dependants_array, $roo)
+     *      beforeDelete($dependants_array, $roo, $request)
      *                      Argument is an array of un-find/fetched dependant items.
      *                      - jerr() will stop insert.. (Prefered)
      *                      - return false for fail and set DO->err;
