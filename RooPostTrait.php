@@ -241,7 +241,7 @@ trait Pman_Core_RooPostTrait {
             $match_total = 0;
             
             if ( $has_beforeDelete ) {
-                if ($xx->beforeDelete($match_ar, $this) === false) {
+                if ($xx->beforeDelete($match_ar, $this, $req) === false) {
                     $errs[] = "Delete failed ({$xx->id})\n".
                         (isset($xx->err) ? $xx->err : '');
                     continue;
