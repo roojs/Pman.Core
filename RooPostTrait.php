@@ -282,7 +282,7 @@ trait Pman_Core_RooPostTrait {
           
             }
             
-            $this->addDeleteEvent($x);
+            $this->logDeleteEvent($x);
             
             $xx->delete();
             
@@ -299,7 +299,7 @@ trait Pman_Core_RooPostTrait {
         
     }
     
-    function addDeleteEvent($object)
+    function logDeleteEvent($object)
     {
         
         DB_DataObject::Factory('Events')->logDeletedRecord($object);
