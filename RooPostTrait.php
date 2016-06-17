@@ -284,10 +284,6 @@ trait Pman_Core_RooPostTrait {
             
             $this->addDeleteEvent($x);
             
-            DB_DataObject::Factory('Events')->logDeletedRecord($x);
-            
-            $this->addEvent("DELETE", $x);
-            
             $xx->delete();
             
             if (method_exists($xx,'onDelete')) {
@@ -302,6 +298,17 @@ trait Pman_Core_RooPostTrait {
         $this->jok("Deleted");
         
     }
+    
+    function addDeleteEvent($object)
+    {
+        
+        DB_DataObject::Factory('Events')->logDeletedRecord($object);
+        
+        $this->addEvent("DELETE", $object);
+          
+        
+    }
+    
     
     function update($x, $req,  $with_perm_check = true)
     {
