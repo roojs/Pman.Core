@@ -313,7 +313,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
-        print_r($this);exit;
+        
         // fill in BCC
         if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
              $admin = DB_DAtaObject::Factory('groups')->lookupMembers($this->bcc_group,'email');
