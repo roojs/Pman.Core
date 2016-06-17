@@ -282,6 +282,8 @@ trait Pman_Core_RooPostTrait {
           
             }
             
+            $this->addDeleteEvent($x);
+            
             DB_DataObject::Factory('Events')->logDeletedRecord($x);
             
             $this->addEvent("DELETE", $x);
