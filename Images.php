@@ -107,7 +107,7 @@ class Pman_Core_Images extends Pman
             if (empty($_REQUEST['anytype'])) {
                 $img->whereAdd("mimetype like 'image/%'");
             }
-            
+            $img->orderBy('title ASC')l
             if (isset($onbits[2])) {
                 $img->imgtype = $onbits[2];
             }
