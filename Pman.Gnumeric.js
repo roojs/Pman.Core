@@ -1143,7 +1143,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         
         if (!data) {
-            return;
+            throw "write Image called with missing data";
         }
         // our default height width is 50/50 ?!
         //console.log('w='+width+',height='+height);
