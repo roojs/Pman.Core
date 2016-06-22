@@ -380,7 +380,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                    continue;
                 }
                 for (var c = s.c; c < s.c1;c++) {
-                    if (c > _t.cmax) continue;
+                    if (c > _t.cmax) {
+                        continue;
+                    }
     
                     if (typeof(_t.grid[r][c]) == 'undefined') {
                         _t.createCell(r,c);
@@ -391,7 +393,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         g.cls = [];
                         g.styles = [];
                     }
-                    if (g.cls.indexOf(s.name)  > -1) continue;
+                    if (g.cls.indexOf(s.name)  > -1) {
+                       continue;
+                    }
                     g.cls.push(s.name);
                     g.styles.push(s.dom);
                     
@@ -421,23 +425,23 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             Fore : function(ent,v) { 
                 var col=[];
-                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); });
                 ent['color'] = 'rgb(' + col.join(',') + ')';
             },
             Back : function(ent,v) { 
                 var col=[];
-                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                Roo.each(v.split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); });
                 ent['background-color'] = 'rgb(' + col.join(',') + ')';
             },
             FontUnit : function(ent,v) { 
                 ent['font-size'] = v + 'px';
             },
             FontBold : function(ent,v) { 
-                if (v*1 < 1) return;
+                if (v*1 < 1) { return; }
                 ent['font-weight'] = 'bold';
             },
             FontItalic : function(ent,v) { 
-                if (v*0 < 1) return;
+                if (v*0 < 1) { return; }
                 //ent['font-weight'] = 'bold';
             },
             FontName : function(ent,v) { 
@@ -451,7 +455,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             BorderColor : function(ent,v) { 
                 var vv  = v.split('-');
                 var col=[];
-                Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); })
+                Roo.each(vv[1].split(':'), function(c) { col.push(Math.round(parseInt(c,16)/256)); });
                 ent['border-'+vv[0]+'-color'] = 'rgb(' + col.join(',') + ')';
             }
         };
@@ -696,7 +700,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         data = data || this.data;
         for (var r = 0; r < this.rmax;r++) {
-            if (typeof(this.grid[r]) == 'undefined') continue;
+            if (typeof(this.grid[r]) == 'undefined') {
+                continue;
+            }
             for (var c = 0; c < this.cmax;c++) {  
                 if (typeof(this.grid[r][c]) == 'undefined') {
                     continue;
@@ -1025,11 +1031,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 ent['Unit'] = v.replace(/px/, '');
             },
             'font-weight' : function(ent,v) { 
-                if (v != 'bold') return;
+                if (v != 'bold') {
+                   return;
+                }
                 ent['Bold'] = 1;
             },
             'font-style' : function(ent,v) { 
-                if (v != 'italic') return;
+                if (v != 'italic') {
+                    return;
+                }
                 ent['Italic'] = 1;
             } 
         };
@@ -1132,6 +1142,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     writeImage : function (row, col, data, width, height) 
     {
         
+        if (!data) {
+            return;
+        }
         // our default height width is 50/50 ?!
         //console.log('w='+width+',height='+height);
                 //        <gmr:Objects>
@@ -1378,7 +1391,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 var g = grid[r][c];
                 
-                if (typeof(g.cls) =='undefined') g.cls = [];
+                if (typeof(g.cls) =='undefined') {
+                    g.cls = [];
+                }
                 var w= calcWidth(c,g.colspan);
                 
                 var value = g.value[0] == '=' ? 'CALCULATED' : g.value;
