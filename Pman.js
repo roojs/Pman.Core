@@ -914,13 +914,13 @@ Pman = new Roo.Document(
                 return;
             }
             if (this.module.disabled) {
-                Roo.log("Module disabled, should not rendering")
+                Roo.log("Module disabled, should not rendering");
                 Roo.log(this);
                 return;
             }
-            
+             
             if (!this.parent.layout) {
-                Roo.log("Module parent does not have property layout.")
+                Roo.log("Module parent does not have property layout.");
                 Roo.log(this);
                 return;
             }
