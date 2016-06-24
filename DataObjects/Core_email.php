@@ -315,22 +315,22 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         // fill in BCC
-//        if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
-//             $admin = DB_DAtaObject::Factory('groups')->lookupMembers($this->bcc_group,'email');
-//            if (empty($admin)) {
-//                return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
-//            }
-//            $contents->bcc = $admin ;
-//        }
-//        if (!empty($contents['rcpts_group'])) {
-//            
-//            $admin = DB_DAtaObject::Factory('groups')->lookupMembers($contents['rcpts_group'],'email');
-//            
-//            if (empty($admin)) {
-//                return $p->raiseError("Trying to send to {$contents['rcpts_group']} - group is empty");
-//            }
-//            $contents['rcpts'] = $admin;
-//        }
+        if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
+             $admin = DB_DAtaObject::Factory('groups')->lookupMembers($this->bcc_group,'email');
+            if (empty($admin)) {
+                return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
+            }
+            $contents->bcc = $admin ;
+        }
+        if (!empty($contents['rcpts_group'])) {
+            
+            $admin = DB_DAtaObject::Factory('groups')->lookupMembers($contents['rcpts_group'],'email');
+            
+            if (empty($admin)) {
+                return $p->raiseError("Trying to send to {$contents['rcpts_group']} - group is empty");
+            }
+            $contents['rcpts'] = $admin;
+        }
         
          
         
