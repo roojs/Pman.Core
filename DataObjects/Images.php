@@ -403,7 +403,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                     $ff->Pman_Images['public_baseURL'] : $ff->baseURL;
         
         if (!empty($req['query']['imagesize'])) {
-             $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : false;
+            $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : $ret['public_baseURL'];
             
             $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
             
