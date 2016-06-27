@@ -856,6 +856,11 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
                 {$this->tableName()}.name LIKE '%{$this->escape($q['query']['name'])}%'
             ");
         }
+         if(!empty($q['query']['name_starts'])){
+            $this->whereAdd("
+                {$this->tableName()}.name LIKE '{$this->escape($q['query']['name_starts'])}%'
+            ");
+        }
         
         if (!empty($q['query']['search'])) {
             
