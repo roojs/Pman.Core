@@ -972,7 +972,6 @@ class Pman_Core_UpdateDatabase extends Pman
             'grep',
 
             'pdfinfo',
-            'pdftocairo',  //poppler-utils
             'pdftoppm',
             'rsvg-convert',
             'strings',
@@ -986,6 +985,8 @@ class Pman_Core_UpdateDatabase extends Pman
             'faad',
             'ffmpeg',
             'html2text', // not availabe in debian squeeze
+            'pdftocairo',  //poppler-utils - not available in debian squeeze.
+
             'lame',
             'ssconvert',
             'unoconv',
