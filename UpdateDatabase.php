@@ -968,10 +968,10 @@ class Pman_Core_UpdateDatabase extends Pman
         $req = array( 
             'convert',
             'grep',
-            'html2text',
+
             'pdfinfo',
             'pdftocairo',
-            'pdftoppma',
+            'pdftoppm',
             'rsvg-convert',
             'strings',
         );
@@ -983,6 +983,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'abiword',
             'faad',
             'ffmpeg',
+            'html2text', // not availabe in debian squeeze
             'lame',
             'ssconvert',
             'unoconv',
