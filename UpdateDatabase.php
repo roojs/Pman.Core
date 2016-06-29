@@ -970,10 +970,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $req = array( 
             'convert',
             'grep',
-
             'pdfinfo',
             'pdftoppm',
-            'rsvg-convert',
+            'rsvg-convert',  //librsvg2-bin
             'strings',
         );
          
