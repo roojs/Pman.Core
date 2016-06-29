@@ -131,6 +131,8 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
+        $this->checkSystem();
+   
         $ff = HTML_FlexyFramework::get();
         
         $this->disabled = explode(',', $ff->disable);
