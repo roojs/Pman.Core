@@ -963,6 +963,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function checkSystem()
     {
+        // most of these are from File_Convert...
+        
         // these are required - and have simple dependancies.
         require_once 'System.php';
         $req = array( 
@@ -970,7 +972,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'grep',
 
             'pdfinfo',
-            'pdftocairo',
+            'pdftocairo',  //poppler-utils
             'pdftoppm',
             'rsvg-convert',
             'strings',
