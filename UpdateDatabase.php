@@ -957,4 +957,60 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
     }
+    
+    
+    function checkSystem()
+    {
+        // these are required - and have simple dependancies.
+        require_once 'System.php';
+        $req = array( 
+            'convert',
+            'grep',
+            'html2text',
+            'pdfinfo',
+            'pdftocairo',
+            'pdftoppma',
+            'rsvg-convert',
+            'strings',
+        );
+         
+         
+         
+        // these are prefered - but may have complicated depenacies
+        $pref= array(
+            'abiword',
+            'faad',
+            'ffmpeg',
+            'lame',
+            'ssconvert',
+            'unoconv',
+            'wkhtmltopdf',
+            'xvfb-run',
+        );
+        $res = array();
+        $fail = false;
+        foreach($req as $r) {
+            if (!System::which($r)) {
+                $res[] = $r;
+            }
+            $fail = true;
+        }
+        if ($res) {
+            $this->jerr("Missing these programs - need installing\n" . implode("\n",$res));
+        }
+        foreach($pref as $r) {
+            if (!System::which($r)) {
+                $res[] = $r;
+            }
+            $fail = true;
+        }
+        if ($res) {
+            echo "WARNING: Missing these programs - they may need installing\n". implode("\n",$res);
+            sleep(5);
+        }
+        
+        
+    }
+    
+    
 }
