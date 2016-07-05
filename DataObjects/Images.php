@@ -732,7 +732,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             umask($oldumask);  
         }
         
-        file_put_contents($f, file_get_contents($data));
+        file_put_contents($f, file_get_contents("data://" . $data));
         
         $o = clone($this);
         
