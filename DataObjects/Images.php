@@ -731,7 +731,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             mkdir($dest, 0775, true);
             umask($oldumask);  
         }
-        
+        print_R($data);exit;
         file_put_contents($f, file_get_contents("data://" . $data));
         
         $o = clone($this);
