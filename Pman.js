@@ -850,7 +850,6 @@ Pman = new Roo.Document(
     
     xbeforebuild : function(obj)
     {
-        Roo.log('xbeforebuild');
         if (typeof(obj.part) != 'undefined')  {
            
             if (!obj.part[1].length) {
@@ -892,7 +891,7 @@ Pman = new Roo.Document(
      */
     register : function(obj)
     {
-        Roo.log('!!!!!!!!!!!!!!!!!!!!!!!!!!1');
+        
         //this.xregister(obj);
         
         
