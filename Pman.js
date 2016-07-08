@@ -861,7 +861,7 @@ Pman = new Roo.Document(
             
                 // we now have permission...
                 // obj.moduleOwner '.' lname
-           
+            Roo.log(obj);
             if (Pman.hasPermExists(permname) && !Pman.hasPerm(permname,'S')) {
                 // it's a turned off permission...
                 Roo.log(permname + " is Disabled for this user");
