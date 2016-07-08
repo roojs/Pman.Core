@@ -390,8 +390,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     
      
-    function toRooArray($req = array()) {
-      //  echo '<PRE>';print_r($req);exit;
+    function toRooArray($req) {
+        echo '<PRE>';print_r($req);exit;
         $ret= $this->toArray();
       
         static $ff = false;
