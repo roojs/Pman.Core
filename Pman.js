@@ -859,7 +859,6 @@ Pman = new Roo.Document(
             
             Roo.log("CHECKING: "+ permname);
             
-            Roo.log(obj);
                 // we now have permission...
                 // obj.moduleOwner '.' lname
            
