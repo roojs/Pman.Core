@@ -868,7 +868,7 @@ Pman = new Roo.Document(
                 obj.disabled = true;
                 return;
             }
-            Roo.log(obj.permname);
+            
             if (obj.permname && obj.permname.length && Pman.hasPermExists(obj.permname) && !Pman.hasPerm(obj.permname,'S')) {
                 // it's a turned off permission...
                 Roo.log(obj.permname + " is Disabled for this user");
