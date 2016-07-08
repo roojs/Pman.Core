@@ -928,7 +928,7 @@ Pman = new Roo.Document(
            // honour DEPRICATED permname setings..
            // new code should use PART name, and matching permissions.
             if (this.permname && this.permname.length) {
-                
+                Roo.log(this);
                 if (!Pman.hasPerm(this.permname, 'S')) {
                     return;
                 }
