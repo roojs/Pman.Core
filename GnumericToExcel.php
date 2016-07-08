@@ -45,12 +45,12 @@ class Pman_Core_GnumericToExcel extends Pman
             die("Missing XML attribute");
         }
         $xml = $_POST['xml'];
-        
+        print_R($xml);exit;
         $xml = iconv("UTF-8", "UTF-8//IGNORE",  $xml);
         
-        //$xml = str_replace('é', 'e', $xml);
+        //$xml = str_replace('ï¿½', 'e', $xml);
         //$xml = str_replace("\xA0", ' ', $xml);
-        //$xml = str_replace("Ø", 'dia.',$xml);
+        //$xml = str_replace("ï¿½", 'dia.',$xml);
         
         //$this->addEvent("DOWNLOAD", false, isset($_REQUEST['title']) ? $_REQUEST['title'] : '???');
         
