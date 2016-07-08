@@ -45,7 +45,7 @@ class Pman_Core_GnumericToExcel extends Pman
             die("Missing XML attribute");
         }
         $xml = $_POST['xml'];
-        print_R('run??');exit;
+        
         $xml = iconv("UTF-8", "UTF-8//IGNORE",  $xml);
         
         //$xml = str_replace('�', 'e', $xml);
