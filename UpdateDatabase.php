@@ -191,7 +191,6 @@ class Pman_Core_UpdateDatabase extends Pman
        
         
         $ar = $this->modulesList();
-        print_R($ar);exit;
         
         foreach($ar as $m) {
             
