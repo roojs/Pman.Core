@@ -396,7 +396,17 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 echo basename($dir).'/'. basename($fn) .    '::' .  $cmd. ($this->cli ? "\n" : "<BR>\n");
                 
-                passthru($cmd);
+                
+                $fp = popen($cmd, "r"); 
+                while(!feof($fp)) 
+                { 
+                    // send the current file part to the browser 
+                    $line = fread($fp, 1024);
+                    echo $line;
+                    // flush the content to the browser 
+                    flush(); 
+                } 
+                
             
                 
         }
