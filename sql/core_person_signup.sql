@@ -31,5 +31,4 @@ ALTER TABLE core_person_signup ADD COLUMN   inviter_id int(11) NOT NULL  default
 ALTER TABLE core_person_signup ADD COLUMN   crm_mailing_list_id int(11) NOT NULL  default 0;
 
 ALTER TABLE core_person_signup ADD COLUMN   phone varchar(256)  NOT NULL DEFAULT '';
-
-call mysql_change_engine('core_person_signup');
+ 
