@@ -45,7 +45,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     )
                 );
                 
-                $smtp = new Net_SMTP($server, 25, '058177247238.ctinets.com', false, 0, $socket_options);
+                $smtp = new Net_SMTP($server, $settings['port'], '058177247238.ctinets.com', false, 0, $socket_options);
                 
                 $smtp->setDebug(true);
                 
