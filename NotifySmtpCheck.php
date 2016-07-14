@@ -23,7 +23,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 continue;
             }
             
-            
+            $smtp = Mail::factory();
         }
     }
     
