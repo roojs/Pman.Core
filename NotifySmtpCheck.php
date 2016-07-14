@@ -72,7 +72,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 $res = $smtp->connect(10);
                 
                 if (is_a($res, 'PEAR_Error')) {
-                    print_R('error?????');exit;
+                    die("Cound not connect to {$server}");
                 }
                 
                 $res = $smtp->auth($settings['username'], $settings['password']);
