@@ -356,15 +356,15 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
-        foreach($mxs as $dom) {
+        foreach($mxs as $mx) {
             
             if (!isset($ff->Mail['helo'])) {
                 $this->errorHandler("config Mail[helo] is not set");
             }
             $this->debug_str = '';
-            $this->debug("Trying SMTP: $dom / HELO {$ff->Mail['helo']}");
+            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
-                    'host'    => $dom ,
+                    'host'    => $mx ,
                     'localhost' => $ff->Mail['helo'],
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
@@ -375,7 +375,7 @@ class Pman_Core_NotifySend extends Pman
             
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
-            if (isset($ff->Mail['host']) && $ff->Mail['host'] == $dom && !empty($ff->Mail['auth'] )) {
+            if (isset($ff->Mail['host']) && $ff->Mail['host'] == $mx && !empty($ff->Mail['auth'] )) {
                 
                 if(!empty($ff->Core_Notify)){
                     
@@ -383,8 +383,11 @@ class Pman_Core_NotifySend extends Pman
                     
                     foreach ($ff->Core_Notify['routes'] as $server => $settings){
                         if(!in_array($dom, $settings['domains'])){
-                            
+                            continue;
                         }
+                        
+                        $mailer->host = $server;
+                        
                     }
                     
                 }
