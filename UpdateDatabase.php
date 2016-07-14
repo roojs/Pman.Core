@@ -410,7 +410,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     $continue =0;
                     switch($matches[1]) {
                         case 1050: // create tables triggers this..
-                            
+                        case 1060: //    Duplicate column name 
+
                             $continue = 1;
                             break;
                         
