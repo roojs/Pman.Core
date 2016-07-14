@@ -67,7 +67,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
 //                print_R($smtpmx->_smtp);exit;
                 
-                $res = $smtp->connect($smtpmx->timeout);
+                $res = $smtp->connect(10);
                 
                 if (is_a($res, 'PEAR_Error')) {
                     print_R('error?????');exit;
