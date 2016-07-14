@@ -54,6 +54,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 continue;
             }
 
+            echo "Login As : {$settings['username']}:{$settings['password']} \n";
+            
             $res = $smtp->auth($settings['username'], $settings['password']);
 
             if (is_a($res, 'PEAR_Error')) {
