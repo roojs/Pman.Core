@@ -63,21 +63,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 print_R("SUCCESS? {$res} \n");
                 exit;
-                    
-//                $mx = $smtpmx->_getMx($dom);
-//                
-//                foreach ($mx as $mserver => $mpriority) {
-//                    
-//                    $smtpmx->_smtp = new Net_SMTP($mserver, $smtpmx->port, $smtpmx->mailname);
-//                    
-////                    print_R($smtpmx);exit;
-//                    $res = $smtpmx->_smtp->connect($smtpmx->timeout);
-//
-//                    $smtpmx->_smtp->disconnect();
-//                    
-//                    print_R($res);exit;
-//                }
-                
+                   
             }
             
             
