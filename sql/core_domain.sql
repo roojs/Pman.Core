@@ -7,4 +7,4 @@ CREATE TABLE core_domain (
 
 ALTER TABLE core_domain ADD COLUMN domain VARCHAR(256) NOT NULL DEFAULT '';
 
-CREATE UNIQUE INDEX ui_domain ON core_domain (domain);
+CREATE UNIQUE INDEX ui_domain ON core_domain USING btree (domain);
