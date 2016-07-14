@@ -6,6 +6,10 @@ require_once 'Mail/smtpmx.php';
         
 class Pman_Core_NotifySmtpCheck extends Pman
 {
+    static $cli_desc = "Check SMTP";
+ 
+    static $cli_opts = array();
+        
     function check()
     {
         $ff = HTML_FlexyFramework::get();
