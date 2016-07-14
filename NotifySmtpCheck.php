@@ -67,8 +67,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 }
             
 //                $smtpmx->_smtp->disconnect();
-
-                print_R($res);exit;
+                print_r("resutlt : {$res} \n");
+                exit;
                     
 //                $mx = $smtpmx->_getMx($dom);
 //                
