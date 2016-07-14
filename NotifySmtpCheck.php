@@ -54,7 +54,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
         }
         
         if(!empty($error)){
-            die($error);
+            print_r($error);
+            exit;
         }
         
         return;
