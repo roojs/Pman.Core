@@ -27,8 +27,14 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
-        $ip = file_get_contents("https://ifconfig.co/");
-        print_R($ip);exit;
+        $ifconfig = file_get_contents("https://ifconfig.co/");
+        $dom = new DomDocument('1.0', 'utf-8');
+        $dom->loadHTML($ifconfig);
+        $xpath = new DOMXPath($dom);
+        $lists = $xpath->query("code[@class='ip]");
+        
+        
+        print_R($lists);exit;
         
         $error = array();
         
