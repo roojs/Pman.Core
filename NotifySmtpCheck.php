@@ -27,25 +27,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
-        $ifconfig = file_get_contents("https://ifconfig.co/");
-        $dom = new DomDocument('1.0', 'utf-8');
-        $dom->loadHTML($ifconfig);
         
-        $xpath = new DOMXPath($dom);
-        
-        $element = $xpath->query("//code[@class='ip']");
-        
-        if(!$element->length){
-            return;
-        }
-        
-        $ip = $element->item(0)->nodeValue;
-        
-        $cmd = "host {$ip}";
-        
-        $e = `$cmd`;
-        
-        $helo = substr(array_pop(explode(' ', $e)), 0, -2);
         
         $error = array();
         
@@ -86,6 +68,31 @@ class Pman_Core_NotifySmtpCheck extends Pman
             }
             
         }
+    }
+    
+    function getHelo()
+    {
+        $ifconfig = file_get_contents("https://ifconfig.co/");
+        $dom = new DomDocument('1.0', 'utf-8');
+        $dom->loadHTML($ifconfig);
+        
+        $xpath = new DOMXPath($dom);
+        
+        $element = $xpath->query("//code[@class='ip']");
+        
+        if(!$element->length){
+            return;
+        }
+        
+        $ip = $element->item(0)->nodeValue;
+        
+        $cmd = "host {$ip}";
+        
+        $e = `$cmd`;
+        
+        $helo = substr(array_pop(explode(' ', $e)), 0, -2);
+        
+        return $helo;
     }
     
 }
