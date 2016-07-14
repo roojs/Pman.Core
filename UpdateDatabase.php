@@ -131,15 +131,15 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
-//        $this->checkSystem();
+        $this->checkSystem();
    
         $ff = HTML_FlexyFramework::get();
         
-//        if(!empty($ff->Core_Notify)){
-//            require_once 'Pman/Core/NotifySmtpCheck.php';
-//            $x = new Pman_Core_NotifySmtpCheck();
-//            $x->check();
-//        }
+        if(!empty($ff->Core_Notify)){
+            require_once 'Pman/Core/NotifySmtpCheck.php';
+            $x = new Pman_Core_NotifySmtpCheck();
+            $x->check();
+        }
         
         $this->disabled = explode(',', $ff->disable);
         
