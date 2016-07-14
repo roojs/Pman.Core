@@ -24,6 +24,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $helo = $this->getHelo();
         
+        echo "HELO : {$helo} \n";
+        
         $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
