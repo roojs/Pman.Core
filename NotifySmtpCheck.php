@@ -26,16 +26,22 @@ class Pman_Core_NotifySmtpCheck extends Pman
             }
             
             foreach ($settings['domains'] as $dom){
-                $mailer = Mail::factory('smtp', array(
-                    'host'    => $dom ,
-                    'localhost' => $server,
-                    'timeout' => 15,
-                    'auth' => true,
-                    'username' => $settings['username'],
-                    'password' => $settings['password']
-                ));
+//                $mailer = Mail::factory('smtp', array(
+//                    'host'    => $dom ,
+//                    'localhost' => $server,
+//                    'timeout' => 15,
+//                    'auth' => true,
+//                    'username' => $settings['username'],
+//                    'password' => $settings['password']
+//                ));
+//                
+//                print_R($mailer);exit;
                 
-                print_R($mailer);exit;
+                $params = array(
+                    'netdns' => false
+                );
+                
+                $smtpmx = new Mail_smtpmx($params);
             }
             
             
