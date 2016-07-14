@@ -377,9 +377,10 @@ class Pman_Core_NotifySend extends Pman
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
             if (isset($ff->Mail['host']) && $ff->Mail['host'] == $mx && !empty($ff->Mail['auth'] )) {
                 
+                $username = $ff->Mail['username'] ;
+                $password = $ff->Mail['password'] ;
+                
                 if(!empty($ff->Core_Notify)){
-                    
-                    $preferHost = false;
                     
                     foreach ($ff->Core_Notify['routes'] as $server => $settings){
                         if(!in_array($dom, $settings['domains'])){
@@ -387,14 +388,17 @@ class Pman_Core_NotifySend extends Pman
                         }
                         
                         $mailer->host = $server;
+                        $username = $settings['username'];
+                        $password = $settings['password'];
                         
+                        break;
                     }
                     
                 }
                 
                 $mailer->auth = true;
-                $mailer->username = $ff->Mail['username'] ;
-                $mailer->password = $ff->Mail['password'] ;        
+                $mailer->username = $username;
+                $mailer->password = $password;        
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
