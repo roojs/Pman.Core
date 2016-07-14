@@ -56,15 +56,17 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $smtp = new Net_SMTP($server, 25, $dom);
                 $smtp->setDebug(true);
-                print_R($smtp);
+//                print_R($smtp);
                 
 //                print_R($smtpmx->_smtp);exit;
                 
-                $res = $smtpmx->_smtp->connect($smtpmx->timeout);
+                $res = $smtp->connect($smtpmx->timeout);
                 
                 if (is_a($res, 'PEAR_Error')) {
                     print_R('error?????');exit;
                 }
+                
+                $smtp->auth($settings['username'], $settings['password']);
             
 //                $smtpmx->_smtp->disconnect();
                 print_r("resutlt : {$res} \n");
