@@ -486,6 +486,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+                $w->domain_id = $core_domain->id;
                 $w->update($ww);
                 
                 
