@@ -45,7 +45,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $e = `$cmd`;
         
-        $helo = substr(array_pop(explode(' ', $e)), 0, -1);
+        $helo = substr(array_pop(explode(' ', $e)), 0, -2);
         
         print_R($helo);exit;
         
