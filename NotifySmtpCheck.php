@@ -43,7 +43,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $smtpmx = new Mail_smtpmx($params);
                 
-                $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
+                $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $server);
                     
                 print_R($smtpmx->_smtp);exit;
                 
