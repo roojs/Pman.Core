@@ -42,12 +42,16 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 );
                 
                 $params = array(
-                    'netdns' => false,
-                    'mailname' => 'edward.roojs'
+                    'netdns' => false
                 );
                 
                 $smtpmx = new Mail_smtpmx($params);
                 
+                $result = $smtpmx->_sanitizeHeaders($headers);
+                if (is_a($result, 'PEAR_Error')) {
+                    $this->jerr("Error occour on '_sanitizeHeaders' \n");
+                }
+
                 $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                     
 //                print_R($smtpmx->_smtp);exit;
