@@ -37,21 +37,12 @@ class Pman_Core_NotifySmtpCheck extends Pman
 //                
 //                print_R($mailer);exit;
                 
-                $headers = array(
-                    'From' => $settings['username']
-                );
-                
                 $params = array(
                     'netdns' => false
                 );
                 
                 $smtpmx = new Mail_smtpmx($params);
                 
-                $result = $smtpmx->_sanitizeHeaders($headers);
-                if (is_a($result, 'PEAR_Error')) {
-                    print_r("Error occour on '_sanitizeHeaders' \n");exit;
-                }
-                print_R($smtpmx);exit;
                 $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                     
 //                print_R($smtpmx->_smtp);exit;
