@@ -36,23 +36,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
             }
             
             foreach ($settings['domains'] as $dom){
-//                $mailer = Mail::factory('smtp', array(
-//                    'host'    => $dom ,
-//                    'localhost' => $server,
-//                    'timeout' => 15,
-//                    'auth' => true,
-//                    'username' => $settings['username'],
-//                    'password' => $settings['password']
-//                ));
-//                
-//                print_R($mailer);exit;
-                
-//                $params = array(
-//                    'netdns' => false
-//                );
-                
-//                $smtpmx = new Mail_smtpmx($params);
-//                $smtpmx->debug = true;
                 
                 $socket_options = array (
                     'ssl' => array(
@@ -65,9 +48,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 $smtp = new Net_SMTP($server, 25, '058177247238.ctinets.com', false, 0, $socket_options);
                 
                 $smtp->setDebug(true);
-//                print_R($smtp);
-                
-//                print_R($smtpmx->_smtp);exit;
                 
                 $res = $smtp->connect(10);
                 
