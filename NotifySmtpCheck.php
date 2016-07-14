@@ -54,13 +54,15 @@ class Pman_Core_NotifySmtpCheck extends Pman
 //                $smtpmx = new Mail_smtpmx($params);
 //                $smtpmx->debug = true;
                 
-                $options = array (
-        'ssl' => array(
-            'verify_peer'  => false,
-            'verify_peer_name'  => false,
-            'allow_self_signed' => true));
+                $socket_options = array (
+                    'ssl' => array(
+                        'verify_peer'  => false,
+                        'verify_peer_name'  => false,
+                        'allow_self_signed' => true
+                    )
+                );
                 
-                $smtp = new Net_SMTP($server, 993, $dom, false, 0, $options);
+                $smtp = new Net_SMTP($server, 993, $dom, false, 0, $socket_options);
                 
                 $smtp->setDebug(true);
 //                print_R($smtp);
@@ -73,9 +75,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     print_R('error?????');exit;
                 }
                 
-                $r = $smtp->auth($settings['username'], $settings['password']);
+                $res = $smtp->auth($settings['username'], $settings['password']);
             
-                print_R($r);exit;
 //                $smtpmx->_smtp->disconnect();
                 print_r("resutlt : {$res} \n");
                 exit;
