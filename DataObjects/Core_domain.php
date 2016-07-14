@@ -1,8 +1,19 @@
 <?php
-
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Table Definition for core_domain
  */
+require_once 'DB/DataObject.php';
 
+class Pman_Core_DataObjects_Core_domain extends DB_DataObject 
+{
+    ###START_AUTOCODE
+    /* the code below is auto generated do not remove the above tag */
+  
+    public $__table = 'core_domain';
+    public $id;
+    public $domain;
+
+    /* the code above is auto generated do not remove the tag below */
+    ###END_AUTOCODE
+    
+}
