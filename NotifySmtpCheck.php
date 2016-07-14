@@ -43,9 +43,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $smtpmx = new Mail_smtpmx($params);
                 
-//                $mx = $smtpmx->_getMx($dom);
+                $mx = $smtpmx->_getMx($dom);
                 
-//                foreach ($mx as $mserver => $mpriority) {
+                foreach ($mx as $mserver => $mpriority) {
                     
                     $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                     
@@ -55,7 +55,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     $smtpmx->_smtp->disconnect();
                     
                     print_R($res);exit;
-//                }
+                }
                 
             }
             
