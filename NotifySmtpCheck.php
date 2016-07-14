@@ -33,7 +33,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $xpath = new DOMXPath($dom);
         
-        $lists = $xpath->query("//code[@class='ip]");
+        $lists = $xpath->query("code[@class='ip']");
         
         
         print_R($lists);exit;
