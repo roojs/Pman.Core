@@ -51,10 +51,10 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     'netdns' => false
                 );
                 
-                $smtpmx = new Mail_smtpmx($params);
-                $smtpmx->debug = true;
+//                $smtpmx = new Mail_smtpmx($params);
+//                $smtpmx->debug = true;
                 
-                $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
+                $smtp = new Net_SMTP($server, 25, $dom);
                 
                 $smtpmx->_smtp->setDebug(true);
                 
