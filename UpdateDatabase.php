@@ -407,7 +407,7 @@ class Pman_Core_UpdateDatabase extends Pman
                         echo "OK - {$line}\n"; flush();
                         continue;
                     }
-                    switch($match[1]) {
+                    switch($matches[1]) {
                         
                         
                     }
