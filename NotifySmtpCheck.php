@@ -14,6 +14,17 @@ class Pman_Core_NotifySmtpCheck extends Pman
         ){
             return;
         }
+        
+        $error = array();
+        
+        foreach ($ff->Core_Notify['routes'] as $server => $settings){
+            if(empty($settings['username']) || empty($settings['password'])){
+                $error[] = "{$server} missing username or password";
+                continue;
+            }
+            
+            
+        }
     }
     
 }
