@@ -27,6 +27,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
+        $ip = file_get_contents("https://ifconfig.co/");
+        print_R($ip);exit;
+        
         $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
