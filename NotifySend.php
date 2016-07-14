@@ -413,7 +413,6 @@ class Pman_Core_NotifySend extends Pman
                         $username = $settings['username'];
                         $password = $settings['password'];
                         
-                        
                         break;
                     }
                     
