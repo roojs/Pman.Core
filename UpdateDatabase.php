@@ -407,12 +407,17 @@ class Pman_Core_UpdateDatabase extends Pman
                         echo "OK - {$line}\n"; flush();
                         continue;
                     }
+                    $continue =0;
                     switch($matches[1]) {
                         case 1050: // create tables triggers this..
                             
-                            echo "IGNORE - {$line}\n"; flush();
-                            continue;
+                            $continue = 1;
+                            break;
                         
+                    }
+                    if ($continue) {
+                        echo "IGNORE - {$line}\n"; flush();
+                        continue;
                     }
                     // real errors...
                     // 1051: // Unknown table -- normally drop = add iff exists..
