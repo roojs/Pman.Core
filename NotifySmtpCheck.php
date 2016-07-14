@@ -62,7 +62,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     )
                 );
                 
-                $smtp = new Net_SMTP($server, 993, $dom, false, 0, $socket_options);
+                $smtp = new Net_SMTP($server, 25, $dom, false, 0, $socket_options);
                 
                 $smtp->setDebug(true);
 //                print_R($smtp);
