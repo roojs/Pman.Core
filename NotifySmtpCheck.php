@@ -44,7 +44,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 $smtpmx = new Mail_smtpmx($params);
                 $smtpmx->debug = true;
                 
-                $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, 'edward.roojs');
+                $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                 
                 $smtpmx->_smtp->setDebug(true);
                 
