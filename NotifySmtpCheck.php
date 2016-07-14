@@ -10,6 +10,12 @@ class Pman_Core_NotifySmtpCheck extends Pman
  
     static $cli_opts = array();
         
+    function get()
+    {
+        $this->check();
+        
+    }
+    
     function check()
     {
         $ff = HTML_FlexyFramework::get();
