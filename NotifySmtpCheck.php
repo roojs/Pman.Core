@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Pman.php';
-//require_once "Mail.php";
+require_once "Mail.php";
 require_once 'Mail/smtpmx.php';
         
 class Pman_Core_NotifySmtpCheck extends Pman
