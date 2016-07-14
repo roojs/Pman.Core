@@ -10,13 +10,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         
-        if(
-                empty($ff->Core_Notify) ||
-                empty($ff->Core_Notify['routes'])
-        ){
-            return;
-        }
-        
         $helo = $this->getHelo();
         
         $error = array();
