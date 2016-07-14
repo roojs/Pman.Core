@@ -41,7 +41,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $ip = $element->item(0)->nodeValue;
         
-        print_R($ip);exit;
+        $cmd = "host {$ip}";
+        
+        $e = `$cmd`;
         
         $error = array();
         
