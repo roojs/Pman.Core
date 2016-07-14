@@ -408,7 +408,10 @@ class Pman_Core_UpdateDatabase extends Pman
                         continue;
                     }
                     switch($matches[1]) {
-                        case 1050:  /// table exists - create table triggers this on existing tables.
+                        case 1050: // create tables triggers this..
+                            
+                            echo "IGNORE - {$line}\n"; flush();
+                            continue;
                         
                     }
                     // real errors...
