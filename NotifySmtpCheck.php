@@ -63,7 +63,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             }
         }
         
-        print_r($error);exit;
+        return $error;
     }
     
     function getHelo()
