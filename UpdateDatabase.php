@@ -425,7 +425,7 @@ class Pman_Core_UpdateDatabase extends Pman
                         
                     }
                     if ($continue) {
-                        echo "IGNORE - {$line}\n"; flush();
+                        echo " ---- {$line}\n"; flush();
                         continue;
                     }
                     // real errors...
