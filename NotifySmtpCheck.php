@@ -10,9 +10,16 @@ class Pman_Core_NotifySmtpCheck extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         
+        if(
+                empty($ff->Core_Notify) ||
+                empty($ff->Core_Notify['routes'])
+        ){
+            return;
+        }
+        
         $helo = $this->getHelo();
         
-        $error = array();
+        $error = array('test');
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
             if(empty($settings['domains']) || empty($settings['username']) || empty($settings['password'])){
@@ -46,7 +53,11 @@ class Pman_Core_NotifySmtpCheck extends Pman
             }
         }
         
-        return $error;
+        if(!empty($error)){
+            die($error);
+        }
+        
+        return;
     }
     
     function getHelo()
