@@ -47,16 +47,16 @@ class Pman_Core_NotifySmtpCheck extends Pman
 //                
 //                print_R($mailer);exit;
                 
-                $params = array(
-                    'netdns' => false
-                );
+//                $params = array(
+//                    'netdns' => false
+//                );
                 
 //                $smtpmx = new Mail_smtpmx($params);
 //                $smtpmx->debug = true;
                 
                 $smtp = new Net_SMTP($server, 25, $dom);
-                
-                $smtpmx->_smtp->setDebug(true);
+                $smtp->setDebug(true);
+                print_R($smtp);
                 
 //                print_R($smtpmx->_smtp);exit;
                 
