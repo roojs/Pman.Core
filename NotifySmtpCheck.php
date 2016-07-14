@@ -45,7 +45,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $mx = $smtpmx->_getMx($dom);
                 
-                print_r($mx);exit;
+                print_r($smtpmx);exit;
                 
             }
             
