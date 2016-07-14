@@ -37,33 +37,30 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 continue;
             }
             
-            foreach ($settings['domains'] as $dom){
-                
-                $socket_options = array (
-                    'ssl' => array(
-                        'verify_peer'  => false,
-                        'verify_peer_name'  => false,
-                        'allow_self_signed' => true
-                    )
-                );
-                
-                $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
-                
-                $smtp->setDebug(true);
-                
-                $res = $smtp->connect(10);
-                
-                if (is_a($res, 'PEAR_Error')) {
-                    $error[] = "{$server} - Cound not connect";
-                    continue;
-                }
-                
-                $res = $smtp->auth($settings['username'], $settings['password']);
-            
-                if (is_a($res, 'PEAR_Error')) {
-                    $error[] = "{$server} - Cound not login";
-                    continue;
-                }
+            $socket_options = array (
+                'ssl' => array(
+                    'verify_peer'  => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true
+                )
+            );
+
+            $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
+
+            $smtp->setDebug(true);
+
+            $res = $smtp->connect(10);
+
+            if (is_a($res, 'PEAR_Error')) {
+                $error[] = "{$server} - Cound not connect";
+                continue;
+            }
+
+            $res = $smtp->auth($settings['username'], $settings['password']);
+
+            if (is_a($res, 'PEAR_Error')) {
+                $error[] = "{$server} - Cound not login";
+                continue;
             }
         }
         
