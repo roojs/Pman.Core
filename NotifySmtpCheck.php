@@ -47,8 +47,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 foreach ($mx as $mserver => $mpriority) {
                     
-
-                    // attempt to connect to the configured SMTP server.
                     $res = $smtpmx->_smtp->connect($smtpmx->timeout);
 
                     print_R($res);exit;
