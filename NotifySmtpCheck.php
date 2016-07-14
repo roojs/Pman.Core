@@ -47,6 +47,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $helo = array_pop(explode(' ', $e));
         
+        print_R($helo);exit;
+        
         $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
