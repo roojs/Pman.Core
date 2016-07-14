@@ -358,8 +358,6 @@ class Pman_Core_NotifySend extends Pman
         
         foreach($mxs as $dom) {
             
-            
-            
             if (!isset($ff->Mail['helo'])) {
                 $this->errorHandler("config Mail[helo] is not set");
             }
@@ -378,6 +376,9 @@ class Pman_Core_NotifySend extends Pman
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
             if (isset($ff->Mail['host']) && $ff->Mail['host'] == $dom && !empty($ff->Mail['auth'] )) {
+                
+                
+                
                 $mailer->auth = true;
                 $mailer->username = $ff->Mail['username'] ;
                 $mailer->password = $ff->Mail['password'] ;        
