@@ -51,7 +51,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
             if(empty($settings['domains']) || empty($settings['username']) || empty($settings['password'])){
-                $error[] = "{$server} missing domains / username / password";
+                $error[] = "{$server} - Missing domains / username / password";
                 continue;
             }
             
@@ -72,20 +72,18 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 $res = $smtp->connect(10);
                 
                 if (is_a($res, 'PEAR_Error')) {
-                    die("Cound not connect to {$server}");
+                    $error[] = "{$server} - Cound not connect";
+                    continue;
                 }
                 
                 $res = $smtp->auth($settings['username'], $settings['password']);
             
                 if (is_a($res, 'PEAR_Error')) {
-                    die($res);
+                    $error[] = "{$server} - Cound not login";
+                    continue;
                 }
                 
-                print_R("SUCCESS? {$res} \n");
-                exit;
-                   
             }
-            
             
         }
     }
