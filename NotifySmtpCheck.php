@@ -64,10 +64,10 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     $error[] = "{$server} - Cound not login";
                     continue;
                 }
-                
             }
-            
         }
+        
+        pritn_R($error);exit;
     }
     
     function getHelo()
