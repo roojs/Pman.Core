@@ -51,7 +51,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 if (is_a($result, 'PEAR_Error')) {
                     print_r("Error occour on '_sanitizeHeaders' \n");exit;
                 }
-
+                print_R($smtpmx);exit;
                 $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                     
 //                print_R($smtpmx->_smtp);exit;
