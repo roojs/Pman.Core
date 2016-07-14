@@ -60,7 +60,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             'verify_peer_name'  => false,
             'allow_self_signed' => true));
                 
-                $smtp = new Net_SMTP($server, 25, $dom, false, 0, $options);
+                $smtp = new Net_SMTP($server, 993, $dom, false, 0, $options);
                 
                 $smtp->setDebug(true);
 //                print_R($smtp);
