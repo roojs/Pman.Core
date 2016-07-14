@@ -136,9 +136,11 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_FlexyFramework::get();
         
         if(!empty($ff->Core_Notify)){
-            print_R($ff->Core_Notify);
+            
         }
-        exit;
+        
+        EXIT;
+        
         $this->disabled = explode(',', $ff->disable);
         
         //$this->fixSequencesPgsql();exit;
