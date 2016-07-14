@@ -39,9 +39,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
-        print_R($element->item(0));exit;
+        $ip = $element->item(0)->nodeValue;
         
-        print_R($lists);exit;
+        print_R($ip);exit;
         
         $error = array();
         
