@@ -436,7 +436,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = $ev->id; // sent ok.. - no need to record it..
-                $w->domain_id = 
+                $w->domain_id = $core_domain->id;
                 $w->update($ww);
                 
                 // enable cc in notify..
