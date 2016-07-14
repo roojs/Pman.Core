@@ -54,10 +54,11 @@ class Pman_Core_NotifySmtpCheck extends Pman
 //                $smtpmx = new Mail_smtpmx($params);
 //                $smtpmx->debug = true;
                 
-                $options = array(
+                $options = array (
+        'ssl' => array(
             'verify_peer'  => false,
             'verify_peer_name'  => false,
-            'allow_self_signed' => true);
+            'allow_self_signed' => true));
                 
                 $smtp = new Net_SMTP($server, 25, $dom, false, 0, $options);
                 
