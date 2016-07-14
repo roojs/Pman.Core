@@ -412,6 +412,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     }
                     $continue =0;
                     switch($matches[1]) {
+                        case 1017: // cause by renaming table -- old one does not exist..
                         case 1050: // create tables triggers this..
                         case 1060: //    Duplicate column name
                         case 1061: // Duplicate key name - triggered by add index.. but could hide error. - unlikely though.
