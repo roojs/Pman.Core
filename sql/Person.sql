@@ -88,6 +88,7 @@ alter table Person change role role varchar(254) NOT NULL DEFAULT '';
 alter table Person change email email varchar(254) NOT NULL DEFAULT '';
 
 ALTER TABLE Person ADD COLUMN authorize_md5 varchar(254)  NOT NULL DEFAULT '';
+ALTER TABLE Person CHANGE COLUMN authorize_md5 authorize_md5 varchar(254)  NOT NULL DEFAULT '';
 
 ALTER TABLE Person ADD INDEX lookup_authorize_md5_active(authorize_md5, active);
 
