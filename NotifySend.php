@@ -356,6 +356,15 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
+        $core_domain = DB_DataObject::factory($core_domain);
+        if(!$core_domain->get('domain', $dom)){
+            $core_domain = DB_DataObject::factory($core_domain);
+            $core_domain->setFrom(array(
+                'domain' => $dom
+            ));
+            $core_domain->insert();
+        }
+                        
         foreach($mxs as $mx) {
             
             if (!isset($ff->Mail['helo'])) {
@@ -385,15 +394,6 @@ class Pman_Core_NotifySend extends Pman
                     foreach ($ff->Core_Notify['routes'] as $server => $settings){
                         if(!in_array($dom, $settings['domains'])){
                             continue;
-                        }
-                        
-                        $core_domain = DB_DataObject::factory($core_domain);
-                        if(!$core_domain->get('domain', $dom)){
-                            $core_domain = DB_DataObject::factory($core_domain);
-                            $core_domain->setFrom(array(
-                                'domain' => $dom
-                            ));
-                            $core_domain->insert();
                         }
                         
                         $core_notify = DB_DataObject::factory('core_notify');
@@ -436,6 +436,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = $ev->id; // sent ok.. - no need to record it..
+                $w->domain_id = 
                 $w->update($ww);
                 
                 // enable cc in notify..
