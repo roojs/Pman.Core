@@ -507,6 +507,7 @@ class Pman_Core_NotifySend extends Pman
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
+            $w->domain_id = $core_domain->id;
             $w->update($ww);
             $this->errorHandler(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
         }
@@ -517,6 +518,7 @@ class Pman_Core_NotifySend extends Pman
             $w->sent = date('Y-m-d H:i:s');
             $w->msgid = '';
             $w->event_id = $ev->id;
+            $w->domain_id = $core_domain->id;
             $w->update($ww);
             $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
         }
@@ -524,6 +526,7 @@ class Pman_Core_NotifySend extends Pman
         
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
+        $w->domain_id = $core_domain->id;
         $w->update($ww);
         $this->errorHandler(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
 
