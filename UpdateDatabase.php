@@ -137,6 +137,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         if(!empty($ff->Core_Notify)){
             $x = new Pman_Core_NotifySmtpCheck();
+            $x->check();
         }
         
         EXIT;
