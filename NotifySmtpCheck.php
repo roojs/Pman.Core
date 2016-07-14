@@ -27,7 +27,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
-        
+        $helo = $this->getHelo();
         
         $error = array();
         
