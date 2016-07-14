@@ -402,7 +402,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 { 
                     // send the current file part to the browser 
                     $line = fread($fp, 1024);
-                    echo $line;
+                    echo '->>> ' .  $line . " <<<---\n";
                     echo "--";
                     
                     
