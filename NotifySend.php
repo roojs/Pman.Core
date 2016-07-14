@@ -403,7 +403,10 @@ class Pman_Core_NotifySend extends Pman
                         ");
                         
                         if($core_notify->count() >= $settings['rate']){
-                            
+                            $old = clone($w);
+                            $w->act_when = date("Y-m-d H:i:s", strtotime('+1 HOUR'));
+                            $w->update($old);
+                            $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                         }
                         
                         $mailer->host = $server;
