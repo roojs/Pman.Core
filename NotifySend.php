@@ -387,9 +387,26 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
                         
+                        $core_domain = DB_DataObject::factory($core_domain);
+                        if(!$core_domain->get('domain', $dom)){
+                            $core_domain = DB_DataObject::factory($core_domain);
+                            $core_domain->setFrom(array(
+                                'domain' => $dom
+                            ));
+                            $core_domain->insert();
+                        }
+                        
+                        $core_notify = DB_DataObject::factory('core_notify');
+                        $core_notify->domain_id = $core_domain->id;
+                        
+                        if($core_notify->count() >= $settings['rate']){
+                            
+                        }
+                        
                         $mailer->host = $server;
                         $username = $settings['username'];
                         $password = $settings['password'];
+                        
                         
                         break;
                     }
