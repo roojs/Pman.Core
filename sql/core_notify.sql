@@ -38,3 +38,5 @@ alter table core_notify add   INDEX lookup_b (sent, person_id, msgid, ontable);
 ALTER TABLE core_notify add   index lookup_d (person_id, msgid, ontable);
 ALTER TABLE core_notify ADD   INDEX lookup_e (onid, ontable, person_id, act_when);
 ALTER TABLE core_notify ADD   INDEX lookup_f (to_email);
+
+ALTER TABLE core_notify ADD COLUMN domain_id INT(11)  NOT NULL  DEFAULT 0;
