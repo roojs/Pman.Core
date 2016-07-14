@@ -43,19 +43,29 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $smtpmx = new Mail_smtpmx($params);
                 
-                $mx = $smtpmx->_getMx($dom);
+                $smtpmx->_smtp = new Net_SMTP($mserver, $smtpmx->port, $smtpmx->mailname);
+                    
+                print_R($smtpmx);exit;
                 
-                foreach ($mx as $mserver => $mpriority) {
-                    
-                    $smtpmx->_smtp = new Net_SMTP($mserver, $smtpmx->port, $smtpmx->mailname);
-                    
-//                    print_R($smtpmx);exit;
-                    $res = $smtpmx->_smtp->connect($smtpmx->timeout);
+                $res = $smtpmx->_smtp->connect($smtpmx->timeout);
 
-                    $smtpmx->_smtp->disconnect();
+                $smtpmx->_smtp->disconnect();
+
+                print_R($res);exit;
                     
-                    print_R($res);exit;
-                }
+//                $mx = $smtpmx->_getMx($dom);
+//                
+//                foreach ($mx as $mserver => $mpriority) {
+//                    
+//                    $smtpmx->_smtp = new Net_SMTP($mserver, $smtpmx->port, $smtpmx->mailname);
+//                    
+////                    print_R($smtpmx);exit;
+//                    $res = $smtpmx->_smtp->connect($smtpmx->timeout);
+//
+//                    $smtpmx->_smtp->disconnect();
+//                    
+//                    print_R($res);exit;
+//                }
                 
             }
             
