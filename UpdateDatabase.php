@@ -413,7 +413,7 @@ class Pman_Core_UpdateDatabase extends Pman
                         case 1060: //    Duplicate column name
                             
                         case 1054: // Unknown column -- triggered by CHANGE COLUMN - but may hide other errrors..
-
+                        case 1061: // Duplicate key name - triggered by add index.. but could hide error. - unlikely though.
                             $continue = 1;
                             break;
                         
