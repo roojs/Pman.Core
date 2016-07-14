@@ -40,8 +40,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             $socket_options = array (
                 'ssl' => array(
                     'verify_peer'  => false,
-                    'verify_peer_name'  => false,
-                    'allow_self_signed' => true
+                    'verify_peer_name'  => false
                 )
             );
 
