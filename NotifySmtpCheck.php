@@ -36,8 +36,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
 
             $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
 
-            $smtp->setDebug(true);
-
             $res = $smtp->connect(10);
 
             if (is_a($res, 'PEAR_Error')) {
