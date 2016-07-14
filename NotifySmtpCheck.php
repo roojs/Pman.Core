@@ -6,6 +6,11 @@ require_once 'Mail/smtpmx.php';
         
 class Pman_Core_NotifySmtpCheck extends Pman
 {
+    function get()
+    {
+        $this->check();
+    }
+    
     function check()
     {
         $ff = HTML_FlexyFramework::get();
