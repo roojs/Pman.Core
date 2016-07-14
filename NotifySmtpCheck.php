@@ -30,8 +30,12 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     'host'    => $dom ,
                     'localhost' => $server,
                     'timeout' => 15,
-                    
+                    'auth' => true,
+                    'username' => $settings['username'],
+                    'password' => $settings['password']
                 ));
+                
+                print_R($mailer);exit;
             }
             
             
