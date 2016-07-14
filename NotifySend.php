@@ -407,6 +407,7 @@ class Pman_Core_NotifySend extends Pman
                             $w->act_when = date("Y-m-d H:i:s", strtotime('+1 HOUR'));
                             $w->update($old);
                             $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
+                            return;
                         }
                         
                         $mailer->host = $server;
