@@ -45,6 +45,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $e = `$cmd`;
         
+        print_R($e);exit;
+        
         $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
