@@ -382,7 +382,9 @@ class Pman_Core_NotifySend extends Pman
                     $preferHost = false;
                     
                     foreach ($ff->Core_Notify['routes'] as $server => $settings){
-//                        if(!in_array($, $haystack))
+                        if(!in_array($dom, $settings['domains'])){
+                            
+                        }
                     }
                     
                 }
