@@ -401,7 +401,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 while(!feof($fp)) 
                 { 
                     // send the current file part to the browser 
-                    $line = fread($fp, 1024);
+                    $line = fgets($fp, 1024);
                     echo '->>> ' .  $line . " <<<---\n";
                     echo "--";
                     
