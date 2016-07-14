@@ -17,7 +17,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
             return;
         }
         
-        $helo = $this->getHelo();
+//        $helo = $this->getHelo();
         
         $error = array();
         
@@ -34,7 +34,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 )
             );
 
-            $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
+            $smtp = new Net_SMTP($server, $settings['port'], '', false, 0, $socket_options);
 
 //            $smtp->setDebug(true);
 
