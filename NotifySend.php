@@ -379,6 +379,12 @@ class Pman_Core_NotifySend extends Pman
                 
                 if(!empty($ff->Core_Notify)){
                     
+                    $preferHost = false;
+                    
+                    foreach ($ff->Core_Notify['routes'] as $server => $settings){
+//                        if(!in_array($, $haystack))
+                    }
+                    
                 }
                 
                 $mailer->auth = true;
