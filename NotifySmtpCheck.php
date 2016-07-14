@@ -9,6 +9,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
     function get()
     {
         $this->check();
+        exit;
     }
     
     function check()
