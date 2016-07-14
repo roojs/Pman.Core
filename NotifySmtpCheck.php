@@ -66,8 +66,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     print_R('error?????');exit;
                 }
                 
-                $smtp->auth($settings['username'], $settings['password']);
+                $r = $smtp->auth($settings['username'], $settings['password']);
             
+                print_R($r);exit;
 //                $smtpmx->_smtp->disconnect();
                 print_r("resutlt : {$res} \n");
                 exit;
