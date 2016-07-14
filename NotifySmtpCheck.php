@@ -47,8 +47,6 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $helo = substr(array_pop(explode(' ', $e)), 0, -2);
         
-        print_R($helo);exit;
-        
         $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
@@ -67,7 +65,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     )
                 );
                 
-                $smtp = new Net_SMTP($server, $settings['port'], '058177247238.ctinets.com', false, 0, $socket_options);
+                $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
                 
                 $smtp->setDebug(true);
                 
