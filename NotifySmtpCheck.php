@@ -37,6 +37,10 @@ class Pman_Core_NotifySmtpCheck extends Pman
 //                
 //                print_R($mailer);exit;
                 
+                $headers = array(
+                    'From' => $settings['username']
+                );
+                
                 $params = array(
                     'netdns' => false,
                     'mailname' => 'edward.roojs'
