@@ -424,8 +424,8 @@ class Pman_Core_UpdateDatabase extends Pman
                     }
                     // real errors...
                     // 1051: // Unknown table -- normally drop = add iff exists..
-                    
-                    print_r(array($line,$matches));exit;
+                    echo "File: $fn\n$line\n";
+                    exit;
                     
                     
                 } 
