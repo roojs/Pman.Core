@@ -402,12 +402,14 @@ class Pman_Core_UpdateDatabase extends Pman
                 { 
                     // send the current file part to the browser 
                     $line = trim(fgets($fp, 1024));
-                    echo '->>> ' .  $line . " <<<---\n";
-                    echo "--";
+                    $matches = array();
+                    if (!preg_match('/^ERROR\s+([0-9]+)/', $line, $matches)) {
+                        echo "OK - {$line}\n"; flush();
+                        continue;
+                    }
+                    print_r($matches);exit;
                     
                     
-                    // flush the content to the browser 
-                    flush(); 
                 } 
                 
             
