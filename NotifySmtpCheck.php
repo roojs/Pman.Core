@@ -47,7 +47,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 foreach ($mx as $mserver => $mpriority) {
                     
-                    $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
+                    $smtpmx->_smtp = new Net_SMTP($mserver, $smtpmx->port, $smtpmx->mailname);
                     
 //                    print_R($smtpmx);exit;
                     $res = $smtpmx->_smtp->connect($smtpmx->timeout);
