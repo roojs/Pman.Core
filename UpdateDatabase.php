@@ -392,7 +392,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     continue;
                 }
                 
-                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ;
+                $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ." 2>&1" ;
                 
                 echo basename($dir).'/'. basename($fn) .    '::' .  $cmd. ($this->cli ? "\n" : "<BR>\n");
                 
