@@ -377,7 +377,9 @@ class Pman_Core_NotifySend extends Pman
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
             if (isset($ff->Mail['host']) && $ff->Mail['host'] == $dom && !empty($ff->Mail['auth'] )) {
                 
-                
+                if(!empty($ff->Core_Notify)){
+                    
+                }
                 
                 $mailer->auth = true;
                 $mailer->username = $ff->Mail['username'] ;
