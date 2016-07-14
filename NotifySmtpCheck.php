@@ -19,7 +19,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
         
         $helo = $this->getHelo();
         
-        $error = array('test');
+        $error = array();
         
         foreach ($ff->Core_Notify['routes'] as $server => $settings){
             if(empty($settings['domains']) || empty($settings['username']) || empty($settings['password'])){
@@ -35,6 +35,8 @@ class Pman_Core_NotifySmtpCheck extends Pman
             );
 
             $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
+
+//            $smtp->setDebug(true);
 
             $res = $smtp->connect(10);
 
