@@ -56,7 +56,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     print_R('error?????');exit;
                 }
             
-                $smtpmx->_smtp->disconnect();
+//                $smtpmx->_smtp->disconnect();
 
                 print_R($res);exit;
                     
