@@ -77,8 +77,11 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $res = $smtp->auth($settings['username'], $settings['password']);
             
-//                $smtpmx->_smtp->disconnect();
-                print_r("resutlt : {$res} \n");
+                if (is_a($res, 'PEAR_Error')) {
+                    die($res);
+                }
+                
+                print_R("SUCCESS? {$res} \n");
                 exit;
                     
 //                $mx = $smtpmx->_getMx($dom);
