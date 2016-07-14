@@ -45,7 +45,7 @@ class Pman_Core_NotifySmtpCheck extends Pman
                 
                 $smtpmx->_smtp = new Net_SMTP($server, $smtpmx->port, $smtpmx->mailname);
                     
-                print_R($smtpmx);exit;
+                print_R($smtpmx->_smtp);exit;
                 
                 $res = $smtpmx->_smtp->connect($smtpmx->timeout);
 
