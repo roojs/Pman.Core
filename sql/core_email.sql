@@ -21,7 +21,7 @@ ALTER TABLE core_email MODIFY COLUMN bcc_group INT(11) NOT NULL DEFAULT 0;
 
 -- each email template should have  a test class with a static method ::test_{name}
 ALTER TABLE core_email ADD COLUMN test_class VARCHAR(254) NOT NULL DEFAULT '';
-
+ALTER TABLE core_email MODIFY COLUMN test_class VARCHAR(254) NOT NULL DEFAULT '';
 
  
 
