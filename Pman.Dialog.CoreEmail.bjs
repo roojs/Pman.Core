@@ -269,7 +269,9 @@
                  "listeners" : {
                   "check" : "function (_self, checked)\n{\n    \n}"
                  },
+                 "Boolean checked" : true,
                  "xtype" : "Checkbox",
+                 "String valueOff" : 0,
                  "String boxLabel" : "Enabled - will be sent out",
                  "$ xns" : "Roo.form",
                  "Mixed value" : 1
