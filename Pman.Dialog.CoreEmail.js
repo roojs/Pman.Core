@@ -13,18 +13,20 @@ Pman.Dialog.CoreEmail = {
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
   '72d6d7a1885885bb55a565fd1070581a' :"Import",
-  '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
+  '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   '884df8e413319ff51a3f5f528606238a' :"Use template",
   'e6b391a8d2c4d45902a23a8b6585703d' :"URL",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
+  '03368e3c1eb4d2a9048775874301b19f' :"Select category",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
-  '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
+  '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
+  '3adbdb3ac060038aa0e6e6c138ef9873' :"Category",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -663,6 +665,61 @@ Pman.Dialog.CoreEmail = {
                xns : Roo.form,
                '|xns' : 'Roo.form',
                xtype : 'TextField'
+              },
+              {
+               allowBlank : false,
+               alwaysQuery : true,
+               displayField : 'name',
+               editable : false,
+               emptyText : _this._strings['03368e3c1eb4d2a9048775874301b19f'] /* Select category */,
+               fieldLabel : _this._strings['3adbdb3ac060038aa0e6e6c138ef9873'] /* Category */,
+               forceSelection : true,
+               hiddenName : 'category_id',
+               listWidth : 400,
+               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+               minChars : 2,
+               name : 'category_id_name',
+               pageSize : 999,
+               qtip : _this._strings['03368e3c1eb4d2a9048775874301b19f'] /* Select category */,
+               queryParam : '',
+               selectOnFocus : true,
+               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{fullpath}</b> </div>',
+               triggerAction : 'all',
+               typeAhead : true,
+               valueField : 'id',
+               width : 200,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               xtype : 'ComboBox',
+               store : {
+                remoteSort : true,
+                sortInfo : { direction : 'ASC', field: 'seqid' },
+                xns : Roo.data,
+                '|xns' : 'Roo.data',
+                xtype : 'Store',
+                listeners : {
+                 beforeload : function (_self, o){
+                      o.params = o.params || {};
+                      // set more here
+                  }
+                },
+                proxy : {
+                 method : 'GET',
+                 url : baseURL + '/Roo/category.php',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data',
+                 xtype : 'HttpProxy'
+                },
+                reader : {
+                 fields : [{"name":"id","type":"int"},{"name":"fullpath","type":"string"}],
+                 id : 'id',
+                 root : 'data',
+                 totalProperty : 'total',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data',
+                 xtype : 'JsonReader'
+                }
+               }
               }
              ]
             },
