@@ -167,8 +167,7 @@ Pman.Dialog.CoreEmail = {
                 mask: 'Sending',
                 params : {
                     _id : id,
-                    _table : _this.data.module,
-                    _send_test : 1
+                    _table : _this.data.module
                 }, 
                 success : function(res) { 
                     if(res.data == 'SUCCESS'){
