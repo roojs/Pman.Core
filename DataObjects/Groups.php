@@ -140,6 +140,9 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function postListFilter($ar, $au, $req)
     {      
+        if(!empty($req['_not_add_others'])){
+            return $ar;
+        }
         
         $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
         $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
