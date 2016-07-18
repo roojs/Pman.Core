@@ -28,6 +28,7 @@ Pman.Dialog.CoreEmail = {
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
+  'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '1bd18d39370b7f26c1c5e18067b74c6f' :"Html File",
@@ -616,9 +617,16 @@ Pman.Dialog.CoreEmail = {
                items  : [
                 {
                  boxLabel : 'Enabled - will be sent out',
+                 value : 1,
                  xns : Roo.form,
                  '|xns' : 'Roo.form',
-                 xtype : 'Checkbox'
+                 xtype : 'Checkbox',
+                 listeners : {
+                  check : function (_self, checked)
+                   {
+                       
+                   }
+                 }
                 }
                ]
               }
