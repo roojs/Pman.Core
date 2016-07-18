@@ -663,6 +663,77 @@ Pman.Dialog.CoreEmail = {
                xns : Roo.form,
                '|xns' : 'Roo.form',
                xtype : 'TextField'
+              },
+              {
+               allowBlank : true,
+               alwaysQuery : true,
+               displayField : 'file',
+               editable : false,
+               emptyText : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
+               fieldLabel : _this._strings['278c491bdd8a53618c149c4ac790da34'] /* Template */,
+               forceSelection : true,
+               hiddenName : 'template',
+               listWidth : 400,
+               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+               minChars : 2,
+               name : 'template',
+               pageSize : 20,
+               qtip : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
+               selectOnFocus : true,
+               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{file}</b> </div>',
+               triggerAction : 'all',
+               typeAhead : true,
+               valueField : 'file',
+               width : 200,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               xtype : 'ComboBox',
+               listeners : {
+                select : function (combo, record, index)
+                 {
+                    
+                 /*
+                     (function() { 
+                         combo.setValue('');
+                     }).defer(100);
+                 */    
+                     if(!record){
+                         return;
+                     }
+                     _this.form.findField('bodytext').setValue(record.data.content);
+                 
+                 }
+               },
+               store : {
+                remoteSort : true,
+                sortInfo : { direction : 'DESC', field: 'file' },
+                xns : Roo.data,
+                '|xns' : 'Roo.data',
+                xtype : 'Store',
+                listeners : {
+                 beforeload : function (_self, o){
+                      o.params = o.params || {};
+                      // set more here
+                     
+                  }
+                },
+                proxy : {
+                 method : 'GET',
+                 url : baseURL + '/Core/MailTemplateList.php',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data',
+                 xtype : 'HttpProxy'
+                },
+                reader : {
+                 fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}],
+                 id : 'name',
+                 root : 'data',
+                 totalProperty : 'total',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data',
+                 xtype : 'JsonReader'
+                }
+               }
               }
              ]
             },

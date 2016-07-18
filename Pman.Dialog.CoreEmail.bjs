@@ -300,6 +300,63 @@
                "width" : 300,
                "$ xns" : "Roo.form",
                "name" : "from_email"
+              },
+              {
+               "listeners" : {
+                "select" : "function (combo, record, index)\n{\n   \n/*\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n*/    \n    if(!record){\n        return;\n    }\n    _this.form.findField('bodytext').setValue(record.data.content);\n\n}"
+               },
+               "alwaysQuery" : true,
+               "listWidth" : 400,
+               "triggerAction" : "all",
+               "fieldLabel" : "Template",
+               "forceSelection" : true,
+               "selectOnFocus" : true,
+               "pageSize" : 20,
+               "displayField" : "file",
+               "emptyText" : "Select Template",
+               "hiddenName" : "template",
+               "minChars" : 2,
+               "valueField" : "file",
+               "xtype" : "ComboBox",
+               "allowBlank" : true,
+               "typeAhead" : true,
+               "editable" : false,
+               "width" : 200,
+               "$ xns" : "Roo.form",
+               "name" : "template",
+               "qtip" : "Select Template",
+               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{file}</b> </div>",
+               "loadingText" : "Searching...",
+               "items" : [
+                {
+                 "listeners" : {
+                  "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n   \n}\n"
+                 },
+                 "xtype" : "Store",
+                 "remoteSort" : true,
+                 "$ sortInfo" : "{ direction : 'DESC', field: 'file' }",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "store",
+                 "items" : [
+                  {
+                   "$ url" : "baseURL + '/Core/MailTemplateList.php'",
+                   "xtype" : "HttpProxy",
+                   "method" : "GET",
+                   "$ xns" : "Roo.data",
+                   "* prop" : "proxy"
+                  },
+                  {
+                   "id" : "name",
+                   "root" : "data",
+                   "xtype" : "JsonReader",
+                   "$ fields" : "[{\"name\":\"file\",\"type\":\"string\"},{\"name\":\"content\",\"type\":\"string\"}]",
+                   "$ xns" : "Roo.data",
+                   "* prop" : "reader",
+                   "totalProperty" : "total"
+                  }
+                 ]
+                }
+               ]
               }
              ]
             },
