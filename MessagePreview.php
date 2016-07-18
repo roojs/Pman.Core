@@ -83,7 +83,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $x = new $cls;
         
-        print_R($cls);exit;
+        if(!method_exists($x, ''))
         
     }
 }
