@@ -730,8 +730,10 @@ Pman.Dialog.CoreEmail = {
              items  : [
               {
                allowBlank : true,
+               disabled : true,
                fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
                name : 'test_class',
+               readOnly : true,
                width : 300,
                xns : Roo.form,
                '|xns' : 'Roo.form',
