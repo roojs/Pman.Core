@@ -91,6 +91,14 @@ class Pman_Core_MessagePreview extends Pman
         
         $content = $x->{$method}($this, $this->authUser);
         
-        $this->send($content);
+        $sent = $this->send($content);
+        
+        if(!is_object($sent)){
+            $this->jok('SUCCESS');
+        }
+        
+        $this->jerr('error!!:' . $sent->toString());
+        
+        
     }
 }
