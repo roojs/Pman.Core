@@ -25,11 +25,11 @@ Pman.Dialog.CoreEmail = {
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
-  '8e5fb038528cb96c95ed88a734589034' :"Mailout Name ?",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
+  'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '1bd18d39370b7f26c1c5e18067b74c6f' :"Html File",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
   '31bb2f6e9b8fb11cbb7fb63c6025223f' :"Select Template",
@@ -601,7 +601,7 @@ Pman.Dialog.CoreEmail = {
              items  : [
               {
                allowBlank : false,
-               fieldLabel : _this._strings['8e5fb038528cb96c95ed88a734589034'] /* Mailout Name ? */,
+               fieldLabel : _this._strings['b20a8b77b05d53b4e695738731400c85'] /* Mailout Name */,
                name : 'name',
                width : 400,
                xns : Roo.form,
