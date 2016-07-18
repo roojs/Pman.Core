@@ -337,7 +337,7 @@
                  "* prop" : "store",
                  "items" : [
                   {
-                   "$ url" : "baseURL + '/Core/MailTemplateList.php'",
+                   "$ url" : "baseURL + '/Roo/Groups'",
                    "xtype" : "HttpProxy",
                    "method" : "GET",
                    "$ xns" : "Roo.data",

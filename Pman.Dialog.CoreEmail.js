@@ -703,7 +703,7 @@ Pman.Dialog.CoreEmail = {
                 },
                 proxy : {
                  method : 'GET',
-                 url : baseURL + '/Core/MailTemplateList.php',
+                 url : baseURL + '/Roo/Groups',
                  xns : Roo.data,
                  '|xns' : 'Roo.data',
                  xtype : 'HttpProxy'
