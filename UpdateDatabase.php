@@ -791,9 +791,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 print_R($g);
                 if (!$g->members('email')) {
-                    print_R('run???');exit;
                       $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
+                print_R('run???');exit;
                 
                 $cm->bcc_group = $g->id;
             }
