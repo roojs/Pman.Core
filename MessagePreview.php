@@ -77,6 +77,11 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr("[{$core_email->name}] does not has test class");
         }
         
+        require_once "{$core_email->test_class}.php";
+        
+        $cls = new str_replace('/', '_', $core_email->test_class);
+        
+        print_R($cls);exit;
         
     }
 }
