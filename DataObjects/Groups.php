@@ -80,7 +80,6 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function memberIds()
     {
-        DB_DataObject::debugLevel(1);
         $gm = DB_Dataobject::factory('group_members');
         $gm->group_id = $this->id;
         return $gm->fetchAll('user_id');
@@ -107,7 +106,6 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function members($what = false)
     {
-        print_R($this);
         $ids = $this->memberIds();
         if (!$ids) {
             return array();
