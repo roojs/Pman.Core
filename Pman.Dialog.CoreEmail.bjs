@@ -329,7 +329,7 @@
                "items" : [
                 {
                  "listeners" : {
-                  "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n   \n}\n"
+                  "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params._not_add_others = 1;\n}\n"
                  },
                  "xtype" : "Store",
                  "remoteSort" : true,

@@ -698,8 +698,8 @@ Pman.Dialog.CoreEmail = {
                 listeners : {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
-                      // set more here
-                     
+                      
+                      o.params._not_add_others = 1;
                   }
                 },
                 proxy : {
