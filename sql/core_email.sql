@@ -15,7 +15,7 @@ CREATE  TABLE core_email (
 ALTER TABLE core_email ADD COLUMN active INT(2) default 1;
 
 -- need to store BCC data here.
-ALTER TABLE core_email ADD COLUMN bcc_group INT(11) default 0;
+ALTER TABLE core_email ADD COLUMN bcc_group INT(11) NOT NULL default 0;
 
 -- each email template should have  a test class with a static method ::test_{name}
 ALTER TABLE core_email ADD COLUMN test_class VARCHAR(254) default 0;
