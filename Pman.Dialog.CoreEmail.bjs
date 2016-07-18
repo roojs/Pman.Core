@@ -269,6 +269,7 @@
                  "listeners" : {
                   "check" : "function (_self, checked)\n{\n    \n}"
                  },
+                 "String name" : "active",
                  "xtype" : "Checkbox",
                  "String valueOff" : 0,
                  "String boxLabel" : "Enabled - will be sent out",
