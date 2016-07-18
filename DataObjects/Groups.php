@@ -107,6 +107,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     function members($what = false)
     {
         $ids = $this->memberIds();
+        print_R($ids);exit;
         if (!$ids) {
             return array();
         }
