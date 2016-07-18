@@ -668,7 +668,7 @@ Pman.Dialog.CoreEmail = {
               {
                allowBlank : true,
                alwaysQuery : true,
-               displayField : 'file',
+               displayField : 'name',
                editable : false,
                emptyText : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
                fieldLabel : _this._strings['278c491bdd8a53618c149c4ac790da34'] /* Template */,
@@ -689,22 +689,6 @@ Pman.Dialog.CoreEmail = {
                xns : Roo.form,
                '|xns' : 'Roo.form',
                xtype : 'ComboBox',
-               listeners : {
-                select : function (combo, record, index)
-                 {
-                    
-                 /*
-                     (function() { 
-                         combo.setValue('');
-                     }).defer(100);
-                 */    
-                     if(!record){
-                         return;
-                     }
-                     _this.form.findField('bodytext').setValue(record.data.content);
-                 
-                 }
-               },
                store : {
                 remoteSort : true,
                 sortInfo : { direction : 'DESC', field: 'file' },

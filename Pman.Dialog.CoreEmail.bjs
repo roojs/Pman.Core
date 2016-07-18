@@ -303,9 +303,6 @@
                "name" : "from_email"
               },
               {
-               "listeners" : {
-                "select" : "function (combo, record, index)\n{\n   \n/*\n    (function() { \n        combo.setValue('');\n    }).defer(100);\n*/    \n    if(!record){\n        return;\n    }\n    _this.form.findField('bodytext').setValue(record.data.content);\n\n}"
-               },
                "alwaysQuery" : true,
                "listWidth" : 400,
                "triggerAction" : "all",
@@ -313,7 +310,7 @@
                "forceSelection" : true,
                "selectOnFocus" : true,
                "pageSize" : 25,
-               "displayField" : "file",
+               "displayField" : "name",
                "emptyText" : "Select BCC Group",
                "hiddenName" : "template",
                "minChars" : 2,
