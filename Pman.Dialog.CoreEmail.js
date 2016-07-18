@@ -27,6 +27,7 @@ Pman.Dialog.CoreEmail = {
   'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
+  '44e7830e754c2e275ef6f658eafba13e' :"Test Class",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
@@ -719,6 +720,15 @@ Pman.Dialog.CoreEmail = {
                  xtype : 'JsonReader'
                 }
                }
+              },
+              {
+               allowBlank : false,
+               fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
+               name : 'test_class',
+               width : 300,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               xtype : 'TextField'
               }
              ]
             },
