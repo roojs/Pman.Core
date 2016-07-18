@@ -84,7 +84,7 @@ class Pman_Core_MessagePreview extends Pman
         $x = new $cls;
         
         $method = "test_{$core_email->name}";
-        $this->jerr("{$method} does not exists in {$cls}");
+        
         if(!method_exists($x, $method)){
             $this->jerr("{$method} does not exists in {$cls}");
         }
