@@ -56,6 +56,7 @@ class Pman_Core_MessagePreview extends Pman
         if(!is_object($sent)){
             $this->jok('SUCCESS');
         }
+        
         $this->jerr('error!!:' . $sent->toString());
         
     }
