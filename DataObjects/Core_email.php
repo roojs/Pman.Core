@@ -335,8 +335,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $contents['rcpts'] = $admin;
         }
         
-         
-        
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
         }
