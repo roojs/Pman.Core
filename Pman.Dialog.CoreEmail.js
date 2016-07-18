@@ -609,11 +609,13 @@ Pman.Dialog.CoreEmail = {
                xtype : 'TextField'
               },
               {
+               hideLabels : true,
                xns : Roo.form,
                '|xns' : 'Roo.form',
                xtype : 'Column',
                items  : [
                 {
+                 boxLabel : 'Enabled',
                  xns : Roo.form,
                  '|xns' : 'Roo.form',
                  xtype : 'Checkbox'

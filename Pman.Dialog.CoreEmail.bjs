@@ -262,9 +262,11 @@
               {
                "xtype" : "Column",
                "$ xns" : "Roo.form",
+               "Boolean hideLabels" : true,
                "items" : [
                 {
                  "xtype" : "Checkbox",
+                 "String boxLabel" : "Enabled",
                  "$ xns" : "Roo.form"
                 }
                ]
