@@ -787,9 +787,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 $g = DB_DataObject::Factory('Groups')->lookup('name',$data['bcc_group']);
                 
                 if (!$g) {
+                    pritn_R('run??');exit;
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
-                print_R($data['bcc_group']);
+                
                 if (!$g->members('email')) {
                       $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
