@@ -699,7 +699,7 @@ Pman.Dialog.CoreEmail = {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
                       
-                      o.params._not_add_others = 1;
+                      o.params._direct_return = 1;
                   }
                 },
                 proxy : {

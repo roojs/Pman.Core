@@ -140,7 +140,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function postListFilter($ar, $au, $req)
     {      
-        if(!empty($req['_not_add_others'])){
+        if(!empty($req['_direct_return'])){
             return $ar;
         }
         
