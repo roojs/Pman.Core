@@ -72,7 +72,7 @@ class Pman_Core_MessagePreview extends Pman
         if(!$core_email->get($_REQUEST['_id'])){
             $this->jerr('Invalid Message ID');
         }
-        $this->jerr("[{$core_email->name}] does not has test class");
+        
         if(empty($core_email->test_class)){
             $this->jerr("[{$core_email->name}] does not has test class");
         }
