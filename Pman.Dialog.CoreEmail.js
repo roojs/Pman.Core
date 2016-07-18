@@ -615,7 +615,7 @@ Pman.Dialog.CoreEmail = {
                xtype : 'Column',
                items  : [
                 {
-                 boxLabel : 'Enabled',
+                 boxLabel : 'Enabled - will be sent out',
                  xns : Roo.form,
                  '|xns' : 'Roo.form',
                  xtype : 'Checkbox'
