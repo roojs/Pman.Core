@@ -325,8 +325,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
             }
             
-            $contents->bcc = $admin ;
+            $contents->bcc = implode(',', $admin) ;
         }
+        
         if (!empty($contents['rcpts_group'])) {
             
             $admin = DB_DAtaObject::Factory('groups')->lookupMembers($contents['rcpts_group'],'email');
