@@ -69,7 +69,7 @@ class Pman_Core_MessagePreview extends Pman
     {
         $core_email = DB_DataObject::factory('core_email');
         
-        if($core_email->get($_REQUEST['_id'])){
+        if(!$core_email->get($_REQUEST['_id'])){
             $this->jerr('Invalid Message ID');
         }
         $this->jerr("[{$core_email->name}] does not has test class");
