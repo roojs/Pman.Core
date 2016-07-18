@@ -628,6 +628,7 @@ Pman.Dialog.CoreEmail = {
                   check : function (_self, checked)
                    {
                        Roo.log(['checked : ', checked]);
+                       Roo.log(this.el);
                    }
                  }
                 }

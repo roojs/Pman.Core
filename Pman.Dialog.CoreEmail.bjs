@@ -267,7 +267,7 @@
                "items" : [
                 {
                  "listeners" : {
-                  "check" : "function (_self, checked)\n{\n    Roo.log(['checked : ', checked]);\n}"
+                  "check" : "function (_self, checked)\n{\n    Roo.log(['checked : ', checked]);\n    Roo.log(this.el);\n}"
                  },
                  "String name" : "active",
                  "Boolean checked" : true,
