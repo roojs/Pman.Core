@@ -617,6 +617,7 @@ Pman.Dialog.CoreEmail = {
                items  : [
                 {
                  boxLabel : 'Enabled - will be sent out',
+                 checked : true,
                  name : 'active',
                  value : 1,
                  valueOff : 0,

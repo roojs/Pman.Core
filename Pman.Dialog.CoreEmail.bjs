@@ -270,6 +270,7 @@
                   "check" : "function (_self, checked)\n{\n    Roo.log(['checked : ', checked]);\n}"
                  },
                  "String name" : "active",
+                 "Boolean checked" : true,
                  "xtype" : "Checkbox",
                  "String valueOff" : 0,
                  "String boxLabel" : "Enabled - will be sent out",
