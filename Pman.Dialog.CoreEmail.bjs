@@ -357,7 +357,13 @@
                  ]
                 }
                ]
-              },
+              }
+             ]
+            },
+            {
+             "xtype" : "Row",
+             "$ xns" : "Roo.form",
+             "items" : [
               {
                "fieldLabel" : "Test Class",
                "xtype" : "TextField",
@@ -367,10 +373,6 @@
                "name" : "test_class"
               }
              ]
-            },
-            {
-             "xtype" : "Row",
-             "$ xns" : "Roo.form"
             },
             {
              "fieldLabel" : "Subject",

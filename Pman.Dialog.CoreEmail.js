@@ -720,7 +720,14 @@ Pman.Dialog.CoreEmail = {
                  xtype : 'JsonReader'
                 }
                }
-              },
+              }
+             ]
+            },
+            {
+             xns : Roo.form,
+             '|xns' : 'Roo.form',
+             xtype : 'Row',
+             items  : [
               {
                allowBlank : true,
                fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
@@ -731,11 +738,6 @@ Pman.Dialog.CoreEmail = {
                xtype : 'TextField'
               }
              ]
-            },
-            {
-             xns : Roo.form,
-             '|xns' : 'Roo.form',
-             xtype : 'Row'
             },
             {
              allowBlank : false,
