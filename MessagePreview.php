@@ -89,6 +89,8 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr("{$method} does not exists in {$cls}");
         }
         
+        $content = $x->{$method}($this, $this->authUser);
         
+        print_R($content);exit;
     }
 }
