@@ -91,6 +91,6 @@ class Pman_Core_MessagePreview extends Pman
         
         $content = $x->{$method}($this, $this->authUser);
         
-        print_R($content);exit;
+        $this->send($content);
     }
 }
