@@ -332,7 +332,7 @@
                  },
                  "xtype" : "Store",
                  "remoteSort" : true,
-                 "$ sortInfo" : "{ direction : 'DESC', field: 'file' }",
+                 "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
                  "$ xns" : "Roo.data",
                  "* prop" : "store",
                  "items" : [

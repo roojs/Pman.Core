@@ -690,7 +690,7 @@ Pman.Dialog.CoreEmail = {
                xtype : 'ComboBox',
                store : {
                 remoteSort : true,
-                sortInfo : { direction : 'DESC', field: 'file' },
+                sortInfo : { direction : 'ASC', field: 'name' },
                 xns : Roo.data,
                 '|xns' : 'Roo.data',
                 xtype : 'Store',
