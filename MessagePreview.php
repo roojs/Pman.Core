@@ -93,12 +93,10 @@ class Pman_Core_MessagePreview extends Pman
         
         $sent = $this->send($content);
         
-        if(!is_object($sent)){
-            $this->jok('SUCCESS');
+        if(is_object($sent)){
+            $this->jerr("Error sending email - " . $sent->toString());
         }
         
-        $this->jerr('error!!:' . $sent->toString());
-        
-        
+        $this->jok('SUCCESS');
     }
 }
