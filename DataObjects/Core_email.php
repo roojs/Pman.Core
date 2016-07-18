@@ -324,7 +324,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             if (empty($admin)) {
                 return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
             }
-            print_r($admin);exit;
+            
             $contents->bcc = $admin ;
         }
         if (!empty($contents['rcpts_group'])) {
