@@ -369,6 +369,10 @@
              ]
             },
             {
+             "xtype" : "Row",
+             "$ xns" : "Roo.form"
+            },
+            {
              "fieldLabel" : "Subject",
              "xtype" : "TextField",
              "allowBlank" : false,

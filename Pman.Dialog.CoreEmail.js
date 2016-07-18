@@ -733,6 +733,11 @@ Pman.Dialog.CoreEmail = {
              ]
             },
             {
+             xns : Roo.form,
+             '|xns' : 'Roo.form',
+             xtype : 'Row'
+            },
+            {
              allowBlank : false,
              fieldLabel : _this._strings['c7892ebbb139886662c6f2fc8c450710'] /* Subject */,
              name : 'subject',
