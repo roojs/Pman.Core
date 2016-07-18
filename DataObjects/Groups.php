@@ -147,7 +147,6 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
         $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
         return array_merge($ret, $ar);
-            //$ret[] = array( 'id' => 999999, 'name' => 'ADMINISTRATORS');
 
     }
     
