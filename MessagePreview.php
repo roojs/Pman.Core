@@ -88,7 +88,7 @@ class Pman_Core_MessagePreview extends Pman
         if(!method_exists($x, $method)){
             $this->jerr("{$method} does not exists in {$cls}");
         }
-        
+//        'HYDRA_INVOICE'
         $content = $x->{$method}($this, $this->authUser);
         
         $sent = $core_email->send($content);
