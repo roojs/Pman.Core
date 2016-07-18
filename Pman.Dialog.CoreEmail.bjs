@@ -369,7 +369,6 @@
                "Boolean readOnly" : true,
                "xtype" : "TextField",
                "allowBlank" : true,
-               "Boolean disabled" : true,
                "width" : 300,
                "$ xns" : "Roo.form",
                "name" : "test_class"
