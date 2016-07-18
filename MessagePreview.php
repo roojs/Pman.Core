@@ -40,7 +40,7 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr('Missing Options');
         }
         
-        if(!empty($_REQUEST['_send_test']) && $_REQUEST['core_email'])){
+        if($_REQUEST['_table'] == 'core_email'){
             $this->sendTest();
         }
         
