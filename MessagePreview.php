@@ -91,7 +91,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $content = $x->{$method}($this, $this->authUser);
         
-        $sent = $this->send($content);
+        $sent = $core_email->send($content);
         
         if(is_object($sent)){
             $this->jerr("Error sending email - " . $sent->toString());
