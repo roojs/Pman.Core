@@ -790,10 +790,10 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
                 print_R($g);
-                if (empty($g->members('email'))) {
+                if ($g->members('email')) {
                       $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
-                print_R('run???');exit;
+                print_R($g->members('email'));exit;
                 
                 $cm->bcc_group = $g->id;
             }
