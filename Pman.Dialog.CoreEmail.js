@@ -161,8 +161,6 @@ Pman.Dialog.CoreEmail = {
                 return;
             }
            
-            Roo.log(_this.data);return;
-            
             new Pman.Request({
                 url : baseURL + '/Core/MessagePreview',
                 method : 'POST',
