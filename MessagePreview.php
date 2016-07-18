@@ -76,5 +76,7 @@ class Pman_Core_MessagePreview extends Pman
         if(empty($core_email->test_class)){
             $this->jerr("[{$core_email->name}] does not has test class");
         }
+        
+        
     }
 }
