@@ -41,7 +41,7 @@ class Pman_Core_MessagePreview extends Pman
         }
         
         if($_REQUEST['_table'] == 'core_email'){
-            $this->sendTest();
+            $this->coreEmailSendTest();
         }
         
         $mid = $_REQUEST['_id'];
@@ -65,7 +65,7 @@ class Pman_Core_MessagePreview extends Pman
         
     }
     
-    function sendTest()
+    function coreEmailSendTest()
     {
         $table = DB_DataObject::factory($_REQUEST['_table']);
         
