@@ -258,6 +258,10 @@
                "width" : 400,
                "$ xns" : "Roo.form",
                "name" : "name"
+              },
+              {
+               "xtype" : "Checkbox",
+               "$ xns" : "Roo.form"
               }
              ]
             },

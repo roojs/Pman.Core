@@ -607,6 +607,11 @@ Pman.Dialog.CoreEmail = {
                xns : Roo.form,
                '|xns' : 'Roo.form',
                xtype : 'TextField'
+              },
+              {
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               xtype : 'Checkbox'
               }
              ]
             },
