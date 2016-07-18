@@ -67,14 +67,14 @@ class Pman_Core_MessagePreview extends Pman
     
     function coreEmailSendTest()
     {
-        $table = DB_DataObject::factory($_REQUEST['_table']);
+        $core_email = DB_DataObject::factory($_REQUEST['core_email']);
         
-        if($table->get($_REQUEST['_id'])){
+        if($core_email->get($_REQUEST['_id'])){
             $this->jerr('Invalid Message ID');
         }
-        
-        if(empty($table->test_class)){
-            
+        $this->jerr("[{$core_email->name}] does not has test class");
+        if(empty($core_email->test_class)){
+            $this->jerr("[{$core_email->name}] does not has test class");
         }
     }
 }
