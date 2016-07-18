@@ -309,8 +309,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $this->get('name', $contents['template']);
         }
         
+        if(empty($this->active)){
+            return $p->raiseError("template [{$contents['template']}] is Disabled");
+        }
+        
         if(empty($this->id)){
-            
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
         
