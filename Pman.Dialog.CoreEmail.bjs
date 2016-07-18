@@ -361,7 +361,7 @@
               {
                "fieldLabel" : "Test Class",
                "xtype" : "TextField",
-               "allowBlank" : false,
+               "allowBlank" : true,
                "width" : 300,
                "$ xns" : "Roo.form",
                "name" : "test_class"

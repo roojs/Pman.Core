@@ -722,7 +722,7 @@ Pman.Dialog.CoreEmail = {
                }
               },
               {
-               allowBlank : false,
+               allowBlank : true,
                fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
                name : 'test_class',
                width : 300,
