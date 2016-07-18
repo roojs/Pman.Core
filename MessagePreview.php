@@ -79,7 +79,9 @@ class Pman_Core_MessagePreview extends Pman
         
         require_once "{$core_email->test_class}.php";
         
-        $cls = new str_replace('/', '_', $core_email->test_class);
+        $cls = str_replace('/', '_', $core_email->test_class);
+        
+        $x = new $cls;
         
         print_R($cls);exit;
         
