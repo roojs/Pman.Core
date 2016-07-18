@@ -709,7 +709,7 @@ Pman.Dialog.CoreEmail = {
                  xtype : 'HttpProxy'
                 },
                 reader : {
-                 fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}],
+                 fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
                  id : 'name',
                  root : 'data',
                  totalProperty : 'total',

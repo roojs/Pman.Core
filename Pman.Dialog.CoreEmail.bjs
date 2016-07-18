@@ -347,7 +347,7 @@
                    "id" : "name",
                    "root" : "data",
                    "xtype" : "JsonReader",
-                   "$ fields" : "[{\"name\":\"file\",\"type\":\"string\"},{\"name\":\"content\",\"type\":\"string\"}]",
+                   "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
                    "$ xns" : "Roo.data",
                    "* prop" : "reader",
                    "totalProperty" : "total"
