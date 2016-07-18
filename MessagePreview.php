@@ -40,6 +40,10 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr('Missing Options');
         }
         
+        if(!empty($_REQUEST['_send_test'])){
+            $this->sendTest();
+        }
+        
         $mid = $_REQUEST['_id'];
         
         $mlq = DB_DataObject::factory($_REQUEST['_table']);
@@ -58,6 +62,17 @@ class Pman_Core_MessagePreview extends Pman
         }
         
         $this->jerr('error!!:' . $sent->toString());
+        
+    }
+    
+    function sendTest()
+    {
+        $table = DB_DataObject::factory($_REQUEST['_table']);
+        
+        if($table->get($_REQUEST['_id'])){
+            $this->jerr('Invalid Message ID');
+        }
+        
         
     }
 }
