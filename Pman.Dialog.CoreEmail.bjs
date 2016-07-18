@@ -260,8 +260,14 @@
                "name" : "name"
               },
               {
-               "xtype" : "Checkbox",
-               "$ xns" : "Roo.form"
+               "xtype" : "Column",
+               "$ xns" : "Roo.form",
+               "items" : [
+                {
+                 "xtype" : "Checkbox",
+                 "$ xns" : "Roo.form"
+                }
+               ]
               }
              ]
             },
