@@ -776,6 +776,7 @@ class Pman_Core_UpdateDatabase extends Pman
       
         $pg = HTML_FlexyFramework::get()->page;
         foreach($emails as $name=>$data) {
+            print_R($emails);exit;
             $cm = DB_DataObject::factory('core_email');
             $update = $cm->get('name', $name);
             $old = clone($cm);
