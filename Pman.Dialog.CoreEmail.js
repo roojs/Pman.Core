@@ -630,7 +630,7 @@ Pman.Dialog.CoreEmail = {
                        var boxLabel = 'Enabled - will be sent out';
                        
                        if(!checked){
-                           boxLabel = 'Disabled - will NOT be sent out right of \'Mailout Name\'';
+                           boxLabel = 'Disabled - will NOT be sent out';
                        }
                        
                        this.setBoxLabel(boxLabel);
