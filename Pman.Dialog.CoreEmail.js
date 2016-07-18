@@ -627,11 +627,15 @@ Pman.Dialog.CoreEmail = {
                  listeners : {
                   check : function (_self, checked)
                    {
+                       Roo.log(['active : ', checked]);
+                       
                        var boxLabel = 'Enabled - will be sent out';
                        
                        if(!checked){
                            boxLabel = 'Disabled - will NOT be sent out right of \'Mailout Name\'';
                        }
+                       
+                       Roo.log(boxLabel);
                        
                        this.setBoxLabel = boxLabel;
                    }

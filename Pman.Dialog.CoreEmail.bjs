@@ -267,7 +267,7 @@
                "items" : [
                 {
                  "listeners" : {
-                  "check" : "function (_self, checked)\n{\n    var boxLabel = 'Enabled - will be sent out';\n    \n    if(!checked){\n        boxLabel = 'Disabled - will NOT be sent out right of \\'Mailout Name\\'';\n    }\n    \n    this.setBoxLabel = boxLabel;\n}"
+                  "check" : "function (_self, checked)\n{\n    Roo.log(['active : ', checked]);\n    \n    var boxLabel = 'Enabled - will be sent out';\n    \n    if(!checked){\n        boxLabel = 'Disabled - will NOT be sent out right of \\'Mailout Name\\'';\n    }\n    \n    Roo.log(boxLabel);\n    \n    this.setBoxLabel = boxLabel;\n}"
                  },
                  "String name" : "active",
                  "Boolean checked" : true,
