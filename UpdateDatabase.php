@@ -126,7 +126,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->authUser = $au;
         return true;
     }
-     
+    
     function get($args, $opts)
     {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
