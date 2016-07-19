@@ -98,6 +98,5 @@ class Pman_Core_MessagePreview extends Pman
         }
         
         $this->jok('SUCCESS');
-        
     }
 }
