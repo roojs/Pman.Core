@@ -60,17 +60,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
     
     function sendVerification($template, $roo)
     {
-        $admin = array();
-        
-        $group = DB_DataObject::factory('groups');
-        if($group->get('name', 'core-person-signup-bcc')){
-            $admin = $group->members('email');
-        }
-        
-        if(empty($admin)){
-            $roo->jerr("Please contact our administrators - system setting problem");
-        }
-        
         $content = array(
             'template'      => $template,
             'person'        => $this,
