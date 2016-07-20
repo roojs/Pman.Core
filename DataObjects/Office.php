@@ -64,7 +64,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             $roo->jerr("dep is not a person..");
             return true;
         }
-        
+        print_R('run???');exit;
         $p->office_id = $this->id;
         if ($p->count() > 1) {
             return true; // default err..
