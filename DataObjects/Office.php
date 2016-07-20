@@ -65,9 +65,6 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
             return true;
         }
         
-        print_R(count($dependants_array));exit;
-        print_R('run?>>>');exit;
-        
         $p->office_id = $this->id;
         if ($p->count() > 1) {
             return true; // default err..
