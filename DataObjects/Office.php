@@ -59,11 +59,14 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
         }
         
         $p = DB_DAtaObject::Factory('Person');
-        print_R($p);exit;
+        
         if (!is_a($dependants_array[0], get_class($p))) {
             $roo->jerr("dep is not a person..");
             return true;
         }
+        
+        print_R(count($dependants_array));exit;
+        print_R('run?>>>');exit;
         
         $p->office_id = $this->id;
         if ($p->count() > 1) {
