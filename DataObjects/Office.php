@@ -53,6 +53,7 @@ class Pman_Core_DataObjects_Office extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
+        print_R($dependants_array);exit;
         if (count($dependants_array) != 1) {
             //$roo->jerr("more than one dependant type....");
             return true; // standard error message.
