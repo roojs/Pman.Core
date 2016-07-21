@@ -71,6 +71,7 @@ Pman.Dialog.CoreEmail = {
  {
    var _this = this;
    this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
     closable : true,
     collapsible : false,
     height : 500,
@@ -78,9 +79,6 @@ Pman.Dialog.CoreEmail = {
     resizable : true,
     title : _this._strings['396ecabf0cd1f9503e591418851ef406'] /* Edit / Create Message */,
     width : 800,
-    xns : Roo,
-    '|xns' : 'Roo',
-    xtype : 'LayoutDialog',
     listeners : {
      show : function (_self)
       {
@@ -109,28 +107,28 @@ Pman.Dialog.CoreEmail = {
           
       }
     },
+    xns : Roo,
+    '|xns' : 'Roo',
     center : {
+     xtype : 'LayoutRegion',
      tabPosition : 'top',
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     east : {
+     xtype : 'LayoutRegion',
      hidden : true,
      split : true,
      title : _this._strings['308f2757bfc9ce92fb00ff93fdffd279'] /* Images / Attachments */,
      titlebar : true,
      width : 500,
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     buttons : [
      {
-      text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
       listeners : {
        click : function (_self, e)
         {
@@ -142,13 +140,13 @@ Pman.Dialog.CoreEmail = {
         {
             _this.preview_btn = _self;
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
       listeners : {
        click : function (_self, e)
         {
@@ -180,25 +178,25 @@ Pman.Dialog.CoreEmail = {
         {
             _this.html_preview = _self;
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
         {
             _this.dialog.hide();
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['c9cc8cce247e49bae79f15173ce97354'] /* Save */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['c9cc8cce247e49bae79f15173ce97354'] /* Save */,
       listeners : {
        click : function (_self, e)
         {
@@ -212,38 +210,38 @@ Pman.Dialog.CoreEmail = {
             });
         
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
      {
+      xtype : 'NestedLayoutPanel',
       autoScroll : false,
       fitContainer : true,
       fitToFrame : true,
       region : 'center',
       xns : Roo,
       '|xns' : 'Roo',
-      xtype : 'NestedLayoutPanel',
       toolbar : {
+       xtype : 'Toolbar',
        xns : Roo,
        '|xns' : 'Roo',
-       xtype : 'Toolbar',
        items  : [
         {
+         xtype : 'Button',
          text : _this._strings['72d6d7a1885885bb55a565fd1070581a'] /* Import */,
          xns : Roo.Toolbar,
          '|xns' : 'Roo.Toolbar',
-         xtype : 'Button',
          menu : {
+          xtype : 'Menu',
           xns : Roo.menu,
           '|xns' : 'Roo.menu',
-          xtype : 'Menu',
           items  : [
            {
-            text : _this._strings['e6b391a8d2c4d45902a23a8b6585703d'] /* URL */,
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu',
             xtype : 'Item',
+            text : _this._strings['e6b391a8d2c4d45902a23a8b6585703d'] /* URL */,
             listeners : {
              click : function (_self, e)
               {
@@ -256,13 +254,13 @@ Pman.Dialog.CoreEmail = {
                       }
                   });
               }
-            }
+            },
+            xns : Roo.menu,
+            '|xns' : 'Roo.menu'
            },
            {
-            text : _this._strings['1bd18d39370b7f26c1c5e18067b74c6f'] /* Html File */,
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu',
             xtype : 'Item',
+            text : _this._strings['1bd18d39370b7f26c1c5e18067b74c6f'] /* Html File */,
             listeners : {
              click : function (_self, e)
               {
@@ -274,26 +272,26 @@ Pman.Dialog.CoreEmail = {
                       }
                   });
               }
-            }
+            },
+            xns : Roo.menu,
+            '|xns' : 'Roo.menu'
            }
           ]
          }
         },
         {
+         xtype : 'Button',
          text : _this._strings['884df8e413319ff51a3f5f528606238a'] /* Use template */,
          xns : Roo.Toolbar,
          '|xns' : 'Roo.Toolbar',
-         xtype : 'Button',
          menu : {
+          xtype : 'Menu',
           xns : Roo.menu,
           '|xns' : 'Roo.menu',
-          xtype : 'Menu',
           items  : [
            {
-            text : _this._strings['dc0de523c25be298ba751c63c694109e'] /* Responsive Email (1) */,
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu',
             xtype : 'Item',
+            text : _this._strings['dc0de523c25be298ba751c63c694109e'] /* Responsive Email (1) */,
             listeners : {
              click : function (_self, e)
               {
@@ -315,12 +313,15 @@ Pman.Dialog.CoreEmail = {
                 
                   });
               }
-            }
+            },
+            xns : Roo.menu,
+            '|xns' : 'Roo.menu'
            }
           ]
          }
         },
         {
+         xtype : 'ComboBox',
          allowBlank : true,
          alwaysQuery : true,
          displayField : 'file',
@@ -341,9 +342,6 @@ Pman.Dialog.CoreEmail = {
          typeAhead : true,
          valueField : 'file',
          width : 200,
-         xns : Roo.form,
-         '|xns' : 'Roo.form',
-         xtype : 'ComboBox',
          listeners : {
           select : function (combo, record, index)
            {
@@ -360,12 +358,12 @@ Pman.Dialog.CoreEmail = {
            
            }
          },
+         xns : Roo.form,
+         '|xns' : 'Roo.form',
          store : {
+          xtype : 'Store',
           remoteSort : true,
           sortInfo : { direction : 'DESC', field: 'file' },
-          xns : Roo.data,
-          '|xns' : 'Roo.data',
-          xtype : 'Store',
           listeners : {
            beforeload : function (_self, o){
                 o.params = o.params || {};
@@ -373,34 +371,34 @@ Pman.Dialog.CoreEmail = {
                
             }
           },
+          xns : Roo.data,
+          '|xns' : 'Roo.data',
           proxy : {
+           xtype : 'HttpProxy',
            method : 'GET',
            url : baseURL + '/Core/MailTemplateList.php',
            xns : Roo.data,
-           '|xns' : 'Roo.data',
-           xtype : 'HttpProxy'
+           '|xns' : 'Roo.data'
           },
           reader : {
+           xtype : 'JsonReader',
            fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}],
            id : 'name',
            root : 'data',
            totalProperty : 'total',
            xns : Roo.data,
-           '|xns' : 'Roo.data',
-           xtype : 'JsonReader'
+           '|xns' : 'Roo.data'
           }
          }
         },
         {
+         xtype : 'Fill',
          xns : Roo.Toolbar,
-         '|xns' : 'Roo.Toolbar',
-         xtype : 'Fill'
+         '|xns' : 'Roo.Toolbar'
         },
         {
-         text : _this._strings['ea30b40c3caf28acb29198d20d243e54'] /* Images / Attachments >> */,
-         xns : Roo.Toolbar,
-         '|xns' : 'Roo.Toolbar',
          xtype : 'Button',
+         text : _this._strings['ea30b40c3caf28acb29198d20d243e54'] /* Images / Attachments >> */,
          listeners : {
           click : function (_self, e)
            {
@@ -413,31 +411,31 @@ Pman.Dialog.CoreEmail = {
                }
                
            }
-         }
+         },
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
         }
        ]
       },
       layout : {
+       xtype : 'BorderLayout',
        xns : Roo,
        '|xns' : 'Roo',
-       xtype : 'BorderLayout',
        center : {
+        xtype : 'LayoutRegion',
         autoScroll : true,
         xns : Roo,
-        '|xns' : 'Roo',
-        xtype : 'LayoutRegion'
+        '|xns' : 'Roo'
        },
        items  : [
         {
+         xtype : 'ContentPanel',
          autoScroll : false,
          background : false,
          fitContainer : true,
          fitToFrame : true,
          region : 'center',
          title : _this._strings['4c2a8fe7eaf24721cc7a9f0175115bd4'] /* Message */,
-         xns : Roo,
-         '|xns' : 'Roo',
-         xtype : 'ContentPanel',
          listeners : {
           render : function (_self, width, height)
            {
@@ -468,8 +466,11 @@ Pman.Dialog.CoreEmail = {
            
            }
          },
+         xns : Roo,
+         '|xns' : 'Roo',
          items  : [
           {
+           xtype : 'Form',
            labelAlign : 'right',
            labelWidth : 120,
            method : 'POST',
@@ -541,9 +542,6 @@ Pman.Dialog.CoreEmail = {
            },
            style : 'margin:10px',
            url : baseURL + '/Roo/crm_mailing_list_message.php',
-           xns : Roo.form,
-           '|xns' : 'Roo.form',
-           xtype : 'Form',
            listeners : {
             actioncomplete : function(_self,action)
              {
@@ -597,36 +595,36 @@ Pman.Dialog.CoreEmail = {
                  _this.form= form;
              }
            },
+           xns : Roo.form,
+           '|xns' : 'Roo.form',
            items  : [
             {
+             xtype : 'Row',
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Row',
              items  : [
               {
+               xtype : 'TextField',
                allowBlank : false,
                fieldLabel : _this._strings['b20a8b77b05d53b4e695738731400c85'] /* Mailout Name */,
                name : 'name',
                width : 400,
                xns : Roo.form,
-               '|xns' : 'Roo.form',
-               xtype : 'TextField'
+               '|xns' : 'Roo.form'
               },
               {
+               xtype : 'Column',
                hideLabels : true,
                xns : Roo.form,
                '|xns' : 'Roo.form',
-               xtype : 'Column',
                items  : [
                 {
+                 xtype : 'Checkbox',
                  boxLabel : 'Enabled - will be sent out',
                  checked : true,
                  name : 'active',
                  value : 1,
                  valueOff : 0,
-                 xns : Roo.form,
-                 '|xns' : 'Roo.form',
-                 xtype : 'Checkbox',
                  listeners : {
                   check : function (_self, checked)
                    {
@@ -638,36 +636,39 @@ Pman.Dialog.CoreEmail = {
                        
                        this.setBoxLabel(boxLabel);
                    }
-                 }
+                 },
+                 xns : Roo.form,
+                 '|xns' : 'Roo.form'
                 }
                ]
               }
              ]
             },
             {
+             xtype : 'Row',
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Row',
              items  : [
               {
+               xtype : 'TextField',
                allowBlank : false,
                fieldLabel : _this._strings['5da618e8e4b89c66fe86e32cdafde142'] /* From */,
                name : 'from_name',
                width : 300,
                xns : Roo.form,
-               '|xns' : 'Roo.form',
-               xtype : 'TextField'
+               '|xns' : 'Roo.form'
               },
               {
+               xtype : 'TextField',
                allowBlank : false,
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                name : 'from_email',
                width : 300,
                xns : Roo.form,
-               '|xns' : 'Roo.form',
-               xtype : 'TextField'
+               '|xns' : 'Roo.form'
               },
               {
+               xtype : 'ComboBox',
                allowBlank : true,
                alwaysQuery : true,
                displayField : 'name',
@@ -689,13 +690,10 @@ Pman.Dialog.CoreEmail = {
                width : 300,
                xns : Roo.form,
                '|xns' : 'Roo.form',
-               xtype : 'ComboBox',
                store : {
+                xtype : 'Store',
                 remoteSort : true,
                 sortInfo : { direction : 'ASC', field: 'name' },
-                xns : Roo.data,
-                '|xns' : 'Roo.data',
-                xtype : 'Store',
                 listeners : {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
@@ -703,67 +701,53 @@ Pman.Dialog.CoreEmail = {
                       o.params._direct_return = 1;
                   }
                 },
+                xns : Roo.data,
+                '|xns' : 'Roo.data',
                 proxy : {
+                 xtype : 'HttpProxy',
                  method : 'GET',
                  url : baseURL + '/Roo/Groups',
                  xns : Roo.data,
-                 '|xns' : 'Roo.data',
-                 xtype : 'HttpProxy'
+                 '|xns' : 'Roo.data'
                 },
                 reader : {
+                 xtype : 'JsonReader',
                  fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
                  id : 'name',
                  root : 'data',
                  totalProperty : 'total',
                  xns : Roo.data,
-                 '|xns' : 'Roo.data',
-                 xtype : 'JsonReader'
+                 '|xns' : 'Roo.data'
                 }
                }
               }
              ]
             },
             {
-             xns : Roo.form,
-             '|xns' : 'Roo.form',
-             xtype : 'Row',
-             items  : [
-              {
-               allowBlank : true,
-               fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
-               name : 'test_class',
-               readOnly : true,
-               width : 300,
-               xns : Roo.form,
-               '|xns' : 'Roo.form',
-               xtype : 'TextField'
-              }
-             ]
-            },
-            {
+             xtype : 'TextField',
              allowBlank : false,
              fieldLabel : _this._strings['c7892ebbb139886662c6f2fc8c450710'] /* Subject */,
              name : 'subject',
              width : 600,
              xns : Roo.form,
-             '|xns' : 'Roo.form',
-             xtype : 'TextField'
+             '|xns' : 'Roo.form'
             },
             {
+             xtype : 'Row',
              hideLabels : true,
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Row',
              items  : [
               {
+               xtype : 'FieldSet',
                hideLabels : true,
                legend : _this._strings['962b90039a542a29cedd51d87a9f28a1'] /* Html Editor */,
                style : 'text-align:center;',
                xns : Roo.form,
                '|xns' : 'Roo.form',
-               xtype : 'FieldSet',
                items  : [
                 {
+                 xtype : 'HtmlEditor',
                  autosave : function() {
                      
                      var body = _this.form.findField('bodytext');
@@ -820,9 +804,6 @@ Pman.Dialog.CoreEmail = {
                  height : 250,
                  name : 'bodytext',
                  resizable : 's',
-                 xns : Roo.form,
-                 '|xns' : 'Roo.form',
-                 xtype : 'HtmlEditor',
                  listeners : {
                   autosave : function (_self)
                    {
@@ -883,18 +864,21 @@ Pman.Dialog.CoreEmail = {
                        });
                    }
                  },
+                 xns : Roo.form,
+                 '|xns' : 'Roo.form',
                  toolbars : [
                   {
+                   xtype : 'ToolbarContext',
                    xns : Roo.form.HtmlEditor,
-                   '|xns' : 'Roo.form.HtmlEditor',
-                   xtype : 'ToolbarContext'
+                   '|xns' : 'Roo.form.HtmlEditor'
                   },
                   {
+                   xtype : 'ToolbarStandard',
                    xns : Roo.form.HtmlEditor,
                    '|xns' : 'Roo.form.HtmlEditor',
-                   xtype : 'ToolbarStandard',
                    btns : [
                     {
+                     xtype : 'ComboBox',
                      alwaysQuery : true,
                      displayField : 'name',
                      editable : false,
@@ -912,9 +896,6 @@ Pman.Dialog.CoreEmail = {
                      typeAhead : true,
                      valueField : 'id',
                      width : 100,
-                     xns : Roo.form,
-                     '|xns' : 'Roo.form',
-                     xtype : 'ComboBox',
                      listeners : {
                       beforequery : function (combo, query, forceAll, cancel, e)
                        {
@@ -955,12 +936,12 @@ Pman.Dialog.CoreEmail = {
                            
                         }
                      },
+                     xns : Roo.form,
+                     '|xns' : 'Roo.form',
                      store : {
+                      xtype : 'Store',
                       remoteSort : true,
                       sortInfo : { direction : 'ASC', field: 'id' },
-                      xns : Roo.data,
-                      '|xns' : 'Roo.data',
-                      xtype : 'Store',
                       listeners : {
                        beforeload : function (_self, o){
                             o.params = o.params || {};
@@ -978,25 +959,28 @@ Pman.Dialog.CoreEmail = {
                             // set more here
                         }
                       },
+                      xns : Roo.data,
+                      '|xns' : 'Roo.data',
                       proxy : {
+                       xtype : 'HttpProxy',
                        method : 'GET',
                        url : baseURL + '/Roo/Images.php',
                        xns : Roo.data,
-                       '|xns' : 'Roo.data',
-                       xtype : 'HttpProxy'
+                       '|xns' : 'Roo.data'
                       },
                       reader : {
+                       xtype : 'JsonReader',
                        fields : [{"name":"id","type":"int"},{"name":"filename","type":"string"},{"name":"url_thumb","type":"string"}],
                        id : 'id',
                        root : 'data',
                        totalProperty : 'total',
                        xns : Roo.data,
-                       '|xns' : 'Roo.data',
-                       xtype : 'JsonReader'
+                       '|xns' : 'Roo.data'
                       }
                      }
                     },
                     {
+                     xtype : 'ComboBox',
                      alwaysQuery : true,
                      displayField : 'name',
                      editable : false,
@@ -1014,9 +998,6 @@ Pman.Dialog.CoreEmail = {
                      typeAhead : true,
                      valueField : 'type',
                      width : 100,
-                     xns : Roo.form,
-                     '|xns' : 'Roo.form',
-                     xtype : 'ComboBox',
                      listeners : {
                       render : function (_self)
                        {
@@ -1047,7 +1028,10 @@ Pman.Dialog.CoreEmail = {
                            
                         }
                      },
+                     xns : Roo.form,
+                     '|xns' : 'Roo.form',
                      store : {
+                      xtype : 'SimpleStore',
                       data : [ 
                           [ '{person.firstname}', "First Name"],
                           [ '{person.lastname}' , "Last Name"],
@@ -1056,28 +1040,27 @@ Pman.Dialog.CoreEmail = {
                       ],
                       fields : [  'type', 'name'],
                       xns : Roo.data,
-                      '|xns' : 'Roo.data',
-                      xtype : 'SimpleStore'
+                      '|xns' : 'Roo.data'
                      }
                     },
                     {
+                     xtype : 'Separator',
                      xns : Roo.Toolbar,
-                     '|xns' : 'Roo.Toolbar',
-                     xtype : 'Separator'
+                     '|xns' : 'Roo.Toolbar'
                     },
                     {
+                     xtype : 'Button',
                      cls : 'x-init-enable',
                      text : _this._strings['bd88a20b53a47f7b5704a83a15ff5506'] /* Saved Version */,
-                     xns : Roo.Toolbar,
-                     '|xns' : 'Roo.Toolbar',
-                     xtype : 'Button',
                      listeners : {
                       click : function (_self, e)
                        {
                            this.scope.owner.fireEvent('savedpreview', this.scope.owner);
                            
                        }
-                     }
+                     },
+                     xns : Roo.Toolbar,
+                     '|xns' : 'Roo.Toolbar'
                     }
                    ]
                   }
@@ -1088,16 +1071,14 @@ Pman.Dialog.CoreEmail = {
              ]
             },
             {
+             xtype : 'Row',
              hideLabels : true,
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Row',
              items  : [
               {
-               text : _this._strings['e9968623956c15023d54335ea3699855'] /* Convert Html to Text */,
-               xns : Roo,
-               '|xns' : 'Roo',
                xtype : 'Button',
+               text : _this._strings['e9968623956c15023d54335ea3699855'] /* Convert Html to Text */,
                listeners : {
                 click : function (_self, e)
                  {
@@ -1120,40 +1101,59 @@ Pman.Dialog.CoreEmail = {
                      });  
                      
                  }
-               }
+               },
+               xns : Roo,
+               '|xns' : 'Roo'
               }
              ]
             },
             {
+             xtype : 'Row',
              hideLabels : true,
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Row',
              items  : [
               {
+               xtype : 'FieldSet',
                hideLabels : true,
                legend : _this._strings['e44b145bd8b49b06e0ad2ced1ad56466'] /* Plain Text */,
                style : 'text-align:center;',
                xns : Roo.form,
                '|xns' : 'Roo.form',
-               xtype : 'FieldSet',
                items  : [
                 {
+                 xtype : 'TextArea',
                  height : 50,
                  name : 'plaintext',
                  xns : Roo.form,
-                 '|xns' : 'Roo.form',
-                 xtype : 'TextArea'
+                 '|xns' : 'Roo.form'
                 }
                ]
               }
              ]
             },
             {
-             name : 'id',
+             xtype : 'Row',
              xns : Roo.form,
              '|xns' : 'Roo.form',
-             xtype : 'Hidden'
+             items  : [
+              {
+               xtype : 'TextField',
+               allowBlank : true,
+               fieldLabel : _this._strings['44e7830e754c2e275ef6f658eafba13e'] /* Test Class */,
+               name : 'test_class',
+               readOnly : true,
+               width : 300,
+               xns : Roo.form,
+               '|xns' : 'Roo.form'
+              }
+             ]
+            },
+            {
+             xtype : 'Hidden',
+             name : 'id',
+             xns : Roo.form,
+             '|xns' : 'Roo.form'
             }
            ]
           }
@@ -1163,6 +1163,7 @@ Pman.Dialog.CoreEmail = {
       }
      },
      {
+      xtype : 'GridPanel',
       autoScroll : false,
       background : false,
       fitContainer : true,
@@ -1170,9 +1171,6 @@ Pman.Dialog.CoreEmail = {
       region : 'east',
       tableName : 'Images',
       title : _this._strings['308f2757bfc9ce92fb00ff93fdffd279'] /* Images / Attachments */,
-      xns : Roo,
-      '|xns' : 'Roo',
-      xtype : 'GridPanel',
       listeners : {
        activate : function() {
             _this.ipanel = this;
@@ -1181,12 +1179,12 @@ Pman.Dialog.CoreEmail = {
             }
         }
       },
+      xns : Roo,
+      '|xns' : 'Roo',
       grid : {
+       xtype : 'Grid',
        autoExpandColumn : 'filename',
        loadMask : true,
-       xns : Roo.grid,
-       '|xns' : 'Roo.grid',
-       xtype : 'Grid',
        listeners : {
         render : function() 
          {
@@ -1197,18 +1195,18 @@ Pman.Dialog.CoreEmail = {
              }
          }
        },
+       xns : Roo.grid,
+       '|xns' : 'Roo.grid',
        toolbar : {
+        xtype : 'Toolbar',
         xns : Roo,
         '|xns' : 'Roo',
-        xtype : 'Toolbar',
         items  : [
          {
+          xtype : 'Button',
           cls : 'x-btn-text-icon',
           icon : Roo.rootURL + 'images/default/dd/drop-add.gif',
           text : _this._strings['ec211f7c20af43e742bf2570c3cb84f9'] /* Add */,
-          xns : Roo.Toolbar,
-          '|xns' : 'Roo.Toolbar',
-          xtype : 'Button',
           listeners : {
            click : function()
             {
@@ -1225,15 +1223,15 @@ Pman.Dialog.CoreEmail = {
                     _this.igrid.getDataSource().load({});
                 }); 
             }
-          }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
          },
          {
+          xtype : 'Button',
           cls : 'x-btn-text-icon',
           icon : rootURL + '/Pman/templates/images/trash.gif',
           text : _this._strings['f2a6c498fb90ee345d997f888fce3b18'] /* Delete */,
-          xns : Roo.Toolbar,
-          '|xns' : 'Roo.Toolbar',
-          xtype : 'Button',
           listeners : {
            click : function()
             {
@@ -1261,16 +1259,16 @@ Pman.Dialog.CoreEmail = {
                     });
                 });
             }
-          }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
          }
         ]
        },
        dataSource : {
+        xtype : 'Store',
         remoteSort : true,
         sortInfo : { field : 'filename', direction: 'ASC' },
-        xns : Roo.data,
-        '|xns' : 'Roo.data',
-        xtype : 'Store',
         listeners : {
          beforeload : function (_self, options)
           {
@@ -1286,14 +1284,17 @@ Pman.Dialog.CoreEmail = {
               }
           }
         },
+        xns : Roo.data,
+        '|xns' : 'Roo.data',
         proxy : {
+         xtype : 'HttpProxy',
          method : 'GET',
          url : baseURL + '/Roo/Images.php',
          xns : Roo.data,
-         '|xns' : 'Roo.data',
-         xtype : 'HttpProxy'
+         '|xns' : 'Roo.data'
         },
         reader : {
+         xtype : 'JsonReader',
          fields : [
              {
                  'name': 'id',
@@ -1429,12 +1430,12 @@ Pman.Dialog.CoreEmail = {
          root : 'data',
          totalProperty : 'total',
          xns : Roo.data,
-         '|xns' : 'Roo.data',
-         xtype : 'JsonReader'
+         '|xns' : 'Roo.data'
         }
        },
        colModel : [
         {
+         xtype : 'ColumnModel',
          dataIndex : 'filename',
          header : _this._strings['1351017ac6423911223bc19a8cb7c653'] /* Filename */,
          renderer : function(v,x,r)
@@ -1451,26 +1452,25 @@ Pman.Dialog.CoreEmail = {
          },
          width : 300,
          xns : Roo.grid,
-         '|xns' : 'Roo.grid',
-         xtype : 'ColumnModel'
+         '|xns' : 'Roo.grid'
         },
         {
+         xtype : 'ColumnModel',
          dataIndex : 'displayorder',
          header : _this._strings['2393ad754ba179442d85e415d1d5167c'] /* Displayorder */,
          renderer : function(v) { return String.format('{0}', v); },
          width : 75,
          xns : Roo.grid,
-         '|xns' : 'Roo.grid',
-         xtype : 'ColumnModel'
+         '|xns' : 'Roo.grid'
         },
         {
+         xtype : 'ColumnModel',
          dataIndex : 'title',
          header : _this._strings['b78a3223503896721cca1303f776159b'] /* Title */,
          renderer : function(v) { return String.format('{0}', v); },
          width : 75,
          xns : Roo.grid,
-         '|xns' : 'Roo.grid',
-         xtype : 'ColumnModel'
+         '|xns' : 'Roo.grid'
         }
        ]
       }
