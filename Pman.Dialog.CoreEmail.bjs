@@ -14,6 +14,7 @@
   "72d6d7a1885885bb55a565fd1070581a" : "Import",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
   "31fde7b05ac8952dacf4af8a704074ec" : "Preview",
+  "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "884df8e413319ff51a3f5f528606238a" : "Use template",
   "e6b391a8d2c4d45902a23a8b6585703d" : "URL",
   "2393ad754ba179442d85e415d1d5167c" : "Displayorder",
@@ -26,7 +27,6 @@
   "dc0de523c25be298ba751c63c694109e" : "Responsive Email (1)",
   "396ecabf0cd1f9503e591418851ef406" : "Edit / Create Message",
   "b9c49611cfda3259a2b837b39489e650" : "Add Image",
-  "44e7830e754c2e275ef6f658eafba13e" : "Test Class",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "c4ca4238a0b923820dcc509a6f75849b" : "1",
@@ -561,7 +561,7 @@
              "$ xns" : "Roo.form",
              "items" : [
               {
-               "fieldLabel" : "Test Class",
+               "fieldLabel" : "Test Class <BR/> (for system reference only)",
                "Boolean readOnly" : true,
                "xtype" : "TextField",
                "allowBlank" : true,
