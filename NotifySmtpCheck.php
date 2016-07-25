@@ -41,7 +41,9 @@ class Pman_Core_NotifySmtpCheck extends Pman
                     'verify_peer_name'  => false
                 )
             );
-
+            if (empty($settings['port'])) {
+                $settings['port'] = 25;
+            }
             $smtp = new Net_SMTP($server, $settings['port'], $helo, false, 0, $socket_options);
 
 //            $smtp->setDebug(true);
