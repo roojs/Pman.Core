@@ -247,12 +247,9 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            if (!$p->person()) {
-                print_R($p);
-                exit ;
-            }
+            $email = $p->person() ? $p->person()->email : $p->to_email;
             
-            if ($this->poolHasDomain($p->person()->email) > $this->max_to_domain) {
+            if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
                 if ($pushed === false) {
                     // we only try once to requeue..
@@ -267,7 +264,7 @@ class Pman_Core_Notify extends Pman
             }
             
             
-            $this->run($p->id,$p->person()->email);
+            $this->run($p->id,$email);
             
             
             
