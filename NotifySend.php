@@ -396,7 +396,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
                         
-                        $core_notify = DB_DataObject::factory('core_notify');
+                        $core_notify = DB_DataObject::factory($this->table);
                         $core_notify->domain_id = $core_domain->id;
                         $core_notify->whereAdd("
                             sent >= NOW - INTERVAL 1 HOUR
