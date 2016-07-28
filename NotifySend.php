@@ -415,6 +415,7 @@ class Pman_Core_NotifySend extends Pman
                             $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                         }
                         
+                        // that make's this test obsolete...
                         /*
                         
                         $core_notify = DB_DataObject::factory($this->table);
