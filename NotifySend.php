@@ -396,10 +396,31 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
                         
+                        // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
+                        // if it's newer that '1' minute...
+                        // then shunt it..
+                        
+                        $seconds = floor((60 * 60) / $settings['rate']);
+                        
                         $core_notify = DB_DataObject::factory($this->table);
                         $core_notify->domain_id = $core_domain->id;
                         $core_notify->whereAdd("
-                            sent >= NOW - INTERVAL 1 HOUR
+                            sent >= NOW() - INTERVAL $seconds SECONDS
+                        ");
+                        
+                        if($core_notify->count()){
+                            $old = clone($w);
+                            $w->act_when = date("Y-m-d H:i:s", time() + $seconds);
+                            $w->update($old);
+                            $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
+                        }
+                        
+                        
+                        
+                        $core_notify = DB_DataObject::factory($this->table);
+                        $core_notify->domain_id = $core_domain->id;
+                        $core_notify->whereAdd("
+                            sent >= NOW() - INTERVAL 1 HOUR
                         ");
                         
                         if($core_notify->count() >= $settings['rate']){
@@ -408,6 +429,9 @@ class Pman_Core_NotifySend extends Pman
                             $w->update($old);
                             $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                         }
+                        
+                        
+                        
                         
                         $mailer->host = $server;
                         $username = $settings['username'];
