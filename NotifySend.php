@@ -415,7 +415,7 @@ class Pman_Core_NotifySend extends Pman
                             $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                         }
                         
-                        
+                        /*
                         
                         $core_notify = DB_DataObject::factory($this->table);
                         $core_notify->domain_id = $core_domain->id;
@@ -429,7 +429,7 @@ class Pman_Core_NotifySend extends Pman
                             $w->update($old);
                             $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                         }
-                        
+                        */
                         
                         
                         
