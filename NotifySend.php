@@ -389,7 +389,7 @@ class Pman_Core_NotifySend extends Pman
                 $username = $ff->Mail['username'] ;
                 $password = $ff->Mail['password'] ;
                 
-                if(!empty($ff->Core_Notify)){
+                if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                     
                     foreach ($ff->Core_Notify['routes'] as $server => $settings){
                         if(!in_array($dom, $settings['domains'])){
