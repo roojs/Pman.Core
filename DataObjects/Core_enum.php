@@ -375,11 +375,16 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $t->insert();
             }else{
                 $t->find(true); // fetch it..
+                $o = clone($t);
+                
                 if ( isset($row['is_system_enum'])) {
                      $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
-                    
-                    $t->update();
                 }
+                
+                $t->display_name = isset($row['display_name']) ? $row['display_name'] : '';
+                
+                $t->update($o);
+                
             }
             if (!empty($row['cn'])) {
                 $this->initEnums($row['cn'], array('etype' => $t->name));
