@@ -367,7 +367,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 
                 //$t->is_system_enum = 1; // this should be on the caller..
                 
-                if (!empty($row['seqid'])) {
+                if (!empty($row['seqid']) && !is_numeric($row['seqid'])) {
                     $t->seqid = $seq_id;
                     $seq_id++;
                 }
