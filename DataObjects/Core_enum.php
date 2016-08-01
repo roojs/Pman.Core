@@ -381,7 +381,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                      $t->is_system_enum = isset($row['is_system_enum']) ? $row['is_system_enum'] : $t->is_system_enum;
                 }
                 
-                $t->display_name = isset($row['display_name']) ? $row['display_name'] : '';
+                $t->display_name = isset($row['display_name']) ? $row['display_name'] : $t->display_name;
+                
+                $t->seqid = isset($row['seqid']) ? $row['seqid'] : $t->seqid;
                 
                 $t->update($o);
                 
