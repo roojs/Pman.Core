@@ -42,8 +42,12 @@ class Pman_Core_Import_Core_email extends Pman
         }
         
     }
+    
+    function get($part = '', $opts) {
+        $this->updateOrCreateEmail($part, $opts, false);
+    }
 
-    function get($part='', $opts){
+    function updateOrCreateEmail($part='', $opts, $cm = false){
         
        // DB_DataObject::debugLevel(1);
         
@@ -59,11 +63,12 @@ class Pman_Core_Import_Core_email extends Pman
         }
         
         
-         
-        $c = DB_dataObject::factory('core_email');
-        $ret = $c->get('name',$template_name);
-        if($ret && empty($opts['update'])) {
-            $this->jerr("use --update 1 to update the template..");
+        if (empty($cm)) {
+            $cm = DB_dataObject::factory('core_email');
+            $ret = $cm->get('name',$template_name);
+            if($ret && empty($opts['update'])) {
+                $this->jerr("use --update 1 to update the template..");
+            }
         }
         
         $mailtext = file_get_contents($opts['file']);
@@ -95,28 +100,30 @@ class Pman_Core_Import_Core_email extends Pman
      
         
         
-        if ($c->id) {
-            $cc =clone($c);
-            $c->setFrom(array(
+        if ($cm->id) {
+            
+            $cc =clone($cm);
+            $cm->setFrom(array(
                'bodytext'      => $parts[2],
                'updated_dt'     => date('Y-m-d H:i:s'),   
             ));
             
-            $c->update($cc);
+            $cm->update($cc);
         } else {
             
-              $c->setFrom(array(
+            $cm->setFrom(array(
                 'from_name'     => $from_name,
                 'from_email'    => $from_email,
-                'subject'       => $parts[1]['Subject'],
+                'subject'       => $headers['Subject'],
                 'name'          => $template_name,
                 'bodytext'      => $parts[2],
                 'updated_dt'     => date('Y-m-d H:i:s'),
                 'created_dt'     => date('Y-m-d H:i:s'),
             ));
             
-            $c->insert();
+            $cm->insert();
         }
+        return $cm;
     }
     function output() {
         die("done\n");
