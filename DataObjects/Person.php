@@ -278,10 +278,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             setcookie('Pman.timeout', -1, time() + (30*60), '/');
             
         }
-        if (!$this->canInitializeSystem()) {
-            return false;
-        }
-        
         
         // local auth - 
         $default_admin = false;
