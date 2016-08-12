@@ -259,7 +259,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
        
         $sesPrefix = $this->sesPrefix();
-        print_R($_SESSION[get_class($this)][$sesPrefix .'-auth']);exit;
+        
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
