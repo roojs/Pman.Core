@@ -470,7 +470,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
-        print_R($sesPrefix);exit;
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         // ensure it's written so that ajax calls can fetch it..
         
