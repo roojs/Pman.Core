@@ -279,6 +279,26 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             
         }
         
+        // http basic auth..
+        $u = DB_DataObject::factory($this->tableName());
+
+        if (!empty($_SERVER['PHP_AUTH_USER']) 
+            &&
+            !empty($_SERVER['PHP_AUTH_PW'])
+            &&
+            $u->get('email', $_SERVER['PHP_AUTH_USER'])
+            &&
+            $u->checkPassword($_SERVER['PHP_AUTH_PW'])
+           ) {
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
+            return true; 
+        }
+        
+        if (!$this->canInitializeSystem()) {
+            return false;
+        }
+        
+        
         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
@@ -317,21 +337,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
             return true;
         }
-           
-        // http basic auth..
-        $u = DB_DataObject::factory($this->tableName());
-
-        if (!empty($_SERVER['PHP_AUTH_USER']) 
-            &&
-            !empty($_SERVER['PHP_AUTH_PW'])
-            &&
-            $u->get('email', $_SERVER['PHP_AUTH_USER'])
-            &&
-            $u->checkPassword($_SERVER['PHP_AUTH_PW'])
-           ) {
-            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
-            return true; 
-        }
+        
         //var_dump(session_id());
         //var_dump($_SESSION[__CLASS__]);
         
