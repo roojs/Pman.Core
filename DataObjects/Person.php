@@ -281,7 +281,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
         
         // http basic auth..
         $u = DB_DataObject::factory($this->tableName());
-        print_R($_SERVER);EXIT;
+        
         if (!empty($_SERVER['PHP_AUTH_USER']) 
             &&
             !empty($_SERVER['PHP_AUTH_PW'])
