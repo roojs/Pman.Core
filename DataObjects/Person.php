@@ -370,7 +370,6 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function getAuthUser()
     {
         if (!$this->isAuth()) {
-            print_R('run???');exit;
             return false;
         }
         
