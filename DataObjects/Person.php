@@ -233,18 +233,18 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     function verifyAuth()
     { 
         $ff= HTML_FlexyFramework::get();
-//        if (!empty($ff->Pman['auth_comptype']) &&
-//            (!$this->company_id || ($ff->Pman['auth_comptype'] != $this->company()->comptype))
-//           ){
-//            
-//            $sesPrefix = $this->sesPrefix();
-//       
-//            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
-//            
-//            return false;
-//            
-//            //$ff->page->jerr("Login not permited to outside companies");
-//        }
+        if (!empty($ff->Pman['auth_comptype']) &&
+            (!$this->company_id || ($ff->Pman['auth_comptype'] != $this->company()->comptype))
+           ){
+            
+            $sesPrefix = $this->sesPrefix();
+       
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
+            
+            return false;
+            
+            //$ff->page->jerr("Login not permited to outside companies");
+        }
         return true;
         
     }    
