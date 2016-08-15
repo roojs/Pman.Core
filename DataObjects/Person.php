@@ -964,6 +964,7 @@ class Pman_Core_DataObjects_Person extends DB_DataObject
     }
     function setFromRoo($ar, $roo)
     {
+        print_r($ar);exit;
         $this->setFrom($ar);
         if (!empty($ar['passwd1'])) {
             $this->setPassword($ar['passwd1']);
