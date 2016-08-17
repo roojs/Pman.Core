@@ -14,7 +14,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     {
           
         $this->loadIniFiles(); //?? shared???
-        $this->updateEngine(); // update the engine first - get's around 1000 character limit on indexes..
+        $this->updateEngine(); // update the engine first - get's around 1000 character limit on indexes..cd 
         
         $this->updateCharacterSet();
         
