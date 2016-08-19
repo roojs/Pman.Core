@@ -132,6 +132,8 @@ Pman.Tab.PersonList.prototype = {
     
     add : function(parentLayout, region) {
         
+        Roo.log('PersonList add called!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        
         var _this = this;
         if (this.tab) {
             parentLayout.getRegion(region).showPanel(this.panel);
