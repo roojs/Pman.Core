@@ -249,7 +249,6 @@ Pman.Tab.PersonList.prototype = {
                 listeners : {
                     rowdblclick : function(g, ri, e) {
                         var s = g.getDataSource().getAt(ri).data;
-                        Roo.log('rowdblclick fire');
                         if (_this.dialog() && Pman.hasPerm(_this.permName, 'E')) {
                             _this.dialog().show(s,refreshPager);
                         }
@@ -497,7 +496,7 @@ Pman.Tab.PersonList.prototype = {
                 xtype : 'Button',
                 xns : Roo.Toolbar,
                
-                text: "Switch to Selected User",
+                text: "Switch to Selected User????",
                 hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
                 listeners : {
                     click : function () { 
