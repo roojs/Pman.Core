@@ -284,7 +284,7 @@ Pman.Tab.PersonList.prototype = {
                 fitContainer: true,
                 //background : false,
                 id: this.id, 
-                title: this.title || "Staff", 
+                title: this.title || "Staff list????", 
                 controller : this 
             })
         );
