@@ -771,7 +771,7 @@ Pman = new Roo.Document(
     
     xregister : function(obj)
     {
-        Roo.log('xegistre');
+        
         // work out owner..
         if (!Pman.appModules === false) {
             Pman.appModules = typeof(AppModules ) == 'undefined'? [] :
@@ -896,8 +896,7 @@ Pman = new Roo.Document(
      */
     register : function(obj)
     {
-        Roo.log('register');
-        Roo.log(Roo.apply({}, obj));
+        
         //this.xregister(obj);
         
         
