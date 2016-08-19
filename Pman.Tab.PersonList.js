@@ -288,6 +288,7 @@ Pman.Tab.PersonList.prototype = {
                 controller : this 
             })
         );
+Roo.log('title !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11');
         Roo.log(this.title);
         this.grid.render();
         
