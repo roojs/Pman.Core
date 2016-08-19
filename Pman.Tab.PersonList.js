@@ -150,7 +150,7 @@ Pman.Tab.PersonList.prototype = {
             }
         );
 
-
+        Roo.log(['Person', parentLayout]);
 
         this.tab = parentLayout.add(region,
             new Roo.NestedLayoutPanel(
