@@ -290,7 +290,7 @@ Pman.Tab.PersonList.prototype = {
         );
         this.grid.render();
         
-        Roo.log(['Person', parentLayout, this.panel, this.grid]);
+        Roo.log(['Person', this.layout, this.panel, this.grid]);
         
         if (this.hiddenColumns) {
             var cm = this.grid.getColumnModel();
