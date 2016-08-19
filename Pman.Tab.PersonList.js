@@ -20,7 +20,7 @@ Pman.Tab.PersonList.prototype = {
     //--- things that should be set!!!!
     id : '',  // should be set to something!
     type : 0, // means!! = 0 = Groups (perms) 1= teams - loose grouping..
-    title : false,
+    title : 'test???',
     hiddenColumns: false,  // lsit of cols to hide..
     itemDisplayName : false, /// eg "Staff Employees / Contacts etc."
     permName : 'Core.Person', // or 'Core.Staff'
