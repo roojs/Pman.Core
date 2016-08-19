@@ -155,8 +155,6 @@ Pman.Tab.GroupsList.prototype = {
         this.panel  = parentLayout.add(region,  new Ext.GridPanel(this.grid ,
             { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
         );
-        Roo.log('test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-        Roo.log(this.panel);
         this.grid.render();
         
         
