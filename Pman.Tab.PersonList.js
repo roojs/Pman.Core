@@ -284,14 +284,10 @@ Pman.Tab.PersonList.prototype = {
                 fitContainer: true,
                 //background : false,
                 id: this.id, 
-                title: this.title || "Staff list????", 
+                title: this.title || "Staff", 
                 controller : this 
             })
         );
-
-        Roo.log('test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1');
-        Roo.log(this.title);
-        Roo.log(this.panel.title);
         this.grid.render();
         
         if (this.hiddenColumns) {
