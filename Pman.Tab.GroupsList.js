@@ -276,7 +276,7 @@ Pman.Tab.GroupsList.prototype = {
         var _dialog= this.getDialog();
         this.toolbar.add({
             
-            text: "Manage Groups",
+            text: "Manage Groups????",
             cls: 'x-btn-text-icon',
             icon: Ext.rootURL + 'images/default/tree/leaf.gif',
             menu : {
