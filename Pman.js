@@ -896,7 +896,7 @@ Pman = new Roo.Document(
      */
     register : function(obj)
     {
-        
+        Roo.log(obj);
         //this.xregister(obj);
         
         
