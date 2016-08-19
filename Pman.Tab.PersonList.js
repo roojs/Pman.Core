@@ -288,6 +288,10 @@ Pman.Tab.PersonList.prototype = {
                 controller : this 
             })
         );
+
+        Roo.log('test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1');
+        Roo.log(this.title);
+        Roo.log(this.panel.title);
         this.grid.render();
         
         if (this.hiddenColumns) {
