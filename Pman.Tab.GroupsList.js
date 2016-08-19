@@ -73,7 +73,7 @@ Pman.Tab.GroupsList.prototype = {
                     listeners : {
                         
                         beforeload: function(t, o) {
-                            //console.log(o.params);
+                            console.log(o.params);
                             if (!o.params) {
                                 o.params = {};
                             }
