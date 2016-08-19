@@ -155,10 +155,8 @@ Pman.Tab.GroupsList.prototype = {
         this.panel  = parentLayout.add(region,  new Ext.GridPanel(this.grid ,
             { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
         );
-
         this.grid.render();
-
-        Roo.log(['Groups', parentLayout, this.panel, this.grid]);
+        
         
         new Ext.dd.DropTarget(_this.grid.getView().mainBody, {  
             ddGroup : 'groupDD',  
