@@ -152,6 +152,8 @@ Pman.Tab.GroupsList.prototype = {
         });
         // add selection changed...
         
+        Roo.log(['Groups', this.panel]);
+        
         this.panel  = parentLayout.add(region,  new Ext.GridPanel(this.grid ,
             { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
         );
