@@ -17,7 +17,7 @@ Pman.Tab.GroupsList.prototype = {
     type : 0,
     disabled : false,
     add : function(parentLayout, region) {
-        
+        return;
         var _this = this;
         
         var refreshPager = function() {
