@@ -772,6 +772,7 @@ Pman = new Roo.Document(
     xregister : function(obj)
     {
         Roo.log(obj);
+        return;
         // work out owner..
         if (!Pman.appModules === false) {
             Pman.appModules = typeof(AppModules ) == 'undefined'? [] :
