@@ -771,7 +771,7 @@ Pman = new Roo.Document(
     
     xregister : function(obj)
     {
-        Roo.log(obj);
+        
         // work out owner..
         if (!Pman.appModules === false) {
             Pman.appModules = typeof(AppModules ) == 'undefined'? [] :
@@ -957,7 +957,6 @@ Pman = new Roo.Document(
         // Roo.log("CALLING XComponent register with : " + obj.name);
         
         // this will call xregister as it's the on.register handler..
-        Roo.log(obj);
         Roo.XComponent.register(obj.isTop ? obj : Roo.apply(obj.module, obj));
          
     } ,
