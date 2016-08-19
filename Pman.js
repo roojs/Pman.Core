@@ -938,6 +938,7 @@ Pman = new Roo.Document(
                 }
                 
             }
+            Roo.log(this);
             this.add(this.parent.layout, this.region);
             this.el = this.layout;
             
