@@ -156,7 +156,7 @@ Pman.Tab.GroupsList.prototype = {
             { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
         );
 
-        Roo.log(['Groups', parentLayout, this.panel]);
+        Roo.log(['Groups', parentLayout, this.panel, this.grid]);
         
         this.grid.render();
         
