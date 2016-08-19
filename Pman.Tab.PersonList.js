@@ -150,7 +150,7 @@ Pman.Tab.PersonList.prototype = {
             }
         );
 
-        Roo.log(['Person', parentLayout]);
+
 
         this.tab = parentLayout.add(region,
             new Roo.NestedLayoutPanel(
@@ -289,8 +289,6 @@ Pman.Tab.PersonList.prototype = {
             })
         );
         this.grid.render();
-        
-        Roo.log(['Person', this.layout, this.panel, this.grid]);
         
         if (this.hiddenColumns) {
             var cm = this.grid.getColumnModel();
