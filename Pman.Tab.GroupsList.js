@@ -18,6 +18,8 @@ Pman.Tab.GroupsList.prototype = {
     disabled : false,
     add : function(parentLayout, region) {
         
+        Roo.log('GroupsList add called!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        
         var _this = this;
         
         var refreshPager = function() {
