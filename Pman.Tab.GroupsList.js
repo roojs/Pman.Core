@@ -74,7 +74,6 @@ Pman.Tab.GroupsList.prototype = {
                         
                         beforeload: function(t, o) {
                             //console.log(o.params);
-                            Roo.log('run???????????????????????????????????????/');
                             if (!o.params) {
                                 o.params = {};
                             }
