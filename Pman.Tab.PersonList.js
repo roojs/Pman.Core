@@ -31,6 +31,7 @@ Pman.Tab.PersonList.prototype = {
     beforeload: function(t, o) {
         //console.log(o.params);
         // teams!?!
+        Roo.log('before load??????');
         alert('person list not configured');
         return false;
         /*
