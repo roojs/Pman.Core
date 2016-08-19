@@ -159,9 +159,10 @@ Pman.Tab.PersonList.prototype = {
                     background: true,
                     controller : this
         }));
-
+        _this.delayedCreate();
+        
         this.tab.on('activate', function() {
-            _this.delayedCreate();
+//            _this.delayedCreate();
            // _this.paging.onClick('refresh');
         });
     },
