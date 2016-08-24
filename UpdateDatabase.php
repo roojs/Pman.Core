@@ -136,9 +136,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_FlexyFramework::get();
         
         if(!empty($ff->Core_Notify)){
-            require_once 'Pman/Core/NotifySmtpCheck.php';
-            $x = new Pman_Core_NotifySmtpCheck();
-            $x->check();
+//            require_once 'Pman/Core/NotifySmtpCheck.php';
+//            $x = new Pman_Core_NotifySmtpCheck();
+//            $x->check();
         }
         
         $this->disabled = explode(',', $ff->disable);
