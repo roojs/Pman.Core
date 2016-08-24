@@ -880,6 +880,20 @@ class Pman_Core_UpdateDatabase extends Pman
             die("Error: set innodb_file_per_table = 1 in my.cnf\n\n");
         }
         
+        $db = DB_DataObject::factory('core_enum');
+        $db->query("show variables like 'sql_mode'");
+        $db->fetch();
+        
+        $modes = explode(",", $db->value);
+        
+        if(
+                in_array('NO_ZERO_IN_DATE', $modes) ||
+                in_array('NO_ZERO_DATE', $modes) ||
+                !in_array('ALLOW_INVALID_DATES', $modes)
+        ){
+            die("Error: set innodb_file_per_table = 1 in my.cnf\n\n");
+        }
+        
         $done_check = true;;
 
  
