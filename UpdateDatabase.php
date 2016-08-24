@@ -891,7 +891,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 in_array('NO_ZERO_DATE', $modes) ||
                 !in_array('ALLOW_INVALID_DATES', $modes)
         ){
-            die("Error: set innodb_file_per_table = 1 in my.cnf\n\n");
+            die("Error: set sql_mode include 'ALLOW_INVALID_DATES', remove 'NO_ZERO_IN_DATE' AND 'NO_ZERO_DATE' in my.cnf\n\n");
         }
         
         $done_check = true;;
