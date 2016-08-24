@@ -883,11 +883,9 @@ class Pman_Core_UpdateDatabase extends Pman
         $db = DB_DataObject::factory('core_enum');
         $db->query("show variables like 'sql_mode'");
         $db->fetch();
-        print_r($db->Value);exit;
         
-        $modes = explode(",", $db->value);
+        $modes = explode(",", $db->Value);
         
-        print_r($db->value);exit;
         if(
                 in_array('NO_ZERO_IN_DATE', $modes) ||
                 in_array('NO_ZERO_DATE', $modes) ||
