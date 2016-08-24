@@ -18,7 +18,7 @@ ALTER TABLE Person ADD COLUMN   chosen_title TEXT NOT NULL;
 
 
 ALTER TABLE Person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
-ALTER TABLE Person ADD COLUMN   remarks text;
+ALTER TABLE Person ADD COLUMN   remarks text NOT NULL;
 ALTER TABLE Person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE Person ADD COLUMN   country varchar(8) default '';
 
