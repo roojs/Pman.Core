@@ -14,7 +14,7 @@ ALTER TABLE Person ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT '';
 
 -- chose title is like a nickname 
 
-ALTER TABLE Person ADD COLUMN   chosen_title TEXT NOT NULL DEFAULT ''; 
+ALTER TABLE Person ADD COLUMN   chosen_title TEXT NOT NULL; 
 
 
 ALTER TABLE Person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
