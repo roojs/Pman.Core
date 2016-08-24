@@ -7,5 +7,5 @@ CREATE TABLE core_oauth_jwt (
 );
 
 CREATE INDEX client_id_idx ON core_oauth_jwt (client_id) USING BTREE;
-CREATE INDEX public_key_idx ON core_oauth_jwt (public_key) USING BTREE;
+CREATE INDEX public_key_idx ON core_oauth_jwt (public_key(1000)) USING BTREE;
  
