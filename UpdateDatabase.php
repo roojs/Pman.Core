@@ -886,6 +886,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $modes = explode(",", $db->value);
         
+        print_r($modes);exit;
         if(
                 in_array('NO_ZERO_IN_DATE', $modes) ||
                 in_array('NO_ZERO_DATE', $modes) ||
