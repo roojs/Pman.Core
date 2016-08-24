@@ -24,7 +24,7 @@ ALTER TABLE core_person_signup ADD COLUMN   company_name TEXT NOT NULL;
 ALTER TABLE core_person_signup ADD COLUMN   person_type TEXT NOT NULL;
 
 ALTER TABLE core_person_signup ADD COLUMN   person_id int(11) NOT NULL  default 0;
-ALTER TABLE core_person_signup ADD COLUMN   person_table TEXT NOT NULL  default '';
+ALTER TABLE core_person_signup ADD COLUMN   person_table TEXT NOT NULL;
 
 ALTER TABLE core_person_signup ADD COLUMN   inviter_id int(11) NOT NULL  default 0;
 
