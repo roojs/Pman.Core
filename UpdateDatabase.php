@@ -893,7 +893,7 @@ class Pman_Core_UpdateDatabase extends Pman
         ){
             die("Error: set sql_mode include 'ALLOW_INVALID_DATES', remove 'NO_ZERO_IN_DATE' AND 'NO_ZERO_DATE' in my.cnf\n\n");
         }
-        
+//        STRICT_TRANS_TABLES
         $done_check = true;;
 
  
