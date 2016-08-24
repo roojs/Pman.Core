@@ -22,7 +22,7 @@ ALTER TABLE Person ADD COLUMN   remarks text NOT NULL;
 ALTER TABLE Person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE Person ADD COLUMN   country varchar(8) default '';
 
-ALTER TABLE Person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '0000-01-01';
+ALTER TABLE Person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '1900-01-01';
 
 -- main contact details
 ALTER TABLE Person ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';
