@@ -890,6 +890,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $modes = explode(",", $db->Value);
         
+        // these are 'new' problems with mysql.
         if(
                 in_array('NO_ZERO_IN_DATE', $modes) ||
                 in_array('NO_ZERO_DATE', $modes) ||
