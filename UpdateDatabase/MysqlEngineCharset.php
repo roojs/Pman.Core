@@ -14,7 +14,10 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     {
           
         $this->loadIniFiles(); //?? shared???
-        $this->updateEngine(); // update the engine first - get's around 1000 character limit on indexes..cd 
+        
+        // update the engine first - get's around 1000 character limit on indexes..cd
+        // however - Innodb does not support fulltext indexes, so this may fail...
+        $this->updateEngine(); 
         
         $this->updateCharacterSet();
         
