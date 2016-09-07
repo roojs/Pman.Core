@@ -152,9 +152,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         // do this first, so the innodb change + utf8 fixes column max sizes
-        // no need to run it first -innodb changes is first - so we need to remove fulltext using the .sql files
         
-        // $this->runExtensions(); 
+        // this will trigger errors about freetext indexes - we will have to remove them manually.?
+        // otherwise we need to do an sql query to find them, then remove them (not really worth it as it only affects really old code..)
+        
+        $this->runExtensions(); 
 
         
         if (empty($opts['data-only'])) {
