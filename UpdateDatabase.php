@@ -150,7 +150,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->checkOpts($opts);
         
-        $this->runExtensions(); // do this first, so the innodb change + utf8 fixes column max sizes
+        
+        // do this first, so the innodb change + utf8 fixes column max sizes
+        // no need to run it first -innodb changes is first - so we need to remove fulltext using the .sql files
+        
+        // $this->runExtensions(); 
 
         
         if (empty($opts['data-only'])) {
