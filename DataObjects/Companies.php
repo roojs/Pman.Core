@@ -404,8 +404,7 @@ class Pman_Core_DataObjects_Companies extends DB_DataObject
         $companies->setFrom(array(
             'background_color' => '',
             'created_dt' => $this->sqlValue('NOW()'),
-            'updated_dt' => $this->sqlValue('NOW()'),
-            'code' => (empty($opts['company-code'])) ? '' : $opts['company-code'],
+            'updated_dt' => $this->sqlValue('NOW()')
         ));
         
         
