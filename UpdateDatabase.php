@@ -885,21 +885,28 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         $db = DB_DataObject::factory('core_enum');
-        $db->query("show variables like 'sql_mode'");
+        $db->query("select version() as version");
         $db->fetch();
         
-        $modes = explode(",", $db->Value);
-        
-        // these are 'new' problems with mysql.
-        if(
-                in_array('NO_ZERO_IN_DATE', $modes) ||
-                in_array('NO_ZERO_DATE', $modes) ||
-                in_array('STRICT_TRANS_TABLES', $modes) || 
-                !in_array('ALLOW_INVALID_DATES', $modes)
-        ){
-            die("Error: set sql_mode include 'ALLOW_INVALID_DATES', remove 'NO_ZERO_IN_DATE' AND 'NO_ZERO_DATE' in my.cnf\n\n");
+        if (version_compare($db->version, '5.7', '>=' )) {
+                
+            $db = DB_DataObject::factory('core_enum');
+            $db->query("show variables like 'sql_mode'");
+            $db->fetch();
+            
+            $modes = explode(",", $db->Value);
+            
+            // these are 'new' problems with mysql.
+            if(
+                    in_array('NO_ZERO_IN_DATE', $modes) ||
+                    in_array('NO_ZERO_DATE', $modes) ||
+                    in_array('STRICT_TRANS_TABLES', $modes) || 
+                    !in_array('ALLOW_INVALID_DATES', $modes)
+            ){
+                die("Error: set sql_mode include 'ALLOW_INVALID_DATES', remove 'NO_ZERO_IN_DATE' AND 'NO_ZERO_DATE' in my.cnf\n\n");
+            }
         }
-
+        
         $done_check = true;;
 
  
