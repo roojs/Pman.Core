@@ -270,7 +270,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             empty($_FILES['imageUpload']['name']) || 
             empty($_FILES['imageUpload']['type'])
         ) {
-            $this->err = "Missing file details";
+            $this->err = "Missing file details : ". print_r($_FILES['imageUpload'],true);
             return false;
         }
         
