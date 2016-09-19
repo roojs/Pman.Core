@@ -68,7 +68,6 @@ class Pman_Core_UpdateDatabase extends Pman
             'max' => 1,
         ),
         
-        
         'json-person' => array(
             'desc' => 'Person JSON file',
             'default' => '',
