@@ -280,8 +280,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 4=>"No file was uploaded",
                 6=>"Missing a temporary folder" 
             ); 
-            $estr = (empty($_FILES['imageUpload']['error']) ? '?': $emap[$_FILES['imageUpload']['error']])
-            $this->err = "Missing file details : Error=". (empty($_FILES['imageUpload']['error']) ? '?': $_FILES['imageUpload']['error']);
+            $estr = (empty($_FILES['imageUpload']['error']) ? '?': $emap[$_FILES['imageUpload']['error']]);
+            $this->err = "Missing file details : Error=". $estr;
             return false;
         }
         
