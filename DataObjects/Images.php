@@ -271,6 +271,16 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             empty($_FILES['imageUpload']['name']) || 
             empty($_FILES['imageUpload']['type'])
         ) {
+            
+            $emap = array( 
+                0=>"There is no error, the file uploaded with success", 
+                1=>"The uploaded file exceeds the upload_max_filesize directive in php.ini", 
+                2=>"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form" ,
+                3=>"The uploaded file was only partially uploaded",
+                4=>"No file was uploaded",
+                6=>"Missing a temporary folder" 
+            ); 
+            $estr = (empty($_FILES['imageUpload']['error']) ? '?': $emap[$_FILES['imageUpload']['error']])
             $this->err = "Missing file details : Error=". (empty($_FILES['imageUpload']['error']) ? '?': $_FILES['imageUpload']['error']);
             return false;
         }
