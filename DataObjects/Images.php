@@ -325,6 +325,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         if (!$this->createFrom($_FILES['imageUpload']['tmp_name'])) {
+            $this->err  =  isset($this->err)  ?  $this->err  : "createFrom Image failed";
             return false;
         }
         return true;
