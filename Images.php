@@ -57,6 +57,7 @@ class Pman_Core_Images extends Pman
     
     function get($s) // determin what to serve!!!!
     {
+        print_r('test');exit;
         // for testing only.
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
