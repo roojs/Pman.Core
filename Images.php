@@ -371,7 +371,7 @@ class Pman_Core_Images extends Pman
             
             
         }
-        
+        print_r($html);exit;
         
         $result = array();
         preg_match_all('/<a\s+[^>]+>/i',$html, $result); 
