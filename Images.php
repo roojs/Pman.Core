@@ -243,16 +243,13 @@ class Pman_Core_Images extends Pman
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
         
-        require_once 'File/MimeType.php';
-        $y = new File_MimeType();
-        $ext = $y->toExt(trim((string) $this->as_mimetype ));
-        
-        print_r($ext);exit;
-        
-        
         // if the mimetype is not converted..
         // then the filename should be original.{size}.jpeg
         $fn = $img->getStoreName() . '.'. $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
+        
+        if($img->mimetype == 'image/gif'){
+            
+        }
         
         if (!file_exists($fn)) {
             $fn = $img->getStoreName()  . '.'. $this->size . '.'. $img->fileExt();
