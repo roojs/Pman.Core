@@ -232,9 +232,10 @@ class Pman_Core_Images extends Pman
         }
 //        print_r($img);exit;
         $x = $img->toFileConvert();
-        if (empty($this->as_mimetype)) {
+        if (empty($this->as_mimetype) || $img->mimetype == 'image/gif') {
             $this->as_mimetype  = $img->mimetype;
         }
+        
         if (!$this->thumb) {
             $x->convert( $this->as_mimetype);
             $x->serve($this->method);
