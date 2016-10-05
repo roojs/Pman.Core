@@ -53,6 +53,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function beforeInsert($q, $roo) 
     {
+        print_r('beforeInsert');exit;
+        
         if (isset($q['_remote_upload'])) {
             require_once 'System.php';
             
@@ -104,6 +106,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function createFrom($file, $filename=false)
     {
+        print_r('createFrom');exit;
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             $this->err = "File $file did not exist or is 0 size";
