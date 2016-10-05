@@ -232,10 +232,9 @@ class Pman_Core_Images extends Pman
         }
 //        print_r($img);exit;
         $x = $img->toFileConvert();
-        if (empty($this->as_mimetype) || $img->mimetype == 'image/gif') {
+        if (empty($this->as_mimetype)) {
             $this->as_mimetype  = $img->mimetype;
         }
-        
         if (!$this->thumb) {
             $x->convert( $this->as_mimetype);
             $x->serve($this->method);
@@ -243,6 +242,8 @@ class Pman_Core_Images extends Pman
         }
         //echo "SKALING?  $this->size";
         // acutally if we generated the image, then we do not need to validate the size..
+        
+        
         
         // if the mimetype is not converted..
         // then the filename should be original.{size}.jpeg
