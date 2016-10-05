@@ -356,6 +356,8 @@ class Pman_Core_Images extends Pman
             if (empty($attr['src'])) {
                 continue;
             }
+            print_r($attr['src']);
+            print_r($baseURL);
             print_f(strpos($attr['src'], $baseURL));exit;
             if (0 !== strpos($attr['src'], $baseURL)) {
                 // it starts with our 'new' baseURL?
