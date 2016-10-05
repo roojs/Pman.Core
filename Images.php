@@ -360,7 +360,7 @@ class Pman_Core_Images extends Pman
                 $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
                 continue;
             }
-            if (false !== strpos($attr['src'], '//')) {
+            if (false !== strpos($attr['src'], '//') && false === strpos($attr['src'], $baseURL)) {
                 // contains an absolute path.. that is probably not us...
                 continue;
             }
