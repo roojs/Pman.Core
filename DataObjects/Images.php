@@ -106,7 +106,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function createFrom($file, $filename=false)
     {
-        print_r('createFrom');exit;
         // copy the file into the storage area..
         if (!file_exists($file) || !filesize($file)) {
             $this->err = "File $file did not exist or is 0 size";
