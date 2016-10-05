@@ -573,7 +573,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function setFromRoo($ar, $roo)
     {
-        print_r('setFromRoo');exit;
         // not sure why we do this.. 
         
         // if imgtype starts with '-' ? then we set the 'old' (probably to delete later)
