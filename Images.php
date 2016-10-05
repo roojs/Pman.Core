@@ -355,6 +355,10 @@ class Pman_Core_Images extends Pman
             if (empty($attr['src'])) {
                 continue;
             }
+            print_r($baseURL);
+            echo "\n";
+            print_r($attr['src']);
+            exit;
             if (0 !== strpos($attr['src'], $baseURL)) {
                 // it starts with our 'new' baseURL?
                 $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
