@@ -455,7 +455,7 @@ class Pman_Core_Images extends Pman
         } else {
             $provider = $provider == 'Images/Thumb' ? 'Images' : $provider; 
         }
-        print_r($img->URL($thumbsize, $provider, $baseURL));exit;
+        
         
         // finally replace the original TAG with the new version..
         
