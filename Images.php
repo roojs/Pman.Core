@@ -340,7 +340,7 @@ class Pman_Core_Images extends Pman
         preg_match_all('/<img\s+[^>]+>/i',$html, $result); 
         
         $matches = array_unique($result[0]);
-        print_r($baseURL);exit;
+        
         foreach($matches as $img) {
             $imatch = array();
             preg_match_all('/(width|height|src)="([^"]*)"/i',$img, $imatch);
@@ -356,6 +356,7 @@ class Pman_Core_Images extends Pman
             if (empty($attr['src'])) {
                 continue;
             }
+            print_f(strpos($attr['src'], $baseURL));exit;
             if (0 !== strpos($attr['src'], $baseURL)) {
                 // it starts with our 'new' baseURL?
                 $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
