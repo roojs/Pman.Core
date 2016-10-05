@@ -248,7 +248,7 @@ class Pman_Core_Images extends Pman
         $fn = $img->getStoreName() . '.'. $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
         
         if($img->mimetype == 'image/gif'){
-            
+            $fn = $img->getStoreName() . '.'. $this->size . '.gif';
         }
         
         if (!file_exists($fn)) {
