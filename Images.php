@@ -248,6 +248,8 @@ class Pman_Core_Images extends Pman
         $y = new File_MimeType();
         $ext = $y->toExt(trim((string) $this->as_mimetype ));
         
+        print_r($ext);exit;
+        
         // if the mimetype is not converted..
         // then the filename should be original.{size}.jpeg
         $fn = $img->getStoreName() . '.'. $this->size . '.jpeg'; // thumbs are currenly all jpeg.!???
