@@ -340,6 +340,7 @@ class Pman_Core_Images extends Pman
         preg_match_all('/<img\s+[^>]+>/i',$html, $result); 
         
         $matches = array_unique($result[0]);
+        print_r($result[0]);
         print_r($matches);exit;
         foreach($matches as $img) {
             $imatch = array();
