@@ -368,8 +368,6 @@ class Pman_Core_Images extends Pman
             
             $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
             
-            
-            
         }
         
         
