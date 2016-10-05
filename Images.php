@@ -160,8 +160,6 @@ class Pman_Core_Images extends Pman
                 urlencode("access to this image/file has been denied."));
         }
         
-        
-        
         $this->serve($img);
         exit;
     }
