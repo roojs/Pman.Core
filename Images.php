@@ -338,8 +338,9 @@ class Pman_Core_Images extends Pman
         $baseURL = $ff->Pman_Images['public_baseURL'];
         
         preg_match_all('/<img\s+[^>]+>/i',$html, $result); 
-        print_r($result);exit;
+        
         $matches = array_unique($result[0]);
+        print_r($matches);exit;
         foreach($matches as $img) {
             $imatch = array();
             preg_match_all('/(width|height|src)="([^"]*)"/i',$img, $imatch);
