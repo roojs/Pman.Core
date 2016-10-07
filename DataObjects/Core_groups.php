@@ -34,6 +34,10 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     {
         return 'core_group_members';
     }
+    function rightsTable()
+    {
+        return 'core_group_rights';
+    }
     
     // group types??
     function applyFilters($q, $au, $roo)
