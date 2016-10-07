@@ -81,10 +81,10 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             return true;
         }
         
-        $pi = DB_DataObject::factory($this->personTable());
+        $pi = DB_DataObject::factory('Person');
         $pi->get($this->leader);
             
-        $p = DB_DataObject::factory($this->membersTable());
+        $p = DB_DataObject::factory('core_group_member');
         $p->group_id = $this->id;
         $p->user_id = $this->leader;
         //$p->type = 1; //???????
@@ -99,14 +99,14 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function memberCount()
     {
-        $gm = DB_Dataobject::factory($this->membersTable());
+        $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         return $gm->count();
     }
     
     function memberIds()
     {
-        $gm = DB_Dataobject::factory($this->membersTable());
+        $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         return $gm->fetchAll('user_id');
         
@@ -115,7 +115,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function addMember($person)
     {
-        $gm = DB_Dataobject::factory($this->membersTable());
+        $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         $gm->user_id = $person->id;
         if (!$gm->count()) {
