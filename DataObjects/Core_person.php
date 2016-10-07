@@ -579,7 +579,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         
         //DB_DataObject::debugLevel(1);
-        $c = DB_Dataobject::factory('Companies');
+        $c = DB_Dataobject::factory('core_company');
         $im = DB_Dataobject::factory('Images');
         $c->joinAdd($im, 'LEFT');
         $c->selectAdd();
@@ -594,7 +594,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($c->company_id_logo_id_id))  {
                  
             $im = DB_Dataobject::factory('Images');
-            $im->ontable = 'Companies';
+            $im->ontable = DB_DataObject::factory('core_company')->tableName();
             $im->onid = $c->id;
             $im->imgtype = 'LOGO';
             $im->limit(1);
@@ -801,7 +801,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // specific to project directory which is single comp. login
             //
-            $owncomp = DB_DataObject::Factory('Companies');
+            $owncomp = DB_DataObject::Factory('core_company');
             $owncomp->get('comptype', 'OWNER');
             if ($q['company_id'] == $owncomp->id) {
                 $this->active =1;
@@ -1029,7 +1029,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         // determine if it's staff!!!
-        $owncomp = DB_DataObject::Factory('Companies');
+        $owncomp = DB_DataObject::Factory('core_company');
         $owncomp->get('comptype', 'OWNER');
         $isStaff = ($au->company_id ==  $owncomp->id);
        
@@ -1085,7 +1085,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             return;
         }
-        $c = DB_DAtaObject::Factory('Companies');
+        $c = DB_DAtaObject::Factory('core_company');
         $tc =$c->count();
         if (!$tc || $tc> 1) {
             $roo->jerr("can not create initial user as multiple companies already exist");
