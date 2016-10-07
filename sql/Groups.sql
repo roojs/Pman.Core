@@ -1,4 +1,23 @@
 
+
+
+
+
+
+
+
+
+---  THIS IS DEPRICATED --- USE core_groups now....
+
+
+
+
+
+
+
+
+
+
 CREATE TABLE Groups (
   id int(11) NOT NULL auto_increment,  
   PRIMARY KEY   (id)
