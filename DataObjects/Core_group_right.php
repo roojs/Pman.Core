@@ -16,12 +16,12 @@
 require_once 'DB/DataObject.php';
 
  
-class Pman_Core_DataObjects_Group_rights extends DB_DataObject 
+class Pman_Core_DataObjects_Core_group_right extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'group_rights';                    // table name
+    public $__table = 'core_group_right';                    // table name
     public $rightname;                       // string(64)  not_null
     public $group_id;                        // int(11)  not_null
     public $accessmask;                      // string(10)  not_null
