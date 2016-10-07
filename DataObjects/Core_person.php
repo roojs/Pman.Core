@@ -425,7 +425,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $u->id = -1;
             
             // if a company has been created fill that in in company_id_id
-            $c = DB_DAtaObject::factory('Companies')->lookupOwner();
+            $c = DB_DAtaObject::factory('core_company')->lookupOwner();
             if ($c) {
                 $u->company_id_id = $c->pid();
                 $u->company_id = $c->pid();
