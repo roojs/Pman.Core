@@ -356,11 +356,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                
             ";
             $has_checks=  false;
-            $err = array();
+            $errs = array();
             foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
-                    $err[] = "SOURCE MISSING: $source_col => $target";
+                    $errs[] = "SOURCE MISSING: $source_col => $target";
                     continue;
                 }
                 
@@ -370,7 +370,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 if (!isset($this->schema[$target_table])) {
                     // skip... target table does not exist
-                    $err[] = "TARGET MISSING: $source_col => $target";
+                    $errs[] = "TARGET MISSING: $source_col => $target";
                     continue;
                 }
                 
@@ -401,8 +401,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
            
             ";
             if (!$has_checks) {
-                echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $err) . ")\n";
-                return;
+                echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $errs) . ")\n";
+                continue;
             }
             
             //echo $trigger; exit;
