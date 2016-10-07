@@ -30,6 +30,13 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     ###END_AUTOCODE
     
     // group types??
+    function applyFilters($q, $au, $roo)
+    {
+        if (!empty($q['query']['name_starts'])) {
+            $v = $this->escape($q['query']['name_starts']);
+            $this->whereAdd("name like '{$v}%'");
+        }
+    }
     
     function toEventString() {
         return $this->name;
