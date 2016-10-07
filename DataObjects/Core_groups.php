@@ -91,7 +91,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
         $pi = DB_DataObject::factory($this->personTable());
         $pi->get($this->leader);
             
-        $p = DB_DataObject::factory('group_members');
+        $p = DB_DataObject::factory($this->membersTable());
         $p->group_id = $this->id;
         $p->user_id = $this->leader;
         //$p->type = 1; //???????
