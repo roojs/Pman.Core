@@ -29,12 +29,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    
-    
-    function rightsTable()
-    {
-        return 'core_group_rights';
-    }
+      
     function personTable()
     {
         $ff = HTML_FlexyFramework::get();
