@@ -37,7 +37,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     
     function beforeDelete()
     {
-        $x = DB_DataObject::factory('Groups');
+        $x = DB_DataObject::factory($this->tableName());
         $x->query("DELETE FROM group_rights WHERE group_id = {$this->id}");
         $x->query("DELETE FROM group_members WHERE group_id = {$this->id}");
     }
