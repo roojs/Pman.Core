@@ -18,11 +18,7 @@ class Pman_Core_DataObjects_Group_members extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
-    function personColumn()
-    {
-        return 'user_id';
-    }
-    
+   
     
     var $inAdmin = false;
     
