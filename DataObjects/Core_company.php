@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
       
         $tn = $this->tableName();
         //DB_DataObject::debugLevel(1);
-        $x = DB_DataObject::factory('Companies');
+        $x = DB_DataObject::factory('core_company');
         $x->comptype= 'OWNER';
         $x->find(true);
         
@@ -129,7 +129,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
-            $u = DB_DataObject::factory('Companies');
+            $u = DB_DataObject::factory('core_company');
             if ($u->get($a->id)) { //&& strlen($u->passwd)) {
                 return true;
             }
@@ -152,7 +152,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
             
-            $u = DB_DataObject::factory('Companies');
+            $u = DB_DataObject::factory('core_company');
             if ($u->get($a->id)) { /// && strlen($u->passwd)) {
                 return clone($u);
             }
@@ -227,7 +227,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $img = DB_DataObject::factory('Images');
         $img->onid= 0;
         
-        $img->ontable = 'Companies';
+        $img->ontable = $this->tableName();
         $img->imgtype = 'LOGO';
         // should check uploader!!!
         if ($img->find()) {
@@ -263,7 +263,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $roo->jerr('This company is not allow to delete');
         }
         $img = DB_DataObject::factory('Images');
-        $img->ontable = 'Companies';
+        $img->ontable = $this->tableName();
         $img->onid = $this->id;
         $img->find();
         while ($img->fetch()) {
@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function initCompanies($roo, $opts)
     {
-        $companies = DB_DataObject::factory('companies');
+        $companies = DB_DataObject::factory('core_company');
         
         $ctype = empty($opts['add-company-with-type']) ? 'OWNER' : $opts['add-company-with-type'];
         
@@ -384,13 +384,13 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $roo->jerr("invalid company type '$ctype'");
         }
         if ($ctype =='OWNER') {
-            $companies = DB_DataObject::factory('companies');
+            $companies = DB_DataObject::factory('core_company');
             $companies->comptype_id = $enum;
             if ($companies->count()) {
                 $roo->jerr("Owner  company already exists");
             }
         }
-        $companies = DB_DataObject::factory('companies');
+        $companies = DB_DataObject::factory('core_company');
         
         // check that 
         $companies->setFrom(array(
@@ -414,7 +414,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function lookupOwner()
     {
         $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', 'OWNER'  );
-        $companies = DB_DataObject::factory('companies');
+        $companies = DB_DataObject::factory('core_company');
         $companies->comptype_id = $enum;
         if ($companies->find(true)) {
             return $companies;
