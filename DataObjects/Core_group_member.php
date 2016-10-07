@@ -25,7 +25,7 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     
     function change($person, $group, $state)
     {
-        $gm = DB_DataObject::factory('core_group_member');
+        $gm = DB_DataObject::factory($this->tableName());
         $gm->group_id = $group->id;
         $gm->user_id = $person->id;
         $gm->find(true);
