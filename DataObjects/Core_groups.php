@@ -164,7 +164,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     function initGroups()
     {
         
-        $g = DB_DataObject::factory('Groups');
+        $g = DB_DataObject::factory($this->tableName());
         $g->type = 0;
         $g->name = 'Administrators';
         if ($g->count()) {
@@ -180,7 +180,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
         $this->initGroups();
         
         foreach($data as $gi) {
-            $g = DB_DataObject::factory('Groups');
+            $g = DB_DataObject::factory($this->tableName());
             $g->setFrom($gi);
             
             if(!$g->find(true)){
