@@ -115,7 +115,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     {
         $gm = DB_Dataobject::factory($this->membersTable());
         $gm->group_id = $this->id;
-        return $gm->fetchAll('user_id');
+        return $gm->fetchAll($gm->personColumn());
         
     }
     
