@@ -24,7 +24,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     public $name;                            // string(64)  not_null
     public $type;                            // int(11)  
     public $leader;                          // int(11)  not_null
-
+    public $is_system;                       // used by timesheets?
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
