@@ -40,6 +40,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     }
     function personTable()
     {
+        $ff = HTML_FlexyFramework::get();
         return empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable'];
     }
     
