@@ -192,13 +192,12 @@ class Pman_Core_DataObjects_Projects extends DB_DataObject
             return;
         }
         
-        
-        $opts = PEAR::getStaticProperty('Pman', 'options');
+        $opts = HTML_FlexyFramework::get()->Pman;
         
         $olddir =  $opts['storedir'] . '/' . $old->code;
         $newdir =  $opts['storedir'] . '/' . $this->code;
         if ( file_exists($olddir)) {
-            move($olddir, $newdir);
+            rename($olddir, $newdir);
         }
          
         
