@@ -29,6 +29,12 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    
+    function memberTable()
+    {
+        return 'core_group_members';
+    }
+    
     // group types??
     function applyFilters($q, $au, $roo)
     {
