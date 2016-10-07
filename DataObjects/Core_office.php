@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Core_office extends DB_DataObject
     
     function company()
     {
-        $c = DB_DataObject::Factory('Companies');
+        $c = DB_DataObject::Factory('core_company');
         $c->get($this->company_id);
         return $c;
         
