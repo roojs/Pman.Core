@@ -88,7 +88,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
             return true;
         }
         
-        $pi = DB_DataObject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
+        $pi = DB_DataObject::factory($this->personTable());
         $pi->get($this->leader);
             
         $p = DB_DataObject::factory('group_members');
