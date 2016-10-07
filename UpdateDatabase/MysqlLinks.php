@@ -277,7 +277,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 
                 if (!isset($this->schema[$target_table])) {
                     // skip... target table does not exist
-                     $err[] = "TARGET MISSING: $source_col => $target";
+                    $err[] = "TARGET MISSING: $source_col => $target";
                     continue;
                 }
                 
