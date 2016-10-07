@@ -19,7 +19,7 @@ class Pman_Core_DataObjects_Groups extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'Groups';                          // table name
+    public $__table = 'core_groups';                          // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // string(64)  not_null
     public $type;                            // int(11)  
