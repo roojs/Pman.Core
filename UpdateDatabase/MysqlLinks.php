@@ -313,7 +313,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             ";
             
             if (!$has_checks) {
-                echo "SKIP TRIGGER {$tbl}_before_insert (missing " . implode(", ", $errs) . ")\n";
+                echo "SKIP TRIGGER {$tbl}_before_insert (missing " . implode(", ", $err) . ")\n";
                 return;
             }
             //echo $trigger; exit;
