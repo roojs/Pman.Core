@@ -12,4 +12,9 @@ class Pman_Core_DataObjects_Core_groups extends Pman_Core_DataObjects_Groups
 
     public $__table = 'Groups';                          // table name
     
+    
+     function memberTable()
+    {
+        return 'group_members';
+    }
 }
