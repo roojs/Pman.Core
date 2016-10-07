@@ -261,7 +261,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
         //echo '<PRE>';print_r($defs);
         //$usecol = 1;
         foreach($defs as $rightname => $defdata) {
-            $gr = DB_DataObject::Factory('core_group_rights');
+            $gr = DB_DataObject::Factory('core_group_right');
             $gr->rightname  = $rightname;
             $gr->group_id = $g->id;
             if (!$gr->find(true)) {
