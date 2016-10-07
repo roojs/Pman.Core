@@ -4,12 +4,12 @@
  */
 require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_Group_members extends DB_DataObject 
+class Pman_Core_DataObjects_Core_group_member extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'group_members';                   // table name
+    public $__table = 'core_group_member';                   // table name
     public $group_id;                        // int(11)  
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $user_id;                         // int(11)  not_null
