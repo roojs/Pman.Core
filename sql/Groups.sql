@@ -7,7 +7,10 @@
 
 
 
----  THIS IS DEPRICATED --- USE core_groups now....
+--  THIS IS DEPRICATED --- USE core_groups now....
+
+
+--  some projects will still have to use 'Groups'... so 
 
 
 
