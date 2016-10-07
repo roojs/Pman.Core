@@ -114,7 +114,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     
     function addMember($person)
     {
-        $gm = DB_Dataobject::factory('group_members');
+        $gm = DB_Dataobject::factory($this->membersTable());
         $gm->group_id = $this->id;
         $gm->user_id = $person->id;
         if (!$gm->count()) {
@@ -197,7 +197,7 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
             return;
         }
         $g->insert();
-        $gr = DB_DataObject::factory('group_rights');
+        $gr = DB_DataObject::factory($this->rightsTable());
         $gr->genDefault();
     }
     
