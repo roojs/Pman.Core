@@ -103,6 +103,14 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
              
     }
     
+    
+    function memberCount()
+    {
+        $gm = DB_Dataobject::factory($this->membersTable());
+        $gm->group_id = $this->id;
+        return $gm->count();
+    }
+    
     function memberIds()
     {
         $gm = DB_Dataobject::factory($this->membersTable());
