@@ -38,6 +38,11 @@ class Pman_Core_DataObjects_Core_groups extends DB_DataObject
     {
         return 'core_group_rights';
     }
+    function personTable()
+    {
+        return empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable'];
+    }
+    
     
     // group types??
     function applyFilters($q, $au, $roo)
