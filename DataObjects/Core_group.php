@@ -30,10 +30,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     ###END_AUTOCODE
     
     
-    function memberTable()
-    {
-        return 'core_group_members';
-    }
+    
     function rightsTable()
     {
         return 'core_group_rights';
@@ -60,9 +57,10 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function beforeDelete()
     {
-        $x = DB_DataObject::factory($this->tableName());
-        $x->query("DELETE FROM {$this->rightsTable()} WHERE group_id = {$this->id}");
-        $x->query("DELETE FROM {$this->membersTable()} WHERE group_id = {$this->id}");
+        $x = DB_DataObject::factory('core_group_right');
+        $x->query("DELETE FROM {$x->tableName()} WHERE group_id = {$this->id}");
+        $x = DB_DataObject::factory('core_group_member');
+        $x->query("DELETE FROM {$x->tableName()} WHERE group_id = {$this->id}");
     }
     /**
      * check who is trying to access this. false == access denied..
@@ -205,7 +203,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             return;
         }
         $g->insert();
-        $gr = DB_DataObject::factory($this->rightsTable());
+        $gr = DB_DataObject::factory('core_group_right');
         $gr->genDefault();
     }
     
