@@ -356,7 +356,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                
             ";
             $has_checks=  false;
-            $err[] = array();
+            $err = array();
             foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
@@ -401,7 +401,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
            
             ";
             if (!$has_checks) {
-                echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $errs) . ")\n";
+                echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $err) . ")\n";
                 return;
             }
             
