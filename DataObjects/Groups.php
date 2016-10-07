@@ -17,4 +17,9 @@ class Pman_Core_DataObjects_Core_groups extends Pman_Core_DataObjects_Groups
     {
         return 'group_members';
     }
+     function rightsTable()
+    {
+        return 'group_rights';
+    }
+    
 }
