@@ -7,7 +7,4 @@ CREATE TABLE  core_group_right  (
 ALTER TABLE core_group_right ADD COLUMN    rightname varchar(64)  NOT NULL DEFAULT '';
 ALTER TABLE core_group_right ADD COLUMN     group_id int(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_group_right ADD COLUMN   accessmask varchar(10)  NOT NULL DEFAULT '';
-
--- old mysql.
-ALTER TABLE core_group_right CHANGE COLUMN AccessMask accessmask varchar(10)  NOT NULL DEFAULT '';
-
+ 
