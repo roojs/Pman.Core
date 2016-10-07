@@ -1,13 +1,6 @@
 <?php
 /**
- * Table Definition for Groups
- *
- *group types
- *
- * 0 = permission group..
- * 1 = team
- * 2 = contact group
- *
+ * @deprecated - use Core_groups
  * 
  */
 require_once 'Pman/Core/DataObjects/Core_groups.php';
