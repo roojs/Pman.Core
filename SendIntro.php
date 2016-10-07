@@ -44,7 +44,7 @@ class Pman_Core_SendIntro extends Pman
         if (!$this->hasPerm("Core.Person", "A")) {
              $this->jerr("Not Permitted - no permission to add users.");
         }
-        $p = DB_DataObject::factory('Person');
+        $p = DB_DataObject::factory('core_person');
         
         // let's make a password anyway..
         $rawPasswd = false;
@@ -63,7 +63,7 @@ class Pman_Core_SendIntro extends Pman
             if ($p->get('email', $_REQUEST['email'])) {
                 $this->jerr("duplicate email address:" .$_REQUEST['email']);
             }
-            $p = DB_DataObject::factory('Person');
+            $p = DB_DataObject::factory('core_person');
             $p->setFrom($_REQUEST);
             
             if ($rawPasswd == false) {
@@ -81,7 +81,7 @@ class Pman_Core_SendIntro extends Pman
         } 
         
         
-        $p = DB_DataObject::factory('Person');
+        $p = DB_DataObject::factory('core_person');
         
         if (!$id || !$p->get($_REQUEST['id']))  {
             $this->jerr("Invalid user id");

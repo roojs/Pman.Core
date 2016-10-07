@@ -46,7 +46,7 @@ class Pman_Core_GroupCountries extends Pman
     function addPersonToCountry($users)
     {
         foreach($users as $id){
-            $p = DB_DataObject::factory('Person');
+            $p = DB_DataObject::factory('core_person');
             if(!$p->get($id)){
                 $this->jerr('This Person is not exsiting');
             }
@@ -63,7 +63,7 @@ class Pman_Core_GroupCountries extends Pman
     function subPersonToCountry($users)
     {
         foreach($users as $id){
-            $p = DB_DataObject::factory('Person');
+            $p = DB_DataObject::factory('core_person');
             if(!$p->get($id)){
                 $this->jerr('This Person is not exsiting');
             }

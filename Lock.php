@@ -72,7 +72,7 @@ class Pman_Core_Lock extends Pman
         if (empty($_REQUEST['id'])) {
             $this->jerr("No lock id");
         }
-        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock = DB_DataObject::factory('core_locking');
         if (!$curlock->get($_REQUEST['id'])) {
             $this->jok("No lock exists"); // been deleted before.. probably ok..
         }
@@ -132,7 +132,7 @@ class Pman_Core_Lock extends Pman
         if ($nlocks && empty($_REQUEST['force'])) {
            // DB_DataObjecT::debugLevel(1);
             $ar = $curlock_ex->fetchAll('person_id', 'created');
-            $p = DB_DataObject::factory('Person');
+            $p = DB_DataObject::factory('core_person');
             $p->selectAdd();
             $p->selectAdd('id,name,email');
             
@@ -175,7 +175,7 @@ class Pman_Core_Lock extends Pman
         
         // make a lock..
         
-        $curlock = DB_DataObject::factory('Core_locking');
+        $curlock = DB_DataObject::factory('core_locking');
         $curlock->setFrom(array(
             'on_id' => $_REQUEST['on_id'],
             'on_table' => strtolower($_REQUEST['on_table']),

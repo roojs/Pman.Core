@@ -53,15 +53,17 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($set !== false) {
             $this->person_table = is_object($set) ? $set->tableName() : '';
             
-            $person_table = empty($this->person_table) ? 'Person' : $this->person_table;
-            $col = $person_table  == "Person" ? 'person_id' : $person_table . '_id';
+            $def_pt = DB_DataObject::Factory('core_person')->tableName();
+            
+            $person_table = empty($this->person_table) ? $def_pt  : $this->person_table;
+            $col = $person_table  == $def_pt ? 'person_id' : $person_table . '_id';
             
             $this->{$col} = is_object($set) ? $set->id : $set;
             return;
         }
         static $cache  =array();
-        $person_table = empty($this->person_table) ? 'Person' : $this->person_table;
-        $col = $person_table == "Person" ? 'person_id' : $person_table . '_id';
+        $person_table = empty($this->person_table) ? $def_pt  : $this->person_table;
+        $col = $person_table == $def_pt  ? 'person_id' : $person_table . '_id';
         
         if (isset($cache[$person_table .':'. $this->{$col}])) {
             return $cache[$person_table .':'. $this->{$col}];

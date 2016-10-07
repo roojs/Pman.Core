@@ -171,7 +171,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
             // make sure we have a good cache...?
            
-            DB_DataObject::factory('companies')->initCompanies($this, $opts);
+            DB_DataObject::factory('core_company')->initCompanies($this, $opts);
         }
         
         $this->runExtensions();
@@ -719,7 +719,7 @@ class Pman_Core_UpdateDatabase extends Pman
     function updateDataGroups()
     {
          
-        $groups = DB_DataObject::factory('groups');
+        $groups = DB_DataObject::factory('core_group');
         $groups->initGroups();
         
         $groups->initDatabase($this,array(
@@ -743,7 +743,7 @@ class Pman_Core_UpdateDatabase extends Pman
     {
          
         // fix comptypes enums..
-        $c = DB_DataObject::Factory('Companies');
+        $c = DB_DataObject::Factory('core_company');
         $c->selectAdd();
         $c->selectAdd('distinct(comptype) as comptype');
         $c->whereAdd("comptype != ''");
@@ -761,7 +761,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $c->initEnums($ctb);
         //DB_DataObject::debugLevel(1);
         // fix comptypeid
-        $c = DB_DataObject::Factory('Companies');
+        $c = DB_DataObject::Factory('core_company');
         $c->query("
             UPDATE Companies 
                 SET
@@ -792,7 +792,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (empty($data['bcc_group'])) {
                     $this->jerr("missing bcc_group for template $name");
                 }
-                $g = DB_DataObject::Factory('Groups')->lookup('name',$data['bcc_group']);
+                $g = DB_DataObject::Factory('core_group')->lookup('name',$data['bcc_group']);
                 
                 if (empty($g->id)) {
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");

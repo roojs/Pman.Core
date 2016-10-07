@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Core_office extends DB_DataObject
             return true; // standard error message.
         }
         
-        $p = DB_DAtaObject::Factory('Person');
+        $p = DB_DAtaObject::Factory('core_person');
         
         if (!is_a($dependants_array[0], get_class($p))) {
             $roo->jerr("dep is not a person..");

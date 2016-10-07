@@ -33,7 +33,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function personTable()
     {
         $ff = HTML_FlexyFramework::get();
-        return empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable'];
+        return empty($ff->Pman['authTable']) ? 'core_person' : $ff->Pman['authTable'];
     }
     
     
@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             return true;
         }
         
-        $pi = DB_DataObject::factory('Person');
+        $pi = DB_DataObject::factory('core_person');
         $pi->get($this->leader);
             
         $p = DB_DataObject::factory('core_group_member');
@@ -138,7 +138,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
         //$p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         // groups databse is hard coded to person.. so this should not be used for other tables.????
-        $p = DB_Dataobject::factory( 'Person' );
+        $p = DB_Dataobject::factory( 'core_person' );
         
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;

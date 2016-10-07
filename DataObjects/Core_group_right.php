@@ -149,7 +149,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
         }
         $has_admin = true; ///?? not sure..
         if ($gid) {
-            $g = DB_DataObject::factory('groups');
+            $g = DB_DataObject::factory('core_group');
             $g->get($this->group_id);
             $has_admin = $g->type  == 2 ? false : true;
         }
@@ -214,7 +214,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
     {
         // all groups must have the minimum privaligess..
         // admin group must have all the privaliges
-        $g = DB_DataObject::Factory('groups');
+        $g = DB_DataObject::Factory('core_group');
         $g->get($this->group_id);
         $defs = $this->defaultPermData();
         switch($g->name) {
@@ -236,7 +236,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
     function genDefault()
     {
         // need to create to special groups, admin & DEFAULT.
-        $g = DB_DataObject::Factory('Groups');
+        $g = DB_DataObject::Factory('core_group');
         //$g->name = 'Default';
         //if (!$g->find(true)) {
         //    $g->insert();
@@ -244,7 +244,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
         $g->id = 0;
         $this->applyDefs($g, 1);
     
-        $g = DB_DataObject::Factory('Groups');
+        $g = DB_DataObject::Factory('core_group');
         $g->name = 'Administrators';
         $g->type = 0;
         if (!$g->find(true)) {
@@ -261,7 +261,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
         //echo '<PRE>';print_r($defs);
         //$usecol = 1;
         foreach($defs as $rightname => $defdata) {
-            $gr = DB_DataObject::Factory('group_rights');
+            $gr = DB_DataObject::Factory('core_group_rights');
             $gr->rightname  = $rightname;
             $gr->group_id = $g->id;
             if (!$gr->find(true)) {

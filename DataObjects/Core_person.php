@@ -307,10 +307,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ($_SERVER['SERVER_ADDR'] == '127.0.0.1') &&
             ($_SERVER['REMOTE_ADDR'] == '127.0.0.1')  
         ) {
-            $group = DB_DataObject::factory('Groups');
+            $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
-            $member = DB_DataObject::factory('group_members');
+            $member = DB_DataObject::factory('core_group_member');
             $member->autoJoin();
             $member->group_id = $group->id;
             $member->whereAdd("
@@ -449,13 +449,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
          
         // refresh admin group if we are logged in as one..
         //DB_DataObject::debugLevel(1);
-        $g = DB_DataObject::factory('Groups');
+        $g = DB_DataObject::factory('core_group');
         $g->type = 0;
         $g->get('name', 'Administrators');
-        $gm = DB_DataObject::Factory('group_members');
+        $gm = DB_DataObject::Factory('core_group_member');
         if (in_array($g->id,$gm->listGroupMembership($this))) {
             // refresh admin groups.
-            $gr = DB_DataObject::Factory('group_rights');
+            $gr = DB_DataObject::Factory('core_group_right');
             $gr->applyDefs($g, 0);
         }
         

@@ -200,7 +200,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     
     function person()
     {
-        $p = DB_DAtaObject::factory('Person');
+        $p = DB_DAtaObject::factory('core_person');
         $p->get($this->person_id);
         return $p;
     }

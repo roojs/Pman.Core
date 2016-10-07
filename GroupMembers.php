@@ -43,7 +43,7 @@ class Pman_Core_GroupMembers extends Pman
         
         // Groups are only usable by owner company!!!
         
-        $u = DB_DataObject::factory('Person');
+        $u = DB_DataObject::factory('core_person');
         $u->company_id = $this->company->id;
         //$this->setFilters($u,$_GET);
         $u->active = 1; // active staff only..
@@ -87,7 +87,7 @@ class Pman_Core_GroupMembers extends Pman
         
         
         
-        $p = DB_DataObject::factory('group_members');
+        $p = DB_DataObject::factory('core_group_member');
         $p->group_id = (int)$_GET['group_id'];
         $p->whereAdd('user_id IN ('. implode(',' ,array_keys($ret) ). ')');
         $p->find();
@@ -119,14 +119,14 @@ class Pman_Core_GroupMembers extends Pman
             // add
             $ar = explode(',', $_POST['user_ids']);
             $ac = $_POST['action'];
-            $g = DB_DataObject::factory('Groups');
+            $g = DB_DataObject::factory('core_group');
             $g->get($_POST['group_id']);
             // check type????
             foreach($ar as $uid) {
-                $pi = DB_DataObject::factory('Person');
+                $pi = DB_DataObject::factory('core_person');
                 $pi->get($uid);
                     
-                $p = DB_DataObject::factory('group_members');
+                $p = DB_DataObject::factory('core_group_member');
                 $p->group_id = (int)$_POST['group_id'];
                 $p->user_id = $uid;
                 
@@ -162,7 +162,7 @@ class Pman_Core_GroupMembers extends Pman
            
             
             foreach($_POST['dataDelete'] as $id => $ac) {
-                $m = DB_DataObject::factory('group_members');
+                $m = DB_DataObject::factory('core_group_member');
                 $m->get($id);
                 $m->delete();
             }
@@ -172,7 +172,7 @@ class Pman_Core_GroupMembers extends Pman
         if (!empty($_POST['dataAdd'])) {
              
             foreach($_POST['dataAdd'] as $id => $ac) {
-                $p = DB_DataObject::factory('group_members');
+                $p = DB_DataObject::factory('core_group_member');
                 $p->group_id = (int)$_POST['group_id'];
                 $p->user_id = $id;
                 $p->insert();

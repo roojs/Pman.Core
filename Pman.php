@@ -13,13 +13,13 @@ class Pman_Core_Pman {
     {
         
         
-        $group = DB_DataObject::factory('groups');
+        $group = DB_DataObject::factory('core_group');
         
         // group should be auto created - by update-database...
         
         
         if(!$group->get('name', 'core-person-signup-bcc')){
-            $group = DB_DataObject::factory('groups');
+            $group = DB_DataObject::factory('core_group');
             $group->name = 'core-person-signup-bcc';
             $group->insert();
         }
@@ -32,7 +32,7 @@ class Pman_Core_Pman {
         
         
         
-        $member = DB_DataObject::factory('group_members');
+        $member = DB_DataObject::factory('core_group_member');
         $member->group_id = $group->id;
         if ($member->count()) {
             return;
@@ -43,7 +43,7 @@ class Pman_Core_Pman {
         // if we only have one member - then add it .... (it's the admin, and they can modify this later.. - after they get annoyed with it..
         
         $p->find(true);
-        $member = DB_DataObject::factory('group_members');
+        $member = DB_DataObject::factory('core_group_member');
         $member->group_id = $group->id;
         $member->user_id = $p->id;
         $member->insert();

@@ -56,7 +56,7 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
         $t = clone($this);
         //DB_DataObject::debugLevel(1);
          
-        $grp = DB_DataObject::factory('Groups');
+        $grp = DB_DataObject::factory('core_group');
         $t->joinAdd($grp , 'LEFT');
         //$person->id = (int)$person->id;
         $t->whereAdd("

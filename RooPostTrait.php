@@ -395,7 +395,7 @@ trait Pman_Core_RooPostTrait {
     {
         $this->permitError = true; // allow it to fail without dieing
         
-        $lock = DB_DataObjecT::factory('Core_locking');
+        $lock = DB_DataObjecT::factory('core_locking');
         $this->permitError = false; 
         if (is_a($lock,'DB_DataObject') && $this->authUser)  {
                  
@@ -434,7 +434,7 @@ trait Pman_Core_RooPostTrait {
             // edit it anyways...
             
             // can we find the user's lock.
-            $lock = DB_DataObjecT::factory('Core_locking');
+            $lock = DB_DataObjecT::factory('core_locking');
             $lock->on_id = $x->{$this->key};
             $lock->on_table= strtolower($x->tableName());
             $lock->person_id = $this->authUser->id;
@@ -449,7 +449,7 @@ trait Pman_Core_RooPostTrait {
 	            $x->modified_by != $this->authUser->id 	
                 )
             {
-                $p = DB_DataObject::factory('Person');
+                $p = DB_DataObject::factory('core_person');
                 $p->get($x->modified_by);
                 $this->jerr($p->name . " saved the record since you started editing,\nDo you really want to update it?", array('needs_confirm' => true)); 
                 
