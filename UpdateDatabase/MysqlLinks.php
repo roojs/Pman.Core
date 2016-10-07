@@ -262,6 +262,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                 IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN 
                
             ";
+            $has_checks=  false;
+            
             foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
@@ -289,15 +291,17 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                        
                     END IF;
                 ";
-                
+                $has_checks=  true;
                 
                 
             }
+            
             $ar = $this->listTriggerFunctions($tbl, 'insert');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn( NEW.{$col});
                 ";
+                $has_checks=  true;
             }
             
             $trigger .= "
@@ -305,6 +309,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             END 
            
             ";
+            
+            if (!$has_checks) {
+                echo "SKIP TRIGGER {$tbl}_before_insert (missing links)\n";
+                return;
+            }
             //echo $trigger; exit;
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
@@ -344,6 +353,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN  
                
             ";
+            $has_checks=  false;
+          
             foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
@@ -370,12 +381,14 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                        
                     END IF;
                 ";
+                $has_checks=  false;
             }
             $ar = $this->listTriggerFunctions($tbl, 'update');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn(OLD.{$col}, NEW.{$col});
                 ";
+                $has_checks=  false;
             }
             
             $trigger .= "
@@ -383,6 +396,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             END 
            
             ";
+            if (!$has_checks) {
+                echo "SKIP TRIGGER {$tbl}_before_update (missing links)\n";
+                return;
+            }
+            
             //echo $trigger; exit;
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
