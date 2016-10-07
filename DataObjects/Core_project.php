@@ -4,12 +4,12 @@
  */
 require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_Projects extends DB_DataObject 
+class Pman_Core_DataObjects_Core_projects extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'Projects';            // table name
+    public $__table = 'core_project';            // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // string(254)  not_null
     public $remarks;                         // blob(65535)  not_null blob
