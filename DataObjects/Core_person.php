@@ -532,7 +532,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function company()
     {
-        $x = DB_DataObject::factory('Companies');
+        $x = DB_DataObject::factory('core_company');
         $x->autoJoin();
         $x->get($this->company_id);
         return $x;
