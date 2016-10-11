@@ -610,7 +610,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();
-        $g = DB_DataObject::Factory('group_members');
+        $g = DB_DataObject::Factory('core_group_member');
         $aur['groups']  = $g->listGroupMembership($this, 'name');
         
         $aur['passwd'] = '';
@@ -1098,7 +1098,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function onInsert($req, $roo)
     {
          
-        $p = DB_DataObject::factory('person');
+        $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id < 0 && $p->count() == 1) {
             // this seems a bit risky...
             
