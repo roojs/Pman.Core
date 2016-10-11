@@ -1,8 +1,8 @@
 
-DROP FUNCTION IF EXISTS person_get_by_email;
+DROP FUNCTION IF EXISTS core_person_get_by_email;
 
 DELIMITER $$
-CREATE FUNCTION person_get_by_email(  
+CREATE FUNCTION core_person_get_by_email(  
         in_addr VARCHAR(254)
         
 
@@ -11,7 +11,7 @@ CREATE FUNCTION person_get_by_email(
         
         DECLARE v_id INT(11);
         SET v_id = 0;
-        SELECT id INTO v_id FROM Person WHERE email = in_addr LIMIT 1;
+        SELECT id INTO v_id FROM core_person WHERE email = in_addr LIMIT 1;
         RETURN v_id;
         
     END $$
