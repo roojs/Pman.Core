@@ -26,7 +26,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     
     function person()
     {
-        $p = DB_DataObject::factory('Person');
+        $p = DB_DataObject::factory('core_person');
         $p->get($this->person_id);
         return $p;
     }
@@ -35,9 +35,9 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         $p = $this->person();
         // this is weird... company is in the person.. - effieciency??
         // for seaching??
-        $c = DB_DataObject::factory('Companies');
+        $c = DB_DataObject::factory('core_company');
         $c->get($this->company_id);
-        $pr = DB_DataObject::factory('Projects');
+        $pr = DB_DataObject::factory('core_project');
         $pr->get($this->project_id);
         
         return $pr->code . ' '. $p->name . '('. $c->name .')';
