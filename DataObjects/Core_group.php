@@ -107,7 +107,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function memberIds()
     {
         $gm = DB_Dataobject::factory('core_group_member');
-        print_r($gm->tableName());exit;
         $gm->group_id = $this->id;
         return $gm->fetchAll('user_id');
         
