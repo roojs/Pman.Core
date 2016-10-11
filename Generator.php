@@ -115,7 +115,7 @@ class Pman_Core_Generator extends DB_DataObject_Generator
         $options['require_prefix'] =    $proj . '/DataObjects/';
         $options['class_prefix'] =    $proj . '_DataObjects_';
         HTML_FlexyFramework::debug(print_r($options,true));
-       //  print_r($this);exit;
+      print_r($this);exit;
        
        
         $standard_database = $options['database'];
