@@ -629,7 +629,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // ------ INIITIALIZE IF NO GROUPS ARE SET UP.
         
-        $g = DB_DataObject::Factory('group_rights');
+        $g = DB_DataObject::Factory('core_group_right');
         if (!$g->count()) {
             $g->genDefault();
         }
@@ -638,13 +638,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return $g->adminRights(); // system is not set up - so they get full rights.
         }
         //DB_DataObject::debugLevel(1);
-        $g = DB_DataObject::Factory('group_members');
+        $g = DB_DataObject::Factory('core_group_member');
         $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
         if (!$g->count()) {
             // add the current user to the admin group..
-            $g = DB_DataObject::Factory('Groups');
+            $g = DB_DataObject::Factory('core_group');
             if ($g->get('name', 'Administrators')) {
-                $gm = DB_DataObject::Factory('group_members');
+                $gm = DB_DataObject::Factory('core_group_member');
                 $gm->group_id = $g->id;
                 $gm->user_id = $this->id;
                 $gm->insert();
@@ -654,14 +654,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // ------ STANDARD PERMISSION HANDLING.
         $isOwner = $this->company()->comptype == 'OWNER';
-        $g = DB_DataObject::Factory('group_members');
+        $g = DB_DataObject::Factory('core_group_member');
         $grps = $g->listGroupMembership($this);
        //var_dump($grps);
         $isAdmin = $g->inAdmin;
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
         // then load all those 
-        $g = DB_DataObject::Factory('group_rights');
+        $g = DB_DataObject::Factory('core_group_right');
         $ret =  $g->listPermsFromGroupIds($grps, $isAdmin, $isOwner);
         //echo '<PRE>';print_r($ret);
         return $ret;
@@ -676,9 +676,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function groups($what=false)
     {
-        $g = DB_DataObject::Factory('group_members');
+        $g = DB_DataObject::Factory('core_group_member');
         $grps = $g->listGroupMembership($this);
-        $g = DB_DataObject::Factory('Groups');
+        $g = DB_DataObject::Factory('core_group');
         $g->whereAddIn('id', $grps, 'int');
         return $g->fetchAll($what);
         
@@ -761,8 +761,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->active = 1;
         }
         $tn_p = $this->tableName();
-        $tn_gm = DB_DataObject::Factory('group_members')->tableName();
-        $tn_g = DB_DataObject::Factory('Groups')->tableName();
+        $tn_gm = DB_DataObject::Factory('core_group_member')->tableName();
+        $tn_g = DB_DataObject::Factory('core_groups')->tableName();
 
         ///---------------- Group views --------
         if (!empty($q['query']['in_group'])) {
@@ -1102,13 +1102,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($roo->authUser->id < 0 && $p->count() == 1) {
             // this seems a bit risky...
             
-            $g = DB_DataObject::factory('Groups');
+            $g = DB_DataObject::factory('core_group');
             $g->initGroups();
             
             $g->type = 0;
             $g->get('name', 'Administrators');
             
-            $p = DB_DataObject::factory('group_members');
+            $p = DB_DataObject::factory('core_group_member');
             $p->group_id = $g->id;
             $p->user_id = $this->id;     
             if (!$p->count()) {
@@ -1138,16 +1138,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!is_array($persons) || empty($persons)) {
             $roo->jerr("error in the person data. - empty on not valid");
         }
-        DB_DataObject::factory('groups')->initGroups();
+        DB_DataObject::factory('core_group')->initGroups();
         
         foreach($persons as $person){
-            $p = DB_DataObject::factory('person');
+            $p = DB_DataObject::factory('core_person');
             if($p->get('name', $person['name'])){
                 continue;
             }
             $p->setFrom($person);
             
-            $companies = DB_DataObject::factory('companies');
+            $companies = DB_DataObject::factory('core_company');
             if(!$companies->get('comptype', 'OWNER')){
                 $roo->jerr("Missing OWNER companies!");
             }
@@ -1160,11 +1160,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // if $person->groups is set.. then
             // add this person to that group eg. groups : [ 'Administrator' ] 
             if(!empty($person['groups'])){
-                $groups = DB_DataObject::factory('groups');
+                $groups = DB_DataObject::factory('core_group');
                 if(!$groups->get('name', $person['groups'])){
                     $roo->jerr("Missing groups : {$person['groups']}");
                 }
-                $gm = DB_DataObject::factory('group_members');
+                $gm = DB_DataObject::factory('core_group_member');
                 $gm->change($p, $groups, true);
             }
             
