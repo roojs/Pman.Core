@@ -133,7 +133,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function members($what = false)
     {
         $ids = $this->memberIds();
-        print_r($ids);exit;
         if (!$ids) {
             return array();
         }
