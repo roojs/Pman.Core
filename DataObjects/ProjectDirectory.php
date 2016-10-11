@@ -175,7 +175,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         
         
         $pd = DB_DataObject::factory('ProjectDirectory');
-        $pd->joinAdd(DB_DataObject::factory('Projects'), 'LEFT');
+        $pd->joinAdd(DB_DataObject::factory('core_project'), 'LEFT');
         $pd->whereAdd("Projects.type NOT IN ('N','X')");
         $pd->person_id = $au->id;
         
