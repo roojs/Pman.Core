@@ -160,6 +160,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function lookUpMembers($name, $what=false)
     {
+        print_r($name);exit;
         if (!$this->get('name', $name)) {
             return array();
         }
