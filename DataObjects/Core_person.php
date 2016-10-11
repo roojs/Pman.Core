@@ -762,7 +762,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         $tn_p = $this->tableName();
         $tn_gm = DB_DataObject::Factory('core_group_member')->tableName();
-        $tn_g = DB_DataObject::Factory('core_groups')->tableName();
+        $tn_g = DB_DataObject::Factory('core_group')->tableName();
 
         ///---------------- Group views --------
         if (!empty($q['query']['in_group'])) {
