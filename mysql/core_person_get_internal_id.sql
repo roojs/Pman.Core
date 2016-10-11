@@ -1,8 +1,8 @@
 
-DROP FUNCTION IF EXISTS person_get_internal_id;
+DROP FUNCTION IF EXISTS core_person_get_internal_id;
 
 DELIMITER $$
-CREATE FUNCTION person_get_internal_id(  
+CREATE FUNCTION core_person_get_internal_id(  
         in_addr VARCHAR(254)
         
 
@@ -14,12 +14,12 @@ CREATE FUNCTION person_get_internal_id(
         SET v_id = 0;
         SET v_company_id = 0;
         
-        SELECT company_get_owner() INTO v_company_id;
+        SELECT core_person_get_owner() INTO v_company_id;
         IF v_company_id < 1 THEN
             RETURN 0;
         END IF;
         
-        SELECT id INTO v_id FROM Person WHERE
+        SELECT id INTO v_id FROM core_person WHERE
             company_id = v_company_id
             AND email = in_addr LIMIT 1;
         
