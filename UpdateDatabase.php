@@ -763,9 +763,9 @@ class Pman_Core_UpdateDatabase extends Pman
         // fix comptypeid
         $c = DB_DataObject::Factory('core_company');
         $c->query("
-            UPDATE Companies 
+            UPDATE {$c->tableName()} 
                 SET
-                    comptype_id = (SELECT id FROM core_enum where etype='comptype' and name=Companies.comptype LIMIT 1)
+                    comptype_id = (SELECT id FROM core_enum where etype='comptype' and name={$c->tableName()}.comptype LIMIT 1)
                 WHERE
                     comptype_id = 0
                     AND
