@@ -169,7 +169,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
         }
         
         
-        $pr = DB_DataObject::factory('Projects');
+        $pr = DB_DataObject::factory('core_project');
         $pr->whereAdd("Projects.type IN ('N','X')");
         $prjs = $pr->fetchAll('id');
         
