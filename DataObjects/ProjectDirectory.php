@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject
     function projects($au)
     {
         if (empty($au)) {
-            $p = DB_DataObject::Factory('Projects');
+            $p = DB_DataObject::Factory('core_project');
             $p->get('code',  '*PUBLIC');
             return array($p->id);          
             
