@@ -4,7 +4,7 @@
 DROP FUNCTION IF EXISTS core_person_has_perm;
 
 DELIMITER $$
-CREATE FUNCTION person_has_perm(  
+CREATE FUNCTION core_person_has_perm(  
        in_person_id INT(11),
        in_perm_name VARCHAR(64),
        in_perm_level VARCHAR(1)
