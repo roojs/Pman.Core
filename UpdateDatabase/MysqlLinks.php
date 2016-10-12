@@ -437,14 +437,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             $q = DB_DataObject::factory('core_enum');
             $q->query($trigger);
             echo "CREATED TRIGGER {$tbl}_before_update\n";
-            if ($tbl == 'core_email') {
-                echo $trigger;
-                exit;
-            }
-            
-            
-            
-            
             
             
         }
