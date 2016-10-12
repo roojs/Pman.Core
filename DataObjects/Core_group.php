@@ -111,7 +111,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         return $gm->fetchAll('user_id');
         
     }
-    
+    function isMember($uid)
+    {
+        $gm = DB_Dataobject::factory('core_group_member');
+        $gm->group_id = $this->id;
+        $gm->user_id = $uid;
+        return $gm->count();
+    }
     
     function addMember($person)
     {
@@ -139,6 +145,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         //$p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         // groups databse is hard coded to person.. so this should not be used for other tables.????
         $p = DB_Dataobject::factory( 'core_person' );
+        
+        
         
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
