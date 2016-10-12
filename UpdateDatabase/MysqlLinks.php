@@ -78,7 +78,34 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->schema = parse_ini_file($iniCache, true);
         $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
         
-
+        $lcfg = &$this->links;
+        $cfg = HTML_FlexyFramework::get()->DB_DataObject;
+        
+        if (!empty($cfg['table_alias'])) {
+            $ta = $cfg['table_alias'];
+            foreach($lcfg  as $k=>$v) {
+                $kk = $k;
+                if (isset($ta[$k])) {
+                    $kk = $ta[$k];
+                    if (!isset($lcfg[$kk])) {
+                        $lcfg[$kk] = array();
+                    }
+                }
+                foreach($v as $l => $t_c) {
+                    $bits = explode(':',$t_c);
+                    $tt = isset($ta[$bits[0]]) ? $ta[$bits[0]] : $bits[0];
+                    if ($tt == $bits[0] && $kk == $k) {
+                        continue;
+                    }
+                    
+                    $lcfg[$kk][$l] = $tt .':'. $bits[1];
+                    
+                    
+                }
+                
+            }
+        }
+         
         
     }
     function updateTableComments()
@@ -410,7 +437,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             $q = DB_DataObject::factory('core_enum');
             $q->query($trigger);
             echo "CREATED TRIGGER {$tbl}_before_update\n";
-            
+            if ($tbl == 'core_email') {
+                echo $trigger;
+                exit;
+            }
             
             
             
