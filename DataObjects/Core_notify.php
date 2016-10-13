@@ -50,10 +50,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function person($set = false)
     {
+        $def_pt = 'core_person';
+        
         if ($set !== false) {
             $this->person_table = is_object($set) ? $set->tableName() : '';
             
-            $def_pt = 'core_person';
+            
             
             $person_table = empty($this->person_table) ? $def_pt  : strtolower($this->person_table);
             $col = $person_table  == $def_pt ? 'person_id' : $person_table . '_id';
@@ -62,7 +64,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return;
         }
         static $cache  =array();
-        $person_table = empty($this->person_table) ? $def_pt  : $this->person_table;
+        $person_table = empty($this->person_table) ? $def_pt  : strtolower($this->person_table);
         $col = $person_table == $def_pt  ? 'person_id' : $person_table . '_id';
         
         if (isset($cache[$person_table .':'. $this->{$col}])) {
