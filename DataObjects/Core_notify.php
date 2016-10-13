@@ -53,7 +53,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($set !== false) {
             $this->person_table = is_object($set) ? $set->tableName() : '';
             
-            $def_pt = DB_DataObject::Factory('core_person')->tableName();
+            $def_pt = 'core_person';
             
             $person_table = empty($this->person_table) ? $def_pt  : $this->person_table;
             $col = $person_table  == $def_pt ? 'person_id' : $person_table . '_id';
