@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             
             $def_pt = 'core_person';
             
-            $person_table = empty($this->person_table) ? $def_pt  : $this->person_table;
+            $person_table = empty($this->person_table) ? $def_pt  : strtolower($this->person_table);
             $col = $person_table  == $def_pt ? 'person_id' : $person_table . '_id';
             
             $this->{$col} = is_object($set) ? $set->id : $set;
