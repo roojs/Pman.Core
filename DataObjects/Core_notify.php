@@ -71,7 +71,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return $cache[$person_table .':'. $this->{$col}];
         }
         
-        $c = DB_DataObject::Factory($person_table);
+        $c = DB_DataObject::Factory($person_table == 'person' ? 'core_person' : $person_table);
         $c->get($this->{$col});
         $cache[$person_table .':'. $this->{$col}] = $c;
         return $c;
