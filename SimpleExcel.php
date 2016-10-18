@@ -254,8 +254,13 @@ class Pman_Core_SimpleExcel extends Pman
                         continue;
                     }
                     if (isset($col_cfg['renderer'])) {
+                        
+                        if (is_a($col_cfg['renderer'], 'Closure')) {
+                            $col_cfg['renderer']->call($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                        } else {
                         // not sure if row is correct here...!!!?
-                        call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                            call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                        }
                         
                     }
                   //  echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c, $cl[$col_cfg['dataIndex']]), true));
