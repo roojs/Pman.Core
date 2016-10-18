@@ -255,7 +255,7 @@ class Pman_Core_SimpleExcel extends Pman
                     if (empty($cl[$col_cfg['dataIndex']])) {
                         continue;
                     }
-                    if (isset($col_cfg['renderer'])) {
+                    if (!empty($col_cfg['renderer'])) {
                         
                         if (is_a($col_cfg['renderer'], 'Closure')) {
                             $col_cfg['renderer']->call($this, $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
