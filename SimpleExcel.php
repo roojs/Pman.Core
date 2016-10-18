@@ -38,15 +38,17 @@ new Pman_Core_SimpleExcel(array(
                 'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
             //..... and ther rows...
-        
-        // if this is set then it will add a tab foreach one.
-        workbooks = array(
-            workbook ->
+    ),
+    
+    // if this is set then it will add a tab foreach one.
+    'workbooks' = array(
+            workbook => '....' // ???
+    ),
+    'leave_open' => false,  // if you call addrows?? later..
             
-        'leave_open' => false  
-            
-            
-        // callbacks: renderer
+));
+
+    callbacks: renderer
         
         function($value, $worksheet, $row, $col, $row_data)
         
