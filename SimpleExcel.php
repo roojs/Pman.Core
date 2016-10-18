@@ -333,7 +333,7 @@ class Pman_Core_SimpleExcel extends Pman
                 
                  if (is_a($col_cfg['txtrenderer'], 'Closure')) {
                      
-                    $v =     $col_cfg['txtrenderer'](new StdClass, $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
+                    $v =     $col_cfg['txtrenderer']($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
                 } else {
                     $v = call_user_func($col_cfg['txtrenderer'], 
                             $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
