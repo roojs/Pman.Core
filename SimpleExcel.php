@@ -258,7 +258,7 @@ class Pman_Core_SimpleExcel extends Pman
                     if (isset($col_cfg['renderer'])) {
                         
                         if (is_a($col_cfg['renderer'], 'Closure')) {
-                            $col_cfg['renderer']->call($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                            $col_cfg['renderer']->call($this, $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
                         } else {
                         // not sure if row is correct here...!!!?
                             call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
@@ -332,7 +332,7 @@ class Pman_Core_SimpleExcel extends Pman
             if (isset($col_cfg['txtrenderer'])) {
                 
                  if (is_a($col_cfg['txtrenderer'], 'Closure')) {
-                    $v =     $col_cfg['txtrenderer']->call($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
+                    $v =     $col_cfg['txtrenderer']->call($this, $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
                 } else {
                     $v = call_user_func($col_cfg['txtrenderer'], 
                             $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
