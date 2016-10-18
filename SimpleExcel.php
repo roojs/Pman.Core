@@ -33,7 +33,9 @@ new Pman_Core_SimpleExcel($data_array, array(
                 'dataFormat' => 'string' // to force a string..
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb'),
-                'txtrenderer' => array($this, 'cleanValue'),   // for text content...
+                'txtrenderer' => function($value, $worksheet, $row, $col, $row_data) {
+                    return $value
+                },   // for text content...
                 'color' => 'yellow', // set color for the cell which is a header element
                 'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
