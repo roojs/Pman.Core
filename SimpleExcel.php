@@ -328,8 +328,13 @@ class Pman_Core_SimpleExcel extends Pman
                 continue;
             }
             if (isset($col_cfg['txtrenderer'])) {
-                $v = call_user_func($col_cfg['txtrenderer'], 
-                        $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
+                
+                 if (is_a($col_cfg['txtrenderer'], 'Closure')) {
+                    $v =     $col_cfg['txtrenderer']->call($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
+                } else {
+                    $v = call_user_func($col_cfg['txtrenderer'], 
+                            $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $clo);
+                }
                 if ($v === false) {
                     continue;
                 }
