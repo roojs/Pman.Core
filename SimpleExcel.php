@@ -4,7 +4,7 @@
  * class to generate excel file from rows of data, and a configuration.
  *
  * usage :
- *   $x = new Pman_Core_SimpleExcel(array())
+ *   $x = new Pman_Core_SimpleExcel($data_array, array())
  *   $x->send($fn);
  *
  * 
