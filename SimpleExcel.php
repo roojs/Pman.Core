@@ -10,7 +10,7 @@
  * 
  *
  
-new Pman_Core_SimpleExcel(array(
+new Pman_Core_SimpleExcel($data_array, array(
     'formats' => array(
         'format_name' => array( 'Align' =>  'left' ), // etc...
     ),
