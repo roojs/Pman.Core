@@ -8,33 +8,36 @@
  *   $x->send($fn);
  *
  * 
- * cfg:
- *     formats 
- *          name : [ Align : left, .... ]
- *          
- *     workbook : nameof
  *
- *     head  : [
-            [ "a", "b" ]
-            [],
-            [ "A", "B" ]
-            [ "a",  ["test", "left"]  ] << sub array [text, formatname]
-        ],
- *     merged_ranges : array(
- *                          array($first_row, $first_col, $last_row, $last_col),
- * *                        array($first_row, $first_col, $last_row, $last_col),
- *                      ),
- *     cols :  array(
+ 
+new Pman_Core_SimpleExcel(array(
+    'formats' => array(
+        'format_name' => array( 'Align' =>  'left' ), // etc...
+    ),
+    'workbook' => 'name_of_workbook'm
+    
+    'head' => array(
+        array ( 'this', 'is', 'the' , 'first', 'row'), 
+        array ( 'this', 'is', 'the' , 'seconde', 'row'),  // ... etc.
+        array (  array( 'string', 'format_name') , 'another cell') ,  // with formating..
+    ),
+   
+    'merged_ranges' => array(
+                           array($first_row, $first_col, $last_row, $last_col),
+                         array($first_row, $first_col, $last_row, $last_col),
+    ),
+    'cols' =>  array(
             array(
                 'header'=> "Thumbnail",
                 'dataIndex'=> 'id',
- *              'dataFormat' => 'string' // to force a string..
+                'dataFormat' => 'string' // to force a string..
                 'width'=>  75,
                 'renderer' => array($this, 'getThumb'),
                 'txtrenderer' => array($this, 'cleanValue'),   // for 
- *              'color' => 'yellow', // set color for the cell which is a header element
- *              'fillBlank' => 'gray', // set the color for the cell which is a blank area
+                'color' => 'yellow', // set color for the cell which is a header element
+                'fillBlank' => 'gray', // set the color for the cell which is a blank area
             ),
+            //..... and ther rows...
         
         // if this is set then it will add a tab foreach one.
         workbooks = array(
