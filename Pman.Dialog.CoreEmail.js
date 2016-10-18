@@ -26,8 +26,8 @@ Pman.Dialog.CoreEmail = {
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
-  '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
+  '1d1f67eb8701dbc0825389bdd309d1ef' :"Edit / Create Message?",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
@@ -77,7 +77,7 @@ Pman.Dialog.CoreEmail = {
     height : 500,
     modal : true,
     resizable : true,
-    title : _this._strings['396ecabf0cd1f9503e591418851ef406'] /* Edit / Create Message */,
+    title : _this._strings['1d1f67eb8701dbc0825389bdd309d1ef'] /* Edit / Create Message? */,
     width : 800,
     listeners : {
      show : function (_self)
