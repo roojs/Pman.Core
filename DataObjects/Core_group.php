@@ -229,7 +229,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function postListFilter($ar, $au, $req)
     {      
-        if(!empty($req['_direct_return'])){
+        if(empty($req['_add_everyone'])){
             return $ar;
         }
         
