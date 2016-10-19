@@ -151,6 +151,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $gm->insert();
         }
     }
+    
+    function removeMember($person)
+    {
+        $gm = DB_Dataobject::factory('core_group_member');
+        $gm->group_id = $this->id;
+        $gm->user_id = is_object($person) ? $person->id : $person;
+        if ($gm->count()) {
+            $gm->delete();
+        }
+    }
+    
     /**
      *
      *  grab a list of members - default is the array of person objects..
