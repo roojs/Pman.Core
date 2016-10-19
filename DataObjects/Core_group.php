@@ -59,6 +59,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jerr("missing group id");
 
             }
+            DB_DataObejct::debuglEvel(1);
             foreach(explode(',', $q['user_ids']) as $uid) {
                 switch($q['_action']) {
                     case 'add':
