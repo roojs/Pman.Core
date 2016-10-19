@@ -59,14 +59,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jerr("missing group id");
 
             }
-            DB_DataObejct::debuglEvel(1);
-            foreach(explode(',', $q['user_ids']) as $uid) {
+             foreach(explode(',', $q['user_ids']) as $uid) {
                 switch($q['_action']) {
                     case 'add':
-                        $this->addMember($uid);
+                        $g->addMember($uid);
                         break;
                     case 'sub':
-                        $this->removeMember($uid);
+                        $g->removeMember($uid);
                         break;
                     default:
                         $roo->jerr('invalid action');
