@@ -50,6 +50,29 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         return $this->name;
     }
     
+    function beforeInsert($q,$roo)
+    {
+        if (isset($q['_action'])) {
+            // add // sub...
+            $g = clone($this);
+            if (!$g->get($q['group_id'])) {
+                $roo->jerr("missing group id");
+
+            }
+            foreach(explode(',', $q['user_ids']) as $uid) {
+                $this->addMember($uid);
+            }
+            
+            
+            
+            $this->jerr('invalid action');
+            
+        }
+        
+        
+    }
+    
+    
     function beforeDelete()
     {
         $x = DB_DataObject::factory('core_group_right');
@@ -123,7 +146,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
-        $gm->user_id = $person->id;
+        $gm->user_id = is_object($person) ? $person->id : $person;
         if (!$gm->count()) {
             $gm->insert();
         }
