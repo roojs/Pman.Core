@@ -272,6 +272,26 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             
     }
     
+    
+    
+    function client()
+    {
+        $c = DB_DataObject::factory('core_company');
+        $c->get($this->client_id);
+        return $c;
+    }
+    
+    
+    
+    function team()
+    {
+        $c = DB_DataObject::factory('core_group');
+        $c->get($this->team_id);
+        return $c;
+    }
+    
+    
+    
     // DEPRICATED - use userProjects
     
     function getUserProjects($au, $data='id') // COMPANY BASED!!!!
@@ -281,13 +301,6 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             
     }
     
-    
-    function client()
-    {
-        $c = DB_DataObject::factory('Companies');
-        $c->get($this->client_id);
-        return $c;
-    }
     
     /**
      * check who is trying to access this. false == access denied..
