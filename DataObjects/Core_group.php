@@ -60,12 +60,21 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
             }
             foreach(explode(',', $q['user_ids']) as $uid) {
-                $this->addMember($uid);
+                switch($q['_action']) {
+                    case 'add':
+                        $this->addMember($uid);
+                        break;
+                    case 'sub':
+                        $this->removeMember($uid);
+                        break;
+                    default:
+                        $roo->jerr('invalid action');
+                }
             }
+            $roo->jok('updated');
             
             
             
-            $this->jerr('invalid action');
             
         }
         
