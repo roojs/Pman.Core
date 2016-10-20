@@ -69,7 +69,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
 
     function toEventString() {
         $c = $this->client();
-        return ($c->id ? $c->toEventString() : '??'). ':' . $this->name;
+        return ($c && $c->id ? $c->toEventString() : '??'). ':' . $this->name;
     }
     
     /**
