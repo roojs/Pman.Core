@@ -24,7 +24,7 @@ class Pman_Core_Pman {
             $group->insert();
         }
         
-        $p = DB_DataObject::factory('Person');
+        $p = DB_DataObject::factory('core_person');
         if (!$p->count()) {
             return; // can not check people...
         }
