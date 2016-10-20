@@ -143,11 +143,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         return $gm->fetchAll('user_id');
         
     }
-    function isMember($uid)
+    function isMember($person)
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
-        $gm->user_id = $uid;
+        $gm->user_id = is_object($person) ? $person->id : $person;
         return $gm->count();
     }
     
