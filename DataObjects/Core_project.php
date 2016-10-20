@@ -276,6 +276,9 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     
     function client()
     {
+        if (!$this->client_id) {
+            return false;
+        }
         $c = DB_DataObject::factory('core_company');
         $c->get($this->client_id);
         return $c;
