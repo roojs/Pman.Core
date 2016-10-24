@@ -249,7 +249,7 @@ class Pman_Core_Mailer {
             }
             $isMime = true;
         }
-        print_R($parts);exit;
+        
         if(!empty($this->attachments)){
             //if got a attachments
             $header = $mime->headers($parts[1]);
