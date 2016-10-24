@@ -32,6 +32,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        DB_DataObject::debugLevel(1);
+        
         $tn = $this->tableName();
         
         if(!empty($q['search']['nameortitle'])){
