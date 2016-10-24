@@ -368,7 +368,7 @@ class Pman_Core_Mailer {
         }  else {
             $pg->addEvent("COREMAILER-FAIL",  false, $ret->toString());
         }
-        
+        print_R('run??');exit;
         return $ret;
     }
     
