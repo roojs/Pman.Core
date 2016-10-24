@@ -706,7 +706,7 @@ Pman.Dialog.CoreEmail = {
                 proxy : {
                  xtype : 'HttpProxy',
                  method : 'GET',
-                 url : baseURL + '/Roo/Groups',
+                 url : baseURL + '/Roo/Core_group',
                  xns : Roo.data,
                  '|xns' : 'Roo.data'
                 },
