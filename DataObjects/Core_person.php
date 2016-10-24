@@ -688,7 +688,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function hasPerm($name, $lvl) 
     {
-        print_R('test');exit;
         static $pcache = array();
         
         if (!isset($pcache[$this->id])) {
