@@ -15,6 +15,7 @@ class Pman_Core_Pman {
         
         $group = DB_DataObject::factory('core_group');
         
+        print_R($group);exit;
         // group should be auto created - by update-database...
         
         
