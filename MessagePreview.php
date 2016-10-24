@@ -52,7 +52,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $content = array(
             'template' => $mlq->name,
-            'rcpts' => 'edward@roojs.com'
+            'person' => $this->authUser
         );
         
         $sent = DB_DataObject::factory($_REQUEST['_table'])->send($content);
