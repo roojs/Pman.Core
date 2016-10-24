@@ -310,7 +310,6 @@ class Pman_Core_Mailer {
     }
     function send($email = false)
     {
-        print_R('run??');exit;
         $ff = HTML_FlexyFramework::get();
         
         $pg = $ff->page;
