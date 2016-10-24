@@ -50,8 +50,6 @@ class Pman_Core_MessagePreview extends Pman
         
         $mlq->get($_REQUEST['_id']);
         
-        $this->authUser->email = 'edward@roojs.com';
-        
         $content = array(
             'template' => $mlq->name,
             'person' => $this->authUser
