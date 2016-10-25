@@ -347,7 +347,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $seq_id = $t->seqid+1;
             }
         }
-        
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
             
