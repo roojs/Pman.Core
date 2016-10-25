@@ -354,7 +354,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->etype = isset($base['etype']) ? $base['etype'] : $t->etype ;
             
             $t->name = isset($row['name']) ? $row['name'] : '';
-            
+            print_R($row);exitl;
             if (empty($t->name)) {
                 print_R($data);
                 die("ERROR: invalid name used for core_enum\n\n");
