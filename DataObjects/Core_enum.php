@@ -347,7 +347,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $seq_id = $t->seqid+1;
             }
         }
-        print_R($data);exit;
+        
         foreach($data as $row) {
             $t = DB_DAtaObject::Factory('core_enum');
             
@@ -355,7 +355,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $t->etype = isset($base['etype']) ? $base['etype'] : $t->etype ;
             
             $t->name = isset($row['name']) ? $row['name'] : '';
-            print_R($row);exit;
+            
             if (empty($t->name)) {
                 print_R($data);
                 die("ERROR: invalid name used for core_enum\n\n");
