@@ -364,6 +364,8 @@ class Pman_Core_NotifySend extends Pman
             ));
             $core_domain->insert();
         }
+        
+        print_R($core_domain);exit;
                         
         foreach($mxs as $mx) {
             
