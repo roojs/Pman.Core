@@ -358,6 +358,7 @@ class Pman_Core_NotifySend extends Pman
         
         $core_domain = DB_DataObject::factory('core_domain');
         if(!$core_domain->get('domain', $dom)){
+            print_r($core_domain);exit;
             $core_domain = DB_DataObject::factory('core_domain');
             $core_domain->setFrom(array(
                 'domain' => $dom
