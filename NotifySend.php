@@ -357,7 +357,6 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         $core_domain = DB_DataObject::factory('core_domain');
-        print_R($core_domain);exit;
         if(!$core_domain->get('domain', $dom)){
             $core_domain = DB_DataObject::factory('core_domain');
             $core_domain->setFrom(array(
