@@ -461,7 +461,7 @@ class Pman_Core_NotifySend extends Pman
                 $ev->writeEventLog($this->debug_str);
                 
                 if(strtotime($w->act_when) > strtotime("NOW")){
-                    
+                    $w->act_when = date('Y-m-d H:i:s');
                 }
                 
                 $w->sent = date('Y-m-d H:i:s');
