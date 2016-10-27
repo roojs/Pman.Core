@@ -460,7 +460,10 @@ class Pman_Core_NotifySend extends Pman
                 
                 $ev->writeEventLog($this->debug_str);
                 
-                $w->act_when = date('Y-m-d H:i:s');
+                if(strtotime($w->act_when) > strtotime("NOW")){
+                    
+                }
+                
                 $w->sent = date('Y-m-d H:i:s');
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = $ev->id; // sent ok.. - no need to record it..
