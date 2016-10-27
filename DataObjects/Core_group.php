@@ -246,11 +246,23 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $g->type = 0;
         $g->name = 'Administrators';
         if ($g->count()) {
-            return;
+            $g->find(true);;
+        } else {
+            $g->insert();
+            $gr = DB_DataObject::factory('core_group_right');
+            $gr->genDefault();
         }
-        $g->insert();
-        $gr = DB_DataObject::factory('core_group_right');
-        $gr->genDefault();
+        $m = $g->members();
+        if (empty($m)) {
+            $p = DB_DAtaObject::factory('core_person');
+            $p->orderBy('id ASC');
+            $p->limit(1);
+            if ($p->find(true)) {
+                $g->addMember($p);
+            }
+            
+            
+        }
     }
     
     function initDatabase($roo, $data)
