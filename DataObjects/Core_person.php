@@ -1205,7 +1205,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         
         $appname = empty($ff->appNameShort) ? $ff->project : $ff->project . '-' . $ff->appNameShort;
-        print_R($appname);exit;
+        
         $db = $this->getDatabaseConnection();
         
         $sesPrefix = $appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
