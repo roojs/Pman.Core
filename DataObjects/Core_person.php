@@ -1226,7 +1226,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         $sesPrefix = $ff->Pman->login_public . '-' .get_class($this) .'-'.$db->dsn['database'] ;
-        
+        print_R($sesPrefix);exit;
         $p = DB_DAtaObject::Factory($this->tableName());
         $p->get($this->pid());
         
