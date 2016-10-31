@@ -1227,13 +1227,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $sesPrefix = $ff->Pman->login_public . '-' .get_class($this) .'-'.$db->dsn['database'] ;
         
-        // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
         $p->get($this->pid());
         
-        //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$p->toArray());
-        // ensure it's written so that ajax calls can fetch it..
         
     }
     
