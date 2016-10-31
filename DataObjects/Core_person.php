@@ -1220,7 +1220,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         
         $ff= HTML_FlexyFramework::get();
-        print_R($ff);exit;
+        
+        if(empty($ff->Pman) || empty($ff->Pman->login_public)){
+            return false;
+        }
         
         $sesPrefix = 'Hydra-' .get_class($this) .'-'.$db->dsn['database'] ;
         
