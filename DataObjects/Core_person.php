@@ -1232,6 +1232,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$p->toArray());
         
+        return true;
     }
     
  }
