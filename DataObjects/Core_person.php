@@ -1225,7 +1225,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $sesPrefix = 'Hydra-' .get_class($this) .'-'.$db->dsn['database'] ;
+        $sesPrefix = $ff->Pman->login_public . '-' .get_class($this) .'-'.$db->dsn['database'] ;
         
         print_R($sesPrefix);exit;
         // we should not store the whole data in the session - otherwise it get's huge.
