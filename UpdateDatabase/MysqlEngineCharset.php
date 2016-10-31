@@ -46,9 +46,17 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
    
     function updateCharacterSet()
     {
+        $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
+        $views = $db->getListOf(  'views');
+        
+        
         foreach (array_keys($this->schema) as $tbl){
             
             if(strpos($tbl, '__keys') !== false ){
+                continue;
+            }
+            
+            if(in_array($tbl , $views)) {
                 continue;
             }
             
@@ -88,9 +96,20 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     }
     function updateEngine()
     {
+        // get a list of table views...
+        
+        $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
+        $views = $db->getListOf(  'views');
+        
+        
+        
+        
         foreach (array_keys($this->schema) as $tbl){
             
             if(strpos($tbl, '__keys') !== false ){
+                continue;
+            }
+            if(in_array($tbl , $views)) {
                 continue;
             }
             
