@@ -1220,7 +1220,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $db = $this->getDatabaseConnection();
         
         $sesPrefix = 'Hydra-' .get_class($this) .'-'.$db->dsn['database'] ;
-
+        
+        print_R($sesPrefix);exit;
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
         $p->get($this->pid());
