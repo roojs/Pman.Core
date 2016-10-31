@@ -235,7 +235,7 @@ Pman.Dialog.PersonEditor.prototype = {
                       // load using HTTP
                     proxy:{
                         xtype:  'HttpProxy',
-                        url: baseURL + '/Roo/Companies.html',
+                        url: baseURL + '/Roo/core_company',
                         method: 'GET'
                     },
                     reader: Pman.Readers.Companies,
@@ -264,7 +264,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         '<b>{name}</b> {address}',
                     '</div>'
                 ),
-                queryParam: 'query[name]',
+                queryParam: 'search[name_starts]',
                 loadingText: "Searching...",
                 listWidth: 400,
                
