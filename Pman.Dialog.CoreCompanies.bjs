@@ -266,7 +266,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    // do some checks?\n    \n    if(!_this.form.isValid()){\n        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');\n        return;\n    }\n    \n    \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+      "click" : "function (_self, e)\n{\n    // do some checks?\n    \n    if(!_this.form.isValid()){\n        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');\n        return;\n    }\n    \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
      },
      "text" : "Save",
      "xtype" : "Button",
