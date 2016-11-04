@@ -256,7 +256,7 @@ Pman.Dialog.CoreCompanies = {
            },
            {
             xtype : 'TextField',
-            allowBlank : true,
+            allowBlank : false,
             fieldLabel : _this._strings['e7b47c58815acf1d3afa59a84b5db7fb'] /* Company Name */,
             name : 'name',
             qtip : _this._strings['4ef6052d74436756f08e95fd63949653'] /* Enter Company Name */,

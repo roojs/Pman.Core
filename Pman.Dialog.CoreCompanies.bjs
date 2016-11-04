@@ -149,7 +149,7 @@
           {
            "fieldLabel" : "Company Name",
            "xtype" : "TextField",
-           "allowBlank" : true,
+           "allowBlank" : false,
            "width" : 300,
            "$ xns" : "Roo.form",
            "name" : "name",
