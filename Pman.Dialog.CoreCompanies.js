@@ -114,7 +114,8 @@ Pman.Dialog.CoreCompanies = {
                   _check_name : 1
                 }, 
                 success : function(res) {
-                    Roo.log(res);
+                    _this.dialog.el.mask("Saving");
+                    _this.form.doAction("submit");
                 },
                 failure : function(res) {
                     Roo.log(res);
@@ -123,9 +124,6 @@ Pman.Dialog.CoreCompanies = {
             
             return;
             
-            _this.dialog.el.mask("Saving");
-            _this.form.doAction("submit");
-        
         }
       },
       xns : Roo,
