@@ -475,7 +475,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         
     }
     
-    function checkName($roo)
+    function checkName()
     {
         $company = DB_DataObject::factory('core_company');
         $company->setFrom(array(
@@ -487,9 +487,9 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
         
         if(!$company->find(true)){
-            $roo->jok('OK');
+            return true
         }
         
-        $roo->jok('EXISTS');
+        return false;
     }
 }
