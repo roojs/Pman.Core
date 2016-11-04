@@ -477,6 +477,19 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function checkName($roo)
     {
+        $company = DB_DataObject::factory('core_company');
+        $company->setFrom(array(
+            'name' => $this->name
+        ));
         
+        if(!empty($this->id)){
+            $company->whereAdd("id != {$this->id}");
+        }
+        
+        if(!$company->find(true)){
+            $roo->jok('OK');
+        }
+        
+        $roo->jok('EXISTS');
     }
 }
