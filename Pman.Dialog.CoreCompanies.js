@@ -106,7 +106,7 @@ Pman.Dialog.CoreCompanies = {
             }
             
             new Pman.Request({
-                url : baseURL + '/Roo/Core_enum.php',
+                url : baseURL + '/Roo/Core_company.php',
                 method : 'POST',
                 params : {
                   id : _this.form.findField('id').getValue() * 1,
