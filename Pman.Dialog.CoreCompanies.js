@@ -102,7 +102,9 @@ Pman.Dialog.CoreCompanies = {
         {
             // do some checks?
             
+            if(!_this.form.isValid()){
             
+            }
             
             _this.dialog.el.mask("Saving");
             _this.form.doAction("submit");
