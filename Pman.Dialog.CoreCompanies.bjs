@@ -266,7 +266,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_enum.php',\n        method : 'POST',\n        params : {\n          id : _this.form.findField('id').getValue() * 1,\n          name : _this.form.findField('name').getValue(),\n          _check_name : 1\n        }, \n        success : function(res) {\n            \n        }\n    });\n    \n    return;\n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_enum.php',\n        method : 'POST',\n        params : {\n          id : _this.form.findField('id').getValue() * 1,\n          name : _this.form.findField('name').getValue(),\n          _check_name : 1\n        }, \n        success : function(res) {\n            Roo.log(res);\n        }\n    });\n    \n    return;\n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
      },
      "text" : "Save",
      "xtype" : "Button",

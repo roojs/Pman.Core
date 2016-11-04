@@ -114,7 +114,7 @@ Pman.Dialog.CoreCompanies = {
                   _check_name : 1
                 }, 
                 success : function(res) {
-                    
+                    Roo.log(res);
                 }
             });
             
