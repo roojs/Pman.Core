@@ -107,6 +107,25 @@ Pman.Dialog.CoreCompanies = {
                 return;
             }
             
+            new Pman.Request({
+                url : baseURL + '/Roo/Core_enum.php',
+                method : 'POST',
+                params : {
+                  id : record.data.id,
+                  etype : _this.data.etype,
+                  name :  record.data.name,
+                  active : record.data.active,
+                  seqid : record.data.seqid,
+                  display_name : record.data.display_name
+                }, 
+                success : function(res) {
+                  //Roo.log(data);
+                  // update the ID if it's not set..
+                  if (record.data.id * 1 < 1) {
+                      record.set('id', res.data.id);
+                  }
+                }
+            });
             
             _this.dialog.el.mask("Saving");
             _this.form.doAction("submit");
