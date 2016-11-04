@@ -118,6 +118,8 @@ Pman.Dialog.CoreCompanies = {
                 }
             });
             
+            return;
+            
             _this.dialog.el.mask("Saving");
             _this.form.doAction("submit");
         
