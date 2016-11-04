@@ -247,8 +247,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
-        if(!empty($request['_merge_id'])){
-            $this->merge($request['_merge_id'], $roo);
+        if(!empty($q['_merge_id'])){
+            $this->merge($q['_merge_id'], $roo);
         }
         
         if(!empty($this->is_system) && 
