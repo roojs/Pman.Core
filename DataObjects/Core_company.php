@@ -240,9 +240,13 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $this->update();
         }
         
-        
-        
-        
+    }
+    
+    function beforeInsert($q, $roo)
+    {
+        if(!empty($q['_check_name'])){
+            $this->checkName($roo);
+        }
     }
     
     function beforeUpdate($old, $q,$roo)
