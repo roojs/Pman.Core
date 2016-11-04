@@ -474,4 +474,9 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $roo->jok('Merged');
         
     }
+    
+    function checkName($roo)
+    {
+        
+    }
 }
