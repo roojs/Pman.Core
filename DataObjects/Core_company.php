@@ -425,4 +425,45 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
         return false;
     }
+    
+    function merge($merge_to, $roo)
+    {
+        $affects  = array();
+        
+        $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
+        
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $this->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
+        }
+        print_R($affects);exit;
+        foreach($affects as $k => $true) {
+            $ka = explode('.', $k);
+
+            $chk = DB_DataObject::factory($ka[0]);
+            
+            if (!is_a($chk,'DB_DataObject')) {
+                $roo->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
+            }
+            
+            $chk->{$ka[1]} = $this->id;
+
+            foreach ($chk->fetchAll() as $c){
+                $cc = clone ($c);
+                $c->{$ka[1]} = $merge_to;
+                $c->update($cc);
+            }
+        }
+        
+        $this->delete();
+        
+        $roo->jok('Merged');
+        
+    }
 }
