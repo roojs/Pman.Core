@@ -256,7 +256,11 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function beforeUpdate($old, $q,$roo)
     {
         if(!empty($q['_check_name'])){
-            $this->checkName();
+            if($this->checkName()){
+                $roo->jok('OK');
+            }
+            
+            $roo->jerr('EXIST');
         }
         
         if(!empty($q['_merge_id'])){
