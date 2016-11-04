@@ -103,7 +103,8 @@ Pman.Dialog.CoreCompanies = {
             // do some checks?
             
             if(!_this.form.isValid()){
-            
+                Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');
+                return;
             }
             
             _this.dialog.el.mask("Saving");
