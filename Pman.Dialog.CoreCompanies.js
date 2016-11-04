@@ -100,8 +100,6 @@ Pman.Dialog.CoreCompanies = {
       listeners : {
        click : function (_self, e)
         {
-            // do some checks?
-            
             if(!_this.form.isValid()){
                 Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');
                 return;
@@ -111,19 +109,12 @@ Pman.Dialog.CoreCompanies = {
                 url : baseURL + '/Roo/Core_enum.php',
                 method : 'POST',
                 params : {
-                  id : record.data.id,
-                  etype : _this.data.etype,
-                  name :  record.data.name,
-                  active : record.data.active,
-                  seqid : record.data.seqid,
-                  display_name : record.data.display_name
+                  id : _this.form.findField('id').getValue() * 1,
+                  name : _this.form.findField('name').getValue(),
+                  _check_name : 1
                 }, 
                 success : function(res) {
-                  //Roo.log(data);
-                  // update the ID if it's not set..
-                  if (record.data.id * 1 < 1) {
-                      record.set('id', res.data.id);
-                  }
+                    
                 }
             });
             
