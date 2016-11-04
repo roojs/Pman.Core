@@ -495,7 +495,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
         
         if(!$company->find(true)){
-            return true
+            return true;
         }
         
         return false;
