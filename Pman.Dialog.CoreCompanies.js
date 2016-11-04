@@ -196,6 +196,7 @@ Pman.Dialog.CoreCompanies = {
            },
            {
             xtype : 'ComboBox',
+            allowBlank : false,
             alwaysQuery : true,
             displayField : 'display_name',
             emptyText : _this._strings['023a5dfa857c4aa0156e6685231a1dbd'] /* Select Type */,

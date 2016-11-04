@@ -96,6 +96,7 @@
            },
            "alwaysQuery" : true,
            "listWidth" : 250,
+           "Boolean allowBlank" : false,
            "triggerAction" : "all",
            "fieldLabel" : "Type",
            "forceSelection" : true,
