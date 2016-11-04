@@ -118,7 +118,18 @@ Pman.Dialog.CoreCompanies = {
                     _this.form.doAction("submit");
                 },
                 failure : function(res) {
-                    Roo.log(res);
+                    Roo.MessageBox.confirm(
+                        "Confirm", 
+                        "The company name has been used. Save it anyway?", 
+                        function(res) {
+                            if(res != 'yes') {
+                                return;
+                            }
+                            
+                            _this.dialog.el.mask("Saving");
+                            _this.form.doAction("submit");
+                        }
+                    );
                 }
             });
             
