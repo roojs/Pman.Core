@@ -79,6 +79,8 @@ Pman.Tab.GroupsList.prototype = {
                             }
                             o.params.type = _this.type;
                             
+                            o.params._add_everyone = 1;
+                            
                             
                         },
                         load : function()
