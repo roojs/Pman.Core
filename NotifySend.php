@@ -127,7 +127,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $o = $w->object();
-        $this->errorHandler("send repeat to early\n");
+        
         if ($o === false)  {
             
             $ev = $this->addEvent('NOTIFY', $w,
