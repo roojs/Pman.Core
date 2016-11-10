@@ -365,6 +365,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function canInitializeSystem()
     {
+        
         return !strcasecmp(get_class($this) , __CLASS__);
     }
     
