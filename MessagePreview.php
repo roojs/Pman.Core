@@ -46,12 +46,13 @@ class Pman_Core_MessagePreview extends Pman
         
         $cn = DB_DataObject::factory('core_notify');
         $cn->setFrom(array(
-            'evtype'    => "{$_REQUEST['_table']}::SendPreviewEmail",
-            'onid'      => $_REQUEST['_id'],
-            'ontable'   => $_REQUEST['_table'],
-            'person_id' => $this->authUser->id,
-            'act_when'  => $cn->sqlValue("NOW()"),
-            'act_start' => $cn->sqlValue("NOW()")
+            'evtype'        => "{$_REQUEST['_table']}::SendPreviewEmail",
+            'onid'          => $_REQUEST['_id'],
+            'ontable'       => $_REQUEST['_table'],
+            'person_id'     => $this->authUser->id,
+            'person_table'  => 'Person',
+            'act_when'      => $cn->sqlValue("NOW()"),
+            'act_start'     => $cn->sqlValue("NOW()")
         ));
         
         $cn->insert();
