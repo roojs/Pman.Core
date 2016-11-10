@@ -44,6 +44,21 @@ class Pman_Core_MessagePreview extends Pman
             $this->coreEmailSendTest();
         }
         
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->setFrom(array(
+            'evtype'    => "{$_REQUEST['_table']}::SendPreviewEmail",
+            'onid'      => $_REQUEST['_id'],
+            'ontable'   => $_REQUEST['_table'],
+            'person_id' => $this->authUser->id,
+            'act_when'  => $cn->sqlValue("NOW()"),
+            'act_start' => $cn->sqlValue("NOW()")
+        ));
+        
+        $cn->insert();
+        
+        $cn->sendManual();
+        
+        /*
         $mid = $_REQUEST['_id'];
         
         $mlq = DB_DataObject::factory($_REQUEST['_table']);
@@ -62,7 +77,7 @@ class Pman_Core_MessagePreview extends Pman
         }
         
         $this->jerr('error!!:' . $sent->toString());
-        
+        */
     }
     
     function coreEmailSendTest()
