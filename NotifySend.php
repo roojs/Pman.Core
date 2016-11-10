@@ -95,7 +95,7 @@ class Pman_Core_NotifySend extends Pman
         $force = empty($opts['force']) ? 0 : 1;
         
         $w = DB_DataObject::factory($this->table);
-        $this->errorHandler("send repeat to early\n");
+//        $this->errorHandler("send repeat to early\n");
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
