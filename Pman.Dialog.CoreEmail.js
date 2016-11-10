@@ -151,7 +151,7 @@ Pman.Dialog.CoreEmail = {
        click : function (_self, e)
         {
             //_this.dialog.hide();
-            
+        
             var id = _this.form.findField('id').getValue();
             
             if(id*1 < 1){
