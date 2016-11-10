@@ -36,6 +36,8 @@ class Pman_Core_MessagePreview extends Pman
     
     function post()
     {
+        print_r($_REQUEST);
+        exit;
         if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
         }
