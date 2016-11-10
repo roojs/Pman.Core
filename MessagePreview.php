@@ -54,6 +54,8 @@ class Pman_Core_MessagePreview extends Pman
             'act_start' => $cn->sqlValue("NOW()")
         ));
         
+        print_R($cn);exit;
+            
         $cn->insert();
         
         $cn->sendManual();
