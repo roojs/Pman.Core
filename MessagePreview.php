@@ -62,7 +62,7 @@ class Pman_Core_MessagePreview extends Pman
         print_R(get_class($sent));exit;
         
         if(get_class($sent) != 'Pman_Core_NotifySend_Exception_Success'){
-            $this->jerr($sent);
+            $this->jerr($sent->getMessage());
         }
         
         $this->jok("SUCCESS");
