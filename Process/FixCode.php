@@ -71,11 +71,10 @@ class Pman_Core_Process_FixCode extends Pman
         }
         foreach($this->factory_map as $from=>$to) {
             
-            preg_replace("/DB_DataObject::factory\(([\'\"]" . $from . "[\'\"]])\)/", "DB_DataObject::factory('$1')", $c);
-
+            $c = preg_replace("/DB_DataObject::factory\((\s{0,}['\"]" . $from . "['\"]\s{0,})\)/i", "DB_DataObject::factory('{$to}')", $c);
             
-            $c = str_ireplace("DB_DataObject::factory('$from')","DB_DataObject::factory('$to')", $c);
-            $c = str_ireplace("DB_DataObject::factory(\"$from\")","DB_DataObject::factory('$to')", $c);
+//            $c = str_ireplace("DB_DataObject::factory('$from')","DB_DataObject::factory('$to')", $c);
+//            $c = str_ireplace("DB_DataObject::factory(\"$from\")","DB_DataObject::factory('$to')", $c);
             
         }
         if ($old_c == $c) {
