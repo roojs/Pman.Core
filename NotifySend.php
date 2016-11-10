@@ -652,8 +652,11 @@ class Pman_Core_NotifySend extends Pman
     function errorHandler($msg, $success = false)
     {
         if($this->error_handler == 'exception'){
-            if()
-            throw new Exception($msg);
+            if($success){
+                throw new Pman_Core_NotifySend_Exception_Success($msg);
+            }
+            
+            throw new Pman_Core_NotifySend_Exception_Fail($msg);
         }
         
         die($msg);
