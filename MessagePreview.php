@@ -59,6 +59,8 @@ class Pman_Core_MessagePreview extends Pman
         
         $cn->sendManual();
         
+        $this->jok("OK");
+        
         /*
         $mid = $_REQUEST['_id'];
         
