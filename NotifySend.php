@@ -26,8 +26,8 @@ require_once 'Pman.php';
  * Mail[helo] << helo host name
  * Mail[socket_options] << any socket option.
  */
-Pman_Core_NotifySend_Exception_Success extends Exception {}
-Pman_Core_NotifySend_Exception_Fail extends Exception {}
+Pman_Core_NotifySend_Exception_Success extends Exception {};
+Pman_Core_NotifySend_Exception_Fail extends Exception {};
 
 
 class Pman_Core_NotifySend extends Pman
