@@ -57,7 +57,11 @@ class Pman_Core_MessagePreview extends Pman
         
         $cn->insert();
         
-        $cn->sendManual();
+        $sent = $cn->sendManual();
+        
+        if($sent === true){
+            $this->jerr($sent);
+        }
         
         $this->jok("SUCCESS");
         
