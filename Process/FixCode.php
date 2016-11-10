@@ -70,8 +70,13 @@ class Pman_Core_Process_FixCode extends Pman
             exit;
         }
         foreach($this->factory_map as $from=>$to) {
+            
+            preg_replace("/DB_DataObject::factory\(([\'\"]" . $from . "[\'\"]])\)/", "DB_DataObject::factory('$1')", $c);
+
+            
             $c = str_ireplace("DB_DataObject::factory('$from')","DB_DataObject::factory('$to')", $c);
             $c = str_ireplace("DB_DataObject::factory(\"$from\")","DB_DataObject::factory('$to')", $c);
+            
         }
         if ($old_c == $c) {
             echo "$file: SKIP NO CHANGES\n";
