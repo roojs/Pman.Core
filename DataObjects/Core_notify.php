@@ -328,9 +328,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         try {
             $send->get($this->id, array());
         } catch (Exception $e) {
-            print_R($e);exit;
-            ob_end_clean();
-            return $e;
+            
         }
         
         ob_end_clean();
