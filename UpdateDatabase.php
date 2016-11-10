@@ -131,6 +131,9 @@ class Pman_Core_UpdateDatabase extends Pman
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $this->checkSystem();
+        
+        
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
    
         $ff = HTML_FlexyFramework::get();
         
