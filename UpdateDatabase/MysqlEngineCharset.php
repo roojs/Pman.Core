@@ -77,7 +77,9 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                         T.table_name = '{$tbl}' -- COLLATE utf8_general_ci
             ");
                      
-            $ce->fetch();
+            if (!$ce->fetch()) {
+                continue;
+            }
             
             if($ce->csname == 'utf8' && $ce->collatename == 'utf8_general_ci'){
                 echo "utf8: SKIP $tbl\n";
