@@ -334,7 +334,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         ob_end_clean();
         
-        return;
+        return true;
     }
     
 }
