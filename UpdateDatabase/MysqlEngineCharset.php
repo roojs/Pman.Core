@@ -7,8 +7,8 @@
 class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     
     var $dburl;
-    var $schema;
-    var $links;
+    var $schema = array();
+    var $links = array();
     
     function __construct()
     {
@@ -36,6 +36,9 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         
         
         $iniCache = $ff->DB_DataObject[$dbini];
+        if (!file_exists($iniCache)) {
+            return;
+        }
         
         $this->schema = parse_ini_file($iniCache, true);
         $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
