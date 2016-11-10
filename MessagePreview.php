@@ -59,7 +59,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $sent = $cn->sendManual();
         
-        print_R($sent);exit;
+        print_R(get_class($sent));exit;
         
         if($sent === true){
             $this->jerr($sent);
