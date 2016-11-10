@@ -96,8 +96,6 @@ class Pman_Core_NotifySend extends Pman
         
         $w = DB_DataObject::factory($this->table);
         
-        $this->errorHandler("invalid id\n");
-        
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
