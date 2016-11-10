@@ -137,7 +137,9 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                     table_name = '{$tbl}'
             ");
 
-            $ce->fetch();
+            if (!$ce->fetch()) {
+                continue;
+            }
             
             if($ce->engine == 'InnoDB' ){
                 echo "InnoDB: SKIP $tbl\n";
