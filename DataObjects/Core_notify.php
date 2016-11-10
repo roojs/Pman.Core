@@ -318,4 +318,22 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
     
+    function sendManual()
+    {   
+        require_once 'Pman/Core/NotifySend.php';
+        
+        $send = new Pman_Core_NotifySend();
+        $send->error_handler = 'exception';
+        
+        try {
+            $send->get($this->id, array());
+        } catch (Exception $e) {
+            // nothing to do
+        }
+        
+        ob_end_clean();
+        
+        return;
+    }
+    
 }
