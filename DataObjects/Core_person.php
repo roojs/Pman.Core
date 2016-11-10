@@ -293,9 +293,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
-        die("test init");
+        //die("test init");
         if (!$this->canInitializeSystem()) {
-            die("can not init");
+          //  die("can not init");
             return false;
         }
         
