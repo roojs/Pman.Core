@@ -368,7 +368,7 @@ class Pman_Core_UpdateDatabase extends Pman
      * 
      *
      */
-    function importmysqldiri($dburl, $dir) {
+    function importmysqlidir($dburl, $dir) {
         return $this->importmysqldir($dburl, $dir);
     }
     
