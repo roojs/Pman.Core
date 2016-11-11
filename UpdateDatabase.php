@@ -126,7 +126,7 @@ class Pman_Core_UpdateDatabase extends Pman
         return true;
     }
     
-    function get($args, $opts)
+    function get($args, $opts=array())
     {
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
