@@ -9,6 +9,15 @@ CREATE TRIGGER core_notify_trigger_after_update
             BEFORE UPDATE ON core_notify
         FOR EACH ROW
         BEGIN
-           DECLARE mid INT(11);
-           IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN  
-           
+            -- make sure that act_start does not get modified if sent is set.
+            IF OLD.sent IS NOT NULL AND  NEW.act_start != OLD.act_start THEN
+                  UPDATE `Error: Can not update core_notify act_start after its set` SET x = 1;
+            END IF;
+        END;
+
+$$
+ 
+
+DELIMITER ;
+
+        
