@@ -115,7 +115,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     
     function postListFilter($data, $authUser, $q) {
         
-        if(!empty($q['cmsTab'])){
+       /* if(!empty($q['cmsTab'])){
             $ret = array();
             foreach($data as $k=>$v){
                 if($v['name'] == 'element'){
@@ -129,7 +129,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
             $data = $ret;
         }
-        
+        */
         return $data;
         
     }
