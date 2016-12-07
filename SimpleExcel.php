@@ -239,43 +239,53 @@ class Pman_Core_SimpleExcel extends Pman
         if (empty($data)) {
             return;
         }
-        $data_ar = $data;
+        foreach($cfg['cols']  as $c => $col_cfg) {
+            if (isset($col_cfg['renderer'])) {
+                $hasRender = true;
+                break;
+            }
+        }
+        
+        
         
         if (is_object($data)) {
             $data_ar = array();
+            $count = $data->count();
             $data->find();
+            
             while($data->fetch()) {
                 $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
                 $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
             }
-        }
+        } else { 
         
-        foreach($data as $r=>$clo) {
-            $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
-            $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
-             
-        }
+            foreach($data as $r=>$clo) {
+                $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
+                $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
+                 
+            }
         /// call user render on any that are defined..
-        if ($hasRender) {
-            foreach($data as $r=>$cl) {
-            
-                foreach($cfg['cols']   as $c=>$col_cfg) {
-                    $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
-                    if (empty($cl[$col_cfg['dataIndex']])) {
-                        continue;
-                    }
-                    if (!empty($col_cfg['renderer'])) {
-                        
-                        if (is_a($col_cfg['renderer'], 'Closure')) {
-                            $col_cfg['renderer']($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
-                        } else {
-                        // not sure if row is correct here...!!!?
-                            call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+            if ($hasRender) {
+                foreach($data as $r=>$cl) {
+                
+                    foreach($cfg['cols']   as $c=>$col_cfg) {
+                        $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
+                        if (empty($cl[$col_cfg['dataIndex']])) {
+                            continue;
                         }
-                        
+                        if (!empty($col_cfg['renderer'])) {
+                            
+                            if (is_a($col_cfg['renderer'], 'Closure')) {
+                                $col_cfg['renderer']($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                            } else {
+                            // not sure if row is correct here...!!!?
+                                call_user_func($col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
+                            }
+                            
+                        }
+                      //  echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c, $cl[$col_cfg['dataIndex']]), true));
+                 
                     }
-                  //  echo "<PRE>WRITE: ". htmlspecialchars(print_r(array($r+1, $c, $cl[$col_cfg['dataIndex']]), true));
-             
                 }
             }
         }
