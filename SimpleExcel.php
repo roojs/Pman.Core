@@ -257,6 +257,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
                 $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
             }
+            $start_row += $count;
         } else { 
         
             foreach($data as $r=>$clo) {
@@ -288,8 +289,9 @@ class Pman_Core_SimpleExcel extends Pman
                     }
                 }
             }
+            $start_row += count($data);
+
         }
-        $start_row += count($data);
         
         if (!empty($cfg['foot'])) {
             foreach($cfg['foot'] as $row) { 
