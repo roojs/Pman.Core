@@ -254,7 +254,7 @@ class Pman_Core_SimpleExcel extends Pman
             $data->find();
             
             while($data->fetch()) {
-                $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
+                $hasRenderRow = $this->addLine($cfg['workbook'], $data);
                 $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
             }
             $start_row += $count;
