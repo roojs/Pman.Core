@@ -239,7 +239,16 @@ class Pman_Core_SimpleExcel extends Pman
         if (empty($data)) {
             return;
         }
+        $data_ar = $data;
         
+        if (is_object($data)) {
+            $data_ar = array();
+            $data->find();
+            while($data->fetch()) {
+                $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
+                $hasRender = ($hasRender  || $hasRenderRow) ? true : false;
+            }
+        }
         
         foreach($data as $r=>$clo) {
             $hasRenderRow = $this->addLine($cfg['workbook'], $clo);
