@@ -2,7 +2,7 @@
 /**
  * Table Definition for Group_Members
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_group_member extends DB_DataObject 
 {

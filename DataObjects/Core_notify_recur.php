@@ -2,7 +2,7 @@
 /**
  * Table Definition for core_notify_recur
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject 
 {

@@ -2,7 +2,7 @@
 /**
  * Table Definition for Office
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_office extends DB_DataObject 
 {

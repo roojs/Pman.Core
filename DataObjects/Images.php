@@ -2,7 +2,7 @@
 /**
  * Table Definition for Images
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Images extends DB_DataObject 
 {

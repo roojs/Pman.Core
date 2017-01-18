@@ -7,7 +7,7 @@
  * It should eventually replace most of that..
  * 
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_I18n extends DB_DataObject 
 {

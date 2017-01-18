@@ -2,7 +2,7 @@
 /**
  * Table Definition for translations
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Translations extends DB_DataObject 
 {

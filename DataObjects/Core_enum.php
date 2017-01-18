@@ -2,7 +2,7 @@
 /**
  * Table Definition for core enum - it's used in pulldowns or simple option lists.
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_enum extends DB_DataObject 
 {

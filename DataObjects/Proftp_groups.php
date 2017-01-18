@@ -4,7 +4,7 @@
  * 
  * -- this is needed for proftp integratin, but it's not used.. AFAIK
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Proftp_groups extends DB_DataObject 
 {

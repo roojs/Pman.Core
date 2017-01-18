@@ -5,7 +5,7 @@
  * Note - projectdirectory is linked to this - due to an issue with postgres - we should keep to lowercase names only for tables..
  * 
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_ProjectDirectory extends DB_DataObject 
 {

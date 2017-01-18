@@ -17,6 +17,6 @@ function init() {
     
     require_once 'HTML/FlexyFramework/Page.php';
     
-    require_once 'DB/DataObject.php';
+    class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 }

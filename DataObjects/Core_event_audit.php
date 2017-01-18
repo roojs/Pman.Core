@@ -2,7 +2,7 @@
 /**
  * Table Definition for core_event_audit
  */
-require_once 'DB/DataObject.php';
+class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
 class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject 
 {
