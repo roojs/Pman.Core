@@ -263,8 +263,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-            
-            
+             
             $u = DB_DataObject::factory($this->tableName());
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
               
@@ -446,7 +445,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         // open up iptables at login..
-        $dbname = $this->database();
+        $dbname = $this->databaseNickname();
         touch( '/tmp/run_pman_admin_iptables-'.$dbname);
          
         // refresh admin group if we are logged in as one..
@@ -1208,9 +1207,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $appname = empty($ff->appNameShort) ? $ff->project : $ff->project . '-' . $ff->appNameShort;
         
-        $db = $this->getDatabaseConnection();
+        $dname = method_exists($this, 'getDatabaseConnection') ? $this->getDatabaseConnection()->dsn['database'] : $this->databaseNickname();
         
-        $sesPrefix = $appname.'-' .get_class($this) .'-'.$db->dsn['database'] ;
+        $sesPrefix = $appname.'-' .get_class($this) .'-' . $dname;
 
         return $sesPrefix;
     }

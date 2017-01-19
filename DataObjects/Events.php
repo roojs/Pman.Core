@@ -312,7 +312,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         } else {
             $col = $au->tableName() == "Person" ? 'person_id' : $au->tableName() . '_id';
             // does $col exist?
-            $cols = $this->table();
+            $cols = $this->tableColumns();
             $col = isset($cols[$col]) ? $col : 'person_id'; // for BC.... - revert to using person_id
             $this->{$col} = $au->pid();
             //$this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;
