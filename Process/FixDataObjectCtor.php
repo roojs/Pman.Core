@@ -57,6 +57,7 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
 
       
         $c = preg_replace("/DB_DataObject::factory\('([a-z_]+)'\)::/i", "DB_DataObject::factory('\\1')->", $c);
+        $c = preg_replace("/DB_DataObjects::factory/i", "DB_DataObject::factory", $c); // typo...
 
       
         if ($old_c == $c) {
