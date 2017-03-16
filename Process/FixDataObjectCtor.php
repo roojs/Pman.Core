@@ -48,9 +48,9 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
             echo "$file: NOT PHP\n";
             exit;
         }
-        $c = preg_replace("/new DataObjects_([a-z_]+)/i", "DB_DataObject::factory('\1')", $c);
+        $c = preg_replace("/new DataObjects_([a-z_]+)/i", "DB_DataObject::factory('\\1')", $c);
         
-        $c = preg_replace("/DataObjects_([a-z_]+)::/i", "DB_DataObject::factory('\1')", $c);
+        $c = preg_replace("/DataObjects_([a-z_]+)::/i", "DB_DataObject::factory('\\1')::", $c);
 
       
         if ($old_c == $c) {
