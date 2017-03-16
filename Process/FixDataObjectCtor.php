@@ -56,6 +56,9 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
         $c = preg_replace("/DB_DataObject::staticGet\('DataObjects_([a-z_]+)'\s*,/i", "DB_DataObject::factory('\\1')->load(", $c);
 
       
+        $c = preg_replace("/DB_DataObject::factory\('([a-z_]+)'\)::/i", "DB_DataObject::factory('\\1')->", $c);
+
+      
         if ($old_c == $c) {
             echo "$file: SKIP NO CHANGES\n";
             exit;
