@@ -50,7 +50,8 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
         }
         $c = preg_replace("/new DataObjects_([a-z_]+)/i", "DB_DataObject::factory('\\1')", $c);
         
-        $c = preg_replace("/DataObjects_([a-z_]+)::/i", "DB_DataObject::factory('\\1')->", $c);
+        /// this one tends t hit a few odd comment examples..
+        //$c = preg_replace("/DataObjects_([a-z_]+)::/i", "DB_DataObject::factory('\\1')->", $c);
         
         $c = preg_replace("/DB_DataObject::staticGet\(\"DataObjects_([a-z_]+)\"\s*,/i", "DB_DataObject::factory('\\1')->load(", $c);
         $c = preg_replace("/DB_DataObject::staticGet\('DataObjects_([a-z_]+)'\s*,/i", "DB_DataObject::factory('\\1')->load(", $c);
@@ -60,9 +61,7 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
         $c = preg_replace("/DB_DataObjects::factory/i", "DB_DataObject::factory", $c); // typo...
 
         
-        // this is a temp kludge change...
-        $c = preg_replace("/class DataObjects_/i", 'class Pman_Hebe_DataObjects_', $c);
-      
+        
         if ($old_c == $c) {
             echo "$file: SKIP NO CHANGES\n";
             exit;
