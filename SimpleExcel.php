@@ -75,6 +75,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $workbook = false;
     var $worksheet= false;
     
+     
     function Pman_Core_SimpleExcel($data,$cfg)
     {
       // print_r($cfg);exit;
@@ -92,11 +93,14 @@ class Pman_Core_SimpleExcel extends Pman
        
         $cfg['formats'] = isset($cfg['formats']) ? $cfg['formats'] : array();
         
+        $this->formats['_default_date_format_'] = $workbook->addFormat();;
+         $this->formats['_default_date_format_']->setNumFormat('YYYY-MM-DD');
+        
         foreach($cfg['formats'] as $f=>$fcfg) {
             
             $this->formats[$f] = & $workbook->addFormat();
             foreach((array)$fcfg as $k=>$v) {
-                 $this->formats[$f]->{'set' . $k}($v);
+                $this->formats[$f]->{'set' . $k}($v);
             }
             
         }
