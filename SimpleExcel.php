@@ -377,7 +377,13 @@ class Pman_Core_SimpleExcel extends Pman
             $format = isset($col_cfg['format'])  && isset($formats[$col_cfg['format']] )   ? $formats[$col_cfg['format']] : false;
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
           // handle 0 prefixes..
-            if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.') 
+          
+            if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $v)) {
+                $dataFormat = 'date';
+                $format = empty($format) ? 'YYYY-MM-DD' : $format;
+            }
+          
+            if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' )
                     || 
                     $dataFormat == 'string' ) {
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
