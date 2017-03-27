@@ -94,7 +94,7 @@ class Pman_Core_SimpleExcel extends Pman
         $cfg['formats'] = isset($cfg['formats']) ? $cfg['formats'] : array();
         
         $this->formats['_default_date_format_'] = $workbook->addFormat();;
-         $this->formats['_default_date_format_']->setNumFormat('YYYY-MM-DD');
+        $this->formats['_default_date_format_']->setNumFormat('YYYY-MM-DD');
         
         foreach($cfg['formats'] as $f=>$fcfg) {
             
@@ -384,11 +384,11 @@ class Pman_Core_SimpleExcel extends Pman
           
             if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $v)) {
                 $dataFormat = 'date';
-                $format = empty($format) ? 'YYYY-MM-DD' : $format;
+                $format = empty($format) ? $this->formats['_default_date_format_']: $format;
                 $ut_to_ed_diff = 86400 * 25569;
 
                 $v = (strtotime($v) + $ut_to_ed_diff) / 86400;
-                var_Dump(array($format, $v));
+                
             }
           
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' )
