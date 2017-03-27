@@ -383,7 +383,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $format = empty($format) ? 'YYYY-MM-DD' : $format;
                 $ut_to_ed_diff = 86400 * 25569;
 
-                $v = (strtotime($v) + $ut_to_ed_diff) / $format;
+                $v = (strtotime($v) + $ut_to_ed_diff) / 86400;
             }
           
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' )
