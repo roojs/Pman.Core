@@ -386,8 +386,11 @@ class Pman_Core_SimpleExcel extends Pman
                 $dataFormat = 'date';
                 $format = empty($format) ? $this->formats['_default_date_format_']: $format;
                 $ut_to_ed_diff = 86400 * 25569;
+                $gmt = strtotime('1970-01-01');
 
-                $v = (strtotime($v) + $ut_to_ed_diff) / 86400;
+                $v = (strtotime($v) + $ut_to_ed_diff - $gmt) / 86400;
+                // need to +8hrs to get real time..
+                
                 
             }
           
