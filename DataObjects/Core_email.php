@@ -366,9 +366,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'contents' => $contents,
             'css_embed' => true, // we should always try and do this with emails...
         );
+        
         if (isset($contents['rcpts'])) {
             $cfg['rcpts'] = $contents['rcpts'];
         }
+        
         if (isset($contents['mailer_opts']) && is_array($contents['mailer_opts'])) {
             $cfg = array_merge($contents['mailer_opts'], $cfg);
         }
