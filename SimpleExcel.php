@@ -384,6 +384,7 @@ class Pman_Core_SimpleExcel extends Pman
                 $ut_to_ed_diff = 86400 * 25569;
 
                 $v = (strtotime($v) + $ut_to_ed_diff) / 86400;
+                var_Dump(array($format, $v));
             }
           
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' )
