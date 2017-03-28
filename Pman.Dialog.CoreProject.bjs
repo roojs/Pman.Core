@@ -1,315 +1,336 @@
 {
-    "id": "roo-file-28",
-    "name": "Pman.Dialog.CoreProject",
-    "parent": "",
-    "title": "",
-    "path": "/home/chris/gitlive/Pman.Core/Pman.Dialog.CoreProject.bjs",
-    "items": [
+ "name" : "Pman.Dialog.CoreProject",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreProject.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "strings" : {
+  "99b344c8ae43e3e7213862b8f35c4e51" : "Select Company",
+  "231bc72756b5e6de492aaaa1577f61b1" : "Remarks",
+  "577d7068826de925ea2aec01dbadf5e4" : "Client",
+  "ca528d836417871a349312db705a1951" : "Open date",
+  "ddb016a244ff2b895e69d25fb3b5f780" : "Edit / Create Projects",
+  "b5b20a9df20ea61c1cc0485f5e83891e" : "Select Project Type",
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "9675747b5ab12d05f18518761e68a533" : "Select Companies",
+  "ac848fa228f49ba2b8a5fbd76596817d" : "Team",
+  "24f9e53eb92c0995d04433c1f7a4c9c0" : "File location",
+  "d1847fa47ea6bc047b413947463262ab" : "Enter Project Name",
+  "340c2ee497b85d5954b01c64de7f44f6" : "Select Person",
+  "1a11b1adc359c03db0ca798a00e2632c" : "Opened",
+  "8e3a42158ee70b67cf55b33e2789a9e5" : "Project Name",
+  "ca0dbad92a874b2f69b549293387925e" : "Code",
+  "245fe794333c2b0d5c513129b346b93f" : "Project Type",
+  "ab83ccde6764ca581702f38d79834615" : "Select Team",
+  "c9cc8cce247e49bae79f15173ce97354" : "Save",
+  "223aad18ce30620a724d8a97021ce26e" : "Open by"
+ },
+ "items" : [
+  {
+   "collapsible" : false,
+   "title" : "Edit / Create Projects",
+   "xtype" : "LayoutDialog",
+   "width" : 470,
+   "$ xns" : "Roo",
+   "closable" : false,
+   "resizable" : false,
+   "height" : 450,
+   "items" : [
+    {
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "* prop" : "center"
+    },
+    {
+     "region" : "center",
+     "xtype" : "ContentPanel",
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "listeners" : {
+        "|actioncomplete" : "function(_self,action)\n{\n    if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, _this.form.getValues());\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
+        "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
+       },
+       "$ url" : "baseURL + '/Roo/Projects.php'",
+       "xtype" : "Form",
+       "method" : "POST",
+       "style" : "margin:10px;",
+       "$ xns" : "Roo.form",
+       "items" : [
         {
-            "closable": false,
-            "collapsible": false,
-            "height": 450,
-            "resizable": false,
-            "title": "Edit / Create Projects",
-            "width": 470,
-            "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "items": [
-                {
-                    "|xns": "Roo",
-                    "xtype": "LayoutRegion",
-                    "*prop": "center"
-                },
-                {
-                    "region": "center",
-                    "xtype": "ContentPanel",
-                    "|xns": "Roo",
-                    "items": [
-                        {
-                            "listeners": {
-                                "|actioncomplete": "function(_self,action)\n{\n    if (action.type == 'setdata') {\n       //_this.dialog.el.mask(\"Loading\");\n       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, _this.form.getValues());\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
-                                "|rendered": "function (form)\n{\n    _this.form= form;\n}\n"
-                            },
-                            "method": "POST",
-                            "style": "margin:10px;",
-                            "xtype": "Form",
-                            "|url": "baseURL + '/Roo/Projects.php'",
-                            "|xns": "Roo.form",
-                            "items": [
-                                {
-                                    "fieldLabel": "Code",
-                                    "name": "code",
-                                    "width": 150,
-                                    "xtype": "TextField",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "fieldLabel": "Project Name",
-                                    "name": "name",
-                                    "qtip": "Enter Project Name",
-                                    "width": 300,
-                                    "xtype": "TextField",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "allowBlank": false,
-                                    "displayField": "desc",
-                                    "editable": false,
-                                    "emptyText": "Select Project Type",
-                                    "fieldLabel": "Project Type",
-                                    "forceSelection": true,
-                                    "hiddenName": "type",
-                                    "listWidth": 400,
-                                    "loadingText": "Searching...",
-                                    "minChars": 2,
-                                    "name": "type_desc",
-                                    "pageSize": 20,
-                                    "qtip": "Select Project Type",
-                                    "queryParam": "query[name]",
-                                    "selectOnFocus": true,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{desc}</b> </div>",
-                                    "triggerAction": "all",
-                                    "typeAhead": true,
-                                    "valueField": "code",
-                                    "width": 200,
-                                    "xtype": "ComboBox",
-                                    "|xns": "Roo.form",
-                                    "items": [
-                                        {
-                                            "*prop": "store",
-                                            "|data": "[ [  'U' , \"Project (Unconfirmed)\" ],\n[  'P' , \"Project\" ],\n[  'C' , \"Project (Closed)\" ],\n[  'N' , \"Non-Project\" ],\n[  'X' , \"Non-Project (Closed)\" ]\n]",
-                                            "|fields": " [ 'code', 'desc' ]",
-                                            "xtype": "SimpleStore",
-                                            "|xns": "Roo.data"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "listeners": {
-                                        "add": "function (combo)\n{\n Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n            _this.form.setValues({ \n                client_id : data.id,\n                client_id_name : data.name\n            });\n        }); \n}"
-                                    },
-                                    "allowBlank": "false",
-                                    "displayField": "name",
-                                    "editable": "false",
-                                    "emptyText": "Select Company",
-                                    "fieldLabel": "Client",
-                                    "forceSelection": true,
-                                    "hiddenName": "client_id",
-                                    "listWidth": 400,
-                                    "loadingText": "Searching...",
-                                    "minChars": 2,
-                                    "name": "client_id_name",
-                                    "pageSize": 20,
-                                    "qtip": "Select Companies",
-                                    "queryParam": "query[name]",
-                                    "selectOnFocus": true,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-                                    "triggerAction": "all",
-                                    "typeAhead": true,
-                                    "valueField": "id",
-                                    "width": 300,
-                                    "xtype": "ComboBox",
-                                    "|xns": "Roo.form",
-                                    "items": [
-                                        {
-                                            "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n   \n    o.params.type = 1;\n    o.params['query[group_pulldown]'] = 1;\n}\n"
-                                            },
-                                            "*prop": "store",
-                                            "remoteSort": true,
-                                            "xtype": "Store",
-                                            "|sortInfo": "{ direction : 'ASC', field: 'name' }",
-                                            "|xns": "Roo.data",
-                                            "items": [
-                                                {
-                                                    "*prop": "proxy",
-                                                    "xtype": "HttpProxy",
-                                                    "method": "GET",
-                                                    "|xns": "Roo.data",
-                                                    "|url": "baseURL + '/Roo/Companies.php'"
-                                                },
-                                                {
-                                                    "*prop": "reader",
-                                                    "xtype": "JsonReader",
-                                                    "|xns": "Roo.data",
-                                                    "id": "id",
-                                                    "root": "data",
-                                                    "totalProperty": "total",
-                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"code\",\"type\":\"string\"}]"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "allowBlank": "false",
-                                    "displayField": "name",
-                                    "editable": "false",
-                                    "emptyText": "Select Team",
-                                    "fieldLabel": "Team",
-                                    "forceSelection": true,
-                                    "hiddenName": "team_id",
-                                    "listWidth": 400,
-                                    "loadingText": "Searching...",
-                                    "minChars": 2,
-                                    "name": "team_id_name",
-                                    "pageSize": 20,
-                                    "qtip": "Select Team",
-                                    "queryParam": "query[name]",
-                                    "selectOnFocus": true,
-                                    "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-                                    "triggerAction": "all",
-                                    "typeAhead": true,
-                                    "valueField": "id",
-                                    "width": 300,
-                                    "xtype": "ComboBox",
-                                    "|xns": "Roo.form",
-                                    "items": [
-                                        {
-                                            "*prop": "store",
-                                            "xtype": "Store",
-                                            "|xns": "Roo.data",
-                                            "remoteSort": true,
-                                            "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                            "listeners": {
-                                                "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
-                                            },
-                                            "items": [
-                                                {
-                                                    "*prop": "proxy",
-                                                    "xtype": "HttpProxy",
-                                                    "method": "GET",
-                                                    "|xns": "Roo.data",
-                                                    "|url": "baseURL + '/Roo/Groups.php'"
-                                                },
-                                                {
-                                                    "*prop": "reader",
-                                                    "xtype": "JsonReader",
-                                                    "|xns": "Roo.data",
-                                                    "id": "id",
-                                                    "root": "data",
-                                                    "totalProperty": "total",
-                                                    "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "fieldLabel": "File location",
-                                    "name": "file_location",
-                                    "width": 300,
-                                    "xtype": "TextField",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "fieldLabel": "Remarks",
-                                    "height": 100,
-                                    "name": "remarks",
-                                    "width": 300,
-                                    "xtype": "TextArea",
-                                    "|xns": "Roo.form"
-                                },
-                                {
-                                    "legend": "Opened",
-                                    "xtype": "FieldSet",
-                                    "|xns": "Roo.form",
-                                    "items": [
-                                        {
-                                            "altFormats": "Y-m-d|d/m/Y",
-                                            "fieldLabel": "Open date",
-                                            "format": "d/m/Y",
-                                            "name": "open_date",
-                                            "width": 100,
-                                            "xtype": "DateField",
-                                            "|xns": "Roo.form"
-                                        },
-                                        {
-                                            "|xns": "Roo.form",
-                                            "xtype": "ComboBox",
-                                            "allowBlank": "false",
-                                            "editable": "false",
-                                            "emptyText": "Select Person",
-                                            "forceSelection": true,
-                                            "listWidth": 400,
-                                            "loadingText": "Searching...",
-                                            "minChars": 2,
-                                            "pageSize": 20,
-                                            "qtip": "Select Person",
-                                            "selectOnFocus": true,
-                                            "triggerAction": "all",
-                                            "typeAhead": true,
-                                            "width": 300,
-                                            "tpl": "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-                                            "queryParam": "query[name]",
-                                            "fieldLabel": "Open by",
-                                            "valueField": "id",
-                                            "displayField": "name",
-                                            "hiddenName": "open_by",
-                                            "name": "open_by_name",
-                                            "items": [
-                                                {
-                                                    "*prop": "store",
-                                                    "xtype": "Store",
-                                                    "|xns": "Roo.data",
-                                                    "remoteSort": true,
-                                                    "|sortInfo": "{ direction : 'ASC', field: 'id' }",
-                                                    "listeners": {
-                                                        "|beforeload": "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
-                                                    },
-                                                    "items": [
-                                                        {
-                                                            "*prop": "proxy",
-                                                            "xtype": "HttpProxy",
-                                                            "method": "GET",
-                                                            "|xns": "Roo.data",
-                                                            "|url": "baseURL + '/Roo/Person.php'"
-                                                        },
-                                                        {
-                                                            "*prop": "reader",
-                                                            "xtype": "JsonReader",
-                                                            "|xns": "Roo.data",
-                                                            "id": "id",
-                                                            "root": "data",
-                                                            "totalProperty": "total",
-                                                            "|fields": "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "name": "id",
-                                    "|xns": "Roo.form",
-                                    "xtype": "Hidden"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "Cancel",
-                    "xtype": "Button",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "Save",
-                    "xtype": "Button",
-                    "|xns": "Roo"
-                }
-            ]
+         "fieldLabel" : "Code",
+         "xtype" : "TextField",
+         "width" : 150,
+         "$ xns" : "Roo.form",
+         "name" : "code"
+        },
+        {
+         "fieldLabel" : "Project Name",
+         "xtype" : "TextField",
+         "width" : 300,
+         "$ xns" : "Roo.form",
+         "qtip" : "Enter Project Name",
+         "name" : "name"
+        },
+        {
+         "listWidth" : 400,
+         "triggerAction" : "all",
+         "fieldLabel" : "Project Type",
+         "forceSelection" : true,
+         "selectOnFocus" : true,
+         "pageSize" : 20,
+         "displayField" : "desc",
+         "emptyText" : "Select Project Type",
+         "hiddenName" : "type",
+         "minChars" : 2,
+         "valueField" : "code",
+         "xtype" : "ComboBox",
+         "allowBlank" : false,
+         "typeAhead" : true,
+         "editable" : false,
+         "width" : 200,
+         "$ xns" : "Roo.form",
+         "name" : "type_desc",
+         "qtip" : "Select Project Type",
+         "queryParam" : "query[name]",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{desc}</b> </div>",
+         "loadingText" : "Searching...",
+         "items" : [
+          {
+           "xtype" : "SimpleStore",
+           "$ data" : "[ [  'U' , \"Project (Unconfirmed)\" ],\n[  'P' , \"Project\" ],\n[  'C' , \"Project (Closed)\" ],\n[  'N' , \"Non-Project\" ],\n[  'X' , \"Non-Project (Closed)\" ]\n]",
+           "$ fields" : " [ 'code', 'desc' ]",
+           "$ xns" : "Roo.data",
+           "* prop" : "store"
+          }
+         ]
+        },
+        {
+         "listeners" : {
+          "add" : "function (combo)\n{\n Pman.Dialog.Companies.show( {  id: 0 },  function(data) {\n            _this.form.setValues({ \n                client_id : data.id,\n                client_id_name : data.name\n            });\n        }); \n}"
+         },
+         "listWidth" : 400,
+         "triggerAction" : "all",
+         "fieldLabel" : "Client",
+         "forceSelection" : true,
+         "selectOnFocus" : true,
+         "pageSize" : 20,
+         "displayField" : "name",
+         "emptyText" : "Select Company",
+         "hiddenName" : "client_id",
+         "minChars" : 2,
+         "valueField" : "id",
+         "xtype" : "ComboBox",
+         "allowBlank" : false,
+         "typeAhead" : true,
+         "editable" : false,
+         "width" : 300,
+         "$ xns" : "Roo.form",
+         "name" : "client_id_name",
+         "qtip" : "Select Companies",
+         "queryParam" : "query[name]",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+         "loadingText" : "Searching...",
+         "items" : [
+          {
+           "listeners" : {
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n   \n    o.params.type = 1;\n    o.params['query[group_pulldown]'] = 1;\n}\n"
+           },
+           "xtype" : "Store",
+           "remoteSort" : true,
+           "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+           "$ xns" : "Roo.data",
+           "* prop" : "store",
+           "items" : [
+            {
+             "$ url" : "baseURL + '/Roo/core_company'",
+             "method" : "GET",
+             "xtype" : "HttpProxy",
+             "$ xns" : "Roo.data",
+             "* prop" : "proxy"
+            },
+            {
+             "id" : "id",
+             "root" : "data",
+             "xtype" : "JsonReader",
+             "$ xns" : "Roo.data",
+             "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"code\",\"type\":\"string\"}]",
+             "* prop" : "reader",
+             "totalProperty" : "total"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "listWidth" : 400,
+         "triggerAction" : "all",
+         "fieldLabel" : "Team",
+         "forceSelection" : true,
+         "selectOnFocus" : true,
+         "pageSize" : 20,
+         "displayField" : "name",
+         "emptyText" : "Select Team",
+         "hiddenName" : "team_id",
+         "minChars" : 2,
+         "valueField" : "id",
+         "xtype" : "ComboBox",
+         "allowBlank" : false,
+         "typeAhead" : true,
+         "editable" : false,
+         "width" : 300,
+         "$ xns" : "Roo.form",
+         "name" : "team_id_name",
+         "qtip" : "Select Team",
+         "queryParam" : "query[name]",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+         "loadingText" : "Searching...",
+         "items" : [
+          {
+           "listeners" : {
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
+           },
+           "xtype" : "Store",
+           "remoteSort" : true,
+           "$ xns" : "Roo.data",
+           "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
+           "* prop" : "store",
+           "items" : [
+            {
+             "$ url" : "baseURL + '/Roo/Groups.php'",
+             "method" : "GET",
+             "xtype" : "HttpProxy",
+             "$ xns" : "Roo.data",
+             "* prop" : "proxy"
+            },
+            {
+             "id" : "id",
+             "root" : "data",
+             "xtype" : "JsonReader",
+             "$ xns" : "Roo.data",
+             "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+             "* prop" : "reader",
+             "totalProperty" : "total"
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "fieldLabel" : "File location",
+         "xtype" : "TextField",
+         "width" : 300,
+         "$ xns" : "Roo.form",
+         "name" : "file_location"
+        },
+        {
+         "fieldLabel" : "Remarks",
+         "xtype" : "TextArea",
+         "width" : 300,
+         "$ xns" : "Roo.form",
+         "name" : "remarks",
+         "height" : 100
+        },
+        {
+         "legend" : "Opened",
+         "xtype" : "FieldSet",
+         "$ xns" : "Roo.form",
+         "items" : [
+          {
+           "format" : "d/m/Y",
+           "fieldLabel" : "Open date",
+           "xtype" : "DateField",
+           "width" : 100,
+           "$ xns" : "Roo.form",
+           "altFormats" : "Y-m-d|d/m/Y",
+           "name" : "open_date"
+          },
+          {
+           "listWidth" : 400,
+           "triggerAction" : "all",
+           "forceSelection" : true,
+           "selectOnFocus" : true,
+           "fieldLabel" : "Open by",
+           "pageSize" : 20,
+           "xtype" : "ComboBox",
+           "emptyText" : "Select Person",
+           "minChars" : 2,
+           "valueField" : "id",
+           "displayField" : "name",
+           "hiddenName" : "open_by",
+           "allowBlank" : false,
+           "typeAhead" : true,
+           "editable" : false,
+           "$ xns" : "Roo.form",
+           "width" : 300,
+           "qtip" : "Select Person",
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+           "queryParam" : "query[name]",
+           "name" : "open_by_name",
+           "loadingText" : "Searching...",
+           "items" : [
+            {
+             "listeners" : {
+              "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n}\n"
+             },
+             "xtype" : "Store",
+             "remoteSort" : true,
+             "$ xns" : "Roo.data",
+             "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
+             "* prop" : "store",
+             "items" : [
+              {
+               "$ url" : "baseURL + '/Roo/Person.php'",
+               "method" : "GET",
+               "xtype" : "HttpProxy",
+               "$ xns" : "Roo.data",
+               "* prop" : "proxy"
+              },
+              {
+               "id" : "id",
+               "root" : "data",
+               "xtype" : "JsonReader",
+               "$ xns" : "Roo.data",
+               "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
+               "* prop" : "reader",
+               "totalProperty" : "total"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "id"
         }
-    ],
-    "permname": "",
-    "modOrder": "001"
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Cancel",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+     },
+     "text" : "Save",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
 }
