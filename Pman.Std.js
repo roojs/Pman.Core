@@ -99,7 +99,7 @@ Pman.Std = {
                     xtype: 'Store',
                     proxy: {
                         xtype : 'HttpProxy',
-                        url: baseURL + '/Roo/Companies.html',
+                        url: baseURL + '/Roo/core_company',
                         method: 'GET'
                     },
                     reader: Pman.Readers.Companies,
