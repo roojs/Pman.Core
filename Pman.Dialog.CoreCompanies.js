@@ -154,7 +154,7 @@ Pman.Dialog.CoreCompanies = {
         xtype : 'Form',
         fileUpload : true,
         labelWidth : 160,
-        url : baseURL + '/Roo/Companies.php',
+        url : baseURL + '/Roo/core_company.php',
         listeners : {
          actioncomplete : function(f, act) {
               _this.dialog.el.unmask();
