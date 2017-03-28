@@ -982,7 +982,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         // this only applies to our owner company..
         $c = $this->company();
-        if (!$c || $c->comptype_name != 'OWNER') {
+        if (empty($c->comptype_name) || $c->comptype_name != 'OWNER') {
             return true;
         }
         
