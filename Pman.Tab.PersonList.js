@@ -211,7 +211,7 @@ Pman.Tab.PersonList.prototype = {
                             // only used to change active status.
                             
                             new Pman.Request({
-                                url : baseURL + '/Roo/Person.php',
+                                url : baseURL + '/Roo/core_person',
                                 method :'POST',
                                 params : {
                                     id : record.data.id,

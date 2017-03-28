@@ -102,7 +102,7 @@ Pman.Dialog.CorePersonContact = {
         xtype : 'Form',
         method : 'POST',
         style : 'margin:10px;',
-        url : baseURL + '/Roo/Person.php',
+        url : baseURL + '/Roo/core_person',
         listeners : {
          actioncomplete : function(_self,action)
           {
