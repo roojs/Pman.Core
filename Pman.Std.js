@@ -83,8 +83,7 @@ Pman.Std = {
                 displayField:'name',
                 
                 fieldLabel : "Sent To",
-                allowBlank : true,
-                qtip : "Enter Sent To",
+                 qtip : "Enter Sent To",
                 width: 290,
                 
                 
