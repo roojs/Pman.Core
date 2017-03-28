@@ -188,7 +188,7 @@ Pman.Tab.PersonList.prototype = {
                 ds:   new Roo.data.Store({
                     // load using HTTP
                     proxy: new Roo.data.HttpProxy({
-                        url: baseURL + '/Roo/Person.html',
+                        url: baseURL + '/Roo/core_person',
                         method: 'GET'
                     }),
                     reader: Pman.Readers.Person,
@@ -424,7 +424,7 @@ Pman.Tab.PersonList.prototype = {
 
                     
                     Roo.Ajax.request({
-                        url: baseURL + '/Roo/Person.html',
+                        url: baseURL + '/Roo/core_person',
                         method: 'GET',
                         params: {
                             _toggleActive : r.join(',')

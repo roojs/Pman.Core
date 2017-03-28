@@ -653,7 +653,7 @@ Pman.Dialog.PersonEditor.prototype = {
         }
         this.dialog.el.mask("Sending");
         this.form.doAction('submit', {
-            url: baseURL + '/Roo/Person.html',
+            url: baseURL + '/Roo/core_person',
             method: 'POST',
             params: {
                 _id: this._id ,
@@ -676,7 +676,7 @@ Pman.Dialog.PersonEditor.prototype = {
             this.dialog.show();
             this.dialog.el.mask("Loading");
             this.form.doAction('load', {
-                url: baseURL + '/Roo/Person.html',
+                url: baseURL + '/Roo/core_person',
                 method: 'GET',
                 params: {
                     _id: this._id ,

@@ -216,7 +216,7 @@ Pman.Std = {
                       // load using HTTP
                     proxy: {
                         xtype : 'HttpProxy',
-                        url: baseURL + '/Roo/Person.html',
+                        url: baseURL + '/Roo/core_person',
                         method: 'GET'
                     },
                     reader: Pman.Readers.Companies,
