@@ -6,7 +6,7 @@ DELIMITER $$
  
 
 CREATE TRIGGER core_notify_trigger_after_update
-            BEFORE UPDATE ON core_notify
+            AFTER UPDATE ON core_notify
         FOR EACH ROW
         BEGIN
             -- make sure that act_start does not get modified if sent is set.
