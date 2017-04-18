@@ -307,10 +307,11 @@ class Pman_Core_Images extends Pman
         
         $project = str_replace('/', '_', $project);
          
-         var_dump($project::$Pman_Core_Images_Size);
+        $pr_obj = new $project;
         
-        if(isset($project::$Pman_Core_Images_Size)){
-            $sizes = $project::$Pman_Core_Images_Size;
+        var_dump($pr_obj->Pman_Core_Images_Size);
+        if(isset($pr_obj->Pman_Core_Images_Size)){
+            $sizes = $pr_obj->Pman_Core_Images_Size;
             
             
         }
