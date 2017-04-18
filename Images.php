@@ -306,12 +306,10 @@ class Pman_Core_Images extends Pman
         require_once $ff->project . '.php';
         
         $project = str_replace('/', '_', $project);
-         
-        $pr_obj = new $project;
+     
         
-        var_dump($pr_obj->Pman_Core_Images_Size);
-        if(isset($pr_obj->Pman_Core_Images_Size)){
-            $sizes = $pr_obj->Pman_Core_Images_Size;
+        if(isset($project::$Pman_Core_Images_Size)){
+            $sizes = $project::$Pman_Core_Images_Size;
             
             
         }

@@ -494,7 +494,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         //print_r($this);
         $file = $logdir.  date('/Y/m/d/'). $this->id . ".json";
         if (!file_exists(dirname($file))) {
-            mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
+            
+            @mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
+            if (!file_exists(dirname($file))) {
+                die("could not create $file - permissons are not correct"); // fatal, otherwise we loop!?
+            }
             
         }
         
