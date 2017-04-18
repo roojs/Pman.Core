@@ -273,7 +273,8 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
-        if (($this->authUser && !empty($this->authUser->company_id) && $this->authUser->company()->comptype=='OWNER') || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
+        if (($this->authUser && !empty($this->authUser->company_id) && $this->authUser->company()->comptype=='OWNER')
+            || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
             return true;
         }
         
@@ -304,7 +305,8 @@ class Pman_Core_Images extends Pman
         
         require_once $ff->project . '.php';
         
-        $project = new $ff->project();
+        $project = str_replace('/', '_', $project);
+         
         
         if(isset($project::$Pman_Core_Images_Size)){
             $sizes = $project::$Pman_Core_Images_Size;
