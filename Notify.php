@@ -318,10 +318,10 @@ class Pman_Core_Notify extends Pman
                 continue;
             };
             //echo "$module\n";
-            $x->updateData();
+            $x->generate();
         }
                 
-    }
+    
     }
     
     
