@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Normally called by Core/Notify
+ *
+ */
+
 
 class Pman_Core_GenerateNotifications {
     
