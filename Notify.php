@@ -152,6 +152,10 @@ class Pman_Core_Notify extends Pman
         $this->parseArgs($opts); 
          
         //date_default_timezone_set('UTC');
+        
+        
+        
+        
        // phpinfo();exit;
         if (!empty($opts['generate'])) {
             $w = DB_DataObject::factory($opts['generate']);
@@ -287,6 +291,15 @@ class Pman_Core_Notify extends Pman
         $this->logecho("DONE");
         exit;
     }
+    
+    function generateNotifications()
+    {
+        // this should check each module for 'GenerateNotifications.php' class..
+        //and run it if found..
+        
+    }
+    
+    
     
     function run($id, $email, $cmdOpts="")
     {
