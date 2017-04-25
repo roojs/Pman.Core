@@ -56,13 +56,11 @@ class Pman_Core_Notify extends Pman
             'min' => 0,
             'max' => 0,
         ),
-        'generate' => array(
-            'desc' => 'Generate notifications for a table, eg. cash_invoice',
-            'default' => '',
-            'short' => 'g',
-            'min' => 0,
-            'max' => 1,
+       /* removed - use GenerateNotifcations.php hooked classes
+         'generate' =>  'Generate notifications for a table, eg. cash_invoice',
+            
         ),
+        */
          'limit' => array(
             'desc' => 'Limit search for no. to send to ',
             'default' => 1000,
