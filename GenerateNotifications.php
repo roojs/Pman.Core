@@ -4,7 +4,7 @@
 class Pman_Core_GenerateNotifications {
     
     
-    function generate()
+    function generate($roo)
     {
         
         
