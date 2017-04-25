@@ -279,14 +279,16 @@ class Pman_Core_Notify extends Pman
     {
         // this should check each module for 'GenerateNotifications.php' class..
         //and run it if found..
+        $ff = HTML_FlexyFramework::get();
        
-     
+        $disabled = explode(',', $ff->disable);
+
         $modules = array_reverse($this->modulesList());
         
         // move 'project' one to the end...
         
         foreach ($modules as $module){
-            if(in_array($module, $this->disabled)){
+            if(in_array($module, $disabled)){
                 continue;
             }
             $file = $this->rootDir. "/Pman/$module/GenerateNotifications.php";
