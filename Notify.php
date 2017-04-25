@@ -318,7 +318,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             };
             //echo "$module\n";
-            $x->generate();
+            $x->generate($this);
         }
                 
     
