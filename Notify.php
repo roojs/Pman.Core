@@ -296,7 +296,32 @@ class Pman_Core_Notify extends Pman
     {
         // this should check each module for 'GenerateNotifications.php' class..
         //and run it if found..
+       
+     
+        $modules = array_reverse($this->modulesList());
         
+        // move 'project' one to the end...
+        
+        foreach ($modules as $module){
+            if(in_array($module, $this->disabled)){
+                continue;
+            }
+            $file = $this->rootDir. "/Pman/$module/GenerateNotifications.php";
+            if(!file_exists($file)){
+                continue;
+            }
+            
+            require_once $file;
+            $class = "Pman_{$module}_GenerateNotifications";
+            $x = new $class;
+            if(!method_exists($x, 'generate')){
+                continue;
+            };
+            //echo "$module\n";
+            $x->updateData();
+        }
+                
+    }
     }
     
     
