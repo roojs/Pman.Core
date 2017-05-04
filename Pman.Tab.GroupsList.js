@@ -226,7 +226,7 @@ Pman.Tab.GroupsList.prototype = {
                 }
                 
                 new Pman.Request({
-                    url: baseURL + '/Core/GroupMembers',
+                    url: baseURL + '/Core/GroupMembers', // not a dataobject...
                     params: {
                         action : action,
                         group_id: action =='add' ? rid.id : s[0].data.id,
