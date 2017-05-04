@@ -226,7 +226,7 @@ Pman.Tab.GroupsList.prototype = {
                 }
                 
                 new Pman.Request({
-                    url: baseURL + '/Core/GroupMembers.php',
+                    url: baseURL + '/Core/core_groop_member',
                     params: {
                         action : action,
                         group_id: action =='add' ? rid.id : s[0].data.id,
