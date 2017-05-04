@@ -90,9 +90,10 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     function applyFilters($q, $au)
     {
          
+        $tn = $this->tableName();
         if (!empty($q['query']['project_search'])) {
             $s = $this->escape($q['query']['project_search']);
-            $this->whereAdd(" (Projects.code LIKE '$s%') OR (Projects.name LIKE '%$s%')");
+            $this->whereAdd(" ({$tn}.code LIKE '$s%') OR ({$tn}.name LIKE '%$s%')");
         }
         // types of project to list ... - default is only the open ones...
         if (!empty($q['query']['project_indaterange'])) {
@@ -100,10 +101,10 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
                 case 'A': // all
                     break; 
                 case 'C': // current
-                     $this->whereAdd('Projects.close_date >= NOW()');
+                     $this->whereAdd("{$tn}.close_date >= NOW()");
                     break;
                 case 'O': // old
-                    $this->whereAdd('Projects.close_date < NOW()');
+                    $this->whereAdd("{$tn}.close_date < NOW()");
                     break;
                }
         }
@@ -115,7 +116,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
          
         
-            $this->whereAddIn("Projects.type", explode(',', $pf), 'string');
+            $this->whereAddIn("{$tn}.type", explode(',', $pf), 'string');
         }
          // user projects!!!! - make sure they can only see project they are suppsed to..
          // only applies to document stuff..
@@ -126,20 +127,20 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             
             
             
-            $pr = DB_DataObject::factory('Projects');
-            $pr->whereAdd("Projects.type IN ('N','X')");
+            $pr = DB_DataObject::factory($tn);
+            $pr->whereAdd("{$tn}.type IN ('N','X')");
             $prjs = $pr->fetchAll('id');
             
             //DB_DataObject::debugLevel(1);
             $pd = DB_DataObject::factory('ProjectDirectory');
-            $pd->joinAdd(DB_DataObject::factory('Projects'), 'LEFT');
-            $pd->whereAdd("Projects.type NOT IN ('N','X')");
+            $pd->joinAdd(DB_DataObject::factory($tn), 'LEFT');
+            $pd->whereAdd("{$tn}.type NOT IN ('N','X')");
             $pd->person_id = $au->id;
             
             $prjs = array_merge($prjs, $pd->fetchAll('project_id'));
             if (count($prjs)) {
                 $this->whereAdd("
-                     (Projects.id IN (".implode(',', $prjs).")) 
+                     ({$tn}.id IN (".implode(',', $prjs).")) 
                 ");
             }  else {
                 $this->whereAdd("1=0"); // can see nothing!!!
