@@ -62,7 +62,7 @@ Pman.Tab.GroupsList.prototype = {
                     
                     
                     proxy: new Ext.data.HttpProxy({
-                        url: baseURL + '/Roo/Groups.html',
+                        url: baseURL + '/Roo/core_group',
                         method: 'GET'
                     }),
                     remoteSort: true,
