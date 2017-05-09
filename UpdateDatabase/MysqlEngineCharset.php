@@ -115,7 +115,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         
         
         $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
-        $views = $db->getListOf( 'views');
+        $views = $db->getListOf( 'views');  // needs updated pear... 
         
         
         
