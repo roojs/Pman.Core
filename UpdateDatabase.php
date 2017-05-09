@@ -1086,7 +1086,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $fail = true;
         }
         if ($res) {
-            $this->jerr("Missing these programs - need installing\n" . implode("\n",$res));
+            die("Missing these programs - need installing\n" . implode("\n",$res));
         }
         foreach($pref as $r) {
             if (!System::which($r)) {
