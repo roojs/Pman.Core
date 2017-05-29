@@ -708,7 +708,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au, $roo)
     {
-        print_R('run??');exit;
         //DB_DataObject::DebugLevel(1);
         
         if (!empty($q['query']['is_owner'])) {
