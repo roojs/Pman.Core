@@ -708,7 +708,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     //  ------------ROO HOOKS------------------------------------
     function applyFilters($q, $au, $roo)
     {
-        DB_DataObject::DebugLevel(1);
+        //DB_DataObject::DebugLevel(1);
         
         if (!empty($q['query']['is_owner'])) {
             $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
