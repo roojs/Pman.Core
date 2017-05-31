@@ -33,7 +33,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     ###END_AUTOCODE
     function getProjectManagers()
     {
-        $c = DB_DataObject::factory('Companies');
+        $c = DB_DataObject::factory('core_company');
         $c->isOwner = 1;
         if (!$c->find(true)) {
             return array();
