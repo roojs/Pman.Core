@@ -970,7 +970,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->setPassword($ar['passwd1']);
         }
         
-        print_R($this);exit;
+        print_R($roo->old->email);exit;
         if (    $this->id &&
                 ($this->email == $roo->old->email)&&
                 ($this->company_id == $roo->old->company_id)
