@@ -989,6 +989,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         
         $xx = DB_Dataobject::factory($this->tableName());
+        
+        print_R($xx);exit;
         $xx->setFrom(array(
             'email' => $this->email,
            // 'company_id' => $x->company_id
