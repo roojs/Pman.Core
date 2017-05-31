@@ -57,7 +57,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
             
         }
         $ret = array();
-        $p =  DB_DataObject::factory('Person');
+        $p =  DB_DataObject::factory('core_person');
         $p->whereAdd('id IN ('. implode(',', $pmids) .')');
         $p->find();
         while ($p->fetch()) {
