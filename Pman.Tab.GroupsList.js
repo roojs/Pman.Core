@@ -333,7 +333,7 @@ Pman.Tab.GroupsList.prototype = {
                             }
                             
                             
-                            Pman.genericDelete(_this, 'Groups'); 
+                            Pman.genericDelete(_this, 'core_group'); 
                         } 
                     } , '-',
                       {
