@@ -151,7 +151,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
           // DB_DataObjecT::debuglevel(1);
             $this->selectAdd();
             $this->selectAdd('distinct(client_id)');
-            $this->selectAs(DB_DataObject::factory('Companies'), 'client_id_%s','join_client_id_id');
+            $this->selectAs(DB_DataObject::factory('core_company'), 'client_id_%s','join_client_id_id');
             $this->groupBy('client_id');
              
         }
