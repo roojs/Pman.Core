@@ -965,7 +965,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     }
     function setFromRoo($ar, $roo)
     {
-        print_R('test');exit;
          $this->setFrom($ar);
          
         if (!empty($ar['passwd1'])) {
@@ -977,8 +976,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 ($this->email == $roo->old->email)&&
                 ($this->company_id == $roo->old->company_id)
             ) {
+            print_R('test');exit;
             return true;
         }
+        print_R('test1');exit;
         if (empty($this->email)) {
             return true;
         }
