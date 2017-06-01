@@ -169,7 +169,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
             if (($module == 'Admin') && !$has_admin) {
                 continue;
             }
-            
+            continue;
             $fn = $pman. $module.  '/'.$module. '.perms.json';
             if (!file_exists($fn)) {
                 continue;
