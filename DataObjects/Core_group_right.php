@@ -169,12 +169,13 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
             if (($module == 'Admin') && !$has_admin) {
                 continue;
             }
-            continue;
+            
             $fn = $pman. $module.  '/'.$module. '.perms.json';
             if (!file_exists($fn)) {
                 continue;
             }
             $ar = (array)json_decode(file_get_contents($fn));
+            print_R($ar);exit;
             if (empty($ar)) {
                 // since these are critical files.. die'ing with error is ok.
                 die("invalid json file: " . $fn);
