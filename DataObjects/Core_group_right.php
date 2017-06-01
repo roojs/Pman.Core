@@ -163,7 +163,7 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
         $disabled =  explode(',', $ff->disable? $ff->disable: '');
         $pman = $ff->rootDir . '/Pman/';
         $ret = array();
-         //echo '<PRE>';print_r($enabled);
+         echo '<PRE>';print_r($enabled);exit;
         foreach($enabled as $module) {
             
             if (($module == 'Admin') && !$has_admin) {
@@ -175,7 +175,6 @@ class Pman_Core_DataObjects_Core_group_right extends DB_DataObject
                 continue;
             }
             $ar = (array)json_decode(file_get_contents($fn));
-            print_R($ar);exit;
             if (empty($ar)) {
                 // since these are critical files.. die'ing with error is ok.
                 die("invalid json file: " . $fn);
