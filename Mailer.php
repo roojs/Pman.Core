@@ -361,10 +361,10 @@ class Pman_Core_Mailer {
         $ret = $mail->send($rcpts,$email['headers'],$email['body']);
         error_reporting($oe);
         if ($ret === true) { 
-//            $pg->addEvent("COREMAILER-SENT",  false,
-//                'To: ' .  ( is_array($rcpts) ? implode(', ', $rcpts) : $rcpts ) .
-//                'Subject: '  . @$email['headers']['Subject']
-//            ); 
+            $pg->addEvent("COREMAILER-SENT",  false,
+                'To: ' .  ( is_array($rcpts) ? implode(', ', $rcpts) : $rcpts ) .
+                'Subject: '  . @$email['headers']['Subject']
+            ); 
         }  else {
             $pg->addEvent("COREMAILER-FAIL",  false, $ret->toString());
         }
