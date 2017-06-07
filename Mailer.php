@@ -83,8 +83,6 @@ class Pman_Core_Mailer {
     var $mail_method = 'SMTP';
     
     var $cache_images = true;
-    
-    var $addEvent = true;
       
     var $bcc = false;
     
