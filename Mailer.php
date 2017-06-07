@@ -160,6 +160,10 @@ class Pman_Core_Mailer {
         $html_tmp_opts = $tmp_opts;
         $htmltemplate = new HTML_Template_Flexy( $html_tmp_opts );
         
+        $htmltemplate->resolvePath('mail/'.$templateFile.'.body.html');
+        
+        print_r('test');exit;
+                
         if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) {
             // then we have a multi-part email...
             
