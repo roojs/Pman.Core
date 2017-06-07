@@ -205,6 +205,7 @@ class Pman_Core_Mailer {
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        print_r($parts);exit;
         if (PEAR::isError($parts)) {
             return $parts;
             //echo "PROBLEM: {$parts->message}";
