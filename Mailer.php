@@ -169,6 +169,7 @@ class Pman_Core_Mailer {
             
             $htmltemplate->compile('mail/'. $templateFile.'.body.html');
             $htmlbody =  $htmltemplate->bufferedOutputObject($content);
+            print_r($htmlbody);exit;
             
             $this->htmlbody = $htmlbody;
             
