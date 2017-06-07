@@ -195,7 +195,7 @@ class Pman_Core_Mailer {
         /* use variables from this object to ouput data. */
         $mailtext = $template->bufferedOutputObject($content);
         //print_r($mailtext);exit;
-       
+       print_r($mailtext);exit;
         
         
         //echo "<PRE>";print_R($mailtext);
