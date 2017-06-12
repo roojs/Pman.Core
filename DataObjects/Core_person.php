@@ -1025,7 +1025,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
      */
     function checkPerm($lvl, $au, $changes=false) //heck who is trying to access this. false == access denied..
     {
-         
+         print_r($au);exit;
        // do we have an empty system..
         if ($au && $au->id == -1) {
             return true;
