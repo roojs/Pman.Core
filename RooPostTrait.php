@@ -313,7 +313,7 @@ trait Pman_Core_RooPostTrait {
     function update($x, $req,  $with_perm_check = true)
     {
         if ( $with_perm_check && !$this->checkPerm($x,'E', $req) )  {
-            $this->jerr("PERMISSION DENIED - No Edit permissions on this element???");
+            $this->jerr("PERMISSION DENIED - No Edit permissions on this element");
         }
        
         // check any locks..
