@@ -499,7 +499,7 @@ Pman.Dialog.PersonEditor.prototype = {
             },
             passwd1 : {
                 name : 'passwd1',
-                fieldLabel : "New Password ???",
+                fieldLabel : "New Password ",
                 value : '',
                 allowBlank : true, // must be filled in as we rely on it for login details..
                 inputType: 'password', // << if comment out this input type, it should be ok
