@@ -311,7 +311,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         url: baseURL + '/Roo/Office.html',
                         method: 'GET'
                     },
-                    reader: Pman.Readers.Office,
+                    reader: new Roo.data.JsonReader({}, []), //Pman.Readers.Office,
                     listeners : {
                         beforeload : function(st,o)
                         {
