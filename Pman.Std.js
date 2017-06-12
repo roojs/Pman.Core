@@ -35,7 +35,7 @@ Pman.Std = {
                     url: baseURL + '/Roo/Projects.html',
                     method: 'GET'
                 },
-                reader: Pman.Readers.Projects,
+                reader: new Roo.data.JsonReader({}, []), //Pman.Readers.Projects,
                 listeners : Roo.apply(
                     {
                         loadexception : Pman.loadException
