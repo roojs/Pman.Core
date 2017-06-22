@@ -32,12 +32,11 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         $ff->generateDataobjectsCache(true);
         $this->dburl = parse_url($ff->database);
         
-         print_R($ff->PDO_DataObject);exit;
-        
+         
         $dbini = 'ini_'. basename($this->dburl['path']);
         
         
-        $iniCache = $ff->DB_DataObject[$dbini];
+        $iniCache = isset( $ff->PDO_DataObject) ?  $ff->DB_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
         if (!file_exists($iniCache)) {
             return;
         }
