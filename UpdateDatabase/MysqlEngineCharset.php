@@ -142,7 +142,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 from
                     information_schema.tables
                 where
-                    table_schema='{$ce->database()}'
+                    table_schema= DATABASE()
                     and
                     table_name = '{$tbl}'
             ");
