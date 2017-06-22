@@ -85,7 +85,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 WHERE
                         CCSA.collation_name = T.table_collation
                     AND
-                        T.table_schema = '{$ce->database()}' -- COLLATE utf8_general_ci
+                        T.table_schema = DATABASE() -- COLLATE utf8_general_ci
                     AND
                         T.table_name = '{$tbl}' -- COLLATE utf8_general_ci
             ");
