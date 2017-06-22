@@ -79,7 +79,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
         
         $lcfg = &$this->links;
-        $cfg = HTML_FlexyFramework::get()->DB_DataObject;
+        $cfg = empty($ff->DB_DataObject) ? array() : $ff->DB_DataObject;
         
         if (!empty($cfg['table_alias'])) {
             $ta = $cfg['table_alias'];
