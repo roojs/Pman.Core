@@ -197,7 +197,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $ff = HTML_Flexyframework::get();
         
-        $dburl = parse_url($ff->DB_DataObject['database']);
+        $dburl = parse_url($ff->database); // used to be DB_DataObject['database'] - but not portable to PDO
         
         //$this->{'import' . $url['scheme']}($url);
         
