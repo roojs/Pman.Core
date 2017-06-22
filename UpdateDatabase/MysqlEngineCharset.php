@@ -124,7 +124,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         
         
         
-        
+        $views = $this->views;
         
         
         foreach (array_keys($this->schema) as $tbl){
