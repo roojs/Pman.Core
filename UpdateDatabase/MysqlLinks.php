@@ -134,7 +134,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
                     FROM
                         information_schema.TABLES
                     WHERE
-                        TABLE_SCHEMA = '{$q->escape($q->database())}'
+                        TABLE_SCHEMA = DATABASE()
                         AND
                         TABLE_NAME = '{$q->escape($tbl)}'
         ");
