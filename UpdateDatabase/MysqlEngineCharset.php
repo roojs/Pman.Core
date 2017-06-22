@@ -114,10 +114,14 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         // first check if database is using this format.
         
         
-        
-        $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
-        $views = $db->getListOf( 'views');  // needs updated pear... 
-        
+        $dbo = DB_DataObject::factory('core_enum');
+        if (is_a($dbo, 'PDO_DataObject')) {
+            
+            
+        } else {
+            $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
+            $views = $db->getListOf( 'views');  // needs updated pear... 
+        }
         
         
         
