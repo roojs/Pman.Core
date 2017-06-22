@@ -9,11 +9,21 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     var $dburl;
     var $schema = array();
     var $links = array();
+    var $views = array();
     
     function __construct()
     {
           
         $this->loadIniFiles(); //?? shared???
+        
+        $dbo = DB_DataObject::factory('core_enum');
+        if (is_a($dbo, 'PDO_DataObject')) {
+            
+            $this->views = $dbo->generator()->introspection()->getListOf('views');
+        } else {
+            $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
+            $this->views = $db->getListOf( 'views');  // needs updated pear... 
+        }
         
         // update the engine first - get's around 1000 character limit on indexes..cd
         // however - Innodb does not support fulltext indexes, so this may fail...
@@ -50,8 +60,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
    
     function updateCharacterSet()
     {
-        $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
-        $views = $db->getListOf(  'views');
+        $views = $this->views;
         
         
         foreach (array_keys($this->schema) as $tbl){
@@ -114,14 +123,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         // first check if database is using this format.
         
         
-        $dbo = DB_DataObject::factory('core_enum');
-        if (is_a($dbo, 'PDO_DataObject')) {
-            
-            $views = $dbo->generator()->introspection()->getListOf('views');
-        } else {
-            $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
-            $views = $db->getListOf( 'views');  // needs updated pear... 
-        }
+        
         
         
         
