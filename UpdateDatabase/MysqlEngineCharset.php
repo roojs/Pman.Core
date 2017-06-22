@@ -117,7 +117,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         $dbo = DB_DataObject::factory('core_enum');
         if (is_a($dbo, 'PDO_DataObject')) {
             
-            
+            $views = $dbo->generator()->introspection()->getListOf('views');
         } else {
             $db = DB_DataObject::factory('core_enum')->getDatabaseConnection();
             $views = $db->getListOf( 'views');  // needs updated pear... 
