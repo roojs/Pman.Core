@@ -73,8 +73,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $dbini = 'ini_'. basename($this->dburl['path']);
         
         
-        $iniCache = $ff->DB_DataObject[$dbini];
-        
+        $iniCache = isset( $ff->PDO_DataObject) ?  $ff->PDO_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
+               
         $this->schema = parse_ini_file($iniCache, true);
         $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
         
