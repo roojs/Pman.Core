@@ -268,12 +268,12 @@ class Pman_Core_UpdateDatabase extends Pman
             $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/sql");
             $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}");
             
-            if (class_exists('PDO_DataObjects_Introspection')) {
-                PDO_DataObject_Introspection::$cache = array();
-            }
-            
+           
             
             if (!empty($this->opts['init']) && file_exists($this->rootDir. "/Pman/$m/{$dbtype}.initdata")) {
+                if (class_exists('PDO_DataObjects_Introspection')) {
+                    PDO_DataObject_Introspection::$cache = array();
+                }
                 HTML_FlexyFramework::get()->generateDataobjectsCache(true);
                 
                 $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}.initdata");
@@ -283,6 +283,7 @@ class Pman_Core_UpdateDatabase extends Pman
               
             
         }
+        
         
     }
     
