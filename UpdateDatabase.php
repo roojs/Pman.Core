@@ -268,6 +268,9 @@ class Pman_Core_UpdateDatabase extends Pman
             $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/sql");
             $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}");
             
+            if (class_exists('PDO_DataObjects_Introspection')) {
+                PDO_DataObject_Introspection::$cache = array();
+            }
             
             
             if (!empty($this->opts['init']) && file_exists($this->rootDir. "/Pman/$m/{$dbtype}.initdata")) {
@@ -626,7 +629,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if(!in_array('Core', $this->disabled)){
             echo "Running jsonImportFromArray\n";
             Pman_Core_UpdateDatabase::jsonImportFromArray($this->opts);
-
+            
 
             echo "Running updateData on modules\n";
             // runs core...
