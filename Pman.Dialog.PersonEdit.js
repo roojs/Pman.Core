@@ -19,7 +19,7 @@ Pman.on('beforeload', function() {
             'company_id_name',
             'office_id_name',
             'name','role', 'phone', 'fax', 'email',
-            'passwd1', 'passwd2', 'secure_passowrd',
+            'passwd1', 'passwd2', 'secure_password',
             'id', 
             //'company_id', 
             'company_id_email',
