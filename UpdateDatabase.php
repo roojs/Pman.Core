@@ -132,7 +132,9 @@ class Pman_Core_UpdateDatabase extends Pman
    
         $this->checkSystem();
         
-        
+        if (class_exists('PDO_DataObjects_Introspection')) {
+            PDO_DataObject_Introspection::$cache = array();
+        }
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
    
         $ff = HTML_FlexyFramework::get();
@@ -625,6 +627,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function runUpdateModulesData()
     {
+        if (class_exists('PDO_DataObjects_Introspection')) {
+            PDO_DataObject_Introspection::$cache = array();
+        }
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         
         if(!in_array('Core', $this->disabled)){
@@ -867,6 +872,9 @@ class Pman_Core_UpdateDatabase extends Pman
     function updateData()
     {
         // fill i18n data..
+        if (class_exists('PDO_DataObjects_Introspection')) {
+            PDO_DataObject_Introspection::$cache = array();
+        }
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         $this->updateDataEnums();
         $this->updateDataGroups();
