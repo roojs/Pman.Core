@@ -517,8 +517,8 @@ Pman.Dialog.PersonEditor.prototype = {
                 xtype : 'TextField',
                 width : 220
             },
-            secure_passowrd : {
-                name : 'secure_passowrd',
+            secure_password : {
+                name : 'secure_password',
                 fieldLabel : "Secure passwords",
                 inputValue : 1,
                 valueOff : 0,
