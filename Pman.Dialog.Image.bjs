@@ -99,7 +99,8 @@
          "name" : "id"
         },
         {
-         "xtype" : "Hidden",
+         "String name" : "fred",
+         "xtype" : "Text",
          "Mixed value" : 1,
          "$ xns" : "Roo.form"
         },

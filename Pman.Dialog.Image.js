@@ -323,7 +323,8 @@ Pman.Dialog.Image = {
           '|xns' : 'Roo.form'
          },
          {
-          xtype : 'Hidden',
+          xtype : 'Text',
+          name : 'fred',
           value : 1,
           xns : Roo.form,
           '|xns' : 'Roo.form'
