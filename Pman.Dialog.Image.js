@@ -38,6 +38,7 @@ Pman.Dialog.Image = {
  {
    var _this = this;
    this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
     closable : false,
     collapsible : false,
     haveProgress : false,
@@ -105,9 +106,6 @@ Pman.Dialog.Image = {
         
     },
     width : 500,
-    xns : Roo,
-    '|xns' : 'Roo',
-    xtype : 'LayoutDialog',
     listeners : {
      show : function (_self)
       {
@@ -140,29 +138,29 @@ Pman.Dialog.Image = {
           
       }
     },
+    xns : Roo,
+    '|xns' : 'Roo',
     center : {
+     xtype : 'LayoutRegion',
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     buttons : [
      {
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
         {
             _this.dialog.hide();
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['91412465ea9169dfd901dd5e7c96dd99'] /* Upload */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['91412465ea9169dfd901dd5e7c96dd99'] /* Upload */,
       listeners : {
        click : function (_self, e)
         {
@@ -179,27 +177,27 @@ Pman.Dialog.Image = {
             _this.dialog.uploadProgress.defer(1000, _this.dialog);
         
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
      {
+      xtype : 'ContentPanel',
       fitToFrame : true,
       region : 'center',
       xns : Roo,
       '|xns' : 'Roo',
-      xtype : 'ContentPanel',
       items  : [
        {
+        xtype : 'Form',
         fileUpload : true,
         labelWidth : 140,
         method : 'POST',
         style : 'margin:10px;',
         timeout : 300,
         url : baseURL + '/Roo/Images.php',
-        xns : Roo.form,
-        '|xns' : 'Roo.form',
-        xtype : 'Form',
         listeners : {
          actioncomplete : function(_self,act)
           {
@@ -273,59 +271,66 @@ Pman.Dialog.Image = {
               _this.form= form;
           }
         },
+        xns : Roo.form,
+        '|xns' : 'Roo.form',
         items  : [
          {
+          xtype : 'Hidden',
           name : 'UPLOAD_IDENTIFIER',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'post_max_size',
           value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'] /* 32M */,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'upload_max_filesize',
           value : _this._strings['eb5d45750c7ab13aa8e6bacc80315a30'] /* 32M */,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'TextField',
           fieldLabel : _this._strings['ea72bacd2fdfa818907bb9559e6905a1'] /* Upload Image or File */,
           inputType : 'file',
           name : 'imageUpload',
           width : 200,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'TextField'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'ontable',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'onid',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'id',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
+         {
+          xtype : 'Hidden',
           name : 'imgtype',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          }
         ]
        }
