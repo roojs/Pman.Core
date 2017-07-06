@@ -9,7 +9,6 @@ Pman.Dialog.Image = {
  _strings : {
   'eb5d45750c7ab13aa8e6bacc80315a30' :"32M",
   '2859a4ae58ae4e25abdfc530f814e42f' :"Upload an Image or File",
-  'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '91412465ea9169dfd901dd5e7c96dd99' :"Upload",
   'ea72bacd2fdfa818907bb9559e6905a1' :"Upload Image or File"
@@ -319,13 +318,6 @@ Pman.Dialog.Image = {
          {
           xtype : 'Hidden',
           name : 'id',
-          xns : Roo.form,
-          '|xns' : 'Roo.form'
-         },
-         {
-          xtype : 'TextField',
-          name : 'fred',
-          value : 1,
           xns : Roo.form,
           '|xns' : 'Roo.form'
          },
