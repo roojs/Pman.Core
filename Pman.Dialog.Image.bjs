@@ -100,7 +100,7 @@
         },
         {
          "String name" : "fred",
-         "xtype" : "Text",
+         "xtype" : "TextField",
          "Mixed value" : 1,
          "$ xns" : "Roo.form"
         },

@@ -323,7 +323,7 @@ Pman.Dialog.Image = {
           '|xns' : 'Roo.form'
          },
          {
-          xtype : 'Text',
+          xtype : 'TextField',
           name : 'fred',
           value : 1,
           xns : Roo.form,
