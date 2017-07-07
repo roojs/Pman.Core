@@ -504,8 +504,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         
         if (substr($this->passwd,0,1) == '$') {
-            if (password_e)
-            
+            if (function_exists('pasword_verify')) {
+                return password_verify($val, $this->passwd);
+            }
             return crypt($val,$this->passwd) == $this->passwd ;
         }
         // old style md5 passwords...- cant be used with courier....
@@ -514,7 +515,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function setPassword($value) 
     {
-        if (func_exists('pasword_hash')) {
+        if (function_exists('pasword_hash')) {
             return password_hash($value);
         }
         
