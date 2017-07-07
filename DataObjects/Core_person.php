@@ -502,7 +502,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function checkPassword($val)
     {
         
+        
         if (substr($this->passwd,0,1) == '$') {
+            if (password_e)
             
             return crypt($val,$this->passwd) == $this->passwd ;
         }
@@ -512,7 +514,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function setPassword($value) 
     {
-        if (method_exists('pasword_hash')) {
+        if (func_exists('pasword_hash')) {
             return password_hash($value);
         }
         
