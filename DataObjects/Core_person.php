@@ -512,6 +512,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function setPassword($value) 
     {
+        
+        return password_hash($value)
+        
         $salt='';
         while(strlen($salt)<9) {
             $salt.=chr(rand(64,126));
