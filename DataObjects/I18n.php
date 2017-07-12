@@ -131,6 +131,9 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 
             ");
         }
+        if (!empty($q['!code'])) {
+            $this->whereAddIn('!lkey', explode(',', $q['!code']), 'string'); 
+        }
         if (!empty($q['query']['name'])) {
             //DB_DAtaObject::debugLevel(1);
             $v = strtoupper($this->escape($q['query']['name']));
