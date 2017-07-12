@@ -242,6 +242,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         if ($tbl->$fld) {
             HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
+            exit;
             $image = DB_DataObject::factory('Images');
             $image->get($tbl->$fld);
             $image->beforeDelete();
@@ -287,6 +288,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         if ($this->id) {
+            HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
+            exit;
             $this->beforeDelete();
         }
         if ( empty($this->ontable)) {
@@ -303,6 +306,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $img->find();
             while ($img->fetch()) {
+                HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
+                exit;
                 $img->beforeDelete();
                 $img->delete();
             }
@@ -662,6 +667,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         if ($this->id) {
+            HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
+            exit;
             $this->beforeDelete();
         }
         
@@ -679,6 +686,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $img->find();
             while ($img->fetch()) {
+                HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
+                exit;
                 $img->beforeDelete();
                 $img->delete();
             }
