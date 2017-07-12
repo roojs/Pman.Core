@@ -63,7 +63,7 @@ Pman.Download = function(cfg)
     
     var requested = 0;
      
-    Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
+//    Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
     
     
     //--- simple method..
