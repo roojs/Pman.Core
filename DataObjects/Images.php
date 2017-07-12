@@ -241,6 +241,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         if ($tbl->$fld) {
+            HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
             $image = DB_DataObject::factory('Images');
             $image->get($tbl->$fld);
             $image->beforeDelete();
