@@ -148,7 +148,7 @@ Pman.Tab.GroupsList.prototype = {
                     rowclick: function(g, ri, e)
                     {
                         refreshCenterPanel();
-                    } 
+                    }
                 }
                  
         });
