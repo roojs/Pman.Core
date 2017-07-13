@@ -5,7 +5,7 @@
 
 
 Pman.Tab.GroupsList = function(config) {
-    Ext.apply(this, config);
+    Roo.apply(this, config);
 };
 
 Pman.Tab.GroupsList.prototype = {
@@ -45,8 +45,8 @@ Pman.Tab.GroupsList.prototype = {
         }
         
         var frm = parentLayout.getRegion(region).getEl().createChild({tag:'div'});
-        //this.grid = new Ext.grid.EditorGrid(frm,  {
-        this.grid = new Ext.grid.Grid(frm,  {
+        //this.grid = new Roo.grid.EditorGrid(frm,  {
+        this.grid = new Roo.grid.Grid(frm,  {
                 id: _this.id + '-groups',
                 
                 //enableDragDrop:true,
@@ -57,16 +57,18 @@ Pman.Tab.GroupsList.prototype = {
                 //    appendOnly : true,
                 //    ddGroup: 'groupDD' 
                 //},
-                ds:   new Ext.data.Store({
+                ds:   new Roo.data.Store({
                     // load using HTTP
                     
                     
-                    proxy: new Ext.data.HttpProxy({
+                    proxy: new Roo.data.HttpProxy({
                         url: baseURL + '/Roo/core_group',
                         method: 'GET'
                     }),
                     remoteSort: true,
-                    reader: Pman.Readers.Groups,
+                    reader: new Roo.data.JsonReader({
+                        
+                    }),
                     sortInfo: {
                         field: 'name', direction: 'ASC'
                     },
@@ -97,8 +99,8 @@ Pman.Tab.GroupsList.prototype = {
                     
                     }
                 }),
-                sm: new Ext.grid.RowSelectionModel({ singleSelect: true }),
-                cm: new Ext.grid.ColumnModel(
+                sm: new Roo.grid.RowSelectionModel({ singleSelect: true }),
+                cm: new Roo.grid.ColumnModel(
                     [{
                         id : _this.id + '-name',
                         header : "Name",
@@ -154,13 +156,13 @@ Pman.Tab.GroupsList.prototype = {
         });
         // add selection changed...
         
-        this.panel  = parentLayout.add(region,  new Ext.GridPanel(this.grid ,
+        this.panel  = parentLayout.add(region,  new Roo.GridPanel(this.grid ,
             { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
         );
         this.grid.render();
         
         
-        new Ext.dd.DropTarget(_this.grid.getView().mainBody, {  
+        new Roo.dd.DropTarget(_this.grid.getView().mainBody, {  
             ddGroup : 'groupDD',  
             copy       : true,
 
@@ -240,7 +242,7 @@ Pman.Tab.GroupsList.prototype = {
                     }, 
                     
                     failure: function() {
-                        //Ext.get(document.body).unmask();
+                        //Roo.get(document.body).unmask();
                         //if (cb) {
                         //    cb.call(false);
                         //}
@@ -262,7 +264,7 @@ Pman.Tab.GroupsList.prototype = {
         /*
         var gridFoot = this.grid.getView().getFooterPanel(true);
         
-        this.paging = new Ext.PagingToolbar(gridFoot, this.grid.getDataSource(), {
+        this.paging = new Roo.PagingToolbar(gridFoot, this.grid.getDataSource(), {
             pageSize: 25,
             displayInfo: true,
             displayMsg: '',
@@ -272,7 +274,7 @@ Pman.Tab.GroupsList.prototype = {
         var grid = this.grid;
  
         var gridHead = this.grid.getView().getHeaderPanel(true);
-        this.toolbar = new Ext.Toolbar(gridHead);
+        this.toolbar = new Roo.Toolbar(gridHead);
           
  
         var _dialog= this.getDialog();
@@ -280,14 +282,14 @@ Pman.Tab.GroupsList.prototype = {
             
             text: "Manage Groups",
             cls: 'x-btn-text-icon',
-            icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+            icon: Roo.rootURL + 'images/default/tree/leaf.gif',
             menu : {
                 items : [
                     
                     {
                         text: "Add",
                          cls: 'x-btn-text-icon',
-                        icon: Ext.rootURL + 'images/default/dd/drop-add.gif',
+                        icon: Roo.rootURL + 'images/default/dd/drop-add.gif',
                         hidden : !Pman.hasPerm('Core.Groups', 'A'),
                         handler : function(){
                             _dialog.show( { id : 0, type: _this.type }, refreshPager ); 
@@ -296,20 +298,20 @@ Pman.Tab.GroupsList.prototype = {
                     {
                         text: "Edit",
                         cls: 'x-btn-text-icon',
-                        icon: Ext.rootURL + 'images/default/tree/leaf.gif',
+                        icon: Roo.rootURL + 'images/default/tree/leaf.gif',
                         hidden : !Pman.hasPerm('Core.Groups', 'E'),
                         handler : function() {
                             var s = grid.getSelectionModel().getSelections();
                             if (!s.length || (s.length > 1))  {
-                                Ext.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
+                                Roo.MessageBox.alert("Error", s.length ? "Select only one Row" : "Select a Row");
                                 return;
                             }
                             if ((s[0].data.name == 'Administrators') ||(s[0].data.name == 'Default')) {
-                                Ext.MessageBox.alert("Error", "You can not rename that group");
+                                Roo.MessageBox.alert("Error", "You can not rename that group");
                                 return;
                             }
                             if (s[0].data.id < 1) {
-                                Ext.MessageBox.alert("Error", "You can not rename that group");
+                                Roo.MessageBox.alert("Error", "You can not rename that group");
                                 return;
                             }
                             _dialog.show(s[0].data, refreshPager); 
@@ -327,7 +329,7 @@ Pman.Tab.GroupsList.prototype = {
                             for(var i = 0; i < s.length; i++) {
                                 
                                 if ((s[i].data.id < 1) || (s[i].data.name == 'Administrators')) {
-                                    Ext.MessageBox.alert("Error", "You can not delete that group");
+                                    Roo.MessageBox.alert("Error", "You can not delete that group");
                                     return;
                                 }
                             }
