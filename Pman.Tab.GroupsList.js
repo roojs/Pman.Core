@@ -155,7 +155,7 @@ Pman.Tab.GroupsList.prototype = {
         // add selection changed...
         
         this.panel  = parentLayout.add(region,  new Roo.GridPanel(this.grid ,
-            { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: true})
+            { fitToframe: true,fitContainer: true, title: _this.title, id : _this.id, background: false})
         );
         this.grid.render();
         
