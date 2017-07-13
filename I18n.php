@@ -201,6 +201,7 @@ class Pman_Core_I18n extends Pman
         }
         //echo '<PRE>';print_r($ar);
         header('Content-type: text/javascript');
+        echo "Roo.namespace('Pman.I18n');";
         echo 'Pman.I18n.Data = ' .  json_encode($ar);
         exit;
         

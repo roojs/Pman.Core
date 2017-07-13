@@ -151,7 +151,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
         
-        if (PEAR::isError($parts)) {
+        if (is_a($parts,'PEAR_Error')) {
             return $parts;
             //echo "PROBLEM: {$parts->message}";
             //exit;
@@ -350,9 +350,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
         $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
-        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
-        if ($error) {
-            die($error->toString()); // not really a good thing to do...
+        if (class_exists('PEAR')) {
+            $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+            if ($error) {
+                die($error->toString()); // not really a good thing to do...
+            }
         }
         if (!$n){ // authenticated as there are no users in the system...
             return true;
