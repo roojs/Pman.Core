@@ -496,7 +496,7 @@ Pman.Tab.PersonList.prototype = {
                 xtype : 'Button',
                 xns : Roo.Toolbar,
                
-                text: "Switch to Selected User??",
+                text: "Switch to Selected User",
                 hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
                 listeners : {
                     click : function () { 
