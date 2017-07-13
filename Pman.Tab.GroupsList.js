@@ -66,9 +66,7 @@ Pman.Tab.GroupsList.prototype = {
                         method: 'GET'
                     }),
                     remoteSort: true,
-                    reader: new Roo.data.JsonReader({
-                        
-                    }),
+                    reader: new Roo.data.JsonReader({}, []),
                     sortInfo: {
                         field: 'name', direction: 'ASC'
                     },
