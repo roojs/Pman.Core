@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
             
-            if(!array_key_exists("{$jt->tableName()}_id", $this->table())){ // coz we have triiger on mysql...
+            if(!array_key_exists("{$jt->tableName()}_id", $this->tableColumns())){ // coz we have triiger on mysql...
                 
                 $keys = $jt->keys();
             
@@ -164,7 +164,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = join_on_id_{$jtn}.{$jk}
                         AND on_table = '{$jtn}'
                 ";
-                $keys = array_keys($x->table());
+                $keys = array_keys($x->tableColumns());
                 if (isset($q['_join_cols'])) {
                     $jcs = explode(',',$q['_join_cols'] );
                     //DB_DataObject::DebugLevel(1);
@@ -354,7 +354,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
          
         $ret = 0;
-        foreach(array_keys($new->table()) as $k) {
+        foreach(array_keys($new->tableColumns()) as $k) {
             // should we JSON serialize this?
             $n = empty($new->$k) ? '' : $new->$k;
             $o = empty($old->$k) || empty($old->$k) ? '' : $old->$k;
