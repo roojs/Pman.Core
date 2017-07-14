@@ -264,7 +264,10 @@ class Pman_Core_JsCompile  extends Pman
         if (isset($o['packseed'])) {
             return $this->packSeed($files,$output,$translation_base);
         }
-    
+        if (!empty($o['disable_packer'])) {
+            echo "<!-- packer disabled    disable_packer  != false -->";
+            return;
+        }
         
         require_once 'System.php';
         $packer = System::which('roojspacker');
