@@ -22,7 +22,8 @@ ALTER TABLE core_person ADD COLUMN   remarks text NOT NULL;
 ALTER TABLE core_person ADD COLUMN   lang varchar(8) default 'en';
 ALTER TABLE core_person ADD COLUMN   country varchar(8) default '';
 
-SET SQL_MODE='ALLOW_INVALID_DATES';
+-- do not set SQL mode here - it needs to be done in the config
+-- SET SQL_MODE='ALLOW_INVALID_DATES';
 ALTER TABLE core_person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '0000-00-00';
 
 -- main contact details
