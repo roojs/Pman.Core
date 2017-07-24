@@ -23,8 +23,8 @@
  "items" : [
   {
    "collapsible" : false,
-   "xtype" : "LayoutDialog",
    "title" : "Edit / Create Contact Details",
+   "xtype" : "LayoutDialog",
    "width" : 450,
    "$ xns" : "Roo",
    "closable" : false,
@@ -47,8 +47,8 @@
         "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
        },
        "$ url" : "baseURL + '/Roo/core_person'",
-       "method" : "POST",
        "xtype" : "Form",
+       "method" : "POST",
        "style" : "margin:10px;",
        "$ xns" : "Roo.form",
        "items" : [
@@ -91,8 +91,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/core_company.php'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -149,8 +149,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Office.php'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
