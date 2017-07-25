@@ -48,7 +48,7 @@ class Pman_Core_Prune extends Pman
     {
         // 40 seconds ? to delete 100K records..
        // DB_DataObject::debugLevel(1);
-        $f = DB_DataObject::Factory('reader_article');
+        $f = DB_DataObject::Factory('Events');
         $f->query("
             DELETE FROM Events where 
                   event_when < NOW() - INTERVAL {$inM} MONTH
