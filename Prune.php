@@ -48,6 +48,7 @@ class Pman_Core_Prune extends Pman
     {
         // 40 seconds ? to delete 100K records..
        // DB_DataObject::debugLevel(1);
+       /*
         $f = DB_DataObject::Factory('Events');
         $f->query("
             DELETE FROM Events where 
@@ -56,7 +57,7 @@ class Pman_Core_Prune extends Pman
                   action != 'NOTIFY'
                   LIMIT 100000
         ");
-        
+        */
         // notificication events occur alot - so we should trash them more frequently..
       /*  $f = DB_DataObject::Factory('reader_article');
         $f->query("
