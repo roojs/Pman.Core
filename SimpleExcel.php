@@ -76,7 +76,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $worksheet= false;
     
      
-    function Pman_Core_SimpleExcel($data,$cfg)
+    function __construct($data,$cfg)
     {
       // print_r($cfg);exit;
         require_once 'Spreadsheet/Excel/Writer.php';
