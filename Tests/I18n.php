@@ -12,7 +12,7 @@ class Pman_Core_Tests_I18n extends Pman
         }
         
     }
-    function get()
+    function get($v, $opts=array())
     {
         require_once 'Pman/Core/I18n.php';
          $i = new Pman_Core_I18n();
