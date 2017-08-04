@@ -24,12 +24,12 @@ class Pman_Core_GroupCountries extends Pman
         return true;
     }
     
-    function get()
+    function get($v, $opts=array())
     {
-        $this->post();
+        $this->post($v);
     }
     
-    function post()
+    function post($v)
     {
         if (!$this->hasPerm( 'Core.Groups','E')) { // editing groups..
             $this->jerr("PERMISSION DENIED");
