@@ -55,7 +55,7 @@ class Pman_Core_Images extends Pman
     var $as_mimetype = false;
     var $method = 'inline';
     
-    function get($s) // determin what to serve!!!!
+    function get($s, $opts=array()) // determin what to serve!!!!
     {
         // for testing only.
         //if (!empty($_GET['_post'])) {
