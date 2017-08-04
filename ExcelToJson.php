@@ -12,7 +12,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         return parent::getAuth();
     }
     
-    function post()
+    function post($v)
     {
         $this->transObj = DB_DataObject::Factory('invhist_transfer');
         
