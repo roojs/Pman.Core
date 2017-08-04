@@ -31,7 +31,7 @@ class Pman_Core_UpdateCurrencyRate extends Pman
         die("NOT ALLOWED");
     }
     
-    function get($args, $opts)
+    function get($args, $opts=array())
     {   
         
         //DB_DataObject::DebugLevel(1);
