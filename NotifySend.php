@@ -120,7 +120,7 @@ class Pman_Core_NotifySend extends Pman
         if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
             if (!$sent) { 
-                $w->sent = $w->sqlValue("NOW()");
+                $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
                 $w->update($ww);
             }    
             $this->errorHandler("message has been sent already.\n");
@@ -133,7 +133,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (underlying object does not exist)" );;
             $ww = clone($w);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -150,7 +150,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (not user not active any more)" );;
             $ww = clone($w);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -204,7 +204,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (not required any more)" );;
             $ww = clone($w);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -230,7 +230,7 @@ class Pman_Core_NotifySend extends Pman
             $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
             $ww = clone($w);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -278,7 +278,7 @@ class Pman_Core_NotifySend extends Pman
         if (!Validate::email($p->email, true)) {
             $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
             $ww = clone($w);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -325,7 +325,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -339,7 +339,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
             $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->update($ww);
@@ -466,7 +466,7 @@ class Pman_Core_NotifySend extends Pman
                     $w->act_when = date('Y-m-d H:i:s');
                 }
                 
-                $w->sent = date('Y-m-d H:i:s');
+                $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
                 $w->msgid = $email['headers']['Message-Id'];
                 $w->event_id = $ev->id; // sent ok.. - no need to record it..
                 $w->domain_id = $core_domain->id;
@@ -537,7 +537,7 @@ class Pman_Core_NotifySend extends Pman
             
             $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
                        $errmsg);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->domain_id = $core_domain->id;
@@ -548,7 +548,7 @@ class Pman_Core_NotifySend extends Pman
         // handle no host availalbe forever...
         if (strtotime($w->act_start) < strtotime('NOW - 3 DAYS')) {
             $ev = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ". $p->email);
-            $w->sent = date('Y-m-d H:i:s');
+            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->domain_id = $core_domain->id;
