@@ -6,7 +6,7 @@ require_once 'Mail/smtpmx.php';
         
 class Pman_Core_NotifySmtpCheck extends Pman
 {
-    function get()
+    function get($v, $opts=array())
     {
         $this->check();
         exit;
