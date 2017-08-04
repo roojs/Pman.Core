@@ -21,12 +21,12 @@ class Pman_Core_JavascriptError extends Pman {
         return true;
     }
     
-    function get()
+    function get($v, $opts=array())
     {
         die("invalid url");
     }
     
-    function post()
+    function post($v)
     {
          
         $this->addEvent("JSERROR", false,$_REQUEST['msg']);
