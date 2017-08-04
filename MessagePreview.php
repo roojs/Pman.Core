@@ -18,7 +18,7 @@ class Pman_Core_MessagePreview extends Pman
         return true;
     }
     
-    function get()
+    function get($v, $opts=array())
     {
         if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
@@ -34,7 +34,7 @@ class Pman_Core_MessagePreview extends Pman
         
     }
     
-    function post()
+    function post($v)
     {
         if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
