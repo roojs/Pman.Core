@@ -169,7 +169,7 @@ class Pman_Core_Images extends Pman
         return true;
     }
     
-    function post()
+    function post($v)
     {
         
         if (!$this->authUser) {
