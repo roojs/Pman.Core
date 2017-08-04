@@ -26,7 +26,7 @@ class Pman_Core_Tests_Mailer extends Pman
         
     }
     
-    function get($q, $opts)
+    function get($q,  $opts=array())
     {
         // send a test email to me...
         $this->rcpts = $opts['to'];
