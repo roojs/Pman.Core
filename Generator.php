@@ -12,7 +12,7 @@
  * 
  */
  
-require_once 'DB/DataObject/Generator.php';
+require_once 'PDO/DataObject/Generator.php';
 
 
 /** basic thing now works... 
@@ -42,7 +42,7 @@ $this->def['forms'][$table][$t->name] = $form;
 
 
 
-class Pman_Core_Generator extends DB_DataObject_Generator
+class Pman_Core_Generator extends PDO_DataObject_Generator
 {
     
      
