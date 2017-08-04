@@ -22,12 +22,12 @@ class Pman_Core_GoogleKey extends Pman
         
         $this->authUser = $au;
     }
-    function get() {
+    function get($v, $opts=array()) {
         // for testing..
         return $this->post();
     }
     
-    function post()
+    function post($v)
     {
         $pc = HTML_FlexyFramework::get()->Pman_Core;
         if (empty($pc['googlekey'])) {
