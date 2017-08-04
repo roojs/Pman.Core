@@ -37,7 +37,7 @@ class Pman_Core_JsCompile  extends Pman
     }
     
     
-    function get($proj, $args)
+    function get($proj, $args=array())
     {
         if (empty($args)) {
             die("missing action : eg. build or install");
