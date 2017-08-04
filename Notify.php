@@ -145,7 +145,7 @@ class Pman_Core_Notify extends Pman
     }
     
     
-    function get($r,$opts)    
+    function get($r,$opts=array())    
     {
         $this->parseArgs($opts); 
          
