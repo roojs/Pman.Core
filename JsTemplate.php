@@ -40,7 +40,7 @@ class Pman_Core_JsTemplate extends Pman {
          
     }
      
-    function get()
+    function get($v, $opts=array())
     {
         
         $this->sessionState(0);
