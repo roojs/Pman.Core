@@ -350,6 +350,7 @@ class Pman_Core_NotifySend extends Pman
         
         $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
+        // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         $w->act_when =  $w->sent == '0000-00-00 00:00:00' ? date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')) : $w->act_when;
         $w->update($ww);
         
