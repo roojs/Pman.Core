@@ -25,7 +25,7 @@ class Pman_Core_GroupMembers extends Pman
     }
     
      
-    function get()
+    function get($v, $opts=array())
     {
         // must recieve a group..
         if (empty($_GET['group_id']) || (int)$_GET['group_id'] < 1) {
