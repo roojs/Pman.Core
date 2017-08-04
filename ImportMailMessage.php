@@ -18,14 +18,14 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
         return true;
     }
     
-    function get()
+    function get($v, $opts=array())
     {
         $this->post();
         
         return $this->jerr("not allowed");
     }
     
-    function post()
+    function post($v)
     {   
         if(isset($_REQUEST['_convertToPlain']))
         {
