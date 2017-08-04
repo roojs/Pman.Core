@@ -62,7 +62,7 @@ class Pman_Core_RunGenerator extends Pman
         return true;
     }
      
-    function get($args, $opts)
+    function get($args, $opts=array())
     {
         //print_r($opts);exit;
         if (empty($opts['noupdate'])) {
