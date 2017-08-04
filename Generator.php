@@ -2,6 +2,9 @@
  
  
 /**
+ *
+ *  THIS HAS NOT BEEN TESTED WITH PDO yet...
+ *
  * 
  * Generate DataObjects...
  * 
