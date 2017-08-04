@@ -48,7 +48,7 @@ class Pman_Core_Lock extends Pman
         return true; 
     }
     
-    function get($action)
+    function get($action, $opts=array())
     {
         // should we allow url links to lock things???
         // only for debugging??
