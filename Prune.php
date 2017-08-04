@@ -34,7 +34,7 @@ class Pman_Core_Prune extends Pman
         return false;
     }
     
-    function get($m="", $opts)
+    function get($m="", $opts=array())
     {
         
         // prune irrelivant stuff..
