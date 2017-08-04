@@ -4,7 +4,7 @@ require_once 'Pman.php';
 
 class Pman_Core_tests_Images extends Pman
 {
-     function get() {
+     function get($v, $opts=array()) {
         // test...
         echo '<PRE>';
         require_once 'Pman/Core/Images.php';
