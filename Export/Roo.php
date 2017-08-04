@@ -167,7 +167,7 @@ class Pman_Core_Export_Roo extends Pman_Roo {
         
         
     }
-    function checkDebug()
+    function checkDebug($req = false)
     {
         
     
