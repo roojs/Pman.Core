@@ -43,7 +43,7 @@ class Pman_Core_Import_Core_email extends Pman
         
     }
     
-    function get($part = '', $opts) {
+    function get($part = '', $opts=array()) {
         $this->updateOrCreateEmail($part, $opts, false);
     }
 
