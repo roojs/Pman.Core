@@ -33,7 +33,7 @@ class Pman_Core_RefreshDatabaseCache extends Pman
     
     }
      
-    function get($args, $opts)
+    function get($args, $opts=array())
     {
         //print_r($opts);exit;
         
