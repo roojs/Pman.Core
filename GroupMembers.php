@@ -103,7 +103,7 @@ class Pman_Core_GroupMembers extends Pman
          
     }
     
-    function post()
+    function post($v)
     {
         if (empty($_POST['group_id']) || (int)$_POST['group_id'] < 1) {
             $this->jerr("NO GROUP");
