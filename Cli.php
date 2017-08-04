@@ -19,7 +19,7 @@ class Pman_Core_Cli extends Pman
     }
     
     
-    function get()
+    function get($v, $opts = Array())
     {
         die("this is only used as a base class for Cli based commands - extend to use.");
     }
