@@ -14,7 +14,7 @@ class Pman_Core_UploadProgress extends Pman
         
         return true; 
     }
-    function get()
+    function get($v, $opts=array())
     {
         $this->sessionState(0); // turn off the session..
         header("Cache-Control: no-cache, must-revalidate");
