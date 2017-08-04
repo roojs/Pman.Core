@@ -107,7 +107,7 @@ class Pman_Core_I18n extends Pman
         return explode('_', $lang);
     }
      
-    function get($s ='')
+    function get($s ='', $opts=array())
     {
      
         $this->sessionState(0);
