@@ -22,7 +22,7 @@ class Pman_Core_DatabaseColumns extends Pman {
         return true;
     }
     
-    function get($table) {
+    function get($table, $opts = Array()) {
         $d = DB_DAtaObject::Factory($table);
         if (method_exists($d, 'availableColumns')) {
             $cols = $d->availableColumns();
