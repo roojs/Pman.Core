@@ -28,7 +28,7 @@ class Pman_Core_GnumericToExcel extends Pman
         return true;
     }
 
-    function get()
+    function get($v, $opts=array())
     {
         
     }
