@@ -34,7 +34,7 @@ class Pman_Core_Process_FixDataObjectCtor extends Pman
     
     
     
-    function get($p,$opts)
+    function get($p,$opts=array())
     {
         $file = realpath($opts['file']);
         if (!file_exists($file) || !is_writable($file)) {
