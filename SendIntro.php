@@ -36,7 +36,7 @@ class Pman_Core_SendIntro extends Pman
         return true; 
     }
     
-    function post()
+    function post($v)
     {
         //DB_DataObject::debuglevel(1);
         //  gets id : c.id,  rawPasswd: c.rawPasswd
