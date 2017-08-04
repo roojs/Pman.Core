@@ -28,7 +28,7 @@ class Pman_Core_JsonToExcel extends Pman
         return true;
     }
 
-    function get()
+    function get($v, $opts=array())
     {
         $this->jerr("invalid get");
     }
