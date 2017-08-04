@@ -5,7 +5,7 @@ require_once 'ConvertStyle.php';
 class Pman_Core_MailTemplateList extends Pman_Core_ConvertStyle
 {
     
-    function get()
+    function get($v, $opts=array())
     {
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
         
