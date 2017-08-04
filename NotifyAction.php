@@ -31,12 +31,12 @@ class Pman_Core_NotifyAction extends Pman
     }
     
     
-    function get()
+    function get($v, $opts=array())
     {
         $this->jerr("invalid request");
         
     }
-    function post()
+    function post($v)
     {
         // needs: (Array of...)
         //   on_table,
