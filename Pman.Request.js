@@ -87,8 +87,8 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
                 Roo.callback(options.failure, options.scope, [res, options]);
                 return;
             }
-            Roo.bootstrap.MessageBox.hide(); // hide any existing messages..
-            Roo.bootstrap.MessageBox.alert("Error", res && res.errorMsg ?  res.errorMsg : "Error Sending data");
+            Roo.MessageBox.hide(); // hide any existing messages..
+            Roo.MessageBox.alert("Error", res && res.errorMsg ?  res.errorMsg : "Error Sending data");
             return;
         }
         Roo.callback(options.success, options.scope, [res, options]);
@@ -110,12 +110,12 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
             var decode = this.processResponse(response);
             Roo.log(decode);
             
-            if (Roo.bootstrap.MessageBox.isVisible()) {
+            if (Roo.MessageBox.isVisible()) {
                 alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data - return true from failure to remove message");
                 return;
             }
             
-            Roo.bootstrap.MessageBox.alert("Error", decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
+            Roo.MessageBox.alert("Error", decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data");
             
         }
     }
