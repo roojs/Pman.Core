@@ -358,7 +358,7 @@ Pman = new Roo.Document(
                 Pman.Dialog.PersonStaff.show( 
                     { 
                         id : 0, 
-                        company_id : Pman.Login.authUser.company_id_id * 1, 
+                        company_id : Pman.Login.authUser.company_id * 1, 
                         company_id_name : Pman.Login.authUser.company_id_name
                     }, function(data) {
                         forceAdmin(data);
@@ -366,6 +366,7 @@ Pman = new Roo.Document(
                 );
                 return;
             }
+            
             Roo.state.Manager.set('Pman.Login.username', data.email),
             window.onbeforeunload = false;
             document.location = baseURL + '?ts=' + Math.random();
