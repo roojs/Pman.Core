@@ -345,7 +345,7 @@ Pman.Dialog.Image = {
             beforeload : function (_self, o){
                  o.params = o.params || {};
                  
-                 o.params['etype'] = _this.data.etype;
+                 o.params.etype = 'ImageType';
                  
                  o.params['!id'] = _this.form.findField('id').getValue();
                  // set more here
