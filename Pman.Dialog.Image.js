@@ -333,7 +333,7 @@ Pman.Dialog.Image = {
           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>',
           triggerAction : 'all',
           typeAhead : true,
-          valueField : 'id',
+          valueField : 'name',
           width : 250,
           xns : Roo.form,
           '|xns' : 'Roo.form',

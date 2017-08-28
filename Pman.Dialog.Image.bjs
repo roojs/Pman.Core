@@ -97,7 +97,7 @@
          "emptyText" : "Select image type",
          "hiddenName" : "imgtype",
          "minChars" : 2,
-         "valueField" : "id",
+         "valueField" : "name",
          "xtype" : "ComboBox",
          "allowBlank" : true,
          "typeAhead" : true,
