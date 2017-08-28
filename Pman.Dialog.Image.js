@@ -347,8 +347,7 @@ Pman.Dialog.Image = {
                  
                  o.params.etype = 'ImageType';
                  
-                 o.params['!id'] = _this.form.findField('id').getValue();
-                 // set more here
+                 o.params.active = 1;
              }
            },
            xns : Roo.data,

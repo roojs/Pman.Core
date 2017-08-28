@@ -111,7 +111,7 @@
          "items" : [
           {
            "listeners" : {
-            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params.etype = 'ImageType';\n    \n    o.params['!id'] = _this.form.findField('id').getValue();\n    // set more here\n}\n"
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params.etype = 'ImageType';\n    \n    o.params.active = 1;\n}\n"
            },
            "xtype" : "Store",
            "remoteSort" : true,
