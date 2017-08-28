@@ -9,7 +9,10 @@ Pman.Dialog.Image = {
  _strings : {
   'eb5d45750c7ab13aa8e6bacc80315a30' :"32M",
   '2859a4ae58ae4e25abdfc530f814e42f' :"Upload an Image or File",
+  '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
+  '8e16a71b3d8217eb80b39b7d8dec4296' :"Image Type",
+  'dff0c70e4c11953e4e3ee1cf268fb96d' :"Select image type",
   '91412465ea9169dfd901dd5e7c96dd99' :"Upload",
   'ea72bacd2fdfa818907bb9559e6905a1' :"Upload Image or File"
  },
@@ -207,6 +210,13 @@ Pman.Dialog.Image = {
               //_this.dialog.el.unmask();
                
               if (act.type == 'setdata') { 
+              
+                  _this.form.findField('imgtype').hide();
+                  
+                  if(_this.data._show_image_type){
+                      _this.form.findField('imgtype').show();
+                  }
+                  
                   this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
                   this.el.dom.action = this.url;
                   if (typeof(_this.data.timeout) != 'undefined') {
@@ -304,6 +314,64 @@ Pman.Dialog.Image = {
           '|xns' : 'Roo.form'
          },
          {
+          xtype : 'ComboBox',
+          allowBlank : true,
+          alwaysQuery : true,
+          displayField : 'display_name',
+          emptyText : _this._strings['dff0c70e4c11953e4e3ee1cf268fb96d'] /* Select image type */,
+          fieldLabel : _this._strings['8e16a71b3d8217eb80b39b7d8dec4296'] /* Image Type */,
+          forceSelection : true,
+          hiddenName : 'imgtype',
+          listWidth : 400,
+          loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+          minChars : 2,
+          name : 'imgtype_name',
+          pageSize : 20,
+          qtip : _this._strings['dff0c70e4c11953e4e3ee1cf268fb96d'] /* Select image type */,
+          queryParam : 'query[search]',
+          selectOnFocus : true,
+          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>',
+          triggerAction : 'all',
+          typeAhead : true,
+          valueField : 'id',
+          width : 250,
+          xns : Roo.form,
+          '|xns' : 'Roo.form',
+          store : {
+           xtype : 'Store',
+           remoteSort : true,
+           sortInfo : { direction : 'ASC', field: 'name' },
+           listeners : {
+            beforeload : function (_self, o){
+                 o.params = o.params || {};
+                 
+                 o.params['etype'] = _this.data.etype;
+                 
+                 o.params['!id'] = _this.form.findField('id').getValue();
+                 // set more here
+             }
+           },
+           xns : Roo.data,
+           '|xns' : 'Roo.data',
+           proxy : {
+            xtype : 'HttpProxy',
+            method : 'GET',
+            url : baseURL + '/Roo/Core_enum',
+            xns : Roo.data,
+            '|xns' : 'Roo.data'
+           },
+           reader : {
+            xtype : 'JsonReader',
+            fields : [{"name":"id","type":"int"},{"name":"name","type":"string"}],
+            id : 'id',
+            root : 'data',
+            totalProperty : 'total',
+            xns : Roo.data,
+            '|xns' : 'Roo.data'
+           }
+          }
+         },
+         {
           xtype : 'Hidden',
           name : 'ontable',
           xns : Roo.form,
@@ -318,12 +386,6 @@ Pman.Dialog.Image = {
          {
           xtype : 'Hidden',
           name : 'id',
-          xns : Roo.form,
-          '|xns' : 'Roo.form'
-         },
-         {
-          xtype : 'Hidden',
-          name : 'imgtype',
           xns : Roo.form,
           '|xns' : 'Roo.form'
          }
