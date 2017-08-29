@@ -697,7 +697,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      
     applyData : function(data)
     {
-        
+        Roo.log('data');
+        Roo.log(data);
         data = data || this.data;
         for (var r = 0; r < this.rmax;r++) {
             if (typeof(this.grid[r]) == 'undefined') {
