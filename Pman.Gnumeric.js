@@ -185,9 +185,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             url: this.url,
             method:  'GET',
             success : function(resp, opts) {
-                
-                Roo.log('resp:');
-                Roo.log(resp);
                 _t.response = resp;
                 _t.doc = resp.responseXML;
                 
