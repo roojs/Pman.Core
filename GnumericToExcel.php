@@ -30,7 +30,7 @@ class Pman_Core_GnumericToExcel extends Pman
 
     function get($v, $opts=array())
     {
-        print_R('ru???');exit;
+        
     }
     function post($fname) {
         
