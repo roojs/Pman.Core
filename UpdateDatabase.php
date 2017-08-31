@@ -1126,17 +1126,17 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
-//    function generateDataobjectsCache()
-//    {
-//        $url = "http://localhost{$this->local_base_url}/Roo/SaveDocuments";
-//            
-//        $this->curl($url, array(
-//            'onid' => $coba_declarations->id,
-//            'ontable' => $coba_declarations->tableName(),
-//            'method' => 'forms',
-//            'file' => $file
-//        ), 'POST');
-//    }
+    function generateDataobjectsCache()
+    {
+        $url = "http://localhost{$this->local_base_url}/Roo/SaveDocuments";
+            
+        $this->curl($url, array(
+            'onid' => $coba_declarations->id,
+            'ontable' => $coba_declarations->tableName(),
+            'method' => 'forms',
+            'file' => $file
+        ), 'GET');
+    }
     
     function curl($url, $request = array(), $method = 'GET') 
     {
