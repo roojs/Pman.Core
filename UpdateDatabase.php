@@ -191,6 +191,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runExtensions();
         
+        $this->generateDataobjectsCache();
+        
         $url = "http://localhost{$this->local_base_url}/Roo/SaveDocuments";
             
         $this->curl($url, array(
@@ -1133,6 +1135,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
+    function generateDataobjectsCache()
+    {
+        
+    }
+    
     function curl($url, $request = array(), $method = 'GET') 
     {
         if(is_array($request)){
@@ -1163,6 +1170,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         return $response;
     }
+    
     
     
 }
