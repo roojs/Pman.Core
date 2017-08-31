@@ -149,6 +149,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->local_base_url = $ff->Pman['local_base_url'];
         
+        print_R($this->local_base_url);exit;
         if(!empty($ff->Core_Notify)){
 //            require_once 'Pman/Core/NotifySmtpCheck.php';
 //            $x = new Pman_Core_NotifySmtpCheck();
