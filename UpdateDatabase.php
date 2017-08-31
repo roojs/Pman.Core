@@ -191,7 +191,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runExtensions();
         
-//        $this->generateDataobjectsCache();
+        $this->generateDataobjectsCache();
         
          
     }
@@ -1151,11 +1151,11 @@ class Pman_Core_UpdateDatabase extends Pman
             
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-            curl_setopt($ch, CURLOPT_HTTPHEADER,
-                    array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
+            
         } else {
             
-            
+            curl_setopt($ch, CURLOPT_HTTPHEADER,
+                    array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
             
         }
         
