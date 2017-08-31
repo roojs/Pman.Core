@@ -131,7 +131,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function get($args, $opts=array())
     {
-        print_R('run??');exit;
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $this->checkSystem();
@@ -192,7 +191,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runExtensions();
         
-        $this->generateDataobjectsCache();
+//        $this->generateDataobjectsCache();
         
          
     }
