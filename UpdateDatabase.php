@@ -1140,19 +1140,23 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function curl($url, $request = array(), $method = 'GET') 
     {
-        if(is_array($request)){
+        if($method == 'GET'){
             $request = http_build_query($request);
+            $url = $url . "?" . $request;  
         }
-        
-        $url = $url . ($method == 'GET' ? "?" . $request : '');  
         
         $ch = curl_init($url);
         
         if ($method == 'POST') {
+            
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
             curl_setopt($ch, CURLOPT_HTTPHEADER,
                     array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
+        } else {
+            
+            
+            
         }
         
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
