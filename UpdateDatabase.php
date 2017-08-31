@@ -1145,14 +1145,18 @@ class Pman_Core_UpdateDatabase extends Pman
             $url = $url . "?" . $request;  
         }
         
-        
         $ch = curl_init($url);
         
         if ($method == 'POST') {
+            
             curl_setopt($ch, CURLOPT_POST, 1);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+            
+        } else {
+            
             curl_setopt($ch, CURLOPT_HTTPHEADER,
                     array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
+            
         }
         
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
