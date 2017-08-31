@@ -51,6 +51,7 @@ class Pman_Core_RefreshDatabaseCache extends Pman
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         
         $this->jok('DONE');
+        
     }
     
 }
