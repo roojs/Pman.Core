@@ -182,6 +182,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runUpdateModulesData();
         
+        echo "GET HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";exit;
         
         if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
             // make sure we have a good cache...?
@@ -190,8 +191,6 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         $this->runExtensions();
-        
-        echo "GET HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
         
         $this->generateDataobjectsCache();
         
