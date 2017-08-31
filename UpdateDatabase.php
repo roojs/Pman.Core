@@ -1127,7 +1127,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function generateDataobjectsCache()
     {
-        $url = "http://localhost{$this->local_base_url}/Roo/Core/RefreshDatabaseCache";
+        $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
             
         $response = $this->curl($url);
         
