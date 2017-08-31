@@ -149,6 +149,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         
+        
         $this->local_base_url = $ff->Pman['local_base_url'];
         
         if(!empty($ff->Core_Notify)){
