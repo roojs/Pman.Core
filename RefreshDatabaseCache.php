@@ -9,6 +9,7 @@
  * 
  */
 require_once 'Pman.php';
+
 class Pman_Core_RefreshDatabaseCache extends Pman
 {     
     static $cli_desc = "Refresh the database schema cache";
