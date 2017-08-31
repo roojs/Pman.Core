@@ -135,9 +135,12 @@ class Pman_Core_UpdateDatabase extends Pman
         if (class_exists('PDO_DataObjects_Introspection')) {
             PDO_DataObject_Introspection::$cache = array();
         }
+        
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
    
         $ff = HTML_FlexyFramework::get();
+        
+        print_R($ff);exit;
         
         if(!empty($ff->Core_Notify)){
 //            require_once 'Pman/Core/NotifySmtpCheck.php';
