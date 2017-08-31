@@ -1132,6 +1132,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
         $response = $this->curl($url);
         
+        echo "here\n";
         print_r($response);exit;
     }
     
