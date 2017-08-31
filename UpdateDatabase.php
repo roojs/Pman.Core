@@ -1126,7 +1126,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function curl($url, $request = array(), $method = 'GET') 
     {
-         
         if(is_array($request)){
             $request = http_build_query($request);
         }
