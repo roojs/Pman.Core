@@ -676,8 +676,7 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "$module\n";
             $x->updateData();
         }
-            
-        print_R('run?????');exit;
+        
     }
     
     
