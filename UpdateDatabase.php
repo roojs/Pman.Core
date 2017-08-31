@@ -1144,6 +1144,8 @@ class Pman_Core_UpdateDatabase extends Pman
             $request = http_build_query($request);
         }
         
+        print_R($request);exit;
+        
         $url = $url . ($method == 'GET' ? "?" . $request : '');  
         
         $ch = curl_init($url);
