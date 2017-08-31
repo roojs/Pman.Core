@@ -15,8 +15,11 @@ class Pman_Core_RefreshDatabaseCache extends Pman
     static $cli_desc = "Refresh the database schema cache";
    
     var $cli = false;
-    function getAuth() {
-        
+    function getAuth() 
+    {
+        if($_SERVER['HTTP_HOST'] == 'localhost'){
+            return true;
+        }
         
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->cli)) {
