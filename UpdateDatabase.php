@@ -147,6 +147,7 @@ class Pman_Core_UpdateDatabase extends Pman
             die("Please setup local_base_url");
         }
         
+        
         $this->local_base_url = $ff->Pman['local_base_url'];
         
         if(!empty($ff->Core_Notify)){
