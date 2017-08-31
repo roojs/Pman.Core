@@ -1129,10 +1129,8 @@ class Pman_Core_UpdateDatabase extends Pman
     {
         $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
             
-        $response = $this->curl($url);
+        $this->curl($url);
         
-        echo "here\n";
-        print_r($response);exit;
     }
     
     function curl($url, $request = array(), $method = 'GET') 

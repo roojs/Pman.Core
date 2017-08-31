@@ -39,9 +39,6 @@ class Pman_Core_RefreshDatabaseCache extends Pman
      
     function get($args, $opts=array())
     {
-        //print_r($opts);exit;
-        
-        
         // technically it would be good to trash the cached ini files here.. 
         // however we can not really do that, as the ownships are off..
         //we can however regen our own files..
