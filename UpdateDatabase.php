@@ -1141,10 +1141,14 @@ class Pman_Core_UpdateDatabase extends Pman
     function curl($url, $request = array(), $method = 'GET') 
     {
         if(is_array($request)){
-            $request = http_build_query($request);
+            
         }
         
-        $url = $url . ($method == 'GET' ? "?" . $request : '');  
+        if($method == 'GET'){
+            $request = http_build_query($request);
+            $url = $url . $request;  
+        }
+        
         
         $ch = curl_init($url);
         
