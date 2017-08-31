@@ -1128,14 +1128,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function generateDataobjectsCache()
     {
-        $url = "http://localhost{$this->local_base_url}/Roo/SaveDocuments";
+        $url = "http://localhost{$this->local_base_url}/Roo/Core/RefreshDatabaseCache";
             
-        $this->curl($url, array(
-            'onid' => $coba_declarations->id,
-            'ontable' => $coba_declarations->tableName(),
-            'method' => 'forms',
-            'file' => $file
-        ), 'GET');
+        $this->curl($url);
     }
     
     function curl($url, $request = array(), $method = 'GET') 
