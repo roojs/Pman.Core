@@ -179,10 +179,10 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['only-module-sql'])) {
             return;
         }
-        
+        echo "GET HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";exit;
         $this->runUpdateModulesData();
         
-        echo "GET HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";exit;
+        
         
         if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
             // make sure we have a good cache...?
