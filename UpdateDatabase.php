@@ -108,6 +108,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     
     var $cli = false;
+    
+    var $local_base_url = false;
+    
     function getAuth() {
         
         
