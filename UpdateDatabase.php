@@ -1124,5 +1124,37 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
+    function curl($url, $request = array(), $method = 'GET') 
+    {
+         
+        if(is_array($request)){
+            $request = http_build_query($request);
+        }
+        
+        $url = $url . ($method == 'GET' ? "?" . $request : '');  
+        
+        $ch = curl_init($url);
+        
+        if ($method == 'POST') {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+            curl_setopt($ch, CURLOPT_HTTPHEADER,
+                    array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
+        }
+        
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+        $response = curl_exec($ch);
+        
+        curl_close($ch);
+        
+        return $response;
+    }
+    
     
 }
