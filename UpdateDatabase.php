@@ -191,6 +191,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runExtensions();
         
+        echo "GET HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1\n";
+        
         $this->generateDataobjectsCache();
         
          
