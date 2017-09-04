@@ -25,7 +25,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     public $person_id;                       // int(11)  
     public $remarks;                         // blob(65535)  blob
     public $person_table;                    // string(64)
-    public $coba_investor_id;                     // int(11)  
+    public $investor_id;                     // int(11)  
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -117,9 +117,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->whereAdd("$tn.on_table = ''");
         }
         
-        if (!empty($q['query']['to'])) {
-            $dt = date('Y-m-d' , strtotime($q['query']['to']));
-            $this->whereAdd(" {$tn}.event_when <=  '$dt' ");
+       if (!empty($q['coba_investor_id'])) {
+ 	    $coba_investor_id = $this->escape($q['coba_investor_id']);		
+            //$dt = date('Y-m-d' , strtotime($q['query']['to']));
+            $this->whereAdd(" {$tn}.coba_investor_id <=  '$coba_investor_id' ");
         }
         
         if (isset($q['query']['person_sum'])) {
