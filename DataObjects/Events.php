@@ -25,7 +25,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     public $person_id;                       // int(11)  
     public $remarks;                         // blob(65535)  blob
     public $person_table;                    // string(64)
-    
+    public $investor_id;                           // int(11)  
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
