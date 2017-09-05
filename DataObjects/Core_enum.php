@@ -9,8 +9,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-
-
     public $__table = 'core_enum';                       // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $etype;                           // string(32)  not_null
