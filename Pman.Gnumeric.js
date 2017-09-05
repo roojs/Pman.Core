@@ -714,7 +714,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         || !this.grid[r][c].value.match(/\{/)) {
                     continue;
                 }
-                
+                Roo.log(this.grid[r][c].value);
                 var x = new Roo.Template({ html: this.grid[r][c].value });
                 try {
                     var res = x.applyTemplate(data);
