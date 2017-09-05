@@ -699,7 +699,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     {
         
         data = data || this.data;
-        
         for (var r = 0; r < this.rmax;r++) {
             if (typeof(this.grid[r]) == 'undefined') {
                 continue;
@@ -712,7 +711,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         || !this.grid[r][c].value.match(/\{/)) {
                     continue;
                 }
-                Roo.log(this.grid[r][c].value);
+                
                 var x = new Roo.Template({ html: this.grid[r][c].value });
                 try {
                     var res = x.applyTemplate(data);
