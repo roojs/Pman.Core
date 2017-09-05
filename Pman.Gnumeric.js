@@ -194,8 +194,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 _t.applyData();
     
                 _t.fireEvent('load', _t);
-                
-                
             },
             failure : function()
             {
