@@ -2,13 +2,12 @@
 /**
  * Table Definition for core enum - it's used in pulldowns or simple option lists.
  */
-class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
-
+//class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
+require_once '../../PDO_DataObject/PDO/DataObject.php';
 class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
-
     public $__table = 'core_enum';                       // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $etype;                           // string(32)  not_null
