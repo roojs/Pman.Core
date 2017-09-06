@@ -780,9 +780,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $type = pathinfo($file, PATHINFO_EXTENSION);
         
-        $data = file_get_contents($type);
+        $data = file_get_contents($file);
         
         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+        return $base64;
     }
     
  }
