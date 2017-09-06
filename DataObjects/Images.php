@@ -778,17 +778,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         
-        require_once 'File/MimeType.php';
-        
-        $imageInfo = getimagesize($file);
-
-        $y = new File_MimeType();
-
-        $ext = $y->toExt(trim((string) $imageInfo['mime'] ));
-        
         $data = file_get_contents($file);
         
-        $base64 = 'data:image/' . $ext . ';base64,' . base64_encode($data);
+        $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
         return $base64;
     }
