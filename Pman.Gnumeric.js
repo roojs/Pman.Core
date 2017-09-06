@@ -1187,7 +1187,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 break;
             }
         }
-       
         
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
