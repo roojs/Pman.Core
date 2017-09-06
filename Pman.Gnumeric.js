@@ -1253,16 +1253,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
         
-        var ww = 0.01; // offset a bit...
-        var hh = 0.01; //
-        
-        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 0.99;
-        
-        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
-        //console.log(offset_str );
-        //alert(offset_str);
-        soi.setAttribute('ObjectOffset', offset_str);
+        soi.setAttribute('ObjectOffset', '0 0 0 0');
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
         soi.setAttribute('Direction','17');
         soi.setAttribute('crop-top','0.000000');
