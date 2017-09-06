@@ -768,7 +768,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function toBase64()
     {
+        $file = $this->getStoreName();
         
+        if(!file_exists($file)){
+            return '';
+        }
+        
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
     }
     
  }
