@@ -1251,9 +1251,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
-        soi.setAttribute('ObjectBound',
-            //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(startRow,col) + ':' + this.RCtoCell(row,endcol));
+        soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
      
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
