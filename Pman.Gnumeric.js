@@ -1256,7 +1256,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
-        content.setAttribute('name', name);
+        content.setAttribute('name', 'test');
         soi.appendChild(content);
         objs.appendChild(soi);
         
