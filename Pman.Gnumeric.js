@@ -1213,13 +1213,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('name', name);
+        soi.appendChild(content);
+        objs.appendChild(soi);
         
-        content.setAttribute('name', );
+        
         
         content.setAttribute('size-bytes',data.length);
         content.textContent = data;
-        soi.appendChild(content);
-        objs.appendChild(soi);
+        
         return true;
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
