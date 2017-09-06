@@ -1224,6 +1224,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         content.setAttribute('image-type', type ? type : 'jpeg');
         content.setAttribute('name', name);
         content.setAttribute('type', 'GOPixbuf');
+        content.setAttribute('width', width);
+        content.setAttribute('height', height);
         
         
         content.setAttribute('size-bytes',data.length);
