@@ -1221,15 +1221,14 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var godoc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'GODoc');
         
         var goimage = this.doc.createElement('GOImage');
-        content.setAttribute('image-type', type ? type : 'jpeg');
-        content.setAttribute('name', name);
-        content.setAttribute('type', 'GOPixbuf');
-        content.setAttribute('width', width);
-        content.setAttribute('height', height);
+        goimage.setAttribute('image-type', type ? type : 'jpeg');
+        goimage.setAttribute('name', name);
+        goimage.setAttribute('type', 'GOPixbuf');
+        goimage.setAttribute('width', width);
+        goimage.setAttribute('height', height);
+        goimage.textContent = data;
         
         
-        content.setAttribute('size-bytes',data.length);
-        content.textContent = data;
         
         return true;
                 //< /gnm:SheetObjectImage>
