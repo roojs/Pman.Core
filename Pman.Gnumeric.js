@@ -1219,7 +1219,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var worksheet = this.sheet.getElementsByTagNameNS('*','Workbook')[0];
         var godoc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'GODoc');
-        var goimage
+        
+        var goimage = this.doc.createElement('GOImage');
+        
+        
         
         content.setAttribute('size-bytes',data.length);
         content.textContent = data;
