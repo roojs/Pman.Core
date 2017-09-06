@@ -1266,7 +1266,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var goimage = this.doc.createElement('GOImage');
         goimage.setAttribute('image-type', type ? type : 'jpeg');
-        goimage.setAttribute('name', name);
+        goimage.setAttribute('name', 'test');
         goimage.setAttribute('type', 'GOPixbuf');
         goimage.setAttribute('width', width);
         goimage.setAttribute('height', height);
