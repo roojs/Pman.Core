@@ -1272,8 +1272,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
-        Roo.log('running');
-        
         return true;
     },
  
