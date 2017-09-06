@@ -1241,6 +1241,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             throw "write Image called with missing data";
         }
         
+        throw "write Image called with missing data";
+        
         startCol = startCol * 1;
         startRow = startRow * 1;
         endCol = endCol * 1;
