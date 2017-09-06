@@ -1241,11 +1241,38 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             throw "write Image called with missing data";
         }
         
+        startCol = startCol * 1;
+        startRow = startRow * 1;
+        endCol = endCol * 1;
+        endRow = endRow * 1;
+        width = width * 1;
+        height = height * 1;
+        
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
+        
+        soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
+     
+        var name = 'Image' + Math.random().toString(36).substring(2);
+        var content = this.doc.createElement('Content');
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('name', name);
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        var goimage = this.doc.createElement('GOImage');
+        goimage.setAttribute('image-type', type ? type : 'jpeg');
+        goimage.setAttribute('name', name);
+        goimage.setAttribute('type', 'GOPixbuf');
+        goimage.setAttribute('width', width);
+        goimage.setAttribute('height', height);
+        goimage.textContent = data;
+        
+        godoc.appendChild(goimage);
         
         return true;
-                //< /gnm:SheetObjectImage>
-                // < /gnm:Objects>
-
     },
  
     /**
