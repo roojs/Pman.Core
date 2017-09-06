@@ -1217,7 +1217,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
-        var godoc = this.sheet.getElementsByTagNameNS('*','GODoc')[0];
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
         
         var goimage = this.doc.createElement('GOImage');
         goimage.setAttribute('image-type', type ? type : 'jpeg');
