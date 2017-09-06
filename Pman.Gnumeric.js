@@ -1247,7 +1247,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         endRow = endRow * 1;
         width = width * 1;
         height = height * 1;
-        
+        afjs
         var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
