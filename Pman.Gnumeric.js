@@ -1237,56 +1237,23 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
-        
         if (!data) {
             throw "write Image called with missing data";
         }
-        // our default height width is 50/50 ?!
-        //console.log('w='+width+',height='+height);
-                //        <gmr:Objects>
-        row*=1;
-        col*=1;
-        height*=1;
-        width*=1;
+        
+        startCol = startCol * 1;
+        startCol = startCol * 1;
+        startCol = startCol * 1;
+        startCol = startCol * 1;
+        startCol = startCol * 1;
+        startCol = startCol * 1;
+        
         var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
-        //<gmr:SheetObjectImage 
-        //      ObjectBound="A3:J8" 
-        //      ObjectOffset="0.375 0.882 0.391 0.294" 
-        //      ObjectAnchorType="16 16 16 16" 
-        //      Direction="17" 
-        //      crop-top="0.000000" 
-        //      crop-bottom="0.000000" 
-        //      crop-left="0.000000" 
-        //      crop-right="0.000000">
-                
-                
-        //alert(gnumeric_colRowToName(row,col));
-               
-        // this is where we really have fun!!!... 
-        // since our design currently assumes the height is enough to fit
-        // stuff in, we only really need to work out how wide it has to be..
-        
-        // note we should probably use centralized calcs if it fits in the first cell!
-        
-        // step 1 - work out how many columns it will span..
-        // lets hope the spreadsheet is big enought..
-        var colwidth = 0;
-        var endcol=col;
-        for ( endcol=col;endcol <100; endcol++) {
-            if (!this.colInfo[endcol]) {
-                this.colInfo[endcol] = 100; // eak fudge
-            }
-            colwidth += this.colInfo[endcol];
-            if (colwidth > width) {
-                break;
-            }
-        }
-        
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
+            this.RCtoCell(startRow,col) + ':' + this.RCtoCell(row,endcol));
      
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
