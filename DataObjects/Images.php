@@ -766,4 +766,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
+    function toBase64()
+    {
+        
+    }
+    
  }
