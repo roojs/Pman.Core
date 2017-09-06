@@ -1217,7 +1217,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
-        
+        var worksheet = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
         content.setAttribute('size-bytes',data.length);
         content.textContent = data;
