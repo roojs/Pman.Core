@@ -1221,7 +1221,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var godoc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'GODoc');
         
         var goimage = this.doc.createElement('GOImage');
-        
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('name', name);
+        content.setAttribute('type', 'GOPixbuf');
         
         
         content.setAttribute('size-bytes',data.length);
