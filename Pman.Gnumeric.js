@@ -1235,7 +1235,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
     },
     
-    writeFixedImage : function (startRow, startCol, endRow, endCol data, width, height, type) 
+    writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
         
         if (!data) {
