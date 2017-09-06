@@ -1242,11 +1242,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         
         startCol = startCol * 1;
-        startCol = startCol * 1;
-        startCol = startCol * 1;
-        startCol = startCol * 1;
-        startCol = startCol * 1;
-        startCol = startCol * 1;
+        startRow = startRow * 1;
+        endCol = endCol * 1;
+        endRow = endRow * 1;
+        width = width * 1;
+        height = height * 1;
         
         var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
