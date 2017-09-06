@@ -1260,6 +1260,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
+        Roo.log(name);
+        
         var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
         
         var goimage = this.doc.createElement('GOImage');
