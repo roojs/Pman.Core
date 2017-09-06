@@ -1210,7 +1210,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.setAttribute('crop-right','0.000000');
                 // <Content image-type="jpeg" size-bytes="3900">......  < / Content>
                 
-        var name = 'Image' + Math.random().toString(36).substring(10);
+        var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
         
