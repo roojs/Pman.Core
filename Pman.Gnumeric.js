@@ -1217,8 +1217,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
-        var worksheet = this.sheet.getElementsByTagNameNS('*','Workbook')[0];
-        var godoc = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'GODoc');
+        var godoc = this.sheet.getElementsByTagNameNS('*','GODoc')[0];
         
         var goimage = this.doc.createElement('GOImage');
         goimage.setAttribute('image-type', type ? type : 'jpeg');
@@ -1228,7 +1227,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         goimage.setAttribute('height', height);
         goimage.textContent = data;
         
-        
+        godoc.appendChild(goimage);
         
         return true;
                 //< /gnm:SheetObjectImage>
