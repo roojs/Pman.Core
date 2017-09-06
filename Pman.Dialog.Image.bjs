@@ -121,8 +121,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
