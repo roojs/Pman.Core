@@ -315,6 +315,7 @@ Pman.Dialog.Image = {
          },
          {
           xtype : 'ComboBox',
+          actionMode : 'fieldEl',
           allowBlank : true,
           alwaysQuery : true,
           displayField : 'display_name',
