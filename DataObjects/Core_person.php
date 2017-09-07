@@ -311,9 +311,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )
                 ||
                 (
-                    $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
-                    $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
-                )   
+                    $_SERVER['SERVER_ADDR'] == '::1' &&
+                    $_SERVER['REMOTE_ADDR'] == '::1'
+                ) 
             )
         ) {
             $group = DB_DataObject::factory('core_group');
