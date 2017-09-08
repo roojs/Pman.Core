@@ -606,7 +606,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->loadMap($r);
             $r->limit(1);
             $r->find(true);
-            $roo->jok($r->toArray());
+            $roo->jdata($r->toArray());
             
             
         }
@@ -642,7 +642,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $roo->loadMap($r);
         $r->limit(1);
         $r->find(true);
-        $roo->jok($r->toArray());
+        $roo->jdata($r->toArray());
          
     }
     
