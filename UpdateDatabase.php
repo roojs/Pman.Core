@@ -1157,7 +1157,7 @@ class Pman_Core_UpdateDatabase extends Pman
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         
         curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 0);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
