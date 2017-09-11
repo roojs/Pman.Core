@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CoreCompanies",
  "parent" : "",
  "title" : "",
- "path" : "/home/khlau/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
+ "path" : "/home/johns/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -94,9 +94,9 @@
            "listeners" : {
             "render" : "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
            },
-           "Boolean allowBlank" : false,
            "alwaysQuery" : true,
            "listWidth" : 250,
+           "Boolean allowBlank" : false,
            "triggerAction" : "all",
            "fieldLabel" : "Type",
            "forceSelection" : true,
