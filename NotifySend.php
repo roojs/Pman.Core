@@ -538,7 +538,7 @@ class Pman_Core_NotifySend extends Pman
             
             $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
                        $errmsg);
-            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
+            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->domain_id = $core_domain->id;
