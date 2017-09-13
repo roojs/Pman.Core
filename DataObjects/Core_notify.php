@@ -55,8 +55,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if ($set !== false) {
             $this->person_table = is_object($set) ? $set->tableName() : '';
             
-            
-            
             $person_table = empty($this->person_table) ? $def_pt  : strtolower($this->person_table);
             $col = $person_table  == $def_pt ? 'person_id' : $person_table . '_id';
             
