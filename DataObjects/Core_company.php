@@ -446,7 +446,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         $affects  = array();
         
-        $all_links = method_exists($this, 'databaseLinks') ? $x->databaseLinks() : $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
+        $all_links = $x->databaseLinks();
         
         foreach($all_links as $tbl => $links) {
             foreach($links as $col => $totbl_col) {
