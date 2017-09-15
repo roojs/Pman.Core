@@ -434,7 +434,7 @@ trait Pman_Core_RooGetTrait {
         $cols  = array_keys($data[0]);
      
         $options = &PEAR::getStaticProperty('DB_DataObject','options');
-        $reader = $options["ini_{$x->_database}"] .'.reader';
+        $reader = $options["ini_{$x->databaseNickname()}"] .'.reader';
         if (!file_exists( $reader )) {
             return;
         }
