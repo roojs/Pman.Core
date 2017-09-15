@@ -396,7 +396,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $affects  = array();
 
-        $all_links = $GLOBALS['_DB_DATAOBJECT']['LINKS'][$this->_database];
+        $all_links = $x->databaseLinks();
 
         foreach($all_links as $tbl => $links) {
             foreach($links as $col => $totbl_col) {
