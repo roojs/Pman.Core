@@ -399,7 +399,7 @@ Pman.Dialog.CoreCompanies = {
                                        
                   Pman.Dialog.Image.show({
                       onid :_this.data.id,
-                      ontable : 'Companies',
+                      ontable : 'core_company',
                       imgtype : 'LOGO'
                   }, function(data) {
                       if  (data) {
