@@ -817,10 +817,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['in_group_name'])){
+            
+            $v = $this->escape($q['in_group_name']);
+            
             $this->whereAdd("
                 $tn_p.id IN (
-                    SELECT distinct(user_id) FROM $tn_gm
-                    WHERE group_id = $ing
+                    SELECT 
+                        DISTINCT(user_id) FROM $tn_gm
+                    LEFT JOIN
+                        $tn_g
+                    ON
+                        $tn_g.id = $tn_gm.group_id
+                    WHERE 
+                        $tn_g.name = '{$v}'
                 )"
             );
         }
