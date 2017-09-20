@@ -816,6 +816,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        if(!empty($q['in_group_name'])){
+            $this->whereAdd("
+                $tn_p.id IN (
+                    SELECT distinct(user_id) FROM $tn_gm
+                    WHERE group_id = $ing
+                )"
+            );
+        }
+        
         // #2307 Search Country!!
         if (!empty($q['query']['in_country'])) {
             // DB_DataObject::debugLevel(1);
