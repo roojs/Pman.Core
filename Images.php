@@ -44,7 +44,8 @@ class Pman_Core_Images extends Pman
         $au = $this->getAuthUser();
         
         if (!$au) {
-            die("Access denied");
+            $this->authUser = false;
+            return true;//die("Access denied");
         }
         
         $this->authUser = $au;
@@ -85,10 +86,12 @@ class Pman_Core_Images extends Pman
             $id = empty($bits[3]) ? 0 :   $bits[3];
             
         } else if (!empty($bits[0]) && $bits[0] == 'events') {
-            
+            if (!$this->authUser) {
+                $this->imgErr("no-authentication-events",$s);
+            }
             $this->downloadEvent($bits);
+            $this->imgErr("unknown file",$s);
             
-            die ("unknown file?"); 
             
         } else {
         
@@ -96,9 +99,16 @@ class Pman_Core_Images extends Pman
         }
         
         if (strpos($id,':') > 0) {  // id format  tablename:id:-imgtype
+            
+            if (!$this->authUser) {
+                $this->imgErr("not-authenticated-using-colon-format",$s);
+                
+            }
+            
             $onbits = explode(':', $id);
             if ((count($onbits) < 2)   || empty($onbits[1]) || !is_numeric($onbits[1]) || !strlen($onbits[0])) {
-                die("Bad url");
+                $this->imgErr("bad-url",$s);
+                
             }
             //DB_DataObject::debugLevel(1);
             $img = DB_DataObject::factory('Images');
@@ -113,8 +123,8 @@ class Pman_Core_Images extends Pman
             }
             $img->limit(1);
             if (!$img->find(true)) {
-                header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-                urlencode("no images for that item: " . htmlspecialchars($id)));
+                $this->imgErr("no images for that item: " . htmlspecialchars($id),$s);
+                
             }
             
             $id = $img->id;
@@ -125,20 +135,20 @@ class Pman_Core_Images extends Pman
         
         // depreciated - should use ontable:onid:type here...
         if (!empty($_REQUEST['ontable'])) {
-
+            
+            if (!$this->authUser) {
+                die("authentication required");
+            }
+            
             //DB_DataObjecT::debugLevel(1);
-            $img = DB_DataObjecT::factory('Images');
+            $img = DB_DataObject::factory('Images');
             $img->setFrom($_REQUEST);
-            // use imgtype now...
-           // if (!empty($_REQUEST['query']['filename'])){
-           //     $img->whereAdd("filename LIKE '". $img->escape($_REQUEST['query']['filename']).".%'");
-           // }
+           
             
             
             $img->limit(1);
             if (!$img->find(true)) {
-                header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason='. 
-                    urlencode("No file exists"));
+                $this->imgErr("No file exists",$s);
             } 
             $id = $img->id;
             
@@ -149,18 +159,39 @@ class Pman_Core_Images extends Pman
         $img = DB_DataObjecT::factory('Images');
          
         if (!$id || !$img->get($id)) {
-             
-            header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-                urlencode("image has been removed or deleted."));
+             $this->imgErr("image has been removed or deleted.",$s);
+        }
+        
+        if (!$this->authUser) {
+           
+            if ($img->ontable != 'core_company') {
+                $this->imgErr("not-authenticated",$s);
+            }
+            if ($img->imgtype != 'LOGO') {
+                $this->imgErr("not-logo",$s);
+            }
+            $comp  = $img->object();
+            if ($comp->comptype != 'OWNER') {
+                $this->imgErr("not-owner-company",$s);
+            }
+            return $this->serve($img);
+        
             
         }
         
+        
         if(!$this->hasPermission($img)){
-            header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-                urlencode("access to this image/file has been denied."));
+            $this->imgErr("access to this image/file has been denied.",$s);
+            
         }
         
         $this->serve($img);
+        exit;
+    }
+    
+    function imgErr($reason,$path) {
+        header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
+            urlencode($reason) .'&path='.urlencode($path));
         exit;
     }
     
