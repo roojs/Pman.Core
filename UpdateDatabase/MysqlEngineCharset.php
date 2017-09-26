@@ -114,9 +114,16 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         $db = DB_DataObject::factory('core_enum');
         $db->query("show variables like 'innodb_file_per_table'");
         $db->fetch();
-        if ($db->Value == 'OFF') {
-            die("Error: set innodb_file_per_table = 1 in my.cnf\n\n");
+        
+        $pg = HTML_FlexyFramework::get()->page;
+        
+        if (empty($pg->opts['skip-mysql-checks'])) {
+            if ($db->Value == 'OFF') {
+                die("Error: set innodb_file_per_table = 1 in my.cnf\n\n");
+            }
+            
         }
+        
         
         // get a list of table views...
         // innodb in single files is far more efficient that MYD or one big innodb file.
