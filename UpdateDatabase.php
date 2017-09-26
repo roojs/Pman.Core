@@ -912,7 +912,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if ($done_check) {
             return;
         }
-        if (!empty($this->opts['skip-mysql-check'])) {
+        if (!empty($this->opts['skip-mysql-checks'])) {
             return;
         }
         // innodb in single files is far more efficient that MYD or one big innodb file.
