@@ -61,6 +61,12 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'skip-mysql-checks' => array(
+            'desc' => 'Skip mysql checks',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         'procedures-only' => array(
             'desc' => 'Only import procedures (not supported by most modules yet) - ignores sql directory',
             'default' => '',
