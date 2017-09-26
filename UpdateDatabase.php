@@ -912,6 +912,8 @@ class Pman_Core_UpdateDatabase extends Pman
         if ($done_check) {
             return;
         }
+        print_r($this->opts);
+        
         if (!empty($this->opts['skip-mysql-checks'])) {
             return;
         }
