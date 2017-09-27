@@ -165,7 +165,7 @@ class Pman_Core_Images extends Pman
              $this->imgErr("image has been removed or deleted.",$s);
         }
         
-        if (!$this->authUser) && !in_array($img->ontable,$this->public_image_tables)) {
+        if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
            
             if ($img->ontable != 'core_company') {
                 $this->imgErr("not-authenticated",$s);
