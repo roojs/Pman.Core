@@ -38,6 +38,7 @@ require_once  'Pman.php';
 class Pman_Core_Images extends Pman
 {
     
+    // tables that do not need authentication checks before serving.
     var $public_image_tables = array();
     
     
