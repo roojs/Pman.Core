@@ -4,7 +4,7 @@ CREATE TABLE   core_enum (
 
 );
 
-alter table  core_enum ADD COLUMN  etype varchar(32)  NOT NULL DEFAULT '';
+alter table  core_enum ADD COLUMN  etype varchar(64)  NOT NULL DEFAULT '';
 alter table core_enum CHANGE COLUMN etype etype varchar(64)  NOT NULL DEFAULT '';
 
 alter table  core_enum ADD COLUMN  name varchar(255)  NOT NULL DEFAULT '';
