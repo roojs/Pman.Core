@@ -38,7 +38,8 @@ require_once  'Pman.php';
 class Pman_Core_Images extends Pman
 {
     
-    var $public_image_table = array();
+    var $public_image_tables = array();
+    
     
     function getAuth()
     {
