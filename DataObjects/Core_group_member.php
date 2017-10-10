@@ -93,6 +93,13 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
+        if(!empty($q['_persons'])){
+            $this->bulkAddToGroup($q, $roo);
+        }
+    }
+    
+    function bulkAddToGroup($q, $roo)
+    {
         
     }
     
