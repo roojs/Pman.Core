@@ -163,9 +163,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $gm->group_id = $this->id;
         $gm->user_id = is_object($person) ? $person->id : $person;
         
-        $gm->whereAdd("1=1"); // fix PDO DataObject delete problem!?
-        
-        if ($gm->count()) {
+        if ($gm->find(true)) {
             $gm->delete();
         }
     }
