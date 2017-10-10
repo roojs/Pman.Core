@@ -91,48 +91,4 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
         return false;
     }
     
-    function beforeInsert($q, $roo)
-    {
-        if(!empty($q['_persons']) && !empty($q['group_id'])){
-            $this->bulkAddToGroup($q, $roo);
-        }
-    }
-    
-    function bulkAddToGroup($q, $roo)
-    {
-        $core_group = DB_DataObject::factory('core_group');
-        
-        if(!$core_group->get($q['group_id'])){
-            $roo->jerr('Invalid URL');
-        }
-        
-        $persons = array_unique(array_filter(explode(',', $q['_persons'])));
-        
-        foreach ($persons as $p){
-            
-            $core_person = DB_DataObject::factory('core_person');
-            
-            if(!$core_person->get($p)){
-                continue;
-            }
-            
-            $core_group_member = DB_DataObject::factory('core_group_member');
-            $core_group_member->setFrom(array(
-                'group_id' => $core_group->id,
-                'user_id' => $core_person->id
-            ));
-            
-            if($core_group_member->find(true)){
-                continue;
-            }
-            
-            $core_group_member->insert();
-            
-        }
-        
-        $roo->jok('OK');
-        
-    }
-    
-   
 }
