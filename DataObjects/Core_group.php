@@ -52,7 +52,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     
     function beforeInsert($q,$roo)
     {
-        print_R($q);exit;
         if (isset($q['_action'])) {
             // add // sub...
             $g = clone($this);
