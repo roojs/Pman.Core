@@ -164,7 +164,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $gm->user_id = is_object($person) ? $person->id : $person;
         
         if ($gm->count()) {
-            $gm->delete();
+            $gm->delete(true);
         }
     }
     
