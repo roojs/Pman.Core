@@ -130,6 +130,8 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
             
         }
         
+        $roo->jok('OK');
+        
     }
     
    
