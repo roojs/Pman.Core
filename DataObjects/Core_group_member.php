@@ -85,9 +85,15 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
         return $ret;
         
     }
+    
     function checkPerm($lvl, $au) 
     {
         return false;
+    }
+    
+    function beforeInsert($q, $roo)
+    {
+        
     }
     
    
