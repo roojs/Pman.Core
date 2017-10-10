@@ -73,11 +73,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
             $roo->jok('updated');
             
-            
-            
-            
         }
-        
         
     }
     
