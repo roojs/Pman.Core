@@ -160,8 +160,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function removeMember($person)
     {
         $gm = DB_Dataobject::factory('core_group_member');
-        $gm->group_id = $this->id;
-        $gm->user_id = is_object($person) ? $person->id : $person;
+        
+        $gm->setFrom(array(
+            'group_id' => $this->id,
+            'user_id' => is_object($person) ? $person->id : $person
+        ));
+//        $gm->group_id = $this->id;
+//        $gm->user_id = is_object($person) ? $person->id : $person;
         
         if ($gm->count()) {
             $gm->delete();
