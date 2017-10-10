@@ -101,6 +101,7 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     function bulkAddToGroup($q, $roo)
     {
         
+        
     }
     
    
