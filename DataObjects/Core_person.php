@@ -1048,7 +1048,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
      * this is called after checkPerm..
      */
     
-    function beforeDelete()
+    function beforeDelete($dependants_array, $roo)
     {
         
         $e = DB_DataObject::Factory('Events');
