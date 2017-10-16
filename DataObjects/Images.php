@@ -637,8 +637,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $roo->addEvent("ADD", $this, $this->toEventString());
         
-        if(method_exists($this, 'addEventLog')){
-            $this->addEventLog($ar, $roo);
+        if(method_exists($this, 'addExtraLog')){
+            $this->addExtraLog($ar, $roo);
         }
         
         $r = DB_DataObject::factory($this->tableName());
