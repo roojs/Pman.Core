@@ -100,7 +100,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!$au->hasPerm("Admin.Admin_Tab", 'S')) {
             //DB_DataObject::DebugLevel(1);
             // they can only view their changes..
-            $this->person_id = $au->id;
+            $this->whereAdd("($tn.person_id = {$au->id} OR $tn.person_id = 0)");
+//            $this->person_id = $au->id;
             
         }
         // _join = tablename,tablename...
