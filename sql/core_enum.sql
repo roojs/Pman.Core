@@ -21,4 +21,4 @@ alter table  core_enum ADD  INDEX lookup(seqid, active, name, etype);
 alter table  core_enum ADD  INDEX lookup_etype_active(etype, active);
 
 
-UPDATE core_enum SET display_name = name WHERE display_name = '';
+-- UPDATE core_enum SET display_name = name WHERE display_name = '';

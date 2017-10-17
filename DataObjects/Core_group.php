@@ -10,11 +10,11 @@
  *
  *
  *  NOTE - used to be called Groups ....
- * 
+ *
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
-class Pman_Core_DataObjects_Core_group extends DB_DataObject 
+class Pman_Core_DataObjects_Core_group extends DB_DataObject
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
@@ -22,21 +22,21 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     public $__table = 'core_group';                          // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $name;                            // string(64)  not_null
-    public $type;                            // int(11)  
+    public $type;                            // int(11)
     public $leader;                          // int(11)  not_null
     public $is_system;                       // used by timesheets?
-    
+
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
-      
+
+
     function personTable()
     {
         $ff = HTML_FlexyFramework::get();
         return empty($ff->Pman['authTable']) ? 'core_person' : $ff->Pman['authTable'];
     }
-    
-    
+
+
     // group types??
     function applyFilters($q, $au, $roo)
     {
@@ -45,11 +45,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $this->whereAdd("{$this->tableName()}.name like '{$v}%'");
         }
     }
-    
+
     function toEventString() {
         return $this->name;
     }
-    
+
     function beforeInsert($q,$roo)
     {
         if (isset($q['_action'])) {
@@ -72,12 +72,12 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 }
             }
             $roo->jok('updated');
-            
+
         }
-        
+
     }
-    
-    
+
+
     function beforeDelete()
     {
         $x = DB_DataObject::factory('core_group_right');
@@ -88,10 +88,10 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     /**
      * check who is trying to access this. false == access denied..
      */
-    function checkPerm($lvl, $au) 
+    function checkPerm($lvl, $au)
     {
-        return $au->hasPerm("Core.Groups", $lvl);    
-    } 
+        return $au->hasPerm("Core.Groups", $lvl);
+    }
     function onUpdate($old, $req, $roo)
     {
         $this->ensureLeaderMembership($roo);
@@ -102,42 +102,42 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     }
     function ensureLeaderMembership($roo)
     {
-        
+
         // groups - make sure the leader is a member...
         if (!$this->type || !$this->leader)
         {
             return true;
         }
-        
+
         $pi = DB_DataObject::factory('core_person');
         $pi->get($this->leader);
-            
+
         $p = DB_DataObject::factory('core_group_member');
         $p->group_id = $this->id;
         $p->user_id = $this->leader;
         //$p->type = 1; //???????
         if (!$p->count()) {
-            
+
             $p->insert();
             $roo->addEvent("ADD", $p, $this->toEventString(). " Added " . $pi->toEventString());
         }
-             
+
     }
-    
-    
+
+
     function memberCount()
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         return $gm->count();
     }
-    
+
     function memberIds()
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         return $gm->fetchAll('user_id');
-        
+
     }
     function isMember($person)
     {
@@ -146,7 +146,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $gm->user_id = is_object($person) ? $person->id : $person;
         return $gm->count();
     }
-    
+
     function addMember($person)
     {
         $gm = DB_Dataobject::factory('core_group_member');
@@ -156,18 +156,18 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $gm->insert();
         }
     }
-    
+
     function removeMember($person)
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         $gm->user_id = is_object($person) ? $person->id : $person;
-        
+
         if ($gm->find(true)) {
             $gm->delete();
         }
     }
-    
+
     /**
      *
      *  grab a list of members - default is the array of person objects..
@@ -175,7 +175,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
      *
      *
      */
-    
+
     function members($what = false)
     {
         $ids = $this->memberIds();
@@ -185,17 +185,19 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         //$p = DB_Dataobject::factory(empty($ff->Pman['authTable']) ? 'Person' : $ff->Pman['authTable']);
         // groups databse is hard coded to person.. so this should not be used for other tables.????
         $p = DB_Dataobject::factory( 'core_person' );
-        
-        
-        
+
+
+
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
+
+        $p->orderBy('name');
         return $p->fetchAll($what);
     }
-    
-    
-    
-    
+
+
+
+
     function lookup($k,$v = false) {
         if ($v === false) {
             $v = $k;
@@ -204,41 +206,41 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $this->get($k,$v);
 
         return $this;
-    } 
-    
+    }
+
     function lookUpMembers($name, $what=false)
     {
         if (!$this->get('name', $name)) {
             return array();
         }
         return $this->members($what);
-        
+
     }
-    
+
     function lookupMembersByGroupId($id, $what=false)
     {
         if (!$this->get($id)) {
             return array();
         }
-        
+
         return $this->members($what);
     }
-    
+
     function postListFilter($ar, $au, $req)
-    {      
+    {
         if(empty($req['_add_everyone'])){
             return $ar;
         }
-        
+
         $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
         $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
         return array_merge($ret, $ar);
 
     }
-    
+
     function initGroups()
     {
-        
+
         $g = DB_DataObject::factory($this->tableName());
         $g->type = 0;
         $g->name = 'Administrators';
@@ -257,33 +259,33 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             if ($p->find(true)) {
                 $g->addMember($p);
             }
-            
-            
+
+
         }
     }
-    
+
     function initDatabase($roo, $data)
     {
         $this->initGroups();
-        
+
         foreach($data as $gi) {
             $g = DB_DataObject::factory($this->tableName());
             $g->setFrom($gi);
-            
+
             if(!$g->find(true)){
                 $g->insert();
             }
-            
+
             if(count($g->members()) || empty($gi['members'])){
                 continue;
             }
-            
+
             foreach ($gi['members'] as $m){
                 $g->addMember($m);
             }
-            
+
         }
-     
+
     }
-    
+
 }
