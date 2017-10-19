@@ -635,7 +635,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->jerr("File upload failed : error = ". (!empty($this->err) ? $this->err : ''));
         }
         
-        $roo->addEvent("ADD", $this, $this->toEventString());
+        $this->addEvent($ar, $roo);
         
         $r = DB_DataObject::factory($this->tableName());
         $r->id = $this->id;
@@ -646,7 +646,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
     }
     
-    function addEvent()
+    function addEvent($ar, $roo)
     {
         $roo->addEvent("ADD", $this, $this->toEventString());
     }
