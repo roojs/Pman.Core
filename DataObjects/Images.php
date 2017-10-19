@@ -650,6 +650,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
          
     }
     
+    function addEvent()
+    {
+        $roo->addEvent("ADD", $this, $this->toEventString());
+    }
+    
     function toEventString()
     {
         
