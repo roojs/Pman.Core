@@ -120,7 +120,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         if (isset($q['on_table']) && !strlen($q['on_table'])) {
             // empty ontable queries.. these are valid..
-            $this->whereAdd("$tn.on_table = ''");
+            $this->whereAdd("{$tn}.on_table = ''");
         }
       
         if (isset($q['query']['person_sum'])) {
