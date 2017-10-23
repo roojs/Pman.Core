@@ -49,7 +49,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 
                 $keys = $jt->keys();
             
-                $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
+                $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=evet.person_id)";
+                //$this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
                 $this->selectAdd();
                 $this->selectAs();
 
