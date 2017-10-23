@@ -47,7 +47,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $keys = $jt->keys();
             
                 $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
-                $this->selectAdd();
+                $this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
                 $this->selectAs($et,'%s','evet');
 
                 $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
