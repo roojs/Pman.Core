@@ -37,9 +37,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         $tn = $this->tableName();
         // if not empty on_table
-        exit;
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
+
+            $et = DB_DataObject::factory($tn);
             
             if(!array_key_exists("{$jt->tableName()}_id", $this->tableColumns())){ // coz we have triiger on mysql...
                 
