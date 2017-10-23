@@ -48,7 +48,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $this->selectAdd();
                 $this->selectAs();
 
-                $this->selectAs($jt, 'person_id_%s', 'join_person_id_id_1');
+                $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
 
                 if (method_exists($jt,'nameColumn')) {
                     $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
