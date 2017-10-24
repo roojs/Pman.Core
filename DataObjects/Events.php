@@ -94,7 +94,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         if(!empty($q['_with_dupe_count'])){
             $this->dupe_id = 0;        	                   
-            $this->selectAdd("(select count(*)+1 from Events where Events.dupe_id = {$tn}.id) as dupe_count");
+            $this->selectAdd("(select count(*)+1 from Events ev_cnt where ev_cnt.dupe_id = {$tn}.id) as dupe_count");
         }
         /*
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
