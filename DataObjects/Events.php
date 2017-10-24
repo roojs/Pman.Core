@@ -42,16 +42,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $jt = DB_DataObject::factory($q['person_table']);
 
             $et = DB_DataObject::factory($tn);
-            //$this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
-            //$this->selectAs($et,'%s','evet');
-				//$tn='evet';            
+            $this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
+            $this->selectAs($et,'%s','evet');
             
             if(!array_key_exists("{$jt->tableName()}_id", $this->tableColumns())){ // coz we have triiger on mysql...
                 
                 $keys = $jt->keys();
             
-                $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}={$tn}.person_id)";
-                //$this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
+                $this->_join = "LEFT JOIN {$jt->tableName()} AS join_person_id_id ON (join_person_id_id.{$keys[0]}=Events.person_id)";
+                
                 $this->selectAdd();
                 $this->selectAs();
 
@@ -121,7 +120,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         if (isset($q['on_table']) && !strlen($q['on_table'])) {
             // empty ontable queries.. these are valid..
-            $this->whereAdd("{$tn}.on_table = ''");
+            $this->whereAdd("$tn.on_table = ''");
         }
       
         if (isset($q['query']['person_sum'])) {
@@ -251,12 +250,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         if(!empty($q['query']['action'])) {
             $act = $this->escape($q['query']['action']);
-            $this->whereAdd("{$tn}.action LIKE '%{$act}%'");
+            $this->whereAdd("Events.action LIKE '%{$act}%'");
         }
         
         if(!empty($q['query']['on_table'])) {
             $tnb = $this->escape($q['query']['on_table']);
-            $this->whereAdd("{$tn}.on_table LIKE '%{$tnb}%'");
+            $this->whereAdd("Events.on_table LIKE '%{$tnb}%'");
         } 
         
     }
