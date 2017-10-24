@@ -25,6 +25,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     public $person_id;                       // int(11)  
     public $remarks;                         // blob(65535)  blob
     public $person_table;                    // string(64)
+    public $dupe_id;                    // int(11)
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -91,13 +92,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->whereAdd(" {$tn}.event_when <=  '$dt' ");
         }
         
-        if(!empty($q['dup_check'])){
-        	   $et = DB_DataObject::factory($tn);
-            $this->_join .= "LEFT JOIN {$et->tableName()} AS evet ON (evet.id=Events.id)";
-            $this->selectAdd("(select count(*)+1 from Events where Events.dup_id = evet.id) as cnt ");        	   
-        	   //$this->selectAs($et,'%s','evet');
-        	   $this->having('Events.dup_id = 0 ');
-            
+        if(!empty($q['_with_dupe_count'])){
+            $this->dupe_id = 0;        	                   
+            $this->selectAdd("(select count(*)+1 from Events where Events.dupe_id = {$tn}.id) as dupe_count");
         }
         /*
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {

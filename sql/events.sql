@@ -16,6 +16,8 @@ ALTER TABLE Events ADD COLUMN   on_id int(11) NOT NULL default 0;
 ALTER TABLE Events ADD COLUMN   on_table varchar(64) NOT NULL default '';
 ALTER TABLE Events ADD COLUMN   person_id int(11) NOT NULL default 0;
 ALTER TABLE Events ADD COLUMN   person_table varchar(64) NOT NULL default '';
+ALTER TABLE Events ADD COLUMN   dupe_id INT(11) NOT NULL DEFAULT 0;
+
 
 ALTER TABLE Events ADD COLUMN   remarks text ;
  
