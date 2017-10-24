@@ -42,8 +42,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $jt = DB_DataObject::factory($q['person_table']);
 
             $et = DB_DataObject::factory($tn);
-            $this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
-            $this->selectAs($et,'%s','evet');
+            //$this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
+            //$this->selectAs($et,'%s','evet');
 				//$tn='evet';            
             
             if(!array_key_exists("{$jt->tableName()}_id", $this->tableColumns())){ // coz we have triiger on mysql...
