@@ -41,9 +41,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
 
-            $et = DB_DataObject::factory($tn);
-            $this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");
-            $this->selectAs($et,'%s','evet');
+            
             
             if(!array_key_exists("{$jt->tableName()}_id", $this->tableColumns())){ // coz we have triiger on mysql...
                 
@@ -91,6 +89,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if (!empty($q['query']['to'])) {
             $dt = date('Y-m-d' , strtotime($q['query']['to']));
             $this->whereAdd(" {$tn}.event_when <=  '$dt' ");
+        }
+        
+        if(!empty($q['dup_check'])){
+        	   $et = DB_DataObject::factory($tn);
+            $this->_join = "LEFT JOIN {$et->tableName()} AS evet ON (evet.id=Events.id)";
+            $this->selectAdd("(select count(*) from Events where Events.dup_id = evet.id) as cnt ");        	   
+        	   $this->selectAs($et,'evet_%s','evet');
+        	   
+            
+            
         }
         /*
         if (!empty($q['query']['grouped']) && $q['query']['grouped'] == 'gr') {
