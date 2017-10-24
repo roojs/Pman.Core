@@ -96,8 +96,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $this->_join = "LEFT JOIN {$et->tableName()} AS evet ON (evet.id=Events.id)";
             $this->selectAdd("(select count(*)+1 from Events where Events.dup_id = evet.evet_id) as cnt ");        	   
         	   //$this->selectAs($et,'%s','evet');
-        	   
-            
+        	   $this->having('dup_id = 0 ');
             
         }
         /*
