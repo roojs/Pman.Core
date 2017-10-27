@@ -321,6 +321,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         } 
           
         $this->person_name = $au && !empty($au->name) ? $au->name : '';
+        print_r($au);
+        exit;
         //$this->who = $au && !empty($au->name) ? $au->name : '';
         if (empty($au) || (isset($au->id) && empty($au->id))) {
             // not authenticated - and a standard id based object
