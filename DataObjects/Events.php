@@ -343,9 +343,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                   'userdata_id' => $au->pid(),            
                ));                  
                if($e->find(true)){               	
-                   $this->who = $e->getUserName();
-                   print_r($this);
-                   exit;
+                   $this->who = $e->getUserName();                   
                }               
             }
         }
