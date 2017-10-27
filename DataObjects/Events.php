@@ -443,6 +443,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $this->ipaddr = $_SERVER['HTTP_X_FORWARDED_FOR'];
             }
         }
+        print_r($this);
+        exit;
     }
     
     function beforeUpdate($old, $request,$roo)
