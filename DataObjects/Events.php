@@ -337,6 +337,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             $this->who = $au->name;
             print_r($au->tableName());
+            exit;
             if($au->tableName() == "modx_users"){
             	$e = PDO_DataObject::factory('ext_data');
                $e->setFrom(array(            
