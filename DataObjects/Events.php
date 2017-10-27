@@ -341,12 +341,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             	$e = PDO_DataObject::factory('ext_data');
                $e->setFrom(array(            
                   'userdata_id' => $au->pid(),            
-               ));
-               
-   
-               if($e->find(true)){
-               	print_r($e->getUserName());
-               	exit;
+               ));                  
+               if($e->find(true)){               	
                    $this->who = $e->getUserName();
                }               
             }
