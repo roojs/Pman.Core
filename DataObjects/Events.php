@@ -74,12 +74,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $jt = DB_DataObject::factory($person);
-            $this->whereAdd("
-                    person_table  = '{$jt->tableName()}'
-                    OR
-                    person_table = ''
-                    OR person_table IS NULL"
-            ); // default to  our standard.. - unless otherwise requested..
+            //$this->whereAdd("
+            //        person_table  = '{$jt->tableName()}'
+            //        OR
+            //        person_table = ''
+            //        OR person_table IS NULL"
+            //); // default to  our standard.. - unless otherwise requested..
         }
         
         
