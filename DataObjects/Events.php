@@ -342,9 +342,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                $e->setFrom(array(            
                   'userdata_id' => $au->pid(),            
                ));
-               print_r($e);
-               exit;   
-               if($e->find()){
+               
+   
+               if($e->find(true)){
+               	print_r($e);
+               	exit;
                    $this->who = $e->getUserName();
                }               
             }
