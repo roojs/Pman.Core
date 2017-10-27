@@ -344,7 +344,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                ));
                print_r($e);
                exit;   
-               if($e->find(true)){
+               if($e->find()){
                    $this->who = $e->getUserName();
                }               
             }
