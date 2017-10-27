@@ -333,19 +333,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $cols = $this->tableColumns();
             $col = isset($cols[$col]) ? $col : 'person_id'; // for BC.... - revert to using person_id
             $this->{$col} = $au->pid();
-            //$this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;
-            
-            $this->who = $au->name;
-            
-            if($au->tableName() == "modx_users"){
-            	$e = PDO_DataObject::factory('ext_data');
-               $e->setFrom(array(            
-                  'userdata_id' => $au->pid(),            
-               ));                  
-               if($e->find(true)){               	
-                   $this->who = $e->getUserName();                   
-               }               
-            }
+            //$this->person_id = $au ? (!empty($au->id) ? $au->id : $au->pid()) : -1;            
         }
         $this->person_table = $au ? $au->tableName() : '';
         $this->ipaddr = isset($_SERVER["REMOTE_ADDR"]) ? $_SERVER["REMOTE_ADDR"] : 'cli';
