@@ -224,6 +224,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             if ($obj && method_exists($obj,'relatedWhere')) {
                 $ar = $obj->relatedWhere();
+                
                 $tn = $this->tableName();
                 
                 $w = array();
