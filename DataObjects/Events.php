@@ -723,7 +723,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function autoJoinExtData()
     {
-       $this->_join .= "LEFT JOIN
+       $this->_join .= "LEFT JOIN 
                             ext_data AS ext_data_id
                         ON
                             Events.modx_users_id = ext_data_id.userdata_id";                            
