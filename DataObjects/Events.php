@@ -217,7 +217,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             if (!$obj) {
                 $roo->jerr("ontable is invalid");
             }
-            /*
+            
             if (!method_exists($obj,'relatedWhere')) {
                 $roo->jerr( $q['_related_on_table'] . " Does not have method relatedWhere :" .
                            implode(',', get_class_methods($obj)));
@@ -241,13 +241,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     
                 }
                 $this->whereAdd(implode(' OR ' , $w));
-            }*/
-            if ($obj && method_exists($obj,'relatedEventsWhere')) {
-                $a = $obj->relatedEventsWhere($q,$roo);
-                if($a){
-                    $this->whereAdd($a);
-                }
             }
+            
             
             
             
