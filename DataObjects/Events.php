@@ -254,10 +254,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             
         }
-        if (isset($q['_who'])) {
+        if (!isset($q['_who'])) {
         	   $this->autoJoinExtData();
-            $this->autoJoinCorePerson();
-            //$this->selectAddWho(); 
+            //$this->autoJoinCorePerson();
+            $this->selectAddWho(); 
         }
         
         // since roo does not support autojoin yet..
@@ -729,18 +729,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                             Events.modx_users_id = ext_data_id.userdata_id";                            
     }
     
-    function autoJoinCorePerson()
-    {
-       $this->_join .= "LEFT JOIN                             
-                             core_person AS core_person_id
-                        ON
-                             Events.person_id = core_person_id.id";                             
-    }
-    
     function selectAddWho() 
     {
-       $this->selectAdd("
-            core_person_id.name AS person_name, 
+       $this->selectAdd("             
             CASE
                 WHEN ext_data_id.in_middlename='' THEN
                     CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_lastname)
