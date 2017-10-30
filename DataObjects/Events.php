@@ -255,7 +255,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         if (!isset($q['_who'])) {
-            //$this->autoJoinExtra();
+        	   $this->autoJoinExtData();
+            $this->autoJoinCorePerson();
         }
         
         // since roo does not support autojoin yet..
