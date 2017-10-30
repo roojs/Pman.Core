@@ -735,4 +735,17 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                         ON
                              Events.person_id = core_person_id.id";                             
     }
+    
+    function selectAddWho() 
+    {
+       $this->selectAdd("
+            core_person_id.name AS person_name, 
+            CASE
+                WHEN ext_data_id.in_middlename='' THEN
+                    CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_lastname)
+                ELSE
+                    CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_middlename,ext_data_id.in_lastname)
+            END AS ext_data_full_name 
+       ");
+    }
 }
