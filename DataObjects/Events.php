@@ -224,7 +224,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             if ($obj && method_exists($obj,'relatedWhere')) {
                 $ar = $obj->relatedWhere();
-                
                 $tn = $this->tableName();
                 
                 $w = array();
@@ -243,7 +242,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 }
                 $this->whereAdd(implode(' OR ' , $w));
             }
-            
+            if ($obj && method_exists($obj,'relatedEventsWhere')) {
+                $a = $obj->relatedEventsWhere($q,$roo);
+                if($a){
+                    $this->whereAdd($a);
+                }
+            }
             
             
             
