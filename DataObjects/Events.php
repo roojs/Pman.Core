@@ -74,7 +74,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
             $jt = DB_DataObject::factory($person);
-            //$this->whereAdd("
+            $this->whereAdd("
+                    person_table = *
+                ");
             //        person_table  = '{$jt->tableName()}'
             //        OR
             //        person_table = ''
