@@ -254,6 +254,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             
         }
+        if (!isset($q['_who'])) {
+            //$this->autoJoinExtra();
+        }
+        
         // since roo does not support autojoin yet..
         if (!isset($q['_distinct'])) {
             //$this->autoJoinExtra();
@@ -713,5 +717,21 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         $this->selectAdd('join_person_id_id.email as email');
         
+    }
+    
+    function autoJoinExtData()
+    {
+       $this->_join .= "LEFT JOIN
+                            ext_data AS ext_data_id
+                        ON
+                            Events.modx_users_id = ext_data_id.userdata_id";                            
+    }
+    
+    function autoJoinCorePerson()
+    {
+       $this->_join .= "LEFT JOIN                             
+                             core_person AS core_person_id
+                        ON
+                             Events.person_id = core_person_id.id";                             
     }
 }
