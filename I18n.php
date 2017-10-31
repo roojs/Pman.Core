@@ -189,7 +189,8 @@ class Pman_Core_I18n extends Pman
         foreach($langs as $lang)
         {
             //$rlang = array_shift(explode('_', strtoupper($lang)));
-            $rlang = array_shift(explode('_', $lang));
+            $ll = explode('_', $lang);
+            $rlang = array_shift($ll);
             
             $ar[$lang] = array();
             $i = DB_DataObject::Factory('I18n');
