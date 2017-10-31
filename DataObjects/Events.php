@@ -255,9 +255,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         if (isset($q['_who'])) {
+        	   
         	   //$this->autoJoin();
             //$this->autoJoinCorePerson();
-            //$this->selectAddWho(); 
+            $this->selectAddWho(); 
         }
         
         // since roo does not support autojoin yet..
@@ -731,13 +732,15 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function selectAddWho() 
     {
-       $this->selectAdd("             
-            CASE
-                WHEN ext_data_id.in_middlename='' THEN
-                    CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_lastname)
-                ELSE
-                    CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_middlename,ext_data_id.in_lastname)
-            END AS ext_data_full_name 
-       ");
+    	 $this->selectAdd("ext_data_id.in_firstname, ext_data_id.in_middlename, ext_data_id.in_lastname");
+       
+       //$this->selectAdd("             
+       //     CASE
+       //         WHEN ext_data_id.in_middlename='' THEN
+       //             CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_lastname)
+       //         ELSE
+       //             CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_middlename,ext_data_id.in_lastname)
+       //     END AS ext_data_full_name 
+       //");
     }
 }
