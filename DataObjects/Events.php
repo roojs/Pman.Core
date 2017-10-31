@@ -732,7 +732,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function selectAddWho() 
     {
-    	 $this->selectAdd("ext_data_id.in_firstname, ext_data_id.in_middlename, ext_data_id.in_lastname");
+    	 $this->selectAdd("join_person_id_userdata_id.in_firstname, join_person_id_userdata_id.in_middlename, join_person_id_userdata_id.in_lastname");
        
        //$this->selectAdd("             
        //     CASE
