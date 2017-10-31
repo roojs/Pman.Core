@@ -256,10 +256,10 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         if (isset($q['_who'])) {
         	   
-        	   $e = PDO_DataObject::factory('ext_data');
-        	   $this->joinAdd($e,'LEFT');
+        	   //$e = PDO_DataObject::factory('ext_data');
+        	   //$this->joinAdd($e,'LEFT');
             //$this->autoJoinCorePerson();
-            $this->selectAddWho(); 
+            //$this->selectAddWho(); 
         }
         
         // since roo does not support autojoin yet..
@@ -723,25 +723,5 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function autoJoinExtData()
-    {
-       $this->_join .= "LEFT JOIN 
-                            ext_data AS ext_data_id
-                        ON
-                            Events.modx_users_id = ext_data_id.userdata_id";                            
-    }
     
-    function selectAddWho() 
-    {
-    	 $this->selectAdd("join_person_id_userdata_id.in_firstname, join_person_id_userdata_id.in_middlename, join_person_id_userdata_id.in_lastname");
-       
-       //$this->selectAdd("             
-       //     CASE
-       //         WHEN ext_data_id.in_middlename='' THEN
-       //             CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_lastname)
-       //         ELSE
-       //             CONCAT_WS(' ', ext_data_id.in_firstname,ext_data_id.in_middlename,ext_data_id.in_lastname)
-       //     END AS ext_data_full_name 
-       //");
-    }
 }
