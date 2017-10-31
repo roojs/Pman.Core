@@ -255,7 +255,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
         }
         if (isset($q['_who'])) {
-        	   $this->autoJoin();
+        	   //$this->autoJoin();
             //$this->autoJoinCorePerson();
             //$this->selectAddWho(); 
         }
