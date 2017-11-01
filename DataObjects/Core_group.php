@@ -46,7 +46,12 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
         
         if(!empty($q['_count_member_by_name'])){
-            $v = $this->escape($q['_count_member_by_name']);
+            
+            $core_group = DB_DataObject::factory('core_group');
+            
+            if($core_group->get('name', $q['_count_member_by_name'])){
+                $roo->jdata($core_group->memberCount());
+            }
         }
         
     }
