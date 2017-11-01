@@ -44,6 +44,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $v = $this->escape($q['query']['name_starts']);
             $this->whereAdd("{$this->tableName()}.name like '{$v}%'");
         }
+        
+        if(!empty($q['_count_member_by_name'])){
+            $v = $this->escape($q['_count_member_by_name']);
+        }
+        
     }
 
     function toEventString() {
