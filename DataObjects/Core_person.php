@@ -1290,11 +1290,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_generate_oath_key'])){
-            $this->generate_oath_key($roo);
+            $this->generate_oath_key();
+            $roo->jok('OK');
         }
     }
     
-    function generate_oath_key($roo)
+    function generate_oath_key()
     {
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         
