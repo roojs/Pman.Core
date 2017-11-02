@@ -1008,6 +1008,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
         }
         
+        /*
+         * Seems we never expose oath_key, so...
+         */
         $this->selectAdd("
             CASE WHEN {$tn}.oath_key != '' THEN
                 TRUE
