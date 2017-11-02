@@ -1359,8 +1359,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!System::which('oathtool')) {
             return false;
         }
+        $test = System::which('oathtool');
         
-        $test =  exec('whoami');
+        
         print_R($test);exit;
     }
     
