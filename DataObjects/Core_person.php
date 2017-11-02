@@ -522,7 +522,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function checkPassword($val)
     {
         if(!empty($this->oath_key)){
-            return $this->checkTwoFactorAuthentication();
+            return $this->checkTwoFactorAuthentication($val);
         }
         
         if (substr($this->passwd,0,1) == '$') {
@@ -1352,6 +1352,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$uri}"));
         
         return "data:image/png;base64,{$base64}";
+    }
+    
+    function checkTwoFactorAuthentication($val)
+    {
+        
     }
     
  }
