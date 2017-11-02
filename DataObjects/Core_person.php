@@ -1313,6 +1313,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->update($o);
             $roo->jok('OK');
         }
+        
+        if(!empty($q['_to_qr_code'])){
+            $this->generateQRCode();
+        }
     }
     
     function generateOathKey()
