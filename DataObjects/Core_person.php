@@ -1358,13 +1358,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         require_once 'System.php';
         
-        if (!System::which('oathtool')) {
+        $oathtool = System::which('oathtool');
+        
+        if (!$oathtool) {
             return false;
         }
         
-        $oathtool = System::which('oathtool');
-        
-        $cmd = "";
+        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
         
         print_R($test);exit;
     }
