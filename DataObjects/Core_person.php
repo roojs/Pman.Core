@@ -643,7 +643,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $aur['passwd'] = '';
         $aur['dailykey'] = '';
-        
+        $aur['oath_key'] = '';
         
         
         return $aur;
