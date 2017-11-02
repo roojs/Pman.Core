@@ -1053,6 +1053,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($xx->count()) {
             return "Duplicate Email found";
         }
+        
+        if(!empty($ar['enable_oath_key'])){
+            $this->generateOathKey();
+        }
+        
         return true;
     }
     /**
