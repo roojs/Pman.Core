@@ -1202,7 +1202,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $ret = $this->toArray();
         
-        print_r($this);exit;
+        if(!empty($q['enable_oath_key'])){
+            print_r($this->oath_key);exit;
+        }
         
     }
     
