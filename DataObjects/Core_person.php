@@ -1298,7 +1298,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $hexadecimal = '12345678901234567890';
         
-        echo( base_convert( 12345, 10, 32 ) );
+        print_R(base_convert($hexadecimal, 10, 32));
         exit;
     }
     
