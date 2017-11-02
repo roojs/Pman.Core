@@ -1329,7 +1329,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function generateQRCode()
     {
-        print_R($this->oath_key);exit;
+        
     }
     
  }
