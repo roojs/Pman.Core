@@ -1368,7 +1368,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $password = exec($cmd);
         
-        print_R($password);exit;
+        return ($password == $val) ? true : false;
     }
     
  }
