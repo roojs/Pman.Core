@@ -1297,12 +1297,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function generate_oath_key($roo)
     {
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
-        print_r($hex);exit;
         
-        $hexadecimal = '12345678901234567890';
+        $o = clone($this);
+        $this->oath_key = $hex;
+        $this->update($o);
         
-        print_R(base_convert($hexadecimal, 10, 32));
-        exit;
+        return;
+        
     }
     
  }
