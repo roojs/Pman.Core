@@ -1006,8 +1006,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             //$this->whereAdd('join_prole != ''");
             
-        }  
+        }
+        
+        $this->selectAdd("
+            CASE WHEN {$tn}.oath_key != '' THEN
+                TRUE
+            ELSE
+                FALSE
+            END AS has_oath_key
+        ");
+        
     }
+    
     function setFromRoo($ar, $roo)
     {
          $this->setFrom($ar);
