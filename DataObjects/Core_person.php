@@ -1287,4 +1287,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return true;
     }
     
+    function beforeUpdate($old, $q, $roo)
+    {
+        
+    }
+    
  }
