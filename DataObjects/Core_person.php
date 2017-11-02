@@ -1331,7 +1331,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $base32 = new Base32();
         
-        $this->oath_key = $hex;
+        $this->oath_key = $base32->base32_encode($hex);
+        
+        print_r($this->oath_key);exit;
+        
         return $this->oath_key;
         
     }
