@@ -1054,7 +1054,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return "Duplicate Email found";
         }
         
-        if(!empty($ar['enable_oath_key'])){
+        if(!empty($ar['_enable_oath_key'])){
             $this->generateOathKey();
         }
         
@@ -1195,16 +1195,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $pd->office_id = $this->office_id;
             $pd->company_id = $this->company_id;
             $pd->insert();
-        }
-        
-    }
-    
-    function toRooSingleArray($au, $q)
-    {
-        $ret = $this->toArray();
-        
-        if(!empty($q['enable_oath_key'])){
-            print_r($this->oath_key);exit;
         }
         
     }
