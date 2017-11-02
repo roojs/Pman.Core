@@ -1200,6 +1200,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function toRooSingleArray($au, $q)
     {
+        $ret = $this->toArray();
+        
+        print_r($this);exit;
         
     }
     
