@@ -1158,10 +1158,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $c->find(true);
         $this->company_id = $c->id;
         
-        if(!empty($req['enable_oath_key'])){
-            $this->generateOathKey();
-        }
-        
     }
     
     function onInsert($req, $roo)
