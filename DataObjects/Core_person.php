@@ -1308,13 +1308,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
-            $this->generate_oath_key();
+            $this->generateOathKey();
             $this->update($o);
             $roo->jok('OK');
         }
     }
     
-    function generate_oath_key()
+    function generateOathKey()
     {
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
         $this->oath_key = $hex;
