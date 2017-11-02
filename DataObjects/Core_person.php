@@ -641,7 +641,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $g = DB_DataObject::Factory('core_group_member');
         $aur['groups']  = $g->listGroupMembership($this, 'name');
         
-        $aur['passwd'] = '';
+        $aur['passwd'] = 'reset?';
         $aur['dailykey'] = '';
         
         
