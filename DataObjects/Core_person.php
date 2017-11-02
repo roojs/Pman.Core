@@ -1303,7 +1303,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_generate_oath_key'])){
+            $o = clone($this);
             $this->generate_oath_key();
+            $this->update($o);
             $roo->jok('OK');
         }
     }
@@ -1311,12 +1313,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function generate_oath_key()
     {
         $hex = bin2hex(openssl_random_pseudo_bytes(16));
-        
-        $o = clone($this);
         $this->oath_key = $hex;
-        $this->update($o);
-        
-        return;
+        return $this->oath_key;
         
     }
     
