@@ -1343,7 +1343,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $name = (empty($this->name)) ? urlencode('ROOJS') : urlencode($this->name);
+        $name = (empty($this->name)) ? urlencode('ROOJS') : urlencode('test f');
         
         print_R($name);exit;
         
