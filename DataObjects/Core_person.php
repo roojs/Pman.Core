@@ -1343,9 +1343,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $name = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode('test f');
-        
-        print_R($name);exit;
+        $name = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
         
         $uri = "otpauth://totp/ACME%20Co:{$this->email}?secret={$this->oath_key}&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30";
         
