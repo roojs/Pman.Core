@@ -1291,7 +1291,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         if(!empty($q['_generate_oath_key'])){
             $this->generate_oath_key();
-            $roo->jok('OK');
+            $roo->jerr('OK');
         }
     }
     
