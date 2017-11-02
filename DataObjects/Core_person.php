@@ -1199,6 +1199,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
     }
     
+    function toRooSingleArray($au, $q)
+    {
+        $ret = $this->toArray();
+        
+        if(!empty($q['enable_oath_key'])){
+            print_r($this->oath_key);exit;
+        }
+        
+    }
+    
     function importFromArray($roo, $persons, $opts)
     {
         if (empty($opts['prefix'])) {
