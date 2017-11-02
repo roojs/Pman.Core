@@ -1337,6 +1337,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
+        $uri = "otpauth://totp/ACME%20Co:{$this->email}?secret={$this->oath_key}&issuer=ACME%20Co&algorithm=SHA1&digits=6&period=30"
+        
         $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->oath_key}"));
         
         return "data:image/png;base64,{$base64}";
