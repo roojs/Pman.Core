@@ -1337,7 +1337,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl={$this->oath_key}"));
+        $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$this->oath_key}"));
         
         return "data:image/png;base64,{$base64}";
     }
