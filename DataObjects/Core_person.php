@@ -1202,7 +1202,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function toRooSingleArray($au, $q)
     {
         $ret = $this->toArray();
-        
+        print_R($q);exit;
         if(!empty($q['_enable_oath_key'])){
             print_R('run???');exit;
             $oath_key = DB_DataObject::factory('core_person')->load($this->id)->oath_key;
