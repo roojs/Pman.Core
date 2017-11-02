@@ -522,14 +522,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function checkPassword($val)
     {
         if(!empty($this->oath_key)){
-            $ret =  $this->checkTwoFactorAuthentication($val);
-            
-            if(!$ret){
-                print_R('error');
-                exit;
-            }
-            
-            print_r('true');exit;
+            return $this->checkTwoFactorAuthentication($val);
         }
         
         if (substr($this->passwd,0,1) == '$') {
@@ -1374,11 +1367,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
         
         $password = exec($cmd);
-        
-        print_r(array(
-           $password,
-            $val
-        ));
         
         return ($password == $val) ? true : false;
     }
