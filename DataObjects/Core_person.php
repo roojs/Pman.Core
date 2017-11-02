@@ -1356,11 +1356,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function checkTwoFactorAuthentication($val)
     {
+        require_once 'System.php';
+        
         if (!System::which('oathtool')) {
             return false;
         }
-        $test = System::which('oathtool');
         
+        $oathtool = System::which('oathtool');
+        
+        $cmd = "";
         
         print_R($test);exit;
     }
