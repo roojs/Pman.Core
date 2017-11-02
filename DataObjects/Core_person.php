@@ -1330,8 +1330,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
 //        $key = strtr(ucfirst(Text_Password::create(20)).ucfirst(Text_Password::create(20)), array(
 //        "a"=>"4", "e"=>"3",  "i"=>"1",  "o"=>"0", "s"=>"5",  "t"=>"7"));
         
-        $hex = bin2hex(openssl_random_pseudo_bytes(16));
-        print_R(openssl_random_pseudo_bytes(8));exit;
+        $hex = bin2hex(openssl_random_pseudo_bytes(10));
+        print_R($hex);exit;
         $this->oath_key = $hex;
         return $this->oath_key;
         
