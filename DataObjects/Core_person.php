@@ -1315,7 +1315,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['_to_qr_code'])){
-            $this->generateQRCode();
+            $qrcode = $this->generateQRCode();
+            if(empty($qrcode)){
+                $roo->jerr('Fail to generate QR Code');
+            }
+            
+            $roo->jdata($qrcode);
         }
     }
     
