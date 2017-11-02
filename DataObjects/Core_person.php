@@ -522,7 +522,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function checkPassword($val)
     {
         if(!empty($this->oath_key)){
-            return $this->checkTwoFactorAuthentication($val);
+            $ret =  $this->checkTwoFactorAuthentication($val);
+            
+            if(!$ret){
+                print_R('error');
+                exit;
+            }
+            
+            print_r('true');exit;
         }
         
         if (substr($this->passwd,0,1) == '$') {
