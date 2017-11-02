@@ -1366,7 +1366,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
         
-        print_R($test);exit;
+        $password = exec($cmd);
+        
+        print_R($password);exit;
     }
     
  }
