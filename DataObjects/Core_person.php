@@ -1375,6 +1375,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $base64 = base64_encode(ob_get_contents());
         ob_end_clean();
         
+        print_R($base64);exit;
+        
         $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
