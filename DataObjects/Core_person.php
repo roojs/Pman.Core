@@ -1322,7 +1322,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ");
         $core_person->get($this->id);
         
-        print_R($core_person);exit;
+        $ret['has_oath_key'] = $core_person->oath_key;
+        
+        return $ret;
         
     }
     
