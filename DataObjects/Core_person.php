@@ -1165,6 +1165,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $c->find(true);
         $this->company_id = $c->id;
         
+        print_r($this);exit;
+        
     }
     
     function onInsert($req, $roo)
