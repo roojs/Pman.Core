@@ -1028,7 +1028,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
          * Seems we never expose oath_key, so...
          */
         $this->selectAdd("
-            CASE WHEN core_person.oath_key != '' THEN
+            CASE WHEN {$this->tableName()}.oath_key != '' THEN
                 TRUE
             ELSE
                 FALSE
@@ -1327,7 +1327,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $ret = $this->toArray();
         
         $core_person = DB_DataObject::factory('core_person');
-        $core_person->selectAdd('core_person.oath_key AS oath_key');
+        $core_person->selectAdd("{$core_person->tableName()}.oath_key AS oath_key");
         $core_person->get($this->id);
         
         $ret['has_oath_key'] = (empty($core_person->oath_key)) ? 0 : 1;
