@@ -1368,7 +1368,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $image = $qrcode->makeCode('test', array(
             'output_type' => 'return',
-            'module_size' => 10
+            'module_size' => 8
         ));
         
         ob_start();
