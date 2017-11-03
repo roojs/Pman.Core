@@ -1378,21 +1378,4 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return "data:image/png;base64,{$base64}";
     }
     
-    function checkTwoFactorAuthentication($val)
-    {
-        require_once 'System.php';
-        
-        $oathtool = System::which('oathtool');
-        
-        if (!$oathtool) {
-            return false;
-        }
-        
-        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
-        
-        $password = exec($cmd);
-        
-        return ($password == $val) ? true : false;
-    }
-    
  }
