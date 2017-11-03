@@ -1307,6 +1307,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return true;
     }
     
+    function toRooSingleArray($au, $q)
+    {
+        $ret = $this->toArray();
+    }
+    
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_generate_oath_key'])){
