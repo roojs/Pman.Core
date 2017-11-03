@@ -1375,7 +1375,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $contents = ob_get_contents();
         ob_end_clean();
         
-        print_R($contents);exit;
+        print_R(base64_encode($contents));exit;
         
         exit;
         
