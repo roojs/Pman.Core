@@ -1370,7 +1370,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             'output_type' => 'return'
         ));
         
-        print_R(imagepng($im));
+        print_R(file_get_contents(imagepng($im)));
         exit;
         
         $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
