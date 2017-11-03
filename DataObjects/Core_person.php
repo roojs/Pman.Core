@@ -1372,19 +1372,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $image = $qrcode->makeCode($uri, array(
             'output_type' => 'return',
-            'module_size' => 8
+            'module_size' => 4
         ));
         
         ob_start();
         imagepng($image);
         $base64 = base64_encode(ob_get_contents());
         ob_end_clean();
-        
-        print_R($base64);exit;
-        
-        
-        
-        $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$uri}"));
         
         return "data:image/png;base64,{$base64}";
     }
