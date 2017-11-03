@@ -1060,6 +1060,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->generateOathKey();
         }
         
+        print_R($this);exit;
         return true;
     }
     /**
