@@ -1362,11 +1362,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
+        $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
+        
+        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
+        
         require_once 'Image/QRCode.php';
         
         $qrcode = new Image_QRCode();
         
-        $image = $qrcode->makeCode('test', array(
+        $image = $qrcode->makeCode($uri, array(
             'output_type' => 'return',
             'module_size' => 8
         ));
@@ -1378,9 +1382,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         print_R($base64);exit;
         
-        $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
         
-        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
         $base64 = base64_encode(file_get_contents("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$uri}"));
         
