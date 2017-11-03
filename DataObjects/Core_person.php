@@ -1315,8 +1315,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $core_person->selectAdd('core_person.oath_key AS oath_key');
         $core_person->get($this->id);
         
-        
-        $ret['has_oath_key'] = $core_person->oath_key;
+        $ret['has_oath_key'] = (empty($core_person->oath_key) ? false : true;
         
         return $ret;
         
