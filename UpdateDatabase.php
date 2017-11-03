@@ -1080,7 +1080,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     
-    function checkSystem()
+    function checkSystem($req = false, $pref = false)
     {
         // most of these are from File_Convert...
         
