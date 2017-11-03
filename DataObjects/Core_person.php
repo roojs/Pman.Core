@@ -1025,8 +1025,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function setFromRoo($ar, $roo)
     {
-        print_r('run???');exit;
         $this->setFrom($ar);
+        
+        if(!empty($ar['_enable_oath_key'])){
+            $this->generateOathKey();
+        }
+        
         if (!empty($ar['passwd1'])) {
             $this->setPassword($ar['passwd1']);
         }
@@ -1057,12 +1061,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return "Duplicate Email found";
         }
         
-        if(!empty($ar['_enable_oath_key'])){
-            $this->generateOathKey();
-        }
-        echo "setFromRoo";
-        echo "<br/>";
-        print_R($this);exit;
         return true;
     }
     /**
