@@ -1372,7 +1372,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         ob_start();
         imagepng($image);
-        $contents = ob_get_clean();
+        $contents = ob_get_contents();
         ob_end_clean();
         
         print_R(base64_encode($contents));exit;
