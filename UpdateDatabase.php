@@ -1086,7 +1086,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // these are required - and have simple dependancies.
         require_once 'System.php';
-        $req = array( 
+        $req = $req != false ? $req : array( 
             'convert',
             'grep',
             'pdfinfo',
@@ -1099,7 +1099,7 @@ class Pman_Core_UpdateDatabase extends Pman
          
          
         // these are prefered - but may have complicated depenacies
-        $pref= array(
+        $pref = $pref != false ? $pref :  = array(
             'abiword',
             'faad',
             'ffmpeg',
