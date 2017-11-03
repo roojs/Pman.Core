@@ -1366,18 +1366,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $qrcode = new Image_QRCode();
         
-        $image = $qrcode->makeCode('http://pear.php.net/', array(
+        $image = $qrcode->makeCode('test', array(
             'output_type' => 'return'
         ));
         
         ob_start();
         imagepng($image);
-        $contents = ob_get_contents();
+        $base64 = base64_encode(ob_get_contents());
         ob_end_clean();
-        
-        print_R(base64_encode($contents));exit;
-        
-        exit;
         
         $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
         
