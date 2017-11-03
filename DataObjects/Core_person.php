@@ -1362,6 +1362,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
+        require_once 'Image/QRCode.php';
+        
+        $generator = new Image_QRCode();
+        
         $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
