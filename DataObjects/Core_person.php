@@ -1059,7 +1059,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($ar['_enable_oath_key'])){
             $this->generateOathKey();
         }
-        
+        echo "setFromRoo";
+        echo "<br/>";
         print_R($this);exit;
         return true;
     }
