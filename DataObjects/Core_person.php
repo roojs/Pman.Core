@@ -519,6 +519,24 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         return md5(implode(',' ,  array($month, $this->email , $this->passwd, $this->id)));
     } 
+    
+    function checkTwoFactorAuthentication($val)
+    {
+        require_once 'System.php';
+        
+        $oathtool = System::which('oathtool');
+        
+        if (!$oathtool) {
+            return false;
+        }
+        
+        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
+        
+        $password = exec($cmd);
+        
+        return ($password == $val) ? true : false;
+    }
+    
     function checkPassword($val)
     {
         if (substr($this->passwd,0,1) == '$') {
