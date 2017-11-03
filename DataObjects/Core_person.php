@@ -1154,8 +1154,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeInsert($req, $roo)
     {
-        print_r($this);exit;
-        
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             return;
