@@ -1027,6 +1027,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         /*
          * Seems we never expose oath_key / passwd, so...
          */
+        
+        $this->_extra_cols = array('length_passwd', 'length_oath_key');
+        
         $this->selectAdd("
             LENGTH({$this->tableName()}.passwd) AS length_passwd,
             LENGTH({$this->tableName()}.oath_key) AS length_oath_key
