@@ -1028,8 +1028,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
          * Seems we never expose oath_key / passwd, so...
          */
         $this->selectAdd("
-            LENGTH(passwd) AS length_passwd,
-            LENGTH(oath_key) AS length_oath_key
+            LENGTH({$this->tableName()}.passwd) AS length_passwd,
+            LENGTH({$this->tableName()}.oath_key) AS length_oath_key
         ");
         
     }
