@@ -1025,14 +1025,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         /*
-         * Seems we never expose oath_key, so...
+         * Seems we never expose oath_key / passwd, so...
          */
         $this->selectAdd("
-            CASE WHEN {$this->tableName()}.oath_key != '' THEN
-                TRUE
-            ELSE
-                FALSE
-            END AS has_oath_key
+            LENGTH(passwd) AS length_passwd,
+            LENGTH(oath_key) AS length_oath_key
         ");
         
     }
