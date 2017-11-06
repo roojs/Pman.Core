@@ -1319,20 +1319,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return true;
     }
     
-    function toRooSingleArray($au, $q)
-    {
-        $ret = $this->toArray();
-        
-        $core_person = DB_DataObject::factory('core_person');
-        $core_person->selectAdd("{$core_person->tableName()}.oath_key AS oath_key");
-        $core_person->get($this->id);
-        
-        $ret['has_oath_key'] = (empty($core_person->oath_key)) ? 0 : 1;
-        
-        return $ret;
-        
-    }
-    
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_generate_oath_key'])){
