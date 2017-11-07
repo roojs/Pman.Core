@@ -301,7 +301,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // local auth - 
         $default_admin = false;
-        
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
             (!empty($_SERVER['SERVER_ADDR'])) &&
