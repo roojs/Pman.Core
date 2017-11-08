@@ -108,7 +108,7 @@ class Pman_Core_Mailer {
     
     function toData()
     {
-    
+        var_dump($templateFile);exit;
         $templateFile = $this->template;
         $args = (array)$this->contents;
         
@@ -313,8 +313,6 @@ class Pman_Core_Mailer {
         $ff = HTML_FlexyFramework::get();
         
         $pg = $ff->page;
-        
-        var_dump(is_array($email));exit;
         
         $email = is_array($email)  ? $email : $this->toData();
         
