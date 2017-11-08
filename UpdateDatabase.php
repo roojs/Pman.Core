@@ -150,7 +150,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $ff = HTML_FlexyFramework::get();
         
         if(!isset($ff->Pman) || !isset($ff->Pman['local_base_url'])){
-            die("Please setup local_base_url\n");
+            die("Please setup Pman[local_base_url]\n");
         }
         
         $this->local_base_url = $ff->Pman['local_base_url'];
