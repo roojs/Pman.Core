@@ -185,8 +185,8 @@ class Pman_Core_Mailer {
         //print_R($tmp_opts);
         // $tmp_opts['force'] = true;
         $template = new HTML_Template_Flexy(  $tmp_opts );
-        print_R($tmp_opts);exit;
         $template->compile('mail/'. $templateFile.'.txt');
+        print_R($tmp_opts);exit;
         
         /* use variables from this object to ouput data. */
         $mailtext = $template->bufferedOutputObject($content);
