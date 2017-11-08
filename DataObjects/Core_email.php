@@ -301,7 +301,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function toMailer($obj,$force=false)
     {
-        print_r($this);exit;
         $p = new PEAR();
         $contents = (array)$obj;
 
