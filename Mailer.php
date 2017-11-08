@@ -314,7 +314,7 @@ class Pman_Core_Mailer {
         
         $pg = $ff->page;
         
-        print_R(is_array($email));exit;
+        var_dump(is_array($email));exit;
         
         $email = is_array($email)  ? $email : $this->toData();
         
