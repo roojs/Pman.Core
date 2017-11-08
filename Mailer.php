@@ -138,6 +138,8 @@ class Pman_Core_Mailer {
            // 'forceCompile' => true,
             'site_prefix' => false,
         );
+        
+        var_dump($this->templateDir);exit;
         if (!empty($this->templateDir)) {
             $tmp_opts['templateDir'] = $this->templateDir;
         }
