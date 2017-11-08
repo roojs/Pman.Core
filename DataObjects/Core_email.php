@@ -304,14 +304,13 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         require 'PEAR.php';
         
         $p = new PEAR();
-        
         $contents = (array)$obj;
 
          
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
-        print_r($this);exit;
+        
         if(empty($this->active)){
             return $p->raiseError("template [{$contents['template']}] is Disabled");
         }
