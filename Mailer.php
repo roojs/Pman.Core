@@ -108,7 +108,6 @@ class Pman_Core_Mailer {
     
     function toData()
     {
-        var_dump($templateFile);exit;
         $templateFile = $this->template;
         $args = (array)$this->contents;
         
