@@ -71,6 +71,8 @@ class Pman_Core_Images extends Pman
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
+        $this->page = empty($_REQUEST['page']) ? false : $_REQUEST['page'];
+        
         $bits= explode('/', $s);
         $id = 0;
 //        var_dump($bits);die('in');
