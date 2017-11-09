@@ -824,8 +824,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                         continue;
                     }
                     
-                    print_R($i);exit;
-                    
+                    $ret = (empty($matches[1])) ? false : $matches[1];
+                    break;
                 }
                 
                 break;
