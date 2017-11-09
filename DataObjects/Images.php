@@ -807,12 +807,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 }
                 
                 $pdftk = System::which('pdftk');
+                $grep = System::which('grep');
                 
                 if (empty($pdftk)) {
                     return false;
                 }
                 
-                
+                $cmd = "{$pdftk} dump_data | grep "
                 
                 break;
             default :
