@@ -790,4 +790,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $base64;
     }
     
+    function getNumberOfPages()
+    {
+        
+    }
+    
  }
