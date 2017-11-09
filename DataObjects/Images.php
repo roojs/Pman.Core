@@ -794,6 +794,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         $ret = false;
         
+        require_once 'System.php';
+        
         switch ($this->mimetype) {
             
             case 'application/pdf' :
@@ -801,6 +803,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $file = $this->getStoreName();
                 
                 if(!file_exists($file)){
+                    return false;
+                }
+                
+                $pdftk = System::which('pdftk');
+                
+                if (empty($pdftk)) {
                     return false;
                 }
                 
