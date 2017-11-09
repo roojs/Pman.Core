@@ -795,6 +795,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ret = false;
         
         switch ($this->mimetype) {
+            
             case 'application/pdf' :
                 
                 $file = $this->getStoreName();
@@ -802,6 +803,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 if(!file_exists($file)){
                     return false;
                 }
+                
+                
                 
                 break;
             default :
