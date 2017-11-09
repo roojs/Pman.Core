@@ -792,10 +792,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function getNumberOfPages()
     {
-        $ret = 0;
+        $ret = false;
         
         switch ($this->mimetype) {
             case 'application/pdf' :
+                
+                $file = $this->getStoreName();
+                
+                if(!file_exists($file)){
+                    return false;
+                }
+                
                 break;
             default :
                 break;
