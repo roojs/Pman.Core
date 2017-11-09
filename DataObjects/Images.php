@@ -814,9 +814,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 
                 $cmd = "{$pdftk} {$file} dump_data";
                 
-                $test = `$cmd`;
+                $info = `$cmd`;
                 
-                print_R($test);exit;
+                $infos = explode("\n", $info);
+                
+                print_R($infos);exit;
                 
                 break;
             default :
