@@ -817,8 +817,16 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $info = `$cmd`;
                 
                 $infos = explode("\n", $info);
-                
-                print_R($infos);exit;
+
+                foreach ($infos as $i){
+                    
+                    if(!preg_match('/^NumberOfPages: ([0-9]+)/', $i, $matches)){
+                        continue;
+                    }
+                    
+                    print_R($i);exit;
+                    
+                }
                 
                 break;
             default :
