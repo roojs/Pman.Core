@@ -812,11 +812,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                     return false;
                 }
                 
-                $cmd = "{$pdftk} dump_data";
+                $cmd = "{$pdftk} {$file} dump_data";
                 
                 $test = `$cmd`;
                 
-                print_R($cmd);exit;
+                print_R($test);exit;
                 
                 break;
             default :
