@@ -816,7 +816,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 
                 $test = `$cmd`;
                 
-                print_R($test);exit;
+                print_R($cmd);exit;
                 
                 break;
             default :
