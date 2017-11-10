@@ -30,4 +30,6 @@ ALTER TABLE Images ADD INDEX lookup(ontable, onid);
 
 ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid);
 
+ALTER TABLE Images ADD COLUMN no_of_pages INT(11) NOT NULL DEFAULT 0;
+
  
