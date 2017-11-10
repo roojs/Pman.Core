@@ -132,31 +132,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         if($this->mimetype == 'application/pdf'){
-            
-            require_once 'System.php';
-        
-            $this->no_of_pages = 0;
-            
-            $pdfinfo = System::which('pdfinfo');
-
-            if (!empty($pdfinfo)) {
-                
-                $cmd = "{$pdfinfo} {$file}";
-
-                $ret = `$cmd`;
-
-                $info = explode("\n", $ret);
-
-                foreach ($info as $i){
-
-                    if(preg_match('/^Pages:[\s]*([0-9]+)/', $i, $matches)){
-                        $this->no_of_pages = (empty($matches[1])) ? 0 : $matches[1];
-                        continue;
-                    }
-                    
-                }
-            }
-            
+            $this->no_of_pages = $this->getNumberOfPage($file);
         }
         
         $this->filesize = filesize($file);
