@@ -132,7 +132,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         if($this->mimetype == 'application/pdf'){
-            $this->no_of_pages = $this->getNumberOfPage($file);
+            $this->no_of_pages = $this->getPdfPages($file);
         }
         
         $this->filesize = filesize($file);
@@ -792,6 +792,36 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
         return $base64;
+    }
+    
+    function getPdfPages($file)
+    {
+        require_once 'System.php';
+        
+        $page = 0;
+
+        $pdfinfo = System::which('pdfinfo');
+
+        if (empty($pdfinfo)) {
+            return $page;
+        }
+        
+        $cmd = "{$pdfinfo} {$file}";
+
+        $ret = `$cmd`;
+
+        $info = explode("\n", $ret);
+
+        foreach ($info as $i){
+
+            if(!preg_match('/^Pages:[\s]*([0-9]+)/', $i, $matches)){
+                continue;
+            }
+            
+            $page = (empty($matches[1])) ? 0 : $matches[1];
+        }
+        
+        return $page;
     }
     
  }
