@@ -806,7 +806,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
         $pdfinfo = System::which('pdfinfo');
 
-        if (empty($pdfinfo)) {
+        if (!file_exists($file) || empty($pdfinfo)) {
             return $page;
         }
         
