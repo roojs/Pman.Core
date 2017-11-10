@@ -131,7 +131,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
         }
         
-        $this->getNumberOfPages();
+        $this->getNumberOfPages($file);
         
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
@@ -794,14 +794,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function getNumberOfPages()
     {
-        $this->no_of_pages = 0;
+        $ret = false;
         
         require_once 'System.php';
         
         $file = $this->getStoreName();
                 
         if(!file_exists($file)){
-            return;
+            return false;
         }
                 
         switch ($this->mimetype) {
