@@ -131,6 +131,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
         }
         
+        $this->getNumberOfPages();
+        
         $this->filesize = filesize($file);
         $this->created = date('Y-m-d H:i:s');
          
