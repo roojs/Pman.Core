@@ -796,15 +796,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         require_once 'System.php';
         
+        $file = $this->getStoreName();
+                
+        if(!file_exists($file)){
+            return false;
+        }
+                
         switch ($this->mimetype) {
             
             case 'application/pdf' :
-                
-                $file = $this->getStoreName();
-                
-                if(!file_exists($file)){
-                    return false;
-                }
                 
                 $pdftk = System::which('pdftk');
                 
