@@ -794,14 +794,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function getNumberOfPages()
     {
-        $ret = false;
+        $this->no_of_pages = 0;
         
         require_once 'System.php';
         
         $file = $this->getStoreName();
                 
         if(!file_exists($file)){
-            return false;
+            return;
         }
                 
         switch ($this->mimetype) {
