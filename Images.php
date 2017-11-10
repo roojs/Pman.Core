@@ -302,7 +302,7 @@ class Pman_Core_Images extends Pman
             $this->validateSize();
         }
         
-        if(!empty($this->page)){
+        if(!empty($this->page) && $this->page * 1 > 0){
             $x->convert( $this->as_mimetype, $this->size, 0, $this->page);
         } else {
             $x->convert( $this->as_mimetype, $this->size);
