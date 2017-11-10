@@ -809,13 +809,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             case 'application/pdf' :
                 
-                $pdftk = System::which('pdftk');
+                $pdfinfo = System::which('pdfinfo');
                 
-                if (empty($pdftk)) {
+                if (empty($pdfinfo)) {
                     return false;
                 }
                 
-                $cmd = "{$pdftk} {$file} dump_data";
+                $cmd = "{$pdfinfo} {$file}";
                 
                 $info = `$cmd`;
                 
