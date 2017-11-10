@@ -769,6 +769,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $this->filesize = filesize($f);
         
+        if($this->mimetype == 'application/pdf'){
+            $this->no_of_pages = $this->getPdfPages($f);
+        }
+        
         $this->update($o);
         
         return true;
