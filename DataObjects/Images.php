@@ -801,7 +801,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if(!file_exists($file)){
             return;
         }
-                
+        
+        /*
+         * We handle pdf only at present
+         */
         switch ($this->mimetype) {
             
             case 'application/pdf' :
@@ -833,7 +836,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 break;
         }
         
-        return $ret;
+        return;
     }
     
  }
