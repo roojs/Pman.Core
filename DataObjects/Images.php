@@ -823,10 +823,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
                 foreach ($infos as $i){
                     
-                    if(!preg_match('/^NumberOfPages: ([0-9]+)/', $i, $matches)){
+                    if(!preg_match('/^Pages:[\s]?([0-9]+)/', $i, $matches)){
                         continue;
                     }
-                    
+                    print_R($matches);exit;
                     $ret = (empty($matches[1])) ? false : $matches[1];
                     break;
                 }
