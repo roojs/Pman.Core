@@ -130,8 +130,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 list($this->width , $this->height)  = $imgs;
             }
         }
-        
+        print_r($this->mimetype);exit;
         if($this->mimetype == 'application/pdf'){
+            
             require_once 'System.php';
         
             $this->no_of_pages = 0;
