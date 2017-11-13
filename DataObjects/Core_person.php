@@ -303,7 +303,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $default_admin = false;
         
         if($ff->Pman['local_autoauth'] === true){
-            print_r('test');
+            print_r($_SERVER['SERVER_ADDR']);
             exit;
         }
         
