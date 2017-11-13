@@ -302,7 +302,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // local auth - 
         $default_admin = false;
         
-        if($ff->Pman['local_autoauth'] === true){
+        if((
+                    $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
+                    $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
+                )){
             print_r($_SERVER['REMOTE_ADDR']);
             exit;
         }
