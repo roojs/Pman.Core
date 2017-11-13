@@ -326,6 +326,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $member->whereAdd("
                 join_user_id_id.id IS NOT NULL
             ");
+            
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 if(!$default_admin->get($member->user_id)){
@@ -333,7 +334,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         }
-        
+        print_R($default_admin);exit;
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
         $u = DB_DataObject::factory($this->tableName());
         $ff = HTML_FlexyFramework::get();
