@@ -316,27 +316,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     $_SERVER['REMOTE_ADDR'] == '::1'
                 )
             )
-        ){
-            print_r('in????');
-            exit;
-        }
-        
-        print_R('out??');exit;
-        
-        if (!empty($ff->Pman['local_autoauth']) && 
-            ($ff->Pman['local_autoauth'] === true) &&
-            (!empty($_SERVER['SERVER_ADDR'])) &&
-            (
-                (
-                    $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
-                    $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
-                )
-                ||
-                (
-                    $_SERVER['SERVER_ADDR'] == '::1' &&
-                    $_SERVER['REMOTE_ADDR'] == '::1'
-                )
-            )
         ) {
             $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
