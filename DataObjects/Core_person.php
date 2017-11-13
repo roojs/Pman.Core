@@ -301,7 +301,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // local auth - 
         $default_admin = false;
-        
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
             (!empty($_SERVER['SERVER_ADDR'])) &&
@@ -326,7 +325,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $member->whereAdd("
                 join_user_id_id.id IS NOT NULL
             ");
-            
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 if(!$default_admin->get($member->user_id)){
@@ -354,6 +352,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ) &&
             ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
+            $tn = $default_admin ? $default_admin->tableName() : $u->tableName();
+            $p = DB_DataObject::factory($tn);
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($default_admin ? $default_admin : $u);
             return true;
         }
