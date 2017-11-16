@@ -745,6 +745,31 @@ class Pman_Core_UpdateDatabase extends Pman
                         
                     )
                 ),
+                array(
+                    'etype' => '',
+                    'name' => 'coba.compliance_status_id',
+                    'display_name' =>  'Compliance Status',
+                    'is_system_enum' => 0,
+                    'cn' => array(
+                        array(
+                            'name' => 'Pending',
+                            'display_name' => 'Pending',
+                            
+                        ),
+                        
+                        array(
+                            'name' => 'Approved',
+                            'display_name' => 'Approved',
+                             
+                        ),
+                        array(
+                            'name' => 'Rejected',
+                            'display_name' => 'Rejected',
+                            
+                        ),                            
+                        
+                    )
+                ),
             )
         ); 
         
