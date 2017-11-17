@@ -50,8 +50,6 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $x->comptype= 'OWNER';
         $x->find(true);
         
-        var_dump('fetch here??');exit;
-        
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
             if (!empty($q['query']['company_include_self'])) {
