@@ -769,10 +769,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 'name' => 'core-person-signup-bcc',
                 'type' => 0, // system
             ),
-            array(
-                'name' => 'Compliance Officers',
-                'type' => 0, 
-            ),
+        
 
         ));
         
