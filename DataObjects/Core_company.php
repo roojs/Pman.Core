@@ -40,7 +40,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-       $tn = $this->tableName();
+        
+        $tn = $this->tableName();
         $this->selectAdd("i18n_translate('c' , {$tn}.country, 'en') as country_display_name ");
       
         $tn = $this->tableName();
@@ -48,6 +49,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $x = DB_DataObject::factory('core_company');
         $x->comptype= 'OWNER';
         $x->find(true);
+        
+        var_dump('fetch here??');exit;
         
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
