@@ -1098,7 +1098,7 @@ Pman.Dialog.CoreEmail = {
                                 p.setValue(res.data);
                              }
                          }
-                     });  
+                     });
                      
                  }
                },
