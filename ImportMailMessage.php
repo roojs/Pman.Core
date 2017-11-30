@@ -57,8 +57,6 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             require_once 'File/Convert.php';
             $fc = new File_Convert($path, 'text/html');
             
-            print_r($fc);exit;
-            
             $plain = $fc->convert('text/plain');
             $this->jok(file_get_contents($plain));
         }
