@@ -170,7 +170,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    //_this.dialog.el.mask(\"Sending\");\n    _this.dialog.uploadComplete = false;\n    _this.form.doAction('submit', {\n        params: {\n            ts : Math.random()\n        } \n    });\n    _this.dialog.haveProgress = 0; // set to show..\n    _this.dialog.uploadProgress.defer(1000, _this.dialog);\n\n}"
+      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    //_this.dialog.el.mask(\"Sending\");\n    _this.dialog.uploadComplete = false;\n    _this.form.doAction('submit', {\n        params: {\n            ts : Math.random()\n        }\n    });\n    _this.dialog.haveProgress = 0; // set to show..\n    _this.dialog.uploadProgress.defer(1000, _this.dialog);\n\n}"
      },
      "text" : "Upload",
      "xtype" : "Button",

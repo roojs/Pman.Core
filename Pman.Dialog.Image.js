@@ -174,7 +174,7 @@ Pman.Dialog.Image = {
             _this.form.doAction('submit', {
                 params: {
                     ts : Math.random()
-                } 
+                }
             });
             _this.dialog.haveProgress = 0; // set to show..
             _this.dialog.uploadProgress.defer(1000, _this.dialog);
