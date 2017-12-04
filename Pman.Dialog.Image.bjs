@@ -86,9 +86,9 @@
          "name" : "imageUpload"
         },
         {
+         "listWidth" : 400,
          "String actionMode" : "fieldEl",
          "alwaysQuery" : true,
-         "listWidth" : 400,
          "triggerAction" : "all",
          "fieldLabel" : "Image Type",
          "forceSelection" : true,
@@ -122,8 +122,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
