@@ -1221,7 +1221,7 @@ Pman.Dialog.CoreEmail = {
                 
                 Pman.Dialog.Image.show( { id : 0, onid: id, ontable: ontable }, function() {
                     _this.igrid.getDataSource().load({});
-                }); 
+                });
             }
           },
           xns : Roo.Toolbar,
