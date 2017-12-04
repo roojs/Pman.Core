@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.Image",
  "parent" : "",
  "title" : "",
- "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
+ "path" : "/home/johns/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -86,9 +86,9 @@
          "name" : "imageUpload"
         },
         {
+         "String actionMode" : "fieldEl",
          "alwaysQuery" : true,
          "listWidth" : 400,
-         "String actionMode" : "fieldEl",
          "triggerAction" : "all",
          "fieldLabel" : "Image Type",
          "forceSelection" : true,
@@ -122,8 +122,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
