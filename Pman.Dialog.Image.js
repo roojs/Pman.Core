@@ -331,7 +331,7 @@ Pman.Dialog.Image = {
           qtip : _this._strings['dff0c70e4c11953e4e3ee1cf268fb96d'] /* Select image type */,
           queryParam : 'query[search]',
           selectOnFocus : true,
-          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>',
+          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}???</b> {name}</div>',
           triggerAction : 'all',
           typeAhead : true,
           valueField : 'name',

@@ -107,7 +107,7 @@
          "name" : "imgtype_name",
          "qtip" : "Select image type",
          "queryParam" : "query[search]",
-         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>",
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}???</b> {name}</div>",
          "loadingText" : "Searching...",
          "items" : [
           {
