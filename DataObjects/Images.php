@@ -185,9 +185,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
-        $opts = HTML_FlexyFramework::get()->Coba;
-        
-        print_r($opts);exit;
         return implode( '/', array(
             $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
         ));
