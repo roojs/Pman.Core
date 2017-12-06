@@ -77,7 +77,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     onRender: function (ct, position) {
         Ext.form.SecurePass.superclass.onRender.call(this, ct, position);
         this.wrap = this.el.wrap({cls: 'x-form-field-wrap'});
-        this.trigger = this.wrap.createChild({tag: 'div', cls: 'StrengthMeter ' + this.triggerClass});
+        this.trigger = this.wrap.createChild({tag: 'div', cls: 'roo-strength-meter ' + this.triggerClass});
 
         this.trigger.createChild({
             tag: 'div',
