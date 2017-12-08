@@ -137,6 +137,7 @@ class Pman_Core_Mailer {
         $tmp_opts = array(
            // 'forceCompile' => true,
             'site_prefix' => false,
+            'multiSource' => true,
         );
         if (!empty($this->templateDir)) {
             $tmp_opts['templateDir'] = $this->templateDir;
