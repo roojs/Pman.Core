@@ -222,6 +222,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($this->name)) {
             return $this->email;
         }
+        
+        var_dump( '"' . addslashes($this->name) . '" <' . $this->email . '>');exit;
+        
         return '"' . addslashes($this->name) . '" <' . $this->email . '>';
     }
     
