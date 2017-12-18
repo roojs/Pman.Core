@@ -66,7 +66,6 @@ class Pman_Core_DataObjects_Core_person_signup extends DB_DataObject
             'serverName'    => $_SERVER['SERVER_NAME'],
             'baseURL'       => $roo->baseURL
         );
-       
         
         $sent = DB_DataObject::factory('core_email')->send($content);
         
