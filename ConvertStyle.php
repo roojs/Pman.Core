@@ -52,10 +52,10 @@ class Pman_Core_ConvertStyle extends Pman
     
     function checkHeader($url)
     {
-        if(strpos($url, 'https') !== false)
-        {
-            $this->jerr('accept HTTP url only!');
-        }
+        // if(strpos($url, 'https') !== false)
+        // {
+        //     $this->jerr('accept HTTP url only!');
+        // }
         $headers = get_headers($url, 1);
         if(strpos(is_array($headers['Content-Type']) ? $headers['Content-Type'][0] : $headers['Content-Type'], 'text/html') === false)
         {
