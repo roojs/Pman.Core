@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
              foreach(explode(',', $q['user_ids']) as $uid) {
                 switch($q['_action']) {
                     case 'add':
-                        $g->addMember($uid);
+                        $g->addMember($uid,$roo);
                         break;
                     case 'sub':
                         $g->removeMember($uid);
