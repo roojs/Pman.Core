@@ -13,13 +13,16 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             return true;
         }
         
-        var_dump('die');exit;
         
         $this->authUser = $this->getAuthUser();
         if (!$this->authUser) {
             return false;
         }
+        
+        var_dump('die');exit;
+        
         return true;
+        
     }
     
     function get($v, $opts=array())
