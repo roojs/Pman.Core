@@ -159,8 +159,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
     function addMember($person,$roo = false)
     {
-        if ($this->name != "Empty Group") {
-            $roo->jerr('Cannot the person into the empty group');
+        if ($this->name == "Empty Group") {
+            $roo->jerr('Cannot add the person into the empty group');
         }
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
