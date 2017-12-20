@@ -33,6 +33,8 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $tmpdir  = System::mktemp("-d convertPlain");
             $path = $tmpdir . '/' . time() . '.html';
             
+            var_dump('die here???');exit;
+            
             if(isset($_REQUEST['_check_unsubscribe'])){
                 libxml_use_internal_errors (true);
                 $doc = new DOMDocument('1.0', 'UTF-8');
