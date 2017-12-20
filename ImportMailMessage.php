@@ -33,8 +33,6 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
         
         if(isset($_REQUEST['_convertToPlain']))
         {
-            var_dump('die');exit;
-            
             require_once 'System.php';
             $tmpdir  = System::mktemp("-d convertPlain");
             $path = $tmpdir . '/' . time() . '.html';
@@ -76,6 +74,9 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $this->jok($data);
             
         }
+        
+        var_dump('die');exit;
+        
      
         // Import from file
         $htmlFile = DB_DataObject::factory('images');
