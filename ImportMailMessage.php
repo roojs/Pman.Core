@@ -30,6 +30,8 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
     
     function post($v)
     {   
+        var_dump('die');exit;
+        
         if(isset($_REQUEST['_convertToPlain']))
         {
             require_once 'System.php';
