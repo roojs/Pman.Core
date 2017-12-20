@@ -8,11 +8,13 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
 {
     function getAuth()
     {
-        var_dump('die');exit;
         
         if (HTML_FlexyFramework::get()->cli) {
             return true;
         }
+        
+        var_dump('die');exit;
+        
         $this->authUser = $this->getAuthUser();
         if (!$this->authUser) {
             return false;
