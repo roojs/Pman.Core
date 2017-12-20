@@ -68,14 +68,17 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
         // Import from URL
         if(isset($_REQUEST['importUrl']))
         {
+            
             $this->checkHeader($_REQUEST['importUrl']);
+            
+            var_dump('die');exit;
+            
             $data = $this->convertStyle($_REQUEST['importUrl'], '', true);
          
             $this->jok($data);
             
         }
         
-        var_dump('die');exit;
         
      
         // Import from file
