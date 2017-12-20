@@ -20,6 +20,7 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
     
     function get($v, $opts=array())
     {
+        var_dump('die here???');exit;
         $this->post();
         
         return $this->jerr("not allowed");
