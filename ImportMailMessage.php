@@ -8,17 +8,14 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
 {
     function getAuth()
     {
-        
         if (HTML_FlexyFramework::get()->cli) {
             return true;
         }
-        
         $this->authUser = $this->getAuthUser();
         if (!$this->authUser) {
             return false;
         }
-
-        return true;        
+        return true;
     }
     
     function get($v, $opts=array())
@@ -30,7 +27,6 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
     
     function post($v)
     {   
-        
         if(isset($_REQUEST['_convertToPlain']))
         {
             require_once 'System.php';
@@ -68,18 +64,12 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
         // Import from URL
         if(isset($_REQUEST['importUrl']))
         {
-            
             $this->checkHeader($_REQUEST['importUrl']);
-            
-            var_dump('die');exit;
-            
             $data = $this->convertStyle($_REQUEST['importUrl'], '', true);
          
             $this->jok($data);
             
         }
-        
-        
      
         // Import from file
         $htmlFile = DB_DataObject::factory('images');
