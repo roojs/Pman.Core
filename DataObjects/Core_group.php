@@ -157,7 +157,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         return $gm->count();
     }
 
-    function addMember($person)
+    function addMember($person,$roo)
     {
         if ($this->name != "Empty Group") {
             //$this->jerr('Cannot the person into the empty group');
