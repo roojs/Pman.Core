@@ -104,7 +104,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     }
     function onUpdate($old, $req, $roo)
     {
-        var_dump('die here');exit;
         $this->ensureLeaderMembership($roo);
     }
     function onInsert($req, $roo)
