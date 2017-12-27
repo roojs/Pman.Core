@@ -65,6 +65,10 @@ class Pman_Core_Asset extends Pman {
             exit;
         }
         
+        
+        $supportsGzip = !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos( $_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip' ) !== false;
+
+        
         $last_modified_time = filemtime($fn);
         
         
