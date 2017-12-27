@@ -100,8 +100,7 @@ class Pman_Core_Asset extends Pman {
             $content = gzencode( file_get_contents($fn) , 9);
             
             header('Content-Encoding: gzip');
-                header('Vary: Accept-Encoding');
-
+            header('Vary: Accept-Encoding');
             header('Content-Length: '. strlen($content));
             
             echo $content;
