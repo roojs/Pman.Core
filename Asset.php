@@ -90,15 +90,30 @@ class Pman_Core_Asset extends Pman {
         
         
         header("Pragma: public");
-        header('Content-Length: '. filesize($fn));
+        
         header('Cache-Control: max-age=2592000, public');
         header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
         header('Last-Modified: '.gmdate('D, d M Y H:i:s \G\M\T', $last_modified_time));
         header('Etag: '. md5($fn)); 
         
-        $fh = fopen($fn,'r');
-        fpassthru($fh);
-        fclose($fh);
+         if ( $supportsGzip ) {
+            $content = gzencode( file_get_contents($fn) , 9);
+            
+            header('Content-Encoding: gzip');
+            header('Content-Length: '. strlen($content));
+            echo $content;
+            
+        } else {
+            
+            
+            $fh = fopen($fn,'r');
+            fpassthru($fh);
+            fclose($fh);
+            $content = $data;
+        }
+        
+        
+        
         exit;
         
     }
