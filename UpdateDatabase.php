@@ -863,7 +863,6 @@ class Pman_Core_UpdateDatabase extends Pman
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
             
-            print_r($got_it);exit;
             
             
             if ($update) {
@@ -882,6 +881,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 'update' => 1,
                 'file' => $templateDir. $name .'.html'
             );
+            
+            print_r($got_it);exit;
+            
             
             if (!empty($data['master'])) {
                 $opts['master'] = $templateDir . $master .'.html';
