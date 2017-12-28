@@ -54,6 +54,7 @@ class Pman_Core_Import_Core_email extends Pman
         $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
         
         if (!file_exists($opts['file'])) {
+            print_r('die here');exit;
             $this->jerr("file does not exist : " . $opts['file']);
         }
         
