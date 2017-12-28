@@ -199,8 +199,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         // groups databse is hard coded to person.. so this should not be used for other tables.????
         $p = DB_Dataobject::factory( 'core_person' );
 
-
-
         $p->whereAdd('id IN ('. implode(',', $ids) .')');
         $p->active = 1;
 
