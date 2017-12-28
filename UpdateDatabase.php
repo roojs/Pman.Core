@@ -870,7 +870,6 @@ class Pman_Core_UpdateDatabase extends Pman
                 //$cm->insert();
             }
             
-            print_r('die here');exit;
             
     //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
             
