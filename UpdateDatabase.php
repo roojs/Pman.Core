@@ -882,12 +882,14 @@ class Pman_Core_UpdateDatabase extends Pman
                 'file' => $templateDir. $name .'.html'
             );
             
-            print_r($got_it);exit;
             
             
             if (!empty($data['master'])) {
                 $opts['master'] = $templateDir . $master .'.html';
             }
+            
+            print_r($got_it);exit;
+            
             require_once 'Pman/Core/Import/Core_email.php';
             $x = new Pman_Core_Import_Core_email();
             $x->updateOrCreateEmail('', $opts, $cm);
