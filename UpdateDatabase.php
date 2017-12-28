@@ -840,15 +840,15 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->bcc_group = $g->id;
             }
             
-            print_r('die here');exit;
-            
-            
             if (empty($cm->test_class)) {
                 if (empty($data['test_class'])) {
                     $this->jerr("missing test_class for template $name");
                 }
                 $cm->test_class = $data['test_class'];
             }
+            
+            print_r('die here');exit;
+            
             require_once $cm->test_class . '.php';
             
             $clsname = str_replace('/','_', $cm->test_class);
