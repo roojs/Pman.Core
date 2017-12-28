@@ -858,7 +858,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $got_it = false;
                 
             }
-            // print_r($got_it);exit;
+            print_r($got_it);exit;
             if (!$got_it) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
