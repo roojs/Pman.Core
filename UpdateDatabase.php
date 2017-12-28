@@ -847,7 +847,6 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->test_class = $data['test_class'];
             }
             
-            print_r('die here');exit;
             
             require_once $cm->test_class . '.php';
             
@@ -871,6 +870,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 //$cm->insert();
             }
             
+            print_r('die here');exit;
             
     //        $basedir = $this->bootLoader->rootDir . $mail_template_dir;
             
