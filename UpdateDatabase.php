@@ -817,6 +817,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function initEmails($templateDir, $emails)
     {
+      
         $pg = HTML_FlexyFramework::get()->page;
         foreach($emails as $name=>$data) {
             $cm = DB_DataObject::factory('core_email');
@@ -833,21 +834,19 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
                 
+                
                 if (!$g->members('email')) {
                     $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
                 
                 $cm->bcc_group = $g->id;
             }
-            
             if (empty($cm->test_class)) {
                 if (empty($data['test_class'])) {
                     $this->jerr("missing test_class for template $name");
                 }
                 $cm->test_class = $data['test_class'];
             }
-            
-            
             require_once $cm->test_class . '.php';
             
             $clsname = str_replace('/','_', $cm->test_class);
@@ -858,13 +857,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 $got_it = false;
                 
             }
-
             if (!$got_it) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
-            
-            
-            
             if ($update) {
                 $cm->update($old);
                 echo "email: {$name} - checked\n";
@@ -882,18 +877,11 @@ class Pman_Core_UpdateDatabase extends Pman
                 'file' => $templateDir. $name .'.html'
             );
             
-            
-            
             if (!empty($data['master'])) {
                 $opts['master'] = $templateDir . $master .'.html';
             }
-            
-            
             require_once 'Pman/Core/Import/Core_email.php';
-            
             $x = new Pman_Core_Import_Core_email();
-            print_r($got_it);exit;
-            
             $x->updateOrCreateEmail('', $opts, $cm);
             
             echo "email: {$name} - CREATED\n";
