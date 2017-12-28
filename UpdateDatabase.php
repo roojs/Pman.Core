@@ -858,9 +858,11 @@ class Pman_Core_UpdateDatabase extends Pman
                 $got_it = false;
                 
             }
+            //
             if (!$got_it) {
                 $this->jerr("template {$name} does not have a test method {$clsname}::test_{$name}");
             }
+            
             if ($update) {
                 $cm->update($old);
                 echo "email: {$name} - checked\n";
