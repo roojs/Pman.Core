@@ -389,6 +389,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $r->images = $images;
         }
         
+        var_dump($r);exit;
+        
         return $r;
     }
     function toMailerData($obj,$force=false)
