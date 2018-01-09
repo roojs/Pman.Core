@@ -113,8 +113,6 @@ class Pman_Core_MessagePreview extends Pman
 
         $content = $x->{$method}($this, $this->authUser);
         
-        var_dump($content);exit;
-        
         $sent = $core_email->send($content);
         
         if(is_object($sent)){
