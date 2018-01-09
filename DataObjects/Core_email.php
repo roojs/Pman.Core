@@ -413,7 +413,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if(!empty($obj['rcpts'])) {
-            
+            $rcpts = $obj['rcpts'];
+            if (strpos($obj['rcpts'], '@') == false) {
+                $rcpts = array();
+                $gp = DB_DataObject::factory('core_group');
+                $gp->get('name', $obj['rcpts']);
+                foreach ($gp->members() as $v) {
+                    $rcpts[] = $v->email;
+                }
+                $obj['rcpts'] = $rcpts;
+            }
         }
         
         
