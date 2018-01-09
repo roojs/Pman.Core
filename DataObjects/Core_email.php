@@ -306,8 +306,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
 
-        var_dump($this->id);
-         
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
@@ -369,6 +367,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'contents' => $contents,
             'css_embed' => true, // we should always try and do this with emails...
         );
+        
+        var_dump($cfg);
         
         if (isset($contents['rcpts'])) {
             $cfg['rcpts'] = $contents['rcpts'];
