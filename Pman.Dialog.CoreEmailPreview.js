@@ -2,114 +2,128 @@
 
 // Auto generated file - created by app.Builder.js- do not edit directly (at present!)
 
+Roo.namespace('Pman.Dialog');
+
 Pman.Dialog.CoreEmailPreview = {
 
-    dialog : false,
-    callback:  false,
+ _strings : {
+  '4cd8413207629a963225f4314b53adcd' :"Plain",
+  '4c4ad5fca2e7a3f74dbb1ced00381aa4' :"HTML",
+  '006c82ffdd63692a84a259c4f8732842' :"Email Preview",
+  'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
+ },
 
-    show : function(data, cb)
-    {
-        if (!this.dialog) {
-            this.create();
-        }
+ dialog : false,
+ callback:  false,
 
-        this.callback = cb;
-        this.data = data;
-        this.dialog.show(this.data._el);
-        if (this.form) {
-           this.form.reset();
-           this.form.setValues(data);
-           this.form.fireEvent('actioncomplete', this.form,  { type: 'setdata', data: data });
-        }
+ show : function(data, cb)
+ {
+  if (!this.dialog) {
+   this.create();
+  }
 
+  this.callback = cb;
+  this.data = data;
+  this.dialog.show(this.data._el);
+  if (this.form) {
+   this.form.reset();
+   this.form.setValues(data);
+   this.form.fireEvent('actioncomplete', this.form,  { type: 'setdata', data: data });
+  }
+
+ },
+
+ create : function()
+ {
+   var _this = this;
+   this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
+    autoScroll : true,
+    closable : true,
+    height : 800,
+    shadow : true,
+    title : _this._strings['006c82ffdd63692a84a259c4f8732842'] /* Email Preview */,
+    width : 1200,
+    listeners : {
+     show : function (_self)
+      {
+          
+          _self.layout.getRegion('center').showPanel(0);
+          _this.panel.load({ 
+              url: baseURL + '/Core/MessagePreview', 
+              params  : {
+                  _id : _this.data.id,
+                  _table : _this.data.module
+              },
+              method : 'GET'
+          });
+          _this.hpanel.load({ 
+              url: baseURL + '/Core/MessagePreview', 
+              params  : {
+                  _as_html : 1,
+                  _id : _this.data.id,
+                  _table : _this.data.module
+              },
+              method : 'GET'
+          });
+              
+      }
     },
-
-    create : function()
-    {
-        var _this = this;
-        this.dialog = Roo.factory({
-            xtype: 'LayoutDialog',
-            xns: Roo,
-            listeners : {
-                show : function (_self)
-                {
-                    
-                    _self.layout.getRegion('center').showPanel(0);
-                    _this.panel.load({ 
-                        url: baseURL + '/Core/MessagePreview', 
-                        params  : {
-                            _id : _this.data.id,
-                            _table : _this.data.module
-                        },
-                        method : 'GET'
-                    });
-                    _this.hpanel.load({ 
-                        url: baseURL + '/Core/MessagePreview', 
-                        params  : {
-                            _as_html : 1,
-                            _id : _this.data.id,
-                            _table : _this.data.module
-                        },
-                        method : 'GET'
-                    });
-                        
-                }
-            },
-            autoScroll : true,
-            closable : true,
-            height : 800,
-            shadow : 'true',
-            title : "Email Preview",
-            width : 1200,
-            items : [
-                {
-                    xtype: 'ContentPanel',
-                    xns: Roo,
-                    listeners : {
-                        render : function (_self)
-                        {
-                            _this.panel = _self;
-                        }
-                    },
-                    fitContainer : true,
-                    fitToFrame : true,
-                    region : 'center',
-                    title : "Plain"
-                },
-                {
-                    xtype: 'ContentPanel',
-                    xns: Roo,
-                    listeners : {
-                        render : function (_self)
-                        {
-                            _this.hpanel = _self;
-                        }
-                    },
-                    fitContainer : true,
-                    fitToFrame : true,
-                    region : 'center',
-                    title : "HTML"
-                }
-            ],
-            center : {
-                xtype: 'LayoutRegion',
-                xns: Roo,
-                autoScroll : true,
-                tabPosition : 'top'
-            },
-            buttons : [
-                {
-                    xtype: 'Button',
-                    xns: Roo,
-                    listeners : {
-                        click : function (_self, e)
-                        {
-                            _this.dialog.hide();
-                        }
-                    },
-                    text : "OK"
-                }
-            ]
-        });
-    }
+    xns : Roo,
+    '|xns' : 'Roo',
+    center : {
+     xtype : 'LayoutRegion',
+     autoScroll : true,
+     tabPosition : 'top',
+     xns : Roo,
+     '|xns' : 'Roo'
+    },
+    buttons : [
+     {
+      xtype : 'Button',
+      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     }
+    ],
+    items  : [
+     {
+      xtype : 'ContentPanel',
+      fitContainer : true,
+      fitToFrame : true,
+      region : 'center',
+      title : _this._strings['4cd8413207629a963225f4314b53adcd'] /* Plain */,
+      listeners : {
+       render : function (_self)
+        {
+            _this.panel = _self;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'ContentPanel',
+      fitContainer : true,
+      fitToFrame : true,
+      region : 'center',
+      title : _this._strings['4c4ad5fca2e7a3f74dbb1ced00381aa4'] /* HTML */,
+      listeners : {
+       render : function (_self)
+        {
+            _this.hpanel = _self;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     }
+    ]
+   });
+ }
 };

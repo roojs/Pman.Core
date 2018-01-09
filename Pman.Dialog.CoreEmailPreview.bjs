@@ -1,64 +1,69 @@
 {
-    "id": "roo-file-316",
-    "name": "Pman.Dialog.CoreEmailPreview",
-    "parent": "",
-    "title": "",
-    "path": "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreEmailPreview.bjs",
-    "items": [
-        {
-            "listeners": {
-                "show": "function (_self)\n{\n    \n    _self.layout.getRegion('center').showPanel(0);\n    _this.panel.load({ \n        url: baseURL + '/Core/MessagePreview', \n        params  : {\n            _id : _this.data.id,\n            _table : _this.data.module\n        },\n        method : 'GET'\n    });\n    _this.hpanel.load({ \n        url: baseURL + '/Core/MessagePreview', \n        params  : {\n            _as_html : 1,\n            _id : _this.data.id,\n            _table : _this.data.module\n        },\n        method : 'GET'\n    });\n        \n}"
-            },
-            "autoScroll": true,
-            "closable": true,
-            "height": 800,
-            "shadow": "true",
-            "title": "Email Preview",
-            "width": 1200,
-            "xtype": "LayoutDialog",
-            "|xns": "Roo",
-            "items": [
-                {
-                    "*prop": "center",
-                    "autoScroll": true,
-                    "tabPosition": "top",
-                    "xtype": "LayoutRegion",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "render": "function (_self)\n{\n    _this.panel = _self;\n}"
-                    },
-                    "fitContainer": true,
-                    "fitToFrame": true,
-                    "region": "center",
-                    "title": "Plain",
-                    "xtype": "ContentPanel",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "render": "function (_self)\n{\n    _this.hpanel = _self;\n}"
-                    },
-                    "fitContainer": true,
-                    "fitToFrame": true,
-                    "region": "center",
-                    "title": "HTML",
-                    "xtype": "ContentPanel",
-                    "|xns": "Roo"
-                },
-                {
-                    "listeners": {
-                        "click": "function (_self, e)\n{\n    _this.dialog.hide();\n}"
-                    },
-                    "*prop": "buttons[]",
-                    "text": "OK",
-                    "xtype": "Button",
-                    "|xns": "Roo"
-                }
-            ]
-        }
-    ],
-    "permname": "",
-    "modOrder": "001"
+ "name" : "Pman.Dialog.CoreEmailPreview",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/johns/gitlive/Pman.Core/Pman.Dialog.CoreEmailPreview.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "strings" : {
+  "4cd8413207629a963225f4314b53adcd" : "Plain",
+  "4c4ad5fca2e7a3f74dbb1ced00381aa4" : "HTML",
+  "006c82ffdd63692a84a259c4f8732842" : "Email Preview",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK"
+ },
+ "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    \n    _self.layout.getRegion('center').showPanel(0);\n    _this.panel.load({ \n        url: baseURL + '/Core/MessagePreview', \n        params  : {\n            _id : _this.data.id,\n            _table : _this.data.module\n        },\n        method : 'GET'\n    });\n    _this.hpanel.load({ \n        url: baseURL + '/Core/MessagePreview', \n        params  : {\n            _as_html : 1,\n            _id : _this.data.id,\n            _table : _this.data.module\n        },\n        method : 'GET'\n    });\n        \n}"
+   },
+   "shadow" : true,
+   "autoScroll" : true,
+   "title" : "Email Preview",
+   "xtype" : "LayoutDialog",
+   "width" : 1200,
+   "$ xns" : "Roo",
+   "closable" : true,
+   "height" : 800,
+   "items" : [
+    {
+     "autoScroll" : true,
+     "xtype" : "LayoutRegion",
+     "tabPosition" : "top",
+     "$ xns" : "Roo",
+     "* prop" : "center"
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.panel = _self;\n}"
+     },
+     "region" : "center",
+     "fitToFrame" : true,
+     "title" : "Plain",
+     "xtype" : "ContentPanel",
+     "fitContainer" : true,
+     "$ xns" : "Roo"
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.hpanel = _self;\n}"
+     },
+     "region" : "center",
+     "fitToFrame" : true,
+     "title" : "HTML",
+     "xtype" : "ContentPanel",
+     "fitContainer" : true,
+     "$ xns" : "Roo"
+    },
+    {
+     "listeners" : {
+      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+     },
+     "text" : "OK",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
 }
