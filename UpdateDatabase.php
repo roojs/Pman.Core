@@ -841,12 +841,13 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 $cm->bcc_group = $g->id;
             }
-            if (empty($cm->test_class)) {
+            // initEmails will always have the latest location of the test class - in theory the user should not be changign the value of this...
+            //if (empty($cm->test_class)) {
                 if (empty($data['test_class'])) {
                     $this->jerr("missing test_class for template $name");
                 }
                 $cm->test_class = $data['test_class'];
-            }
+            //}
             require_once $cm->test_class . '.php';
             
             $clsname = str_replace('/','_', $cm->test_class);
