@@ -303,11 +303,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {
         require_once 'PEAR.php';
         
-        var_dump($obj);
-        
         $p = new PEAR();
         $contents = (array)$obj;
-
          
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
