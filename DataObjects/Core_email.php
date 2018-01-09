@@ -412,7 +412,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             return $this->toMailerData($obj,$force);
         }
         
-        var_dump($obj);exit;
+        if(!empty($obj['rcpts'])) {
+            
+        }
+        
         
         $r = $this->toMailer($obj, $force);
         if (is_a($r, 'PEAR_Error')) {
