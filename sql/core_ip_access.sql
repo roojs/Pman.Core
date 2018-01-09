@@ -5,6 +5,7 @@ CREATE TABLE core_ip_access (
 );
 
 ALTER TABLE core_ip_access ADD COLUMN ip VARCHAR(32) NOT NULL DEFAULT '';
+ALTER TABLE core_ip_access ADD COLUMN created_dt DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00';
 
 
 
