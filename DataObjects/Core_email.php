@@ -306,7 +306,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
         
-        var_dump($content);exit;
+        var_dump($contents);exit;
         
         if (!empty($obj['subject_replace'])) {
             $mapping = array(
