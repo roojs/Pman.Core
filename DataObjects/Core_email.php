@@ -356,6 +356,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
          
         require_once 'Pman/Core/Mailer.php';
         
+			var_dump('die');exit;        
+        
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
         //print_r($this);
         
