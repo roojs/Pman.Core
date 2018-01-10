@@ -312,6 +312,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $this->get('name', $contents['template']);
         }
         
+        var_dump('die');exit;
+        
         if(empty($this->active)){
             return $p->raiseError("template [{$contents['template']}] is Disabled");
         }
@@ -321,7 +323,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         // fill in BCC
-        var_dump('die');exit;
+        
         if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
             $admin = DB_DAtaObject::Factory('core_group')->lookupMembersByGroupId($this->bcc_group,'email');
             
