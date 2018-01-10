@@ -404,6 +404,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     /**
      *
      * DEPRICATED !!! - DO NOT USE THIS !!!
+     *
+     * use: toMailerData() -- to return the email data..
+     * or toMailer($obj, false)->send()
+     *
+     * 
      */
     
     function send($obj, $force = true, $send = true)
