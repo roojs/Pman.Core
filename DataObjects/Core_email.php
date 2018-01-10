@@ -315,12 +315,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(empty($this->active)){
             return $p->raiseError("template [{$contents['template']}] is Disabled");
         }
+        var_dump($this->id);exit;
         
         if(empty($this->id)){
             return $p->raiseError("template [{$contents['template']}] has not been set");
         }
-        
-        var_dump('die');exit;
         
         // fill in BCC
         
