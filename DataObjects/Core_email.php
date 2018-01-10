@@ -425,6 +425,17 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
         }
         
+        if (!empty($obj['is_subject_replace']) && $obj['is_subject_replace'] > 0) {
+            $mapping = array(
+                '/{person.name}/' => $obj['person']->name
+            );
+            
+            $subject = $this->subject;
+            foreach ($mapping as $pattern => $replace) {
+                $subject = preg_replace($pattern,$replace,$subject);
+            }
+        }
+        
         $r = $this->toMailer($obj, $force);
         if (is_a($r, 'PEAR_Error')) {
             return $r;
