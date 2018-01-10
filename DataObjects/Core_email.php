@@ -321,6 +321,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         // fill in BCC
+        var_dump('die');exit;
         if (!empty($this->bcc_group) && empty($contents['rcpts_group'])) {
             $admin = DB_DAtaObject::Factory('core_group')->lookupMembersByGroupId($this->bcc_group,'email');
             
@@ -346,9 +347,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
             $contents['rcpts'] = implode(',', $contents['rcpts']);
-        }
-        
-			var_dump('die');exit;        
+        }     
         
         $ui = posix_getpwuid(posix_geteuid());
         
