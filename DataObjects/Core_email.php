@@ -303,8 +303,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {
         require_once 'PEAR.php';
         
-		  var_dump('die here');exit;        
-        
         $p = new PEAR();
         $contents = (array)$obj;
 
