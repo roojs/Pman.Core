@@ -319,7 +319,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
         }
         
-        if (!empty($obj['is_subject_replace'])) {
+        if (!empty($obj['subject_replace'])) {
             $mapping = array(
                 '/{person.name}/' => $obj['person']->name
             );
