@@ -306,8 +306,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
         
-        var_dump($contents);exit;
-        
         if (!empty($obj['subject_replace'])) {
             $mapping = array(
                 '/{person.name}/' => $obj['person']->name
@@ -380,6 +378,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             'contents' => $contents,
             'css_embed' => true, // we should always try and do this with emails...
         );
+        
+        var_dump($cfg);exit;
         
         if (isset($contents['rcpts'])) {
             $cfg['rcpts'] = $contents['rcpts'];
