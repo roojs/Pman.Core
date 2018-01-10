@@ -412,12 +412,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             return $this->toMailerData($obj,$force);
         }
         
-        if(!empty($obj['rcpts'])) {
-            $rcpts = $obj['rcpts'];
-            if (strpos($obj['rcpts'], '@') == false) {
+        if(!empty($obj['rcpts_gp'])) {
+            $rcpts = $obj['rcpts_gp'];
+            if (strpos($obj['rcpts_gp'], '@') == false) {
                 $rcpts = array();
                 $gp = DB_DataObject::factory('core_group');
-                $gp->get('name', $obj['rcpts']);
+                $gp->get('name', $obj['rcpts_gp']);
                 foreach ($gp->members() as $v) {
                     $rcpts[] = $v->email;
                 }
