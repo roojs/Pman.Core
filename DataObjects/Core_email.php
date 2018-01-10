@@ -304,7 +304,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     	
     	
         require_once 'PEAR.php';
-        var_dump('die');exit;
+        
         $p = new PEAR();
         $contents = (array)$obj;
 
@@ -347,6 +347,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
             $contents['rcpts'] = implode(',', $contents['rcpts']);
         }
+        
+			var_dump('die');exit;        
         
         $ui = posix_getpwuid(posix_geteuid());
         
