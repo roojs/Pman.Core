@@ -311,8 +311,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
-        
-			var_dump($contents['template']);exit;        
+             
         
         if(empty($this->active)){
             return $p->raiseError("template [{$contents['template']}] is Disabled");
