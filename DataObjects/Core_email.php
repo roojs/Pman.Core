@@ -305,18 +305,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $p = new PEAR();
         $contents = (array)$obj;
-        
-        if (!empty($obj['subject_replace'])) {
-            $mapping = array(
-                '/{person.name}/' => $obj['person']->name
-            );
-            $subject = $obj['subject'];
-            foreach ($mapping as $pattern => $replace) {
-                $subject = preg_replace($pattern,$replace,$subject);
-            }
-            $content['subject'] = $subject;
-        }
-         
+
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
