@@ -429,11 +429,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $mapping = array(
                 '/{person.name}/' => $obj['person']->name
             );
-            
             $subject = $this->subject;
             foreach ($mapping as $pattern => $replace) {
                 $subject = preg_replace($pattern,$replace,$subject);
             }
+            $obj['subject'] = $subject;
         }
         
         $r = $this->toMailer($obj, $force);
