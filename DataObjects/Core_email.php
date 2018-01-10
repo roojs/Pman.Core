@@ -301,10 +301,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function toMailer($obj,$force=false)
     {
-    	var_dump('die');exit;
+    	
     	
         require_once 'PEAR.php';
-        
+        var_dump('die');exit;
         $p = new PEAR();
         $contents = (array)$obj;
 
