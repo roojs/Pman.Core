@@ -306,12 +306,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
 
-        if(!empty($obj['rcpts_gp'])) {
-            $rcpts = $obj['rcpts_gp'];
-            if (strpos($obj['rcpts_gp'], '@') == false) {
+        if(!empty($obj['rcpts_group'])) {
+            $rcpts = $obj['rcpts_group'];
+            if (strpos($obj['rcpts_group'], '@') == false) {
                 $rcpts = array();
                 $gp = DB_DataObject::factory('core_group');
-                $gp->get('name', $obj['rcpts_gp']);
+                $gp->get('name', $obj['rcpts_group']);
                 foreach ($gp->members() as $v) {
                     $rcpts[] = $v->email;
                 }
