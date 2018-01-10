@@ -306,6 +306,29 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
 
+        if(!empty($obj['rcpts_gp'])) {
+            $rcpts = $obj['rcpts_gp'];
+            if (strpos($obj['rcpts_gp'], '@') == false) {
+                $rcpts = array();
+                $gp = DB_DataObject::factory('core_group');
+                $gp->get('name', $obj['rcpts_gp']);
+                foreach ($gp->members() as $v) {
+                    $rcpts[] = $v->email;
+                }
+                $content['rcpts'] = $rcpts;
+            }
+        }
+        
+        if (!empty($obj['is_subject_replace'])) {
+            $mapping = array(
+                '/{person.name}/' => $obj['person']->name
+            );
+            $subject = $obj['subject'];
+            foreach ($mapping as $pattern => $replace) {
+                $subject = preg_replace($pattern,$replace,$subject);
+            }
+            $content['subject'] = $subject;
+        }
          
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
@@ -415,30 +438,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     {   
         if (!$send) {
             return $this->toMailerData($obj,$force);
-        }
-        
-        if(!empty($obj['rcpts_gp'])) {
-            $rcpts = $obj['rcpts_gp'];
-            if (strpos($obj['rcpts_gp'], '@') == false) {
-                $rcpts = array();
-                $gp = DB_DataObject::factory('core_group');
-                $gp->get('name', $obj['rcpts_gp']);
-                foreach ($gp->members() as $v) {
-                    $rcpts[] = $v->email;
-                }
-                $obj['rcpts'] = $rcpts;
-            }
-        }
-        
-        if (!empty($obj['is_subject_replace'])) {
-            $mapping = array(
-                '/{person.name}/' => $obj['person']->name
-            );
-            $subject = $obj['subject'];
-            foreach ($mapping as $pattern => $replace) {
-                $subject = preg_replace($pattern,$replace,$subject);
-            }
-            $obj['subject'] = $subject;
         }
         
         $r = $this->toMailer($obj, $force);
