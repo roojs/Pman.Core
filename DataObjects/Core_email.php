@@ -306,6 +306,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
         
+        var_dump($contents);
+        exit;
         /*
         if(!empty($obj['rcpts_group'])) {
             $rcpts = $obj['rcpts_group'];
