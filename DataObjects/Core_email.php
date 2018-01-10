@@ -305,7 +305,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $p = new PEAR();
         $contents = (array)$obj;
-
+        
+        /*
         if(!empty($obj['rcpts_group'])) {
             $rcpts = $obj['rcpts_group'];
             if (strpos($obj['rcpts_group'], '@') == false) {
@@ -318,6 +319,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 $content['rcpts'] = $rcpts;
             }
         }
+        */
         
         if (!empty($obj['subject_replace'])) {
             $mapping = array(
