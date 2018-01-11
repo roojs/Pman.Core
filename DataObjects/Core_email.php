@@ -341,8 +341,15 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $contents['rcpts'] = $admin;
         }
         
+        //subject replacement
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
+        }
+        
+        if (!empty($content['subject_replace'])) {
+            foreach ($content['mapping'] as $pattern => $replace) {
+                $content['subject'] = preg_replace($pattern,$replace,$content['subject']);
+            }
         }
         
         if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
