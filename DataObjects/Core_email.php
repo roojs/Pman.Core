@@ -301,8 +301,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     
     function toMailer($obj,$force=false)
     {
-    	
-    	
         require_once 'PEAR.php';
         
         $p = new PEAR();
