@@ -306,6 +306,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $p = new PEAR();
         $contents = (array)$obj;
         
+        var_dump($content);
+        
         if(empty($this->id) && !empty($contents['template'])){
             $this->get('name', $contents['template']);
         }
