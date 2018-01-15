@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function applyPermissionFilters()
+    function applyPermissionFilters($q, $au ,$roo)
     {
         if (!$au->hasPerm("Admin.Admin_Tab", 'S') &&  !$au->hasPerm("BAdmin.BAdmin", 'S')) {
             //DB_DataObject::DebugLevel(1);
