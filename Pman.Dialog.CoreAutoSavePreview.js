@@ -39,6 +39,7 @@ Pman.Dialog.CoreAutoSavePreview = {
  {
    var _this = this;
    this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
     background : false,
     closable : false,
     collapsible : false,
@@ -47,9 +48,6 @@ Pman.Dialog.CoreAutoSavePreview = {
     resizable : false,
     title : _this._strings['bd88a20b53a47f7b5704a83a15ff5506'] /* Saved Version */,
     width : 800,
-    xns : Roo,
-    '|xns' : 'Roo',
-    xtype : 'LayoutDialog',
     listeners : {
      show : function (_self)
       {
@@ -59,35 +57,35 @@ Pman.Dialog.CoreAutoSavePreview = {
           
       }
     },
+    xns : Roo,
+    '|xns' : 'Roo',
     center : {
+     xtype : 'LayoutRegion',
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     west : {
+     xtype : 'LayoutRegion',
      split : true,
      width : 200,
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     buttons : [
      {
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function() {
             _this.dialog.hide();
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
       listeners : {
        click : function() {
         
@@ -97,20 +95,20 @@ Pman.Dialog.CoreAutoSavePreview = {
                 _this.callback.call(this, _this.source);
             }
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
      {
+      xtype : 'GridPanel',
       background : false,
       fitContainer : true,
       fitToframe : true,
       region : 'west',
       tableName : 'Events',
       title : _this._strings['87f9f735a1d36793ceaecd4e47124b63'] /* Events */,
-      xns : Roo,
-      '|xns' : 'Roo',
-      xtype : 'GridPanel',
       listeners : {
        activate : function() {
             _this.panel = this;
@@ -119,12 +117,12 @@ Pman.Dialog.CoreAutoSavePreview = {
             }
         }
       },
+      xns : Roo,
+      '|xns' : 'Roo',
       grid : {
+       xtype : 'Grid',
        autoExpandColumn : 'event_when',
        loadMask : true,
-       xns : Roo.grid,
-       '|xns' : 'Roo.grid',
-       xtype : 'Grid',
        listeners : {
         render : function() 
          {
@@ -135,19 +133,19 @@ Pman.Dialog.CoreAutoSavePreview = {
              }
          }
        },
+       xns : Roo.grid,
+       '|xns' : 'Roo.grid',
        footer : {
+        xtype : 'PagingToolbar',
         displayInfo : false,
         pageSize : 25,
         xns : Roo,
-        '|xns' : 'Roo',
-        xtype : 'PagingToolbar'
+        '|xns' : 'Roo'
        },
        dataSource : {
+        xtype : 'Store',
         remoteSort : true,
         sortInfo : { field : 'event_when', direction: 'DESC' },
-        xns : Roo.data,
-        '|xns' : 'Roo.data',
-        xtype : 'Store',
         listeners : {
          beforeload : function (_self, o)
           {
@@ -174,14 +172,17 @@ Pman.Dialog.CoreAutoSavePreview = {
               }
           }
         },
+        xns : Roo.data,
+        '|xns' : 'Roo.data',
         proxy : {
+         xtype : 'HttpProxy',
          method : 'GET',
          url : baseURL + '/Roo/Events.php',
          xns : Roo.data,
-         '|xns' : 'Roo.data',
-         xtype : 'HttpProxy'
+         '|xns' : 'Roo.data'
         },
         reader : {
+         xtype : 'JsonReader',
          fields : [
              {
                  'name': 'id',
@@ -196,15 +197,12 @@ Pman.Dialog.CoreAutoSavePreview = {
          root : 'data',
          totalProperty : 'total',
          xns : Roo.data,
-         '|xns' : 'Roo.data',
-         xtype : 'JsonReader'
+         '|xns' : 'Roo.data'
         }
        },
        sm : {
-        singleSelect : true,
-        xns : Roo.grid,
-        '|xns' : 'Roo.grid',
         xtype : 'RowSelectionModel',
+        singleSelect : true,
         listeners : {
          afterselectionchange : function (_self)
           {
@@ -241,45 +239,47 @@ Pman.Dialog.CoreAutoSavePreview = {
                   
               });
           }
-        }
+        },
+        xns : Roo.grid,
+        '|xns' : 'Roo.grid'
        },
        colModel : [
         {
+         xtype : 'ColumnModel',
          dataIndex : 'event_when',
          header : _this._strings['44749712dbec183e983dcd78a7736c41'] /* Date */,
          renderer : function(v) { return String.format('{0}', v ? v.format('Y-m-d H:i:s') : ''); },
          width : 100,
          xns : Roo.grid,
-         '|xns' : 'Roo.grid',
-         xtype : 'ColumnModel'
+         '|xns' : 'Roo.grid'
         },
         {
+         xtype : 'ColumnModel',
          dataIndex : 'person_id_name',
          header : _this._strings['53e5aa2c97fef1555d2511de8218c544'] /* By */,
          renderer : function(v) { return String.format('{0}', v ); },
          width : 100,
          xns : Roo.grid,
-         '|xns' : 'Roo.grid',
-         xtype : 'ColumnModel'
+         '|xns' : 'Roo.grid'
         }
        ]
       }
      },
      {
+      xtype : 'ContentPanel',
       autoScroll : true,
       background : false,
       fitContainer : true,
       fitToFrame : true,
       region : 'center',
-      xns : Roo,
-      '|xns' : 'Roo',
-      xtype : 'ContentPanel',
       listeners : {
        render : function (_self)
         {
             _this.viewPanel = _self;
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ]
    });
