@@ -262,7 +262,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $sesPrefix = $this->sesPrefix();
         
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
-            print_R('still here??');exit;
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
              
