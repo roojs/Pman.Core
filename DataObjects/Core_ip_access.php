@@ -23,8 +23,6 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
         
     }
     
-    var $template = 'ip_access_xmpp.html';
-    
     function sendXMPP()
     {
         $ff = HTML_FlexyFramework::get();
@@ -39,12 +37,8 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             return;
         }
         
-        $template_engine = new HTML_Template_Flexy();
-        $template_engine->compile($this->masterTemplate);
         
-        $fn = $this->tempName('html');
         
-        file_put_contents($fn, $template_engine->bufferedOutputObject($this, $this->elements));
     }
     
     
