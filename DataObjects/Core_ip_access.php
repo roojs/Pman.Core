@@ -54,7 +54,7 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             $conn->disconnect();
             
         } catch(XMPPHP_Exception $e) {
-            die($e->getMessage());
+            $ff->page->jerr($e->getMessage());
         }
 
         return;
