@@ -27,7 +27,7 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
     {
         $ff = HTML_FlexyFramework::get();
         
-        
+        print_R($ff->Coba);exit;
     }
     
     
