@@ -23,7 +23,7 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
         
     }
     
-    var $masterTemplate = 'xmpp_master.html';
+    var $template = 'ip_access_xmpp.html';
     
     function sendXMPP()
     {
