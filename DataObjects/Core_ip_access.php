@@ -48,15 +48,16 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             $conn->connect();
             $conn->processUntil('session_start');
             $conn->presence();
-            $conn->message($ff->Pman['XMPP']['to'], 'This is a test message!');
+            $conn->message($ff->Pman['XMPP']['to'], "
+                
+            ");
             $conn->disconnect();
-            print_R('don???');exit;
+            
         } catch(XMPPHP_Exception $e) {
             die($e->getMessage());
         }
 
-        exit;
-        
+        return;
     }
     
     
