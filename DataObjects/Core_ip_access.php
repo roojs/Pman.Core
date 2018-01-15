@@ -40,7 +40,22 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             return;
         }
         
-        
+        require_once 'Net/XMPP.php';
+            
+        $conn = new Net_XMPP('talk.google.com', 5222, $ff->Pman['XMPP']['username'], $ff->Pman['XMPP']['password'], 'xmpphp', 'gmail.com', $printlog=false, $loglevel=Net_XMPP_Log::LEVEL_VERBOSE);
+
+        try {
+            $conn->connect();
+            $conn->processUntil('session_start');
+            $conn->presence();
+            $conn->message($ff->Pman['XMPP']['to'], 'This is a test message!');
+            $conn->disconnect();
+            print_R('don???');exit;
+        } catch(XMPPHP_Exception $e) {
+            die($e->getMessage());
+        }
+
+        exit;
         
     }
     
