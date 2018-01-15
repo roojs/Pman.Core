@@ -27,7 +27,15 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
     {
         $ff = HTML_FlexyFramework::get();
         
-        print_R($ff->Pman);exit;
+        if(
+                empty($ff->Pman['ip_management']) || 
+                empty($ff->Pman['XMPP']) ||
+                empty($ff->Pman['XMPP']['username']) ||
+                empty($ff->Pman['XMPP']['password']) ||
+                empty($ff->Pman['XMPP']['to'])
+        ) {
+            
+        }
     }
     
     
