@@ -18,7 +18,6 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
     public $expire_dt;
     public $user_agent;
 
-
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
