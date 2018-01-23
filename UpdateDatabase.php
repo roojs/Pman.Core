@@ -848,6 +848,12 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $cm->test_class = $data['test_class'];
             //}
+            
+            if ($to_group != -1) {
+                $g
+            }
+            
+            
             require_once $cm->test_class . '.php';
             
             $clsname = str_replace('/','_', $cm->test_class);
