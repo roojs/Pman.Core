@@ -815,7 +815,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     
-    function initEmails($templateDir, $emails)
+    function initEmails($templateDir, $emails, $active = 1, $to_group = -1)
     {
       
         $pg = HTML_FlexyFramework::get()->page;
