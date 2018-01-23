@@ -23,7 +23,7 @@ ALTER TABLE core_email MODIFY COLUMN bcc_group INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_email ADD COLUMN test_class VARCHAR(254) NOT NULL DEFAULT '';
 ALTER TABLE core_email MODIFY COLUMN test_class VARCHAR(254) NOT NULL DEFAULT '';
 
-ALTER TABLE core_email ADD COLUMN in_group INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE core_email ADD COLUMN in_group INT(11) NOT NULL DEFAULT -1;
 
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
