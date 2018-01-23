@@ -834,7 +834,6 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
                 
-                
                 if (!$g->members('email')) {
                     $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
@@ -850,9 +849,18 @@ class Pman_Core_UpdateDatabase extends Pman
             //}
             
             if ($to_group != -1) {
-                $g
+                $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
+                
+                if (empty($gp->id)) {
+                    $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
+                }
+                
+                $cm->in_group = $gp->id;
             }
             
+            if($active != 1) {
+                $cm->active = 0;
+            }
             
             require_once $cm->test_class . '.php';
             
