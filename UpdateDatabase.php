@@ -898,8 +898,6 @@ class Pman_Core_UpdateDatabase extends Pman
             require_once 'Pman/Core/Import/Core_email.php';
             $x = new Pman_Core_Import_Core_email();
             
-            print_r($cm);exit;
-            
             $x->updateOrCreateEmail('', $opts, $cm);
             
             echo "email: {$name} - CREATED\n";
