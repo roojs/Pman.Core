@@ -858,6 +858,19 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->to_group = $gp->id;
             }
             
+            if(isset($cm->to_group)) {
+                if($cm->to_group > 0) {
+                    
+                    $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
+                    
+                    if (empty($gp->id)) {
+                        $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
+                    }
+                    
+                    $cm->to_group = $gp->id;
+                }
+            }
+            
             if(isset($data['active'])) {
                 $cm->active = $data['active'];
             }
