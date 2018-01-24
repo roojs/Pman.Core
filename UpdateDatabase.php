@@ -848,6 +848,9 @@ class Pman_Core_UpdateDatabase extends Pman
             //}
             
             if (!empty($data['in_group'])) {
+                
+                print_r($data['in_group']);exit;
+                
                 $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                 
                 if (empty($gp->id)) {
