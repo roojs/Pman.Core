@@ -859,6 +859,8 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if(!empty($data['active'])) {
+                
+                print_r($data['active']);exit;
                 $cm->active = $data['active'];
             }
             
