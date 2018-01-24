@@ -855,7 +855,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
                 }
                 
-                $cm->in_group = $gp->id;
+                $cm->to_group = $gp->id;
             }
             
             if(!empty($data['active'])) {
