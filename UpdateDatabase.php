@@ -857,8 +857,8 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->in_group = $gp->id;
             }
             
-            if($active != 1) {
-                $cm->active = 0;
+            if(!empty($data['active'])) {
+                $cm->active = $data['active'];
             }
             
             require_once $cm->test_class . '.php';
