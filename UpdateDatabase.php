@@ -858,7 +858,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->to_group = $gp->id;
             }
             
-            if(!isset($data['active'])) {
+            if(isset($data['active'])) {
                 $cm->active = $data['active'];
             }
             
