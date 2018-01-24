@@ -859,7 +859,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if(isset($cm->to_group)) {
-                if($cm->to_group > 0) {
+                if($cm->to_group < 1) {
                     
                     $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                     
