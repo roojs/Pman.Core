@@ -851,7 +851,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                 
                 if (empty($gp->id)) {
-                    $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
+                    $this->jerr("in_group {$data['to_group']} does not exist when importing template $name");
                 }
                 
                 $cm->in_group = $gp->id;
