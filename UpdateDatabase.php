@@ -817,7 +817,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function initEmails($templateDir, $emails)
     {
-      
+        print_r($emails);exit;
         $pg = HTML_FlexyFramework::get()->page;
         foreach($emails as $name=>$data) {
             $cm = DB_DataObject::factory('core_email');
