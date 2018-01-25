@@ -846,9 +846,14 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $cm->test_class = $data['test_class'];
             //}
+            if(isset($cm->to_group)) {
+                print_r('isset');
+            }
             
-            if (!empty($data['to_group']) && !isset($cm->to_group)) {
-                
+            if (
+                !empty($data['to_group']) &&
+                (!isset($cm->to_group) || !empty($cm->to_group)) 
+            ) {
                 $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                 
                 if (empty($gp->id)) {
@@ -858,20 +863,9 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->to_group = $gp->id;
             }
             
-            if(!empty($data['to_group']) && isset($cm->to_group)) {
-                if($cm->to_group < 1) {
-                    
-                    $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
-                    
-                    if (empty($gp->id)) {
-                        $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
-                    }
-                    
-                    $cm->to_group = $gp->id;
-                }
-            }
-            
-            if(isset($data['active'])) {
+            if(
+                isset($data['active']) && !isset($cm->active)
+            ) {
                 $cm->active = $data['active'];
             }
             
