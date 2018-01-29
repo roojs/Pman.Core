@@ -201,6 +201,7 @@ class Pman_Core_UpdateDatabase extends Pman
          
     }
     function output() {
+        echo "\nUpdate Completed SUCCESS\n";
         return '';
     }
      /**
