@@ -516,7 +516,9 @@ class Pman_Core_Mailer {
         }
         
         require_once 'HTTP/Request.php';
-        $a = new HTTP_Request($this->mapurl($url));
+        
+        $real_url = str_replace(' ', '%20', $this->mapurl($url));
+        $a = new HTTP_Request($real_url);
         $a->sendRequest();
         $data = $a->getResponseBody();
         
