@@ -41,6 +41,18 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 $tn.subject LIKE '%{$this->escape($q['search']['nameortitle'])}%'
             ");
         }
+        
+        $this->selectAdd("
+           (
+            SELECT 
+                count(user_id) 
+            FROM 
+                core_group_member 
+            WHERE 
+                to_group_id = core_group_member.group_id
+            ) 
+            AS group_member_count
+        ");
     }
     
     function beforeDelete($dependants_array, $roo)
