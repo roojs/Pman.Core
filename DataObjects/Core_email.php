@@ -599,6 +599,20 @@ Content-Transfer-Encoding: 7bit
          
     }
     
+    function selectAddGroupCount()
+    {
+        $this->selectAdd("
+           (
+            SELECT 
+                count(user_id) 
+            FROM 
+                core_group_member 
+            WHERE 
+                to_group_id = core_group_member.group_id
+            ) 
+            AS group_member_count
+        ");
+    }
     
     
 }
