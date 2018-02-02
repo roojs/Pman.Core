@@ -81,11 +81,11 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                         
             if (!$c->find(true)) {
                 if (empty($request['_ignore_group_count'])) {
-        	   	     $roo->jerr('no_member',array{'errcode'=> '100'});
+        	   	     $roo->jerr('no_member',array('errcode'=> '100'));
         	       }
         	       
         	       if (!$request['_ignore_group_count']) {
-        	   	     $roo->jerr('no_member',array{'errcode'=> '100'});
+        	   	     $roo->jerr('no_member',array('errcode'=> '100'));
         	       }	                                
             } 
         }
