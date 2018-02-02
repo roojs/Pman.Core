@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
 
             //print_r($this->to_group);
-            //print_r($c);
+            print_r($c);
             print_r($c->count());exit;
         }
     }
