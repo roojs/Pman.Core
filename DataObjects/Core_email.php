@@ -73,6 +73,17 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $this->makeCopy($roo);
             
         }
+        
+        if ($this->to_group != -1) {
+            $c = DB_DataObject::factory('core_group_member');
+            $c->setFrom(array(
+                'groud_id' => $this->to_group
+            ));
+            print_r($c->count());exit;
+            if (!$c->find(true)) {
+                
+            }
+        }
     }
     
     function makeCopy($roo)
