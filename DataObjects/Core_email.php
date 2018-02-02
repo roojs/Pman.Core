@@ -75,21 +75,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if ($this->to_group != -1) {
-            $c = DB_DataObject::factory('core_group_member');
-            //$c->groud_id = $this->to_group;
-            
-            //$c->setFrom(array(
-            //    'groud_id' => $this->to_group
-            //));
-            //$c->whereAdd("group_id = {$this->to_group}");
-            $c->whereAdd("group_id = 99");            
+            $c = DB_DataObject::factory('core_group_member');            
+            $c->whereAdd("group_id = {$this->to_group}");
+                        
             if (!$c->find(true)) {
               echo "not found";  
             }
 
-            //print_r($this->to_group);
-            print_r($c);
-            print_r(count($c));exit;
+            
         }
     }
     
