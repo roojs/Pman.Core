@@ -79,6 +79,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $c->setFrom(array(
                 'groud_id' => $this->to_group
             ));
+            print_r($this->to_group);
             print_r($c);
             print_r($c->count());exit;
             if (!$c->find(true)) {
