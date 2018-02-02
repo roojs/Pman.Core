@@ -80,10 +80,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $c->whereAdd("group_id = {$this->to_group}");
                         
             if (!$c->find(true)) {
-                if (!empty($request['_ignore_group_count']) && !$request['_ignore_group_count']) {
+                if (empty($request['_ignore_group_count'])) {
+        	   	     $roo->jerr('not found');
+        	       }
+        	       
+        	       if (!$request['_ignore_group_count']) {
         	   	     $roo->jerr('not found');
         	       }	                                
-            }
+            } 
         }
     }
     
