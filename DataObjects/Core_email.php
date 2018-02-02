@@ -82,12 +82,12 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             //    'groud_id' => $this->to_group
             //));
             
-            if (!$c->find(true)) {
-                
-            }
+            //if (!$c->find(true)) {
+            //    
+            //}
             
             print_r($this->to_group);
-            print_r($c);
+            //print_r($c);
             print_r($c->count());exit;
         }
     }
