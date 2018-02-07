@@ -51,7 +51,17 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             WHERE 
                 to_group_id = core_group_member.group_id
             ) 
-            AS group_member_count
+            AS group_member_count,
+            
+           (
+            SELECT 
+                count(user_id) 
+            FROM 
+                core_group_member 
+            WHERE 
+                bcc_group = core_group_member.group_id
+           ) 
+           AS bcc_group_member_count
         ");
     }
     
