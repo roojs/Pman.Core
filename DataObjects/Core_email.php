@@ -75,7 +75,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         if ($this->to_group != -1) {
-        	   print_r($this->to_group); exit;
+        	   
             $c = DB_DataObject::factory('core_group_member');            
             $c->whereAdd("group_id = {$this->to_group}");
                         
