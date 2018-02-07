@@ -78,8 +78,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         	   
             $c = DB_DataObject::factory('core_group_member');            
             $c->whereAdd("group_id = {$this->to_group}");
-            print_r($request['_ignore_group_count']);
-            print_r($c->count());exit;            
+            //print_r($request['_ignore_group_count']);
+            //print_r($c->count());exit;            
             if (!$c->count() && !$request['_ignore_group_count']) {
                 $roo->jerr('no_member',array('errcode'=> 100));
             }
