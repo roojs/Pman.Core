@@ -37,5 +37,25 @@ ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 ALTER TABLE Events CHANGE COLUMN action action varchar(64)  default NULL;
 
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
+
+-- #Keep for later use..
+
+-- ALTER TABLE Events CHANGE COLUMN person_name person_name VARCHAR(128) NOT NULL ;
+
+-- ALTER TABLE Events CHANGE COLUMN event_when event_when DATETIME NOT NULL ;
+
+-- ALTER TABLE Events CHANGE COLUMN action action VARCHAR(64) NOT NULL DEFAULT '';
+
+-- ALTER TABLE Events CHANGE COLUMN ipaddr ipaddr VARCHAR(16) NOT NULL DEFAULT '';
+
+-- ALTER TABLE Events CHANGE COLUMN on_id on_id INT(11) NOT NULL DEFAULT 0 ;
+
+-- ALTER TABLE Events CHANGE COLUMN on_table on_table VARCHAR(64) NOT NULL DEFAULT '';
+
+-- ALTER TABLE Events CHANGE COLUMN person_id person_id INT(11) NOT NULL DEFAULT 0 ;
+
+-- ALTER TABLE Events CHANGE COLUMN remarks remarks TEXT NOT NULL ;
+
+-- ALTER TABLE Events CHANGE COLUMN person_table person_table VARCHAR(64) NOT NULL DEFAULT '';
   
  
