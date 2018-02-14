@@ -35,10 +35,6 @@ class Pman_Core_VerifyAccess extends Pman
         }
         
         
-        
-        
-        
-        
     }
     
 }
