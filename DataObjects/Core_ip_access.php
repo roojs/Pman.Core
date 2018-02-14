@@ -46,6 +46,10 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
 
         $url = "{$ff->baseURL}/Core/VerifyAccess/{$this->id}/{$this->authorized_key}";
         
+        $message = <<<EOF
+            
+EOF;
+        
         try {
             $conn->connect();
             $conn->processUntil('session_start');
