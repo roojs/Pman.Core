@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             
         $conn = new Net_XMPP('talk.google.com', 5222, $ff->Pman['XMPP']['username'], $ff->Pman['XMPP']['password'], 'xmpphp', 'gmail.com', $printlog=false, $loglevel=Net_XMPP_Log::LEVEL_VERBOSE);
 
-        $url = "https://{$ff->baseURL}/Core/VerifyAccess/{$this->id}/{$this->authorized_key}";
+        $url = "https://{$ff->Pman['XMPP']['host']}/{$ff->baseURL}/Core/VerifyAccess/{$this->id}/{$this->authorized_key}";
         
         try {
             $conn->connect();
