@@ -46,16 +46,11 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
 
         $url = "{$ff->baseURL}/Core/VerifyAccess/{$this->id}/{$this->authorized_key}";
         
-        $message = <<<EOF
-            New IP Login Required\n
-            {$url}
-EOF;
-        
         try {
             $conn->connect();
             $conn->processUntil('session_start');
             $conn->presence();
-            $conn->message($ff->Pman['XMPP']['to'], $message);
+            $conn->message($ff->Pman['XMPP']['to'], "New IP Login Required\n{$url}");
             $conn->disconnect();
             
         } catch(XMPPHP_Exception $e) {
