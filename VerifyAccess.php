@@ -16,7 +16,7 @@ class Pman_Core_VerifyAccess extends Pman
     {
         @list($vid, $key) = explode('/', $id);
         
-        
+        print_R($array($vid, $key));exit;
         
     }
     
