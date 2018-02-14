@@ -14,9 +14,9 @@ class Pman_Core_VerifyAccess extends Pman
     
     function get($id)
     {
+        
         @list($id, $key) = explode('/', $id);
         
-        print_R($id);exit;
         
         
     }
