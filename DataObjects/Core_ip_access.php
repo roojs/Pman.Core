@@ -44,7 +44,7 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             
         $conn = new Net_XMPP('talk.google.com', 5222, $ff->Pman['XMPP']['username'], $ff->Pman['XMPP']['password'], 'xmpphp', 'gmail.com', $printlog=false, $loglevel=Net_XMPP_Log::LEVEL_VERBOSE);
 
-        $url = htmlspecialchars("<a href='www.roojs.com'>test</a>");
+        print_R($ff);exit;
         
         try {
             $conn->connect();
