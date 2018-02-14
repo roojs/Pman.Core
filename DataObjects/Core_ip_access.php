@@ -50,7 +50,8 @@ class Pman_Core_DataObjects_Core_ip_access extends DB_DataObject
             $conn->presence();
             $conn->message($ff->Pman['XMPP']['to'], "
                 New IP Login Required\n
-                <a href='www.roojs.com'>test</a>
+                <a href='www.roojs.com'>test</a>\n
+                http://www.roojs.com
             ");
             $conn->disconnect();
             
