@@ -22,12 +22,12 @@ class Pman_Core_VerifyAccess extends Pman
         $core_ip_access = DB_DataObject::factory('core_ip_access');
         
         if(
+                empty($id) ||
+                empty($key) ||
                 empty($ff->Pman['ip_management']) || 
                 empty($ff->Pman['XMPP']) ||
                 empty($ff->Pman['XMPP']['to']) ||
                 !$core_person->get('email', $ff->Pman['XMPP']['to']) ||
-                empty($id) ||
-                empty($key) ||
                 !$core_ip_access->get($id) ||
                 $core_ip_access->authorized_key != $key
         ) {
