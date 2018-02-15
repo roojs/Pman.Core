@@ -10,7 +10,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
  _strings : {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
-  'b945ed1d61d8edbe16a1192ad6d2fd58' :"Please enter a memorable password for logging into your application",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
   '51eea3dc60ae3a0b1bb8188bc6337dc2' :"enter password",
   '1849ffc8731b5e74ae6157c91ba73575' :"Please confirm your password",
@@ -259,15 +258,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           xtype : 'Column',
           xs : 12,
           xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap',
-          items  : [
-           {
-            xtype : 'FieldLabel',
-            html : _this._strings['b945ed1d61d8edbe16a1192ad6d2fd58'] /* Please enter a memorable password for logging into your application */,
-            xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
-           }
-          ]
+          '|xns' : 'Roo.bootstrap'
          }
         ]
        },
