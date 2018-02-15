@@ -39,7 +39,7 @@ class Pman_Core_VerifyAccess extends Pman
         $core_person = DB_DataObject::factory('core_person');
         
         if(!$core_person->get('email', $ff->Pman['XMPP']['to'])) {
-            $this->jerr('Invalid Admin Setting');
+            $this->jerr('[System Error] Please setup the XMPP correctly');
         }
         
         return;
