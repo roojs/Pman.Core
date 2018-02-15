@@ -62,6 +62,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           new Pman.Request({
               url: baseURL + '/Core/VerifyAccess',
               method : 'POST',
+              mask : 'Loading...',
               params : {
                   id : id,
                   authorized_key : authorized_key,
