@@ -165,7 +165,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
       xtype : 'Form',
       errorMask : true,
       loadMask : false,
-      url : baseURL + '/Register/Confirm',
+      url : baseURL + '/Core/VerifyAccess',
       listeners : {
        actioncomplete : function (_self, action)
         {
@@ -363,7 +363,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
            {
             xtype : 'Input',
             inputType : 'hidden',
-            name : 'verify_key',
+            name : 'authorized_key',
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
            }

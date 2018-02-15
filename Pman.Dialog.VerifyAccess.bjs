@@ -32,7 +32,7 @@
       "actioncomplete" : "function (_self, action)\n{\n    if (action.type == 'setdata') {\n    \n        _this.form.findField('password').focus();\n        \n        return;\n    }\n    if (action.type == 'load') {\n        \n        return;\n    }\n    if (action.type =='submit') {\n        \n        _this.dialog.hide();\n        \n        Roo.get(document.body).mask('Start your Application');\n        \n        setTimeout(function() {\n            window.location.href = baseURL;\n        }, 500); \n        \n        return;\n    }\n    \n}",
       "render" : "function (_self,e)\n{\n    _this.form = _self;\n    \n}"
      },
-     "$ string url" : "baseURL + '/Register/Confirm'",
+     "$ string url" : "baseURL + '/Core/VerifyAccess'",
      "Boolean errorMask" : true,
      "xtype" : "Form",
      "$ xns" : "Roo.bootstrap",
@@ -147,7 +147,7 @@
            "$ xns" : "Roo.bootstrap"
           },
           {
-           "String name" : "verify_key",
+           "String name" : "authorized_key",
            "xtype" : "Input",
            "String inputType" : "hidden",
            "$ xns" : "Roo.bootstrap"
