@@ -61,26 +61,11 @@ class Pman_Core_VerifyAccess extends Pman
         
         if(
                 empty($_REQUEST['id']) || 
-                empty($_REQUEST['verify_key']) ||
-                !$core_ip_access->get($_REQUEST['id']) 
+                empty($_REQUEST['authorized_key']) ||
+                !$core_ip_access->get($_REQUEST['id']) ||
+                $core_ip_access->authorized_key != $_REQUEST['authorized_key']
         ){        	   
-            $this->jerr('broken_link');
-            return;
-        }
-        
-        if(!empty($coba_application_signup->coba_application_id)){
-            $this->jerr('already_registered');
-            return;
-        }
-
-        if($coba_application_signup->verify_key != $_REQUEST['verify_key']){
-            $this->jerr('broken_link');
-            return;
-        }
-                
-        if(time() > strtotime($coba_application_signup->expiry_dt)) {
-            $this->jerr('expired');
-            return;        
+            $this->jerr('Invalid URL');
         }
         
         $this->jdata($coba_application_signup->toArray());
