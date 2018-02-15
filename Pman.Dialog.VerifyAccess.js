@@ -68,6 +68,12 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
               
                   _this.data = res.data;
                   
+                  if(_this.data.status != 0){
+                      _this.data.hide();
+                      Roo.bootstrap.MessageBox.alert('Notice', 'This IP has been verified [' + _this.data.ip + ']');
+                      return;
+                  }
+                  
                   _this.form.setValues(_this.data);
                   
                   if(_this.data.status * 1 == 0){
