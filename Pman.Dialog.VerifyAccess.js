@@ -8,13 +8,13 @@ Pman.Dialog.VerifyAccess= function() {}
 Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
 
  _strings : {
+  '294176b7ee742a4fcfe2085448e6f138' :"Cacel",
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
   '004bf6c9a40003140292e97330236c53' :"Action",
   'dfb790522fdea3859af206d32916fe77' :"User Agent",
-  'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
-  '14cf5e829f5cb6fbf8cb54f7c5ff4ca9' :"Start the application process   "
+  '70d9be9b139893aa6c69b5e77e614311' :"Confirm"
  },
 
  dialog : false,
@@ -87,7 +87,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
     buttons : [
      {
       xtype : 'Button',
-      html : _this._strings['14cf5e829f5cb6fbf8cb54f7c5ff4ca9'] /* Start the application process    */,
+      html : _this._strings['70d9be9b139893aa6c69b5e77e614311'] /* Confirm */,
       weight : 'primary',
       listeners : {
        click : function (_self, e)
@@ -106,7 +106,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
      },
      {
       xtype : 'Button',
-      html : _this._strings['d71940f24ee38ee09f6e06b908480bcf'] /* Resend email */,
+      html : _this._strings['294176b7ee742a4fcfe2085448e6f138'] /* Cacel */,
       weight : 'primary',
       listeners : {
        click : function (_self, e)
