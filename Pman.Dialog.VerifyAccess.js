@@ -271,7 +271,10 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
               {
                   _this.expire_dt = this;
                   
-                  this.setStartDate(new Date());
+                  var d = new Date();
+                  d.setDate(d.getDate() - 1);
+              
+                  this.setStartDate(d);
                   
                   this.el.setVisibilityMode(Roo.Element.DISPLAY);
                   
