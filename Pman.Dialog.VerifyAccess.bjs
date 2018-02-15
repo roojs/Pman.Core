@@ -198,7 +198,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        return;\n    }\n    Roo.log('submit');\n    return;\n    _this.dialog.el.mask('Sending...');\n    _this.form.doAction('submit');\n    \n}"
+      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        return;\n    }\n\n    _this.dialog.el.mask('Sending...');\n    _this.form.doAction('submit');\n    \n}"
      },
      "String weight" : "primary",
      "xtype" : "Button",
