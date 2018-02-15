@@ -11,9 +11,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
-  '51eea3dc60ae3a0b1bb8188bc6337dc2' :"enter password",
   'dfb790522fdea3859af206d32916fe77' :"User Agent",
-  '1849ffc8731b5e74ae6157c91ba73575' :"Please confirm your password",
   'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
   '14cf5e829f5cb6fbf8cb54f7c5ff4ca9' :"Start the application process   "
  },
@@ -235,7 +233,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
            {
             xtype : 'Input',
             fieldLabel : _this._strings['f6039d44b29456b20f8f373155ae4973'] /* Username */,
-            labelAlign : 'top',
             name : 'email',
             readOnly : true,
             xns : Roo.bootstrap,
@@ -267,77 +264,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             fieldLabel : _this._strings['dfb790522fdea3859af206d32916fe77'] /* User Agent */,
             name : 'user_agent',
             readOnly : true,
-            xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
-           }
-          ]
-         }
-        ]
-       },
-       {
-        xtype : 'Row',
-        listeners : {
-         render : function (_self)
-          {
-              _this.row_pwd1 = _self;
-          }
-        },
-        xns : Roo.bootstrap,
-        '|xns' : 'Roo.bootstrap',
-        items  : [
-         {
-          xtype : 'Column',
-          xs : 12,
-          xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap',
-          items  : [
-           {
-            xtype : 'SecurePass',
-            allowBlank : false,
-            inputType : 'password',
-            labelAlign : 'top',
-            name : 'password',
-            placeholder : _this._strings['51eea3dc60ae3a0b1bb8188bc6337dc2'] /* enter password */,
-            xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
-           }
-          ]
-         }
-        ]
-       },
-       {
-        xtype : 'Row',
-        listeners : {
-         render : function (_self)
-          {
-              _this.row_pwd2 = _self;
-          }
-        },
-        xns : Roo.bootstrap,
-        '|xns' : 'Roo.bootstrap',
-        items  : [
-         {
-          xtype : 'Column',
-          xs : 12,
-          xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap',
-          items  : [
-           {
-            xtype : 'Input',
-            allowBlank : false,
-            inputType : 'password',
-            invalidText : 'The passwords you entered do not match',
-            name : 'password1',
-            placeholder : _this._strings['1849ffc8731b5e74ae6157c91ba73575'] /* Please confirm your password */,
-            validator : function(v){
-                
-                if(_this.form.findField('password').getValue() == v) {
-                    
-                    return true;
-                }
-                
-                return false;
-            },
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
            }
