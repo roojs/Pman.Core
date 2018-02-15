@@ -264,9 +264,11 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
               {
                   _this.expire_dt = this;
                   
+                  this.setStartDate(new Date());
+                  
                   this.el.setVisibilityMode(Roo.Element.DISPLAY);
                   
-                  this.el.hide();
+                  //this.el.hide();
               }
             },
             xns : Roo.bootstrap,
