@@ -63,8 +63,19 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jdata($core_ip_access->toArray());
         }
         
-        print_R($_REQUEST);exit;
+        $o = clone($core_ip_access);
         
+        $core_ip_access->status = empty($_REQUEST['status']) ? 0 : $_REQUEST['status'];
+        
+        if($core_ip_access->status == -2){
+            
+            $core_ip_access->setFrom(array(
+                'status' => 1,
+                'expire_dt' => date('Y-m-d', strtotime($_REQUEST['expire_dt']))
+            ));
+        }
+        
+        $core_ip_access->update($o);
         
     }
     
