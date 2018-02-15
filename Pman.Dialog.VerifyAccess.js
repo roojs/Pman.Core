@@ -169,8 +169,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
        actioncomplete : function (_self, action)
         {
             if (action.type == 'setdata') {
-            
-                _this.form.findField('password').focus();
                 
                 return;
             }
@@ -264,6 +262,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             fieldLabel : _this._strings['dfb790522fdea3859af206d32916fe77'] /* User Agent */,
             name : 'user_agent',
             readOnly : true,
+            rows : 3,
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
            }
