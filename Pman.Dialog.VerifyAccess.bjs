@@ -76,31 +76,30 @@
            "string fieldLabel" : "User Agent",
            "Number rows" : 3,
            "$ xns" : "Roo.bootstrap"
-          }
-         ]
-        }
-       ]
-      },
-      {
-       "xtype" : "Row",
-       "$ xns" : "Roo.bootstrap",
-       "items" : [
-        {
-         "xtype" : "Column",
-         "Number xs" : 8,
-         "$ xns" : "Roo.bootstrap",
-         "items" : [
-          {
-           "String name" : "id",
-           "xtype" : "Input",
-           "String inputType" : "hidden",
-           "$ xns" : "Roo.bootstrap"
           },
           {
-           "String name" : "authorized_key",
-           "xtype" : "Input",
-           "String inputType" : "hidden",
-           "$ xns" : "Roo.bootstrap"
+           "listeners" : {
+            "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
+           },
+           "xtype" : "Row",
+           "$ xns" : "Roo.bootstrap",
+           "items" : [
+            {
+             "xtype" : "Column",
+             "Number xs" : 12,
+             "$ xns" : "Roo.bootstrap",
+             "items" : [
+              {
+               "String name" : "user_agent",
+               "Boolean readOnly" : true,
+               "xtype" : "TextArea",
+               "string fieldLabel" : "User Agent",
+               "Number rows" : 3,
+               "$ xns" : "Roo.bootstrap"
+              }
+             ]
+            }
+           ]
           }
          ]
         }
@@ -112,7 +111,7 @@
        "items" : [
         {
          "xtype" : "Column",
-         "Number xs" : 8,
+         "Number xs" : 12,
          "$ xns" : "Roo.bootstrap",
          "items" : [
           {

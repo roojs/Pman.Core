@@ -263,35 +263,36 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             rows : 3,
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
-           }
-          ]
-         }
-        ]
-       },
-       {
-        xtype : 'Row',
-        xns : Roo.bootstrap,
-        '|xns' : 'Roo.bootstrap',
-        items  : [
-         {
-          xtype : 'Column',
-          xs : 8,
-          xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap',
-          items  : [
-           {
-            xtype : 'Input',
-            inputType : 'hidden',
-            name : 'id',
-            xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
            },
            {
-            xtype : 'Input',
-            inputType : 'hidden',
-            name : 'authorized_key',
+            xtype : 'Row',
+            listeners : {
+             render : function (_self)
+              {
+                  _this.row_pwd_label = _self;
+              }
+            },
             xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
+            '|xns' : 'Roo.bootstrap',
+            items  : [
+             {
+              xtype : 'Column',
+              xs : 12,
+              xns : Roo.bootstrap,
+              '|xns' : 'Roo.bootstrap',
+              items  : [
+               {
+                xtype : 'TextArea',
+                fieldLabel : _this._strings['dfb790522fdea3859af206d32916fe77'] /* User Agent */,
+                name : 'user_agent',
+                readOnly : true,
+                rows : 3,
+                xns : Roo.bootstrap,
+                '|xns' : 'Roo.bootstrap'
+               }
+              ]
+             }
+            ]
            }
           ]
          }
@@ -304,7 +305,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
         items  : [
          {
           xtype : 'Column',
-          xs : 8,
+          xs : 12,
           xns : Roo.bootstrap,
           '|xns' : 'Roo.bootstrap',
           items  : [
