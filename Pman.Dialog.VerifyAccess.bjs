@@ -120,6 +120,7 @@
            },
            "Boolean allowBlank" : false,
            "String name" : "expire_dt",
+           "String format" : "Y-m-d",
            "xtype" : "DateField",
            "string fieldLabel" : "Expire Date",
            "$ xns" : "Roo.bootstrap",
