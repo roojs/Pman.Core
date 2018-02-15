@@ -96,14 +96,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                 return;
             }
             
-            var p1 = _this.form.findField('password').getValue();
-            var p2 = _this.form.findField('password1').getValue();
-            
-            if (p1 != p2) {
-                _this.form.findField('password1').markInvalid('Password do not match');
-                return;
-            }
-            
             _this.dialog.el.mask('Sending...');
             _this.form.doAction('submit');
             

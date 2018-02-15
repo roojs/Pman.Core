@@ -171,7 +171,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        return;\n    }\n    \n    var p1 = _this.form.findField('password').getValue();\n    var p2 = _this.form.findField('password1').getValue();\n    \n    if (p1 != p2) {\n        _this.form.findField('password1').markInvalid('Password do not match');\n        return;\n    }\n    \n    _this.dialog.el.mask('Sending...');\n    _this.form.doAction('submit');\n    \n}"
+      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        return;\n    }\n    \n    _this.dialog.el.mask('Sending...');\n    _this.form.doAction('submit');\n    \n}"
      },
      "String weight" : "primary",
      "xtype" : "Button",
