@@ -5,6 +5,208 @@
  "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.VerifyAccess.bjs",
  "permname" : "",
  "modOrder" : "001",
+ "strings" : {
+  "d41d8cd98f00b204e9800998ecf8427e" : "",
+  "b945ed1d61d8edbe16a1192ad6d2fd58" : "Please enter a memorable password for logging into your application",
+  "07ae22a49223522664766d12c37a4eeb" : "Activate Your account",
+  "ee7ad62ad69b9ab5f25d273e4e0a1736" : "Your Username",
+  "51eea3dc60ae3a0b1bb8188bc6337dc2" : "enter password",
+  "1849ffc8731b5e74ae6157c91ba73575" : "Please confirm your password",
+  "d71940f24ee38ee09f6e06b908480bcf" : "Resend email",
+  "14cf5e829f5cb6fbf8cb54f7c5ff4ca9" : "Start the application process   "
+ },
  "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    var path = window.location.pathname.split('/');\n    \n    var verify_key = path.pop();\n    \n    var id = path.pop();\n    \n    var show_err = function(msg,title,show_resend_btn) {\n        _this.form.hide();\n        _this.btn_ok.hide();\n        _this.error_row.el.show();\n        _this.text_el.el.dom.innerHTML = msg;\n        _this.modal.setTitle(title);\n        if(show_resend_btn){\n            _this.btn_resend.show();\n        }\n    }\n    \n    new Pman.Request({\n        url: baseURL + '/Register/Confirm',\n        method : 'POST',\n        params : {\n            id : id,\n            verify_key : verify_key,\n            _to_data : 1\n        }, \n        success : function(res) {\n            _this.form.setValues(res.data);\n            return;\n        },\n        failure: function(res) {\n            \n            switch(res.errorMsg) {\n                case 'already_registered':\n                    _this.dialog.hide();\n                    Coba.Dialog.Login.show({});\n                    break;\n\n                case 'multi_account':\n                    show_err('This email has been registered for multiple account. Please contact to your distributor to synchronize them',\n                             'System Error',\n                              false);\n                    break;\n\n                case 'broken_link':\n                    show_err('The link you clicked on was broken, on not complete, please copy and paste the full URL from the email you received',\n                             'Invalid Link',\n                             false);\n                    break;\n\n                case 'expired':\n                    show_err('This activation link is already expired, please click Resend email to get the updated activated link',\n                             'Link Expired',\n                             true);                   \n                    break;\n\n                \n                default:\n                    show_err(res.errorMsg,'Error', false);\n                    break;\n            }            \n\n            \n            return;\n       }\n    });\n}",
+    "render" : "function (_self)\n{\n    _this.modal = _self;\n}"
+   },
+   "String cls" : "enable-overflow",
+   "String size" : "sm",
+   "Boolean allow_close" : false,
+   "xtype" : "Modal",
+   "$ xns" : "Roo.bootstrap",
+   "String title" : "Activate Your account",
+   "items" : [
+    {
+     "listeners" : {
+      "actionfailed" : "function (_self, action)\n{\n    _this.dialog.el.unmask();\n    Roo.log(\"action failed\");\n    Roo.log(action);\n  \n    if(!action.result.errorMsg){\n        Roo.bootstrap.MessageBox.alert(\"Error\", \"Please contact system adminisrator\");\n    }\n   \n    var msg = action.result.errorMsg;\n   \n    if(msg.length >= 200){\n        msg = msg.substring(0,199) + '...'\n    }\n    \n    Roo.bootstrap.MessageBox.alert(\"Error\", msg);\n}",
+      "actioncomplete" : "function (_self, action)\n{\n    if (action.type == 'setdata') {\n    \n        _this.form.findField('password').focus();\n        \n        return;\n    }\n    if (action.type == 'load') {\n        \n        return;\n    }\n    if (action.type =='submit') {\n        \n        _this.dialog.hide();\n        \n        Roo.get(document.body).mask('Start your Application');\n        \n        setTimeout(function() {\n            window.location.href = baseURL;\n        }, 500); \n        \n        return;\n    }\n    \n}",
+      "render" : "function (_self,e)\n{\n    _this.form = _self;\n    \n}"
+     },
+     "$ string url" : "baseURL + '/Register/Confirm'",
+     "Boolean errorMask" : true,
+     "xtype" : "Form",
+     "$ xns" : "Roo.bootstrap",
+     "Boolean loadMask" : false,
+     "items" : [
+      {
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 12,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "String name" : "email",
+           "Boolean readOnly" : true,
+           "xtype" : "Input",
+           "string fieldLabel" : "Your Username",
+           "String labelAlign" : "top",
+           "$ xns" : "Roo.bootstrap"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "listeners" : {
+        "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
+       },
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 12,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "xtype" : "FieldLabel",
+           "$ xns" : "Roo.bootstrap",
+           "String html" : "Please enter a memorable password for logging into your application"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "listeners" : {
+        "render" : "function (_self)\n{\n    _this.row_pwd1 = _self;\n}"
+       },
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 12,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "Boolean allowBlank" : false,
+           "String name" : "password",
+           "xtype" : "SecurePass",
+           "String labelAlign" : "top",
+           "string placeholder" : "enter password",
+           "String inputType" : "password",
+           "$ xns" : "Roo.bootstrap"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "listeners" : {
+        "render" : "function (_self)\n{\n    _this.row_pwd2 = _self;\n}"
+       },
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 12,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "Boolean allowBlank" : false,
+           "string invalidText" : "The passwords you entered do not match",
+           "String name" : "password1",
+           "xtype" : "Input",
+           "string placeholder" : "Please confirm your password",
+           "String inputType" : "password",
+           "$ xns" : "Roo.bootstrap",
+           "$ Function validator" : "function(v){\n    \n    if(_this.form.findField('password').getValue() == v) {\n        \n        return true;\n    }\n    \n    return false;\n}"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 8,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "String name" : "id",
+           "xtype" : "Input",
+           "String inputType" : "hidden",
+           "$ xns" : "Roo.bootstrap"
+          },
+          {
+           "String name" : "verify_key",
+           "xtype" : "Input",
+           "String inputType" : "hidden",
+           "$ xns" : "Roo.bootstrap"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.error_row = this;\n    \n    this.el.setVisibilityMode(Roo.Element.DISPLAY);\n    \n    this.el.hide();\n}"
+     },
+     "xtype" : "Row",
+     "$ xns" : "Roo.bootstrap",
+     "items" : [
+      {
+       "xtype" : "Column",
+       "Number xs" : 12,
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "listeners" : {
+          "render" : "function (_self)\n{\n    _this.text_el = _self;\n}"
+         },
+         "xtype" : "Element",
+         "$ xns" : "Roo.bootstrap",
+         "String html" : ""
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.btn_ok = _self;\n}",
+      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        return;\n    }\n    \n    var p1 = _this.form.findField('password').getValue();\n    var p2 = _this.form.findField('password1').getValue();\n    \n    if (p1 != p2) {\n        _this.form.findField('password1').markInvalid('Password do not match');\n        return;\n    }\n    \n    _this.dialog.el.mask('Sending...');\n    _this.form.doAction('submit');\n    \n}"
+     },
+     "String weight" : "primary",
+     "xtype" : "Button",
+     "$ xns" : "Roo.bootstrap",
+     "String html" : "Start the application process   ",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "render" : "function (_self)\n{\n    _this.btn_resend = _self;\n     this.el.setVisibilityMode(Roo.Element.DISPLAY);\n     this.el.hide();\n}",
+      "click" : "function (_self, e)\n{\n    var path = window.location.pathname.split('/');\n    \n    var verify_key = path.pop();\n    \n    var id = path.pop();\n    \n    new Pman.Request({\n        url: baseURL + '/Roo/Coba_application_signup',\n        method : 'POST',\n        mask : 'Sending...',\n        params : {\n            _resend : id\n        }, \n        success : function(res) {\n            var msg = \"We have re-sent you an invitation via email.\" +\n                        \"<br/><br/>\" + \n                        \"Please check your inbox for the final registration step.\" + \n                         \"<br/><br/>\" + \n                        \"<B>(Note. emails may accidentally be sent to your Spam Folder)</B>\";\n                        \n            Roo.bootstrap.MessageBox.alert('Please check your email', msg) ;\n        },\n        failure: function(res) {\n            Roo.bootstrap.MessageBox.alert('Error', res.errorMsg) ;\n        }\n    });\n}"
+     },
+     "String weight" : "primary",
+     "xtype" : "Button",
+     "$ xns" : "Roo.bootstrap",
+     "String html" : "Resend email",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
  ]
 }
