@@ -46,4 +46,45 @@ class Pman_Core_VerifyAccess extends Pman
         
     }
     
+    function post()
+    {
+        if(!empty($_REQUEST['_to_data'])){
+            $this->toData();
+        }
+        
+        
+    }
+    
+    function toData()
+    {
+        $core_ip_access = DB_DataObject::factory('core_ip_access');
+        
+        if(
+                empty($_REQUEST['id']) || 
+                empty($_REQUEST['verify_key']) ||
+                !$core_ip_access->get($_REQUEST['id']) 
+        ){        	   
+            $this->jerr('broken_link');
+            return;
+        }
+        
+        if(!empty($coba_application_signup->coba_application_id)){
+            $this->jerr('already_registered');
+            return;
+        }
+
+        if($coba_application_signup->verify_key != $_REQUEST['verify_key']){
+            $this->jerr('broken_link');
+            return;
+        }
+                
+        if(time() > strtotime($coba_application_signup->expiry_dt)) {
+            $this->jerr('expired');
+            return;        
+        }
+        
+        $this->jdata($coba_application_signup->toArray());
+        
+    }
+    
 }
