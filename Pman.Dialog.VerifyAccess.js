@@ -253,40 +253,9 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           '|xns' : 'Roo.bootstrap',
           items  : [
            {
-            xtype : 'ComboBox',
-            allowBlank : false,
-            alwaysQuery : true,
-            displayField : 'value',
-            editable : false,
-            fieldLabel : _this._strings['004bf6c9a40003140292e97330236c53'] /* Action */,
-            forceSelection : true,
-            hiddenName : 'status',
-            indicatorpos : 'right',
-            mode : 'local',
-            name : 'status_name',
-            selectOnFocus : true,
-            tpl : '<div class=\"roo-select2-result\"><b>{value}</b></div>',
-            triggerAction : 'all',
-            valueField : 'code',
-            listeners : {
-             select : function (combo, record, index)
-              {
-                  
-              }
-            },
+            xtype : 'DateField',
             xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap',
-            store : {
-             xtype : 'SimpleStore',
-             data : [
-                 ['1', 'Approve'],
-                 ['-2', 'Temporary'],
-                 ['-1', 'Reject']
-             ],
-             fields : [ 'code', 'value' ],
-             xns : Roo.data,
-             '|xns' : 'Roo.data'
-            }
+            '|xns' : 'Roo.bootstrap'
            }
           ]
          }

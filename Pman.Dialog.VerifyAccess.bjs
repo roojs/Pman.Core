@@ -114,34 +114,8 @@
          "$ xns" : "Roo.bootstrap",
          "items" : [
           {
-           "listeners" : {
-            "select" : "function (combo, record, index)\n{\n    \n}"
-           },
-           "Boolean allowBlank" : false,
-           "Boolean selectOnFocus" : true,
-           "String name" : "status_name",
-           "String mode" : "local",
-           "String valueField" : "code",
-           "Boolean editable" : false,
-           "xtype" : "ComboBox",
-           "String triggerAction" : "all",
-           "string fieldLabel" : "Action",
-           "Boolean alwaysQuery" : true,
-           "$ xns" : "Roo.bootstrap",
-           "String/Roo.Template tpl" : "<div class=\"roo-select2-result\"><b>{value}</b></div>",
-           "String hiddenName" : "status",
-           "String displayField" : "value",
-           "String indicatorpos" : "right",
-           "Boolean forceSelection" : true,
-           "items" : [
-            {
-             "$ string data" : "[\n    ['1', 'Approve'],\n    ['-2', 'Temporary'],\n    ['-1', 'Reject']\n] ",
-             "xtype" : "SimpleStore",
-             "$ xns" : "Roo.data",
-             "$ fields" : "[ 'code', 'value' ]",
-             "* prop" : "store"
-            }
-           ]
+           "xtype" : "DateField",
+           "$ xns" : "Roo.bootstrap"
           }
          ]
         }
