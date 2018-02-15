@@ -11,7 +11,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'b945ed1d61d8edbe16a1192ad6d2fd58' :"Please enter a memorable password for logging into your application",
-  'ee7ad62ad69b9ab5f25d273e4e0a1736' :"Your Username",
+  'f6039d44b29456b20f8f373155ae4973' :"Username",
   '51eea3dc60ae3a0b1bb8188bc6337dc2' :"enter password",
   '1849ffc8731b5e74ae6157c91ba73575' :"Please confirm your password",
   'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
@@ -233,7 +233,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           items  : [
            {
             xtype : 'Input',
-            fieldLabel : _this._strings['ee7ad62ad69b9ab5f25d273e4e0a1736'] /* Your Username */,
+            fieldLabel : _this._strings['f6039d44b29456b20f8f373155ae4973'] /* Username */,
             labelAlign : 'top',
             name : 'email',
             readOnly : true,
