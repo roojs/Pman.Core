@@ -110,7 +110,7 @@
            "Boolean forceSelection" : true,
            "items" : [
             {
-             "$ string data" : "[\n    ['1', 'Approve'],\n    ['-1', 'Reject']\n] ",
+             "$ string data" : "[\n    ['1', 'Approve'],\n    ['-2', 'Temporary'],\n    ['-1', 'Reject']\n] ",
              "xtype" : "SimpleStore",
              "$ xns" : "Roo.data",
              "$ fields" : "[ 'code', 'value' ]",

@@ -250,6 +250,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
              xtype : 'SimpleStore',
              data : [
                  ['1', 'Approve'],
+                 ['-2', 'Temporary'],
                  ['-1', 'Reject']
              ],
              fields : [ 'code', 'value' ],
