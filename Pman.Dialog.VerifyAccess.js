@@ -258,7 +258,15 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           xtype : 'Column',
           xs : 12,
           xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap'
+          '|xns' : 'Roo.bootstrap',
+          items  : [
+           {
+            xtype : 'TextArea',
+            readOnly : true,
+            xns : Roo.bootstrap,
+            '|xns' : 'Roo.bootstrap'
+           }
+          ]
          }
         ]
        },

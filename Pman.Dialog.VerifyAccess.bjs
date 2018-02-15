@@ -68,7 +68,14 @@
         {
          "xtype" : "Column",
          "Number xs" : 12,
-         "$ xns" : "Roo.bootstrap"
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "Boolean readOnly" : true,
+           "xtype" : "TextArea",
+           "$ xns" : "Roo.bootstrap"
+          }
+         ]
         }
        ]
       },
