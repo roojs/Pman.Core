@@ -173,6 +173,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             }
             if (action.type == 'load') {
                 
+                if(_this.data.sta)
                 return;
             }
             if (action.type =='submit') {
