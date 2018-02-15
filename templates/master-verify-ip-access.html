@@ -1,0 +1,131 @@
+<!DOCTYPE html
+      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+    <head>
+        <!-- core/template/master.html -->
+
+        <title>{appName}</title>
+        
+        <meta name="google" value="notranslate">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        
+        <link rel="shortcut icon" href="./Pman.ico" type="image/vnd.microsoft.icon"/>
+        
+        <link href="{rootURL}/roojs1/css-bootstrap/font-awesome.css" rel="stylesheet" type="text/css" />
+        <link href="{rootURL}/roojs1/css-bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="{rootURL}/roojs1/css-bootstrap/roojs-bootstrap-debug.css" rel="stylesheet" type="text/css" />
+        
+        {outputCSSIncludes()}
+
+<style>
+        /* -- move me to a css file !!! */
+        /*
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        */
+        #body-container {
+            width: 100%;
+            height: auto;
+         }
+         .roo-layout-component-panel, .roo-layout-nested-layout {
+            height: auto;
+            overflow: visible;
+         }
+
+         #body-container,
+         #body-container  .roo-layout-panel-body
+         {
+            overflow: visible;
+         }
+
+
+        .navbar-default {
+            background-color: #634e37;
+        }
+        .roo-layout-panel-body  .navbar ul.nav-tabs
+        {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .roo-layout-panel-body  .navbar {
+            margin-left: auto;
+            hidden: table;
+            margin-right: auto;
+            padding: 0 20px;
+        }
+
+      </style>
+
+     </head>
+    <body class="ytheme-gray">
+        <!-- <flexy:include src="header-nav.html"></flexy:include> -->
+
+        <br/>
+
+        <div id="body-container"></div>
+
+        <!-- footer -->
+        <!-- <flexy:include src="footer-public.html"></flexy:include> -->
+        <!-- footer -->
+{if:bootLoader.Pman[roo_debug]}
+
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-core-debug.js"></script>
+        <!-- bootstrap js.. needs to compile it later.. -->
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-bootstrap-debug.js"></script>
+
+        <!-- <script type="text/javascript" src="{rootURL}/roojs1/ux/Iscroll.js"></script>  -->
+
+{else:}
+
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-core-debug.js"></script>
+        <!-- bootstrap js.. needs to compile it later.. -->
+        <script type="text/javascript" src="{rootURL}/roojs1/roojs-bootstrap-debug.js"></script>
+
+{end:}
+        <flexy:toJSON
+            baseURL="baseURL"
+            rootURL="rootURL"
+            isDev="isDev"
+            serverName="serverName"
+            appLang="lang"
+            appName="appName"
+            appNameShort="appNameShort"
+            appLogo="appLogo"
+            appOwnerCompanyId="company.id"
+
+            AppLinkError="linkFail"
+            AppTrackOnLoad="onloadTrack"
+
+            showNewPass="showNewPass"
+            allowSignup="allowSignup"
+
+            logoPrefix="logoPrefix"
+
+            AppModules="appModules"
+            AppVersion="appVersion"
+            appDisabled="appDisabled"
+            uiConfig="uiConfig"
+            fullstory="fullstory"
+            register_confirm="register_confirm"
+        ></flexy:toJSON>
+
+        <script type="text/javascript">
+            Ext=Roo; // bc
+            Roo.BLANK_IMAGE_URL =  rootURL + "/roojs1/images/gray/s.gif";
+            Roo.rootURL = rootURL +'/roojs1/';
+            Pman = {};
+                    
+        </script>
+
+        {outputJavascriptDir(#Pman/Core#,#Pman.Request.js#,#Pman.Dialog.VerifyAccess.js#)}   
+        
+
+    </body>
+</html>
