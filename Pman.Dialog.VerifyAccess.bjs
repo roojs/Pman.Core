@@ -76,30 +76,30 @@
            "string fieldLabel" : "User Agent",
            "Number rows" : 3,
            "$ xns" : "Roo.bootstrap"
-          },
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "listeners" : {
+        "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
+       },
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 12,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
           {
-           "listeners" : {
-            "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
-           },
-           "xtype" : "Row",
-           "$ xns" : "Roo.bootstrap",
-           "items" : [
-            {
-             "xtype" : "Column",
-             "Number xs" : 12,
-             "$ xns" : "Roo.bootstrap",
-             "items" : [
-              {
-               "String name" : "user_agent",
-               "Boolean readOnly" : true,
-               "xtype" : "TextArea",
-               "string fieldLabel" : "User Agent",
-               "Number rows" : 3,
-               "$ xns" : "Roo.bootstrap"
-              }
-             ]
-            }
-           ]
+           "String name" : "user_agent",
+           "Boolean readOnly" : true,
+           "xtype" : "TextArea",
+           "string fieldLabel" : "User Agent",
+           "Number rows" : 3,
+           "$ xns" : "Roo.bootstrap"
           }
          ]
         }
