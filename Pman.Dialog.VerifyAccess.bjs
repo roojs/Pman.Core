@@ -100,6 +100,7 @@
            "xtype" : "ComboBox",
            "String triggerAction" : "all",
            "string fieldLabel" : "Action",
+           "Boolean alwaysQuery" : true,
            "$ xns" : "Roo.bootstrap",
            "String hiddenName" : "status",
            "String displayField" : "value",
