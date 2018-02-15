@@ -63,7 +63,7 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jdata($core_ip_access->toArray());
         }
         
-        
+        print_R($_REQUEST);exit;
         
         
     }
