@@ -11,6 +11,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
+  '004bf6c9a40003140292e97330236c53' :"Action",
   'dfb790522fdea3859af206d32916fe77' :"User Agent",
   'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
   '14cf5e829f5cb6fbf8cb54f7c5ff4ca9' :"Start the application process   "
@@ -290,6 +291,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             allowBlank : false,
             displayField : 'value',
             editable : false,
+            fieldLabel : _this._strings['004bf6c9a40003140292e97330236c53'] /* Action */,
             hiddenName : 'status',
             mode : 'local',
             name : 'status_name',
