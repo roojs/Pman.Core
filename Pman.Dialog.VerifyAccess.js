@@ -45,7 +45,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
     xtype : 'Modal',
     allow_close : false,
     cls : 'enable-overflow',
-    size : 'sm',
     title : _this._strings['07ae22a49223522664766d12c37a4eeb'] /* Activate Your account */,
     listeners : {
      render : function (_self)
@@ -69,6 +68,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   _to_data : 1
               }, 
               success : function(res) {
+                  Roo.log(res);
+                  return;
                   _this.form.setValues(res.data);
                   return;
               },
