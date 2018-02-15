@@ -10,6 +10,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
  _strings : {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
+  '7c5ba892645af8d7dba520e3978c726f' :"Director",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
   'dfb790522fdea3859af206d32916fe77' :"User Agent",
   'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
@@ -286,13 +287,90 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           '|xns' : 'Roo.bootstrap',
           items  : [
            {
-            xtype : 'TextArea',
-            fieldLabel : _this._strings['dfb790522fdea3859af206d32916fe77'] /* User Agent */,
-            name : 'user_agent',
-            readOnly : true,
-            rows : 3,
+            xtype : 'ComboBox',
+            allowBlank : false,
+            alwaysQuery : true,
+            displayField : 'fullname',
+            editable : true,
+            fieldLabel : _this._strings['7c5ba892645af8d7dba520e3978c726f'] /* Director */,
+            forceSelection : true,
+            hiddenName : '_existing_director',
+            indicatorpos : 'right',
+            md : 12,
+            minChars : 2,
+            name : '_existing_director_name',
+            queryParam : 'query[name]',
+            tpl : '<div class=\"roo-select2-result\">{fullname}</div>',
+            triggerAction : 'all',
+            typeAhead : true,
+            valueField : 'id',
             xns : Roo.bootstrap,
-            '|xns' : 'Roo.bootstrap'
+            '|xns' : 'Roo.bootstrap',
+            store : {
+             xtype : 'Store',
+             remoteSort : true,
+             sortInfo : {field:"firstname",direction:"ASC"},
+             listeners : {
+              beforeload : function (_self, o)
+               {
+                   o.params = o.params || {};
+                   
+                   o.params._with_fullname = 1;
+                   
+                   var parent = _this.form.findField('parent_company_id').getValue() * 1;
+                   
+                   o.params._hide_existing = 1;
+                   
+                   o.params._parent_company_id = parent;
+                   
+                   if (Roo.select('main').first().dom.className.indexOf('trust') >= 0) {
+                       
+                       o.params._find_person_type = 'trustee';
+                   }
+                   
+               }
+             },
+             xns : Roo.data,
+             '|xns' : 'Roo.data',
+             proxy : {
+              xtype : 'HttpProxy',
+              method : 'GET',
+              url : baseURL+'/Roo/Coba_person',
+              xns : Roo.data,
+              '|xns' : 'Roo.data'
+             },
+             reader : {
+              xtype : 'JsonReader',
+              fields : [
+                  {
+                      'name': 'id',
+                      'type': 'int'
+                  },
+                  {
+                      'name': 'honor',
+                      'type': 'string'
+                  },
+                  {
+                      'name': 'firstname',
+                      'type': 'string'
+                  },
+                  {
+                      'name': 'middlename',
+                      'type': 'string'
+                  },
+                  {
+                      'name': 'lastname',
+                      'type': 'string'
+                  },
+                  {
+                      'name': 'fullname',
+                      'type': 'string'
+                  }
+              ],
+              xns : Roo.data,
+              '|xns' : 'Roo.data'
+             }
+            }
            }
           ]
          }
