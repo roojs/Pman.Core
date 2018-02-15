@@ -59,9 +59,6 @@
        ]
       },
       {
-       "listeners" : {
-        "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
-       },
        "xtype" : "Row",
        "$ xns" : "Roo.bootstrap",
        "items" : [
