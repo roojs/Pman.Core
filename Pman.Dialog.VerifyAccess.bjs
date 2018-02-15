@@ -1,0 +1,10 @@
+{
+ "name" : "Pman.Dialog.VerifyAccess",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.VerifyAccess.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "items" : [
+ ]
+}
