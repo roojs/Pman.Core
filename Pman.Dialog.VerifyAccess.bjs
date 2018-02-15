@@ -105,6 +105,31 @@
          ]
         }
        ]
+      },
+      {
+       "xtype" : "Row",
+       "$ xns" : "Roo.bootstrap",
+       "items" : [
+        {
+         "xtype" : "Column",
+         "Number xs" : 8,
+         "$ xns" : "Roo.bootstrap",
+         "items" : [
+          {
+           "String name" : "id",
+           "xtype" : "Input",
+           "String inputType" : "hidden",
+           "$ xns" : "Roo.bootstrap"
+          },
+          {
+           "String name" : "authorized_key",
+           "xtype" : "Input",
+           "String inputType" : "hidden",
+           "$ xns" : "Roo.bootstrap"
+          }
+         ]
+        }
+       ]
       }
      ]
     },

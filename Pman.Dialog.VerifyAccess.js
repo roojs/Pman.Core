@@ -296,6 +296,35 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           ]
          }
         ]
+       },
+       {
+        xtype : 'Row',
+        xns : Roo.bootstrap,
+        '|xns' : 'Roo.bootstrap',
+        items  : [
+         {
+          xtype : 'Column',
+          xs : 8,
+          xns : Roo.bootstrap,
+          '|xns' : 'Roo.bootstrap',
+          items  : [
+           {
+            xtype : 'Input',
+            inputType : 'hidden',
+            name : 'id',
+            xns : Roo.bootstrap,
+            '|xns' : 'Roo.bootstrap'
+           },
+           {
+            xtype : 'Input',
+            inputType : 'hidden',
+            name : 'authorized_key',
+            xns : Roo.bootstrap,
+            '|xns' : 'Roo.bootstrap'
+           }
+          ]
+         }
+        ]
        }
       ]
      },
