@@ -97,6 +97,7 @@
            "listeners" : {
             "select" : "function (combo, record, index)\n{\n    \n}"
            },
+           "Boolean allowBlank" : false,
            "String name" : "status_name",
            "String mode" : "local",
            "String valueField" : "code",

@@ -287,6 +287,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           items  : [
            {
             xtype : 'ComboBox',
+            allowBlank : false,
             displayField : 'value',
             editable : false,
             hiddenName : 'status',
