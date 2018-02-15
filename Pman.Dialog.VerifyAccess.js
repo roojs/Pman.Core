@@ -234,6 +234,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             indicatorpos : 'right',
             mode : 'local',
             name : 'status_name',
+            selectOnFocus : true,
+            tpl : '<div class=\"roo-select2-result\">{value}</div>',
             triggerAction : 'all',
             valueField : 'code',
             listeners : {

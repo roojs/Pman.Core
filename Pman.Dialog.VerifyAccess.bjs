@@ -93,6 +93,7 @@
             "select" : "function (combo, record, index)\n{\n    \n}"
            },
            "Boolean allowBlank" : false,
+           "Boolean selectOnFocus" : true,
            "String name" : "status_name",
            "String mode" : "local",
            "String valueField" : "code",
@@ -102,6 +103,7 @@
            "string fieldLabel" : "Action",
            "Boolean alwaysQuery" : true,
            "$ xns" : "Roo.bootstrap",
+           "String/Roo.Template tpl" : "<div class=\"roo-select2-result\">{value}</div>",
            "String hiddenName" : "status",
            "String displayField" : "value",
            "String indicatorpos" : "right",
