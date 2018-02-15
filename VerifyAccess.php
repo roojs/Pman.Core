@@ -16,27 +16,17 @@ class Pman_Core_VerifyAccess extends Pman
     
     function get($id)
     {
-        
-        
-        return;
-        
-    }
-    
-    function validate($id)
-    {
-        $ret = array(
-            'is_valid' => true,
-            'errorMsg' => ''
-        );
-        
         @list($id, $key) = explode('/', $id);
         
         if(empty($id) || empty($key)){
-            return false;
+            $this->jerr('Invalid URL');
         }
         
         $core_ip_access = DB_DataObject::factory('core_ip_access');
         
+        if(!$core_ip_access->get($id) || $core_ip_access->authorized_key != $key){
+            $this->jerr('This URL is broken');
+        }
         
         $ff = HTML_FlexyFramework::get();
         
@@ -57,6 +47,9 @@ class Pman_Core_VerifyAccess extends Pman
         ) {
             $this->jerr('Invalid URL');
         }
+        
+        return;
+        
     }
     
 }
