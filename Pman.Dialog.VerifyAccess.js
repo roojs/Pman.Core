@@ -107,10 +107,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             _this.dialog.el.mask('Sending...');
             _this.form.doAction('submit');
             
-        },
-       render : function (_self)
-        {
-            _this.btn_ok = _self;
         }
       },
       xns : Roo.bootstrap,
@@ -186,12 +182,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             if (action.type =='submit') {
                 
                 _this.dialog.hide();
-                
-                Roo.get(document.body).mask('Start your Application');
-                
-                setTimeout(function() {
-                    window.location.href = baseURL;
-                }, 500); 
                 
                 return;
             }
