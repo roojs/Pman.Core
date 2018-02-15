@@ -8,7 +8,6 @@
  "strings" : {
   "e2c9d024b79dfb48b42a7807206c6aed" : "Verify New IP Access",
   "d41d8cd98f00b204e9800998ecf8427e" : "",
-  "7c5ba892645af8d7dba520e3978c726f" : "Director",
   "f6039d44b29456b20f8f373155ae4973" : "Username",
   "dfb790522fdea3859af206d32916fe77" : "User Agent",
   "d71940f24ee38ee09f6e06b908480bcf" : "Resend email",
@@ -95,49 +94,26 @@
          "$ xns" : "Roo.bootstrap",
          "items" : [
           {
-           "Boolean allowBlank" : false,
-           "String name" : "_existing_director_name",
-           "Number minChars" : 2,
-           "Number md" : 12,
-           "String valueField" : "id",
-           "String queryParam" : "query[name]",
-           "Boolean typeAhead" : true,
+           "listeners" : {
+            "render" : "function (_self)\n{\n    _this.status_filter = _self;\n}",
+            "select" : "function (combo, record, index)\n{\n    _this.table.footer.onClick('first'); \n}"
+           },
+           "String name" : "status_filter_name",
+           "String mode" : "local",
+           "String valueField" : "code",
+           "Boolean editable" : false,
            "xtype" : "ComboBox",
            "String triggerAction" : "all",
-           "Boolean editable" : true,
-           "Boolean alwaysQuery" : true,
            "$ xns" : "Roo.bootstrap",
-           "String/Roo.Template tpl" : "<div class=\"roo-select2-result\">{fullname}</div>",
-           "String fieldLabel" : "Director",
-           "String hiddenName" : "_existing_director",
-           "String displayField" : "fullname",
-           "Boolean forceSelection" : true,
-           "String indicatorpos" : "right",
+           "String hiddenName" : "status_filter",
+           "String displayField" : "value",
            "items" : [
             {
-             "listeners" : {
-              "beforeload" : "function (_self, o)\n{\n    o.params = o.params || {};\n    \n    o.params._with_fullname = 1;\n    \n    var parent = _this.form.findField('parent_company_id').getValue() * 1;\n    \n    o.params._hide_existing = 1;\n    \n    o.params._parent_company_id = parent;\n    \n    if (Roo.select('main').first().dom.className.indexOf('trust') >= 0) {\n        \n        o.params._find_person_type = 'trustee';\n    }\n    \n}"
-             },
-             "xtype" : "Store",
-             "boolean remoteSort" : true,
+             "$ string data" : "[\n    ['all', 'All'],\n    ['submitted', 'Submitted'],\n    ['pending_submission', 'Pending Submission'],\n    ['pending_approval', 'Pending Approval'],\n    ['rejected', 'Rejected'],\n    ['approved', 'Approved'],\n    ['deleted', 'Deleted']\n] ",
+             "xtype" : "SimpleStore",
              "$ xns" : "Roo.data",
-             "$ sortInfo" : "{field:\"firstname\",direction:\"ASC\"}",
-             "* prop" : "store",
-             "items" : [
-              {
-               "xtype" : "HttpProxy",
-               "$ xns" : "Roo.data",
-               "String method" : "GET",
-               "* prop" : "proxy",
-               "$ String url" : "baseURL+'/Roo/Coba_person'"
-              },
-              {
-               "xtype" : "JsonReader",
-               "$ xns" : "Roo.data",
-               "$ fields" : "[\n    {\n        'name': 'id',\n        'type': 'int'\n    },\n    {\n        'name': 'honor',\n        'type': 'string'\n    },\n    {\n        'name': 'firstname',\n        'type': 'string'\n    },\n    {\n        'name': 'middlename',\n        'type': 'string'\n    },\n    {\n        'name': 'lastname',\n        'type': 'string'\n    },\n    {\n        'name': 'fullname',\n        'type': 'string'\n    }\n]",
-               "* prop" : "reader"
-              }
-             ]
+             "$ fields" : "[ 'code', 'value' ]",
+             "* prop" : "store"
             }
            ]
           }
