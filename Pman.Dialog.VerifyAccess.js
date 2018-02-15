@@ -122,6 +122,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                 
                 if(_this.data.status * 1 == 0){
                     _this.form.findField('status').reset();
+                    Roo.log('reset???');
                 }
                 
                 return;
