@@ -306,13 +306,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             store : {
              xtype : 'SimpleStore',
              data : [
-                 ['all', 'All'],
-                 ['submitted', 'Submitted'],
-                 ['pending_submission', 'Pending Submission'],
-                 ['pending_approval', 'Pending Approval'],
-                 ['rejected', 'Rejected'],
-                 ['approved', 'Approved'],
-                 ['deleted', 'Deleted']
+                 ['1', 'Approve'],
+                 ['-1', 'Reject']
              ],
              fields : [ 'code', 'value' ],
              xns : Roo.data,

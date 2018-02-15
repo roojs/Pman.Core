@@ -109,7 +109,7 @@
            "String displayField" : "value",
            "items" : [
             {
-             "$ string data" : "[\n    ['all', 'All'],\n    ['submitted', 'Submitted'],\n    ['pending_submission', 'Pending Submission'],\n    ['pending_approval', 'Pending Approval'],\n    ['rejected', 'Rejected'],\n    ['approved', 'Approved'],\n    ['deleted', 'Deleted']\n] ",
+             "$ string data" : "[\n    ['1', 'Approve'],\n    ['-1', 'Reject']\n] ",
              "xtype" : "SimpleStore",
              "$ xns" : "Roo.data",
              "$ fields" : "[ 'code', 'value' ]",
