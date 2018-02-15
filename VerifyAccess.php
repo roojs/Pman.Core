@@ -63,10 +63,25 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jdata($core_ip_access->toArray());
         }
         
+        $ff = HTML_FlexyFramework::get();
+        
+        if(empty($ff->Pman['ip_management']) || empty($ff->Pman['XMPP']) || empty($ff->Pman['XMPP']['to'])) {
+            $this->jerr('[System Error] This site does not using IP management');
+        }
+        
+        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
+        
+        $core_person = DB_DataObject::factory('core_person');
+        
+        if(!$core_person->get('email', $ff->Pman['XMPP']['to'])) {
+            $this->jerr('[System Error] Please setup the XMPP correctly');
+        }
+        
         $o = clone($core_ip_access);
         
         $core_ip_access->setFrom(array(
-            'status' => empty($_REQUEST['status']) ? 0 : $_REQUEST['status']
+            'status' => empty($_REQUEST['status']) ? 0 : $_REQUEST['status'],
+            'authorized_by' => $core_person->id
         ));
         
         if($core_ip_access->status == -2){
