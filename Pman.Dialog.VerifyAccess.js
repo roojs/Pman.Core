@@ -256,6 +256,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             name : 'user_agent',
             readOnly : true,
             rows : 3,
+            style : 'margin-bottom: 15px;',
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
            }
@@ -265,12 +266,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
        },
        {
         xtype : 'Row',
-        listeners : {
-         render : function (_self)
-          {
-              _this.row_pwd_label = _self;
-          }
-        },
         xns : Roo.bootstrap,
         '|xns' : 'Roo.bootstrap',
         items  : [

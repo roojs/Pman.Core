@@ -73,16 +73,14 @@
            "xtype" : "TextArea",
            "string fieldLabel" : "User Agent",
            "Number rows" : 3,
-           "$ xns" : "Roo.bootstrap"
+           "$ xns" : "Roo.bootstrap",
+           "String style" : "margin-bottom: 15px;"
           }
          ]
         }
        ]
       },
       {
-       "listeners" : {
-        "render" : "function (_self)\n{\n    _this.row_pwd_label = _self;\n}"
-       },
        "xtype" : "Row",
        "$ xns" : "Roo.bootstrap",
        "items" : [
