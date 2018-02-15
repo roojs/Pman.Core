@@ -10,6 +10,7 @@
   "d41d8cd98f00b204e9800998ecf8427e" : "",
   "f6039d44b29456b20f8f373155ae4973" : "Username",
   "004bf6c9a40003140292e97330236c53" : "Action",
+  "5a787141d53b573ec9b86e900bfe0d79" : "Expire Date",
   "dfb790522fdea3859af206d32916fe77" : "User Agent",
   "70d9be9b139893aa6c69b5e77e614311" : "Confirm"
  },
@@ -116,6 +117,7 @@
           {
            "String name" : "expire_dt",
            "xtype" : "DateField",
+           "string fieldLabel" : "Expire Date",
            "$ xns" : "Roo.bootstrap"
           }
          ]
