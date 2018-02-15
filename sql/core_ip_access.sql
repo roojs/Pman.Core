@@ -11,6 +11,7 @@ ALTER TABLE core_ip_access ADD COLUMN authorized_by INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_ip_access ADD COLUMN authorized_key VARCHAR(254) NOT NULL DEFAULT '';
 ALTER TABLE core_ip_access ADD COLUMN email VARCHAR(254) NOT NULL DEFAULT '';
 ALTER TABLE core_ip_access ADD COLUMN expire_dt DATE NOT NULL DEFAULT '0000-00-00';
+ALTER TABLE core_ip_access CHANGE COLUMN expire_dt expire_dt DATE NOT NULL DEFAULT '0000-00-00';
 ALTER TABLE core_ip_access ADD COLUMN user_agent VARCHAR(254) NOT NULL DEFAULT '';
 ALTER TABLE core_ip_access ADD COLUMN updated_by INT(11) NOT NULL DEFAULT 0;
 
