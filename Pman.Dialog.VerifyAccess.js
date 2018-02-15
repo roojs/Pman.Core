@@ -56,27 +56,16 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
       {
           var path = window.location.pathname.split('/');
           
-          var verify_key = path.pop();
+          var authorized_key = path.pop();
           
           var id = path.pop();
           
-          var show_err = function(msg,title,show_resend_btn) {
-              _this.form.hide();
-              _this.btn_ok.hide();
-              _this.error_row.el.show();
-              _this.text_el.el.dom.innerHTML = msg;
-              _this.modal.setTitle(title);
-              if(show_resend_btn){
-                  _this.btn_resend.show();
-              }
-          }
-          
           new Pman.Request({
-              url: baseURL + '/Register/Confirm',
+              url: baseURL + '/Core/VerifyAccess',
               method : 'POST',
               params : {
                   id : id,
-                  verify_key : verify_key,
+                  authorized_key : authorized_key,
                   _to_data : 1
               }, 
               success : function(res) {
