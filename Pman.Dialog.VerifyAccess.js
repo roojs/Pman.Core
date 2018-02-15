@@ -74,6 +74,10 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
               },
               failure: function(res) {
                   
+                  _this.dialog.hide();
+                  
+                  Roo.bootstrap.MessageBox.alert('Error', res.errorMsg);
+                  
                   return;
              }
           });
