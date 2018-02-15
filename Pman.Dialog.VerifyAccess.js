@@ -8,7 +8,6 @@ Pman.Dialog.VerifyAccess= function() {}
 Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
 
  _strings : {
-  '294176b7ee742a4fcfe2085448e6f138' :"Cacel",
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
@@ -99,50 +98,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             _this.dialog.el.mask('Sending...');
             _this.form.doAction('submit');
             
-        }
-      },
-      xns : Roo.bootstrap,
-      '|xns' : 'Roo.bootstrap'
-     },
-     {
-      xtype : 'Button',
-      html : _this._strings['294176b7ee742a4fcfe2085448e6f138'] /* Cacel */,
-      weight : 'primary',
-      listeners : {
-       click : function (_self, e)
-        {
-            var path = window.location.pathname.split('/');
-            
-            var verify_key = path.pop();
-            
-            var id = path.pop();
-            
-            new Pman.Request({
-                url: baseURL + '/Roo/Coba_application_signup',
-                method : 'POST',
-                mask : 'Sending...',
-                params : {
-                    _resend : id
-                }, 
-                success : function(res) {
-                    var msg = "We have re-sent you an invitation via email." +
-                                "<br/><br/>" + 
-                                "Please check your inbox for the final registration step." + 
-                                 "<br/><br/>" + 
-                                "<B>(Note. emails may accidentally be sent to your Spam Folder)</B>";
-                                
-                    Roo.bootstrap.MessageBox.alert('Please check your email', msg) ;
-                },
-                failure: function(res) {
-                    Roo.bootstrap.MessageBox.alert('Error', res.errorMsg) ;
-                }
-            });
-        },
-       render : function (_self)
-        {
-            _this.btn_resend = _self;
-             this.el.setVisibilityMode(Roo.Element.DISPLAY);
-             this.el.hide();
         }
       },
       xns : Roo.bootstrap,

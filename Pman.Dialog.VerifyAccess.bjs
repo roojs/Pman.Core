@@ -6,7 +6,6 @@
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
-  "294176b7ee742a4fcfe2085448e6f138" : "Cacel",
   "e2c9d024b79dfb48b42a7807206c6aed" : "Verify New IP Access",
   "d41d8cd98f00b204e9800998ecf8427e" : "",
   "f6039d44b29456b20f8f373155ae4973" : "Username",
@@ -177,17 +176,6 @@
      "xtype" : "Button",
      "$ xns" : "Roo.bootstrap",
      "String html" : "Confirm",
-     "* prop" : "buttons[]"
-    },
-    {
-     "listeners" : {
-      "render" : "function (_self)\n{\n    _this.btn_resend = _self;\n     this.el.setVisibilityMode(Roo.Element.DISPLAY);\n     this.el.hide();\n}",
-      "click" : "function (_self, e)\n{\n    var path = window.location.pathname.split('/');\n    \n    var verify_key = path.pop();\n    \n    var id = path.pop();\n    \n    new Pman.Request({\n        url: baseURL + '/Roo/Coba_application_signup',\n        method : 'POST',\n        mask : 'Sending...',\n        params : {\n            _resend : id\n        }, \n        success : function(res) {\n            var msg = \"We have re-sent you an invitation via email.\" +\n                        \"<br/><br/>\" + \n                        \"Please check your inbox for the final registration step.\" + \n                         \"<br/><br/>\" + \n                        \"<B>(Note. emails may accidentally be sent to your Spam Folder)</B>\";\n                        \n            Roo.bootstrap.MessageBox.alert('Please check your email', msg) ;\n        },\n        failure: function(res) {\n            Roo.bootstrap.MessageBox.alert('Error', res.errorMsg) ;\n        }\n    });\n}"
-     },
-     "String weight" : "primary",
-     "xtype" : "Button",
-     "$ xns" : "Roo.bootstrap",
-     "String html" : "Cacel",
      "* prop" : "buttons[]"
     }
    ]
