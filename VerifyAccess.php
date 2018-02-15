@@ -68,7 +68,7 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jerr('Invalid URL');
         }
         
-        $this->jdata($coba_application_signup->toArray());
+        $this->jdata($core_ip_access->toArray());
         
     }
     
