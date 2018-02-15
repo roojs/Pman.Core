@@ -8,9 +8,9 @@ Pman.Dialog.VerifyAccess= function() {}
 Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
 
  _strings : {
+  'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'b945ed1d61d8edbe16a1192ad6d2fd58' :"Please enter a memorable password for logging into your application",
-  '07ae22a49223522664766d12c37a4eeb' :"Activate Your account",
   'ee7ad62ad69b9ab5f25d273e4e0a1736' :"Your Username",
   '51eea3dc60ae3a0b1bb8188bc6337dc2' :"enter password",
   '1849ffc8731b5e74ae6157c91ba73575' :"Please confirm your password",
@@ -45,7 +45,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
     xtype : 'Modal',
     allow_close : false,
     cls : 'enable-overflow',
-    title : _this._strings['07ae22a49223522664766d12c37a4eeb'] /* Activate Your account */,
+    title : _this._strings['e2c9d024b79dfb48b42a7807206c6aed'] /* Verify New IP Access */,
     listeners : {
      render : function (_self)
       {
