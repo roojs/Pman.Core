@@ -4,6 +4,8 @@ require_once 'Pman.php';
 
 class Pman_Core_VerifyAccess extends Pman
 {
+    var $masterTemplate = 'master-verify-ip-access.html';
+    
     /*
      * This is a public page
      */
@@ -14,12 +16,34 @@ class Pman_Core_VerifyAccess extends Pman
     
     function get($id)
     {
+        
+        
+        return;
+        
+    }
+    
+    function validate($id)
+    {
+        $ret = array(
+            'is_valid' => true,
+            'errorMsg' => ''
+        );
+        
         @list($id, $key) = explode('/', $id);
+        
+        if(empty($id) || empty($key)){
+            return false;
+        }
+        
+        $core_ip_access = DB_DataObject::factory('core_ip_access');
+        
         
         $ff = HTML_FlexyFramework::get();
         
         $core_person = DB_DataObject::factory('core_person');
-        $core_ip_access = DB_DataObject::factory('core_ip_access');
+        
+        
+        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
         
         if(
                 empty($id) ||
@@ -33,8 +57,6 @@ class Pman_Core_VerifyAccess extends Pman
         ) {
             $this->jerr('Invalid URL');
         }
-        
-        
     }
     
 }
