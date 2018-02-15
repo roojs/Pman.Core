@@ -68,6 +68,12 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   
                   _this.form.setValues(_this.data);
                   
+                  if(_this.data.status * 1 == 0){
+                      _this.form.findField('status').reset();
+                  }
+                  
+                  _this.form.clearInvalid();
+                  
                   return;
               },
               failure: function(res) {
