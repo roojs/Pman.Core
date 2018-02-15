@@ -255,6 +255,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           items  : [
            {
             xtype : 'DateField',
+            allowBlank : false,
             fieldLabel : _this._strings['5a787141d53b573ec9b86e900bfe0d79'] /* Expire Date */,
             name : 'expire_dt',
             xns : Roo.bootstrap,

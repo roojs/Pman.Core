@@ -115,6 +115,7 @@
          "$ xns" : "Roo.bootstrap",
          "items" : [
           {
+           "Boolean allowBlank" : false,
            "String name" : "expire_dt",
            "xtype" : "DateField",
            "string fieldLabel" : "Expire Date",
