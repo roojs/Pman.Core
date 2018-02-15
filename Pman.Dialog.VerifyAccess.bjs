@@ -29,7 +29,7 @@
     {
      "listeners" : {
       "actionfailed" : "function (_self, action)\n{\n    _this.dialog.el.unmask();\n    Roo.log(\"action failed\");\n    Roo.log(action);\n  \n    if(!action.result.errorMsg){\n        Roo.bootstrap.MessageBox.alert(\"Error\", \"Please contact system adminisrator\");\n    }\n   \n    var msg = action.result.errorMsg;\n   \n    if(msg.length >= 200){\n        msg = msg.substring(0,199) + '...'\n    }\n    \n    Roo.bootstrap.MessageBox.alert(\"Error\", msg);\n}",
-      "actioncomplete" : "function (_self, action)\n{\n    if (action.type == 'setdata') {\n        \n        return;\n    }\n    if (action.type == 'load') {\n        \n        return;\n    }\n    if (action.type =='submit') {\n        \n        _this.dialog.hide();\n        \n        return;\n    }\n    \n}",
+      "actioncomplete" : "function (_self, action)\n{\n    if (action.type == 'setdata') {\n        \n        return;\n    }\n    if (action.type == 'load') {\n        \n        return;\n    }\n    if (action.type =='submit') {\n        \n        _this.dialog.hide();\n        \n        Roo.bootstrap.MessageBox.alert('Notice', 'You have verified the IP [' + _this.data.id + ']');\n        \n        return;\n    }\n    \n}",
       "render" : "function (_self,e)\n{\n    _this.form = _self;\n    \n}"
      },
      "$ string url" : "baseURL + '/Core/VerifyAccess'",
