@@ -134,7 +134,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                 
                 _this.dialog.hide();
                 
-                Roo.bootstrap.MessageBox.alert('Notice', 'You have verified the IP [' + _this.data.id + ']');
+                Roo.bootstrap.MessageBox.alert('Notice', 'You have verified the IP [' + _this.data.ip + ']');
                 
                 return;
             }
