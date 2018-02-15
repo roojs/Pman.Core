@@ -97,14 +97,14 @@
            "listeners" : {
             "select" : "function (combo, record, index)\n{\n    \n}"
            },
-           "String name" : "status_filter_name",
+           "String name" : "status_name",
            "String mode" : "local",
            "String valueField" : "code",
            "Boolean editable" : false,
            "xtype" : "ComboBox",
            "String triggerAction" : "all",
            "$ xns" : "Roo.bootstrap",
-           "String hiddenName" : "status_filter",
+           "String hiddenName" : "status",
            "String displayField" : "value",
            "items" : [
             {

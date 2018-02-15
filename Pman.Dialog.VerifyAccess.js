@@ -289,9 +289,9 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             xtype : 'ComboBox',
             displayField : 'value',
             editable : false,
-            hiddenName : 'status_filter',
+            hiddenName : 'status',
             mode : 'local',
-            name : 'status_filter_name',
+            name : 'status_name',
             triggerAction : 'all',
             valueField : 'code',
             listeners : {
