@@ -81,7 +81,7 @@ class Pman_Core_VerifyAccess extends Pman
         
         $core_ip_access->setFrom(array(
             'status' => empty($_REQUEST['status']) ? 0 : $_REQUEST['status'],
-            'expire_dt' => empty($_REQUEST['expire_dt']) ? '' : date('Y-m-d', strtotime($_REQUEST['expire_dt'])),
+            'expire_dt' => ($_REQUEST['status'] != -2 || empty($_REQUEST['expire_dt'])) ? '' : date('Y-m-d', strtotime($_REQUEST['expire_dt'])),
             'authorized_by' => $core_person->id
         ));
         
