@@ -71,42 +71,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
               success : function(res) {
                   _this.form.setValues(res.data);
                   return;
-              },
-              failure: function(res) {
-                  
-                  switch(res.errorMsg) {
-                      case 'already_registered':
-                          _this.dialog.hide();
-                          Coba.Dialog.Login.show({});
-                          break;
-      
-                      case 'multi_account':
-                          show_err('This email has been registered for multiple account. Please contact to your distributor to synchronize them',
-                                   'System Error',
-                                    false);
-                          break;
-      
-                      case 'broken_link':
-                          show_err('The link you clicked on was broken, on not complete, please copy and paste the full URL from the email you received',
-                                   'Invalid Link',
-                                   false);
-                          break;
-      
-                      case 'expired':
-                          show_err('This activation link is already expired, please click Resend email to get the updated activated link',
-                                   'Link Expired',
-                                   true);                   
-                          break;
-      
-                      
-                      default:
-                          show_err(res.errorMsg,'Error', false);
-                          break;
-                  }            
-      
-                  
-                  return;
-             }
+              }
           });
       }
     },
