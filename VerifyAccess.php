@@ -48,15 +48,6 @@ class Pman_Core_VerifyAccess extends Pman
     
     function post()
     {
-        if(!empty($_REQUEST['_to_data'])){
-            $this->toData();
-        }
-        
-        
-    }
-    
-    function toData()
-    {
         $core_ip_access = DB_DataObject::factory('core_ip_access');
         
         if(
@@ -68,8 +59,14 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jerr('Invalid URL');
         }
         
-        $this->jdata($core_ip_access->toArray());
+        if(!empty($_REQUEST['_to_data'])){
+            $this->jdata($core_ip_access->toArray());
+        }
+        
+        
+        
         
     }
+    
     
 }
