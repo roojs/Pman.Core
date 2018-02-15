@@ -47,10 +47,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
     cls : 'enable-overflow',
     title : _this._strings['e2c9d024b79dfb48b42a7807206c6aed'] /* Verify New IP Access */,
     listeners : {
-     render : function (_self)
-      {
-          _this.modal = _self;
-      },
      show : function (_self)
       {
           var path = window.location.pathname.split('/');
@@ -69,7 +65,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   _to_data : 1
               }, 
               success : function(res) {
-                  //_this.dialog.show();
                   Roo.log(res);
                   return;
                   _this.form.setValues(res.data);
