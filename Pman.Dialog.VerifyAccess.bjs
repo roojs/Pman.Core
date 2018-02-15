@@ -119,7 +119,8 @@
            "String name" : "expire_dt",
            "xtype" : "DateField",
            "string fieldLabel" : "Expire Date",
-           "$ xns" : "Roo.bootstrap"
+           "$ xns" : "Roo.bootstrap",
+           "String indicatorpos" : "right"
           }
          ]
         }
