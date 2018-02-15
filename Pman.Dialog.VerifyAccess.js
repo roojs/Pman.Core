@@ -64,7 +64,11 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   _to_data : 1
               }, 
               success : function(res) {
-                  _this.form.setValues(res.data);
+              
+                  _this.data = res.data;
+                  
+                  _this.form.setValues(_this.data);
+                  
                   return;
               },
               failure: function(res) {
