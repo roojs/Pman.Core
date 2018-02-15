@@ -164,6 +164,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
      {
       xtype : 'Form',
       errorMask : true,
+      labelAlign : 'top',
       loadMask : false,
       url : baseURL + '/Core/VerifyAccess',
       listeners : {

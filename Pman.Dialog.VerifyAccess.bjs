@@ -35,6 +35,7 @@
      "$ string url" : "baseURL + '/Core/VerifyAccess'",
      "Boolean errorMask" : true,
      "xtype" : "Form",
+     "String labelAlign" : "top",
      "$ xns" : "Roo.bootstrap",
      "Boolean loadMask" : false,
      "items" : [
