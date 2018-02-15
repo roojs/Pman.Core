@@ -101,7 +101,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             if(!_this.form.isValid()){
                 return;
             }
-            
+            Roo.log('submit');
+            return;
             _this.dialog.el.mask('Sending...');
             _this.form.doAction('submit');
             
