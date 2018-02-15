@@ -80,6 +80,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                       _this.form.findField('status').reset();
                   }
                   
+                  _this.form.findField('expire_dt').reset();
+                  
                   _this.form.clearInvalid();
                   
                   return;
