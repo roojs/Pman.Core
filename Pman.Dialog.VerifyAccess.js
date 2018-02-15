@@ -53,8 +53,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
       },
      show : function (_self)
       {
-          _this.dialog.hide();
-          
           var path = window.location.pathname.split('/');
           
           var authorized_key = path.pop();
@@ -71,7 +69,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   _to_data : 1
               }, 
               success : function(res) {
-                  _this.dialog.hide();
+                  //_this.dialog.show();
                   Roo.log(res);
                   return;
                   _this.form.setValues(res.data);
