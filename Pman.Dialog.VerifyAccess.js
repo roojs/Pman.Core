@@ -120,11 +120,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             }
             if (action.type == 'load') {
                 
-                if(_this.data.status * 1 == 0){
-                    _this.form.findField('status').reset();
-                    Roo.log('reset???');
-                }
-                
                 return;
             }
             if (action.type =='submit') {
