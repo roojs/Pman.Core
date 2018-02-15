@@ -95,8 +95,7 @@
          "items" : [
           {
            "listeners" : {
-            "render" : "function (_self)\n{\n    _this.status_filter = _self;\n}",
-            "select" : "function (combo, record, index)\n{\n    _this.table.footer.onClick('first'); \n}"
+            "select" : "function (combo, record, index)\n{\n    \n}"
            },
            "String name" : "status_filter_name",
            "String mode" : "local",

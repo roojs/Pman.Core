@@ -295,13 +295,9 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             triggerAction : 'all',
             valueField : 'code',
             listeners : {
-             render : function (_self)
-              {
-                  _this.status_filter = _self;
-              },
              select : function (combo, record, index)
               {
-                  _this.table.footer.onClick('first'); 
+                  
               }
             },
             xns : Roo.bootstrap,
