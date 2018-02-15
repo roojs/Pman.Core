@@ -259,6 +259,16 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             fieldLabel : _this._strings['5a787141d53b573ec9b86e900bfe0d79'] /* Expire Date */,
             indicatorpos : 'right',
             name : 'expire_dt',
+            listeners : {
+             render : function (_self)
+              {
+                  _this.expire_dt = this;
+                  
+                  this.el.setVisibilityMode(Roo.Element.DISPLAY);
+                  
+                  this.el.hide();
+              }
+            },
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
            }

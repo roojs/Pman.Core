@@ -115,6 +115,9 @@
          "$ xns" : "Roo.bootstrap",
          "items" : [
           {
+           "listeners" : {
+            "render" : "function (_self)\n{\n    _this.expire_dt = this;\n    \n    this.el.setVisibilityMode(Roo.Element.DISPLAY);\n    \n    this.el.hide();\n}"
+           },
            "Boolean allowBlank" : false,
            "String name" : "expire_dt",
            "xtype" : "DateField",
