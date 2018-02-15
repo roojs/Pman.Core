@@ -229,6 +229,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             displayField : 'value',
             editable : false,
             fieldLabel : _this._strings['004bf6c9a40003140292e97330236c53'] /* Action */,
+            forceSelection : true,
             hiddenName : 'status',
             indicatorpos : 'right',
             mode : 'local',

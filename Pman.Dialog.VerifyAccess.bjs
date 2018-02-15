@@ -105,6 +105,7 @@
            "String hiddenName" : "status",
            "String displayField" : "value",
            "String indicatorpos" : "right",
+           "Boolean forceSelection" : true,
            "items" : [
             {
              "$ string data" : "[\n    ['1', 'Approve'],\n    ['-1', 'Reject']\n] ",
