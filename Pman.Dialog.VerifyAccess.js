@@ -12,6 +12,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
   'd41d8cd98f00b204e9800998ecf8427e' :"",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
   '51eea3dc60ae3a0b1bb8188bc6337dc2' :"enter password",
+  'dfb790522fdea3859af206d32916fe77' :"User Agent",
   '1849ffc8731b5e74ae6157c91ba73575' :"Please confirm your password",
   'd71940f24ee38ee09f6e06b908480bcf' :"Resend email",
   '14cf5e829f5cb6fbf8cb54f7c5ff4ca9' :"Start the application process   "
@@ -262,6 +263,8 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
           items  : [
            {
             xtype : 'TextArea',
+            fieldLabel : _this._strings['dfb790522fdea3859af206d32916fe77'] /* User Agent */,
+            name : 'user_agent',
             readOnly : true,
             xns : Roo.bootstrap,
             '|xns' : 'Roo.bootstrap'
