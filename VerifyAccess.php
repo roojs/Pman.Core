@@ -65,7 +65,9 @@ class Pman_Core_VerifyAccess extends Pman
         
         $o = clone($core_ip_access);
         
-        $core_ip_access->status = empty($_REQUEST['status']) ? 0 : $_REQUEST['status'];
+        $core_ip_access->setFrom(array(
+            'status' => empty($_REQUEST['status']) ? 0 : $_REQUEST['status']
+        ));
         
         if($core_ip_access->status == -2){
             
@@ -76,6 +78,8 @@ class Pman_Core_VerifyAccess extends Pman
         }
         
         $core_ip_access->update($o);
+        
+        $this->jok('OK');
         
     }
     
