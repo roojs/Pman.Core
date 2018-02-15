@@ -34,22 +34,12 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jerr('[System Error] This site does not using IP management');
         }
         
-        $core_person = DB_DataObject::factory('core_person');
-        
-        
         $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
         
-        if(
-                empty($id) ||
-                empty($key) ||
-                empty($ff->Pman['ip_management']) || 
-                empty($ff->Pman['XMPP']) ||
-                empty($ff->Pman['XMPP']['to']) ||
-                !$core_person->get('email', $ff->Pman['XMPP']['to']) ||
-                !$core_ip_access->get($id) ||
-                $core_ip_access->authorized_key != $key
-        ) {
-            $this->jerr('Invalid URL');
+        $core_person = DB_DataObject::factory('core_person');
+        
+        if(!$core_person->get('email', $ff->Pman['XMPP']['to'])) {
+            $this->jerr('Invalid Admin Setting');
         }
         
         return;
