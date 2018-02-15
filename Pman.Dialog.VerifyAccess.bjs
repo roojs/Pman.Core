@@ -116,7 +116,7 @@
          "items" : [
           {
            "listeners" : {
-            "render" : "function (_self)\n{\n    _this.expire_dt = this;\n    \n    this.setStartDate(new Date());\n    \n    this.el.setVisibilityMode(Roo.Element.DISPLAY);\n    \n    //this.el.hide();\n}"
+            "render" : "function (_self)\n{\n    _this.expire_dt = this;\n    \n    this.setStartDate(new Date());\n    \n    this.el.setVisibilityMode(Roo.Element.DISPLAY);\n    \n    this.el.hide();\n}"
            },
            "Boolean allowBlank" : false,
            "String name" : "expire_dt",

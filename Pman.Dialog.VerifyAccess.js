@@ -268,7 +268,7 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
                   
                   this.el.setVisibilityMode(Roo.Element.DISPLAY);
                   
-                  //this.el.hide();
+                  this.el.hide();
               }
             },
             xns : Roo.bootstrap,
