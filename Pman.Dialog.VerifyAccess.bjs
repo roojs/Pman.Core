@@ -103,7 +103,6 @@
            "$ xns" : "Roo.bootstrap",
            "String hiddenName" : "status",
            "String displayField" : "value",
-           "String indicatorpos" : "right",
            "items" : [
             {
              "$ string data" : "[\n    ['1', 'Approve'],\n    ['-1', 'Reject']\n] ",
