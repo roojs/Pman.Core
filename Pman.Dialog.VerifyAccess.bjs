@@ -79,7 +79,7 @@
          "items" : [
           {
            "listeners" : {
-            "select" : "function (combo, record, index)\n{\n    \n}"
+            "select" : "function (combo, record, index)\n{\n    _this.expire_dt.allowBlank = true;\n    _this.expire_dt.el.hide();\n    \n    if(record.data.code == '-2'){\n        _this.expire_dt.allowBlank = false;\n        _this.expire_dt.el.show();\n    }\n}"
            },
            "Boolean allowBlank" : false,
            "Boolean selectOnFocus" : true,

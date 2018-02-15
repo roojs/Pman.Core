@@ -228,7 +228,13 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             listeners : {
              select : function (combo, record, index)
               {
+                  _this.expire_dt.allowBlank = true;
+                  _this.expire_dt.el.hide();
                   
+                  if(record.data.code == '-2'){
+                      _this.expire_dt.allowBlank = false;
+                      _this.expire_dt.el.show();
+                  }
               }
             },
             xns : Roo.bootstrap,
