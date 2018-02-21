@@ -9,7 +9,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
 
  _strings : {
   'e2c9d024b79dfb48b42a7807206c6aed' :"Verify New IP Access",
-  'd41d8cd98f00b204e9800998ecf8427e' :"",
   'a12a3079e14ced46e69ba52b8a90b21a' :"IP",
   'f6039d44b29456b20f8f373155ae4973' :"Username",
   '004bf6c9a40003140292e97330236c53' :"Action",
@@ -342,43 +341,6 @@ Roo.apply(Pman.Dialog.VerifyAccess.prototype, {
             '|xns' : 'Roo.bootstrap'
            }
           ]
-         }
-        ]
-       }
-      ]
-     },
-     {
-      xtype : 'Row',
-      listeners : {
-       render : function (_self)
-        {
-            _this.error_row = this;
-            
-            this.el.setVisibilityMode(Roo.Element.DISPLAY);
-            
-            this.el.hide();
-        }
-      },
-      xns : Roo.bootstrap,
-      '|xns' : 'Roo.bootstrap',
-      items  : [
-       {
-        xtype : 'Column',
-        xs : 12,
-        xns : Roo.bootstrap,
-        '|xns' : 'Roo.bootstrap',
-        items  : [
-         {
-          xtype : 'Element',
-          html : _this._strings['d41d8cd98f00b204e9800998ecf8427e'] /*  */,
-          listeners : {
-           render : function (_self)
-            {
-                _this.text_el = _self;
-            }
-          },
-          xns : Roo.bootstrap,
-          '|xns' : 'Roo.bootstrap'
          }
         ]
        }

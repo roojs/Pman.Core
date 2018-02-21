@@ -7,7 +7,6 @@
  "modOrder" : "001",
  "strings" : {
   "e2c9d024b79dfb48b42a7807206c6aed" : "Verify New IP Access",
-  "d41d8cd98f00b204e9800998ecf8427e" : "",
   "a12a3079e14ced46e69ba52b8a90b21a" : "IP",
   "f6039d44b29456b20f8f373155ae4973" : "Username",
   "004bf6c9a40003140292e97330236c53" : "Action",
@@ -167,30 +166,6 @@
            "$ xns" : "Roo.bootstrap"
           }
          ]
-        }
-       ]
-      }
-     ]
-    },
-    {
-     "listeners" : {
-      "render" : "function (_self)\n{\n    _this.error_row = this;\n    \n    this.el.setVisibilityMode(Roo.Element.DISPLAY);\n    \n    this.el.hide();\n}"
-     },
-     "xtype" : "Row",
-     "$ xns" : "Roo.bootstrap",
-     "items" : [
-      {
-       "xtype" : "Column",
-       "Number xs" : 12,
-       "$ xns" : "Roo.bootstrap",
-       "items" : [
-        {
-         "listeners" : {
-          "render" : "function (_self)\n{\n    _this.text_el = _self;\n}"
-         },
-         "xtype" : "Element",
-         "$ xns" : "Roo.bootstrap",
-         "String html" : ""
         }
        ]
       }
