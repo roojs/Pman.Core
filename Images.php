@@ -105,7 +105,7 @@ class Pman_Core_Images extends Pman
         
             $id = empty($bits[0]) ? 0 :  $bits[0];
         }
-        
+        print_R($this);exit;
         if (strpos($id,':') > 0) {  // id format  tablename:id:-imgtype
             
             if (!$this->authUser) {
