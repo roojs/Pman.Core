@@ -54,6 +54,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
+         $this->selectAdd("
+           (
+            SELECT 
+                count(user_id) 
+            FROM 
+                core_group_member 
+            WHERE 
+                core_group.id = core_group_member.group_id
+            ) 
+            AS group_member_count            
+        ");
     }
 
     function toEventString() {
