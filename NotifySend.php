@@ -624,7 +624,8 @@ class Pman_Core_NotifySend extends Pman
                 
         if (method_exists($object, 'toMailerData')) {
             return $object->toMailerData(array(
-                         'rcpts'=>$rcpt,
+                'rcpts'=>$rcpt,
+                'person'=>$rcpt,
             )); //this is core_email - i think it's only used for testing...
             //var_Dump($object);
             //exit;
