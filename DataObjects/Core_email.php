@@ -24,8 +24,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $bcc_group_id;
     public $test_class;
     
-
-    
+ 
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
