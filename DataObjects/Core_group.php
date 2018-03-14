@@ -53,15 +53,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jdata($core_group->memberCount());
             }
         }
+        $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
         
          $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
             FROM 
-                core_group_member 
+                {$cgm}
             WHERE 
-                core_group.id = core_group_member.group_id
+                {$this->tableName()}.id = {$cgm}.group_id
             ) 
             AS group_member_count            
         ");
