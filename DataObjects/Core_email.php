@@ -60,7 +60,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             FROM 
                 {$cgm}
             WHERE 
-                bcc_group = {$cgm}.group_id
+                bcc_group_id = {$cgm}.group_id
            ) 
            AS bcc_group_member_count
         ");
