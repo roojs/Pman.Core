@@ -838,7 +838,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
                 
-                $cm->bcc_group = $g->id;
+                $cm->bcc_group_id = $g->id;
             }
             // initEmails will always have the latest location of the test class - in theory the user should not be changign the value of this...
             //if (empty($cm->test_class)) {
