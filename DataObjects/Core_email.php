@@ -41,15 +41,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 $tn.subject LIKE '%{$this->escape($q['search']['nameortitle'])}%'
             ");
         }
-        
+        $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
+      
         $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
             FROM 
-                core_group_member 
+                {$cgm}
             WHERE 
-                to_group_id = core_group_member.group_id
+                to_group_id = {$cgm}.group_id
             ) 
             AS group_member_count,
             
@@ -57,9 +58,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             SELECT 
                 count(user_id) 
             FROM 
-                core_group_member 
+                {$cgm}
             WHERE 
-                bcc_group = core_group_member.group_id
+                bcc_group = {$cgm}.group_id
            ) 
            AS bcc_group_member_count
         ");
