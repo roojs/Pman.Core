@@ -54,7 +54,7 @@ trait Pman_Core_AssetTrait {
         $mtime = 0;
         foreach($ar as $fn) {
             $f = basename($fn);
-            if (!preg_match('/\.js$/', $f)) {
+            if (!preg_match('/\.js$/', $f)) { // only javascript files... (so XXX.Dialog.YYY*  works..)
                 continue;
             }
             // got the 'module file..'
