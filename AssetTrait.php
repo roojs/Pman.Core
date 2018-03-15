@@ -54,6 +54,9 @@ trait Pman_Core_AssetTrait {
         $mtime = 0;
         foreach($ar as $fn) {
             $f = basename($fn);
+            if (!preg_match('/\.js$/', $f)) {
+                continue;
+            }
             // got the 'module file..'
             $mtime = filemtime($dir . '/'. $f);
             $maxtime = max($mtime, $maxtime);
