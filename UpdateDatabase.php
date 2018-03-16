@@ -689,7 +689,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateDataEnums()
     {
-        
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+
         $enum = DB_DataObject::Factory('core_enum');
         //DB_DAtaObject::debugLevel(1);
         $enum->initEnums(
