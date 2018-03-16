@@ -14,7 +14,7 @@ class Pman_Core_VerifyAccess extends Pman
         return true;
     }
     
-    function get($id)
+    function get($id='', $opts = array())
     {
         @list($id, $key) = explode('/', $id);
         
