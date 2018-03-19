@@ -1,10 +1,20 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  edward
- * Created: Mar 19, 2018
- */
 
+DROP FUNCTION IF EXISTS core_images_count;
+
+DELIMITER $$
+CREATE FUNCTION core_images_count(
+    in_ontable VARCHAR(128),
+    in_onid INT(11)
+)  
+RETURNS INT(4)  NOT DETERMINISTIC READS SQL DATA 
+    BEGIN
+
+        DECLARE v_ret INT(4);
+        
+        SELECT COUNT(id) INTO v_ret FROM Images WHERE ontable = in_ontable AND onid = in_onid;
+
+        RETURN v_ret;
+
+    END $$
+
+DELIMITER ;
