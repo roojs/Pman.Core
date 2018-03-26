@@ -429,7 +429,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (isset($contents['mailer_opts']) && is_array($contents['mailer_opts'])) {
             $cfg = array_merge($contents['mailer_opts'], $cfg);
         }
-        print_R($contents);exit;
+        
         if(isset($contents['css_inline'])){
             $cfg['css_inline'] = $contents['css_inline'];
         }
