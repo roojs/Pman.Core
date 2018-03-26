@@ -455,26 +455,27 @@ class Pman_Core_Mailer {
     
     function htmlbodyInlineCss($html)
     {
-        $dom = new DOMDocument();
         
-        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
-        
-        $html = $dom->getElementsByTagName('html');
-        $head = $dom->getElementsByTagName('head');
-        $body = $dom->getElementsByTagName('body');
-        
-        if(!$head->length){
-            $head = $dom->createElement('head');
-            $html->item(0)->insertBefore($head, $body->item(0));
-            $head = $dom->getElementsByTagName('head');
-        }
-        
-        $s = $dom->createElement('style');
-        $e = $dom->createTextNode($this->css_inline);
-        $s->appendChild($e);
-        $head->item(0)->appendChild($s);
-        
-        return $dom->saveHTML();
+//        $dom = new DOMDocument();
+//        
+//        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+//        
+//        $html = $dom->getElementsByTagName('html');
+//        $head = $dom->getElementsByTagName('head');
+//        $body = $dom->getElementsByTagName('body');
+//        
+//        if(!$head->length){
+//            $head = $dom->createElement('head');
+//            $html->item(0)->insertBefore($head, $body->item(0));
+//            $head = $dom->getElementsByTagName('head');
+//        }
+//        
+//        $s = $dom->createElement('style');
+//        $e = $dom->createTextNode($this->css_inline);
+//        $s->appendChild($e);
+//        $head->item(0)->appendChild($s);
+//        
+//        return $dom->saveHTML();
     }
     
     function fetchImage($url)
