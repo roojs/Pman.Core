@@ -494,17 +494,17 @@ class Pman_Core_Mailer {
     
     function htmlbodySetClass($html, $cls)
     {
-        $dom = new DOMDocument();
-        
-        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
-        
-        $body = $dom->getElementsByTagName('body');
-        
-        $class = $dom->createAttribute('class');
-        $class->value = $cls;
-        $body->item(0)->appendChild($class);
-        
-        return $dom->saveHTML();
+//        $dom = new DOMDocument();
+//        
+//        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+//        
+//        $body = $dom->getElementsByTagName('body');
+//        
+//        $class = $dom->createAttribute('class');
+//        $class->value = $cls;
+//        $body->item(0)->appendChild($class);
+//        
+//        return $dom->saveHTML();
     }
     
     function fetchImage($url)
