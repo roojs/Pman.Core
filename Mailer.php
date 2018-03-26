@@ -380,7 +380,7 @@ class Pman_Core_Mailer {
     {
         $dom = new DOMDocument();
         // this may raise parse errors as some html may be a component..
-        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+        @$dom->loadHTML($html);
         $imgs= $dom->getElementsByTagName('img');
         
         foreach ($imgs as $i=>$img) {
@@ -455,10 +455,9 @@ class Pman_Core_Mailer {
     
     function htmlbodyInlineCss($html)
     {
-        print_R($html);exit;
         $dom = new DOMDocument();
         
-        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+        @$dom->loadHTML($html);
         
         $html = $dom->getElementsByTagName('html');
         $head = $dom->getElementsByTagName('head');
