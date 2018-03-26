@@ -456,6 +456,7 @@ class Pman_Core_Mailer {
     function htmlbodyInlineCss($html)
     {
         print_R($html);exit;
+        
         $dom = new DOMDocument();
         
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
