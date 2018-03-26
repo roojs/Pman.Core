@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $map[$i->id] = $new_image->id;
         }
         
-        print_r('test??');exit;
+        
         libxml_use_internal_errors (true);
         $doc = new DOMDocument('1.0', 'UTF-8');
         $doc->loadHTML('<?xml encoding="UTF-8"><HTML><BODY>'.$this->bodytext.'</BODY></HTML>');
@@ -536,7 +536,7 @@ Content-Transfer-Encoding: 7bit
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-        print_R($this->bodytext);exit;
+        
         file_put_contents($cachePath, $this->bodytext);
         
     }
