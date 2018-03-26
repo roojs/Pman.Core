@@ -459,7 +459,7 @@ class Pman_Core_Mailer {
         
         $doc = new HTML_CSS_InlineStyle($html);
         
-        $htmldoc->applyStylesheet($this->css_inline);
+        $doc->applyStylesheet($this->css_inline);
         
         $html = $htmldoc->getHTML();
         
