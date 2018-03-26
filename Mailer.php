@@ -179,7 +179,7 @@ class Pman_Core_Mailer {
             if ($this->css_embed) {
                 $htmlbody = $this->htmlbodyCssEmbed($htmlbody);
             }
-            
+            print_R($this);exit;
             if ($this->css_inline && strlen($this->css_inline)) {
                 $htmlbody = $this->htmlbodyInlineCss($htmlbody);
             }
