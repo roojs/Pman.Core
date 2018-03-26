@@ -500,6 +500,9 @@ class Pman_Core_Mailer {
         
         $body = $dom->getElementsByTagName('body');
         
+        $class = $dom->createAttribute('class');
+        $class->value = $cls;
+        $body->appendChild($class);
         
     }
     
