@@ -430,6 +430,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $cfg = array_merge($contents['mailer_opts'], $cfg);
         }
         
+        if(isset($contents['css_inline'])){
+            $cfg['css_inline'] = $contents['css_inline'];
+        }
+        
         $r = new Pman_Core_Mailer($cfg);
         
         $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
