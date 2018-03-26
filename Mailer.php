@@ -504,6 +504,7 @@ class Pman_Core_Mailer {
         $class->value = $cls;
         $body->appendChild($class);
         
+        return $dom->saveHTML();
     }
     
     function fetchImage($url)
