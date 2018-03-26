@@ -124,11 +124,7 @@ class Pman_Core_Mailer {
             $http_host  = $ff->Pman['HTTP_HOST'];
         }
         
-        
         $content->HTTP_HOST = $http_host;
-        
-        
-        
         
         // this should be done by having multiple template sources...!!!
         
