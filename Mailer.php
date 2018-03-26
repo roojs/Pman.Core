@@ -492,6 +492,17 @@ class Pman_Core_Mailer {
         */
     }
     
+    function htmlbodySetClass($html, $cls)
+    {
+        $dom = new DOMDocument();
+        
+        @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
+        
+        $body = $dom->getElementsByTagName('body');
+        
+        
+    }
+    
     function fetchImage($url)
     {
         
