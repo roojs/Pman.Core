@@ -172,7 +172,7 @@ class Pman_Core_Mailer {
 //            var_dump($htmlbody);exit;
             
             if($content->body_cls && strlen($content->body_cls)){
-                
+                $htmlbody = $this->htmlbodySetClass($content->body_cls);
             }
             
             if ($this->replaceImages) {
