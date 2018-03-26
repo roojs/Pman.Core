@@ -459,13 +459,13 @@ class Pman_Core_Mailer {
         
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         
+        $html = $dom->getElementsByTagName('html');
         $head = $dom->getElementsByTagName('head');
         $body = $dom->getElementsByTagName('body');
         
         if(!$head->length){
             $head = $dom->createElement('head');
-            
-            $body->item(0)->parentNode->insertBefore($head, $body->item(0));
+            $html->item(0)->insertBefore($head, $body->item(0));
             $head = $dom->getElementsByTagName('head');
         }
         
