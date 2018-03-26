@@ -460,11 +460,11 @@ class Pman_Core_Mailer {
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         
         $body = $dom->getElementsByTagName('body');
-        print_R($body);exit;
+        
         $s = $dom->createElement('style');
         $e = $dom->createTextNode($this->css_inline);
         $s->appendChild($e);
-        $body->appendChild($s);
+        $body->item(0)->appendChild($s);
         
         return $dom->saveHTML();
     }
