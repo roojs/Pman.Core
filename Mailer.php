@@ -472,7 +472,7 @@ class Pman_Core_Mailer {
         $s = $dom->createElement('style');
         $e = $dom->createTextNode($this->css_inline);
         $s->appendChild($e);
-        $body->item(0)->appendChild($s);
+        $head->item(0)->appendChild($s);
         
         return $dom->saveHTML();
     }
