@@ -465,7 +465,7 @@ class Pman_Core_Mailer {
         
         if(!$head->length){
             $head = $dom->createElement('head');
-            $html->item(0)->insertBefore($head, $body);
+            $html->item(0)->insertBefore($head, $body->item(0));
             $head = $dom->getElementsByTagName('head');
         }
         
