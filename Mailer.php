@@ -87,7 +87,6 @@ class Pman_Core_Mailer {
     var $bcc = false;
     
     function __construct($args) {
-        print_R($args);exit;
         foreach($args as $k=>$v) {
             // a bit trusting..
             $this->$k =  $v;
@@ -180,7 +179,7 @@ class Pman_Core_Mailer {
             if ($this->css_embed) {
                 $htmlbody = $this->htmlbodyCssEmbed($htmlbody);
             }
-            print_R($this);exit;
+            
             if ($this->css_inline && strlen($this->css_inline)) {
                 $htmlbody = $this->htmlbodyInlineCss($htmlbody);
             }
