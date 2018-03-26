@@ -180,7 +180,7 @@ class Pman_Core_Mailer {
                 $htmlbody = $this->htmlbodyCssEmbed($htmlbody);
             }
             
-            if ($this->css_inline) {
+            if ($this->css_inline && strlen($this->css_inline)) {
                 $htmlbody = $this->htmlbodyInlineCss($htmlbody);
             }
             
@@ -455,51 +455,19 @@ class Pman_Core_Mailer {
     
     function htmlbodyInlineCss($html)
     {
-        $ff = HTML_FlexyFramework::get();
         $dom = new DOMDocument();
         
-        // this may raise parse errors as some html may be a component..
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
-        $links = $dom->getElementsByTagName('link');
-        $lc = array();
-        foreach ($links as $link) {  // duplicate as links is dynamic and we change it..!
-            $lc[] = $link;
-        }
-        //<link rel="stylesheet" type="text/css" href="{rootURL}/roojs1/css-mailer/mailer.css">
         
-        foreach ($lc as $i=>$link) {
-            //var_dump($link->getAttribute('href'));
-            
-            if ($link->getAttribute('rel') != 'stylesheet') {
-                continue;
-            }
-            $url  = $link->getAttribute('href');
-            $file = $ff->rootDir . $url;
-            
-            if (!preg_match('#^(http|https)://#', $url)) {
-                $file = $ff->rootDir . $url;
-
-                if (!file_exists($file)) {
-//                    echo $file;
-                    $link->setAttribute('href', 'missing:' . $file);
-                    continue;
-                }
-            } else {
-               $file = $this->mapurl($url);  
-            }
-            
-            $par = $link->parentNode;
-            $par->removeChild($link);
-            $s = $dom->createElement('style');
-            $e = $dom->createTextNode(file_get_contents($file));
-            $s->appendChild($e);
-            $par->appendChild($s);
-            
-        }
+        $head = $dom->getElementsByTagName('head');
+        
+        $s = $dom->createElement('style');
+        $e = $dom->createTextNode($this->css_inline);
+        $s->appendChild($e);
+        $head->appendChild($s);
+        
         return $dom->saveHTML();
     }
-    
-    
     
     function fetchImage($url)
     {
