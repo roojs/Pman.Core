@@ -168,6 +168,9 @@ class Pman_Core_Mailer {
             
             // for the html body, we may want to convert the attachments to images.
 //            var_dump($htmlbody);exit;
+            
+            
+            
             if ($this->replaceImages) {
                 $htmlbody = $this->htmlbodytoCID($htmlbody);    
             }
