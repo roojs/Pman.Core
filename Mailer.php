@@ -87,6 +87,7 @@ class Pman_Core_Mailer {
     var $bcc = false;
     
     function __construct($args) {
+        print_R($args);exit;
         foreach($args as $k=>$v) {
             // a bit trusting..
             $this->$k =  $v;
