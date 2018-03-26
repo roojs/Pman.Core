@@ -536,7 +536,7 @@ Content-Transfer-Encoding: 7bit
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
         }
-        
+        print_R($this->bodytext);exit;
         file_put_contents($cachePath, $this->bodytext);
         
     }
