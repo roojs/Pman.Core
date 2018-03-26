@@ -459,7 +459,7 @@ class Pman_Core_Mailer {
         
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         
-        $head = $dom->getElementsByTagName('head');
+        $head = $dom->getElementsByTagName('body');
         
         $s = $dom->createElement('style');
         $e = $dom->createTextNode($this->css_inline);
