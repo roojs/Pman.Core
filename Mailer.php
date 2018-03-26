@@ -466,6 +466,7 @@ class Pman_Core_Mailer {
         if(!$head->length){
             $head = $dom->createElement('head');
             $html->item(0)->appendChild($head);
+            $head = $dom->getElementsByTagName('head');
         }
         
         $s = $dom->createElement('style');
