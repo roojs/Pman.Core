@@ -77,7 +77,7 @@ class Pman_Core_Mailer {
     var $html_locale = false; // eg. 'en' or 'zh_HK'
     var $images         = array(); // generated list of cid images for sending
     var $attachments = false;
-    var $css_inline = false; // not supported
+    var $css_inline = false; // put the css into the html
     var $css_embed = false; // put the css tags into the body.
     
     var $mail_method = 'SMTP';
@@ -175,10 +175,15 @@ class Pman_Core_Mailer {
             if ($this->replaceImages) {
                 $htmlbody = $this->htmlbodytoCID($htmlbody);    
             }
+            
             if ($this->css_embed) {
-                $htmlbody = $this->htmlbodyCssEmbed($htmlbody);    
-              
+                $htmlbody = $this->htmlbodyCssEmbed($htmlbody);
             }
+            
+            if ($this->css_inline) {
+                $htmlbody = $this->htmlbodyinlineCss($htmlbody);
+            }
+            
         }
         $tmp_opts['nonHTML'] = true;
         
