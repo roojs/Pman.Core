@@ -455,6 +455,31 @@ class Pman_Core_Mailer {
     
     function htmlbodyInlineCss($html)
     {
+        require_once 'HTML/CSS/InlineStyle.php';
+        
+        $doc = new HTML_CSS_InlineStyle($html);
+        
+        $htmldoc->applyStylesheet($this->css_inline);
+        
+        $html = $htmldoc->getHTML();
+        
+//        libxml_use_internal_errors (false);
+//        
+//        if (!function_exists('tidy_repair_string')) {
+//            return "INSTALL TIDY ON SERVER " . $html;
+//        }
+//        
+//        $html = tidy_repair_string(
+//                $html,
+//                array(
+//                  'indent' => TRUE,
+//                    'output-xhtml' => TRUE,
+//                    'wrap' => 120
+//                ),
+//                'UTF8'
+//        );
+        
+        return $html;
         
 //        $dom = new DOMDocument();
 //        
