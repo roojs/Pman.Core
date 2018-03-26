@@ -86,6 +86,8 @@ class Pman_Core_Mailer {
       
     var $bcc = false;
     
+    var $body_cls = false;
+    
     function __construct($args) {
         foreach($args as $k=>$v) {
             // a bit trusting..
@@ -169,7 +171,9 @@ class Pman_Core_Mailer {
             // for the html body, we may want to convert the attachments to images.
 //            var_dump($htmlbody);exit;
             
-            
+            if($content->body_cls && strlen($content->body_cls)){
+                
+            }
             
             if ($this->replaceImages) {
                 $htmlbody = $this->htmlbodytoCID($htmlbody);    
