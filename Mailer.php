@@ -494,7 +494,6 @@ class Pman_Core_Mailer {
     
     function htmlbodySetClass($html, $cls)
     {
-        print_R('run???');exit;
         $dom = new DOMDocument();
         
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
