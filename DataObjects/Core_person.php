@@ -307,7 +307,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             (!empty($_SERVER['SERVER_ADDR'])) &&
             (
                 (
-                    print_r('getting here??');exit;
                     $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
                     $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
                 )
@@ -318,6 +317,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )
             )
         ) {
+            print_r('getting here??');exit;
+            
             $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
