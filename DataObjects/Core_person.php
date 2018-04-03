@@ -289,6 +289,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
+               print_r('return true');exit;
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
