@@ -240,6 +240,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $sesPrefix = $this->sesPrefix();
        
+            print_r($sesPrefix);exit;
+       
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
             
             return false;
@@ -267,7 +269,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
              
             $u = DB_DataObject::factory($this->tableName());
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
-                print_r($u->verifyAuth());exit;
+              
                 return $u->verifyAuth();  // got authentication...
                 
     
