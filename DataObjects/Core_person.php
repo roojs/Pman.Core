@@ -353,7 +353,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ) &&
             ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
-            
+            print_r('this one???');exit;
             $user = $default_admin ? $default_admin->toArray() : $u->toArray();
             
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object) $user);
