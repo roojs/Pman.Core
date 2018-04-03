@@ -254,6 +254,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
     {
+        
         @session_start();
        
         $ff= HTML_FlexyFramework::get();
@@ -289,7 +290,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
-               print_r('return true');exit;
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
             return true; 
         }
@@ -299,7 +299,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        
+        print_r('local auth');exit;
         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
