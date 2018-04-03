@@ -317,8 +317,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )
             )
         ) {
-            print_r('getting here??');exit;
-            
             $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
