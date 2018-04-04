@@ -61,6 +61,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return;
         }
         
+        $this->initKeys($dir);
+        
         $val = $a['val'];
         if(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) {
             $val = encrypt($val);
