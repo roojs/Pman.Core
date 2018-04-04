@@ -19,7 +19,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $ssl = openssl_pkey_new(array(
             "digest_alg" => "sha512",  
-            "private_key_bits" => 1024, //returns cipher in 128 characters
+            "private_key_bits" => 1024, //returns cipher in 128 bit
             "private_key_type" => OPENSSL_KEYTYPE_RSA
         ));
         
