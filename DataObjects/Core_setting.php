@@ -8,9 +8,12 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys($dir)
     {
-        //reject when keys exist
+        if(!file_exists($dir)) {
+            mkdir($dir);
+        }
+        
+        //return when keys exist
         if(
-            !file_exists($dir) ||
             file_exists("{$dir}/pub.key") ||
             file_exists("{$dir}/pri.key")
         ){
