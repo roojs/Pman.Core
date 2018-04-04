@@ -14,7 +14,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             file_exists("{$dir}/pub.key") ||
             file_exists("{$dir}/pri.key")
         ){
-            return;
+            exit;
         }
         
         $ssl = openssl_pkey_new(array(
@@ -54,6 +54,14 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         if(empty($a)) {
             return;
         }
+        
+        //check setting exist
+        $c = $this->getSetting($a['module'], $a['name']);
+        if($c) {
+            return;
+        }
+        
+        
         
         $val = $a['val'];
         if(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) {
