@@ -19,7 +19,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $ssl = openssl_pkey_new(array(
             "digest_alg" => "sha512",  
-            "private_key_bits" => 1024, //returns cipher in 128 bit
+            "private_key_bits" => 1024, //returns cipher in 128 char
             "private_key_type" => OPENSSL_KEYTYPE_RSA
         ));
         
@@ -51,19 +51,19 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initSetting($a)
     {
-        //foreach ($a) > insert
         if(empty($a)) {
             return;
         }
         
-        foreach ($a as $s) {
-            
+        $val = $a['val'];
+        if(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) {
+            $val = encrypt($val);
         }
         
         return;
     }
     
-    function encryptVal($v) {
+    function encrypt($v) {
         
     }
     
