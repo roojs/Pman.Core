@@ -827,7 +827,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $update = $cm->get('name', $name);
             $old = clone($cm);
             
-            if (empty($cm->bcc_group)) {
+            if (empty($cm->bcc_group_id)) {
                 if (empty($data['bcc_group'])) {
                     $this->jerr("missing bcc_group for template $name");
                 }
@@ -856,7 +856,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
             if (
                 !empty($data['to_group']) &&
-                (!isset($cm->to_group) || !empty($cm->to_group)) 
+                (!isset($cm->to_group_id) || !empty($cm->to_group_id)) 
             ) {
                 $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                 
@@ -864,7 +864,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
                 }
                 
-                $cm->to_group = $gp->id;
+                $cm->to_group_id = $gp->id;
             }
             
             if(
