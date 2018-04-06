@@ -1180,6 +1180,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         $c = DB_DataObject::Factory('core_company');
         $tc =$c->count();
+        
+        print_r($tc);exit;
+        
         if (!$tc || $tc> 1) {
             $roo->jerr("can not create initial user as multiple companies already exist");
         }
