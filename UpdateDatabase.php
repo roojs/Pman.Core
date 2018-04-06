@@ -849,7 +849,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $cm->test_class = $data['test_class'];
             //}
-            if(isset($cm->to_group)) {
+            if(isset($cm->to_group_id)) {
                 print_r('isset');
             }
             
