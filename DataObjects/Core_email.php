@@ -43,25 +43,23 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
       
         $this->selectAdd("
-           (
-            SELECT 
-                count(user_id) 
-            FROM 
-                {$cgm}
-            WHERE 
-                to_group_id = {$cgm}.group_id
-            ) 
-            AS group_member_count,
+            (
+                SELECT 
+                    count(id) 
+                FROM 
+                    {$cgm}
+                WHERE 
+                    to_group_id = {$cgm}.group_id
+            )  AS group_member_count,
             
-           (
-            SELECT 
-                count(user_id) 
-            FROM 
-                {$cgm}
-            WHERE 
-                bcc_group_id = {$cgm}.group_id
-           ) 
-           AS bcc_group_member_count
+            (
+                SELECT 
+                    count(id) 
+                FROM 
+                    {$cgm}
+                WHERE 
+                    bcc_group_id = {$cgm}.group_id
+            )  AS bcc_group_member_count
         ");
     }
     
