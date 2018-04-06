@@ -6,11 +6,13 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
 {
     public $__table = 'core_setting';
     
-    function initKeys($dir)
+    function initKeys()
     {
+        $d = $this->storedir;
+        
         if(
-            file_exists("{$dir}/pub.key") ||
-            file_exists("{$dir}/pri.key")
+            file_exists("{$d}/pub.key") ||
+            file_exists("{$d}/pri.key")
         ){
             return;
         }
@@ -25,16 +27,16 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $pub_key = openssl_pkey_get_details($ssl);
         $pub_key = $pub_key["key"];
         
-        file_put_contents("{$dir}/pub.key",$pub_key);
-        file_put_contents("{$dir}/pri.key",$pri_key);
+        file_put_contents("{$d}/pub.key",$pub_key);
+        file_put_contents("{$d}/pri.key",$pri_key);
     }
     
     function getSetting($m,$n)
     {
         $s = DB_DataObject::factory('core_setting');
         $s->setFrom(array(
-            'module' => $q['module'],
-            'name' => $q['name']
+            'module' => $m,
+            'name' => $n
         ));
         if($s->find(true)) {
             return $s;
@@ -61,13 +63,14 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         }
         
         //$ff->pman['storedir']/key generic for all projects?
+        
         $this->setStoreDir($dir);
         
         $this->initKeys();
         
         $val = $a['val'];
         if(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) {
-            $val = encrypt($val);
+            $val = $this->encrypt($val);
         }
         
         $s = DB_DataObject::factory('core_setting');
@@ -95,7 +98,9 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     function setStoreDir($dir)
     {
         if(!file_exists($dir)) {
-            mkdir($dir);
+            $oldumask = umask(0);
+            mkdir($dir, 0775, true);
+            umask($oldumask);  
         }
         $this->storedir = $dir;
     }
