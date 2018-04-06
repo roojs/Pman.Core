@@ -1178,7 +1178,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             return;
         }
-        $c = DB_DAtaObject::Factory('core_company');
+        $c = DB_DataObject::Factory('core_company');
         $tc =$c->count();
         if (!$tc || $tc> 1) {
             $roo->jerr("can not create initial user as multiple companies already exist");
