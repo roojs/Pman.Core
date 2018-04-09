@@ -819,14 +819,15 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function initEmails($templateDir, $emails)
     {
-        
+        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
+
         $pg = HTML_FlexyFramework::get()->page;
         foreach($emails as $name=>$data) {
             $cm = DB_DataObject::factory('core_email');
             $update = $cm->get('name', $name);
             $old = clone($cm);
             
-            if (empty($cm->bcc_group)) {
+            if (empty($cm->bcc_group_id)) {
                 if (empty($data['bcc_group'])) {
                     $this->jerr("missing bcc_group for template $name");
                 }
@@ -849,13 +850,13 @@ class Pman_Core_UpdateDatabase extends Pman
                 }
                 $cm->test_class = $data['test_class'];
             //}
-            if(isset($cm->to_group)) {
+            if(isset($cm->to_group_id)) {
                 print_r('isset');
             }
             
             if (
                 !empty($data['to_group']) &&
-                (!isset($cm->to_group) || !empty($cm->to_group)) 
+                (!isset($cm->to_group_id) || !empty($cm->to_group_id)) 
             ) {
                 $gp = DB_DataObject::Factory('core_group')->lookup('name',$data['to_group']);
                 
@@ -863,7 +864,7 @@ class Pman_Core_UpdateDatabase extends Pman
                     $this->jerr("to_group {$data['to_group']} does not exist when importing template $name");
                 }
                 
-                $cm->to_group = $gp->id;
+                $cm->to_group_id = $gp->id;
             }
             
             if(
