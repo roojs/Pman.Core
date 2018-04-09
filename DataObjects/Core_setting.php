@@ -51,7 +51,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return;
     }
     
-    function initSetting($a, $dir)
+    function initSetting($a)
     {
         if(empty($a) || empty($dir)) {
             return;
