@@ -89,7 +89,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function encrypt($v)
     {
-        $pub_key = file_get_contents("{$this->storedir}/pub.key");
+        $pub_key = file_get_contents("{$this->dir}/pub.key");
         if(!$pub_key) {
             return;
         }
