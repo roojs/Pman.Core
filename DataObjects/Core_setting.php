@@ -53,9 +53,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initSetting($a)
     {
-        $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
-        
-        if(empty($a) || empty($d)) {
+        if(empty($a)) {
             return;
         }
         
