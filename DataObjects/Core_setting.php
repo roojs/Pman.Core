@@ -64,7 +64,12 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
         
-        $this->setStoreDir($dir);
+        if(!file_exists($d)) {
+            $oldumask = umask(0);
+            mkdir($d, 0775, true);
+            umask($oldumask);  
+        }
+        $this->storedir = $d;
         
         $this->initKeys();
         
