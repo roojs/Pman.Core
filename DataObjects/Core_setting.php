@@ -69,7 +69,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             mkdir($d, 0775, true);
             umask($oldumask);  
         }
-        $this->storedir = $d;
+        $this->dir = $d;
         
         $this->initKeys();
         
