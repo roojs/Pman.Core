@@ -94,14 +94,4 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         openssl_public_encrypt($v, $cipher, $pub_key);
         return $cipher;
     }
-    
-    function setStoreDir($dir)
-    {
-        if(!file_exists($dir)) {
-            $oldumask = umask(0);
-            mkdir($dir, 0775, true);
-            umask($oldumask);  
-        }
-        $this->storedir = $dir;
-    }
 }
