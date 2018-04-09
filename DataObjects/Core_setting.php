@@ -8,8 +8,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys()
     {
-        $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
-        
         if(
             file_exists("{$d}/pub.key") ||
             file_exists("{$d}/pri.key")
