@@ -46,7 +46,7 @@ class Pman_Core_VerifyAccess extends Pman
         
     }
     
-    function post()
+    function post($base)
     {
         $core_ip_access = DB_DataObject::factory('core_ip_access');
         
