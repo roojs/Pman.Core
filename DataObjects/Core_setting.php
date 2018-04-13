@@ -31,6 +31,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         file_put_contents("{$dir}/pri.key",$pri_key);
     }
     
+    //FIXME - rename to lookup
+    
     function getSetting($m,$n)
     {
         $s = DB_DataObject::factory('core_setting');
