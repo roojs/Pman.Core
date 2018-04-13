@@ -27,8 +27,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $pub_key = openssl_pkey_get_details($ssl);
         $pub_key = $pub_key["key"];
         
-        file_put_contents("{$d}/pub.key",$pub_key);
-        file_put_contents("{$d}/pri.key",$pri_key);
+        file_put_contents("{$dir}/pub.key",$pub_key);
+        file_put_contents("{$dir}/pri.key",$pri_key);
     }
     
     function getSetting($m,$n)
