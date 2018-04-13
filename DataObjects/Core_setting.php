@@ -8,9 +8,11 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys()
     {
+        
+        $dir = $this->keyDir();
         if(
-            file_exists("{$this->dir}/pub.key") ||
-            file_exists("{$this->dir}/pri.key")
+            file_exists("{$dir}/pub.key") ||
+            file_exists("{$dir}/pri.key")
         ){
             return;
         }
@@ -49,6 +51,18 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return;
     }
     
+    function keyDir()
+    {
+        $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
+        if(!file_exists($d)) {
+            $oldumask = umask(0);
+            mkdir($d, 0775, true);
+            umask($oldumask);  
+        }
+        return $d;
+    }
+    
+    
     function initSetting($a)
     {
         if(empty($a)) {
@@ -59,14 +73,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         if($c) {
             return;
         }
-        
-        $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
-        if(!file_exists($d)) {
-            $oldumask = umask(0);
-            mkdir($d, 0775, true);
-            umask($oldumask);  
-        }
-        $this->dir = $d;
+         
         
         $this->initKeys();
         
@@ -89,7 +96,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function encrypt($v)
     {
-        $pub_key = file_get_contents("{$this->dir}/pub.key");
+        $dir = $this->keyDir();
+        $pub_key = file_get_contents("{$dir}/pub.key");
         if(!$pub_key) {
             return;
         }
