@@ -62,7 +62,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return $d;
     }
     
-    
+    // FIXME  - this needs to go in beforeInsert/beforeUpdate
+    // should not be sending this the values..
     function initSetting($a)
     {
         if(empty($a)) {
@@ -84,9 +85,9 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $s = DB_DataObject::factory('core_setting');
         $s->setFrom(array(
-            'module' => $a['module'],
-            'name' => $a['name'],
-            'description' => $a['description'],
+            'module'        =>     $a['module'],
+            'name'          =>       $a['name'],
+            'description'   => $a['description'],
             'val' =>$val,
             'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
         ));
