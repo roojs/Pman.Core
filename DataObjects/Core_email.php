@@ -539,9 +539,8 @@ Content-Transfer-Encoding: 7bit
             file_put_contents($cachePath, $this->bodytext);
             return;
         }
-        // use-file
-        $mailtext = file_get_contents($this->use_file);
-        
+        // use-file -- uses the original template...
+        $mailtext = file_get_contents($this->use_file);        
          
         require_once 'Mail/mimeDecode.php';
         require_once 'Mail/RFC822.php';
@@ -596,6 +595,17 @@ Content-Transfer-Encoding: 7bit
         if (!file_exists($cachePath) || !filesize($cachePath)) {
             return false;
         }
+        
+        if (!empty($this->use_file)) {
+            $ctime = filemtime($cachePath);
+            $mtime = filemtime($this->use_file);
+            if($ctime >= $mtime){
+                return true;
+            }
+            return false;
+            
+        }
+        
         
         
         $ctime = filemtime($cachePath);
