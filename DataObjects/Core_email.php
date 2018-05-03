@@ -547,7 +547,7 @@ Content-Transfer-Encoding: 7bit
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
-        file_put_contents($parts[2], $this->bodytext);
+        file_put_contents($cachePath,$parts[2]);
          
     }
     
