@@ -535,8 +535,21 @@ Content-Transfer-Encoding: 7bit
             mkdir(dirname($cachePath), 0700, true);
         }
         
-        file_put_contents($cachePath, $this->bodytext);
+        if (empty($this->use_file)) {
+            file_put_contents($cachePath, $this->bodytext);
+            return;
+        }
+        // use-file
+        $mailtext = file_get_contents($this->use_file);
         
+         
+        require_once 'Mail/mimeDecode.php';
+        require_once 'Mail/RFC822.php';
+        
+        $decoder = new Mail_mimeDecode($mailtext);
+        $parts = $decoder->getSendArray();
+        file_put_contents($parts[2], $this->bodytext);
+         
     }
     
     function cachedImages()
