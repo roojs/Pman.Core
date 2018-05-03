@@ -28,8 +28,15 @@ class Pman_Core_Import_Core_email extends Pman
             'desc' => 'Update template (deletes old version?)',
             'short' => 'u',
             'default' => '',
-            'min' => 1,
-            'max' => 1,  
+            'min' => 0,
+            'max' => 0,  
+        ),
+         'use-file' => array(
+            'desc' => 'Force usage of file (so content is not editable in Management system)',
+            'short' => 'F',
+            'default' => '',
+            'min' => 0,
+            'max' => 0,  
         ),
     );
     
@@ -40,7 +47,6 @@ class Pman_Core_Import_Core_email extends Pman
         if (!$ff->cli) {
             die("cli only");
         }
-        
     }
     
     function get($part = '', $opts=array()) {
@@ -67,10 +73,9 @@ class Pman_Core_Import_Core_email extends Pman
             $cm = DB_dataObject::factory('core_email');
             $ret = $cm->get('name',$template_name);
             if($ret && empty($opts['update'])) {
-                $this->jerr("use --update 1 to update the template..");
+                $this->jerr("use --update   to update the template..");
             }
         }
-        
         $mailtext = file_get_contents($opts['file']);
         
         if (!empty($opts['master'])) {
@@ -88,7 +93,7 @@ class Pman_Core_Import_Core_email extends Pman
             echo $parts->toString() . "\n";
             exit;
         }
-        
+    
         $headers = $parts[1];
         $from = new Mail_RFC822();
         $from_str = $from->parseAddressList($headers['From']);
@@ -97,15 +102,19 @@ class Pman_Core_Import_Core_email extends Pman
         
         $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
-     
+        
+        if (!empty($opts['use-file'])) {
+            $parts[2] = '';
+        }
         
         
         if ($cm->id) {
             
             $cc =clone($cm);
             $cm->setFrom(array(
-               'bodytext'      => $parts[2],
-               'updated_dt'     => date('Y-m-d H:i:s'),   
+               'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
+               'updated_dt'     => date('Y-m-d H:i:s'),
+               'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
             
             $cm->update($cc);
@@ -116,9 +125,10 @@ class Pman_Core_Import_Core_email extends Pman
                 'from_email'    => $from_email,
                 'subject'       => $headers['Subject'],
                 'name'          => $template_name,
-                'bodytext'      => $parts[2],
+                'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
                 'updated_dt'     => date('Y-m-d H:i:s'),
                 'created_dt'     => date('Y-m-d H:i:s'),
+                'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
             
             $cm->insert();
