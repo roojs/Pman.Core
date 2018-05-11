@@ -11,7 +11,7 @@ RETURNS INT(4)  NOT DETERMINISTIC READS SQL DATA
 
         DECLARE v_ret INT(4);
         
-        SELECT COUNT(id) INTO v_ret FROM Images WHERE ontable = in_ontable AND onid = in_onid;
+        SELECT COUNT(id) INTO v_ret FROM Images WHERE ontable = in_ontable AND onid = in_onid AND is_deleted = 0;
 
         RETURN v_ret;
 
