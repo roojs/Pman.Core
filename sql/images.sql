@@ -32,4 +32,6 @@ ALTER TABLE Images ADD INDEX lookupc(created, ontable, onid);
 
 ALTER TABLE Images ADD COLUMN no_of_pages INT(11) NOT NULL DEFAULT 0;
 
+ALTER TABLE Images ADD COLUMN is_deleted INT(2) NOT NULL DEFAULT 0;
+
  
