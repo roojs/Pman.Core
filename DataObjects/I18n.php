@@ -151,6 +151,23 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         }
     }
     
+    function lookupCode($inlang,$ltype,$name)
+    {
+        $x = DB_DataObject::factory('i18n');
+        $x->ltype = $ltype;
+        $x->lval = $name;
+        $x->inlang= $inlang;
+        
+        $x->limit(1);
+        if ($x->find(true) && !empty($x->lkey)) {
+            return $x->lkey;
+        }
+        return '';
+        
+        
+    }
+    
+    
     function translate($inlang,$ltype,$kval)
     {
         
