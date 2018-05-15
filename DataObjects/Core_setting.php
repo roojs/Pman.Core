@@ -8,7 +8,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys()
     {
-        
         $dir = $this->keyDir();
         if(
             file_exists("{$dir}/pub.key") ||
