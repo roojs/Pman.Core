@@ -89,7 +89,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
         ));
         
-        print_r('setting');exit;
+        $s->beforeInsert();
         
         $s->insert();
     }
