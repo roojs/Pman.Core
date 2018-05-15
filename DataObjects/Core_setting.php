@@ -78,17 +78,12 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $this->initKeys();
         
-        $val = $a['val'];
-        if(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) {
-            $val = $this->encrypt($val);
-        }
-        
         $s = DB_DataObject::factory('core_setting');
         $s->setFrom(array(
             'module'        =>     $a['module'],
             'name'          =>       $a['name'],
             'description'   => $a['description'],
-            'val' =>$val,
+            'val' =>(!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) ? $this->encrypt($val) : $val,
             'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
         ));
         
