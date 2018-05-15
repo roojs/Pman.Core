@@ -75,7 +75,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         if($c) {
             return;
         }
-         
         
         $this->initKeys();
         
