@@ -83,8 +83,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             'module'        =>     $a['module'],
             'name'          =>       $a['name'],
             'description'   => $a['description'],
-            'val' => (!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) ?
-                $this->encrypt($val) : $val,
             'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
         ));
         
