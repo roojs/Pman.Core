@@ -27,6 +27,10 @@ ALTER TABLE core_email CHANGE COLUMN  in_group to_group_id INT(11) NOT NULL DEFA
 ALTER TABLE core_email CHANGE COLUMN  to_group to_group_id INT(11) NOT NULL DEFAULT -1;
 ALTER TABLE core_email ADD COLUMN    to_group_id INT(11) NOT NULL DEFAULT -1;
 
+-- rather than use 'body... use the original file..'
+ALTER TABLE core_email ADD COLUMN  use_file VARCHAR(254) NOT NULL DEFAULT '';
+
+
 
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
