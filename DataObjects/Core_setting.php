@@ -91,6 +91,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $s->insert();
     }
     
+    //one key for encrypting all the settings
     function encrypt($v)
     {
         $key_dir = "{$this->getKeyDirectory()}/pub.key";
