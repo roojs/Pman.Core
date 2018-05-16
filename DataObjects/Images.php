@@ -198,12 +198,26 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function beforeDelete()
     {
+        
+        $opts = HTML_FlexyFramework::get()->Pman;
+        $dir = $opts['storedir']. '/_deleted_images_';
+        if (!file_exists( $dir)) {
+            mkdir($dir, 0755);
+        }
+            
         $fn = $this->getStoreName();
+        $b = basename($fn);
         if (file_exists($fn)) {
-            unlink($fn);
+            
+            if (file_exists($dir. '/'. $b)) {
+                unlink($fn);
+            }
+            rename($fn, $dir.'/',$b);
+            
+            
         }
         // delete thumbs..
-        $b = basename($fn);
+        
         $d = dirname($fn);
         if (file_exists($d)) {
                 
