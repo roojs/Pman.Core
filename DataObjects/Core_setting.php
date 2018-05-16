@@ -8,7 +8,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys()
     {
-        $dir = $this->getkeyDirectory();
+        $dir = $this->getKeyDirectory();
+        
         if(
             file_exists("{$dir}/pub.key") ||
             file_exists("{$dir}/pri.key")
@@ -30,9 +31,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         file_put_contents("{$dir}/pri.key",$pri_key);
     }
     
-    //FIXME - rename to lookup
-    
-    function getSetting($m,$n)
+    function lookup($m,$n)
     {
         $s = DB_DataObject::factory('core_setting');
         $s->setFrom(array(
@@ -47,32 +46,31 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
-        print_r($q);
         exit;
-        
-        return;
     }
     
-    function getkeyDirectory()
+    function getKeyDirectory()
     {
-        $d = HTML_FlexyFramework::get()->Pman['storedir'].'/key';
-        if(!file_exists($d)) {
-            $oldumask = umask(0);
-            mkdir($d, 0775, true);
-            umask($oldumask);  
+        $client_dir = HTML_FlexyFramework::get()->Pman['storedir'];
+        $key_dir = $client_dir.'/keys';
+        if(!file_exists($key_dir)) {
+            $this->checkWritable(get_class($this),__FUNCTION__,$client_dir);
+            exec("mkdir -m775 {$key_dir}");
         }
-        return $d;
+        return $key_dir;
     }
     
     // FIXME  - this needs to go in beforeInsert/beforeUpdate
     // should not be sending this the values..
     function initSetting($a)
     {
+        $dir = $this->getKeyDirectory();
+        
         if(empty($a)) {
             return;
         }
         
-        $c = $this->getSetting($a['module'], $a['name']);
+        $c = $this->lookup($a['module'], $a['name']);
         if($c) {
             return;
         }
@@ -80,27 +78,44 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $this->initKeys();
         
         $s = DB_DataObject::factory('core_setting');
+        
         $s->setFrom(array(
             'module'        =>     $a['module'],
             'name'          =>       $a['name'],
             'description'   => $a['description'],
             'val' => (!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) ?
-                $this->encrypt($val) : $val,
+                $this->encrypt($a['val']) : $a['val'],
             'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
         ));
-        
-        // $s->beforeInsert();
         
         $s->insert();
     }
     
     function encrypt($v)
     {
-        $pub_key = file_get_contents("{$this->getkeyDirectory()}/pub.key");
+        $key_dir = "{$this->getKeyDirectory()}/pub.key";
+        
+        if(!file_exists($key_dir)) {
+            print_r("Cannot find {$key_dir}");
+            exit;
+        }
+        
+        $pub_key = file_get_contents($key_dir);
         if(!$pub_key) {
             return;
         }
         openssl_public_encrypt($v, $cipher, $pub_key);
         return $cipher;
+    }
+    
+    function checkWritable($cls_name,$func_name,$dir)
+    {
+        if(!is_writable($dir)) {
+            print_r("Cannot run {$cls_name} :: {$func_name}\n");
+            print_r("Directory: {$dir} is not writable by current user\n");
+            exit;
+        }
+        
+        return true;
     }
 }
