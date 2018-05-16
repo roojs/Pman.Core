@@ -200,8 +200,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         
         $opts = HTML_FlexyFramework::get()->Pman;
-        $dir = $opts['storedir']. '/_deleted_images_';
-        if (!file_exists( $dir)) {
+        $deldir = $opts['storedir']. '/_deleted_images_';
+        if (!file_exists( $deldir )) {
             mkdir($dir, 0755);
         }
             
@@ -209,10 +209,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $b = basename($fn);
         if (file_exists($fn)) {
             
-            if (file_exists($dir. '/'. $b)) {
+            if (file_exists($deldir . '/'. $b)) {
                 unlink($fn);
+            } else {
+                rename($fn, $deldir .'/',$b);
             }
-            rename($fn, $dir.'/',$b);
             
             
         }
@@ -224,7 +225,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $dh = opendir($d);
             while (false !== ($fn = readdir($dh))) {
                 if (substr($fn, 0, strlen($b)) == $b) {
-                    unlink($d. '/'. $fn);
+                    
+                    if (file_exists($deldir . '/'. $fn)) {
+                        unlink($d. '/'. $fn);
+                        continue;
+                    }
+                    rename($d. '/'. $fn, $deldir .'/',$fn);
+                    
+                    
                 }
             }
         }
