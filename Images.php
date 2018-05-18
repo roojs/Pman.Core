@@ -2,6 +2,9 @@
 /**
  * Deal with image delivery and HTML replacement of image links in body text.
  *
+ *
+ * NOTE THIS WAS NEVER INTENDED FOR PUBLIC IMAGE DISTRIBUTION - we need to create a seperate file for that...
+ *
  * $str = Pman_Core_Images::replaceImg($str); // < use with HTML
  *
  * or
