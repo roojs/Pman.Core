@@ -41,7 +41,18 @@ class Pman_Core_Images extends Pman
     // tables that do not need authentication checks before serving.
     var $public_image_tables = array();
     
-    
+    var  $sizes = array(
+                '100', 
+                '100x100', 
+                '150', 
+                '150x150', 
+                '200', 
+                '200x0',
+                '200x200',  
+                '400x0',
+                '300x100',
+                '500'
+            );
     function getAuth()
     {
         parent::getAuth(); // load company!
@@ -325,18 +336,7 @@ class Pman_Core_Images extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
-        $sizes = array(
-                '100', 
-                '100x100', 
-                '150', 
-                '150x150', 
-                '200', 
-                '200x0',
-                '200x200',  
-                '400x0',
-                '300x100',
-                '500'
-            );
+        $sizes= $this->sizes;
         
         $cfg = isset($ff->Pman_Images) ? $ff->Pman_Images :
                 (isset($ff->Pman_Core_Images) ? $ff->Pman_Core_Images : array());
