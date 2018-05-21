@@ -817,7 +817,7 @@ class Pman_Core_UpdateDatabase extends Pman
     }
     
     
-    function initEmails($templateDir, $emails)
+    function initEmails($templateDir, $emails, $mapping = false)
     {
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
 
@@ -909,7 +909,7 @@ class Pman_Core_UpdateDatabase extends Pman
             require_once 'Pman/Core/Import/Core_email.php';
             $x = new Pman_Core_Import_Core_email();
             
-            $x->updateOrCreateEmail('', $opts, $cm);
+            $x->updateOrCreateEmail('', $opts, $cm, $mapping);
             
             echo "email: {$name} - CREATED\n";
         }

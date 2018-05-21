@@ -53,7 +53,7 @@ class Pman_Core_Import_Core_email extends Pman
         $this->updateOrCreateEmail($part, $opts, false);
     }
 
-    function updateOrCreateEmail($part='', $opts, $cm = false){
+    function updateOrCreateEmail($part='', $opts, $cm = false, $mapping = false){
         
        // DB_DataObject::debugLevel(1);
         
@@ -82,6 +82,12 @@ class Pman_Core_Import_Core_email extends Pman
             $body = $mailtext;
             $mailtext = file_get_contents($opts['master']);
             $mailtext = str_replace('{outputBody():h}', $body, $mailtext);
+        }
+        
+        if($mapping) {
+            foreach ($mapping as $k => $v) {
+                $mailtext = str_replace($k, $v, $mailtext);
+            }
         }
         
         require_once 'Mail/mimeDecode.php';

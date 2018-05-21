@@ -64,8 +64,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     // should not be sending this the values..
     function initSetting($a)
     {
-        $dir = $this->getKeyDirectory();
-        
         if(empty($a)) {
             return;
         }
@@ -105,8 +103,26 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         if(!$pub_key) {
             return;
         }
-        openssl_public_encrypt($v, $cipher, $pub_key);
-        return $cipher;
+        openssl_public_encrypt($v, $ciphertext, $pub_key);
+        return $ciphertext;
+    }
+    
+    function decrypt($v)
+    {
+        $key_dir = "{$this->getKeyDirectory()}/pri.key";
+        
+        if(!file_exists($key_dir)) {
+            print_r("Cannot find {$key_dir}");
+            exit;
+        }
+        
+        $pri_key = file_get_contents($key_dir);
+        if(!$pri_key) {
+            return;
+        }
+        
+        openssl_private_decrypt($v, $plaintext, $pri_key);
+        return $plaintext;
     }
     
     function checkWritable($cls_name,$func_name,$dir)
