@@ -855,6 +855,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                         $tn_g.name = '{$v}'
                 )"
             );
+            
+            $this->jdata();
         }
         
         // #2307 Search Country!!
