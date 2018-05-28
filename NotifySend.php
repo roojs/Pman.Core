@@ -462,7 +462,7 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent($successEventName, $w, "{$w->to_email} - {$email['headers']['Subject']}");
                 
                 $ev->writeEventLog($this->debug_str);
-                print_R('test??');exit;
+                
                 if(strtotime($w->act_when) > strtotime("NOW")){
                     $w->act_when = date('Y-m-d H:i:s');
                 }
