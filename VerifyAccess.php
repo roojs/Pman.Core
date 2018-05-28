@@ -34,7 +34,7 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jerr('[System Error] This site does not using IP management');
         }
         
-        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
+//        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
         
         $core_person = DB_DataObject::factory('core_person');
         
@@ -69,7 +69,7 @@ class Pman_Core_VerifyAccess extends Pman
             $this->jerr('[System Error] This site does not using IP management');
         }
         
-        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
+//        $ff->Pman['XMPP']['to'] = 'edward@roojs.com'; // testing...
         
         $core_person = DB_DataObject::factory('core_person');
         
