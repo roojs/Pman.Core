@@ -224,7 +224,7 @@ class Pman_Core_NotifySend extends Pman
                 'email' => $email['recipients']
             );
         }
-        print_R('test??');exit;
+         
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
