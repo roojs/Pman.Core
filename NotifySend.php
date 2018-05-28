@@ -346,7 +346,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  GAVE UP TO OLD - {$p->email} \n");
         }
         
-        print_r($w);exit;
+        
         
         $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
@@ -452,7 +452,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-             
+            print_R($res);exit;
             
             if ($res === true) {
                 // success....
