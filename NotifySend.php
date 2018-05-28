@@ -452,7 +452,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-            print_R($res);exit;
+             
             
             if ($res === true) {
                 // success....
