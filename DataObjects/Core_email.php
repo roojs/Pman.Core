@@ -476,7 +476,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $r = $this->toMailer($obj, $force);
         
         if (is_a($r, 'PEAR_Error')) {
-            print_r('test');exit;
             return $r;
         }
         
