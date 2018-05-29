@@ -360,7 +360,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         // fill in BCC
         
-        if (!empty($this->bcc_group_id) && empty($contents['rcpts_group'])) {
+        if (!empty($this->bcc_group_id) && $this->bcc_group_id > 0 && empty($contents['rcpts_group'])) {
             $admin = DB_DAtaObject::Factory('core_group')->lookupMembersByGroupId($this->bcc_group_id,'email');
             
             if (!empty($admin)) {
