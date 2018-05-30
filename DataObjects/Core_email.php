@@ -363,7 +363,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (!empty($this->bcc_group_id) && $this->bcc_group_id > 0 && empty($contents['rcpts_group'])) {
             $admin = DB_DAtaObject::Factory('core_group')->lookupMembersByGroupId($this->bcc_group_id,'email');
             
-            if (!empty($admin)) {
+            if (empty($admin)) {
                 return $p->raiseError("template [{$contents['template']}] - bcc group is empty");
             }
             
