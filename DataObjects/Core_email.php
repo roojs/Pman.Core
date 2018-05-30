@@ -657,7 +657,7 @@ Content-Transfer-Encoding: 7bit
         if (!empty($master)) {
             $opts['master'] = $mail_template_dir . $master .'.html';
         }
-        print_r($opts);
+        //print_r($opts);
         require_once 'Pman/Core/Import/Core_email.php';
         $x = new Pman_Core_Import_Core_email();
         $x->get('', $opts);
