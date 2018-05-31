@@ -385,8 +385,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
 
         if (!empty($contents['subject_replace'])) {
-            foreach ($contents['mapping'] as $pattern => $replace) {
-                $contents['subject'] = preg_replace($pattern,$replace,$contents['subject']);
+            if (isset($contents['mapping'])) {
+                foreach ($contents['mapping'] as $pattern => $replace) {
+                    $contents['subject'] = preg_replace($pattern,$replace,$contents['subject']);
+                }
             }
             foreach ($contents as $k => $v) {
                 if (is_string($v)) {
