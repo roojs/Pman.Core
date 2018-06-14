@@ -254,7 +254,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     //   ---------------- authentication / passwords and keys stuff  ----------------
     function isAuth()
     {
-        
         @session_start();
        
         $ff= HTML_FlexyFramework::get();
