@@ -15,8 +15,6 @@ trait Pman_Core_AssetTrait {
     
     function outputJavascriptDir($path)
     {
-        print_r($path);
-        
         
         $relpath = $this->rootURL . '/' . $path .'/';
         $ff = HTML_FlexyFramework::get();
