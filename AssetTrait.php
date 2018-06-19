@@ -78,7 +78,7 @@ trait Pman_Core_AssetTrait {
         
          
         
-        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        $lsort = function($a,$b) { return strlen($a) > strlen($b) ? 1 : -1; };
         usort($files, $lsort);
         
         $ff = HTML_FlexyFramework::get();
