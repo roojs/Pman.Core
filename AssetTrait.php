@@ -232,7 +232,9 @@ trait Pman_Core_AssetTrait {
         
         
         // yes sort... if includes are used - they have to be in the first file...
-        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
+        $lsort = function($a,$b ) {
+                return strlen($a) > strlen($b) ? 1 : -1;
+        };
         usort($files, $lsort);
         usort($relfiles,$lsort);
        // print_R($relfiles);
