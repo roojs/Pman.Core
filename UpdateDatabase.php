@@ -203,7 +203,7 @@ class Pman_Core_UpdateDatabase extends Pman
             return;
         }
         if (!empty($opts['debug'])) {
-             DB_DataObject::DebugLevel($opts['debug']);
+            DB_DataObject::DebugLevel($opts['debug']);
         }
       
         $this->runUpdateModulesData();
@@ -1189,8 +1189,11 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function generateDataobjectsCache()
     {
+        
+        // this needs to clear it's own cache along with remote one..
+        
+        
         $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
-            
         $this->curl($url);
         
     }
