@@ -942,8 +942,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         
-        var_dump(DB_DataObject::debugLevel());exit;
-        
+         
         $this->updateDataEnums();
         $this->updateDataGroups();
         $this->updateDataCompanies();
