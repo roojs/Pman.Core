@@ -676,7 +676,6 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "Running updateData on modules\n";
             // runs core...
             echo "Core\n";
-            var_dump(DB_DataObject::DebugLevel());exit;
             $this->updateData(); 
         }
         
