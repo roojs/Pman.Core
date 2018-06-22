@@ -178,6 +178,10 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->checkOpts($opts);
         
+        if (!empty($opts['debug'])) {
+            DB_DataObject::DebugLevel(1);
+        }
+        
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
