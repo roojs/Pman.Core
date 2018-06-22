@@ -93,7 +93,12 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         $tn = $this->tableName();
         if (!empty($q['query']['project_search'])) {
             $s = $this->escape($q['query']['project_search']);
-            $this->whereAdd(" ({$tn}.code LIKE '$s%') OR ({$tn}.name LIKE '%$s%')");
+            $this->whereAdd(" ({$tn}.code LIKE '$s%')
+                            OR
+                            ({$tn}.name LIKE '%$s%')
+                            OR
+                            join_client_id_id.name LIKE '%$s%'
+                ");
         }
         // types of project to list ... - default is only the open ones...
         if (!empty($q['query']['project_indaterange'])) {
