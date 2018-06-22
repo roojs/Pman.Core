@@ -81,6 +81,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'max' => 1,
             
         ),
+        'debug' => array(
+            'desc' => 'Debug the database',
+            'short' => 'D',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+            
+        ),
     );
     
     static function cli_opts()
