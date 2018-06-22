@@ -180,7 +180,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['debug'])) {
              DB_DataObject::DebugLevel($opts['debug']);
         }
-      
+        var_dump(DB_DataObject::DebugLevel());exit;
         
         // ask all the modules to verify the opts
         
