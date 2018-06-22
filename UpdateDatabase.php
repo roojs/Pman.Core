@@ -216,7 +216,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->runExtensions();
         
-        $this->generateDataobjectsCache();
+        $this->clearApacheDataobjectsCache();
         
          
     }
@@ -1187,13 +1187,11 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
-    function generateDataobjectsCache()
+    function clearApacheDataobjectsCache()
     {
         
         // this needs to clear it's own cache along with remote one..
-        HTML_FlexyFramework::get()->generateDataobjectsCache(true);
-
-        
+  
         $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
         $this->curl($url);
         
