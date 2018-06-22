@@ -145,7 +145,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function get($args, $opts=array())
     {
-        print_R($otps);
+        print_R($opts);
         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
@@ -176,15 +176,17 @@ class Pman_Core_UpdateDatabase extends Pman
         //$this->fixSequencesPgsql();exit;
         $this->opts = $opts;
         
-        // ask all the modules to verify the opts
-        
-        $this->checkOpts($opts);
-        
         if (!empty($opts['debug'])) {
             echo "Setting debug Level : {$opts['debug']}\n";
             DB_DataObject::DebugLevel($opts['debug']);
         }
+      
         
+        // ask all the modules to verify the opts
+        
+        $this->checkOpts($opts);
+        
+          
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
