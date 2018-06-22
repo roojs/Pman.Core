@@ -147,8 +147,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function get($args, $opts=array())
     {
-        print_R($opts);exit;
-        
+         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $this->checkSystem();
@@ -181,6 +180,7 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['debug'])) {
             echo "Setting debug Level : {$opts['debug']}\n";
             DB_DataObject::DebugLevel($opts['debug']);
+            exit;
         }
       
         
