@@ -179,7 +179,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->checkOpts($opts);
         
         if (!empty($opts['debug'])) {
-            DB_DataObject::DebugLevel(1);
+            echo "Setting debug Level : {$opts['debug']}\n";
+            DB_DataObject::DebugLevel($opts['debug']);
         }
         
         
