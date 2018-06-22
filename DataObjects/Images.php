@@ -202,7 +202,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $opts = HTML_FlexyFramework::get()->Pman;
         $deldir = $opts['storedir']. '/_deleted_images_';
         if (!file_exists( $deldir )) {
-            mkdir($dir, 0755);
+            mkdir($deldir, 0755);
         }
             
         $fn = $this->getStoreName();
