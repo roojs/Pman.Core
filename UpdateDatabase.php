@@ -180,7 +180,6 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['debug'])) {
              DB_DataObject::DebugLevel($opts['debug']);
         }
-        var_dump(DB_DataObject::DebugLevel());exit;
         
         // ask all the modules to verify the opts
         
@@ -202,10 +201,9 @@ class Pman_Core_UpdateDatabase extends Pman
         if (!empty($opts['only-module-sql'])) {
             return;
         }
-        if (!empty($opts['debug'])) {
-            DB_DataObject::DebugLevel($opts['debug']);
-        }
-      
+        
+              var_dump(DB_DataObject::DebugLevel());exit;
+
         $this->runUpdateModulesData();
         
         if (!empty($opts['add-company']) && !in_array('Core', $this->disabled)) {
