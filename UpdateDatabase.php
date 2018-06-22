@@ -147,7 +147,8 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function get($args, $opts=array())
     {
-         
+        print_R($opts);exit;
+        
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $this->checkSystem();
