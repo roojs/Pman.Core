@@ -263,7 +263,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
     function initGroups()
     {
-
+        print_r($this);
+        var_dump($this->tableName()));
         $g = DB_DataObject::factory($this->tableName());
         $g->type = 0;
         $g->name = 'Administrators';
