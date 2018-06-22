@@ -124,7 +124,7 @@ class Pman_Core_JsCompile  extends Pman
         }
         $tf = 
         // sort exc. the .js
-        usort($ofiles,create_function('$a,$b', 'return Pman_Core_JsCompile::jsSort($a,$b);'));
+        usort($ofiles,function($a,$b) { return Pman_Core_JsCompile::jsSort($a,$b); });
         
         //print_R($ofiles);
         
@@ -295,8 +295,8 @@ class Pman_Core_JsCompile  extends Pman
         if (!file_exists(dirname($output))) {
             mkdir(dirname($output), 0755, true);
         }
-        $lsort = create_function('$a,$b','return strlen($a) > strlen($b) ? 1 : -1;');
-        usort($ofiles, $lsort);
+        
+        usort($ofiles, function($a,$b)  { return strlen($a) > strlen($b) ? 1 : -1; });
         
         //$eoutput = " -k  -o " . escapeshellarg($output) ; // with whitespace..
         $eoutput = "  -t " . escapeshellarg($output) ;
@@ -308,7 +308,7 @@ class Pman_Core_JsCompile  extends Pman
         //            
         //}
         
-        
+    
         $cmd = "$packer  $eoutput  -f " . implode($ofiles, ' -f ') . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
