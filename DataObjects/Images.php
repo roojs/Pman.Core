@@ -196,7 +196,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * 
      * 
      */
-    function beforeDelete()
+    function beforeDelete($dependants_array, $roo)
     {
         
         $opts = HTML_FlexyFramework::get()->Pman;
