@@ -120,7 +120,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $this->mimetype= strtolower($this->mimetype);
         
-        if (array_shift(explode('/', $this->mimetype)) == 'image') { 
+        $mta = explode('/', $this->mimetype)
+        if (array_shift($mta) == 'image') { 
         
             $imgs = @getimagesize($file);
             
