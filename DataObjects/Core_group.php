@@ -161,6 +161,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
+        $gm->autoJoin();
+        $gm->whereAdd('join_user_id_id.active = 1');
         return $gm->fetchAll('user_id');
 
     }
