@@ -152,7 +152,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         $gm->autoJoin();
-        PDO_DAtaObject::DebugLevel(1); 
+        $gm->whereAdd('join_user_id_id.active = 1');
+        //PDO_DAtaObject::DebugLevel(1); 
         return $gm->count();
     }
 
