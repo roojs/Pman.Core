@@ -284,7 +284,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $roo->jerr('This company is not allow to delete');
         }
     }
-    function onDelete()
+    function onDelete($req, $roo)
     {
         $img = DB_DataObject::factory('Images');
         $img->ontable = $this->tableName();
