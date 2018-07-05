@@ -1197,9 +1197,10 @@ class Pman_Core_UpdateDatabase extends Pman
         $response = $this->curl($url);
         
         $response = json_decode($response, true);
-        print_R($response);exit;
-        if(empty($response) || $response != 'DONE'){
-            
+        
+        if(empty($response['data']) || $response['data'] != 'DONE'){
+            print_r($response);
+            exit;
         }
         
     }
