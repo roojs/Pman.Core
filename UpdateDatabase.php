@@ -1193,7 +1193,10 @@ class Pman_Core_UpdateDatabase extends Pman
         // this needs to clear it's own cache along with remote one..
   
         $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
+        
         $response = $this->curl($url);
+        
+        $response = json_decode($response, true);
         print_R($response);exit;
         if(empty($response) || $response != 'DONE'){
             
