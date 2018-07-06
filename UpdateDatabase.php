@@ -1200,6 +1200,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         if(empty($json['data']) || $json['data'] != 'DONE'){
             echo $response. "\n";
+            echo "CURL clear cache failed\n";
             exit;
         }
         
