@@ -131,7 +131,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
         
         $ff = HTML_FlexyFramework::get();
-        print_R($ff);exit;
         if (!empty($ff->cli)) {
             $this->cli = true;
             return true;
