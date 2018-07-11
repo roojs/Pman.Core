@@ -308,7 +308,7 @@ Pman.Dialog.PersonEditor.prototype = {
                       // load using HTTP
                     proxy: {
                         xtype : 'HttpProxy',
-                        url: baseURL + '/Roo/Office.html',
+                        url: baseURL + '/Roo/Core_office.html',
                         method: 'GET'
                     },
                     reader: new Roo.data.JsonReader({}, []), //Pman.Readers.Office,
