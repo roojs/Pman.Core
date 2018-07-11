@@ -213,7 +213,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (file_exists($deldir . '/'. $b)) {
                 unlink($fn);
             } else {
-                rename($fn, $deldir .'/',$b);
+                rename($fn, $deldir .'/'. $b);
             }
             
             
@@ -231,8 +231,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                         unlink($d. '/'. $fn);
                         continue;
                     }
-                    rename($d. '/'. $fn, $deldir .'/',$fn);
-                    
+                    rename($d. '/'. $fn, $deldir .'/'. $fn);
                     
                 }
             }
