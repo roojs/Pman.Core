@@ -17,7 +17,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     static $cli_desc = "Update SQL - Beta (it will run updateData of all modules)";
  
-    var $cli_opts = array(
+    static $cli_opts = array(
       
         'prefix' => array(
             'desc' => 'prefix for the password (eg. fred > xxx4fred - prefix is xxx4)',
@@ -94,7 +94,7 @@ class Pman_Core_UpdateDatabase extends Pman
     static function cli_opts()
     {
         
-        $ret = $this->cli_opts;
+        $ret = self::$cli_opts;
         $ff = HTML_FlexyFramework::get();
         $a = new Pman();
         $mods = $a->modulesList();
