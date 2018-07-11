@@ -207,6 +207,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
             
         $fn = $this->getStoreName();
+        
+        print_r($fn);
+        
         $b = basename($fn);
         if (file_exists($fn)) {
             
