@@ -94,7 +94,7 @@ class Pman_Core_UpdateDatabase extends Pman
     static function cli_opts()
     {
         
-        $ret = self::$cli_opts;
+        $ret = $this->cli_opts;
         $ff = HTML_FlexyFramework::get();
         $a = new Pman();
         $mods = $a->modulesList();
