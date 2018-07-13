@@ -256,14 +256,14 @@ Pman.Tab.PersonList.prototype = {
                         
                     },
                     cellclick : function (_self, rowIndex, columnIndex, e)
-                    {   console.log(_this.grid.ds.getAt(rowIndex));
+                    {   
                         var di = this.colModel.getDataIndex(columnIndex);
                         if (di != 'active') {
                             return;
                         }
                         
                         var rec = _this.grid.ds.getAt(rowIndex);
-                        console.log(rec); 
+                  
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
 
@@ -456,7 +456,7 @@ Pman.Tab.PersonList.prototype = {
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
-                    
+                    var rec = _this.grid.ds.getAt(rowIndex);
 
                    
                         
