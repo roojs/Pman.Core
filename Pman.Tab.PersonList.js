@@ -263,7 +263,7 @@ Pman.Tab.PersonList.prototype = {
                         }
                          
                         var rec = _this.grid.ds.getAt(rowIndex);
-                        
+                        console.log(rec);
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
 
