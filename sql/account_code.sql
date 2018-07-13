@@ -1,12 +1,15 @@
-CREATE  TABLE cost_centers (
+CREATE  TABLE account_code (
   id INT(11) NOT NULL AUTO_INCREMENT ,
-  short_name VARCHAR(8) NULL,
-  name VARCHAR(32) NULL,
+  name VARCHAR(8) NULL,
+  description VARCHAR(64) NULL,
+  cost_center INT(11) NULL,
+  accpac VARCHAR(32) NULL,
+  accpac_out VARCHAR(32) NULL,
   PRIMARY KEY (id)
 );
 
-ALTER TABLE cost_centers CHANGE COLUMN is_active is_active INT(2) NOT NULL DEFAULT 1;
-ALTER TABLE cost_centers ADD COLUMN is_active INT(2) NOT NULL DEFAULT 1;
+ALTER TABLE account_code CHANGE COLUMN is_active is_active INT(2) NOT NULL DEFAULT 1;
+ALTER TABLE account_code ADD COLUMN is_active INT(2) NOT NULL DEFAULT 1;
 
 
 
