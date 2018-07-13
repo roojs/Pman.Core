@@ -482,6 +482,7 @@ Pman.Tab.PersonList.prototype = {
                                     _delete  : ids.join(',')
                                 },
                                 success : function() {
+                                    console.log(_this.grid);
                                     _this.grid.footer.onClick('refresh');
                                 }
                             });
