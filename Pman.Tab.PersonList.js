@@ -456,6 +456,7 @@ Pman.Tab.PersonList.prototype = {
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
+                    console.log(_this.grid);
                     var rec = _this.grid.ds.getAt(rowIndex);
 
                    
