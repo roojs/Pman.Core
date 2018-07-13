@@ -455,7 +455,7 @@ Pman.Tab.PersonList.prototype = {
                 hidden : !Pman.hasPerm(_this.permName, 'D'),    
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
-                    Pman.genericDelete(_this, 'Person'); 
+                    //Pman.genericDelete(_this, 'Person'); 
                     
 
                    
