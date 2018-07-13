@@ -461,8 +461,9 @@ Pman.Tab.PersonList.prototype = {
 
                     console.log(rec);
                         
-                   
-                    /*if (!ids.length) {
+                    var ids = [];
+                    ids.push(rec.id);
+                    if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
                         return;
                     }
@@ -485,7 +486,7 @@ Pman.Tab.PersonList.prototype = {
                                 }
                             });
                         }
-                    );*/
+                    );
 
 
                     
