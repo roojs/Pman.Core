@@ -457,7 +457,7 @@ Pman.Tab.PersonList.prototype = {
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
                     
-                console.log(_this.grid.getSelectionModel());
+                console.log(_this.grid.getDataSource());
                     var rec = _this.grid.ds.getAt(rowIndex);
                         
                    
