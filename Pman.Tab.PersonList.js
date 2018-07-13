@@ -464,7 +464,7 @@ Pman.Tab.PersonList.prototype = {
                     var ids = [];
                     ids.push(rec.id);
                     if (!ids.length) {
-                        Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
+                        Roo.MessageBox.alert("Error", "Select row to delete");
                         return;
                     }
 
