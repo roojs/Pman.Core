@@ -461,7 +461,7 @@ Pman.Tab.PersonList.prototype = {
                     
                     var rec_id = rec.id;
                     
-                    if (!ids.length) {
+                    if (rec_id * 1 < 1) {
                         Roo.MessageBox.alert("Error", "Select row to delete");
                         return;
                     }
