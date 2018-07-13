@@ -455,8 +455,42 @@ Pman.Tab.PersonList.prototype = {
                 hidden : !Pman.hasPerm(_this.permName, 'D'),    
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
-                    Pman.genericDelete(_this, 'Person'); 
-                    
+                    //Pman.genericDelete(_this, 'Person'); 
+                    function()
+                    {
+                        var ids = [];
+                        _this.grid.dataSource.each(function(rr) {
+                            if (rr.selected) {
+                                ids.push(rr.data.id);
+                            }
+                        });   
+                        if (!ids.length) {
+                            Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
+                            return;
+                        }
+
+                        Roo.MessageBox.confirm(
+                            "Confirm", 
+                            "Confirm Deletion of selected rows (some rows can not be deleted if they are referenced elsewhere", 
+                            function(res) {
+                                if(res != 'yes') {
+                                    return;
+                                }
+                                new Pman.Request({
+                                    method : 'POST',
+                                    url : baseURL + '/Roo/core_person',
+                                    params : {
+                                        _delete  : ids.join(',')
+                                    },
+                                    success : function() {
+                                        _this.grid.footer.onClick('refresh');
+                                    }
+                                });
+                            }
+                        );
+
+
+                    }
 
                 }
             } ,
