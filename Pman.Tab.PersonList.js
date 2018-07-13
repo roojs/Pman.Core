@@ -456,12 +456,11 @@ Pman.Tab.PersonList.prototype = {
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
-                    console.log(_this);
-                    var di = this.grid.RowSelectionModel.getSelected();
                     
+
                     var rec = _this.grid.ds.getAt(rowIndex);
             
-                    console.log(ids.length);
+                    console.log(rec);
                     /*if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
                         return;
