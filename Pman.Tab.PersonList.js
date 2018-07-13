@@ -458,12 +458,13 @@ Pman.Tab.PersonList.prototype = {
                     //Pman.genericDelete(_this, 'Person'); 
                     
                     var ids = [];
-                    console.log(_this.grid.dataSource);
+
                     _this.grid.dataSource.each(function(rr) {
                         if (rr.selected) {
                             ids.push(rr.data.id);
                         }
                     });   
+                    console.log(ids.length);
                     if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
                         return;
