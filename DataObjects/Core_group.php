@@ -50,7 +50,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $core_group = DB_DataObject::factory('core_group');
             
             if($core_group->get('name', $q['_count_member_by_name'])){
-                $roo->jdata($core_group->memberCount());
+                $roo->jok($core_group->memberCount());
             }
         }
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
