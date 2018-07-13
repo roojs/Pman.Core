@@ -256,7 +256,7 @@ Pman.Tab.PersonList.prototype = {
                         
                     },
                     cellclick : function (_self, rowIndex, columnIndex, e)
-                    {
+                    {   console.log(_this.grid.ds.getAt(rowIndex));
                         var di = this.colModel.getDataIndex(columnIndex);
                         if (di != 'active') {
                             return;
