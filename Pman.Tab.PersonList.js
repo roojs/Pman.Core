@@ -470,7 +470,7 @@ Pman.Tab.PersonList.prototype = {
 
                     Roo.MessageBox.confirm(
                         "Confirm", 
-                        "Confirm Deletion of selected rows (some rows can not be deleted if they are referenced elsewhere", 
+                        "Confirm Deletion of selected row (some rows can not be deleted if they are referenced elsewhere", 
                         function(res) {
                             if(res != 'yes') {
                                 return;
