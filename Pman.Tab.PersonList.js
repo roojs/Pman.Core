@@ -456,18 +456,7 @@ Pman.Tab.PersonList.prototype = {
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
-                    function()
-                    {
-                        var ids = [];
-                        _this.grid.dataSource.each(function(rr) {
-                            if (rr.selected) {
-                                ids.push(rr.data.id);
-                            }
-                        });   
-                        
-
-
-                    }
+                    
 
                 }
             } ,
