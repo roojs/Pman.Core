@@ -457,10 +457,10 @@ Pman.Tab.PersonList.prototype = {
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
                     
-
+console.log(_this);
                     var rec = _this.grid.ds.getAt(rowIndex);
-                        console.log(_this);
-                    console.log(rec);
+                        
+                   
                     /*if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
                         return;
