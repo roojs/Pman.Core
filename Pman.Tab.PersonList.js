@@ -261,9 +261,9 @@ Pman.Tab.PersonList.prototype = {
                         if (di != 'active') {
                             return;
                         }
-                         
-                        var rec = _this.grid.ds.getAt(rowIndex);
                         
+                        var rec = _this.grid.ds.getAt(rowIndex);
+                        console.log(rec); 
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
 
