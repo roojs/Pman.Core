@@ -263,7 +263,7 @@ Pman.Tab.PersonList.prototype = {
                         }
                          
                         var rec = _this.grid.ds.getAt(rowIndex);
-                        console.log(rec);
+                        
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
 
@@ -455,10 +455,10 @@ Pman.Tab.PersonList.prototype = {
                 hidden : !Pman.hasPerm(_this.permName, 'D'),    
                 icon: rootURL + '/Pman/templates/images/trash.gif',
                 handler : function(){
-                    //Pman.genericDelete(_this, 'Person'); 
+                    Pman.genericDelete(_this, 'Person'); 
                     
-                console.log(_this.grid.getSelectionModel());
-                    var rec = _this.grid.ds.getAt(rowIndex);
+
+                   
                         
                    
                     /*if (!ids.length) {
