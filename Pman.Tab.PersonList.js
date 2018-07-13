@@ -459,7 +459,7 @@ Pman.Tab.PersonList.prototype = {
                     
 
                     var rec = _this.grid.ds.getAt(rowIndex);
-            
+                        console.log(_this);
                     console.log(rec);
                     /*if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
