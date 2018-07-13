@@ -457,15 +457,12 @@ Pman.Tab.PersonList.prototype = {
                 handler : function(){
                     //Pman.genericDelete(_this, 'Person'); 
                     
-                    var ids = [];
-
-                    _this.grid.dataSource.each(function(rr) {
-                        if (rr.selected) {
-                            ids.push(rr.data.id);
-                        }
-                    });   
+                    var di = this.RowSelectionModel.getSelected;
+                    console.log(di);
+                    var rec = _this.grid.ds.getAt(rowIndex);
+            
                     console.log(ids.length);
-                    if (!ids.length) {
+                    /*if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select rows by clicking on the Internal# column");
                         return;
                     }
@@ -488,7 +485,7 @@ Pman.Tab.PersonList.prototype = {
                                 }
                             });
                         }
-                    );
+                    );*/
 
 
                     
