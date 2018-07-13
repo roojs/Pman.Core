@@ -459,7 +459,7 @@ Pman.Tab.PersonList.prototype = {
                     
                     var rec = _this.grid.ds.getAt(_this.grid.selModel.last);
 
-                    console.log(rec);
+                    console.log(_this.grid);
                         
                     var ids = [];
                     ids.push(rec.id);
@@ -482,7 +482,7 @@ Pman.Tab.PersonList.prototype = {
                                     _delete  : ids.join(',')
                                 },
                                 success : function() {
-                                    console.log(_this.grid);
+                                    
                                     _this.grid.footer.onClick('refresh');
                                 }
                             });
