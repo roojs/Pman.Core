@@ -459,8 +459,8 @@ Pman.Tab.PersonList.prototype = {
                     
                     var rec = _this.grid.ds.getAt(_this.grid.selModel.last);
                     
-                    var ids = [];
-                    ids.push(rec.id);
+                    var rec_id = rec.id;
+                    
                     if (!ids.length) {
                         Roo.MessageBox.alert("Error", "Select row to delete");
                         return;
