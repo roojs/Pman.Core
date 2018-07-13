@@ -459,7 +459,7 @@ Pman.Tab.PersonList.prototype = {
                     
                     var rec = _this.grid.ds.getAt(_this.grid.selModel.last);
 
-                    console.log(_this.grid);
+                    console.log(_this);
                         
                     var ids = [];
                     ids.push(rec.id);
