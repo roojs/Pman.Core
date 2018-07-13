@@ -458,7 +458,7 @@ Pman.Tab.PersonList.prototype = {
                     //Pman.genericDelete(_this, 'Person'); 
                     
                     var rec = _this.grid.ds.getAt(_this.grid.selModel.last);
-                    _this.paging.onClick('refresh');
+                    
                     var ids = [];
                     ids.push(rec.id);
                     if (!ids.length) {
@@ -480,8 +480,8 @@ Pman.Tab.PersonList.prototype = {
                                     _delete  : ids.join(',')
                                 },
                                 success : function() {
-                                    
-                                    _this.grid.footer.onClick('refresh');
+                                    _this.paging.onClick('refresh');
+                                    //_this.grid.footer.onClick('refresh');
                                 }
                             });
                         }
