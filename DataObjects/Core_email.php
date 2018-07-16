@@ -266,7 +266,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 	    if (empty($cfg)) {
 		continue;
 	    }
-	    // not available if server_baseurl not set...
+	    // not available if server_baseurl not set... and crm module not used.
             $link = DB_DataObject::factory('crm_mailing_list_link');
             $link->setFrom(array(
                 'url' => $href
@@ -286,7 +286,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             
         }
         
-        if(!empty($unsubscribe)){
+        if(!empty($unsubscribe) && !empty($cfg)){
             $element = $doc->createElement('img');
             $element->setAttribute('mailembed', 'no');
             $element->setAttribute('src', $cfg ['server_baseurl']  . '/Crm/Open/' . $this->id . '/{person.id}.html');
