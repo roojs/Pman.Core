@@ -266,6 +266,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 	    if (empty($cfg)) {
 		continue;
 	    }
+	    // not available if server_baseurl not set...
             $link = DB_DataObject::factory('crm_mailing_list_link');
             $link->setFrom(array(
                 'url' => $href
