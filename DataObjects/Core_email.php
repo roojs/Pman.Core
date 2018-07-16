@@ -263,6 +263,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             if (!$replace_links) {
                 continue;
             }
+	    if (empty($cfg)) {
+		continue;
+	    }
             $link = DB_DataObject::factory('crm_mailing_list_link');
             $link->setFrom(array(
                 'url' => $href
