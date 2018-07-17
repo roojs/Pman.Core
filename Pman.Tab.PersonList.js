@@ -477,7 +477,7 @@ Pman.Tab.PersonList.prototype = {
                                 method : 'POST',
                                 url : baseURL + '/Roo/core_person',
                                 params : {
-                                    _delete  : ids.join(',')
+                                    _delete  : rec_id
                                 },
                                 success : function() {
                                     _this.paging.onClick('refresh');
