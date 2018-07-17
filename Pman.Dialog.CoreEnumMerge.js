@@ -14,6 +14,12 @@ Pman.Dialog.CoreEnumMerge = {
   '68be4837f6c739877233e527a996dd00' :"Merge",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel"
  },
+ _named_strings : {
+  '_merge_id_name_emptyText' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
+  '_merge_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  '_merge_id_name_qtip' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
+  '_merge_id_name_fieldLabel' : '03e956f1dca2b4d525df03cb1899cb6f' /* Merge with */ 
+ },
 
  dialog : false,
  callback:  false,
@@ -39,6 +45,7 @@ Pman.Dialog.CoreEnumMerge = {
  {
    var _this = this;
    this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
     closable : false,
     collapsible : false,
     height : 120,
@@ -46,9 +53,6 @@ Pman.Dialog.CoreEnumMerge = {
     resizable : false,
     title : _this._strings['298a183cfe4fddedd4bd17abe8aeb685'] /* Merge Pulldown Option */,
     width : 400,
-    xns : Roo,
-    '|xns' : 'Roo',
-    xtype : 'LayoutDialog',
     listeners : {
      show : function (_self)
       {
@@ -57,29 +61,29 @@ Pman.Dialog.CoreEnumMerge = {
           }
       }
     },
+    xns : Roo,
+    '|xns' : 'Roo',
     center : {
+     xtype : 'LayoutRegion',
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     buttons : [
      {
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
         {
             _this.dialog.hide();
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['68be4837f6c739877233e527a996dd00'] /* Merge */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['68be4837f6c739877233e527a996dd00'] /* Merge */,
       listeners : {
        click : function (_self, e)
         {
@@ -87,23 +91,23 @@ Pman.Dialog.CoreEnumMerge = {
             _this.form.doAction("submit");
         
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
      {
+      xtype : 'ContentPanel',
       region : 'center',
       xns : Roo,
       '|xns' : 'Roo',
-      xtype : 'ContentPanel',
       items  : [
        {
+        xtype : 'Form',
         method : 'POST',
         style : 'margin: 10px;',
         url : baseURL + '/Roo/Core_enum.php',
-        xns : Roo.form,
-        '|xns' : 'Roo.form',
-        xtype : 'Form',
         listeners : {
          actioncomplete : function (_self, action)
           {
@@ -137,8 +141,11 @@ Pman.Dialog.CoreEnumMerge = {
              _this.form = form;
           }
         },
+        xns : Roo.form,
+        '|xns' : 'Roo.form',
         items  : [
          {
+          xtype : 'ComboBox',
           allowBlank : false,
           alwaysQuery : true,
           displayField : 'name',
@@ -161,13 +168,10 @@ Pman.Dialog.CoreEnumMerge = {
           width : 250,
           xns : Roo.form,
           '|xns' : 'Roo.form',
-          xtype : 'ComboBox',
           store : {
+           xtype : 'Store',
            remoteSort : true,
            sortInfo : { direction : 'ASC', field: 'name' },
-           xns : Roo.data,
-           '|xns' : 'Roo.data',
-           xtype : 'Store',
            listeners : {
             beforeload : function (_self, o){
                  o.params = o.params || {};
@@ -178,35 +182,37 @@ Pman.Dialog.CoreEnumMerge = {
                  // set more here
              }
            },
+           xns : Roo.data,
+           '|xns' : 'Roo.data',
            proxy : {
+            xtype : 'HttpProxy',
             method : 'GET',
             url : baseURL + '/Roo/Core_enum',
             xns : Roo.data,
-            '|xns' : 'Roo.data',
-            xtype : 'HttpProxy'
+            '|xns' : 'Roo.data'
            },
            reader : {
+            xtype : 'JsonReader',
             fields : [{"name":"id","type":"int"},{"name":"name","type":"string"}],
             id : 'id',
             root : 'data',
             totalProperty : 'total',
             xns : Roo.data,
-            '|xns' : 'Roo.data',
-            xtype : 'JsonReader'
+            '|xns' : 'Roo.data'
            }
           }
          },
          {
+          xtype : 'Hidden',
           name : 'etype',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'id',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          }
         ]
        }
