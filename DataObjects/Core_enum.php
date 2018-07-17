@@ -141,7 +141,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
 
         $tn = $this->tableName();
-        $x = $this->factory($tn);
+        //$x = $this->factory($tn);
         // check if record exists?
         if(isset($request['etype']) &&   !($old->etype == $request['etype'] && $old->name == $request['name'])){
             $x->whereAdd("etype = '{$this->escape($request['etype'])}' AND name = '{$this->escape($request['name'])}'");
