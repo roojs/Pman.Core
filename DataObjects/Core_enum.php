@@ -395,7 +395,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     function merge($merge_to, $roo)
     {
         $affects  = array();
-        
+        $tn = $this->tableName();
+        $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
         foreach($all_links as $tbl => $links) {
