@@ -104,7 +104,7 @@ class Pman_Core_MessagePreview extends Pman
         $cls = str_replace('/', '_', $core_email->test_class);
         
         $x = new $cls;
-        
+        print_r($x);exit;
         $method = "test_{$core_email->name}";
         
         if(!method_exists($x, $method)){
