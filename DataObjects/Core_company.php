@@ -122,7 +122,9 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     
     // ---------- AUTHENTICATION
-     function isAuth()
+    // not sure where authetnication via company is used?? posibly media-outreach
+    
+    function isAuth()
     {
         $db = $this->getDatabaseConnection();
         $sesPrefix = $db->dsn['database'];
