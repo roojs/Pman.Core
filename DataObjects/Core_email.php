@@ -388,13 +388,16 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
         }
-
+        
         if (!empty($contents['subject_replace'])) {
+            
+            // do not use the mapping 
             if (isset($contents['mapping'])) {
                 foreach ($contents['mapping'] as $pattern => $replace) {
                     $contents['subject'] = preg_replace($pattern,$replace,$contents['subject']);
                 }
             }
+            
             foreach ($contents as $k => $v) {
                 if (is_string($v)) {
                     $contents['subject'] = str_replace('{'. $k . '}', $v, $contents['subject']);
@@ -415,11 +418,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
          
         require_once 'Pman/Core/Mailer.php';
-              
         
         $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
-        //print_r($this);
-        
         
         $cfg = array(
             'template'=> $this->tableName() . '-' . $this->id,
