@@ -29,6 +29,20 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    function applyFilters($q, $au, $roo)
+    {
+        $tn = $this->tableName();
+        
+        if(!empty($q['search']['filename'])){
+            $this->whereAdd("
+                $tn.name LIKE '%{$this->escape($q['search']['filename'])}%'
+                OR
+                $tn.subject LIKE '%{$this->escape($q['search']['filename'])}%'
+            ");
+        }
+ 
+
+    }
     
     function checkPerm($lvl, $au)
     {
