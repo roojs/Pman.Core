@@ -32,8 +32,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         $tn = $this->tableName();
-        echo "$tn.filename LIKE '%{$this->escape($q['search']['filename'])}%'"; die;
+        
         if(!empty($q['search']['filename'])){
+            echo "$tn.filename LIKE '%{$this->escape($q['search']['filename'])}%'"; die;
             $this->whereAdd("
                 $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
