@@ -134,7 +134,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     }
     
     
-    function act_start($set = false)
+    function act_start($set = false, $force = false)
     {
         if ($set === false) {
             return $this->act_start;
