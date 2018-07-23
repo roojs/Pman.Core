@@ -110,8 +110,6 @@ class Pman_Core_Mailer {
     
     function toData()
     {
-        $ts = microtime(true);
-        
         $templateFile = $this->template;
         $args = (array)$this->contents;
         $content  = clone($this->page);
