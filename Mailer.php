@@ -110,8 +110,6 @@ class Pman_Core_Mailer {
     
     function toData()
     {
-        $ts = microtime(true);
-        
         $templateFile = $this->template;
         $args = (array)$this->contents;
         $content  = clone($this->page);
@@ -158,7 +156,6 @@ class Pman_Core_Mailer {
         $htmlbody = false;
         $html_tmp_opts = $tmp_opts;
         $htmltemplate = new HTML_Template_Flexy( $html_tmp_opts );
-        
         if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) { 
             // then we have a multi-part email...
             if (!empty($this->html_locale)) {
@@ -170,9 +167,7 @@ class Pman_Core_Mailer {
             $htmlbody =  $htmltemplate->bufferedOutputObject($content);
             
             $this->htmlbody = $htmlbody;
-            $diff = microtime(true) - $ts;
-        
-        print_r($diff);exit;
+            
             // for the html body, we may want to convert the attachments to images.
 //            var_dump($htmlbody);exit;
             
