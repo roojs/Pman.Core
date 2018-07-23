@@ -35,7 +35,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if(!empty($q['search']['filename'])){
             $this->whereAdd("
-                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['title'])}%'
+                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
         }
         
