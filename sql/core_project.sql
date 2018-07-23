@@ -26,5 +26,4 @@ ALTER TABLE core_project  ADD COLUMN languages varchar(128)  NOT NULL DEFAULT ''
 ALTER TABLE  core_project ADD COLUMN agency_id int(11)  NOT NULL DEFAULT 0 ;
 
 ALTER TABLE core_project ADD INDEX plookup (code);
-ALTER TABLE core_project ADD INDEX pressrelease_id_lookup (pressrelease_id);
  
