@@ -158,6 +158,7 @@ class Pman_Core_Mailer {
         $htmlbody = false;
         $html_tmp_opts = $tmp_opts;
         $htmltemplate = new HTML_Template_Flexy( $html_tmp_opts );
+        
         if (is_string($htmltemplate->resolvePath('mail/'.$templateFile.'.body.html')) ) { 
             // then we have a multi-part email...
             if (!empty($this->html_locale)) {
@@ -192,7 +193,9 @@ class Pman_Core_Mailer {
         }
         $tmp_opts['nonHTML'] = true;
         
+        $diff = microtime(true) - $ts;
         
+        print_r($diff);exit;
         //print_R($tmp_opts);
         // $tmp_opts['force'] = true;
         
