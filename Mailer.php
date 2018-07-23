@@ -170,7 +170,9 @@ class Pman_Core_Mailer {
             $htmlbody =  $htmltemplate->bufferedOutputObject($content);
             
             $this->htmlbody = $htmlbody;
-            
+            $diff = microtime(true) - $ts;
+        
+        print_r($diff);exit;
             // for the html body, we may want to convert the attachments to images.
 //            var_dump($htmlbody);exit;
             
@@ -193,9 +195,7 @@ class Pman_Core_Mailer {
         }
         $tmp_opts['nonHTML'] = true;
         
-        $diff = microtime(true) - $ts;
         
-        print_r($diff);exit;
         //print_R($tmp_opts);
         // $tmp_opts['force'] = true;
         
