@@ -386,7 +386,7 @@ class Pman_Core_Mailer {
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $imgs= $dom->getElementsByTagName('img');
         
-        $test = array();
+        $urls = array();
         
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
@@ -397,7 +397,15 @@ class Pman_Core_Mailer {
             if ($me == 'no') {
                 continue;
             }
-            $test[] = $url;
+            
+            if(!array_key_exists($url, $urls)){
+                $conv = $this->fetchImage($url);
+                $this->images[$conv['contentid']] = $conv;
+            } else {
+                $conv = $urls[$url];
+            }
+            
+            
         }
         
         print_R($test);exit;
