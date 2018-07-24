@@ -405,11 +405,10 @@ class Pman_Core_Mailer {
                 $conv = $urls[$url];
             }
             
-            
+            $img->setAttribute('src', 'cid:' . $conv['contentid']);
         }
         
-        print_R($test);exit;
-        
+        /*
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
             if (preg_match('#^cid:#', $url)) {
@@ -424,9 +423,10 @@ class Pman_Core_Mailer {
             $this->images[$conv['contentid']] = $conv;
             
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
-            
-            
         }
+        * 
+        */
+        
         return $dom->saveHTML();
         
         
