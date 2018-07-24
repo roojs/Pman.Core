@@ -385,7 +385,23 @@ class Pman_Core_Mailer {
         // this may raise parse errors as some html may be a component..
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         $imgs= $dom->getElementsByTagName('img');
-        print_r($imgs);exit;
+        
+        $test = array();
+        
+        foreach ($imgs as $i=>$img) {
+            $url  = $img->getAttribute('src');
+            if (preg_match('#^cid:#', $url)) {
+                continue;
+            }
+            $me = $img->getAttribute('mailembed');
+            if ($me == 'no') {
+                continue;
+            }
+            $test[] = $url;
+        }
+        
+        print_R($test);exit;
+        
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
             if (preg_match('#^cid:#', $url)) {
