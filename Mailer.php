@@ -321,8 +321,9 @@ class Pman_Core_Mailer {
         
         $pg = $ff->page;
         
+        $ts = microtime(true);
         $email = is_array($email)  ? $email : $this->toData();
-        
+        print_r(microtime(true) - $ts);exit;
         if (is_a($email, 'PEAR_Error')) {
             $pg->addEvent("COREMAILER-FAIL",  false, "email toData failed"); 
       
