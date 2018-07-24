@@ -409,28 +409,7 @@ class Pman_Core_Mailer {
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
         }
         
-        /*
-        foreach ($imgs as $i=>$img) {
-            $url  = $img->getAttribute('src');
-            if (preg_match('#^cid:#', $url)) {
-                continue;
-            }
-            $me = $img->getAttribute('mailembed');
-            if ($me == 'no') {
-                continue;
-            }
-            
-            $conv = $this->fetchImage($url);
-            $this->images[$conv['contentid']] = $conv;
-            
-            $img->setAttribute('src', 'cid:' . $conv['contentid']);
-        }
-        * 
-        */
-        
         return $dom->saveHTML();
-        
-        
         
     }
     function htmlbodyCssEmbed($html)
