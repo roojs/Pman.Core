@@ -1347,7 +1347,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr('Fail to generate QR Code');
             }
             
-            $roo->jdata($qrcode);
+            $roo->jok($qrcode);
         }
     }
     
