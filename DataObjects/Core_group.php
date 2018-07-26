@@ -53,19 +53,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jok($core_group->memberCount());
             }
         }
-        $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
-        
-        $this->selectAdd("
-           (
-            SELECT 
-                count(user_id) 
-            FROM 
-                {$cgm}
-            WHERE 
-                {$this->tableName()}.id = {$cgm}.group_id
-            ) 
-            AS group_member_count            
-        ");
+        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         
         $this->_join .= "
             LEFT JOIN
@@ -77,6 +65,22 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             ON
                 core_user_id = core_person.id
         ";
+        
+        $this->selectAdd("
+           (
+            SELECT 
+                count(user_id) 
+            FROM 
+                {$cgm}
+            WHERE 
+                {$this->tableName()}.id = {$cgm}.group_id
+            ) 
+            AND
+                core_person.active = 1
+            AS group_member_count            
+        ");
+        
+        
         
 
     }
