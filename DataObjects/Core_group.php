@@ -61,7 +61,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         $cpObj->active = 1; // set the where condition with active = 1
       
-        $core_group->joinAdd($cgmDBObj, array('joinType' => 'LEFT', 'useWhereAsOn' => false));
+        $cgm->joinAdd($cpObj, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
         $core_group->joinAdd($cpObj, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
         $core_group->find();
         DB_DataObject::debugLevel();
