@@ -61,12 +61,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         
         $this->selectAdd("
            (
-            SELECT 
-                count(user_id) 
-            FROM 
-                core_group_member
-            
-            AS group_member_count            
+                SELECT 
+                    COUNT(core_group_member.user_id) 
+                FROM 
+                    core_group_member
+                LEFT JOIN
+                    core_person
+                ON
+                    core_person.id = core_group_member.user_id
+                WHERE
+                    core_person.active = 1
+            ) AS group_member_count            
         ");
         /*WHERE 
             {$this->tableName()}.id = core_group_member.group_id
@@ -76,9 +81,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 core_person.active = 1    
         )*/ 
         
-        $this->whereAdd("{$this->tableName()}.id = core_group_member.group_id");
-        $this->whereAdd("core_group_member.user_id = core_person.id");
-        $this->whereAdd("core_person.active = 1");
+//        $this->whereAdd("{$this->tableName()}.id = core_group_member.group_id");
+//        $this->whereAdd("core_group_member.user_id = core_person.id");
+//        $this->whereAdd("core_person.active = 1");
      
     
         /*$cgmDBObj->joinAdd($cpObj);
