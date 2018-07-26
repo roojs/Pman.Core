@@ -67,8 +67,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$cgm}
             WHERE 
                 {$this->tableName()}.id = {$cgm}.group_id
-            AND
-                {$cgm}.user_id = {$cp}.id
+            
             AND
                 {$cp}.active = 1
             ) 
