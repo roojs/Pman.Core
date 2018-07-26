@@ -66,11 +66,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             FROM 
                 {$cgm}
             WHERE 
-                {$this->tableName()}.id = {$cgm->tableName()}.group_id
+                {$this->tableName()}.id = {$cgm}.group_id
             AND
-                {$cgm->tableName()}.user_id = {$cp->tableName()}.id
+                {$cgm}.user_id = {$cp}.id
             AND
-                {$cp->tableName()}.active = 1
+                {$cp}.active = 1
             ) 
             AS group_member_count            
         ");
