@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
         echo "sql checking:"."\n";
         DB_DataObject::debugLevel(5);
-        
+        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         /*$cgmDBObj = DB_DataObject::Factory('core_group_member');
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
