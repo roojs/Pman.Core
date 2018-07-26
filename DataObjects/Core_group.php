@@ -59,6 +59,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         $cpObj->active = 1; // set the where condition with active = 1*/
+        DB_DataObject::debugLevel(5);
         $this->selectAdd("
            (
             SELECT 
@@ -70,6 +71,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             ) 
             AS group_member_count            
         ");
+         DB_DataObject::debugLevel();       
     
         /*$cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
