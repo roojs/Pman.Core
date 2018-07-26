@@ -73,7 +73,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         ");*/
         $cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
-        
+        DB_DataObject::debugLevel();
     }
 
     function toEventString() {
