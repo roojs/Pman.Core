@@ -59,7 +59,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         $cpObj->active = 1; // set the where condition with active = 1*/
-        DB_DataObject::debugLevel(5);
+        DB_DataObject::debugLevel(1);
         $this->selectAdd("
            (
             SELECT 
