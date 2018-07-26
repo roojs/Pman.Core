@@ -71,6 +71,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             ) 
             AS group_member_count            
         ");
+        DB_DataObject::debugLevel();        
         /*$cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
         DB_DataObject::debugLevel();*/
