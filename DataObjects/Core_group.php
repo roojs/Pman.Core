@@ -65,16 +65,20 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 count(user_id) 
             FROM 
                 core_group_member
-            WHERE 
-                {$this->tableName()}.id = core_group_member.group_id
-                AND
-                    core_group_member.user_id = core_person.id
-                
-            ) 
+            
             AS group_member_count            
         ");
- 
-
+        /*WHERE 
+            {$this->tableName()}.id = core_group_member.group_id
+            AND
+                core_group_member.user_id = core_person.id
+            AND
+                core_person.active = 1    
+        )*/ 
+        
+        $this->whereAdd("{$this->tableName()}.id = core_group_member.group_id");
+        $this->whereAdd("core_group_member.user_id = core_person.id");
+        $this->whereAdd("core_person.active = 1");
      
     
         /*$cgmDBObj->joinAdd($cpObj);
