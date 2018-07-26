@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
         
-         /*$this->selectAdd("
+         $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -65,8 +65,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$this->tableName()}.id = {$cgm}.group_id
             ) 
             AS group_member_count            
-        ");*/
-        $this->selectAdd("
+        ");
+        /*$this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
             ) 
             AS group_member_count            
-        ");
+        ");*/
 
     }
 
