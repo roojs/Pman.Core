@@ -54,13 +54,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
 
-        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        /*$cgmDBObj = DB_DataObject::Factory('core_group_member');
+        
+        $cgmDBObj = DB_DataObject::Factory('core_group_member');
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        $cpObj->active = 1; // set the where condition with active = 1*/
-        DB_DataObject::debugLevel(1);
-        $this->selectAdd("
+        $cpObj->active = 1; // set the where condition with active = 1
+      
+        $core_group->joinAdd($cgmDBObj, array('joinType' => 'LEFT', 'useWhereAsOn' => false));
+        $core_group->joinAdd($cpObj, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
+        $core_group->find();
+        /*$this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -70,8 +73,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$this->tableName()}.id = {$cgm}.group_id
             ) 
             AS group_member_count            
-        ");
-         DB_DataObject::debugLevel();       
+        ");*/
+     
     
         /*$cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
