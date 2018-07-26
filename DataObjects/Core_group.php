@@ -54,7 +54,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
 
-        DB_DataObject::debugLevel(1);
+
         
         $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
@@ -74,7 +74,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             ) 
             AS group_member_count            
         ");
-        DB_DataObject::debugLevel();
+ 
 
      
     
