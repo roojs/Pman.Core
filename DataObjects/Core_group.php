@@ -54,7 +54,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
 
-        
+        DB_DataObject::debugLevel(1);
+        $core_group = DB_DataObject::factory('core_group');
         $cgmDBObj = DB_DataObject::Factory('core_group_member');
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
@@ -63,6 +64,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $core_group->joinAdd($cgmDBObj, array('joinType' => 'LEFT', 'useWhereAsOn' => false));
         $core_group->joinAdd($cpObj, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
         $core_group->find();
+        DB_DataObject::debugLevel();
         /*$this->selectAdd("
            (
             SELECT 
