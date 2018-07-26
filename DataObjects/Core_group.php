@@ -56,9 +56,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
 
         
-        $cp = DB_DataObject::Factory('core_person')->tableName();
-        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-      
+        $cp = DB_DataObject::Factory('core_person');
+        $cgm = DB_DataObject::Factory('core_group_member');
+        
         $this->selectAdd("
            (
             SELECT 
