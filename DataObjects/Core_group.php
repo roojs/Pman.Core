@@ -53,8 +53,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jok($core_group->memberCount());
             }
         }
-        echo "sql checking:"."\n";
-        DB_DataObject::debugLevel(5);
+
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         /*$cgmDBObj = DB_DataObject::Factory('core_group_member');
         $cpObj = DB_DataObject::Factory('core_person');
@@ -71,7 +70,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             ) 
             AS group_member_count            
         ");
-        DB_DataObject::debugLevel(5);        
+    
         /*$cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
         DB_DataObject::debugLevel();*/
