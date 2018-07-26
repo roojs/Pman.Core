@@ -56,16 +56,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
         DB_DataObject::debugLevel(1);
         $core_group = DB_DataObject::factory('core_group');
-        $cgmDBObj = DB_DataObject::Factory('core_group_member');
-        $cpObj = DB_DataObject::Factory('core_person');
+        $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         $cpObj->active = 1; // set the where condition with active = 1
       
-        $cgm->joinAdd($cpObj, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
-        $core_group->joinAdd($cgm, array('joinType' => 'LEFT', 'useWhereAsOn' => true));
-        $core_group->find();
-        DB_DataObject::debugLevel();
-        /*$this->selectAdd("
+        $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -73,9 +68,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$cgm}
             WHERE 
                 {$this->tableName()}.id = {$cgm}.group_id
+            AND
+                {$cgm}.user_id = {$cp}.id
+            AND
+                {$cp}.active = 1
             ) 
+            
             AS group_member_count            
-        ");*/
+        ");
+        DB_DataObject::debugLevel();
+
      
     
         /*$cgmDBObj->joinAdd($cpObj);
