@@ -67,6 +67,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 core_group_member
             WHERE 
                 {$this->tableName()}.id = core_group_member.group_id
+                AND
+                    core_group_member.user_id = core_person.id
                 
             ) 
             AS group_member_count            
