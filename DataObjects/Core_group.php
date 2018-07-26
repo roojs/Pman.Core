@@ -70,7 +70,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             AND
                 {$cgm->tableName()}.user_id = {$cp->tableName()}.id
             AND
-                {$cp}.active = 1
+                {$cp->tableName()}.active = 1
             ) 
             AS group_member_count            
         ");
