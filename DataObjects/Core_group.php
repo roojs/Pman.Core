@@ -73,7 +73,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             AND
                 {$cp}.active = 1
             ) 
-            
             AS group_member_count            
         ");
         DB_DataObject::debugLevel();
