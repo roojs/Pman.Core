@@ -65,7 +65,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 count(user_id) 
             FROM 
                 core_group_member
-            
+            WHERE 
+                {$this->tableName()}.id = core_group_member.group_id
+                
             ) 
             AS group_member_count            
         ");
