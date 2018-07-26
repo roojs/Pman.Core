@@ -64,13 +64,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             SELECT 
                 count(user_id) 
             FROM 
-                {$cgm}
+                core_group_member
             WHERE 
-                {$this->tableName()}.id = {$cgm}.group_id
-            AND
-                {$cgm}.user_id = {$cp}.id
-            AND
-                {$cp}.active = 1
+                {$this->tableName()}.id = core_group_member.group_id
+                AND
+                    core_group_member.user_id = core_person.id
+                AND
+                    core_person.active = 1
             ) 
             AS group_member_count            
         ");
