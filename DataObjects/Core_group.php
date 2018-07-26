@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
         
-        /*$this->selectAdd("
+        $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -65,13 +65,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$this->tableName()}.id = {$cgm}.group_id
             ) 
             AS group_member_count            
-        ");*/
-        $this->selectAdd("
-           (
-            SELECT 
-                count(user_id) 
-            FROM 
-                {$cgm}
+        ");
+        
+        $this->_join .= "
             LEFT JOIN
                 core_group_member
             ON
@@ -80,14 +76,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 core_person
             ON
                 core_user_id = core_person.id
-            WHERE 
-                {$this->tableName()}.id = {$cgm}.group_id
-            AND
-                core_person.active = 1
-
-            ) 
-            AS group_member_count            
-        ");
+        ";
+        
 
     }
 
