@@ -56,11 +56,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         echo "sql checking:"."\n";
         DB_DataObject::debugLevel(5);
         
-        $cgmDBObj = DB_DataObject::Factory('core_group_member');
+        /*$cgmDBObj = DB_DataObject::Factory('core_group_member');
         $cpObj = DB_DataObject::Factory('core_person');
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        $cpObj->active = 1; // set the where condition with active = 1
-        /*$this->selectAdd("
+        $cpObj->active = 1; // set the where condition with active = 1*/
+        $this->selectAdd("
            (
             SELECT 
                 count(user_id) 
@@ -70,10 +70,10 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 {$this->tableName()}.id = {$cgm}.group_id
             ) 
             AS group_member_count            
-        ");*/
-        $cgmDBObj->joinAdd($cpObj);
+        ");
+        /*$cgmDBObj->joinAdd($cpObj);
         $this->joinAdd($cgmDBObj);
-        DB_DataObject::debugLevel();
+        DB_DataObject::debugLevel();*/
     }
 
     function toEventString() {
