@@ -75,6 +75,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                         core_person.active = 1
             ) AS group_member_count            
         ");
+        
         /*WHERE 
             {$this->tableName()}.id = core_group_member.group_id
             AND
