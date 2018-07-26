@@ -55,7 +55,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
 
         DB_DataObject::debugLevel(1);
-        $core_group = DB_DataObject::factory('core_group');
+        
         $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         $cpObj->active = 1; // set the where condition with active = 1
