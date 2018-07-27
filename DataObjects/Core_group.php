@@ -61,18 +61,18 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         
         $this->selectAdd("
            (
-                SELECT 
-                        COUNT(core_group_member.user_id) 
-                FROM 
-                        core_group_member
-                LEFT JOIN
-                        core_person
-                ON
-                        core_person.id = core_group_member.user_id
-                WHERE
-                        core_group_member.group_id = core_group.id
-                    AND
-                        core_person.active = 1
+            SELECT 
+                COUNT(core_group_member.user_id) 
+            FROM 
+                core_group_member
+            LEFT JOIN
+                core_person
+            ON
+                core_person.id = core_group_member.user_id
+            WHERE
+                    core_group_member.group_id = core_group.id
+                AND
+                    core_person.active = 1
             ) AS group_member_count            
         ");
         
