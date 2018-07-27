@@ -1094,6 +1094,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function beforeDelete($dependants_array, $roo)
     {
         
+        //delete group membership except for admin group..
+        // if they are a member of admin group do not delete anything.
+        
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         $e->delete(true);
