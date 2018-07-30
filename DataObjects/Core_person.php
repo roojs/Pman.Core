@@ -1108,7 +1108,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // add the current user to the admin group..
             $g = DB_DataObject::Factory('core_group');
             if ($g->get('name', 'Administrators')) {
-                $roo->jerr("can not delete admin user");
+                $roo->jerr("Can not delete admin user");
             }
             else{
                 $e->delete(true);
