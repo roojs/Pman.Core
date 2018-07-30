@@ -1101,29 +1101,22 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         
-        $group = DB_DataObject::factory('core_group');
-        $group->get('name', 'Administrators');
-
-        $member = DB_DataObject::factory('core_group_member');
-        $member->autoJoin();
-        $member->group_id = $group->id;
-        $member->whereAdd("
-            join_user_id_id.id IS NOT NULL
-        ");
-       
-        if($member->find(true)){
-            $default_admin = DB_DataObject::factory($this->tableName());
-            if(!$default_admin->get($member->user_id)){
-                $e->delete(true);
-                
+        
+        
+        
+        $g = DB_DataObject::Factory('core_group_member');
+        $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
+        if (!$g->count()) {
+            // add the current user to the admin group..
+            $g = DB_DataObject::Factory('core_group');
+            if ($g->get('name', 'Administrators')) {
+                $roo->jerr("can not delete admin user");
             }
             else{
-                $roo->jerr("can not delete administrator");
+                $e->delete(true);
             }
+            
         }
-        
-        
-        
         
         
         
