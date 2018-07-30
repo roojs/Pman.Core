@@ -1093,7 +1093,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
-        
         //delete group membership except for admin group..
         // if they are a member of admin group do not delete anything.
         $default_admin = false;
@@ -1101,19 +1100,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         
-        $g = DB_DataObject::Factory('core_group_member');
-        $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
-  
-        if ($g->count()) {
-            // add the current user to the admin group..
-            $g = DB_DataObject::Factory('core_group');
-            if ($g->get('name', 'Administrators')) {
-                $roo->jerr("Can not delete admin user");
-            }
-            else{
-                $e->delete(true);
-            }
-            
+        $g = DB_DataObject::Factory('core_group');
+        $g->get('name', 'Administrators');
+        $p = DB_DataObject::Factory('core_group_member');
+
+        $p->get('user_id', $this->id); 
+ 
+         
+        if ($p->group_id != $g->id) {
+            $e->delete(true);
+        }
+        else{
+            $roo->jerr("Can not delete admin user");
         }
         
         
@@ -1353,6 +1351,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
+        print_r($q);exit;
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
