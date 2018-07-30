@@ -51,7 +51,7 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     
     
     function listGroupMembership($person, $arrayof = 'group_id') 
-    {echo "hi"; die;
+    {
         $this->inAdmin = false;
         $t = clone($this);
         //DB_DataObject::debugLevel(1);
