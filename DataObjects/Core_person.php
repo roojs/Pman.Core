@@ -1103,6 +1103,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $g = DB_DataObject::Factory('core_group_member');
         $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
+        echo "count:". $g->count();
         if (!$g->count()) {
             // add the current user to the admin group..
             $g = DB_DataObject::Factory('core_group');
