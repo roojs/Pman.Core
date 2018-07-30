@@ -1113,12 +1113,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
        
         if($member->find(true)){
             $default_admin = DB_DataObject::factory($this->tableName());
+            echo $default_admin->get($member->user_id); die;
             if(!$default_admin->get($member->user_id)){
                 $e->delete(true);
                 
             }
             else{
-                $roo->jerr("can not delete admin user");
+                $roo->jerr("can not delete administrator");
             }
         }
         
