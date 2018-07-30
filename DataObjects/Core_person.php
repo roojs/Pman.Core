@@ -1096,7 +1096,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         //delete group membership except for admin group..
         // if they are a member of admin group do not delete anything.
-        
+        var_dump($dependants_array); die;
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         $e->delete(true);
