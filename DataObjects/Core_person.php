@@ -1096,10 +1096,33 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         //delete group membership except for admin group..
         // if they are a member of admin group do not delete anything.
+        $default_admin = false;
         
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
-        $e->delete(true);
+        
+        $group = DB_DataObject::factory('core_group');
+        $group->get('name', 'Administrators');
+
+        $member = DB_DataObject::factory('core_group_member');
+        $member->autoJoin();
+        $member->group_id = $group->id;
+        $member->whereAdd("
+            join_user_id_id.id IS NOT NULL
+        ");
+        var_dump($member->find(true)); 
+        if($member->find(true)){
+            $default_admin = DB_DataObject::factory($this->tableName());
+            if(!$default_admin->get($member->user_id)){
+                $default_admin = false;
+                $e->delete(true);
+            }
+        }
+        
+        
+        
+        
+        
         
         // anything else?  
         
