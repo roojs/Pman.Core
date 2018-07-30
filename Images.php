@@ -203,10 +203,11 @@ class Pman_Core_Images extends Pman
         
         
         if(!$this->hasPermission($img)){
+            print_r('no permission');exit;
             $this->imgErr("access to this image/file has been denied.",$s);
             
         }
-        
+        print_R($img);exit;
         $this->serve($img);
         exit;
     }
