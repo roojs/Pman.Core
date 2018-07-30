@@ -1101,9 +1101,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $e = DB_DataObject::Factory('Events');
         $e->whereAdd('person_id = ' . $this->id);
         
-        
-        
-        
         $g = DB_DataObject::Factory('core_group_member');
         $g->whereAdd('group_id is NOT NULL AND user_id IS NOT NULL');
         if (!$g->count()) {
