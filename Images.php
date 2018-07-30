@@ -181,7 +181,7 @@ class Pman_Core_Images extends Pman
         $img = DB_DataObjecT::factory('Images');
          
         if (!$id || !$img->get($id)) {
-             $this->imgErr("image has been removed or deleted.",$s);
+            $this->imgErr("image has been removed or deleted.",$s);
         }
         
         if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
@@ -203,11 +203,10 @@ class Pman_Core_Images extends Pman
         
         
         if(!$this->hasPermission($img)){
-            print_r('no permission');exit;
             $this->imgErr("access to this image/file has been denied.",$s);
             
         }
-        print_R($img);exit;
+        
         $this->serve($img);
         exit;
     }
