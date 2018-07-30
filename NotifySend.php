@@ -289,8 +289,8 @@ class Pman_Core_NotifySend extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
-        $e = explode('@', $p->email);
-        $dom = array_pop($e);
+        $explode_email = explode('@', $p->email);
+        $dom = array_pop($explode_email);
         
         $mxs = $this->mxs($dom);
         $ww = clone($w);
