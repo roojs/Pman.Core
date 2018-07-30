@@ -157,7 +157,7 @@ class Pman_Core_Images extends Pman
         
         // depreciated - should use ontable:onid:type here...
         if (!empty($_REQUEST['ontable'])) {
-            print_r('test??');exit;
+            
             if (!$this->authUser) {
                 die("authentication required");
             }
