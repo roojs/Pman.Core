@@ -760,7 +760,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //DB_DataObject::DebugLevel(1);
         
         $core_group_member = DB_DataObject::factory('core_group_member');
-//        $core_group_member->autoJoin();
+        $core_group_member->autoJoin();
         $core_group_member->get(1);
         
         print_R($core_group_member);exit;
