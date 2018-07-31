@@ -1105,11 +1105,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $g->get('name', 'Administrators');  // select * from core_group where name = 'Administrators'
         
         $p = DB_DataObject::Factory('core_group_member');
-        /*$p->setFrom(array(
+        $p->setFrom(array(
             'user_id' => $this->id,
             'group_id' => $g->id
-        ));*/
-        var_dump($p);
+        ));
+
         if ($p->count()) {
            $roo->jerr();
         }
