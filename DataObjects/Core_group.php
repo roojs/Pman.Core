@@ -54,7 +54,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
 
-
+        if(!empty($q['_with_member_id'])){
+            $this->selectAdd("
+                COALESE(
+                    (SELECT id from core_group_member
+                        WHERE ...
+                        
+                        LIMIT 1
+                    ),0) as ....
+                    ");
+        }
+        
         
         $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
