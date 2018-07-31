@@ -16,6 +16,15 @@ Pman.Dialog.Image = {
   '91412465ea9169dfd901dd5e7c96dd99' :"Upload",
   'ea72bacd2fdfa818907bb9559e6905a1' :"Upload Image or File"
  },
+ _named_strings : {
+  'imgtype_name_fieldLabel' : '8e16a71b3d8217eb80b39b7d8dec4296' /* Image Type */ ,
+  'imgtype_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'imgtype_name_emptyText' : 'dff0c70e4c11953e4e3ee1cf268fb96d' /* Select image type */ ,
+  'upload_max_filesize_value' : 'eb5d45750c7ab13aa8e6bacc80315a30' /* 32M */ ,
+  'imgtype_name_qtip' : 'dff0c70e4c11953e4e3ee1cf268fb96d' /* Select image type */ ,
+  'post_max_size_value' : 'eb5d45750c7ab13aa8e6bacc80315a30' /* 32M */ ,
+  'imageUpload_fieldLabel' : 'ea72bacd2fdfa818907bb9559e6905a1' /* Upload Image or File */ 
+ },
 
  dialog : false,
  callback:  false,
