@@ -88,7 +88,7 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     
     function checkPerm($lvl, $au) 
     {
-        return true;
+        return false;
     }
     
 }
