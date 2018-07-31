@@ -1098,34 +1098,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // if they are a member of admin group do not delete anything.
         $default_admin = false;
         
-        $e = DB_DataObject::Factory('Events');
-        $e->whereAdd('person_id = ' . $this->id);
         
-        $g = DB_DataObject::Factory('core_group');
-        $g->get('name', 'Administrators');
-        $p = DB_DataObject::Factory('core_group_member');
-
-        //$p->get('user_id', $this->id); 
-        
-        $p->setFrom(array(
-            'user_id' => $this->id,
-            'group_id' => $g->id
-        ));
-        
-        if ($p->count()) {
-           $roo->jerr();
-        }
- 
-         
-        $p = DB_DataObject::Factory('core_group_member');
-        $p->user_id = $this->id;
-        $mem = $p->fetchAll();
-
-        $e->logDeletedRecord($p);
-
-        foreach($mem as $p) { 
-            $p->deletE();
-        }  
         
         
         
