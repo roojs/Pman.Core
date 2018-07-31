@@ -1118,7 +1118,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::Factory('core_group_member');
         $p->user_id = $this->id;
         $mem = $p->fetchAll();  // fetch all the rows and set the $mem variable to the rows data, just like mysqli_fetch_assoc
-        var_dump($e); 
+   
         $e->logDeletedRecord($p);
         
         foreach($mem as $p) { 
