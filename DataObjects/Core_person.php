@@ -1105,15 +1105,27 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $g->get('name', 'Administrators');
         $p = DB_DataObject::Factory('core_group_member');
 
-        $p->get('user_id', $this->id); 
+        //$p->get('user_id', $this->id); 
+        
+        $p->setFrom(array(
+            'user_id' => $this->id,
+            'group_id' => $g->id
+        ));
+        
+        if ($p->count()) {
+           $roo->jerr();
+        }
  
          
-        if ($p->group_id != $g->id) {
-            $e->delete(true);
-        }
-        else{
-            $roo->jerr("Can not delete admin user");
-        }
+        $p = DB_DataObject::Factory('core_group_member');
+        $p->user_id = $this->id;
+        $mem = $p->fetchAll();
+
+        $e->logDeletedRecord($p);
+
+        foreach($mem as $p) { 
+            $p->deletE();
+        }  
         
         
         
