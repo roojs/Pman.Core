@@ -54,7 +54,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         print_r($q);
-        if(!empty($q['_with_member_id'])){
+        /*if(!empty($q['_with_member_id'])){
             $this->selectAdd("
                 COALESE(
                     (SELECT id from core_group_member
@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                         LIMIT 1
                     ),0) as ....
                     ");
-        }
+        }*/
         
         
         $cp = DB_DataObject::Factory('core_person')->tableName();
