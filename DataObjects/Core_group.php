@@ -57,7 +57,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         
         if(!empty($q['_with_member_id'])){
             $this->selectAdd("
-                COALESE(
+                COALESCE(
                     (SELECT id from core_group_member
                         WHERE ...
                         
