@@ -65,7 +65,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                         AND
                             group_id = {$this->tableName()}.id
                         LIMIT 1
-                    ),0) as group_member_user
+                    ),0) as group_membership_user
                     ");
         }
         
