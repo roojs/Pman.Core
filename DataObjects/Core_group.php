@@ -53,7 +53,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jok($core_group->memberCount());
             }
         }
-        
+
         /*if(!empty($q['_with_member_id'])){
             $this->selectAdd("
                 COALESE(
