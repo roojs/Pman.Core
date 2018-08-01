@@ -7,4 +7,4 @@ CREATE TABLE  core_group_member  (
 ALTER TABLE core_group_member ADD COLUMN  group_id int(11) default NULL;
 ALTER TABLE core_group_member ADD COLUMN   user_id int(11) NOT NULL default 0;
 
- 
+ALTER TABLE ADD UNIQUE KEY `unique_group_user` (`group_id`,`user_id`);
