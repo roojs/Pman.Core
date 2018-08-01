@@ -40,6 +40,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     // group types??
     function applyFilters($q, $au, $roo)
     {
+        print_r($q); exit;
         if (!empty($q['query']['name_starts'])) {
             $v = $this->escape($q['query']['name_starts']);
             $this->whereAdd("{$this->tableName()}.name like '{$v}%'");
