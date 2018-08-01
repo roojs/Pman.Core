@@ -55,14 +55,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
-        if(!empty($q['_with_member_id'])){
+        if(!empty($q['mem_id'])){
             $this->selectAdd("
                 COALESCE(
                     (SELECT id from core_group_member
-                        WHERE ...
-                        
+                        WHERE 
+                            user_id = {$q['mem_id']}
+                        AND
+                            group_id = {$this->tableName()}.id
                         LIMIT 1
-                    ),0) as ....
+                    ),0) as cgm_id
                     ");
         }
         
