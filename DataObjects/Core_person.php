@@ -1411,7 +1411,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $group_id_arr = explode(",", $q['membership_list']);
             
-            $result_del = array_diff($ar, $group_id_arr);
+            $result_del = array_values(array_filters(array_diff($ar, $group_id_arr)));
             
             // check if id needs to be deleted
             if(!empty($result_del)){
@@ -1421,7 +1421,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
             
-            $result_add = array_diff($group_id_arr, $ar);
+            $result_add = array_values(array_filters(array_diff($group_id_arr, $ar)));
             
             
             // insert data into core_person_member...
