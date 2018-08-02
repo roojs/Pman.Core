@@ -1431,8 +1431,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // check if id needs to be deleted
             if(!empty($result_del)){
+                $x = PDO_DataObject::factory('core_group_member');
+                $x->user_id = $q['id'];
+                $x->whereAddIn('group_id', $result_del, 'int');
+                $x->fetchAll();
+                
                 foreach($result_del as $group_id){
-                    
                     $x = PDO_DataObject::factory('core_group_member');
                     $x->user_id = $q['id'];
                     $x->group_id = $group_id;
