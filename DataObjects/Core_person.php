@@ -1417,11 +1417,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             
             
-            $pid = $q['id'];
+            
          
             $x = PDO_DataObject::factory('core_group_member');
             $x->select('group_id');
-            $x->user_id = $pid;
+            $x->user_id = $q['id'];
             
             $ar = $x->fetchAll('group_id');
             
@@ -1431,7 +1431,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // check if id needs to be deleted
             if(!empty($result_del)){
-                foreach($result_del as $rdid){
+                foreach($result_del as $group_id){
+                    
                     $x = PDO_DataObject::factory('core_group_member');
                     $x->get($rdid);
                     $x->delete();
