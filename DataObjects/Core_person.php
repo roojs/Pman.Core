@@ -1459,7 +1459,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 foreach($result_add as $gid){
                     PDO_DataObject::Factory('core_group_member')->set(array(
                         'group_id'=> $gid,
-                        'user_id' => $pid
+                        'user_id' => $q['id']
                     ))->insert();
                 }
             }
