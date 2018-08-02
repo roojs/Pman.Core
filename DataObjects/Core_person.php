@@ -1403,7 +1403,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($q['membership_list'])){
             
             // insert data into core_person_member...
-             PDO_DataObject::Factory('coremytable_group_member')->set([ 'name' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
+            //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
             
         }
     }
