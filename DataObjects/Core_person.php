@@ -1383,6 +1383,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
+        print_r($q); exit;
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
