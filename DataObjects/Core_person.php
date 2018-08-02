@@ -1422,7 +1422,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $result_add = array_diff($group_id_arr, $ar);
             
-
+            var_dump($result_add);exit;
             // insert data into core_person_member...
             //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
             foreach($result_add as $gid){
