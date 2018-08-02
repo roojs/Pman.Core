@@ -1401,6 +1401,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['membership_list'])){
+            // need to get current membership list to compare before insert to prevent integrity problem
+            $x = PDO_DataObject::factory('core_group_member');
+            $x->select('id');
+            $x->whereAdd('user_id='.$q['id']);
+            
+            
             $group_id_arr = explode(",", $q['membership_list']);
             $pid = $q['id'];
 
