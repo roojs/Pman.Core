@@ -1421,7 +1421,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
          
             $x = PDO_DataObject::factory('core_group_member');
             $x->select('group_id');
-            $x->whereAdd("user_id={$pid}");
+            $x->user_id = $pid;
+            
+            
             $ar = $x->fetchAll(true);
             
             $group_id_arr = explode(",", $q['membership_list']);
