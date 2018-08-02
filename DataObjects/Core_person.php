@@ -1416,7 +1416,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // check if id needs to be deleted
             if(!empty($result_del)){
                 foreach($result_del as $rdid){
-                    $del = $x->get($rdid)->delete();
+                    $x->get($rdid);
+                    $x->delete();
                 }
             }
             
