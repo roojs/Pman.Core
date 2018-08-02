@@ -1423,7 +1423,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $x->select('group_id');
             $x->user_id = $pid;
             
-            
             $ar = $x->fetchAll('group_id');
             
             $group_id_arr = explode(",", $q['membership_list']);
