@@ -1048,16 +1048,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $this->selectAdd("
            (
-            SELECT GROUP_CONCAT(CONCAT_WS('\"', ${cgm}.group_id), '\"') 
+            SELECT GROUP_CONCAT({$cg}.group_id) 
                 FROM 
                     {$cgm}
-                LEFT JOIN
-                    {$this}
-                ON
-                    {$this->tableName()}.id = {$cgm}.user_id
-                AND
-                    ${cp}.active = 1
-                ) AS group_membership_list            
+                WHERE 
+                    {$cgm}.user_id = {$this->tableName()}.id
+                ) AS membership_list    
+            
         ");    
         
         
