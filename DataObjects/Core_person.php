@@ -1408,11 +1408,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $x->select('id');
             $x->whereAdd("user_id={$pid}");
             $ar = $x->fetchAll(true);
-            
+            var_dump($ar);exit;
             $group_id_arr = explode(",", $q['membership_list']);
             
             $result_del = array_diff($ar, $group_id_arr);
-            var_dump($result_del);exit;
+            
             // check if id needs to be deleted
             if(!empty($result_del)){
                 foreach($result_del as $rdid){
