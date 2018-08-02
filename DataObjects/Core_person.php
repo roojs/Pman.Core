@@ -1399,16 +1399,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $roo->jok($qrcode);
         }
-        var_dump($q['membership_list']);exit;
+        
         if(!empty($q['membership_list'])){
             
             $pid = $q['id'];
-            // need to get current membership list to compare before insert to prevent integrity problem
+         
             $x = PDO_DataObject::factory('core_group_member');
-            $x->select('id');
+            $x->select('group_id');
             $x->whereAdd("user_id={$pid}");
             $ar = $x->fetchAll(true);
-            
+            var_dump($ar); exit;
             $group_id_arr = explode(",", $q['membership_list']);
             
             $result_del = array_diff($ar, $group_id_arr);
