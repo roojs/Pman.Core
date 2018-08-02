@@ -1125,6 +1125,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $p->delete();
         }  
         
+        $e = DB_DataObject::Factory('events');
+        $e->person_id = $this->id;
+        $eve = $e->fetchAll();  // fetch all the rows and set the $mem variable to the rows data, just like mysqli_fetch_assoc
+        
+        foreach($eve as $e) { 
+            $e->delete();
+        }  
+        
         
         
         // anything else?  
