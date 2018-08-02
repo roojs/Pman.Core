@@ -1419,10 +1419,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     $del = $x->get($rdid)->delete();
                 }
             }
+            
+            $result_add = array_diff($group_id_arr, $ar);
+            
 
             // insert data into core_person_member...
             //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
-            foreach($group_id_arr as $gid){
+            foreach($result_add as $gid){
                 PDO_DataObject::Factory('core_group_member')->set([ 'group_id' => $gid, 'user_id' => $pid])->insert();
             }
         }
