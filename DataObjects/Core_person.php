@@ -1382,7 +1382,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     }
     
     function beforeUpdate($old, $q, $roo)
-    {
+    {var_dump($q);exit;
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
@@ -1399,7 +1399,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $roo->jok($qrcode);
         }
-        // handle group_id here..
+        
         if(!empty($q['group_id'])){
             
             // insert data into core_person_member...
