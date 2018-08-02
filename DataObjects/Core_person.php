@@ -1411,8 +1411,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $group_id_arr = explode(",", $q['membership_list']);
             
+            $result_del = array_diff($ar, $group_id_arr);
             
-            
+            // check if id needs to be deleted
+            if(!empty($result_del)){
+                foreach($result_del as $rdid){
+                    $del = $x->get($rdid)->delete();
+                }
+            }
 
             // insert data into core_person_member...
             //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
