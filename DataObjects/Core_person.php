@@ -58,7 +58,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $this->selectAdd("
            (
-            SELECT GROUP_CONCAT(CONCAT_WS('\"', ${cgm}.group_id, '\"')) 
+            SELECT GROUP_CONCAT(CONCAT_WS('\', ${cgm}.group_id)) 
                 FROM 
                     {$cgm}
                 LEFT JOIN
