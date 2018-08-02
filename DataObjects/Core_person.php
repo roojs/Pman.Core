@@ -1434,7 +1434,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 foreach($result_del as $group_id){
                     
                     $x = PDO_DataObject::factory('core_group_member');
-                    $x->get($rdid);
+                    $x->user_id = $q['id'];
+                    $x->group_id = $group_id;
+                    $x->find(true);
                     $x->delete();
                 }
             }
