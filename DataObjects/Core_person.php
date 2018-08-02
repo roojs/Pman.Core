@@ -1401,10 +1401,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['membership_list'])){
+            $group_id_arr = explode(",", $q['membership_list']);
+            
+            var_dump($group_id_arr); exit;
             
             // insert data into core_person_member...
             //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
-            
+            foreach($group_id_arr as $gid){
+                PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => $gid, 'user_id' => $this->tableName().id])->insert();
+            }
         }
     }
     
