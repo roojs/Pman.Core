@@ -55,7 +55,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $cg = DB_DataObject::Factory('core_group')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        
+        /*
+         * 
+         * make this conditional
+       
         $this->selectAdd("
            (
             SELECT GROUP_CONCAT(CONCAT_WS('\', ${cgm}.group_id)) 
@@ -69,7 +72,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     ${cp}.active = 1
                 ) AS group_membership_list            
         ");    
-        
+          */
     }
     
     
