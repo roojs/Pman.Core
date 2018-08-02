@@ -1111,7 +1111,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ));
 
         if ($p->count()) {
-           $roo->jerr();
+           $roo->jerr("Please remove this user from the Administrator group before deleting");
         }
  
          
