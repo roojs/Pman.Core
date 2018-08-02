@@ -1410,9 +1410,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $ar = $x->fetchAll(true);
             
             $group_id_arr = explode(",", $q['membership_list']);
-            var_dump($group_id_arr); exit;
-            $result_del = array_diff($ar, $group_id_arr);
             
+            $result_del = array_diff($ar, $group_id_arr);
+            var_dump($result_del); exit;
             // check if id needs to be deleted
             if(!empty($result_del)){
                 foreach($result_del as $rdid){
