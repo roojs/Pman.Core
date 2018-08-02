@@ -1431,11 +1431,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             // check if id needs to be deleted
             if(!empty($result_del)){
+                /*
                 $x = PDO_DataObject::factory('core_group_member');
                 $x->user_id = $q['id'];
                 $x->whereAddIn('group_id', $result_del, 'int');
-                $x->fetchAll();
+                foreach($x->fetchAll() as $cgm) {
+                    $cgm->delete();
+                }
                 
+                
+                */
                 foreach($result_del as $group_id){
                     $x = PDO_DataObject::factory('core_group_member');
                     $x->user_id = $q['id'];
@@ -1452,7 +1457,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
             if(!empty($result_add)){
                 foreach($result_add as $gid){
-                    PDO_DataObject::Factory('core_group_member')->set([ 'group_id'=> $gid, 'user_id' => $pid])->insert();
+                    PDO_DataObject::Factory('core_group_member')->set(array(
+                        'group_id'=> $gid,
+                        'user_id' => $pid
+                    ))->insert();
                 }
             }
         }
