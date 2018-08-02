@@ -1383,6 +1383,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
+       
+        
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
@@ -1401,6 +1403,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['membership_list'])){
+            
+             
+            if ($roo->authUser->id == $old->id) {
+                // you are editing yourself...
+                
+                // if was admin before....
+                   // -if new membership does not icnlude  admin id
+                      // -- then show error
+                
+                
+            }
+            
+            
             
             $pid = $q['id'];
          
