@@ -50,11 +50,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
-    
-    
-    
-    
+ 
     function owner()
     {
         $p = DB_DataObject::Factory($this->tableName());
@@ -1046,6 +1042,23 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 LENGTH({$this->tableName()}.oath_key) AS length_oath_key
             ");
         }
+        
+        $cg = DB_DataObject::Factory('core_group')->tableName();
+        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
+        
+        $this->selectAdd("
+           (
+            SELECT GROUP_CONCAT(CONCAT_WS('\"', ${cgm}.group_id), '\"') 
+                FROM 
+                    {$cgm}
+                LEFT JOIN
+                    {$this}
+                ON
+                    {$this->tableName()}.id = {$cgm}.user_id
+                AND
+                    ${cp}.active = 1
+                ) AS group_membership_list            
+        ");    
         
         
     }
