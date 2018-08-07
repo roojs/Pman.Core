@@ -755,7 +755,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $ext = $y->toExt(trim((string) $this->mimetype ));
         
-        if(array_pop(explode('.', $this->filename)) != $ext){
+        $explode_filename = explode('.', $this->filename);
+        if(array_pop($explode_filename) != $ext){
             $this->filename = $this->filename .'.'. $ext; 
         }
         
