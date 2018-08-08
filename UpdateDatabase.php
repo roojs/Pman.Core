@@ -182,7 +182,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         // ask all the modules to verify the opts
-        
+        echo "Checi options\n";
         $this->checkOpts($opts);
         
           
