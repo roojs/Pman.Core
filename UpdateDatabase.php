@@ -155,9 +155,9 @@ class Pman_Core_UpdateDatabase extends Pman
         if (class_exists('PDO_DataObjects_Introspection')) {
             PDO_DataObject_Introspection::$cache = array();
         }
-        
+        echo "Generate DB　cache\n";
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
-   
+        echo "Generated DB　cache\n";
         $ff = HTML_FlexyFramework::get();
         
         if(!isset($ff->Pman) || !isset($ff->Pman['local_base_url'])){
