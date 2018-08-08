@@ -8,6 +8,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function initKeys()
     {
+        // return false when fail
+        
         $dir = $this->getKeyDirectory();
         
         if(
