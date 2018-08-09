@@ -110,7 +110,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return $ciphertext;
     }
     
-    function decrypt($v)
+    function getDecryptVal()
     {
         $key_dir = "{$this->getKeyDirectory()}/pri.key";
         
@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return;
         }
         
-        openssl_private_decrypt($v, $plaintext, $pri_key);
+        openssl_private_decrypt($this->val, $plaintext, $pri_key);
         return $plaintext;
     }
     
