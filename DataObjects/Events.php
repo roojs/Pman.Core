@@ -483,14 +483,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             $user = getenv('USERNAME'); // windows.
         }
         
-        // DEPRICATED...
+        
+   
+        if (!empty($ff->Pman['storedir'])) {
+            return $ff->Pman['storedir'] .'/Events/'.$user;
+        }
+        // DEPRICATED... 
         if (!empty($ff->Pman['event_log_dir'])) {
             return $ff->Pman['event_log_dir'] . '/'.$user;
         }
-        if (!empty($ff->Pman['storedir'])) {
-            return $ff->Pman['storedir'] .'/Events/'.$user;
         
-        }
         return false;
     }
     
