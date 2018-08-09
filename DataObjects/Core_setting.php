@@ -6,6 +6,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
 {
     public $__table = 'core_setting';
     
+    // gitlive test...
+    
     function initKeys()
     {
         // return false when fail
