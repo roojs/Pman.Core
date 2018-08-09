@@ -16,7 +16,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             file_exists("{$dir}/pub.key") ||
             file_exists("{$dir}/pri.key")
         ){
-            return;
+            return true;
         }
         
         $ssl = openssl_pkey_new(array(
@@ -31,6 +31,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         file_put_contents("{$dir}/pub.key",$pub_key);
         file_put_contents("{$dir}/pri.key",$pri_key);
+        return true;
     }
     
     function lookup($m,$n)
@@ -57,7 +58,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $key_dir = $client_dir.'/keys';
         if(!file_exists($key_dir)) {
             $this->checkWritable(get_class($this),__FUNCTION__,$client_dir);
-            exec("mkdir -m775 {$key_dir}");
+            mkdir($key_dir, 0775);
         }
         return $key_dir;
     }
