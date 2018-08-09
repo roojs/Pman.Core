@@ -114,6 +114,10 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function getDecryptVal()
     {
+        if (!$this->is_encrypt) {
+            return $this->val;
+        }
+        
         $key_dir = "{$this->getKeyDirectory()}/pri.key";
         
         if(!file_exists($key_dir)) {
