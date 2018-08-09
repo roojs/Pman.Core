@@ -9,14 +9,17 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     function initKeys()
     {
         // return false when fail
-        
         $dir = $this->getKeyDirectory();
+        
+        if(!$dir) {
+            return false; // only fail case?
+        }
         
         if(
             file_exists("{$dir}/pub.key") ||
             file_exists("{$dir}/pri.key")
         ){
-            return;
+            return true;
         }
         
         $ssl = openssl_pkey_new(array(
@@ -31,6 +34,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         file_put_contents("{$dir}/pub.key",$pub_key);
         file_put_contents("{$dir}/pri.key",$pri_key);
+        
+        return true;
     }
     
     function lookup($m,$n)
@@ -40,9 +45,11 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             'module' => $m,
             'name' => $n
         ));
+        
         if($s->find(true)) {
             return $s;
         }
+        
         return false;
     }
     
@@ -54,11 +61,19 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     function getKeyDirectory()
     {
         $client_dir = HTML_FlexyFramework::get()->Pman['storedir'];
+        
         $key_dir = $client_dir.'/keys';
-        if(!file_exists($key_dir)) {
-            $this->checkWritable(get_class($this),__FUNCTION__,$client_dir);
-            exec("mkdir -m775 {$key_dir}");
+        
+        if(file_exists($key_dir)) {
+            return $key_dir;
         }
+        
+        if(!is_writable($key_dir)) {
+            return false;
+        }
+        
+        exec("mkdir -m775 {$key_dir}");
+        
         return $key_dir;
     }
     
@@ -109,32 +124,33 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return $ciphertext;
     }
     
-    function decrypt($v)
+    function getDecryptVal()
     {
-        $key_dir = "{$this->getKeyDirectory()}/pri.key";
+        $dir = $this->getKeyDirectory();
+        
+        if(!$dir) {
+            return false;
+        }
+        
+        if(empty($this->val)) {
+            return false;
+        }
+        
+        $key_dir = "{$dir}/pri.key";
         
         if(!file_exists($key_dir)) {
-            print_r("Cannot find {$key_dir}");
-            exit;
+            return false;
         }
         
         $pri_key = file_get_contents($key_dir);
+        
         if(!$pri_key) {
-            return;
+            return false;
         }
         
-        openssl_private_decrypt($v, $plaintext, $pri_key);
+        openssl_private_decrypt($this->val, $plaintext, $pri_key);
+        
         return $plaintext;
     }
     
-    function checkWritable($cls_name,$func_name,$dir)
-    {
-        if(!is_writable($dir)) {
-            print_r("Cannot run {$cls_name} :: {$func_name}\n");
-            print_r("Directory: {$dir} is not writable by current user\n");
-            exit;
-        }
-        
-        return true;
-    }
 }
