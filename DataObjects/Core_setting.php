@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return false;
         }
         
-        exec("mkdir -m775 {$key_dir}");
+        mkdir($key_dir, 0755, true);
         
         return $key_dir;
     }
@@ -134,6 +134,10 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         if(empty($this->val)) {
             return false;
+        }
+        
+        if(empty($this->is_encrypt)) {
+            return $this->val;
         }
         
         $key_dir = "{$dir}/pri.key";
