@@ -501,7 +501,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function writeEventLog($extra_data  = false)
     {
         $logdir = $this->logDir();
-        echo "diu"; exit;
+        
         if (!$logdir) {
             return false;
         }
@@ -617,7 +617,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     
     function retrieveEventLog()
     {
-        
+        echo "diu"; exit;
         $logdir = $this->logDir();
         if (!$logdir) {
             return false;
