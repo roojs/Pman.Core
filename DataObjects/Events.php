@@ -38,7 +38,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     {
         $tn = $this->tableName();
         // if not empty on_table
-        echo "fuk"; die;
+        
         if(!empty($q['person_table'])){
             $jt = DB_DataObject::factory($q['person_table']);
 
