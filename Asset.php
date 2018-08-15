@@ -125,10 +125,15 @@ class Pman_Core_Asset extends Pman {
      
     static function getCompileDir($type)
     {
-        if(
-            empty($type)
-        ) {
-            return false;
+        switch($type) {
+            case 'js'
+                break;
+                case 'js'
+                    break;
+                    case 'js'
+                        break;
+            default:
+                return false;
         }
         
         exit;
