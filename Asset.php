@@ -134,7 +134,7 @@ class Pman_Core_Asset extends Pman {
         switch($type) {
             case 'js':
             case 'css':
-                $compile_dir = session_save_path() . '/' . implode("-", array(
+                $compile_dir .= implode("-", array(
                     $ui['name'],
                     $ff->project,
                     $ff->version,
@@ -142,6 +142,7 @@ class Pman_Core_Asset extends Pman {
                 ));
                 break;
             case 'template':
+                
                 break;
             default:
                 return false;
