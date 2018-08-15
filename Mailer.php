@@ -503,8 +503,9 @@ class Pman_Core_Mailer {
         @$dom->loadHTML('<?xml encoding="UTF-8">' .$html);
         
         $body = $dom->getElementsByTagName('body');
-        
-         $body->setAttribute('class', $cls);
+        if ($body->count()) {
+            $body->item(0)->setAttribute('class', $cls);
+        }
         
         
         return $dom->saveHTML();
