@@ -144,6 +144,10 @@ class Pman_Core_Asset extends Pman {
             return $compile_dir;
         }
         
-        mkdir($compile_dir, 0700, true);
+        if(mkdir($compile_dir, 0700, true)) {
+            return $compile_dir;
+        }
+        
+        return false;
     }
 }
