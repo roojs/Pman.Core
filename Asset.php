@@ -141,18 +141,9 @@ class Pman_Core_Asset extends Pman {
                     "{$type}compile"
                 ));
                 break;
-            case 'template':
-                print_r($ff);exit;
-                break;
             default:
                 return false;
         }
-        
-        exit;
-        
-        
-        
-        
         
         if (file_exists($compile_dir)) {
             return $compile_dir;
