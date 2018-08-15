@@ -157,7 +157,7 @@ class Pman_Core_Asset extends Pman {
         return false;
     }
     
-    function clearCompileCache()
+    function clearCompiledFilesCache()
     {
         
     }
