@@ -125,6 +125,10 @@ class Pman_Core_Asset extends Pman {
      
     static function getAssetDir($type)
     {
-        if(empty($type))
+        if(!in_array($type, array(
+            
+        ))) {
+            return false;
+        }
     }
 }
