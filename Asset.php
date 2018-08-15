@@ -127,8 +127,6 @@ class Pman_Core_Asset extends Pman {
     {
         switch($type) {
             case 'js':
-                $suffix = 'jscompile';
-                break;
             case 'css':
                 $suffix = 'csscompile';
                 break;
