@@ -215,9 +215,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->runExtensions();
         
         $this->clearApacheDataobjectsCache();
-        
-         
     }
+    
     function output() {
         echo "\nUpdate Completed SUCCESS\n";
         return '';

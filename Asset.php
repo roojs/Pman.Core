@@ -55,16 +55,12 @@ class Pman_Core_Asset extends Pman {
      
         $fn = $compile . '/'. $s .'.'. $bits[0];
         
-        
-        
-        
         if (!file_exists($fn)) {
             header('Content-Type: '. $this->types[$bits[0]]);
         
             echo "// compiled file not found = $fn";
             exit;
         }
-        
         
         $supportsGzip = !empty($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos( $_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip' ) !== false;
 
@@ -125,9 +121,9 @@ class Pman_Core_Asset extends Pman {
      
     static function getCompileDir($type)
     {
-        $ui = posix_getpwuid(posix_geteuid());
-        
         $ff = HTML_FlexyFramework::get();
+        
+        $ui = posix_getpwuid(posix_geteuid());
         
         $compile_dir = session_save_path() . "/";
         
@@ -159,6 +155,8 @@ class Pman_Core_Asset extends Pman {
     
     function clearCompiledFilesCache()
     {
-        exit('testing');
+        // using getCompileDir..
+        
+        return;
     }
 }
