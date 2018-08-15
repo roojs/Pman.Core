@@ -36,6 +36,13 @@ class Pman_Core_Asset extends Pman {
     
     function get($s='', $opts = Array())
     {
+        if(
+            !empty($_REQUEST['_clear_cache']) &&
+            !empty($_REQUEST['_clear_module'])
+        ) {
+            $this->clearCompiledFilesCache($_REQUEST['_clear_module']);
+        }
+        
         
         $this->sessionState(0);
         
@@ -115,11 +122,12 @@ class Pman_Core_Asset extends Pman {
         exit;
         
     }
+    
     function post($s='') {
         die('invalid');
     }
      
-    static function getCompileDir($type)
+    static function getCompileDir($type, $module = '', $is_mkdir = true)
     {
         $ff = HTML_FlexyFramework::get();
         
@@ -127,12 +135,14 @@ class Pman_Core_Asset extends Pman {
         
         $compile_dir = session_save_path() . "/";
         
+        $module = (empty($module)) ? $ff->project : $module;
+        
         switch($type) {
             case 'js':
             case 'css':
                 $compile_dir .= implode("-", array(
                     $ui['name'],
-                    $ff->project,
+                    $module,
                     $ff->version,
                     "{$type}compile"
                 ));
@@ -146,6 +156,10 @@ class Pman_Core_Asset extends Pman {
             return $compile_dir;
         }
         
+        if(!$is_mkdir) {
+            return false;
+        }
+        
         if(mkdir($compile_dir, 0700, true)) {
             return $compile_dir;
         }
@@ -153,10 +167,18 @@ class Pman_Core_Asset extends Pman {
         return false;
     }
     
-    function clearCompiledFilesCache()
+    function clearCompiledFilesCache($module)
     {
-        // using getCompileDir..
+        $compile_dir = $this->getCompileDir('js', $module, false);
         
-        return;
+        if(empty($compile_dir)) {
+            $this->jok('EMPTY');
+        }
+        
+        foreach(glob($compile_dir.'/*.*') as $v){
+            unlink($v);
+        }
+        
+        $this->jok('DONE');
     }
 }

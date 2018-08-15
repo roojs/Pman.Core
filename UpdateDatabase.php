@@ -215,6 +215,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->runExtensions();
         
         $this->clearApacheDataobjectsCache();
+        
+        $this->clearCompileFileCache();
     }
     
     function output() {
@@ -1240,6 +1242,35 @@ class Pman_Core_UpdateDatabase extends Pman
         return $response;
     }
     
-    
+    function clearCompileFileCache()
+    {
+        $a = new Pman();
+        $mods = $a->modulesList();
+        
+        $url = "http://localhost{$this->local_base_url}/Core/Asset";
+        
+        foreach ($mods as $mod) {
+            
+            $response = $this->curl($url, array(
+                '_clear_cache' => 1,
+                '_clear_module' => $mod
+            ));
+            
+            $json = json_decode($response, true);
+            
+            if(
+                empty($json['data']) ||
+                (
+                    $json['data'] != 'DONE' &&
+                    $json['data'] != 'EMPTY'
+                )
+            ){
+                echo $response. "\n";
+                echo "CURL clear compiled file failed\n";
+                exit;
+            }
+        }
+        
+    }
     
 }
