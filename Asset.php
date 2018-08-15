@@ -142,7 +142,7 @@ class Pman_Core_Asset extends Pman {
                 ));
                 break;
             case 'template':
-                
+                print_r($ff);exit;
                 break;
             default:
                 return false;
