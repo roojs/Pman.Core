@@ -130,5 +130,12 @@ class Pman_Core_Asset extends Pman {
         }
         
         $ui = posix_getpwuid(posix_geteuid());
+        
+        $compiledir = session_save_path() . '/' .
+                $ui['name'] . '-' . $ff->project . '-' . $ff->version . '-jscompile';
+        
+        if (!file_exists($compiledir)) {
+            mkdir($compiledir,0700,true);
+        }
     }
 }
