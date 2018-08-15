@@ -125,9 +125,13 @@ class Pman_Core_Asset extends Pman {
      
     static function getCompileDir($type)
     {
-        if(empty($type)) {
+        if(
+            empty($type)
+        ) {
             return false;
         }
+        
+        exit;
         
         $ui = posix_getpwuid(posix_geteuid());
         
