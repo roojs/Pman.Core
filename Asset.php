@@ -125,10 +125,19 @@ class Pman_Core_Asset extends Pman {
      
     static function getCompileDir($type)
     {
+        $ui = posix_getpwuid(posix_geteuid());
+        
+        $ff = HTML_FlexyFramework::get();
+        
         switch($type) {
             case 'js':
             case 'css':
-                $suffix = 'csscompile';
+                $compile_dir = session_save_path() . '/' . implode("-", array(
+                    $ui['name'],
+                    $ff->project,
+                    $ff->version,
+                    "{$type}compile"
+                ));
                 break;
             case 'template':
                 break;
@@ -138,16 +147,9 @@ class Pman_Core_Asset extends Pman {
         
         exit;
         
-        $ui = posix_getpwuid(posix_geteuid());
         
-        $ff = HTML_FlexyFramework::get();
         
-        $compile_dir = session_save_path() . '/' . implode("-", array(
-            $ui['name'],
-            $ff->project,
-            $ff->version,
-            "{$type}compile"
-        ));
+        
         
         if (file_exists($compile_dir)) {
             return $compile_dir;
