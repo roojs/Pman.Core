@@ -123,12 +123,12 @@ class Pman_Core_Asset extends Pman {
         die('invalid');
     }
      
-    static function getAssetDir($type)
+    static function getCompileDir($type)
     {
         if(empty($type)) {
             return false;
         }
         
-        
+        $ui = posix_getpwuid(posix_geteuid());
     }
 }
