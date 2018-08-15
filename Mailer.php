@@ -506,6 +506,9 @@ class Pman_Core_Mailer {
         
         $class = $dom->createAttribute('class');
         $class->value = $cls;
+        if (!$body->item(0)) {
+            echo $html;
+        }
         $body->item(0)->appendChild($class);
         
         return $dom->saveHTML();
