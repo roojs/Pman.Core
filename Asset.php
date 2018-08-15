@@ -141,6 +141,7 @@ class Pman_Core_Asset extends Pman {
                     "{$type}compile"
                 ));
                 break;
+            //dir config for template?
             default:
                 return false;
         }
