@@ -133,16 +133,15 @@ class Pman_Core_Asset extends Pman {
         
         $ff = HTML_FlexyFramework::get();
         
-        $compiledir = session_save_path() . '/' . implode("-", array(
+        $compile_dir = session_save_path() . '/' . implode("-", array(
             $ui['name'],
             $ff->project,
             $ff->version,
             "{$type}compile"
         ));
-                $ui['name'] . '-' . $ff->project . '-' . $ff->version . '-jscompile';
         
-        if (!file_exists($compiledir)) {
-            mkdir($compiledir,0700,true);
+        if (!file_exists($compile_dir)) {
+            mkdir($compile_dir, 0700, true);
         }
     }
 }
