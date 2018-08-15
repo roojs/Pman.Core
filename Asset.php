@@ -140,7 +140,7 @@ class Pman_Core_Asset extends Pman {
             "{$type}compile"
         ));
         
-        if (!file_exists($compile_dir)) {
+        if (file_exists($compile_dir)) {
             mkdir($compile_dir, 0700, true);
         }
     }
