@@ -129,6 +129,8 @@ class Pman_Core_Asset extends Pman {
         
         $ff = HTML_FlexyFramework::get();
         
+        $compile_dir = session_save_path() . "/";
+        
         switch($type) {
             case 'js':
             case 'css':
