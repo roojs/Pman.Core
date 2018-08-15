@@ -123,8 +123,8 @@ class Pman_Core_Asset extends Pman {
         die('invalid');
     }
      
-    static function getAssetDir()
+    static function getAssetDir($type)
     {
-        
+        if(empty($type))
     }
 }
