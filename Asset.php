@@ -141,7 +141,7 @@ class Pman_Core_Asset extends Pman {
                     "{$type}compile"
                 ));
                 break;
-            //dir config for template?
+            // template
             default:
                 return false;
         }
@@ -155,5 +155,10 @@ class Pman_Core_Asset extends Pman {
         }
         
         return false;
+    }
+    
+    function clearCompileCache()
+    {
+        
     }
 }
