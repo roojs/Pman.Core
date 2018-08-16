@@ -184,8 +184,7 @@ class Pman_Core_Asset extends Pman {
                 System::rm(array('-r', $compiledir));
             }
         }
-        
-        
+         
         $this->jok('DONE');
     }
 }
