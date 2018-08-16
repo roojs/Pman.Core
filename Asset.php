@@ -175,6 +175,9 @@ class Pman_Core_Asset extends Pman {
         require_once 'System.php';
         
         $mods = $this->modulesList();
+        $mods[] = 'Pman';
+        $mods[] = '';
+        
         foreach ($mods as $module) {
             $compile_dir = $this->getCompileDir('js', $module, false);
         
