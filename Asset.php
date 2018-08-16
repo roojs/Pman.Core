@@ -175,9 +175,10 @@ class Pman_Core_Asset extends Pman {
         }
         
         require_once 'System.php';
+        $ff = HTML_FlexyFramework::get();
         
         $mods = $this->modulesList();
-        $mods[] = $ff->project; // Pman
+        $mods[] = $ff->project; // Pman - this was the old format...
         $mods[] = ''; // Pman + appshortname..
         
         foreach ($mods as $module) {
