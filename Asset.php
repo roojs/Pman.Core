@@ -51,8 +51,9 @@ class Pman_Core_Asset extends Pman {
         $ui = posix_getpwuid(posix_geteuid());
         $ff = HTML_FlexyFramework::get();
         
-        $compile = session_save_path() . '/' .
-                $ui['name'] . '-' . $ff->project . '-' . $ff->version .  '-'. $bits[0] . 'compile';
+        $compile = self::getCompileDir($bits[0]);
+        //'session_save_path() . '/' .
+         //       $ui['name'] . '-' . $ff->project . '-' . $ff->version .  '-'. $bits[0] . 'compile';
      
         $fn = $compile . '/'. $s .'.'. $bits[0];
         
