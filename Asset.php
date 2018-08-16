@@ -169,15 +169,24 @@ class Pman_Core_Asset extends Pman {
     
     function clearCompiledFilesCache($module)
     {
-        $compile_dir = $this->getCompileDir('js', $module, false);
         
-        if(empty($compile_dir)) {
-            $this->jok('EMPTY');
+        $mods = $this->modulesList();
+        
+        $url = "http://localhost{$this->local_base_url}/Core/Asset";
+        
+        foreach ($mods as $mod) {
+            $compile_dir = $this->getCompileDir('js', $module, false);
+        
+            if(empty($compile_dir)) {
+                continue;
+            }
+            
+            foreach(glob($compile_dir.'/*.*') as $v){
+                unlink($v);
+            }
+            
         }
         
-        foreach(glob($compile_dir.'/*.*') as $v){
-            unlink($v);
-        }
         
         $this->jok('DONE');
     }
