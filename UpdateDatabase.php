@@ -216,7 +216,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $this->clearApacheDataobjectsCache();
         
-        $this->clearCompileFileCache();
+        $this->clearApacheAssetCache();
     }
     
     function output() {
@@ -1207,6 +1207,28 @@ class Pman_Core_UpdateDatabase extends Pman
         
     }
     
+    
+    function clearApacheAssetCache()
+    {
+        $a = new Pman();
+        $mods = $a->modulesList();
+        
+        $url = "http://localhost{$this->local_base_url}/Core/Asset";
+        $response = $this->curl($url, array(
+                '_clear_cache' => 1,
+                
+        ));
+        $json = json_decode($response, true);
+        
+        if(empty($json['success']) || !$json['success']) {
+            echo $response. "\n";
+            echo "CURL clear compiled file failed\n";
+            exit;
+        }
+        
+    }
+    
+    
     function curl($url, $request = array(), $method = 'GET') 
     {
         if($method == 'GET'){
@@ -1222,7 +1244,6 @@ class Pman_Core_UpdateDatabase extends Pman
             curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
             
         } else {
-            
             curl_setopt($ch, CURLOPT_HTTPHEADER,
                     array("Content-Type: application/x-www-form-urlencoded", "Content-Length: " . strlen($request)));
             
@@ -1240,37 +1261,6 @@ class Pman_Core_UpdateDatabase extends Pman
         curl_close($ch);
         
         return $response;
-    }
-    
-    function clearCompileFileCache()
-    {
-        $a = new Pman();
-        $mods = $a->modulesList();
-        
-        $url = "http://localhost{$this->local_base_url}/Core/Asset";
-        
-        foreach ($mods as $mod) {
-            
-            $response = $this->curl($url, array(
-                '_clear_cache' => 1,
-                '_clear_module' => $mod
-            ));
-            
-            $json = json_decode($response, true);
-            
-            if(
-                empty($json['data']) ||
-                (
-                    $json['data'] != 'DONE' &&
-                    $json['data'] != 'EMPTY'
-                )
-            ){
-                echo $response. "\n";
-                echo "CURL clear compiled file failed\n";
-                exit;
-            }
-        }
-        
     }
     
 }
