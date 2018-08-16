@@ -133,7 +133,10 @@ class Pman_Core_Asset extends Pman {
         
         $compile_dir = session_save_path() . "/";
         
-        $module = (empty($module)) ? $ff->project : $module;
+        if (empty($module)) {
+            $module = $ff->project . (isset($ff->appNameShort) ?  '_' . $ff->appNameShort : '');
+        }
+        
         
         switch($type) {
             case 'js':
@@ -175,8 +178,8 @@ class Pman_Core_Asset extends Pman {
         require_once 'System.php';
         
         $mods = $this->modulesList();
-        $mods[] = 'Pman';
-        $mods[] = '';
+        $mods[] = $ff->project;
+        $mods[] = $ff->project;
         
         foreach ($mods as $module) {
             $compile_dir = $this->getCompileDir('js', $module, false);
