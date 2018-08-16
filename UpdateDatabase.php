@@ -1200,7 +1200,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         if(empty($json['data']) || $json['data'] != 'DONE'){
             echo $response. "\n";
-            echo "Clear DataObjects cache failed\n";
+            echo "Clear DataObjects Cache failed\n";
             exit;
         }
         
@@ -1219,7 +1219,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         if(empty($json['success']) || !$json['success']) {
             echo $response. "\n";
-            echo "CURL clear compiled file failed\n";
+            echo "CURL Clear Asset cache failed\n";
             exit;
         }
         
