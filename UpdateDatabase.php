@@ -1193,9 +1193,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // this needs to clear it's own cache along with remote one..
   
-        $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
         
-        $response = $this->curl($url);
+        $response = $this->curl("http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache");
         
         $json = json_decode($response, true);
         
@@ -1210,14 +1209,11 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function clearApacheAssetCache()
     {
-        $a = new Pman();
-        $mods = $a->modulesList();
         
-        $url = "http://localhost{$this->local_base_url}/Core/Asset";
-        $response = $this->curl($url, array(
-                '_clear_cache' => 1,
-                
-        ));
+        $response = $this->curl(
+            "http://localhost{$this->local_base_url}/Core/Asset",
+            array( '_clear_cache' => 1 )
+        );
         $json = json_decode($response, true);
         
         if(empty($json['success']) || !$json['success']) {
