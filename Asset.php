@@ -168,7 +168,7 @@ class Pman_Core_Asset extends Pman {
     function clearCompiledFilesCache()
     {
         $au = $this->getAuthUser();
-        if (!$au && !in_array($_SERVER['REMOTE_ADDR'] , array('127.0.0.1','::1')) {
+        if (!$au && !in_array($_SERVER['REMOTE_ADDR'] , array('127.0.0.1','::1'))) {
             $this->jerr("Cache can only be cleared by authenticated users");
         }
         
