@@ -67,8 +67,7 @@ trait Pman_Core_AssetTrait {
         ksort($arfiles); // just sort by name so it's consistant for serialize..
         
         require_once 'Pman/Asset.php';
-        
-        $compiledir = Pman_Asset::getCompileDir(js, '', true);
+        $compiledir = Pman_Asset::getCompileDir('js', '', true);
         
          
         
@@ -211,13 +210,11 @@ trait Pman_Core_AssetTrait {
         
          
         //print_r($relfiles);
+      
+        require_once 'Pman/Asset.php';
+        $compiledir = Pman_Asset::getCompileDir('css', '', true);
         
-        $ui = posix_getpwuid(posix_geteuid());
-       
-        
-        $compiledir = session_save_path() . '/' .
-                $ui['name'] . '-' . $ff->project . '-'. $ff->version . '-csscompile';
-        
+         
         if (!file_exists($compiledir)) {
             mkdir($compiledir,0700,true);
         }
