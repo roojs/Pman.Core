@@ -36,10 +36,7 @@ class Pman_Core_Asset extends Pman {
     
     function get($s='', $opts = Array())
     {
-        if(!empty($_REQUEST['_clear_cache'])) {
-            $this->clearCompiledFilesCache();
-        }
-        
+
         
         $this->sessionState(0);
         
@@ -121,6 +118,10 @@ class Pman_Core_Asset extends Pman {
     }
     
     function post($s='') {
+        if(!empty($_REQUEST['_clear_cache'])) {
+            $this->clearCompiledFilesCache();
+        }
+        
         die('invalid');
     }
      
@@ -166,6 +167,12 @@ class Pman_Core_Asset extends Pman {
     
     function clearCompiledFilesCache()
     {
+        $au = $this->getAuthUser();
+        if (!$au && !in_array($_SERVER['REMOTE_ADDR'] , array('127.0.0.1','::1')) {
+            $this->jerr("Cache can only be cleared by authenticated users");
+        }
+        
+        
         require_once 'System.php';
         $mods = $this->modulesList();
         
