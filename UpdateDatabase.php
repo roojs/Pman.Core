@@ -1190,7 +1190,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function clearApacheDataobjectsCache()
     {
-        
+        echo "Clearing Database Cache\n";
         // this needs to clear it's own cache along with remote one..
   
         
@@ -1209,7 +1209,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function clearApacheAssetCache()
     {
-        
+        echo "Clearing Asset Cache\n";
         $response = $this->curl(
             "http://localhost{$this->local_base_url}/Core/Asset",
             array( '_clear_cache' => 1 ),
