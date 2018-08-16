@@ -1212,7 +1212,8 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $response = $this->curl(
             "http://localhost{$this->local_base_url}/Core/Asset",
-            array( '_clear_cache' => 1 )
+            array( '_clear_cache' => 1 ),
+            'POST'
         );
         $json = json_decode($response, true);
         
