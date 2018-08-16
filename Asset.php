@@ -172,10 +172,9 @@ class Pman_Core_Asset extends Pman {
             $this->jerr("Cache can only be cleared by authenticated users");
         }
         
-        
         require_once 'System.php';
-        $mods = $this->modulesList();
         
+        $mods = $this->modulesList();
         foreach ($mods as $mod) {
             $compile_dir = $this->getCompileDir('js', $module, false);
         
