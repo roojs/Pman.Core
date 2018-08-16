@@ -66,15 +66,9 @@ trait Pman_Core_AssetTrait {
         
         ksort($arfiles); // just sort by name so it's consistant for serialize..
         
-        $ui = posix_getpwuid(posix_geteuid());
-       
+        require_once 'Pman/Asset.php';
         
-        $compiledir = session_save_path() . '/' .
-                $ui['name'] . '-' . $ff->project . '-' . $ff->version . '-jscompile';
-        
-        if (!file_exists($compiledir)) {
-            mkdir($compiledir,0700,true);
-        }
+        $compiledir = Pman_Asset::getCompileDir(js, '', true);
         
          
         
