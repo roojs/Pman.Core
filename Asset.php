@@ -179,12 +179,12 @@ class Pman_Core_Asset extends Pman {
             $compile_dir = $this->getCompileDir('js', $module, false);
         
             if(!empty($compile_dir)) {
-                System::rm(array('-r', $compiledir));
+                System::rm(array('-r', $compile_dir));
             }
             $compile_dir = $this->getCompileDir('css', $module, false);
         
             if(!empty($compile_dir)) {
-                System::rm(array('-r', $compiledir));
+                System::rm(array('-r', $compile_dir));
             }
         }
          
