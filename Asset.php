@@ -36,11 +36,8 @@ class Pman_Core_Asset extends Pman {
     
     function get($s='', $opts = Array())
     {
-        if(
-            !empty($_REQUEST['_clear_cache']) &&
-            !empty($_REQUEST['_clear_module'])
-        ) {
-            $this->clearCompiledFilesCache($_REQUEST['_clear_module']);
+        if(!empty($_REQUEST['_clear_cache'])) {
+            $this->clearCompiledFilesCache();
         }
         
         
@@ -167,7 +164,7 @@ class Pman_Core_Asset extends Pman {
         return false;
     }
     
-    function clearCompiledFilesCache($module)
+    function clearCompiledFilesCache()
     {
         require_once 'System.php';
         $mods = $this->modulesList();
