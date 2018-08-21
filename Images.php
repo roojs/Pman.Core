@@ -527,6 +527,7 @@ class Pman_Core_Images extends Pman
     {
 //        $popts = PEAR::getStaticProperty('Pman','options');
         $ev = DB_DAtaObject::Factory('events');
+        print_r($bits);exit;
         if (!$ev->get($bits[1])) {
             die("could not find event id");
         }
