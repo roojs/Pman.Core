@@ -816,7 +816,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
-    function toBase64()
+    function toBase64($rotate = false)
     {
         if(!preg_match('/^image\//', $this->mimetype)){
             return false;
@@ -829,6 +829,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $data = file_get_contents($file);
+        
+        if($rotate){
+            $data = $this->rotate();
+        }
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
