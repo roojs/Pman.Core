@@ -525,7 +525,6 @@ class Pman_Core_Images extends Pman
     
     function downloadEvent($bits)
     {
-//        $popts = PEAR::getStaticProperty('Pman','options');
         $ev = DB_DAtaObject::Factory('events');
         if (!$ev->get($bits[1])) {
             die("could not find event id");
