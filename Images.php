@@ -538,10 +538,22 @@ class Pman_Core_Images extends Pman
             $user = getenv('USERNAME'); // windows.
         }
         $ff = HTML_FlexyFramework::get();
-        print_r($ff);exit;
+        
+        if (!empty($ff->Pman['storedir'])) {
+            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+        }
+        // DEPRICATED... 
+        if (!empty($ff->Pman['event_log_dir'])) {
+            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+        }
+        
+        if(!file_exists($file)){
+            die("file was not saved");$
+        }
+        
         $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         $filesJ = json_decode(file_get_contents($file));
-        print_R($filesJ);exit;
+
         //print_r($filesJ);
 
         foreach($filesJ->FILES as $k=>$f){
