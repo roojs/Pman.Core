@@ -560,16 +560,17 @@ class Pman_Core_Images extends Pman
                 continue;
             }
 
+            $src = false;
+            
             if (!empty($ff->Pman['storedir'])) {
-                $file = $ff->Pman['storedir']. '/Events/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
             }
             // DEPRICATED... 
             if (!empty($ff->Pman['event_log_dir'])) {
-                $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
             }
 
-            $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
-            if (!file_exists($src)) {
+            if (!$src || !file_exists($src)) {
                 die("file was not saved");
             }
             header ('Content-Type: ' . $f->type);
