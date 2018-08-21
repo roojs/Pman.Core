@@ -538,6 +538,7 @@ class Pman_Core_Images extends Pman
             $user = getenv('USERNAME'); // windows.
         }
         $ff = HTML_FlexyFramework::get();
+        print_r($ff);exit;
         $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         $filesJ = json_decode(file_get_contents($file));
         print_R($filesJ);exit;
