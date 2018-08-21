@@ -563,7 +563,7 @@ class Pman_Core_Images extends Pman
             $src = false;
             
             if (!empty($ff->Pman['storedir'])) {
-                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
+                $src = $ff->Pman['storedir']. '/Events/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
             }
             // DEPRICATED... 
             if (!empty($ff->Pman['event_log_dir'])) {
