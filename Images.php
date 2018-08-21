@@ -551,16 +551,8 @@ class Pman_Core_Images extends Pman
                 continue;
             }
 
-            $src = false;
+            $src = $file = $ev->logDir() . date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
             
-            if (!empty($ff->Pman['storedir'])) {
-                $src = $ff->Pman['storedir']. '/Events/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
-            }
-            // DEPRICATED... 
-            if (!empty($ff->Pman['event_log_dir'])) {
-                $src = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/', strtotime($ev->event_when)).  $f->tmp_name ;
-            }
-
             if (!$src || !file_exists($src)) {
                 die("file was not saved");
             }
