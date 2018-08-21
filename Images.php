@@ -540,7 +540,7 @@ class Pman_Core_Images extends Pman
         $ff = HTML_FlexyFramework::get();
         
         if (!empty($ff->Pman['storedir'])) {
-            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
+            $file = $ff->Pman['storedir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         }
         // DEPRICATED... 
         if (!empty($ff->Pman['event_log_dir'])) {
@@ -548,13 +548,12 @@ class Pman_Core_Images extends Pman
         }
         
         if(!file_exists($file)){
-            die("file was not saved");$
+            die("file was not saved");
         }
         
-        $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         $filesJ = json_decode(file_get_contents($file));
 
-        //print_r($filesJ);
+        print_r($filesJ);exit;
 
         foreach($filesJ->FILES as $k=>$f){
             if ($f->tmp_name != $bits[2]) {
