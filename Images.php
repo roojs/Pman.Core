@@ -538,15 +538,7 @@ class Pman_Core_Images extends Pman
         }
         $ff = HTML_FlexyFramework::get();
         
-        $file = false;
-        
-        if (!empty($ff->Pman['storedir'])) {
-            $file = $ff->Pman['storedir']. '/Events/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
-        }
-        // DEPRICATED... 
-        if (!empty($ff->Pman['event_log_dir'])) {
-            $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
-        }
+        $file = $ev->logDir() . date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         
         if(!$file || !file_exists($file)){
             die("file was not saved");
