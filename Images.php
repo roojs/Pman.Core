@@ -527,7 +527,6 @@ class Pman_Core_Images extends Pman
     {
 //        $popts = PEAR::getStaticProperty('Pman','options');
         $ev = DB_DAtaObject::Factory('events');
-        print_r($bits);exit;
         if (!$ev->get($bits[1])) {
             die("could not find event id");
         }
@@ -541,7 +540,7 @@ class Pman_Core_Images extends Pman
         $ff = HTML_FlexyFramework::get();
         $file = $ff->Pman['event_log_dir']. '/'. $user. date('/Y/m/d/',strtotime($ev->event_when)). $ev->id . ".json";
         $filesJ = json_decode(file_get_contents($file));
-
+        print_R($filesJ);exit;
         //print_r($filesJ);
 
         foreach($filesJ->FILES as $k=>$f){
