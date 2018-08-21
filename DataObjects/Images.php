@@ -865,10 +865,19 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $page;
     }
     
-    function rotate($blob)
+    function rotate($blob = false)
     {
+        if(empty($this->id) && !$blob){
+            return false;
+        }
+        
         $imagick = new Imagick();
-        $imagick->readImageBlob($blob);
+        
+        if(!empty($this->id)){
+            $imagick->readimage($this->getStoreName());
+        } else {
+            $imagick->readImageBlob($blob);
+        }
         
         $orientation = $imagick->getImageOrientation(); 
 
