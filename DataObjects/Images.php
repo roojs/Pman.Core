@@ -865,4 +865,28 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $page;
     }
     
+    function rotate($blob)
+    {
+        $imagick = new Imagick();
+        $imagick->readImageBlob($blob);
+        
+        $orientation = $imagick->getImageOrientation(); 
+
+        switch($orientation) { 
+            case Imagick::ORIENTATION_BOTTOMRIGHT: 
+                $imagick->rotateimage(new ImagickPixel('#00000000'), 180); // rotate 180 degrees 
+            break; 
+
+            case Imagick::ORIENTATION_RIGHTTOP: 
+                $imagick->rotateimage(new ImagickPixel('#00000000'), 90); // rotate 90 degrees CW 
+            break; 
+
+            case Imagick::ORIENTATION_LEFTBOTTOM: 
+                $imagick->rotateimage(new ImagickPixel('#00000000'), -90); // rotate 90 degrees CCW 
+            break; 
+        }
+        
+        return $imagick->getImageBlob();
+    }
+    
  }
