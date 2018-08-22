@@ -156,9 +156,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        echo "here"; exit;
+        
         if(empty($req['etype']) || !strlen(trim($req['etype'])) ){
-
+            echo "here"; exit;
             if (empty($req['name']) || !strlen(trim($req['name']))) {
                 $roo->jerr('name or etype missing');
             }
@@ -167,7 +167,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $roo->jerr("name already exists - '{$req['name']}'"  );
             }
         } else if (!empty($req['_bulk_names'])) {
-
+            
             $lines = explode("\n", $req['_bulk_names']);
             foreach($lines as $l) {
                 $l = trim($l);
