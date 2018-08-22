@@ -187,7 +187,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 $x->setFrom($rr);
                 $x->insert();
 
-            }echo "here"; exit;
+            }
             $roo->jok("inserted");
 
         } else {
