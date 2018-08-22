@@ -158,7 +158,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         
         if(empty($req['etype']) || !strlen(trim($req['etype'])) ){
-            echo "here"; exit;
             if (empty($req['name']) || !strlen(trim($req['name']))) {
                 $roo->jerr('name or etype missing');
             }
