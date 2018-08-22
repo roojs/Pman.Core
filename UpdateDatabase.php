@@ -1260,4 +1260,9 @@ class Pman_Core_UpdateDatabase extends Pman
         return $response;
     }
     
+    function verifyExtensions($extensions)
+    {
+        
+    }
+    
 }
