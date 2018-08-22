@@ -1273,7 +1273,6 @@ class Pman_Core_UpdateDatabase extends Pman
             $error[] = "Error: Please install php {$e} extensions";
         }
         
-        print_R($error);exit;
         if(empty($error)){
            return; 
         }
