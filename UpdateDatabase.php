@@ -1262,7 +1262,22 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function verifyExtensions($extensions)
     {
+        $error = array();
         
+        foreach ($extensions as $e){
+            
+            if(extension_loaded($e)) {
+                continue;
+            }
+            
+            $error[] = "Error: Please install php {$e} extensions";
+        }
+        
+        if(empty($error)){
+           return; 
+        }
+        
+        die(implode('\n', $error));
     }
     
 }
