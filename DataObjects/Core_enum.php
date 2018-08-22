@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     {
         $tn = $this->tableName();
         $x = $this->factory($tn);
-        echo $x; exit;
+        var_dump($x); exit;
         if(empty($req['etype']) || !strlen(trim($req['etype'])) ){
 
             if (empty($req['name']) || !strlen(trim($req['name']))) {
