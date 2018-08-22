@@ -1262,7 +1262,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function verifyExtensions($extensions)
     {
-        print_R($extensions);exit;
         $error = array();
         
         foreach ($extensions as $e){
@@ -1274,6 +1273,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $error[] = "Error: Please install php {$e} extensions";
         }
         
+        print_R($error);exit;
         if(empty($error)){
            return; 
         }
