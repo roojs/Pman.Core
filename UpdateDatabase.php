@@ -1262,6 +1262,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function verifyExtensions($extensions)
     {
+        print_R($extensions);exit;
         $error = array();
         
         foreach ($extensions as $e){
