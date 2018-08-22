@@ -551,7 +551,7 @@ Pman = new Roo.Document(
     genericDelete : function(tab,tbl) {
         
         var r = [];
-        
+ 
             
         var s = tab.grid.getSelectionModel().getSelections();
         if (!s.length)  {
@@ -593,6 +593,7 @@ Pman = new Roo.Document(
                         
                     },
                     failure: function(act) {
+                        
                         Roo.log(act);
                         var msg = '';
                         try {
