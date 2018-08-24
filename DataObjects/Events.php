@@ -257,28 +257,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
     }
     
-    function autojoin($cfg = array()){
-        /*$mt = DB_DataObject::factory('member_types');
-        $m->joinAdd($mt, 'LEFT');
-        
-        $t->joinAdd($m, 'LEFT');
-        $t->selectAs($m,'member_%s');
-        
-        $e = DB_DataObject::factory('Events');
-        
-        $cp = DB_DataObject::factory('core_person');
-        $e->joinAdd($cp, 'LEFT');
-        $t->joinAdd($e, 'LEFT');
-        
-        $t->selectAdd("member_types.charge_code as member_type_charge_code ");
-        $t->selectAdd("Events.action as evType, Events.event_when as eventWhen");
-        $t->selectAdd("core_person.name as personName");*/
-
-        $ret = parent::autoJoin($cfg);
-        return $ret;
-        
-    }
-    
     function applyPermissionFilters($q, $au ,$roo)
     {
         if (!$au->hasPerm("Admin.Admin_Tab", 'S')) {
