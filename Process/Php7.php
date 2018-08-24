@@ -24,7 +24,7 @@ class Pman_Core_Php7 extends Pman
         
     }
     
-    function get()
+    function get($base, $opts = array())
     {
         $base = realpath(__DIR__ . '/../..');
         var_dump($base);
