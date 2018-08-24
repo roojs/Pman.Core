@@ -438,7 +438,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
                 
              
-        if (isset(   $_SESSION[get_class($this)][$sesPrefix .'-empty'] ) && $_SESSION[get_class($this)][$sesPrefix .'-empty']  < 1) {
+        if (
+            isset(   $_SESSION[get_class($this)][$sesPrefix .'-empty'] ) && 
+            $_SESSION[get_class($this)][$sesPrefix .'-empty']  < 1
+        ) {
             
             // fake person - open system..
             //$ce = DB_DataObject::factory('core_enum');
