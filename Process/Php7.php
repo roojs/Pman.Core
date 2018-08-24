@@ -21,9 +21,15 @@ class Pman_Core_Php7 extends Pman
         if (empty($this->cli)) {
             die("CLI only");
         }
+        
     }
     
-    function cliHelpSearch($p,$pr, $path=false) {
+    function get()
+    {
+        $this->
+    }
+    
+    function scan($p,$pr, $path=false) {
         
         
         
@@ -63,9 +69,9 @@ class Pman_Core_Php7 extends Pman
             // otherwise recurse...
             //print_r("RECURSE:        " . implode('/', $clp)."\n");
             
-            $this->cliHelpSearch($p,$pr, $clp);
+            $this->scan($p,$pr, $clp);
         }
-    
+    }
     
     
 }
