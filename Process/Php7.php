@@ -26,7 +26,7 @@ class Pman_Core_Process_Php7 extends Pman
     
     function get($base, $opts = array())
     {
-        $base = realpath(__DIR__ . '/..');
+        $base = realpath($this->rootDir);
         var_dump($base);
         exit;
         $this->scan($base, '');
