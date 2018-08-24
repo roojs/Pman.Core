@@ -8,7 +8,7 @@
  * would be nice to write the code to fix them.
  *
  */
-
+require_once 'Pman.php';
 class Pman_Core_Php7 extends Pman
 {
     
