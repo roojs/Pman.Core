@@ -3,6 +3,8 @@
 class Pman_Core_Php7 extends Pman
 {
     
+    static $cli_desc = "Tests for PHP compatibilty, by including files..."; 
+    
     
     
     function getAuth()
@@ -11,5 +13,8 @@ class Pman_Core_Php7 extends Pman
             die("CLI only");
         }
     }
+    
+    
+    
     
 }
