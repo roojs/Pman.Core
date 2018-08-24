@@ -9,7 +9,7 @@
  *
  */
 require_once 'Pman.php';
-class Pman_Core_Php7 extends Pman
+class Pman_Core_Process_Php7 extends Pman
 {
     
     static $cli_desc = "Tests for PHP compatibilty, by including files..."; 
