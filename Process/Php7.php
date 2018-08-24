@@ -26,7 +26,10 @@ class Pman_Core_Php7 extends Pman
     
     function get()
     {
-        $this->
+        $base = realpath(__DIR__ . '/../..');
+        var_dump($base);
+        exit;
+        $this->scan($base, '');
     }
     
     function scan($p,$pr, $path=false) {
