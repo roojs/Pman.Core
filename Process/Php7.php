@@ -18,8 +18,7 @@ class Pman_Core_Process_Php7 extends Pman
     
     function getAuth()
     {
-        var_Dump($this);
-        if (empty($this->cli)) {
+         if (empty($this->bootLoader->cli)) {
             die("CLI only");
         }
         
@@ -27,7 +26,7 @@ class Pman_Core_Process_Php7 extends Pman
     
     function get($base, $opts = array())
     {
-        $base = realpath(__DIR__ . '/../..');
+        $base = realpath(__DIR__ . '/..');
         var_dump($base);
         exit;
         $this->scan($base, '');
