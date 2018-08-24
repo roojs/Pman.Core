@@ -18,6 +18,7 @@ class Pman_Core_Process_Php7 extends Pman
     
     function getAuth()
     {
+        var_Dump($this);
         if (empty($this->cli)) {
             die("CLI only");
         }
