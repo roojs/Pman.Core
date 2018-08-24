@@ -26,10 +26,8 @@ class Pman_Core_Process_Php7 extends Pman
     
     function get($base, $opts = array())
     {
-        $base = realpath($this->rootDir);
-        var_dump($base);
-        exit;
-        $this->scan($base, '');
+        
+        $this->scan($this->rootDir, 'Pman');
     }
     
     function scan($p,$pr, $path=false) {
@@ -65,7 +63,7 @@ class Pman_Core_Process_Php7 extends Pman
                 $clp[] = preg_replace('/\.php$/','', $d);
                 
                 //print_r("CLP:          " . implode('/', $clp)."\n");
-                var_dump(implode('/', $clp ));
+                require_once "Pman/". implode('/', $clp ). '.php';
                 continue;
             }
             $clp[] = $d;
