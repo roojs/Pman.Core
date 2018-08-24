@@ -1260,7 +1260,7 @@ class Pman_Core_UpdateDatabase extends Pman
         return $response;
     }
     
-    function verifyExtensions($extensions)
+    static function verifyExtensions($extensions)
     {
         $error = array();
         
@@ -1270,14 +1270,15 @@ class Pman_Core_UpdateDatabase extends Pman
                 continue;
             }
             
-            $error[] = "Error: Please install php {$e} extensions";
+            $error[] = "Error: Please install php extension: {$e}";
         }
         
         if(empty($error)){
-           return; 
+           return true; 
         }
+        $ff = HTML_FLexyFramework::get();
         
-        die(implode('\n', $error));
+        $ff->page->jerr(implode('\n', $error));
     }
     
 }
