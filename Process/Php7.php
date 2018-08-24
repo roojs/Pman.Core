@@ -75,6 +75,10 @@ class Pman_Core_Php7 extends Pman
             $this->scan($p,$pr, $clp);
         }
     }
+    function output()
+    {
+        die("DONE");
+    }
     
     
 }
