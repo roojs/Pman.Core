@@ -152,6 +152,8 @@ class Pman_Core_UpdateDatabase extends Pman
    
         $this->checkSystem();
         
+        $this->verifyExtensions(array('curl'));
+        
         if (class_exists('PDO_DataObjects_Introspection')) {
             PDO_DataObject_Introspection::$cache = array();
         }
@@ -303,9 +305,10 @@ class Pman_Core_UpdateDatabase extends Pman
             // new -- sql directory..
             // new style will not support migrate ... they have to go into mysql-migrate.... directories..
             // new style will not support pg.sql etc.. naming - that's what the direcotries are for..
+            $dbdir = $dbtype == 'mysqli' ? 'mysql' : $dbdir;
             
             $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/sql");
-            $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbtype}");
+            $this->{$dirmethod}($dburl, $this->rootDir. "/Pman/$m/{$dbdir}");
             
            
             
