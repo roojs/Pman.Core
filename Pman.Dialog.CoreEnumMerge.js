@@ -145,6 +145,12 @@ Pman.Dialog.CoreEnumMerge = {
         '|xns' : 'Roo.form',
         items  : [
          {
+          xtype : 'Input',
+          name : 'etype',
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
+         {
           xtype : 'ComboBox',
           allowBlank : false,
           alwaysQuery : true,

@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CoreEnumMerge",
  "parent" : "",
  "title" : "",
- "path" : "/home/benny/gitlive/web.hhyc_membership_system/Pman/Core/Pman.Dialog.CoreEnumMerge.bjs",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEnumMerge.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -12,6 +12,12 @@
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "68be4837f6c739877233e527a996dd00" : "Merge",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "named_strings" : {
+  "_merge_id_name_emptyText" : "bf8691517ce00a09186a05cd65863091",
+  "_merge_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "_merge_id_name_qtip" : "bf8691517ce00a09186a05cd65863091",
+  "_merge_id_name_fieldLabel" : "03e956f1dca2b4d525df03cb1899cb6f"
  },
  "items" : [
   {
@@ -41,15 +47,20 @@
       {
        "listeners" : {
         "actionfailed" : "function (_self, action)\n{\n \n    Pman.standardActionFailed(_self, action);\n}\n",
-        "rendered" : "function (form)\n{\n   _this.form = form;\n}",
-        "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n         _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        \n         var title = _this.data.title  || _this.data.etype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n         \n       return;\n    }\n    \n}\n"
+        "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n         _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        \n         var title = _this.data.title  || _this.data.etype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n         \n       return;\n    }\n    \n}\n",
+        "rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/Core_enum.php'",
-       "xtype" : "Form",
        "method" : "POST",
+       "xtype" : "Form",
        "style" : "margin: 10px;",
        "$ xns" : "Roo.form",
        "items" : [
+        {
+         "xtype" : "Input",
+         "$ xns" : "Roo.form",
+         "name" : "etype"
+        },
         {
          "alwaysQuery" : true,
          "listWidth" : 400,
@@ -86,8 +97,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
