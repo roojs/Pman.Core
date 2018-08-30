@@ -129,7 +129,7 @@ Pman.Dialog.CoreEnumMerge = {
                   
                    var title = _this.data.title  || _this.data.etype;
                   _this.dialog.setTitle("Delete selected " + title + " and merge data with");
-                   
+                   this.load({ method: 'GET', params: { '_id' : _this.data.id }});  
                  return;
               }
               
