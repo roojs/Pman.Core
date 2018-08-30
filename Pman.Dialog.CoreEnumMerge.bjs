@@ -15,6 +15,7 @@
   "ea4788705e6873b424c65e91c2846b19" : "Cancel"
  },
  "named_strings" : {
+  "display_name_fieldLabel" : "8324cdec05065c4bd7d8c5effdf43edf",
   "_merge_id_name_emptyText" : "bf8691517ce00a09186a05cd65863091",
   "_merge_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "_merge_id_name_qtip" : "bf8691517ce00a09186a05cd65863091",
@@ -59,7 +60,9 @@
        "Number labelWidth" : 120,
        "items" : [
         {
+         "String name" : "display_name",
          "Number width" : 250,
+         "Boolean readOnly" : true,
          "xtype" : "TextField",
          "String fieldLabel" : "Delete this",
          "$ xns" : "Roo.form"
