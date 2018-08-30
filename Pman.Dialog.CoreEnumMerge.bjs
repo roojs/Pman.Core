@@ -57,11 +57,6 @@
        "$ xns" : "Roo.form",
        "items" : [
         {
-         "xtype" : "Input",
-         "$ xns" : "Roo.form",
-         "name" : "etype"
-        },
-        {
          "alwaysQuery" : true,
          "listWidth" : 400,
          "triggerAction" : "all",
