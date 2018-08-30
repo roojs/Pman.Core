@@ -7,8 +7,9 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreEnumMerge = {
 
  _strings : {
-  'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
+  '8324cdec05065c4bd7d8c5effdf43edf' :"Delete this",
   '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
+  'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
   '03e956f1dca2b4d525df03cb1899cb6f' :"Merge with",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '68be4837f6c739877233e527a996dd00' :"Merge",
@@ -144,6 +145,12 @@ Pman.Dialog.CoreEnumMerge = {
         xns : Roo.form,
         '|xns' : 'Roo.form',
         items  : [
+         {
+          xtype : 'TextField',
+          fieldLabel : _this._strings['8324cdec05065c4bd7d8c5effdf43edf'] /* Delete this */,
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
          {
           xtype : 'ComboBox',
           allowBlank : false,
