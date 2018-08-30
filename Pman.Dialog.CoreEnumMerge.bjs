@@ -6,10 +6,10 @@
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
+  "6fd3ea70e4ce522aad292a75f2e16886" : "And replace with:",
   "8324cdec05065c4bd7d8c5effdf43edf" : "Delete this",
   "298a183cfe4fddedd4bd17abe8aeb685" : "Merge Pulldown Option",
   "bf8691517ce00a09186a05cd65863091" : "Select Item to Merge With",
-  "03e956f1dca2b4d525df03cb1899cb6f" : "Merge with",
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "68be4837f6c739877233e527a996dd00" : "Merge",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel"
@@ -18,7 +18,7 @@
   "_merge_id_name_emptyText" : "bf8691517ce00a09186a05cd65863091",
   "_merge_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "_merge_id_name_qtip" : "bf8691517ce00a09186a05cd65863091",
-  "_merge_id_name_fieldLabel" : "03e956f1dca2b4d525df03cb1899cb6f"
+  "_merge_id_name_fieldLabel" : "6fd3ea70e4ce522aad292a75f2e16886"
  },
  "items" : [
   {
@@ -33,7 +33,7 @@
    "$ xns" : "Roo",
    "closable" : false,
    "resizable" : false,
-   "height" : 120,
+   "height" : 160,
    "items" : [
     {
      "xtype" : "LayoutRegion",
@@ -66,7 +66,7 @@
          "alwaysQuery" : true,
          "listWidth" : 400,
          "triggerAction" : "all",
-         "fieldLabel" : "Merge with",
+         "fieldLabel" : "And replace with:",
          "forceSelection" : true,
          "selectOnFocus" : true,
          "pageSize" : 20,

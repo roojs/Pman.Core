@@ -7,10 +7,10 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreEnumMerge = {
 
  _strings : {
+  '6fd3ea70e4ce522aad292a75f2e16886' :"And replace with:",
   '8324cdec05065c4bd7d8c5effdf43edf' :"Delete this",
   '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
   'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
-  '03e956f1dca2b4d525df03cb1899cb6f' :"Merge with",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '68be4837f6c739877233e527a996dd00' :"Merge",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel"
@@ -19,7 +19,7 @@ Pman.Dialog.CoreEnumMerge = {
   '_merge_id_name_emptyText' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
   '_merge_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   '_merge_id_name_qtip' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
-  '_merge_id_name_fieldLabel' : '03e956f1dca2b4d525df03cb1899cb6f' /* Merge with */ 
+  '_merge_id_name_fieldLabel' : '6fd3ea70e4ce522aad292a75f2e16886' /* And replace with: */ 
  },
 
  dialog : false,
@@ -49,7 +49,7 @@ Pman.Dialog.CoreEnumMerge = {
     xtype : 'LayoutDialog',
     closable : false,
     collapsible : false,
-    height : 120,
+    height : 160,
     modal : true,
     resizable : false,
     title : _this._strings['298a183cfe4fddedd4bd17abe8aeb685'] /* Merge Pulldown Option */,
@@ -157,7 +157,7 @@ Pman.Dialog.CoreEnumMerge = {
           alwaysQuery : true,
           displayField : 'name',
           emptyText : _this._strings['bf8691517ce00a09186a05cd65863091'] /* Select Item to Merge With */,
-          fieldLabel : _this._strings['03e956f1dca2b4d525df03cb1899cb6f'] /* Merge with */,
+          fieldLabel : _this._strings['6fd3ea70e4ce522aad292a75f2e16886'] /* And replace with: */,
           forceSelection : true,
           hiddenName : '_merge_id',
           listWidth : 400,
