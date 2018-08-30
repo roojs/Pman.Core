@@ -53,7 +53,7 @@ Pman.Dialog.CoreEnumMerge = {
     modal : true,
     resizable : false,
     title : _this._strings['298a183cfe4fddedd4bd17abe8aeb685'] /* Merge Pulldown Option */,
-    width : 400,
+    width : 450,
     listeners : {
      show : function (_self)
       {
@@ -149,6 +149,7 @@ Pman.Dialog.CoreEnumMerge = {
          {
           xtype : 'TextField',
           fieldLabel : _this._strings['8324cdec05065c4bd7d8c5effdf43edf'] /* Delete this */,
+          width : 250,
           xns : Roo.form,
           '|xns' : 'Roo.form'
          },

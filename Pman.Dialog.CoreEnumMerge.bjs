@@ -29,7 +29,7 @@
    "collapsible" : false,
    "title" : "Merge Pulldown Option",
    "xtype" : "LayoutDialog",
-   "width" : 400,
+   "width" : 450,
    "$ xns" : "Roo",
    "closable" : false,
    "resizable" : false,
@@ -59,6 +59,7 @@
        "Number labelWidth" : 120,
        "items" : [
         {
+         "Number width" : 250,
          "xtype" : "TextField",
          "String fieldLabel" : "Delete this",
          "$ xns" : "Roo.form"
