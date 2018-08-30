@@ -56,6 +56,7 @@
        "xtype" : "Form",
        "style" : "margin: 10px;",
        "$ xns" : "Roo.form",
+       "Number labelWidth" : 120,
        "items" : [
         {
          "xtype" : "TextField",

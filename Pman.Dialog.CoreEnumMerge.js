@@ -106,6 +106,7 @@ Pman.Dialog.CoreEnumMerge = {
       items  : [
        {
         xtype : 'Form',
+        labelWidth : 120,
         method : 'POST',
         style : 'margin: 10px;',
         url : baseURL + '/Roo/Core_enum.php',
