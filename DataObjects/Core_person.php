@@ -1240,6 +1240,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         $c->find(true);
         $this->company_id = $c->id;
+        $this->email = trim($this->email);
         
     }
     
@@ -1466,6 +1467,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         }
+        $this->email = trim($this->email);
     }
     
     function generateOathKey()
