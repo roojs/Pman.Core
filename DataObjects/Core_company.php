@@ -268,6 +268,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $this->delete_dt = date('Y-m-d H:i:s');
             $this->delete_by = $roo->getAuthUser();
             $this->id = $q['_ids'];
+            var_dump($this); die;
             $this->update();
             //$roo->query("UPDATE {$old->tableName()} SET deleted_by = {$roo->getAuthUser()} , deleted_dt = {$delete_dt} WHERE id = {$req['_update_id']}");
             //$this->addEvent("UPDATE", false, "update core_company record");
