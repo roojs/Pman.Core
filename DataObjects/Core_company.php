@@ -262,13 +262,13 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
-        var_dump($roo->getAuthUser()->name); exit;
+
         if(!empty($q['_flag_delete']) && $q['_flag_delete'] * 1 == 1){
             //$delete_dt = date('Y-m-d H:i:s');
             $this->deleted_dt = date('Y-m-d H:i:s');
-            $this->deleted_by = $roo->getAuthUser();
+            $this->deleted_by = $roo->getAuthUser()->name;
             $this->id = $q['_ids'];
-            var_dump($this); die;
+
             $this->update();
             //$roo->query("UPDATE {$old->tableName()} SET deleted_by = {$roo->getAuthUser()} , deleted_dt = {$delete_dt} WHERE id = {$req['_update_id']}");
             //$this->addEvent("UPDATE", false, "update core_company record");
