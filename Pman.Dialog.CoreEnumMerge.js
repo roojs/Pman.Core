@@ -7,18 +7,20 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreEnumMerge = {
 
  _strings : {
-  'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
+  '8324cdec05065c4bd7d8c5effdf43edf' :"Delete this",
   '298a183cfe4fddedd4bd17abe8aeb685' :"Merge Pulldown Option",
-  '03e956f1dca2b4d525df03cb1899cb6f' :"Merge with",
+  'bf8691517ce00a09186a05cd65863091' :"Select Item to Merge With",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '68be4837f6c739877233e527a996dd00' :"Merge",
+  '266459bee8ed1ca2e0464899e1ef0994' :"And replace with",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel"
  },
  _named_strings : {
+  'display_name_fieldLabel' : '8324cdec05065c4bd7d8c5effdf43edf' /* Delete this */ ,
   '_merge_id_name_emptyText' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
   '_merge_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   '_merge_id_name_qtip' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
-  '_merge_id_name_fieldLabel' : '03e956f1dca2b4d525df03cb1899cb6f' /* Merge with */ 
+  '_merge_id_name_fieldLabel' : '266459bee8ed1ca2e0464899e1ef0994' /* And replace with */ 
  },
 
  dialog : false,
@@ -48,11 +50,11 @@ Pman.Dialog.CoreEnumMerge = {
     xtype : 'LayoutDialog',
     closable : false,
     collapsible : false,
-    height : 120,
+    height : 160,
     modal : true,
     resizable : false,
     title : _this._strings['298a183cfe4fddedd4bd17abe8aeb685'] /* Merge Pulldown Option */,
-    width : 400,
+    width : 450,
     listeners : {
      show : function (_self)
       {
@@ -105,6 +107,7 @@ Pman.Dialog.CoreEnumMerge = {
       items  : [
        {
         xtype : 'Form',
+        labelWidth : 120,
         method : 'POST',
         style : 'margin: 10px;',
         url : baseURL + '/Roo/Core_enum.php',
@@ -126,8 +129,8 @@ Pman.Dialog.CoreEnumMerge = {
                   
                    var title = _this.data.title  || _this.data.etype;
                   _this.dialog.setTitle("Delete selected " + title + " and merge data with");
-                   
-                 return;
+                   this.load({ method: 'GET', params: { '_id' : _this.data.id }});  
+                  return;
               }
               
           },
@@ -145,12 +148,21 @@ Pman.Dialog.CoreEnumMerge = {
         '|xns' : 'Roo.form',
         items  : [
          {
+          xtype : 'TextField',
+          fieldLabel : _this._strings['8324cdec05065c4bd7d8c5effdf43edf'] /* Delete this */,
+          name : 'display_name',
+          readOnly : true,
+          width : 250,
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
+         {
           xtype : 'ComboBox',
           allowBlank : false,
           alwaysQuery : true,
           displayField : 'name',
           emptyText : _this._strings['bf8691517ce00a09186a05cd65863091'] /* Select Item to Merge With */,
-          fieldLabel : _this._strings['03e956f1dca2b4d525df03cb1899cb6f'] /* Merge with */,
+          fieldLabel : _this._strings['266459bee8ed1ca2e0464899e1ef0994'] /* And replace with */,
           forceSelection : true,
           hiddenName : '_merge_id',
           listWidth : 400,
