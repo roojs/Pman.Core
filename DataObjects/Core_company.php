@@ -49,7 +49,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $x = DB_DataObject::factory('core_company');
         $x->comptype= 'OWNER';
         $x->find(true);
-        
+
         if (!empty($q['query']['company_project_id'])) {
             $add = '';
             if (!empty($q['query']['company_include_self'])) {
@@ -58,6 +58,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             if (!empty($q['query']['company_not_self'])) {
                 $add = " AND {$tn}.id != {$x->id}";
             }
+            
             $pids = array();
             $pid = $q['query']['company_project_id'];
             if (strpos($pid, ',')) {
@@ -81,7 +82,10 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
-        
+        /*if (!empty($q['query']['deleted_by'])) {
+            $deleted_by = $this->escape($q['query']['deleted_by']);
+            $this->whereAdd("deleted_by = '$deleted_by'");
+        }*/
         // depricated - should be moved to module specific (texon afair)
         
          if (!empty($q['query']['province'])) {
@@ -103,8 +107,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
                 ) as comptype_display_name
         ");
         
-        if(!empty($q['search']['name'])){
-            $s = $this->escape($q['search']['name']);
+        if(!empty($q['query']['name'])){
+            $s = $this->escape($q['query']['name']);
             $this->whereAdd("
                 {$tn}.name LIKE '%$s%'
             ");
@@ -279,6 +283,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeDelete($req, $roo)
     {
+        
         // should check for members....
         if(!empty($this->is_system) && 
             ($old->code != $this->code || $old->name != $this->name)
@@ -287,7 +292,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
     }
     function onDelete($req, $roo)
-    {
+    {   
+         
         $img = DB_DataObject::factory('Images');
         $img->ontable = $this->tableName();
         $img->onid = $this->id;
