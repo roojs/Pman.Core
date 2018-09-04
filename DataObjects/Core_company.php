@@ -291,12 +291,12 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $roo->jerr('This company is not allow to delete');
         }
         
-        if(!empty($req['_flag_delete']) && $req['_flag_delete'] * 1 == 1){
+        /*if(!empty($req['_flag_delete']) && $req['_flag_delete'] * 1 == 1){
             $delete_dt = date('Y-m-d H:i:s');
             $this->query("UPDATE {$x->tableName()} SET deleted_by = {$this->getAuthUser()} , deleted_dt = {$delete_dt} WHERE id = {$req['_delete']}");
             //$this->addEvent("UPDATE", false, "update core_company record");
             $this->jok("Updated");
-        }
+        }*/
     }
     function onDelete($req, $roo)
     {   
