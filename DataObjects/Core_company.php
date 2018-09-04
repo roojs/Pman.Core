@@ -288,7 +288,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $this->query("UPDATE {$x->tableName()} SET deleted_by = {$this->getAuthUser()} , deleted_dt = {$delete_dt} WHERE id = {$req['_delete']}");
             //$this->addEvent("UPDATE", false, "update core_company record");
             $this->jok("Updated");
-        }
+        }echo "here"; exit;
         // should check for members....
         if(!empty($this->is_system) && 
             ($old->code != $this->code || $old->name != $this->name)
