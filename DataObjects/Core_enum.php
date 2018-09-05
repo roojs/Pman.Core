@@ -28,12 +28,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $this->whereAdd("core_enum.etype = ''");
         }
         
-        if(!empty($q['query']['name'])){
-            $search_name = $this->escape($q['query']['name']);
-            $this->whereAdd("
-                core_enum.name LIKE '%$search_name%'
-            ");
-        }
 
         // this should be handled by roo... using '!name[0]' ....
         if(!empty($q['!name'])){
