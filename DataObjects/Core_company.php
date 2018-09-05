@@ -82,10 +82,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
-        /*if (!empty($q['query']['deleted_by'])) {
-            $deleted_by = $this->escape($q['query']['deleted_by']);
-            $this->whereAdd("deleted_by = '$deleted_by'");
-        }*/
+        
         // depricated - should be moved to module specific (texon afair)
         
          if (!empty($q['query']['province'])) {
