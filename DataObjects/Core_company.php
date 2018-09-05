@@ -262,7 +262,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
 
         if(!empty($q['_flag_delete']) && $q['_flag_delete'] * 1 == 1){
             //$delete_dt = date('Y-m-d H:i:s');
-            $this->deleted_dt = date('Y-m-d H:i:s');
+            $this->deleted_dt = $this->sqlValue("NOW()");
             $this->deleted_by = $roo->getAuthUser()->name;
             $this->id = $q['_ids'];
 
