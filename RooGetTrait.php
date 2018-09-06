@@ -107,7 +107,8 @@ trait Pman_Core_RooGetTrait {
         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
-        $tab = array_shift(explode('/', $tab));
+        $explode_tab = explode('/', $tab);
+        $tab = array_shift($explode_tab);
         
         $x = $this->dataObject($tab);
         
