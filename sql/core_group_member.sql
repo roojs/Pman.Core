@@ -11,7 +11,7 @@ ALTER TABLE core_group_member ADD COLUMN  group_id int(11) NOT NULL default 0;
 ALTER TABLE core_group_member ADD COLUMN   user_id int(11) NOT NULL default 0;
 
 
--- remove duplicates...
+-- remove duplicates... (hopefully only one duplicate.. failes if > 2...)
 delete from  core_group_member where id in (
         select mid FROM (
             select
@@ -24,7 +24,7 @@ delete from  core_group_member where id in (
                 group_id,user_id
             having n > 1
         ) s
-)
+);
 
 
 ALTER TABLE core_group_member ADD UNIQUE KEY  unique_group_user (group_id,user_id);
