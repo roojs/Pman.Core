@@ -53,7 +53,7 @@
        "Number labelWidth" : 120,
        "items" : [
         {
-         "String name" : "display_name",
+         "String name" : "_names",
          "Boolean readOnly" : true,
          "Number width" : 250,
          "xtype" : "TextField",

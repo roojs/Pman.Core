@@ -16,11 +16,11 @@ Pman.Dialog.CoreEnumMerge = {
   'ea4788705e6873b424c65e91c2846b19' :"Cancel"
  },
  _named_strings : {
-  'display_name_fieldLabel' : '8324cdec05065c4bd7d8c5effdf43edf' /* Delete this */ ,
   '_merge_id_name_emptyText' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
   '_merge_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   '_merge_id_name_qtip' : 'bf8691517ce00a09186a05cd65863091' /* Select Item to Merge With */ ,
-  '_merge_id_name_fieldLabel' : '266459bee8ed1ca2e0464899e1ef0994' /* And replace with */ 
+  '_merge_id_name_fieldLabel' : '266459bee8ed1ca2e0464899e1ef0994' /* And replace with */ ,
+  '_names_fieldLabel' : '8324cdec05065c4bd7d8c5effdf43edf' /* Delete this */ 
  },
 
  dialog : false,
@@ -152,7 +152,7 @@ Pman.Dialog.CoreEnumMerge = {
          {
           xtype : 'TextField',
           fieldLabel : _this._strings['8324cdec05065c4bd7d8c5effdf43edf'] /* Delete this */,
-          name : 'display_name',
+          name : '_names',
           readOnly : true,
           width : 250,
           xns : Roo.form,
