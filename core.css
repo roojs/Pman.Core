@@ -583,3 +583,6 @@ span.ptcv-selectlang
     text-align: right;
 }
 
+.cell-strikethrough{
+    text-decoration: line-through;
+}
