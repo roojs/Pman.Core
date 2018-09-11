@@ -137,8 +137,22 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
     function beforeUpdate($old, $request,$roo)
     {
+
+        /* multiple id merge */
         if(!empty($request['_merge_id'])){
-            $this->merge($request['_merge_id'], $roo);
+            if(!empty($request['_ids'])){
+                //DB_DataObject::DebugLevel(1);
+                $ce = DB_DataObject::factory('core_enum');
+                $ce->whereAddIn("id", explode(",", $request['_ids']), "int");
+
+                foreach($ce->fetchAll() as $mergeItem){
+
+                    $mergeItem->merge($request['_merge_id'], $roo);
+                }
+            } else {
+                $this->merge($request['_merge_id'], $roo);
+            }
+            $roo->jok('Merged'); 
         }
 
         $tn = $this->tableName();
