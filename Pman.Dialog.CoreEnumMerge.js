@@ -129,8 +129,8 @@ Pman.Dialog.CoreEnumMerge = {
                   
                    var title = _this.data.title  || _this.data.etype;
                   _this.dialog.setTitle("Delete selected " + title + " and merge data with");
-                  //_this.form.findField('_ids').setValue(_this.data._ids);
-                  //_this.form.findField('_names').setValue(_this.data.countrylist);
+                  _this.form.findField('_ids').setValue(_this.data._ids);
+                  _this.form.findField('_names').setValue(_this.data.countrylist);
                    this.load({ method: 'GET', params: { '_id' : _this.data.id }});  
                   return;
               }
