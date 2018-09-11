@@ -122,6 +122,11 @@
         {
          "xtype" : "Hidden",
          "$ xns" : "Roo.form",
+         "name" : "_ids"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
          "name" : "id"
         }
        ]
