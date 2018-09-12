@@ -137,6 +137,7 @@ Pman.Dialog.CoreEnumMerge = {
                   }
                   
                   _this.data._names = _this.data.materialList;
+                  _this.form.findField('_names').setValue(_this.data._names);
                   return;
               }
               
