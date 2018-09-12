@@ -132,12 +132,10 @@ Pman.Dialog.CoreEnumMerge = {
                   
           
                   if(_this.data._ids == ""){
-                      console.log("fuk");
                       this.load({ method: 'GET', params: { '_id' : _this.data.id }});  
                       _this.form.findField('id').setValue(_this.data.id);
                       return;
                   }
-                  console.log("fuk2");
                   _this.form.findField('_names').setValue(_this.data._names);
                   _this.form.findField('_ids').setValue(_this.data._ids);
                   return;
