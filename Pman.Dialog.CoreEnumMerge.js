@@ -135,8 +135,6 @@ Pman.Dialog.CoreEnumMerge = {
                       this.load({ method: 'GET', params: { '_id' : _this.data.id }});  
                       return;
                   }
-                  
-                  _this.data._names = _this.data.materialList;
                   _this.form.findField('_names').setValue(_this.data._names);
                   return;
               }
