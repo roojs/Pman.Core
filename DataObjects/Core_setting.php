@@ -100,7 +100,8 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             'description'   => $a['description'],
             'val' => (!isset($a['is_encrypt']) || $a['is_encrypt'] == 1) ?
                 $this->encrypt($a['val']) : $a['val'],
-            'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1
+            'is_encrypt' => isset($a['is_encrypt']) ? $a['is_encrypt'] : 1,
+            'is_valid' => 1
         ));
         
         $s->insert();
