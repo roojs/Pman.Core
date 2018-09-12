@@ -259,14 +259,14 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
-        
+        echo $q['_flag_delete']; die;
         if(!empty($q['_flag_delete'])){
             if($q['_flag_delete'] * 1 == 1){
                 
                 $this->deleted_dt = $this->sqlValue("NOW()");
                 $this->deleted_by = $roo->getAuthUser()->id;
             }
-            echo "wtf"; exit;
+            
             $this->deleted_dt = "";
             $this->deleted_by = 0;
         }
