@@ -16,5 +16,6 @@ ALTER TABLE core_setting ADD COLUMN updated_dt DATE NOT NULL DEFAULT '0000-00-00
 
 ALTER TABLE core_setting ADD COLUMN is_encrypt INT(2) NOT NULL DEFAULT 1;
 
+ALTER TABLE core_setting ADD COLUMN is_valid INT(2) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_setting ADD INDEX lookup_module_name(module, name);
