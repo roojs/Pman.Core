@@ -259,7 +259,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
-        echo "wtf"; exit;
+        var_dump($q); exit;
         if(!empty($q['_flag_delete'])){
             if($q['_flag_delete'] * 1 == 1){
                 
