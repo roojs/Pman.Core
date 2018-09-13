@@ -265,10 +265,12 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
                 
                 $this->deleted_dt = $this->sqlValue("NOW()");
                 $this->deleted_by = $roo->getAuthUser()->id;
-            } else {
-                $this->deleted_dt = "";
-                $this->deleted_by = 0;
-            }
+            } 
+        }
+        
+        if(!empty($q['_flag_undelete'])){
+            $this->deleted_dt = "";
+            $this->deleted_by = 0;
         }
         if(!empty($q['_check_name'])){
             if($this->checkName()){
