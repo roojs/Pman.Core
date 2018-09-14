@@ -129,7 +129,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     var $emailTemplates = array(
         'EVENT_ERRORS_REPORT' => array(
-            'test_class' => 'Pman/Coba/DataObjects/Ext_data',
+            'test_class' => 'Pman/Admin/Report/SendEventErrors',
             'to_group' => 'Administrators',
             'active' => 1,
             'description' => '9. System Error Messages'
