@@ -927,7 +927,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->active = $data['active'];
             }
             
-            if(!empty($data['description'])){
+            if(empty($cm->description) && !empty($data['description'])){
                 $cm->description = $cm->escape($data['description']);
             }
             
