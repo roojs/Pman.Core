@@ -799,14 +799,17 @@ class Pman_Core_UpdateDatabase extends Pman
             array(
                 'name' => 'system-email-from',
                 'type' => 0, // system
+                'display_name' => 'Standard System Email From Group'
             ),
             array(
                 'name' => 'core-person-signup-bcc',
                 'type' => 0, // system
+                'display_name' => 'Standard Person Signup BCC Group'
             ),
             array(
                 'name' => 'Empty Group', // use for no bcc emails.
-                'type' => 0
+                'type' => 0,
+                'display_name' => 'Standard Empty Group'
             )
 
         ));
