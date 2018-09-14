@@ -129,6 +129,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     var $emailTemplates = array(
         'EVENT_ERRORS_REPORT' => array(
+            'bcc_group' => 'Empty Group',
             'test_class' => 'Pman/Admin/Report/SendEventErrors',
             'to_group' => 'Administrators',
             'active' => 1,
