@@ -337,6 +337,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
         foreach($data as $gi) {
             $g = DB_DataObject::factory($this->tableName());
+            
+            $o = false;
+            
+            if($g->get('name', $gi['name'])){
+                $o = clone($g);
+            }
+            
             $g->setFrom($gi);
 
             if(!$g->find(true)){
