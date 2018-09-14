@@ -965,6 +965,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->updateDataGroups();
         $this->updateDataCompanies();
         
+        $this->updateDataEmails();
+        
         $c = DB_DataObject::Factory('I18n');
         $c->buildDB();
          
