@@ -794,6 +794,7 @@ class Pman_Core_UpdateDatabase extends Pman
             array(
                 'name' => 'bcc-email', // group who are bcc'ed on all requests.
                 'type' => 0, // system
+                'display_name' => 'Standard BCC Group'
             ),
             array(
                 'name' => 'system-email-from',
