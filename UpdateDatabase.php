@@ -127,6 +127,16 @@ class Pman_Core_UpdateDatabase extends Pman
     
     var $local_base_url = false;
     
+    var $emailTemplates = array(
+        'EVENT_ERRORS_REPORT' => array(
+            'bcc_group' => 'Administrators',
+            'test_class' => 'Pman/Coba/DataObjects/Ext_data',
+            'to_group' => 'Review Submission Group',
+            'active' => 0,
+            'description' => '9. System Error Messages'
+        )
+    );
+    
     function getAuth() {
         
         
