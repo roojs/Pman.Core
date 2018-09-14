@@ -344,11 +344,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $o = clone($g);
             }
             
+            $display_name = (isset($gi['display_name'])) ? $gi['display_name'] : '';
+            
+            unset($gi['display_name']);
+            
             $g->setFrom($gi);
-
-            if(!$g->find(true)){
-                $g->insert();
+            
+            if(empty($o) || empty($o->display_name)){
+                $g->display_name = $display_name;
             }
+            
+            (empty($o)) ? $g->insert() : $g->update($o);
 
             if(count($g->members()) || empty($gi['members'])){
                 continue;
