@@ -63,9 +63,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
-	    $this->whereAdd(" name NOT IN (
-		'EVENT_ERRORS_REPORT'
-	    )");
+	    $this->whereAddIn("!name", array('EVENT_ERRORS_REPORT'), 'string');
 	}
 	
     }
