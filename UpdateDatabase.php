@@ -897,7 +897,7 @@ class Pman_Core_UpdateDatabase extends Pman
             }
             
             if(!empty($data['description'])){
-                $cm->description = $data['description'];
+                $cm->description = $cm->escape($data['description']);
             }
             
             require_once $cm->test_class . '.php';
