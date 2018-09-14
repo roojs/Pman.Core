@@ -132,7 +132,8 @@ class Pman_Core_UpdateDatabase extends Pman
             'test_class' => 'Pman/Admin/Report/SendEventErrors',
             'to_group' => 'Administrators',
             'active' => 1,
-            'description' => '9. System Error Messages'
+            'description' => '9. System Error Messages',
+            'template_dir' => '/Pman/Admin/templates/mail/'
         )
     );
     
@@ -849,7 +850,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateDataEmails()
     {
-        print_r($this->rootDir);exit;
         foreach ($this->emailTemplates as $k => $mail) {
             $mail_dir = $this->client_path.'/mail/';
 
