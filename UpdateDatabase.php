@@ -849,6 +849,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateDataEmails()
     {
+        print_r($this->rootDir);exit;
         foreach ($this->emailTemplates as $k => $mail) {
             $mail_dir = $this->client_path.'/mail/';
 
