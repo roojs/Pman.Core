@@ -851,11 +851,8 @@ class Pman_Core_UpdateDatabase extends Pman
     function updateDataEmails()
     {
         foreach ($this->emailTemplates as $k => $mail) {
-            $mail_dir = $this->client_path.'/mail/';
-
-            if (!file_exists($mail_dir."{$k}.html")) {
-                $mail_dir = $ff->page->rootDir. '/Coba/Clients/default/mail/';
-            }
+            
+            $mail_dir = "{$this->rootDir}{$mail['template_dir']}";
 
             $this->initEmails(
                 $mail_dir,
