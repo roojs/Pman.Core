@@ -927,6 +927,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 $cm->active = $data['active'];
             }
             
+            /*
+             * Set description to email.
+             * However we do not update if it is been set.
+             */
             if(empty($cm->description) && !empty($data['description'])){
                 $cm->description = $cm->escape($data['description']);
             }
