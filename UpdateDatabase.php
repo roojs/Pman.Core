@@ -857,7 +857,7 @@ class Pman_Core_UpdateDatabase extends Pman
             $this->initEmails(
                 $mail_dir,
                 array($k => $mail),
-                $mapping
+                false
             );
         }
     }
@@ -876,6 +876,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (empty($data['bcc_group'])) {
                     $this->jerr("missing bcc_group for template $name");
                 }
+                
                 $g = DB_DataObject::Factory('core_group')->lookup('name',$data['bcc_group']);
                 
                 if (empty($g->id)) {
