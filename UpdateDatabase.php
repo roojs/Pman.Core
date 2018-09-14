@@ -804,7 +804,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 'type' => 0, // system
             ),
             array(
-                'name' => 'Empty Group'   
+                'name' => 'Empty Group' // use for no bcc emails.
             )
 
         ));
