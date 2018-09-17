@@ -826,10 +826,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 // list all staff who are not in a group.
                 $this->whereAdd("{$this->tableName()}.id NOT IN (
                     SELECT distinct(user_id) FROM $tn_gm LEFT JOIN
-                        $tn_g ON $tn_g.id = $tn_gm.group_id
-                        WHERE $tn_g.type = ".$q['query']['type']."
-                    )");
-                
+                        $tn_g ON $tn_g.id = $tn_gm.group_id)");
                 
             } else {
                 
