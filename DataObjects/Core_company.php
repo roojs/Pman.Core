@@ -325,7 +325,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             return true;
         }
         
-        
+        print_r($au->company()->comptype);exit;
         
         if ($au->company()->comptype != 'OWNER') {
             
