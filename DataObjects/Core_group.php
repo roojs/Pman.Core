@@ -107,8 +107,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
             
             $user_ids = explode(',', $q['user_ids']);
-            print_R($user_ids);exit;
+            
             foreach($user_ids as $uid) {
+                print_R($uid);exit;
                 switch($q['_action']) {
                     case 'add':
                         $g->addMember($uid,$roo);
