@@ -210,7 +210,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         $gm->user_id = is_object($person) ? $person->id : $person;
-        print_r($gm->count());exit;
+        
         if (!$gm->count()) {
             $gm->insert();
         }
