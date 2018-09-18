@@ -57,14 +57,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         
         if(!empty($q['_is_in_group'])){
             $this->selectAdd("
-                COALESCE(
-                    (SELECT id from core_group_member
+                COALESCE((
+                    SELECT 
+                            COUNT(id) 
+                    FROM 
+                            core_group_member
                         WHERE 
                             user_id = {$q['_is_in_group']}
                         AND
                             group_id = {$this->tableName()}.id
-                        LIMIT 1
-                    ),0) as group_membership_user_id
+                    ), 0) AS is_in_group
             ");
         }
         
