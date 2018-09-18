@@ -12,13 +12,13 @@
         
 	"Person"                    : [ "ADEPS", "S" , "Contacts"] ,
 	"Offices"                   : [ "ADEPS", "S" , "Contact Offices"] ,
-	"Companies"                 : [ "ADEPS", "S" , "Contact Companies"] ,
+	"Companies"                 : [ "ADEPS", "S" , "Company Management"] ,
         
 	"Staff"                     : [ "ADEPS", "S" , "Staff"] ,
 	"Groups"                    : [ "ADEPS", "" , "Group Management"] ,
         
 	"Events"                    : [ "PS",     "", "Event Log"] ,
-    "ChangePassword"                    : [ "S",     "S", "User Can Change Password"] 
+	"ChangePassword"                    : [ "S",     "S", "User Can Change Password"] 
 }
             
             

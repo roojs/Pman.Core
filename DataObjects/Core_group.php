@@ -55,18 +55,19 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
-        if(!empty($q['_with_membership_user'])){
-            $q['_with_membership_user'] = 1*$q['_with_membership_user'];
+        if(!empty($q['_is_in_group'])){
             $this->selectAdd("
-                COALESCE(
-                    (SELECT id from core_group_member
+                COALESCE((
+                    SELECT 
+                            COUNT(id) 
+                    FROM 
+                            core_group_member
                         WHERE 
-                            user_id = {$q['_with_membership_user']}
+                            user_id = {$q['_is_in_group']}
                         AND
                             group_id = {$this->tableName()}.id
-                        LIMIT 1
-                    ),0) as group_membership_user_id
-                    ");
+                    ), 0) AS is_in_group
+            ");
         }
         
         
@@ -89,22 +90,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 ) AS group_member_count            
         ");
         
-        /*WHERE 
-            {$this->tableName()}.id = core_group_member.group_id
-            AND
-                core_group_member.user_id = core_person.id
-            AND
-                core_person.active = 1    
-        )*/ 
-        
-//        $this->whereAdd("{$this->tableName()}.id = core_group_member.group_id");
-//        $this->whereAdd("core_group_member.user_id = core_person.id");
-//        $this->whereAdd("core_person.active = 1");
-     
-    
-        /*$cgmDBObj->joinAdd($cpObj);
-        $this->joinAdd($cgmDBObj);
-        DB_DataObject::debugLevel();*/
     }
 
     function toEventString() {
@@ -120,7 +105,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 $roo->jerr("missing group id");
 
             }
-             foreach(explode(',', $q['user_ids']) as $uid) {
+            
+            $user_ids = explode(',', $q['user_ids']);
+            
+            foreach($user_ids as $uid) {
+                
                 switch($q['_action']) {
                     case 'add':
                         $g->addMember($uid,$roo);

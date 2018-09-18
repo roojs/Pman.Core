@@ -1043,19 +1043,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ");
         }
         
-        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        
-        $this->selectAdd("
-           (
-            SELECT GROUP_CONCAT({$cgm}.group_id) 
-                FROM 
-                    {$cgm}
-                WHERE 
-                    {$cgm}.user_id = {$this->tableName()}.id
-                ) AS membership_list    
-            
-        ");    
-        
         
     }
     
@@ -1383,8 +1370,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
-       
-        
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
@@ -1402,68 +1387,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jok($qrcode);
         }
         
-        if(!empty($q['membership_list'])){
-            
-             
-            if ($roo->authUser->id == $old->id) {
-                // you are editing yourself...
-                
-                // if was admin before....
-                   // -if new membership does not icnlude  admin id
-                      // -- then show error
-                
-                
-            }
-            
-            
-            
-            
-         
-            $x = PDO_DataObject::factory('core_group_member');
-            $x->select('group_id');
-            $x->user_id = $q['id'];
-            
-            $ar = $x->fetchAll('group_id');
-            
-            $group_id_arr = explode(",", $q['membership_list']);
-            
-            $result_del = array_diff($ar, $group_id_arr);
-            
-            // check if id needs to be deleted
-            if(!empty($result_del)){
-                /*
-                $x = PDO_DataObject::factory('core_group_member');
-                $x->user_id = $q['id'];
-                $x->whereAddIn('group_id', $result_del, 'int');
-                foreach($x->fetchAll() as $cgm) {
-                    $cgm->delete();
-                }
-                
-                
-                */
-                foreach($result_del as $group_id){
-                    $x = PDO_DataObject::factory('core_group_member');
-                    $x->user_id = $q['id'];
-                    $x->group_id = $group_id;
-                    $x->find(true);
-                    $x->delete();
-                }
-            }
-            
-            $result_add = array_diff($group_id_arr, $ar);
-            
-            
-            // insert data into core_person_member...
-            //PDO_DataObject::Factory('coremytable_group_member')->set([ 'group_id' => 'test', 'user_id' => "{$this->tableName()}.id"])->insert();
-            if(!empty($result_add)){
-                foreach($result_add as $gid){
-                    PDO_DataObject::Factory('core_group_member')->set(array(
-                        'group_id'=> $gid,
-                        'user_id' => $q['id']
-                    ))->insert();
-                }
-            }
-        }
         $this->email = trim($this->email);
     }
     
