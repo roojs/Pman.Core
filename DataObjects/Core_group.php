@@ -55,6 +55,20 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
+        if(!empty($q['_is_in_group'])){
+            $this->selectAdd("
+                COALESCE(
+                    (SELECT id from core_group_member
+                        WHERE 
+                            user_id = {$q['_is_in_group']}
+                        AND
+                            group_id = {$this->tableName()}.id
+                        LIMIT 1
+                    ),0) as group_membership_user_id
+            ");
+        }
+        
+        
         $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         
@@ -74,11 +88,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                 ) AS group_member_count            
         ");
         
-    }
-    
-    function toRooArray($q)
-    {
-        print_R($this);exit;
     }
 
     function toEventString() {
