@@ -75,6 +75,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         ");
         
     }
+    
+    function postListExtra($q)
+    {
+        
+    }
 
     function toEventString() {
         return $this->name;
