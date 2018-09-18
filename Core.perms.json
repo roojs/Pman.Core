@@ -12,7 +12,7 @@
         
 	"Person"                    : [ "ADEPS", "S" , "Contacts"] ,
 	"Offices"                   : [ "ADEPS", "S" , "Contact Offices"] ,
-	"Companies"                 : [ "ADEPS", "S" , "Contact Companies"] ,
+	"Companies"                 : [ "ADEPS", "S" , "Company Details"] ,
         
 	"Staff"                     : [ "ADEPS", "S" , "Staff"] ,
 	"Groups"                    : [ "ADEPS", "" , "Group Management"] ,
