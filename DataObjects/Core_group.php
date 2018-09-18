@@ -55,21 +55,6 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             }
         }
         
-        if(!empty($q['_with_membership_user'])){
-            $q['_with_membership_user'] = 1*$q['_with_membership_user'];
-            $this->selectAdd("
-                COALESCE(
-                    (SELECT id from core_group_member
-                        WHERE 
-                            user_id = {$q['_with_membership_user']}
-                        AND
-                            group_id = {$this->tableName()}.id
-                        LIMIT 1
-                    ),0) as group_membership_user_id
-                    ");
-        }
-        
-        
         $cp = DB_DataObject::Factory('core_person')->tableName();
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();
         
