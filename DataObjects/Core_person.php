@@ -1043,19 +1043,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             ");
         }
         
-        $cgm = DB_DataObject::Factory('core_group_member')->tableName();
-        
-        $this->selectAdd("
-           (
-            SELECT GROUP_CONCAT({$cgm}.group_id) 
-                FROM 
-                    {$cgm}
-                WHERE 
-                    {$cgm}.user_id = {$this->tableName()}.id
-                ) AS membership_list    
-            
-        ");    
-        
         
     }
     
