@@ -265,7 +265,7 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
     function postListFilter($ar, $au, $req)
     {
         $ret = array();
-        
+        print_r($ar);exit;
         if(!empty($req['_is_group'])){
             
             
