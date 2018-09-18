@@ -264,13 +264,21 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
     function postListFilter($ar, $au, $req)
     {
-        if(empty($req['_add_everyone'])){
-            return $ar;
+        $ret = array();
+        
+        if(!empty($req['_is_group'])){
+            
+            
+            
         }
-
-        $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
-        $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
-        return array_merge($ret, $ar);
+            
+        if(!empty($req['_add_everyone'])){
+            $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
+            $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
+            $ar = array_merge($ret, $ar);
+        }
+        
+        
 
     }
 
