@@ -75,6 +75,11 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         ");
         
     }
+    
+    function toRooArray($q)
+    {
+        print_R($this);exit;
+    }
 
     function toEventString() {
         return $this->name;
@@ -264,21 +269,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
 
     function postListFilter($ar, $au, $req)
     {
-        $ret = array();
-        print_r($ar);exit;
-        if(!empty($req['_is_group'])){
-            
-            
-            
+        if(empty($req['_add_everyone'])){
+            return $ar;
         }
-            
-        if(!empty($req['_add_everyone'])){
-            $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
-            $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
-            $ar = array_merge($ret, $ar);
-        }
-        
-        
+
+        $ret[] = array( 'id' => 0, 'name' => 'EVERYONE');
+        $ret[] = array( 'id' => -1, 'name' => 'NOT_IN_GROUP');
+        return array_merge($ret, $ar);
 
     }
 
