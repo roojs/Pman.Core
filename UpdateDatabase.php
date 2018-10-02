@@ -113,7 +113,6 @@ class Pman_Core_UpdateDatabase extends Pman
                   
                 $ret = array_merge($ret, $cls->getStaticPropertyValue('cli_opts'));
             }
-            
         }
         
         return $ret;
