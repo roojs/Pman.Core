@@ -157,7 +157,6 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function get($args, $opts=array())
     {
-         
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
    
         $this->checkSystem();
@@ -197,7 +196,14 @@ class Pman_Core_UpdateDatabase extends Pman
         echo "Checi options\n";
         $this->checkOpts($opts);
         
-          
+        $response = $this->curl("http://localhost{$this->local_base_url}/Core/UpdateDatabase/VerifyExtensions");
+        $json = json_decode($response, true);
+        
+        if(empty($json['data']) || $json['data'] != 'DONE'){
+            echo $response. "\n";
+            echo "Please install the above extensions and restart the apache.\n";
+            exit;
+        }
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
@@ -986,7 +992,6 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         HTML_FlexyFramework::get()->generateDataobjectsCache(true);
         
-         
         $this->updateDataEnums();
         $this->updateDataGroups();
         $this->updateDataCompanies();
@@ -995,10 +1000,6 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $c = DB_DataObject::Factory('I18n');
         $c->buildDB();
-         
-       
-        
-        
     }
     
     function fixMysqlInnodb()
