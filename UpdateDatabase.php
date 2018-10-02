@@ -200,7 +200,8 @@ class Pman_Core_UpdateDatabase extends Pman
         $json = json_decode($response, true);
         
         if(empty($json['data']) || $json['data'] != 'DONE'){
-            echo $response. "\n";
+            echo "\nError: Missing php extensions:\n";
+            print_r($json['errorMsg']);
             echo "Please install the above extensions and restart the apache.\n";
             exit;
         }

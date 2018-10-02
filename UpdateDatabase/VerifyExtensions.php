@@ -15,7 +15,7 @@ class Pman_Core_UpdateDatabase_VerifyExtensions extends Pman
     
     function get($base, $opts = array())
     {
-        $extensions = $error = array();
+        $extensions = array();
         
         $ff = HTML_FlexyFramework::get();
         
@@ -35,13 +35,15 @@ class Pman_Core_UpdateDatabase_VerifyExtensions extends Pman
             }
         }
         
+        $error = '';
+        
         foreach ($extensions as $e){
             
             if(extension_loaded($e)) {
                 continue;
             }
             
-            $error[] = "Error: Please install php extension: {$e}";
+            $error .= "$e\n";
         }
         
         if(!empty($error)) {
