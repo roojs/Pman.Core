@@ -164,7 +164,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 echo "InnoDB: SKIP $tbl\n";
                 continue;
             }
-            if($ce->engine == 'NDB' ){
+            if($ce->engine == 'ndbcluster' ){
                 echo "InnoDB: SKIP $tbl\n";
                 continue;
             }
