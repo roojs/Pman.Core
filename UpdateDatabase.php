@@ -209,7 +209,7 @@ class Pman_Core_UpdateDatabase extends Pman
         echo "Checking Setup Requirements\n";
         require_once 'Pman/Core/UpdateDatabase/VerifyVariable.php';
         $sq = new Pman_Core_UpdateDatabase_VerifyVariable();
-        $sq->get();
+        $sq->get($args, $opts);
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
