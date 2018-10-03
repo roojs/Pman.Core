@@ -25,7 +25,7 @@ class Pman_Core_UpdateDatabase_SetupRequirement extends Pman
     
     function get($base, $opts = array())
     {
-        $extensions = array();
+        $requirements = array();
         
         $ff = HTML_FlexyFramework::get();
         
