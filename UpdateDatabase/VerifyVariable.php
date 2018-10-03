@@ -28,7 +28,7 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
         $requirements = array();
         
         $ff = HTML_FlexyFramework::get();
-        print_R($ff);exit;
+        
         foreach($this->modulesList() as $m) {
             
             $fd = $ff->rootDir. "/Pman/$m/UpdateDatabase.php";
@@ -50,18 +50,21 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
         
         foreach ($requirements as $k => $v){
             
-            if(extension_loaded($e)) {
+            if(empty($ff->{$k})){
+                $error[] = "Missing Config: {$k} Config";
                 continue;
             }
             
-            $error .= "$e\n";
+            foreach ($v as $r){
+                
+                if(isset($ff->{$k}[$r])){
+                    continue;
+                }
+                
+                $error[] = "Missing Config: {$k} - {$r}";
+            }
         }
         
-        if(!empty($error)) {
-            $this->jerr($error);
-        }
-        
-        $this->jok("DONE");
-        
+        return $error;
     }
 }
