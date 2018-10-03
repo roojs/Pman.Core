@@ -193,7 +193,7 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         // ask all the modules to verify the opts
-        echo "Checi options\n";
+        echo "Checking options\n";
         $this->checkOpts($opts);
         
         $response = $this->curl("http://localhost{$this->local_base_url}/Core/UpdateDatabase/VerifyExtensions");
@@ -205,6 +205,11 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "Please install the above extensions and restart the apache.\n";
             exit;
         }
+        
+        echo "Checking Setup Requirements\n";
+        require_once 'Pman/Core/UpdateDatabase/SetupRequirement.php';
+        $sq = new Pman_Core_UpdateDatabase_SetupRequirement();
+        $sq->get();
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
