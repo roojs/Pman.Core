@@ -48,6 +48,8 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
         
         $error = '';
         
+        print_R($requirements);exit;
+        
         foreach ($extensions as $e){
             
             if(extension_loaded($e)) {
