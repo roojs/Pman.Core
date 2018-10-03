@@ -211,7 +211,10 @@ class Pman_Core_UpdateDatabase extends Pman
         $sq = new Pman_Core_UpdateDatabase_VerifyVariable();
         $ret = $sq->get($args, $opts);
         
-        print_r($ret);exit;
+        if(!empty($ret)){
+            echo implode("\n", $ret) . "\n";
+            sleep(30);
+        }
         
         // do this first, so the innodb change + utf8 fixes column max sizes
         
