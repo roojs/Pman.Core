@@ -28,7 +28,7 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
         $requirements = array();
         
         $ff = HTML_FlexyFramework::get();
-        
+        print_R($ff);exit;
         foreach($this->modulesList() as $m) {
             
             $fd = $ff->rootDir. "/Pman/$m/UpdateDatabase.php";
@@ -46,11 +46,9 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
             }
         }
         
-        $error = '';
+        $error = array();
         
-        print_R($requirements);exit;
-        
-        foreach ($extensions as $e){
+        foreach ($requirements as $k => $v){
             
             if(extension_loaded($e)) {
                 continue;
