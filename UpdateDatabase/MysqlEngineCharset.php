@@ -169,6 +169,8 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 continue;
             }
             
+            // should really determine if we are running in cluster ready ...
+            
             // this used to be utf8_unicode_ci
             //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
             
