@@ -164,6 +164,11 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
                 echo "InnoDB: SKIP $tbl\n";
                 continue;
             }
+            if($ce->engine == 'NDB' ){
+                echo "InnoDB: SKIP $tbl\n";
+                continue;
+            }
+            
             // this used to be utf8_unicode_ci
             //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
             
