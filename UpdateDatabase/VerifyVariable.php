@@ -41,8 +41,8 @@ class Pman_Core_UpdateDatabase_VerifyVariable extends Pman
             $cls = new ReflectionClass('Pman_'. $m . '_UpdateDatabase');
             $props = $cls->getDefaultProperties();
             
-            if(!empty($props['required_extensions'])) {
-                $extensions = array_merge($extensions, $props['required_extensions']);
+            if(!empty($props['required_variable'])) {
+                $requirements = array_merge($requirements, $props['required_variable']);
             }
         }
         
