@@ -10,6 +10,16 @@ class Pman_Core_UpdateDatabase_VerifyExtensions extends Pman
     
     function getAuth()
     {
+        if ($_SERVER['HTTP_HOST'] == 'localhost') {
+            return true;
+        }
+        
+        $this->getAuthUser();
+        
+        if(empty($this->authUser)) {
+            return false;
+        }
+        
         return true;
     }
     
