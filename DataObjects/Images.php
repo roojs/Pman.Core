@@ -833,24 +833,30 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if($rotate){
             $data = $this->rotate();
         }
-            
-        $width = $this->width;
-        $height = $this->height;
-
-        if(!empty($scaleWidth)){
-            $width = $scaleWidth;
-
-            if(empty($scaleHeight)){
-                $height = $this->height * $scaleWidth / $this->width;
-            }
-        }
         
-        if(!empty($scaleHeight)){
-            $height = $scaleHeight;
+        if(!empty($scaleWidth) || !empty($scaleHeight)){
+            
+            $width = $this->width;
+            $height = $this->height;
 
-            if(empty($scaleWidth)){
-                $width = $this->width * $scaleHeight / $this->height;
+            if(!empty($scaleWidth)){
+                $width = $scaleWidth;
+
+                if(empty($scaleHeight)){
+                    $height = $this->height * $scaleWidth / $this->width;
+                }
             }
+
+            if(!empty($scaleHeight)){
+                $height = $scaleHeight;
+
+                if(empty($scaleWidth)){
+                    $width = $this->width * $scaleHeight / $this->height;
+                }
+            }
+            
+            
+            
         }
         
         
