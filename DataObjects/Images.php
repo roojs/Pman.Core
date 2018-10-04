@@ -834,6 +834,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $data = $this->rotate();
         }
         
+        
+        
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
         return $base64;
