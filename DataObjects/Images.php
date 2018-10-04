@@ -833,14 +833,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if($rotate){
             $data = $this->rotate();
         }
-        
-        if(!empty($scaleWidth) || !empty($scaleHeight)){
             
-            $width = $this->width;
-            $height = $this->height;
-            
-            
-            
+        $width = $this->width;
+        $height = $this->height;
+
+        if(!empty($scaleWidth)){
+            $width = $scaleWidth;
+
+            if(empty($scaleHeight)){
+                $height = $this->height * $scaleWidth / $this->width;
+            }
+
         }
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
