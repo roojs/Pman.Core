@@ -862,8 +862,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 imagejpeg($scaled);
                 $data = ob_get_contents();
                 ob_end_clean();
-                
-                
+                imagedestroy($im);
             }
             
         }
