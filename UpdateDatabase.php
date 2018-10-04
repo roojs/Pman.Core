@@ -207,8 +207,8 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         
         echo "Checking Setup Requirements\n";
-        require_once 'Pman/Core/UpdateDatabase/VerifyVariable.php';
-        $sq = new Pman_Core_UpdateDatabase_VerifyVariable();
+        require_once 'Pman/Core/UpdateDatabase/VerifyConfig.php';
+        $sq = new Pman_Core_UpdateDatabase_VerifyConfig();
         $ret = $sq->get($args, $opts);
         
         if(!empty($ret)){
