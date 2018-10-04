@@ -87,7 +87,7 @@ class Pman_Core_Prune extends Pman
         $f->having("mm > 2");
         $f->orderBy('mm desc') ;
         $f->limit(10000);
-                $ar = $f->fetchAll();
+        $ar = $f->fetchAll();
 
         foreach($ar as $f) {
             $q = DB_DataObject::Factory('Events');
@@ -98,9 +98,9 @@ class Pman_Core_Prune extends Pman
                   AND
                   on_table = '{$q->escape($f->on_table)}'
                   AND
-                  id > {$f->min_id}
+                  id >= {$f->min_id}
                   AND
-                  id < {$f->max_id}
+                  id <= {$f->max_id}
             ");
         }
         
