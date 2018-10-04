@@ -80,6 +80,9 @@ class Pman_Core_Prune extends Pman
         
         DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('Events');
+        $before = $f->count();
+
+        $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
         $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
         $f->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
@@ -104,7 +107,9 @@ class Pman_Core_Prune extends Pman
             ");
         }
         
-        
+        $f = DB_DataObject::Factory('Events');
+        $after = $f->count();
+        echo "DELETED : " . ($before - $after) . " records\n";
 
         
         
