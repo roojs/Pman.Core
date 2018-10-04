@@ -36,7 +36,7 @@ class Pman_Core_Prune extends Pman
     
     function get($m="", $opts=array())
     {
-        
+        echo "start?";
         // prune irrelivant stuff..
        
         
