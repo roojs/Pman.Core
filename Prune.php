@@ -25,6 +25,8 @@ class Pman_Core_Prune extends Pman
     var $cli = false;
     
     function getAuth() {
+        
+         
         $ff = HTML_FlexyFramework::get();
         if (!empty($ff->cli)) {
             $this->cli = true;
@@ -46,7 +48,28 @@ class Pman_Core_Prune extends Pman
     
     function prune($inM)
     {
-        
+        // 40 seconds ? to delete 100K records..
+       // DB_DataObject::debugLevel(1);
+       /*
+        $f = DB_DataObject::Factory('Events');
+        $f->query("
+            DELETE FROM Events where 
+                  event_when < NOW() - INTERVAL {$inM} MONTH
+                  AND
+                  action != 'NOTIFY'
+                  LIMIT 100000
+        ");
+        */
+        // notificication events occur alot - so we should trash them more frequently..
+      /*  $f = DB_DataObject::Factory('reader_article');
+        $f->query("
+            DELETE FROM Events where 
+                  event_when < NOW() - INTERVAL 1 MONTH
+                  AND
+                  action IN ('NOTIFY')
+                  LIMIT 100000
+        ");
+        */
         // rather than deleting them all, it's probably best to just delete notify events that occured to often.
         // eg. when we tried to deliver multiple times without success...
         /*
