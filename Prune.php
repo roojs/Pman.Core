@@ -32,7 +32,8 @@ class Pman_Core_Prune extends Pman
             $this->cli = true;
             return true;
         }
-//        return true;// for test only
+        
+ //        return true;// for test only
         return false;
     }
     
