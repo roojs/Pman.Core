@@ -855,7 +855,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 }
             }
             
+            $im = imagecreatefromstring($data, IMG_NEAREST_NEIGHBOUR);
             
+            if (($scaled = imagescale($im, $width, $width)) != false) {
+                
+            }
             
         }
         
