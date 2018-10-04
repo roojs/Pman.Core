@@ -863,11 +863,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $data = ob_get_contents();
                 ob_end_clean();
                 imagedestroy($im);
+                imagedestroy($scaled);
             }
             
         }
-        
-        
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
