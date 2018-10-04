@@ -839,7 +839,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $width = $this->width;
             $height = $this->height;
             
-            print_R($width);exit;
             if(!empty($scaleWidth)){
                 $width = $scaleWidth;
 
@@ -847,6 +846,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                     $height = $this->height * $scaleWidth / $this->width;
                 }
             }
+            
+            print_R($width);exit;
 
             if(!empty($scaleHeight)){
                 $height = $scaleHeight;
