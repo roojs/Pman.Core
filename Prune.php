@@ -39,8 +39,7 @@ class Pman_Core_Prune extends Pman
     
     function get($m="", $opts=array())
     {
-        echo "start?";
-        // prune irrelivant stuff..
+         // prune irrelivant stuff..
        
         
         
@@ -88,8 +87,8 @@ class Pman_Core_Prune extends Pman
         $f->having("mm > 2");
         $f->orderBy('mm desc') ;
         $f->limit(10000);
-        exit;
-        $ar = $f->fetchAll();
+                $ar = $f->fetchAll();
+
         foreach($ar as $f) {
             $q = DB_DataObject::Factory('Events');
             $q->query("DELETE FROM Events where 
