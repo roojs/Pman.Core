@@ -816,7 +816,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
     }
     
-    function toBase64($rotate = false, $scale = false)
+    function toBase64($rotate = false, $scaleWidth = 0, $scaleHeight = 0)
     {
         if(!preg_match('/^image\//', $this->mimetype)){
             return false;
