@@ -858,6 +858,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $im = imagecreatefromstring($data, IMG_NEAREST_NEIGHBOUR);
             
             if (($scaled = imagescale($im, $width, $width)) != false) {
+                ob_start();
+                imagejpeg($scaled);
+                $data = ob_get_contents();
+                ob_end_clean();
+                
                 
             }
             
