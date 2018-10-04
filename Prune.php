@@ -78,7 +78,7 @@ class Pman_Core_Prune extends Pman
          WHERE action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK GROUP BY  on_id, on_table HAVING  mm > 2 ORDER BY mm desc;
          */
         
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('Events');
         $before = $f->count();
 
@@ -101,7 +101,7 @@ class Pman_Core_Prune extends Pman
                   AND
                   on_table = '{$q->escape($f->on_table)}'
                   AND
-                  id >= {$f->min_id}
+                  id >  {$f->min_id}
                   AND
                   id <= {$f->max_id}
             ");
