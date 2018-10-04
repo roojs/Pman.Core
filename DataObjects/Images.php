@@ -838,7 +838,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             $width = $this->width;
             $height = $this->height;
-
+            
+            print_R($width);exit;
             if(!empty($scaleWidth)){
                 $width = $scaleWidth;
 
@@ -855,7 +856,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 }
             }
             
-            $im = imagecreatefromstring($data, IMG_NEAREST_NEIGHBOUR);
+            $im = imagecreatefromstring($data);
             
             if (($scaled = imagescale($im, $width, $width)) != false) {
                 ob_start();
