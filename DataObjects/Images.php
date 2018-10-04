@@ -843,8 +843,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if(empty($scaleHeight)){
                 $height = $this->height * $scaleWidth / $this->width;
             }
-
         }
+        
+        if(!empty($scaleHeight)){
+            $height = $scaleHeight;
+
+            if(empty($scaleWidth)){
+                $width = $this->width * $scaleHeight / $this->height;
+            }
+        }
+        
+        
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
