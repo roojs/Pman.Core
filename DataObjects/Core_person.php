@@ -773,11 +773,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($q['_to_qr_code'])){
             
             // quite dangerous..
-            $this->getAuthUser();
+            $au = $this->getAuthUser();
             
-            print_r($this->getAuthUser());
-            
-            $o = clone($this);
+            $o = clone($au);
             
             $this->generateOathKey();
             
