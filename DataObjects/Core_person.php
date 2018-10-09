@@ -761,6 +761,22 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
+        if(!empty($q['_generate_oath_key'])){
+            $o = clone($this);
+            $this->generateOathKey();
+            $this->update($o);
+            $roo->jok('OK');
+        }
+        
+        if(!empty($q['_to_qr_code'])){
+            $qrcode = $this->generateQRCode();
+            
+            if(empty($qrcode)){
+                $roo->jerr('Fail to generate QR Code');
+            }
+            
+            $roo->jok($qrcode);
+        }
         
         if (!empty($q['query']['is_owner'])) {
             $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
