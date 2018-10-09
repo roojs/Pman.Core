@@ -1405,7 +1405,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function generateQRCode()
     {
-        $issuer = (empty($this->name)) ? rawurlencode('ROOJS') : rawurlencode($this->name);
+        $issuer = (empty($this->name)) ? 
+            rawurlencode('ROOJS') : rawurlencode($this->name);
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
