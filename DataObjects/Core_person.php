@@ -781,7 +781,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $au->update($o);
             
-            $qrcode = $this->generateQRCode();
+            $qrcode = $au->generateQRCode();
             
             if(empty($qrcode)){
                 $roo->jerr('Fail to generate QR Code');
