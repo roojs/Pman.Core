@@ -803,6 +803,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
             
             $o = clone($au);
+            
+            $au->oath_key = '';
         }
         
         if (!empty($q['query']['is_owner'])) {
