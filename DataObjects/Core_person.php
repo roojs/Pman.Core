@@ -772,9 +772,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
             
-            /*
-            should not update until the verify token returns...
-            
             $au = $this->getAuthUser();
             
             $o = clone($au);
@@ -784,7 +781,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $au->update($o);
             
             $qrcode = $au->generateQRCode();
-            */
             
             if(empty($qrcode)){
                 $roo->jerr('Fail to generate QR Code');
