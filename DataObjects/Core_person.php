@@ -1370,6 +1370,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
+        exit('not responing');
+        
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
             $this->generateOathKey();
@@ -1378,8 +1380,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['_to_qr_code'])){
-            print_r('not entering..??');
-            
             $qrcode = $this->generateQRCode();
             
             if(empty($qrcode)){
