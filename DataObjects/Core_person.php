@@ -775,6 +775,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // quite dangerous..
             $this->getAuthUser();
             
+            print_r($this->getAuthUser());
+            
             $o = clone($this);
             
             $this->generateOathKey();
