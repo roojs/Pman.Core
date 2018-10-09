@@ -788,10 +788,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($q['two_factor_auth_code'])) {
             
             if($this->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
-                $this->jok('DONE');
+                $roo->jok('DONE');
             }
             
-            $this->jerr('_invalid_auth_code');
+            $roo->jerr('_invalid_auth_code');
         }
         
         if (!empty($q['query']['is_owner'])) {
