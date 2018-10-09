@@ -803,6 +803,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(!empty($q['two_factor_auth_code'])) {
             
+            if(isset($q['id'])) {
+                print_r('reutnr..');exit;
+            }
+            
             if($this->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
                 $roo->jok('DONE');
             }
