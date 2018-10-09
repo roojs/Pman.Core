@@ -670,6 +670,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['dailykey'] = '';
         $aur['oath_key'] = '';
         
+        $aur['oath_key_enable'] = !empty($this->oath_key);
+        
         return $aur;
     }
     
