@@ -769,6 +769,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['_to_qr_code'])){
+            
             $qrcode = $this->generateQRCode();
             
             if(empty($qrcode)){
