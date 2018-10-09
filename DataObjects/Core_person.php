@@ -536,8 +536,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
+        $oath_key = $this->oath_key;
+        
         if(empty($this->id)) {
-            
             $au = $this->getAuthUser();
         }
         
