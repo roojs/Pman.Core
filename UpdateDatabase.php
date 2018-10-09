@@ -1323,7 +1323,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         foreach ($extensions as $e){
             
-            if(extension_loaded($e)) {
+            if(empty($e) || extension_loaded($e)) {
                 continue;
             }
             
