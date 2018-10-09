@@ -794,6 +794,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jerr('_invalid_auth_code');
         }
         
+        if(!empty($q['oath_key_disable'])) {
+            
+            $au = $this->getAuthUser();
+        }
+        
         if (!empty($q['query']['is_owner'])) {
             $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
         }
