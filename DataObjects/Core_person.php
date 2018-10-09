@@ -772,6 +772,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
             
+            $au = $this->getAuthUser();
+            
+            $qrcode = $au->generateQRCode();
+            
             if(empty($qrcode)){
                 $roo->jerr('Fail to generate QR Code');
             }
