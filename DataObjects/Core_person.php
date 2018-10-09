@@ -779,14 +779,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
             
-            
-            
             if($q['id'] == 'is_auth') {
                 $person = $this->getAuthUser();
             } else {
                 $person = DB_DataObject::factory('Core_person');
                 $person->get($q['id']);
             }
+            
+            print_r($person);exit;
             
             $o = clone($person);
             
