@@ -783,6 +783,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jok($qrcode);
         }
         
+        if(!empty($q['two_factor_auth_code'])) {
+            $this->checkTwoFactorAuthentication($q['two_factor_auth_code']);
+        }
+        
         if (!empty($q['query']['is_owner'])) {
             $this->whereAdd(" join_company_id_id.comptype = 'OWNER'");
         }
