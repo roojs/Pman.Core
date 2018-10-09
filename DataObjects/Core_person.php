@@ -826,8 +826,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $person->get($q['id']);
             }
             
-            print_r($person);exit;
-            
             if(empty($person)) {
                 $roo->jerr('Please login to the system');
             }
