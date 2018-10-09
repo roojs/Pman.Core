@@ -540,11 +540,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(empty($this->id)) {
             $au = $this->getAuthUser();
+            $oath_key = $au->oath_key;
         }
         
-        
-        
-        $cmd = "{$oathtool} --totp --base32 {$au->oath_key}";
+        $cmd = "{$oathtool} --totp --base32 {$oath_key}";
         
         $password = exec($cmd);
         
