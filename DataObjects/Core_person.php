@@ -1370,25 +1370,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
-        exit('not responing');
-        
-        if(!empty($q['_generate_oath_key'])){
-            $o = clone($this);
-            $this->generateOathKey();
-            $this->update($o);
-            $roo->jok('OK');
-        }
-        
-        if(!empty($q['_to_qr_code'])){
-            $qrcode = $this->generateQRCode();
-            
-            if(empty($qrcode)){
-                $roo->jerr('Fail to generate QR Code');
-            }
-            
-            $roo->jok($qrcode);
-        }
-        
         $this->email = trim($this->email);
     }
     
