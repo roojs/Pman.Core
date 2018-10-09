@@ -821,11 +821,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $person = $this->getAuthUser();
             
-            if(!empty($q['id']) {
-                $person = 
+            if(!empty($q['id'])) {
+                $person = DB_DataObject::factory('core_person');
+                $person->get($q['id']);
             }
-            
-            
             
             if(empty($person)) {
                 $roo->jerr('Please login to the system');
