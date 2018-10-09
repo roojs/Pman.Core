@@ -778,7 +778,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $au->generateOathKey();
             
-            $o = clone($this);
+            $o = clone($au);
+            
+            $au->update($o);
             
             $qrcode = $au->generateQRCode();
             
