@@ -1405,7 +1405,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function generateQRCode()
     {
-        if(empty($this->oath_key)){
+        if(
+            empty($this->oath_key) ||
+            empty($this->email)
+        ){
             return false;
         }
         
