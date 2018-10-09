@@ -1405,6 +1405,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function generateQRCode()
     {
+        if(empty($this->oath_key)){
+            return false;
+        }
+        
         $issuer = (empty($this->name)) ? 
             rawurlencode('ROOJS') : rawurlencode($this->name);
         
