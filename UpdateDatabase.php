@@ -203,7 +203,9 @@ class Pman_Core_UpdateDatabase extends Pman
             echo "\nError: Missing php extensions:\n";
             print_r($response);
             echo "Please install the above extensions and restart the apache.\n";
-            exit;
+            sleep(5);
+            
+            //exit;
         }
         
         echo "Checking Setup Requirements\n";
