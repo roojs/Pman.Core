@@ -1413,6 +1413,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
+        $oath_key = empty($this->oath_key) ? $this->generateOathKey : $this->oath_key;
+        
         $issuer = (empty($this->name)) ? 
             rawurlencode('ROOJS') : rawurlencode($this->name);
         
