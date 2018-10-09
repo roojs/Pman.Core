@@ -536,11 +536,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $oath_key = $this->oath_key;
-        
-        if(empty($this->id)) {
+        if(!isset($this->oath_key)) {
             $au = $this->getAuthUser();
             $oath_key = $au->oath_key;
+        } else {
+            $oath_key = $this->oath_key;
         }
         
         $cmd = "{$oathtool} --totp --base32 {$oath_key}";
