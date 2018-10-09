@@ -538,6 +538,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $au = $this->getAuthUser();
         
+        print_r($this);exit;
+        
         $cmd = "{$oathtool} --totp --base32 {$au->oath_key}";
         
         $password = exec($cmd);
