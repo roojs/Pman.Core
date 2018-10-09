@@ -806,7 +806,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $person = $this;
             
             if(isset($q['id'])) {
-                $person = DB_DataObject::factory('Core_person');
+                $person = DB_DataObject::factory('core_person');
                 $person->get($q['id']);
             }
             
@@ -819,17 +819,23 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(!empty($q['oath_key_disable'])) {
             
-            $au = $this->getAuthUser();
+            $person = $this->getAuthUser();
             
-            if(empty($au)) {
+            if(!empty($q['id']) {
+                $person = 
+            }
+            
+            
+            
+            if(empty($person)) {
                 $roo->jerr('Please login to the system');
             }
             
-            $o = clone($au);
+            $o = clone($person);
             
-            $au->oath_key = '';
+            $person->oath_key = '';
             
-            $au->update($o);
+            $person->update($o);
             
             $roo->jok('DONE');
         }
