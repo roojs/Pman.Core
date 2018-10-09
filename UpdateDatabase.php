@@ -1057,7 +1057,7 @@ class Pman_Core_UpdateDatabase extends Pman
             ){
                 die("Error: set sql_mode include 'ALLOW_INVALID_DATES', remove 'NO_ZERO_IN_DATE' AND 'STRICT_TRANS_TABLES' AND 'NO_ZERO_DATE' in my.cnf\n\n".
                     "Recommended line: \n\nsql_mode = ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,ALLOW_INVALID_DATES\n\n"
-                    );
+                );
             }
         }
         
