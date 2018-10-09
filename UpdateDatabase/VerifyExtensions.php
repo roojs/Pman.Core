@@ -49,7 +49,7 @@ class Pman_Core_UpdateDatabase_VerifyExtensions extends Pman
         
         foreach ($extensions as $e){
             
-            if(extension_loaded($e)) {
+            if(!empty($e) && extension_loaded($e)) {
                 continue;
             }
             
