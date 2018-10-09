@@ -797,6 +797,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($q['oath_key_disable'])) {
             
             $au = $this->getAuthUser();
+            
+            if(empty($au)) {
+                $roo->jerr('Please login to the system');
+            }
+            
             $o = clone($au);
         }
         
