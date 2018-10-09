@@ -768,6 +768,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jok('OK');
         }
         
+        // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
             
             $o = clone($this);
