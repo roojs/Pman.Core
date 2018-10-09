@@ -538,9 +538,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $au = $this->getAuthUser();
         
-        $qrcode = $au->generateQRCode();
-        
-        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
+        $cmd = "{$oathtool} --totp --base32 {$au->oath_key}";
         
         $password = exec($cmd);
         
