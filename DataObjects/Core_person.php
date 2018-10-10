@@ -1445,7 +1445,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->email = trim($this->email);
     }
     
-    function generateOathKey()
+    function getOathKey()
     {
         $hex = bin2hex(openssl_random_pseudo_bytes(10));
         
