@@ -789,8 +789,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $_SESSION[__CLASS__]['oath'][$person->id] = $hash;
             
-            print_r($_SESSION);exit;
-            
             $qrcode = $person->generateQRCode($hash);
             
             if(empty($qrcode)){
