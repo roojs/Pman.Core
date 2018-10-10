@@ -530,6 +530,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         require_once 'System.php';
         
+        print_r('testing');exit;
+        
         if(empty($this->id)) {
             return false;
         }
