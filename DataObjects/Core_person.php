@@ -1447,13 +1447,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function getOathKey()
     {
-        $hex = bin2hex(openssl_random_pseudo_bytes(10));
-        
         require 'Base32.php';
         
         $base32 = new Base32();
         
-        return $base32->base32_encode($hex);
+        return $base32->base32_encode(bin2hex(openssl_random_pseudo_bytes(10)));
     }
     
     function generateQRCode()
