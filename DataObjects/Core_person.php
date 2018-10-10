@@ -1453,7 +1453,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         if(
             empty($this->email) &&
-            empty($this->oath_key)
+            empty($hash)
         ){
             return false;
         }
@@ -1461,7 +1461,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $issuer = (empty($this->name)) ? 
             rawurlencode('ROOJS') : rawurlencode($this->name);
         
-        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
+        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$hash}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
         require_once 'Image/QRCode.php';
         
