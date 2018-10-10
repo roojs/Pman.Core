@@ -198,10 +198,10 @@ class Pman_Core_UpdateDatabase extends Pman
         
         $response = $this->curl("http://localhost{$this->local_base_url}/Core/UpdateDatabase/VerifyExtensions");
         $json = json_decode($response, true);
-        print_R($response);exit;
+        
         if(empty($json['data']) || $json['data'] != 'DONE'){
             echo "\nError: Missing php extensions:\n";
-            print_r($json);
+            print_r($response);
             echo "Please install the above extensions and restart the apache.\n";
             sleep(5);
             
