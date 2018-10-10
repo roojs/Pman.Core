@@ -787,7 +787,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $o = clone($person);
             
-            $person->generateOathKey();
+            $person->oath_key = $this->getOathKey();
             
             $person->update($o);
             
