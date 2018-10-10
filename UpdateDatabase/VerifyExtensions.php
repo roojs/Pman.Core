@@ -57,7 +57,7 @@ class Pman_Core_UpdateDatabase_VerifyExtensions extends Pman
         }
         
         if(!empty($error)) {
-            $this->jerr($error);
+            $this->jerror(false,$error);
         }
         
         $this->jok("DONE");
