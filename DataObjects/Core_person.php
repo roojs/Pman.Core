@@ -528,9 +528,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function checkTwoFactorAuthentication($val, $oath_key)
     {
+        // also used in login
+        
         require_once 'System.php';
         
-        if(empty($this->id)) {
+        if(
+            empty($this->id) ||
+            empty($oath_key)
+        ) {
             return false;
         }
         
