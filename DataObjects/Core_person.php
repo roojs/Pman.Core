@@ -545,12 +545,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $oath_key = $_SESSION[__CLASS__]['oath'][$this->id];
-        
-        if(empty($oath_key)) {
-            return false;
-        }
-        
         $cmd = "{$oathtool} --totp --base32 {$oath_key}";
         
         $password = exec($cmd);
