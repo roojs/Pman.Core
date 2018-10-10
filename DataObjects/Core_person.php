@@ -808,6 +808,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $person->get($q['id']);
             
             if($person->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
+                
+                print_r($_SESSION);exit;
+                
                 $roo->jok('DONE');
             }
             
