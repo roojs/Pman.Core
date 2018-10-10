@@ -778,12 +778,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(!empty($q['_to_qr_code'])){
             
-            if($q['id'] == 'is_auth') {
-                $person = $this->getAuthUser();
-            } else {
-                $person = DB_DataObject::factory('Core_person');
-                $person->get($q['id']);
-            }
+            $person = DB_DataObject::factory('Core_person');
+            $person->get($q['id']);
             
             $o = clone($person);
             
@@ -824,7 +820,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $o = clone($person);
             
             $person->oath_key = '';
-            
             $person->update($o);
             
             $roo->jok('DONE');
