@@ -166,7 +166,7 @@ class Pman_Core_UpdateDatabase extends Pman
    
         $this->checkSystem();
         
-        $this->verifyExtensions(array('curl'));
+        $this->verifyExtensions($this->required_extensions);
         
         if (class_exists('PDO_DataObjects_Introspection')) {
             PDO_DataObject_Introspection::$cache = array();
