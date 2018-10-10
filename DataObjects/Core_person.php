@@ -172,7 +172,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // h embeds images here..
             $body = $mime->get();
             $headers = $mime->headers($headers);
-            
         }
         
          
