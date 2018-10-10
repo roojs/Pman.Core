@@ -137,6 +137,11 @@ class Pman_Core_UpdateDatabase extends Pman
         )
     );
     
+    var $required_extensions = array(
+        'curl',
+        'gd'
+    );
+    
     function getAuth() {
         
         
