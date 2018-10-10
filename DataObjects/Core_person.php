@@ -818,8 +818,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(!empty($q['oath_key_disable'])) {
             
-            $person = DB_DataObject::factory('Core_person');
-            
+            $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
             
             $o = clone($person);
