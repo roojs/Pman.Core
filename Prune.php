@@ -101,7 +101,7 @@ class Pman_Core_Prune extends Pman
                   AND
                   on_table = '{$q->escape($f->on_table)}'
                   AND
-                  id >  {$f->min_id}
+                  id >  {$f->min_id}  -- allow the first one to stay....
                   AND
                   id <= {$f->max_id}
             ");
