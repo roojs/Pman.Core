@@ -809,7 +809,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
             
-            if($person->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
+            if($person->checkTwoFactorAuthentication(
+                $q['two_factor_auth_code'],
+                $oath_key
+            )) {
                 
                 $o = clone($person);
                 $person->oath_key = $_SESSION[__CLASS__]['oath'][$person->id];
