@@ -1210,7 +1210,8 @@ class Pman_Core_UpdateDatabase extends Pman
             'pdftoppm',
             'rsvg-convert',  //librsvg2-bin
             'strings',
-            'oathtool'
+            'oathtool',
+            'gifsicle', // used for gif conversions
         );
          
          
