@@ -789,6 +789,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $_SESSION[__CLASS__]['oath'][$person->id] = $hash;
             
+            print_r($_SESSION);exit;
+            
             $qrcode = $person->generateQRCode($hash);
             
             if(empty($qrcode)){
@@ -1447,7 +1449,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return $base32->base32_encode(bin2hex(openssl_random_pseudo_bytes(10)));
     }
     
-    function generateQRCode()
+    function generateQRCode($hash)
     {
         if(
             empty($this->email) &&
