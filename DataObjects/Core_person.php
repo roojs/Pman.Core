@@ -1453,9 +1453,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $base32 = new Base32();
         
-        $this->oath_key = $base32->base32_encode($hex);
-        
-        return $this->oath_key;
+        return $base32->base32_encode($hex);
     }
     
     function generateQRCode()
