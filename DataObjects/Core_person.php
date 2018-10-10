@@ -785,10 +785,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr('_invalid_person');
             }
             
-            $person->oath_key = ;
-            $person->update($o);
             
-            $qrcode = $person->generateQRCode();
+            
+            $qrcode = $person->generateQRCode($hash);
             
             if(empty($qrcode)){
                 $roo->jerr('Fail to generate QR Code');
