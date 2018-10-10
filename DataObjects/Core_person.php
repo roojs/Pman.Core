@@ -530,6 +530,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         require_once 'System.php';
         
+        if(empty($this->id)) {
+            return false;
+        }
+        
         $oathtool = System::which('oathtool');
         
         if (!$oathtool) {
