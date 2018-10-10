@@ -174,15 +174,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $headers = $mime->headers($headers);
         }
         
-         
-        
         return array(
             'recipients' => $recipents,
             'headers'    => $headers,
             'body'      => $body
         );
-        
-        
     }
     
     
@@ -194,10 +190,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
      */
     function sendTemplate($templateFile, $args)
     {
-        
         $ar = $this->buildMail($templateFile, $args);
       
-        
         //print_r($recipents);exit;
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         $mail = Mail::factory("SMTP",$mailOptions);
@@ -210,7 +204,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         error_reporting($oe);
        
         return $ret;
-    
     }
     
   
