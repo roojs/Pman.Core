@@ -785,7 +785,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr('_invalid_person');
             }
             
-            
+            $hash = $this->getOathKey();
             
             $qrcode = $person->generateQRCode($hash);
             
