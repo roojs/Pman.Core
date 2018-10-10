@@ -526,7 +526,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return md5(implode(',' ,  array($month, $this->email , $this->passwd, $this->id)));
     } 
     
-    function checkTwoFactorAuthentication($val)
+    function checkTwoFactorAuthentication($val, $oath_key)
     {
         require_once 'System.php';
         
@@ -811,7 +811,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             if($person->checkTwoFactorAuthentication(
                 $q['two_factor_auth_code'],
-                $oath_key
+                $_SESSION[__CLASS__]['oath'][$person->id]
             )) {
                 
                 $o = clone($person);
