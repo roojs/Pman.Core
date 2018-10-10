@@ -771,7 +771,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //DB_DataObject::DebugLevel(1);
         if(!empty($q['_generate_oath_key'])){
             $o = clone($this);
-            $this->generateOathKey();
+            $this->oath_key = $this->getOathKey();
             $this->update($o);
             $roo->jok('OK');
         }
