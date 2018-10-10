@@ -779,11 +779,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if(!empty($q['_to_qr_code'])){
             
             $person = DB_DataObject::factory('Core_person');
-            $person->get($q['id']);
+            $person->id = $q['id']; 
             
-            $o = clone($person);
+            if(!$person->find(true)) {
+                $roo->jerr('_invalid_person');
+            }
             
-            $person->oath_key = $this->getOathKey();
+            $person->oath_key = ;
             $person->update($o);
             
             $qrcode = $person->generateQRCode();
