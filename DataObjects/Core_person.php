@@ -530,8 +530,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         require_once 'System.php';
         
-        print_r('testing');exit;
-        
         if(empty($this->id)) {
             return false;
         }
@@ -543,6 +541,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         $oath_key = $_SESSION[__CLASS__]['oath'][$this->id];
+        
+        print_r($oath_key);exit;
         
         if(empty($oath_key)) {
             return false;
