@@ -1123,7 +1123,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->setFrom($ar);
         
         if(!empty($ar['_enable_oath_key'])){
-            $this->generateOathKey();
+            $oath_key = $this->getOathKey();
         }
         
         if (!empty($ar['passwd1'])) {
