@@ -819,10 +819,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         if(!empty($q['oath_key_disable'])) {
             
-            $person = $this->getAuthUser();
-            
-            if(!empty($q['id'])) {
-                $person = DB_DataObject::factory('core_person');
+            if($q['id'] == 'is_auth') {
+                $person = $this->getAuthUser();
+            } else {
+                $person = DB_DataObject::factory('Core_person');
                 $person->get($q['id']);
             }
             
