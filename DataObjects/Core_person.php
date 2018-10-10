@@ -776,7 +776,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jok('OK');
         }
         
-        // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
             
             if($q['id'] == 'is_auth') {
@@ -824,10 +823,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             } else {
                 $person = DB_DataObject::factory('Core_person');
                 $person->get($q['id']);
-            }
-            
-            if(empty($person)) {
-                $roo->jerr('Please login to the system');
             }
             
             $o = clone($person);
