@@ -672,15 +672,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['passwd'] = '';
         $aur['dailykey'] = '';
         $aur['oath_key'] = '';
-        $aur['require_oath'] =  1;
+        
         $aur['oath_key_enable'] = !empty($this->oath_key);
         
         $s = DB_DataObject::Factory('core_setting');
         $oath_require = $s->lookup('core', 'two_factor_authentication_requirement');
-        if(!empty($oath_require) || $oath_require == 0) {
-            
-            $aur['require_oath'] =  1;
-        }
+        
+        $aur['require_oath'] =  !empty($oath_require) || $oath_require->val == 0 ? 0 : 1;
         
         return $aur;
     }
