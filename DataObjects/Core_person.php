@@ -767,7 +767,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         //DB_DataObject::DebugLevel(1);
         if(!empty($q['_to_qr_code'])){
-            
             $person = DB_DataObject::factory('Core_person');
             $person->id = $q['id']; 
             
@@ -811,7 +810,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['oath_key_disable'])) {
-            
             $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
             
