@@ -537,7 +537,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $cmd = "{$oathtool} --totp --base32 {$oath_key}";
+        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
         
         $password = exec($cmd);
         
@@ -794,11 +794,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
+            $o = clone($person);
             $person->oath_key = $_SESSION[__CLASS__]['oath'][$person->id];
             
             if($person->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
                 
-                $o = clone($person);
+                
                 $person->update($o);
                 
                 unset($_SESSION[__CLASS__]['oath'][$person->id]);
