@@ -766,13 +766,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
-        if(!empty($q['_generate_oath_key'])){
-            $o = clone($this);
-            $this->oath_key = $this->getOathKey();
-            $this->update($o);
-            $roo->jok('OK');
-        }
-        
         if(!empty($q['_to_qr_code'])){
             
             $person = DB_DataObject::factory('Core_person');
