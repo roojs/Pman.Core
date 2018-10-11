@@ -520,7 +520,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function checkTwoFactorAuthentication($val)
     {
-        return true;
         // also used in login
         require_once 'System.php';
         
