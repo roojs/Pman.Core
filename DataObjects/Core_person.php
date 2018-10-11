@@ -775,7 +775,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr('_invalid_person');
             }
             
-            $hash = $this->getOathKey();
+            $hash = $this->generateOathKey();
             
             $_SESSION[__CLASS__] = isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
             $_SESSION[__CLASS__]['oath'] = isset($_SESSION[__CLASS__]['oath']) ? $_SESSION[__CLASS__]['oath'] : array();
@@ -1114,7 +1114,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->setFrom($ar);
         
         if(!empty($ar['_enable_oath_key'])){
-            $oath_key = $this->getOathKey();
+            $oath_key = $this->generateOathKey();
         }
         
         if (!empty($ar['passwd1'])) {
@@ -1436,7 +1436,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->email = trim($this->email);
     }
     
-    function getOathKey()
+    function generateOathKey()
     {
         require 'Base32.php';
         
