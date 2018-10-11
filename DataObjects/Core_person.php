@@ -683,7 +683,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         
-        $aur['disable_oath'] = (bool)$oath_require  ? 1 : 0;
+        $aur['require_oath'] = (bool)$oath_require  ? 1 : 0;
         
         return $aur;
     }
