@@ -777,8 +777,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $hash = $this->generateOathKey();
             
-            $_SESSION[__CLASS__] = isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
-            $_SESSION[__CLASS__]['oath'] = isset($_SESSION[__CLASS__]['oath']) ? $_SESSION[__CLASS__]['oath'] : array();
+            $_SESSION[__CLASS__] = 
+                isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
+            $_SESSION[__CLASS__]['oath'] = 
+                isset($_SESSION[__CLASS__]['oath']) ? $_SESSION[__CLASS__]['oath'] : array();
+                
             $_SESSION[__CLASS__]['oath'][$person->id] = $hash;
 
             $qrcode = $person->generateQRCode($hash);
@@ -798,12 +801,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $person->oath_key = $_SESSION[__CLASS__]['oath'][$person->id];
             
             if($person->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
-                
-                
                 $person->update($o);
-                
                 unset($_SESSION[__CLASS__]['oath'][$person->id]);
-                
                 $roo->jok('DONE');
             }
             
