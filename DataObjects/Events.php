@@ -513,8 +513,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             
             @mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
             if (!file_exists(dirname($file))) {
-                print_r($this);
-                die("could not create $file - permissons are not correct"); // fatal, otherwise we loop!?
+                //print_r($this);
+                die("could not create $file - permissons are not correct\n"); // fatal, otherwise we loop!?
             }
             
         }
