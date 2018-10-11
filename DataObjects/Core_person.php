@@ -778,9 +778,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $hash = $this->generateOathKey();
             
             $_SESSION[__CLASS__] = 
-                isset($_SESSION[__CLASS__]) ? $_SESSION[__CLASS__] : array();
+                isset($_SESSION[__CLASS__]) ? 
+                    $_SESSION[__CLASS__] : array();
             $_SESSION[__CLASS__]['oath'] = 
-                isset($_SESSION[__CLASS__]['oath']) ? $_SESSION[__CLASS__]['oath'] : array();
+                isset($_SESSION[__CLASS__]['oath']) ? 
+                    $_SESSION[__CLASS__]['oath'] : array();
                 
             $_SESSION[__CLASS__]['oath'][$person->id] = $hash;
 
@@ -794,7 +796,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['two_factor_auth_code'])) {
-            
             $person = DB_DataObject::factory('core_person');
             $person->get($q['id']);
             $o = clone($person);
