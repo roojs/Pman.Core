@@ -89,7 +89,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         
         $c = $this->lookup($a['module'], $a['name']);
         
-        $o = clone($c);
+        $o = empty($c) ? false : clone($c);
         
         if(empty($c)) {
             $c = DB_DataObject::factory('core_setting');
