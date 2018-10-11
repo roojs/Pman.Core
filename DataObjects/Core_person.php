@@ -522,6 +522,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         // also used in login
         
+        return true;
+        
         require_once 'System.php';
         
         if(
@@ -676,7 +678,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $s = DB_DataObject::Factory('core_setting');
         $oath_require = $s->lookup('core', 'two_factor_authentication_requirement');
         
-        $aur['disable_oath'] = (bool)  ? 1 : 0;
+        if(!empty($oath_require)) {
+            
+        }
+        
+        
+        $aur['disable_oath'] = (bool)$oath_require  ? 1 : 0;
         
         return $aur;
     }
