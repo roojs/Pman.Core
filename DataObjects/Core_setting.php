@@ -85,16 +85,17 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return;
         }
         
-        $c = $this->lookup($a['module'], $a['name']);
-        if($c) {
-            return;
-        }
-        
         $this->initKeys();
         
-        $s = DB_DataObject::factory('core_setting');
+        $c = $this->lookup($a['module'], $a['name']);
         
-        $s->setFrom(array(
+        $o = clone($c);
+        
+        if(empty($c)) {
+            $c = DB_DataObject::factory('core_setting');
+        }
+        
+        $c->setFrom(array(
             'module'        =>     $a['module'],
             'name'          =>       $a['name'],
             'description'   => $a['description'],
@@ -104,7 +105,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             'is_valid' => 1
         ));
         
-        $s->insert();
+        empty($o) ? $c->insert() : $c->update($o);
     }
     
     //one key for encrypting all the settings
