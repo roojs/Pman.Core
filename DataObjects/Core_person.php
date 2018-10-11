@@ -674,7 +674,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['oath_key_enable'] = !empty($this->oath_key);
         
         $s = DB_DataObject::Factory('core_setting');
-        $aur['disable_oath'] = empty($s->lookup('core', 'two_factor_authentication')) ? 0 : 1;
+        $aur['disable_oath'] = (bool) $s->lookup('core', 'two_factor_authentication') ? 0 : 1;
         
         return $aur;
     }
