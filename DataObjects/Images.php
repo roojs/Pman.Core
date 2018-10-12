@@ -867,7 +867,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 //        }
         
         if(!empty($scaleWidth) || !empty($scaleHeight)){
-            $data = $this->scale($data, $scaleWidth, $scaleHeight);
+            $data = $this->scale(false, $scaleWidth, $scaleHeight);
         }
         
         if($rotate){
