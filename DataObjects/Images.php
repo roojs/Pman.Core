@@ -946,7 +946,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $imagick->readImageBlob($imageBlob);
         }
         
-        $imagick->resizeimage($width, $height, Imagick::FILTER_LANCZOS, true, true);
+        $imagick->scaleImage($width, $height, true);
         
         return $imagick->getImageBlob();
         
