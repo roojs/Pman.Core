@@ -866,12 +866,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 //            
 //        }
         
-//        if(!empty($scaleWidth) || !empty($scaleHeight)){
-//            $data = $this->scale($scaleWidth, $scaleHeight);
-//        }
+        if(!empty($scaleWidth) || !empty($scaleHeight)){
+            $data = $this->scale($scaleWidth, $scaleHeight);
+        }
         
         if($rotate){
-            $data = $this->rotate();
             $data = $this->rotate($data);
         }
         
@@ -938,7 +937,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $imagick->getImageBlob();
     }
     
-    function scale($width, $height)
+    function scale($width, $height, $imageBlob = false)
     {
         
     }
