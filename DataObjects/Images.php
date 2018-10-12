@@ -915,7 +915,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $orientation = $imagick->getImageOrientation(); 
-        print_R($orientation);exit;
+//        print_R($orientation);exit;
         switch($orientation) { 
             case Imagick::ORIENTATION_BOTTOMRIGHT: 
                 $imagick->rotateimage(new ImagickPixel('#00000000'), 180); // rotate 180 degrees 
