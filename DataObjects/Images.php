@@ -937,9 +937,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $imagick->getImageBlob();
     }
     
-    function scale($width, $height, $imageBlob = false)
+    function scale($imageBlob = false, $width = 0, $height = 0)
     {
-        
+        if(empty($imageBlob)){
+            $imagick = new Imagick($this->getStoreName());
+        } else {
+            $imagick = new Imagick();
+            $imagick->readImageBlob($imageBlob);
+        }
     }
     
  }
