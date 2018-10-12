@@ -866,9 +866,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         }
         
-//        if($rotate){
-//            $data = $this->rotate($data);
-//        }
+        if($rotate){
+            $data = $this->rotate($data);
+        }
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
         
@@ -912,6 +912,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         } else {
             $imagick = new Imagick();
             $imagick->readImageBlob($imageBlob);
+            print_R($imagick);exit;
         }
         
         $orientation = $imagick->getImageOrientation(); 
