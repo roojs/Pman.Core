@@ -830,42 +830,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $data = file_get_contents($file);
         
-//        if(!empty($scaleWidth) || !empty($scaleHeight)){
-//            
-//            $width = $this->width;
-//            $height = $this->height;
-//            
-//            if(!empty($scaleWidth)){
-//                $width = $scaleWidth;
-//
-//                if(empty($scaleHeight)){
-//                    $height = $this->height * $scaleWidth / $this->width;
-//                }
-//            }
-//            
-//            
-//
-//            if(!empty($scaleHeight)){
-//                $height = $scaleHeight;
-//
-//                if(empty($scaleWidth)){
-//                    $width = $this->width * $scaleHeight / $this->height;
-//                }
-//            }
-//            
-//            $im = imagecreatefromstring($data);
-//            
-//            if (($scaled = imagescale($im, $width, $height)) != false) {
-//                ob_start();
-//                imagejpeg($scaled);
-//                $data = ob_get_contents();
-//                ob_end_clean();
-//                imagedestroy($im);
-//                imagedestroy($scaled);
-//            }
-//            
-//        }
-        
         if(!empty($scaleWidth) || !empty($scaleHeight)){
             $data = $this->scale(false, $scaleWidth, $scaleHeight);
         }
