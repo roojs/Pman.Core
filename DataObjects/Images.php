@@ -830,6 +830,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $data = file_get_contents($file);
         
+        if($rotate){
+            $data = $this->rotate();
+        }
+        
         if(!empty($scaleWidth) || !empty($scaleHeight)){
             
             $width = $this->width;
@@ -864,10 +868,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 imagedestroy($scaled);
             }
             
-        }
-        
-        if($rotate){
-            $data = $this->rotate();
         }
         
         $base64 = 'data:' . $this->mimetype . ';base64,' . base64_encode($data);
@@ -915,7 +915,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $orientation = $imagick->getImageOrientation(); 
-
+        print_R($orientation);exit;
         switch($orientation) { 
             case Imagick::ORIENTATION_BOTTOMRIGHT: 
                 $imagick->rotateimage(new ImagickPixel('#00000000'), 180); // rotate 180 degrees 
