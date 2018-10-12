@@ -905,7 +905,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $page;
     }
     
-    function rotate()
+    function rotate($imageBlob = false)
     {
         $imagick = new Imagick($this->getStoreName());
         
