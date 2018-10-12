@@ -172,13 +172,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // h embeds images here..
             $body = $mime->get();
             $headers = $mime->headers($headers);
+            
         }
+        
+         
         
         return array(
             'recipients' => $recipents,
             'headers'    => $headers,
             'body'      => $body
         );
+        
+        
     }
     
     
@@ -190,8 +195,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
      */
     function sendTemplate($templateFile, $args)
     {
+        
         $ar = $this->buildMail($templateFile, $args);
       
+        
         //print_r($recipents);exit;
         $mailOptions = PEAR::getStaticProperty('Mail','options');
         $mail = Mail::factory("SMTP",$mailOptions);
@@ -204,6 +211,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         error_reporting($oe);
        
         return $ret;
+    
     }
     
   
@@ -290,8 +298,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        
-        // local auth - 
+         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
@@ -308,6 +315,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )
             )
         ) {
+            
             $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
@@ -520,15 +528,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function checkTwoFactorAuthentication($val)
     {
-        // also used in login
         require_once 'System.php';
-        
-        if(
-            empty($this->id) ||
-            empty($this->oath_key)
-        ) {
-            return false;
-        }
         
         $oathtool = System::which('oathtool');
         
@@ -536,7 +536,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        $cmd = "{$oathtool} --totp --base32 {$this->oath_key}";
+        if(empty($this->oath_key)) {
+            return true;
+        }
+        
+        $cmd = "{$oathtool} --totp --base32 " . escapeshellarg($this->oath_key);
         
         $password = exec($cmd);
         
@@ -671,16 +675,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['oath_key'] = '';
         
         $aur['oath_key_enable'] = !empty($this->oath_key);
-        $aur['require_oath'] = 1;
-        
-        $s = DB_DataObject::Factory('core_setting');
-        $oath_require = $s->lookup('core', 'two_factor_authentication_requirement');
-        
-        if(!empty($oath_require)) {
-            if($oath_require->val == 0) {
-                $aur['require_oath'] = 0;
-            }
-        } 
         
         return $aur;
     }
@@ -772,26 +766,30 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         //DB_DataObject::DebugLevel(1);
+        if(!empty($q['_generate_oath_key'])){
+            $o = clone($this);
+            $this->generateOathKey();
+            $this->update($o);
+            $roo->jok('OK');
+        }
+        
+        // missing id for core_person mgmt
         if(!empty($q['_to_qr_code'])){
-            $person = DB_DataObject::factory('Core_person');
-            $person->id = $q['id']; 
             
-            if(!$person->find(true)) {
-                $roo->jerr('_invalid_person');
+            if($q['id'] == 'is_auth') {
+                $person = $this->getAuthUser();
+            } else {
+                $person = DB_DataObject::factory('Core_person');
+                $person->get($q['id']);
             }
             
-            $hash = $this->generateOathKey();
+            $o = clone($person);
             
-            $_SESSION[__CLASS__] = 
-                isset($_SESSION[__CLASS__]) ? 
-                    $_SESSION[__CLASS__] : array();
-            $_SESSION[__CLASS__]['oath'] = 
-                isset($_SESSION[__CLASS__]['oath']) ? 
-                    $_SESSION[__CLASS__]['oath'] : array();
-                
-            $_SESSION[__CLASS__]['oath'][$person->id] = $hash;
-
-            $qrcode = $person->generateQRCode($hash);
+            $person->generateOathKey();
+            
+            $person->update($o);
+            
+            $qrcode = $person->generateQRCode();
             
             if(empty($qrcode)){
                 $roo->jerr('Fail to generate QR Code');
@@ -801,14 +799,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['two_factor_auth_code'])) {
-            $person = DB_DataObject::factory('core_person');
-            $person->get($q['id']);
-            $o = clone($person);
-            $person->oath_key = $_SESSION[__CLASS__]['oath'][$person->id];
+            
+            $person = $this;
+            
+            if(isset($q['id'])) {
+                $person = DB_DataObject::factory('core_person');
+                $person->get($q['id']);
+            }
             
             if($person->checkTwoFactorAuthentication($q['two_factor_auth_code'])) {
-                $person->update($o);
-                unset($_SESSION[__CLASS__]['oath'][$person->id]);
                 $roo->jok('DONE');
             }
             
@@ -816,12 +815,22 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         if(!empty($q['oath_key_disable'])) {
-            $person = DB_DataObject::factory('core_person');
-            $person->get($q['id']);
+            
+            $person = $this->getAuthUser();
+            
+            if(!empty($q['id'])) {
+                $person = DB_DataObject::factory('core_person');
+                $person->get($q['id']);
+            }
+            
+            if(empty($person)) {
+                $roo->jerr('Please login to the system');
+            }
             
             $o = clone($person);
             
             $person->oath_key = '';
+            
             $person->update($o);
             
             $roo->jok('DONE');
@@ -1116,7 +1125,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->setFrom($ar);
         
         if(!empty($ar['_enable_oath_key'])){
-            $oath_key = $this->generateOathKey();
+            $this->generateOathKey();
         }
         
         if (!empty($ar['passwd1'])) {
@@ -1440,18 +1449,22 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function generateOathKey()
     {
+        $hex = bin2hex(openssl_random_pseudo_bytes(10));
+        
         require 'Base32.php';
         
         $base32 = new Base32();
         
-        return $base32->base32_encode(bin2hex(openssl_random_pseudo_bytes(10)));
+        $this->oath_key = $base32->base32_encode($hex);
+        
+        return $this->oath_key;
     }
     
-    function generateQRCode($hash)
+    function generateQRCode()
     {
         if(
             empty($this->email) &&
-            empty($hash)
+            empty($this->oath_key)
         ){
             return false;
         }
@@ -1459,7 +1472,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $issuer = (empty($this->name)) ? 
             rawurlencode('ROOJS') : rawurlencode($this->name);
         
-        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$hash}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
+        $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$this->oath_key}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
         require_once 'Image/QRCode.php';
         
