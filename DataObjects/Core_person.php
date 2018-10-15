@@ -407,7 +407,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
        
         if (self::$authUser) {
-            $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
+            $a = self::$authUser; // are they still allowed to do stuff..
             
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
             $u->autoJoin();
