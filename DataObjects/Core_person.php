@@ -485,7 +485,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
-        $p->autoJoin();
         $p->get($this->pid());
         
         $d = $p->toArray();
@@ -496,7 +495,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         
-        self::$authUser = $p;
+        $pp = DB_DAtaObject::Factory($this->tableName());
+        $pp->get($this->pid());
+        $pp->autoJoin();
+        
+        self::$authUser = $pp;
         // ensure it's written so that ajax calls can fetch it..
         
         
