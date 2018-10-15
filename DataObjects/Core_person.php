@@ -235,6 +235,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $sesPrefix = $this->sesPrefix();
        
+            self::$authUser = false;
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
             
             return false;
