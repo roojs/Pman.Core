@@ -346,7 +346,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $user = $default_admin ? $default_admin->toArray() : $u->toArray();
             
-            //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object) $user);
+            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object) $user);
             return true;
         }
         
