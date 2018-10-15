@@ -295,6 +295,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
+            ($_SERVER['PATH_INFO'] != '') &&  // auto-auth is disabled for home page
             (!empty($_SERVER['SERVER_ADDR'])) &&
             (
                 (
@@ -306,6 +307,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     $_SERVER['SERVER_ADDR'] == '::1' &&
                     $_SERVER['REMOTE_ADDR'] == '::1'
                 )
+                
             )
         ) {
             $group = DB_DataObject::factory('core_group');
