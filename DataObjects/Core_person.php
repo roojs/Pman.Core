@@ -412,7 +412,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
                 setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
             }
-            
+            // not really sure why it's cloned..
             return   clone (self::$authUser);
              
             
