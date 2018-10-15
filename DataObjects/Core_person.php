@@ -290,8 +290,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
             // logged in via http auth
-            
-            $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
+            // http auth will not need session... 
+            //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
             self::$authUser = $u;
             return true; 
         }
