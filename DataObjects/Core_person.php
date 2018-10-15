@@ -358,7 +358,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $user = $default_admin ? $default_admin->toArray() : $u->toArray();
             
             // if we request other URLS.. then we get auto logged in..
-            self::$authUser = $u;
+            self::$authUser = $user;
             //$_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object) $user);
             return true;
         }
