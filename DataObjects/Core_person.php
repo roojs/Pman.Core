@@ -291,12 +291,20 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         
+        $auto_auth_allow = false;
+        if (!empty($ff->Pman['local_autoauth']) && $ff->Pman['local_autoauth'] === true) {
+            $auto_auth_allow  = true;
+        }
+        if (empty($_SERVER['PATH_INFO']) || $_SERVER['PATH_INFO'] == '/Login') {
+            $auto_auth_allow  = false;
+        }
+        
         // local auth - 
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
             (
-                empty($_SERVER['PATH_INFO']) || // auto-auth is disabled for home page
+                !empty($_SERVER['PATH_INFO']) || // auto-auth is disabled for home page and login
                 $_SERVER['PATH_INFO'] != '/Login'
             ) &&  // auto-auth is disabled for home page
             (!empty($_SERVER['SERVER_ADDR'])) &&
@@ -313,7 +321,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 
             )
         ) {
-             $group = DB_DataObject::factory('core_group');
+            $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
             $member = DB_DataObject::factory('core_group_member');
