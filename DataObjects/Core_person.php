@@ -369,9 +369,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
         }
         if (!$n){ // authenticated as there are no users in the system...
+            die("return true?");
             return true;
         }
-        
+        die("return false?");
         return false;
         
     }
