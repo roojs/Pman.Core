@@ -413,7 +413,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
             }
             
-            return = clone (self::$authUser);
+            return   clone (self::$authUser);
              
             
         }
@@ -485,6 +485,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // we should not store the whole data in the session - otherwise it get's huge.
         $p = DB_DAtaObject::Factory($this->tableName());
+        $p->autoJoin();
         $p->get($this->pid());
         
         $d = $p->toArray();
