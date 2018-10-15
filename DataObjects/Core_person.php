@@ -50,6 +50,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    static $authUser = false;
+    
  
     function owner()
     {
@@ -347,6 +350,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $user = $default_admin ? $default_admin->toArray() : $u->toArray();
             
             // if we request other URLS.. then we get auto logged in..
+            
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object) $user);
             return true;
         }
