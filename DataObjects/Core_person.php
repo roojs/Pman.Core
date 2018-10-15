@@ -1416,7 +1416,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return $sesPrefix;
     }
     
-    function loginPublic()
+    function loginPublic() // used where???
     {
         $this->isAuth(); // force session start..
          
