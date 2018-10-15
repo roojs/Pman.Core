@@ -256,6 +256,27 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
        
         $sesPrefix = $this->sesPrefix();
         
+        if (self::$authUser) {
+            return self::$authUser;
+        }
+        
+        
+        if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
+            // in session...
+            $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
+            $u = DB_DataObject::factory($this->tableName());
+            if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
+                if ($u->verifyAuth()) {
+                    self::$authUser = $u;
+                    return true;
+                }
+            }
+            unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
+            unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
+            setcookie('Pman.timeout', -1, time() + (30*60), '/');
+            return false;
+        
+        
         if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
@@ -268,9 +289,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
             }
             
-            unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-            unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
-            setcookie('Pman.timeout', -1, time() + (30*60), '/');
             
         }
         
