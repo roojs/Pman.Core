@@ -405,7 +405,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
        
-        if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
+        if (self::$authUser) {
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             
             $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
