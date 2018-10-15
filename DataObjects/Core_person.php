@@ -313,8 +313,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 
             )
         ) {
-             var_dump($_SERVER['PATH_INFO']);exit;
-            $group = DB_DataObject::factory('core_group');
+             $group = DB_DataObject::factory('core_group');
             $group->get('name', 'Administrators');
             
             $member = DB_DataObject::factory('core_group_member');
