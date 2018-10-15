@@ -496,7 +496,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         
-        
+        self::$authUser = $p;
         // ensure it's written so that ajax calls can fetch it..
         
         
@@ -511,6 +511,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = -1;
         
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
+        
+        self::$authUser = false;
         
     }    
     function genPassKey ($t) 
