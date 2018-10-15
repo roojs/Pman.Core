@@ -265,6 +265,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // in session...
             $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             $u = DB_DataObject::factory($this->tableName());
+            $u->autoJoin();
             if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
                 if ($u->verifyAuth()) {
                     self::$authUser = $u;
