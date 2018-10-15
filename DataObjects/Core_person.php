@@ -407,23 +407,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
        
         if (self::$authUser) {
-            $a = self::$authUser; // are they still allowed to do stuff..
-            
-            $u = DB_DataObject::factory($this->tableName()); // allow extending this ...
-            $u->autoJoin();
-            if ($u->get($a->id)) { /// && strlen($u->passwd)) {  // should work out the pid .. really..
-                if (isset($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
-                    $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
-                    setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
-                }
-                
-                $user = clone ($u);
-                return clone($user);
-            
+             
+            if (isset($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
+                $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
+                setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
             }
-            unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-            unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
-            setcookie('Pman.timeout', -1, time() + (30*60), '/');
+            
+            $user = clone (self::$authUser);
+            return clone($user);
+            
             
         }
         
@@ -503,6 +495,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
+        
+        
         // ensure it's written so that ajax calls can fetch it..
         
         
