@@ -413,9 +413,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
             }
             
-            $user = clone (self::$authUser);
-            return clone($user);
-            
+            return = clone (self::$authUser);
+             
             
         }
         
