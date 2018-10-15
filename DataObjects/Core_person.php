@@ -295,7 +295,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $default_admin = false;
         if (!empty($ff->Pman['local_autoauth']) && 
             ($ff->Pman['local_autoauth'] === true) &&
-            (!empty($_SERVER['PATH_INFO'])) &&  // auto-auth is disabled for home page
+            (
+                empty($_SERVER['PATH_INFO']) || // auto-auth is disabled for home page
+                $_SERVER['PATH_INFO'] != '/Login'
+            ) &&  // auto-auth is disabled for home page
             (!empty($_SERVER['SERVER_ADDR'])) &&
             (
                 (
