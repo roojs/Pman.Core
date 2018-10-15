@@ -275,21 +275,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
             setcookie('Pman.timeout', -1, time() + (30*60), '/');
             return false;
-        
-        
-        if (!empty($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
-            // in session...
-            $a = unserialize($_SESSION[get_class($this)][$sesPrefix .'-auth']);
-             
-            $u = DB_DataObject::factory($this->tableName());
-            if ($a->id && $u->get($a->id)) { //&& strlen($u->passwd)) {
-              
-                return $u->verifyAuth();  // got authentication...
-                
-    
-            }
-            
-            
         }
         
         // http basic auth..
@@ -303,7 +288,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             &&
             $u->checkPassword($_SERVER['PHP_AUTH_PW'])
            ) {
+            // logged in via http auth
+            
             $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize($u);
+            self::$authUser = $u;
             return true; 
         }
         //die("test init");
