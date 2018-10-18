@@ -689,7 +689,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['require_oath'] = 1;
         
         $s = DB_DataObject::Factory('core_setting');
-        $oath_require = $s->lookup('core', 'two_factor_authentication_requirement');
+        $oath_require = $s->lookup('core', 'two_factor_auth_required');
         $aur['require_oath'] = $oath_require ?  $oath_require->val : 0;
         
         return $aur;
