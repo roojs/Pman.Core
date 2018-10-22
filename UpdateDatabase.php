@@ -852,13 +852,15 @@ class Pman_Core_UpdateDatabase extends Pman
         $ctb = array();
         foreach($c->fetchAll('comptype') as $cts) {
             
+            if($cts == 'undefined'){
+                continue;
+            }
             
-            
-           $ctb[]= array( 'etype'=>'COMPTYPE', 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
+            $ctb[]= array( 'etype'=>'COMPTYPE', 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
         }
-         $c = DB_DataObject::Factory('core_enum');
-         print_r($ctb);exit;
+        $c = DB_DataObject::Factory('core_enum');
+         
         $c->initEnums($ctb);
         //DB_DataObject::debugLevel(1);
         // fix comptypeid
