@@ -858,7 +858,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
         }
          $c = DB_DataObject::Factory('core_enum');
-         
+         print_r($ctb);exit;
         $c->initEnums($ctb);
         //DB_DataObject::debugLevel(1);
         // fix comptypeid
