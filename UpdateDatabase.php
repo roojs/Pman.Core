@@ -852,7 +852,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $ctb = array();
         foreach($c->fetchAll('comptype') as $cts) {
             
-            if($cts == 'undefined'){
+            if($cts == 'undefined' || $cts == 'undefine'){
                 continue;
             }
             
