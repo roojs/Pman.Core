@@ -306,7 +306,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!empty($ff->Pman['local_autoauth']) && $ff->Pman['local_autoauth'] === true) {
             $auto_auth_allow  = true;
         }
-        if  (
+        if  ( !empty($ff->Pman['local_autoauth'])
+             &&
                 (!empty($_SERVER['SERVER_ADDR'])) &&
                 (
                     $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
@@ -353,7 +354,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u->autoJoin();
         $ff = HTML_FlexyFramework::get();
         
-        if ($auto_auth_allow &&
+        if ($auto_auth_allow && 
             ($default_admin ||  $u->get('email', $ff->Pman['local_autoauth']))
         ) {
             
