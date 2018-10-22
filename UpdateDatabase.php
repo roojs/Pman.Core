@@ -847,14 +847,16 @@ class Pman_Core_UpdateDatabase extends Pman
         $c = DB_DataObject::Factory('core_company');
         $c->selectAdd();
         $c->selectAdd('distinct(comptype) as comptype');
-        $c->whereAdd("comptype != ''");
+        $c->whereAdd("
+                comptype != '' 
+            AND 
+                comptype != 'undefined' 
+            AND 
+                comptype != 'undefine'
+        ");
         
         $ctb = array();
         foreach($c->fetchAll('comptype') as $cts) {
-            
-            if($cts == 'undefined' || $cts == 'undefine'){
-                continue;
-            }
             
             $ctb[]= array( 'etype'=>'COMPTYPE', 'name' => $cts, 'display_name' => ucfirst(strtolower($cts)));
         
