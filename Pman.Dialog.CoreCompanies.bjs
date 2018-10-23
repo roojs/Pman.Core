@@ -128,7 +128,7 @@
            "pageSize" : 20,
            "emptyText" : "Select Type",
            "displayField" : "display_name",
-           "hiddenName" : "comptype_id",
+           "hiddenName" : "comptype_id_display_name",
            "minChars" : 2,
            "valueField" : "name",
            "xtype" : "ComboBox",

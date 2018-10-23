@@ -251,7 +251,7 @@ Pman.Dialog.CoreCompanies = {
             emptyText : _this._strings['023a5dfa857c4aa0156e6685231a1dbd'] /* Select Type */,
             fieldLabel : _this._strings['a1fa27779242b4902f7ae3bdd5c6d508'] /* Type */,
             forceSelection : true,
-            hiddenName : 'comptype_id',
+            hiddenName : 'comptype_id_display_name',
             listWidth : 250,
             loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
             minChars : 2,
