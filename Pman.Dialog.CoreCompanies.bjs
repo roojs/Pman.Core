@@ -33,6 +33,30 @@
   "35cb9e66ff801a819684ee0fbeabaeeb" : "Background Colour",
   "bc87ef2144ae15ef4f78211e73948051" : "Logo Image"
  },
+ "named_strings" : {
+  "name_qtip" : "4ef6052d74436756f08e95fd63949653",
+  "tel_fieldLabel" : "bcc254b55c4a1babdf1dcb82c207506b",
+  "address_qtip" : "32c4e9483403d60115b21519178e5384",
+  "background_color_fieldLabel" : "35cb9e66ff801a819684ee0fbeabaeeb",
+  "code_fieldLabel" : "b33457e7e1cd5dbf1db34a0c60fcb75f",
+  "comptype_display_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "fax_fieldLabel" : "9810aa2b9f44401be4bf73188ef2b67d",
+  "comptype_display_name_qtip" : "8535bcc0f05358a583bb432bbadf7e0d",
+  "name_fieldLabel" : "e7b47c58815acf1d3afa59a84b5db7fb",
+  "fax_qtip" : "cf3a5d25d39613ad5bbc2f5eb0f9b675",
+  "url_qtip" : "8c04eb09879a05470fae436ba76e3bb9",
+  "remarks_fieldLabel" : "231bc72756b5e6de492aaaa1577f61b1",
+  "code_qtip" : "733640ec0c9367df1b4d85eb286ed9ae",
+  "tel_qtip" : "bc3a4c40d007b8d610a16312970e5cb3",
+  "email_qtip" : "9f86c00615b1a210935ac28ff8ebbb22",
+  "url_fieldLabel" : "02a3a357710cc2a5dfdfb74ed012fb59",
+  "remarks_qtip" : "c54b90756cfbeff9217293b567cb2eb0",
+  "email_fieldLabel" : "ce8ae9da5b7cd6c3df2929543a9af92d",
+  "address_fieldLabel" : "dd7bf230fde8d4836917806aff6a6b27",
+  "comptype_display_name_emptyText" : "023a5dfa857c4aa0156e6685231a1dbd",
+  "comptype_display_name_fieldLabel" : "a1fa27779242b4902f7ae3bdd5c6d508",
+  "logo_id_fieldLabel" : "bc87ef2144ae15ef4f78211e73948051"
+ },
  "items" : [
   {
    "modal" : true,
@@ -67,8 +91,8 @@
       {
        "listeners" : {
         "actionfailed" : "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
-        "rendered" : "function (form)\n{\n    _this.form = form;\n}",
-        "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}"
+        "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}",
+        "rendered" : "function (form)\n{\n    _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/core_company.php'",
        "fileUpload" : true,
@@ -78,8 +102,8 @@
        "items" : [
         {
          "xtype" : "Column",
-         "$ xns" : "Roo.form",
          "width" : 500,
+         "$ xns" : "Roo.form",
          "items" : [
           {
            "fieldLabel" : "Company ID (for filing Ref.)",
@@ -94,9 +118,9 @@
            "listeners" : {
             "render" : "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
            },
+           "listWidth" : 250,
            "Boolean allowBlank" : false,
            "alwaysQuery" : true,
-           "listWidth" : 250,
            "triggerAction" : "all",
            "fieldLabel" : "Type",
            "forceSelection" : true,
@@ -104,7 +128,7 @@
            "pageSize" : 20,
            "emptyText" : "Select Type",
            "displayField" : "display_name",
-           "hiddenName" : "comptype",
+           "hiddenName" : "comptype_id",
            "minChars" : 2,
            "valueField" : "name",
            "xtype" : "ComboBox",
@@ -129,8 +153,8 @@
              "items" : [
               {
                "$ url" : "baseURL + '/Roo/core_enum.php'",
-               "method" : "GET",
                "xtype" : "HttpProxy",
+               "method" : "GET",
                "$ xns" : "Roo.data",
                "* prop" : "proxy"
               },
@@ -227,8 +251,8 @@
           },
           {
            "fieldLabel" : "Logo Image",
-           "style" : "border: 1px solid #ccc;",
            "xtype" : "DisplayField",
+           "style" : "border: 1px solid #ccc;",
            "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{1}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..\n    );\n}",
            "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
            "width" : 170,
