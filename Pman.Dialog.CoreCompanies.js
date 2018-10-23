@@ -251,7 +251,7 @@ Pman.Dialog.CoreCompanies = {
             emptyText : _this._strings['023a5dfa857c4aa0156e6685231a1dbd'] /* Select Type */,
             fieldLabel : _this._strings['a1fa27779242b4902f7ae3bdd5c6d508'] /* Type */,
             forceSelection : true,
-            hiddenName : 'comptype_id_display_name',
+            hiddenName : 'comptype_id',
             listWidth : 250,
             loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
             minChars : 2,
@@ -263,7 +263,7 @@ Pman.Dialog.CoreCompanies = {
             tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> : {display_name}</div>',
             triggerAction : 'all',
             typeAhead : false,
-            valueField : 'name',
+            valueField : 'id',
             width : 200,
             listeners : {
              render : function (_self)
