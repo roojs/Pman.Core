@@ -308,16 +308,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         if  ( !empty($ff->Pman['local_autoauth'])
              &&
-                (!empty($_SERVER['SERVER_ADDR'])) &&
+                !empty($_SERVER['SERVER_ADDR']) &&
                 !empty($_SERVER['REMOTE_ADDR']) &&
                 (
-                    $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
-                    $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
-                )
-                ||
-                (
-                    $_SERVER['SERVER_ADDR'] == '::1' &&
-                    $_SERVER['REMOTE_ADDR'] == '::1'
+                    (
+                       $_SERVER['SERVER_ADDR'] == '127.0.0.1' &&
+                       $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
+                   )
+                   ||
+                   (
+                       $_SERVER['SERVER_ADDR'] == '::1' &&
+                       $_SERVER['REMOTE_ADDR'] == '::1'
+                   )
                 )
                 
             ){
