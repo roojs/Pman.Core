@@ -143,12 +143,12 @@ Pman.Dialog.CoreProject = {
                  return;
               }
               if (action.type == 'load') {
-                  _this.dialog.el.unmask();
+           
                   return;
               }
               if (action.type =='submit') {
               
-                  _this.dialog.el.unmask();
+           
                   _this.dialog.hide();
               
                    if (_this.callback) {
