@@ -53,6 +53,7 @@
  },
  "items" : [
   {
+   "Boolean modal" : true,
    "collapsible" : false,
    "xtype" : "LayoutDialog",
    "title" : "Edit / Create Projects",

@@ -81,6 +81,7 @@ Pman.Dialog.CoreProject = {
     closable : false,
     collapsible : false,
     height : 450,
+    modal : true,
     resizable : false,
     title : _this._strings['ddb016a244ff2b895e69d25fb3b5f780'] /* Edit / Create Projects */,
     width : 470,
