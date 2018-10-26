@@ -133,7 +133,7 @@ Pman.Dialog.CoreProject = {
         xtype : 'Form',
         method : 'POST',
         style : 'margin:10px;',
-        url : baseURL + '/Roo/Projects.php',
+        url : baseURL + '/Roo/core_project',
         listeners : {
          actioncomplete : function(_self,action)
           {
