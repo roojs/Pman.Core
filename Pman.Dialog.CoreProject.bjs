@@ -27,11 +27,35 @@
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "223aad18ce30620a724d8a97021ce26e" : "Open by"
  },
+ "named_strings" : {
+  "name_qtip" : "d1847fa47ea6bc047b413947463262ab",
+  "client_id_name_emptyText" : "99b344c8ae43e3e7213862b8f35c4e51",
+  "client_id_name_fieldLabel" : "577d7068826de925ea2aec01dbadf5e4",
+  "type_desc_emptyText" : "b5b20a9df20ea61c1cc0485f5e83891e",
+  "type_desc_fieldLabel" : "245fe794333c2b0d5c513129b346b93f",
+  "type_desc_qtip" : "b5b20a9df20ea61c1cc0485f5e83891e",
+  "client_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "code_fieldLabel" : "ca0dbad92a874b2f69b549293387925e",
+  "open_by_name_qtip" : "340c2ee497b85d5954b01c64de7f44f6",
+  "name_fieldLabel" : "8e3a42158ee70b67cf55b33e2789a9e5",
+  "team_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "remarks_fieldLabel" : "231bc72756b5e6de492aaaa1577f61b1",
+  "open_by_name_emptyText" : "340c2ee497b85d5954b01c64de7f44f6",
+  "open_by_name_fieldLabel" : "223aad18ce30620a724d8a97021ce26e",
+  "team_id_name_fieldLabel" : "ac848fa228f49ba2b8a5fbd76596817d",
+  "open_date_fieldLabel" : "ca528d836417871a349312db705a1951",
+  "team_id_name_qtip" : "ab83ccde6764ca581702f38d79834615",
+  "team_id_name_emptyText" : "ab83ccde6764ca581702f38d79834615",
+  "file_location_fieldLabel" : "24f9e53eb92c0995d04433c1f7a4c9c0",
+  "open_by_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "type_desc_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "client_id_name_qtip" : "9675747b5ab12d05f18518761e68a533"
+ },
  "items" : [
   {
    "collapsible" : false,
-   "title" : "Edit / Create Projects",
    "xtype" : "LayoutDialog",
+   "title" : "Edit / Create Projects",
    "width" : 470,
    "$ xns" : "Roo",
    "closable" : false,
@@ -54,8 +78,8 @@
         "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
        },
        "$ url" : "baseURL + '/Roo/Projects.php'",
-       "xtype" : "Form",
        "method" : "POST",
+       "xtype" : "Form",
        "style" : "margin:10px;",
        "$ xns" : "Roo.form",
        "items" : [
@@ -146,8 +170,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/core_company'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -200,8 +224,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Groups.php'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -283,8 +307,8 @@
              "items" : [
               {
                "$ url" : "baseURL + '/Roo/core_person'",
-               "method" : "GET",
                "xtype" : "HttpProxy",
+               "method" : "GET",
                "$ xns" : "Roo.data",
                "* prop" : "proxy"
               },
@@ -323,7 +347,7 @@
     },
     {
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    \n    _this.dialog.el.mask(\"Saving\");\n    _this.form.doAction(\"submit\");\n\n}"
+      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    \n \n    _this.form.doAction(\"submit\");\n\n}"
      },
      "text" : "Save",
      "xtype" : "Button",

@@ -28,6 +28,30 @@ Pman.Dialog.CoreProject = {
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '223aad18ce30620a724d8a97021ce26e' :"Open by"
  },
+ _named_strings : {
+  'name_qtip' : 'd1847fa47ea6bc047b413947463262ab' /* Enter Project Name */ ,
+  'client_id_name_emptyText' : '99b344c8ae43e3e7213862b8f35c4e51' /* Select Company */ ,
+  'client_id_name_fieldLabel' : '577d7068826de925ea2aec01dbadf5e4' /* Client */ ,
+  'type_desc_emptyText' : 'b5b20a9df20ea61c1cc0485f5e83891e' /* Select Project Type */ ,
+  'type_desc_fieldLabel' : '245fe794333c2b0d5c513129b346b93f' /* Project Type */ ,
+  'type_desc_qtip' : 'b5b20a9df20ea61c1cc0485f5e83891e' /* Select Project Type */ ,
+  'client_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'code_fieldLabel' : 'ca0dbad92a874b2f69b549293387925e' /* Code */ ,
+  'open_by_name_qtip' : '340c2ee497b85d5954b01c64de7f44f6' /* Select Person */ ,
+  'name_fieldLabel' : '8e3a42158ee70b67cf55b33e2789a9e5' /* Project Name */ ,
+  'team_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'remarks_fieldLabel' : '231bc72756b5e6de492aaaa1577f61b1' /* Remarks */ ,
+  'open_by_name_emptyText' : '340c2ee497b85d5954b01c64de7f44f6' /* Select Person */ ,
+  'open_by_name_fieldLabel' : '223aad18ce30620a724d8a97021ce26e' /* Open by */ ,
+  'team_id_name_fieldLabel' : 'ac848fa228f49ba2b8a5fbd76596817d' /* Team */ ,
+  'open_date_fieldLabel' : 'ca528d836417871a349312db705a1951' /* Open date */ ,
+  'team_id_name_qtip' : 'ab83ccde6764ca581702f38d79834615' /* Select Team */ ,
+  'team_id_name_emptyText' : 'ab83ccde6764ca581702f38d79834615' /* Select Team */ ,
+  'file_location_fieldLabel' : '24f9e53eb92c0995d04433c1f7a4c9c0' /* File location */ ,
+  'open_by_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'type_desc_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'client_id_name_qtip' : '9675747b5ab12d05f18518761e68a533' /* Select Companies */ 
+ },
 
  dialog : false,
  callback:  false,
@@ -89,7 +113,7 @@ Pman.Dialog.CoreProject = {
             // do some checks?
              
             
-            _this.dialog.el.mask("Saving");
+         
             _this.form.doAction("submit");
         
         }
