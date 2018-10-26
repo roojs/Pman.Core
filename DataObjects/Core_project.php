@@ -114,7 +114,9 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
                }
         }
         
-        if (empty($q['query']['project_filter'])  || $q['query']['project_filter'] != 'ALL') {
+        if (empty($q['_is_update_request']) &&
+            
+            (empty($q['query']['project_filter'])  || $q['query']['project_filter'] != 'ALL')) {
             
                
             $pf = empty($q['query']['project_filter']) ? 'P,N,U' : $q['query']['project_filter'];
