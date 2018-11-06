@@ -139,6 +139,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             if(strpos($tbl, '__keys') !== false ){
                 continue;
             }
+            
             if(in_array($tbl , $views)) {
                 continue;
             }
@@ -159,12 +160,14 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             if (!$ce->fetch()) {
                 continue;
             }
+            //AWS is returning captials?
+            $engine = isset($ce->engine) ? $ce->engine : $ce->ENGINE;
             
-            if($ce->engine == 'InnoDB' ){
+            if($engine == 'InnoDB' ){
                 echo "InnoDB: SKIP $tbl\n";
                 continue;
             }
-            if($ce->engine == 'ndbcluster' ){
+            if($engine == 'ndbcluster' ){
                 echo "ndbcluster: SKIP $tbl\n";
                 continue;
             }
