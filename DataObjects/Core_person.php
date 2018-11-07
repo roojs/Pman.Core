@@ -626,7 +626,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!func_num_args()) {
             return $this->lang;
         }
-        $val = array_shift(func_get_args());
+        $ar = func_get_args();
+        $val = array_shift($ar);
         if ($val == $this->lang) {
             return;
         }
