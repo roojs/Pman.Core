@@ -256,6 +256,10 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         // we still use comptype in some old systems...
         
+        if(!empty($q['_merge_id'])){
+            $this->merge($q['_merge_id'], $roo);
+        }
+        
         if (!empty($q['comptype_id'])) {
             $en = DB_DataObject::Factory('core_enum');
             $en->get($q['comptype_id']);
