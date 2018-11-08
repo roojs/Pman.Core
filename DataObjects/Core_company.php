@@ -255,6 +255,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function beforeInsert($q, $roo)
     {
         // we still use comptype in some old systems...
+        
         if (!empty($q['comptype_id'])) {
             $en = DB_DataObject::Factory('core_enum');
             $en->get($q['comptype_id']);
@@ -272,7 +273,6 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
-        print_r('test?????');exit;
         // we still use comptype in some old systems...
         
         if (!empty($q['comptype_id'])) {
