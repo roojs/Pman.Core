@@ -16,3 +16,6 @@ ALTER TABLE core_ip_access ADD COLUMN user_agent VARCHAR(254) NOT NULL DEFAULT '
 ALTER TABLE core_ip_access ADD COLUMN updated_by INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_ip_access ADD INDEX ip_status_lookup(ip, status);
+
+ALTER TABLE core_ip_access ADD INDEX lookup_authorized_by (authorized_by);
+ALTER TABLE core_ip_access ADD INDEX lookup_updated_by (updated_by);
