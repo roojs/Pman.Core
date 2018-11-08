@@ -38,6 +38,8 @@ ALTER TABLE Events CHANGE COLUMN action action varchar(64)  default NULL;
 
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
 
+ALTER TABLE Events ADD INDEX lookup_person_id (person_id);
+
 -- #Keep for later use..
 
 -- ALTER TABLE Events CHANGE COLUMN person_name person_name VARCHAR(128) NOT NULL ;
