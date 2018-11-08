@@ -107,18 +107,16 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if(!empty($q['query']['name']) || !empty($q['search']['name'])){
             
             $s = (!empty($q['query']['name'])) ? $this->escape($q['query']['name']) : $this->escape($q['search']['name']);
+            
             $this->whereAdd("
                 {$tn}.name LIKE '%$s%'
             ");
         }
-        if(){ 
-            $s = $this->escape($q['search']['name']);
-            $this->whereAdd("
-                {$tn}.name LIKE '%$s%'
-            ");
-        }
-        if(!empty($q['search']['name_starts'])){
-            $s = $this->escape($q['search']['name_starts']);
+        
+        if(!empty($q['query']['name_starts']) || !empty($q['search']['name_starts'])){
+            
+            $s = (!empty($q['query']['name_starts'])) ? $this->escape($q['query']['name_starts']) : $this->escape($q['search']['name_starts']);
+            
             $this->whereAdd("
                 {$tn}.name LIKE '$s%'
             ");
