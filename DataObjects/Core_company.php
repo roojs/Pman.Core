@@ -299,10 +299,6 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             $roo->jerr('EXIST');
         }
         
-        if(!empty($q['_merge_id'])){
-            $this->merge($q['_merge_id'], $roo);
-        }
-        
         if(!empty($this->is_system) && 
             ($old->code != $this->code  ) // used to be not allowed to change name..
         ){
