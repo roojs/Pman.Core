@@ -19,3 +19,4 @@ ALTER TABLE core_office ADD COLUMN country VARCHAR(4) NULL;
 
 ALTER TABLE core_office ADD COLUMN display_name VARCHAR(4) NULL;
 
+ALTER TABLE core_office ADD INDEX lookup_company_id (company_id);
