@@ -16,4 +16,6 @@ alter table  core_watch ADD COLUMN  active int(11) NOT NULL DEFAULT '1';
 
 ALTER TABLE core_watch ADD INDEX qlookup (ontable,onid,person_id,event,medium);
 
+ALTER TABLE core_watch ADD INDEX lookup_person_id (person_id);
+
  
