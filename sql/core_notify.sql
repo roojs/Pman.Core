@@ -42,3 +42,6 @@ ALTER TABLE core_notify ADD   INDEX lookup_e (onid, ontable, person_id, act_when
 ALTER TABLE core_notify ADD   INDEX lookup_f (to_email);
 alter table core_notify add index lookup_g(sent, act_start, act_when);
 
+ALTER TABLE core_notify ADD INDEX lookup_person_id (person_id);
+ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);
+
