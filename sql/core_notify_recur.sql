@@ -30,3 +30,5 @@ ALTER TABLE  core_notify_recur  ADD INDEX lookup(person_id, dtstart, dtend, tz, 
 -- old design..
 ALTER TABLE  core_notify_recur  CHANGE COLUMN tz  tz varchar(64)  NOT NULL;
 
+ALTER TABLE core_notify_recur ADD INDEX lookup_person_id (person_id);
+
