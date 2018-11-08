@@ -104,3 +104,5 @@ ALTER TABLE core_person add index lookup_owner(owner_id);
 ALTER TABLE core_person ADD COLUMN post_code VARCHAR(256) NOT NULL DEFAULT '';
 
 ALTER TABLE core_person ADD COLUMN oath_key VARCHAR(254) NOT NULL DEFAULT ''; 
+
+alter table core_person add index lookup_company_id( company_id);
