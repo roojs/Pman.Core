@@ -50,6 +50,8 @@ ALTER TABLE core_company ADD COLUMN deleted_by INT(11)  NOT NULL DEFAULT 0;
 
 ALTER TABLE core_company ADD COLUMN deleted_dt DATETIME  NOT NULL DEFAULT '0000-00-00'; 
 
+ALTER TABLE core_company ADD INDEX lookup_owner_id (owner_id);
+
 -- our new code should have this fixed now..
 -- UPDATE core_company set comptype='OWNER' where isOwner=1;
  
