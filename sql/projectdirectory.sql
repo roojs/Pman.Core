@@ -20,6 +20,7 @@ ALTER TABLE  ProjectDirectory ADD COLUMN   office_id int(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE ProjectDirectory ADD INDEX plookup (project_id,person_id, ispm, role);
 
+ALTER TABLE ProjectDirectory ADD INDEX lookup_company_id (company_id);
  
  
   
