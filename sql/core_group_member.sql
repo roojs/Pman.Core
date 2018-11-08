@@ -10,6 +10,7 @@ ALTER TABLE core_group_member ADD COLUMN  group_id int(11) NOT NULL default 0;
 
 ALTER TABLE core_group_member ADD COLUMN   user_id int(11) NOT NULL default 0;
 
+ALTER TABLE core_group_member ADD INDEX lookup_user_id (user_id);
 
 -- remove duplicates... (hopefully only one duplicate.. failes if > 2...)
 delete from  core_group_member where id in (
