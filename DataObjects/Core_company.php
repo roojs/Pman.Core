@@ -104,13 +104,14 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
                 ) as comptype_display_name
         ");
         
-        if(!empty($q['query']['name'])){
-            $s = $this->escape($q['query']['name']);
+        if(!empty($q['query']['name']) || !empty($q['search']['name'])){
+            
+            $s = (!empty($q['query']['name'])) ? $this->escape($q['query']['name']) : $this->escape($q['search']['name']);
             $this->whereAdd("
                 {$tn}.name LIKE '%$s%'
             ");
         }
-        if(!empty($q['search']['name'])){ 
+        if(){ 
             $s = $this->escape($q['search']['name']);
             $this->whereAdd("
                 {$tn}.name LIKE '%$s%'
