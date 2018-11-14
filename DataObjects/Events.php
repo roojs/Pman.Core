@@ -347,7 +347,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $rem[] = $obj->toEventString();
             }
         }
-        $rem[] = $remarks;
+        
+        if(!empty($remarks)){
+            $rem[] = $remarks;
+        }
+        
         $this->remarks = implode(' : ', $rem);
     }
     
