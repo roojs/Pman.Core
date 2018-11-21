@@ -42,7 +42,13 @@ class Pman_Core_Process_Php7 extends Pman
                 continue;
             }
             
+            if (is_dir($d)) {
+                $nDir = array_merge($dir, array($d));
+                $this->scan(array_merge($dir, array($d)), array_merge($cls, array($d)));
+                return;
+            }
             
+            echo "{$d}\n";
             
         }
         
