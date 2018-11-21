@@ -35,7 +35,8 @@ class Pman_Core_Process_Php7 extends Pman
             ));
         });
         
-        $this->scan();
+        $this->scan($this->rootDir . "/Pman");
+        $this->scan($this->rootDir . "/Hebe");
         
         exit;
     }
