@@ -49,7 +49,7 @@ class Pman_Core_Process_Php7 extends Pman
                 continue;
             }
             
-            
+            require_once implode('/', $cls) . "/" . $d;
             
         }
         
