@@ -9,74 +9,72 @@
  *
  */
 require_once 'Pman.php';
-class Pman_Core_Process_Php7 extends Pman
+
+class Pman_Core_Process_Php7 extends Pman 
 {
-    
-    static $cli_desc = "Tests for PHP compatibilty, by including files..."; 
+
+    static $cli_desc = "Tests for PHP compatibilty, by including files...";
     static $cli_opts = array();
-    
-    
-    function getAuth()
+
+    function getAuth() 
     {
-         if (empty($this->bootLoader->cli)) {
+        if (empty($this->bootLoader->cli)) {
             die("CLI only");
         }
-        
     }
-    
-    function get($base, $opts = array())
+
+    function get($base, $opts = array()) 
     {
+        print_r($this->rootDir);exit;
         
         $this->scan($this->rootDir, 'Pman');
     }
-    
-    function scan($p,$pr, $path=false) {
-        
-        
-        
-        $full_path = array($p,$pr);
+
+    function scan($p, $pr, $path = false) 
+    {
+        $full_path = array($p, $pr);
         $class_path = array();
-        if ($path !== false)  {
-            $full_path= array_merge($full_path, $path);
+        if ($path !== false) {
+            $full_path = array_merge($full_path, $path);
             $class_path = array_merge($class_path, $path);
         }
         //print_r("CHKDIR:    ". implode('/', $full_path)."\n");
-        
-        foreach(scandir(implode('/', $full_path)) as $d) {
-            
+
+        foreach (scandir(implode('/', $full_path)) as $d) {
+
             if (!strlen($d) || $d[0] == '.') {
                 continue;
             }
             $chk = $full_path;
             $chk[] = $d;
-            
+
             $clp = $class_path;
-            
-            
-            
+
+
+
             //print_r("CHK:          " . implode('/', $chk)."\n");
             // is it a file.. and .PHP...
             if (!is_dir(implode('/', $chk))) {
-                if (!preg_match('/\.php$/',$d)) {
+                if (!preg_match('/\.php$/', $d)) {
                     continue;
                 }
-                $clp[] = preg_replace('/\.php$/','', $d);
-                
+                $clp[] = preg_replace('/\.php$/', '', $d);
+
                 //print_r("CLP:          " . implode('/', $clp)."\n");
-                require_once "Pman/". implode('/', $clp ). '.php';
+                require_once "Pman/" . implode('/', $clp) . '.php';
                 continue;
             }
             $clp[] = $d;
             // otherwise recurse...
             //print_r("RECURSE:        " . implode('/', $clp)."\n");
-            
-            $this->scan($p,$pr, $clp);
+
+            $this->scan($p, $pr, $clp);
         }
     }
-    function output()
+
+    function output() 
     {
         die("DONE");
     }
-    
-    
+
 }
