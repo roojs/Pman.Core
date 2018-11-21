@@ -62,7 +62,7 @@ class Pman_Core_Process_Php7 extends Pman
             if($d == 'Php7.php'){
                 continue;
             }
-            
+            print_r($d);
 //            require_once implode('/', $route) . "/" . $d;
             
             try {
