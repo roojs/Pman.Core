@@ -50,6 +50,7 @@ class Pman_Core_Process_Php7 extends Pman
         foreach (scandir($dir) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
+                echo "not handle {$d}\n";
                 continue;
             }
             
