@@ -36,6 +36,8 @@ class Pman_Core_Process_Php7 extends Pman
         });
         
         $this->scan();
+        
+        exit;
     }
     
     function scan($route = array()) 
