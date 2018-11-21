@@ -29,12 +29,14 @@ class Pman_Core_Process_Php7 extends Pman
         $cls = array();
         
 //        $this->scan($this->rootDir, 'Pman');
-        $this->scan($dir, $cls);
+        $this->scan();
     }
     
-    function scan($dir, $cls) 
+    function scan($route = array()) 
     {
-        echo "Looking for " . implode('/', $dir) . "\n";
+        $dir = $this->rootDir . "/" . implode("/", $route);
+        
+        echo "Looking for {$dir}\n";
         
         foreach (scandir(implode('/', $dir)) as $d) {
             
