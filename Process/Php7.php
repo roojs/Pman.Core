@@ -30,13 +30,13 @@ class Pman_Core_Process_Php7 extends Pman
         
 //        $this->scan($this->rootDir, 'Pman');
         $this->scan($dir, $cls);
-        
-        
     }
     
-    function scan($dir) 
+    function scan($dir, $cls) 
     {
-        foreach (scandir($dir) as $d) {
+        
+        
+        foreach (scandir(implode('/', $dir)) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
                 continue;
