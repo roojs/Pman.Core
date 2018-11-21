@@ -63,10 +63,6 @@ class Pman_Core_Process_Php7 extends Pman
                 continue;
             }
             
-            if(empty($route)){
-                continue;
-            }
-            
             try {
                 
                 require_once implode('/', $route) . "/" . $d;
