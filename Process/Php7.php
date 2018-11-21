@@ -64,7 +64,7 @@ class Pman_Core_Process_Php7 extends Pman
             try {
                 
                 $cls = $d;
-                
+                var_dump($d);
                 if(!empty($route)){
                     $cls = implode('/', $route) . "/" . $d;
                 }
