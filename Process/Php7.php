@@ -29,6 +29,7 @@ class Pman_Core_Process_Php7 extends Pman
 //            throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
             print_r(array(
                 $errno,
+                $errstr,
                 $errfile,
                 $errline
             ));
