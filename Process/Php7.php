@@ -36,7 +36,7 @@ class Pman_Core_Process_Php7 extends Pman
         });
         
         $this->scan(array("Pman"));
-//        $this->scan(array("Hebe"));
+        $this->scan(array("Hebe"));
         
         exit;
     }
