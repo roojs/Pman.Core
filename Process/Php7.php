@@ -27,7 +27,7 @@ class Pman_Core_Process_Php7 extends Pman
     {
         set_error_handler(function ($errno, $errstr, $errfile, $errline ){
 //            throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
-            echo "{$errno}\n";
+            echo "{$errstr}\n";
         });
         
         $this->scan();
