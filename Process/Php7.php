@@ -25,9 +25,8 @@ class Pman_Core_Process_Php7 extends Pman
 
     function get($base, $opts = array()) 
     {
-        print_r($this->rootDir);exit;
-        
-        $this->scan($this->rootDir, 'Pman');
+//        $this->scan($this->rootDir, 'Pman');
+        $this->scan($this->rootDir);
     }
 
     function scan($p, $pr, $path = false) 
