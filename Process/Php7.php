@@ -54,6 +54,7 @@ class Pman_Core_Process_Php7 extends Pman
             }
             
             if (is_dir($d)) {
+                echo "directory : {$d}\n";
                 $this->scan(array_merge($route, array($d)));
                 continue;
             }
