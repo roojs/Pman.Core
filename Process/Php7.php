@@ -54,12 +54,10 @@ class Pman_Core_Process_Php7 extends Pman
             }
             
             if (is_dir("{$dir}/{$d}")) {
-                echo "directory : {$d}\n";
                 $this->scan(array_merge($route, array($d)));
                 continue;
             }
             
-            echo "get file {$d}\n";
             if (!preg_match('/\.php$/', $d)) {
                 continue;
             }
