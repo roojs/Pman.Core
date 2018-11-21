@@ -61,12 +61,13 @@ class Pman_Core_Process_Php7 extends Pman
             
             try {
                 
+                $cls = $d;
+                
                 if(!empty($route)){
-                    require_once implode('/', $route) . "/" . $d;
-                    continue;
+                    $cls = implode('/', $route) . "/" . $d;
                 }
                 
-                require_once $d;
+                require_once $cls;
                 
             } catch (ErrorException $ex) {
                 echo $ex->getMessage() . "\n";
