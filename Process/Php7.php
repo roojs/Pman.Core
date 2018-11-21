@@ -34,6 +34,8 @@ class Pman_Core_Process_Php7 extends Pman
     
     function scan($dir, $cls) 
     {
+        echo "Looking for " . implode('/', $dir) . "\n";
+        
         foreach (scandir(implode('/', $dir)) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
