@@ -38,14 +38,14 @@ class Pman_Core_Process_Php7 extends Pman
         
         echo "Looking for {$dir}\n";
         
-        foreach (scandir(implode('/', $dir)) as $d) {
+        foreach (scandir($dir) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
                 continue;
             }
             
             if (is_dir($d)) {
-                $this->scan(array_merge($dir, array($d)), array_merge($cls, array($d)));
+                $this->scan(array_merge($route, array($d)));
                 continue;
             }
             
@@ -53,7 +53,7 @@ class Pman_Core_Process_Php7 extends Pman
                 continue;
             }
             
-            require_once implode('/', $cls) . "/" . $d;
+            require_once implode('/', $route) . "/" . $d;
             
         }
         
