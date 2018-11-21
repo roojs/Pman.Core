@@ -28,51 +28,21 @@ class Pman_Core_Process_Php7 extends Pman
 //        $this->scan($this->rootDir, 'Pman');
 //        $this->scan($this->rootDir);
         
-        foreach (scandir($this->rootDir) as $d) {
-            echo "{$d}\n";
-        }
+        
     }
     
     function scan($dir) 
     {
-        $full_path = array($p, $pr);
-        $class_path = array();
-        if ($path !== false) {
-            $full_path = array_merge($full_path, $path);
-            $class_path = array_merge($class_path, $path);
-        }
-        //print_r("CHKDIR:    ". implode('/', $full_path)."\n");
-
-        foreach (scandir(implode('/', $full_path)) as $d) {
-
+        foreach (scandir($dir) as $d) {
+            
             if (!strlen($d) || $d[0] == '.') {
                 continue;
             }
-            $chk = $full_path;
-            $chk[] = $d;
-
-            $clp = $class_path;
-
-
-
-            //print_r("CHK:          " . implode('/', $chk)."\n");
-            // is it a file.. and .PHP...
-            if (!is_dir(implode('/', $chk))) {
-                if (!preg_match('/\.php$/', $d)) {
-                    continue;
-                }
-                $clp[] = preg_replace('/\.php$/', '', $d);
-
-                //print_r("CLP:          " . implode('/', $clp)."\n");
-                require_once "Pman/" . implode('/', $clp) . '.php';
-                continue;
-            }
-            $clp[] = $d;
-            // otherwise recurse...
-            //print_r("RECURSE:        " . implode('/', $clp)."\n");
-
-            $this->scan($p, $pr, $clp);
+            
+            
+            
         }
+        
     }
 
 //    function scan($p, $pr, $path = false) 
