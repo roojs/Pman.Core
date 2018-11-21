@@ -45,8 +45,6 @@ class Pman_Core_Process_Php7 extends Pman
     {
         $dir = $this->rootDir . "/" . implode("/", $route);
         
-        echo "Looking for {$dir}\n";
-        
         foreach (scandir($dir) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
