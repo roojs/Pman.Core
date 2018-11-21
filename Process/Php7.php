@@ -63,6 +63,8 @@ class Pman_Core_Process_Php7 extends Pman
             
             try {
                 require_once implode('/', $route) . "/" . $d;
+            } catch (ErrorException $ex) {
+                echo $ex->getMessage() . "\n";
             }
             
         }
