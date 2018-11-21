@@ -34,8 +34,6 @@ class Pman_Core_Process_Php7 extends Pman
     
     function scan($dir, $cls) 
     {
-        
-        
         foreach (scandir(implode('/', $dir)) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
@@ -43,12 +41,15 @@ class Pman_Core_Process_Php7 extends Pman
             }
             
             if (is_dir($d)) {
-                $nDir = array_merge($dir, array($d));
                 $this->scan(array_merge($dir, array($d)), array_merge($cls, array($d)));
-                return;
+                continue;
             }
             
-            echo "{$d}\n";
+            if (!preg_match('/\.php$/', $d)) {
+                continue;
+            }
+            
+            
             
         }
         
