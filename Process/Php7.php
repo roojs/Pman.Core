@@ -36,7 +36,7 @@ class Pman_Core_Process_Php7 extends Pman
         });
         
         $this->scan(array("Pman"));
-        $this->scan(array("Hebe"));
+//        $this->scan(array("Hebe"));
         
         exit;
     }
@@ -50,7 +50,6 @@ class Pman_Core_Process_Php7 extends Pman
         foreach (scandir($dir) as $d) {
             
             if (!strlen($d) || $d[0] == '.') {
-                echo "not handle {$d}\n";
                 continue;
             }
             
