@@ -23,8 +23,15 @@ class Pman_Core_Process_Php7 extends Pman
         }
     }
 
+    function exception_error_handler($errno, $errstr, $errfile, $errline ) 
+    {
+        throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+    }
+
     function get($base, $opts = array()) 
     {
+        set_error_handler("exception_error_handler");
+        
         $this->scan();
     }
     
@@ -49,7 +56,13 @@ class Pman_Core_Process_Php7 extends Pman
                 continue;
             }
             
-            require_once implode('/', $route) . "/" . $d;
+//            require_once implode('/', $route) . "/" . $d;
+            
+            try {
+                require_once implode('/', $route) . "/" . $d;
+            } catch (ErrorException $ex) {
+                echo "Unable to load configuration file.";
+            }
             
         }
         
