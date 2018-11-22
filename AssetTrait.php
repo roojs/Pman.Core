@@ -32,7 +32,9 @@ trait Pman_Core_AssetTrait {
                     $ar = array_merge($ar ,  glob($dir . '/'. $f));
                     continue;
                 }
-                
+                if (!preg_match('/\.js$/', $f)) {
+                    $f .= ".js";
+                }
                 $ar[] = $dir .'/'. $f;
             }
           
