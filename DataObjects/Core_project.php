@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
      * 
      */
     
-    function applyFilters($q, $au)
+    function applyFilters($q, $au, $roo)
     {
          
         $tn = $this->tableName();
