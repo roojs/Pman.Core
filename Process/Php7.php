@@ -34,9 +34,9 @@ class Pman_Core_Process_Php7 extends Pman
                 $errline
             ));
         });
-        print_R($this->bootLoader->project);exit;
+        
         $this->scan(array("Pman"));
-        $this->scan(array("Hebe"));
+        $this->scan(array($this->bootLoader->project));
         
         exit;
     }
