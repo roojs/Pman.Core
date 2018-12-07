@@ -1498,11 +1498,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $person = DB_DataObject::Factory('core_person');
         $person->id = -1;
         
-        $content = array(
+        return array(
             'HTTP_HOST' => $_SERVER['SERVER_NAME'],
             'person' => $person,
             'authFrom' => 'FAKE_LINK',
-            'authKey' -> 'FAKE_KEY',
+            'authKey' => 'FAKE_KEY',
 
             'rcpts' => $to->email,
         );
