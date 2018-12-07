@@ -140,7 +140,9 @@ class Pman_Core_UpdateDatabase extends Pman
             'test_class' => 'Pman/Core/DataObjects/Core_person',
             'to_group' => '',
             'active' => 1,
-            'description' => '99. Management System Password Reset'
+            'description' => '99. Management System Password Reset',
+            'template_dir' => '/Pman/Core/templates/mail/'
+
             
         )
     );
