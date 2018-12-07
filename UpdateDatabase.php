@@ -263,6 +263,34 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->clearApacheDataobjectsCache();
         
         $this->clearApacheAssetCache();
+        
+        
+        $core_group = DB_DataObject::factory('core_group');
+        $core_group->get('name', 'Administrators');
+        if(!empty($core_group->memberCount())) {
+            
+            $core_company = DB_DataObject::factory('core_company');
+            $core_company->get('comptype', 'OWNER');
+            
+           
+            
+            foreach ($this->emailTemplates as $k => $mail) {
+                $mail_dir = $this->client_path.'/mail/';
+                
+                if (!file_exists($mail_dir."{$k}.html")) {
+                    $mail_dir = $ff->page->rootDir. '/Pman/Core/templates/mail/';
+                }
+                
+                $this->initEmails(
+                    $mail_dir,
+                    array($k => $mail),
+                    array()
+                );
+            }
+        } 
+        
+        
+        
     }
     
     function output() {
