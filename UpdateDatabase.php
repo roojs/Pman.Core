@@ -90,17 +90,7 @@ class Pman_Core_UpdateDatabase extends Pman
             
         ),
     );
-    var $emailTemplates = array(
-        'ADMIN_PASSWORD_RESET' => array(
-            'bcc_group' => 'Administrators',
-            'test_class' => 'Pman/Core/DataObjects/Core_person',
-            'to_group' => '',
-            'active' => 1,
-            'description' => '99. Management System Password Reset'
-            
-        )
-    );
-    
+  
     static function cli_opts()
     {
         
@@ -144,6 +134,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'active' => 1,
             'description' => '9. System Error Messages',
             'template_dir' => '/Pman/Admin/templates/mail/'
+        ),
+         'ADMIN_PASSWORD_RESET' => array(
+            'bcc_group' => 'Administrators',
+            'test_class' => 'Pman/Core/DataObjects/Core_person',
+            'to_group' => '',
+            'active' => 1,
+            'description' => '99. Management System Password Reset'
+            
         )
     );
     
@@ -265,29 +263,7 @@ class Pman_Core_UpdateDatabase extends Pman
         $this->clearApacheAssetCache();
         
         
-        $core_group = DB_DataObject::factory('core_group');
-        $core_group->get('name', 'Administrators');
-        if(!empty($core_group->memberCount())) {
-            
-            $core_company = DB_DataObject::factory('core_company');
-            $core_company->get('comptype', 'OWNER');
-            
-           
-            
-            foreach ($this->emailTemplates as $k => $mail) {
-                $mail_dir = $this->client_path.'/mail/';
-                
-                if (!file_exists($mail_dir."{$k}.html")) {
-                    $mail_dir = $ff->page->rootDir. '/Pman/Core/templates/mail/';
-                }
-                
-                $this->initEmails(
-                    $mail_dir,
-                    array($k => $mail),
-                    array()
-                );
-            }
-        } 
+        
         
         
         
