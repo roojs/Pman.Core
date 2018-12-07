@@ -1494,13 +1494,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     static function test_ADMIN_PASSWORD_RESET($pg, $to)
     {
-        
+        $ff = HTML_FlexyFramework::get();
         
         $content = array(
-            'person' => $person,
-            'user_data' => (object) array(
-                'in_firstname' => $to->name
-            ),
+            
             'baseURL' => $ff->baseURL,
             'serverName' => $_SERVER['SERVER_NAME'],
             'rcpts' => $to->email,
