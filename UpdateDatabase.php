@@ -132,7 +132,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'test_class' => 'Pman/Admin/Report/SendEventErrors',
             'to_group' => 'Administrators',
             'active' => 1,
-            'description' => '9. System Error Messages',
+            'description' => '9.2 System Error Messages',
             'template_dir' => '/Pman/Admin/templates/mail/'
         ),
          'ADMIN_PASSWORD_RESET' => array(
@@ -140,7 +140,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'test_class' => 'Pman/Core/DataObjects/Core_person',
             'to_group' => '',
             'active' => 1,
-            'description' => '99. Management System Password Reset',
+            'description' => '9.1 Management System Password Reset',
             'template_dir' => '/Pman/Core/templates/mail/'
 
             
