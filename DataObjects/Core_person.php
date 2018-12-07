@@ -327,7 +327,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         
-        if (empty($_SERVER['PATH_INFO']) || preg_match('#^(/Login$|/PasswordReset)#/', $_SERVER['PATH_INFO']) {
+        if (empty($_SERVER['PATH_INFO']) || preg_match('#^(/Login$|/PasswordReset)#/', $_SERVER['PATH_INFO'])) {
             $auto_auth_allow  = false;
         }
         //var_dump($auto_auth_allow);
