@@ -1492,10 +1492,22 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return "data:image/png;base64,{$base64}";
     }
     
-    static function test_ADMIN_PASSWORD_RESET()
+    static function test_ADMIN_PASSWORD_RESET($pg, $to)
     {
         
         
+        $content = array(
+            'person' => $person,
+            'user_data' => (object) array(
+                'in_firstname' => $to->name
+            ),
+            'baseURL' => $ff->baseURL,
+            'serverName' => $_SERVER['SERVER_NAME'],
+            'rcpts' => $to->email,
+        );
+        
+        return $content;
     }
+    
     
  }
