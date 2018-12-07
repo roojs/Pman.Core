@@ -94,10 +94,13 @@ class Pman_Core_UpdateDatabase extends Pman
         'ADMIN_PASSWORD_RESET' => array(
             'bcc_group' => 'Administrators',
             'test_class' => 'Pman/Core/DataObjects/Core_person',
-            'to_group' => 'Review Submission Group',
-            'active' => 0,
-            'description' => '3. Application submitted - email to admin with deposit slip'
-        ),
+            'to_group' => '',
+            'active' => 1,
+            'description' => '99. Management System Password Reset'
+            
+        )
+    );
+    
     static function cli_opts()
     {
         
