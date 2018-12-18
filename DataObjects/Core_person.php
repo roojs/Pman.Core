@@ -1470,9 +1470,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ){
             return false;
         }
-        
-        $issuer = (empty($this->name)) ? 
-            rawurlencode('ROOJS') : rawurlencode($this->name);
+        $pg= HTML_FlexyFramework::get()->page;
+        $issuer = (empty($pg->company->name)) ? 
+            rawurlencode('ROOJS') : rawurlencode($pg->company->name);
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$hash}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
