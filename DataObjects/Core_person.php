@@ -814,7 +814,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             $roo->jdata(array(
                 'secret' => $hash,
-                'image' => $qrcode
+                'image' => $qrcode,
+                'issuer' => $person->issuer
             ));
         }
         
@@ -1475,7 +1476,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         $pg= HTML_FlexyFramework::get()->page;
         
-        $issuer = (empty($pg->company->name)) ?  rawurlencode('ROOJS') : rawurlencode($pg->company->name);
+        $this->issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
+        
+        $issuer = rawurlencode($this->issuer);
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$hash}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
         
