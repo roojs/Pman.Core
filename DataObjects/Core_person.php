@@ -796,7 +796,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
             
             $hash = $this->generateOathKey();
-            
+            print_r($hash);exit;
             $_SESSION[__CLASS__] = 
                 isset($_SESSION[__CLASS__]) ? 
                     $_SESSION[__CLASS__] : array();
