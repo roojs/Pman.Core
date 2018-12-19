@@ -796,7 +796,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
             
             $hash = $this->generateOathKey();
-            print_r($hash);exit;
+            
             $_SESSION[__CLASS__] = 
                 isset($_SESSION[__CLASS__]) ? 
                     $_SESSION[__CLASS__] : array();
@@ -812,7 +812,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr('Fail to generate QR Code');
             }
             
-            $roo->jok($qrcode);
+            $roo->jdata(array(
+                'secret' => $hash,
+                'image' => $qrcode
+            ));
         }
         
         if(!empty($q['two_factor_auth_code'])) {
