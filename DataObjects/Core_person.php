@@ -1501,7 +1501,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
         
-        return $this->issuer;
+        return $issuer;
     }
     
     static function test_ADMIN_PASSWORD_RESET($pg, $to)
