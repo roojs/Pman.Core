@@ -1499,9 +1499,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $pg= HTML_FlexyFramework::get()->page;
         
-        $this->issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
+        $issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
         
-        return;
+        return $this->issuer;
     }
     
     static function test_ADMIN_PASSWORD_RESET($pg, $to)
