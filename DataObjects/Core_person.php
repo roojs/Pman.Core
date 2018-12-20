@@ -1475,13 +1475,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             return false;
         }
         
-        if(method_exists($this, 'selectAddExtra')) {
-            print_r('exist');
-            exit;
-        }
-        
-        print_r('not exist');exit;
-        
         $issuer = rawurlencode($this->qrCodeIssuer());
         
         $uri = "otpauth://totp/{$issuer}:{$this->email}?secret={$hash}&issuer={$issuer}&algorithm=SHA1&digits=6&period=30";
