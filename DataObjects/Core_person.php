@@ -1474,9 +1474,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ){
             return false;
         }
-        $pg= HTML_FlexyFramework::get()->page;
         
-        $this->issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
         
         $issuer = rawurlencode($this->issuer);
         
@@ -1496,6 +1494,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ob_end_clean();
         
         return "data:image/png;base64,{$base64}";
+    }
+    
+    function qrCodeIssuer()
+    {
+        $pg= HTML_FlexyFramework::get()->page;
+        
+        $this->issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
+        
+        return;
     }
     
     static function test_ADMIN_PASSWORD_RESET($pg, $to)
