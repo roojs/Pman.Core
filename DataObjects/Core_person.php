@@ -1499,7 +1499,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $pg= HTML_FlexyFramework::get()->page;
         
-        $issuer = (empty($pg->company->name)) ?  'COBA KYC' : "{$pg->company->name} COBA KYC";
+        $issuer = (empty($pg->company->name)) ?  'ROOJS' : "{$pg->company->name}";
         
         return $issuer;
     }
