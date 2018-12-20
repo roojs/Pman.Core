@@ -815,7 +815,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $roo->jdata(array(
                 'secret' => $hash,
                 'image' => $qrcode,
-                'issuer' => $person->issuer
+                'issuer' => $person->qrCodeIssuer()
             ));
         }
         
