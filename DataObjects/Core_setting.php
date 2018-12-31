@@ -112,35 +112,20 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $key_dir = "{$this->getKeyDirectory()}/pub.key";
         
         if(!file_exists($key_dir)) {
-            print_r("Cannot find {$key_dir}");
-            exit;
+            return false;
         }
         
         $pub_key = file_get_contents($key_dir);
         if(!$pub_key) {
-            return;
+            return false;
         }
         openssl_public_encrypt($v, $ciphertext, $pub_key);
         return $ciphertext;
     }
     
-    function getDecryptVal()
+    function decrypt($v)
     {
-        $dir = $this->getKeyDirectory();
-        
-        if(!$dir) {
-            return false;
-        }
-        
-        if(empty($this->val)) {
-            return false;
-        }
-        
-        if(empty($this->is_encrypt)) {
-            return $this->val;
-        }
-        
-        $key_dir = "{$dir}/pri.key";
+        $key_dir = "{$this->getKeyDirectory()}/pri.key";
         
         if(!file_exists($key_dir)) {
             return false;
@@ -152,9 +137,23 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return false;
         }
         
-        openssl_private_decrypt($this->val, $plaintext, $pri_key);
+        openssl_private_decrypt($v, $plaintext, $pri_key);
         
         return $plaintext;
+    }
+    
+    function getDecryptVal()
+    {
+        
+        if(empty($this->val)) {
+            return false;
+        }
+        
+        if(empty($this->is_encrypt)) {
+            return $this->val;
+        }
+        
+        return $this->decrypt($this->val);
     }
     
 }
