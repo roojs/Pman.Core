@@ -128,8 +128,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         $key_dir = "{$this->getKeyDirectory()}/pri.key";
         
         if(!file_exists($key_dir)) {
-            print_r("Cannot find {$key_dir}");
-            exit;
+            return false;
         }
         
         $pri_key = file_get_contents($key_dir);
