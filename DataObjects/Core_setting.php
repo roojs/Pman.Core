@@ -144,11 +144,6 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function getDecryptVal()
     {
-        $dir = $this->getKeyDirectory();
-        
-        if(!$dir) {
-            return false;
-        }
         
         if(empty($this->val)) {
             return false;
@@ -158,21 +153,7 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
             return $this->val;
         }
         
-        $key_dir = "{$dir}/pri.key";
-        
-        if(!file_exists($key_dir)) {
-            return false;
-        }
-        
-        $pri_key = file_get_contents($key_dir);
-        
-        if(!$pri_key) {
-            return false;
-        }
-        
-        openssl_private_decrypt($this->val, $plaintext, $pri_key);
-        
-        return $plaintext;
+        return $this->decrypt($this->val);
     }
     
 }
