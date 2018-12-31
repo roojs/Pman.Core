@@ -124,6 +124,31 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
         return $ciphertext;
     }
     
+    function decrypt($v)
+    {
+        $dir = $this->getKeyDirectory();
+        
+        if(!$dir) {
+            return false;
+        }
+        
+        $key_dir = "{$dir}/pri.key";
+        
+        if(!file_exists($key_dir)) {
+            return false;
+        }
+        
+        $pri_key = file_get_contents($key_dir);
+        
+        if(!$pri_key) {
+            return false;
+        }
+        
+        openssl_private_decrypt($v, $plaintext, $pri_key);
+        
+        return $plaintext;
+    }
+    
     function getDecryptVal()
     {
         $dir = $this->getKeyDirectory();
