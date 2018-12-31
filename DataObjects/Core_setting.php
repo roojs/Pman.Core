@@ -126,16 +126,11 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function decrypt($v)
     {
-        $dir = $this->getKeyDirectory();
-        
-        if(!$dir) {
-            return false;
-        }
-        
-        $key_dir = "{$dir}/pri.key";
+        $key_dir = "{$this->getKeyDirectory()}/pri.key";
         
         if(!file_exists($key_dir)) {
-            return false;
+            print_r("Cannot find {$key_dir}");
+            exit;
         }
         
         $pri_key = file_get_contents($key_dir);
