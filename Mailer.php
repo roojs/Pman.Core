@@ -402,6 +402,7 @@ class Pman_Core_Mailer {
             }
             
             if(!array_key_exists($url, $urls)){
+                print_r($url);exit;
                 $conv = $this->fetchImage($url);
                 $urls[$url] = $conv;
                 $this->images[$conv['contentid']] = $conv;
