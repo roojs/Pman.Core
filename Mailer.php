@@ -402,10 +402,7 @@ class Pman_Core_Mailer {
             }
             
             if(!array_key_exists($url, $urls)){
-                $url = "http://localhost/web.MediaOutreach/Release/templates/images/logo.png";
                 $conv = $this->fetchImage($url);
-                echo "$url\n";
-                print_r($conv);exit;
                 $urls[$url] = $conv;
                 $this->images[$conv['contentid']] = $conv;
             } else {
