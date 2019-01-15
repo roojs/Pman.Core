@@ -157,9 +157,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      *  @param int    $onid    - the id of the row changed
      *  @param string  $whereAdd (optiona) - a DB whereAdd() condition to filter the search for watches
      *  @param datetime    $when   (default now)  - date/time to create the notification for (Eg. end of day..)
+     *  @param string $to_ontable  - notify event create on this table, rather than watch table.
+     *  @param string $to_id  - notify event create on this id, rather than watch id.
+     *  
      * 
      */
-    function notify($ontable , $onid, $whereAdd = false, $when=false)
+    function notify($ontable , $onid, $whereAdd = false, $when=false, $to_ontable=false, $to_onid=false)
     {
         $w = DB_DataObject::factory('core_watch');   
         if ($whereAdd !== false) { 
@@ -182,8 +185,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
          
          
             $nn = DB_DataObject::Factory('core_notify');
-            $nn->ontable = $ontable;
-            $nn->onid = $onid;
+            $nn->ontable = $to_ontable === false ? $ontable : $to_ontable;
+            $nn->onid = $to_onid === false ?  $onid : $to_onid;
             $nn->evtype = $w->medium;
             $nn->person_id = $w->person_id;
             
