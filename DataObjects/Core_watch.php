@@ -182,8 +182,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
          
-         
-         
             $nn = DB_DataObject::Factory('core_notify');
             $nn->ontable = $to_ontable === false ? $ontable : $to_ontable;
             $nn->onid = $to_onid === false ?  $onid : $to_onid;
