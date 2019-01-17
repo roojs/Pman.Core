@@ -1300,7 +1300,7 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function clearApacheAssetCache()
     {
-        echo "Clearing Asset Cache\n";
+        echo "Clearing Asset Cache : http://localhost{$this->local_base_url}/Core/Asset\n";
         $response = $this->curl(
             "http://localhost{$this->local_base_url}/Core/Asset",
             array( '_clear_cache' => 1 ,'returnHTML' => 'NO' ),
