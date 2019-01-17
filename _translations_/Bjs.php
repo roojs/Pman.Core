@@ -15,24 +15,23 @@ class Pman_Core_Bjs {
     {
         
         $this->json = json_decode(file_get_contents($file));
-    
         $this->iterateFields($this->json->items);
     }
     
-    function iterateFields($ar, $res)
+    function iterateFields($ar)
     {
         foreach($ar as $o) {
             
             switch ($o->xtype) {
                 case "ComboBox":                
-                    $res[] = $o->{'String hiddenName'};
+                    $this->fields[] = $o->{'String hiddenName'};
                     // fall throught..
                     $k = isset($o->{'String name'}) ? 'String name' : 'string name';
                     
                     if (!isset($o->{$k})) {
                         break; // allowed to not exit.
                     }
-                    $res[] = $o->{$k};
+                    $this->fields[] = $o->{$k};
                     
                 case "Input":
                 case "TextArea":
@@ -48,25 +47,24 @@ class Pman_Core_Bjs {
                         echo "missing string name";
                         print_r($o);exit;
                     }
-                    $res[] = $o->{$k};
+                    $this->fields[] = $o->{$k};
                     break;
                 
                 case "MoneyField":
                     $k = isset($o->{'String currencyName'}) ? 'String currencyName' : 'string currencyName';
                     
-                    $res[] = $o->{$k};
+                    $this->fields[] = $o->{$k};
                     $k = isset($o->{'String name'}) ? 'String name' : 'string name';
-                    $res[] = $o->{$k};
+                    $this->fields[] = $o->{$k};
                     break;
                 default:
                     if (isset($o->items)) {
-                        $res = $this->iterateFields($o->items,$res);
+                        $this->fields = $this->iterateFields($o->items);
                     }
             }
              
         }
         
-        return $res;
     }
     
     
