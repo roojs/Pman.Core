@@ -1277,10 +1277,13 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function clearApacheDataobjectsCache()
     {
-        echo "Clearing Database Cache\n";
+        
         // this needs to clear it's own cache along with remote one..
   
         $url = "http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache";
+        
+        echo "Clearing Database Cache : http://localhost{$this->local_base_url}/Core/RefreshDatabaseCache\n";
+        
         $response = $this->curl($url);
         
         $json = json_decode($response, true);
