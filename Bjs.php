@@ -59,7 +59,7 @@ class Pman_Core_Bjs {
                     break;
                 default:
                     if (isset($o->items)) {
-                        $this->fields = $this->iterateFields($o->items);
+                        $this->iterateFields($o->items);
                     }
             }
              
