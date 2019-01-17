@@ -3,7 +3,7 @@
 /**
  * parse BJS files .... 
  *
- *
+ * currenly only extracts $this->fields from the list..
  */
 
 class Pman_Core_Bjs {
@@ -11,7 +11,7 @@ class Pman_Core_Bjs {
     var $json;
     var $fields = array();
     
-    static function formFields($file)
+    function __construct($file)
     {
         
         $this->json = json_decode(file_get_contents($file));
