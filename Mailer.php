@@ -122,7 +122,7 @@ class Pman_Core_Mailer {
         
         $ff = HTML_FlexyFramework::get();
         $http_host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : 'pman.HTTP_HOST.not.set';
-        if (isset($ff->Pman['HTTP_HOST'])) {
+        if (isset($ff->Pman['HTTP_HOST']) && $http_host != 'localhost') {
             $http_host  = $ff->Pman['HTTP_HOST'];
         }
         
