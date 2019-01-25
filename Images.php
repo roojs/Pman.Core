@@ -465,7 +465,8 @@ class Pman_Core_Images extends Pman
         $id = $umatch[2];
         $hash = '';
         if (!empty($umatch[3]) && strpos($umatch[3],'#')) {
-            $hash = '#'. array_pop(explode('#',$umatch[3]));
+            $hh = explode('#',$umatch[3]);
+            $hash = '#'. array_pop($hh);
         }
         
         
