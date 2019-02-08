@@ -408,9 +408,10 @@ class Pman_Core_Mailer {
             } else {
                 $conv = $urls[$url];
             }
-            
+            $img->setAttribute('origsrc', $url);
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
         }
+        
         
         return $dom->saveHTML();
         
