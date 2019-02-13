@@ -176,8 +176,6 @@ class Pman_Core_Images extends Pman
             
         }
         
-        
-       
         $img = DB_DataObjecT::factory('Images');
          
         if (!$id || !$img->get($id)) {
@@ -196,15 +194,13 @@ class Pman_Core_Images extends Pman
             if ($comp->comptype != 'OWNER') {
                 $this->imgErr("not-owner-company",$s);
             }
+            
             return $this->serve($img);
-        
             
         }
         
-        
         if(!$this->hasPermission($img)){
             $this->imgErr("access to this image/file has been denied.",$s);
-            
         }
         
         $this->serve($img);
