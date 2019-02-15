@@ -270,7 +270,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.cellholder = this.sheet.getElementsByTagNameNS('*','Cells')[0];
         var cells = this.sheet.getElementsByTagNameNS('*','Cell');
 
-        Roo.log(cells);
+        
         
         Roo.each(cells, function(c) {
            // Roo.log(c);
