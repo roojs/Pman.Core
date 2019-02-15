@@ -308,7 +308,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         
         var merge = this.sheet.getElementsByTagNameNS('*','Merge');
-        Roo.log(this.grid);
+        Roo.log(merge);
         Roo.each(merge, function(c) {
             var rc = _t.rangeToRC(c.textContent);
             //Roo.log(JSON.stringify(rc));
