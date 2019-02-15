@@ -327,7 +327,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                }
            }
             
-            
         });
         // read colinfo..
         var ci = this.sheet.getElementsByTagNameNS('*','ColInfo');
