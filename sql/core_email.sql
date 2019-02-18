@@ -36,3 +36,6 @@ ALTER TABLE core_email ADD INDEX lookup_owner_id (owner_id);
 
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
+-- need to drop auto created triggers = as we modfied bcc-groupo _> bcc_grou_id
+DROP TRIGGER  IF EXISTS core_email_before_insert;
+DROP TRIGGER  IF EXISTS core_email_before_update;
