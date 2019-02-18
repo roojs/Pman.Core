@@ -168,7 +168,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                             geoip_city
                     WHERE
                             geoip_city.country = 'i18n.lkey'
-                ) AS no_of_division
+                ) AS no_of_city
             ");
             
         }
