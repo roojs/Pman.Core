@@ -149,6 +149,29 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             }
             
         }
+        
+        if(!empty($q['_with_geoip_count'])) {
+            
+            $this->selectAdd("
+                (
+                    SELECT
+                            COUNT(geoip_division.id)
+                    FROM
+                            geoip_division
+                    WHERE
+                            geoip_division.country = i18n.lkey
+                ) AS no_of_division,
+                (
+                    SELECT
+                            COUNT(geoip_city.id)
+                    FROM
+                            geoip_city
+                    WHERE
+                            geoip_city.country = i18n.lkey
+                ) AS no_of_city
+            ");
+            
+        }
     }
     
     function lookupCode($inlang,$ltype,$name)

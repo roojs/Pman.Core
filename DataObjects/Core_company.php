@@ -12,7 +12,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     public $__table = 'core_company';                       // table name
     public $code;                            // string(32)  not_null
     public $name;                            // string(128)  
-    public $remarks;                         // blob(65535)  blob
+    public $remarks;                         // blob(65535)  blobeforeDeleteb
     public $owner_id;                        // int(11)  not_null
     public $address;                         // blob(65535)  blob
     public $tel;                             // string(32)  
@@ -328,7 +328,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $img->onid = $this->id;
         $img->find();
         while ($img->fetch()) {
-            $img->beforeDelete();
+            $img->beforeDelete(array(), $roo);
             $img->delete();
         }
         return true;
