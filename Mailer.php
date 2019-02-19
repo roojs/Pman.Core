@@ -604,6 +604,10 @@ class Pman_Core_Mailer {
         $mt = $a->getResponseHeader('Content-Type');
         print_r($mt);
         echo "\n";
+        
+        if($mt == 'text/html; charset=UTF-8') {
+            print_R($data);
+        }
         require_once 'File/MimeType.php';
         $m  = new File_MimeType();
         $ext = $m->toExt($mt);
