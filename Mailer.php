@@ -605,7 +605,7 @@ class Pman_Core_Mailer {
         print_r($mt);
         echo "\n";
         
-        if(preg_match('/html/', $mt)) {
+        if(preg_match('/html/', 'png')) {
             print_R($data);
         }
         require_once 'File/MimeType.php';
