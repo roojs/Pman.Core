@@ -394,7 +394,7 @@ class Pman_Core_Mailer {
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
             print_r($url);
-            echo "\n";
+            echo "<br/>";
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
