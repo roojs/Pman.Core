@@ -588,6 +588,7 @@ class Pman_Core_Mailer {
         
         $real_url = str_replace(' ', '%20', $this->mapurl($url));
         $a = new HTTP_Request($real_url);
+        $a->addQueryString('is_email', 1);
         $a->sendRequest();
         $data = $a->getResponseBody();
         

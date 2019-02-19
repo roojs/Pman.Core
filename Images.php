@@ -44,6 +44,8 @@ class Pman_Core_Images extends Pman
     // tables that do not need authentication checks before serving.
     var $public_image_tables = array();
     
+    var $is_email = false;
+    
     var  $sizes = array(
                 '100', 
                 '100x100', 
@@ -82,6 +84,10 @@ class Pman_Core_Images extends Pman
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
         //}
+        
+        if(!empty($_REQUEST['is_email'])) {
+            $this->is_email = true;
+        }
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
@@ -184,6 +190,10 @@ class Pman_Core_Images extends Pman
         
         if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
            
+            if($this->is_email) {
+                return $this->serve($img);
+            }
+            
             if ($img->ontable != 'core_company') {
                 $this->imgErr("not-authenticated {$img->ontable}",$s);
             }
