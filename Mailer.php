@@ -390,7 +390,7 @@ class Pman_Core_Mailer {
         $imgs= $dom->getElementsByTagName('img');
         
         $urls = array();
-        
+        print_r($imgs);exit;
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
             if (preg_match('#^cid:#', $url)) {
