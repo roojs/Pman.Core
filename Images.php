@@ -44,6 +44,8 @@ class Pman_Core_Images extends Pman
     // tables that do not need authentication checks before serving.
     var $public_image_tables = array();
     
+    var $is_email = false;
+    
     var  $sizes = array(
                 '100', 
                 '100x100', 
