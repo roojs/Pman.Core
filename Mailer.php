@@ -602,7 +602,8 @@ class Pman_Core_Mailer {
         
         
         $mt = $a->getResponseHeader('Content-Type');
-        
+        print_r($mt);
+        echo "\n";
         require_once 'File/MimeType.php';
         $m  = new File_MimeType();
         $ext = $m->toExt($mt);
