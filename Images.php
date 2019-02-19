@@ -187,7 +187,7 @@ class Pman_Core_Images extends Pman
         if (!$id || !$img->get($id)) {
             $this->imgErr("image has been removed or deleted.",$s);
         }
-        print_R($_REQUEST);exit;
+        
         if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
            
             if($this->is_email) {
