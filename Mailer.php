@@ -394,7 +394,7 @@ class Pman_Core_Mailer {
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
             print_r($url);
-            echo "<br/>";
+            echo "\n";
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
@@ -406,7 +406,7 @@ class Pman_Core_Mailer {
             if(!array_key_exists($url, $urls)){
                 $conv = $this->fetchImage($url);
                 print_r($conv);
-                echo "<br/>";
+                echo "\n";
                 $urls[$url] = $conv;
                 $this->images[$conv['contentid']] = $conv;
             } else {
