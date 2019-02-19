@@ -1200,12 +1200,14 @@ class Pman_Core_UpdateDatabase extends Pman
         $dburl = parse_url($ff->database);
         
         $dbtype = $dburl['scheme'];
-       
+        $dbtype  = ($dbtype == 'mysqli') ? 'mysql' : $dbtype;
+        
         foreach($this->extensions as $ext) {
        
             $scls = ucfirst($dbtype). $ext;
             $cls = __CLASS__ . '_'. $scls;
             $fn = implode('/',explode('_', $cls)).'.php';
+            
             if (!file_exists(__DIR__.'/UpdateDatabase/'. $scls .'.php')) {
                 return;
             }
