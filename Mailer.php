@@ -390,9 +390,10 @@ class Pman_Core_Mailer {
         $imgs= $dom->getElementsByTagName('img');
         
         $urls = array();
-        print_r($imgs);exit;
+        
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
+            print_r($url);
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
@@ -412,7 +413,7 @@ class Pman_Core_Mailer {
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
         }
         
-        
+        exit;
         return $dom->saveHTML();
         
     }
