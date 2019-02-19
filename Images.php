@@ -317,7 +317,7 @@ class Pman_Core_Images extends Pman
         } else {
             $x->convert( $this->as_mimetype, $this->size);
         }
-        
+        print_R('test??');exit;
         $x->serve();
         exit;
         
