@@ -85,6 +85,10 @@ class Pman_Core_Images extends Pman
         //   return $this->post();
         //}
         
+        if(!empty($_REQUEST['is_email'])) {
+            $this->is_email = true;
+        }
+        
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
         $this->page = empty($_REQUEST['page']) ? false : (int) $_REQUEST['page'];
