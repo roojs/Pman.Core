@@ -393,8 +393,6 @@ class Pman_Core_Mailer {
         
         foreach ($imgs as $i=>$img) {
             $url  = $img->getAttribute('src');
-            print_r($url);
-            echo "\n";
             if (preg_match('#^cid:#', $url)) {
                 continue;
             }
@@ -405,8 +403,6 @@ class Pman_Core_Mailer {
             
             if(!array_key_exists($url, $urls)){
                 $conv = $this->fetchImage($url);
-                print_r($conv);
-                echo "\n";
                 $urls[$url] = $conv;
                 $this->images[$conv['contentid']] = $conv;
             } else {
@@ -416,7 +412,7 @@ class Pman_Core_Mailer {
             $img->setAttribute('src', 'cid:' . $conv['contentid']);
         }
         
-        exit;
+        
         return $dom->saveHTML();
         
     }
@@ -591,8 +587,6 @@ class Pman_Core_Mailer {
         require_once 'HTTP/Request.php';
         
         $real_url = str_replace(' ', '%20', $this->mapurl($url));
-        print_R($real_url);
-        echo "\n";
         $a = new HTTP_Request($real_url);
         $a->sendRequest();
         $data = $a->getResponseBody();
@@ -604,8 +598,6 @@ class Pman_Core_Mailer {
         
         
         $mt = $a->getResponseHeader('Content-Type');
-        print_r($mt);
-        echo "\n";
         
         require_once 'File/MimeType.php';
         $m  = new File_MimeType();
