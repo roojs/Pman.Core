@@ -274,12 +274,23 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         // we still use comptype in some old systems...
         
+        if(!empty($q['comptype']) && empty($q['comptype_id'])) {
+            $en = DB_DataObject::Factory('core_enum');
+            $en->setFrom(array(
+                'etype' => 'COMPTYPE',
+                'name' => $q['comptype'],
+                'active' => 1
+            ));
+            if($en->find(true)) {
+                $this->comptype_id = $en->id;
+            }
+        }
+        
         if (!empty($q['comptype_id'])) {
             $en = DB_DataObject::Factory('core_enum');
             $en->get($q['comptype_id']);
             $this->comptype = $en->name;
         }
-        
         
         if(!empty($q['_flag_delete'])){
             $this->deleted_dt = $this->sqlValue("NOW()");
