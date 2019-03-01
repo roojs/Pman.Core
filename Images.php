@@ -183,10 +183,6 @@ class Pman_Core_Images extends Pman
         }
         
         if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
-           
-            if($this->is_email) {
-                return $this->serve($img);
-            }
             
             if ($img->ontable != 'core_company') {
                 $this->imgErr("not-authenticated {$img->ontable}",$s);
