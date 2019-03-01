@@ -83,7 +83,9 @@ class Pman_Core_Images extends Pman
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
         //}
-        print_R($_SERVER['HTTP_HOST']);EXIT;
+        
+        $this->is_local = (!empty($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') ? true : false;
+        
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
         $this->page = empty($_REQUEST['page']) ? false : (int) $_REQUEST['page'];
