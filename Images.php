@@ -44,8 +44,6 @@ class Pman_Core_Images extends Pman
     // tables that do not need authentication checks before serving.
     var $public_image_tables = array();
     
-    var $is_email = false;
-    
     var  $sizes = array(
                 '100', 
                 '100x100', 
@@ -77,6 +75,7 @@ class Pman_Core_Images extends Pman
     var $as_mimetype = false;
     var $method = 'inline';
     var $page = false;
+    var $is_local = false;
     
     function get($s, $opts=array()) // determin what to serve!!!!
     {
@@ -85,9 +84,7 @@ class Pman_Core_Images extends Pman
         //   return $this->post();
         //}
         
-        if(!empty($_REQUEST['is_email'])) {
-            $this->is_email = true;
-        }
+        $this->is_local = (!empty($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') ? true : false;
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
         
@@ -188,11 +185,11 @@ class Pman_Core_Images extends Pman
             $this->imgErr("image has been removed or deleted.",$s);
         }
         
+        if($this->is_local) {
+            return $this->serve($img);
+        }
+        
         if (!$this->authUser && !in_array($img->ontable,$this->public_image_tables)) {
-           
-            if($this->is_email) {
-                return $this->serve($img);
-            }
             
             if ($img->ontable != 'core_company') {
                 $this->imgErr("not-authenticated {$img->ontable}",$s);
@@ -337,6 +334,10 @@ class Pman_Core_Images extends Pman
     }
     function validateSize()
     {
+        if($this->is_local) {
+            return true;
+        }
+        
         if (($this->authUser && !empty($this->authUser->company_id) && $this->authUser->company()->comptype=='OWNER')
             || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']) {
             return true;
