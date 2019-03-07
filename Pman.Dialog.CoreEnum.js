@@ -16,6 +16,13 @@ Pman.Dialog.CoreEnum = {
   '4d3d769b812b6faa6b76e1a8abaece2d' :"Active",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
+ _named_strings : {
+  'display_name_fieldLabel' : 'b48968e1c912da07df5e8d6d246291ec' /* Display Name */ ,
+  'seqid_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ ,
+  'name_fieldLabel' : '49ee3087348e8d44e1feda1917443987' /* Name */ ,
+  'active_fieldLabel' : '4d3d769b812b6faa6b76e1a8abaece2d' /* Active */ ,
+  'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ 
+ },
 
  dialog : false,
  callback:  false,
@@ -41,6 +48,7 @@ Pman.Dialog.CoreEnum = {
  {
    var _this = this;
    this.dialog = Roo.factory({
+    xtype : 'LayoutDialog',
     background : true,
     closable : false,
     collapsible : false,
@@ -49,39 +57,36 @@ Pman.Dialog.CoreEnum = {
     resizable : false,
     title : _this._strings['518ad9ed87d3ca17e223a91604b464d5'] /* Add / Edit Core Enum */,
     width : 400,
-    xns : Roo,
-    '|xns' : 'Roo',
-    xtype : 'LayoutDialog',
     listeners : {
      show : function (_self)
       {
           
       }
     },
+    xns : Roo,
+    '|xns' : 'Roo',
     center : {
+     xtype : 'LayoutRegion',
      titlebar : false,
      xns : Roo,
-     '|xns' : 'Roo',
-     xtype : 'LayoutRegion'
+     '|xns' : 'Roo'
     },
     buttons : [
      {
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function() {
             _this.form.reset();
             _this.dialog.hide();
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      },
      {
-      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
-      xns : Roo,
-      '|xns' : 'Roo',
       xtype : 'Button',
+      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
       listeners : {
        click : function() {
         
@@ -96,25 +101,25 @@ Pman.Dialog.CoreEnum = {
             _this.form.doAction('submit');
             
         }
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
      {
+      xtype : 'ContentPanel',
       background : true,
       fitToFrame : true,
       region : 'center',
       xns : Roo,
       '|xns' : 'Roo',
-      xtype : 'ContentPanel',
       items  : [
        {
+        xtype : 'Form',
         method : 'POST',
         style : 'margin: 5px',
         url : baseURL + '/Roo/core_enum.php',
-        xns : Roo.form,
-        '|xns' : 'Roo.form',
-        xtype : 'Form',
         listeners : {
          actioncomplete : function (_self, action)
           {
@@ -156,8 +161,11 @@ Pman.Dialog.CoreEnum = {
              _this.form = form;
           }
         },
+        xns : Roo.form,
+        '|xns' : 'Roo.form',
         items  : [
          {
+          xtype : 'TextField',
           actionMode : 'fieldEl',
           allowBlank : false,
           fieldLabel : _this._strings['49ee3087348e8d44e1feda1917443987'] /* Name */,
@@ -165,26 +173,26 @@ Pman.Dialog.CoreEnum = {
           name : 'name',
           width : 200,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'TextField'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'TextField',
           allowBlank : false,
           fieldLabel : _this._strings['b48968e1c912da07df5e8d6d246291ec'] /* Display Name */,
           name : 'display_name',
           width : 200,
-          xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'TextField',
           listeners : {
            keyup : function (_self, e)
             {
                 _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());
                 
             }
-          }
+          },
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Checkbox',
           actionMode : 'fieldEl',
           checked : true,
           fieldLabel : _this._strings['4d3d769b812b6faa6b76e1a8abaece2d'] /* Active */,
@@ -194,27 +202,26 @@ Pman.Dialog.CoreEnum = {
           value : 1,
           valueOff : 0,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Checkbox'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'etype',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'seqid',
           value : 0,
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          },
          {
+          xtype : 'Hidden',
           name : 'id',
           xns : Roo.form,
-          '|xns' : 'Roo.form',
-          xtype : 'Hidden'
+          '|xns' : 'Roo.form'
          }
         ]
        }
