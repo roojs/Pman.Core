@@ -171,6 +171,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 ) AS no_of_city
             ");
             
+            if(!empty($q['_hide_unused'])) {
+                $this->having("no_of_division > 0");
+            }
+            
         }
     }
     
