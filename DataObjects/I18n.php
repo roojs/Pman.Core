@@ -172,14 +172,16 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             ");
             
             if(!empty($q['_hide_unused'])) {
-                $this->whereAdd("(
-                    SELECT
-                            COUNT(geoip_division.id)
-                    FROM
-                            geoip_division
-                    WHERE
-                            geoip_division.country = i18n.lkey
-                ) > 0");
+                $this->whereAdd("
+                    (
+                        SELECT
+                                COUNT(geoip_division.id)
+                        FROM
+                                geoip_division
+                        WHERE
+                                geoip_division.country = i18n.lkey
+                    ) > 0
+                ");
             }
             
         }
