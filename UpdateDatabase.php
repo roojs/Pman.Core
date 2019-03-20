@@ -73,6 +73,12 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'disable-create-triggers' => array(
+            'desc' => 'So not create the mysql triggers',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         
         'json-person' => array(
             'desc' => 'Person JSON file',
