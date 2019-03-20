@@ -67,6 +67,12 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'skip-email-import' => array(
+            'desc' => 'Skip email import',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         'procedures-only' => array(
             'desc' => 'Only import procedures (not supported by most modules yet) - ignores sql directory',
             'default' => '',
@@ -907,6 +913,9 @@ class Pman_Core_UpdateDatabase extends Pman
     
     function updateDataEmails()
     {
+        if (!empty($this->opts['skip-email-import'])) {
+            return;
+        }
         foreach ($this->emailTemplates as $k => $mail) {
             
             $mail_dir = "{$this->rootDir}{$mail['template_dir']}";
