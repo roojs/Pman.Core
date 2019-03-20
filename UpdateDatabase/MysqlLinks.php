@@ -49,15 +49,20 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $this->updateTableComments();
        
         $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->Pman['enable_trigger_tests'])) {
+        if (empty($ff->Pman['enable_trigger_tests'])) {
+            return;
+        }
+        if (!empty($ff->page->opts['disable_trigger_create'])) {
+            return;
+        }
             
             // note we may want to override some of these... - to do special triggers..
             // as you can only have one trigger per table for each action.
             
-            $this->createDeleteTriggers();
-            $this->createInsertTriggers();
-            $this->createUpdateTriggers();
-        }
+        $this->createDeleteTriggers();
+        $this->createInsertTriggers();
+        $this->createUpdateTriggers();
+        
         
         
     }
