@@ -52,7 +52,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         if (empty($ff->Pman['enable_trigger_tests'])) {
             return;
         }
-        if (!empty($ff->page->opts['disable-trigger-create'])) {
+        if (!empty($ff->page->opts['disable-create-triggers'])) {
             return;
         }
             
