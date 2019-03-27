@@ -837,6 +837,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             
             for(var col=0;col < cols.length; col++) {
                 
+                if (rows[row].getAttribute('xls:width')) {
+                    this.setColumnWidth(col, 1 * rows[row].getAttribute('xls:width'));
+                    console.log('setting column width!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+                }
+                
                 var colspan = cols[col].getAttribute('colspan');
                 colspan  = colspan ? colspan *1 : 1;
                 
