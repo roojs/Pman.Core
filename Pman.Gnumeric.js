@@ -840,7 +840,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             for(var col=0;col < cols.length; col++) {
                 
                 if (rows[row].getAttribute('xls:width')) {
-                    this.setColumnWidth(col, 1 * rows[row].getAttribute('xls:height'));
+                    this.setColumnWidth(col, 1 * rows[row].getAttribute('xls:width'));
                 }
                
                 
