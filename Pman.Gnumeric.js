@@ -833,14 +833,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 this.setRowHeight( row + yoff +1, Roo.get(rows[row]).getHeight());
             }
             
-         
             var cols = rows[row].getElementsByTagName('td');
-            
             
             for(var col=0;col < cols.length; col++) {
                 
-                
-               
+                if (cols[col].getAttribute('xls:width')) {
+                    this.setColumnWidth(col, 1 * cols[col].getAttribute('xls:width'));
+                }
                 
                 var colspan = cols[col].getAttribute('colspan');
                 colspan  = colspan ? colspan *1 : 1;
@@ -1402,7 +1401,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         column = column *1; 
         width= width*1;
         if (typeof(this.colInfoDom[column]) == 'undefined') {
-            var cols = this.doc.getElementsByTagNameNS('*','Cols')[0];
+            var cols = this.sheet.getElementsByTagNameNS('*','Cols')[0];
             var ri = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:ColInfo');
             ri.setAttribute('No', column);
             ri.setAttribute('Unit', width);
