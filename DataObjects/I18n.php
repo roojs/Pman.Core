@@ -170,20 +170,19 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                             geoip_city.country = i18n.lkey
                 ) AS no_of_city
             ");
-            
-            if(!empty($q['_hide_unused'])) {
-                $this->whereAdd("
-                    (
-                        SELECT
-                                COUNT(geoip_division.id)
-                        FROM
-                                geoip_division
-                        WHERE
-                                geoip_division.country = i18n.lkey
-                    ) > 0
-                ");
-            }
-            
+        }
+        
+        if(!empty($q['_hide_unused'])) {
+            $this->whereAdd("
+                (
+                    SELECT
+                            COUNT(geoip_division.id)
+                    FROM
+                            geoip_division
+                    WHERE
+                            geoip_division.country = i18n.lkey
+                ) > 0
+            ");
         }
     }
     
