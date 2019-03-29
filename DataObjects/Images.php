@@ -470,10 +470,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (!empty($req['query']['imagesize'])) {
                 $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
             }
+            
+            $ret['shorten_name'] = $this->shorten_name();
         }
         
-         
-         
         return $ret;
     }
     
@@ -488,9 +488,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         if (!$this->id) {
             return 'about:blank';
-            
         }
-
+        
+        $shorten_name = $this->shorten_name();
+        
         $ff = HTML_FlexyFramework::get();
         $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
         if (preg_match('#^http[s]*://#', $provider)) {
@@ -500,7 +501,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($size < 0) {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
-            return $baseURL . $provider . "/{$this->id}/{$this->filename}";
+            return $baseURL . $provider . "/{$this->id}/{$shorten_name}";
         }
         //-- max?
         //$size = max(100, (int) $size);
@@ -522,7 +523,26 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $fc->convert($mt, $size);
         
-        return $baseURL . $provider . "/$size/{$this->id}/{$this->filename}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}";
+    }
+    
+    function shorten_name()
+    {
+        if(empty($this->filename)) {
+            return;
+        }
+        
+        $filename = explode('.', $this->filename);
+        $ext = array_pop($filename);
+        $name = preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename)) ;
+        
+        if(strlen($name) > 32) {
+            $name = substr($name, 0, 32);
+        }
+        
+        $shorten_name = "{$name}.{$ext}";
+        
+        return $shorten_name;
     }
     /**
      * size could be 123x345
