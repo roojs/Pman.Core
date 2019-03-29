@@ -493,13 +493,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $filename = explode('.', $this->filename);
         $ext = array_pop($filename);
-        $name = implode('-', explode('.', preg_replace("/[^A-Za-z0-9.]+/", '-', $filename)));
+        $name = explode('.', preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename))) ;
         
         if(strlen($this->filename) > 32) {
             echo "{$this->filename}";
             echo "<br/>";
 //            print_r($name);exit;
-            print_R($filename);exit;
+            print_R($name);exit;
         }
 //        
 //        echo "{$this->filename}";
