@@ -491,7 +491,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         }
         
-        echo "{$this->filename}\n";
+        echo "{$this->filename}";
+        echo "<br/>";
         $filename = preg_replace("/[-]+/", '-', preg_replace("/[^A-Za-z0-9.]/", '-', $this->filename));
         
         if(strlen($filename) > 32) {
