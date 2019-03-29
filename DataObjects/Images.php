@@ -495,6 +495,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ext = array_pop($filename);
         $name = explode('.', preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename))) ;
         
+        echo $name;
         if(strlen($name) > 32) {
             $name = substr($name, 0, 32);
             print_R($name);exit;
