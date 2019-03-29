@@ -462,7 +462,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             // query/imageBaseURL ... depricated...? -- set it in config?
             
             $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : $ret['public_baseURL'];
-            
+            print_r($ret);exit;
             $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
             
             $ret['url_view'] = $this->URL(-1, '/Images',$baseURL);    
