@@ -474,8 +474,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $ret['shorten_name'] = $this->shorten_name();
         }
         
-         
-         
         return $ret;
     }
     
