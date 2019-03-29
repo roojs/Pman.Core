@@ -501,6 +501,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $shorten_name = "{$name}.{$ext}";
         
+        print_R($shorten_name);exit;
 //        
 //        echo "{$this->filename}";
 //        echo "<br/>";
