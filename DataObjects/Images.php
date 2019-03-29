@@ -491,15 +491,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         }
         
-        $filename = explode('.', $this->filename);
-        $ext = array_pop($filename);
-        $name = preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename)) ;
-        
-        if(strlen($name) > 32) {
-            $name = substr($name, 0, 32);
-        }
-        
-        $shorten_name = "{$name}.{$ext}";
+        $shorten_name = $this->shorten_name();
         
         $ff = HTML_FlexyFramework::get();
         $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
