@@ -490,7 +490,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return 'about:blank';
             
         }
-        print_R($this->filename);exit;
+        
         $ff = HTML_FlexyFramework::get();
         $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
         if (preg_match('#^http[s]*://#', $provider)) {
