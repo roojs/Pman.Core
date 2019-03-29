@@ -493,7 +493,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $filename = $this->filename;
         
-        if(strlen($this->filename) > 30) {
+        if(strlen($this->filename) > 32) {
             
             
             
