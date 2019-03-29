@@ -492,7 +492,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $filename = $this->filename;
-        print_R($filename);exit;
+        
+        if(strlen($this->filename) > 30) {
+            
+            
+            
+        }
+        
         
         $ff = HTML_FlexyFramework::get();
         $baseURL = $baseURL ? $baseURL : $ff->baseURL ;
