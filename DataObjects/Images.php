@@ -495,6 +495,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if(strlen($this->filename) > 32) {
             
+            print_R($this->filename);exit;
             
             
         }
