@@ -470,6 +470,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (!empty($req['query']['imagesize'])) {
                 $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
             }
+            
+            $ret['shorten_name'] = $this->shorten_name();
         }
         
          
@@ -488,7 +490,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         if (!$this->id) {
             return 'about:blank';
-            
         }
         
         $shorten_name = $this->shorten_name();
