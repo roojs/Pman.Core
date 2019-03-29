@@ -462,7 +462,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             // query/imageBaseURL ... depricated...? -- set it in config?
             
             $baseURL = isset($req['query']['imageBaseURL']) ? $req['query']['imageBaseURL'] : $ret['public_baseURL'];
-            print_r($ret);exit;
+            
             $ret['url'] = $this->URL(-1, '/Images/Download',$baseURL);
             
             $ret['url_view'] = $this->URL(-1, '/Images',$baseURL);    
@@ -533,6 +533,25 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc->convert($mt, $size);
         
         return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}";
+    }
+    
+    function shorten_name()
+    {
+        if(empty($this->filename)) {
+            return;
+        }
+        
+        $filename = explode('.', $this->filename);
+        $ext = array_pop($filename);
+        $name = preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename)) ;
+        
+        if(strlen($name) > 32) {
+            $name = substr($name, 0, 32);
+        }
+        
+        $shorten_name = "{$name}.{$ext}";
+        
+        return $shorten_name;
     }
     /**
      * size could be 123x345
