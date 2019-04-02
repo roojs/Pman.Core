@@ -18,4 +18,6 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
+    
+    
  }
