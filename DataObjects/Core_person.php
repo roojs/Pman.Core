@@ -703,7 +703,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         ));
         
         foreach ($core_person_settings->fetchAll() as $k => $v) {
-            
+            $aur['core_person_settings'][$v->scope] = json_decode($v->data);
         }
         
         return $aur;
