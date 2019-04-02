@@ -696,7 +696,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['require_oath'] = $oath_require ?  $oath_require->val : 0;
         
         $core_person_settings = DB_DataObject::factory('core_person_settings');
-        
+        $core_person_settings->setFrom(array(
+            'person_id' => $this->id
+        ));
         
         
         return $aur;
