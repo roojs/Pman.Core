@@ -640,13 +640,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function authUserArray()
     {
-        
         $aur = $this->toArray();
         
         if ($this->id < 1) {
             return $aur;
         }
-        
         
         //DB_DataObject::debugLevel(1);
         $c = DB_Dataobject::factory('core_company');
@@ -696,6 +694,17 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $s = DB_DataObject::Factory('core_setting');
         $oath_require = $s->lookup('core', 'two_factor_auth_required');
         $aur['require_oath'] = $oath_require ?  $oath_require->val : 0;
+        
+        $aur['core_person_settings'] = array();
+                
+        $core_person_settings = DB_DataObject::factory('core_person_settings');
+        $core_person_settings->setFrom(array(
+            'person_id' => $this->id
+        ));
+        
+        foreach ($core_person_settings->fetchAll() as $k => $v) {
+            $aur['core_person_settings'][$v->scope] = $v->toArray();
+        }
         
         return $aur;
     }
