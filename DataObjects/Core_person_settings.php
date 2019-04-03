@@ -27,6 +27,7 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
             $roo->jerr('Access Dennied');
         }
         
+        
     }
     
     function beforeUpdate($old, $q, $roo)
