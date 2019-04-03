@@ -704,7 +704,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $aur['core_person_settings'] = $core_person_settings->fetchAll('scope', 'data');
         
-        print_r($aur);exit;
         return $aur;
     }
     
