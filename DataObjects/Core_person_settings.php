@@ -42,12 +42,11 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
-        if(
-                !$roo->authUser ||
-                (!empty($this->person_id) && $this->person_id != $roo->authUser->id)
-        ) {
+        if(!$this->hasPermission($roo)) {
             $roo->jerr('Access Dennied');
         }
+        
+        
     }
     
     function beforeDelete($dependants_array, $roo)
@@ -58,6 +57,18 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
         ) {
             $roo->jerr('Access Dennied');
         }
+    }
+    
+    function hasPermission($roo)
+    {
+        if(
+                !$roo->authUser ||
+                (!empty($this->person_id) && $this->person_id != $roo->authUser->id)
+        ) {
+            return false;
+        }
+        
+        return true;
     }
     
     function isExist()
