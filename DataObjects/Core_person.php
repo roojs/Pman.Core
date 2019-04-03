@@ -702,9 +702,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             'person_id' => $this->id
         ));
         
-        foreach ($core_person_settings->fetchAll() as $k => $v) {
-            $aur['core_person_settings'][$v->scope] = $v->toArray();
-        }
+        $aur['core_person_settings'] = $core_person_settings->fetchAll('scope', 'data');
         
         return $aur;
     }
