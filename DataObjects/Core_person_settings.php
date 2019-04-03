@@ -42,8 +42,6 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
         if(!$this->hasPermission($roo)) {
             $roo->jerr('Access Dennied');
         }
-        
-        
     }
     
     function beforeDelete($dependants_array, $roo)
