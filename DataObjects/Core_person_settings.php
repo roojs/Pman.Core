@@ -27,6 +27,7 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
             $roo->jerr('Access Dennied');
         }
         
+        $this->isExist();
         
     }
     
@@ -48,6 +49,21 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
         ) {
             $roo->jerr('Access Dennied');
         }
+    }
+    
+    function isExist()
+    {
+        $core_person_settings = DB_DataObject::factory('core_person_settings');
+        $core_person_settings->setFrom(array(
+            'scope' => $this->scope,
+            'person_id' => $this->person_id
+        ));
+        
+        if($core_person_settings->find(true)) {
+            return $core_person_settings;
+        }
+        
+        return false;
     }
     
  }
