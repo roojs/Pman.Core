@@ -27,7 +27,16 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
             $roo->jerr('Access Dennied');
         }
         
-        $this->isExist();
+        $o = $this->isExist();
+        
+        if(!empty($o)) {
+            $oo = clone ($o);
+            $o->setFrom(array(
+                'data' => $this->data
+            ));
+            $o->update($oo);
+            $roo->jok('OK');
+        }
         
     }
     
