@@ -20,10 +20,7 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
-        if(
-                !$roo->authUser ||
-                (!empty($this->person_id) && $this->person_id != $roo->authUser->id)
-        ) {
+        if(!$this->hasPermission($roo)) {
             $roo->jerr('Access Dennied');
         }
         
@@ -51,10 +48,7 @@ class Pman_Core_DataObjects_Core_person_settings extends DB_DataObject
     
     function beforeDelete($dependants_array, $roo)
     {
-        if(
-                !$roo->authUser ||
-                (!empty($this->person_id) && $this->person_id != $roo->authUser->id)
-        ) {
+        if(!$this->hasPermission($roo)) {
             $roo->jerr('Access Dennied');
         }
     }
