@@ -197,6 +197,7 @@ Pman.Dialog.Image = {
     items  : [
      {
       xtype : 'ContentPanel',
+      fitContainer : true,
       fitToFrame : true,
       region : 'center',
       xns : Roo,
