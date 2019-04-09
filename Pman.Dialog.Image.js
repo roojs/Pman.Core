@@ -224,11 +224,8 @@ Pman.Dialog.Image = {
               
                   _this.form.findField('imgtype').hide();
                   
-                  _this.dialog.el.setHeight(140);
-                  
                   if(_this.data._show_image_type){
                       _this.form.findField('imgtype').show();
-                      _this.dialog.el.setHeight(160);
                   }
                   
                   this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
