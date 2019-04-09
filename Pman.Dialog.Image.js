@@ -226,7 +226,7 @@ Pman.Dialog.Image = {
                   
                   if(_this.data._show_image_type){
                       _this.form.findField('imgtype').show();
-                      _this.dialog.resizeTo(500, 160);
+                      _this.dialog.resizeTo(500, 170);
                   }
                   
                   this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
