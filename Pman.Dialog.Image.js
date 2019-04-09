@@ -222,7 +222,7 @@ Pman.Dialog.Image = {
               
                   _this.form.findField('imgtype').hide();
                   
-                  _this.dialog.resizeTo(500, 150);
+                  _this.dialog.resizeTo(500, 140);
                   
                   if(_this.data._show_image_type){
                       _this.form.findField('imgtype').show();
