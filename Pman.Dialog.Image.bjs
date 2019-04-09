@@ -51,10 +51,8 @@
     {
      "fitToFrame" : true,
      "region" : "center",
-     "Boolean fitContainer" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
-     "Boolean autoScroll" : true,
      "items" : [
       {
        "listeners" : {
