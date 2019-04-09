@@ -54,7 +54,7 @@ Pman.Dialog.Image = {
     closable : false,
     collapsible : false,
     haveProgress : false,
-    height : 140,
+    height : 150,
     modal : true,
     resizable : false,
     shadow : true,

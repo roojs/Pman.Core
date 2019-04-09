@@ -40,7 +40,7 @@
    "closable" : false,
    "resizable" : false,
    "haveProgress" : false,
-   "height" : 140,
+   "height" : 150,
    "$ uploadProgress" : "function()\n{\n    var dlg = this;\n   if (!dlg.haveProgress) {\n        Roo.MessageBox.progress(\"Uploading\", \"Uploading\");\n    }\n    \n    if (dlg.haveProgress == 2) {\n        // it's been closed elsewhere..\n        return;\n    }\n    if (dlg.uploadComplete) {\n        Roo.MessageBox.hide();\n        return;\n    }\n    \n    dlg.haveProgress = 1;\n\n    var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();\n    new Pman.Request({\n        url : baseURL + '/Core/UploadProgress.php',\n        params: {\n            id : uid\n        },\n        method: 'GET',\n        success : function(res){\n            //console.log(data);\n            var data = res.data;\n            if (dlg.haveProgress == 2) {\n                // it's been closed elsewhere..\n                return;\n            }\n            \n            if (dlg.uploadComplete) {\n                Roo.MessageBox.hide();\n                return;\n            }\n                \n            if (data){\n                Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,\n                    Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'\n                );\n            } else {\n                Roo.MessageBox.updateProgress(1,\n                    \"Upload Complete - processing\"\n                );\n                return;\n            }\n            dlg.uploadProgress.defer(2000,dlg);\n        },\n        failure: function(data) {\n          //  console.log('fail');\n         //   console.log(data);\n        }\n    })\n    \n}\n",
    "items" : [
     {
