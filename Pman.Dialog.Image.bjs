@@ -15,6 +15,15 @@
   "91412465ea9169dfd901dd5e7c96dd99" : "Upload",
   "ea72bacd2fdfa818907bb9559e6905a1" : "Upload Image or File"
  },
+ "named_strings" : {
+  "imgtype_name_fieldLabel" : "8e16a71b3d8217eb80b39b7d8dec4296",
+  "imgtype_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "imgtype_name_emptyText" : "dff0c70e4c11953e4e3ee1cf268fb96d",
+  "upload_max_filesize_value" : "eb5d45750c7ab13aa8e6bacc80315a30",
+  "imgtype_name_qtip" : "dff0c70e4c11953e4e3ee1cf268fb96d",
+  "post_max_size_value" : "eb5d45750c7ab13aa8e6bacc80315a30",
+  "imageUpload_fieldLabel" : "ea72bacd2fdfa818907bb9559e6905a1"
+ },
  "items" : [
   {
    "listeners" : {
@@ -42,13 +51,14 @@
     {
      "fitToFrame" : true,
      "region" : "center",
+     "Boolean fitContainer" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
       {
        "listeners" : {
         "actionfailed" : "function (_self, act)\n{\n   \n   \n    _this.dialog.uploadComplete = true;\n   // _this.dialog.el.unmask();\n    // error msg???\n     _this.dialog.haveProgress = 2; \n    if (act.type == 'submit') {\n        Roo.log(\"Upload error\");\n        Roo.log(act);\n        \n        try {\n            Roo.MessageBox.alert(\"Error\", act.result.errorMsg.split(/\\n/).join('<BR/>'));\n        } catch(e) {\n          //  Roo.log(e);\n            Roo.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");        \n        }\n        return;\n    }\n    \n    // what about load failing..\n    Roo.MessageBox.alert(\"Error\", \"Error loading details\"); \n}",
-        "|actioncomplete" : "function(_self,act)\n{\n    _this.dialog.uploadComplete = true;\n    _this.dialog.haveProgress = 2; \n    Roo.MessageBox.hide(); // force hiding\n    //_this.dialog.el.unmask();\n     \n    if (act.type == 'setdata') { \n    \n        _this.form.findField('imgtype').hide();\n        \n        if(_this.data._show_image_type){\n            _this.form.findField('imgtype').show();\n        }\n        \n        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';\n        this.el.dom.action = this.url;\n        if (typeof(_this.data.timeout) != 'undefined') {\n            this.timeout = _this.data.timeout;\n        }\n        \n        this.findField('UPLOAD_IDENTIFIER').setValue(\n            (new Date() * 1) + '' + Math.random());\n            \n        return;\n    }\n     \n   \n    if (act.type == 'load') {\n      // should this happen?  \n        _this.data = act.result.data;\n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n        Roo.log(\"Upload success\");\n        Roo.log(act);\n        //console.log(act);\n        if (_this.callback) {\n            _this.callback.call(this, act.result.data, act.result.extra);\n        }\n        return; \n    }\n \n\n    \n}\n",
+        "|actioncomplete" : "function(_self,act)\n{\n    _this.dialog.uploadComplete = true;\n    _this.dialog.haveProgress = 2; \n    Roo.MessageBox.hide(); // force hiding\n    //_this.dialog.el.unmask();\n     \n    if (act.type == 'setdata') { \n    \n        _this.form.findField('imgtype').hide();\n        \n        _this.dialog.resizeTo(500, 140);\n        \n        if(_this.data._show_image_type){\n            _this.form.findField('imgtype').show();\n            _this.dialog.resizeTo(500, 170);\n        }\n        \n        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';\n        this.el.dom.action = this.url;\n        if (typeof(_this.data.timeout) != 'undefined') {\n            this.timeout = _this.data.timeout;\n        }\n        \n        this.findField('UPLOAD_IDENTIFIER').setValue(\n            (new Date() * 1) + '' + Math.random());\n            \n        return;\n    }\n     \n   \n    if (act.type == 'load') {\n      // should this happen?  \n        _this.data = act.result.data;\n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n        Roo.log(\"Upload success\");\n        Roo.log(act);\n        //console.log(act);\n        if (_this.callback) {\n            _this.callback.call(this, act.result.data, act.result.extra);\n        }\n        return; \n    }\n \n\n    \n}\n",
         "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
        },
        "$ url" : "baseURL + '/Roo/Images.php'",
@@ -86,9 +96,9 @@
          "name" : "imageUpload"
         },
         {
+         "listWidth" : 400,
          "String actionMode" : "fieldEl",
          "alwaysQuery" : true,
-         "listWidth" : 400,
          "triggerAction" : "all",
          "fieldLabel" : "Image Type",
          "forceSelection" : true,
@@ -122,8 +132,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
