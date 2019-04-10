@@ -450,10 +450,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $ret= $this->toArray();
       
-        static $ff = false;
-        if (!$ff) {
-            $ff = HTML_FlexyFramework::get();
-        }
+         
+        $ff = HTML_FlexyFramework::get();
+        
         
         $ret['public_baseURL'] = isset($ff->Pman_Images['public_baseURL']) ?
                     $ff->Pman_Images['public_baseURL'] : $ff->baseURL;
