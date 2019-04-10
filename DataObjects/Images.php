@@ -446,7 +446,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     
      
-    function toRooArray($req) {
+    function toRooArray($req)
+    {
         
         $ret= $this->toArray();
       
@@ -470,8 +471,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
             }
             
-            $ret['shorten_name'] = $this->shorten_name();
+            
         }
+        $ret['shorten_name'] = $this->shorten_name();
         
         return $ret;
     }
