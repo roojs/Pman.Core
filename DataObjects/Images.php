@@ -446,14 +446,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     
      
-    function toRooArray($req) {
+    function toRooArray($req)
+    {
         
         $ret= $this->toArray();
       
-        static $ff = false;
-        if (!$ff) {
-            $ff = HTML_FlexyFramework::get();
-        }
+         
+        $ff = HTML_FlexyFramework::get();
+        
         
         $ret['public_baseURL'] = isset($ff->Pman_Images['public_baseURL']) ?
                     $ff->Pman_Images['public_baseURL'] : $ff->baseURL;
@@ -471,8 +471,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $ret['url_thumb'] = $this->URL($req['query']['imagesize'], '/Images/Thumb',$baseURL);
             }
             
-            $ret['shorten_name'] = $this->shorten_name();
+            
         }
+        $ret['shorten_name'] = $ret['filename'] = $this->shorten_name();
         
         return $ret;
     }
@@ -534,7 +535,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $filename = explode('.', $this->filename);
         $ext = array_pop($filename);
-        $name = preg_replace("/[^A-Za-z0-9.]+/", '-', implode('-', $filename)) ;
+        $name = preg_replace("/[^A-Z0-9.]+/i", '-', implode('-', $filename)) ;
         
         if(strlen($name) > 32) {
             $name = substr($name, 0, 32);
