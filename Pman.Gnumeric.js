@@ -1289,6 +1289,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         this.grid[startRow][startCol].value=  data;
         this.grid[startRow][startCol].valueFormat = 'image';
+        this.grid[startRow][startCol].imageType = type;
         
         return true;
     },
