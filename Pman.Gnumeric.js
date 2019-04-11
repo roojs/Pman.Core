@@ -1139,7 +1139,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeImage : function (row, col, data, width, height, type) 
     {
-        
+        console.log('run write image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         if (!data) {
             throw "write Image called with missing data";
         }
