@@ -1483,6 +1483,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     
                 }
                 
+                if(g.valueFormat == 'image') {
+                    out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
+                        g.colspan, g.rowspan, value,
+                        'overflow:hidden;' + 
+                        'width:'+w+'px;' +
+
+                        'text-overflow:ellipsis;' +
+                        'white-space:nowrap;',
+                         g.cls.join(' ')
+
+
+                    );
+                    c+=(g.colspan-1);
+                    continue;
+                }
+                
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
                     g.colspan, g.rowspan, value,
                     'overflow:hidden;' + 
