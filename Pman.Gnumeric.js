@@ -1139,7 +1139,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeImage : function (row, col, data, width, height, type) 
     {
-        console.log('run write image !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        
         if (!data) {
             throw "write Image called with missing data";
         }
@@ -1226,13 +1226,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         goimage.textContent = data;
         
         godoc.appendChild(goimage);
-        
-        this.grid[row][col].value=  data;
-        
-        console.log('write image!!!!!!!!!!!!!!!!!!!???????????????');
-        console.log(row);
-        console.log(col);
-        console.log(data);
         
         return true;
                 //< /gnm:SheetObjectImage>
@@ -1457,7 +1450,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 var g = grid[r][c];
                 
-                console.log(g);
+                Roo.log(g);
                 
                 if (typeof(g.cls) =='undefined') {
                     g.cls = [];
