@@ -1465,8 +1465,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 var g = grid[r][c];
                 
-                Roo.log(g);
-                
                 if (typeof(g.cls) =='undefined') {
                     g.cls = [];
                 }
