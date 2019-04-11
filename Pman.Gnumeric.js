@@ -1288,6 +1288,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         console.log(startCol);
         console.log(data);
         
+        
         return true;
     },
  
