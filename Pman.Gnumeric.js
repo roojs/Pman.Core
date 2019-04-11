@@ -1227,6 +1227,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
+        if (typeof(this.grid[row]) == 'undefined') {
+            this.grid[row] = [];
+        }
+        if (typeof(this.grid[row][startCol]) == 'undefined') {
+            this.createCell(row,startCol);
+        }
+        
+        this.grid[row][col].value=  data;
+        this.grid[row][col].valueFormat = 'image';
+        this.grid[row][col].imageType = type;
+        this.grid[row][col].width = width;
+        this.grid[row][col].height = height;
+        
         return true;
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
