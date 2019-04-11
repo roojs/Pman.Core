@@ -1264,7 +1264,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
         
-        soi.setAttribute('ObjectOffset', '0.188 0.529 189 191');
+        soi.setAttribute('ObjectOffset', '0 0 0 0');
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
         soi.setAttribute('Direction','17');
         soi.setAttribute('crop-top','0.000000');
