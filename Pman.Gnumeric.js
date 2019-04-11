@@ -1229,6 +1229,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         this.grid[row][col].value=  data;
         
+        console.log(row);
+        console.log(col);
+        console.log(data);
+        
         return true;
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
