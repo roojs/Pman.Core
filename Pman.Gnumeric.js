@@ -1227,6 +1227,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
+        this.grid[row][col].value=  data;
+        
         return true;
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
