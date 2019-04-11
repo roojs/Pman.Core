@@ -1281,11 +1281,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
-        if (typeof(this.grid[cs.r]) == 'undefined') {
-            this.grid[cs.r] = [];
+        if (typeof(this.grid[startRow]) == 'undefined') {
+            this.grid[startRow] = [];
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
-            Roo.log('cell not defined:' + cell);
             this.createCell(cs.r,cs.c);
         }
         // cell might not be rendered yet... so if we try and create a cell, it overrides the default formating..
