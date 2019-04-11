@@ -1284,8 +1284,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (typeof(this.grid[startRow]) == 'undefined') {
             this.grid[startRow] = [];
         }
-        if (typeof(this.grid[startRow][cs.c]) == 'undefined') {
-            this.createCell(startRow,cs.c);
+        if (typeof(this.grid[startRow][startCol]) == 'undefined') {
+            this.createCell(startRow,startCol);
         }
         
 //        this.grid[cs.r][cs.c].value=  v;
