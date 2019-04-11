@@ -1229,6 +1229,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         this.grid[row][col].value=  data;
         
+        console.log('write image!!!!!!!!!!!!!!!!!!!???????????????');
         console.log(row);
         console.log(col);
         console.log(data);
