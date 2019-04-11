@@ -1289,6 +1289,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         goimage.setAttribute('height', height);
         goimage.textContent = data;
         
+        console.log(goimage);
+        
         godoc.appendChild(goimage);
         
         if (typeof(this.grid[startRow]) == 'undefined') {
