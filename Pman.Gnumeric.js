@@ -1235,7 +1235,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
-        Roo.log('write fixed images!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         if (!data) {
             throw "write Image called with missing data";
         }
@@ -1289,7 +1288,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         
         this.grid[startRow][startCol].value=  data;
-        this.grid[cs.r][cs.c].valueFormat = 'image';
+        this.grid[startRow][startCol].valueFormat = 'image';
         
         return true;
     },
