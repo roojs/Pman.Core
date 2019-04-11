@@ -1281,6 +1281,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
+        this.grid[startRow][startCol].value=  data;
+        
+        console.log('write image!!!!!!!!!!!!!!!!!!!???????????????');
+        console.log(startRow);
+        console.log(startCol);
+        console.log(data);
+        
         return true;
     },
  
