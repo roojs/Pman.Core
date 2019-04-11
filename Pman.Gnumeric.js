@@ -1284,37 +1284,30 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         if (typeof(this.grid[startRow]) == 'undefined') {
             this.grid[startRow] = [];
         }
-        if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
-            this.createCell(cs.r,cs.c);
-        }
-        // cell might not be rendered yet... so if we try and create a cell, it overrides the default formating..
-        
-        if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
-            Roo.log('no default content for cell:' + cell);
-            Roo.log(this.grid[cs.r][cs.c]);
-            //this.createCell(cs.r,cs.c);
-            //return;
-        }
-        this.grid[cs.r][cs.c].value=  v;
-        if (this.grid[cs.r][cs.c].dom) {
-            this.grid[cs.r][cs.c].dom.textContent=  v;
+        if (typeof(this.grid[startRow][cs.c]) == 'undefined') {
+            this.createCell(startRow,cs.c);
         }
         
-        
-        if (typeof(vt) != 'undefined') {
-            this.grid[cs.r][cs.c].valueType = vt;
-            this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
-            if (vt === '' || vt === false) { // value type is empty for formula's
-                this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
-            }
-        }
-        if (typeof(vf) != 'undefined' && vf !== false) {
-            this.grid[cs.r][cs.c].valueFormat = vf;
-            this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
-            if (vf === '' || vf === false) { // value type is empty for formula's
-                this.grid[cs.r][cs.c].dom.removeAttribute('ValueFormat');
-            }
-        }
+//        this.grid[cs.r][cs.c].value=  v;
+//        if (this.grid[cs.r][cs.c].dom) {
+//            this.grid[cs.r][cs.c].dom.textContent=  v;
+//        }
+//        
+//        
+//        if (typeof(vt) != 'undefined') {
+//            this.grid[cs.r][cs.c].valueType = vt;
+//            this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
+//            if (vt === '' || vt === false) { // value type is empty for formula's
+//                this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
+//            }
+//        }
+//        if (typeof(vf) != 'undefined' && vf !== false) {
+//            this.grid[cs.r][cs.c].valueFormat = vf;
+//            this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
+//            if (vf === '' || vf === false) { // value type is empty for formula's
+//                this.grid[cs.r][cs.c].dom.removeAttribute('ValueFormat');
+//            }
+//        }
         
         this.grid[startRow][startCol].value=  data;
         
