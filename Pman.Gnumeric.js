@@ -1282,9 +1282,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         godoc.appendChild(goimage);
         
         if (typeof(this.grid[cs.r]) == 'undefined') {
-            Roo.log('no row:' + cell);
-            this.grid[cs.r] = []; // create a row..
-            //return;
+            this.grid[cs.r] = [];
         }
         if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
             Roo.log('cell not defined:' + cell);
