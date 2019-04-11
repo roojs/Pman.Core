@@ -1288,33 +1288,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             this.createCell(startRow,startCol);
         }
         
-//        this.grid[cs.r][cs.c].value=  v;
-//        if (this.grid[cs.r][cs.c].dom) {
-//            this.grid[cs.r][cs.c].dom.textContent=  v;
-//        }
-//        
-//        
-//        if (typeof(vt) != 'undefined') {
-//            this.grid[cs.r][cs.c].valueType = vt;
-//            this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
-//            if (vt === '' || vt === false) { // value type is empty for formula's
-//                this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
-//            }
-//        }
-//        if (typeof(vf) != 'undefined' && vf !== false) {
-//            this.grid[cs.r][cs.c].valueFormat = vf;
-//            this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
-//            if (vf === '' || vf === false) { // value type is empty for formula's
-//                this.grid[cs.r][cs.c].dom.removeAttribute('ValueFormat');
-//            }
-//        }
-        
         this.grid[startRow][startCol].value=  data;
-        
-        console.log('write image!!!!!!!!!!!!!!!!!!!???????????????');
-        console.log(startRow);
-        console.log(startCol);
-        console.log(data);
+        this.grid[cs.r][cs.c].valueFormat = 'image';
         
         return true;
     },
