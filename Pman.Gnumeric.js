@@ -1197,7 +1197,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var hh2 = 0.99;
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
-        //console.log(offset_str );
+        
         //alert(offset_str);
         soi.setAttribute('ObjectOffset', offset_str);
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
@@ -1226,6 +1226,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         goimage.textContent = data;
         
         godoc.appendChild(goimage);
+        
+        if (typeof(this.grid[row]) == 'undefined') {
+            this.grid[row] = [];
+        }
+        if (typeof(this.grid[row][col]) == 'undefined') {
+            this.createCell(row,col);
+        }
+        
+        this.grid[row][col].value=  data;
+        this.grid[row][col].valueFormat = 'image';
+        this.grid[row][col].imageType = type;
+        this.grid[row][col].width = width;
+        this.grid[row][col].height = height;
         
         return true;
                 //< /gnm:SheetObjectImage>
@@ -1266,8 +1279,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
-        Roo.log(name);
-        
         var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
         
         var goimage = this.doc.createElement('GOImage');
@@ -1279,6 +1290,19 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         goimage.textContent = data;
         
         godoc.appendChild(goimage);
+        
+        if (typeof(this.grid[startRow]) == 'undefined') {
+            this.grid[startRow] = [];
+        }
+        if (typeof(this.grid[startRow][startCol]) == 'undefined') {
+            this.createCell(startRow,startCol);
+        }
+        
+        this.grid[startRow][startCol].value=  data;
+        this.grid[startRow][startCol].valueFormat = 'image';
+        this.grid[startRow][startCol].imageType = type;
+        this.grid[startRow][startCol].width = width;
+        this.grid[startRow][startCol].height = height;
         
         return true;
     },
@@ -1469,6 +1493,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     
                 } catch(e) {
                     
+                }
+                
+                if(g.valueFormat == 'image') {
+                    out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{2}"><div style="{3}"><img src="data:image/{4};base64, {5}" width="{6}" height="{7}"></div></td>', 
+                        g.colspan, g.rowspan, g.cls.join(' '),
+                        'overflow:hidden;' + 
+                        'width:'+g.width+'px;' +
+
+                        'text-overflow:ellipsis;' +
+                        'white-space:nowrap;',
+                         g.imageType,
+                         value, g.width, g.height
+
+                    );
+                    c+=(g.colspan-1);
+                    continue;
                 }
                 
                 out+=String.format('<td colspan="{0}" rowspan="{1}"  class="{4}"><div style="{3}">{2}</div></td>', 
