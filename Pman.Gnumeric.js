@@ -1197,7 +1197,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var hh2 = 0.99;
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
-        //console.log(offset_str );
+        console.log(offset_str );
         //alert(offset_str);
         soi.setAttribute('ObjectOffset', offset_str);
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
