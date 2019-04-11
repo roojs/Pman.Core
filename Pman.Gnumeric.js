@@ -1281,13 +1281,50 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         godoc.appendChild(goimage);
         
+        if (typeof(this.grid[cs.r]) == 'undefined') {
+            Roo.log('no row:' + cell);
+            this.grid[cs.r] = []; // create a row..
+            //return;
+        }
+        if (typeof(this.grid[cs.r][cs.c]) == 'undefined') {
+            Roo.log('cell not defined:' + cell);
+            this.createCell(cs.r,cs.c);
+        }
+        // cell might not be rendered yet... so if we try and create a cell, it overrides the default formating..
+        
+        if (typeof(this.grid[cs.r][cs.c].dom) == 'undefined') {
+            Roo.log('no default content for cell:' + cell);
+            Roo.log(this.grid[cs.r][cs.c]);
+            //this.createCell(cs.r,cs.c);
+            //return;
+        }
+        this.grid[cs.r][cs.c].value=  v;
+        if (this.grid[cs.r][cs.c].dom) {
+            this.grid[cs.r][cs.c].dom.textContent=  v;
+        }
+        
+        
+        if (typeof(vt) != 'undefined') {
+            this.grid[cs.r][cs.c].valueType = vt;
+            this.grid[cs.r][cs.c].dom.setAttribute('ValueType', vt);
+            if (vt === '' || vt === false) { // value type is empty for formula's
+                this.grid[cs.r][cs.c].dom.removeAttribute('ValueType');
+            }
+        }
+        if (typeof(vf) != 'undefined' && vf !== false) {
+            this.grid[cs.r][cs.c].valueFormat = vf;
+            this.grid[cs.r][cs.c].dom.setAttribute('ValueFormat', vf);
+            if (vf === '' || vf === false) { // value type is empty for formula's
+                this.grid[cs.r][cs.c].dom.removeAttribute('ValueFormat');
+            }
+        }
+        
         this.grid[startRow][startCol].value=  data;
         
         console.log('write image!!!!!!!!!!!!!!!!!!!???????????????');
         console.log(startRow);
         console.log(startCol);
         console.log(data);
-        
         
         return true;
     },
