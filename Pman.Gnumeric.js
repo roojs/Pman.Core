@@ -1248,6 +1248,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
+        console.log([startCol, startRow, endCol, endRow, type, width, height]);
+        
         if (!data) {
             throw "write Image called with missing data";
         }
