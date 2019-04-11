@@ -1474,8 +1474,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 }
                 var g = grid[r][c];
                 
-                console.log(g);
-                
                 if (typeof(g.cls) =='undefined') {
                     g.cls = [];
                 }
