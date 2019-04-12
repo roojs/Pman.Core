@@ -180,7 +180,7 @@ class Pman_Core_Images extends Pman
         }
         
         $img = DB_DataObjecT::factory('Images');
-        print_R($id);exit;
+         
         if (!$id || !$img->get($id)) {
             $this->imgErr("image has been removed or deleted.",$s);
         }
