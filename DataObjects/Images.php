@@ -690,7 +690,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
 //        print_r(!$this->onUpload($this));
         
-        if ( !$this->onUpload($this)) { 
+        if ( !$this->onUpload($this, $ar)) { 
             $roo->jerr("File upload failed : error = ". (!empty($this->err) ? $this->err : ''));
         }
         
