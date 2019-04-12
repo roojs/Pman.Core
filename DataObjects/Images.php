@@ -304,7 +304,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     // direct via roo...
     /// ctrl not used??
-    function onUpload($roo, $q = array())
+    function onUpload($roo)
     {
         //print_r($_FILES); echo $_FILES['imageUpload']['type'];exit;
         if (empty($_FILES['imageUpload']['tmp_name']) || 
@@ -690,7 +690,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
 //        print_r(!$this->onUpload($this));
         
-        if ( !$this->onUpload($this, $ar)) { 
+        if ( !$this->onUpload($this)) { 
             $roo->jerr("File upload failed : error = ". (!empty($this->err) ? $this->err : ''));
         }
         
