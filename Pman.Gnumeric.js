@@ -1123,7 +1123,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     /**
      * writeImageOld:
-     * write an image (needs base64 data to write it)
+     * write an image in old gnumberic format (needs base64 data to write it)
      * 
      * 
      * @param {Number} row  row to put it in (rows start at 0)
@@ -1133,8 +1133,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} width image height
      * 
      */
-    
-    
     writeImageOld : function (row, col, data, width, height, type) 
     {
         
