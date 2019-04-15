@@ -131,6 +131,16 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 i18n_translate(ltype, lkey, 'en') as lval_en
             ");
         }
+         if (!empty($q['_as_code_and_title'])) {
+            $this->selectAdd();
+            $this->selectAdd("
+                    {$tn}.lval as title,
+                    {$tn}.lkey as code
+            ");
+            if (!empty($q['_title'])) {
+                $this->whereAdd("{$tn}.lval like '{$this->escape($_REQUEST['_title'])}%'");
+            }
+        }
          
         if (!empty($q['!code'])) {
             $this->whereAddIn('!lkey', explode(',', $q['!code']), 'string'); 
