@@ -1250,7 +1250,63 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      */
     writeFixedImageOld : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
+        if (!data) {
+            throw "write Image called with missing data";
+        }
         
+        startCol = startCol * 1;
+        startRow = startRow * 1;
+        endCol = endCol * 1;
+        endRow = endRow * 1;
+        width = width * 1;
+        height = height * 1;
+        
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
+        
+        soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
+        
+        soi.setAttribute('ObjectOffset', '0 0 0 0');
+        soi.setAttribute('ObjectAnchorType','16 16 16 16');
+        soi.setAttribute('Direction','17');
+        soi.setAttribute('crop-top','0.000000');
+        soi.setAttribute('crop-bottom','0.000000');
+        soi.setAttribute('crop-left','0.000000');
+        soi.setAttribute('crop-right','0.000000');
+        
+        var name = 'Image' + Math.random().toString(36).substring(2);
+        var content = this.doc.createElement('Content');
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('name', name);
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        var goimage = this.doc.createElement('GOImage');
+        goimage.setAttribute('image-type', type ? type : 'jpeg');
+        goimage.setAttribute('name', name);
+        goimage.setAttribute('type', 'GOPixbuf');
+        goimage.setAttribute('width', width);
+        goimage.setAttribute('height', height);
+        goimage.textContent = data;
+        
+        godoc.appendChild(goimage);
+        
+        if (typeof(this.grid[startRow]) == 'undefined') {
+            this.grid[startRow] = [];
+        }
+        if (typeof(this.grid[startRow][startCol]) == 'undefined') {
+            this.createCell(startRow,startCol);
+        }
+        
+        this.grid[startRow][startCol].value=  data;
+        this.grid[startRow][startCol].valueFormat = 'image';
+        this.grid[startRow][startCol].imageType = type;
+        this.grid[startRow][startCol].width = width;
+        this.grid[startRow][startCol].height = height;
+        
+        return true;
     },
     
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
