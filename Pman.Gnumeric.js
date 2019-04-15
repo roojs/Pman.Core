@@ -1244,6 +1244,15 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 
     },
     
+    /**
+     * writeFixedImageOld:
+     * write an image in old gnumberic format (needs base64 data to write it)
+     */
+    writeFixedImageOld : function (startCol, startRow, endCol, endRow, type, data, width, height) 
+    {
+        
+    },
+    
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
     {
         if (!data) {
