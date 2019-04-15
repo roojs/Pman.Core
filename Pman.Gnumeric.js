@@ -1227,8 +1227,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} width image height
      * 
      */
-    
-    
     writeImage : function (row, col, data, width, height, type) 
     {
         
