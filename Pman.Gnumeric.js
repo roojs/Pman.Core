@@ -1248,7 +1248,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * writeFixedImageOld:
      * write an image in old gnumberic format (needs base64 data to write it)
      */
-    writeFixedImageOld : function (startCol, startRow, endCol, endRow, type, data, width, height) 
+    writeFixedImageOld : function (startCol, startRow, endCol, endRow, type, data, width, height, size) 
     {
         if (!data) {
             throw "write Image called with missing data";
@@ -1274,10 +1274,11 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.setAttribute('crop-left','0.000000');
         soi.setAttribute('crop-right','0.000000');
         
-        var name = 'Image' + Math.random().toString(36).substring(2);
+//        var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
-        content.setAttribute('name', name);
+        
+//        content.setAttribute('name', name);
         soi.appendChild(content);
         objs.appendChild(soi);
         
