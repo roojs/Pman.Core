@@ -1121,6 +1121,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
     },
     
+    writeImageOld : function (row, col, data, width, height, type) 
+    {
+        
+    },
     
     
     /**
