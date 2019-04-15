@@ -1133,15 +1133,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} width image height
      * 
      */
-    writeImageOld : function (row, col, data, width, height, type) 
+    writeImageOld : function (row, col, data, width, height, type, size) 
     {
         
         if (!data) {
             throw "write Image called with missing data";
         }
-        // our default height width is 50/50 ?!
-        //console.log('w='+width+',height='+height);
-                //        <gmr:Objects>
+        
         row*=1;
         col*=1;
         height*=1;
