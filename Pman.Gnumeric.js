@@ -1198,9 +1198,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.grid[row][col].height = height;
         
         return true;
-                //< /gnm:SheetObjectImage>
-                // < /gnm:Objects>
-
     },
     
     /**
