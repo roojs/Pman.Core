@@ -1204,16 +1204,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
             this.RCtoCell(row,col) + ':' + this.RCtoCell(row,col));
      
-        var ww = 0.01; // offset a bit...
-        var hh = 0.01; //
-        
-        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 0.99;
-        
-        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+//        var ww = 0.01; // offset a bit...
+//        var hh = 0.01; //
+//        
+//        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
+//        var hh2 = 0.99;
+//        
+//        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
         
         //alert(offset_str);
-        soi.setAttribute('ObjectOffset', offset_str);
+        soi.setAttribute('ObjectOffset', '0 0 0 0');
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
         soi.setAttribute('Direction','17');
         soi.setAttribute('crop-top','0.000000');
