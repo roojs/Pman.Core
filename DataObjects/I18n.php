@@ -132,12 +132,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             ");
         }
         if (!empty($q['_as_code_and_title'])) {
+            $tn = $this->tableName();
+            
             $this->selectAdd();
             $this->selectAdd("
                     {$tn}.lval as title,
                     {$tn}.lkey as code
             ");
-            $tn = $this->tableName();
             if (!empty($q['_title'])) {
                 $this->whereAdd("{$tn}.lval like '{$this->escape($_REQUEST['_title'])}%'");
             }
