@@ -127,8 +127,22 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB(); // ensure we have the full database...
             
             $this->selectAdd("
+                id as id,
                 i18n_translate(ltype, lkey, 'en') as lval_en
             ");
+        }
+        
+        if (!empty($q['_as_code_and_title'])) {
+            $tn = $this->tableName();
+            
+            $this->selectAdd();
+            $this->selectAdd("
+                    {$tn}.lval as title,
+                    {$tn}.lkey as code
+            ");
+            if (!empty($q['_title'])) {
+                $this->whereAdd("{$tn}.lval like '{$this->escape($_REQUEST['_title'])}%'");
+            }
         }
          
         if (!empty($q['!code'])) {
@@ -138,6 +152,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             //DB_DAtaObject::debugLevel(1);
             $v = strtoupper($this->escape($q['query']['name']));
             $this->whereAdd("upper(lval) LIKE '%{$v}%'");
+        }
+        
+         if (!empty($q['query']['name_starts'])) {
+            $this->whereAdd("lval LIKE '". $this->escape($q['query']['name_starts']). "%'");
         }
         
         if (!empty($q['_filtered']) && !empty($this->ltype)) {

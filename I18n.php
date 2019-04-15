@@ -120,7 +120,7 @@ class Pman_Core_I18n extends Pman
         
         
         $i = DB_DataObject::Factory('I18n');
-        
+        $i->is_active = 1;
         switch($s) {
             case 'Lang':
                  
