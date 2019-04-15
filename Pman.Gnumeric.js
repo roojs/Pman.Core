@@ -1147,27 +1147,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
         var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
         
-        //<gmr:SheetObjectImage 
-        //      ObjectBound="A3:J8" 
-        //      ObjectOffset="0.375 0.882 0.391 0.294" 
-        //      ObjectAnchorType="16 16 16 16" 
-        //      Direction="17" 
-        //      crop-top="0.000000" 
-        //      crop-bottom="0.000000" 
-        //      crop-left="0.000000" 
-        //      crop-right="0.000000">
-                
-                
-        //alert(gnumeric_colRowToName(row,col));
-               
-        // this is where we really have fun!!!... 
-        // since our design currently assumes the height is enough to fit
-        // stuff in, we only really need to work out how wide it has to be..
-        
-        // note we should probably use centralized calcs if it fits in the first cell!
-        
-        // step 1 - work out how many columns it will span..
-        // lets hope the spreadsheet is big enought..
         var colwidth = 0;
         var endcol=col;
         for ( endcol=col;endcol <100; endcol++) {
@@ -1180,9 +1159,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             }
         }
         
-        soi.setAttribute('ObjectBound',
-            //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
+        soi.setAttribute('ObjectBound', this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
      
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
@@ -1200,8 +1177,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.setAttribute('crop-bottom','0.000000');
         soi.setAttribute('crop-left','0.000000');
         soi.setAttribute('crop-right','0.000000');
-                // <Content image-type="jpeg" size-bytes="3900">......  < / Content>
-                
+         
         var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
