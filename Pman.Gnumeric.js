@@ -1197,6 +1197,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.grid[row][col].width = width;
         this.grid[row][col].height = height;
         
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        if(godoc && godoc.parentNode) {
+            godoc.parentNode.removeChild(godoc);
+        }
+        
         return true;
     },
     
