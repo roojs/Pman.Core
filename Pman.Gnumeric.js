@@ -1277,22 +1277,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
 //        var name = 'Image' + Math.random().toString(36).substring(2);
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
-        
-//        content.setAttribute('name', name);
+        content.setAttribute('size-bytes', size);
+        content.textContent = data;
         soi.appendChild(content);
         objs.appendChild(soi);
-        
-        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
-        
-        var goimage = this.doc.createElement('GOImage');
-        goimage.setAttribute('image-type', type ? type : 'jpeg');
-        goimage.setAttribute('name', name);
-        goimage.setAttribute('type', 'GOPixbuf');
-        goimage.setAttribute('width', width);
-        goimage.setAttribute('height', height);
-        goimage.textContent = data;
-        
-        godoc.appendChild(goimage);
         
         if (typeof(this.grid[startRow]) == 'undefined') {
             this.grid[startRow] = [];
