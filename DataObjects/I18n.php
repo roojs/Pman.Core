@@ -140,6 +140,10 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->whereAdd("upper(lval) LIKE '%{$v}%'");
         }
         
+         if (!empty($q['query']['name_starts'])) {
+            $this->whereAdd("upper(lval) LIKE '". $this->escape($q['query']['name_starts']). "%'");
+        }
+        
         if (!empty($q['_filtered']) && !empty($this->ltype)) {
             $cfg = $this->cfg();
             $filter = $cfg[$this->ltype];
