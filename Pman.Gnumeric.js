@@ -1121,7 +1121,90 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
     },
     
-    
+    /**
+     * writeImageOld:
+     * write an image in old gnumberic format (needs base64 data to write it)
+     * 
+     * 
+     * @param {Number} row  row to put it in (rows start at 0)
+     * @param {Number} col  column to put it in
+     * @param {Number} data  the base64 description of the images
+     * @param {Number} width image width
+     * @param {Number} width image height
+     * 
+     */
+    writeImageOld : function (row, col, data, width, height, type, size) 
+    {
+        
+        if (!data) {
+            throw "write Image called with missing data";
+        }
+        
+        row*=1;
+        col*=1;
+        height*=1;
+        width*=1;
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
+        
+        var colwidth = 0;
+        var endcol=col;
+        for ( endcol=col;endcol <100; endcol++) {
+            if (!this.colInfo[endcol]) {
+                this.colInfo[endcol] = 100; // eak fudge
+            }
+            colwidth += this.colInfo[endcol];
+            if (colwidth > width) {
+                break;
+            }
+        }
+        
+        soi.setAttribute('ObjectBound', this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
+     
+        var ww = 0.01; // offset a bit...
+        var hh = 0.01; //
+        
+        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
+        var hh2 = 0.99;
+        
+        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+        
+        //alert(offset_str);
+        soi.setAttribute('ObjectOffset', offset_str);
+        soi.setAttribute('ObjectAnchorType','16 16 16 16');
+        soi.setAttribute('Direction','17');
+        soi.setAttribute('crop-top','0.000000');
+        soi.setAttribute('crop-bottom','0.000000');
+        soi.setAttribute('crop-left','0.000000');
+        soi.setAttribute('crop-right','0.000000');
+        
+        var content = this.doc.createElement('Content');
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('size-bytes', size);
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        
+        if (typeof(this.grid[row]) == 'undefined') {
+            this.grid[row] = [];
+        }
+        if (typeof(this.grid[row][col]) == 'undefined') {
+            this.createCell(row,col);
+        }
+        
+        this.grid[row][col].value=  data;
+        this.grid[row][col].valueFormat = 'image';
+        this.grid[row][col].imageType = type;
+        this.grid[row][col].width = width;
+        this.grid[row][col].height = height;
+        
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        if(godoc && godoc.parentNode) {
+            godoc.parentNode.removeChild(godoc);
+        }
+        
+        return true;
+    },
     
     /**
      * writeImage:
@@ -1135,8 +1218,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} width image height
      * 
      */
-    
-    
     writeImage : function (row, col, data, width, height, type) 
     {
         
@@ -1244,6 +1325,65 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 //< /gnm:SheetObjectImage>
                 // < /gnm:Objects>
 
+    },
+    
+    /**
+     * writeFixedImageOld:
+     * write an image in old gnumberic format (needs base64 data to write it)
+     */
+    writeFixedImageOld : function (startCol, startRow, endCol, endRow, type, data, width, height, size) 
+    {
+        if (!data) {
+            throw "write Image called with missing data";
+        }
+        
+        startCol = startCol * 1;
+        startRow = startRow * 1;
+        endCol = endCol * 1;
+        endRow = endRow * 1;
+        width = width * 1;
+        height = height * 1;
+        
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
+        
+        soi.setAttribute('ObjectBound',this.RCtoCell(startRow, startCol) + ':' + this.RCtoCell(endRow, endCol));
+        
+        soi.setAttribute('ObjectOffset', '0 0 0 0');
+        soi.setAttribute('ObjectAnchorType','16 16 16 16');
+        soi.setAttribute('Direction','17');
+        soi.setAttribute('crop-top','0.000000');
+        soi.setAttribute('crop-bottom','0.000000');
+        soi.setAttribute('crop-left','0.000000');
+        soi.setAttribute('crop-right','0.000000');
+        
+        var content = this.doc.createElement('Content');
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('size-bytes', size);
+        content.textContent = data;
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        
+        if (typeof(this.grid[startRow]) == 'undefined') {
+            this.grid[startRow] = [];
+        }
+        if (typeof(this.grid[startRow][startCol]) == 'undefined') {
+            this.createCell(startRow,startCol);
+        }
+        
+        this.grid[startRow][startCol].value=  data;
+        this.grid[startRow][startCol].valueFormat = 'image';
+        this.grid[startRow][startCol].imageType = type;
+        this.grid[startRow][startCol].width = width;
+        this.grid[startRow][startCol].height = height;
+        
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        if(godoc && godoc.parentNode) {
+            godoc.parentNode.removeChild(godoc);
+        }
+        
+        return true;
     },
     
     writeFixedImage : function (startCol, startRow, endCol, endRow, type, data, width, height) 
