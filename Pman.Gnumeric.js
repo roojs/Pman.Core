@@ -1375,7 +1375,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         console.log(godoc.parentNode);
         
-        if(godoc) {
+        if(godoc && godoc.parentNode) {
             
         }
         
