@@ -1122,6 +1122,129 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     },
     
     /**
+     * writeImageOld:
+     * write an image (needs base64 data to write it)
+     * 
+     * 
+     * @param {Number} row  row to put it in (rows start at 0)
+     * @param {Number} col  column to put it in
+     * @param {Number} data  the base64 description of the images
+     * @param {Number} width image width
+     * @param {Number} width image height
+     * 
+     */
+    
+    
+    writeImageOld : function (row, col, data, width, height, type) 
+    {
+        
+        if (!data) {
+            throw "write Image called with missing data";
+        }
+        // our default height width is 50/50 ?!
+        //console.log('w='+width+',height='+height);
+                //        <gmr:Objects>
+        row*=1;
+        col*=1;
+        height*=1;
+        width*=1;
+        var objs = this.sheet.getElementsByTagNameNS('*','Objects')[0];
+        var soi = this.doc.createElementNS('http://www.gnumeric.org/v10.dtd', 'gnm:SheetObjectImage');
+        
+        //<gmr:SheetObjectImage 
+        //      ObjectBound="A3:J8" 
+        //      ObjectOffset="0.375 0.882 0.391 0.294" 
+        //      ObjectAnchorType="16 16 16 16" 
+        //      Direction="17" 
+        //      crop-top="0.000000" 
+        //      crop-bottom="0.000000" 
+        //      crop-left="0.000000" 
+        //      crop-right="0.000000">
+                
+                
+        //alert(gnumeric_colRowToName(row,col));
+               
+        // this is where we really have fun!!!... 
+        // since our design currently assumes the height is enough to fit
+        // stuff in, we only really need to work out how wide it has to be..
+        
+        // note we should probably use centralized calcs if it fits in the first cell!
+        
+        // step 1 - work out how many columns it will span..
+        // lets hope the spreadsheet is big enought..
+        var colwidth = 0;
+        var endcol=col;
+        for ( endcol=col;endcol <100; endcol++) {
+            if (!this.colInfo[endcol]) {
+                this.colInfo[endcol] = 100; // eak fudge
+            }
+            colwidth += this.colInfo[endcol];
+            if (colwidth > width) {
+                break;
+            }
+        }
+        
+        soi.setAttribute('ObjectBound',
+            //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
+            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
+     
+        var ww = 0.01; // offset a bit...
+        var hh = 0.01; //
+        
+        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
+        var hh2 = 0.99;
+        
+        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+        
+        //alert(offset_str);
+        soi.setAttribute('ObjectOffset', offset_str);
+        soi.setAttribute('ObjectAnchorType','16 16 16 16');
+        soi.setAttribute('Direction','17');
+        soi.setAttribute('crop-top','0.000000');
+        soi.setAttribute('crop-bottom','0.000000');
+        soi.setAttribute('crop-left','0.000000');
+        soi.setAttribute('crop-right','0.000000');
+                // <Content image-type="jpeg" size-bytes="3900">......  < / Content>
+                
+        var name = 'Image' + Math.random().toString(36).substring(2);
+        var content = this.doc.createElement('Content');
+        content.setAttribute('image-type', type ? type : 'jpeg');
+        content.setAttribute('name', name);
+        soi.appendChild(content);
+        objs.appendChild(soi);
+        
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        
+        var goimage = this.doc.createElement('GOImage');
+        goimage.setAttribute('image-type', type ? type : 'jpeg');
+        goimage.setAttribute('name', name);
+        goimage.setAttribute('type', 'GOPixbuf');
+        goimage.setAttribute('width', width);
+        goimage.setAttribute('height', height);
+        goimage.textContent = data;
+        
+        godoc.appendChild(goimage);
+        
+        if (typeof(this.grid[row]) == 'undefined') {
+            this.grid[row] = [];
+        }
+        if (typeof(this.grid[row][col]) == 'undefined') {
+            this.createCell(row,col);
+        }
+        
+        this.grid[row][col].value=  data;
+        this.grid[row][col].valueFormat = 'image';
+        this.grid[row][col].imageType = type;
+        this.grid[row][col].width = width;
+        this.grid[row][col].height = height;
+        
+        return true;
+                //< /gnm:SheetObjectImage>
+                // < /gnm:Objects>
+
+    },
+    
+    /**
      * writeImage:
      * write an image (needs base64 data to write it)
      * 
