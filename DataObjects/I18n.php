@@ -131,6 +131,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                 i18n_translate(ltype, lkey, 'en') as lval_en
             ");
         }
+        
         if (!empty($q['_as_code_and_title'])) {
             $tn = $this->tableName();
             
