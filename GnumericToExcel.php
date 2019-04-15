@@ -111,5 +111,5 @@ class Pman_Core_GnumericToExcel extends Pman
         
     }
     
-    
+     
 }
