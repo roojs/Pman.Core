@@ -1371,7 +1371,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         this.grid[startRow][startCol].width = width;
         this.grid[startRow][startCol].height = height;
         
-        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
+        var godoc = this.doc.getElementsByTagNameNS('*','GODoctest')[0];
         
         console.log(godoc);
         
