@@ -1373,8 +1373,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
         
-        console.log(godoc.parentNode);
-        
         if(godoc && godoc.parentNode) {
             
         }
