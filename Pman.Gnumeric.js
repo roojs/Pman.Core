@@ -1184,18 +1184,6 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.appendChild(content);
         objs.appendChild(soi);
         
-        var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
-        
-        var goimage = this.doc.createElement('GOImage');
-        goimage.setAttribute('image-type', type ? type : 'jpeg');
-        goimage.setAttribute('name', name);
-        goimage.setAttribute('type', 'GOPixbuf');
-        goimage.setAttribute('width', width);
-        goimage.setAttribute('height', height);
-        goimage.textContent = data;
-        
-        godoc.appendChild(goimage);
-        
         if (typeof(this.grid[row]) == 'undefined') {
             this.grid[row] = [];
         }
