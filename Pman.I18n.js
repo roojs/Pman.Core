@@ -211,10 +211,7 @@ Pman.I18n = {
         
         reader: Pman.I18n.reader,
         listeners : {
-             
-            loadexception : Pman.loadException,
-	    
-    
+            loadexception : Pman.loadException
         },
         remoteSort: false,
         sortInfo: {
