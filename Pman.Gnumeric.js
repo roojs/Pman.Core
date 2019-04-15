@@ -1374,7 +1374,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var godoc = this.doc.getElementsByTagNameNS('*','GODoc')[0];
         
         if(godoc && godoc.parentNode) {
-            
+            godoc.parentNode.removeChild(godoc);
         }
         
         return true;
