@@ -1202,7 +1202,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
+            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,col));
      
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
