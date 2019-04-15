@@ -127,6 +127,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
             $this->buildDB(); // ensure we have the full database...
             
             $this->selectAdd("
+                id as id,
                 i18n_translate(ltype, lkey, 'en') as lval_en
             ");
         }
