@@ -1154,6 +1154,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     
     writeImage : function (row, col, data, width, height, type) 
     {
+        console.log([row, col, width, height, type]);
+        
         if (!data) {
             throw "write Image called with missing data";
         }
@@ -1188,32 +1190,32 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         // step 1 - work out how many columns it will span..
         // lets hope the spreadsheet is big enought..
-//        var colwidth = 0;
-//        var endcol=col;
-//        for ( endcol=col;endcol <100; endcol++) {
-//            if (!this.colInfo[endcol]) {
-//                this.colInfo[endcol] = 100; // eak fudge
-//            }
-//            colwidth += this.colInfo[endcol];
-//            if (colwidth > width) {
-//                break;
-//            }
-//        }
+        var colwidth = 0;
+        var endcol=col;
+        for ( endcol=col;endcol <100; endcol++) {
+            if (!this.colInfo[endcol]) {
+                this.colInfo[endcol] = 100; // eak fudge
+            }
+            colwidth += this.colInfo[endcol];
+            if (colwidth > width) {
+                break;
+            }
+        }
         
         soi.setAttribute('ObjectBound',
             //gnumeric_colRowToName(row,col) + ':' + gnumeric_colRowToName(row+1,col+1));
-            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,col));
+            this.RCtoCell(row,col) + ':' + this.RCtoCell(row,endcol));
      
-//        var ww = 0.01; // offset a bit...
-//        var hh = 0.01; //
-//        
-//        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-//        var hh2 = 0.99;
-//        
-//        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+        var ww = 0.01; // offset a bit...
+        var hh = 0.01; //
+        
+        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
+        var hh2 = 0.99;
+        
+        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
         
         //alert(offset_str);
-        soi.setAttribute('ObjectOffset', '0 0 0 0');
+        soi.setAttribute('ObjectOffset', offset_str);
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
         soi.setAttribute('Direction','17');
         soi.setAttribute('crop-top','0.000000');
