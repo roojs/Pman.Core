@@ -140,7 +140,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
                     {$tn}.lval as title,
                     {$tn}.lkey as code
             ");
-            $this->active = 1;
+            $this->is_active = 1;
             if (!empty($q['_title'])) {
                 $this->whereAdd("{$tn}.lval like '{$this->escape($_REQUEST['_title'])}%'");
             }
