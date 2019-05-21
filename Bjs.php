@@ -16,6 +16,7 @@ class Pman_Core_Bjs {
         
         $this->json = json_decode(file_get_contents($file));
         $this->iterateFields($this->json->items);
+        $this->iterateColumns($this->json->items);
     }
     
     function iterateFields($ar)
