@@ -436,7 +436,7 @@ class Pman_Core_SimpleExcel extends Pman
                     $ar[0]($ar[1], $ar[2], $ar[3], $ar[4], $ar[5]);
                 } else {
                 // not sure if row is correct here...!!!?
-                    call_user_func($ar[0],$ar[2], $ar[3], $ar[4], $ar[5]);
+                    call_user_func($ar[0],$ar[1], $ar[2], $ar[3], $ar[4], $ar[5]);
                 }
             }
             
