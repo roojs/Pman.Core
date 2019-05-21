@@ -10,7 +10,7 @@ class Pman_Core_Bjs {
     
     var $json;
     var $fields = array();
-    
+    var $cols = array();
     function __construct($file)
     {
         
@@ -67,6 +67,10 @@ class Pman_Core_Bjs {
         }
         
     }
-    
+    function iterateColumns($ar)
+    {
+        foreach($ar as $o) {
+            
+     
     
 }
