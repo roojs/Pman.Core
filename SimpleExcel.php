@@ -74,7 +74,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $formats = array();
     var $workbook = false;
     var $worksheet= false;
-    
+    var $postRender = array();
      
     function __construct($data,$cfg)
     {
@@ -243,6 +243,7 @@ class Pman_Core_SimpleExcel extends Pman
         if (empty($data)) {
             return;
         }
+         
         foreach($cfg['cols']  as $c => $col_cfg) {
             if (isset($col_cfg['renderer'])) {
                 $hasRender = true;
@@ -279,8 +280,7 @@ class Pman_Core_SimpleExcel extends Pman
                             continue;
                         }
                         if (!empty($col_cfg['renderer'])) {
-                            
-                            if (is_a($col_cfg['renderer'], 'Closure')) {
+                             if (is_a($col_cfg['renderer'], 'Closure')) {
                                 $col_cfg['renderer']($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
                             } else {
                             // not sure if row is correct here...!!!?
@@ -370,6 +370,18 @@ class Pman_Core_SimpleExcel extends Pman
             }
             if (isset($col_cfg['renderer'])) {
                 $hasRender = true;
+                
+                $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
+                if (empty($cl[$col_cfg['dataIndex']])) {
+                    continue;
+                }
+                $this->postRender[] = array(
+                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $start_row+$r+1, $c, $cl
+                );
+                  
+                
+                
+                
                 continue;
             }
             
@@ -417,6 +429,20 @@ class Pman_Core_SimpleExcel extends Pman
     
     function send($fname)
     {
+        
+        if (!empty($this->postRender)) {
+            foreach($this->postRender as $ar) {
+                 if (is_a($ar[0], 'Closure')) {
+                    $ar[0]($ar[1], $ar[2], $ar[3], $ar[4], $ar[5]);
+                } else {
+                // not sure if row is correct here...!!!?
+                    call_user_func($ar[0],$ar[1], $ar[2], $ar[3], $ar[4], $ar[5]);
+                }
+            }
+            
+        }
+        
+        
         if (!empty($this->workbook)) {
             $this->workbook->close();
             $this->workbook = false;
