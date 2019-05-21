@@ -429,6 +429,20 @@ class Pman_Core_SimpleExcel extends Pman
     
     function send($fname)
     {
+        
+        if (!empty($this->postRender)) {
+            foreach($this->postRender as $ar) {
+                 if (is_a($ar[0], 'Closure')) {
+                    $ar[0]($ar[1], $ar[2], $ar[3], $ar[4], $ar[5]);
+                } else {
+                // not sure if row is correct here...!!!?
+                    call_user_func($ar[0],$ar[2], $ar[3], $ar[4], $ar[5]);
+                }
+            }
+            
+        }
+        
+        
         if (!empty($this->workbook)) {
             $this->workbook->close();
             $this->workbook = false;
