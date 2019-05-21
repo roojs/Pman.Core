@@ -243,6 +243,8 @@ class Pman_Core_SimpleExcel extends Pman
         if (empty($data)) {
             return;
         }
+        print_R($col_cfg);exit;
+        
         foreach($cfg['cols']  as $c => $col_cfg) {
             if (isset($col_cfg['renderer'])) {
                 $hasRender = true;
