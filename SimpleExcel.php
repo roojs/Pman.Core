@@ -370,6 +370,18 @@ class Pman_Core_SimpleExcel extends Pman
             }
             if (isset($col_cfg['renderer'])) {
                 $hasRender = true;
+                
+                $v = isset($cl[$col_cfg['dataIndex']]) ? $cl[$col_cfg['dataIndex']] : '';
+                if (empty($cl[$col_cfg['dataIndex']])) {
+                    continue;
+                }
+                $this->postRender[] = array(
+                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl;
+                );
+                  
+                
+                
+                
                 continue;
             }
             
