@@ -24,7 +24,10 @@ class Pman_Core_Bjs {
         foreach($ar as $o) {
             
             switch ($o->xtype) {
-                case "ComboBox":                
+                case "ComboBox":
+                    if (!isset($o->{'String hiddenName'})) {
+                        continue;
+                    }
                     $this->fields[] = $o->{'String hiddenName'};
                     // fall throught..
                     $k = isset($o->{'String name'}) ? 'String name' : 'string name';
