@@ -376,7 +376,7 @@ class Pman_Core_SimpleExcel extends Pman
                     continue;
                 }
                 $this->postRender[] = array(
-                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl
+                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $start_row+$r+1, $c, $cl
                 );
                   
                 
