@@ -74,7 +74,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $formats = array();
     var $workbook = false;
     var $worksheet= false;
-    
+    var $postRender = array();
      
     function __construct($data,$cfg)
     {
@@ -376,7 +376,7 @@ class Pman_Core_SimpleExcel extends Pman
                     continue;
                 }
                 $this->postRender[] = array(
-                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl;
+                    $col_cfg['renderer'], $cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl
                 );
                   
                 
