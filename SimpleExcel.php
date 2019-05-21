@@ -279,8 +279,7 @@ class Pman_Core_SimpleExcel extends Pman
                             continue;
                         }
                         if (!empty($col_cfg['renderer'])) {
-                            
-                            if (is_a($col_cfg['renderer'], 'Closure')) {
+                             if (is_a($col_cfg['renderer'], 'Closure')) {
                                 $col_cfg['renderer']($cl[$col_cfg['dataIndex']], $worksheet, $r+1, $c, $cl);
                             } else {
                             // not sure if row is correct here...!!!?
