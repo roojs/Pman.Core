@@ -70,7 +70,17 @@ class Pman_Core_Bjs {
     function iterateColumns($ar)
     {
         foreach($ar as $o) {
-            
+            switch ($o->xtype) {
+                case "ColumnModel":
+                    $this->cols[] = $o;
+                    break;
+                default:
+                    if (isset($o->items)) {
+                        $this->iterateColumns($o->items);
+                    }
+            }
+        }
+    }
      
     
 }
