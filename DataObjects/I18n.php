@@ -246,7 +246,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function toTransList($ltype, $inlang)
     {
         
-        
+        $this->is_active = 1;
         $this->ltype = $ltype;
         $this->inlang= $inlang;
         $this->selectAdd();
