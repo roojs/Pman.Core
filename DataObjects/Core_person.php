@@ -56,7 +56,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
  
     function owner()
     {
-        $p = DB_DataObject::Factory($this->tableName());
+        // this might be a Person in some old code? 
+        $p = DB_DataObject::Factory('core_person');
         $p->get($this->owner_id);
         return $p;
     }
