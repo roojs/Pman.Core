@@ -179,7 +179,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
             return true;
         }
         
-        if ('[\x21-\x7e]*'.match(value)) {
+        if (value.match(/[\x21-\x7e]*/)) {
             this.markInvalid(this.errors.PwdBadChar);
             return false;
         }
