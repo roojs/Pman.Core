@@ -1164,11 +1164,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
         
+        var rowHeight = typeof(this.rowInfoDom[row]) == 'undefined' ? 100 : 
+		this.rowInfoDom[row].getAttribute('Unit')*1;
+	
+	
         var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 0.99;
+        var hh2 = 1 - ((rowHeight - height) /    rowHeight);
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
         
+	// offset string 0.01 0.01 0.01 0.392 << last one needs to be calculated based on proportions.
+	// so what are our dimentions..
+	
+	
+	
+	
+	
         //alert(offset_str);
         soi.setAttribute('ObjectOffset', offset_str);
         soi.setAttribute('ObjectAnchorType','16 16 16 16');
@@ -1178,6 +1189,10 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         soi.setAttribute('crop-left','0.000000');
         soi.setAttribute('crop-right','0.000000');
         
+	
+	
+	
+	
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
         content.setAttribute('size-bytes', size);
@@ -1276,8 +1291,12 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
         
+	var rowHeight = typeof(this.rowInfoDom[row]) == 'undefined' ? 100 : 
+		this.rowInfoDom[row].getAttribute('Unit')*1;
+	
+	
         var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 0.99;
+        var hh2 = 1 - ((rowHeight - height) /    rowHeight);
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
         
