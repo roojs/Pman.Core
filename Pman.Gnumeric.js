@@ -1166,7 +1166,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         
         var rowHeight = typeof(this.rowInfoDom[row]) == 'undefined' ? 100 : 
 		this.rowInfoDom[row].getAttribute('Unit')*1;
-	
+	 
 	
         var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
         var hh2 = 1 - ((rowHeight - height) /    rowHeight);
