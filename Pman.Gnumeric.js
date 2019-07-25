@@ -1164,14 +1164,8 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var ww = 0.01; // offset a bit...
         var hh = 0.01; //
         
-        var rowHeight = typeof(this.rowInfoDom[row]) == 'undefined' ? 100 : 
-		this.rowInfoDom[row].getAttribute('Unit')*1;
-	 
-	
         var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 1 - ((rowHeight - height) /    rowHeight);
-        
-        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
+        var hh2 = 0.99;
         
         var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2;
         
@@ -1237,14 +1231,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * 
      */
     
-    var rowHeight = typeof(this.rowInfoDom[row]) == 'undefined' ? 100 : 
-		this.rowInfoDom[row].getAttribute('Unit')*1;
-	
-	
-        var ww2 = 1 - ((colwidth - width) / this.colInfo[endcol]);
-        var hh2 = 1 - ((rowHeight - height) /    rowHeight);
-        
-        var offset_str = ww + ' '  + hh + ' ' + ww2 + ' '+hh2; : function (row, col, data, width, height, type) 
+    writeImage : function (row, col, data, width, height, type) 
     {
         
         if (!data) {
