@@ -55,7 +55,7 @@ class Pman_Core_GnumericToExcel extends Pman
         //$this->addEvent("DOWNLOAD", false, isset($_REQUEST['title']) ? $_REQUEST['title'] : '???');
         
         
-        if (1) { // if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
+         if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
             if (empty($_POST['debug'])) {
                 header('Content-type: application/x-gnumeric');
                 header('Content-Disposition: attachment; filename="' .addslashes($fname). '.gnumeric"');
