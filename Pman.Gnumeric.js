@@ -1181,6 +1181,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
         content.setAttribute('size-bytes', size);
+	content.appendChild( this.doc.createTextNode(data));
         soi.appendChild(content);
         objs.appendChild(soi);
         
@@ -1218,6 +1219,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
      * @param {Number} width image height
      * 
      */
+    
     writeImage : function (row, col, data, width, height, type) 
     {
         
@@ -1360,7 +1362,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
         content.setAttribute('size-bytes', size);
-        content.textContent = data;
+        content.appendChild( this.doc.createTextNode(data));
         soi.appendChild(content);
         objs.appendChild(soi);
         
@@ -1416,6 +1418,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         var content = this.doc.createElement('Content');
         content.setAttribute('image-type', type ? type : 'jpeg');
         content.setAttribute('name', name);
+	
         soi.appendChild(content);
         objs.appendChild(soi);
         

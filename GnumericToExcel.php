@@ -34,7 +34,7 @@ class Pman_Core_GnumericToExcel extends Pman
     }
     function post($fname) {
         
-          $ml = (int) ini_get('suhosin.post.max_value_length');
+        $ml = (int) ini_get('suhosin.post.max_value_length');
         if (empty($_POST['xml'])) {
             header("HTTP/1.0 400 Internal Server Error");
             die(  $ml ? "Suhosin Patch enabled - try and disable it!!!" : 'no XML sent');
@@ -55,9 +55,10 @@ class Pman_Core_GnumericToExcel extends Pman
         //$this->addEvent("DOWNLOAD", false, isset($_REQUEST['title']) ? $_REQUEST['title'] : '???');
         
         
-        if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
+        if (1) { // if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
             if (empty($_POST['debug'])) {
                 header('Content-type: application/x-gnumeric');
+                header('Content-Disposition: attachment; filename="' .addslashes($fname). '.gnumeric"');
             } else {
                 header('Content-type: text/xml');
             }
