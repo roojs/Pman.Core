@@ -74,8 +74,10 @@ class Pman_Core_GnumericToExcel extends Pman
         
         
         require_once 'System.php';
+        $xvfb = System::which('xvfb-run');
+        
         $ss = System::which('ssconvert');
-        $cmd =  $ss. 
+        $cmd = $xvfb . " -a " . $ss. 
                 " --import-encoding=Gnumeric_XmlIO:sax" .
                 " --export-type=Gnumeric_Excel:excel_biff8 " . 
                 $srcTmp . ' ' . $targetTmp . ' 2>&1';

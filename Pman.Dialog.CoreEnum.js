@@ -180,7 +180,7 @@ Pman.Dialog.CoreEnum = {
           allowBlank : false,
           fieldLabel : _this._strings['b48968e1c912da07df5e8d6d246291ec'] /* Display Name */,
           name : 'display_name',
-          width : 200,
+          width : 250,
           listeners : {
            keyup : function (_self, e)
             {

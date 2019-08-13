@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CoreEnum",
  "parent" : "",
  "title" : "",
- "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.CoreEnum.bjs",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEnum.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -45,9 +45,9 @@
      "* prop" : "center"
     },
     {
+     "fitToFrame" : true,
      "background" : true,
      "region" : "center",
-     "fitToFrame" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
@@ -57,8 +57,8 @@
         "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/core_enum.php'",
-       "xtype" : "Form",
        "method" : "POST",
+       "xtype" : "Form",
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
@@ -79,7 +79,7 @@
          "fieldLabel" : "Display Name",
          "xtype" : "TextField",
          "allowBlank" : false,
-         "width" : 200,
+         "width" : 250,
          "$ xns" : "Roo.form",
          "name" : "display_name"
         },
