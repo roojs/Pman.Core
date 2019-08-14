@@ -127,7 +127,7 @@ Pman.Download = function(cfg)
         
     }
     var req = new XMLHttpRequest();
-    xhr.responseType = 'blob';
+    req.responseType = 'blob';
     req.open(this.method, this.url);
     
     var _t = this;
