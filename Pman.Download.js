@@ -83,6 +83,8 @@ Pman.Download = function(cfg)
     
     Roo.log("creating form?");
     
+    this.form = new FormData();
+    /*
     var b = Roo.get(document.body);
     this.form = b.createChild({
         tag: 'form',
@@ -91,6 +93,7 @@ Pman.Download = function(cfg)
         target : this.newWindow ? '_new' : this.csvFrame.id,
         enctype : 'multipart/form-data'
     });
+    **/
 //    
 //    if(this.doctype == 'pdf'){
 //        this.pdfEmbed = b.createChild({
@@ -103,7 +106,8 @@ Pman.Download = function(cfg)
  
     Roo.log(this.params);
     for(var i in this.params) {
-        
+        this.form.append(i, this.params[i]);
+        /*
         var el = this.form.createChild( {
             ns : 'html',
             tag : 'input',
@@ -112,16 +116,32 @@ Pman.Download = function(cfg)
             name : i,
             value : this.params[i]
         });
+        */
         
         
     }
+    var req = new XMLHttpRequest();
+    req.open(this.method, this.url);
     
+    var _t = this;
+    req.onload = function( ev )
+    {
+        if (req.status == 200) {
+            _t.success ? _t.sucess() : '';
+        } else {
+            _t.failure ? _t.failure() : '';
+        }
+        
+    }
+    
+    req.send(this.form);
+    /*
     (function() {
         this.submit = true;
         this.form.dom.submit();
         this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
-    
+    */
      
  
 }
@@ -229,7 +249,7 @@ Roo.apply(Pman.Download.prototype, {
     // private - clean up download elements.
     cleanup :function()
     {
-        Roo.log('cleanup?');
+       /* Roo.log('cleanup?');
         if (this.form) {
             this.form.remove();
             this.form= false;
@@ -241,6 +261,7 @@ Roo.apply(Pman.Download.prototype, {
             Roo.get(this.csvFrame).remove();
             this.csvFrame= false;
         }
+        */
          
     },
     
