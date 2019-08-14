@@ -71,6 +71,10 @@ Pman.Download = function(cfg)
     
     if (this.method == 'GET' && !this.params) {
         (function() {
+            
+            
+            this.createCsvFrame();
+            Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
             this.submit = true;
             this.csvFrame.src = cfg.url;
             //this.cleanup.defer(cfg.timeout || 30000,this);
@@ -167,7 +171,7 @@ Roo.apply(Pman.Download.prototype, {
     failure : false,
     
     // private..
-    /*
+    //used by simple GET method.
     createCsvFrame: function()
     {
         if (this.csvFrame) {
@@ -189,7 +193,7 @@ Roo.apply(Pman.Download.prototype, {
         }
         
     },
-   
+    /* not used as it didn't work..
     onLoad : function()
     {
        // requested++; // second request is real one..
