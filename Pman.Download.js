@@ -167,6 +167,7 @@ Roo.apply(Pman.Download.prototype, {
     failure : false,
     
     // private..
+    /*
     createCsvFrame: function()
     {
         if (this.csvFrame) {
@@ -188,7 +189,7 @@ Roo.apply(Pman.Download.prototype, {
         }
         
     },
-    
+   
     onLoad : function()
     {
        // requested++; // second request is real one..
@@ -245,7 +246,7 @@ Roo.apply(Pman.Download.prototype, {
         
 
     },
-    
+     */
     // private - clean up download elements.
     cleanup :function()
     {
