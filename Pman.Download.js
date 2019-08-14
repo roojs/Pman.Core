@@ -143,7 +143,7 @@ Pman.Download = function(cfg)
                 filename = matches[1].replace(/['"]/g, '');
             }
             
-            var blob = new Blob([this.response], {type: req.responseType });
+            var blob = new Blob([req.response], {type: req.responseType });
             
             var a = document.createElement("a");
             a.style = "display: none";
