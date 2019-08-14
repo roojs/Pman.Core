@@ -194,7 +194,7 @@ Roo.apply(Pman.Download.prototype, {
                 if (this.failure) {
                     this.failure();
                 }
-                
+                return;
             }
             
             Roo.log(doc.body.innerHTML);
