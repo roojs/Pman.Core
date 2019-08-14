@@ -135,6 +135,8 @@ Pman.Download = function(cfg)
     {
         if (req.status == 200) {
             Roo.log(ev);
+            var headers = req.getAllResponseHeaders();
+            Roo.log(req.getAllResponseHeaders())
             var blob = new Blob([this.response], {type: req.responseType });
             
             var a = document.createElement("a");
