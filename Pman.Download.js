@@ -176,7 +176,7 @@ Roo.apply(Pman.Download.prototype, {
         if (!this.submit) {
             return false;
         }
-        return false;
+        //return false;
       
         var frame = this.csvFrame;
         var success  = true; 
