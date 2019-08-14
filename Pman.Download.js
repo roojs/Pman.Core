@@ -38,8 +38,7 @@ var t = new Pman.Download({
 Pman.Download = function(cfg)
 {
     
-    success : false,
-    failure : false,
+   
     
     this.params = {};
     
