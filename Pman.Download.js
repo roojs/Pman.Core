@@ -191,7 +191,9 @@ Roo.apply(Pman.Download.prototype, {
                   
                 Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
                 success  = false;
-                 
+                if (this.failure) {
+                    this.failure();
+                }
                 
             }
             
@@ -201,6 +203,9 @@ Roo.apply(Pman.Download.prototype, {
         catch(e) {
             Roo.log(e.toString());
             Roo.log(e);
+        }
+        if (this.success) {
+            this.success();
         }
         // we can not actually do anything with the frame... as it may actually still be downloading..
         return true;
