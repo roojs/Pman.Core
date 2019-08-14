@@ -135,8 +135,14 @@ Pman.Download = function(cfg)
     {
         if (req.status == 200) {
             Roo.log(ev);
-            var headers = req.getAllResponseHeaders();
-            Roo.log(req.getAllResponseHeaders())
+            var cd = req.getResponseHeader('Content-Disposition');
+            
+            var filename = '';
+            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(cd);
+            if (matches != null && matches[1]) { 
+                filename = matches[1].replace(/['"]/g, '');
+            }
+            
             var blob = new Blob([this.response], {type: req.responseType });
             
             var a = document.createElement("a");
@@ -144,7 +150,7 @@ Pman.Download = function(cfg)
             document.body.appendChild(a);
             var url = window.URL.createObjectURL(blob);
             a.href = url;
-            a.download = 'myFile.pdf';
+            a.download = filename;
              a.click();
             //release the reference to the file by revoking the Object URL
             window.URL.revokeObjectURL(url);
