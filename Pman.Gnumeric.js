@@ -1709,6 +1709,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         }
         
         var ser = new XMLSerializer();
+	Roo.get(document.body).mask("Downloading");
         var x = new Pman.Download({
             method: 'POST',
             timeout : 120000, // quite a long wait.. 2 minutes.
@@ -1720,11 +1721,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             },
             url : (this.downloadURL || (baseURL + '/GnumericToExcel/')) + name + '.xls',
             success : function() {
+		Roo.get(document.body).unmask();
                 Roo.MessageBox.alert("Alert", "File should have downloaded now");
                 if (callback) {
                     callback();
                 }
-            }
+            },
+	    failure : function() {
+		Roo.get(document.body).unmask();
+		Roo.MessageBox.alert("Alert", "Download failed");
+	    }
         });
          
     }

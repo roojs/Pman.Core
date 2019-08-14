@@ -38,6 +38,8 @@ var t = new Pman.Download({
 Pman.Download = function(cfg)
 {
     
+   
+    
     this.params = {};
     
     Roo.apply(this, cfg);
@@ -58,12 +60,12 @@ Pman.Download = function(cfg)
    
     
     
-    this.submit = false;
-    this.createCsvFrame();
+    //this.submit = false;
+    //this.createCsvFrame();
     
-    var requested = 0;
+    //var requested = 0;
      
-    Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
+    //Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
     
     
     //--- simple method..
@@ -71,6 +73,10 @@ Pman.Download = function(cfg)
     
     if (this.method == 'GET' && !this.params) {
         (function() {
+            
+            
+            this.createCsvFrame();
+            //Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
             this.submit = true;
             this.csvFrame.src = cfg.url;
             //this.cleanup.defer(cfg.timeout || 30000,this);
@@ -83,6 +89,8 @@ Pman.Download = function(cfg)
     
     Roo.log("creating form?");
     
+    this.form = new FormData();
+    /*
     var b = Roo.get(document.body);
     this.form = b.createChild({
         tag: 'form',
@@ -91,6 +99,7 @@ Pman.Download = function(cfg)
         target : this.newWindow ? '_new' : this.csvFrame.id,
         enctype : 'multipart/form-data'
     });
+    **/
 //    
 //    if(this.doctype == 'pdf'){
 //        this.pdfEmbed = b.createChild({
@@ -103,7 +112,8 @@ Pman.Download = function(cfg)
  
     Roo.log(this.params);
     for(var i in this.params) {
-        
+        this.form.append(i, this.params[i]);
+        /*
         var el = this.form.createChild( {
             ns : 'html',
             tag : 'input',
@@ -112,16 +122,54 @@ Pman.Download = function(cfg)
             name : i,
             value : this.params[i]
         });
+        */
         
         
     }
+    var req = new XMLHttpRequest();
+    req.responseType = 'blob';
+    req.open(this.method, this.url);
     
+    var _t = this;
+    req.onload = function( ev )
+    {
+        if (req.status == 200) {
+            Roo.log(ev);
+            var cd = req.getResponseHeader('Content-Disposition');
+            
+            var filename = '';
+            var matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(cd);
+            if (matches != null && matches[1]) { 
+                filename = matches[1].replace(/['"]/g, '');
+            }
+            
+            var blob = new Blob([req.response], {type: req.responseType });
+            
+            var a = document.createElement("a");
+            a.style = "display: none";
+            document.body.appendChild(a);
+            var url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = filename;
+             a.click();
+            //release the reference to the file by revoking the Object URL
+            window.URL.revokeObjectURL(url);
+            
+            _t.success ? _t.success(ev) : '';
+        } else {
+            _t.failure ? _t.failure(ev) : '';
+        }
+        
+    }
+    
+    req.send(this.form);
+    /*
     (function() {
         this.submit = true;
         this.form.dom.submit();
         this.cleanup.defer(this.timeout || 30000,this);
     }).defer(100, this);
-    
+    */
      
  
 }
@@ -143,7 +191,11 @@ Roo.apply(Pman.Download.prototype, {
     
     method : 'GET',
     
+    success : false,
+    failure : false,
+    
     // private..
+    //used by simple GET method.
     createCsvFrame: function()
     {
         if (this.csvFrame) {
@@ -165,7 +217,7 @@ Roo.apply(Pman.Download.prototype, {
         }
         
     },
-    
+    /* not used as it didn't work..
     onLoad : function()
     {
        // requested++; // second request is real one..
@@ -176,7 +228,7 @@ Roo.apply(Pman.Download.prototype, {
         if (!this.submit) {
             return false;
         }
-        return false;
+        //return false;
       
         var frame = this.csvFrame;
         var success  = true; 
@@ -191,8 +243,10 @@ Roo.apply(Pman.Download.prototype, {
                   
                 Roo.MessageBox.alert("Download Error", doc.body.innerHTML);
                 success  = false;
-                 
-                
+                if (this.failure) {
+                    this.failure();
+                }
+                return true;
             }
             
             Roo.log(doc.body.innerHTML);
@@ -201,6 +255,9 @@ Roo.apply(Pman.Download.prototype, {
         catch(e) {
             Roo.log(e.toString());
             Roo.log(e);
+        }
+        if (this.success) {
+            this.success();
         }
         // we can not actually do anything with the frame... as it may actually still be downloading..
         return true;
@@ -217,11 +274,11 @@ Roo.apply(Pman.Download.prototype, {
         
 
     },
-    
+     */
     // private - clean up download elements.
     cleanup :function()
     {
-        Roo.log('cleanup?');
+       /* Roo.log('cleanup?');
         if (this.form) {
             this.form.remove();
             this.form= false;
@@ -233,6 +290,7 @@ Roo.apply(Pman.Download.prototype, {
             Roo.get(this.csvFrame).remove();
             this.csvFrame= false;
         }
+        */
          
     },
     
