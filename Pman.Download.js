@@ -127,12 +127,26 @@ Pman.Download = function(cfg)
         
     }
     var req = new XMLHttpRequest();
+    xhr.responseType = 'blob';
     req.open(this.method, this.url);
     
     var _t = this;
     req.onload = function( ev )
     {
         if (req.status == 200) {
+            Roo.log(ev);
+            var blob = new Blob([this.response], {type: req.responseType });
+            
+            var a = document.createElement("a");
+            a.style = "display: none";
+            document.body.appendChild(a);
+            var url = window.URL.createObjectURL(blob);
+            a.href = url;
+            a.download = 'myFile.pdf';
+             a.click();
+            //release the reference to the file by revoking the Object URL
+            window.URL.revokeObjectURL(url);
+            
             _t.success ? _t.success(ev) : '';
         } else {
             _t.failure ? _t.failure(ev) : '';
