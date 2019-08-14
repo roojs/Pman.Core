@@ -131,9 +131,9 @@ Pman.Download = function(cfg)
     req.onload = function( ev )
     {
         if (req.status == 200) {
-            _t.success ? _t.sucess() : '';
+            _t.success ? _t.success(ev) : '';
         } else {
-            _t.failure ? _t.failure() : '';
+            _t.failure ? _t.failure(ev) : '';
         }
         
     }
