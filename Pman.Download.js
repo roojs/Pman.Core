@@ -74,7 +74,7 @@ Pman.Download = function(cfg)
             
             
             this.createCsvFrame();
-            Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
+            //Roo.EventManager.on( this.csvFrame, 'load', this.onLoad, this);
             this.submit = true;
             this.csvFrame.src = cfg.url;
             //this.cleanup.defer(cfg.timeout || 30000,this);
