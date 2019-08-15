@@ -110,7 +110,8 @@ Pman.Download = function(cfg)
 //        });
 //    }
  
-    Roo.log(this.params);
+    //Roo.log(this.params);
+    this.params._get = 1; // always do a post request, with _get passed
     for(var i in this.params) {
         this.form.append(i, this.params[i]);
         /*
@@ -128,7 +129,8 @@ Pman.Download = function(cfg)
     }
     var req = new XMLHttpRequest();
     req.responseType = 'blob';
-    req.open(this.method, this.url);
+    
+    req.open('POST', this.url);
     
     var _t = this;
     req.onload = function( ev )
