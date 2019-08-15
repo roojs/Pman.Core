@@ -338,7 +338,7 @@ Roo.apply(Pman.Download.prototype, {
         
         // do it as a post, as args can get long..
         
-        this.method = this.method || 'POST';
+        this.method =   'POST';
         if (this.method  == 'POST') {
             this.params._get = 1;
         }
