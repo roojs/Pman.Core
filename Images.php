@@ -227,7 +227,7 @@ class Pman_Core_Images extends Pman
     
     function post($v)
     {
-        if (empty($_REQUEST['_get'])) {
+        if (!empty($_REQUEST['_get'])) {
             return $this->get($v);
         }
         
