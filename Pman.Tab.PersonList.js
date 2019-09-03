@@ -637,8 +637,8 @@ Pman.Tab.PersonList.prototype = {
                     return String.format('<div style="text-decoration:line-through">{0}</div>', v).split("\n").join("<br/>"); 
                 }
                 return String.format('{0}', v).split("\n").join("<br/>"); 
-            }
-          //  width : 150  
+            },
+            width : 150  
         }, cfg);
     },
     
