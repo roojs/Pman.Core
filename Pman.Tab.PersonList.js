@@ -632,7 +632,7 @@ Pman.Tab.PersonList.prototype = {
             dataIndex : 'member_of_json',
             sortable : false,
             renderer : function(vv,p,r) {
-                var v = JSON.parse(r).join("\n");
+                var v = vv ? JSON.parse(vv).join("\n") : '';
                 if(r.data.active != 1){
                     return String.format('<div style="text-decoration:line-through">{0}</div>', v).split("\n").join("<br/>"); 
                 }
