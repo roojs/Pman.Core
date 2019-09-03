@@ -1156,7 +1156,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     WHERE
                         core_group_member.user_id = core_person.id
                 ), ''),
-            ']') as members");
+            ']') as member_of_json");
     }
     
     function setFromRoo($ar, $roo)
