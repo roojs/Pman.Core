@@ -630,12 +630,13 @@ Pman.Tab.PersonList.prototype = {
          //   id : (this.id + '-name').toLowerCase(),
             header : "Group Membership",
             dataIndex : 'member_of_json',
-            sortable : true,
-            renderer : function(v,p,r) { 
+            sortable : false,
+            renderer : function(vv,p,r) {
+                var v = JSON.parse(r).join("\n");
                 if(r.data.active != 1){
-                    return String.format('<div style="text-decoration:line-through">{0}</div>', v); 
+                    return String.format('<div style="text-decoration:line-through">{0}</div>', v).split("\n").join("<br/>"); 
                 }
-                return String.format('{0}', v); 
+                return String.format('{0}', v).split("\n").join("<br/>"); 
             }
           //  width : 150  
         }, cfg);
