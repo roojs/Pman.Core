@@ -623,6 +623,24 @@ Pman.Tab.PersonList.prototype = {
           //  width : 150  
         }, cfg);
     },
+    
+     c_group_membership : function(cfg) {
+        cfg = cfg || {};
+        return Roo.apply({
+         //   id : (this.id + '-name').toLowerCase(),
+            header : "Group Membership",
+            dataIndex : 'member_of_json',
+            sortable : true,
+            renderer : function(v,p,r) { 
+                if(r.data.active != 1){
+                    return String.format('<div style="text-decoration:line-through">{0}</div>', v); 
+                }
+                return String.format('{0}', v); 
+            }
+          //  width : 150  
+        }, cfg);
+    },
+    
      c_company_id_comptype : function(cfg) {
         cfg = cfg || {};
         return Roo.apply({
