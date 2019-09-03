@@ -1134,8 +1134,31 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 LENGTH({$this->tableName()}.oath_key) AS length_oath_key
             ");
         }
+        if (isset($q['_with_group_membership'])) {
+            $this->selectAddGroupMemberships();
+        }
         
-        
+    }
+    
+    function selectAddGroupMemberships()
+    {
+        $this->selectAdd("
+            CONCAT ('[',
+                COALESCE((
+                    SELECT
+                        GROUP_CONCAT( 
+                            JSON_QUOTE(core_group.name)
+                        )
+                    FROM
+                        core_group_member
+                    LEFT JOIN
+                        core_group
+                    ON
+                        core_group.id = core_group_member.group_id
+                    WHERE
+                        core_group_member.user_id = core_person.id
+                ), ''),
+            ']') as member_of_json");
     }
     
     function setFromRoo($ar, $roo)
