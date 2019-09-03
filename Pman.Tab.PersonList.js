@@ -624,7 +624,7 @@ Pman.Tab.PersonList.prototype = {
         }, cfg);
     },
     
-     c_group_membership : function(cfg) {
+    c_group_membership : function(cfg) {
         cfg = cfg || {};
         return Roo.apply({
          //   id : (this.id + '-name').toLowerCase(),
