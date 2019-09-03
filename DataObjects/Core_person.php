@@ -1134,7 +1134,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 LENGTH({$this->tableName()}.oath_key) AS length_oath_key
             ");
         }
-        
+        if (isset($q['_with_group_membership'])) {
+            $this->selectAddGroupMemberships();
+        }
         
     }
     
