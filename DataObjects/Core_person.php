@@ -1146,9 +1146,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             COALESCE((
                 SELECT
-                    GROUP_CONCAT( 
-                        core_group.name
-                    , '\n')
+                    GROUP_CONCAT(  core_group.name separator  '\n')
                 FROM
                     core_group_member
                 LEFT JOIN
