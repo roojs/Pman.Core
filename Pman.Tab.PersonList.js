@@ -629,7 +629,7 @@ Pman.Tab.PersonList.prototype = {
         return Roo.apply({
          //   id : (this.id + '-name').toLowerCase(),
             header : "Group Membership",
-            dataIndex : 'member_of_json',
+            dataIndex : 'member_of',
             sortable : false,
             renderer : function(v,p,r) {
                 if(r.data.active != 1){
