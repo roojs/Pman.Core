@@ -1143,22 +1143,21 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function selectAddGroupMemberships()
     {
         $this->selectAdd("
-            CONCAT ('[',
-                COALESCE((
-                    SELECT
-                        GROUP_CONCAT( 
-                            JSON_QUOTE(core_group.name)
-                        )
-                    FROM
-                        core_group_member
-                    LEFT JOIN
-                        core_group
-                    ON
-                        core_group.id = core_group_member.group_id
-                    WHERE
-                        core_group_member.user_id = core_person.id
-                ), ''),
-            ']') as member_of_json");
+            
+            COALESCE((
+                SELECT
+                    GROUP_CONCAT( 
+                        core_group.name
+                    , '\n')
+                FROM
+                    core_group_member
+                LEFT JOIN
+                    core_group
+                ON
+                    core_group.id = core_group_member.group_id
+                WHERE
+                    core_group_member.user_id = core_person.id
+            ), '')  as member_of");
     }
     
     function setFromRoo($ar, $roo)
