@@ -263,15 +263,18 @@ Pman.Tab.PersonList.prototype = {
                         }
                         
                         var rec = _this.grid.ds.getAt(rowIndex);
-                  
+                        var is_active = rec.data.active;
                         rec.set('active', rec.data.active ? 0 : 1);
                         rec.commit();
-
-                        var el = Roo.select('.x-grid-row-selected').item(3);
-                        el.addClass('x-grid-row-fadeout');
-                        el.on('transitionend',function(){
-                            _this.grid.ds.remove(rec);
-                        },this,{single:true});
+                        
+                        // only hide if viewing active members... 
+                        if (is_active) {
+                            var el = Roo.select('.x-grid-row-selected').item(3);
+                            el.addClass('x-grid-row-fadeout');
+                            el.on('transitionend',function(){
+                                _this.grid.ds.remove(rec);
+                            },this,{single:true});
+                        }
                         
                     }
                     
