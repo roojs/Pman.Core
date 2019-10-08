@@ -312,6 +312,15 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         return $x->fetchAll($fetchArg1, $fetchArg2, $fetchArg3);
     }
 
+    function fetchAllByTypeOrderDisplay($etype, $fetchArg1=false, $fetchArg2=false, $fetchArg3=false)
+    {
+        $x = DB_DataObject::factory('core_enum');
+        $x->etype = $etype;
+        $x->active = 1;
+        $x->orderBy('display_name ASC');
+        return $x->fetchAll($fetchArg1, $fetchArg2, $fetchArg3);
+    }
+    
     function lookupObject($etype,$name, $create= false)
     {
 
