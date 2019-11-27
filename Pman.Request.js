@@ -81,7 +81,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         }
         var res = this.processResponse(response);
                 
-        if (!res.success) { // error!
+        if (!res.success && !res.done) { // error!
             if (options.failure) {
                 // failure is handled... - do not show error..
                 Roo.callback(options.failure, options.scope, [res, options]);
