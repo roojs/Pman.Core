@@ -24,7 +24,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             return;
         }
         
-        
+        die("HERE");
         if (is_a($dbo, 'PDO_DataObject')) {
             
             $this->views = $dbo->generator()->introspection()->getListOf('views');
