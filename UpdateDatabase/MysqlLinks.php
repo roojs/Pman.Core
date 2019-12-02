@@ -40,7 +40,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     
     var $dburl;
     var $schema;
-    var $links;
+    var $links = array();
     
     function __construct()
     {
@@ -79,7 +79,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
         $iniCache = isset( $ff->PDO_DataObject) ?  $ff->PDO_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
-               
+        
+        if (strpos($iniCache, DIRECTORY_SEPARATOR) !== false) {
+            echo "SKIP links code - cached ini file has not been created\n";
+            return;
+        }
         $this->schema = parse_ini_file($iniCache, true);
         $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
         
