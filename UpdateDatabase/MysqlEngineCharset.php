@@ -15,14 +15,16 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     {
         // this might get run before we have imported the database
         // and hence not have any db.
+        $this->loadIniFiles(); //?? shared???
+        
         try {
-            $this->loadIniFiles(); //?? shared???
+            $dbo = DB_DataObject::factory('core_enum');
         } catch(PDO_DataObject_Exception_InvalidConfig $e) {
             echo "SKipping MysqlEngineCharse - no database yet\n";
             return;
         }
         
-        $dbo = DB_DataObject::factory('core_enum');
+        
         if (is_a($dbo, 'PDO_DataObject')) {
             
             $this->views = $dbo->generator()->introspection()->getListOf('views');
