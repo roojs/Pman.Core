@@ -1228,6 +1228,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!file_exists(__DIR__.'/UpdateDatabase/'. $scls .'.php')) {
                 return;
             }
+            echo "Running : {$fn}\n";
             require_once $fn;
             $c = new $cls();
             
