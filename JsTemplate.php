@@ -196,11 +196,11 @@ class Pman_Core_JsTemplate extends Pman {
                 default:
                     if (substr($item,-3,2) == ':h') {
                         $ret[] = $in . "ret += ".  substr($item,1,-3) . ';';
-                        continue;
+                        continue 2;
                     }
                     if (substr($item,-3,2) == ':b') {
                         $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-3).').split("\n").join("<br/>\n");';
-                        continue;
+                        continue 2;
                     }
                     $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-1).');';
                     continue 2;
