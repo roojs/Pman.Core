@@ -127,46 +127,46 @@ class Pman_Core_JsTemplate extends Pman {
             //var_Dump(substr($item,-3,2));
             switch(true) {
                 case (!strlen($item)):
-                    continue;
+                    continue 2;
                 
                 case ($inscript && ($item != '{end:}')):
                     $ret[count($ret)-1] .= $item;
-                    continue;
+                    continue 2;
                 
                 case ($inscript && ($item == '{end:}')):
                     $inscript = false;
-                    continue;
+                    continue 2;
                  
              
                 case ($item[0] != '{'):
                     if (!strlen(trim($item))) {
-                        continue;
+                        continue 2;
                     }
                     $ret[] = $in . "ret += ". json_encode($item) . ";";
-                    continue;
+                    continue 2;
                 
                 
                 case ($item == '{script:}'): 
                     $inscript = true;
                      $ret[] = '';
-                    continue;
+                    continue 2;
                 
                 case ($item[1] == '!'):
                     $ret[] = $in . substr($item,2,-1) .';';
-                    continue;
+                    continue 2;
                 
                 
                 case (substr($item,1,3) == 'if('):
                     $ret[] = $in . substr($item,1,-1) . ' {';
                     $indent++;
-                    continue;
+                    continue 2;
                 
                 case (substr($item,1,5) == 'else:'):
                     $indent--;
                     $in = str_repeat("    ", $indent);
                     $ret[] = $in . "} else { ";
                     $indent++;
-                    continue;
+                    continue 2;
                  
                 case (substr($item,1,4) == 'end:'):
                     $indent--;
@@ -176,11 +176,11 @@ class Pman_Core_JsTemplate extends Pman {
                         $fstart = -1;
                         $ret = &$out;
                     }
-                    continue;
+                    continue 2;
                 
                 case (substr($item,1,7) == 'return:'):
                     $ret[] = $in . "return;";
-                    continue;
+                    continue 2;
                 
                 case (substr($item,1,9) == 'function:'):
                     $fstart = $indent;
@@ -191,19 +191,19 @@ class Pman_Core_JsTemplate extends Pman {
                     
                     
                     $ret[] = $in . "var $name = function (" .  $body  . '{';
-                    continue;
+                    continue 2;
                 
                 default:
                     if (substr($item,-3,2) == ':h') {
                         $ret[] = $in . "ret += ".  substr($item,1,-3) . ';';
-                        continue;
+                        continue 2;
                     }
                     if (substr($item,-3,2) == ':b') {
                         $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-3).').split("\n").join("<br/>\n");';
-                        continue;
+                        continue 2;
                     }
                     $ret[] = $in . "ret += Roo.util.Format.htmlEncode(".  substr($item,1,-1).');';
-                    continue;
+                    continue 2;
                 
             }
             

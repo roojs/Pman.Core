@@ -26,7 +26,7 @@ class Pman_Core_Bjs {
             switch ($o->xtype) {
                 case "ComboBox":
                     if (!isset($o->{'String hiddenName'})) {
-                        continue;
+                        continue 2;
                     }
                     $this->fields[] = $o->{'String hiddenName'};
                     // fall throught..
