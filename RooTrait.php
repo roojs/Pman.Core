@@ -257,7 +257,7 @@ trait Pman_Core_RooTrait {
                         $x->whereAdd("(on_id = $oid  OR 
                                 on_id IN ( SELECT distinct(id) FROM Documents WHERE original = $o ) 
                             )");
-                        continue;
+                        continue 2;
                                 
                     }
                     $x->on_id = $val;
@@ -281,7 +281,7 @@ trait Pman_Core_RooTrait {
                     }
                     
                     
-                    continue;
+                    continue 2;
             }
         }
         if (!empty($q_filtered)) {
