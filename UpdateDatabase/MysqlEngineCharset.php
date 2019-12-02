@@ -17,14 +17,11 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         // and hence not have any db.
         $this->loadIniFiles(); //?? shared???
         
-        try {
-            $dbo = DB_DataObject::factory('core_enum');
-        } catch(PDO_DataObject_Exception_InvalidConfig $e) {
-            echo "SKipping MysqlEngineCharse - no database yet\n";
-            return;
-        }
+       
+        $dbo = DB_DataObject::factory('core_enum');
         
-        die("HERE");
+        
+       
         if (is_a($dbo, 'PDO_DataObject')) {
             
             $this->views = $dbo->generator()->introspection()->getListOf('views');
@@ -36,10 +33,9 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         // update the engine first - get's around 1000 character limit on indexes..cd
         // however - Innodb does not support fulltext indexes, so this may fail...
         $this->updateEngine(); 
-        
+ 
         $this->updateCharacterSet();
-        
-        
+         
     }
     
     function loadIniFiles()
@@ -121,6 +117,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
     {
         $db = DB_DataObject::factory('core_enum');
         $db->query("show variables like 'innodb_file_per_table'");
+        
         $db->fetch();
         
         $pg = HTML_FlexyFramework::get()->page;
@@ -141,7 +138,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
         
         $views = $this->views;
         
-        
+         echo "a3\n";
         foreach (array_keys($this->schema) as $tbl){
             
             if(strpos($tbl, '__keys') !== false ){
