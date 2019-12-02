@@ -249,18 +249,20 @@ class Pman_Core_UpdateDatabase extends Pman
         
         // this will trigger errors about freetext indexes - we will have to remove them manually.?
         // otherwise we need to do an sql query to find them, then remove them (not really worth it as it only affects really old code..)
-        
+        echo "Run extensions\n";
+
         $this->runExtensions(); 
 
         
         if (empty($opts['data-only'])) {
+            echo "Import SQL\n";
             $this->importSQL();
         }
         if (!empty($opts['only-module-sql'])) {
             return;
         }
         
-        
+        echo "run Update Modules Data\n";
 
         $this->runUpdateModulesData();
         
