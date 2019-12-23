@@ -20,6 +20,7 @@ class Pman_Core_MessagePreview extends Pman
     
     function get($v, $opts=array())
     {
+ 
         if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
         }
