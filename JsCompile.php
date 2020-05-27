@@ -309,7 +309,7 @@ class Pman_Core_JsCompile  extends Pman
         //}
         
     
-        $cmd = "$packer  $eoutput  -f " . implode($ofiles, ' -f ') . ' 2>&1';
+        $cmd = "$packer  $eoutput  -f " . implode(' -f ', $ofiles) . ' 2>&1';
         //echo "<PRE>$cmd\n";
         //echo `$cmd`;
         
