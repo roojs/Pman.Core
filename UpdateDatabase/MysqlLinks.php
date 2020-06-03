@@ -80,7 +80,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         $iniCache = isset( $ff->PDO_DataObject) ?  $ff->PDO_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
         
-        if (strpos($iniCache, DIRECTORY_SEPARATOR) !== false) {
+        if (strpos($iniCache, PATH_SEPARATOR) !== false) {
             echo "SKIP links code - cached ini file has not been created\n";
             return;
         }
