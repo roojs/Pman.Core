@@ -105,6 +105,7 @@ class Pman_Core_GnumericToExcel extends Pman
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
         if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+            require_once 'File/Convert.php';
             $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
             $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         }
