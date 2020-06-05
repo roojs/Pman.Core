@@ -55,7 +55,7 @@ class Pman_Core_GnumericToExcel extends Pman
         //$this->addEvent("DOWNLOAD", false, isset($_REQUEST['title']) ? $_REQUEST['title'] : '???');
         
         
-         if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
+        if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
             if (empty($_POST['debug'])) {
                 header('Content-type: application/x-gnumeric');
                 header('Content-Disposition: attachment; filename="' .addslashes($fname). '.gnumeric"');
@@ -65,6 +65,18 @@ class Pman_Core_GnumericToExcel extends Pman
             echo $xml; 
             exit;
         }
+        
+        $ext = '.xls';
+        $outfmt = 'Gnumeric_Excel:excel_biff8';
+        $mime = 'application/vnd.ms-excel';
+        if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+            $outfmt = 'Gnumeric_Excel:xlsx';
+            $ext = '.xlsx';
+            $mime = 'aapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        }
+        
+        
+        
         $srcTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.gnumeric';
         $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.xls';
         // write the gnumeric file...
