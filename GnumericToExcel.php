@@ -91,7 +91,7 @@ class Pman_Core_GnumericToExcel extends Pman
         $ss = System::which('ssconvert');
         $cmd = $xvfb . " -a " . $ss. 
                 " --import-encoding=Gnumeric_XmlIO:sax" .
-                " --export-type=Gnumeric_Excel:excel_biff8 " . 
+                " --export-type={$outfmt} " . 
                 $srcTmp . ' ' . $targetTmp . ' 2>&1';
         // echo $cmd;
         //passthru($cmd);exit;
@@ -109,7 +109,7 @@ class Pman_Core_GnumericToExcel extends Pman
         }
         $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
        
-        header('Content-type: application/vnd.ms-excel');
+        header('Content-type: ' . $mime);
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
         header('Content-length: '. filesize($targetTmp));   
         header("Content-Transfer-Encoding: binary");
