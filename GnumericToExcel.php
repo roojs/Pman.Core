@@ -109,6 +109,7 @@ class Pman_Core_GnumericToExcel extends Pman
             $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
            
             $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
          }
         
         
