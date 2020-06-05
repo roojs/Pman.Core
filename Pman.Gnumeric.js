@@ -1715,7 +1715,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             timeout : 120000, // quite a long wait.. 2 minutes.
             params : {
                xml : ser.serializeToString(this.doc),
-               format : 'xls', //xml
+               format : 'xlsx', //xml
                debug : 0
                
             },

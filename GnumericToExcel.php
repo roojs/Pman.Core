@@ -55,7 +55,7 @@ class Pman_Core_GnumericToExcel extends Pman
         //$this->addEvent("DOWNLOAD", false, isset($_REQUEST['title']) ? $_REQUEST['title'] : '???');
         
         
-         if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
+        if (!empty($_POST['format']) && $_POST['format']=='gnumeric') {
             if (empty($_POST['debug'])) {
                 header('Content-type: application/x-gnumeric');
                 header('Content-Disposition: attachment; filename="' .addslashes($fname). '.gnumeric"');
@@ -65,8 +65,21 @@ class Pman_Core_GnumericToExcel extends Pman
             echo $xml; 
             exit;
         }
-        $srcTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.gnumeric';
-        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.xls';
+        
+        $ext = '.xls';
+        $outfmt = 'Gnumeric_Excel:excel_biff8';
+        $mime = 'application/vnd.ms-excel';
+       /* if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+            $outfmt = 'Gnumeric_Excel:xlsx';
+            $ext = 'xlsx';
+            $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        }
+        */
+        
+        
+        
+        $srcTmp = $this->tempName('gnumeric');
+        $targetTmp = $this->tempName($ext);
         // write the gnumeric file...
         $fh = fopen($srcTmp,'w');
         fwrite($fh, $xml);
@@ -79,7 +92,7 @@ class Pman_Core_GnumericToExcel extends Pman
         $ss = System::which('ssconvert');
         $cmd = $xvfb . " -a " . $ss. 
                 " --import-encoding=Gnumeric_XmlIO:sax" .
-                " --export-type=Gnumeric_Excel:excel_biff8 " . 
+                " --export-type={$outfmt} " . 
                 $srcTmp . ' ' . $targetTmp . ' 2>&1';
         // echo $cmd;
         //passthru($cmd);exit;
@@ -91,13 +104,27 @@ class Pman_Core_GnumericToExcel extends Pman
             header("HTTP/1.0 400 Internal Server Error - Convert error");
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
+        if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+            require_once 'File/Convert.php';
+            $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
+           
+            $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+             $ext = ".xlsx";
+         }
+        
+        
+        
+        
+        
+        
        // unlink($srcTmp);
         if (empty($fname)) {
            $fname = basename($targetTmp);
         }
-        $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
+        $fname .= preg_match('/\.' . $ext . '/i', $fname) ? '' :  ('.' . $ext); // make sure it ends in xls..
        
-        header('Content-type: application/vnd.ms-excel');
+        header('Content-type: ' . $mime);
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
         header('Content-length: '. filesize($targetTmp));   
         header("Content-Transfer-Encoding: binary");
