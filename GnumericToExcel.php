@@ -69,16 +69,17 @@ class Pman_Core_GnumericToExcel extends Pman
         $ext = '.xls';
         $outfmt = 'Gnumeric_Excel:excel_biff8';
         $mime = 'application/vnd.ms-excel';
-        if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+       /* if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
             $outfmt = 'Gnumeric_Excel:xlsx';
             $ext = 'xlsx';
-            $mime = 'aapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
         }
+        */
         
         
         
-        $srcTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.gnumeric';
-        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_') . '.' . $ext;
+        $srcTmp = $this->tempName('gnumeric');
+        $targetTmp = $this->tempName($ext);
         // write the gnumeric file...
         $fh = fopen($srcTmp,'w');
         fwrite($fh, $xml);
@@ -103,6 +104,16 @@ class Pman_Core_GnumericToExcel extends Pman
             header("HTTP/1.0 400 Internal Server Error - Convert error");
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
+        if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+            $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
+            $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        }
+        
+        
+        
+        
+        
+        
        // unlink($srcTmp);
         if (empty($fname)) {
            $fname = basename($targetTmp);
