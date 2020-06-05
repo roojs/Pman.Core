@@ -78,7 +78,7 @@ class Pman_Core_GnumericToExcel extends Pman
         
         
         $srcTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.gnumeric';
-        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.xls';
+        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_') . $ext;
         // write the gnumeric file...
         $fh = fopen($srcTmp,'w');
         fwrite($fh, $xml);
