@@ -71,14 +71,14 @@ class Pman_Core_GnumericToExcel extends Pman
         $mime = 'application/vnd.ms-excel';
         if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
             $outfmt = 'Gnumeric_Excel:xlsx';
-            $ext = '.xlsx';
+            $ext = 'xlsx';
             $mime = 'aapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
         }
         
         
         
         $srcTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_').'.gnumeric';
-        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_') . $ext;
+        $targetTmp = ini_get('session.save_path') . '/' .uniqid('gnumeric_') . '.' . $ext;
         // write the gnumeric file...
         $fh = fopen($srcTmp,'w');
         fwrite($fh, $xml);
@@ -107,7 +107,7 @@ class Pman_Core_GnumericToExcel extends Pman
         if (empty($fname)) {
            $fname = basename($targetTmp);
         }
-        $fname .= preg_match('/\.xls/i', $fname) ? '' :  '.xls'; // make sure it ends in xls..
+        $fname .= preg_match('/\.' . $ext . '/i', $fname) ? '' :  ('.' . $ext); // make sure it ends in xls..
        
         header('Content-type: ' . $mime);
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
