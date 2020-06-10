@@ -231,7 +231,7 @@ class Pman_Core_I18n extends Pman
         if (empty($k)) {
             return '??';
         }
-        $lang = !$au || empty($au->lang ) ? 'en' : is_string($au) ? $au : $au->lang;
+        $lang = !$au || empty($au->lang ) ? 'en' : (is_string($au) ? $au : $au->lang);
         
         // does it need caching?
         
