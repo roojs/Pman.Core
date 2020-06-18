@@ -69,7 +69,10 @@ class Pman_Core_GnumericToExcel extends Pman
         $ext = '.xls';
         $outfmt = 'Gnumeric_Excel:excel_biff8';
         $mime = 'application/vnd.ms-excel';
-       /* if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
+        
+        /*
+         // ssconvert results in bad images 
+         if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
             $outfmt = 'Gnumeric_Excel:xlsx';
             $ext = 'xlsx';
             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
@@ -104,13 +107,14 @@ class Pman_Core_GnumericToExcel extends Pman
             header("HTTP/1.0 400 Internal Server Error - Convert error");
             die("ERROR CONVERTING?:" . $cmd ."\n<BR><BR> OUTPUT:". htmlspecialchars($out));
         }
+        
         if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
             require_once 'File/Convert.php';
             $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
            
             $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-             $ext = ".xlsx";
+            $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+            $ext = "xlsx";
          }
         
         

@@ -149,6 +149,13 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
     rowOffset : 0,
     
     /**
+     * @type {String} format - either XLSX (if images are used) or XLS - as ssconvert does not do images that well.
+     */
+    
+    format : 'xlsx',
+    
+    
+    /**
      * load:
      * run the connection, parse document and fire load event..
      * can be run multiple times with new data..
@@ -1715,7 +1722,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             timeout : 120000, // quite a long wait.. 2 minutes.
             params : {
                xml : ser.serializeToString(this.doc),
-               format : 'xlsx', //xml
+               format : this.format,
                debug : 0
                
             },
