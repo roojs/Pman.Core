@@ -119,7 +119,7 @@ Pman.Delete = {
             
         );
     },
-    completed : function()
+    completed : function(tab)
     {
         
         if ( tab.paging ) {
