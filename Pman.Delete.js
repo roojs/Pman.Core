@@ -35,55 +35,60 @@ Pman.Delete = {
             return;
         }
         
+        
         Roo.MessageBox.confirm("Confirm", "Are you sure you want to delete that?",
             function(btn) {
                 if (btn != 'yes') {
                     return;
                 }
-                // what about the toolbar??
-                tab.grid.getView().mainWrap.mask("Deleting");
-                new Pman.Request({
-                    url: baseURL + '/Roo/'+tbl+'.php',
-                    method: 'POST',
-                    params: {
-                        _delete : r.join(',')
-                    },
-                    success: function(response) {
-                        tab.grid.getView().mainWrap.unmask();
-                        if ( tab.paging ) {
-                            tab.paging.onClick('refresh');   
-                        } else if (tab.grid.footer && tab.grid.footer.onClick) {
-                            // new xtype built grids
-                            tab.grid.footer.onClick('refresh');   
-                        } else if (tab.refresh) {
-                            tab.refresh(); // this might cause problems as panels have a refresh method?
-                        } else {
-                            tab.grid.getDataSource().load();
-                        }
-                        
-                        
-                        
-                    },
-                    failure: function(act) {
-                        
-                        Roo.log(act);
-                        var msg = '';
-                        try {
-                            msg = act.errorMsg;
-                        } catch(e) {
-                            msg = "Error deleting";
-                        }
-                        tab.grid.getView().mainWrap.unmask();
-                        Roo.MessageBox.alert("Error",  msg);
-                    }
-                    
-                });
+                Pman.Delete.simpleCall(r);
+                
             }
             
         );
-        return '';
-    },
+     },
     
+    simpleCall : function(r)
+    {
+            // what about the toolbar??
+        tab.grid.getView().mainWrap.mask("Deleting");
+        new Pman.Request({
+            url: baseURL + '/Roo/'+tbl+'.php',
+            method: 'POST',
+            params: {
+                _delete : r.join(',')
+            },
+            success: function(response) {
+                tab.grid.getView().mainWrap.unmask();
+                if ( tab.paging ) {
+                    tab.paging.onClick('refresh');   
+                } else if (tab.grid.footer && tab.grid.footer.onClick) {
+                    // new xtype built grids
+                    tab.grid.footer.onClick('refresh');   
+                } else if (tab.refresh) {
+                    tab.refresh(); // this might cause problems as panels have a refresh method?
+                } else {
+                    tab.grid.getDataSource().load();
+                }
+                
+                
+                
+            },
+            failure: function(act) {
+                
+                Roo.log(act);
+                var msg = '';
+                try {
+                    msg = act.errorMsg;
+                } catch(e) {
+                    msg = "Error deleting";
+                }
+                tab.grid.getView().mainWrap.unmask();
+                Roo.MessageBox.alert("Error",  msg);
+            }
+            
+        });
+    }
     
     progress : function(tab, tbl) {
         
