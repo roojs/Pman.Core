@@ -43,6 +43,7 @@ Pman.Delete = {
                 }
                 tab.grid.getView().mainWrap.mask("Deleting");
                 Pman.Delete.simpleCall(tab, tbl, r, function(response) {
+                    tab.grid.getView().mainWrap.unmask();
                     Pman.Delete.completed(tab);
                 });
                 
@@ -120,7 +121,7 @@ Pman.Delete = {
     },
     completed : function()
     {
-        tab.grid.getView().mainWrap.unmask();
+        
         if ( tab.paging ) {
             tab.paging.onClick('refresh');   
         } else if (tab.grid.footer && tab.grid.footer.onClick) {
