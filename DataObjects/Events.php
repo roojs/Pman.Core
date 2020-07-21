@@ -551,6 +551,9 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 print_r("failed to copy {$f['tmp_name']}...\n");
             }
         }
+        
+        
+        
         $out = array(
             'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
             'HTTP_USER_AGENT' => empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'],
@@ -568,6 +571,16 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         if ( self::$extra_data !== false) {
             $out['EXTRA_DATA'] =  self::$extra_data;
         }
+        $total_data = 0;
+        foreach($out as $k=>$v) {
+            if (!empty($v) && $k != 'REQUEST_URI') {
+                $total_data++;
+            }
+        }
+        if (!$total_data) {
+            return; // do not write an empty file with no usefull info.
+        }
+        
         
         file_put_contents($file, json_encode($out));
         
