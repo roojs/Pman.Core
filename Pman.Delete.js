@@ -41,19 +41,19 @@ Pman.Delete = {
                 if (btn != 'yes') {
                     return;
                 }
-                Pman.Delete.simpleCall(r);
+                Pman.Delete.simpleCall(tab, tbl, r);
                 
             }
             
         );
      },
     
-    simpleCall : function(r)
+    simpleCall : function(tab, tbl, r)
     {
             // what about the toolbar??
         tab.grid.getView().mainWrap.mask("Deleting");
         new Pman.Request({
-            url: baseURL + '/Roo/'+tbl+'.php',
+            url: baseURL + '/Roo/'+tbl,
             method: 'POST',
             params: {
                 _delete : r.join(',')
