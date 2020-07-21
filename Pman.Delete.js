@@ -41,6 +41,7 @@ Pman.Delete = {
                 if (btn != 'yes') {
                     return;
                 }
+                tab.grid.getView().mainWrap.mask("Deleting");
                 Pman.Delete.simpleCall(tab, tbl, r, function(response) {
                     tab.grid.getView().mainWrap.unmask();
                     if ( tab.paging ) {
@@ -66,7 +67,7 @@ Pman.Delete = {
     simpleCall : function(tab, tbl, r, resp)
     {
             // what about the toolbar??
-        tab.grid.getView().mainWrap.mask("Deleting");
+        
         new Pman.Request({
             url: baseURL + '/Roo/'+tbl,
             method: 'POST',
@@ -88,7 +89,7 @@ Pman.Delete = {
             }
             
         });
-    }
+    },
     
     progress : function(tab, tbl) {
         
