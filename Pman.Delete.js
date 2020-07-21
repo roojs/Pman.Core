@@ -41,14 +41,29 @@ Pman.Delete = {
                 if (btn != 'yes') {
                     return;
                 }
-                Pman.Delete.simpleCall(tab, tbl, r);
+                Pman.Delete.simpleCall(tab, tbl, r, function(response) {
+                    tab.grid.getView().mainWrap.unmask();
+                    if ( tab.paging ) {
+                        tab.paging.onClick('refresh');   
+                    } else if (tab.grid.footer && tab.grid.footer.onClick) {
+                        // new xtype built grids
+                        tab.grid.footer.onClick('refresh');   
+                    } else if (tab.refresh) {
+                        tab.refresh(); // this might cause problems as panels have a refresh method?
+                    } else {
+                        tab.grid.getDataSource().load();
+                    }
+                    
+                    
+                    
+                });
                 
             }
             
         );
      },
     
-    simpleCall : function(tab, tbl, r)
+    simpleCall : function(tab, tbl, r, resp)
     {
             // what about the toolbar??
         tab.grid.getView().mainWrap.mask("Deleting");
@@ -58,22 +73,7 @@ Pman.Delete = {
             params: {
                 _delete : r.join(',')
             },
-            success: function(response) {
-                tab.grid.getView().mainWrap.unmask();
-                if ( tab.paging ) {
-                    tab.paging.onClick('refresh');   
-                } else if (tab.grid.footer && tab.grid.footer.onClick) {
-                    // new xtype built grids
-                    tab.grid.footer.onClick('refresh');   
-                } else if (tab.refresh) {
-                    tab.refresh(); // this might cause problems as panels have a refresh method?
-                } else {
-                    tab.grid.getDataSource().load();
-                }
-                
-                
-                
-            },
+            success: resp,
             failure: function(act) {
                 
                 Roo.log(act);
