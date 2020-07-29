@@ -224,6 +224,13 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     function translate($inlang,$ltype,$kval)
     {
         
+        
+        static $cache = array();
+        $cache_key = implode(' ', array($inlang,$ltime,$kval));
+        if (isset($cache[$cache_key ])) {
+            return $cache[$cache_key];
+        }
+        
         $x = DB_DataObject::factory('i18n');
         $x->ltype = $ltype;
         $x->lkey = $kval;
@@ -232,12 +239,15 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         $x->limit(1);
         if ($x->find(true) && !empty($x->lval)) {
+            $cache[$cache_key] = $x->lval;
             return $x->lval;
         }
         $fallback->inlang = 'en';
         if ($fallback->find(true) && !empty($fallback->lval)) {
-           return $fallback->lval;
+            $cache[$cache_key] = $fallback->lval;
+            return $fallback->lval;
         }
+         $cache[$cache_key] = $kval;
         return $kval;
     }
     
