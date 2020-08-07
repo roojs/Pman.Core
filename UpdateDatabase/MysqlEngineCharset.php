@@ -107,8 +107,8 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             
             $ce = DB_DataObject::factory('core_enum');
             // not sure why, but convert to does not actually change the 'charset=' bit..
-            $ce->query("ALTER TABLE $tbl CHARSET=utf8");
-            $ce->query("ALTER TABLE {$tbl} CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
+            $ce->query("ALTER TABLE `$tbl` CHARSET=utf8");
+            $ce->query("ALTER TABLE `{$tbl}` CONVERT TO CHARACTER SET  utf8 COLLATE utf8_general_ci");
             echo "utf8: FIXED {$tbl}\n";
             
         }
