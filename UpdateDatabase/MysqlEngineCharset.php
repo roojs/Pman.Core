@@ -183,7 +183,7 @@ class Pman_Core_UpdateDatabase_MysqlEngineCharset {
             //as the default collation for stored procedure parameters is utf8_general_ci and you can't mix collations.
             
             $ce = DB_DataObject::factory('core_enum');
-            $ce->query("ALTER TABLE $tbl ENGINE=InnoDB");
+            $ce->query("ALTER TABLE `$tbl` ENGINE=InnoDB");
             echo "InnoDB: FIXED {$tbl}\n";
             
         }

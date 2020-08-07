@@ -226,7 +226,7 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
         
         static $cache = array();
-        $cache_key = implode(' ', array($inlang,$ltime,$kval));
+        $cache_key = implode(' ', array($inlang,$ltype,$kval));
         if (isset($cache[$cache_key ])) {
             return $cache[$cache_key];
         }
