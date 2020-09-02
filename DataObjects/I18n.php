@@ -220,10 +220,36 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
     }
     
+    // load all all to reduce future queries..
+    function translateCache($inlang, $ltype, $build)
+    {
+        static $cache;
+        $key = "{$inlang} {$ltype}";
+        if (isset($cache[$key])) {
+            return $cache[$key];
+        }
+        if (!$build) {
+            return false;
+        }
+        
+        $x = DB_DataObject::factory('i18n');
+        $x->ltype = $ltype;
+        
+        $x->inlang= $inlang;
+        $cache[$key] = $x->fetchAll('lkey', 'lval');
+        
+        return $cache[$key] ;
+
+    }
+    
     
     function translate($inlang,$ltype,$kval)
     {
         
+        $tc = $this->translateCache($inlang, $ltype, false);
+        if ($tc !== false && isset($tc[$kval])) {
+            return $tc[$kval];
+        }
         
         static $cache = array();
         $cache_key = implode(' ', array($inlang,$ltype,$kval));
