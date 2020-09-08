@@ -200,6 +200,10 @@ class Pman_Core_I18n extends Pman
             $i = DB_DataObject::Factory('I18n');
             $ar[$lang]['m'] = $i->toTransList('m', $rlang);
         }
+        require_once 'I18Nv2/CurrencyMap.php';
+        
+        $ar['currency_map'] = I18Nv2_CurrencyMap::$s_map;
+        
         //echo '<PRE>';print_r($ar);
         header('Content-type: text/javascript');
         echo "Roo.namespace('Pman.I18n');";
