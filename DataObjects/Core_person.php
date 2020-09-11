@@ -602,6 +602,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function company()
     {
+        if (empty($this->company_id)) {
+            return false;
+        }
         $x = DB_DataObject::factory('core_company');
         $x->autoJoin();
         $x->get($this->company_id);
@@ -1160,7 +1163,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function setFromRoo($ar, $roo)
     {
-        $this->setFrom($ar);
+        $this->setFrom($ar); 
         
         if(!empty($ar['_enable_oath_key'])){
             $oath_key = $this->generateOathKey();
@@ -1181,7 +1184,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         // this only applies to our owner company..
         $c = $this->company();
-        if (empty($c->comptype_name) || $c->comptype_name != 'OWNER') {
+        if (empty($c) || empty($c->comptype_name) || $c->comptype_name != 'OWNER') {
             return true;
         }
         
