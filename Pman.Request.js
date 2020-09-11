@@ -94,6 +94,7 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         Roo.callback(options.success, options.scope, [res, options]);
         
     },
+    
     handleFailure : function(response, e){
         this.transId = false;
         var options = response.argument.options;
@@ -109,9 +110,12 @@ Roo.extend(Pman.Request, Roo.data.Connection, {
         if (res !== true) {
             var decode = this.processResponse(response);
             Roo.log(decode);
-            
-            if (Roo.MessageBox.isVisible()) {
-                alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data - return true from failure to remove message");
+            // this pops up even if we have a method to handle failure..
+            if (Roo.MessageBox.isVisible() ) {
+                if (!options.failure) {
+                    alert(decode && decode.errorMsg ?  decode.errorMsg : "Error Sending data - return true from failure to remove message");
+                }
+                
                 return;
             }
             
