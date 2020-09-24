@@ -700,7 +700,7 @@ Content-Transfer-Encoding: 7bit
             $pg->jerr("{$method} does not exists in {$cls}");
         }
         
-        $content = $x->{$method}($this, $this->authUser);
+        $content = $x->{$method}($this, $person);
         $content['to'] = $person->getEmailFrom();
 
         $content['bcc'] = array();
