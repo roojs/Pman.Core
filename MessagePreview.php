@@ -131,7 +131,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $cn->insert();
         
-        $sent = $cn->sendManual(true);
+        $sent = $cn->sendManual();
         
         if(get_class($sent) != 'Pman_Core_NotifySend_Exception_Success'){
             $this->jerr($sent->getMessage());
