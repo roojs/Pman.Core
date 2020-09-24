@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * Table is designed to be used with a mailer to notify or issue
+ * Table iend designed to be used with a mailer to notify or issue
  * emails (or maybe others later??)
  *
  *
@@ -316,7 +316,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
     
-    function sendManual()
+    function sendManual($debug=false)
     {   
         require_once 'Pman/Core/NotifySend.php';
         
