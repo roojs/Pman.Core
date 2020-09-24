@@ -111,10 +111,37 @@ class Pman_Core_MessagePreview extends Pman
         if(!method_exists($x, $method)){
             $this->jerr("{$method} does not exists in {$cls}");
         }
-
+        /*
         $content = $x->{$method}($this, $this->authUser);
         
         $content['bcc'] = array();
+        */
+        
+        
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->setFrom(array(
+            'evtype'        => 'Core_email:testData',
+            'onid'          => $_REQUEST['_id'],
+            'ontable'       => $_REQUEST['_table'],
+            'person_id'     => $this->authUser->id,
+            'person_table'  => 'Person',
+            'act_when'      => $cn->sqlValue("NOW()"),
+            'act_start'     => $cn->sqlValue("NOW()")
+        ));
+        
+        $cn->insert();
+        
+        $sent = $cn->sendManual();
+        
+        if(get_class($sent) != 'Pman_Core_NotifySend_Exception_Success'){
+            $this->jerr($sent->getMessage());
+        }
+        
+        $this->jok("SUCCESS");
+        
+        
+        
+        
         
         $sent = $core_email->send($content);
         
