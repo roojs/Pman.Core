@@ -323,6 +323,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $send = new Pman_Core_NotifySend();
         $send->error_handler = 'exception';
         
+        if ($debug) {
+            $send->get($this->id, array());
+            return true;
+        }
+        
         try {
             $send->get($this->id, array());
         } catch (Exception $e) {
