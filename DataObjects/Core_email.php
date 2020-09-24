@@ -678,7 +678,7 @@ Content-Transfer-Encoding: 7bit
     static function testData($person, $dt , $core_notify)
     {
 	// should return the formated email???
-	$pg = FlexyFramework::get()->page;
+	$pg = HTML_FlexyFramework::get()->page;
 	
 	$core_email = DB_DataObject::factory('core_email');
 	if(!$core_email->get($_REQUEST['_id'])){
