@@ -705,7 +705,9 @@ Content-Transfer-Encoding: 7bit
         $content = $x->{$method}($this, $this->authUser);
         
         $content['bcc'] = array();
-       
+	$data = $this->toMailerData($content);
+	print_R($data);exit;
+	return $data;
         
            
     }
