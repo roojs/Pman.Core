@@ -120,7 +120,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $cn = DB_DataObject::factory('core_notify');
         $cn->setFrom(array(
-            'evtype'        => 'Core_email:testData',
+            'evtype'        => 'Core_email::testData',
             'onid'          => $_REQUEST['_id'],
             'ontable'       => $_REQUEST['_table'],
             'person_id'     => $this->authUser->id,
