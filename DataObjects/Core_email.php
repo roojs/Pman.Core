@@ -675,5 +675,38 @@ Content-Transfer-Encoding: 7bit
     }
     
     
-    
+    function testData($person, $dt , $core_notify)
+    {
+	 
+	// should return the formated email???
+	$pg = HTML_FlexyFramework::get()->page;
+	
+	 
+	
+	
+        if(empty($this->test_class)){
+            $pg->jerr("[{$this->name}] does not has test class");
+        }
+        
+        require_once "{$this->test_class}.php";
+        
+        $cls = str_replace('/', '_', $this->test_class);
+        
+        $x = new $cls;
+        
+        $method = "test_{$this->name}";
+        
+        if(!method_exists($x, $method)){
+            $pg->jerr("{$method} does not exists in {$cls}");
+        }
+        
+        $content = $x->{$method}($this, $person);
+        $content['to'] = $person->getEmailFrom();
+
+        $content['bcc'] = array();
+	$data = $this->toMailerData($content);
+ 	return $data;
+        
+           
+    }
 }
