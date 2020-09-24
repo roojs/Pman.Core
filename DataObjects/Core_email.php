@@ -675,7 +675,7 @@ Content-Transfer-Encoding: 7bit
     }
     
     
-    static function testData($person, $dt , $core_notify)
+    function testData($person, $dt , $core_notify)
     {
 	
 	print_R($this);exit;
