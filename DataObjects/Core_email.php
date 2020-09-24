@@ -677,28 +677,24 @@ Content-Transfer-Encoding: 7bit
     
     function testData($person, $dt , $core_notify)
     {
-	
-	print_R($this);exit;
+	 
 	// should return the formated email???
 	$pg = HTML_FlexyFramework::get()->page;
 	
-	$core_email = DB_DataObject::factory('core_email');
-	if(!$core_email->get($core_notify->onid)){
-            $pg->jerr('Invalid Message ID');
-        }
+	 
 	
 	
-        if(empty($core_email->test_class)){
-            $pg->jerr("[{$core_email->name}] does not has test class");
+        if(empty($this->test_class)){
+            $pg->jerr("[{$this->name}] does not has test class");
         }
         
-        require_once "{$core_email->test_class}.php";
+        require_once "{$this->test_class}.php";
         
-        $cls = str_replace('/', '_', $core_email->test_class);
+        $cls = str_replace('/', '_', $this->test_class);
         
         $x = new $cls;
         
-        $method = "test_{$core_email->name}";
+        $method = "test_{$this->name}";
         
         if(!method_exists($x, $method)){
             $pg->jerr("{$method} does not exists in {$cls}");
