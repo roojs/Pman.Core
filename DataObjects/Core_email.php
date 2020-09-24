@@ -678,7 +678,7 @@ Content-Transfer-Encoding: 7bit
     function testData()
     {
 	// should return the formated email???
-	print_r(function_get_args()); exit;
+	print_r(func_get_args()); exit;
             
 	    /*
 	    $core_email = DB_DataObject::factory('core_email');
