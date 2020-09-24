@@ -681,7 +681,7 @@ Content-Transfer-Encoding: 7bit
 	$pg = HTML_FlexyFramework::get()->page;
 	
 	$core_email = DB_DataObject::factory('core_email');
-	if(!$core_email->get($_REQUEST['_id'])){
+	if(!$core_email->get($core_notify->onid)){
             $pg->jerr('Invalid Message ID');
         }
 	
