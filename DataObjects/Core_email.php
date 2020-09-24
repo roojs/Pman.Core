@@ -675,20 +675,19 @@ Content-Transfer-Encoding: 7bit
     }
     
     
-    function testData()
+    static function testData($person, $dt , $core_notify)
     {
 	// should return the formated email???
-	print_r(func_get_args()); exit;
-            
-	    /*
-	    $core_email = DB_DataObject::factory('core_email');
-        
-        if(!$core_email->get($_REQUEST['_id'])){
-            $this->jerr('Invalid Message ID');
+	$pg = FlexyFramework::get()->page;
+	
+	$core_email = DB_DataObject::factory('core_email');
+	if(!$core_email->get($_REQUEST['_id'])){
+            $pg->jerr('Invalid Message ID');
         }
-        
+	
+	
         if(empty($core_email->test_class)){
-            $this->jerr("[{$core_email->name}] does not has test class");
+            $pg->jerr("[{$core_email->name}] does not has test class");
         }
         
         require_once "{$core_email->test_class}.php";
@@ -700,7 +699,7 @@ Content-Transfer-Encoding: 7bit
         $method = "test_{$core_email->name}";
         
         if(!method_exists($x, $method)){
-            $this->jerr("{$method} does not exists in {$cls}");
+            $pg->jerr("{$method} does not exists in {$cls}");
         }
         
         $content = $x->{$method}($this, $this->authUser);
@@ -708,27 +707,6 @@ Content-Transfer-Encoding: 7bit
         $content['bcc'] = array();
        
         
-        
-        $cn = DB_DataObject::factory('core_notify');
-        $cn->setFrom(array(
-            'evtype'        => 'Core_email:testData',
-            'onid'          => $_REQUEST['_id'],
-            'ontable'       => $_REQUEST['_table'],
-            'person_id'     => $this->authUser->id,
-            'person_table'  => 'Person',
-            'act_when'      => $cn->sqlValue("NOW()"),
-            'act_start'     => $cn->sqlValue("NOW()")
-        ));
-        
-        $cn->insert();
-        
-        $sent = $cn->sendManual();
-        
-        if(get_class($sent) != 'Pman_Core_NotifySend_Exception_Success'){
-            $this->jerr($sent->getMessage());
-        }
-        
-        $this->jok("SUCCESS");
-     */
+           
     }
 }
