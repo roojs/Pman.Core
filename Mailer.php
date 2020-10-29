@@ -617,8 +617,7 @@ class Pman_Core_Mailer {
     
     function mapurl($in)
     {
-        
-        foreach($this->urlmap as $o=>$n) {
+         foreach($this->urlmap as $o=>$n) {
             if (strpos($in,$o) === 0) {
                 $ret =$n . substr($in,strlen($o));
                 $this->log("mapURL in $in = $ret");
