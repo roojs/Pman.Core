@@ -252,7 +252,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function isAuth()
     {
         // do not start a session if we are using http auth...
-        if (empty($_SERVER['PHP_AUTH_USER'])) {
+        if (empty($_SERVER['PHP_AUTH_USER']) || php_sapi_name()==="cli") {
             @session_start();
         }
        
