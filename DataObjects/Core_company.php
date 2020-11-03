@@ -134,7 +134,9 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         $db = $this->getDatabaseConnection();
         $sesPrefix = $db->dsn['database'];
-        @session_start();
+        if  (empty($_SERVER['PHP_AUTH_USER'])) {
+            @session_start();
+        }
         if (!empty($_SESSION[__CLASS__][$sesPrefix .'-auth'])) {
             // in session...
             $a = unserialize($_SESSION[__CLASS__][$sesPrefix .'-auth']);
