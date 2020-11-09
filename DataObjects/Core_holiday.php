@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                 
                 $d = DB_DataObject::Factory('core_holiday');
                 $d->country = $country;
-                $d->holiday_date = date('Y-m-d', strtotime($i));
+                $d->holiday_date = date('Y-m-d', $i);
                 if (!$d->count()) {
                     $d->insert();
                 }
