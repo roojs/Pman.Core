@@ -33,6 +33,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         
         // do we alredy have the data for this year.
         $d = DB_DAtaObject::Factory('core_holiday');
+        $d->country = $country;
         $d->orderBy('holiday_date DESC');
         $d->limit(1);
         if ($d->count() && $d->find(true) && strtotime($d->holiday_date) > strtotime('NOW + 6 MONTHS')) {
@@ -42,10 +43,9 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         
         
         
-         $data = file_get_contents("http://www.1823.gov.hk/common/ical/gc/en.ics"));
-        }
+        $data = file_get_contents("http://www.1823.gov.hk/common/ical/gc/en.ics");
         
-        $vevents = explode('BEGIN:VEVENT', file_get_contents($ics));
+        $vevents = explode('BEGIN:VEVENT', $data);
         
         foreach ($vevents as $vevent){
             
@@ -73,14 +73,19 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
             }
             
             for ($i = strtotime($start_dt); $i < strtotime($end_dt) ; $i += (60 * 60 * 24)) {
-                $this->holidays[] = date('Y-m-d', $i);
+                
+                $d = DB_DAtaObject::Factory('core_holiday');
+                $d->country = $country;
+                $d->holiday_date = date('Y-m-d', strtotime($i));
+                if (!$d->count()) {
+                    $d->insert();
+                }
+                
+                
             }
             
         }
-        
-        $this->holidays = array_unique(array_filter($this->holidays));
-        
-        return $this->holidays;
+
     }
     
 }
