@@ -25,7 +25,8 @@ class Pman_Core_Import_Core_holiday extends Pman_Roo
     function get($v, $opts=array())
     {   
         $d = DB_DataObject::factory('core_holiday');
-        $d->
+        $d->updateHolidays('hk');
+        
     }
     
     function log($str)
