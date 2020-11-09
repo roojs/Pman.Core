@@ -32,7 +32,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         }
         
         // do we alredy have the data for this year.
-        $d = DB_DAtaObject::Factory('core_holiday');
+        $d = DB_DataObject::Factory('core_holiday');
         $d->country = $country;
         $d->orderBy('holiday_date DESC');
         $d->limit(1);
@@ -74,7 +74,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
             
             for ($i = strtotime($start_dt); $i < strtotime($end_dt) ; $i += (60 * 60 * 24)) {
                 
-                $d = DB_DAtaObject::Factory('core_holiday');
+                $d = DB_DataObject::Factory('core_holiday');
                 $d->country = $country;
                 $d->holiday_date = date('Y-m-d', strtotime($i));
                 if (!$d->count()) {
