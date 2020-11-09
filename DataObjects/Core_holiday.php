@@ -17,4 +17,70 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    
+    
+    static $map = array(
+        'hk' => 'http://www.1823.gov.hk/common/ical/gc/en.ics'
+    );
+    
+     
+    function updateHolidays($country)
+    {
+        
+        if (!isset(self::$map[$country])) {
+            die("invalid country");
+        }
+        
+        // do we alredy have the data for this year.
+        $d = DB_DAtaObject::Factory('core_holiday');
+        $d->orderBy('holiday_date DESC');
+        $d->limit(1);
+        if ($d->count() && $d->find(true) && strtotime($d->holiday_date) > strtotime('NOW + 6 MONTHS')) {
+            // no need to fetch..
+            return;
+        }
+        
+        
+        
+         $data = file_get_contents("http://www.1823.gov.hk/common/ical/gc/en.ics"));
+        }
+        
+        $vevents = explode('BEGIN:VEVENT', file_get_contents($ics));
+        
+        foreach ($vevents as $vevent){
+            
+            $lines = explode("\n", $vevent);
+            
+            $start_dt = false;
+            $end_dt = false;
+            
+            foreach ($lines as $line){
+                
+                if(preg_match('/^DTSTART;VALUE=DATE:([0-9]+)/', $line, $matches)){
+                    $fmt = substr($matches[1], 0, 4) . "-" . substr($matches[1], 4, 2) . "-" . substr($matches[1], 6, 2);
+                    $start_dt = date('Y-m-d', strtotime($fmt));
+                }
+                
+                if(preg_match('/^DTEND;VALUE=DATE:([0-9]+)/', $line, $matches)){
+                    $fmt = substr($matches[1], 0, 4) . "-" . substr($matches[1], 4, 2) . "-" . substr($matches[1], 6, 2);
+                    $end_dt = date('Y-m-d', strtotime($fmt));
+                }
+                
+            }
+            
+            if(empty($start_dt) || empty($end_dt)){
+                continue;
+            }
+            
+            for ($i = strtotime($start_dt); $i < strtotime($end_dt) ; $i += (60 * 60 * 24)) {
+                $this->holidays[] = date('Y-m-d', $i);
+            }
+            
+        }
+        
+        $this->holidays = array_unique(array_filter($this->holidays));
+        
+        return $this->holidays;
+    }
+    
 }
