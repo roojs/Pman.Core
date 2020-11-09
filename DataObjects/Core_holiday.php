@@ -72,10 +72,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                 continue;
             }
             
-            var_dump($start_dt);
-            
-            var_dump($end_dt);
-            exit;
+            //var_dump($start_dt); var_dump($end_dt); exit;
             
             for ($i = strtotime($start_dt); $i < strtotime($end_dt) ; $i += (60 * 60 * 24)) {
                 
