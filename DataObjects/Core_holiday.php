@@ -89,5 +89,12 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         }
 
     }
+    function isHoliday($country, $date)
+    {
+        $d = DB_DataObject::Factory('core_holiday');
+        $d->country = $country;
+        $d->holiday_date = $date;
+        return $d->count();
+    }
     
 }
