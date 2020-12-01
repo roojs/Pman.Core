@@ -154,7 +154,14 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
     }
     
-   
+    /* compile a html template
+     *  
+     *  @param template_dir  << the path to the template dir ... Pman/XXX/template ...
+     *  @param template   << name of template used by name field)
+     *  @param base  << view name (module ? + templates?)
+     *  
+     *  
+     */
     function syncTemplatePage($pgdata)
     {
         $force = true;
