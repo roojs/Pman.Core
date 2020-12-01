@@ -475,6 +475,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         
     }
+    
+    // called from flexy to translate a string.
+    
+    
     function translateFlexyString($flexy, $string)
     {
         //var_dump($string);
