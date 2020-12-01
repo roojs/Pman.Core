@@ -124,9 +124,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         if (empty($q['node'])) {
             $roo->jerr("invalid node");
         }
-        switch($q['node']) {
+        switch(true) {
             
-            case 'transtree':
+            case ($q['node'] == 'transtree'):
                // DB_DataObject::debugLevel(1);
                 $x = DB_Dataobject::Factory($this->tableName());
                 $x->selectAdd();
@@ -136,25 +136,54 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 foreach( $x->fetchAll('lang') as $l) {
                     $ret[] = array(
                         'text'=>$l,
-                        'id' =>$l,
+                        'id' => 'lang:'.$l,
                         'language' => true
                     );
                 }
                 if (empty($ret)) {
                     $ret[] = array(
                         'text'=>'en',
-                        'id' => 'en',
+                        'id' => 'lang:en',
                         'language' => true
                     );
                 }
                 $roo->jdata($ret);
+            
+            case  preg_match('/^lang:/', $q['node']):
                 
-                
-            default:
-                $x = DB_DataObject::factory($this->tableName());
+                $lang = preg_replace('/^lang:/', '', $q['node']);
+                $ret= array();  
+                $x = DB_DataObject::factory('core_templatestr');
+                $x->autoJoin();
                 $x->selectAdd();
-                $x->selectAdd('distinct(template_id) as template_id');
-                $x->lang = $q['node'];
+                $x->selectAdd('distinct(view_name) as view_name');
+                $x->lang = $lang;
+                $x->orderBy('view_name DESC');
+                $x->find();
+                while($x->fetch()) {
+                    $ret[] = array( 
+                        'text'=> $x->view_name,
+                        'id' => 'view:'. $lang .':'.  $x->view_name,
+                        'leaf' => false
+                    );
+                }
+                
+                
+                $roo->jdata($ret);
+                
+                   break;
+                
+                
+            case  preg_match('/^view:/', $q['node']):
+                
+                $bits= explode(":",preg_replace('/^view:/', '', $q['node']));
+                
+                 $x = DB_DataObject::factory($this->tableName());
+                $x->autoJoin();
+                $x->selectAdd();
+                $x->selectAdd('distinct(core_templatestr.template_id) as template_id');
+                $x->whereAdd("join_template_id_id.view_name = '{$x->escape($bits[1])}'");
+                $x->lang = $bits[0];
                 $ids = $x->fetchAll('template_id');
                 
                 $ret= array();
@@ -182,21 +211,20 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $xx->selectAdd();
                 $xx->selectAdd("
                                
-                    id, concat(view_name,':', template) as template_name
+                    id, concat(  template) as template_name
                 ");
                 $xx->orderBy('template_name ASC');
                 
                 foreach( $xx->fetchAll('id', 'template_name') as $l =>$n) {
                     $ret[] = array(
-                        'text'=>$n,
+                        'text'=> $n,
                         'id' => $l,
                         'leaf' => true
                     );
                 }
                 
                 $roo->jdata($ret);
-                $roo->jerr("not yet");
-                break;
+                 break;
         }
                 
         
@@ -530,6 +558,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //var_Dump($x->txt);
         return empty($x->txt) ? $string : $x->txt;
     }
+    
+    // determine if a complied template need recompling
+    
     function translateChanged($flexy)
     {
         //return true;
