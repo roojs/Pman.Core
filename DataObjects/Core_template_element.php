@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for cms_template 
+ * Table Definition for core_template 
  *
  *
  * The idea here is that it contains all the strings in the templates with a language '' (empty)
@@ -9,12 +9,12 @@
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
-class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject 
+class Pman_Core_DataObjects_Core_template_element  extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'cms_template_element';         // table name
+    public $__table = 'core_template_element';         // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $template_id;                           // string(64)  not_null
     public $name;
@@ -25,13 +25,13 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if (isset($q['_cms_page_id'] )) {
-            if (empty($q['_cms_page_id'] )) {
+        if (isset($q['_core_page_id'] )) {
+            if (empty($q['_core_page_id'] )) {
                 $this->whereAdd('1=0');
                 return;
             }
-            $p = DB_DataObject::factory('cms_page');
-            $p->get($q['_cms_page_id']);
+            $p = DB_DataObject::factory('core_page');
+            $p->get($q['_core_page_id']);
             $this->template_id = $p->template_id;
             
             
@@ -60,9 +60,9 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
         // this should also look for <flexy:use\s+content="\{block\[([A-Za-z0-9_]+)\]^+"\s" (default_content) </flexy:use>
         // if it finds this
         
-        // -> make sure there is a reference to element in cms_template_element...
+        // -> make sure there is a reference to element in core_template_element...
         // -> System PAGE and elements???? with that text as the contents..
-        $cms_page_strings = array();
+        $core_page_strings = array();
         
         $matches = array();
         if (preg_match_all('/flexy\:content=\"(\{block\[([A-Za-z0-9_-]+)\]\.([A-Za-z0-9_]+)([^"]*))"/',
@@ -79,10 +79,10 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
                     continue;
                 }
                 //print_R($matches);
-                if (!isset($cms_page_strings[ $matches[1][$i] ])) {
-                    $cms_page_strings[ $matches[1][$i] ] = array();
+                if (!isset($core_page_strings[ $matches[1][$i] ])) {
+                    $core_page_strings[ $matches[1][$i] ] = array();
                 }
-                $cms_page_strings[ $matches[1][$i] ][ $matches[2][$i] ] = trim($contentStrings[$k]);
+                $core_page_strings[ $matches[1][$i] ][ $matches[2][$i] ] = trim($contentStrings[$k]);
 //                print_r(trim($contentStrings[$k]));
             }
         }
@@ -100,8 +100,8 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
                 $matches[0][] = $v;
                 $matches[1][] = $old_matches[1][$i];
                 
-                if (!isset($cms_page_strings[ $matches[1][$i] ])) {
-                    $cms_page_strings[ $matches[1][$i] ] = array(
+                if (!isset($core_page_strings[ $matches[1][$i] ])) {
+                    $core_page_strings[ $matches[1][$i] ] = array(
                         'title' => trim($matches[1][$i]),
                         'body' => 'Fill in text here'
                         
@@ -111,7 +111,7 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
 //                print_r(trim($matches[1][$i]));
             }
         }
-        //print_r($cms_page_strings);
+        //print_r($core_page_strings);
         // why delete the template???
         
         // if (empty($matches[0]) && empty($old_matches[0])) {
@@ -141,14 +141,14 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
             if (!isset($old[$el])) {
                 $t = clone($base);
                 $t->name = $el;
-                $t->content_strings = isset($cms_page_strings[$el]) ? $cms_page_strings[$el] : array();
+                $t->content_strings = isset($core_page_strings[$el]) ? $core_page_strings[$el] : array();
                 
                 $t->insert();
                 $ret[] = clone($t);
             } else {
                 $t =DB_DataObject::Factory($tn);
                 $t->get($old[$el]);
-                $t->content_strings = isset($cms_page_strings[$el]) ? $cms_page_strings[$el] : array();
+                $t->content_strings = isset($core_page_strings[$el]) ? $core_page_strings[$el] : array();
                 unset($old[$el]);
                 $ret[] = clone($t);
                 // got element already.. ignore it..
@@ -164,9 +164,9 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
             $t = DB_DataObject::Factory($tn);
             $t->get($id);
             $t->delete();
-            // de'reference the cms_pages that refered to it..
-            $cms = DB_DataObject::factory('cms_page');
-            $cms->query("UPDATE cms_page set is_system_page = 0, element_id= 0 WHERE element_id = {$t->id}");
+            // de'reference the core_pages that refered to it..
+            $core = DB_DataObject::factory('core_page');
+            $core->query("UPDATE core_page set is_system_page = 0, element_id= 0 WHERE element_id = {$t->id}");
             
         }
         
@@ -180,11 +180,11 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
         if (empty($pgdata['page'])) {
             return false;
         }
-        $element_id = DB_DataObject::factory('core_enum')->lookup('cms_page_type', 'element'); 
+        $element_id = DB_DataObject::factory('core_enum')->lookup('core_page_type', 'element'); 
 
-        $cms = DB_DataObject::factory('cms_page');
+        $core = DB_DataObject::factory('core_page');
         //DB_DataObject::DebugLevel(1);
-        $cms->setFrom(array(
+        $core->setFrom(array(
                 'page_type_id'  => $element_id,
                 'page_link' => $this->name,
                 'parent_id' => $pgdata['page']->id,
@@ -193,15 +193,15 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
                 'language' => 'en',
                 'is_system_page' => 1
         ));
-        if ($cms->count()) {
-            $cms->fetch();
-            $this->page = clone($cms);
+        if ($core->count()) {
+            $core->fetch();
+            $this->page = clone($core);
             return;
         }
         
         
-        $cms = DB_DataObject::factory('cms_page');
-        $cms->title = $this->name; /// placeholder..
+        $core = DB_DataObject::factory('core_page');
+        $core->title = $this->name; /// placeholder..
          
        // from parsing earlier..
         
@@ -219,9 +219,9 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
                 
             }
         }
-        $cms->setFrom($this->content_strings); 
+        $core->setFrom($this->content_strings); 
         
-        $cms->setFrom(array(
+        $core->setFrom(array(
                 'page_type_id'  => $element_id,
                 'page_link' => $this->name,
                 'parent_id' => $pgdata['page']->id,
@@ -230,9 +230,9 @@ class Pman_Cms_DataObjects_Cms_template_element  extends DB_DataObject
                 'language' => 'en',
                 'is_system_page' => 1
         ));
-        $cms->insert();    
+        $core->insert();    
         
-        $this->page = clone($cms);
+        $this->page = clone($core);
     }
     
     
