@@ -1,4 +1,7 @@
 
+
+-- depricated use core_template templatestr etc..
+
 CREATE TABLE  translations (
   id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
