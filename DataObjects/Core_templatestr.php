@@ -1,6 +1,6 @@
 <?php
 /**
- * Table Definition for cms_templatestr
+ * Table Definition for core_templatestr
  *
  *
  * The idea here is that it contains all the strings in the templates with a language '' (empty)
@@ -9,12 +9,12 @@
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
 
-class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject 
+class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject 
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
 
-    public $__table = 'cms_templatestr';         // table name
+    public $__table = 'core_templatestr';         // table name
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $template_id;                           // string(64)  not_null
     public $txt;                    // datetime(19)  multiple_key binary
@@ -50,13 +50,13 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         }
         if (!empty($q['_search_txt'])) {
             $str = $this->escape($q['_search_txt']);
-            $this->whereAdd("cms_templatestr.txt like '%{$str}%' OR join_src_id_id.txt like '%{$str}%'");
+            $this->whereAdd("core_templatestr.txt like '%{$str}%' OR join_src_id_id.txt like '%{$str}%'");
             
         }
     }
     function translateTableCol($obj, $col, $lang)
     {
-        $cts = DB_DataObject::factory('cms_templatestr');
+        $cts = DB_DataObject::factory('core_templatestr');
         $cts->lang = $lang;
         $cts->on_table = $obj->tableName();
         $cts->on_id = $obj->pid();
@@ -84,16 +84,16 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
     function onTableChange($roo, $obj, $chg)
     {
         
-        $ff = HTML_FlexyFramework::get()->Pman_Cms;
+        $ff = HTML_FlexyFramework::get()->Pman_Core;
             
-        if(empty($ff['DataObjects_Cms_templatestr']['tables'])){
+        if(empty($ff['DataObjects_Core_templatestr']['tables'])){
             return;
         }
         $tn = $obj->tableName();
-        if(empty($ff['DataObjects_Cms_templatestr']['tables'][$tn])){
+        if(empty($ff['DataObjects_Core_templatestr']['tables'][$tn])){
             return;
         }
-        $cols = $ff['DataObjects_Cms_templatestr']['tables'][$tn];
+        $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
         
         foreach($cols as $c) {
@@ -160,10 +160,10 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
                 $ret= array();
                 //add the table type lists
                 
-                $ff = HTML_FlexyFramework::get()->Pman_Cms;
+                $ff = HTML_FlexyFramework::get()->Pman_Core;
                 
-                if(!empty($ff['DataObjects_Cms_templatestr']['tables'])){
-                    foreach($ff['DataObjects_Cms_templatestr']['tables'] as $table=>$v){
+                if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
+                    foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
                         $ret[] = array(
                             'text'=> $table,
                             'on_table' => $table,
@@ -177,7 +177,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
 //                $x->whereAdd("lang != ''");
                 
                 //below are old code
-                $xx = DB_Dataobject::Factory('cms_template');
+                $xx = DB_Dataobject::Factory('core_template');
                 $xx->whereAddIn('id', $ids, 'int');
                 $xx->selectAdd();
                 $xx->selectAdd("
@@ -207,7 +207,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
     /**
      *
      * 
-     * @param object $tmpl cms_template data object
+     * @param object $tmpl core_template data object
      * @param array $words array of words 
      */ 
     function syncTemplateWords($tmpl, $keyvalue = false)
@@ -298,7 +298,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
 //            print_r($cur);
 //            echo "\n";
             $deactive = array_values($cur);
-            $t->query("UPDATE cms_templatestr
+            $t->query("UPDATE core_templatestr
                       SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
                      ");
         }
@@ -312,7 +312,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         if (empty($active)) {// set the active array to empty
             $active = array(-1);
         }
-        $t->query("UPDATE  cms_templatestr 
+        $t->query("UPDATE  core_templatestr 
                 SET active = 1
                   WHERE
                      src_id IN (". implode(',' ,$active) . ")
@@ -323,7 +323,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         if (empty($deactive)) {
             $deactive = array(-1);
         }
-        $t->query("UPDATE  cms_templatestr 
+        $t->query("UPDATE  core_templatestr 
                 SET active = 0
                   WHERE
                     src_id IN (". implode(',' ,$deactive) . ")
@@ -383,7 +383,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         }
         // this is done by calling code 
         //$t = DB_DataObject::factory($this->tableName());
-        //$t->query("update cms_templatestr set active= 1 where src_id = $id");
+        //$t->query("update core_templatestr set active= 1 where src_id = $id");
         
         
         
@@ -461,7 +461,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         static $cache = array(); // cache of templates..
         
         $ff = HTML_FlexyFramework::get();
-        $view_name = isset($ff->Pman_Cms['view_name']) ? $ff->Pman_Cms['view_name'] : false;
+        $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
         
         if ($debug) { var_dump(array('view_name'=> $view_name)); }
         
@@ -485,14 +485,14 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
                 
             
             
-            $tmpl = DB_DataObject::factory('cms_template');
+            $tmpl = DB_DataObject::factory('core_template');
             if ($view_name !== false) {
                 $tmpl->view_name = $view_name;
             }
             if(!$tmpl->get('template', $tmpname)){
                 // strip of site prefix if set...
                  
-                $tmpl = DB_DataObject::factory('cms_template');
+                $tmpl = DB_DataObject::factory('core_template');
                 if(!$tmpl->get('template', $tmpname)){
                     //var_dump("no template? {$tmpname} or {$relpath}" );
                     $cache[$tmpname] = false;
@@ -544,7 +544,7 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
         static $cache = array(); // cache of templates..
         
         $ff = HTML_FlexyFramework::get();
-        $view_name = isset($ff->Pman_Cms['view_name']) ? $ff->Pman_Cms['view_name'] : false;
+        $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
         
         $tempdir = '';
         foreach($flexy->options['templateDir'] as $td) {
@@ -565,14 +565,14 @@ class Pman_Cms_DataObjects_Cms_templatestr extends DB_DataObject
                 
             
             
-            $tmpl = DB_DataObject::factory('cms_template');
+            $tmpl = DB_DataObject::factory('core_template');
             if ($view_name !== false) {
                 $tmpl->view_name = $view_name;
             }
             if(!$tmpl->get('template', $tmpname)){
                 // strip of site prefix if set...
                  
-                $tmpl = DB_DataObject::factory('cms_template');
+                $tmpl = DB_DataObject::factory('core_template');
                 if(!$tmpl->get('template', $tmpname)){
                     //var_dump("no template? {$tmpname} or {$relpath}" );
                     $cache[$tmpname] = false;
