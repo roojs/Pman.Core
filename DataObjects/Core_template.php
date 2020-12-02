@@ -340,7 +340,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $tmpl->update($xx);
         }
       
-        
+        $words = array_unique($words);
         
         if (!count($words)) {
             return;
