@@ -296,14 +296,16 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     {
         $tmpl = DB_DataObject::Factory($this->tableName());
         $tmpl->view_name = $pgdata['base'];
+        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
+        
         if ($tmpl->get('template',  $pgdata['template'])) {
-            if (strtotime($tmpl->updated) >= filemtime( $pgdata['template_dir'] . '/'. $pgdata['template']  )) {
+            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
                 return $tmpl;
             }
         }
         $words = array();
         
-        $ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
+        $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
         foreach( $ar as $i=> $tok) {
             if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
                 continue;
@@ -321,6 +323,41 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $words[] =  replace('\\'. $ct, $ct, trim($tok[1][0] , $ct));
             
         }
+        // create the template...
+        
+        
+         if ($tmpl->id) {
+            
+            $tmpl->template = $pgdata['template'];
+            $tmpl->lang = 'en'; /// ??? hard coded??
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->insert();
+        } else {
+            $xx =clone($tmpl);
+            
+            $tmpl->lang = 'en'; /// ??? hard coded??
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->update($xx);
+        }
+      
+        
+        
+        if (count($words)) {
+            $tmpl = DB_DataObject::Factory($this->tableName());
+            $tmpl->words = file_exists($flexy->getTextStringsFile) ?
+                    unserialize(file_get_contents($flexy->getTextStringsFile)) :
+                    array();
+            
+            $tmpl->contentStrings   = $flexy->compiler->contentStrings;
+            //var_dump(file_exists($flexy->getTextStringsFile));
+            //print_r($tmpl->words);
+            $tmpl->currentTemplate  = $flexy->currentTemplate;
+            
+            
+            
+        }
+        
+        
         //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
          exit;
         
