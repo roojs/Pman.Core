@@ -283,6 +283,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     }
     function syncPhpGetText($pgdata)
     {
+        $tmpl = DB_DataObject::Factory($this->tableName());
+        $tmpl->view_name = $pgdata['base'];
+        if ($tmpl->get('template',  $pgdata['template'])) {
+            if (strttotime($tmpl->updated) >= filemtime( $pgdata['template_dir'] . '/'. $pgdata['template']  )) {
+                return $tmpl;
+            }
+        }
         
         
     }
