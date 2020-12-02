@@ -165,7 +165,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     function syncTemplatePage($pgdata)
     {
         $force = true;
-         echo "compiling:"; print_r($pgdata);
+         //echo "compiling:"; print_r($pgdata);
         // read the template and extract the translatable strings.
         ini_set('memory_limit', '512M');
         
