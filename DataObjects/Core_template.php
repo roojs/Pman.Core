@@ -196,9 +196,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $flexy = new HTML_Template_Flexy( $oo );
           
         if (!$flexy->resolvePath ($pgdata['template'])) {
-            
-            echo "SKIP - could not resolve path?\n";
-            print_r($oo);
+            //echo "SKIP - could not resolve path?\n"; print_r($oo);
             return false;
         }
         
