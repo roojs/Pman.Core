@@ -164,6 +164,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      */
     function syncTemplatePage($pgdata)
     {
+        print_r($pgdata);
+        
         $force = true;
          //echo "compiling:"; print_r($pgdata);
         // read the template and extract the translatable strings.
