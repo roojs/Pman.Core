@@ -120,7 +120,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 
                 continue;
             }
-            if (!preg_match('/(\.html|\.txt)$/', $fn)) {
+            if (!preg_match('/(\.html|\.txt|\.abw)$/', $fn)) {
                 continue;
             }
             
