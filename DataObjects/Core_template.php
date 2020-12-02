@@ -346,7 +346,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             return;
         }
         
-        
+        print_R($words);exit;
             
         $tmpl->words = $words;
             
