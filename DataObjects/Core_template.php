@@ -300,7 +300,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                return $tmpl;
+                //return $tmpl;
             }
         }
         $words = array();
