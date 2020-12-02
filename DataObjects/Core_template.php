@@ -301,8 +301,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 return $tmpl;
             }
         }
-        
-        $ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
+         $ar = token_get_all("<?php echo _('test');".'echo _("test");');
+        //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
         print_R($ar);exit;
         exit;
         
