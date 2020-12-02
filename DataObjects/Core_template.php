@@ -301,7 +301,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 return $tmpl;
             }
         }
-        $ar = token_get_all("<?php echo _('test');".'echo _("test");');
+        $words = array();
+        
+        $ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
         foreach( $ar as $i=> $tok) {
             if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
                 continue;
@@ -315,11 +317,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
                 continue;
             }
-            var_dump($tok[1]);
+            $ct = $tok[1][0];
+            $words[] =  replace('\\'. $ct, $ct, trim($tok[1][0] , $ct));
+            
         }
         //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
-        print_R($ar);exit;
-        exit;
+         exit;
         
         
         
