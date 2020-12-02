@@ -303,7 +303,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
         $ar = token_get_all("<?php echo _('test');".'echo _("test");');
         foreach( $ar as $i=> $tok) {
-            if (!is_array($tok) || $tok[0] != 'T_CONSTANT_ENCAPSED_STRING') {
+            if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
                 continue;
             }
             if ($i < 2) {
