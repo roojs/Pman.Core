@@ -108,7 +108,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
 
             $fullpath = $tmp_dir."/".$fn;
-//            echo "filename: ".$fullpath." \n";    
+             echo "filename: ".$fullpath." \n";    
              
             $relpath = $subdir . (empty($subdir) ? '' : '/') . $fn;
             
