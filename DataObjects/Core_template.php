@@ -165,7 +165,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     function syncTemplatePage($pgdata)
     {
         $force = true;
-        echo "compiling:"; print_r($pgdata);
+       // echo "compiling:"; print_r($pgdata);
         // read the template and extract the translatable strings.
         ini_set('memory_limit', '512M');
         
@@ -177,6 +177,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         //print_R($opts);
         //$dir = $opts['templateDir'] . '/' . $node;
         $oo = array(
+            'fatalError'    => PEAR_ERROR_EXCEPTION,  
             'disableTranslate' => false,
             'templateDir' => $pgdata['template_dir'],
             'compileDir' => $fopts['compileDir'] . '_translation_files',
@@ -184,7 +185,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         );
          
         // non-html templates - treat as such..
-        if (!preg_match('/\.html$/i', $pgdata['template'])) {
+        // abiword - treat as html?
+        if (!preg_match('/\.(html|abw)$/i', $pgdata['template'])) {
             $oo['nonHTML'] = true;
         }
         
@@ -200,8 +202,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             return false;
         }
           
-          
+        try {
+        
         $r = $flexy->compile($pgdata['template']);
+        } catch(Exception $e) {
+            return false;
+        }
        
         //print_r( $flexy);
       
@@ -220,7 +226,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         $tmpl->contentStrings   = $flexy->compiler->contentStrings;
         //var_dump(file_exists($flexy->getTextStringsFile));
-        print_r($tmpl->words);
+        //print_r($tmpl->words);
         $tmpl->currentTemplate  = $flexy->currentTemplate;
         
         $tmpl->view_name = $pgdata['base'];
