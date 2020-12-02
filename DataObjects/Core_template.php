@@ -320,7 +320,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 continue;
             }
             $ct = $tok[1][0];
-            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1][0] , $ct));
+            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
             
         }
         // create the template...
