@@ -342,25 +342,19 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
       
         
         
-        if (count($words)) {
-            $tmpl = DB_DataObject::Factory($this->tableName());
-            $tmpl->words = file_exists($flexy->getTextStringsFile) ?
-                    unserialize(file_get_contents($flexy->getTextStringsFile)) :
-                    array();
-            
-            $tmpl->contentStrings   = $flexy->compiler->contentStrings;
-            //var_dump(file_exists($flexy->getTextStringsFile));
-            //print_r($tmpl->words);
-            $tmpl->currentTemplate  = $flexy->currentTemplate;
-            
-            
-            
+        if (!count($words)) {
+            return;
         }
         
         
-        //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
-         exit;
+            
+        $tmpl->words = $words;
+            
+        $x = DB_DataObject::Factory('core_templatestr');
+        $x->syncTemplateWords($tmpl);    
+         
         
+        return $tmpl;
         
         
         
