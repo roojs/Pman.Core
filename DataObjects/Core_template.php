@@ -213,9 +213,17 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
         try {
-        
             $r = $flexy->compile($pgdata['template']);
         } catch(Exception $e) {
+            $old = clone($tmpl);
+            $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
+            if ($tmpl->id) {
+                $tmpl->update($tmpl);
+            } else {
+                $tmpl->insert();
+            }
+            
+            
             return false;
         }
        
