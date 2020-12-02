@@ -220,6 +220,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             if ($tmpl->id) {
                 $tmpl->update($tmpl);
             } else {
+                $tmpl->lang = 'en';
                 $tmpl->insert();
             }
             
