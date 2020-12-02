@@ -176,6 +176,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 
             case  preg_match('/^view:/', $q['node']):
                 
+               
                 $bits= explode(":",preg_replace('/^view:/', '', $q['node']));
                 
                  $x = DB_DataObject::factory($this->tableName());
@@ -361,6 +362,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                     lang != ''
         ");
     }
+    
     function checkDupes($tid, $lang, $id, $mdsum) {
         
         $t = DB_DataObject::factory($this->tableName());
