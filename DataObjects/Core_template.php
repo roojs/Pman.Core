@@ -281,4 +281,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return clone($tmpl);
     
     }
+    function syncPhpGetText($pgdata)
+    {
+        
+        
+    }
 }
