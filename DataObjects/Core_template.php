@@ -303,6 +303,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
         $ar = token_get_all("<?php echo _('test');".'echo _("test");');
         foreach($ar as $tok) {
+            var_dump($tok);
             var_dump(is_array($tok) ? token_name($tok) : $tok);
         }
         //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
