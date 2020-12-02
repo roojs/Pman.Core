@@ -302,9 +302,20 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
         }
         $ar = token_get_all("<?php echo _('test');".'echo _("test");');
-        foreach($ar as $tok) {
-            
-            var_dump(is_array($tok) ? token_name($tok[0]) : $tok);
+        foreach( $ar as $i=> $tok) {
+            if (!is_array($tok) || $tok[0] != 'T_CONSTANT_ENCAPSED_STRING') {
+                continue;
+            }
+            if ($i < 2) {
+                continue;
+            }
+            if (is_array($ar[$i-1]) || $ar[$i-1] != '(') {
+                continue;
+            }
+            if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
+                continue;
+            }
+            var_dump($tok[1]);
         }
         //$ar = token_get_all(file_get_contents($pgdata['template_dir'] . '/'. $pgdata['template']  ));
         print_R($ar);exit;
