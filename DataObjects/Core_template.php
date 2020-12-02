@@ -201,24 +201,33 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             print_r($oo);
             return false;
         }
-          
+        
+        // attempt to find the template... record.
+        $tmpl = DB_DataObject::Factory($this->tableName());
+       
+        $tmpl->view_name = $pgdata['base'];
+        if ($tmpl->get('template',  $pgdata['template'])) {
+            if (strttotime($tmpl->updated) >= filemtime($flexy->resolvePath ($pgdata['template']))) {
+                return $tmpl;
+            }
+        }
+        
+        
+        
         try {
         
-        $r = $flexy->compile($pgdata['template']);
+            $r = $flexy->compile($pgdata['template']);
         } catch(Exception $e) {
             return false;
         }
        
-        //print_r( $flexy);
       
-        //printf(" %0.3fs : $fname<BR>", $time);
         if (is_a($r,'PEAR_Error')) {
             
-            echo $r->toString(). "\n";
+           // echo $r->toString(). "\n";
             return $r;
         }
-        //print_R(number_format(memory_get_usage(),0, '.', ','))  ;
-         
+          
         $tmpl = DB_DataObject::Factory($this->tableName());
         $tmpl->words = file_exists($flexy->getTextStringsFile) ?
                 unserialize(file_get_contents($flexy->getTextStringsFile)) :
