@@ -398,7 +398,7 @@ WHERE (
 */
 
     
-    function genGetText($cls)
+    function genGetText($classname)
     {
         // only supports pman ?
         $clsname = strtolower(get_class($cls));
