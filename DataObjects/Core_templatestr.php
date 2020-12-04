@@ -180,11 +180,12 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                
                 $bits= explode(":",preg_replace('/^view:/', '', $q['node']));
                 
-                 $x = DB_DataObject::factory($this->tableName());
+                $x = DB_DataObject::factory($this->tableName());
                 $x->autoJoin();
                 $x->selectAdd();
                 $x->selectAdd('distinct(core_templatestr.template_id) as template_id');
                 $x->whereAdd("join_template_id_id.view_name = '{$x->escape($bits[1])}'");
+                $x->whereAdd('join_template_id_id.is_deleted = 0');
                 $x->lang = $bits[0];
                 $ids = $x->fetchAll('template_id');
                 
