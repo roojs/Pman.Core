@@ -437,7 +437,7 @@ WHERE (
         }
         $lang = $lang ? $lang : $ff->locale;
         $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
-        $fname = "{$fdir}/{$clsname}.po";
+        $fname = "{$fdir}/{$clsname}.mo";
         
         var_dump( "
                setlocale(LC_MESSAGES, $lang); 
@@ -480,7 +480,7 @@ WHERE (
         }
         
         require_once 'File/Gettext.php';
-        $gt = File_Gettext::factory('PO', $fname);
+        $gt = File_Gettext::factory('PO', preg_replace('/\.mo$/', '.po', $fname));
         $gt->fromArray(
             
             array(
@@ -495,7 +495,22 @@ WHERE (
             
         );
         $gt->save();
-          
+        require_once 'File/Gettext.php';
+        $gt = File_Gettext::factory('MO', $fname);
+        $gt->fromArray(
+            
+            array(
+                'meta' => array(
+                    'Content-Type'      => 'text/plain; charset=UTF-8\n',
+                    //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
+                    'PO-Revision-Date'  => date('Y-m-d H:iO'),
+                    //'Language-Team'     => 'German <mail@example.com>',
+                ),
+                'strings' => $words
+            )
+            
+        );
+        $gt->save(); 
         
     }
 }
