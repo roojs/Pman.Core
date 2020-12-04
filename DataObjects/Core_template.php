@@ -220,8 +220,10 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $old = clone($tmpl);
             $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
             if ($tmpl->id) {
+                $tmpl->filetype = 'html';
                 $tmpl->update($tmpl);
             } else {
+                $tmpl->filetype = 'html';
                 $tmpl->lang = 'en';
                 $tmpl->insert();
             }
