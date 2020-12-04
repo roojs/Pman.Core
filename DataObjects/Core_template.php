@@ -400,6 +400,7 @@ WHERE (
     
     function genGetText($cls)
     {
+        // only supports pman ?
         $clsname = strtolower(get_class($cls));
         DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
