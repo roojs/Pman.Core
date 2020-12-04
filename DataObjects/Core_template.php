@@ -443,7 +443,7 @@ WHERE (
         bindtextdomain($clsname, $fdir);
         textdomain($clsname);
         
-        $done[$clsname.':'.$lang] = true;
+        $done[$clsname.':'.$lang] = 1;
         
         // do we need to compile the file..
         $ts = DB_DataObject::Factory('core_templatestr');
