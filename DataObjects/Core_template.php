@@ -407,8 +407,7 @@ WHERE (
         $d->whereAdd("
             LOWER(
                 CONCAT(
-                    'pman_',
-                    REPLACE(view_name, '.','_'),
+                      REPLACE(view_name, '.','_'),
                     '_',
                     REPLACE(template,'/','_')
                 )
