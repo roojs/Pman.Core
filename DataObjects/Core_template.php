@@ -485,12 +485,11 @@ WHERE (
             
             array(
                 'meta' => array(
-                    "Language: {$lang}\n",
-                    'Content-Type'      => 'text/plain; charset=UTF-8\n',
-                    //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
-                    'PO-Revision-Date'  => date('Y-m-d H:iO'),
-                    //'Language-Team'     => 'German <mail@example.com>',
-                ),
+                    "Language" =>  $lang,
+                    'Content-Type'      => 'text/plain; charset=UTF-8',
+                    'Content-Transfer-Encoding'      => ' 8bit',
+                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
+                 ),
                 'strings' => $words
             )
             
@@ -502,11 +501,10 @@ WHERE (
             
             array(
                 'meta' => array(
-                    "Language: {$lang}\n",
-                    'Content-Type'      => 'text/plain; charset=UTF-8\n',
-                    //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
-                    'PO-Revision-Date'  => date('Y-m-d H:iO'),
-                    //'Language-Team'     => 'German <mail@example.com>',
+                     "Language" =>  $lang,
+                    'Content-Type'      => 'text/plain; charset=UTF-8',
+                    'Content-Transfer-Encoding'      => ' 8bit',
+                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
                 ),
                 'strings' => $words
             )
