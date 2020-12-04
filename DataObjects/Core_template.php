@@ -486,7 +486,7 @@ WHERE (
             )
             
         );
-        $gt->write();
+        $gt->save();
           
         
     }
