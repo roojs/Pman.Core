@@ -382,7 +382,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
     }
-    
+    /*
     SELECT LOWER(
 CONCAT(
 REPLACE(view_name, '.','_'),
@@ -395,7 +395,7 @@ FROM core_template
 WHERE (
  = 'release_pressrelease_distributionreportnew_journalistdistribution.php'
 )
-
+*/
 
     
     function genGetText($cls)
