@@ -483,8 +483,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     
     function translateFlexyString($flexy, $string)
     {
-        //var_dump($string);
-        $debug = false;;
+         $debug = false;;
         //if (!empty($_REQUEST['_debug'])) { $debug= true; }
         
         // using $flexy->currentTemplate -> find the template we are looking at..
@@ -496,6 +495,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $ff = HTML_FlexyFramework::get();
         $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
+        if (empty($view_name)) {
+            $pg = HTML_FlexyFramework::get()->page;
+            if (isset($pg->templateViewName)) {
+                $view_name = $pg->templateViewName;
+            }
+            
+        }
+        
+        
         
         if ($debug) { var_dump(array('view_name'=> $view_name)); }
         
@@ -510,6 +518,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $tmpname = substr($flexy->currentTemplate, strlen($td) +1);
         
+         
         if (isset($cache[$tmpname]) && $cache[$tmpname] === false) {
             if ($debug) { echo "from cache no match - $string\n"; }
             return $string;
@@ -538,31 +547,52 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         } else {
             $tmpl = $cache[$tmpname] ;
         }
-         
+        
+        
     
-        //get original template id 
+        //get original template id
+        /*
         $orig = DB_DataObject::factory($this->tableName());
         $orig->lang = '';
         $orig->template_id = $tmpl->id;
         $orig->active = 1;
+        
+        $cache[$tmpname]->words = 
+        
         if(!$orig->get( 'mdsum' , md5(trim($string)))){
              //var_dump('no text? '. $string);
             if ($debug) { echo "no original string found tplid: {$tmpl->id}\n"; }
             return false;
         }
-         
-        //find out the text by language
-        $x = DB_DataObject::factory($this->tableName());
-        $x->lang = $flexy->options['locale'];
-        $x->template_id = $tmpl->id;
-        if(!$x->get('src_id', $orig->id)){
-            //var_dump('no trans found' . $orig->id);
-            if ($debug) { echo "no translation found\n"; }
-            return false;
+        */
+        
+        if (empty($cache[$tmpname]->translations)) {
+        
+            //find out the text by language
+            //DB_DataObject::DebugLevel(1);
+            $x = DB_DataObject::factory($this->tableName());
+            $x->lang = $flexy->options['locale'];
+            $x->template_id = $tmpl->id;
+            $x->autoJoin();
+            $cache[$tmpname]->translations = $x->fetchAll('src_id_mdsum', 'txt');
+            if (empty($cache[$tmpname]->translations)) {
+                $cache[$tmpname]->translations = true;
+            }
+            //var_Dump($cache[$tmpname]->translations);
         }
-        if ($debug) { echo "returning $x->txt\n"; }
-        //var_Dump($x->txt);
-        return empty($x->txt) ? $string : $x->txt;
+        
+        
+        if ($cache[$tmpname]->translations === true) {
+            return $string;
+        }
+        //var_dump("Checking: " . md5(trim($string)));
+        
+        if (!empty($cache[$tmpname]->translations [md5(trim($string))])){
+           // var_dump("RETURNING: ". $cache[$tmpname]->translations [md5(trim($string))]);
+            return $cache[$tmpname]->translations [md5(trim($string))];
+        }
+        return $string;
+        
     }
     
     // determine if a complied template need recompling
