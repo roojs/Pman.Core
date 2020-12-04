@@ -385,7 +385,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     function genGetText($cls)
     {
-        $clsname = strtolower($cls);
+        $clsname = strtolower(get_class($cls));
         DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
