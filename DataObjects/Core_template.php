@@ -441,12 +441,7 @@ WHERE (
         $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
         $fname = "{$fdir}/{$clsname}.mo";
         
-        var_dump( "
-               setlocale(LC_MESSAGES, $lang); 
-        bindtextdomain($clsname, $compileDir);
-        textdomain($clsname);   
-                 
-                 ");
+         
         //exit;
          bindtextdomain($clsname, $compileDir) ;
         //textdomain($clsname);
