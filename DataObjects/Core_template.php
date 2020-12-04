@@ -501,6 +501,9 @@ WHERE (
         
         `$cmd`;
         
+        
+        var_dump(_("Number distributed to Journalists"));
+        
         return;
         
         require_once 'File/Gettext.php';
