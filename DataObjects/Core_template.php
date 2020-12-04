@@ -468,7 +468,7 @@ WHERE (
                
         if (!file_exists($fdir)) {
             var_dump($fdir);
-            mkdir($fdir, 0600, true);
+            mkdir($fdir, 0700, true);
         }
         
         
