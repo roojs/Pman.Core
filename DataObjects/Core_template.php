@@ -409,8 +409,9 @@ WHERE (
         if (!empty($done[$clsname.':'.$lang])) {
             return; // already sent headers and everything.
         }
-        setlocale(LC_MESSAGES, $lang);
+        
         putenv("LANGUAGE=$lang");
+        setlocale(LC_ALL, $lang);
         $clsname = strtolower($clsname);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
