@@ -401,7 +401,7 @@ WHERE (
     function genGetText($clsname, $lang=false)
     {
         static $done = false;
-        
+        textdomain($clsname);
         $ff = HTML_FlexyFramework::get();
         $lang = $lang ? $lang : (isset($ff->locale) ? $ff->locale : 'en');
         if (!empty($done[$clsname.':'.$lang])) {
@@ -448,7 +448,7 @@ WHERE (
         //exit;
         setlocale(LC_MESSAGES, $lang); 
         bindtextdomain($clsname, $compileDir);
-        textdomain($clsname);
+        //textdomain($clsname);
         
         $done[$clsname.':'.$lang] = 1;
         
