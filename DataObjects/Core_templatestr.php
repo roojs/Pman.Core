@@ -158,6 +158,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $x->selectAdd();
                 $x->selectAdd('distinct(view_name) as view_name');
                 $x->lang = $lang;
+                $x->whereAdd('join_template_id_id.is_deleted = 0');
                 $x->orderBy('view_name DESC');
                 $x->find();
                 while($x->fetch()) {
@@ -171,7 +172,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 
                 $roo->jdata($ret);
                 
-                   break;
+                break;
                 
                 
             case  preg_match('/^view:/', $q['node']):
