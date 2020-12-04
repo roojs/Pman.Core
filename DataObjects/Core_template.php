@@ -437,7 +437,7 @@ WHERE (
         }
         $lang = $lang ? $lang : $ff->locale;
         $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
-        $fname = "{$fdir}/{$clsname}.mo";
+        $fname = "{$fdir}/{$clsname}.po";
         
         var_dump( "
                setlocale(LC_MESSAGES, $lang); 
@@ -479,7 +479,7 @@ WHERE (
         }
         
         require_once 'File/Gettext.php';
-        $gt = File_Gettext::factory('MO', $fname);
+        $gt = File_Gettext::factory('PO', $fname);
         $gt->fromArray(
             
             array(
