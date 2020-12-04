@@ -410,7 +410,7 @@ WHERE (
             return; // already sent headers and everything.
         }
         setlocale(LC_MESSAGES, $lang);
-        putenv("LC_ALL=$lang");
+        putenv("LANG=$lang");
         $clsname = strtolower($clsname);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
