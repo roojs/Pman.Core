@@ -447,7 +447,7 @@ WHERE (
          bindtextdomain($clsname, $compileDir) ;
         textdomain($clsname);
 
-         echo "BIND TEXT DOM";
+        
         //textdomain($clsname);
         
         $done[$clsname.':'.$lang] = 1;
