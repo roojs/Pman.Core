@@ -413,6 +413,7 @@ WHERE (
                 )
             ) = '{$clsname}.php'
        ");
+        $d->filetype = 'php';
         if ( $d->find(true) ){
             
         }
