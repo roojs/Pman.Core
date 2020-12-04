@@ -417,24 +417,38 @@ WHERE (
         if (! $d->find(true) ){
             return;
         }
+        $compileDir = ini_get('session.save_path') .'/' . 
+            $user . '_gettext_' . $this->project;
+        
+        if ($this->appNameShort) {
+            $compileDir .= '_' . $this->appNameShort;
+        }
+        if ($this->version) {
+            $compileDir .= '.' . $this->version;
+        }
+        
+        www-translate-{project}/fr_FR/LC_MESSAGES
+        
+        
         
         $gt = File_Gettext::factory('MO', $filename);
         $git->fromArray(
             
-               array(
-            'meta' => array(
-                'Content-Type'      => 'text/plain; charset=utf8',
-                //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
-                'PO-Revision-Date'  => date('Y-m-d H:iO'),
-                //'Language-Team'     => 'German <mail@example.com>',
-            ),
-            'strings' => array(
-                'All rights reserved'   => 'Alle Rechte vorbehalten',
-                'Welcome'               => 'Willkommen',
-                // ...
+            array(
+                'meta' => array(
+                    'Content-Type'      => 'text/plain; charset=utf8',
+                    //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
+                    'PO-Revision-Date'  => date('Y-m-d H:iO'),
+                    //'Language-Team'     => 'German <mail@example.com>',
+                ),
+                'strings' => array(
+                    'All rights reserved'   => 'Alle Rechte vorbehalten',
+                    'Welcome'               => 'Willkommen',
+                    // ...
+                )
             )
             
-        )
+        );
         $gt->write();
         
         var_dump($d);exit;
