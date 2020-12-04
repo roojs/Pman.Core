@@ -386,6 +386,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     function genGetText($cls)
     {
         $clsname = strtolower($cls);
+        DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
             LOWER(
@@ -397,9 +398,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             ) = '{$clsname}.php'
        ");
         if ( $d->find(true) ){
-            print_R($d);exit;
+            
         }
-        
+        print_R($d);exit;
         
         
         
