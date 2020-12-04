@@ -398,7 +398,7 @@ WHERE (
 */
 
     
-    function genGetText($clsname)
+    function genGetText($clsname, $lang)
     {
         // only supports pman ?
         $clsname = strtolower($clsname);
@@ -428,7 +428,7 @@ WHERE (
             $compileDir .= '.' . $ff->version;
         }
         
-        www-translate-{project}/fr_FR/LC_MESSAGES
+        /fr_FR/LC_MESSAGES
         
         
         
