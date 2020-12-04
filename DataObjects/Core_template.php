@@ -220,9 +220,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $old = clone($tmpl);
             $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
             if ($tmpl->id) {
+                $tmpl->is_deleted = 0;
                 $tmpl->filetype = 'html';
                 $tmpl->update($tmpl);
             } else {
+                $tmpl->is_deleted = 0;
                 $tmpl->filetype = 'html';
                 $tmpl->lang = 'en';
                 $tmpl->insert();
@@ -253,6 +255,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
         if (!$tmpl->get('template',  $pgdata['template'])) {
+            $tmpl->is_deleted = 0;
             $tmpl->filetype = 'html';
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
@@ -270,7 +273,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 $tmpl->lang = 'en'; /// ??? hard coded??
             }
             $tmpl->filetype = 'html';
-            $tmpl->filetype = 'html';
+            $tmpl->is_deleted = 0;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($flexy->currentTemplate));
             $tmpl->update($xx);
         }
