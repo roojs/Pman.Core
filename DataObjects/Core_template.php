@@ -423,6 +423,7 @@ WHERE (
        ");
         $d->filetype = 'php';
         if (! $d->find(true) ){
+            $done[$clsname.':'.$lang] = true;
             return;
         }
         $ff = HTML_FlexyFramework::get();
@@ -446,6 +447,11 @@ WHERE (
         $done[$clsname.':'.$lang] = true;
         
         // do we need to compile the file..
+        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts->selectAdd('MAX(updated) as updated');
+        $ts->lang = $lang;
+        $ts->template_id = $d->id;
+        $ts->
         
         
         
