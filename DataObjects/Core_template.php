@@ -448,7 +448,7 @@ WHERE (
                  
                  ");
         //exit;
-        var_dump( bindtextdomain($clsname, $compileDir));
+         bindtextdomain($clsname, $compileDir) ;
         //textdomain($clsname);
         
         $done[$clsname.':'.$lang] = 1;
