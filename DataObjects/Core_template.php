@@ -451,8 +451,16 @@ WHERE (
         $ts->selectAdd('MAX(updated) as updated');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
-        $ts->
-        
+        if (!$ts->find(true)) {
+            // then in theory there are no translations
+            return;
+        }
+        if (file_exists($fd) && strtotime($ts->update) < filemtime($fd)) {
+            return; // file exists and is newer than our updated line.
+        }
+        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts->autoJoin();
+         
         
         
         
