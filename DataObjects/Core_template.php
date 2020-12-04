@@ -446,7 +446,8 @@ WHERE (
                  
                  ");
         //exit;
-        setlocale(LC_MESSAGES, $lang); 
+        $sl = setlocale(LC_MESSAGES, $lang);
+        var_Dump($sl);exit;
         bindtextdomain($clsname, $compileDir);
         //textdomain($clsname);
         
