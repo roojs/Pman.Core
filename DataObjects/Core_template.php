@@ -410,7 +410,6 @@ WHERE (
         
         
         $clsname = strtolower($clsname);
-        DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
             LOWER(
@@ -437,11 +436,11 @@ WHERE (
             $compileDir .= '.' . $ff->version;
         }
         $lang = $lang ? $lang : $ff->locale;
-        $fn = "{$compileDir}/{$lang}/LC_MESSAGES";
-        $fd = "{$fn}/{$clsname}.po";
+        $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
+        $fname = "{$fdir}/{$clsname}.po";
         
         setlocale(LC_MESSAGES, $lang); 
-        bindtextdomain($clsname, $fd);
+        bindtextdomain($clsname, $fdir);
         textdomain($clsname);
         
         $done[$clsname.':'.$lang] = true;
@@ -455,18 +454,24 @@ WHERE (
             // then in theory there are no translations
             return;
         }
-        if (file_exists($fd) && strtotime($ts->update) < filemtime($fd)) {
+        if (file_exists($fname) && strtotime($ts->update) < filemtime($fname)) {
             return; // file exists and is newer than our updated line.
         }
+        DB_DataObject::debugLevel(1);
+
         $ts = DB_DataObject::Factory('core_templatestr');
         $ts->autoJoin();
-         
+        $ts->lang = $lang;
+        $ts->template_id = $d->id;
+        $ts->fetchAll();
+        
+    exit;        
+        if (!file_exists($fdir)) {
+            mkdir($fdir, 0600, true);
+        }
         
         
-        
-        
-        
-        $gt = File_Gettext::factory('MO', $fd);
+        $gt = File_Gettext::factory('MO', $fname);
         $git->fromArray(
             
             array(
