@@ -464,7 +464,7 @@ WHERE (
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return; // file exists and is newer than our updated line.
         }
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
 
         $ts = DB_DataObject::Factory('core_templatestr');
         $ts->autoJoin();
@@ -474,7 +474,7 @@ WHERE (
         $words = $ts->fetchAll('src_id_txt', 'txt' );
                
         if (!file_exists($fdir)) {
-            var_dump($fdir);
+            //var_dump($fdir);
             mkdir($fdir, 0700, true);
         }
         
@@ -505,7 +505,7 @@ WHERE (
         `$cmd`;
         
         
-        var_dump(_("Number distributed to Journalists"));
+         
         
         return;
         
