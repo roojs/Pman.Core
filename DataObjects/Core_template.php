@@ -402,7 +402,7 @@ WHERE (
     {
         static $done = false;
         
-        // only supports pman ?
+        $ff = HTML_FlexyFramework::get();
         $lang = $lang ? $lang : $ff->locale;
         if (!empty($done[$clsname.':'.$lang])) {
             return; // already sent headers and everything.
@@ -425,7 +425,7 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return;
         }
-        $ff = HTML_FlexyFramework::get();
+        
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
         
