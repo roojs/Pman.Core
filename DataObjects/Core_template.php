@@ -440,7 +440,7 @@ WHERE (
         $fname = "{$fdir}/{$clsname}.mo";
         
         setlocale(LC_MESSAGES, $lang); 
-        bindtextdomain($clsname, $fdir);
+        bindtextdomain($clsname, $compileDir);
         textdomain($clsname);
         
         $done[$clsname.':'.$lang] = 1;
