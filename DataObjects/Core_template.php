@@ -334,11 +334,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
             $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->insert();
         } else {
             $xx =clone($tmpl);
             $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
             $tmpl->lang = 'en'; /// ??? hard coded??
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->update($xx);
