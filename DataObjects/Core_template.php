@@ -473,7 +473,7 @@ WHERE (
         
         require_once 'File/Gettext.php';
         $gt = File_Gettext::factory('MO', $fname);
-        $git->fromArray(
+        $gt->fromArray(
             
             array(
                 'meta' => array(
