@@ -461,10 +461,11 @@ WHERE (
 
         $ts = DB_DataObject::Factory('core_templatestr');
         $ts->autoJoin();
+        $ts->selectAdd('join_src_id_id.txt as src_id_txt, core_templatestr.txt as txt');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
-        $ts->fetchAll();
-        
+        $words = $ts->fetchAll('src_id_txt', 'txt' );
+        print_R($words);
     exit;        
         if (!file_exists($fdir)) {
             mkdir($fdir, 0600, true);
