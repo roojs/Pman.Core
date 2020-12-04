@@ -432,7 +432,7 @@ WHERE (
         if ($ff->appNameShort) {
             $compileDir .= '_' . $ff->appNameShort;
         }
-        if ($this->version) {
+        if ($ff->version) {
             $compileDir .= '.' . $ff->version;
         }
         $lang = $lang ? $lang : $ff->locale;
