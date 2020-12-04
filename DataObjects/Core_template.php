@@ -417,14 +417,15 @@ WHERE (
         if (! $d->find(true) ){
             return;
         }
+        $ff = HTML_FlexyFramework::get();
         $compileDir = ini_get('session.save_path') .'/' . 
-            $user . '_gettext_' . $this->project;
+            $user . '_gettext_' . $ff->project;
         
-        if ($this->appNameShort) {
-            $compileDir .= '_' . $this->appNameShort;
+        if ($ff->appNameShort) {
+            $compileDir .= '_' . $ff->appNameShort;
         }
         if ($this->version) {
-            $compileDir .= '.' . $this->version;
+            $compileDir .= '.' . $ff->version;
         }
         
         www-translate-{project}/fr_FR/LC_MESSAGES
