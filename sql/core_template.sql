@@ -10,4 +10,5 @@ CREATE TABLE  core_template (
 
 ALTER TABLE core_template ADD COLUMN view_name varchar(32) NOT NULL default '';
 ALTER TABLE core_template ADD COLUMN filetype varchar(32) NOT NULL default '';
-alter table core_template add index lookupa(view_name, template., lang, filetype);
+ALTER TABLE core_template ADD COLUMN is_deleted INT(2) NOT NULL default 0;
+alter table core_template add index lookupa(view_name, template, lang, filetype, is_deleted);
