@@ -495,6 +495,15 @@ WHERE (
             
         );
         $gt->save();
+        
+        // mo DOESNT WORK!!
+        require_once 'System.php';
+        $poname = preg_replace('/\.mo$/', '.po', $fname);
+        $msgfmt = System::which('msgfmt');
+        $cmd = '{$msgfmt} {$poname}  -o {$fname}'
+        
+        return;
+        
         require_once 'File/Gettext.php';
         $gt = File_Gettext::factory('MO', $fname);
         $gt->fromArray(
