@@ -471,7 +471,7 @@ WHERE (
             mkdir($fdir, 0700, true);
         }
         
-        
+        require_once 'File/Gettext.php';
         $gt = File_Gettext::factory('MO', $fname);
         $git->fromArray(
             
