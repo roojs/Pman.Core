@@ -253,7 +253,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
         if (!$tmpl->get('template',  $pgdata['template'])) {
-            
+            $tmpl->filetype = 'html';
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($flexy->currentTemplate));
@@ -269,6 +269,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 //echo "FIX LANG?";exit;
                 $tmpl->lang = 'en'; /// ??? hard coded??
             }
+            $tmpl->filetype = 'html';
             $tmpl->filetype = 'html';
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($flexy->currentTemplate));
             $tmpl->update($xx);
