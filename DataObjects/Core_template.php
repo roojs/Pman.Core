@@ -414,10 +414,10 @@ WHERE (
             ) = '{$clsname}.php'
        ");
         $d->filetype = 'php';
-        if ( $d->find(true) ){
-            
+        if (! $d->find(true) ){
+            return;
         }
-        print_R($d);exit;
+        var_dump($d);exit;
         
         
         
