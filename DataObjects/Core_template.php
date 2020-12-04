@@ -403,7 +403,7 @@ WHERE (
         static $done = false;
         
         $ff = HTML_FlexyFramework::get();
-        $lang = $lang ? $lang : $ff->locale;
+        $lang = $lang ? $lang : (isset($ff->locale) ? $ff->locale : 'en');
         if (!empty($done[$clsname.':'.$lang])) {
             return; // already sent headers and everything.
         }
