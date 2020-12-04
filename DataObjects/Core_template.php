@@ -445,6 +445,11 @@ WHERE (
         
         $done[$clsname.':'.$lang] = true;
         
+        // do we need to compile the file..
+        
+        
+        
+        
         
         
         $gt = File_Gettext::factory('MO', $fd);
