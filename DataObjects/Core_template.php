@@ -400,7 +400,15 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
+        static $done = false;
+        
         // only supports pman ?
+        $lang = $lang ? $lang : $ff->locale;
+        if (!empty($done[$clsname.':'.$lang])) {
+            return; // already sent headers and everything.
+        }
+        
+        
         $clsname = strtolower($clsname);
         DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
@@ -434,6 +442,10 @@ WHERE (
         setlocale(LC_MESSAGES, $lang); 
         bindtextdomain($clsname, $fd);
         textdomain($clsname);
+        
+        $done[$clsname.':'.$lang] = true;
+        
+        
         
         $gt = File_Gettext::factory('MO', $fd);
         $git->fromArray(
