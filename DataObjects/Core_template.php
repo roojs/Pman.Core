@@ -445,6 +445,8 @@ WHERE (
          
         //exit;
          bindtextdomain($clsname, $compileDir) ;
+        textdomain($clsname);
+
          echo "BIND TEXT DOM";
         //textdomain($clsname);
         
