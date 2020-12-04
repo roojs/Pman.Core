@@ -382,4 +382,26 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
     }
+    
+    function genGetText($cls)
+    {
+        $clsname = strtolower($cls);
+        $d = DB_DataObject::factory($this->tableName());
+        $d->whereAdd("
+            LOWER(
+                CONCAT(
+                    REPLACE(view_name, '.','_'),
+                    '_',
+                    REPLACE(template,'/','_')
+                )
+            ) = '{$clsname}.php'
+       ");
+        if ( $d->find(true) ){
+            print_R($d);exit;
+        }
+        
+        
+        
+        
+    }
 }
