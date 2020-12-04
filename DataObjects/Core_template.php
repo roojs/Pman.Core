@@ -485,6 +485,8 @@ WHERE (
             
             array(
                 'meta' => array(
+                    "Language: {$lang}\n",
+
                     'Content-Type'      => 'text/plain; charset=UTF-8\n',
                     //'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
