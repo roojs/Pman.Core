@@ -208,6 +208,15 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $tmpl->view_name = $pgdata['base'];
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime($flexy->resolvePath ($pgdata['template']))) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
+                    $oo = clone($tmp);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'html';
+                    $tmpl->update($oo);
+                }
+                
+                
+                
                 return $tmpl;
             }
         }
