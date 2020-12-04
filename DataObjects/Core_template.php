@@ -465,8 +465,7 @@ WHERE (
         $ts->lang = $lang;
         $ts->template_id = $d->id;
         $words = $ts->fetchAll('src_id_txt', 'txt' );
-        print_R($words);
-    exit;        
+               
         if (!file_exists($fdir)) {
             mkdir($fdir, 0600, true);
         }
@@ -482,38 +481,12 @@ WHERE (
                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
                     //'Language-Team'     => 'German <mail@example.com>',
                 ),
-                'strings' => array(
-                    'All rights reserved'   => 'Alle Rechte vorbehalten',
-                    'Welcome'               => 'Willkommen',
-                    // ...
-                )
+                'strings' => $words
             )
             
         );
         $gt->write();
-        
-        var_dump($d);exit;
-        /**
-     * fromArray
-     * 
-     * Assigns meta info and strings from an array of a structure like that:
-     * <code>
-     *   array(
-     *       'meta' => array(
-     *           'Content-Type'      => 'text/plain; charset=iso-8859-1',
-     *           'Last-Translator'   => 'Michael Wallner <mike@iworks.at>',
-     *           'PO-Revision-Date'  => date('Y-m-d H:iO'),
-     *           'Language-Team'     => 'German <mail@example.com>',
-     *       ),
-     *       'strings' => array(
-     *           'All rights reserved'   => 'Alle Rechte vorbehalten',
-     *           'Welcome'               => 'Willkommen',
-     *           // ...
-     *       )
-     *   )
-     * </code>
-     */
-        
+          
         
     }
 }
