@@ -437,7 +437,7 @@ WHERE (
         }
         $lang = $lang ? $lang : $ff->locale;
         $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
-        $fname = "{$fdir}/{$clsname}.po";
+        $fname = "{$fdir}/{$clsname}.mo";
         
         setlocale(LC_MESSAGES, $lang); 
         bindtextdomain($clsname, $fdir);
