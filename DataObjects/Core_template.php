@@ -467,6 +467,7 @@ WHERE (
         $words = $ts->fetchAll('src_id_txt', 'txt' );
                
         if (!file_exists($fdir)) {
+            var_dump($fdir);
             mkdir($fdir, 0600, true);
         }
         
