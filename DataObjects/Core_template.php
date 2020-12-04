@@ -398,10 +398,10 @@ WHERE (
 */
 
     
-    function genGetText($classname)
+    function genGetText($clsname)
     {
         // only supports pman ?
-        $clsname = strtolower(get_class($cls));
+        $clsname = strtolower($clsname);
         DB_DataObject::debugLevel(1);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
