@@ -398,7 +398,7 @@ WHERE (
 */
 
     
-    function genGetText($clsname, $lang)
+    function genGetText($clsname, $lang=false)
     {
         // only supports pman ?
         $clsname = strtolower($clsname);
@@ -427,12 +427,15 @@ WHERE (
         if ($this->version) {
             $compileDir .= '.' . $ff->version;
         }
+        $lang = $lang ? $lang : $ff->locale;
+        $fn = "{$compileDir}/{$lang}/LC_MESSAGES";
+        $fd = "{$fn}/{$clsname}.po";
         
-        /fr_FR/LC_MESSAGES
+        setlocale(LC_MESSAGES, $lang); 
+        bindtextdomain($clsname, $fd);
+        textdomain($clsname);
         
-        
-        
-        $gt = File_Gettext::factory('MO', $filename);
+        $gt = File_Gettext::factory('MO', $fd);
         $git->fromArray(
             
             array(
