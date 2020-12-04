@@ -472,7 +472,7 @@ WHERE (
         }
         
         require_once 'File/Gettext.php';
-        $gt = File_Gettext::factory('PO', $fname);
+        $gt = File_Gettext::factory('MO', $fname);
         $gt->fromArray(
             
             array(
