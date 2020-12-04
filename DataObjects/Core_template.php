@@ -404,10 +404,12 @@ WHERE (
         textdomain($clsname);
         $ff = HTML_FlexyFramework::get();
         $lang = $lang ? $lang : (isset($ff->locale) ? $ff->locale : 'en');
+        
+
         if (!empty($done[$clsname.':'.$lang])) {
             return; // already sent headers and everything.
         }
-        
+        setlocale(LC_MESSAGES, $lang);
         
         $clsname = strtolower($clsname);
         $d = DB_DataObject::factory($this->tableName());
@@ -446,9 +448,7 @@ WHERE (
                  
                  ");
         //exit;
-        $sl = setlocale(LC_MESSAGES, $lang);
-        var_Dump($sl);exit;
-        bindtextdomain($clsname, $compileDir);
+         bindtextdomain($clsname, $compileDir);
         //textdomain($clsname);
         
         $done[$clsname.':'.$lang] = 1;
