@@ -454,7 +454,7 @@ WHERE (
             // then in theory there are no translations
             return;
         }
-        if (file_exists($fname) && strtotime($ts->update) < filemtime($fname)) {
+        if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return; // file exists and is newer than our updated line.
         }
         DB_DataObject::debugLevel(1);
