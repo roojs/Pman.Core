@@ -500,11 +500,11 @@ WHERE (
         require_once 'System.php';
         $poname = preg_replace('/\.mo$/', '.po', $fname);
         $msgfmt = System::which('msgfmt');
-        $cmd = '{$msgfmt} {$poname}  -o {$fname}';
-        echo $cmd;
+        $cmd = "{$msgfmt} {$poname}  -o {$fname}";
+        //echo $cmd;
         
-        echo `$cmd`;
-        exit;
+        `$cmd`;
+        
         return;
         
         require_once 'File/Gettext.php';
