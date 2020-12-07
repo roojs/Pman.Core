@@ -527,9 +527,23 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}#image-{$this->id}";
     }
     
-     $node->getAttribute('src'); // should have '#image-??? at the end.
-                    $img = DB_DataObject::factory('image');
-                    if ($img->getFromHashURL($node->getAttribute('src'))) {
+    function getFromHashURL($url)
+    {
+        $id = false;
+        if (preg_match('/#image-([0-9]+)$/', $url, $matches)) {
+            $id = $matches[1];
+        } else if (preg_match('#Images/Thumb/[^/]+/([0-9]+)/#', $url, $matches)) {
+            $id = $matches[1];
+        }
+        if ($id === false ||  $id < 1) {
+            return false;
+        }
+        $img = DB_DAtaObject::Factory('images');
+        if ($img->get($id)) {
+            return $img;
+        }
+        return false;
+    }
     
     
     function shorten_name()
