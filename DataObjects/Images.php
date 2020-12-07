@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($size < 0) {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
-            return $baseURL . $provider . "/{$this->id}/{$shorten_name}";
+            return $baseURL . $provider . "/{$this->id}/{$shorten_name}#image-{$this->id}";
         }
         //-- max?
         //$size = max(100, (int) $size);
@@ -524,8 +524,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $fc->convert($mt, $size);
         
-        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}#image-{$this->id}";
     }
+    
+     $node->getAttribute('src'); // should have '#image-??? at the end.
+                    $img = DB_DataObject::factory('image');
+                    if ($img->getFromHashURL($node->getAttribute('src'))) {
+    
     
     function shorten_name()
     {
