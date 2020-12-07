@@ -535,7 +535,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         } else if (preg_match('#Images/Thumb/[^/]+/([0-9]+)/#', $url, $matches)) {
             $id = $matches[1];
         }
-        var_Dump($id);
+        
         if ($id === false ||  $id < 1) {
             return false;
         }
