@@ -30,6 +30,8 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
             on_col = in_col
             AND
             lang = in_lang
+            AND
+            active = 1
         LIMIT 1;
             
         IF v_id < 1 OR LENGTH(txt) < 1 THEN
