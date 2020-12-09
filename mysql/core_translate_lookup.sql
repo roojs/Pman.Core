@@ -18,8 +18,9 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
         SET v_id = 0;
         
         SELECT
-            v_id,
-            v_ret
+            id , txt
+            INTO
+            v_id, v_ret
         FROM
             core_templatestr
         WHERE
