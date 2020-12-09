@@ -181,7 +181,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                             'text'=> $table,
                             'on_table' => $table,
                             'id' => 'table:'. $lang .':'. $table,
-                            'leaf' => false
+                            'leaf' => true
                         );
                     }
                 }
