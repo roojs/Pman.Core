@@ -139,7 +139,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                     $ret[] = array(
                         'text'=>$l,
                         'id' => 'lang:'.$l,
-                        'language' => true
+                        'language' => true,
+                        'display_name' => $lang_name,
                     );
                 }
                 if (empty($ret)) {
