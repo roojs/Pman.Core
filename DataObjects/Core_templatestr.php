@@ -172,6 +172,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                         'leaf' => false
                     );
                 }
+                die("HERE");
                 if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
                     foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
                         $ret[] = array(
