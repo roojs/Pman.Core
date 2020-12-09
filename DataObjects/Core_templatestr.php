@@ -131,6 +131,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $x = DB_Dataobject::Factory($this->tableName());
                 $x->selectAdd();
                 $x->selectAdd('distinct(lang) as lang');
+                
+                $x->selectAdd("i18n_translate('l', lang, 'en') as lang_name");
                 $x->whereAdd("lang != ''");
                 $ret= array();
                 foreach( $x->fetchAll('lang') as $l) {
