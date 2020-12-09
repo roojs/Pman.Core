@@ -172,7 +172,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                         'leaf' => false
                     );
                 }
-                die("HERE");
+
+                $ff = HTML_FlexyFramework::get()->Pman_Core;
+
                 if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
                     foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
                         $ret[] = array(
