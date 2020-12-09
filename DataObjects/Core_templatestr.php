@@ -47,6 +47,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         if(!empty($q['on_table']) && (empty($q['template_id']) || !is_numeric($q['template_id']))){
             $this->template_id = 0;
+             $this->whereAdd(" OR join_src_id_id.txt != ''");
         }
         if (!empty($q['_search_txt'])) {
             $str = $this->escape($q['_search_txt']);
