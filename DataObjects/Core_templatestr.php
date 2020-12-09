@@ -172,8 +172,18 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                         'leaf' => false
                     );
                 }
+                if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
+                    foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
+                        $ret[] = array(
+                            'text'=> $table,
+                            'on_table' => $table,
+                            'id' => 'table:'. $lang .':'. $table,
+                            'leaf' => true
+                        );
+                    }
+                }
                 
-                
+                 
                 $roo->jdata($ret);
                 
                 break;
@@ -195,23 +205,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 
                 $ret= array();
                 //add the table type lists
-                
+                /*
                 $ff = HTML_FlexyFramework::get()->Pman_Core;
                 
-                if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
-                    foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
-                        $ret[] = array(
-                            'text'=> $table,
-                            'on_table' => $table,
-                            'id' => 0,
-                            'leaf' => true
-                        );
-                    }
-                }
                 
 //                $x->orderBy('template ASC');
 //                $x->whereAdd("lang != ''");
-                
+                */
                 //below are old code
                 $xx = DB_Dataobject::Factory('core_template');
                 $xx->whereAddIn('id', $ids, 'int');
