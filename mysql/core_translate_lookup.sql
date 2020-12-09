@@ -35,7 +35,7 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
             active = 1
         LIMIT 1;
             
-        IF v_id < 1 OR LENGTH(txt) < 1 THEN
+        IF v_id < 1 OR LENGTH(v_ret) < 1 THEN
             RETURN in_default;
         END IF;
         
