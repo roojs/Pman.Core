@@ -127,6 +127,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         switch(true) {
             
             case ($q['node'] == 'transtree'):
+            case ($q['node'] == 'langlist'):
                // DB_DataObject::debugLevel(1);
                 $x = DB_Dataobject::Factory($this->tableName());
                 $x->selectAdd();
@@ -135,12 +136,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $x->selectAdd("i18n_translate('l', lang, 'en') as lang_name");
                 $x->whereAdd("lang != ''");
                 $ret= array();
-                foreach( $x->fetchAll('lang') as $l) {
+                foreach( $x->fetchAll() as $l) {
                     $ret[] = array(
-                        'text'=>$l,
-                        'id' => 'lang:'.$l,
-                        'language' => true,
-                        'display_name' => $lang_name,
+                        'text'=>$l->lang_name,
+                        'id' => $q['node'] == 'langlist' ? $l->lang : 'lang:'.$l->lang ,
+                        'language' => true
                     );
                 }
                 if (empty($ret)) {
