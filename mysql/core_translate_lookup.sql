@@ -30,10 +30,9 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
             on_col = in_col
             AND
             lang = in_lang
-            AND
-            txt != ''
+        LIMIT 1;
             
-        IF v_id < 1 THEN
+        IF v_id < 1 OR LENGTH(txt) < 1 THEN
             RETURN in_default;
         END IF;
         
