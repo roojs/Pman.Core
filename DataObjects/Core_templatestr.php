@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $this->applyFiltersTree($q,$roo);
         }
         
-        if(!empty($q['on_table']) && !is_numeric($q['template_id'])){
+        if(!empty($q['on_table']) && (empty($q['template_id']) || !is_numeric($q['template_id']))){
             $this->template_id = 0;
         }
         if (!empty($q['_search_txt'])) {
