@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($size < 0) {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
-            return $baseURL . $provider . "/{$this->id}/{$shorten_name}#image-{$this->id}";
+            return $baseURL . $provider . "/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
         }
         //-- max?
         //$size = max(100, (int) $size);
@@ -524,7 +524,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $fc->convert($mt, $size);
         
-        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}#image-{$this->id}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
     }
     
     function getFromHashURL($url)
