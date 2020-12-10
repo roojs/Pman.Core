@@ -401,7 +401,11 @@ WHERE (
     function genGetText($clsname, $lang=false)
     {
         static $done = false;
+        $clsname = strtolower($clsname);
+
         textdomain($clsname);
+     
+
         $ff = HTML_FlexyFramework::get();
         $lang = $lang ? $lang : (isset($ff->locale) ? $ff->locale : 'en');
         
@@ -412,7 +416,6 @@ WHERE (
         
         putenv("LANGUAGE=$lang");
         setlocale(LC_ALL, $lang);
-        $clsname = strtolower($clsname);
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
             LOWER(
@@ -444,7 +447,9 @@ WHERE (
         
          
         //exit;
-         bindtextdomain($clsname, $compileDir) ;
+        bindtextdomain($clsname, $compileDir) ;
+        bind_textdomain_codeset($clsname, 'UTF-8');
+
         textdomain($clsname);
 
         
