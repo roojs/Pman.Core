@@ -208,6 +208,15 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $tmpl->view_name = $pgdata['base'];
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime($flexy->resolvePath ($pgdata['template']))) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
+                    $oo = clone($tmpl);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'html';
+                    $tmpl->update($oo);
+                }
+                
+                
+                
                 return $tmpl;
             }
         }
@@ -220,8 +229,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $old = clone($tmpl);
             $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
             if ($tmpl->id) {
+                $tmpl->is_deleted = 0;
+                $tmpl->filetype = 'html';
                 $tmpl->update($tmpl);
             } else {
+                $tmpl->is_deleted = 0;
+                $tmpl->filetype = 'html';
                 $tmpl->lang = 'en';
                 $tmpl->insert();
             }
@@ -251,7 +264,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
         if (!$tmpl->get('template',  $pgdata['template'])) {
-            
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = 'html';
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($flexy->currentTemplate));
@@ -267,7 +281,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 //echo "FIX LANG?";exit;
                 $tmpl->lang = 'en'; /// ??? hard coded??
             }
-            
+            $tmpl->filetype = 'html';
+            $tmpl->is_deleted = 0;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($flexy->currentTemplate));
             $tmpl->update($xx);
         }
@@ -300,6 +315,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
+                    $oo = clone($tmpl);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'php';
+                    $tmpl->update($oo);
+                }
                 return $tmpl;
             }
         }
@@ -330,11 +351,14 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
+            $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->insert();
         } else {
             $xx =clone($tmpl);
-            
+            $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
             $tmpl->lang = 'en'; /// ??? hard coded??
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->update($xx);
@@ -356,6 +380,156 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return $tmpl;
         
         
+        
+    }
+    /*
+    SELECT LOWER(
+CONCAT(
+REPLACE(view_name, '.','_'),
+'_',
+REPLACE(template,'/','_')
+)
+)
+FROM core_template
+
+WHERE (
+ = 'release_pressrelease_distributionreportnew_journalistdistribution.php'
+)
+*/
+
+    
+    function genGetText($clsname, $lang=false)
+    {
+        static $done = false;
+        $clsname = strtolower($clsname);
+
+        textdomain($clsname);
+     
+
+        $ff = HTML_FlexyFramework::get();
+        $lang = $lang ? $lang : (isset($ff->locale) ? $ff->locale : 'en');
+        
+
+        if (!empty($done[$clsname.':'.$lang])) {
+            return; // already sent headers and everything.
+        }
+        
+        putenv("LANGUAGE=$lang");
+        setlocale(LC_ALL, $lang);
+        $d = DB_DataObject::factory($this->tableName());
+        $d->whereAdd("
+            LOWER(
+                CONCAT(
+                      REPLACE(view_name, '.','_'),
+                    '_',
+                    REPLACE(template,'/','_')
+                )
+            ) = '{$clsname}.php'
+       ");
+        $d->filetype = 'php';
+        if (! $d->find(true) ){
+            $done[$clsname.':'.$lang] = true;
+            return;
+        }
+        $user = 'www-data'; // ?? do we need other ones
+        $compileDir = ini_get('session.save_path') .'/' . 
+            $user . '_gettext_' . $ff->project;
+        
+        if ($ff->appNameShort) {
+            $compileDir .= '_' . $ff->appNameShort;
+        }
+        if ($ff->version) {
+            $compileDir .= '.' . $ff->version;
+        }
+        $lang = $lang ? $lang : $ff->locale;
+        $fdir = "{$compileDir}/{$lang}/LC_MESSAGES";
+        $fname = "{$fdir}/{$clsname}.mo";
+        
+         
+        //exit;
+        bindtextdomain($clsname, $compileDir) ;
+        bind_textdomain_codeset($clsname, 'UTF-8');
+
+        textdomain($clsname);
+
+        
+        //textdomain($clsname);
+        
+        $done[$clsname.':'.$lang] = 1;
+        
+        // do we need to compile the file..
+        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts->selectAdd('MAX(updated) as updated');
+        $ts->lang = $lang;
+        $ts->template_id = $d->id;
+        if (!$ts->find(true)) {
+            // then in theory there are no translations
+            return;
+        }
+        if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
+            return; // file exists and is newer than our updated line.
+        }
+        //DB_DataObject::debugLevel(1);
+
+        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts->autoJoin();
+        $ts->selectAdd('join_src_id_id.txt as src_id_txt, core_templatestr.txt as txt');
+        $ts->lang = $lang;
+        $ts->template_id = $d->id;
+        $words = $ts->fetchAll('src_id_txt', 'txt' );
+               
+        if (!file_exists($fdir)) {
+            //var_dump($fdir);
+            mkdir($fdir, 0700, true);
+        }
+        
+        require_once 'File/Gettext.php';
+        $gt = File_Gettext::factory('PO', preg_replace('/\.mo$/', '.po', $fname));
+        $gt->fromArray(
+            
+            array(
+                'meta' => array(
+                    "Language" =>  $lang,
+                    'Content-Type'      => 'text/plain; charset=UTF-8',
+                    'Content-Transfer-Encoding'      => ' 8bit',
+                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
+                 ),
+                'strings' => $words
+            )
+            
+        );
+        $gt->save();
+        
+        // mo DOESNT WORK!!
+        require_once 'System.php';
+        $poname = preg_replace('/\.mo$/', '.po', $fname);
+        $msgfmt = System::which('msgfmt');
+        $cmd = "{$msgfmt} {$poname}  -o {$fname}";
+        //echo $cmd;
+        
+        `$cmd`;
+        
+        
+         
+        
+        return;
+        
+        require_once 'File/Gettext.php';
+        $gt = File_Gettext::factory('MO', $fname);
+        $gt->fromArray(
+            
+            array(
+                'meta' => array(
+                     "Language" =>  $lang,
+                    'Content-Type'      => 'text/plain; charset=UTF-8',
+                    'Content-Transfer-Encoding'      => ' 8bit',
+                     'PO-Revision-Date'  => date('Y-m-d H:iO'),
+                ),
+                'strings' => $words
+            )
+            
+        );
+        $gt->save(); 
         
     }
 }

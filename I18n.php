@@ -235,7 +235,12 @@ class Pman_Core_I18n extends Pman
         if (empty($k)) {
             return '??';
         }
-        $lang = !$au || empty($au->lang ) ? 'en' : (is_string($au) ? $au : $au->lang);
+        $fo = &PEAR::getStaticProperty('HTML_Template_Flexy','options');
+        
+        $fallback_lang = empty($fo['locale']) ? 'en' : $fo['locale'];
+            
+        
+        $lang =  empty($au ) ? $fallback_lang : (is_string($au) ? $au : $au->lang);
         
         // does it need caching?
         

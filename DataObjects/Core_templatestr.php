@@ -45,8 +45,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $this->applyFiltersTree($q,$roo);
         }
         
-        if(!empty($q['on_table']) && !is_numeric($q['template_id'])){
+        if(!empty($q['on_table']) && (empty($q['template_id']) || !is_numeric($q['template_id']))){
             $this->template_id = 0;
+             $this->whereAdd("  join_src_id_id.txt != ''");
         }
         if (!empty($q['_search_txt'])) {
             $str = $this->escape($q['_search_txt']);
@@ -127,22 +128,25 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         switch(true) {
             
             case ($q['node'] == 'transtree'):
+            case ($q['node'] == 'langlist'):
                // DB_DataObject::debugLevel(1);
                 $x = DB_Dataobject::Factory($this->tableName());
                 $x->selectAdd();
                 $x->selectAdd('distinct(lang) as lang');
+                
+                $x->selectAdd("i18n_translate('l', lang, 'en') as lang_name");
                 $x->whereAdd("lang != ''");
                 $ret= array();
-                foreach( $x->fetchAll('lang') as $l) {
+                foreach( $x->fetchAll() as $l) {
                     $ret[] = array(
-                        'text'=>$l,
-                        'id' => 'lang:'.$l,
+                        'text'=>$l->lang_name,
+                        'id' => $q['node'] == 'langlist' ? $l->lang : 'lang:'.$l->lang ,
                         'language' => true
                     );
                 }
                 if (empty($ret)) {
                     $ret[] = array(
-                        'text'=>'en',
+                        'text'=>'English',
                         'id' => 'lang:en',
                         'language' => true
                     );
@@ -158,6 +162,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $x->selectAdd();
                 $x->selectAdd('distinct(view_name) as view_name');
                 $x->lang = $lang;
+                $x->whereAdd('join_template_id_id.is_deleted = 0');
                 $x->orderBy('view_name DESC');
                 $x->find();
                 while($x->fetch()) {
@@ -167,11 +172,24 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                         'leaf' => false
                     );
                 }
+
+                $ff = HTML_FlexyFramework::get()->Pman_Core;
+
+                if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
+                    foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
+                        $ret[] = array(
+                            'text'=> $table,
+                            'on_table' => $table,
+                            'id' => 'table:'. $lang .':'. $table,
+                            'leaf' => true
+                        );
+                    }
+                }
                 
-                
+                 
                 $roo->jdata($ret);
                 
-                   break;
+                break;
                 
                 
             case  preg_match('/^view:/', $q['node']):
@@ -179,33 +197,24 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                
                 $bits= explode(":",preg_replace('/^view:/', '', $q['node']));
                 
-                 $x = DB_DataObject::factory($this->tableName());
+                $x = DB_DataObject::factory($this->tableName());
                 $x->autoJoin();
                 $x->selectAdd();
                 $x->selectAdd('distinct(core_templatestr.template_id) as template_id');
                 $x->whereAdd("join_template_id_id.view_name = '{$x->escape($bits[1])}'");
+                $x->whereAdd('join_template_id_id.is_deleted = 0');
                 $x->lang = $bits[0];
                 $ids = $x->fetchAll('template_id');
                 
                 $ret= array();
                 //add the table type lists
-                
+                /*
                 $ff = HTML_FlexyFramework::get()->Pman_Core;
                 
-                if(!empty($ff['DataObjects_Core_templatestr']['tables'])){
-                    foreach($ff['DataObjects_Core_templatestr']['tables'] as $table=>$v){
-                        $ret[] = array(
-                            'text'=> $table,
-                            'on_table' => $table,
-                            'id' => 0,
-                            'leaf' => true
-                        );
-                    }
-                }
                 
 //                $x->orderBy('template ASC');
 //                $x->whereAdd("lang != ''");
-                
+                */
                 //below are old code
                 $xx = DB_Dataobject::Factory('core_template');
                 $xx->whereAddIn('id', $ids, 'int');
@@ -483,8 +492,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     
     function translateFlexyString($flexy, $string)
     {
-        //var_dump($string);
-        $debug = false;;
+         $debug = false;;
         //if (!empty($_REQUEST['_debug'])) { $debug= true; }
         
         // using $flexy->currentTemplate -> find the template we are looking at..
@@ -496,6 +504,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $ff = HTML_FlexyFramework::get();
         $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
+        if (empty($view_name)) {
+            $pg = HTML_FlexyFramework::get()->page;
+            if (isset($pg->templateViewName)) {
+                $view_name = $pg->templateViewName;
+            }
+            
+        }
+        
+        
         
         if ($debug) { var_dump(array('view_name'=> $view_name)); }
         
@@ -510,6 +527,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $tmpname = substr($flexy->currentTemplate, strlen($td) +1);
         
+         
         if (isset($cache[$tmpname]) && $cache[$tmpname] === false) {
             if ($debug) { echo "from cache no match - $string\n"; }
             return $string;
@@ -538,31 +556,52 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         } else {
             $tmpl = $cache[$tmpname] ;
         }
-         
+        
+        
     
-        //get original template id 
+        //get original template id
+        /*
         $orig = DB_DataObject::factory($this->tableName());
         $orig->lang = '';
         $orig->template_id = $tmpl->id;
         $orig->active = 1;
+        
+        $cache[$tmpname]->words = 
+        
         if(!$orig->get( 'mdsum' , md5(trim($string)))){
              //var_dump('no text? '. $string);
             if ($debug) { echo "no original string found tplid: {$tmpl->id}\n"; }
             return false;
         }
-         
-        //find out the text by language
-        $x = DB_DataObject::factory($this->tableName());
-        $x->lang = $flexy->options['locale'];
-        $x->template_id = $tmpl->id;
-        if(!$x->get('src_id', $orig->id)){
-            //var_dump('no trans found' . $orig->id);
-            if ($debug) { echo "no translation found\n"; }
-            return false;
+        */
+        
+        if (empty($cache[$tmpname]->translations)) {
+        
+            //find out the text by language
+            //DB_DataObject::DebugLevel(1);
+            $x = DB_DataObject::factory($this->tableName());
+            $x->lang = $flexy->options['locale'];
+            $x->template_id = $tmpl->id;
+            $x->autoJoin();
+            $cache[$tmpname]->translations = $x->fetchAll('src_id_mdsum', 'txt');
+            if (empty($cache[$tmpname]->translations)) {
+                $cache[$tmpname]->translations = true;
+            }
+            //var_Dump($cache[$tmpname]->translations);
         }
-        if ($debug) { echo "returning $x->txt\n"; }
-        //var_Dump($x->txt);
-        return empty($x->txt) ? $string : $x->txt;
+        
+        
+        if ($cache[$tmpname]->translations === true) {
+            return $string;
+        }
+        //var_dump("Checking: " . md5(trim($string)));
+        
+        if (!empty($cache[$tmpname]->translations [md5(trim($string))])){
+           // var_dump("RETURNING: ". $cache[$tmpname]->translations [md5(trim($string))]);
+            return $cache[$tmpname]->translations [md5(trim($string))];
+        }
+        return $string;
+        
     }
     
     // determine if a complied template need recompling

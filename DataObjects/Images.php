@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($size < 0) {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
-            return $baseURL . $provider . "/{$this->id}/{$shorten_name}";
+            return $baseURL . $provider . "/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
         }
         //-- max?
         //$size = max(100, (int) $size);
@@ -524,8 +524,31 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $fc->convert($mt, $size);
         
-        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}";
+        return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
     }
+    
+    function getFromHashURL($url)
+    {
+        $id = false;
+        if (preg_match('/#image-([0-9]+)$/', $url, $matches)) {
+            $id = $matches[1];
+        } else if (preg_match('#Images/Thumb/[^/]+/([0-9]+)/#', $url, $matches)) {
+            $id = $matches[1];
+        } else if (preg_match('#Images/([0-9]+)/#', $url, $matches)) {
+            $id = $matches[1];
+        }
+        
+        if ($id === false ||  $id < 1) {
+            return false;
+        }
+        
+        $img = DB_DAtaObject::Factory('images');
+        if ($img->get($id)) {
+            return $img;
+        }
+        return false;
+    }
+    
     
     function shorten_name()
     {
