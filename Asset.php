@@ -138,6 +138,7 @@ class Pman_Core_Asset extends Pman {
         switch($type) {
             case 'js':
             case 'css':
+            case 'scss':
                 $compile_dir .= implode("-", array(
                     $ui['name'],
                     $module,
