@@ -339,25 +339,15 @@ trait Pman_Core_AssetTrait {
                 
                 
             $cmd = "{$sassc} --style=compressed  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
-            echo "$cmd\n";
-            echo `$cmd`;
- 
-            exit;
+            //echo "$cmd\n";            echo `$cmd`;
+            `$cmd`;
             
              
-            //print_r($relfiles);
-            
-            require_once 'HTML/SCSS.php';
-            
-            require_once 'HTML/CSS/Minify.php';
-            $x = new HTML_CSS_Minify(substr($relpath,0,-1), $dir, $relfiles);
-            
-            file_put_contents($compiledir.'/'.$output , $x->minify( $this->baseURL.$asset));
             clearstatcache();
             if (!file_exists($compiledir.'/'.$output) ||
                 !filesize($compiledir.'/'.$routput)) {
                 echo "<!-- compile did not generate files : " . basename($compiledir) . "/{$output} -->\n";
-                $this->assetArrayToHtml($files,'css');
+                echo "<script type=\"text/javascript\">alert('Failed to compile {$fp}');</script>\n";
                 return;
             } 
             
@@ -370,7 +360,7 @@ trait Pman_Core_AssetTrait {
         $this->assetArrayToHtml(  array(
             $this->baseURL.$asset. $output,
           
-        ),'css');
+        ),'scss');
         
     }
     
