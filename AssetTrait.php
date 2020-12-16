@@ -335,7 +335,7 @@ trait Pman_Core_AssetTrait {
                 die("INSTALL sassc");
             }
                  
-            $fd = dirname($fd);
+            $fd = dirname($fp);
                 
                 
             $cmd = "{$sassc}  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $fp {$compiledir}/{$output}";
