@@ -303,7 +303,7 @@ trait Pman_Core_AssetTrait {
         //print_r($relfiles);
       
         require_once 'Pman/Core/Asset.php';
-        $compiledir = Pman_Core_Asset::getCompileDir('scss', '', true);
+        $compiledir = Pman_Core_Asset::getCompileDir('scss', $smod, true);
         
          
         if (!file_exists($compiledir)) {
@@ -312,8 +312,7 @@ trait Pman_Core_AssetTrait {
         
         
         
-        $smod = str_replace('/','.',$path);
-        
+         
         $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
          
         $asset = $ff->project == 'Pman' ? '/Core/Asset/scss/' : '/Asset/scss/';
