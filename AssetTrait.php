@@ -128,6 +128,7 @@ trait Pman_Core_AssetTrait {
                     echo '<script type="text/javascript" src="'. $f. '"></script>'."\n";
                     break;
                 case 'css':
+                case 'css':
                     echo '<link rel="stylesheet" href="'. $f. '"/>'."\n";
                     break;
        
@@ -360,7 +361,7 @@ trait Pman_Core_AssetTrait {
         $this->assetArrayToHtml(  array(
             $this->baseURL.$asset. $output,
           
-        ),'scss');
+        ),'css');
         
     }
     
