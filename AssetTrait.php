@@ -338,7 +338,7 @@ trait Pman_Core_AssetTrait {
             $fd = dirname($fp);
                 
                 
-            $cmd = "{$sassc}  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $fp {$compiledir}/{$output}";
+            $cmd = "{$sassc}  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
             echo "$cmd\n";
             echo `$cmd`;
             
