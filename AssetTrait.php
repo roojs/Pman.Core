@@ -323,12 +323,41 @@ trait Pman_Core_AssetTrait {
         
         
         if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
+            require_once 'HTML/Scss.php';
+            $scss = new HTML_Scss();
+         
+            $scss->setSourceMap(HTML_Scss::SOURCE_MAP_FILE);
+            $scss->setSourceMapOptions(array(
+                    //'sourceRoot' => $file['sourceMapRootpath'],
             
-             
-            $scss->setImportPaths(dirname($fp));
+                    // an optional name of the generated code that this source map is associated with.
+                    //'sourceMapFilename' => "{$file['baseDir']}/{$file['name']}.map",
+            
+                    // url of the map
+                    //'sourceMapURL' => "{$file['name']}.map",
+            
+                    // absolute path to a file to write the map to
+                    //'sourceMapWriteTo' => "{$file['baseDir']}/{$file['name']}.map",
+            
+                    // output source contents?
+                    'outputSourceFiles' => false,
+            
+                    // this is added to the file path.
+                    'sourceMapRootpath' =>  '../',
+            
+                    // this is removed from the filepath.
+                    //'sourceMapBasepath' => $rootDir .'/roojs1/scss'
+                    'sourceMapBasepath' => dirname($fp)
+                
+            ));
+           
+            $scss->setImportPaths($this->rootDir .'/roojs1/scss');
             $scss->setFormatter('Expanded');
              
-            file_put_contents($css, $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";"));
+            echo $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";");
+            exit;
+             
+            file_put_contents($compiledir.'/'.$output, $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";"));
             
             //print_r($relfiles);
             
