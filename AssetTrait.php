@@ -357,7 +357,7 @@ trait Pman_Core_AssetTrait {
             echo $scss->compile("@import \"{$smod}.scss\";");
             exit;
              
-            file_put_contents($compiledir.'/'.$output, $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";"));
+            file_put_contents($compiledir.'/'.$output, $scss->compile("@import \"{$smod}.scss\";"));
             
             //print_r($relfiles);
             
