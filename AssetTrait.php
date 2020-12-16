@@ -335,32 +335,16 @@ trait Pman_Core_AssetTrait {
                 die("INSTALL sassc");
             }
                  
-            $tmpFile = $this->tempName( "scss");
-                file_put_contents($tmpFile, "{$f['variables']}\n@import \"{$file}\";\n");
-                echo file_get_contents($tmpFile);
+            $fd = dirname($fd);
                 
                 
-                
-                $cmd = "{$sassc}  --sourcemap=auto -I {$f['scssDir']} $tmpFile {$f['baseDir']}/{$f['name']}";
-                echo "$cmd\n";
-                echo `$cmd`;
-                $cmd = "{$sassc} --style=compressed --sourcemap=auto -I {$f['scssDir']} $tmpFile {$f['baseDir']}/{$f['minify']}";
-                echo "$cmd\n";
-                echo `$cmd`;
+            $cmd = "{$sassc}  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $fp {$compiledir}/{$output}";
+            echo "$cmd\n";
+            echo `$cmd`;
             
-            
-            require_once 'HTML/Scss.php';
-            $scss = new HTML_Scss();
-         
-            
-            $scss->setImportPaths(array(dirname($fp), $this->rootDir .'/roojs1/scss/bootstrap'));
-            $scss->setFormatter('Expanded');
-             
-            echo $scss->compile("@import \"{$smod}.scss\";");
             exit;
-             
-            file_put_contents($compiledir.'/'.$output, $scss->compile("@import \"{$smod}.scss\";"));
             
+             
             //print_r($relfiles);
             
             require_once 'HTML/SCSS.php';
