@@ -287,7 +287,7 @@ trait Pman_Core_AssetTrait {
         // we cant output non-cached versions of this.... 
         $ff = HTML_FlexyFramework::get();
         $fp =   "{$this->rootDir}/Pman/$smod/scss/{$smod}.scss";
-        var_dump($fp);exit;
+        var_dump($fp);
         if (!file_exists($fp)) {
             return;
         }
