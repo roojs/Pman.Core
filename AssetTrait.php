@@ -304,7 +304,7 @@ trait Pman_Core_AssetTrait {
         //print_r($relfiles);
       
         require_once 'Pman/Core/Asset.php';
-        $compiledir = Pman_Core_Asset::getCompileDir('scss', $smod, true);
+        $compiledir = Pman_Core_Asset::getCompileDir('css',  '', true);
         
          
         if (!file_exists($compiledir)) {
