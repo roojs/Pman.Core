@@ -354,7 +354,7 @@ trait Pman_Core_AssetTrait {
             $scss->setImportPaths($this->rootDir .'/roojs1/scss');
             $scss->setFormatter('Expanded');
              
-            echo $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";");
+            echo $scss->compile("@import \"{$smod}.scss\";");
             exit;
              
             file_put_contents($compiledir.'/'.$output, $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";"));
