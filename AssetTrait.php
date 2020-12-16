@@ -343,7 +343,7 @@ trait Pman_Core_AssetTrait {
                     'outputSourceFiles' => false,
             
                     // this is added to the file path.
-                    'sourceMapRootpath' =>  '../',
+                  //  'sourceMapRootpath' =>  '../',
             
                     // this is removed from the filepath.
                     //'sourceMapBasepath' => $rootDir .'/roojs1/scss'
