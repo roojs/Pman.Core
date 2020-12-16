@@ -327,7 +327,7 @@ trait Pman_Core_AssetTrait {
             $scss = new HTML_Scss();
          
             
-            $scss->setImportPaths(array(dirname($fp), $this->rootDir .'/roojs1/scss'));
+            $scss->setImportPaths(array(dirname($fp), $this->rootDir .'/roojs1/scss/bootstrap'));
             $scss->setFormatter('Expanded');
              
             echo $scss->compile("@import \"{$smod}.scss\";");
