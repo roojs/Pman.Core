@@ -316,7 +316,7 @@ trait Pman_Core_AssetTrait {
          
         $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
          
-        $asset = $ff->project == 'Pman' ? '/Core/Asset/scss/' : '/Asset/css/';
+        $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
         
         // where are we going to write all of this..
         // This has to be done via a
