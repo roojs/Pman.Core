@@ -324,6 +324,12 @@ trait Pman_Core_AssetTrait {
         
         if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
             
+             
+            $scss->setImportPaths(dirname($fp));
+            $scss->setFormatter('Expanded');
+             
+            file_put_contents($css, $scss->compile("{$file['variables']}\n@import \"{$mod}.scss\";"));
+            
             //print_r($relfiles);
             
             require_once 'HTML/SCSS.php';
