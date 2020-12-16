@@ -323,6 +323,32 @@ trait Pman_Core_AssetTrait {
         
         
         if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
+            
+            
+            
+            require_once 'System.php';
+            static $sassc = false;
+            if ($sassc === false) {
+                $sassc = System::which("sassc");
+            }
+            if (empty($sassc)) {
+                die("INSTALL sassc");
+            }
+                 
+            $tmpFile = $this->tempName( "scss");
+                file_put_contents($tmpFile, "{$f['variables']}\n@import \"{$file}\";\n");
+                echo file_get_contents($tmpFile);
+                
+                
+                
+                $cmd = "{$sassc}  --sourcemap=auto -I {$f['scssDir']} $tmpFile {$f['baseDir']}/{$f['name']}";
+                echo "$cmd\n";
+                echo `$cmd`;
+                $cmd = "{$sassc} --style=compressed --sourcemap=auto -I {$f['scssDir']} $tmpFile {$f['baseDir']}/{$f['minify']}";
+                echo "$cmd\n";
+                echo `$cmd`;
+            
+            
             require_once 'HTML/Scss.php';
             $scss = new HTML_Scss();
          
