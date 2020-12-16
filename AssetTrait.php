@@ -282,98 +282,46 @@ trait Pman_Core_AssetTrait {
     
     
     
-    function outputSCSS($path)
+    function outputSCSS($smod)
     {
         // we cant output non-cached versions of this.... 
         $ff = HTML_FlexyFramework::get();
-        $dir =   "{$this->rootDir}/$path/scss/";
-        
-        
-        if (empty($ar)) {
-            echo "<!-- skipping $path - no files found -->\n";
+        $fp =   "{$this->rootDir}/$path";
+        if (!file_exists($fp)) {
             return;
         }
         
-         // cached version?? - how do we decide if it's expired?
-        // while scanning the directory is slow... - it's faster than serving every file...
-        
-        
-        //$path = $this->rootURL ."/Pman/$mod/";
-        
-        //print_R($ar);exit;
-        $missing_files  = false;
-        $files = array();
-        $arfiles = array();
-        $relfiles = array(); // array of files without the path part...
+        $ar = glob(dirname($fp) . '/*.scss');
         $maxtime = 0;
-        $mtime = 0;
         foreach($ar as $fn) {
-            $relfiles[] = substr($fn, strlen($dir)+1);
-            $f = basename($fn);
-            // got the 'module file..'
-            
-            if (!file_exists($dir . '/'. $f)) {
-                echo "<!-- missing {$relpath}{$f} -->\n";
-                $files[] = $relpath  . $f . '?ts=0';
-                $missing_files = true;
-                continue;
-            }
-            
-            $mtime = filemtime($dir . '/'. $f);
-            $maxtime = max($mtime, $maxtime);
-            $arfiles[$fn] = $mtime;
-            $files[] = $relpath  . $f . '?ts='.$mtime;
-            
-            
-            
-        }
-        if ($missing_files) {
-            $this->assetArrayToHtml($files, 'css');
-            return;
-            
+            $maxtime=max($maxtime, filemtime($fn));
         }
         
-         
+        
+        
         //print_r($relfiles);
       
         require_once 'Pman/Core/Asset.php';
-        $compiledir = Pman_Core_Asset::getCompileDir('css', '', true);
+        $compiledir = Pman_Core_Asset::getCompileDir('scss', '', true);
         
          
         if (!file_exists($compiledir)) {
             mkdir($compiledir,0700,true);
         }
         
-         
-        
-        
-        // yes sort... if includes are used - they have to be in the first file...
-        $lsort = function($a,$b ) {
-                return strlen($a) > strlen($b) ? 1 : -1;
-        };
-        usort($files, $lsort);
-        usort($relfiles,$lsort);
-       // print_R($relfiles);
-        
-        $ff = HTML_FlexyFramework::get();
-        
-        // isDev set
-        
-        if ((!empty($ff->Pman['isDev']) || $_SERVER['HTTP_HOST'] == 'localhost' )&& !empty($_REQUEST['isDev'])) {
-            echo "<!-- CSS compile turned off (isDev on) -->\n";
-            $this->assetArrayToHtml($files,'css');
-            return;
-        }
         
         
         $smod = str_replace('/','.',$path);
         
-        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $arfiles))) .'.css';
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
          
-        $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
+        $asset = $ff->project == 'Pman' ? '/Core/Asset/scss/' : '/Asset/scss/';
         
         // where are we going to write all of this..
-        // This has to be done via a 
+        // This has to be done via a
+        
+        
+        
         if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
             
             //print_r($relfiles);
