@@ -328,7 +328,7 @@ trait Pman_Core_AssetTrait {
          
             $scss->setSourceMap(HTML_Scss::SOURCE_MAP_FILE);
             $scss->setSourceMapOptions(array(
-                    //'sourceRoot' => $file['sourceMapRootpath'],
+                    'sourceRoot' => dirname($fp),
             
                     // an optional name of the generated code that this source map is associated with.
                     //'sourceMapFilename' => "{$file['baseDir']}/{$file['name']}.map",
