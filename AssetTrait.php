@@ -347,7 +347,7 @@ trait Pman_Core_AssetTrait {
             
                     // this is removed from the filepath.
                     //'sourceMapBasepath' => $rootDir .'/roojs1/scss'
-                    'sourceMapBasepath' => dirname($fp)
+                   // 'sourceMapBasepath' => dirname($fp)
                 
             ));
            
