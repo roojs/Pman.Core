@@ -326,31 +326,7 @@ trait Pman_Core_AssetTrait {
             require_once 'HTML/Scss.php';
             $scss = new HTML_Scss();
          
-            $scss->setSourceMap(HTML_Scss::SOURCE_MAP_FILE);
-            $scss->setSourceMapOptions(array(
-                    'sourceRoot' => dirname($fp),
             
-                    // an optional name of the generated code that this source map is associated with.
-                    //'sourceMapFilename' => "{$file['baseDir']}/{$file['name']}.map",
-            
-                    // url of the map
-                    //'sourceMapURL' => "{$file['name']}.map",
-            
-                    // absolute path to a file to write the map to
-                    //'sourceMapWriteTo' => "{$file['baseDir']}/{$file['name']}.map",
-            
-                    // output source contents?
-                    'outputSourceFiles' => false,
-            
-                    // this is added to the file path.
-                  //  'sourceMapRootpath' =>  '../',
-            
-                    // this is removed from the filepath.
-                    //'sourceMapBasepath' => $rootDir .'/roojs1/scss'
-                   // 'sourceMapBasepath' => dirname($fp)
-                
-            ));
-           
             $scss->setImportPaths($this->rootDir .'/roojs1/scss');
             $scss->setFormatter('Expanded');
              
