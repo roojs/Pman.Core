@@ -552,7 +552,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return $url.'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd)));
         
     }
-    function genAutoLogin($called)
+    function validateAutoLogin($called)
     {
         $bits = explode($called);
         $hash = array_pop($bits);
