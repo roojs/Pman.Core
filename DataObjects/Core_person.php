@@ -549,7 +549,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function genAutoLoginURL($url, $expires = false) {
     {
         $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
-        return $url.'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd)));
+        return $url.'/'.$this->id .'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd)));
         
     }
     function validateAutoLogin($called)
@@ -557,11 +557,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $bits = explode($called);
         $hash = array_pop($bits);
         $time = array_pop($bits);
+        $id = array_pop($bits);
+        $u = DB_DataObject::Factory($this->tableName());
+        $u->get($id);
         $url = implode("/", $bits);
         if ($time < date()) {
             return false;
         }
-        if ($hash == hash('sha254', serialize(array($url, $time, $this->passwd)))) {
+        if ($hash == hash('sha254', serialize(array($url, $time, $u->email, $u->passwd)))) {
+            $u->login();
             return true;
         }
         return false;
