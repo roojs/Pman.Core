@@ -537,7 +537,36 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $month = $m > -1 ? date('Y-m') : date('Y-m', strtotime('LAST MONTH'));
         
         return md5(implode(',' ,  array($month, $this->email , $this->passwd, $this->id)));
-    } 
+    }
+    /**
+     * When we generate autologin urls:
+     * eg. /Somesite/Test/12
+     * it will generate:
+     * /Somesite/Test/12/{datetime}/{sha256(url + expires_datetime + password)}
+     *
+     * eg. genAutoLoginURL($sub, $expires)
+     */
+    function genAutoLoginURL($url, $expires = false) {
+    {
+        $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
+        return $url.'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd)));
+        
+    }
+    function genAutoLogin($called)
+    {
+        $bits = explode($called);
+        $hash = array_pop($bits);
+        $time = array_pop($bits);
+        $url = implode("/", $bits);
+        if ($time < date()) {
+            return false;
+        }
+        if ($hash == hash('sha254', serialize(array($url, $time, $this->passwd)))) {
+            return true;
+        }
+        return false;
+    }
+    
     
     function checkTwoFactorAuthentication($val)
     {
