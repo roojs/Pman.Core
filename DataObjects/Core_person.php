@@ -549,7 +549,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function genAutoLoginURL($url, $expires = false) {
     {
         $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
-        return $url.'/'.$this->id .'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd)));
+        return $url.'/'.$this->id .'/'.$expires.'/'.hash('sha254', serialize(array($url, $time, $this->passwd))));
         
     }
     function validateAutoLogin($called)
