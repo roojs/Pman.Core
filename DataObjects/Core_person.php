@@ -537,7 +537,58 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $month = $m > -1 ? date('Y-m') : date('Y-m', strtotime('LAST MONTH'));
         
         return md5(implode(',' ,  array($month, $this->email , $this->passwd, $this->id)));
-    } 
+    }
+    /**
+     * When we generate autologin urls:
+     * eg. /Somesite/Test/12
+     * it will generate:
+     * /Somesite/Test/12/{datetime}/{sha256(url + expires_datetime + password)}
+     *
+     * eg. genAutoLoginURL($sub, $expires)
+     */
+    function genAutoLoginURL($url, $expires = false)  
+    {
+        $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
+        //echo serialize(array($url, $expires, $this->email, $this->passwd));
+        //echo hash('sha256', serialize(array($url, $expires, $this->email, $this->passwd)));
+        
+        return $url.'/'.$this->id .'/'.$expires.'/'.
+            hash('sha256',
+                serialize(
+                    array($url, $expires, $this->email,$this->passwd)
+                )
+            );
+        
+    }
+    
+    function validateAutoLogin($called)
+    {
+        $bits = explode("/",$called);
+        if (count($bits) < 4) {
+            return false; // unrelated.
+        }
+        $hash = array_pop($bits);
+        $time = array_pop($bits);
+        
+        $id = array_pop($bits);
+        if (!is_numeric($time) || !is_numeric($id)) {
+            return false; // wrong format.
+        }
+        $u = DB_DataObject::Factory($this->tableName());
+        $u->get($id);
+        $url = implode("/", $bits);
+        if ($time < time()) {
+            return "Expired";
+        }
+        //echo serialize(array('/'.$url, $time, $u->email, $u->passwd));
+        //echo hash('sha256', serialize(array('/'.$url, $time, $u->email, $u->passwd)));
+        if ($hash == hash('sha256', serialize(array('/'.$url, $time*1, $u->email, $u->passwd)))) {
+            $u->login();
+            return $u;
+        }
+        return false;
+    }
+    
     
     function checkTwoFactorAuthentication($val)
     {

@@ -128,6 +128,7 @@ trait Pman_Core_AssetTrait {
                     echo '<script type="text/javascript" src="'. $f. '"></script>'."\n";
                     break;
                 case 'css':
+                case 'css':
                     echo '<link rel="stylesheet" href="'. $f. '"/>'."\n";
                     break;
        
@@ -139,10 +140,10 @@ trait Pman_Core_AssetTrait {
     
     /**
      * usage in template
-     * {outputCssDir(#{Hydra/templates/images/css/#,#Hydra.js",#.......#)}
+     * {outputCSSDir(#{Hydra/templates/images/css/#,#Hydra.js",#.......#)}
      */
     
-    function outputCssDir($path)
+    function outputCSSDir($path)
     {
           
         $relpath = $this->rootURL . '/' . $path .'/';
@@ -280,6 +281,89 @@ trait Pman_Core_AssetTrait {
         
     }
     
+    
+    
+    function outputSCSS($smod)
+    {
+        // we cant output non-cached versions of this.... 
+        $ff = HTML_FlexyFramework::get();
+        $fp =   "{$this->rootDir}/Pman/$smod/scss/{$smod}.scss";
+       // var_dump($fp);
+        if (!file_exists($fp)) {
+            return;
+        }
+        
+        $ar = glob(dirname($fp) . '/*.scss');
+        $maxtime = 0;
+        foreach($ar as $fn) {
+            $maxtime=max($maxtime, filemtime($fn));
+        }
+        
+        
+        
+        //print_r($relfiles);
+      
+        require_once 'Pman/Core/Asset.php';
+        $compiledir = Pman_Core_Asset::getCompileDir('css',  '', true);
+        
+         
+        if (!file_exists($compiledir)) {
+            mkdir($compiledir,0700,true);
+        }
+        
+        
+        
+         
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
+         
+        $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
+        
+        // where are we going to write all of this..
+        // This has to be done via a
+        
+        
+        
+        if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
+            
+            
+            
+            require_once 'System.php';
+            static $sassc = false;
+            if ($sassc === false) {
+                $sassc = System::which("sassc");
+            }
+            if (empty($sassc)) {
+                die("INSTALL sassc");
+            }
+                 
+            $fd = dirname($fp);
+                
+                
+            $cmd = "{$sassc} --style=compressed  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
+            //echo "$cmd\n";            echo `$cmd`;
+            `$cmd`;
+            
+             
+            clearstatcache();
+            if (!file_exists($compiledir.'/'.$output) ||
+                !filesize($compiledir.'/'.$routput)) {
+                echo "<!-- compile did not generate files : " . basename($compiledir) . "/{$output} -->\n";
+                echo "<script type=\"text/javascript\">alert('Failed to compile {$fp}');</script>\n";
+                return;
+            } 
+            
+        } else {
+         //   echo "<!-- file already exists: {$basedir}/{$output} -->\n";
+        }
+        
+         
+        //$this->arrayToJsInclude(  $files);
+        $this->assetArrayToHtml(  array(
+            $this->baseURL.$asset. $output,
+          
+        ),'css');
+        
+    }
     
     
 }
