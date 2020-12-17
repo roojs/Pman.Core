@@ -578,7 +578,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u->get($id);
         $url = implode("/", $bits);
         if ($time < time()) {
-            return false;
+            return "Expired";
         }
         //echo serialize(array('/'.$url, $time, $u->email, $u->passwd));
         //echo hash('sha256', serialize(array('/'.$url, $time, $u->email, $u->passwd)));
