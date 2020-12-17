@@ -552,7 +552,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         return $url.'/'.$this->id .'/'.$expires.'/'.
             hash('sha254',
                 serialize(
-                    array($url, $time, $this->passwd)
+                    array($url, $expires, $this->passwd)
                 )
             );
         
