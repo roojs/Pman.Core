@@ -560,7 +560,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function validateAutoLogin($called)
     {
-        $bits = explode($called);
+        $bits = explode("/",$called);
         $hash = array_pop($bits);
         $time = array_pop($bits);
         $id = array_pop($bits);
