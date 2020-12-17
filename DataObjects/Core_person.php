@@ -567,6 +567,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u = DB_DataObject::Factory($this->tableName());
         $u->get($id);
         $url = implode("/", $bits);
+        var_dump($time);
+        
         if ($time < time()) {
             return false;
         }
