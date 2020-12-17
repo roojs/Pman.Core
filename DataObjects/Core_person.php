@@ -566,7 +566,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         if ($hash == hash('sha254', serialize(array($url, $time, $u->email, $u->passwd)))) {
             $u->login();
-            return true;
+            return $u;
         }
         return false;
     }
