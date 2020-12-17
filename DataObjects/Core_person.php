@@ -565,15 +565,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $bits = explode("/",$called);
         if (count($bits) < 4) {
-            return false;
+            return false; // unrelated.
         }
         $hash = array_pop($bits);
         $time = array_pop($bits);
+        
         $id = array_pop($bits);
+        if (!is_numeric($time) || !is_numeric($id)) {
+            return false; // wrong format.
+        }
         $u = DB_DataObject::Factory($this->tableName());
         $u->get($id);
         $url = implode("/", $bits);
-         if ($time < time()) {
+        if ($time < time()) {
             return false;
         }
         //echo serialize(array('/'.$url, $time, $u->email, $u->passwd));
