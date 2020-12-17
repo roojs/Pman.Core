@@ -549,8 +549,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function genAutoLoginURL($url, $expires = false)  
     {
         $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
-        echo serialize(array($url, $expires, $this->email, $this->passwd));
-        echo hash('sha256', serialize(array($url, $expires, $this->email, $this->passwd)));
+        //echo serialize(array($url, $expires, $this->email, $this->passwd));
+        //echo hash('sha256', serialize(array($url, $expires, $this->email, $this->passwd)));
         
         return $url.'/'.$this->id .'/'.$expires.'/'.
             hash('sha256',
@@ -573,8 +573,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
          if ($time < time()) {
             return false;
         }
-        echo serialize(array('/'.$url, $time, $u->email, $u->passwd));
-        echo hash('sha256', serialize(array('/'.$url, $time, $u->email, $u->passwd)));
+        //echo serialize(array('/'.$url, $time, $u->email, $u->passwd));
+        //echo hash('sha256', serialize(array('/'.$url, $time, $u->email, $u->passwd)));
         if ($hash == hash('sha256', serialize(array('/'.$url, $time*1, $u->email, $u->passwd)))) {
             $u->login();
             return $u;
