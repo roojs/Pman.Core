@@ -570,7 +570,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if ($time < date()) {
             return false;
         }
-        if ($hash == hash('sha254', serialize(array($url, $time, $u->email, $u->passwd)))) {
+        if ($hash == hash('sha256', serialize(array($url, $time, $u->email, $u->passwd)))) {
             $u->login();
             return $u;
         }
