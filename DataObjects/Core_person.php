@@ -546,7 +546,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
      *
      * eg. genAutoLoginURL($sub, $expires)
      */
-    function genAutoLoginURL($url, $expires = false) {
+    function genAutoLoginURL($url, $expires = false)  
     {
         $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
         return $url.'/'.$this->id .'/'.$expires.'/'.
