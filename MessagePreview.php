@@ -52,8 +52,8 @@ class Pman_Core_MessagePreview extends Pman
             'ontable'       => $_REQUEST['_table'],
             'person_id'     => $this->authUser->id,
             'person_table'  => 'Person',
-            'act_when'      => $cn->sqlValue("NOW()"),
-            'act_start'     => $cn->sqlValue("NOW()")
+            'act_when'      => $cn->sqlValue("NOW() + INTERVAL 10 MINUTE"),
+            'act_start'     => $cn->sqlValue("NOW() + INTERVAL 10 MINUTE")
         ));
         
         $cn->insert();
