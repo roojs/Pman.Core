@@ -550,7 +550,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     {
         $expires = $expires  === false ? strtotime("NOW + 1 WEEK") : $expires;
         return $url.'/'.$this->id .'/'.$expires.'/'.
-            hash('sha254',
+            hash('sha256',
                 serialize(
                     array($url, $expires, $this->passwd)
                 )
