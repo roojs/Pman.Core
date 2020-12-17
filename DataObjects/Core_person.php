@@ -564,6 +564,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function validateAutoLogin($called)
     {
         $bits = explode("/",$called);
+        if (count($bits) < 4) {
+            return false;
+        }
         $hash = array_pop($bits);
         $time = array_pop($bits);
         $id = array_pop($bits);
