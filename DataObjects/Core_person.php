@@ -567,7 +567,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u = DB_DataObject::Factory($this->tableName());
         $u->get($id);
         $url = implode("/", $bits);
-        if ($time < date()) {
+        if ($time < time()) {
             return false;
         }
         if ($hash == hash('sha256', serialize(array($url, $time, $u->email, $u->passwd)))) {
