@@ -684,11 +684,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $roo->addEvent("ADD", $this, $this->toEventString());
             
             $r = DB_DataObject::factory($this->tableName());
+            
             $r->id = $this->id;
             $roo->loadMap($r);
             $r->limit(1);
             $r->find(true);
-            $roo->jok($r->toArray());
+            $roo->jok($r->toRooArray($ar));
             
             
         }
@@ -703,8 +704,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!$this->checkPerm($this->id ? 'A' : 'E', $roo->authUser))  {
             $roo->jerr("IMAGE UPLOAD PERMISSION DENIED");
         }
-        
-        
+         
         
         if (!isset($_FILES['imageUpload'])) {
             return; // standard update...
@@ -724,7 +724,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $roo->loadMap($r);
         $r->limit(1);
         $r->find(true);
-        $roo->jok($r->toArray());
+        $roo->jok($r->toRooArray($ar));
          
     }
     
