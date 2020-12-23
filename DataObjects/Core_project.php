@@ -106,7 +106,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
                 case 'A': // all
                     break; 
                 case 'C': // current
-                     $this->whereAdd("{$tn}.close_date >= NOW()");
+                     $this->whereAdd("{$tn}.close_date is NULL OR {$tn}.close_date >= NOW()");
                     break;
                 case 'O': // old
                     $this->whereAdd("{$tn}.close_date < NOW()");
