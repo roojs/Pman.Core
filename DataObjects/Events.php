@@ -513,6 +513,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
          
         //print_r($this);
         $file = $logdir.  date('/Y/m/d/'). $this->id . ".json";
+        var_dump($file);
         if (!file_exists(dirname($file))) {
             
             @mkdir(dirname($file),0700,true); // this might fail if it does not have correct permissions..
