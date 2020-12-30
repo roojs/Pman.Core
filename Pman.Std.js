@@ -32,7 +32,7 @@ Pman.Std = {
                   // load using HTTP
                 proxy: {
                     xtype : 'HttpProxy',
-                    url: baseURL + '/Roo/Projects.html',
+                    url: baseURL + '/Roo/core_project',
                     method: 'GET'
                 },
                 reader: new Roo.data.JsonReader({}, []), //Pman.Readers.Projects,
