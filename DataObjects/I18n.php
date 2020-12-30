@@ -220,6 +220,14 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
         
     }
     
+    function codeExists($ltype, $key)
+    {
+        $x = DB_DataObject::factory('i18n');
+        $x->ltype = $ltype;
+        $x->lkey = $key;
+        return $x->count() ? true : false;
+    }
+    
     // load all all to reduce future queries..
     function translateCache($inlang, $ltype, $build)
     {

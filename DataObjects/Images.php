@@ -304,12 +304,22 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     // direct via roo...
     /// ctrl not used??
-    function onUpload($roo)
+    function onUpload($roo, $table = false, $file = false)
     {
+        
+        if ($table !== false) {
+            $this->ontable = $table->tableName();
+            $this->onid = $table->pid();
+        }
+        
+        if ($file === false) {
+            $file = isset($_FILES['imageUpload']) ? $_FILES['imageUpload'] : array();
+        }
+        
         //print_r($_FILES); echo $_FILES['imageUpload']['type'];exit;
-        if (empty($_FILES['imageUpload']['tmp_name']) || 
-            empty($_FILES['imageUpload']['name']) || 
-            empty($_FILES['imageUpload']['type'])
+        if (empty($file['tmp_name']) || 
+            empty($file['name']) || 
+            empty($file['type'])
         ) {
             
             $emap = array( 
@@ -320,7 +330,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 4=>"No file was uploaded",
                 6=>"Missing a temporary folder" 
             ); 
-            $estr = (empty($_FILES['imageUpload']['error']) ? '?': $emap[$_FILES['imageUpload']['error']]);
+            $estr = (empty($file['error']) ? '?': $emap[$file['error']]);
             $this->err = "Missing file details : Error=". $estr;
             return false;
         }
@@ -356,7 +366,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         require_once 'File/MimeType.php';
         $y = new File_MimeType();
-        $this->mimetype = $_FILES['imageUpload']['type'];
+        $this->mimetype = $file['type'];
         if (in_array($this->mimetype, array(
                         'text/application',
                         'application/octet-stream',
@@ -366,7 +376,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                         'application/vnd.ms-excel',   /// sometimes windows reports csv as excel???
                         'application/csv-tab-delimited-table', // windows again!!?
                 ))) { // weird tyeps..
-            $inf = pathinfo($_FILES['imageUpload']['name']);
+            $inf = pathinfo($file['name']);
             $this->mimetype  = $y->fromExt($inf['extension']);
         }
         
@@ -374,11 +384,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $ext = $y->toExt(trim((string) $this->mimetype ));
         
         $this->filename = empty($this->filename) ? 
-            $_FILES['imageUpload']['name'] : ($this->filename .'.'. $ext); 
+            $file['name'] : ($this->filename .'.'. $ext); 
         
         
         
-        if (!$this->createFrom($_FILES['imageUpload']['tmp_name'])) {
+        if (!$this->createFrom($file['tmp_name'])) {
             $this->err  =  isset($this->err)  ?  $this->err  : "createFrom Image failed";
             return false;
         }
