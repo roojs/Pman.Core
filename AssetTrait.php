@@ -335,9 +335,16 @@ trait Pman_Core_AssetTrait {
             }
                  
             $fd = dirname($fp);
-                
-                
-            $cmd = "{$sassc} --style=compressed  --sourcemap=auto -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
+            
+            $ver = `$sassc --version`;
+            $bits = explode("\n", $ver);
+            foreach($bits as $b) {
+                $lr = explode(":", $b);
+                $vers[trim($lr[0])] = trim($lr[1]);
+            } 
+            
+            $sm = $vers['sass'] > 3.4 ? ' --sourcemap=auto ' : '--sourcemap';
+            $cmd = "{$sassc} --style=compressed  {$sm} -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
             //echo "$cmd\n";            echo `$cmd`;
             `$cmd`;
             
