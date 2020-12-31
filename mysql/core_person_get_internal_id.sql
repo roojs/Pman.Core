@@ -14,7 +14,7 @@ CREATE FUNCTION core_person_get_internal_id(
         SET v_id = 0;
         SET v_company_id = 0;
         
-        SELECT core_person_get_owner() INTO v_company_id;
+        SELECT core_company_get_owner() INTO v_company_id;
         IF v_company_id < 1 THEN
             RETURN 0;
         END IF;
