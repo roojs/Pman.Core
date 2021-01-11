@@ -415,7 +415,13 @@ WHERE (
         }
         
         putenv("LANGUAGE=$lang");
-        setlocale(LC_ALL, $lang);
+        if (!setlocale(LC_ALL, $lang)) {
+            if (!setlocale(LC_ALL, $lang.'UTF8')) {
+                $ff->page->jerr("Language is not available {$lang}");
+            }
+        }
+        
+        
         $d = DB_DataObject::factory($this->tableName());
         $d->whereAdd("
             LOWER(
