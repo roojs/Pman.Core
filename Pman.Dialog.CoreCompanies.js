@@ -356,7 +356,7 @@ Pman.Dialog.CoreCompanies = {
             '|xns' : 'Roo.form'
            },
            {
-            xtype : 'TextField',
+            xtype : 'TextArea',
             allowBlank : true,
             fieldLabel : _this._strings['dd7bf230fde8d4836917806aff6a6b27'] /* Address */,
             name : 'address',

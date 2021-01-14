@@ -91,8 +91,8 @@
       {
        "listeners" : {
         "actionfailed" : "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
-        "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}",
-        "rendered" : "function (form)\n{\n    _this.form = form;\n}"
+        "rendered" : "function (form)\n{\n    _this.form = form;\n}",
+        "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}"
        },
        "$ url" : "baseURL + '/Roo/core_company.php'",
        "fileUpload" : true,
@@ -102,8 +102,8 @@
        "items" : [
         {
          "xtype" : "Column",
-         "width" : 500,
          "$ xns" : "Roo.form",
+         "width" : 500,
          "items" : [
           {
            "fieldLabel" : "Company ID (for filing Ref.)",
@@ -118,9 +118,9 @@
            "listeners" : {
             "render" : "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
            },
+           "alwaysQuery" : true,
            "listWidth" : 250,
            "Boolean allowBlank" : false,
-           "alwaysQuery" : true,
            "triggerAction" : "all",
            "fieldLabel" : "Type",
            "forceSelection" : true,
@@ -153,8 +153,8 @@
              "items" : [
               {
                "$ url" : "baseURL + '/Roo/core_enum.php'",
-               "xtype" : "HttpProxy",
                "method" : "GET",
+               "xtype" : "HttpProxy",
                "$ xns" : "Roo.data",
                "* prop" : "proxy"
               },
@@ -218,7 +218,7 @@
           },
           {
            "fieldLabel" : "Address",
-           "xtype" : "TextField",
+           "xtype" : "TextArea",
            "allowBlank" : true,
            "width" : 300,
            "$ xns" : "Roo.form",
@@ -251,8 +251,8 @@
           },
           {
            "fieldLabel" : "Logo Image",
-           "xtype" : "DisplayField",
            "style" : "border: 1px solid #ccc;",
+           "xtype" : "DisplayField",
            "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{1}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..\n    );\n}",
            "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
            "width" : 170,

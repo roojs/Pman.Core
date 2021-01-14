@@ -415,8 +415,8 @@ WHERE (
         }
         
         putenv("LANGUAGE=$lang");
-        if ($lang != 'en' && !setlocale(LC_ALL, $lang)) {
-            if (!setlocale(LC_ALL, $lang.'.UTF8')) {
+        if ($lang != 'en') {
+            if (!setlocale(LC_ALL, $lang.'.UTF-8')) {
                 $ff->page->jerr("Language is not available {$lang}");
             }
         }
