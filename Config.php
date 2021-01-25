@@ -46,7 +46,9 @@ class Pman_Core_Config {
     }
     function overlayDefaults($cfg)
     {
-        $this->defaults['disable'] = implode(',', $this->defaults['disable']);
+        if (isset($this->defaults['disable']) && is_array($this->defaults['disable']) ) {
+            $this->defaults['disable'] = implode(',', $this->defaults['disable']);
+        }
         foreach($this->defaults as $k=>$v) {
             if (is_array($v)) {
                 
