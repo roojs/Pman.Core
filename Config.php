@@ -18,6 +18,13 @@ class Pman_Core_Config {
         ),
          
         
+        'Mail' => array(
+             'helo' => 'media-outreach.com'
+        ),
+        
+        'Siteworth' => array(
+            'key' => '1baaa889d4d006a7ef7c2e34a51d5b4b526fdbeb',
+        ) 
     );
     function init($ff, $cfg)
     {
