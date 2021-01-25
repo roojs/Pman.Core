@@ -384,7 +384,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u = DB_DataObject::factory($this->tableName());
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
-        if (!is_array($_SESSION[get_class($this)])) { 
+        if (empty($_SESSION[get_class($this)]) || !is_array($_SESSION[get_class($this)])) { 
             $_SESSION[get_class($this)] = array();
         }
         $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
