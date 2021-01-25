@@ -7,9 +7,9 @@ class Pman_Core_Config {
     
     var $memory_limit = 0;
     
-    var $defaults = array(
-       
-    );
+    var $defaults = array(  ); // override... 
+    
+    
     function init($ff, $cfg)
     {
       
