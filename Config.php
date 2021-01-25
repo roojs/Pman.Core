@@ -8,23 +8,7 @@ class Pman_Core_Config {
     var $memory_limit = 0;
     
     var $defaults = array(
-        'Pman' => array(
-            'storedir' => '/home/press',
-        
-        ),
-        'Factiva' => array(
-            'HTTP_HOST' => 'www.media-outreach.com',
-            'baseURL' => '/release.php',
-        ),
-         
-        
-        'Mail' => array(
-             'helo' => 'media-outreach.com'
-        ),
-        
-        'Siteworth' => array(
-            'key' => '1baaa889d4d006a7ef7c2e34a51d5b4b526fdbeb',
-        ) 
+       
     );
     function init($ff, $cfg)
     {
