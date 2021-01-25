@@ -8,6 +8,14 @@ class Pman_Core_Config {
     var $memory_limit = 0;
     
     var $defaults = array(
+        'Pman' => array(
+            'storedir' => '/home/press',
+        
+        ),
+        'Factiva' => array(
+            'HTTP_HOST' => 'www.media-outreach.com',
+            'baseURL' => '/release.php',
+        ),
          
         
     );
