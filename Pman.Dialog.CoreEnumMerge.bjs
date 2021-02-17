@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CoreEnumMerge",
  "parent" : "",
  "title" : "",
- "path" : "/home/benny/gitlive/web.hhyc_membership_system/Pman.Core/Pman.Dialog.CoreEnumMerge.bjs",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEnumMerge.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -13,6 +13,13 @@
   "68be4837f6c739877233e527a996dd00" : "Merge",
   "266459bee8ed1ca2e0464899e1ef0994" : "And replace with",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "named_strings" : {
+  "_merge_id_name_emptyText" : "bf8691517ce00a09186a05cd65863091",
+  "_merge_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "_merge_id_name_qtip" : "bf8691517ce00a09186a05cd65863091",
+  "_merge_id_name_fieldLabel" : "266459bee8ed1ca2e0464899e1ef0994",
+  "_names_fieldLabel" : "8324cdec05065c4bd7d8c5effdf43edf"
  },
  "items" : [
   {
@@ -42,20 +49,20 @@
       {
        "listeners" : {
         "actionfailed" : "function (_self, action)\n{\n \n    Pman.standardActionFailed(_self, action);\n}\n",
-        "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n         _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        \n         var title = _this.data.title  || _this.data.etype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n        \n\n        if(typeof(_this.data._ids) == \"undefined\"){\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }});  \n            return;\n        }\n        _this.form.findField('_names').setValue(_this.data._names);\n        _this.form.findField('_ids').setValue(_this.data._ids);\n        return;\n    }\n    \n}\n",
-        "rendered" : "function (form)\n{\n   _this.form = form;\n}"
+        "rendered" : "function (form)\n{\n   _this.form = form;\n}",
+        "actioncomplete" : "function (_self, action)\n{\n\n   if (action.type =='submit') {\n       \n         _this.dialog.hide();\n       \n        if (_this.callback) {\n           _this.callback.call(_this, _this.form.getValues());\n        }\n        _this.form.reset();\n        return;\n    }\n    if (action.type == 'setdata') {\n        \n         var title = _this.data.title  || _this.data.etype;\n        _this.dialog.setTitle(\"Delete selected \" + title + \" and merge data with\");\n        \n\n        if(typeof(_this.data._ids) == \"undefined\"){\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }});  \n            return;\n        }\n        _this.form.findField('_names').setValue(_this.data._names);\n        _this.form.findField('_ids').setValue(_this.data._ids);\n        return;\n    }\n    \n}\n"
        },
        "$ url" : "baseURL + '/Roo/Core_enum.php'",
-       "method" : "POST",
        "xtype" : "Form",
+       "method" : "POST",
        "style" : "margin: 10px;",
        "$ xns" : "Roo.form",
        "Number labelWidth" : 120,
        "items" : [
         {
          "String name" : "_names",
-         "Number width" : 250,
          "Boolean readOnly" : true,
+         "Number width" : 250,
          "xtype" : "TextField",
          "String fieldLabel" : "Delete this",
          "$ xns" : "Roo.form"
@@ -86,7 +93,7 @@
          "items" : [
           {
            "listeners" : {
-            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params['etype'] = _this.data.etype;\n    \n    o.params['!id'] = _this.form.findField('id').getValue();\n    // set more here\n}\n"
+            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params['etype'] = _this.data.etype;\n    \n    var ids = _this.form.findField('_ids').getValue();\n    if (ids.length) {\n        var xids = ids.split(',');\n        for(var i =0;i < xids.length; i++) {\n            o.params['!id[' + i + ']'] = xids[i];\n        }\n    } else {\n        o.params['!id'] = _this.form.findField('id').getValue();\n    } \n    // set more here\n}\n"
            },
            "xtype" : "Store",
            "remoteSort" : true,
@@ -96,8 +103,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
