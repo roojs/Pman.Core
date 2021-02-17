@@ -34,7 +34,7 @@ Pman.Dialog.CoreEnumMerge = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -197,7 +197,15 @@ Pman.Dialog.CoreEnumMerge = {
                  
                  o.params['etype'] = _this.data.etype;
                  
-                 o.params['!id'] = _this.form.findField('id').getValue();
+                 var ids = _this.form.findField('_ids').getValue();
+                 if (ids.length) {
+                     var xids = ids.split(',');
+                     for(var i =0;i < xids.length; i++) {
+                         o.params['!id[' + i + ']'] = xids[i];
+                     }
+                 } else {
+                     o.params['!id'] = _this.form.findField('id').getValue();
+                 } 
                  // set more here
              }
            },
