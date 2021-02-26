@@ -604,9 +604,21 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
     }
     
-    // determine if a complied template need recompling
     
     function translateChanged($flexy)
+    {
+        
+        $date = $this->lastUpdated($flexy);
+        if ($date === false) {
+            return false;
+        }
+        $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
+        return strtotime($date) > $utime;
+    }
+    
+    // determine if a complied template need recompling
+    
+    function lastUpdated($flexy)
     {
         //return true;
         // var_dump('check changed?');
@@ -616,11 +628,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //var_dump($flexy->compiledTemplate);
         $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
         
-        
+       
         static $cache = array(); // cache of templates..
         
         $ff = HTML_FlexyFramework::get();
         $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
+        
+        // find which of the template directories was actually used for the template.
         
         $tempdir = '';
         foreach($flexy->options['templateDir'] as $td) {
@@ -633,6 +647,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $tmpname = substr($flexy->currentTemplate, strlen($td) +1);
         
+        // we do not have any record of this template..
         if (isset($cache[$tmpname]) && $cache[$tmpname] === false) {
             return false;
         }
@@ -666,9 +681,14 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $x->lang = $flexy->options['locale'];
         $x->active = 1;
         $x->template_id = $tmpl->id;
-        $x->whereAdd("updated > '". date('Y-m-d H:i:s', $utime)."'");
-        
-        return $x->count() ? true : false;
+        //$x->whereAdd("updated > '". date('Y-m-d H:i:s', $utime)."'");
+        if ($x->count() < 1) {
+            return false; // we don't have any record of it.
+        }
+        $x->selectAdd();
+        $x->selectAdd('max(updated) as max_updated');
+        $x->find(true);
+        return $x->max_updated;
         
         
     }
