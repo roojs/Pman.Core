@@ -616,7 +616,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //var_dump($flexy->compiledTemplate);
         $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
         
-        var_dump($utime);
+        var_dump(date("r",$utime));
         static $cache = array(); // cache of templates..
         
         $ff = HTML_FlexyFramework::get();
