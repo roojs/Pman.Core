@@ -609,6 +609,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     {
         
         $date = $this->lastUpdated($flexy);
+        if ($date === false) {
+            return false;
+        }
         $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
         return strtotime($date) > $utime;
     }
@@ -625,11 +628,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //var_dump($flexy->compiledTemplate);
         $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
         
-        var_dump($flexy->compiledTemplate . ' : ' . date("r",$utime));
+       
         static $cache = array(); // cache of templates..
         
         $ff = HTML_FlexyFramework::get();
         $view_name = isset($ff->Pman_Core['view_name']) ? $ff->Pman_Core['view_name'] : false;
+        
+        // find which of the template directories was actually used for the template.
         
         $tempdir = '';
         foreach($flexy->options['templateDir'] as $td) {
@@ -642,6 +647,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         $tmpname = substr($flexy->currentTemplate, strlen($td) +1);
         
+        // we do not have any record of this template..
         if (isset($cache[$tmpname]) && $cache[$tmpname] === false) {
             return false;
         }
