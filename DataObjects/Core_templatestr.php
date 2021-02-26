@@ -604,9 +604,18 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
     }
     
-    // determine if a complied template need recompling
     
     function translateChanged($flexy)
+    {
+        
+        $date = $this->lastUpdated($flexy);
+        $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
+        return strtotime($date) > $utime;
+    }
+    
+    // determine if a complied template need recompling
+    
+    function lastUpdated($flexy)
     {
         //return true;
         // var_dump('check changed?');
