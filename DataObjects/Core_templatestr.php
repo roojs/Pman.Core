@@ -667,7 +667,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $x->active = 1;
         $x->template_id = $tmpl->id;
         $x->whereAdd("updated > '". date('Y-m-d H:i:s', $utime)."'");
-        
+        var_dump($x->ount()); exit;
         return $x->count() ? true : false;
         
         
