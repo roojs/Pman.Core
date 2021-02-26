@@ -167,7 +167,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         }
         
         $q = DB_DAtaObject::factory('core_enum');
-        $q->query("ALTER TABLE $tbl COMMENT = '{$q->escape($fkstr)}'");
+        $q->query("ALTER TABLE `$tbl` COMMENT = '{$q->escape($fkstr)}'");
         
         
         
