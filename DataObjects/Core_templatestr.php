@@ -681,9 +681,14 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $x->lang = $flexy->options['locale'];
         $x->active = 1;
         $x->template_id = $tmpl->id;
-        $x->whereAdd("updated > '". date('Y-m-d H:i:s', $utime)."'");
-        //var_dump($x->count()); 
-        return $x->count() ? true : false;
+        //$x->whereAdd("updated > '". date('Y-m-d H:i:s', $utime)."'");
+        if ($x->count() < 1) {
+            return false; // we don't have any record of it.
+        }
+        $x->selectAdd();
+        $x->selectAdd('max(updated) as max_updated');
+        $x->find(true);
+        return $x->max_updated;
         
         
     }
