@@ -411,7 +411,7 @@ WHERE (
         
 
         if (!empty($done[$clsname.':'.$lang])) {
-            return; // already sent headers and everything.
+            return true; // already sent headers and everything.
         }
         
         putenv("LANGUAGE=$lang");
@@ -435,7 +435,7 @@ WHERE (
         $d->filetype = 'php';
         if (! $d->find(true) ){
             $done[$clsname.':'.$lang] = true;
-            return;
+            return false;
         }
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
@@ -470,10 +470,10 @@ WHERE (
         $ts->template_id = $d->id;
         if (!$ts->find(true)) {
             // then in theory there are no translations
-            return;
+            return false;
         }
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
-            return; // file exists and is newer than our updated line.
+            return $fname; // file exists and is newer than our updated line.
         }
         //DB_DataObject::debugLevel(1);
 
@@ -482,6 +482,7 @@ WHERE (
         $ts->selectAdd('join_src_id_id.txt as src_id_txt, core_templatestr.txt as txt');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
+        $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH(core_templatestr.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
                
         if (!file_exists($fdir)) {
@@ -518,7 +519,7 @@ WHERE (
         
          
         
-        return;
+        return $fname;
         
         require_once 'File/Gettext.php';
         $gt = File_Gettext::factory('MO', $fname);

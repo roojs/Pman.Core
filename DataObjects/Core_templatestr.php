@@ -613,7 +613,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return false;
         }
         $utime = file_exists($flexy->compiledTemplate) ?  filemtime( $flexy->compiledTemplate) : 0;
-        return strtotime($date) > $utime;
+        return strtotime($date) >  $utime;
     }
     
     // determine if a complied template need recompling
