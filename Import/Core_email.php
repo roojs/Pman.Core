@@ -66,10 +66,10 @@ class Pman_Core_Import_Core_email extends Pman
         
        // DB_DataObject::debugLevel(1);
         
-        $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
         
         if (empty($opts['raw_contents'])) {
-            
+            $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
+
             if (!file_exists($opts['file'])) {
                 $this->jerr("file does not exist : " . $opts['file']);
             }
@@ -89,6 +89,7 @@ class Pman_Core_Import_Core_email extends Pman
             }
             $mailtext = file_get_contents($opts['file']);
         } else {
+            $template_name = $opt['name'];
             $mailtext =  $opts['raw_contents'];
         }
         
