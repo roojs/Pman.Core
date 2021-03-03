@@ -38,7 +38,7 @@ class Pman_Core_Import_Core_email extends Pman
             'min' => 0,
             'max' => 0,  
         ),
-        'raw_contents' => array(
+        'raw_content' => array(
             'desc' => 'Raw contents of email (used by API) - not by Command line',
             'short' => 'R',
             'default' => '',
