@@ -1026,7 +1026,9 @@ class Pman_Core_UpdateDatabase extends Pman
             if (!empty($templateDir)) {
                 $opts['file'] = $templateDir. $name .'.html';
             }
-            
+            if (!empty($data['raw_content'])) {
+                $opts['raw_content'] = $data['raw_content'];
+            }
             if (!empty($data['master'])) {
                 $opts['master'] = $templateDir . $master .'.html';
             }
