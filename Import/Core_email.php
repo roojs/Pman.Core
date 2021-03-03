@@ -89,8 +89,8 @@ class Pman_Core_Import_Core_email extends Pman
             }
             $mailtext = file_get_contents($opts['file']);
         } else {
-            $template_name = $opt['name'];
-            $mailtext =  $opts['raw_contents'];
+            $template_name = $opts['name'];
+            $mailtext =  $opts['raw_content'];
         }
         
         if (!empty($opts['master'])) {
