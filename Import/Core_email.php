@@ -67,7 +67,7 @@ class Pman_Core_Import_Core_email extends Pman
        // DB_DataObject::debugLevel(1);
         
         
-        if (empty($opts['raw_contents'])) {
+        if (empty($opts['raw_content'])) {
             $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
 
             if (!file_exists($opts['file'])) {
