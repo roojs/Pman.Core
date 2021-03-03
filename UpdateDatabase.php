@@ -921,10 +921,8 @@ class Pman_Core_UpdateDatabase extends Pman
         }
         foreach ($this->emailTemplates as $k => $mail) {
             
-            $mail_dir = "{$this->rootDir}{$mail['template_dir']}";
-
             $this->initEmails(
-                $mail_dir,
+                !empty($mail['template_dir']) ? "{$this->rootDir}{$mail['template_dir']}" : '',
                 array($k => $mail),
                 false
             );
@@ -1024,8 +1022,10 @@ class Pman_Core_UpdateDatabase extends Pman
             
             $opts = array(
                 'update' => 1,
-                'file' => $templateDir. $name .'.html'
             );
+            if (!empty($templateDir)) {
+                $opts['file'] = $templateDir. $name .'.html';
+            }
             
             if (!empty($data['master'])) {
                 $opts['master'] = $templateDir . $master .'.html';

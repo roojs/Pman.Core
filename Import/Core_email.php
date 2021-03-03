@@ -38,6 +38,14 @@ class Pman_Core_Import_Core_email extends Pman
             'min' => 0,
             'max' => 0,  
         ),
+        'raw_contents' => array(
+            'desc' => 'Raw contents of email (used by API) - not by Command line',
+            'short' => 'R',
+            'default' => '',
+            'min' => 0,
+            'max' => 0,  
+        )
+         
     );
     
     function getAuth()
@@ -49,7 +57,8 @@ class Pman_Core_Import_Core_email extends Pman
         }
     }
     
-    function get($part = '', $opts=array()) {
+    function get($part = '', $opts=array())
+    {
         $this->updateOrCreateEmail($part, $opts, false);
     }
 
@@ -59,24 +68,29 @@ class Pman_Core_Import_Core_email extends Pman
         
         $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
         
-        if (!file_exists($opts['file'])) {
-            $this->jerr("file does not exist : " . $opts['file']);
-        }
-        
-        
-        if (!empty($opts['master']) && !file_exists($opts['master'])) {
-            $this->jerr("master file does not exist : " . $opts['master']);
-        }
-        
-        
-        if (empty($cm)) {
-            $cm = DB_dataObject::factory('core_email');
-            $ret = $cm->get('name',$template_name);
-            if($ret && empty($opts['update'])) {
-                $this->jerr("use --update   to update the template..");
+        if (empty($opts['raw_contents'])) {
+            
+            if (!file_exists($opts['file'])) {
+                $this->jerr("file does not exist : " . $opts['file']);
             }
+            
+            
+            if (!empty($opts['master']) && !file_exists($opts['master'])) {
+                $this->jerr("master file does not exist : " . $opts['master']);
+            }
+            
+            
+            if (empty($cm)) {
+                $cm = DB_dataObject::factory('core_email');
+                $ret = $cm->get('name',$template_name);
+                if($ret && empty($opts['update'])) {
+                    $this->jerr("use --update   to update the template..");
+                }
+            }
+            $mailtext = file_get_contents($opts['file']);
+        } else {
+            $mailtext =  $opts['raw_contents'];
         }
-        $mailtext = file_get_contents($opts['file']);
         
         if (!empty($opts['master'])) {
             $body = $mailtext;
