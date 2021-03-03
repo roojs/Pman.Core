@@ -118,6 +118,11 @@ class Pman_Core_Import_Core_email extends Pman
         $headers = $parts[1];
         $from = new Mail_RFC822();
         $from_str = $from->parseAddressList($headers['From']);
+        if (is_a($from_str,'PEAR_Error')) {
+            echo $from_str->toString() . "\n";
+            exit;
+        }
+
         
         $from_name  = trim($from_str[0]->personal, '"');
         
