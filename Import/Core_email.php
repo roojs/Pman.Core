@@ -142,15 +142,15 @@ class Pman_Core_Import_Core_email extends Pman
                     foreach($structure->parts as $p) {
                         switch($p->ctype_primary .'/'. $p->ctype_secondary ) {
                             case 'text/plain':
-                            $bodytext = $p->body;
-                            break;
+                                $bodytext = $p->body;
+                                break;
                         
-                        case 'text/html':
-                            $bodyhtml = $p->body;
-                            break;
-                        // no default...
+                            case 'text/html':
+                                $bodyhtml = $p->body;
+                                break;
+                                 // no default...
                         }
-                        
+                            
                     }
                     break;
                 case 'text/plain':
@@ -176,8 +176,8 @@ class Pman_Core_Import_Core_email extends Pman
             
             $cc =clone($cm);
             $cm->setFrom(array(
-               'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
-               'plaintext' => '',
+               'bodytext'      => $bodyhtml,
+               'plaintext' => $bodytext,
                'updated_dt'     => date('Y-m-d H:i:s'),
                'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
@@ -190,7 +190,8 @@ class Pman_Core_Import_Core_email extends Pman
                 'from_email'    => $from_email,
                 'subject'       => $headers['Subject'],
                 'name'          => $template_name,
-                'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
+                'bodytext'      => $bodyhtml,
+                'plaintext'     => $bodytext,
                 'updated_dt'     => date('Y-m-d H:i:s'),
                 'created_dt'     => date('Y-m-d H:i:s'),
                 'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
