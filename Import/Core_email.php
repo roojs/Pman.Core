@@ -152,6 +152,7 @@ class Pman_Core_Import_Core_email extends Pman
                         }
                         
                     }
+                    break;
                 case 'text/plain':
                     $bodytext = $parts[2];
                     break;
