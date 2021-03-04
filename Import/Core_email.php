@@ -110,7 +110,8 @@ class Pman_Core_Import_Core_email extends Pman
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
-        print_R($parts);exit;
+        $structure = $decoder->decode();
+        print_R($structure);exit;
         if (is_a($parts,'PEAR_Error')) {
             echo $parts->toString() . "\n";
             exit;
