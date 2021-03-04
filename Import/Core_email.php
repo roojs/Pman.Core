@@ -110,6 +110,7 @@ class Pman_Core_Import_Core_email extends Pman
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        print_R($parts);exit;
         if (is_a($parts,'PEAR_Error')) {
             echo $parts->toString() . "\n";
             exit;
@@ -139,6 +140,7 @@ class Pman_Core_Import_Core_email extends Pman
             $cc =clone($cm);
             $cm->setFrom(array(
                'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
+               'plaintext' => 
                'updated_dt'     => date('Y-m-d H:i:s'),
                'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
