@@ -114,7 +114,6 @@ class Pman_Core_Import_Core_email extends Pman
             'include_bodies' => true,
             'decode_bodies' => true
         ));
-        print_R($structure);exit;
         if (is_a($parts,'PEAR_Error')) {
             echo $parts->toString() . "\n";
             exit;
