@@ -144,11 +144,10 @@ class Pman_Core_Import_Core_email extends Pman
                             break;
                         
                         case 'text/html':
-                        default:
                             $bodyhtml = $p->body;
                             break;
+                        // no default...
                         }
-                        
                         
                     }
                 case 'text/plain':
