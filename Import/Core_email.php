@@ -137,10 +137,10 @@ class Pman_Core_Import_Core_email extends Pman
         $bodytext  = '';
         if (empty($opts['use-file'])) {
             
-            switch($structure->ctype_primary .'/'. $structure->ctype_secodary ) {
+            switch($structure->ctype_primary .'/'. $structure->ctype_secondary ) {
                 case 'multipart/alternative':
                     foreach($structure->parts as $p) {
-                        switch($p->ctype_primary .'/'. $p->ctype_secodary ) {
+                        switch($p->ctype_primary .'/'. $p->ctype_secondary ) {
                             case 'text/plain':
                             $bodytext = $p->body;
                             break;
