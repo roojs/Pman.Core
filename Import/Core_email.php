@@ -38,6 +38,14 @@ class Pman_Core_Import_Core_email extends Pman
             'min' => 0,
             'max' => 0,  
         ),
+        'raw_content' => array(
+            'desc' => 'Raw contents of email (used by API) - not by Command line',
+            'short' => 'R',
+            'default' => '',
+            'min' => 0,
+            'max' => 0,  
+        )
+         
     );
     
     function getAuth()
@@ -49,7 +57,8 @@ class Pman_Core_Import_Core_email extends Pman
         }
     }
     
-    function get($part = '', $opts=array()) {
+    function get($part = '', $opts=array())
+    {
         $this->updateOrCreateEmail($part, $opts, false);
     }
 
@@ -57,26 +66,32 @@ class Pman_Core_Import_Core_email extends Pman
         
        // DB_DataObject::debugLevel(1);
         
-        $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
         
-        if (!file_exists($opts['file'])) {
-            $this->jerr("file does not exist : " . $opts['file']);
-        }
-        
-        
-        if (!empty($opts['master']) && !file_exists($opts['master'])) {
-            $this->jerr("master file does not exist : " . $opts['master']);
-        }
-        
-        
-        if (empty($cm)) {
-            $cm = DB_dataObject::factory('core_email');
-            $ret = $cm->get('name',$template_name);
-            if($ret && empty($opts['update'])) {
-                $this->jerr("use --update   to update the template..");
+        if (empty($opts['raw_content'])) {
+            $template_name = preg_replace('/\.[a-z]+$/i', '', basename($opts['file']));
+
+            if (!file_exists($opts['file'])) {
+                $this->jerr("file does not exist : " . $opts['file']);
             }
+            
+            
+            if (!empty($opts['master']) && !file_exists($opts['master'])) {
+                $this->jerr("master file does not exist : " . $opts['master']);
+            }
+            
+            
+            if (empty($cm)) {
+                $cm = DB_dataObject::factory('core_email');
+                $ret = $cm->get('name',$template_name);
+                if($ret && empty($opts['update'])) {
+                    $this->jerr("use --update   to update the template..");
+                }
+            }
+            $mailtext = file_get_contents($opts['file']);
+        } else {
+            $template_name = $opts['name'];
+            $mailtext =  $opts['raw_content'];
         }
-        $mailtext = file_get_contents($opts['file']);
         
         if (!empty($opts['master'])) {
             $body = $mailtext;
@@ -95,6 +110,10 @@ class Pman_Core_Import_Core_email extends Pman
         
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
+        $structure = $decoder->decode(array(
+            'include_bodies' => true,
+            'decode_bodies' => true
+        ));
         if (is_a($parts,'PEAR_Error')) {
             echo $parts->toString() . "\n";
             exit;
@@ -103,22 +122,62 @@ class Pman_Core_Import_Core_email extends Pman
         $headers = $parts[1];
         $from = new Mail_RFC822();
         $from_str = $from->parseAddressList($headers['From']);
+        if (is_a($from_str,'PEAR_Error')) {
+            echo $from_str->toString() . "\n";
+            exit;
+        }
+
         
         $from_name  = trim($from_str[0]->personal, '"');
         
         $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
         
-        if (!empty($opts['use-file'])) {
-            $parts[2] = '';
+        $bodyhtml  = '';
+        $bodytext  = '';
+        if (empty($opts['use-file'])) {
+            
+            switch($structure->ctype_primary .'/'. $structure->ctype_secondary ) {
+                case 'multipart/alternative':
+                    foreach($structure->parts as $p) {
+                        switch($p->ctype_primary .'/'. $p->ctype_secondary ) {
+                            case 'text/plain':
+                                $bodytext = $p->body;
+                                break;
+                        
+                            case 'text/html':
+                                $bodyhtml = $p->body;
+                                break;
+                                 // no default...
+                        }
+                            
+                    }
+                    break;
+                case 'text/plain':
+                    $bodytext = $parts[2];
+                    break;
+                
+                case 'text/html':
+                
+                    $bodyhtml = $parts[2];
+                    break;
+                default:
+                    var_dump($structure->ctype_primary .'/'. $structure->ctype_secondary );
+                    die("UNKNOWN TYPE");
+            }
+            
+          
         }
+        
+        
         
         
         if ($cm->id) {
             
             $cc =clone($cm);
             $cm->setFrom(array(
-               'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
+               'bodytext'      => $bodyhtml,
+               'plaintext' => $bodytext,
                'updated_dt'     => date('Y-m-d H:i:s'),
                'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
@@ -131,7 +190,8 @@ class Pman_Core_Import_Core_email extends Pman
                 'from_email'    => $from_email,
                 'subject'       => $headers['Subject'],
                 'name'          => $template_name,
-                'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
+                'bodytext'      => $bodyhtml,
+                'plaintext'     => $bodytext,
                 'updated_dt'     => date('Y-m-d H:i:s'),
                 'created_dt'     => date('Y-m-d H:i:s'),
                 'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
