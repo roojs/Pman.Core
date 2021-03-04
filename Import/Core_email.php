@@ -131,9 +131,42 @@ class Pman_Core_Import_Core_email extends Pman
         $from_email = $from_str[0]->mailbox . '@' . $from_str[0]->host;
         
         
-        if (!empty($opts['use-file'])) {
-            $parts[2] = '';
+        $bodyhtml  = '';
+        $bodytext  = '';
+        if (empty($opts['use-file'])) {
+            
+            switch($structure->ctype_primary .'/'. $structure->ctype_secodary ) {
+                case 'multipart/alternative':
+                    foreach($structure->parts as $p) {
+                        switch($p->ctype_primary .'/'. $p->ctype_secodary ) {
+                            case 'text/plain':
+                            $bodytext = $p->body;
+                            break;
+                        
+                        case 'text/html':
+                        default:
+                            $bodyhtml = $p->body;
+                            break;
+                        }
+                        
+                        
+                    }
+                case 'text/plain':
+                    $bodytext = $parts[2];
+                    break;
+                
+                case 'text/html':
+                default:
+                    $bodyhtml = $parts[2];
+                    break;
+            }
+            
+            if ($structure['ctype_primary'] == 'multipart' && $structure['ctype_secodary'] == 'alternative') {
+                
+            }
         }
+        
+        
         
         
         if ($cm->id) {
