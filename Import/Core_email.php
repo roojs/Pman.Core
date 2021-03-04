@@ -140,7 +140,7 @@ class Pman_Core_Import_Core_email extends Pman
             $cc =clone($cm);
             $cm->setFrom(array(
                'bodytext'      => !empty($opts['use-file']) ? '' : $parts[2],
-               'plaintext' => 
+               'plaintext' => '',
                'updated_dt'     => date('Y-m-d H:i:s'),
                'use_file' => !empty($opts['use-file']) ? realpath($opts['file']) : '',
             ));
