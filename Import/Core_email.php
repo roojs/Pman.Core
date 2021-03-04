@@ -162,9 +162,7 @@ class Pman_Core_Import_Core_email extends Pman
                     break;
             }
             
-            if ($structure['ctype_primary'] == 'multipart' && $structure['ctype_secodary'] == 'alternative') {
-                
-            }
+          
         }
         
         
