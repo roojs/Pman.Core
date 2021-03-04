@@ -157,9 +157,12 @@ class Pman_Core_Import_Core_email extends Pman
                     break;
                 
                 case 'text/html':
-                default:
+                
                     $bodyhtml = $parts[2];
                     break;
+                default:
+                    var_dump($structure->ctype_primary .'/'. $structure->ctype_secondary );
+                    die("UNKNOWN TYPE");
             }
             
           
