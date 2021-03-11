@@ -334,7 +334,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($_SERVER['PATH_INFO']) ||  $_SERVER['PATH_INFO'] == '/Login') {
             $auto_auth_allow  = false;
         }
-        //var_dump($auto_auth_allow);
+         //var_dump($auto_auth_allow);
         // local auth - 
         $default_admin = false;
         if ($auto_auth_allow) {
