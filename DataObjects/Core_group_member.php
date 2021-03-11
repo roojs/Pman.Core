@@ -88,7 +88,9 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
     
     function checkPerm($lvl, $au) 
     {
-        return false;
+        // not sure if this is correct - but we need it on texon
+        return  $au->hasPerm("Core.Staff", $lvl);
+    
     }
     
 }
