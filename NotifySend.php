@@ -428,8 +428,8 @@ class Pman_Core_NotifySend extends Pman
                     
                     
                     $mailer->host = $server;
-                    $mailer->auth = true;
-                    $mailer->username = $settings['username'];;
+                    $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+                    $mailer->username = $settings['username'];
                     $mailer->password = $settings['password'];
                     if (isset($settings['port'])) {
                         $mailer->port = $settings['port'];
