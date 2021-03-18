@@ -383,73 +383,64 @@ class Pman_Core_NotifySend extends Pman
                     //'debug' => isset($opts['debug']) ?  1 : 0,
                     'debug' => 1,
                     'debug_handler' => array($this, 'debugHandler')
-                ));
+            ));
             
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
+             
+            
             if (isset($ff->Mail['host']) && $ff->Mail['host'] == $mx && !empty($ff->Mail['auth'] )) {
                 
-                $username = $ff->Mail['username'] ;
-                $password = $ff->Mail['password'] ;
-                
-                if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
+                $mailer->auth = true;
+                $mailer->username = $ff->Mail['username'];
+                $mailer->password = $ff->Mail['password'];        
+            }
+            
+            if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                     
-                    foreach ($ff->Core_Notify['routes'] as $server => $settings){
-                        if(!in_array($dom, $settings['domains'])){
-                            continue;
-                        }
-                        
-                        // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
-                        // if it's newer that '1' minute...
-                        // then shunt it..
-                        
-                        $seconds = floor((60 * 60) / $settings['rate']);
-                        
-                        $core_notify = DB_DataObject::factory($this->table);
-                        $core_notify->domain_id = $core_domain->id;
-                        $core_notify->whereAdd("
-                            sent >= NOW() - INTERVAL $seconds SECONDS
-                        ");
-                        
-                        if($core_notify->count()){
-                            $old = clone($w);
-                            $w->act_when = date("Y-m-d H:i:s", time() + $seconds);
-                            $w->update($old);
-                            $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
-                        }
-                        
-                        // that make's this test obsolete...
-                        /*
-                        
-                        $core_notify = DB_DataObject::factory($this->table);
-                        $core_notify->domain_id = $core_domain->id;
-                        $core_notify->whereAdd("
-                            sent >= NOW() - INTERVAL 1 HOUR
-                        ");
-                        
-                        if($core_notify->count() >= $settings['rate']){
-                            $old = clone($w);
-                            $w->act_when = date("Y-m-d H:i:s", strtotime('+1 HOUR'));
-                            $w->update($old);
-                            $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
-                        }
-                        */
-                        
-                        
-                        
-                        $mailer->host = $server;
-                        $username = $settings['username'];
-                        $password = $settings['password'];
-                        
-                        break;
+                foreach ($ff->Core_Notify['routes'] as $server => $settings){
+                    if(!in_array($dom, $settings['domains'])){
+                        continue;
                     }
                     
+                    // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
+                    // if it's newer that '1' minute...
+                    // then shunt it..
+                    
+                    $settings['rate'] = isset( $settings['rate']) ?  $settings['rate']  : 360;
+                    
+                    $seconds = floor((60 * 60) / $settings['rate']);
+                    
+                    $core_notify = DB_DataObject::factory($this->table);
+                    $core_notify->domain_id = $core_domain->id;
+                    $core_notify->whereAdd("
+                        sent >= NOW() - INTERVAL $seconds SECONDS
+                    ");
+                    
+                    if($core_notify->count()){
+                        $old = clone($w);
+                        $w->act_when = date("Y-m-d H:i:s", time() + $seconds);
+                        $w->update($old);
+                        $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
+                    }
+                     
+                    
+                    
+                    $mailer->host = $server;
+                    $mailer->auth = true;
+                    $mailer->username = $settings['username'];;
+                    $mailer->password = $settings['password'];        
+                    if (isset($settings['socket_options'])) {
+                        $mailer->socket_options = $settings['socket_options'];
+                        $mailer->port = $settings['port'];
+                    }
+                    
+                    
+                    break;
                 }
                 
-                $mailer->auth = true;
-                $mailer->username = $username;
-                $mailer->password = $password;        
             }
+        
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
              
