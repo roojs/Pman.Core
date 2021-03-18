@@ -647,7 +647,7 @@ class Pman_Core_NotifySend extends Pman
     {
         $this->debug_str .= strlen($this->debug_str) ? "\n" : '';
         $this->debug_str .= $message;
-        echo $message ."\n";
+        //echo $message ."\n";
     }
     
     function errorHandler($msg, $success = false)
