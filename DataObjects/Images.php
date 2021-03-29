@@ -212,6 +212,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function beforeDelete($dependants_array, $roo)
     {
         
+        if (!empty($dependants_array)) {
+            return;
+        }
+        
         $opts = HTML_FlexyFramework::get()->Pman;
         $deldir = $opts['storedir']. '/_deleted_images_';
         if (!file_exists( $deldir )) {
