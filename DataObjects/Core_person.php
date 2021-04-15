@@ -1007,6 +1007,25 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 )"
             );
         }
+        if(!empty($q['in_group_starts'])){
+            
+            $v = $this->escape($q['in_group_starts']);
+            
+            $this->whereAdd("
+                $tn_p.id IN (
+                    SELECT 
+                        DISTINCT(user_id) FROM $tn_gm
+                    LEFT JOIN
+                        $tn_g
+                    ON
+                        $tn_g.id = $tn_gm.group_id
+                    WHERE 
+                        $tn_g.name LIKE '{$v}%'
+                )"
+            );
+        }
+        
+        
         
         // #2307 Search Country!!
         if (!empty($q['query']['in_country'])) {
