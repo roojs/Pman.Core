@@ -84,14 +84,7 @@ Pman.Dialog.CoreColumnConfig = {
       listeners : {
        click : function() {
         
-            var name =     _this.form.findField('name').getValue();
-            name = name.toUpperCase().replace(/[^A-Z]+/g, '');
-            if (!name.length) {
-                Roo.MessageBox.alert("Error","Please fill in a valid name");
-                return;
-            }
-            _this.form.findField('name').setValue(name);
-         
+             
             _this.form.doAction('submit');
             
         }
@@ -160,13 +153,6 @@ Pman.Dialog.CoreColumnConfig = {
           fieldLabel : _this._strings['b5a7adde1af5c87d7fd797b6245c2a39'] /* Description */,
           name : 'description',
           width : 250,
-          listeners : {
-           keyup : function (_self, e)
-            {
-                _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());
-                
-            }
-          },
           xns : Roo.form,
           '|xns' : 'Roo.form'
          },

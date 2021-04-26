@@ -57,9 +57,6 @@
        "$ xns" : "Roo.form",
        "items" : [
         {
-         "listeners" : {
-          "keyup" : "function (_self, e)\n{\n    _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());\n    \n}"
-         },
          "fieldLabel" : "Description",
          "xtype" : "TextField",
          "allowBlank" : false,
@@ -103,7 +100,7 @@
     },
     {
      "listeners" : {
-      "|click" : "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
+      "|click" : "function() {\n\n     \n    _this.form.doAction('submit');\n    \n}"
      },
      "text" : "Save",
      "xtype" : "Button",
