@@ -7,11 +7,11 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreColumnConfig = {
 
  _strings : {
-  '518ad9ed87d3ca17e223a91604b464d5' :"Add / Edit Core Enum",
   'cfcd208495d565ef66e7dff9f98764da' :"0",
   'b48968e1c912da07df5e8d6d246291ec' :"Display Name",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
+  '135d0838bf9429a58dc388369036be2c' :"Add / Edit Column Configuration",
   '49ee3087348e8d44e1feda1917443987' :"Name",
   '4d3d769b812b6faa6b76e1a8abaece2d' :"Active",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
@@ -55,7 +55,7 @@ Pman.Dialog.CoreColumnConfig = {
     height : 150,
     modal : true,
     resizable : false,
-    title : _this._strings['518ad9ed87d3ca17e223a91604b464d5'] /* Add / Edit Core Enum */,
+    title : _this._strings['135d0838bf9429a58dc388369036be2c'] /* Add / Edit Column Configuration */,
     width : 400,
     listeners : {
      show : function (_self)
