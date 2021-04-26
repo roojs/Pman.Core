@@ -53,7 +53,7 @@
        "$ url" : "baseURL + '/Roo/core_setting'",
        "method" : "POST",
        "xtype" : "Form",
-       "style" : "border:none",
+       "style" : "padding:5px",
        "$ xns" : "Roo.form",
        "items" : [
         {
