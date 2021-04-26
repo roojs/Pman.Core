@@ -9,7 +9,7 @@ Pman.Dialog.CoreColumnConfig = {
  _strings : {
   'cfcd208495d565ef66e7dff9f98764da' :"0",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '135d0838bf9429a58dc388369036be2c' :"Add / Edit Column Configuration",
+  'c40cab5f875bb6c270d800eff77a4af0' :"Save Column Configuration",
   'b5a7adde1af5c87d7fd797b6245c2a39' :"Description",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
@@ -49,7 +49,7 @@ Pman.Dialog.CoreColumnConfig = {
     height : 150,
     modal : true,
     resizable : false,
-    title : _this._strings['135d0838bf9429a58dc388369036be2c'] /* Add / Edit Column Configuration */,
+    title : _this._strings['c40cab5f875bb6c270d800eff77a4af0'] /* Save Column Configuration */,
     width : 400,
     listeners : {
      show : function (_self)
