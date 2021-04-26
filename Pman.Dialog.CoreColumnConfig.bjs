@@ -5,5 +5,135 @@
  "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreColumnConfig.bjs",
  "permname" : "",
  "modOrder" : "001",
- "items" : []
+ "strings" : {
+  "518ad9ed87d3ca17e223a91604b464d5" : "Add / Edit Core Enum",
+  "cfcd208495d565ef66e7dff9f98764da" : "0",
+  "b48968e1c912da07df5e8d6d246291ec" : "Display Name",
+  "c4ca4238a0b923820dcc509a6f75849b" : "1",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "49ee3087348e8d44e1feda1917443987" : "Name",
+  "4d3d769b812b6faa6b76e1a8abaece2d" : "Active",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK"
+ },
+ "named_strings" : {
+  "display_name_fieldLabel" : "b48968e1c912da07df5e8d6d246291ec",
+  "seqid_value" : "cfcd208495d565ef66e7dff9f98764da",
+  "name_fieldLabel" : "49ee3087348e8d44e1feda1917443987",
+  "active_fieldLabel" : "4d3d769b812b6faa6b76e1a8abaece2d",
+  "active_value" : "c4ca4238a0b923820dcc509a6f75849b"
+ },
+ "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    \n}"
+   },
+   "modal" : true,
+   "collapsible" : false,
+   "background" : true,
+   "title" : "Add / Edit Core Enum",
+   "xtype" : "LayoutDialog",
+   "width" : 400,
+   "$ xns" : "Roo",
+   "closable" : false,
+   "resizable" : false,
+   "height" : 150,
+   "items" : [
+    {
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "titlebar" : false,
+     "* prop" : "center"
+    },
+    {
+     "background" : true,
+     "region" : "center",
+     "fitToFrame" : true,
+     "xtype" : "ContentPanel",
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "listeners" : {
+        "|actioncomplete" : "function (_self, action)\n{\n  if (action.type == 'setdata') {\n\n        if((typeof(_this.data.etype) == 'undefined') || !_this.data.etype.length){\n            Roo.MessageBox.alert('Error', 'Missing etype');\n            _this.dialog.hide();\n            return;\n        }\n        \n        if(typeof(_this.data.title) != 'undefined' && _this.data.title.length){\n            _this.dialog.setTitle(_this.data.title);\n        }\n  \n        if(_this.data.id){\n            _this.dialog.el.mask(\"Loading\");\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }}); \n        }\n       \n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type == 'submit' ) {\n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n\n        if (_this.callback) {\n           _this.callback.call(_this, action.result.data);\n        }\n        _this.form.reset();\n    }\n}\n",
+        "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
+       },
+       "$ url" : "baseURL + '/Roo/core_enum.php'",
+       "method" : "POST",
+       "xtype" : "Form",
+       "style" : "margin: 5px",
+       "$ xns" : "Roo.form",
+       "items" : [
+        {
+         "fieldLabel" : "Name",
+         "bool hidden" : true,
+         "xtype" : "TextField",
+         "allowBlank" : false,
+         "actionMode" : "fieldEl",
+         "width" : 200,
+         "$ xns" : "Roo.form",
+         "name" : "name"
+        },
+        {
+         "listeners" : {
+          "keyup" : "function (_self, e)\n{\n    _this.form.findField('name').setValue(this.getValue().replace(/[^a-z0-9]/ig, '').toUpperCase());\n    \n}"
+         },
+         "fieldLabel" : "Display Name",
+         "xtype" : "TextField",
+         "allowBlank" : false,
+         "width" : 250,
+         "$ xns" : "Roo.form",
+         "name" : "display_name"
+        },
+        {
+         "String actionMode" : "fieldEl",
+         "Boolean checked" : true,
+         "fieldLabel" : "Active",
+         "inputValue" : 1,
+         "hidden" : true,
+         "value" : 1,
+         "xtype" : "Checkbox",
+         "valueOff" : 0,
+         "$ xns" : "Roo.form",
+         "name" : "active"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "etype"
+        },
+        {
+         "xtype" : "Hidden",
+         "value" : 0,
+         "$ xns" : "Roo.form",
+         "name" : "seqid"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "id"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n    _this.form.reset();\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Cancel",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
+     },
+     "text" : "OK",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
 }
