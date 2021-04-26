@@ -44,7 +44,6 @@
      "fitToFrame" : true,
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
-     "String style" : "border:none",
      "items" : [
       {
        "listeners" : {

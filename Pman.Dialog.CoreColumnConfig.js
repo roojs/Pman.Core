@@ -106,7 +106,6 @@ Pman.Dialog.CoreColumnConfig = {
       background : true,
       fitToFrame : true,
       region : 'center',
-      style : 'border:none',
       xns : Roo,
       '|xns' : 'Roo',
       items  : [
