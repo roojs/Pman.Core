@@ -112,7 +112,7 @@ Pman.Dialog.CoreColumnConfig = {
        {
         xtype : 'Form',
         method : 'POST',
-        style : '',
+        style : 'border:none',
         url : baseURL + '/Roo/core_setting',
         listeners : {
          actioncomplete : function (_self, action)
