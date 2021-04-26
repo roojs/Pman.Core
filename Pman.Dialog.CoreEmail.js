@@ -13,14 +13,15 @@ Pman.Dialog.CoreEmail = {
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
   '72d6d7a1885885bb55a565fd1070581a' :"Import",
+  '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
   '884df8e413319ff51a3f5f528606238a' :"Use template",
   'e6b391a8d2c4d45902a23a8b6585703d' :"URL",
-  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
+  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
@@ -45,6 +46,23 @@ Pman.Dialog.CoreEmail = {
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
   'fff0d600f8a0b5e19e88bfb821dd1157' :"Images"
+ },
+ _named_strings : {
+  'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
+  'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
+  'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
+  'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
+  'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
+  'template_qtip' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
+  'template_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
+  'template_emptyText' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
+  'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
+  'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
+  'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
+  'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
+  'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
  },
 
  dialog : false,
@@ -538,6 +556,21 @@ Pman.Dialog.CoreEmail = {
                    });
                   
                }
+               
+               if (!_this.form.findField('bodytext').getValue().match(/unsubscribe/i)) {
+                   Roo.MessageBox.confirm("Missing unusubscribe",
+                       "There is no unsubscribe link on the email  are you sure you want to save it",
+                       function(res) {
+                           if (res == 'no') {
+                               return;
+                           }
+                           mkimg();
+                       }
+                   );
+           
+                   return;
+               }
+               
                mkimg();
            },
            style : 'margin:10px',
@@ -620,7 +653,7 @@ Pman.Dialog.CoreEmail = {
                items  : [
                 {
                  xtype : 'Checkbox',
-                 boxLabel : 'Enabled - will be sent out',
+                 boxLabel : _this._strings['28690be026c0bb9003aa58e45e5662ca'] /* Enabled - will be sent out */,
                  checked : true,
                  name : 'active',
                  value : 1,
