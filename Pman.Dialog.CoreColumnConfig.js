@@ -178,6 +178,12 @@ Pman.Dialog.CoreColumnConfig = {
          },
          {
           xtype : 'Hidden',
+          name : 'val',
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
+         {
+          xtype : 'Hidden',
           name : 'name',
           value : 0,
           xns : Roo.form,
