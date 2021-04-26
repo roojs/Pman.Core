@@ -8,18 +8,14 @@ Pman.Dialog.CoreColumnConfig = {
 
  _strings : {
   'cfcd208495d565ef66e7dff9f98764da' :"0",
-  'b48968e1c912da07df5e8d6d246291ec' :"Display Name",
-  'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '135d0838bf9429a58dc388369036be2c' :"Add / Edit Column Configuration",
-  '4d3d769b812b6faa6b76e1a8abaece2d' :"Active",
+  'b5a7adde1af5c87d7fd797b6245c2a39' :"Description",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
  _named_strings : {
-  'display_name_fieldLabel' : 'b48968e1c912da07df5e8d6d246291ec' /* Display Name */ ,
-  'seqid_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ ,
-  'active_fieldLabel' : '4d3d769b812b6faa6b76e1a8abaece2d' /* Active */ ,
-  'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ 
+  'description_fieldLabel' : 'b5a7adde1af5c87d7fd797b6245c2a39' /* Description */ ,
+  'name_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ 
  },
 
  dialog : false,
@@ -161,8 +157,8 @@ Pman.Dialog.CoreColumnConfig = {
          {
           xtype : 'TextField',
           allowBlank : false,
-          fieldLabel : _this._strings['b48968e1c912da07df5e8d6d246291ec'] /* Display Name */,
-          name : 'display_name',
+          fieldLabel : _this._strings['b5a7adde1af5c87d7fd797b6245c2a39'] /* Description */,
+          name : 'description',
           width : 250,
           listeners : {
            keyup : function (_self, e)
@@ -175,27 +171,14 @@ Pman.Dialog.CoreColumnConfig = {
           '|xns' : 'Roo.form'
          },
          {
-          xtype : 'Checkbox',
-          actionMode : 'fieldEl',
-          checked : true,
-          fieldLabel : _this._strings['4d3d769b812b6faa6b76e1a8abaece2d'] /* Active */,
-          hidden : true,
-          inputValue : 1,
-          name : 'active',
-          value : 1,
-          valueOff : 0,
+          xtype : 'Hidden',
+          name : 'module',
           xns : Roo.form,
           '|xns' : 'Roo.form'
          },
          {
           xtype : 'Hidden',
-          name : 'etype',
-          xns : Roo.form,
-          '|xns' : 'Roo.form'
-         },
-         {
-          xtype : 'Hidden',
-          name : 'seqid',
+          name : 'name',
           value : 0,
           xns : Roo.form,
           '|xns' : 'Roo.form'
