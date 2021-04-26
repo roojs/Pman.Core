@@ -125,11 +125,7 @@ Pman.Dialog.CoreColumnConfig = {
           {
             if (action.type == 'setdata') {
           
-                  if((typeof(_this.data.etype) == 'undefined') || !_this.data.etype.length){
-                      Roo.MessageBox.alert('Error', 'Missing etype');
-                      _this.dialog.hide();
-                      return;
-                  }
+                  
                   
                   if(typeof(_this.data.title) != 'undefined' && _this.data.title.length){
                       _this.dialog.setTitle(_this.data.title);
