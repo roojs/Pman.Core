@@ -11,7 +11,7 @@ Pman.Dialog.CoreColumnConfig = {
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'c40cab5f875bb6c270d800eff77a4af0' :"Save Column Configuration",
   'b5a7adde1af5c87d7fd797b6245c2a39' :"Description",
-  'efa9ac37eef927f562d9102c1f7f09ed' :"SaVE"
+  'c9cc8cce247e49bae79f15173ce97354' :"Save"
  },
  _named_strings : {
   'description_fieldLabel' : 'b5a7adde1af5c87d7fd797b6245c2a39' /* Description */ ,
@@ -46,7 +46,7 @@ Pman.Dialog.CoreColumnConfig = {
     background : true,
     closable : false,
     collapsible : false,
-    height : 150,
+    height : 110,
     modal : true,
     resizable : false,
     title : _this._strings['c40cab5f875bb6c270d800eff77a4af0'] /* Save Column Configuration */,
@@ -80,7 +80,7 @@ Pman.Dialog.CoreColumnConfig = {
      },
      {
       xtype : 'Button',
-      text : _this._strings['efa9ac37eef927f562d9102c1f7f09ed'] /* SaVE */,
+      text : _this._strings['c9cc8cce247e49bae79f15173ce97354'] /* Save */,
       listeners : {
        click : function() {
         

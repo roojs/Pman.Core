@@ -10,7 +10,7 @@
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "c40cab5f875bb6c270d800eff77a4af0" : "Save Column Configuration",
   "b5a7adde1af5c87d7fd797b6245c2a39" : "Description",
-  "efa9ac37eef927f562d9102c1f7f09ed" : "SaVE"
+  "c9cc8cce247e49bae79f15173ce97354" : "Save"
  },
  "named_strings" : {
   "description_fieldLabel" : "b5a7adde1af5c87d7fd797b6245c2a39",
@@ -30,7 +30,7 @@
    "$ xns" : "Roo",
    "closable" : false,
    "resizable" : false,
-   "height" : 150,
+   "height" : 110,
    "items" : [
     {
      "xtype" : "LayoutRegion",
@@ -105,7 +105,7 @@
      "listeners" : {
       "|click" : "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
      },
-     "text" : "SaVE",
+     "text" : "Save",
      "xtype" : "Button",
      "$ xns" : "Roo",
      "* prop" : "buttons[]"
