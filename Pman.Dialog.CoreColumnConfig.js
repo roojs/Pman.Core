@@ -12,14 +12,12 @@ Pman.Dialog.CoreColumnConfig = {
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '135d0838bf9429a58dc388369036be2c' :"Add / Edit Column Configuration",
-  '49ee3087348e8d44e1feda1917443987' :"Name",
   '4d3d769b812b6faa6b76e1a8abaece2d' :"Active",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
  _named_strings : {
   'display_name_fieldLabel' : 'b48968e1c912da07df5e8d6d246291ec' /* Display Name */ ,
   'seqid_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ ,
-  'name_fieldLabel' : '49ee3087348e8d44e1feda1917443987' /* Name */ ,
   'active_fieldLabel' : '4d3d769b812b6faa6b76e1a8abaece2d' /* Active */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ 
  },
@@ -160,17 +158,6 @@ Pman.Dialog.CoreColumnConfig = {
         xns : Roo.form,
         '|xns' : 'Roo.form',
         items  : [
-         {
-          xtype : 'TextField',
-          actionMode : 'fieldEl',
-          allowBlank : false,
-          fieldLabel : _this._strings['49ee3087348e8d44e1feda1917443987'] /* Name */,
-          hidden : true,
-          name : 'name',
-          width : 200,
-          xns : Roo.form,
-          '|xns' : 'Roo.form'
-         },
          {
           xtype : 'TextField',
           allowBlank : false,
