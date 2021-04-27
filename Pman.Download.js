@@ -26,7 +26,7 @@ var t = new Pman.Download({
  
  * @cfg {String} csvCols  - use '*' to override grid coluns
  * @cfg {String} csvTitles - use '*' to override grid coluns
-
+ * @cfg {String} hiddenCols - default 'show'  (use 'hide' to not display them on download)
  
  
 * @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
@@ -163,7 +163,7 @@ Pman.Download = function(cfg)
         }
         
     }
-    
+    Roo.MessageBox.alert("Downloading", "The file should download shortly");
     req.send(this.form);
     /*
     (function() {
@@ -195,6 +195,9 @@ Roo.apply(Pman.Download.prototype, {
     
     success : false,
     failure : false,
+    
+    hiddenCols : 'show', // set to 'hide' to hide them..
+    
     
     // private..
     //used by simple GET method.
@@ -328,6 +331,11 @@ Roo.apply(Pman.Download.prototype, {
         } else {
             
             Roo.each(this.grid.cm.config, function(c,i) {
+                
+                if (t.hiddenCols != 'show' && t.grid.cm.isHidden(i)) {
+                    return;
+                }
+                
                 t.params['csvCols['+i+']'] = c.dataIndex;
                 t.params['csvTitles['+i+']'] = c.header;
                 

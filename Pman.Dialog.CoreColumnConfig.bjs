@@ -1,0 +1,113 @@
+{
+ "name" : "Pman.Dialog.CoreColumnConfig",
+ "parent" : "",
+ "title" : "",
+ "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreColumnConfig.bjs",
+ "permname" : "",
+ "modOrder" : "001",
+ "strings" : {
+  "cfcd208495d565ef66e7dff9f98764da" : "0",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "c40cab5f875bb6c270d800eff77a4af0" : "Save Column Configuration",
+  "b5a7adde1af5c87d7fd797b6245c2a39" : "Description",
+  "c9cc8cce247e49bae79f15173ce97354" : "Save"
+ },
+ "named_strings" : {
+  "description_fieldLabel" : "b5a7adde1af5c87d7fd797b6245c2a39",
+  "name_value" : "cfcd208495d565ef66e7dff9f98764da"
+ },
+ "items" : [
+  {
+   "listeners" : {
+    "show" : "function (_self)\n{\n    \n}"
+   },
+   "modal" : true,
+   "collapsible" : false,
+   "background" : true,
+   "title" : "Save Column Configuration",
+   "xtype" : "LayoutDialog",
+   "width" : 400,
+   "$ xns" : "Roo",
+   "closable" : false,
+   "resizable" : false,
+   "height" : 110,
+   "items" : [
+    {
+     "xtype" : "LayoutRegion",
+     "$ xns" : "Roo",
+     "titlebar" : false,
+     "* prop" : "center"
+    },
+    {
+     "background" : true,
+     "region" : "center",
+     "fitToFrame" : true,
+     "xtype" : "ContentPanel",
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "listeners" : {
+        "|actioncomplete" : "function (_self, action)\n{\n  if (action.type == 'setdata') {\n\n        \n        \n        if(typeof(_this.data.title) != 'undefined' && _this.data.title.length){\n            _this.dialog.setTitle(_this.data.title);\n        }\n  \n        if(_this.data.id){\n            _this.dialog.el.mask(\"Loading\");\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }}); \n        }\n       \n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        return;\n    }\n    if (action.type == 'submit' ) {\n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n\n        if (_this.callback) {\n           _this.callback.call(_this, action.result.data);\n        }\n        _this.form.reset();\n    }\n}\n",
+        "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
+       },
+       "$ url" : "baseURL + '/Roo/core_setting'",
+       "method" : "POST",
+       "xtype" : "Form",
+       "style" : "padding:5px",
+       "$ xns" : "Roo.form",
+       "items" : [
+        {
+         "fieldLabel" : "Description",
+         "xtype" : "TextField",
+         "allowBlank" : false,
+         "width" : 250,
+         "$ xns" : "Roo.form",
+         "name" : "description"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "module"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "val"
+        },
+        {
+         "xtype" : "Hidden",
+         "value" : 0,
+         "$ xns" : "Roo.form",
+         "name" : "name"
+        },
+        {
+         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "id"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n    _this.form.reset();\n    _this.dialog.hide();\n}"
+     },
+     "text" : "Cancel",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    },
+    {
+     "listeners" : {
+      "|click" : "function() {\n\n     \n    _this.form.doAction('submit');\n    \n}"
+     },
+     "text" : "Save",
+     "xtype" : "Button",
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]"
+    }
+   ]
+  }
+ ]
+}
