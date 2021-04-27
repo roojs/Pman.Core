@@ -332,7 +332,7 @@ Roo.apply(Pman.Download.prototype, {
             
             Roo.each(this.grid.cm.config, function(c,i) {
                 
-                if (t.hiddenCols == 'hide' && t.grid.cm.isHidden(i)) {
+                if (t.hiddenCols != 'show' && t.grid.cm.isHidden(i)) {
                     return;
                 }
                 

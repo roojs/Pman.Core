@@ -55,7 +55,11 @@ class Pman_Core_DataObjects_Core_setting extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
-        exit;
+        if (isset($q['is_encrypt'])) {
+            $roo->jerr("no direct access for setting encrypted data at present?");
+        }
+        // we store column data in here now - so it has to be insertable.
+        //exit;
     }
     
     function getKeyDirectory()
