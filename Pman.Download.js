@@ -163,7 +163,7 @@ Pman.Download = function(cfg)
         }
         
     }
-    
+    Roo.MessageBox.alerT("Downloading", "The file should download shortly");
     req.send(this.form);
     /*
     (function() {
