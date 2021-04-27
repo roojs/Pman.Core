@@ -331,6 +331,11 @@ Roo.apply(Pman.Download.prototype, {
         } else {
             
             Roo.each(this.grid.cm.config, function(c,i) {
+                
+                if (t.hiddenCols == 'hide' && t.grid.cm.isHidden(i)) {
+                    return;
+                }
+                
                 t.params['csvCols['+i+']'] = c.dataIndex;
                 t.params['csvTitles['+i+']'] = c.header;
                 
