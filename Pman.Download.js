@@ -26,7 +26,7 @@ var t = new Pman.Download({
  
  * @cfg {String} csvCols  - use '*' to override grid coluns
  * @cfg {String} csvTitles - use '*' to override grid coluns
-
+ * @cfg {String} hiddenCols - default 'show'  (use 'hide' to not display them on download)
  
  
 * @cfg {Function} success (optional) MAY fire on download completed (fails on attachments)..
