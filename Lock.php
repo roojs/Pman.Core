@@ -77,7 +77,7 @@ class Pman_Core_Lock extends Pman
             $this->jok("No lock exists"); // been deleted before.. probably ok..
         }
         
-        if ($curlock->person_id != $this->authUser->id) {
+        if ($curlock->person_id != $this->authUser->id && empty($_REQUEST['force'])) {
             // this is an error conditon..
             $this->jerr("Lock id is invalid");
         }

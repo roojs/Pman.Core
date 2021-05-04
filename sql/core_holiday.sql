@@ -7,3 +7,4 @@ ALTER TABLE core_holiday ADD COLUMN holiday_date DATE NOT NULL DEFAULT '0000-00-
 ALTER TABLE core_holiday ADD COLUMN country VARCHAR(4) NOT NULL DEFAULT '';
 
 
+alter table core_holiday add index lookup (holiday_date, country);
