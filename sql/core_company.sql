@@ -4,8 +4,11 @@ CREATE TABLE core_company (
 );
 
 
-ALTER TABLE core_company ADD COLUMN    code varchar(32)  NOT NULL DEFAULT '';;
-ALTER TABLE core_company ADD COLUMN    name varchar(128)  default NULL ;
+ALTER TABLE core_company CHANGE COLUMN  code  code varchar(128)  NOT NULL DEFAULT '';
+ALTER TABLE core_company ADD COLUMN    code varchar(128)  NOT NULL DEFAULT '';
+ALTER TABLE core_company CHANGE COLUMN    name name varchar(254)  default NULL ;
+
+ALTER TABLE core_company ADD COLUMN    name varchar(254)  default NULL ;
 ALTER TABLE core_company ADD COLUMN    remarks text ;
 ALTER TABLE core_company ADD COLUMN    owner_id int(11) NOT NULL DEFAULT 0 ;
 ALTER TABLE core_company ADD COLUMN    address text ;
@@ -30,8 +33,7 @@ ALTER TABLE core_company ADD COLUMN    country varchar(4) NOT NULL DEFAULT '';
 ALTER TABLE core_company ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT '';
 -- not sure if this needs to change.. << there is code in core/update that fills this in??
 ALTER TABLE core_company ADD COLUMN    comptype_id INT(11) DEFAULT 0;
-
-
+ 
 ALTER TABLE core_company CHANGE COLUMN isOwner isOwner int(11);
 ALTER TABLE core_company CHANGE COLUMN comptype comptype  VARCHAR(32) DEFAULT '';
 -- postres
