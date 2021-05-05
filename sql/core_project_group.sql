@@ -5,5 +5,5 @@ CREATE TABLE core_project_group (
   
 );
 
-ALTER TABLE  core_project  ADD COLUMN   group_id int(11) default NULL default 0;
-ALTER TABLE  core_project  ADD COLUMN   project_id int(11) default NULL default 0;
+ALTER TABLE  core_project_group  ADD COLUMN   group_id int(11) default NULL default 0;
+ALTER TABLE  core_project_group  ADD COLUMN   project_id int(11) default NULL default 0;
