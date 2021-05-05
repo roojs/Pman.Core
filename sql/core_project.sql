@@ -32,4 +32,4 @@ ALTER TABLE core_project ADD INDEX lookup_agency_id (agency_id);
 
 ALTER TABLE core_project ADD INDEX lookup_open_by (open_by);
 ALTER TABLE core_project ADD INDEX lookup_owner_id (owner_id);
- 
+
