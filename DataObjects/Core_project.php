@@ -321,4 +321,23 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         return $au->hasPerm("Core.Projects_Member_Of",$lvl) || $au->hasPerm("Core.Projects_All",$lvl);
     }
     
+    static $cache = array();
+    function cacheLoad($id)
+    {
+        if (isset(self::$cache[$id])) {
+            return self::$cache[$id];
+        }
+        $n = $this->factorySelf();
+        $n->get($id);
+        $n->cacheSave();
+        return $n;
+    }
+    
+    function cacheSave()
+    {
+        self::$cache[$this->id] = $this;
+    }
+    
+    
+    
 }
