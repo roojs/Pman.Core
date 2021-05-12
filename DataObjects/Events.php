@@ -54,7 +54,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                 $this->selectAs();
 
                 $this->selectAs($jt, 'person_id_%s', 'join_person_id_id');
-
                 if (method_exists($jt,'nameColumn')) {
                     $this->selectAdd("join_person_id_id.{$jt->nameColumn()} as person_id_name");
                 }
@@ -150,7 +149,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             //DB_DataObject::DebugLevel(1);
             $joins = explode(',',$q['_join']);
             
-            $this->selectAdd(); // ???
+            //$this->selectAdd(); // ??? << this wipes out the default options
             $distinct = false;
             
             foreach($joins as $t) {
@@ -160,7 +159,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
                     continue;
                 }
                 $jtn = $x->tableName();
-                $jk = array_shift($x->keys());
+                $jks = $x->keys();
+                $jk = array_shift($jks);
                 $this->_join .= "
                 
                     LEFT JOIN {$jtn} as join_on_id_{$jtn} ON {$tn}.on_id = join_on_id_{$jtn}.{$jk}
