@@ -203,7 +203,16 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         ));
           
     }
-     
+    
+    /**
+     * does the files exist?
+     */
+    function exists()
+    {
+        return file_exists($this->getStoreName());
+    }
+    
+    
     /**
      * deletes all the image instances of it...
      * 
