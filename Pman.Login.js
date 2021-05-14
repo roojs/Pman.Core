@@ -132,7 +132,9 @@ Pman.Login =  new Roo.util.Observable({
         var res = Pman.processResponse(response);
         //console.log(res);
         if ( Pman.Login.checkFails > 2) {
-            Pman.Preview.disable();
+            if (typeof(Pman.Preview) != 'undefined') {
+                Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
+            }
             Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : 
                 "Error getting authentication status. - try reloading"); 
             return;
