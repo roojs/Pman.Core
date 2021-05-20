@@ -513,6 +513,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if (!$this->id) {
             return 'about:blank';
         }
+        if (!$this->exists()) {
+            return 'about:missing';
+        }
         
         $shorten_name = $this->shorten_name();
         
