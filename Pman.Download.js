@@ -23,7 +23,7 @@ var t = new Pman.Download({
 * @cfg {Boolean} newWindow (optional) download to new window
 * @cfg {String} doctype (optional) download PDF to new window
 * @cfg {Boolean} limit (optional) limit for grid downloads.
- 
+* @cfg {Boolean} showDownloading default false - show a dialog indicating that the file is downloading
  * @cfg {String} csvCols  - use '*' to override grid coluns
  * @cfg {String} csvTitles - use '*' to override grid coluns
  * @cfg {String} hiddenCols - default 'show'  (use 'hide' to not display them on download)
@@ -163,7 +163,9 @@ Pman.Download = function(cfg)
         }
         
     }
-    Roo.MessageBox.alert("Downloading", "The file should download shortly");
+    if (this.showDownloading) {
+        Roo.MessageBox.alert("Downloading", "The file should download shortly");
+    }
     req.send(this.form);
     /*
     (function() {
