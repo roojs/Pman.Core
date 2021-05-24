@@ -200,7 +200,7 @@ Roo.apply(Pman.Download.prototype, {
     
     hiddenCols : 'show', // set to 'hide' to hide them..
     
-    
+    showDownloading : false,
     // private..
     //used by simple GET method.
     createCsvFrame: function()
