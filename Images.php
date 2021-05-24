@@ -297,6 +297,10 @@ class Pman_Core_Images extends Pman
             $this->as_mimetype  = $img->mimetype;
         }
         if (!$this->thumb) {
+            if ($x->mimetype == $this->as_mimetype) {
+                $x->serveOnly($this->method);
+                exit;
+            }
             $x->convert( $this->as_mimetype);
             $x->serve($this->method);
             exit;
