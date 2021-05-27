@@ -508,7 +508,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $companies = DB_DataObject::factory('core_company');
         $companies->comptype_id = $enum;
         if ($companies->find(true)) {
-            $cache = clone($cache);
+            $cache = clone($companies);
             return $companies;
         }
         return false;
