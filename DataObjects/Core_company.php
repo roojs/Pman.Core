@@ -501,7 +501,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         static $cache = false;
         if ($cache !== false) {
-            return clone($cache);
+            return clone($cache); // no updating this object..
         }
         
         $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', 'OWNER'  );
