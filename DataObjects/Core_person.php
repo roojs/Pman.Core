@@ -523,11 +523,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->isAuth(); // force session start..
         
         $sesPrefix = $this->sesPrefix();
-        
         $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = -1;
-        
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = "";
-        
         self::$authUser = false;
         
     }    
