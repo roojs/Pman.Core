@@ -403,7 +403,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
         }
         
-        if(!empty($contents['rcpts']) && is_string($contents['rcpts'])){
+        if(!empty($contents['rcpts']) && is_array($contents['rcpts'])){
             $contents['rcpts'] = implode(',', $contents['rcpts']);
         }     
         
