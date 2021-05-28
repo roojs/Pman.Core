@@ -130,7 +130,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
         //&& $au->hasPerm('Documents.Documents','S') << this is dependant on the doc modules
           
-        if (!$au->hasPerm('Core.Projects_All','S') ) {
+        if (php_sapi_name() != 'cli' && !$au->hasPerm('Core.Projects_All','S') ) {
             
             
             
