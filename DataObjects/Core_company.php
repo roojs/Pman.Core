@@ -499,10 +499,16 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     static function lookupOwner()
     {
+        static $cache = false;
+        if ($cache !== false) {
+            return clone($cache); // no updating this object..
+        }
+        
         $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', 'OWNER'  );
         $companies = DB_DataObject::factory('core_company');
         $companies->comptype_id = $enum;
         if ($companies->find(true)) {
+            $cache = clone($companies);
             return $companies;
         }
         return false;
