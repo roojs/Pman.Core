@@ -1263,12 +1263,12 @@ class Pman_Core_UpdateDatabase extends Pman
         // these are prefered - but may have complicated depenacies
         $pref = $pref !== false ? $pref :  array(
             'abiword',
-            'faad',
+            //'faad',
             'ffmpeg',
             'html2text', // not availabe in debian squeeze
             'pdftocairo',  //poppler-utils - not available in debian squeeze.
 
-            'lame',
+            //'lame',
             'ssconvert',
             'unoconv',
             'wkhtmltopdf',
