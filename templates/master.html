@@ -44,17 +44,16 @@
         <div id="loading">
             <div class="loading-indicator" id="loading-text">&#160;Loading...(This may take a few seconds)</div>
         </div>
-       
         
-{if:bootLoader.Pman[roo_debug]}                  
+         
+<!--
         <script type="text/javascript" src="{rootURL}/roojs1/roojs-debug.js?ts={version}"></script>
         <script type="text/javascript" src="{rootURL}/roojs1/roojs-calendar-debug.js?ts={version}"></script>
-        <!-- <script type="text/javascript" src="{rootURL}/roojs1/ux/Iscroll.js"></script>  -->
-         
-{else:}                  
+
+-->   
         <script type="text/javascript" src="{rootURL}/roojs1/roojs-all.js?ts={version}"></script>
-                 
-{end:}                  
+              
+
         <flexy:toJSON 
             baseURL="baseURL" 
             rootURL="rootURL" 

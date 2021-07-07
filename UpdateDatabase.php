@@ -1258,8 +1258,7 @@ class Pman_Core_UpdateDatabase extends Pman
             'gifsicle', // used for gif conversions
         );
          
-         
-         
+          
         // these are prefered - but may have complicated depenacies
         $pref = $pref !== false ? $pref :  array(
             'abiword',

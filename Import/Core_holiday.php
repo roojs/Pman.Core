@@ -1,8 +1,8 @@
 <?php
 
-require_once 'Pman/Roo.php';
+require_once 'Pman/Core/Cli.php';
 
-class Pman_Core_Import_Core_holiday extends Pman_Roo 
+class Pman_Core_Import_Core_holiday extends Pman_Core_Cli 
 {
     static $cli_desc = "Update the holiday database (HK Only at present)"; 
     
