@@ -1172,7 +1172,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             if (!$roo->hasPerm('Core.Projects_All', 'S')) {
                 $peps = $p->people($pids);
-                $this->whereAddIn("{$tn}.id", $peps, 'int');
+                $this->whereAddIn("{$this->tableName()}.id", $peps, 'int');
             }
         }    
         
