@@ -175,7 +175,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
     }
  
-    function onInsert($request,$roo)
+    function onInsert($request,$roo,$event)
     {
         $oo = clone($this);
         if (empty($this->code)) {
@@ -186,7 +186,7 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         }
     }
     
-    function onUpdate($old, $request, $roo)
+    function onUpdate($old, $request, $roo,$event)
     {
         $oo = clone($this);
         if (empty($this->code)) {
