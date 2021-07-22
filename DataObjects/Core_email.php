@@ -385,9 +385,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 	    $members = $this->to_group()->members();
 	    $contents['rcpts'] = array();
 	    foreach($this->to_group()->members() as $m) {
-		$contents['rcpts'][] = $m->getEmailFrom();
+		$contents['rcpts'][] = $m->email;
 	    }
-	    
+	    var_dump($contents['rcpts']);
 	    
 	}
         //subject replacement
