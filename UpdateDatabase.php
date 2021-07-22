@@ -767,6 +767,7 @@ class Pman_Core_UpdateDatabase extends Pman
             if(!method_exists($x, 'updateData')){
                 continue;
             };
+            $x->rootDir =  $this->rootDir;
             echo "$module\n";
             $x->updateData();
         }
