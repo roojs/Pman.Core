@@ -23,9 +23,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
     public $active;
     public $bcc_group_id;
     public $test_class;
-    
- 
-
+     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     
@@ -387,7 +385,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 	    foreach($this->to_group()->members() as $m) {
 		$contents['rcpts'][] = $m->email;
 	    }
-	    var_dump($contents['rcpts']);
+	    //var_dump($contents['rcpts']);
 	    
 	}
         //subject replacement
