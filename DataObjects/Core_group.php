@@ -119,7 +119,8 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
                         $g->addMember($uid,$roo);
                         break;
                     case 'sub':
-                        $g->removeMember($uid);
+                        
+                        $g->removeMember($uid, $roo);
                         break;
                     default:
                         $roo->jerr('invalid action');
@@ -220,12 +221,16 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
     }
 
-    function removeMember($person)
+    function removeMember($person, $roo)
     {
         $gm = DB_Dataobject::factory('core_group_member');
         $gm->group_id = $this->id;
         $gm->user_id = is_object($person) ? $person->id : $person;
-
+        $au = $roo->getAuthUser();
+        if ($gm->group()->name == 'Administrators' && $gm->user_id = $au->id) {
+            $roo->jerr("You can not remove yourself from the admin group");
+        }
+        
         if ($gm->find(true)) {
             $gm->delete();
         }

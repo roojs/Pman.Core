@@ -1222,7 +1222,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             COALESCE((
                 SELECT
-                    GROUP_CONCAT(  core_group.name separator  '\n')
+                    GROUP_CONCAT(  CASE WHEN core_group.display_name = '' THEN core_group.name ELSE core_group.display_name  END  separator  '\n')
                 FROM
                     core_group_member
                 LEFT JOIN
@@ -1231,6 +1231,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     core_group.id = core_group_member.group_id
                 WHERE
                     core_group_member.user_id = core_person.id
+                ORDER BY
+                    core_group.display_name ASC
             ), '')  as member_of");
     }
     

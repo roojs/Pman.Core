@@ -42,6 +42,14 @@ class Pman_Core_DataObjects_Core_group_member extends DB_DataObject
         
     }
     
+    function group()
+    {
+        $grp = DB_DataObject::factory('core_group');
+        $grp->get($this->group_id);
+        return $grp;
+        
+    }
+    
     /**
      * Get a list of memberships for a person
      * @param Pman_Core_DataObjects_Person $person who
