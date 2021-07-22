@@ -134,6 +134,13 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         }
 
     }
+    
+    function beforeUpdate($old, $request,$roo)
+    {
+        if (isset($q['display_name']) && !isset($q['name']) && !$this->is_system) {
+            $this->name = $q['display_name'];
+        }
+    }
 
 
     function beforeDelete()
