@@ -365,6 +365,12 @@ class Pman_Core_Mailer {
         }
         
         $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+        if ($this->debug) {
+            print_r(array(
+                'rcpts' => $rcpts,
+                'email' => $email
+            ));
+        }
         $ret = $mail->send($rcpts,$email['headers'],$email['body']);
         error_reporting($oe);
         if ($ret === true) { 
