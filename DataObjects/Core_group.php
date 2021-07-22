@@ -129,6 +129,9 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
             $roo->jok('updated');
 
         }
+        if (isset($q['display_name']) && !isset($q['name']) && !$this->is_system) {
+            $this->name = $q['display_name'];
+        }
 
     }
 
