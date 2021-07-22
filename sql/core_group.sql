@@ -15,5 +15,6 @@ ALTER TABLE core_group ADD COLUMN leader int(11)  NOT NULL default 0;
 ALTER TABLE core_group ADD COLUMN is_system int(2) NOT NULL default 0;
 
 UPDATE core_group SET  display_name = name WHERE display_name = '';
+UPDATE core_group SET  is_system = 1 WHERE name = 'Administrators';
 
 ALTER TABLE core_group ADD INDEX lookup_leader (leader);
