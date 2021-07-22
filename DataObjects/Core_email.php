@@ -381,7 +381,15 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             }
             $contents['rcpts'] = $admin;
         }
-        
+        if (empty($contents['rcpts']) && $this->to_group_id > 0) {
+	    $members = $this->to_group()->members();
+	    $contents['rcpts'] = array();
+	    foreach($this->to_group()->members() as $m) {
+		$contents['rcpts'][] = $m->getEmailFrom();
+	    }
+	    
+	    
+	}
         //subject replacement
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
@@ -708,5 +716,12 @@ Content-Transfer-Encoding: 7bit
  	return $data;
         
            
+    }
+    
+    function to_group()
+    {
+	$g = DB_DataObject::Factory('core_group');
+	$g->get($this->to_group_id);
+	return $g;
     }
 }
