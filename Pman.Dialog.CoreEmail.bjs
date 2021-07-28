@@ -80,14 +80,14 @@
    "items" : [
     {
      "xtype" : "LayoutRegion",
-     "$ xns" : "Roo",
      "tabPosition" : "top",
+     "$ xns" : "Roo",
      "* prop" : "center"
     },
     {
      "hidden" : true,
-     "xtype" : "LayoutRegion",
      "title" : "Images / Attachments",
+     "xtype" : "LayoutRegion",
      "width" : 500,
      "$ xns" : "Roo",
      "split" : true,
@@ -96,8 +96,8 @@
     },
     {
      "autoScroll" : false,
-     "region" : "center",
      "fitToFrame" : true,
+     "region" : "center",
      "xtype" : "NestedLayoutPanel",
      "fitContainer" : true,
      "$ xns" : "Roo",
@@ -198,8 +198,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Core/MailTemplateList.php'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -247,8 +247,8 @@
           "render" : "function (_self, width, height)\n{\n    \n      Roo.log(\"RESIZE, \" + width + ',' + height);\n    \n    var ew = Math.max(250, width-50);\n    var eh = Math.max(250,height-50) ;\n    \n   \n\n}"
          },
          "autoScroll" : false,
-         "fitToFrame" : true,
          "background" : false,
+         "fitToFrame" : true,
          "region" : "center",
          "title" : "Message",
          "xtype" : "ContentPanel",
@@ -260,9 +260,9 @@
             "|actioncomplete" : "function(_self,action)\n{\n   \n    if (action.type == 'setdata') {\n    \n        setInterval(_this.form.findField('bodytext').autosave, 5000);\n        \n        _this.data.module = _this.data.module || 'crm_mailing_list_message';\n        \n        _this.form.url = baseURL + '/Roo/' + _this.data.module;\n        \n        _this.html_preview.hide();\n        _this.preview_btn.hide();\n            \n        if(_this.data.id*1 > 0){\n            _this.dialog.el.mask(\"Loading\");\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n            _this.html_preview.show();\n            _this.preview_btn.show();\n            \n        } else {\n            _this.form.setValues({\n                'from_name' : Pman.Login.authUser.name,\n                'from_email' : Pman.Login.authUser.email\n            });\n        }\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        \n        _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();\n        \n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, action.result.data);\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
             "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
            },
+           "labelAlign" : "right",
            "$ preValidate" : "function(done_callback) {\n    \n    Roo.MessageBox.progress(\"Uploading Images\", \"Uploading\");\n    \n    if(!_this.form.findField('bodytext').editorcore.sourceEditMode){\n        _this.form.findField('bodytext').syncValue();\n    }else{\n        _this.form.findField('bodytext').pushValue();\n    }\n    \n    var html = _this.form.findField('bodytext').getValue();\n    \n    var s = Roo.get(_this.form.findField('bodytext').editorcore.doc.documentElement);\n    \n    var ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';\n    \n    var nodes = [];\n    s.select('img[src]').each(function(i) {\n        nodes.push(i.dom);\n    });\n    var total = nodes.length;\n    var mkimg = function() {\n    \n        if (!nodes.length) {\n              Roo.MessageBox.hide();\n              _this.form.findField('bodytext').syncValue();\n              done_callback(true);\n           //    _this.form.doAction(\"submit\");\n              return;\n        }\n        var i = nodes.pop(); \n        \n        var n = i.getAttribute('src').match(/(baseURL|server_baseurl)/);\n        \n        if(n){\n            mkimg();\n            return;\n        }\n        \n        n = i.getAttribute('src').match(/^http(.*)/);\n       \n        if(!n ){\n            mkimg();\n            return;\n        }\n        \n        new Pman.Request({\n            url : baseURL + '/Roo/Images.php',\n            method : 'POST',\n            params : {\n                onid : _this.form.findField('id').getValue(),\n                ontable : ontable ,\n                _remote_upload : i.src\n            },\n            success : function(res){\n                if(res.success == true){      \n                    i.setAttribute('src', res.data);\n                    Roo.MessageBox.updateProgress( (total - nodes.length) / total , \"Done \" + (total - nodes.length) + '/' + total);\n                }\n                mkimg();\n            }\n        });\n       \n    }\n    \n    if (!_this.form.findField('bodytext').getValue().match(/unsubscribe/i)) {\n        Roo.MessageBox.confirm(\"Missing unusubscribe\",\n            \"There is no unsubscribe link on the email  are you sure you want to save it\",\n            function(res) {\n                if (res == 'no') {\n                    return;\n                }\n                mkimg();\n            }\n        );\n\n        return;\n    }\n    \n    mkimg();\n}\n",
            "$ url" : "baseURL + '/Roo/crm_mailing_list_message.php'",
-           "labelAlign" : "right",
            "method" : "POST",
            "style" : "margin:10px",
            "xtype" : "Form",
@@ -358,8 +358,8 @@
                  "items" : [
                   {
                    "$ url" : "baseURL + '/Roo/Core_group'",
-                   "xtype" : "HttpProxy",
                    "method" : "GET",
+                   "xtype" : "HttpProxy",
                    "$ xns" : "Roo.data",
                    "* prop" : "proxy"
                   },
@@ -393,8 +393,8 @@
              "items" : [
               {
                "hideLabels" : true,
-               "legend" : "Html Editor",
                "style" : "text-align:center;",
+               "legend" : "Html Editor",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -403,9 +403,9 @@
                   "savedpreview" : "function (_self)\n{\n    var id = _this.form.findField('id').getValue() * 1;\n    \n    var successFn = function(res){\n        return res.data.POST.source;\n    };\n    \n    var params = {\n        action : 'AUTOSAVE',\n        remarks : 'BODY',\n        on_id : (id < 1) ? 0 : id,\n        on_table : 'crm_mailing_list_message',\n        successFn : successFn\n    };\n    \n    \n    Pman.Dialog.CoreAutoSavePreview.show(params, function(res){\n        _self.setValue(res);\n        _self.originalValue = res;\n    });\n}",
                   "autosave" : "function (_self)\n{\n    Roo.log('autosave');\n    \n    var id = _this.form.findField('id').getValue() * 1;\n    \n    /*\n    if(!_self.editorcore.sourceEditMode){\n        _self.syncValue();\n    }else{\n        _self.pushValue();\n    }\n    */\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Events.php',\n        method :'POST',\n        params : {\n            id : 0,\n            action : 'AUTOSAVE',\n            on_id : (id > 0) ? id : 0,\n            on_table : 'crm_mailing_list_message',\n            remarks : 'BODY',\n            source: _self.getValue()\n        },\n        success : function() {\n            _self.originalValue = _self.getValue();\n            \n        },\n        failure : function() \n        {\n            Roo.log('body autosave failed?!');\n        }\n    });\n    \n}"
                  },
-                 "xtype" : "HtmlEditor",
-                 "$ cwhite" : "[ \n    'margin',\n    'padding',\n    'text-align',\n    'background',\n    'height',\n    'width',\n    'background-color',\n    'font-size',\n    'line-height',\n    'color',\n    'outline',\n    'text-decoration',\n    'position',\n    'clear',\n    'overflow',\n    'margin-top',\n    'border-bottom',\n    'top',\n    'list-style',\n    'margin-left',\n    'border',\n    'float' ,\n    'margin-right',\n    'padding-top',\n    'min-height',\n    'left',\n    'padding-left',\n    'font-weight',\n    'font-family',\n    'display',\n    'margin-bottom',\n    'padding-bottom',\n    'vertical-align',\n    'cursor',\n    'z-index',\n    'right'\n ]",
                  "| function autosave" : "function() {\n    \n    var body = _this.form.findField('bodytext');\n    \n    if(!body.wrap.isVisible(true) || body.getValue() == '' || !body.isDirty()){\n        Roo.log('body not dirty');\n        return;\n    }\n    \n    Roo.log('body dirty, auto save!');\n    \n    body.fireEvent('autosave', body);\n   \n}\n",
+                 "xtype" : "HtmlEditor",
+                 "$ cwhite" : "[ \n    'background',\n    'background-color',\n    'border',\n    'border-bottom',\n    'border-collapse',\n    'clear',\n    'color',\n    'cursor',\n    'display',\n    'float' ,\n    'font-family',\n    'font-size',\n    'font-weight',\n    'height',\n    'left',\n    'line-height',\n    'list-style',\n    'margin',\n    'margin-bottom',\n    'margin-left',\n    'margin-right',\n    'margin-top',\n    'max-width',\n    'min-height',\n    '-ms-interpolation-mode',\n    'mso-table-rspace',\n    '-ms-text-size-adjust',\n    'outline',\n    'overflow',\n    'padding',\n    'padding-bottom',\n    'padding-left',\n    'padding-right',\n    'padding-top',\n    'position',\n    'right',\n    'text-align',\n    'text-decoration',\n    'top',\n    'vertical-align',\n    '-webkit-text-size-adjust',\n    'width',\n    'width',\n    'z-index'\n ]",
                  "$ xns" : "Roo.form",
                  "resizable" : "s",
                  "name" : "bodytext",
@@ -461,8 +461,8 @@
                        "items" : [
                         {
                          "$ url" : "baseURL + '/Roo/Images.php'",
-                         "xtype" : "HttpProxy",
                          "method" : "GET",
+                         "xtype" : "HttpProxy",
                          "$ xns" : "Roo.data",
                          "* prop" : "proxy"
                         },
@@ -559,8 +559,8 @@
              "items" : [
               {
                "hideLabels" : true,
-               "legend" : "Plain Text",
                "style" : "text-align:center;",
+               "legend" : "Plain Text",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -607,8 +607,8 @@
       "|activate" : "function() {\n    _this.ipanel = this;\n    if (_this.igrid) {\n       _this.igrid.ds.load({});\n    }\n}"
      },
      "autoScroll" : false,
-     "fitToframe" : true,
      "background" : false,
+     "fitToframe" : true,
      "region" : "east",
      "title" : "Images / Attachments",
      "xtype" : "GridPanel",
@@ -638,8 +638,8 @@
          "items" : [
           {
            "$ url" : "baseURL + '/Roo/Images.php'",
-           "xtype" : "HttpProxy",
            "method" : "GET",
+           "xtype" : "HttpProxy",
            "$ xns" : "Roo.data",
            "* prop" : "proxy"
           },
@@ -683,8 +683,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 300,
          "header" : "Filename",
+         "width" : 300,
          "$ renderer" : "function(v,x,r)\n{\n    var width = r.data.width;\n    var height = r.data.height;\n    \n    if(width > 50){\n        height = Math.round(height * 50 / width);\n        width = 50;\n    }\n    \n   return '<img src=\"' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '\" width=\"' + width + '\" height=\"' + height + '\" />';\n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -692,8 +692,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Displayorder",
          "width" : 75,
+         "header" : "Displayorder",
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -701,8 +701,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 75,
          "header" : "Title",
+         "width" : 75,
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
