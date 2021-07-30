@@ -801,6 +801,7 @@ Pman.Dialog.CoreEmail = {
                      'background',
                      'background-color',
                      'border',
+                     'border-radius',
                      'border-bottom',
                      'border-collapse',
                      'box-shadow',
