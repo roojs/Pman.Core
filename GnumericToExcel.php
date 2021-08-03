@@ -66,7 +66,7 @@ class Pman_Core_GnumericToExcel extends Pman
             exit;
         }
         
-        $ext = '.xls';
+        $ext = 'xls';
         $outfmt = 'Gnumeric_Excel:excel_biff8';
         $mime = 'application/vnd.ms-excel';
         
@@ -98,7 +98,7 @@ class Pman_Core_GnumericToExcel extends Pman
                 " --export-type={$outfmt} " . 
                 $srcTmp . ' ' . $targetTmp . ' 2>&1';
         // echo $cmd;
-        //passthru($cmd);exit;
+        //passthru($cmd);exit; 
         //exit;
         $out = `$cmd`;
         clearstatcache(); 
@@ -111,8 +111,11 @@ class Pman_Core_GnumericToExcel extends Pman
         if (!empty($_POST['format']) && $_POST['format']=='xlsx') {
             require_once 'File/Convert.php';
             $cc = new File_Convert($targetTmp,'application/vnd.ms-excel');
-           
             $targetTmp = $cc->convert('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            if (empty($targetTmp)) {
+                $this->jerr("convert to xlsx failed");
+            }
+            
             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             $ext = "xlsx";
          }
