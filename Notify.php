@@ -110,10 +110,21 @@ class Pman_Core_Notify extends Pman
     */
     var $try_again_minutes = 30;
     
+    /**
+     * @var {String} table - the table that the class will query for notification events
+     */
     var $table = 'core_notify';
+    /**
+     * @var {String} target - the application that will run for each Row in the table (eg. Pman/Core/NotifySend)
+     */
     var $target = 'Core/NotifySend';
+    
+    
+    
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
+                    
+                    
     var $force = false;
     function getAuth()
     {
