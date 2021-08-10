@@ -97,14 +97,34 @@ class Pman_Core_Notify extends Pman
     var $max_to_domain = 10;
     
     /**
-     * @var $maxruntime - maximum time a child is allowed to run - defaut 2 minutes
+     * @var $maxruntime - maximum seconds a child is allowed to run - defaut 2 minutes
      */
     var $maxruntime = 120;
     
+    /**
+    * @var {Boolean} log_events - default true if events should be logged.
+    */
+    var $log_events = true;
+    /**
+    * @var {Number} try_again_minutes how long after failing to try again default = 30 if max runtime fails
+    */
+    var $try_again_minutes = 30;
+    
+    /**
+     * @var {String} table - the table that the class will query for notification events
+     */
     var $table = 'core_notify';
+    /**
+     * @var {String} target - the application that will run for each Row in the table (eg. Pman/Core/NotifySend)
+     */
     var $target = 'Core/NotifySend';
+    
+    
+    
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
+                    
+                    
     var $force = false;
     function getAuth()
     {
@@ -311,7 +331,7 @@ class Pman_Core_Notify extends Pman
     
     
     
-    function run($id, $email, $cmdOpts="")
+    function run($id, $email='', $cmdOpts="")
     {
         
         static $renice = false;
@@ -321,9 +341,9 @@ class Pman_Core_Notify extends Pman
         }
         
         // phpinfo();exit;
-        $tnx = tempnam(ini_get('session.save_path'),'stdout');
-        unlink($tnx);
-        $tn =  $tnx . '.stdout';
+        
+        
+        $tn =  $this->tempName('stdout', true);
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
             1 => array("file", $tn, 'w'),  // stdout is a pipe that the child will write to
@@ -419,13 +439,15 @@ class Pman_Core_Notify extends Pman
                     $this->logecho("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
                     @unlink($p['out']);
                     
+                    // schedule again
                     $w = DB_DataObject::factory($this->table);
                     $w->get($p['notify_id']);
                     $ww = clone($w);
-                    $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
-                    $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 30  MINUTES'));
+                    if ($this->log_events) {
+                        $this->addEvent('NOTIFY', $w, 'TERMINATED - TIMEOUT');
+                    }
+                    $w->act_when = date('Y-m-d H:i:s', strtotime("NOW + {$this->try_again_minutes} MINUTES"));
                     $w->update($ww);
-                    
                     
                     continue;
                 }
