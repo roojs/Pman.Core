@@ -43,7 +43,14 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         
         
         
-        $data = file_get_contents("http://www.1823.gov.hk/common/ical/gc/en.ics");
+        $data = file_get_contents("https://www.1823.gov.hk/common/ical/gc/en.ics", false,
+            stream_context_create(array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            ))
+        );
         
         $vevents = explode('BEGIN:VEVENT', $data);
         
