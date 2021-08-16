@@ -11,4 +11,4 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         RETURN ret;
         
     END $$
-DELIMITER ;
+DELIMITER;
