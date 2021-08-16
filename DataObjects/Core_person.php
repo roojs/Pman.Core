@@ -1095,10 +1095,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
          if(!empty($q['query']['name_or_email'])){
+            $v = $this->escape($q['query']['name_or_email']);
             $this->whereAdd("
-                {$this->tableName()}.name LIKE '%{$this->escape($q['query']['name'])}%'
+                {$this->tableName()}.name LIKE '%{$v}%'
                 OR
-                {$this->tableName()}.email LIKE '%{$this->escape($q['query']['name'])}%'
+                {$this->tableName()}.email LIKE '%{$v}%'
             ");
         }
          if(!empty($q['query']['name_starts'])){
