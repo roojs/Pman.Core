@@ -229,7 +229,8 @@ class Pman_Core_Notify extends Pman
         $pushed = array();
         $requeue = array();
         while (true) {
-            if ($w->fetch()) {
+            // only add if we don't have any queued up..
+            if (empty($ar) && $w->fetch()) {
                 $ar[] = clone($w);
                 $total--;
             }
