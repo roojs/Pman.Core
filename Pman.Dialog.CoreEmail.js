@@ -803,7 +803,15 @@ Pman.Dialog.CoreEmail = {
                      'border',
                      'border-radius',
                      'border-bottom',
+                     'border-left',
+                     'border-right',
+                     'border-top',
                      'border-collapse',
+                      'border-color',
+                      'border-style',
+                     'border-width',
+                 
+                     
                      'box-shadow',
                      'clear',
                      'color',
@@ -812,7 +820,9 @@ Pman.Dialog.CoreEmail = {
                      'float' ,
                      'font-family',
                      'font-size',
+                     'font-style',        
                      'font-weight',
+                 
                      'height',
                      'left',
                      'line-height',
