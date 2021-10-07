@@ -16,9 +16,14 @@ ALTER TABLE  core_project  ADD COLUMN   type varchar(1)  NOT NULL default 'P';
 ALTER TABLE  core_project  ADD COLUMN   client_id int(11) NOT NULL default '0';
 ALTER TABLE  core_project  ADD COLUMN   team_id int(11) NOT NULL default '0';
 ALTER TABLE  core_project  ADD COLUMN file_location varchar(254)    NOT NULL default '';
-ALTER TABLE  core_project  ADD COLUMN open_date date default NULL;
-ALTER TABLE  core_project  ADD COLUMN open_by int(11) NOT NULL default '0';
-ALTER TABLE  core_project  ADD COLUMN updated_dt DATETIME NOT NULL;
+ALTER TABLE  core_project  ADD COLUMN open_date date NOT NULL DEFAULT '1000-01-01';
+ALTER TABLE  core_project  ADD COLUMN open_by int(11) NOT NULL default 0;
+
+ALTER TABLE  core_project  ADD COLUMN updated_dt DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';
+ALTER TABLE  core_project  ADD COLUMN deleted_by INT NOT NULL DEFAULT 0;
+ALTER TABLE  core_project  ADD COLUMN deleted_dt DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';
+
+
 
 -- these should be removed, as they are code specific..
 ALTER TABLE core_project ADD COLUMN countries varchar(128)  NOT NULL DEFAULT '';

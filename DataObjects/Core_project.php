@@ -27,6 +27,8 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     public $languages;                       // string(128)  not_null
     public $agency_id;                       // int(11)  not_null
     public $updated_dt;                      // datetime(19)  not_null binary
+    public $deleted_by;                      // INT
+    public $deleted_dt;                      // datetime(19)  not_null binary
 
     
     /* the code above is auto generated do not remove the tag below */
@@ -89,7 +91,10 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-         
+        if (empty($q['_show_deleted']) && empty($q['_is_update_request'])) {
+            $this->whereAdd('core_project.deleted_by = 0');
+        }
+        
         $tn = $this->tableName();
         if (!empty($q['query']['project_search'])) {
             $s = $this->escape($q['query']['project_search']);
@@ -174,6 +179,20 @@ class Pman_Core_DataObjects_Core_project extends DB_DataObject
         
         
     }
+    
+    function beforeUpdate($old, $q, $roo)
+    {
+        if (!empty($q['_flag_deleted'])) {
+            //DB_DataObject::DebugLevel(1);
+            $this->deleted_by = $roo->getAuthUser()->id;
+            $this->deleted_dt = date("Y-m-d H:i:s");
+        }
+        if (!empty($q['_flag_undeleted'])) {
+            $this->deleted_by = 0;
+            $this->deleted_dt = '1000-01-01 00:00:00';
+        }
+    }
+    
  
     function onInsert($request,$roo,$event)
     {
