@@ -260,7 +260,7 @@ trait Pman_Core_AssetTrait {
             file_put_contents($compiledir.'/'.$output , $x->minify( $this->baseURL.$asset));
             clearstatcache();
             if (!file_exists($compiledir.'/'.$output) ||
-                !filesize($compiledir.'/'.$routput)) {
+                !filesize($compiledir.'/'.$output)) {
                 echo "<!-- compile did not generate files : " . basename($compiledir) . "/{$output} -->\n";
                 $this->assetArrayToHtml($files,'css');
                 return;
