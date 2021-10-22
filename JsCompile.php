@@ -199,20 +199,19 @@ class Pman_Core_JsCompile  extends Pman
     function packCssCore($files, $output)
     {
         
-         
-        $o = HTML_FlexyFramework::get()->Pman_Core;
+
+        // csstidy 
+        // cat  x a b c | csstidy - --preserve_css=true --remove_bslash=false --silent=true --template=highest {out}
         
-        if (empty($o['cssminify']) || !file_exists($o['cssminify'])) {
-            echo '<!-- cssminify not set -->';
-            return false;
-        }
+        
         require_once 'System.php';
         
-        $seed= System::which('seed');
-        $gjs = System::which('gjs');
+        $csstidy= System::which('csstidy');
+        $cat = System::which('cat');
         
-        if (!$seed && !$gjs) {
-            echo '<!-- seed or gjs are  not installed -->';
+        
+        if (!$csstidy) {
+            echo '<!-- csstidy not installed -->';
             return false;
             
         }
@@ -230,9 +229,9 @@ class Pman_Core_JsCompile  extends Pman
             mkdir(dirname($output), 0755, true);
         }
         $eoutput = escapeshellarg($output);
-        $cmd = $seed ?
-            ("$seed {$o['cssminify']}  $eoutput " . implode($ofiles, ' ')) :
-            ("$gjs {$o['cssminify']} -- -- $eoutput " . implode($ofiles, ' ')); 
+        
+        $cmd = "$cat " . implode($ofiles, " ") . " | $csstidy   - --preserve_css=true --remove_bslash=false --silent=true --template=highest $eoutput";
+        
         //echo "<PRE>$cmd\n"; echo `$cmd`; exit;
         `$cmd`;
         
