@@ -200,47 +200,16 @@ class Pman_Core_JsCompile  extends Pman
     {
         
 
-        // csstidy 
-        // cat  x a b c | csstidy - --preserve_css=true --remove_bslash=false --silent=true --template=highest {out}
         
-        
-        require_once 'System.php';
-        
-        $csstidy= System::which('csstidy');
-        $cat = System::which('cat');
-        
-        
-        if (!$csstidy) {
-            echo '<!-- csstidy not installed -->';
-            return false;
-            
-        }
-        $targetm = file_exists($output) ? filemtime($output) : 0;
-        $max = 0;
-        $ofiles = array();
-        foreach($files as $f => $mt) {
-            $max = max($max,$mt);
-            $ofiles[] = escapeshellarg($f);
-        }
-        if ($max < $targetm)  {
-            return true;
-        }
-        if (!file_exists(dirname($output))) {
-            mkdir(dirname($output), 0755, true);
-        }
-        $eoutput = escapeshellarg($output);
-        
-        $cmd = "$cat " . implode($ofiles, " ") . " | $csstidy   - --preserve_css=true --remove_bslash=false --silent=true --template=highest $eoutput";
-        
-        //echo "<PRE>$cmd\n"; echo `$cmd`; exit;
-        `$cmd`;
-        
-        
-        // we should do more checking.. return val etc..
-        if (file_exists($output) && ($max < filemtime($output) ) ) {
-            return true;
-        }
+        echo '<!-- JSCOMPILE - should not be used for CSS packing ?? -->';
         return false;
+        // if we did.. use this?
+        
+        //require_once 'HTML/CSS/Minify.php';
+        //$x = new HTML_CSS_Minify(substr($relpath,0,-1), $dir, $relfiles);
+            
+          //  file_put_contents($compiledir.'/'.$output , $x->minify( $this->baseURL.$asset));
+        
         
     }
     /**
