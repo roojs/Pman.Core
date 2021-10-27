@@ -35,7 +35,7 @@ Pman.Dialog.CoreEnum = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -91,7 +91,7 @@ Pman.Dialog.CoreEnum = {
        click : function() {
         
             var name =     _this.form.findField('name').getValue();
-            name = name.toUpperCase().replace(/[^A-Z]+/g, '');
+            name = name.toUpperCase().replace(/[^A-Z0-9]+/g, '');
             if (!name.length) {
                 Roo.MessageBox.alert("Error","Please fill in a valid name");
                 return;

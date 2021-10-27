@@ -45,9 +45,9 @@
      "* prop" : "center"
     },
     {
+     "region" : "center",
      "fitToFrame" : true,
      "background" : true,
-     "region" : "center",
      "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
@@ -57,8 +57,8 @@
         "|rendered" : "function (form)\n{\n   _this.form = form;\n}"
        },
        "$ url" : "baseURL + '/Roo/core_enum.php'",
-       "method" : "POST",
        "xtype" : "Form",
+       "method" : "POST",
        "style" : "margin: 5px",
        "$ xns" : "Roo.form",
        "items" : [
@@ -126,7 +126,7 @@
     },
     {
      "listeners" : {
-      "|click" : "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
+      "|click" : "function() {\n\n    var name =     _this.form.findField('name').getValue();\n    name = name.toUpperCase().replace(/[^A-Z0-9]+/g, '');\n    if (!name.length) {\n        Roo.MessageBox.alert(\"Error\",\"Please fill in a valid name\");\n        return;\n    }\n    _this.form.findField('name').setValue(name);\n \n    _this.form.doAction('submit');\n    \n}"
      },
      "text" : "OK",
      "xtype" : "Button",
