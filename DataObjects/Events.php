@@ -476,17 +476,18 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         self::$extra_data = $data;
     }
     
-    function logDir()
+    function logDir($user = false)
     {
         $ff  = HTML_FlexyFramework::get();
-        if (function_exists('posix_getpwuid')) {
-            $uinfo = posix_getpwuid( posix_getuid () ); 
-         
-            $user = $uinfo['name'];
-        } else {
-            $user = getenv('USERNAME'); // windows.
-        }
-        
+        if ($user == false) {
+            if (function_exists('posix_getpwuid')) {
+                $uinfo = posix_getpwuid( posix_getuid () ); 
+             
+                $user = $uinfo['name'];
+            } else {
+                $user = getenv('USERNAME'); // windows.
+            }
+        } 
         
    
         if (!empty($ff->Pman['storedir'])) {
@@ -646,7 +647,12 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         $file = $logdir. $date. $this->id . ".json";
         if (!file_exists(dirname($file))) {
-            return false;
+            
+            // try looking www-dir..
+            $file = $this->logDir('www-data'). $date. $this->id . ".json";
+            if (!file_exists(dirname($file))) {   
+                return false;
+            }
         }
         
         return $file;
