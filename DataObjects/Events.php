@@ -479,7 +479,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     function logDir($user = false)
     {
         $ff  = HTML_FlexyFramework::get();
-        if ($user == false) {
+        if ($user === false) {
             if (function_exists('posix_getpwuid')) {
                 $uinfo = posix_getpwuid( posix_getuid () ); 
              
