@@ -646,11 +646,11 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         $date = date('/Y/m/d/', strtotime($this->event_when));
         
         $file = $logdir. $date. $this->id . ".json";
-        if (!file_exists(dirname($file))) {
+        if (!file_exists($file)) {
             
             // try looking www-dir..
             $file = $this->logDir('www-data'). $date. $this->id . ".json";
-            if (!file_exists(dirname($file))) {   
+            if (!file_exists($file)) {   
                 return false;
             }
         }
