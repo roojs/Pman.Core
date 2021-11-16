@@ -1,6 +1,8 @@
 
 DROP FUNCTION IF EXISTS i18n_translate;
+
 DELIMITER $$
+
 CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inlang varchar(8)) 
         RETURNS VARCHAR(64) DETERMINISTIC
     BEGIN
@@ -11,4 +13,5 @@ CREATE FUNCTION i18n_translate(in_ltype  varchar(1) , in_lkey varchar(8), in_inl
         RETURN ret;
         
     END $$
-DELIMITER;
+    
+DELIMITER ; 
