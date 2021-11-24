@@ -62,7 +62,7 @@ class Pman_Core_Import_Core_email extends Pman
         $this->updateOrCreateEmail($part, $opts, false);
     }
 
-    function updateOrCreateEmail($part='', $opts, $cm = false, $mapping = false){
+    function updateOrCreateEmail($part='', $opts= array(), $cm = false, $mapping = false){
         
        // DB_DataObject::debugLevel(1);
         
