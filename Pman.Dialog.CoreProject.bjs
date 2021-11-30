@@ -79,8 +79,8 @@
         "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
        },
        "$ url" : "baseURL + '/Roo/core_project'",
-       "method" : "POST",
        "xtype" : "Form",
+       "method" : "POST",
        "style" : "margin:10px;",
        "$ xns" : "Roo.form",
        "items" : [
@@ -171,8 +171,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/core_company'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -224,9 +224,9 @@
            "* prop" : "store",
            "items" : [
             {
-             "$ url" : "baseURL + '/Roo/Groups.php'",
-             "xtype" : "HttpProxy",
+             "$ url" : "baseURL + '/Roo/core_group'",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -308,8 +308,8 @@
              "items" : [
               {
                "$ url" : "baseURL + '/Roo/core_person'",
-               "xtype" : "HttpProxy",
                "method" : "GET",
+               "xtype" : "HttpProxy",
                "$ xns" : "Roo.data",
                "* prop" : "proxy"
               },
