@@ -18,8 +18,9 @@ var t = new Pman.Download({
 * 
 * @constructor
 * @param {Object} cfg   Configuration object.
+* @cfg {Object}  params  params to send
 * @cfg {String} url     Location to download from.
-* @cfg {String} method     GET or POST (default GET), POST will create a form, and post that into the hidden frame.
+* @cfg {String} method (GET|POST)    GET or POST (default GET), POST will create a form, and post that into the hidden frame.
 * @cfg {Boolean} newWindow (optional) download to new window
 * @cfg {String} doctype (optional) download PDF to new window
 * @cfg {Boolean} limit (optional) limit for grid downloads.
