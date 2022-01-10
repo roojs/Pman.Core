@@ -533,10 +533,12 @@ class Pman_Core_Images extends Pman
         
          
     }
+    static $image = 1;
     static function replaceDataUrl($baseURL, $img, $obj)
     {
         $d = DB_DataObject::Factory('Images');
         $d->object($obj);
+        $d->name = 'image-'. self::$image++;
         $d->createFromData($img->getAttribute('src'));
         $img->setAttribute('src', $d->URL(-1, 'Images' , $baseURL));
     }
