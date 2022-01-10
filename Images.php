@@ -538,7 +538,7 @@ class Pman_Core_Images extends Pman
     {
         $d = DB_DataObject::Factory('Images');
         $d->object($obj);
-        $d->name = 'image-'. self::$image++;
+        $d->filename = 'image-'. self::$image++;
         $d->createFromData($img->getAttribute('src'));
         $img->setAttribute('src', $d->URL(-1, 'Images' , $baseURL));
     }
