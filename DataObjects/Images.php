@@ -878,7 +878,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         file_put_contents($f, file_get_contents("data://" . $data));
-        
+        var_dump($f);exit;
         $o = clone($this);
         
         $this->filesize = filesize($f);
