@@ -841,13 +841,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function createFromData($data)
     {   
         
-        if (0 === strpos("data:", $data)) {
+        if (0 === strpos($data, "data:")) {
             // data:image/png;base64, 
             $data = substr($data,5);
             $bits = explode(";", $data);
             $this->mimetype = $bits[0];
         }
-        echo var_dump(strpos("data:", $data)); exit;
+        
         $this->mimetype= strtolower($this->mimetype);
         
         $explode_mimetype = explode('/', $this->mimetype);
