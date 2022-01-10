@@ -410,7 +410,7 @@ class Pman_Core_Images extends Pman
         
         libxml_use_internal_errors(true);
         $doc = new DOMDocument();
-        $doc->loadHTML($html);
+        $dom->loadHTML("<?xml encoding='utf-8'?> <div id='tmp_dom_wrapper'>{$html}</div>");
         $imgs = $doc->getElementsByTagName('img');
        
         
