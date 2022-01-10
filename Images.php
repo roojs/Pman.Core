@@ -532,7 +532,7 @@ class Pman_Core_Images extends Pman
         $d = DB_DataObject::Factory('Images');
         $d->object($obj);
         $d->createFromData($img->getAttribute('src'));
-        $img->setAttribute('src', $img->URL(-1, 'Images' , $baseURL);
+        $img->setAttribute('src', $img->URL(-1, 'Images' , $baseURL));
     }
     
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
