@@ -491,13 +491,16 @@ class Pman_Core_Images extends Pman
             $provider = '/'.$umatch[1];
         }
         
-        if (!empty($attr['width']) || !empty($attr['height']) )
+        $w =  is_string($dom) ? false : $dom->getAttribute('width');
+        $h =  is_string($dom) ? false : $dom->getAttribute('width');
+        
+        if (!is_string($dom) && (!empty($w) || !empty($h)) )
         {
             // no support for %...
             $thumbsize =
-                (empty($attr['width']) ? '0' : $attr['width'] * 1) .
+                (empty($w) ? '0' : $w * 1) .
                 'x' .
-                (empty($attr['height']) ? '0' : $attr['height'] * 1);
+                (empty($h) ? '0' : $h * 1);
              $provider = '/Images/Thumb';
             
         }
@@ -526,7 +529,10 @@ class Pman_Core_Images extends Pman
     }
     static function replaceDataUrl($baseURL, $img, $obj)
     {
-        
+        $d = DB_DataObject::Factory('Images');
+        $d->object($obj);
+        $d->createFromData($img->getAttribute('src'));
+        $img->setAttribute('src', $img->URL(-1, 'Images' , $baseURL);
     }
     
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
