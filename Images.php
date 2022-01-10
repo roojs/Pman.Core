@@ -455,6 +455,12 @@ class Pman_Core_Images extends Pman
             $anc->setAttribute('href', self::domImgUrl($baseURL, $href));
         }
         
+        
+        $inner = $dom->getElementById("tmp_dom_wrapper");
+        $html = '';
+        foreach ($inner->childNodes as $child) {
+            $html .= ($dom->saveHTML($child));
+        }
         return $html;
     }
     
