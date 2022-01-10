@@ -847,8 +847,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $bits = explode(";", $data);
             $this->mimetype = $bits[0];
         }
+        static $imgid = 1;
+        if (empty($this->filename)) {
+            require_once 'File/Mimetype.php';
+            $y = new File_MimeType();
+            $this->filename = 'image-'.$imgid++.'.'.$y->toExt($this->mimetype);
+        }
         
-        $this->mimetype= strtolower($this->mimetype);
+        
+        $this->mimetype = strtolower($this->mimetype);
         
         $explode_mimetype = explode('/', $this->mimetype);
         
