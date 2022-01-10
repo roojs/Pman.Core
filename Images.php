@@ -409,9 +409,9 @@ class Pman_Core_Images extends Pman
         $baseURL = $ff->Pman_Images['public_baseURL'];
         
         libxml_use_internal_errors(true);
-        $doc = new DOMDocument();
+        $dom = new DOMDocument();
         $dom->loadHTML("<?xml encoding='utf-8'?> <div id='tmp_dom_wrapper'>{$html}</div>");
-        $imgs = $doc->getElementsByTagName('img');
+        $imgs = $dom->getElementsByTagName('img');
        
         
         foreach($imgs as $img) {
@@ -442,7 +442,7 @@ class Pman_Core_Images extends Pman
             
         }
         
-        $anchors = $doc->getElementsByTagName('a');
+        $anchors = $dom->getElementsByTagName('a');
         $result = array();
         preg_match_all('/<a\s+[^>]+>/i',$html, $result); 
 
