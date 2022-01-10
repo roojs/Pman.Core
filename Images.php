@@ -419,8 +419,7 @@ class Pman_Core_Images extends Pman
             if (!$src|| !strlen(trim($src))) {
                 continue;
             }
-            var_dump($src);
-            
+             
             if (0 === strpos($src, 'data:')) {
                 if (!$obj) {
                     HTML_FlexyFramework::get()->page->jerr("no object to attach data url");
