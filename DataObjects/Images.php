@@ -849,7 +849,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         static $imgid = 1;
         if (empty($this->filename)) {
-            require_once 'File/Mimetype.php';
+            require_once 'File/MimeType.php';
             $y = new File_MimeType();
             $this->filename = 'image-'.$imgid++.'.'.$y->toExt($this->mimetype);
         }
