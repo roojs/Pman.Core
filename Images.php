@@ -468,10 +468,10 @@ class Pman_Core_Images extends Pman
     {
         $url = $dom;
         if (!is_string($url)) {
-            $url = $dom->getAttribute($src);
+            $url = $dom->getAttribute('src');
         }
          $umatch  = false;
-        if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
+        if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $url, $umatch))  {
             return $url;
         }
         $id = $umatch[2];
