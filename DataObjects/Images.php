@@ -841,13 +841,27 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function createFromData($data)
     {   
         
-        $this->mimetype= strtolower($this->mimetype);
+        if (0 === strpos($data, "data:")) {
+            // data:image/png;base64, 
+            $data = substr($data,5);
+            $bits = explode(";", $data);
+            $this->mimetype = $bits[0];
+        }
+        static $imgid = 1;
+        if (empty($this->filename)) {
+            require_once 'File/MimeType.php';
+            $y = new File_MimeType();
+            $this->filename = 'image-'.$imgid++.'.'.$y->toExt($this->mimetype);
+        }
+        
+        
+        $this->mimetype = strtolower($this->mimetype);
         
         $explode_mimetype = explode('/', $this->mimetype);
         
         if (array_shift($explode_mimetype) == 'image') { 
         
-            $imgs = @getimagesize($data);
+            $imgs = @getimagesize('data://'. $data);
             
             if (!empty($imgs) && !empty($imgs[0]) && !empty($imgs[1])) {
                 list($this->width , $this->height)  = $imgs;
@@ -871,7 +885,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         file_put_contents($f, file_get_contents("data://" . $data));
-        
+        //var_dump($f);exit;
         $o = clone($this);
         
         $this->filesize = filesize($f);

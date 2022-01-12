@@ -398,7 +398,7 @@ class Pman_Core_Images extends Pman
      */
     
     
-    static function replaceImageURLS($html)
+    static function replaceImageURLS($html, $obj = false)
     {
         
         $ff = HTML_FlexyFramework::get();
@@ -408,61 +408,142 @@ class Pman_Core_Images extends Pman
         //var_dump($ff->Pman_Images['public_baseURL']);
         $baseURL = $ff->Pman_Images['public_baseURL'];
         
-        preg_match_all('/<img\s+[^>]+>/i',$html, $result); 
-        //print_r($result);
-        $matches = array_unique($result[0]);
-        foreach($matches as $img) {
-            $imatch = array();
-            preg_match_all('/(width|height|src)="([^"]*)"/i',$img, $imatch);
-            // build a keymap
-            $attr =  array();
+        libxml_use_internal_errors(true);
+        $dom = new DOMDocument();
+        $dom->loadHTML("<?xml encoding='utf-8'?> <div id='tmp_dom_wrapper'>{$html}</div>");
+        $imgs = $dom->getElementsByTagName('img');
+       
+        
+        foreach($imgs as $img) {
+            $src = $img->getAttribute('src');
+            if (!$src|| !strlen(trim($src))) {
+                continue;
+            }
+             
+            if (0 === strpos($src, 'data:')) {
+                if (!$obj) {
+                    HTML_FlexyFramework::get()->page->jerr("no object to attach data url");
+                }
+                
+                self::replaceDataUrl($baseURL, $img, $obj);
+                continue;
+            }
             
-            foreach($imatch[1] as $i=>$key) {
-                $attr[$key] = $imatch[2][$i];
-            }
-            // does it contain baseURL??? --- well what about relative paths...
-            //print_R($attr);
             
-            if (empty($attr['src'])) {
+            if (false !== strpos($src, '//') && false === strpos($src, $baseURL)) {
+                // contains an absolute path.. and not our baseURL.
                 continue;
             }
-            if (0 !== strpos($attr['src'], $baseURL)) {
-                // it starts with our 'new' baseURL?
-                $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
-                continue;
-            }
-            if (false !== strpos($attr['src'], '//') && false === strpos($attr['src'], $baseURL)) {
-                // contains an absolute path.. that is probably not us...
-                continue;
-            }
+             
+            $img->setAttribute('src', self::domImgUrl($baseURL, $img));
+              
             // what about mailto or data... - just ignore?? for images...
             
-            $html = self::replaceImgUrl($html, $baseURL, $img, $attr,  'src' );
             
         }
         
-        
+        $anchors = $dom->getElementsByTagName('a');
         $result = array();
         preg_match_all('/<a\s+[^>]+>/i',$html, $result); 
 
         $matches = array_unique($result[0]);
-        foreach($matches as $img) {
-            $imatch = array();
-            preg_match_all('/(href)="([^"]*)"/i',$img, $imatch);
-            // build a keymap
-            $attr =  array();
-            
-            foreach($imatch[1] as $i=>$key) {
-                $attr[$key] = $imatch[2][$i];
-            }
-            if (!isset($attr['href']) || 0 !== strpos($attr['href'], $baseURL)) { 
+        foreach($anchors as $anc) {
+            $href = $anc->getAttribute('href');
+            if (!empty($href) || 0 !== strpos($href, $baseURL)) { 
                 continue;
             }
-            $html = self::replaceImgUrl($html, $baseURL, $img, $attr, 'href' );
+            $anc->setAttribute('href', self::domImgUrl($baseURL, $href));
         }
         
+        
+        $inner = $dom->getElementById("tmp_dom_wrapper");
+        $html = '';
+        foreach ($inner->childNodes as $child) {
+            $html .= ($dom->saveHTML($child));
+        }
         return $html;
     }
+    
+    static function domImgUrl($baseURL, $dom) 
+    {
+        $url = $dom;
+        if (!is_string($url)) {
+            $url = $dom->getAttribute($src);
+        }
+         $umatch  = false;
+        if(!preg_match('#/(Images|Images/Thumb/[a-z0-9]+|Images/Download)/([0-9]+)/(.*)$#', $attr_url, $umatch))  {
+            return $url;
+        }
+        $id = $umatch[2];
+        $hash = '';
+        
+        if (!empty($umatch[3]) && strpos($umatch[3],'#')) {
+            $hh = explode('#',$umatch[3]);
+            $hash = '#'. array_pop($hh);
+        }
+        
+        
+        $img = DB_DataObject::factory('Images');
+        if (!$img->get($id)) {
+            return $url;
+        }
+        $type = explode('/', $umatch[1]);
+        $thumbsize = -1;
+         
+        if (count($type) > 2 && $type[1] == 'Thumb') {
+            $thumbsize = $type[2];
+            $provider = '/Images/Thumb';
+        } else {
+            $provider = '/'.$umatch[1];
+        }
+        
+        $w =  is_string($dom) ? false : $dom->getAttribute('width');
+        $h =  is_string($dom) ? false : $dom->getAttribute('width');
+        
+        if (!is_string($dom) && (!empty($w) || !empty($h)) )
+        {
+            // no support for %...
+            $thumbsize =
+                (empty($w) ? '0' : $w * 1) .
+                'x' .
+                (empty($h) ? '0' : $h * 1);
+             $provider = '/Images/Thumb';
+            
+        }
+        
+        if ($thumbsize !== -1) {
+            // change in size..
+            // need to regenerate it..
+            
+            $type = array('Images', 'Thumb', $thumbsize);
+                
+            $fc = $img->toFileConvert();
+            // make sure it's available..
+            $fc->convert($img->mimetype, $thumbsize);
+            
+            
+        } else {
+            $provider = $provider == 'Images/Thumb' ? 'Images' : $provider; 
+        }
+        
+        
+        // finally replace the original TAG with the new version..
+        
+        return $img->URL($thumbsize, $provider, $baseURL) . $hash ;
+        
+         
+    }
+    
+    static function replaceDataUrl($baseURL, $img, $obj)
+    {
+        $d = DB_DataObject::Factory('Images');
+        $d->object($obj);
+        
+        
+        $d->createFromData($img->getAttribute('src'));
+        $img->setAttribute('src', $d->URL(-1, '/Images' , $baseURL));
+    }
+    
     static function replaceImgUrl($html, $baseURL, $tag, $attr, $attr_name) 
     {
         
