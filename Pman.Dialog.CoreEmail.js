@@ -855,6 +855,7 @@ Pman.Dialog.CoreEmail = {
                      'width',
                      'z-index'
                   ],
+                 enableBlocks : false,
                  height : 250,
                  name : 'bodytext',
                  resizable : 's',
