@@ -475,6 +475,26 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
     static function writeEventLogExtra($data) {
         self::$extra_data = $data;
     }
+    static $files = array();
+    
+    /**
+     * Add a file to the output log
+     * this needs to be called before addEvent, and the data format should be the same as $_FILES
+     * eg.
+     * 
+     * DB_DataObject::factory('Events')->addFile(array(
+     *    'tmp_name' => real file location
+     *    'name' => real file name
+     *    'type' => mimetype
+     *    'size' => filesize
+     *    
+     * ))
+     * 
+     */
+    function addFile($data)
+    {
+        self::$files[] = $data;
+    }
     
     function logDir($user = false)
     {
