@@ -555,7 +555,7 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         
         
         $i=0;
-        $files = array();
+        $files = self::$files;
          
         $i = 0;
         foreach ($_FILES as $k=>$f){
