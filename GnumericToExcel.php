@@ -123,7 +123,7 @@ class Pman_Core_GnumericToExcel extends Pman
         
         
         
-        
+        $this->addEvent("DOWNLOAD",  false, $fname . (isset($_REQUEST['summary']) ? (' - ' . $_REQUEST['summary']) : ''));
         
        // unlink($srcTmp);
         if (empty($fname)) {
