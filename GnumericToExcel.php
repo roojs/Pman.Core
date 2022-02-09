@@ -132,7 +132,7 @@ class Pman_Core_GnumericToExcel extends Pman
             'size' => filesize($targetTmp)
         ));
         
-        $this->addEvent("DOWNLOAD",  false, $fname . (isset($_REQUEST['summary']) ? (' - ' . $_REQUEST['summary']) : ''));
+        $this->addEvent("DOWNLOAD",  false, $fname  );
         
        // unlink($srcTmp);
         
