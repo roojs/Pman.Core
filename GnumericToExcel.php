@@ -119,18 +119,23 @@ class Pman_Core_GnumericToExcel extends Pman
             $mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
             $ext = "xlsx";
          }
-        
-        
-        
-        
-        $this->addEvent("DOWNLOAD",  false, $fname . (isset($_REQUEST['summary']) ? (' - ' . $_REQUEST['summary']) : ''));
-        
-       // unlink($srcTmp);
         if (empty($fname)) {
            $fname = basename($targetTmp);
         }
         $fname .= preg_match('/\.' . $ext . '/i', $fname) ? '' :  ('.' . $ext); // make sure it ends in xls..
        
+        
+        DB_DataObject::factory('Events')->addFile(array(
+            'tmp_name' => $targetTmp,
+            'name' => $fname,
+            'type' => $mime,
+            'size' => filesize($targetTmp)
+        ));
+        
+        $this->addEvent("DOWNLOAD",  false, $fname . (isset($_REQUEST['summary']) ? (' - ' . $_REQUEST['summary']) : ''));
+        
+       // unlink($srcTmp);
+        
         header('Content-type: ' . $mime);
         header('Content-Disposition: attachment; filename="' .addslashes($fname). '"');
         header('Content-length: '. filesize($targetTmp));   
