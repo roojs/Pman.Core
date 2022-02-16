@@ -782,6 +782,7 @@ Pman.Dialog.CoreEmail = {
                 {
                  xtype : 'HtmlEditor',
                  allowComments : true,
+                 autoClean : false,
                  autosave : function() {
                      
                      var body = _this.form.findField('bodytext');
