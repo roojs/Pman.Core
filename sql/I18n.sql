@@ -4,7 +4,7 @@ CREATE TABLE  i18n (
   id int(11)  NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (id)
 
-) ENGINE=InnoDB;
+);
 
 ALTER TABLE  i18n ADD COLUMN   ltype varchar(1)  NOT NULL DEFAULT '';
 ALTER TABLE  i18n ADD COLUMN   lkey varchar(8)  NOT NULL DEFAULT '';

@@ -14,7 +14,7 @@ ALTER TABLE core_person ADD COLUMN   lastname_alt varchar(128) NOT NULL DEFAULT 
 
 -- chose title is like a nickname 
 
-ALTER TABLE core_person ADD COLUMN   chosen_title TEXT NOT NULL; 
+ALTER TABLE core_person ADD COLUMN   chosen_title TEXT NOT NULL DEFAULT ''; 
 
 
 ALTER TABLE core_person ADD COLUMN   role varchar(254)  NOT NULL DEFAULT '';
@@ -55,7 +55,7 @@ ALTER TABLE core_person ADD COLUMN   no_reset_sent int(11) default '0';
 
 
 ALTER TABLE core_person ADD COLUMN   deleted_by INT(11) NOT NULL default 0 ;
-ALTER TABLE core_person ADD COLUMN   deleted_dt DATETIME ;
+ALTER TABLE core_person ADD COLUMN   deleted_dt DATETIME no null default '1000-01-01 00:00:00';
 
 
 -- social
@@ -64,9 +64,9 @@ ALTER TABLE core_person ADD COLUMN   url_blog VARCHAR(256) NULL ;
 ALTER TABLE core_person ADD COLUMN   url_twitter VARCHAR(256) NULL ;
 ALTER TABLE core_person ADD COLUMN   linkedin_id VARCHAR(256) NULL ;
 ALTER TABLE core_person ADD COLUMN   url_linkedin VARCHAR(256) NULL ;
-ALTER TABLE core_person ADD COLUMN url_google_plus TEXT NOT NULL; 
-ALTER TABLE core_person ADD COLUMN url_blog2 TEXT NOT NULL; 
-ALTER TABLE core_person ADD COLUMN url_blog3 TEXT NOT NULL; 
+ALTER TABLE core_person ADD COLUMN url_google_plus TEXT NOT NULL DEFAULT '';
+ALTER TABLE core_person ADD COLUMN url_blog2 TEXT NOT NULL  DEFAULT '';
+ALTER TABLE core_person ADD COLUMN url_blog3 TEXT NOT NULL  DEFAULT '';
 
 
 
