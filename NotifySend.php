@@ -102,12 +102,14 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("invalid id\n");
         }
         $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ?
-                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable);
+                            $email['error'] : "TEST ERROR  - We can not handle " . $w->ontable);
+        /*
         $ww = clone($w);
         $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
         $w->msgid = '';
         $w->event_id = $ev->id;
         $w->update($ww);
+        */
         $this->errorHandler("test\n");
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             
