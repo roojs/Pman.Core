@@ -101,6 +101,8 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
+        $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ?
+                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable);
         $this->errorHandler("test\n");
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             
