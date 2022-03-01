@@ -101,6 +101,7 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
+        $this->errorHandler("test\n");
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             
             
