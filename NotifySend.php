@@ -101,8 +101,7 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
-        $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ?
-                            $email['error'] : "TEST ERROR  - We can not handle " . $w->ontable);
+        $ev = $this->addEvent('NOTIFYFAIL', $w, "TEST ERROR");
         /*
         $ww = clone($w);
         $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
