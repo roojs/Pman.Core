@@ -227,7 +227,7 @@ class Pman_Core_NotifySend extends Pman
          
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
-            $ev = $this->addEvent('NOTIFY', $w, isset($email['error'])  ?
+            $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ?
                             $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
             $ww = clone($w);
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
@@ -276,7 +276,7 @@ class Pman_Core_NotifySend extends Pman
         
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
-            $ev = $this->addEvent('NOTIFY', $w, "INVALID ADDRESS: " . $p->email);
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
             $ww = clone($w);
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
@@ -318,13 +318,13 @@ class Pman_Core_NotifySend extends Pman
         if ($mxs === false) {
             // only retry for 2 day son the MX issue..
             if ($retry < 120) {
-                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
+                $this->addEvent('NOTIFYFAIL', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
             }
             
-            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
@@ -338,7 +338,7 @@ class Pman_Core_NotifySend extends Pman
         
         
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
-            $ev = $this->addEvent('NOTIFY', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
@@ -531,7 +531,7 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
-            $ev = $this->addEvent('NOTIFY', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
+            $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
                        $errmsg);
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
@@ -543,7 +543,7 @@ class Pman_Core_NotifySend extends Pman
         
         // handle no host availalbe forever...
         if (strtotime($w->act_start) < strtotime('NOW - 3 DAYS')) {
-            $ev = $this->addEvent('NOTIFY', $w, "RETRY TIME EXCEEDED - ". $p->email);
+            $ev = $this->addEvent('NOTIFYFAIL', $w, "RETRY TIME EXCEEDED - ". $p->email);
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
@@ -553,7 +553,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         
-        $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
+        $this->addEvent('NOTIFYFAIL', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->domain_id = $core_domain->id;
         $w->update($ww);
