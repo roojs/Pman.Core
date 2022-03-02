@@ -101,15 +101,6 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
-        $ev = $this->addEvent('NOTIFYFAIL', $w, "TEST ERROR");
-        
-        $ww = clone($w);
-        $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-        $w->msgid = '';
-        $w->event_id = $ev->id;
-        $w->update($ww);
-        
-        $this->errorHandler("test\n");
         if (!$force && strtotime($w->act_when) < strtotime($w->sent)) {
             
             
