@@ -318,7 +318,7 @@ class Pman_Core_NotifySend extends Pman
         if ($mxs === false) {
             // only retry for 2 day son the MX issue..
             if ($retry < 120) {
-                $this->addEvent('NOTIFYFAIL', $w, 'MX LOOKUP FAILED ' . $dom );
+                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
                 $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
@@ -553,7 +553,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         
-        $this->addEvent('NOTIFYFAIL', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
+        $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
         $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
         $w->domain_id = $core_domain->id;
         $w->update($ww);
