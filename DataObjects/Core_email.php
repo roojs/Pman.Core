@@ -59,6 +59,39 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     bcc_group_id = {$cgm}.group_id
             )  AS bcc_group_member_count
         ");
+
+        $this->selectAdd("
+            (
+                SELECT 
+                    COUNT(DISTINCT(crm_person_id))
+                FROM 
+                    core_notify cn 
+                WHERE 
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = {$this->id}
+                    )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+            )  AS sent_to_count,
+            
+            (
+                SELECT 
+                    count(id) 
+                FROM 
+                    {$cgm}
+                WHERE 
+                    bcc_group_id = {$cgm}.group_id
+            )  AS bcc_group_member_count
+        ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');
