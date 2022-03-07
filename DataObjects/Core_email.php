@@ -87,16 +87,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     event_id > 0
                 AND 
                     sent IS NOT NULL
-            )  AS sent_to_count,
-            
-            (
-                SELECT 
-                    count(id) 
-                FROM 
-                    {$cgm}
-                WHERE 
-                    bcc_group_id = {$cgm}.group_id
-            )  AS bcc_group_member_count
+            )  AS sent_to_count
         ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
