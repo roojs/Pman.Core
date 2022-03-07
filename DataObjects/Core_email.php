@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                             id
                         FROM 
                             crm_mailing_list_queue cmlq 
-                        WHERE message_id = {$this->id}
+                        WHERE message_id = crm_mailing_list_message.id
                     )
                 AND 
                     event_id > 0
