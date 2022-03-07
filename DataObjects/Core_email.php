@@ -60,7 +60,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             )  AS bcc_group_member_count
         ");
 
-        die($this->id);
+        die(var_dump($this->id));
 
         $this->selectAdd("
             (
