@@ -66,7 +66,13 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     COUNT(DISTINCT(crm_person_id))
                 FROM 
                     core_notify cn 
-                WHERE 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'crm_person'
+                AND 
+                    crm_person_id != 0 
+                AND
                     ontable = 'crm_mailing_list_queue'
                 AND 
                     onid IN 
