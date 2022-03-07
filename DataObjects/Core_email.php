@@ -91,7 +91,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             +
             (
                 SELECT 
-                    COUNT(DISTINCT(crm_person_id))
+                    COUNT(DISTINCT(person_id))
                 FROM 
                     core_notify cn 
                 WHERE
