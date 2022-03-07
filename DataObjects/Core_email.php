@@ -173,6 +173,61 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             ) 
             AS opened_by_count
         ");
+
+        $this->selectAdd("
+            (
+                SELECT 
+                    COUNT(DISTINCT(crm_person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'crm_person'
+                AND 
+                    crm_person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    is_open = 1
+            )  
+            +
+            (
+                SELECT 
+                    COUNT(DISTINCT(person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'Person'
+                AND 
+                    person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    is_open = 1
+            ) 
+            AS last_opened
+        ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');
