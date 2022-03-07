@@ -226,7 +226,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 AND 
                     is_open = 1
             ) 
-            AS last_opened
+            AS last_sent
         ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
