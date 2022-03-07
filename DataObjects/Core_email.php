@@ -143,6 +143,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                         WHERE message_id = crm_mailing_list_message.id
                     )
                 AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+                AND 
                     is_open = 1
             )  
             +
@@ -168,6 +172,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                             crm_mailing_list_queue cmlq 
                         WHERE message_id = crm_mailing_list_message.id
                     )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
                 AND 
                     is_open = 1
             ) 
