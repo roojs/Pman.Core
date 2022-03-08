@@ -59,6 +59,155 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     bcc_group_id = {$cgm}.group_id
             )  AS bcc_group_member_count
         ");
+
+        $this->selectAdd("
+            (
+                SELECT 
+                    COUNT(DISTINCT(crm_person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'crm_person'
+                AND 
+                    crm_person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+            )  
+            +
+            (
+                SELECT 
+                    COUNT(DISTINCT(person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'Person'
+                AND 
+                    person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+            ) 
+            AS sent_to_count
+        ");
+
+        $this->selectAdd("
+            (
+                SELECT 
+                    COUNT(DISTINCT(crm_person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'crm_person'
+                AND 
+                    crm_person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+                AND 
+                    is_open = 1
+            )  
+            +
+            (
+                SELECT 
+                    COUNT(DISTINCT(person_id))
+                FROM 
+                    core_notify cn 
+                WHERE
+                    evtype = 'MAIL'
+                AND 
+                    person_table = 'Person'
+                AND 
+                    person_id != 0 
+                AND
+                    ontable = 'crm_mailing_list_queue'
+                AND 
+                    onid IN 
+                    (
+                        SELECT 
+                            id
+                        FROM 
+                            crm_mailing_list_queue cmlq 
+                        WHERE message_id = crm_mailing_list_message.id
+                    )
+                AND 
+                    event_id > 0
+                AND 
+                    sent IS NOT NULL
+                AND 
+                    is_open = 1
+            ) 
+            AS opened_by_count
+        ");
+
+        $this->selectAdd("
+        (
+            SELECT 
+                MAX(sent)
+            FROM 
+                core_notify cn 
+            WHERE
+                evtype = 'MAIL'
+            AND
+                ontable = 'crm_mailing_list_queue'
+            AND 
+                onid IN 
+                (
+                    SELECT 
+                        id
+                    FROM 
+                        crm_mailing_list_queue cmlq 
+                    WHERE message_id = crm_mailing_list_message.id
+                )
+            AND 
+                event_id > 0
+            AND 
+                sent IS NOT NULL
+        ) 
+        AS last_sent
+        ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');

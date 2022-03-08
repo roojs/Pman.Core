@@ -76,7 +76,7 @@ Pman.Dialog.CoreEmail = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
+  this.dialog.show(this.data._el);
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
