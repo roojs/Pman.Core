@@ -613,7 +613,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 $extra[]  =   "create sequence {$tbl}_seq;";
               
             }
-            
+            if ($tbl && preg_match('#engine=\S+#i',  $l, $m)) {
+                $l = preg_replace('#engine=\S+#i', '', $l);
+                
+            }
             if (preg_match('#alter\s+table\s+(\`[a-z0-9_]+\`)#i',  $l, $m)){
                 $l = preg_replace('#alter\s+table\s+(\`[a-z0-9_]+\`)#i', "ALTER TABLE {$tbl}", $l);
             }
@@ -951,11 +954,11 @@ class Pman_Core_UpdateDatabase extends Pman
                 
                 $g = DB_DataObject::Factory('core_group')->lookup('name',$data['bcc_group']);
                 
-                if (empty($g->id)) {
+                if (empty($g->id)) { // Admin group as bcc will not have any member at initialization.
                     $this->jerr("bcc_group {$data['bcc_group']} does not exist when importing template $name");
                 }
                 
-                if (!$g->members('email') && $g->name != 'Empty Group') {
+                if (!$g->members('email') && $g->name != 'Empty Group' &&  $g->name != 'Administrators') {
                     $this->jerr("bcc_group {$data['bcc_group']} does not have any members");
                 }
                 

@@ -86,8 +86,7 @@ class Pman_Core_I18n extends Pman
         $this->sessionState(0);
         
         $lang = !$this->authUser || empty($this->authUser->lang ) ? 'en' : $this->authUser->lang;
-        
-        /// verify the selected language..
+         /// verify the selected language..
         $i = DB_DataObject::Factory('I18n');
         $i->ltype = 'l';                           // string(1)  not_null multiple_key
         $i->lkey = $lang;                            // string(8)  not_null
