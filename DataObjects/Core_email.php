@@ -136,6 +136,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 person_table = 'crm_person'
             AND 
                 crm_person_id != 0 
+            AND
                 ontable = 'crm_mailing_list_queue'
             AND 
                 onid IN 
