@@ -208,6 +208,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         ) 
         AS last_sent
         ");
+
+        $this->selectAdd("i18n_translate('l' , {$tn}.language, 'en') as lang_name");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');
