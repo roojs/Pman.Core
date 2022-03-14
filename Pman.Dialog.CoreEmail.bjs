@@ -403,7 +403,7 @@
              "$ xns" : "Roo.form",
              "name" : "bcc_group_id_name",
              "qtip" : "Select Language",
-             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{language}</b> </div>",
              "loadingText" : "Searching...",
              "Boolean forceSelection" : true,
              "items" : [
