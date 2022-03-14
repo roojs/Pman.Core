@@ -63,15 +63,15 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $this->selectAdd("
             (
                 SELECT 
-                    COUNT(DISTINCT(person_id))
+                    COUNT(DISTINCT(crm_person_id))
                 FROM 
                     core_notify cn 
                 WHERE
                     evtype = 'MAIL'
                 AND 
-                    person_table = 'Person'
+                    person_table = 'crm_person'
                 AND 
-                    person_id != 0 
+                    crm_person_id != 0 
                 AND
                     ontable = 'crm_mailing_list_queue'
                 AND 
@@ -87,22 +87,22 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     event_id > 0
                 AND 
                     sent IS NOT NULL
-            ) 
+            )  
             AS sent_to_count
         ");
 
         $this->selectAdd("
             (
                 SELECT 
-                    COUNT(DISTINCT(person_id))
+                    COUNT(DISTINCT(crm_person_id))
                 FROM 
                     core_notify cn 
                 WHERE
                     evtype = 'MAIL'
                 AND 
-                    person_table = 'Person'
+                    person_table = 'crm_person'
                 AND 
-                    person_id != 0 
+                    crm_person_id != 0 
                 AND
                     ontable = 'crm_mailing_list_queue'
                 AND 
@@ -120,7 +120,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     sent IS NOT NULL
                 AND 
                     is_open = 1
-            ) 
+            )  
             AS opened_by_count
         ");
 
@@ -132,7 +132,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 core_notify cn 
             WHERE
                 evtype = 'MAIL'
-            AND
+            AND 
+                person_table = 'crm_person'
+            AND 
+                crm_person_id != 0 
                 ontable = 'crm_mailing_list_queue'
             AND 
                 onid IN 
