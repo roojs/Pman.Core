@@ -396,8 +396,6 @@
              "pageSize" : 25,
              "displayField" : "language",
              "emptyText" : "Select Language",
-             "hiddenName" : "bcc_group_id",
-             "minChars" : 2,
              "valueField" : "id",
              "xtype" : "ComboBox",
              "typeAhead" : true,
