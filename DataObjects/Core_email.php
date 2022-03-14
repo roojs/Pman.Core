@@ -87,6 +87,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     event_id > 0
                 AND 
                     sent IS NOT NULL
+                AND
+                	crm_person_id IN 
+                	(
+                		SELECT 
+                			id 
+            			FROM 
+            				crm_person
+            		)
             )  
             AS sent_to_count
         ");
@@ -120,6 +128,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     sent IS NOT NULL
                 AND 
                     is_open = 1
+                AND
+                	crm_person_id IN 
+                	(
+                		SELECT 
+                			id 
+            			FROM 
+            				crm_person
+            		)
             )  
             AS opened_by_count
         ");
@@ -151,6 +167,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 event_id > 0
             AND 
                 sent IS NOT NULL
+            AND
+                crm_person_id IN 
+                (
+                    SELECT 
+                        id 
+                    FROM 
+                        crm_person
+                )
         ) 
         AS last_sent
         ");
