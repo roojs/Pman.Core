@@ -63,34 +63,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $this->selectAdd("
             (
                 SELECT 
-                    COUNT(DISTINCT(crm_person_id))
-                FROM 
-                    core_notify cn 
-                WHERE
-                    evtype = 'MAIL'
-                AND 
-                    person_table = 'crm_person'
-                AND 
-                    crm_person_id != 0 
-                AND
-                    ontable = 'crm_mailing_list_queue'
-                AND 
-                    onid IN 
-                    (
-                        SELECT 
-                            id
-                        FROM 
-                            crm_mailing_list_queue cmlq 
-                        WHERE message_id = crm_mailing_list_message.id
-                    )
-                AND 
-                    event_id > 0
-                AND 
-                    sent IS NOT NULL
-            )  
-            +
-            (
-                SELECT 
                     COUNT(DISTINCT(person_id))
                 FROM 
                     core_notify cn 
