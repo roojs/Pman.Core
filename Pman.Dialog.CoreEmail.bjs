@@ -392,7 +392,6 @@
              "alwaysQuery" : true,
              "triggerAction" : "all",
              "fieldLabel" : "Language",
-             "selectOnFocus" : true,
              "pageSize" : 25,
              "displayField" : "language",
              "emptyText" : "Select Language",

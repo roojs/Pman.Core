@@ -779,7 +779,6 @@ Pman.Dialog.CoreEmail = {
              name : 'bcc_group_id_name',
              pageSize : 25,
              qtip : _this._strings['83dad8107f9459efe2b4fabcf5b63108'] /* Select Language */,
-             selectOnFocus : true,
              tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
              triggerAction : 'all',
              typeAhead : true,
