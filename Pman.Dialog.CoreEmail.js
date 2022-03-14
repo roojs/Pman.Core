@@ -9,10 +9,10 @@ Pman.Dialog.CoreEmail = {
  _strings : {
   'e44b145bd8b49b06e0ad2ced1ad56466' :"Plain Text",
   '2f26e35d61be90501e099089dc533638' :"Select Images",
+  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
   '72d6d7a1885885bb55a565fd1070581a' :"Import",
-  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
@@ -23,7 +23,6 @@ Pman.Dialog.CoreEmail = {
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
-  '83dad8107f9459efe2b4fabcf5b63108' :"Select Language",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
@@ -33,7 +32,6 @@ Pman.Dialog.CoreEmail = {
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
-  '4994a8ffeba4ac3140beb89e8d41f174' :"Language",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '1bd18d39370b7f26c1c5e18067b74c6f' :"Html File",
@@ -42,8 +40,8 @@ Pman.Dialog.CoreEmail = {
   '31bb2f6e9b8fb11cbb7fb63c6025223f' :"Select Template",
   'b78a3223503896721cca1303f776159b' :"Title",
   '278c491bdd8a53618c149c4ac790da34' :"Template",
-  '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
+  '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
@@ -53,8 +51,8 @@ Pman.Dialog.CoreEmail = {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
   'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
-  'bcc_group_id_name_qtip' : '83dad8107f9459efe2b4fabcf5b63108' /* Select Language */ ,
-  'bcc_group_id_name_emptyText' : '83dad8107f9459efe2b4fabcf5b63108' /* Select Language */ ,
+  'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
+  'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'template_qtip' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
   'template_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
@@ -62,7 +60,7 @@ Pman.Dialog.CoreEmail = {
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
-  'bcc_group_id_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
+  'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
  },
@@ -766,56 +764,6 @@ Pman.Dialog.CoreEmail = {
              width : 600,
              xns : Roo.form,
              '|xns' : 'Roo.form'
-            },
-            {
-             xtype : 'ComboBox',
-             alwaysQuery : true,
-             displayField : 'language',
-             editable : false,
-             emptyText : _this._strings['83dad8107f9459efe2b4fabcf5b63108'] /* Select Language */,
-             fieldLabel : _this._strings['4994a8ffeba4ac3140beb89e8d41f174'] /* Language */,
-             forceSelection : true,
-             loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-             name : 'bcc_group_id_name',
-             pageSize : 25,
-             qtip : _this._strings['83dad8107f9459efe2b4fabcf5b63108'] /* Select Language */,
-             tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{language}</b> </div>',
-             triggerAction : 'all',
-             typeAhead : true,
-             valueField : 'id',
-             width : 300,
-             xns : Roo.form,
-             '|xns' : 'Roo.form',
-             store : {
-              xtype : 'Store',
-              remoteSort : true,
-              sortInfo : { direction : 'ASC', field: 'name' },
-              listeners : {
-               beforeload : function (_self, o){
-                    o.params = o.params || {};
-                    
-                    o.params._direct_return = 1;
-                }
-              },
-              xns : Roo.data,
-              '|xns' : 'Roo.data',
-              proxy : {
-               xtype : 'HttpProxy',
-               method : 'GET',
-               url : baseURL + '/Roo/Core_group',
-               xns : Roo.data,
-               '|xns' : 'Roo.data'
-              },
-              reader : {
-               xtype : 'JsonReader',
-               fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
-               id : 'name',
-               root : 'data',
-               totalProperty : 'total',
-               xns : Roo.data,
-               '|xns' : 'Roo.data'
-              }
-             }
             },
             {
              xtype : 'Row',

@@ -8,10 +8,10 @@
  "strings" : {
   "e44b145bd8b49b06e0ad2ced1ad56466" : "Plain Text",
   "2f26e35d61be90501e099089dc533638" : "Select Images",
+  "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "72d6d7a1885885bb55a565fd1070581a" : "Import",
-  "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
   "28690be026c0bb9003aa58e45e5662ca" : "Enabled - will be sent out",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
   "31fde7b05ac8952dacf4af8a704074ec" : "Preview",
@@ -22,7 +22,6 @@
   "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
   "2393ad754ba179442d85e415d1d5167c" : "Displayorder",
   "e9968623956c15023d54335ea3699855" : "Convert Html to Text",
-  "83dad8107f9459efe2b4fabcf5b63108" : "Select Language",
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "5b8ef4e762c00a15a41cfc26dc3ef99c" : "Send me a test copy",
   "c7892ebbb139886662c6f2fc8c450710" : "Subject",
@@ -32,7 +31,6 @@
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "c4ca4238a0b923820dcc509a6f75849b" : "1",
-  "4994a8ffeba4ac3140beb89e8d41f174" : "Language",
   "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "1bd18d39370b7f26c1c5e18067b74c6f" : "Html File",
@@ -41,8 +39,8 @@
   "31bb2f6e9b8fb11cbb7fb63c6025223f" : "Select Template",
   "b78a3223503896721cca1303f776159b" : "Title",
   "278c491bdd8a53618c149c4ac790da34" : "Template",
-  "308f2757bfc9ce92fb00ff93fdffd279" : "Images / Attachments",
   "1351017ac6423911223bc19a8cb7c653" : "Filename",
+  "308f2757bfc9ce92fb00ff93fdffd279" : "Images / Attachments",
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "5feb9bf3c03b32635135006cbacb9542" : "Insert Field",
   "4c2a8fe7eaf24721cc7a9f0175115bd4" : "Message",
@@ -52,8 +50,8 @@
   "active_boxLabel" : "28690be026c0bb9003aa58e45e5662ca",
   "template_fieldLabel" : "278c491bdd8a53618c149c4ac790da34",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
-  "bcc_group_id_name_qtip" : "83dad8107f9459efe2b4fabcf5b63108",
-  "bcc_group_id_name_emptyText" : "83dad8107f9459efe2b4fabcf5b63108",
+  "bcc_group_id_name_qtip" : "2c466a2c159463f1d9ef5a7b57b52827",
+  "bcc_group_id_name_emptyText" : "2c466a2c159463f1d9ef5a7b57b52827",
   "template_qtip" : "31bb2f6e9b8fb11cbb7fb63c6025223f",
   "template_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "from_email_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
@@ -61,7 +59,7 @@
   "active_value" : "c4ca4238a0b923820dcc509a6f75849b",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
-  "bcc_group_id_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
+  "bcc_group_id_name_fieldLabel" : "68b00d723d37122f64da8d9939f836f0",
   "subject_fieldLabel" : "c7892ebbb139886662c6f2fc8c450710",
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
@@ -82,14 +80,14 @@
    "items" : [
     {
      "xtype" : "LayoutRegion",
-     "tabPosition" : "top",
      "$ xns" : "Roo",
+     "tabPosition" : "top",
      "* prop" : "center"
     },
     {
      "hidden" : true,
-     "title" : "Images / Attachments",
      "xtype" : "LayoutRegion",
+     "title" : "Images / Attachments",
      "width" : 500,
      "$ xns" : "Roo",
      "split" : true,
@@ -98,8 +96,8 @@
     },
     {
      "autoScroll" : false,
-     "fitToFrame" : true,
      "region" : "center",
+     "fitToFrame" : true,
      "xtype" : "NestedLayoutPanel",
      "fitContainer" : true,
      "$ xns" : "Roo",
@@ -200,8 +198,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Core/MailTemplateList.php'",
-             "xtype" : "HttpProxy",
              "method" : "GET",
+             "xtype" : "HttpProxy",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -249,8 +247,8 @@
           "render" : "function (_self, width, height)\n{\n    \n      Roo.log(\"RESIZE, \" + width + ',' + height);\n    \n    var ew = Math.max(250, width-50);\n    var eh = Math.max(250,height-50) ;\n    \n   \n\n}"
          },
          "autoScroll" : false,
-         "background" : false,
          "fitToFrame" : true,
+         "background" : false,
          "region" : "center",
          "title" : "Message",
          "xtype" : "ContentPanel",
@@ -262,9 +260,9 @@
             "|actioncomplete" : "function(_self,action)\n{\n   \n    if (action.type == 'setdata') {\n    \n        setInterval(_this.form.findField('bodytext').autosave, 5000);\n        \n        _this.data.module = _this.data.module || 'crm_mailing_list_message';\n        \n        _this.form.url = baseURL + '/Roo/' + _this.data.module;\n        \n        _this.html_preview.hide();\n        _this.preview_btn.hide();\n            \n        if(_this.data.id*1 > 0){\n            _this.dialog.el.mask(\"Loading\");\n            this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n            _this.html_preview.show();\n            _this.preview_btn.show();\n            \n        } else {\n            _this.form.setValues({\n                'from_name' : Pman.Login.authUser.name,\n                'from_email' : Pman.Login.authUser.email\n            });\n        }\n       return;\n    }\n    if (action.type == 'load') {\n        _this.dialog.el.unmask();\n        \n        _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();\n        \n        return;\n    }\n    if (action.type =='submit') {\n    \n        _this.dialog.el.unmask();\n        _this.dialog.hide();\n    \n         if (_this.callback) {\n            _this.callback.call(_this, action.result.data);\n         }\n         _this.form.reset();\n         return;\n    }\n}\n",
             "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
            },
+           "labelAlign" : "right",
            "$ preValidate" : "function(done_callback) {\n    \n    Roo.MessageBox.progress(\"Uploading Images\", \"Uploading\");\n    \n    if(!_this.form.findField('bodytext').editorcore.sourceEditMode){\n        _this.form.findField('bodytext').syncValue();\n    }else{\n        _this.form.findField('bodytext').pushValue();\n    }\n    \n    var html = _this.form.findField('bodytext').getValue();\n    \n    var s = Roo.get(_this.form.findField('bodytext').editorcore.doc.documentElement);\n    \n    var ontable = (_this.data.module) ? _this.data.module : 'crm_mailing_list_message';\n    \n    var nodes = [];\n    s.select('img[src]').each(function(i) {\n        nodes.push(i.dom);\n    });\n    var total = nodes.length;\n    var mkimg = function() {\n    \n        if (!nodes.length) {\n              Roo.MessageBox.hide();\n              _this.form.findField('bodytext').syncValue();\n              done_callback(true);\n           //    _this.form.doAction(\"submit\");\n              return;\n        }\n        var i = nodes.pop(); \n        \n        var n = i.getAttribute('src').match(/(baseURL|server_baseurl)/);\n        \n        if(n){\n            mkimg();\n            return;\n        }\n        \n        n = i.getAttribute('src').match(/^http(.*)/);\n       \n        if(!n ){\n            mkimg();\n            return;\n        }\n        \n        new Pman.Request({\n            url : baseURL + '/Roo/Images.php',\n            method : 'POST',\n            params : {\n                onid : _this.form.findField('id').getValue(),\n                ontable : ontable ,\n                _remote_upload : i.src\n            },\n            success : function(res){\n                if(res.success == true){      \n                    i.setAttribute('src', res.data);\n                    Roo.MessageBox.updateProgress( (total - nodes.length) / total , \"Done \" + (total - nodes.length) + '/' + total);\n                }\n                mkimg();\n            }\n        });\n       \n    }\n    \n    if (!_this.form.findField('bodytext').getValue().match(/unsubscribe/i)) {\n        Roo.MessageBox.confirm(\"Missing unusubscribe\",\n            \"There is no unsubscribe link on the email  are you sure you want to save it\",\n            function(res) {\n                if (res == 'no') {\n                    return;\n                }\n                mkimg();\n            }\n        );\n\n        return;\n    }\n    \n    mkimg();\n}\n",
            "$ url" : "baseURL + '/Roo/crm_mailing_list_message.php'",
-           "labelAlign" : "right",
            "method" : "POST",
            "style" : "margin:10px",
            "xtype" : "Form",
@@ -360,8 +358,8 @@
                  "items" : [
                   {
                    "$ url" : "baseURL + '/Roo/Core_group'",
-                   "method" : "GET",
                    "xtype" : "HttpProxy",
+                   "method" : "GET",
                    "$ xns" : "Roo.data",
                    "* prop" : "proxy"
                   },
@@ -389,63 +387,14 @@
              "name" : "subject"
             },
             {
-             "alwaysQuery" : true,
-             "triggerAction" : "all",
-             "fieldLabel" : "Language",
-             "pageSize" : 25,
-             "displayField" : "language",
-             "emptyText" : "Select Language",
-             "valueField" : "id",
-             "xtype" : "ComboBox",
-             "typeAhead" : true,
-             "editable" : false,
-             "width" : 300,
-             "$ xns" : "Roo.form",
-             "name" : "bcc_group_id_name",
-             "qtip" : "Select Language",
-             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{language}</b> </div>",
-             "loadingText" : "Searching...",
-             "Boolean forceSelection" : true,
-             "items" : [
-              {
-               "listeners" : {
-                "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params._direct_return = 1;\n}\n"
-               },
-               "xtype" : "Store",
-               "remoteSort" : true,
-               "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
-               "$ xns" : "Roo.data",
-               "* prop" : "store",
-               "items" : [
-                {
-                 "$ url" : "baseURL + '/Roo/Core_group'",
-                 "method" : "GET",
-                 "xtype" : "HttpProxy",
-                 "$ xns" : "Roo.data",
-                 "* prop" : "proxy"
-                },
-                {
-                 "id" : "name",
-                 "root" : "data",
-                 "xtype" : "JsonReader",
-                 "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
-                 "$ xns" : "Roo.data",
-                 "* prop" : "reader",
-                 "totalProperty" : "total"
-                }
-               ]
-              }
-             ]
-            },
-            {
              "hideLabels" : true,
              "xtype" : "Row",
              "$ xns" : "Roo.form",
              "items" : [
               {
                "hideLabels" : true,
-               "style" : "text-align:center;",
                "legend" : "Html Editor",
+               "style" : "text-align:center;",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -455,8 +404,8 @@
                   "autosave" : "function (_self)\n{\n    Roo.log('autosave');\n    \n    var id = _this.form.findField('id').getValue() * 1;\n    \n    /*\n    if(!_self.editorcore.sourceEditMode){\n        _self.syncValue();\n    }else{\n        _self.pushValue();\n    }\n    */\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Events.php',\n        method :'POST',\n        params : {\n            id : 0,\n            action : 'AUTOSAVE',\n            on_id : (id > 0) ? id : 0,\n            on_table : 'crm_mailing_list_message',\n            remarks : 'BODY',\n            source: _self.getValue()\n        },\n        success : function() {\n            _self.originalValue = _self.getValue();\n            \n        },\n        failure : function() \n        {\n            Roo.log('body autosave failed?!');\n        }\n    });\n    \n}"
                  },
                  "bool allowComments" : true,
-                 "| function autosave" : "function() {\n    \n    var body = _this.form.findField('bodytext');\n    \n    if(!body.wrap.isVisible(true) || body.getValue() == '' || !body.isDirty()){\n        Roo.log('body not dirty');\n        return;\n    }\n    \n    Roo.log('body dirty, auto save!');\n    \n    body.fireEvent('autosave', body);\n   \n}\n",
                  "xtype" : "HtmlEditor",
+                 "| function autosave" : "function() {\n    \n    var body = _this.form.findField('bodytext');\n    \n    if(!body.wrap.isVisible(true) || body.getValue() == '' || !body.isDirty()){\n        Roo.log('body not dirty');\n        return;\n    }\n    \n    Roo.log('body dirty, auto save!');\n    \n    body.fireEvent('autosave', body);\n   \n}\n",
                  "$ cwhite" : "[ \n    'background',\n    'background-color',\n    'border',\n    'border-radius',\n    'border-bottom',\n    'border-left',\n    'border-right',\n    'border-top',\n    'border-collapse',\n     'border-color',\n     'border-style',\n    'border-width',\n\n    \n    'box-shadow',\n    'clear',\n    'color',\n    'cursor',\n    'display',\n    'float' ,\n    'font-family',\n    'font-size',\n    'font-style',        \n    'font-weight',\n\n    'height',\n    'left',\n    'line-height',\n    'list-style',\n    'margin',\n    'margin-bottom',\n    'margin-left',\n    'margin-right',\n    'margin-top',\n    'max-width',\n    'min-height',\n    '-ms-interpolation-mode',\n    'mso-table-rspace',\n    '-ms-text-size-adjust',\n    'outline',\n    'overflow',\n    'padding',\n    'padding-bottom',\n    'padding-left',\n    'padding-right',\n    'padding-top',\n    'position',\n    'right',\n    'text-align',\n    'text-decoration',\n    'top',\n    'vertical-align',\n    '-webkit-text-size-adjust',\n    'width',\n    'width',\n    'z-index'\n ]",
                  "boolean autoClean" : false,
                  "$ xns" : "Roo.form",
@@ -515,8 +464,8 @@
                        "items" : [
                         {
                          "$ url" : "baseURL + '/Roo/Images.php'",
-                         "method" : "GET",
                          "xtype" : "HttpProxy",
+                         "method" : "GET",
                          "$ xns" : "Roo.data",
                          "* prop" : "proxy"
                         },
@@ -613,8 +562,8 @@
              "items" : [
               {
                "hideLabels" : true,
-               "style" : "text-align:center;",
                "legend" : "Plain Text",
+               "style" : "text-align:center;",
                "xtype" : "FieldSet",
                "$ xns" : "Roo.form",
                "items" : [
@@ -661,8 +610,8 @@
       "|activate" : "function() {\n    _this.ipanel = this;\n    if (_this.igrid) {\n       _this.igrid.ds.load({});\n    }\n}"
      },
      "autoScroll" : false,
-     "background" : false,
      "fitToframe" : true,
+     "background" : false,
      "region" : "east",
      "title" : "Images / Attachments",
      "xtype" : "GridPanel",
@@ -692,8 +641,8 @@
          "items" : [
           {
            "$ url" : "baseURL + '/Roo/Images.php'",
-           "method" : "GET",
            "xtype" : "HttpProxy",
+           "method" : "GET",
            "$ xns" : "Roo.data",
            "* prop" : "proxy"
           },
@@ -737,8 +686,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Filename",
          "width" : 300,
+         "header" : "Filename",
          "$ renderer" : "function(v,x,r)\n{\n    var width = r.data.width;\n    var height = r.data.height;\n    \n    if(width > 50){\n        height = Math.round(height * 50 / width);\n        width = 50;\n    }\n    \n   return '<img src=\"' + baseURL + '/Images/' + r.data.id + '/' + r.data.filename + '\" width=\"' + width + '\" height=\"' + height + '\" />';\n}",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -746,8 +695,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "width" : 75,
          "header" : "Displayorder",
+         "width" : 75,
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
@@ -755,8 +704,8 @@
         },
         {
          "xtype" : "ColumnModel",
-         "header" : "Title",
          "width" : 75,
+         "header" : "Title",
          "$ renderer" : "function(v) { return String.format('{0}', v); }",
          "$ xns" : "Roo.grid",
          "* prop" : "colModel[]",
