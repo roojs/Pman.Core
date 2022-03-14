@@ -780,7 +780,7 @@ Pman.Dialog.CoreEmail = {
              tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>',
              triggerAction : 'all',
              valueField : 'code',
-             width : 100,
+             width : 200,
              xns : Roo.form,
              '|xns' : 'Roo.form',
              store : {
