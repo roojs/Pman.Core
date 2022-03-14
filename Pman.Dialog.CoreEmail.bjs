@@ -393,7 +393,7 @@
              "forceSelection" : true,
              "selectOnFocus" : true,
              "pageSize" : 25,
-             "displayField" : "name",
+             "displayField" : "language",
              "emptyText" : "Select BCC Group",
              "hiddenName" : "bcc_group_id",
              "minChars" : 2,

@@ -768,7 +768,7 @@ Pman.Dialog.CoreEmail = {
             {
              xtype : 'ComboBox',
              alwaysQuery : true,
-             displayField : 'name',
+             displayField : 'language',
              editable : false,
              emptyText : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
              fieldLabel : _this._strings['68b00d723d37122f64da8d9939f836f0'] /* BCC Group */,
