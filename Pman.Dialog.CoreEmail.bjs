@@ -57,8 +57,8 @@
   "from_email_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
   "template_emptyText" : "31bb2f6e9b8fb11cbb7fb63c6025223f",
   "active_value" : "c4ca4238a0b923820dcc509a6f75849b",
-  "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
+  "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "bcc_group_id_name_fieldLabel" : "68b00d723d37122f64da8d9939f836f0",
   "subject_fieldLabel" : "c7892ebbb139886662c6f2fc8c450710",
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
@@ -299,60 +299,6 @@
                  "Mixed value" : 1
                 }
                ]
-              },
-              {
-               "alwaysQuery" : true,
-               "triggerAction" : "all",
-               "fieldLabel" : "BCC Group",
-               "forceSelection" : true,
-               "selectOnFocus" : true,
-               "pageSize" : 25,
-               "displayField" : "name",
-               "emptyText" : "Select BCC Group",
-               "hiddenName" : "bcc_group_id",
-               "minChars" : 2,
-               "valueField" : "id",
-               "xtype" : "ComboBox",
-               "allowBlank" : true,
-               "typeAhead" : true,
-               "editable" : false,
-               "width" : 300,
-               "$ xns" : "Roo.form",
-               "name" : "bcc_group_id_name",
-               "qtip" : "Select BCC Group",
-               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-               "loadingText" : "Searching...",
-               "Boolean forceSelection" : true,
-               "items" : [
-                {
-                 "listeners" : {
-                  "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params._direct_return = 1;\n}\n"
-                 },
-                 "xtype" : "Store",
-                 "remoteSort" : true,
-                 "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
-                 "$ xns" : "Roo.data",
-                 "* prop" : "store",
-                 "items" : [
-                  {
-                   "$ url" : "baseURL + '/Roo/Core_group'",
-                   "xtype" : "HttpProxy",
-                   "method" : "GET",
-                   "$ xns" : "Roo.data",
-                   "* prop" : "proxy"
-                  },
-                  {
-                   "id" : "name",
-                   "root" : "data",
-                   "xtype" : "JsonReader",
-                   "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
-                   "$ xns" : "Roo.data",
-                   "* prop" : "reader",
-                   "totalProperty" : "total"
-                  }
-                 ]
-                }
-               ]
               }
              ]
             },
@@ -439,6 +385,60 @@
              "width" : 600,
              "$ xns" : "Roo.form",
              "name" : "subject"
+            },
+            {
+             "alwaysQuery" : true,
+             "triggerAction" : "all",
+             "fieldLabel" : "BCC Group",
+             "forceSelection" : true,
+             "selectOnFocus" : true,
+             "pageSize" : 25,
+             "displayField" : "name",
+             "emptyText" : "Select BCC Group",
+             "hiddenName" : "bcc_group_id",
+             "minChars" : 2,
+             "valueField" : "id",
+             "xtype" : "ComboBox",
+             "allowBlank" : true,
+             "typeAhead" : true,
+             "editable" : false,
+             "width" : 300,
+             "$ xns" : "Roo.form",
+             "name" : "bcc_group_id_name",
+             "qtip" : "Select BCC Group",
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+             "loadingText" : "Searching...",
+             "Boolean forceSelection" : true,
+             "items" : [
+              {
+               "listeners" : {
+                "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params._direct_return = 1;\n}\n"
+               },
+               "xtype" : "Store",
+               "remoteSort" : true,
+               "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store",
+               "items" : [
+                {
+                 "$ url" : "baseURL + '/Roo/Core_group'",
+                 "method" : "GET",
+                 "xtype" : "HttpProxy",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "proxy"
+                },
+                {
+                 "id" : "name",
+                 "root" : "data",
+                 "xtype" : "JsonReader",
+                 "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "reader",
+                 "totalProperty" : "total"
+                }
+               ]
+              }
+             ]
             },
             {
              "hideLabels" : true,

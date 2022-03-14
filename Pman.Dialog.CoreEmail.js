@@ -58,8 +58,8 @@ Pman.Dialog.CoreEmail = {
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'template_emptyText' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
-  'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
+  'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
@@ -674,60 +674,6 @@ Pman.Dialog.CoreEmail = {
                  '|xns' : 'Roo.form'
                 }
                ]
-              },
-              {
-               xtype : 'ComboBox',
-               allowBlank : true,
-               alwaysQuery : true,
-               displayField : 'name',
-               editable : false,
-               emptyText : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
-               fieldLabel : _this._strings['68b00d723d37122f64da8d9939f836f0'] /* BCC Group */,
-               forceSelection : true,
-               hiddenName : 'bcc_group_id',
-               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-               minChars : 2,
-               name : 'bcc_group_id_name',
-               pageSize : 25,
-               qtip : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
-               selectOnFocus : true,
-               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
-               triggerAction : 'all',
-               typeAhead : true,
-               valueField : 'id',
-               width : 300,
-               xns : Roo.form,
-               '|xns' : 'Roo.form',
-               store : {
-                xtype : 'Store',
-                remoteSort : true,
-                sortInfo : { direction : 'ASC', field: 'name' },
-                listeners : {
-                 beforeload : function (_self, o){
-                      o.params = o.params || {};
-                      
-                      o.params._direct_return = 1;
-                  }
-                },
-                xns : Roo.data,
-                '|xns' : 'Roo.data',
-                proxy : {
-                 xtype : 'HttpProxy',
-                 method : 'GET',
-                 url : baseURL + '/Roo/Core_group',
-                 xns : Roo.data,
-                 '|xns' : 'Roo.data'
-                },
-                reader : {
-                 xtype : 'JsonReader',
-                 fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
-                 id : 'name',
-                 root : 'data',
-                 totalProperty : 'total',
-                 xns : Roo.data,
-                 '|xns' : 'Roo.data'
-                }
-               }
               }
              ]
             },
@@ -818,6 +764,60 @@ Pman.Dialog.CoreEmail = {
              width : 600,
              xns : Roo.form,
              '|xns' : 'Roo.form'
+            },
+            {
+             xtype : 'ComboBox',
+             allowBlank : true,
+             alwaysQuery : true,
+             displayField : 'name',
+             editable : false,
+             emptyText : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
+             fieldLabel : _this._strings['68b00d723d37122f64da8d9939f836f0'] /* BCC Group */,
+             forceSelection : true,
+             hiddenName : 'bcc_group_id',
+             loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+             minChars : 2,
+             name : 'bcc_group_id_name',
+             pageSize : 25,
+             qtip : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
+             selectOnFocus : true,
+             tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
+             triggerAction : 'all',
+             typeAhead : true,
+             valueField : 'id',
+             width : 300,
+             xns : Roo.form,
+             '|xns' : 'Roo.form',
+             store : {
+              xtype : 'Store',
+              remoteSort : true,
+              sortInfo : { direction : 'ASC', field: 'name' },
+              listeners : {
+               beforeload : function (_self, o){
+                    o.params = o.params || {};
+                    
+                    o.params._direct_return = 1;
+                }
+              },
+              xns : Roo.data,
+              '|xns' : 'Roo.data',
+              proxy : {
+               xtype : 'HttpProxy',
+               method : 'GET',
+               url : baseURL + '/Roo/Core_group',
+               xns : Roo.data,
+               '|xns' : 'Roo.data'
+              },
+              reader : {
+               xtype : 'JsonReader',
+               fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
+               id : 'name',
+               root : 'data',
+               totalProperty : 'total',
+               xns : Roo.data,
+               '|xns' : 'Roo.data'
+              }
+             }
             },
             {
              xtype : 'Row',
