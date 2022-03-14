@@ -767,7 +767,6 @@ Pman.Dialog.CoreEmail = {
             },
             {
              xtype : 'ComboBox',
-             allowBlank : true,
              alwaysQuery : true,
              displayField : 'name',
              editable : false,

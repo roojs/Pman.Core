@@ -399,7 +399,6 @@
              "minChars" : 2,
              "valueField" : "id",
              "xtype" : "ComboBox",
-             "allowBlank" : true,
              "typeAhead" : true,
              "editable" : false,
              "width" : 300,
