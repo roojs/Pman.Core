@@ -40,7 +40,25 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         $cgm = DB_DataObject::Factory('core_group_member')->tableName();;
       
-        
+        $this->selectAdd("
+            (
+                SELECT 
+                    count(id) 
+                FROM 
+                    {$cgm}
+                WHERE 
+                    to_group_id = {$cgm}.group_id
+            )  AS group_member_count,
+            
+            (
+                SELECT 
+                    count(id) 
+                FROM 
+                    {$cgm}
+                WHERE 
+                    bcc_group_id = {$cgm}.group_id
+            )  AS bcc_group_member_count
+        ");
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');
