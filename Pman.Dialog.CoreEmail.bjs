@@ -284,52 +284,39 @@
                "name" : "name"
               },
               {
-               "xtype" : "Column",
+               "listeners" : {
+                "check" : "function (_self, checked)\n{\n    var boxLabel = 'Enabled - will be sent out';\n    \n    if(!checked){\n        boxLabel = 'Disabled - will NOT be sent out';\n    }\n    \n    this.setBoxLabel(boxLabel);\n}"
+               },
+               "String name" : "active",
+               "Boolean checked" : true,
+               "xtype" : "Checkbox",
+               "String valueOff" : 0,
+               "String boxLabel" : "Enabled - will be sent out",
                "$ xns" : "Roo.form",
-               "Boolean hideLabels" : true,
-               "items" : [
-                {
-                 "listeners" : {
-                  "check" : "function (_self, checked)\n{\n    var boxLabel = 'Enabled - will be sent out';\n    \n    if(!checked){\n        boxLabel = 'Disabled - will NOT be sent out';\n    }\n    \n    this.setBoxLabel(boxLabel);\n}"
-                 },
-                 "String name" : "active",
-                 "Boolean checked" : true,
-                 "xtype" : "Checkbox",
-                 "String valueOff" : 0,
-                 "String boxLabel" : "Enabled - will be sent out",
-                 "$ xns" : "Roo.form",
-                 "Mixed value" : 1
-                }
-               ]
+               "Mixed value" : 1
               },
               {
-               "xtype" : "Column",
+               "listWidth" : 200,
+               "triggerAction" : "all",
+               "fieldLabel" : "Language",
+               "displayField" : "title",
+               "hiddenName" : "language",
+               "valueField" : "code",
+               "xtype" : "ComboBox",
+               "allowBlank" : false,
+               "editable" : false,
+               "width" : 200,
                "$ xns" : "Roo.form",
+               "mode" : "local",
+               "name" : "language_name",
+               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
                "items" : [
                 {
-                 "listWidth" : 200,
-                 "triggerAction" : "all",
-                 "fieldLabel" : "Language",
-                 "displayField" : "title",
-                 "hiddenName" : "language",
-                 "valueField" : "code",
-                 "xtype" : "ComboBox",
-                 "allowBlank" : false,
-                 "editable" : false,
-                 "width" : 200,
-                 "$ xns" : "Roo.form",
-                 "mode" : "local",
-                 "name" : "language_name",
-                 "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
-                 "items" : [
-                  {
-                   "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()",
-                   "xtype" : "SimpleStore",
-                   "$ fields" : "['code', 'title']",
-                   "$ xns" : "Roo.data",
-                   "* prop" : "store"
-                  }
-                 ]
+                 "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()",
+                 "xtype" : "SimpleStore",
+                 "$ fields" : "['code', 'title']",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "store"
                 }
                ]
               }
@@ -418,31 +405,6 @@
              "width" : 600,
              "$ xns" : "Roo.form",
              "name" : "subject"
-            },
-            {
-             "listWidth" : 200,
-             "triggerAction" : "all",
-             "fieldLabel" : "Language",
-             "displayField" : "title",
-             "hiddenName" : "language",
-             "valueField" : "code",
-             "xtype" : "ComboBox",
-             "allowBlank" : false,
-             "editable" : false,
-             "width" : 200,
-             "$ xns" : "Roo.form",
-             "mode" : "local",
-             "name" : "language_name",
-             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
-             "items" : [
-              {
-               "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()",
-               "xtype" : "SimpleStore",
-               "$ fields" : "['code', 'title']",
-               "$ xns" : "Roo.data",
-               "* prop" : "store"
-              }
-             ]
             },
             {
              "hideLabels" : true,
