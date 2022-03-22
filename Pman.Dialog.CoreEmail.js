@@ -639,20 +639,13 @@ Pman.Dialog.CoreEmail = {
              '|xns' : 'Roo.form',
              items  : [
               {
-               xtype : 'Column',
+               xtype : 'TextField',
+               allowBlank : false,
+               fieldLabel : _this._strings['b20a8b77b05d53b4e695738731400c85'] /* Mailout Name */,
+               name : 'name',
+               width : 400,
                xns : Roo.form,
-               '|xns' : 'Roo.form',
-               items  : [
-                {
-                 xtype : 'TextField',
-                 allowBlank : false,
-                 fieldLabel : _this._strings['b20a8b77b05d53b4e695738731400c85'] /* Mailout Name */,
-                 name : 'name',
-                 width : 400,
-                 xns : Roo.form,
-                 '|xns' : 'Roo.form'
-                }
-               ]
+               '|xns' : 'Roo.form'
               },
               {
                xtype : 'Column',

@@ -276,18 +276,12 @@
              "$ xns" : "Roo.form",
              "items" : [
               {
-               "xtype" : "Column",
+               "fieldLabel" : "Mailout Name",
+               "xtype" : "TextField",
+               "allowBlank" : false,
+               "width" : 400,
                "$ xns" : "Roo.form",
-               "items" : [
-                {
-                 "fieldLabel" : "Mailout Name",
-                 "xtype" : "TextField",
-                 "allowBlank" : false,
-                 "width" : 400,
-                 "$ xns" : "Roo.form",
-                 "name" : "name"
-                }
-               ]
+               "name" : "name"
               },
               {
                "xtype" : "Column",
