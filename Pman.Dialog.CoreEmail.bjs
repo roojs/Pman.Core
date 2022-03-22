@@ -290,14 +290,6 @@
                ]
               },
               {
-               "fieldLabel" : "Mailout Name",
-               "xtype" : "TextField",
-               "allowBlank" : false,
-               "width" : 400,
-               "$ xns" : "Roo.form",
-               "name" : "name"
-              },
-              {
                "xtype" : "Column",
                "$ xns" : "Roo.form",
                "Boolean hideLabels" : true,
