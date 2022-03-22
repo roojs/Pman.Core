@@ -678,6 +678,37 @@ Pman.Dialog.CoreEmail = {
                ]
               },
               {
+               xtype : 'Column',
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               items  : [
+                {
+                 xtype : 'ComboBox',
+                 allowBlank : false,
+                 displayField : 'title',
+                 editable : false,
+                 fieldLabel : _this._strings['4994a8ffeba4ac3140beb89e8d41f174'] /* Language */,
+                 hiddenName : 'language',
+                 listWidth : 200,
+                 mode : 'local',
+                 name : 'language_name',
+                 tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>',
+                 triggerAction : 'all',
+                 valueField : 'code',
+                 width : 200,
+                 xns : Roo.form,
+                 '|xns' : 'Roo.form',
+                 store : {
+                  xtype : 'SimpleStore',
+                  data : (function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})(),
+                  fields : ['code', 'title'],
+                  xns : Roo.data,
+                  '|xns' : 'Roo.data'
+                 }
+                }
+               ]
+              },
+              {
                xtype : 'ComboBox',
                allowBlank : false,
                displayField : 'title',
