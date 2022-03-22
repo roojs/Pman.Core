@@ -21,6 +21,21 @@ Pman.Dialog.CorePersonContact = {
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '9810aa2b9f44401be4bf73188ef2b67d' :"Fax"
  },
+ _named_strings : {
+  'company_id_code_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'role_fieldLabel' : 'bbbabdbe1b262f75d99d62880b953be1' /* Role */ ,
+  'fax_fieldLabel' : '9810aa2b9f44401be4bf73188ef2b67d' /* Fax */ ,
+  'office_id_name_emptyText' : 'c373dd4bd4ba0b5d3e0c7522c5629880' /* Select Office */ ,
+  'name_fieldLabel' : '49ee3087348e8d44e1feda1917443987' /* Name */ ,
+  'phone_fieldLabel' : 'bcc254b55c4a1babdf1dcb82c207506b' /* Phone */ ,
+  'office_id_name_fieldLabel' : 'df814135652a5a308fea15bff37ea284' /* Office */ ,
+  'office_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'company_id_code_qtip' : '9675747b5ab12d05f18518761e68a533' /* Select Companies */ ,
+  'office_id_name_qtip' : 'c373dd4bd4ba0b5d3e0c7522c5629880' /* Select Office */ ,
+  'email_fieldLabel' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
+  'company_id_code_emptyText' : '9675747b5ab12d05f18518761e68a533' /* Select Companies */ ,
+  'company_id_code_fieldLabel' : '1c76cbfe21c6f44c1d1e59d54f3e4420' /* Company */ 
+ },
 
  dialog : false,
  callback:  false,
