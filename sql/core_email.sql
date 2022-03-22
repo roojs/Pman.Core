@@ -34,5 +34,7 @@ ALTER TABLE core_email ADD COLUMN description VARCHAR(254) NOT NULL DEFAULT '';
 
 ALTER TABLE core_email ADD INDEX lookup_owner_id (owner_id);
 
+ALTER TABLE crm_mailing_list_message ADD COLUMN language varchar(5)  NOT NULL DEFAULT 'en';
+
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
