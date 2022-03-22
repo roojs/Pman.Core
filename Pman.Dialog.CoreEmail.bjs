@@ -332,31 +332,6 @@
                  ]
                 }
                ]
-              },
-              {
-               "listWidth" : 200,
-               "triggerAction" : "all",
-               "fieldLabel" : "Language",
-               "displayField" : "title",
-               "hiddenName" : "language",
-               "valueField" : "code",
-               "xtype" : "ComboBox",
-               "allowBlank" : false,
-               "editable" : false,
-               "width" : 200,
-               "$ xns" : "Roo.form",
-               "mode" : "local",
-               "name" : "language_name",
-               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>",
-               "items" : [
-                {
-                 "| data" : "(function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})()",
-                 "xtype" : "SimpleStore",
-                 "$ fields" : "['code', 'title']",
-                 "$ xns" : "Roo.data",
-                 "* prop" : "store"
-                }
-               ]
               }
              ]
             },
