@@ -286,6 +286,7 @@
               {
                "xtype" : "Column",
                "$ xns" : "Roo.form",
+               "String labelSeparator" : " ",
                "Number labelWidth" : 0,
                "items" : [
                 {
