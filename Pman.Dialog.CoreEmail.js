@@ -677,28 +677,6 @@ Pman.Dialog.CoreEmail = {
                ]
               },
               {
-               xtype : 'Checkbox',
-               boxLabel : _this._strings['28690be026c0bb9003aa58e45e5662ca'] /* Enabled - will be sent out */,
-               checked : true,
-               name : 'active',
-               value : 1,
-               valueOff : 0,
-               listeners : {
-                check : function (_self, checked)
-                 {
-                     var boxLabel = 'Enabled - will be sent out';
-                     
-                     if(!checked){
-                         boxLabel = 'Disabled - will NOT be sent out';
-                     }
-                     
-                     this.setBoxLabel(boxLabel);
-                 }
-               },
-               xns : Roo.form,
-               '|xns' : 'Roo.form'
-              },
-              {
                xtype : 'ComboBox',
                allowBlank : false,
                displayField : 'title',

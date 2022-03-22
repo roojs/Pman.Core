@@ -302,18 +302,6 @@
                ]
               },
               {
-               "listeners" : {
-                "check" : "function (_self, checked)\n{\n    var boxLabel = 'Enabled - will be sent out';\n    \n    if(!checked){\n        boxLabel = 'Disabled - will NOT be sent out';\n    }\n    \n    this.setBoxLabel(boxLabel);\n}"
-               },
-               "String name" : "active",
-               "Boolean checked" : true,
-               "xtype" : "Checkbox",
-               "String valueOff" : 0,
-               "String boxLabel" : "Enabled - will be sent out",
-               "$ xns" : "Roo.form",
-               "Mixed value" : 1
-              },
-              {
                "listWidth" : 200,
                "triggerAction" : "all",
                "fieldLabel" : "Language",
