@@ -342,10 +342,6 @@
              ]
             },
             {
-             "xtype" : "Column",
-             "$ xns" : "Roo.form"
-            },
-            {
              "xtype" : "Row",
              "$ xns" : "Roo.form",
              "items" : [

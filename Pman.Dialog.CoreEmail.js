@@ -718,11 +718,6 @@ Pman.Dialog.CoreEmail = {
              ]
             },
             {
-             xtype : 'Column',
-             xns : Roo.form,
-             '|xns' : 'Roo.form'
-            },
-            {
              xtype : 'Row',
              xns : Roo.form,
              '|xns' : 'Roo.form',
