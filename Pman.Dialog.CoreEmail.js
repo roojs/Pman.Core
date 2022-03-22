@@ -53,8 +53,8 @@ Pman.Dialog.CoreEmail = {
   'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
-  'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
+  'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'template_qtip' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
   'template_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
@@ -676,6 +676,30 @@ Pman.Dialog.CoreEmail = {
                  '|xns' : 'Roo.form'
                 }
                ]
+              },
+              {
+               xtype : 'ComboBox',
+               allowBlank : false,
+               displayField : 'title',
+               editable : false,
+               fieldLabel : _this._strings['4994a8ffeba4ac3140beb89e8d41f174'] /* Language */,
+               hiddenName : 'language',
+               listWidth : 200,
+               mode : 'local',
+               name : 'language_name',
+               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{title}</b> </div>',
+               triggerAction : 'all',
+               valueField : 'code',
+               width : 200,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               store : {
+                xtype : 'SimpleStore',
+                data : (function() {return typeof(Pman) == 'object'  ? Pman.I18n.simpleStoreData('l') : []})(),
+                fields : ['code', 'title'],
+                xns : Roo.data,
+                '|xns' : 'Roo.data'
+               }
               }
              ]
             },
