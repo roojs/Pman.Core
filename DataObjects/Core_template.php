@@ -83,7 +83,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
            
             
-            $this->jok("updated");
+            $roo->jok("updated");
         }
     }
    
