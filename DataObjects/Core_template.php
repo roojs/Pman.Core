@@ -67,9 +67,10 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $pg = HTML_FlexyFramework::get()->page;
             
             $this->syncTemplatePage(array(
-                'template_dir' => $pg->rootDir . '/'. str_replace('.', ',/', $this->view_name). '/templates',
+                'template_dir' => $pg->rootDir . '/'. str_replace('.', '/', $this->view_name). '/templates',
                 'template' => $this->template,
-                'base' => $this->view_name
+                'base' => $this->view_name,
+                'force' => true
             ));
             // update the different langage versions of this page.
             $x = DB_Dataobject::Factory('core_templatestr');
@@ -83,7 +84,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
            
             
-            $roo->jok("updated");
+            $roo->jok("updated -" .  $this->template);
         }
     }
    
@@ -191,6 +192,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      *  @param template_dir  << the path to the template dir ... Pman/XXX/template ...
      *  @param template   << name of template used by name field)
      *  @param base  << view name (module ? + templates?)
+     *  @param force << optional - forces even if database is newer.
      *  
      *  
      */
@@ -204,7 +206,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         ini_set('memory_limit', '512M');
         
         //var_dump($n);
-        $n= $pgdata['template'];  // remove trailing slash..
+        $n = $pgdata['template'];  // remove trailing slash..
         
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
         $opts = HTML_FlexyFramework::get()->Pman_Core;
@@ -246,17 +248,18 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                     $tmpl->filetype = 'html';
                     $tmpl->update($oo);
                 }
-                
-                
-                
-                return $tmpl;
+                if (empty($pgdata['force'])) {
+                    return $tmpl;
+                }
             }
         }
         
-        
+        //die("got here");
         
         try {
             $r = $flexy->compile($pgdata['template']);
+           
+            
         } catch(Exception $e) {
             $old = clone($tmpl);
             $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
