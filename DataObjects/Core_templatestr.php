@@ -261,9 +261,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //print_r($words);exit;
         // grab original
         $tt = DB_DataObject::factory($this->tableName());
-
-
-        $t = DB_DataObject::factory($this->tableName());
+ 
+        $t = clone($tt);
         $t->template_id = $tmpl->id;
         $t->whereAdd("lang = ''");
         
