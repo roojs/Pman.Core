@@ -67,7 +67,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $pg = HTML_FlexyFramework::get()->page;
             
             $this->syncTemplatePage(array(
-                'template_dir' => $pg->rootdir . '/'. str_replace('.', ',/', $this->view_name). '/templates',
+                'template_dir' => $pg->rootDir . '/'. str_replace('.', ',/', $this->view_name). '/templates',
                 'template' => $this->template,
                 'base' => $this->view_name
             ));
