@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 'base' => $this->view_name
             ));
             // update the different langage versions of this page.
-            $x = DB_Dataobject::Factory('core_template_str');
+            $x = DB_Dataobject::Factory('core_templatestr');
             $x->selectAdd();
             $x->selectAdd('distinct(lang) as lang');
             $x->whereAdd("lang != ''");
