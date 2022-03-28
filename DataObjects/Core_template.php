@@ -58,6 +58,38 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
     }
     
+    function beforeUpdate($old, $q, $roo)
+    {
+        if (!empty($q['_rescan'])){
+            if ($this->filetype != 'html') {
+                $roo->jerr("can not update a php source file currently - TDOD");
+            }
+            $pg = HTML_FlexyFramework::get()->page;
+            
+            $this->syncTemplatePage(array(
+                'template_dir' => $pg->rootdir . '/'. str_replace('.', ',/', $this->view_name). '/templates',
+                'template' => $this->template,
+                'base' => $this->view_name
+            ));
+            // update the different langage versions of this page.
+            $x = DB_Dataobject::Factory('core_template_str');
+            $x->selectAdd();
+            $x->selectAdd('distinct(lang) as lang');
+            $x->whereAdd("lang != ''");
+            $langs  = $x->fetchAll('lang');
+            foreach($langs as $l) {
+                $x = DB_Dataobject::Factory('core_template_str');
+                $x->syncLang($l, $this->id);
+            }
+           
+            
+            $this->jok("updated");
+        }
+    }
+   
+    
+    
+    
     /*
      * @param base (should be full path to template directory)
      * @param subdir = empty for top or subpath.
