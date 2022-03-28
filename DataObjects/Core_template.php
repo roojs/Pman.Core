@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $x->whereAdd("lang != ''");
             $langs  = $x->fetchAll('lang');
             foreach($langs as $l) {
-                $x = DB_Dataobject::Factory('core_template_str');
+                $x = DB_Dataobject::Factory('core_templatestr');
                 $x->syncLang($l, $this->id);
             }
            
