@@ -183,7 +183,7 @@ class Pman_Core_Images extends Pman
         
         $img = DB_DataObjecT::factory('Images');
          
-        if (!$id || !$img->get($id)) {
+        if (!$id || !$img->get($id) || !$img->exists()) {
             $this->imgErr("image has been removed or deleted.",$s);
         }
         
