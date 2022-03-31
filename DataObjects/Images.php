@@ -227,8 +227,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $opts = HTML_FlexyFramework::get()->Pman;
         $deldir = $opts['storedir']. '/_deleted_images_';
+        clearstatcache();
         if (!file_exists( $deldir )) {
-            mkdir($deldir, 0755);
+            @mkdir($deldir, 0755); // not sure why we are erroring here.. after checking - maybe permissions?
         }
             
         $fn = $this->getStoreName();

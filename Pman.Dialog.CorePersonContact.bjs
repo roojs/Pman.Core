@@ -2,7 +2,7 @@
  "name" : "Pman.Dialog.CorePersonContact",
  "parent" : "",
  "title" : "",
- "path" : "/home/johns/gitlive/Pman.Core/Pman.Dialog.CorePersonContact.bjs",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CorePersonContact.bjs",
  "permname" : "",
  "modOrder" : "001",
  "strings" : {
@@ -20,11 +20,26 @@
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "9810aa2b9f44401be4bf73188ef2b67d" : "Fax"
  },
+ "named_strings" : {
+  "company_id_code_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "role_fieldLabel" : "bbbabdbe1b262f75d99d62880b953be1",
+  "fax_fieldLabel" : "9810aa2b9f44401be4bf73188ef2b67d",
+  "office_id_name_emptyText" : "c373dd4bd4ba0b5d3e0c7522c5629880",
+  "name_fieldLabel" : "49ee3087348e8d44e1feda1917443987",
+  "phone_fieldLabel" : "bcc254b55c4a1babdf1dcb82c207506b",
+  "office_id_name_fieldLabel" : "df814135652a5a308fea15bff37ea284",
+  "office_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "company_id_code_qtip" : "9675747b5ab12d05f18518761e68a533",
+  "office_id_name_qtip" : "c373dd4bd4ba0b5d3e0c7522c5629880",
+  "email_fieldLabel" : "ce8ae9da5b7cd6c3df2929543a9af92d",
+  "company_id_code_emptyText" : "9675747b5ab12d05f18518761e68a533",
+  "company_id_code_fieldLabel" : "1c76cbfe21c6f44c1d1e59d54f3e4420"
+ },
  "items" : [
   {
    "collapsible" : false,
-   "title" : "Edit / Create Contact Details",
    "xtype" : "LayoutDialog",
+   "title" : "Edit / Create Contact Details",
    "width" : 450,
    "$ xns" : "Roo",
    "closable" : false,
@@ -47,8 +62,8 @@
         "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
        },
        "$ url" : "baseURL + '/Roo/core_person'",
-       "xtype" : "Form",
        "method" : "POST",
+       "xtype" : "Form",
        "style" : "margin:10px;",
        "$ xns" : "Roo.form",
        "items" : [
@@ -91,8 +106,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/core_company.php'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },
@@ -149,8 +164,8 @@
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Office.php'",
-             "method" : "GET",
              "xtype" : "HttpProxy",
+             "method" : "GET",
              "$ xns" : "Roo.data",
              "* prop" : "proxy"
             },

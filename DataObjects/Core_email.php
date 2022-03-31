@@ -59,7 +59,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                     bcc_group_id = {$cgm}.group_id
             )  AS bcc_group_member_count
         ");
-
 	
 	if (!empty($_REQUEST['_hide_system_emails'])) {
 	    $this->whereAddIn("!{$this->tableName()}.name", array('EVENT_ERRORS_REPORT'), 'string');
