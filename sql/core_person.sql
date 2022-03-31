@@ -55,7 +55,7 @@ ALTER TABLE core_person ADD COLUMN   no_reset_sent int(11) default '0';
 
 
 ALTER TABLE core_person ADD COLUMN   deleted_by INT(11) NOT NULL default 0 ;
-ALTER TABLE core_person ADD COLUMN   deleted_dt DATETIME no null default '1000-01-01 00:00:00';
+ALTER TABLE core_person ADD COLUMN   deleted_dt DATETIME NOT null default '1000-01-01 00:00:00';
 
 
 -- social
