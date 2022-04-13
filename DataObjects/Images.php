@@ -537,7 +537,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // the size should 200x150 to convert
         $sizear = preg_split('/(x|c)/', $size);
         if(empty($sizear[1])){
-            $sizear[1] = 0;
+            $sizear[1] = ''; // 0 on second seems odd.
         }
         $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
 //        print_r($size);
