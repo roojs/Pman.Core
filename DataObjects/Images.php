@@ -615,7 +615,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         if (empty($sz[1])) {
             $ratio =  empty($this->width) ? 1 : $this->height/ ($this->width *1.0);
-            $sy = $ratio * $sx;
+            $sy = inval($ratio * $sx);
         } else {
             $sy = $sz[1];
         }
