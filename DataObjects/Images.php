@@ -600,7 +600,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * 
      * 
      */
-    function toHTML($size, $provider = '/Images/Thumb') 
+    function toHTML($size, $provider = '/Images/Thumb', $extra = '') 
     {
         
         
@@ -620,7 +620,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $sy = $sz[1];
         }
         // create it?
-        $extra = '';
+       
         if (strlen($this->title)) {
             $extra = ' title="'. htmlspecialchars($this->title) . '"';
         }
