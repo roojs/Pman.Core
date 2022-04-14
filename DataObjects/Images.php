@@ -536,9 +536,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         //$size = min(1024, (int) $size);
         // the size should 200x150 to convert
         $sizear = preg_split('/(x|c)/', $size);
-        if(empty($sizear[1])){
-            $sizear[1] = 0;
+        if(!isset($sizear[1])){
+            $sizear[1] =   0; // 0x with '0' is a box? why
         }
+        
         $size = implode(strpos($size,'c') > -1 ? 'c' : 'x', $sizear);
 //        print_r($size);
         $fc = $this->toFileConvert();
@@ -600,7 +601,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * 
      * 
      */
-    function toHTML($size, $provider = '/Images/Thumb') 
+    function toHTML($size, $provider = '/Images/Thumb', $extra = '') 
     {
         
         
@@ -615,12 +616,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         if (empty($sz[1])) {
             $ratio =  empty($this->width) ? 1 : $this->height/ ($this->width *1.0);
-            $sy = $ratio * $sx;
+            $sy = intval($ratio * $sx);
         } else {
             $sy = $sz[1];
         }
         // create it?
-        $extra = '';
+       
         if (strlen($this->title)) {
             $extra = ' title="'. htmlspecialchars($this->title) . '"';
         }
