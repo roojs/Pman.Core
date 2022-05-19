@@ -256,16 +256,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // do not start a session if we are using http auth...
         // we have a situation where the app is behind a http access and is also login
         // need to work out a way to handle that.
-        
-        $session_started = false;
-        if (php_sapi_name() != "cli" && empty($_SERVER['PHP_AUTH_USER']) && empty($_COOKIE['PHPSESSID'])) {
-            $session_started = false;
-            @session_start();
+ 
+        if (php_sapi_name() != "cli" && empty($_SERVER['PHP_AUTH_USER']) && !empty($ff->disable_http_auth))  {
+             @session_start();
         }
         
-        
-       
-        $ff= HTML_FlexyFramework::get();
+         
        
         $sesPrefix = $this->sesPrefix();
         
@@ -312,9 +308,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         // at this point all http auth stuff is done, so we can init session
-       if (php_sapi_name() != "cli" && !$session_started) {
-            @session_start();
-        }
+        
         
         //die("test init");
         if (!$this->canInitializeSystem()) {
