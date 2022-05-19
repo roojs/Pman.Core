@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // we have a situation where the app is behind a http access and is also login
         // need to work out a way to handle that.
  
-        if (php_sapi_name() != "cli" && empty($_SERVER['PHP_AUTH_USER']) && !empty($ff->disable_http_auth))  {
+        if (php_sapi_name() != "cli" && (empty($_SERVER['PHP_AUTH_USER']) || !empty($ff->disable_http_auth)))  {
              @session_start();
         }
         
@@ -290,7 +290,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // http basic auth..
         $u = DB_DataObject::factory($this->tableName());
         
-        if (empty($_COOKIE['PHPSESSID']) // http auth requests should not have this...
+        if (empty($ff->disable_http_auth)  // http auth requests should not have this...
             &&
             !empty($_SERVER['PHP_AUTH_USER']) 
             &&
