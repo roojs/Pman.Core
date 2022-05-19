@@ -256,7 +256,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // do not start a session if we are using http auth...
         // we have a situation where the app is behind a http access and is also login
         // need to work out a way to handle that.
- 
+        $ff= HTML_FlexyFramework::get();
         if (php_sapi_name() != "cli" && (empty($_SERVER['PHP_AUTH_USER']) || !empty($ff->disable_http_auth)))  {
              @session_start();
         }
