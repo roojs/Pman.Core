@@ -254,9 +254,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function isAuth()
     {
         // do not start a session if we are using http auth...
-        if (empty($_SERVER['PHP_AUTH_USER']) && php_sapi_name() != "cli") {
+        // we have a situation where the app is behind a http access and is also login
+        // need to work out a way to handle that.
+        
+        $session_started = false;
+        if (php_sapi_name() != "cli" && empty($_SERVER['PHP_AUTH_USER']) && empty($_COOKIE['PHPSESSID'])) {
+            $session_started = false;
             @session_start();
         }
+        
+        
        
         $ff= HTML_FlexyFramework::get();
        
@@ -287,7 +294,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // http basic auth..
         $u = DB_DataObject::factory($this->tableName());
         
-        if (!empty($_SERVER['PHP_AUTH_USER']) 
+        if (empty($_COOKIE['PHPSESSID']) // http auth requests should not have this...
+            &&
+            !empty($_SERVER['PHP_AUTH_USER']) 
             &&
             !empty($_SERVER['PHP_AUTH_PW'])
             &&
@@ -301,6 +310,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             self::$authUser = $u;
             return true; 
         }
+        
+        // at this point all http auth stuff is done, so we can init session
+       if (php_sapi_name() != "cli" && !$session_started) {
+            @session_start();
+        }
+        
         //die("test init");
         if (!$this->canInitializeSystem()) {
           //  die("can not init");

@@ -379,7 +379,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
             if (empty($t->name) && $t->name != 0) {
                 print_R($data);
-                die("ERROR: invalid name used for core_enum\n\n");
+                die("ERROR:   invalid name used for core_enum\n\n" );
             }
 
             if (!$t->count()) {
