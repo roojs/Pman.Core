@@ -85,7 +85,7 @@ class Pman_Core_Images extends Pman
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
         //}
-        
+
         $this->is_local = (!empty($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') ? true : false;
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
@@ -283,7 +283,6 @@ class Pman_Core_Images extends Pman
     function serve($img)
     {
         $this->sessionState(0); // turn off session... - locking...
-        
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
 //            print_r($img);exit;

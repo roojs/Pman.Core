@@ -858,6 +858,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         $this->mimetype = strtolower($this->mimetype);
+        if ($this->mimetype == 'image/jpg') {
+            $this->mimetype = 'image/jpeg';
+        }
+        
         
         $explode_mimetype = explode('/', $this->mimetype);
         
