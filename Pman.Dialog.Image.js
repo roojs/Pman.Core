@@ -289,6 +289,11 @@ Pman.Dialog.Image = {
               // what about load failing..
               Roo.MessageBox.alert("Error", "Error loading details"); 
           },
+         beforeaction : function (_self, action)
+          {
+              console.log("BEFORE ACTION");
+              console.log(action);
+          },
          rendered : function (form)
           {
               _this.form= form;
