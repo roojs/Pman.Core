@@ -1,193 +1,400 @@
 {
- "name" : "Pman.Dialog.Image",
- "parent" : "",
- "title" : "",
- "path" : "/home/edward/gitlive/Pman.Core/Pman.Dialog.Image.bjs",
- "permname" : "",
- "modOrder" : "001",
- "strings" : {
-  "eb5d45750c7ab13aa8e6bacc80315a30" : "32M",
-  "2859a4ae58ae4e25abdfc530f814e42f" : "Upload an Image or File",
-  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
-  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
-  "8e16a71b3d8217eb80b39b7d8dec4296" : "Image Type",
-  "dff0c70e4c11953e4e3ee1cf268fb96d" : "Select image type",
-  "91412465ea9169dfd901dd5e7c96dd99" : "Upload",
-  "ea72bacd2fdfa818907bb9559e6905a1" : "Upload Image or File"
- },
- "named_strings" : {
-  "imgtype_name_fieldLabel" : "8e16a71b3d8217eb80b39b7d8dec4296",
-  "imgtype_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
-  "imgtype_name_emptyText" : "dff0c70e4c11953e4e3ee1cf268fb96d",
-  "upload_max_filesize_value" : "eb5d45750c7ab13aa8e6bacc80315a30",
-  "imgtype_name_qtip" : "dff0c70e4c11953e4e3ee1cf268fb96d",
-  "post_max_size_value" : "eb5d45750c7ab13aa8e6bacc80315a30",
-  "imageUpload_fieldLabel" : "ea72bacd2fdfa818907bb9559e6905a1"
- },
  "items" : [
   {
-   "listeners" : {
-    "show" : "function (_self)\n{\n\n    // this does not really work - escape on the borders works..\n    // resize to fit.. if we have styled stuff...\n    \n    \n    \n    \n    var d = this;\n    \n    var pad =     d.el.getSize().height - (d.header.getSize().height +\n        d.footer.getSize().height +        \n        d.layout.getRegion('center').getPanel(0).el.getSize().height\n        );\n    \n    var height = (\n        pad + \n        d.header.getSize().height +\n        d.footer.getSize().height +        \n        d.layout.getRegion('center').getPanel(0).el.child('div').getSize().height\n    );\n    this.resizeTo(d.el.getSize().width, height);\n    \n    if (this.keylistener) {\n        return;\n    }\n    this.keylistener = this.addKeyListener(27, this.hide, this);\n    \n}"
-   },
-   "modal" : true,
-   "shadow" : true,
-   "collapsible" : false,
-   "title" : "Upload an Image or File",
-   "xtype" : "LayoutDialog",
-   "uploadComplete" : false,
-   "width" : 500,
+   "$ uploadProgress" : [
+    "function()",
+    "{",
+    "    var dlg = this;",
+    "   if (!dlg.haveProgress) {",
+    "        Roo.MessageBox.progress(\"Uploading\", \"Uploading\");",
+    "    }",
+    "    ",
+    "    if (dlg.haveProgress == 2) {",
+    "        // it's been closed elsewhere..",
+    "        return;",
+    "    }",
+    "    if (dlg.uploadComplete) {",
+    "        Roo.MessageBox.hide();",
+    "        return;",
+    "    }",
+    "    ",
+    "    dlg.haveProgress = 1;",
+    "",
+    "    var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();",
+    "    new Pman.Request({",
+    "        url : baseURL + '/Core/UploadProgress.php',",
+    "        params: {",
+    "            id : uid",
+    "        },",
+    "        method: 'GET',",
+    "        success : function(res){",
+    "            //console.log(data);",
+    "            var data = res.data;",
+    "            if (dlg.haveProgress == 2) {",
+    "                // it's been closed elsewhere..",
+    "                return;",
+    "            }",
+    "            ",
+    "            if (dlg.uploadComplete) {",
+    "                Roo.MessageBox.hide();",
+    "                return;",
+    "            }",
+    "                ",
+    "            if (data){",
+    "                Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,",
+    "                    Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'",
+    "                );",
+    "            } else {",
+    "                Roo.MessageBox.updateProgress(1,",
+    "                    \"Upload Complete - processing\"",
+    "                );",
+    "                return;",
+    "            }",
+    "            dlg.uploadProgress.defer(2000,dlg);",
+    "        },",
+    "        failure: function(data) {",
+    "          //  console.log('fail');",
+    "         //   console.log(data);",
+    "        }",
+    "    })",
+    "    ",
+    "}",
+    ""
+   ],
    "$ xns" : "Roo",
    "closable" : false,
-   "resizable" : false,
+   "collapsible" : false,
    "haveProgress" : false,
    "height" : 140,
-   "$ uploadProgress" : "function()\n{\n    var dlg = this;\n   if (!dlg.haveProgress) {\n        Roo.MessageBox.progress(\"Uploading\", \"Uploading\");\n    }\n    \n    if (dlg.haveProgress == 2) {\n        // it's been closed elsewhere..\n        return;\n    }\n    if (dlg.uploadComplete) {\n        Roo.MessageBox.hide();\n        return;\n    }\n    \n    dlg.haveProgress = 1;\n\n    var uid = _this.form.findField('UPLOAD_IDENTIFIER').getValue();\n    new Pman.Request({\n        url : baseURL + '/Core/UploadProgress.php',\n        params: {\n            id : uid\n        },\n        method: 'GET',\n        success : function(res){\n            //console.log(data);\n            var data = res.data;\n            if (dlg.haveProgress == 2) {\n                // it's been closed elsewhere..\n                return;\n            }\n            \n            if (dlg.uploadComplete) {\n                Roo.MessageBox.hide();\n                return;\n            }\n                \n            if (data){\n                Roo.MessageBox.updateProgress(data.bytes_uploaded/data.bytes_total,\n                    Math.floor((data.bytes_total - data.bytes_uploaded)/1000) + 'k remaining'\n                );\n            } else {\n                Roo.MessageBox.updateProgress(1,\n                    \"Upload Complete - processing\"\n                );\n                return;\n            }\n            dlg.uploadProgress.defer(2000,dlg);\n        },\n        failure: function(data) {\n          //  console.log('fail');\n         //   console.log(data);\n        }\n    })\n    \n}\n",
    "items" : [
     {
-     "xtype" : "LayoutRegion",
      "$ xns" : "Roo",
-     "* prop" : "center"
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
     },
     {
-     "fitToFrame" : true,
-     "region" : "center",
-     "Boolean fitContainer" : true,
-     "xtype" : "ContentPanel",
      "$ xns" : "Roo",
+     "Boolean fitContainer" : true,
+     "fitToFrame" : true,
      "items" : [
       {
-       "listeners" : {
-        "actionfailed" : "function (_self, act)\n{\n   \n   \n    _this.dialog.uploadComplete = true;\n   // _this.dialog.el.unmask();\n    // error msg???\n     _this.dialog.haveProgress = 2; \n    if (act.type == 'submit') {\n        Roo.log(\"Upload error\");\n        Roo.log(act);\n        \n        try {\n            Roo.MessageBox.alert(\"Error\", act.result.errorMsg.split(/\\n/).join('<BR/>'));\n        } catch(e) {\n          //  Roo.log(e);\n            Roo.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");        \n        }\n        return;\n    }\n    \n    // what about load failing..\n    Roo.MessageBox.alert(\"Error\", \"Error loading details\"); \n}",
-        "|actioncomplete" : "function(_self,act)\n{\n    _this.dialog.uploadComplete = true;\n    _this.dialog.haveProgress = 2; \n    Roo.MessageBox.hide(); // force hiding\n    //_this.dialog.el.unmask();\n     \n    if (act.type == 'setdata') { \n    \n        _this.form.findField('imgtype').hide();\n        \n        _this.dialog.resizeTo(500, 140);\n        \n        if(_this.data._show_image_type){\n            _this.form.findField('imgtype').show();\n            _this.dialog.resizeTo(500, 170);\n        }\n        \n        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';\n        this.el.dom.action = this.url;\n        if (typeof(_this.data.timeout) != 'undefined') {\n            this.timeout = _this.data.timeout;\n        }\n        \n        this.findField('UPLOAD_IDENTIFIER').setValue(\n            (new Date() * 1) + '' + Math.random());\n            \n        return;\n    }\n     \n   \n    if (act.type == 'load') {\n      // should this happen?  \n        _this.data = act.result.data;\n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n        Roo.log(\"Upload success\");\n        Roo.log(act);\n        //console.log(act);\n        if (_this.callback) {\n            _this.callback.call(this, act.result.data, act.result.extra);\n        }\n        return; \n    }\n \n\n    \n}\n",
-        "|rendered" : "function (form)\n{\n    _this.form= form;\n}\n"
-       },
        "$ url" : "baseURL + '/Roo/Images.php'",
-       "fileUpload" : true,
-       "method" : "POST",
-       "style" : "margin:10px;",
-       "xtype" : "Form",
-       "labelWidth" : 140,
-       "timeout" : 300,
        "$ xns" : "Roo.form",
+       "fileUpload" : true,
        "items" : [
         {
-         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "UPLOAD_IDENTIFIER"
+         "name" : "UPLOAD_IDENTIFIER",
+         "xtype" : "Hidden"
         },
         {
-         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "post_max_size",
          "value" : "32M",
-         "$ xns" : "Roo.form",
-         "name" : "post_max_size"
+         "xtype" : "Hidden"
         },
         {
-         "xtype" : "Hidden",
+         "$ xns" : "Roo.form",
+         "name" : "upload_max_filesize",
          "value" : "32M",
-         "$ xns" : "Roo.form",
-         "name" : "upload_max_filesize"
+         "xtype" : "Hidden"
         },
         {
-         "inputType" : "file",
+         "$ xns" : "Roo.form",
          "fieldLabel" : "Upload Image or File",
-         "xtype" : "TextField",
+         "inputType" : "file",
+         "name" : "imageUpload",
          "width" : 200,
-         "$ xns" : "Roo.form",
-         "name" : "imageUpload"
+         "xtype" : "TextField"
         },
         {
-         "listWidth" : 400,
+         "$ xns" : "Roo.form",
          "String actionMode" : "fieldEl",
+         "allowBlank" : true,
          "alwaysQuery" : true,
-         "triggerAction" : "all",
-         "fieldLabel" : "Image Type",
-         "forceSelection" : true,
-         "selectOnFocus" : true,
-         "pageSize" : 20,
          "displayField" : "display_name",
          "emptyText" : "Select image type",
+         "fieldLabel" : "Image Type",
+         "forceSelection" : true,
          "hiddenName" : "imgtype",
-         "minChars" : 2,
-         "valueField" : "name",
-         "xtype" : "ComboBox",
-         "allowBlank" : true,
-         "typeAhead" : true,
-         "width" : 250,
-         "$ xns" : "Roo.form",
-         "name" : "imgtype_name",
-         "qtip" : "Select image type",
-         "queryParam" : "query[search]",
-         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>",
-         "loadingText" : "Searching...",
          "items" : [
           {
-           "listeners" : {
-            "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    \n    o.params.etype = 'ImageType';\n    \n    o.params.active = 1;\n}\n"
-           },
-           "xtype" : "Store",
-           "remoteSort" : true,
            "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
            "$ xns" : "Roo.data",
            "* prop" : "store",
            "items" : [
             {
              "$ url" : "baseURL + '/Roo/Core_enum'",
-             "xtype" : "HttpProxy",
-             "method" : "GET",
              "$ xns" : "Roo.data",
-             "* prop" : "proxy"
+             "* prop" : "proxy",
+             "method" : "GET",
+             "xtype" : "HttpProxy"
             },
             {
-             "id" : "id",
-             "root" : "data",
-             "xtype" : "JsonReader",
              "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
              "$ xns" : "Roo.data",
              "* prop" : "reader",
-             "totalProperty" : "total"
+             "id" : "id",
+             "root" : "data",
+             "totalProperty" : "total",
+             "xtype" : "JsonReader"
             }
-           ]
+           ],
+           "listeners" : {
+            "|beforeload" : [
+             "function (_self, o){",
+             "    o.params = o.params || {};",
+             "    ",
+             "    o.params.etype = 'ImageType';",
+             "    ",
+             "    o.params.active = 1;",
+             "}",
+             ""
+            ]
+           },
+           "remoteSort" : true,
+           "xtype" : "Store"
           }
-         ]
+         ],
+         "listWidth" : 400,
+         "loadingText" : "Searching...",
+         "minChars" : 2,
+         "name" : "imgtype_name",
+         "pageSize" : 20,
+         "qtip" : "Select image type",
+         "queryParam" : "query[search]",
+         "selectOnFocus" : true,
+         "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{display_name}</b> {name}</div>",
+         "triggerAction" : "all",
+         "typeAhead" : true,
+         "valueField" : "name",
+         "width" : 250,
+         "xtype" : "ComboBox"
         },
         {
-         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "ontable"
+         "name" : "ontable",
+         "xtype" : "Hidden"
         },
         {
-         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "onid"
+         "name" : "onid",
+         "xtype" : "Hidden"
         },
         {
-         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "id"
+         "name" : "id",
+         "xtype" : "Hidden"
         }
-       ]
+       ],
+       "labelWidth" : 140,
+       "listeners" : {
+        "actionfailed" : [
+         "function (_self, act)",
+         "{",
+         "   ",
+         "   ",
+         "    _this.dialog.uploadComplete = true;",
+         "   // _this.dialog.el.unmask();",
+         "    // error msg???",
+         "     _this.dialog.haveProgress = 2; ",
+         "    if (act.type == 'submit') {",
+         "        Roo.log(\"Upload error\");",
+         "        Roo.log(act);",
+         "        ",
+         "        try {",
+         "            Roo.MessageBox.alert(\"Error\", act.result.errorMsg.split(/\\n/).join('<BR/>'));",
+         "        } catch(e) {",
+         "          //  Roo.log(e);",
+         "            Roo.MessageBox.alert(\"Error\", \"Saving failed = fix errors and try again\");        ",
+         "        }",
+         "        return;",
+         "    }",
+         "    ",
+         "    // what about load failing..",
+         "    Roo.MessageBox.alert(\"Error\", \"Error loading details\"); ",
+         "}"
+        ],
+        "|actioncomplete" : [
+         "function(_self,act)",
+         "{",
+         "    _this.dialog.uploadComplete = true;",
+         "    _this.dialog.haveProgress = 2; ",
+         "    Roo.MessageBox.hide(); // force hiding",
+         "    //_this.dialog.el.unmask();",
+         "     ",
+         "    if (act.type == 'setdata') { ",
+         "    ",
+         "        _this.form.findField('imgtype').hide();",
+         "        ",
+         "        _this.dialog.resizeTo(500, 140);",
+         "        ",
+         "        if(_this.data._show_image_type){",
+         "            _this.form.findField('imgtype').show();",
+         "            _this.dialog.resizeTo(500, 170);",
+         "        }",
+         "        ",
+         "        this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';",
+         "        this.el.dom.action = this.url;",
+         "        if (typeof(_this.data.timeout) != 'undefined') {",
+         "            this.timeout = _this.data.timeout;",
+         "        }",
+         "        ",
+         "        this.findField('UPLOAD_IDENTIFIER').setValue(",
+         "            (new Date() * 1) + '' + Math.random());",
+         "            ",
+         "        return;",
+         "    }",
+         "     ",
+         "   ",
+         "    if (act.type == 'load') {",
+         "      // should this happen?  ",
+         "        _this.data = act.result.data;",
+         "       // _this.loaded();",
+         "        return;",
+         "    }",
+         "    ",
+         "    ",
+         "    if (act.type == 'submit') { // only submitted here if we are ",
+         "        _this.dialog.hide();",
+         "        Roo.log(\"Upload success\");",
+         "        Roo.log(act);",
+         "        //console.log(act);",
+         "        if (_this.callback) {",
+         "            _this.callback.call(this, act.result.data, act.result.extra);",
+         "        }",
+         "        return; ",
+         "    }",
+         " ",
+         "",
+         "    ",
+         "}",
+         ""
+        ],
+        "|rendered" : [
+         "function (form)",
+         "{",
+         "    _this.form= form;",
+         "}",
+         ""
+        ]
+       },
+       "method" : "POST",
+       "style" : "margin:10px;",
+       "timeout" : 300,
+       "xtype" : "Form"
       }
-     ]
+     ],
+     "region" : "center",
+     "xtype" : "ContentPanel"
     },
     {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
      },
      "text" : "Cancel",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     },
     {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    // do some checks?\n     \n    //_this.dialog.el.mask(\"Sending\");\n    _this.dialog.uploadComplete = false;\n    _this.form.doAction('submit', {\n        params: {\n            ts : Math.random()\n        }\n    });\n    _this.dialog.haveProgress = 0; // set to show..\n    _this.dialog.uploadProgress.defer(1000, _this.dialog);\n\n}"
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    // do some checks?",
+       "     ",
+       "    //_this.dialog.el.mask(\"Sending\");",
+       "    _this.dialog.uploadComplete = false;",
+       "    console.log(_this.form);",
+       "    _this.form.doAction('submit', {",
+       "        params: {",
+       "            ts : Math.random()",
+       "        }",
+       "    });",
+       "    _this.dialog.haveProgress = 0; // set to show..",
+       "    _this.dialog.uploadProgress.defer(1000, _this.dialog);",
+       "",
+       "}"
+      ]
      },
      "text" : "Upload",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     }
-   ]
+   ],
+   "listeners" : {
+    "show" : [
+     "function (_self)",
+     "{",
+     "",
+     "    // this does not really work - escape on the borders works..",
+     "    // resize to fit.. if we have styled stuff...",
+     "    ",
+     "    ",
+     "    ",
+     "    ",
+     "    var d = this;",
+     "    ",
+     "    var pad =     d.el.getSize().height - (d.header.getSize().height +",
+     "        d.footer.getSize().height +        ",
+     "        d.layout.getRegion('center').getPanel(0).el.getSize().height",
+     "        );",
+     "    ",
+     "    var height = (",
+     "        pad + ",
+     "        d.header.getSize().height +",
+     "        d.footer.getSize().height +        ",
+     "        d.layout.getRegion('center').getPanel(0).el.child('div').getSize().height",
+     "    );",
+     "    this.resizeTo(d.el.getSize().width, height);",
+     "    ",
+     "    if (this.keylistener) {",
+     "        return;",
+     "    }",
+     "    this.keylistener = this.addKeyListener(27, this.hide, this);",
+     "    ",
+     "}"
+    ]
+   },
+   "modal" : true,
+   "resizable" : false,
+   "shadow" : true,
+   "title" : "Upload an Image or File",
+   "uploadComplete" : false,
+   "width" : 500,
+   "xtype" : "LayoutDialog"
   }
- ]
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.Image",
+ "named_strings" : {
+  "imageUpload_fieldLabel" : "ea72bacd2fdfa818907bb9559e6905a1",
+  "imgtype_name_emptyText" : "dff0c70e4c11953e4e3ee1cf268fb96d",
+  "imgtype_name_fieldLabel" : "8e16a71b3d8217eb80b39b7d8dec4296",
+  "imgtype_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "imgtype_name_qtip" : "dff0c70e4c11953e4e3ee1cf268fb96d",
+  "post_max_size_value" : "eb5d45750c7ab13aa8e6bacc80315a30",
+  "upload_max_filesize_value" : "eb5d45750c7ab13aa8e6bacc80315a30"
+ },
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.Image.bjs",
+ "permname" : "",
+ "strings" : {
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "2859a4ae58ae4e25abdfc530f814e42f" : "Upload an Image or File",
+  "8e16a71b3d8217eb80b39b7d8dec4296" : "Image Type",
+  "91412465ea9169dfd901dd5e7c96dd99" : "Upload",
+  "dff0c70e4c11953e4e3ee1cf268fb96d" : "Select image type",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "ea72bacd2fdfa818907bb9559e6905a1" : "Upload Image or File",
+  "eb5d45750c7ab13aa8e6bacc80315a30" : "32M"
+ },
+ "title" : ""
 }

@@ -37,7 +37,7 @@ Pman.Dialog.Image = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -180,6 +180,7 @@ Pman.Dialog.Image = {
              
             //_this.dialog.el.mask("Sending");
             _this.dialog.uploadComplete = false;
+            console.log(_this.form);
             _this.form.doAction('submit', {
                 params: {
                     ts : Math.random()
