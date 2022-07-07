@@ -180,7 +180,6 @@ Pman.Dialog.Image = {
              
             //_this.dialog.el.mask("Sending");
             _this.dialog.uploadComplete = false;
-            console.log(_this.form);
             _this.form.doAction('submit', {
                 params: {
                     ts : Math.random()
