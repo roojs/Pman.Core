@@ -215,13 +215,6 @@
          "    Roo.MessageBox.alert(\"Error\", \"Error loading details\"); ",
          "}"
         ],
-        "beforeaction" : [
-         "function (_self, action)",
-         "{",
-         "    console.log(\"BEFORE ACTION\");",
-         "    console.log(action);",
-         "}"
-        ],
         "|actioncomplete" : [
          "function(_self,act)",
          "{",
