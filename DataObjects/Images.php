@@ -53,7 +53,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         $o = $this->object();
         //print_r($o);
-        if ($o && (method_exists($o, 'checkPerm')) {
+        if ($o &&  method_exists($o, 'checkPerm')) {
             // edit permissions on related object needed...
             return $o->checkPerm( $lvl == 'S' ? 'S' : 'E' , $au);
             
