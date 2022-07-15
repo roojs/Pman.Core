@@ -218,7 +218,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
         // we wil only support AA not AAA
         var top = Math.floor(c/26);
         var bot = c % 26;
-        var cc = top > 0 ? String.fromCharCode('A'.charCodeAt(0) + top) : '';
+        var cc = top > 0 ? String.fromCharCode('A'.charCodeAt(0) + (top-1)) : '';
         cc += String.fromCharCode('A'.charCodeAt(0)  + bot);
         return cc+'' +r;
         
