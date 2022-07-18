@@ -29,7 +29,6 @@ Pman.Dialog.CoreEmail = {
   'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
-  'cafbb1cfc96d63acd85e7de928e1636b' :"To Group <BR/> (for system reference only)",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
@@ -51,7 +50,6 @@ Pman.Dialog.CoreEmail = {
  },
  _named_strings : {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
-  'to_group_id_name_fieldLabel' : 'cafbb1cfc96d63acd85e7de928e1636b' /* To Group <BR/> (for system reference only) */ ,
   'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
@@ -80,7 +78,7 @@ Pman.Dialog.CoreEmail = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -1234,23 +1232,6 @@ Pman.Dialog.CoreEmail = {
                allowBlank : true,
                fieldLabel : _this._strings['b337c8a67244afb6551ee1f8f9717676'] /* Test Class <BR/> (for system reference only) */,
                name : 'test_class',
-               readOnly : true,
-               width : 300,
-               xns : Roo.form,
-               '|xns' : 'Roo.form'
-              }
-             ]
-            },
-            {
-             xtype : 'Row',
-             xns : Roo.form,
-             '|xns' : 'Roo.form',
-             items  : [
-              {
-               xtype : 'TextField',
-               allowBlank : true,
-               fieldLabel : _this._strings['cafbb1cfc96d63acd85e7de928e1636b'] /* To Group <BR/> (for system reference only) */,
-               name : 'to_group_id_name',
                readOnly : true,
                width : 300,
                xns : Roo.form,
