@@ -47,7 +47,7 @@ new Pman_Core_SimpleExcel($data_array, array(
             workbook => '....' // ???
     ),
     'leave_open' => false,  // if you call addrows?? later..
-            
+    'nonspacer' => false, // should add line between head and header row.     
 ));
 
     callbacks: renderer
