@@ -394,7 +394,7 @@ class Pman_Core_SimpleExcel extends Pman
           //  print_R(array($start_row+$r, $c, $v, $format));exit;
           // handle 0 prefixes..
           
-            if (preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $v)) {
+            if ($dataFormat == 'date' || preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $v)) {
                 $dataFormat = 'date';
                 $format = empty($format) ? $this->formats['_default_date_format_']: $format;
                 $ut_to_ed_diff = 86400 * 25569;
