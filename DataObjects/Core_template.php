@@ -435,7 +435,7 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
-        static $done = false;
+        static $done = array();
         $clsname = strtolower($clsname);
 
         textdomain($clsname);
