@@ -500,7 +500,7 @@ WHERE (
         
         // do we need to compile the file..
         $ts = DB_DataObject::Factory('core_templatestr');
-        $ts->selectAdd('MAX(updated) as updated');
+        $ts->selectAdd('COALESCE(MAX(updated), "1000-01-01") as updated');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
         if (!$ts->find(true)) {
