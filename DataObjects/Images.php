@@ -912,7 +912,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     
     function toBase64($rotate = false, $scaleWidth = 0, $scaleHeight = 0)
     {
-        die($this->mimetype);
+        die(var_dump($this->mimetype));
         if(!preg_match('/^image\//', $this->mimetype)){
             return false;
         }
