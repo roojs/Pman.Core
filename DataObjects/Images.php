@@ -38,6 +38,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
         }
+
+        if(!empty($q['toBase64'])) {
+            $roo->jok($this->toBase64());
+        }
         
 
     }
