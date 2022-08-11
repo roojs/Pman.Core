@@ -39,8 +39,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             ");
         }
 
-        die("B");
         if(!empty($q['toBase64'])) {
+            die("B");
             $roo->jok($this->toBase64());
         }
         
