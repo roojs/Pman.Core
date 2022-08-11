@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
 
         if(!empty($q['_to_base64']) && !empty($q['image_id'])) {
-            $i = DB_Object::factory("Images");
+            $i = DB_DataObject::factory("Images");
             $i->get($q['image_id']);
             $roo->jok($i->toBase64());
         }
