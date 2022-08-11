@@ -919,7 +919,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $file = $this->getStoreName();
-        die(var_dump($file));
+        
         if(!file_exists($file)){
             return false;
         }
