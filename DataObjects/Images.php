@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
 
         if(!empty($q['toBase64'])) {
-
+            $this->jok($this->toBase64());
         }
         
 
