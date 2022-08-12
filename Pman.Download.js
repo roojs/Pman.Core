@@ -311,7 +311,7 @@ Roo.apply(Pman.Download.prototype, {
             
         });
         
-         if(ds.sortInfo && ds.remoteSort){
+        if(ds.sortInfo && ds.remoteSort){
             var pn = ds.paramNames;
             this.params[pn["sort"]] = ds.sortInfo.field;
             this.params[pn["dir"]] = ds.sortInfo.direction;
