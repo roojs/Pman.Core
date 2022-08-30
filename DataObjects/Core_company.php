@@ -42,7 +42,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         
         $tn = $this->tableName();
-        if (empty($q['_distinct'])  {
+        if (empty($q['_distinct']))  {
             $this->selectAdd("i18n_translate('c' , {$tn}.country, 'en') as country_display_name ");
         }
       
