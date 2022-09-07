@@ -52,7 +52,7 @@ Pman.Login =  new Roo.util.Observable({
         Roo.Ajax.request({  
             url: baseURL + '/Login.js',  
             params: {
-                getAuthUser: true
+                getAuthUse: true
             },  
             method: 'GET',  
             success:  function(response, opts)  {  // check successfull...
