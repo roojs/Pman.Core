@@ -366,7 +366,7 @@ trait Pman_Core_AssetTrait {
             } 
             
             $sm = $vers['sass'] > 3.4 ? ' --sourcemap=auto ' : '--sourcemap';
-            $cmd = "{$sassc} --style=compressed  {$sm} -I {$dir} -I {$this->rootDir}/roojs1/scss/bootstrap ". basename($file) . " {$compiledir}/{$output}";
+            $cmd = "{$sassc} --style=compressed  {$sm} -I ". basename($file) . " -I {$this->rootDir}/roojs1/scss/bootstrap ". basename($file) . " {$compiledir}/{$output}";
             //echo "$cmd\n";            echo `$cmd`;
             `$cmd`;
             
