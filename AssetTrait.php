@@ -283,16 +283,41 @@ trait Pman_Core_AssetTrait {
     
     function outputSCSS($smod)
     {
-        // we cant output non-cached versions of this.... 
+        // we cant output non-cached versions of this....
+        
+        // this doesnt really look like it would work!
+        $this->outputCSSDir("{$this->rootDir}/Pman/{$smod}/scss/{$smod}.scss", $smod);
+        
+    }
+    /*
+     * Pman projects - expect
+     * /Pman/MyProject/scss/MyProject.less  <<
+     *           this should contain includes for the others?
+     *              @import "fonts.less";
+     *              ....
+     * Then all the files go here.
+     * /Pman/MyProject/scss/*.less
+     *
+     * For a Non Pman project
+     *  send:
+     *  /MyProject/scss/base.less << could be anything really...
+     *
+     * 
+     */
+     
+    
+    function outputSCSSDir($file, $smod= '')
+    {
         $ff = HTML_FlexyFramework::get();
-        $fp =   "{$this->rootDir}/Pman/$smod/scss/{$smod}.scss";
-       // var_dump($fp);
-        if (!file_exists($fp)) {
+        $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
+        
+        
+        if (!file_exists($file)) {
             return;
         }
         
-        $ar = glob(dirname($fp) . '/*.scss');
-        $maxtime = 0;
+        $ar = glob(dirname($file). '/*.scss');
+        $maxtime = filemtime($file);
         foreach($ar as $fn) {
             $maxtime=max($maxtime, filemtime($fn));
         }
@@ -309,17 +334,14 @@ trait Pman_Core_AssetTrait {
             mkdir($compiledir,0700,true);
         }
         
-        
-        
          
-        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
+        $output = date('Y-m-d-H-i-s-', $maxtime). $smod .'-less-'.md5(serialize(array($this->baseURL, $ar))) .'.css';
          
-        $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
+        
         
         // where are we going to write all of this..
         // This has to be done via a
-        
-        
+         
         
         if ( !file_exists($compiledir.'/'.$output) || !filesize($compiledir.'/'.$output)) {
             
@@ -334,8 +356,7 @@ trait Pman_Core_AssetTrait {
                 die("INSTALL sassc");
             }
                  
-            $fd = dirname($fp);
-            
+             
             $ver = `$sassc --version`;
             $bits = explode("\n", $ver);
             foreach($bits as $b) {
@@ -344,7 +365,7 @@ trait Pman_Core_AssetTrait {
             } 
             
             $sm = $vers['sass'] > 3.4 ? ' --sourcemap=auto ' : '--sourcemap';
-            $cmd = "{$sassc} --style=compressed  {$sm} -I {$fd} -I {$this->rootDir}/roojs1/scss/bootstrap $smod.scss {$compiledir}/{$output}";
+            $cmd = "{$sassc} --style=compressed  {$sm} -I {$dir} -I {$this->rootDir}/roojs1/scss/bootstrap ". basename($file) . " {$compiledir}/{$output}";
             //echo "$cmd\n";            echo `$cmd`;
             `$cmd`;
             
@@ -353,7 +374,7 @@ trait Pman_Core_AssetTrait {
             if (!file_exists($compiledir.'/'.$output) ||
                 !filesize($compiledir.'/'.$routput)) {
                 echo "<!-- compile did not generate files : $cmd -->\n";
-                echo "<script type=\"text/javascript\">alert('Failed to compile {$fp}');</script>\n";
+                echo "<script type=\"text/javascript\">alert('Failed to compile Less Dir: {$dir}');</script>\n";
                 return;
             } 
             
@@ -369,6 +390,10 @@ trait Pman_Core_AssetTrait {
         ),'css');
         
     }
+    
+    
+    
+     
     
     
 }
