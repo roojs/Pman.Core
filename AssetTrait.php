@@ -286,7 +286,7 @@ trait Pman_Core_AssetTrait {
         // we cant output non-cached versions of this....
         
         // this doesnt really look like it would work!
-        $this->outputCSSDir("{$this->rootDir}/Pman/{$smod}/scss/{$smod}.scss", $smod);
+        $this->outputSCSSDir("{$this->rootDir}/Pman/{$smod}/scss/{$smod}.scss", $smod);
         
     }
     /*
@@ -308,6 +308,8 @@ trait Pman_Core_AssetTrait {
     
     function outputSCSSDir($file, $smod= '')
     {
+        
+         
         $ff = HTML_FlexyFramework::get();
         $asset = $ff->project == 'Pman' ? '/Core/Asset/css/' : '/Asset/css/';
         
@@ -319,7 +321,7 @@ trait Pman_Core_AssetTrait {
         $ar = glob(dirname($file). '/*.scss');
         $maxtime = filemtime($file);
         foreach($ar as $fn) {
-            $maxtime=max($maxtime, filemtime($fn));
+            $maxtime= max($maxtime, filemtime($fn));
         }
         
         
