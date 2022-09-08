@@ -360,6 +360,7 @@ trait Pman_Core_AssetTrait {
             $ver = `$sassc --version`;
             $bits = explode("\n", $ver);
             foreach($bits as $b) {
+                var_dump($b);
                 $lr = explode(":", $b);
                 $vers[trim($lr[0])] = trim($lr[1]);
             } 
