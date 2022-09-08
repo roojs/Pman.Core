@@ -373,7 +373,7 @@ trait Pman_Core_AssetTrait {
              
             clearstatcache();
             if (!file_exists($compiledir.'/'.$output) ||
-                !filesize($compiledir.'/'.$routput)) {
+                !filesize($compiledir.'/'.$output)) {
                 echo "<!-- compile did not generate files : $cmd -->\n";
                 echo "<script type=\"text/javascript\">alert('Failed to compile Less Dir: ". basename($file). "');</script>\n";
                 return;
