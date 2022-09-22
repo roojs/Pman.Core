@@ -38,6 +38,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
         }
+
+        if(!empty($q['_to_base64']) && !empty($q['image_id'])) {
+            $i = DB_DataObject::factory("Images");
+            $i->get($q['image_id']);
+            $roo->jok($i->toBase64());
+        }
         
 
     }
@@ -913,7 +919,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         
         $file = $this->getStoreName();
-        
+
         if(!file_exists($file)){
             return false;
         }
