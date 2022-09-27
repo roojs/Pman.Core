@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         static $cache = array();
         $ckey = json_encode(array($etype, $name));
         if (isset($cache[$ckey])) {
-            return $cache[$ckey]->id;
+            return $cache[$ckey];
         }
         
         // check
