@@ -254,6 +254,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
     function lookupCreate($etype,$name, $display_name=false) {
 
+        static $cache = array();
+        $ckey = json_encode(array($etype, $name));
+        if (isset($cache[$ckey])) {
+            return $cache[$ckey]->id;
+        }
+        
         // check
         $ce = DB_DataObject::Factory('core_enum');
         $ce->setFrom(array(
@@ -269,11 +275,14 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $ce->etype = $etype;
         $ce->name = $name;
         if ($ce->find(true)) {
+            $cache[$ckey] = $ce->id;
             return $ce->id;
         }
         $ce->active = 1;
         $ce->display_name = $display_name === false ? $ce->name : $display_name;
-        return  $ce->insert();
+        $ret = $ce->insert();
+        $cache[$ckey] = $ret;
+        return  $ret;
 
     }
 
