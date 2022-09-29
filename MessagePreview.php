@@ -21,13 +21,20 @@ class Pman_Core_MessagePreview extends Pman
     function get($v, $opts=array())
     {
  
-        if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
+        if((empty($_REQUEST['_id']) && empty($_REQUEST['template_name']) )|| empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
         }
         
         $mlq = DB_DataObject::factory($_REQUEST['_table']);
+        if (!empty($_REQUEST['template_name'])) {
+            $res = $mlq->get('name', $_REQUEST['template_name']);
+        } else {
+            $res = $mlq->get($_REQUEST['_id']);
+        }
+        if (!$res) {
+            $this->jerr("invalid id/name");
+        }
         
-        $mlq->get($_REQUEST['_id']);
         
         if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['evtype'])) {
             $t = DB_DataObject::factory(preg_replace('/^[a-z_]+/i', '', $_REQUEST['ontable']));
