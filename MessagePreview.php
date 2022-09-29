@@ -38,8 +38,8 @@ class Pman_Core_MessagePreview extends Pman
         
         if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['evtype'])) {
             $tn = preg_replace('/[^a-z_]+/i', '', $_REQUEST['ontable']);
-            var_dump($tn);
-            $t = DB_DataObject::factory(preg_replace('/[a-z_]+/i', '', $_REQUEST['ontable']));
+            
+            $t = DB_DataObject::factory($tn);
             if (!is_a($t, 'DB_DataObject') && !is_a($t, 'PDO_DataObject')) {
                 $this->jerr("invalid URL");
             }
