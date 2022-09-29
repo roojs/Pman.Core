@@ -29,6 +29,20 @@ class Pman_Core_MessagePreview extends Pman
         
         $mlq->get($_REQUEST['_id']);
         
+        if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid'])) {
+            $t = DB_DataObject::factory(preg_replace('/^[a-z_]+/i', '', $_REQUEST['ontable']));
+            if (!is_a($t, 'DB_DataObject') && !is_a($t, 'PDO_DataObject')) {
+                $this->jerr("invalid URL");
+            }
+            if (!$t->get($_REQUEST['onid'])) {
+                $this->jerr("invalid id");
+            }
+            if (!method_exists($t->toEmail())) {
+                
+                
+            }
+        }
+        
         $this->msg = $mlq;
 
         $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
