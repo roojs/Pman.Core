@@ -1,16 +1,18 @@
-<div class="undoreset">
-
-<code>From : "{msg.from_name}" &lt;{msg.from_email}&gt;</code>
-<br/>
-<code>Subject : {msg.subject}</code>
-<br/>
-{if:!showHtml}
-<br>
-<code>{msg.plaintext:b}</code>
-{else:}
-<br/>
-xxx
-{msg.bodytext:h}
-{end:}
+<div>
     
+    
+    <div class="undoreset">
+        
+        <code>From : "{msg.from_name}" &lt;{msg.from_email}&gt;</code>
+        <br/>
+        <code>Subject : {msg.subject}</code>
+        <br/>
+        {if:!showHtml}
+        <br>
+        <code>{msg.plaintext:b}</code>
+        {else:}
+        <br/>
+        {msg.bodytext:h}
+        {end:}
+    </div>
 </div>
