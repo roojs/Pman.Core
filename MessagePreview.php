@@ -35,6 +35,8 @@ class Pman_Core_MessagePreview extends Pman
             $this->jerr("invalid id/name");
         }
         
+        $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
+        
         
         if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['evtype'])) {
             $tn = preg_replace('/[^a-z_]+/i', '', $_REQUEST['ontable']);
@@ -69,7 +71,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $this->msg = $mlq;
 
-        $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
+        
         
     }
     
