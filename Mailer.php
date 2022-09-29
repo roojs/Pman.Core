@@ -271,8 +271,10 @@ class Pman_Core_Mailer {
                 if(preg_match('/text\/html/', $header['Content-Type'])){
                     $mime->setHTMLBody($parts[2]);
                     $mime->setTXTBody('This message is in HTML only');
+                    $this->textbody = 'This message is in HTML only';
                 }else{
                     $mime->setTXTBody($parts[2]);
+                    $this->textbody = $parts[2];
                     $mime->setHTMLBody('<PRE>'.htmlspecialchars($parts[2]).'</PRE>');
                 }
             }
