@@ -52,7 +52,8 @@ Pman.Dialog.CoreEmailPreview = {
           _this.panel.load({ 
               url: baseURL + '/Core/MessagePreview', 
               params  : {
-                  _id : _this.data.id,
+                  _id : _this.data.id || '',
+                  template_name : _this.data.template_name || '',            
                   _table : _this.data.module,
                   ontable : _this.data.ontable || '',
                   onid : _this.data.onid || '',
@@ -64,7 +65,8 @@ Pman.Dialog.CoreEmailPreview = {
               url: baseURL + '/Core/MessagePreview', 
               params  : {
                   _as_html : 1,
-                  _id : _this.data.id,
+                  _id : _this.data.id || '',
+                  template_name : _this.data.template_name || '',
                   _table : _this.data.module,
                   ontable : _this.data.ontable || '',
                   onid : _this.data.onid  || '',
