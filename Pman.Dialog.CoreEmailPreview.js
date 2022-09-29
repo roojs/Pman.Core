@@ -24,7 +24,7 @@ Pman.Dialog.CoreEmailPreview = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -53,7 +53,9 @@ Pman.Dialog.CoreEmailPreview = {
               url: baseURL + '/Core/MessagePreview', 
               params  : {
                   _id : _this.data.id,
-                  _table : _this.data.module
+                  _table : _this.data.module,
+                  ontable : _this.data.ontable,
+                  onid : _this.data.onid
               },
               method : 'GET'
           });
@@ -62,7 +64,9 @@ Pman.Dialog.CoreEmailPreview = {
               params  : {
                   _as_html : 1,
                   _id : _this.data.id,
-                  _table : _this.data.module
+                  _table : _this.data.module,
+                  ontable : _this.data.ontable,
+                  onid : _this.data.onid
               },
               method : 'GET'
           });
@@ -98,11 +102,11 @@ Pman.Dialog.CoreEmailPreview = {
       fitContainer : true,
       fitToFrame : true,
       region : 'center',
-      title : _this._strings['4cd8413207629a963225f4314b53adcd'] /* Plain */,
+      title : _this._strings['4c4ad5fca2e7a3f74dbb1ced00381aa4'] /* HTML */,
       listeners : {
        render : function (_self)
         {
-            _this.panel = _self;
+            _this.hpanel = _self;
         }
       },
       xns : Roo,
@@ -113,11 +117,11 @@ Pman.Dialog.CoreEmailPreview = {
       fitContainer : true,
       fitToFrame : true,
       region : 'center',
-      title : _this._strings['4c4ad5fca2e7a3f74dbb1ced00381aa4'] /* HTML */,
+      title : _this._strings['4cd8413207629a963225f4314b53adcd'] /* Plain */,
       listeners : {
        render : function (_self)
         {
-            _this.hpanel = _self;
+            _this.panel = _self;
         }
       },
       xns : Roo,
