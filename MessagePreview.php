@@ -51,8 +51,8 @@ class Pman_Core_MessagePreview extends Pman
             }
             $m = 'notify'.$_REQUEST['evtype'];
             $this->msg = (object)$t->$m('test@test.com', false, false, false);
-            print_R($this->msg);
-            
+         //   print_R($this->msg);
+            $this->msg->subject = $this->msg->headers['Subject'];
             //$data->subject = $data['Subject;
              
             
