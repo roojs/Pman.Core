@@ -241,7 +241,9 @@ class Pman_Core_Mailer {
                 unset($parts[1]['Content-Type']);
             }
             $mime->setTXTBody($parts[2]);
+            $this->textbody = $parts[2];
             $mime->setHTMLBody($htmlbody);
+            
 //            var_dump($mime);exit;
             foreach($this->images as $cid=>$cdata) { 
             
