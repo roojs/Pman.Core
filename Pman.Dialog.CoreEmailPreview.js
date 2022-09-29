@@ -54,8 +54,9 @@ Pman.Dialog.CoreEmailPreview = {
               params  : {
                   _id : _this.data.id,
                   _table : _this.data.module,
-                  ontable : _this.data.ontable,
-                  onid : _this.data.onid
+                  ontable : _this.data.ontable || '',
+                  onid : _this.data.onid || '',
+                  evtype : _this.data.evtype  || ''
               },
               method : 'GET'
           });
@@ -65,8 +66,9 @@ Pman.Dialog.CoreEmailPreview = {
                   _as_html : 1,
                   _id : _this.data.id,
                   _table : _this.data.module,
-                  ontable : _this.data.ontable,
-                  onid : _this.data.onid
+                  ontable : _this.data.ontable || '',
+                  onid : _this.data.onid  || '',
+                  evtype : _this.data.evtype || ''
               },
               method : 'GET'
           });
