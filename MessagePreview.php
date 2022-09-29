@@ -29,7 +29,7 @@ class Pman_Core_MessagePreview extends Pman
         
         $mlq->get($_REQUEST['_id']);
         
-        if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid'])) {
+        if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['evtype'])) {
             $t = DB_DataObject::factory(preg_replace('/^[a-z_]+/i', '', $_REQUEST['ontable']));
             if (!is_a($t, 'DB_DataObject') && !is_a($t, 'PDO_DataObject')) {
                 $this->jerr("invalid URL");
@@ -37,10 +37,13 @@ class Pman_Core_MessagePreview extends Pman
             if (!$t->get($_REQUEST['onid'])) {
                 $this->jerr("invalid id");
             }
-            if (!method_exists($t->toEmail())) {
-                
-                
+            if (!method_exists($t,'notify'.$_REQUEST['evtype'])) {
+                $this->jerr("invalid evtype");
             }
+            $m = 'notify'.$_REQUEST['evtype'];
+            $data = $t->$m('test@test.com', false, false, false);
+            print_R($data);
+            return;
         }
         
         $this->msg = $mlq;
