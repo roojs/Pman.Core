@@ -21,17 +21,58 @@ class Pman_Core_MessagePreview extends Pman
     function get($v, $opts=array())
     {
  
-        if(empty($_REQUEST['_id']) || empty($_REQUEST['_table'])){
+        if((empty($_REQUEST['_id']) && empty($_REQUEST['template_name']) )|| empty($_REQUEST['_table'])){
             $this->jerr('Missing Options');
         }
         
         $mlq = DB_DataObject::factory($_REQUEST['_table']);
+        if (!empty($_REQUEST['template_name'])) {
+            $res = $mlq->get('name', $_REQUEST['template_name']);
+        } else {
+            $res = $mlq->get($_REQUEST['_id']);
+        }
+        if (!$res) {
+            $this->jerr("invalid id/name");
+        }
         
-        $mlq->get($_REQUEST['_id']);
+        $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
+        
+        
+        if (isset($_REQUEST['ontable']) && !empty($_REQUEST['onid']) && !empty($_REQUEST['evtype'])) {
+            $tn = preg_replace('/[^a-z_]+/i', '', $_REQUEST['ontable']);
+            
+            $t = DB_DataObject::factory($tn);
+            if (!is_a($t, 'DB_DataObject') && !is_a($t, 'PDO_DataObject')) {
+                $this->jerr("invalid URL");
+            }
+            if (!$t->get($_REQUEST['onid'])) {
+                $this->jerr("invalid id");
+            }
+            if (!method_exists($t,'notify'.$_REQUEST['evtype'])) {
+                $this->jerr("invalid evtype");
+            }
+            $m = 'notify'.$_REQUEST['evtype'];
+            $this->msg = (object)$t->$m('test@test.com', false, false, false);
+           // print_R($this->msg->mailer );
+            $this->msg->subject = $this->msg->headers['Subject'];
+            $this->msg->from_email = $mlq->from_email;
+            $this->msg->from_name = $mlq->from_name;
+            $this->msg->plaintext  = $this->msg->mailer->textbody ;
+            $this->msg->bodytext = $this->msg->mailer->htmlbody;
+            $this->msg->rcpts = $this->msg->mailer->rcpts;
+            // htmlbody 
+            //$this->plaintext = 
+            //$data->subject = $data['Subject;
+             
+            
+             
+
+            return;
+        }
         
         $this->msg = $mlq;
-
-        $this->showHtml = isset($_REQUEST['_as_html']) ? true : false;
+        $this->msg->rcpts = "send to <these@people>";
+        
         
     }
     
