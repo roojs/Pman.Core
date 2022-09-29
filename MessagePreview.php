@@ -50,10 +50,11 @@ class Pman_Core_MessagePreview extends Pman
                 $this->jerr("invalid evtype");
             }
             $m = 'notify'.$_REQUEST['evtype'];
-            $data = $t->$m('test@test.com', false, false, false);
-          
-            $data['subject'] = $data['Subject'];
-             $this->msg = (object )$data;
+            $this->msg = (object)$t->$m('test@test.com', false, false, false);
+            print_R($this->msg);
+            
+            //$data->subject = $data['Subject;
+             
             
              
 
