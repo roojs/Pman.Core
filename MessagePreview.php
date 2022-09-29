@@ -55,7 +55,7 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg->subject = $this->msg->headers['Subject'];
             $this->msg->from_email = $mlq->from_email;
             $this->msg->from_name = $mlq->from_name;
-            $this->msg->textbody  = $this->msg->mailer->textbody;
+            $this->msg->plaintext  = $this->msg->mailer->textbody;
             // htmlbody 
             //$this->plaintext = 
             //$data->subject = $data['Subject;
