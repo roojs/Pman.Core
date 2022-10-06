@@ -31,7 +31,7 @@ Pman.Dialog.PersonEditor.prototype = {
             return;
         }
         var _this = this;
-        this.dialog = new Ext.LayoutDialog(Ext.get(document.body).createChild({tag:'div'}),  
+        this.dialog = new Roo.LayoutDialog(Roo.get(document.body).createChild({tag:'div'}),  
             Roo.apply({ 
                 autoCreated: true,
                 title: 'Edit Contact Details',
@@ -69,7 +69,7 @@ Pman.Dialog.PersonEditor.prototype = {
         this.layout.beginUpdate();
         
          
-        this.form = new Ext.form.Form({
+        this.form = new Roo.form.Form({
             labelWidth: 120,
             listeners : {
                 actionfailed : function(f, act) {
@@ -189,7 +189,7 @@ Pman.Dialog.PersonEditor.prototype = {
          
         this.form.render(ef.dom);
 
-        var vp = this.dialog.getLayout().add('center', new Ext.ContentPanel(ef, {
+        var vp = this.dialog.getLayout().add('center', new Roo.ContentPanel(ef, {
             autoCreate : true,
             //title: 'Org Details',
             //toolbar: this.tb,
@@ -259,7 +259,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 forceSelection: true,
                 //mode: 'local',
                 triggerAction: 'all',
-                tpl: new Ext.Template(
+                tpl: new Roo.Template(
                     '<div class="x-grid-cell-text x-btn button">',
                         '<b>{name}</b> {address}',
                     '</div>'
@@ -337,7 +337,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         if (_this.type == 'new') {
                             data = _this.form.findField('company_id').lastData;
                             if (!data.id ) {
-                                Ext.MessageBox.alert("Error", "Select An Company First");
+                                Roo.MessageBox.alert("Error", "Select An Company First");
                                 return false
                             }
                             
@@ -372,7 +372,7 @@ Pman.Dialog.PersonEditor.prototype = {
                     beforequery : function (qe) {
                         var coid = _this.form.findField('company_id').getValue();
                         if (coid < 1 ) {
-                            Ext.MessageBox.alert("Error", "Select An Company First");
+                            Roo.MessageBox.alert("Error", "Select An Company First");
                             return false;
                         }
                     }
@@ -384,7 +384,7 @@ Pman.Dialog.PersonEditor.prototype = {
                 forceSelection: true,
                 //mode: 'local',
                 triggerAction: 'all',
-                tpl: new Ext.Template(
+                tpl: new Roo.Template(
                     '<div class="x-grid-cell-text x-btn button">',
                         '<b>{name}</b> {address}',
                     '</div>'
@@ -561,7 +561,7 @@ Pman.Dialog.PersonEditor.prototype = {
                         width: 50,
                         
                         
-                        store: new Ext.data.SimpleStore({
+                        store: new Roo.data.SimpleStore({
                               // load using HTTP
                             fields: [ 'code', 'desc' ],
                             data:  [[ 'ACTION_REQUIRED', "Yes"] , [ 'NOTIFY', "No"] ]
@@ -613,7 +613,7 @@ Pman.Dialog.PersonEditor.prototype = {
             
         }
         if (this.form.findField('company_id') && !this.form.findField('company_id').getValue()) {
-            Ext.MessageBox.alert("Error", "Select a Company");
+            Roo.MessageBox.alert("Error", "Select a Company");
             return;
         }
         
@@ -623,19 +623,19 @@ Pman.Dialog.PersonEditor.prototype = {
             var p2 = this.form.findField('passwd2').getValue();
             
             if (this.sendAfterSave && !p1.length) {
-                Ext.MessageBox.alert("Error", "You must create a password to send introduction mail");
+                Roo.MessageBox.alert("Error", "You must create a password to send introduction mail");
                 return;
             }
             
             if (Pman.Login.authUser.id < 0 && !p1.length) {
-                Ext.MessageBox.alert("Error", "You must create a password for the admin account");
+                Roo.MessageBox.alert("Error", "You must create a password for the admin account");
                 return;
             }
             
             
             if (p1.length || p2.length) {
                 if (p1 != p2) {
-                    Ext.MessageBox.alert("Error", "Passwords do not match");
+                    Roo.MessageBox.alert("Error", "Passwords do not match");
                     return;
                 }
             }
