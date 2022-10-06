@@ -2,7 +2,7 @@
 //<script type="text/Javascript">
 
 
-Ext.form.SecurePass = function (config) {
+Roo.form.SecurePass = function (config) {
     // these go here, so the translation tool can replace them..
     this.errors = {
         PwdEmpty: "Please type a password, and then retype it to confirm.",
@@ -16,10 +16,10 @@ Ext.form.SecurePass = function (config) {
     },
     this.meterLabel = "Password strength:";
     this.pwdStrengths = ["Too Weak", "Weak", "Medium", "Strong"];
-    Ext.form.SecurePass.superclass.constructor.call(this, config);
+    Roo.form.SecurePass.superclass.constructor.call(this, config);
 }
 
-Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
+Roo.extend(Roo.form.SecurePass, Roo.form.TextField, {
     /**
      * @cfg {String/Object} errors A Error spec, or true for a default spec (defaults to
      * {
@@ -65,7 +65,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     insecure: false,
     // private
     initEvents: function () {
-        Ext.form.SecurePass.superclass.initEvents.call(this);
+        Roo.form.SecurePass.superclass.initEvents.call(this);
 
         if (this.el.is('input[type=password]') && Roo.isSafari) {
             this.el.on('keydown', this.SafariOnKeyDown, this);
@@ -75,7 +75,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     },
     // private
     onRender: function (ct, position) {
-        Ext.form.SecurePass.superclass.onRender.call(this, ct, position);
+        Roo.form.SecurePass.superclass.onRender.call(this, ct, position);
         this.wrap = this.el.wrap({cls: 'x-form-field-wrap'});
         this.trigger = this.wrap.createChild({tag: 'div', cls: 'roo-strength-meter ' + this.triggerClass});
 
@@ -122,7 +122,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         if (this.wrap) {
             this.wrap.remove();
         }
-        Ext.form.TriggerField.superclass.onDestroy.call(this);
+        Roo.form.TriggerField.superclass.onDestroy.call(this);
     },
     // private
     checkStrength: function () {
@@ -153,7 +153,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
         this._lastPwd = pwd;
     },
     reset: function () {
-        Ext.form.SecurePass.superclass.reset.call(this);
+        Roo.form.SecurePass.superclass.reset.call(this);
         this._lastPwd = '';
         var pm = this.trigger.child('div/div/div').dom;
         pm.style.width = 0;
@@ -162,7 +162,7 @@ Ext.extend(Ext.form.SecurePass, Ext.form.TextField, {
     // private
     validateValue: function (value) {
         
-        if (!Ext.form.TextField.superclass.validateValue.call(this, value)) {
+        if (!Roo.form.TextField.superclass.validateValue.call(this, value)) {
             return false;
         }
         if (value.length == 0) {
