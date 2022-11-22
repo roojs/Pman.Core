@@ -703,6 +703,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $uu = clone($this);
         $this->lang = $val;
         $this->update($uu);
+        if(!empty(self::$authUser) && self::$authUser->id == $this->id) {
+            self::$authUser->lang = $this->lang;
+        }
         return $this->lang;
     }
             
