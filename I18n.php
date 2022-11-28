@@ -236,7 +236,7 @@ class Pman_Core_I18n extends Pman
         }
 
         if(class_exists('HTML_FlexyFramework2', false)) {
-            die(HTML_FlexyFramework2::get()->HTML_Template_Flexy);
+            die(var_dump(HTML_FlexyFramework2::get()->HTML_Template_Flexy));
         }
         else {
             $fo = &PEAR::getStaticProperty('HTML_Template_Flexy','options');
