@@ -234,7 +234,13 @@ class Pman_Core_I18n extends Pman
         if (empty($k)) {
             return '??';
         }
-        $fo = &PEAR::getStaticProperty('HTML_Template_Flexy','options');
+
+        if(class_exists('HTML_FlexyFramework2', false)) {
+            $fo = HTML_FlexyFramework2::get()->HTML_Template_Flexy;
+        }
+        else {
+            $fo = &PEAR::getStaticProperty('HTML_Template_Flexy','options');
+        }
         
         $fallback_lang = empty($fo['locale']) ? 'en' : $fo['locale'];
             
