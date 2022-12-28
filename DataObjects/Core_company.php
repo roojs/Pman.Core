@@ -497,6 +497,26 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $companies->insert();
         $companies->onInsert(array(), $roo);
     }
+    
+    function owner()
+    {
+        if (empty($this->owner_id)) {
+            return false;
+        }
+        static $cache = false;
+        if ($cache !== false && isset($cache[$this->owner_id])) {
+            return $cache[$this->owner_id]; 
+        }
+        $o = DB_DataObject::factory('core_company');
+        if (!$o->get($this->owner_id)) {
+            return false;
+        }
+        $cache[$this->owner_id] = $o;
+        return $o;
+        
+    }
+    
+    /// look up the company which is the system owner...
     static function lookupOwner()
     {
         static $cache = false;

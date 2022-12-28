@@ -126,7 +126,7 @@ class Pman_Core_Images extends Pman
         }
         
         if (strpos($id,':') > 0) {  // id format  tablename:id:-imgtype
-            
+            //DB_DataObject::debugLevel(1);
             if (!$this->authUser) {
                 $this->imgErr("not-authenticated-using-colon-format",$s);
                 
@@ -150,6 +150,7 @@ class Pman_Core_Images extends Pman
             }
             $img->limit(1);
             if (!$img->find(true)) {
+                die("HERE");
                 $this->imgErr("no images for that item: " . htmlspecialchars($id),$s);
                 
             }
