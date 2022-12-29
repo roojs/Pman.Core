@@ -1439,6 +1439,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $this->company_id = $c->id;
         $this->email = trim($this->email);
         
+        $pp = DB_DataObject::factory('core_person');
+        $pp->email  = $this->email;
+        if ($pp->count()){
+            $roo->jerr("that email already exists in the database");
+        }
+        
+        
+        
+        
     }
     
     function onInsert($req, $roo)
