@@ -34,7 +34,7 @@ ALTER TABLE core_company ADD COLUMN    comptype varchar(32)  NOT NULL DEFAULT ''
 -- not sure if this needs to change.. << there is code in core/update that fills this in??
 ALTER TABLE core_company ADD COLUMN    comptype_id INT(11) DEFAULT 0;
 
-ALTER TABLE core_company ADD COLUMN parent_id NOT NULL DEFAULT 0;
+ALTER TABLE core_company ADD COLUMN  parent_id INT NOT NULL DEFAULT 0;
 
 
  
