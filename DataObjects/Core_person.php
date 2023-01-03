@@ -1375,10 +1375,18 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // determine if it's staff!!!
         $owncomp = DB_DataObject::Factory('core_company');
         $owncomp->get('comptype', 'OWNER');
-        $isStaff = ($au->company_id ==  $owncomp->id);
+        $editor_is_staff = ($au->company_id ==  $owncomp->id);
+        
+        if (!$editor_is_staff) {
+            // non staff editing should not user roo/isPerm?
+            return false; // no permission if user is not staff!?
+        
+        }
+        
+        $this_is_staff = ($this->company_id ==  $owncomp->id);
        
-       
-        if (!$isStaff) {
+       /*
+        if (!$this_is_staff ) {
             
             // - can not change company!!!
             if ($changes && 
@@ -1402,7 +1410,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             //return $this->company_id == $au->company_id;
         }
-        
+        */
          
         // yes, only owner company can mess with this...
         
@@ -1413,11 +1421,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             // extra case change passwod?
             case 'P': //??? password
                 // standard perms -- for editing + if the user is dowing them selves..
-                $ret = $isStaff ? $au->hasPerm("Core.Staff", "E") : $au->hasPerm("Core.Person", "E");
-                return $ret || $au->id == $this->id;
+                $ret = $this_is_staff  ? $au->hasPerm("Core.Staff", "E") : $au->hasPerm("Core.Person", "E");
+                return $ret || $au->id == $this->id;   // can change own data?
             
             default:                
-                return $isStaff ? $au->hasPerm("Core.Staff", $lvl) : $au->hasPerm("Core.Person", $lvl);
+                return $this_is_staff ? $au->hasPerm("Core.Staff", $lvl) : $au->hasPerm("Core.Person", $lvl);
+                
+                    
         
         }
         return false;
