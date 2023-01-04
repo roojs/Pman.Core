@@ -85,6 +85,8 @@ class Pman_Core_Images extends Pman
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
         //}
+        
+        //DB_DataObject::debugLevel(1);
 
         $this->is_local = (!empty($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') ? true : false;
         
@@ -150,6 +152,7 @@ class Pman_Core_Images extends Pman
             }
             $img->limit(1);
             if (!$img->find(true)) {
+                
                 $this->imgErr("no images for that item: " . htmlspecialchars($id),$s);
                 
             }
@@ -217,6 +220,7 @@ class Pman_Core_Images extends Pman
     }
     
     function imgErr($reason,$path) {
+        
         header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
             urlencode($reason) .'&path='.urlencode($path));
         exit;
@@ -300,6 +304,8 @@ class Pman_Core_Images extends Pman
                 $x->serveOnly($this->method);
                 exit;
             }
+            $x->debug=1;
+            
             $x->convert( $this->as_mimetype);
             $x->serve($this->method);
             exit;
