@@ -304,8 +304,7 @@ class Pman_Core_Images extends Pman
                 $x->serveOnly($this->method);
                 exit;
             }
-            $x->debug=1;
-            
+         
             $x->convert( $this->as_mimetype);
             $x->serve($this->method);
             exit;
