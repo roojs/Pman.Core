@@ -150,7 +150,6 @@ class Pman_Core_Images extends Pman
             }
             $img->limit(1);
             if (!$img->find(true)) {
-                die("HERE");
                 $this->imgErr("no images for that item: " . htmlspecialchars($id),$s);
                 
             }
