@@ -39,27 +39,30 @@ ALTER TABLE core_company ADD COLUMN  parent_id INT NOT NULL DEFAULT 0;
 
  
 ALTER TABLE core_company CHANGE COLUMN isOwner isOwner int(11);
+
 ALTER TABLE core_company CHANGE COLUMN comptype comptype  VARCHAR(32) DEFAULT '';
+
 -- postres
 -- ALTER TABLE core_company ALTER isOwner TYPE int(11);
 ALTER TABLE core_company ALTER owner_id SET DEFAULT 0;
 ALTER TABLE core_company ALTER url SET DEFAULT '';
 
-
-
-
+ 
 
 ALTER TABLE core_company ADD COLUMN    address1 text ;
 ALTER TABLE core_company ADD COLUMN    address2 text ;
 ALTER TABLE core_company ADD COLUMN    address3 text ;
 ALTER TABLE core_company ADD COLUMN is_system INT(2) NOT NULL DEFAULT 0;-- #2028
 
-ALTER TABLE core_company ADD INDEX name_lookup (name);
 
 ALTER TABLE core_company ADD COLUMN deleted_by INT(11)  NOT NULL DEFAULT 0;
+alter table core_company CHANGE COLUMN  deleted_dt deleted_dt datetime NOT NULL DEFAULT '1000-01-01 00:00:00';
+ALTER TABLE core_company ADD COLUMN deleted_dt DATETIME  NOT NULL DEFAULT '1000-00-00'; 
 
-ALTER TABLE core_company ADD COLUMN deleted_dt DATETIME  NOT NULL DEFAULT '0000-00-00'; 
+-- indexs
 
+
+ALTER TABLE core_company ADD INDEX name_lookup (name);
 ALTER TABLE core_company ADD INDEX lookup_owner_id (owner_id);
 
 -- our new code should have this fixed now..
