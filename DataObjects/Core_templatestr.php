@@ -469,25 +469,33 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         //$t->active = 1;
         $got = $t->fetchAll('src_id');
         $missing = array_diff($ids, $got);
-        foreach($missing as $id) {
-            
-            $t = DB_DataObject::factory($tn);
-            $t->setFrom(array(
-                'src_id' => $id,
-                'txt' =>  '',
-                'lang' => $lang,
-                'updated' => date('Y-m-d H:i:s', strtotime("NOW")),
-                'template_id'=> $id_tmp[$id]->template_id,
-                'on_table' => $id_tmp[$id]->on_table,
-                'on_id' => $id_tmp[$id]->on_id,
-                'on_col' => $id_tmp[$id]->on_col,
-                'active' => 1,
-                // no md5um
-            ));
-            $t->insert();
+        
+        if (empty($missing)) {
+            return;
         }
-        
-        
+        $t = DB_DataObject::factory($tn);
+        $q = "CREATE TEMPORARY TABLE core_templatestr_insert SELECT
+            id as src_id,
+            '' as txt,
+            '$lang' as lang,
+            NOW() as updated,
+            template_id,
+            on_table,
+            on_id,
+            on_col,
+            1 as active
+            FROM core_templatestr
+            WHERE
+            id IN (". implode(',', $missing) . ")
+        ";
+        //echo $q; exit;
+        DB_DataObject::factory($tn)->query($q);
+        $q = "INSERT INTO $tn (src_id, txt, lang, updated, template_id, on_table,on_id, on_col, active) SELECT * FROM core_templatestr_insert";
+        DB_DataObject::factory($tn)->query($q);
+        $q = "DROP TEMPORARY TABLE core_templatestr_insert";
+        DB_DataObject::factory($tn)->query($q);
+            
+      
         
     }
     
