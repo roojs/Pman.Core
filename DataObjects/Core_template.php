@@ -241,7 +241,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
        
         $tmpl->view_name = $pgdata['base'];
         if ($tmpl->get('template',  $pgdata['template'])) {
-            if (strtotime($tmpl->updated) >= filemtime($flexy->resolvePath ($pgdata['template']))) {
+            clearstatcache();
+            if (strtotime($tmpl->updated) >= filemtime($flexy->resolvePath ($pgdata['template']) . '/'. $pgdata['template'])) {
                 if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
                     $oo = clone($tmpl);
                     $tmpl->is_deleted = 0;
@@ -249,6 +250,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                     $tmpl->update($oo);
                 }
                 if (empty($pgdata['force'])) {
+                  //  echo "SKIP NO UPDATE: " . $pgdata['template'] ."\n";
+                   // echo $flexy->resolvePath ($pgdata['template']).  ':'. $tmpl->updated  . ">=" .  date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template']))) . "\n";
                     return $tmpl;
                 }
             }
@@ -262,7 +265,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             
         } catch(Exception $e) {
             $old = clone($tmpl);
-            $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template'])));
+            $tmpl->updated   = date('Y-m-d H:i:s',filemtime($flexy->resolvePath ($pgdata['template']) . '/'. $pgdata['template']));
             if ($tmpl->id) {
                 $tmpl->is_deleted = 0;
                 $tmpl->filetype = 'html';
@@ -273,15 +276,15 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 $tmpl->lang = 'en';
                 $tmpl->insert();
             }
-            
-            
+            //echo "SKIP: " . $pgdata['template'] ."\n";
+           //   echo "SKIP - exception\n"; print_r($e);
             return false;
         }
        
       
         if (is_a($r,'PEAR_Error')) {
-            
-           // echo $r->toString(). "\n";
+            //echo "SKIP: " . $pgdata['template'] ."\n";
+            //echo $r->toString(). "\n";
             return $r;
         }
           
@@ -297,7 +300,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         $tmpl->view_name = $pgdata['base'];
         
-        
+        //echo $pgdata['template'] ."\n";
         if (!$tmpl->get('template',  $pgdata['template'])) {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = 'html';
