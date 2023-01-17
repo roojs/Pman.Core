@@ -300,7 +300,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         $tmpl->view_name = $pgdata['base'];
         
-        echo $pgdata['template'] ."\n";
+        //echo $pgdata['template'] ."\n";
         if (!$tmpl->get('template',  $pgdata['template'])) {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = 'html';
