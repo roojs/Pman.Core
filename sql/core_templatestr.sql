@@ -23,3 +23,4 @@ ALTER TABLE core_templatestr ADD COLUMN on_col VARCHAR(64) DEFAULT '';
 
 ALTER TABLE core_templatestr ADD INDEX lookup_a(active, lang, on_table, on_id, on_col);
 
+alter table core_templatestr add index lookup_b(src_id, lang, mdsum, template_id);

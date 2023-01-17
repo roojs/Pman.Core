@@ -442,18 +442,23 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         // find all the id's from lang that have not been generated..
         
-        //find the origanal 
-        $t = DB_DataObject::factory($tn);
-        $t->whereAdd("lang = ''");
-        $t->active = 1;
         
-        //old code, this did not support the on_table
-//        $id_tmp = $t->fetchAll('id','template_id');
-//        $ids = array_keys($id_tmp);
-        $id_tmp = array();
-        //new code for support the sync tables 
-        foreach($t->fetchAll() as $ori){
-            $id_tmp[$ori->id] = $ori;
+        static $id_tmp = false;
+        
+        if ($id_tmp == false) {
+            //find the origanal 
+            $t = DB_DataObject::factory($tn);
+            $t->whereAdd("lang = ''");
+            $t->active = 1;
+            
+            //old code, this did not support the on_table
+    //        $id_tmp = $t->fetchAll('id','template_id');
+    //        $ids = array_keys($id_tmp);
+            $id_tmp = array();
+            //new code for support the sync tables 
+            foreach($t->fetchAll() as $ori){
+                $id_tmp[$ori->id] = $ori;
+            }
         }
         $ids = array_keys($id_tmp);
         
