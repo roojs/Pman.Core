@@ -170,9 +170,11 @@ class Pman_Core_NotifySend extends Pman
                 'onid' => $w->onid,
         );
         // only newer version of the database us this..
-        $personid_col = strtolower($w->person_table).'_id';
-        if (isset($w->{$personid_col})) {
-            $lar[$personid_col] = $w->{$personid_col};
+        if (isset($w->person_table)) {
+            $personid_col = strtolower($w->person_table).'_id';
+            if (isset($w->{$personid_col})) {
+                $lar[$personid_col] = $w->{$personid_col};
+            }
         }
         
         
