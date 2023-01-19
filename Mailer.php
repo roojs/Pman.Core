@@ -137,15 +137,22 @@ class Pman_Core_Mailer {
             'site_prefix' => false,
             'multiSource' => true,
         );
-        if (!empty($this->templateDir)) {
-            $tmp_opts['templateDir'] = $this->templateDir;
-        }
+        
         $fopts = HTML_FlexyFramework::get()->HTML_Template_Flexy;
+        
+        //print_R($fopts);exit;
         if (!empty($fopts['DB_DataObject_translator'])) {
             $tmp_opts['DB_DataObject_translator'] = $fopts['DB_DataObject_translator'];
         }
         if (!empty($fopts['locale'])) {
             $tmp_opts['locale'] = $fopts['locale'];
+        }
+        if (!empty($fopts['templateDir'])) {
+            $tmp_opts['templateDir'] = $fopts['templateDir'];
+        }
+        // override.
+        if (!empty($this->templateDir)) {
+            $tmp_opts['templateDir'] = $this->templateDir;
         }
         
         // local opt's overwrite
@@ -189,12 +196,13 @@ class Pman_Core_Mailer {
             
         }
         $tmp_opts['nonHTML'] = true;
+        //$tmp_opts['debug'] = true;
         
-        
-        //print_R($tmp_opts);
+        // print_R($tmp_opts);
         // $tmp_opts['force'] = true;
         
         $template = new HTML_Template_Flexy(  $tmp_opts );
+        
         $template->compile('mail/'. $templateFile.'.txt');
         
         /* use variables from this object to ouput data. */
