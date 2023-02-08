@@ -298,11 +298,11 @@ class Pman_Core_Images extends Pman
         }
         if (!$this->thumb) {
             if ($x->mimetype == $this->as_mimetype) {
-                $x->serveOnly($this->method);
+                $x->serveOnly($this->method, $img->filename);
                 exit;
             }
             $x->convert( $this->as_mimetype);
-            $x->serve($this->method);
+            $x->serve($this->method, $img->filename);
             exit;
         }
         //echo "SKALING?  $this->size";
