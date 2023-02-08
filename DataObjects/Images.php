@@ -203,7 +203,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function getStoreName() 
     {
         $opts = HTML_FlexyFramework::get()->Pman;
-        $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
+        $fn = preg_replace('/[^a-z0-9_\.]+/i', '_', $this->filename);
         return implode( '/', array(
             $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
         ));
@@ -215,6 +215,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function exists()
     {
+        clearstatcache();
+        //var_dump($this->getStoreName());
         return file_exists($this->getStoreName());
     }
     
@@ -503,7 +505,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             
         }
-        $ret['shorten_name'] = $ret['filename'] = $this->shorten_name();
+        $ret['shorten_name']   = $this->shorten_name();
         
         return $ret;
     }
