@@ -767,18 +767,28 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $oath_require = $s->lookup('core', 'two_factor_auth_required');
         $aur['require_oath'] = $oath_require ?  $oath_require->val : 0;
         
-        $aur['core_person_settings'] = array();
-                
-        $core_person_settings = DB_DataObject::factory('core_person_settings');
-        $core_person_settings->setFrom(array(
-            'person_id' => $this->id
-        ));
-        
-        $aur['core_person_settings'] = $core_person_settings->fetchAll('scope', 'data');
+        $aur['core_person_settings'] = $this->settings();
         
         return $aur;
     }
     
+    function settings($return_obj = false)
+    {
+        $cs = DB_DataObject::factory('core_person_settings');
+        $cs->setFrom(array(
+            'person_id' => $this->id
+        ));
+        return $return_obj ? $cs->fetchAll() : $cs->fetchAll('scope', 'data');;
+    }
+    function toRooSingleArray($authUser, $request)  
+    {
+        $ret = $this->toArray();
+        foreach( $this->settings() as $k=>$v) {
+            $ret['core_person_settings['. $k .']'] = $v;
+        }
+    
+        return $ret;
+    }
     //   ----------PERMS------  ----------------
     function getPerms() 
     {
@@ -1494,8 +1504,44 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $pd->company_id = $this->company_id;
             $pd->insert();
         }
-        
+        if (!empty($req['core_person_settings'])) {
+            $this->updateSettings($req['core_person_settings'], $roo);
+        }
     }
+    
+    function onUpdate($old, $req,$roo, $event)
+    {
+        if (!empty($req['core_person_settings'])) {
+            $this->updateSettings($req['core_person_settings'], $roo);
+        }
+    }
+    
+    // there should really be a registry of valid scope values!?
+    function updateSettings($ar, $roo)
+    {
+        //DB_DataObject::debugLevel(1);
+        $old = array();
+        foreach($this->settings(true) as $o) {
+            $old[$o->scope] = $o;
+        }
+        foreach($ar as $k=>$v) {
+            if (isset($old[$k])) {
+                $oo = clone($old[$k]);
+                $old[$k]->data = $v;
+                $old[$k]->update($oo);
+                continue;
+            }
+            $cs = DB_DataObject::Factory('core_person_settings');
+            $cs->setFrom(array(
+                'person_id' =>$this->id,
+                'scope' => $k,
+                'data' => $v
+            ));
+            $cs->insert();
+        }
+        // we dont delete old stuff....
+    }
+    
     
     function importFromArray($roo, $persons, $opts)
     {
