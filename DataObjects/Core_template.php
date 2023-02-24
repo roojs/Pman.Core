@@ -417,7 +417,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $tmpl->words = $words;
             
         $x = DB_DataObject::Factory('core_templatestr');
-        $x->syncTemplateWords($tmpl);    
+        $this->factoryStr()->syncTemplateWords($tmpl);     
          
         
         return $tmpl;
