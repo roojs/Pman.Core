@@ -459,29 +459,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/g', $fc, $outs);
         print_R($outs);exit;
         
-            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
-            
-        }
-        // create the template...
-        
-        
-        if (!$tmpl->id) {
-            
-            $tmpl->template = $pgdata['template'];
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->insert();
-        } else {
-            $xx =clone($tmpl);
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->update($xx);
-        }
-      
+        $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
         $words = array_unique($words);
         
         if (!count($words)) {
