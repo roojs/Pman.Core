@@ -92,9 +92,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     
     /*
+     * USED? - this is in updateBJSTemplate ?
      * @param base (should be full path to template directory)
      * @param subdir = empty for top or subpath.
      */
+    /*
     function syncTemplateDir($base = false,  $subdir = '', $force = false)
     {
         echo "syncTemplateDir: $base , $subdir, $force \n";
@@ -186,8 +188,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
         }
     }
-    
-    /* compile a html template
+    */
+    /* compile a html template  - called by UpdateBjsTemplates - scan Pman Templates
      *  
      *  @param template_dir  << the path to the template dir ... Pman/XXX/template ...
      *  @param template   << name of template used by name field)
@@ -196,6 +198,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      *  
      *  
      */
+    
     function syncTemplatePage($pgdata)
     {
         //print_r($pgdata);
@@ -345,6 +348,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return clone($tmpl);
     
     }
+    
+    
     function syncPhpGetText($pgdata)
     {
         $tmpl = DB_DataObject::Factory($this->tableName());
@@ -385,7 +390,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         // create the template...
         
         
-         if (!$tmpl->id) {
+        if (!$tmpl->id) {
             
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
@@ -412,7 +417,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $tmpl->words = $words;
             
         $x = DB_DataObject::Factory('core_templatestr');
-        $x->syncTemplateWords($tmpl);    
+        $this->factoryStr()->syncTemplateWords($tmpl);     
          
         
         return $tmpl;
@@ -420,6 +425,74 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
     }
+    // allow reuse in cms templatstr
+    function factoryStr()
+    {
+        return DB_DataObject::factory('core_templatestr');
+    }
+    
+    /**
+     * plain JS files use ._(....) to flag 
+     * it does not support quoted strings or anything really
+     * very simple strings only
+     */ 
+    
+    function syncJsWords($pgdata)
+    {
+        $tmpl = DB_DataObject::Factory($this->tableName());
+        $tmpl->view_name = $pgdata['base'];
+        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
+        
+        if ($tmpl->get('template',  $pgdata['template'])) {
+            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'js') {
+                    $oo = clone($tmpl);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'js';
+                    $tmpl->update($oo);
+                }
+                return $tmpl;
+            }
+        }
+        $words = array();
+        
+        $fc = file_get_contents( $tmpl->currentTemplate );
+        
+        preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
+        $words = $outd[1];
+         
+        preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
+        
+        // ?? seriously adding two arrays?
+        $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
+        $words = array_unique($words);
+        
+        if (empty($words)) {
+            return;
+        }
+        if ($tmpl->id) {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = 'js';
+            $tmpl->update($tmpl);
+        } else {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = 'js';
+            $tmpl->lang = 'en';
+            $tmpl->insert();
+        }
+        
+             
+        $tmpl->words = $words;
+            
+        $this->factoryStr()->syncTemplateWords($tmpl);    
+         
+        
+        return $tmpl;
+        
+        
+        
+    }
+    
     /*
     SELECT LOWER(
 CONCAT(
@@ -502,7 +575,7 @@ WHERE (
         $done[$clsname.':'.$lang] = 1;
         
         // do we need to compile the file..
-        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts = $this->factoryStr();
         $ts->selectAdd('COALESCE(MAX(updated), "1000-01-01") as updated');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
@@ -515,12 +588,12 @@ WHERE (
         }
         //DB_DataObject::debugLevel(1);
 
-        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts = $this->factoryStr();
         $ts->autoJoin();
-        $ts->selectAdd('join_src_id_id.txt as src_id_txt, core_templatestr.txt as txt');
+        $ts->selectAdd("join_src_id_id.txt as src_id_txt, {$ts->tableName()}.txt as txt");
         $ts->lang = $lang;
         $ts->template_id = $d->id;
-        $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH(core_templatestr.txt) > 0");
+        $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
                
         if (!file_exists($fdir)) {
