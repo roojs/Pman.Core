@@ -392,7 +392,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         // create the template...
         
         
-         if (!$tmpl->id) {
+        if (!$tmpl->id) {
             
             $tmpl->template = $pgdata['template'];
             $tmpl->lang = 'en'; /// ??? hard coded??
