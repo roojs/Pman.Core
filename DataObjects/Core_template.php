@@ -92,9 +92,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     
     /*
+     * USED? - this is in updateBJSTemplate ?
      * @param base (should be full path to template directory)
      * @param subdir = empty for top or subpath.
      */
+    /*
     function syncTemplateDir($base = false,  $subdir = '', $force = false)
     {
         echo "syncTemplateDir: $base , $subdir, $force \n";
@@ -186,8 +188,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
         }
     }
-    
-    /* compile a html template
+    */
+    /* compile a html template NOT USED - in UpdateBJS tmpalte ?
      *  
      *  @param template_dir  << the path to the template dir ... Pman/XXX/template ...
      *  @param template   << name of template used by name field)
@@ -196,6 +198,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      *  
      *  
      */
+    /*
     function syncTemplatePage($pgdata)
     {
         //print_r($pgdata);
@@ -345,6 +348,10 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return clone($tmpl);
     
     }
+    
+    */
+    
+    
     function syncPhpGetText($pgdata)
     {
         $tmpl = DB_DataObject::Factory($this->tableName());
