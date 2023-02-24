@@ -451,7 +451,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $words = array();
         
         $fc = file_get_contents( $tmpl->currentTemplate );
-        
+        var_dump($tmpl->currentTemplate);
         $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
         print_R($outd);
         $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
