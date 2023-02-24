@@ -189,7 +189,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
     }
     */
-    /* compile a html template NOT USED - in UpdateBJS tmpalte ?
+    /* compile a html template  - called by UpdateBjsTemplates - scan Pman Templates
      *  
      *  @param template_dir  << the path to the template dir ... Pman/XXX/template ...
      *  @param template   << name of template used by name field)
@@ -198,7 +198,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      *  
      *  
      */
-    /*
+    
     function syncTemplatePage($pgdata)
     {
         //print_r($pgdata);
@@ -348,8 +348,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return clone($tmpl);
     
     }
-    
-    */
     
     
     function syncPhpGetText($pgdata)
