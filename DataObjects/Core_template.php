@@ -460,12 +460,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
         
         $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
-        if (!in_array(
+        if (!in_array($pgdata['template'],
                       array(
                             
                             'Publisher.Report.js',
                             
-                           ), $pgdata['template'])) {
+                           ))) {
             var_dump($tmpl->currentTemplate);
             print_R($outd);print_R($outs);
             
