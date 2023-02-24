@@ -431,7 +431,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
      *
      */ 
     
-    function syncJS($pgdata)
+    function syncJsWords($pgdata)
     {
         $tmpl = DB_DataObject::Factory($this->tableName());
         $tmpl->view_name = $pgdata['base'];
