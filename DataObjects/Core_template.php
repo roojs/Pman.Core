@@ -471,7 +471,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             
             throw new Exception("oops");
         }
-        
+        return;
         $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
         $words = array_unique($words);
         
