@@ -452,9 +452,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         $fc = file_get_contents( $tmpl->currentTemplate );
         
-        $ar = preg_match('/\.\("^("+)"\)/g', $fc, $outd);
+        $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
         print_R($outd);
-        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/g', $fc, $outs);
+        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
         print_R($outs);exit;
         
         $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
