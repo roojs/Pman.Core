@@ -427,6 +427,80 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         
     }
+    
+    /**
+     * plain JS files use ._(....) to flag 
+     *
+     */ 
+    
+    function syncJS($pgdata)
+    {
+        $tmpl = DB_DataObject::Factory($this->tableName());
+        $tmpl->view_name = $pgdata['base'];
+        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
+        
+        if ($tmpl->get('template',  $pgdata['template'])) {
+            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'js') {
+                    $oo = clone($tmpl);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'js';
+                    $tmpl->update($oo);
+                }
+                return $tmpl;
+            }
+        }
+        $words = array();
+        
+        $fc = file_get_contents( $tmpl->currentTemplate );
+        
+        $ar = preg_match('/\.\("^("+)"\)/g', $fc, $outd);
+        print_R($outd);
+        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/g', $fc, $outs);
+        print_R($outs);exit;
+        
+            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
+            
+        }
+        // create the template...
+        
+        
+        if (!$tmpl->id) {
+            
+            $tmpl->template = $pgdata['template'];
+            $tmpl->lang = 'en'; /// ??? hard coded??
+            $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->insert();
+        } else {
+            $xx =clone($tmpl);
+            $tmpl->filetype = 'php';
+            $tmpl->is_deleted = 0;
+            $tmpl->lang = 'en'; /// ??? hard coded??
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->update($xx);
+        }
+      
+        $words = array_unique($words);
+        
+        if (!count($words)) {
+            return;
+        }
+        
+             
+        $tmpl->words = $words;
+            
+        $x = DB_DataObject::Factory('core_templatestr');
+        $x->syncTemplateWords($tmpl);    
+         
+        
+        return $tmpl;
+        
+        
+        
+    }
+    
     /*
     SELECT LOWER(
 CONCAT(
