@@ -472,7 +472,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             throw new Exception("oops");
         }
         if (empty($outd) && empty($outs)) {
-            return false
+            return;
         }
         
         $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
