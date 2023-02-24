@@ -426,6 +426,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
     }
     
+    function factoryStr()
+    {
+        return DB_DataObject::factory('core_templatestr');
+    }
+    
     /**
      * plain JS files use ._(....) to flag 
      *
@@ -467,8 +472,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
              
         $tmpl->words = $words;
             
-        $x = DB_DataObject::Factory('core_templatestr');
-        $x->syncTemplateWords($tmpl);    
+        $this->factoryStr()->syncTemplateWords($tmpl);    
          
         
         return $tmpl;
