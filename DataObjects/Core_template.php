@@ -433,7 +433,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     /**
      * plain JS files use ._(....) to flag 
-     *
+     * it does not support quoted strings or anything really
+     * very simple strings only
      */ 
     
     function syncJsWords($pgdata)
@@ -457,29 +458,27 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         $fc = file_get_contents( $tmpl->currentTemplate );
         
-        $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
+        preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
+        $words = $outd[1];
+         
+        preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
         
-        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
-        if (!in_array($pgdata['template'],
-                      array(
-                            
-                            'Publisher.Report.js',
-                            
-                           ))) {
-            var_dump($tmpl->currentTemplate);
-            print_R($outd);print_R($outs);
-            
-            throw new Exception("oops");
-        }
-        if (empty($outd) && empty($outs)) {
-            return;
-        }
-        
-        $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
+        // ?? seriously adding two arrays?
+        $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
         $words = array_unique($words);
         
-        if (!count($words)) {
+        if (empty($words)) {
             return;
+        }
+        if ($tmpl->id) {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = 'js';
+            $tmpl->update($tmpl);
+        } else {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = 'js';
+            $tmpl->lang = 'en';
+            $tmpl->insert();
         }
         
              
@@ -576,7 +575,7 @@ WHERE (
         $done[$clsname.':'.$lang] = 1;
         
         // do we need to compile the file..
-        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts = $this->factoryStr();
         $ts->selectAdd('COALESCE(MAX(updated), "1000-01-01") as updated');
         $ts->lang = $lang;
         $ts->template_id = $d->id;
@@ -589,12 +588,12 @@ WHERE (
         }
         //DB_DataObject::debugLevel(1);
 
-        $ts = DB_DataObject::Factory('core_templatestr');
+        $ts = $this->factoryStr();
         $ts->autoJoin();
-        $ts->selectAdd('join_src_id_id.txt as src_id_txt, core_templatestr.txt as txt');
+        $ts->selectAdd("join_src_id_id.txt as src_id_txt, {$ts->tableName()}.txt as txt");
         $ts->lang = $lang;
         $ts->template_id = $d->id;
-        $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH(core_templatestr.txt) > 0");
+        $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
                
         if (!file_exists($fdir)) {
