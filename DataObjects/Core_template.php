@@ -460,7 +460,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
         print_R($outd);
         $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
-        print_R($outs);exit;
+        print_R($outs);
+        
+        throw new Exception("oops");
         
         $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
         $words = array_unique($words);
