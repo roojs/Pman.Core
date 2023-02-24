@@ -456,13 +456,21 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $words = array();
         
         $fc = file_get_contents( $tmpl->currentTemplate );
-        var_dump($tmpl->currentTemplate);
-        $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
-        print_R($outd);
-        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
-        print_R($outs);
         
-        throw new Exception("oops");
+        $ar = preg_match('/\.\("^("+)"\)/', $fc, $outd);
+        
+        $ar = preg_match('/\.\('. "'" . '(^"+)'. "'" . '\)/', $fc, $outs);
+        if (!in_array(
+                      array(
+                            
+                            'Publisher.Report.js',
+                            
+                           ), $pgdata['template']) {
+            var_dump($tmpl->currentTemplate);
+            print_R($outd);print_R($outs);
+            
+            throw new Exception("oops");
+        }
         
         $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
         $words = array_unique($words);
