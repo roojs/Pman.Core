@@ -283,7 +283,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
-            setcookie('Pman.timeout', -1, time() + (30*60), '/');
+            //setcookie('Pman.timeout', -1, time() + (30*60), '/');
             return false;
         }
         
@@ -434,7 +434,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
              
             if (isset($_SESSION[get_class($this)][$sesPrefix .'-auth'])) {
                 $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
-                setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
+                //setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
             }
             // not really sure why it's cloned..
             return   clone (self::$authUser);
@@ -514,7 +514,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $d = $p->toArray();
         
         $_SESSION[get_class($this)][$sesPrefix .'-auth-timeout'] = time() + (30*60); // eg. 30 minutes
-        setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
+        //setcookie('Pman.timeout', time() + (30*60), time() + (30*60), '/');
         
         //var_dump(array(get_class($this),$sesPrefix .'-auth'));
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
