@@ -1051,7 +1051,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // #2307 Search Country!!
         if (!empty($q['query']['in_country'])) {
             // DB_DataObject::debugLevel(1);
-            $inc = $q['query']['in_country'];
+            $inc = $this->escape($q['query']['in_country']);
             $this->whereAdd("$tn_p.countries LIKE '%{$inc}%'");
         }
         
