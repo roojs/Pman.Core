@@ -65,7 +65,7 @@ class Pman_Core_JsTemplate extends Pman {
          
             $dir =  $this->rootDir .'/'.$pdir .  $mod . '/jtemplates';
             if (!file_exists($dir)) {
-                echo '// missing directory '. htmlspecialchars($dir) ."\n";
+                //echo '// missing directory '. htmlspecialchars($dir) ."\n";
                 continue;
             }
             // got a directory..
