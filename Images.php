@@ -666,32 +666,7 @@ class Pman_Core_Images extends Pman
         }
     }
     
-    function canFix($img) {
-        // look for the image in the folder, with matching id.
-        // this is problematic..
-        $fn = $img->getStoreName();
-        if (file_exists($fn . '-really-missing')) {
-            return false;
-        }
-        if (!file_exists(dirname($fn))) {
-            return false;
-        }
-        foreach( scandir(dirname($fn)) as $n) {
-            if (empty($n) || $n[0] == '.') {
-                continue;
-            }
-            $bits = explode('-', $n);
-            if ($n[0] != $img->id) {
-                continue;
-            }
-            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
-                continue;
-            }
-            cp(dirname($fn). $n, $fn);
-            return true;
-        }
-        // fixme - flag it as bad
-    }
+    
         
         
          
