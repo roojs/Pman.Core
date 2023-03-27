@@ -286,8 +286,7 @@ class Pman_Core_Images extends Pman
         $this->sessionState(0); // turn off session... - locking...
         require_once 'File/Convert.php';
         if ($img->exists()) {
-            
-            $this->imgErr("serve = missing-image");
+            $this->imgErr("serve = missing-image", $img->getStoreName());
              
         }
 //        print_r($img);exit;
