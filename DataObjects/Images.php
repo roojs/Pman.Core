@@ -223,7 +223,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         }
         return $ret;
     }
-    
+    /**
+     * the getStorename code got changed, and some old files may not end up with the correct name anymore.
+     * this tries to fix it.
+     *
+     */
     function canFix() {
         // look for the image in the folder, with matching id.
         // this is problematic..
