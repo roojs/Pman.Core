@@ -245,7 +245,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
                 continue;
             }
-            cp(dirname($fn). $n, $fn);
+            copy(dirname($fn). $n, $fn);
             return true;
         }
         // fixme - flag it as bad
