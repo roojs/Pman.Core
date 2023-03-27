@@ -291,8 +291,7 @@ class Pman_Core_Images extends Pman
                 echo "Original file was missing : " . $img->getStoreName();
                 exit;
             }
-            
-    
+             
         }
 //        print_r($img);exit;
         $x = $img->toFileConvert();
