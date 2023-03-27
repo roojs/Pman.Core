@@ -285,10 +285,13 @@ class Pman_Core_Images extends Pman
     {
         $this->sessionState(0); // turn off session... - locking...
         require_once 'File/Convert.php';
-        if (!file_exists($img->getStoreName()) && !file_exists($img->getStoreName(true))) {
-//            print_r($img);exit;
-            header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-                urlencode("Original file was missing : " . $img->getStoreName()));
+        if (!file_exists($img->getStoreName())) {
+            if (!$this->canFix($img)) {
+                header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=missing-image-see-original-response');
+                echo "Original file was missing : " . $img->getStoreName();
+                exit;
+            }
+            
     
         }
 //        print_r($img);exit;
@@ -664,4 +667,33 @@ class Pman_Core_Images extends Pman
         }
     }
     
+    function canFix($img) {
+        // look for the image in the folder, with matching id.
+        // this is problematic..
+        $fn = $img->getStoreName();
+        if (file_exists($fn . '-really-missing')) {
+            return false;
+        }
+        if (!file_exists(dirname($fn))) {
+            return false;
+        }
+        foreach( scandir(dirname($fn)) as $n) {
+            if (empty($n) || $n[0] == '.') {
+                continue;
+            }
+            $bits = explode('-', $n);
+            if ($n[0] != $img->id) {
+                continue;
+            }
+            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+                continue;
+            }
+            cp(dirname($fn). $n, $fn);
+            return true;
+        }
+        // fixme - flag it as bad
+    }
+        
+        
+         
 }
