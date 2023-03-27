@@ -250,6 +250,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return true;
         }
         // fixme - flag it as bad
+        touch($fn . '-really-missing');
     }
     
     
