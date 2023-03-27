@@ -246,6 +246,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 continue;
             }
             copy(dirname($fn). $n, $fn);
+            clearstatcache();
             return true;
         }
         // fixme - flag it as bad
