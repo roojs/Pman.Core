@@ -218,9 +218,8 @@ class Pman_Core_Images extends Pman
     }
     
     function imgErr($reason,$path) {
-        header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-            urlencode($reason));
-        echo $path;
+        //header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' . urlencode($reason));
+        echo $reason . ':' . $path;
         exit;
     }
     
