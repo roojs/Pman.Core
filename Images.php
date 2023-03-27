@@ -287,7 +287,7 @@ class Pman_Core_Images extends Pman
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
             
-            $this->imgError("serve = missing-image");
+            $this->imgErr("serve = missing-image");
              
         }
 //        print_r($img);exit;
