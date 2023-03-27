@@ -224,7 +224,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return $ret;
     }
     
-    function canFix($img) {
+    function canFix() {
         // look for the image in the folder, with matching id.
         // this is problematic..
         $fn = $this->getStoreName();
