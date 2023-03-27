@@ -239,7 +239,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 continue;
             }
             $bits = explode('-', $n);
-            if ($n[0] != $this->id) {
+            if ($bits[0] != $this->id) {
                 continue;
             }
             if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
