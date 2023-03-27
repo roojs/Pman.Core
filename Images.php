@@ -286,11 +286,10 @@ class Pman_Core_Images extends Pman
         $this->sessionState(0); // turn off session... - locking...
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
-            if (!$this->canFix($img)) {
-                header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=missing-image-see-original-response');
-                echo "Original file was missing : " . $img->getStoreName();
-                exit;
-            }
+            header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=missing-image-see-original-response');
+            echo "Original file was missing : " . $img->getStoreName();
+            exit;
+        
              
         }
 //        print_r($img);exit;
