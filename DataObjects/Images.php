@@ -200,10 +200,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      *
      * @return - target file name
      */
-    function getStoreName() 
+    function getStoreName($alt = false) 
     {
         $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9_\.]+/i', '_', $this->filename);
+        if ($alt) {
+            $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
+        }
         return implode( '/', array(
             $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
         ));
@@ -668,6 +671,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function toFileConvert()
     {
+        $fn = $this->getStoreName();
+        if (!file_exists($fn)) {
+            $fn = $this->getStoreName(true);
+        }
+        
         require_once 'File/Convert.php';
         $fc = new File_Convert($this->getStoreName(), $this->mimetype);
         return $fc;
