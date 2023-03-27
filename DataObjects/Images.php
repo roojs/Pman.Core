@@ -217,7 +217,38 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         clearstatcache();
         //var_dump($this->getStoreName());
-        return file_exists($this->getStoreName());
+        $ret =  file_exists($this->getStoreName());
+        if (!$ret) {
+            return $this->canFix();
+        }
+        return $ret;
+    }
+    
+    function canFix($img) {
+        // look for the image in the folder, with matching id.
+        // this is problematic..
+        $fn = $this->getStoreName();
+        if (file_exists($fn . '-really-missing')) {
+            return false;
+        }
+        if (!file_exists(dirname($fn))) {
+            return false;
+        }
+        foreach( scandir(dirname($fn)) as $n) {
+            if (empty($n) || $n[0] == '.') {
+                continue;
+            }
+            $bits = explode('-', $n);
+            if ($n[0] != $this->id) {
+                continue;
+            }
+            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+                continue;
+            }
+            cp(dirname($fn). $n, $fn);
+            return true;
+        }
+        // fixme - flag it as bad
     }
     
     
