@@ -219,7 +219,8 @@ class Pman_Core_Images extends Pman
     
     function imgErr($reason,$path) {
         header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=' .
-            urlencode($reason) .'&path='.urlencode($path));
+            urlencode($reason));
+        echo $path;
         exit;
     }
     
@@ -286,10 +287,11 @@ class Pman_Core_Images extends Pman
         $this->sessionState(0); // turn off session... - locking...
         require_once 'File/Convert.php';
         if (!file_exists($img->getStoreName())) {
+            
             header('Location: ' . $this->rootURL . '/Pman/templates/images/file-broken.png?reason=missing-image-see-original-response');
             echo "Original file was missing : " . $img->getStoreName();
             exit;
-        
+          
              
         }
 //        print_r($img);exit;
@@ -665,7 +667,7 @@ class Pman_Core_Images extends Pman
         }
     }
     
-    
+     
         
         
          
