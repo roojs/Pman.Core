@@ -200,13 +200,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      *
      * @return - target file name
      */
-    function getStoreName($alt = false) 
+    function getStoreName() 
     {
         $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9_\.]+/i', '_', $this->filename);
-        if ($alt) {
-            $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
-        }
         return implode( '/', array(
             $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
         ));
@@ -220,7 +217,39 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         clearstatcache();
         //var_dump($this->getStoreName());
-        return file_exists($this->getStoreName());
+        $ret =  file_exists($this->getStoreName());
+        if (!$ret) {
+            return $this->canFix();
+        }
+        return $ret;
+    }
+    
+    function canFix() {
+        // look for the image in the folder, with matching id.
+        // this is problematic..
+        $fn = $this->getStoreName();
+        if (file_exists($fn . '-really-missing')) {
+            return false;
+        }
+        if (!file_exists(dirname($fn))) {
+            return false;
+        }
+        foreach( scandir(dirname($fn)) as $n) {
+            if (empty($n) || $n[0] == '.') {
+                continue;
+            }
+            $bits = explode('-', $n);
+            if ($bits[0] != $this->id) {
+                continue;
+            }
+            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+                continue;
+            }
+            copy(dirname($fn). '/'.  $n, $fn);
+            clearstatcache();
+            return true;
+        }
+        // fixme - flag it as bad
     }
     
     
@@ -672,9 +701,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     function toFileConvert()
     {
         $fn = $this->getStoreName();
-        if (!file_exists($fn)) {
-            $fn = $this->getStoreName(true);
-        }
         
         require_once 'File/Convert.php';
         $fc = new File_Convert($this->getStoreName(), $this->mimetype);
