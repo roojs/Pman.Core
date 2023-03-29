@@ -79,7 +79,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
         if (!empty($q['query']['comptype'])) {
            
-            $this->whereAddIn('comptype', explode(',', $q['query']['comptype']), 'string');
+            $this->whereAddIn($tn.'.comptype', explode(',', $q['query']['comptype']), 'string');
             
         }
         
