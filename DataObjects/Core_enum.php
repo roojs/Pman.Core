@@ -16,7 +16,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
     public $seqid;                           // int(11)  not_null multiple_key
     public $seqmax;                           // int(11)  not_null multiple_key
     public $display_name;
-
+    public $is_system_enum;
+   
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
 

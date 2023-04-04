@@ -80,17 +80,17 @@ class Pman_Core_DataObjects_Core_group extends DB_DataObject
         
         $this->selectAdd("
            (
-            SELECT COUNT(${cgm}.user_id) 
+            SELECT COUNT({$cgm}.user_id) 
                 FROM 
                     {$cgm}
                 LEFT JOIN
                     {$cp}
                 ON
-                    ${cp}.id = {$cgm}.user_id
+                    {$cp}.id = {$cgm}.user_id
                 WHERE
-                    ${cgm}.group_id = {$this->tableName()}.id
+                    {$cgm}.group_id = {$this->tableName()}.id
                 AND
-                    ${cp}.active = 1
+                    {$cp}.active = 1
                 ) AS group_member_count            
         ");
         

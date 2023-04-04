@@ -35,6 +35,13 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     public $country;                         // string(4)  not_null
     public $is_system;                       // int(2)
     
+    
+    public $comptype_id;
+    public $address1;
+    public $address2;
+    public $address3;
+    
+    
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
     

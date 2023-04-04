@@ -73,6 +73,8 @@ class Pman_Core_Mailer {
     var $locale = false; // eg. 'en' or 'zh_HK'
     var $urlmap = array();
     
+    var $htmlbody;
+    var $textbody;
     
     var $html_locale = false; // eg. 'en' or 'zh_HK'
     var $images         = array(); // generated list of cid images for sending
