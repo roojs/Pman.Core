@@ -46,7 +46,7 @@ class Pman_Core_Asset extends Pman {
         }
        
         $ext = $bits[0];
-        if (preg_match('/\.map$/',$_REQUEST_URI)) {
+        if (preg_match('/\.map$/',$_SERVER['REQUEST_URI'])) {
             $ext = 'map';
         }
        
