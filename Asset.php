@@ -26,6 +26,7 @@ class Pman_Core_Asset extends Pman {
     var $types = array(
         'css' => 'text/css',
         'js' => 'text/javascript',
+        'map' => 'application/json'
     );
     
     function getAuth()
@@ -44,17 +45,23 @@ class Pman_Core_Asset extends Pman {
             $this->jerr("invalid url");
         }
        
+        $ext = $bits[0];
+        if (preg_match('/\.map$/',$_REQUEST_URI)) {
+            $ext = 'map';
+        }
+       
         $s = str_replace('/', '-', $bits[1]);
+        
         
         $ui = posix_getpwuid(posix_geteuid());
         $ff = HTML_FlexyFramework::get();
         
         $compile = self::getCompileDir($bits[0], '', false);
         
-        $fn = $compile . '/'. $s .'.'. $bits[0];
+        $fn = $compile . '/'. $s .'.'. $ext;
         
         if (!file_exists($fn)) {
-            header('Content-Type: '. $this->types[$bits[0]]);
+            header('Content-Type: '. $this->types[$ext]);
         
             echo "// compiled file not found = $fn";
             exit;
