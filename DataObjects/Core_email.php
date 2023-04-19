@@ -469,6 +469,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (is_a($r, 'PEAR_Error')) {
             return $r;
         }
+        print_r($r);
+        die('a');
         return $r->toData();
     }
     
@@ -713,8 +715,6 @@ Content-Transfer-Encoding: 7bit
 
         $content['bcc'] = array();
 	$data = $this->toMailerData($content);
-    print_r($data);
-    die('a');
  	return $data;
         
            
