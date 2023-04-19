@@ -93,7 +93,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 
             $cg = DB_DataObject::factory('core_group');
                         
-            if (($cg->get($this->to_group_id) && $cg->name == 'Empty Group') || !$c->count() && empty($request['_ignore_group_count'])) {
+            if ($cg->get($this->to_group_id) && $cg->name != 'Empty Group' && !$c->count() && empty($request['_ignore_group_count'])) {
                 $roo->jerr('Failed to create email template - No member found in recieptent group',array('errcode'=> 100));
             }
         }
