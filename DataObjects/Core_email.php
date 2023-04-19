@@ -93,7 +93,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
 
             $cg = DB_DataObject::factory('core_group');
 
-            var_dump(DB_DataObject::factory('core_group')->get($this->to_group_id));
+            var_dump($cg->get($this->to_group_id));
+
+            var_dump($cg);
 
             var_dump('TO GROUP ID');
             var_dump($c->group_id);
