@@ -302,8 +302,6 @@ class Pman_Core_Mailer {
         
         if($isMime){
             $parts[2] = $mime->get();
-            var_dump($parts[1]);
-            die('a');
             $parts[1] = $mime->headers($parts[1]);
         }
          
