@@ -90,6 +90,10 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         	   
             $c = DB_DataObject::factory('core_group_member');            
             $c->group_id = $this->to_group_id;
+
+            var_dump('TO GROUP ID');
+            var_dump($c->group_id);
+            die('a');
                         
             if (!$c->count() && empty($request['_ignore_group_count'])) {
                 $roo->jerr('Failed to create email template - No member found in recieptent group',array('errcode'=> 100));
@@ -491,7 +495,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $r = $this->toMailer($obj, $force);
-        
         if (is_a($r, 'PEAR_Error')) {
             return $r;
         }
@@ -712,6 +715,8 @@ Content-Transfer-Encoding: 7bit
 
         $content['bcc'] = array();
 	$data = $this->toMailerData($content);
+    print_r($data);
+    die('a');
  	return $data;
         
            
