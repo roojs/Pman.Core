@@ -74,7 +74,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         $i->ontable = $this->tableName();
         $i->find();
         while ($i->fetch()){
-            $i->beforeDelete($dependants_array, $roo);
+            $i->beforeDelete(array(), $roo);
             $i->delete();
         }
     }
