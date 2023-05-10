@@ -75,6 +75,7 @@ class Pman_Core_SimpleExcel extends Pman
     var $workbook = false;
     var $worksheet= false;
     var $postRender = array();
+    var $outfile2;
      
     function __construct($data,$cfg)
     {
