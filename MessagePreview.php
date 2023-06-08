@@ -8,6 +8,8 @@ class Pman_Core_MessagePreview extends Pman
     
     
     var $showHtml;
+    var $msg;
+    
     function getAuth()
     {
         if (HTML_FlexyFramework::get()->cli) {
