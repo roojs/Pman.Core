@@ -6,6 +6,8 @@ class Pman_Core_MessagePreview extends Pman
 {
     var $masterTemplate = 'mail/MessagePreview.html';
     
+    
+    var $showHtml;
     function getAuth()
     {
         if (HTML_FlexyFramework::get()->cli) {
