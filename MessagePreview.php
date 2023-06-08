@@ -55,6 +55,8 @@ class Pman_Core_MessagePreview extends Pman
             if (!method_exists($t,'notify'.$_REQUEST['evtype'])) {
                 $this->jerr("invalid evtype");
             }
+            
+            print_R($t);
             $m = 'notify'.$_REQUEST['evtype'];
             $this->msg = (object)$t->$m('test@test.com', false, false, false);
            // print_R($this->msg->mailer );
