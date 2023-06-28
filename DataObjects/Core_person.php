@@ -1445,6 +1445,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeInsert($req, $roo)
     {
+        die("here");
         if (!empty($req['_bulk_update_passwords'])) {
             $this->bulkUpdatePasswords($req['_bulk_update_passwords'], $roo);
             return;
