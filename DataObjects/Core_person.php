@@ -1739,7 +1739,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 continue;
             }
             // validate.
-            $upd[$bits[0]] = $bits[1];
+            $upd[strtolower($bits[0])] = $bits[1];
             
         }
         if (empty($upd)) {
