@@ -1725,7 +1725,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     }
     function bulkUpdatePasswords($data, $roo)
     {
-         $rows = explode("\n",$data);
+        
+        if ( !$roo->hasPerm("Core.Staff", "E")) {
+            $roo->jerr("permission denied");
+        }
+        $rows = explode("\n",$data);
         $upd = array();
         $bad  = array();
         
