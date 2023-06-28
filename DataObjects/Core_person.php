@@ -1725,7 +1725,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     }
     function bulkUpdatePasswords($data, $roo)
     {
-        die
+        die("HER"E);
         $rows = explode("\n",$data);
         $upd = array();
         $bad  = array();
