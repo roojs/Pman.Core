@@ -1445,6 +1445,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeInsert($req, $roo)
     {
+        if (!empty($req['_bulk_update_passwords'])) {
+            $this->bulkUpdatePasswords($req['_bulk_update_passwords'], $roo)
+        }
+        
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
