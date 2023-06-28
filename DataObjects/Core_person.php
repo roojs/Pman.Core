@@ -1445,6 +1445,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeInsert($req, $roo)
     {
+         if (!empty($req['_bulk_update_passwords'])) {
+            $this->bulkUpdatePasswords($req['_bulk_update_passwords'], $roo);
+            return;
+        }
+        
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
@@ -1718,6 +1723,58 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         return $content;
     }
-    
+    function bulkUpdatePasswords($data, $roo)
+    {
+         $rows = explode("\n",$data);
+        $upd = array();
+        $bad  = array();
+        
+        foreach($rows  as $i=>$row) {
+            if (!strlen(trim($row))) {
+                continue;
+            }
+            $bits = preg_split('/\s+/', trim($row));
+            if (count($bits) != 2) {
+                $bad[] = "Invalid line: {$row}";
+                continue;
+            }
+            // validate.
+            $upd[strtolower($bits[0])] = $bits[1];
+            
+        }
+        if (empty($upd)) {
+            
+            $roo->jerr(empty($bad) ? "No rows to update": ("ERRORS: ". implode("\n", $bad)));
+            return;
+        }
+        // next fetch them all.
+        $p = DB_DataObject::factory('core_person');
+        $p->whereAddIn('email', array_keys($upd), 'string');
+        foreach($p->fetchAll() as $p) {
+            $map[strtolower($p->email)] = $p;
+        }
+        foreach($upd as $k=>$nv) {
+            if (!isset($map[$k])) {
+                $bad[] = "Missing account with email: " . $k;
+                continue;
+            }
+            if ($map[$k]->id == $roo->authUser->id) {
+                $bad[] = "You can not update your own password here: " . $k;
+                continue;
+            }
+        }
+        if (!empty($bad)) {
+            $roo->jerr("ERRORS: ". implode("\n", $bad));
+            return;
+        }
+        foreach($map as $k => $p) {
+            $pp = clone($p);
+            $p->setPassword($upd[$k]);
+            $p->update($pp);
+        }
+        $roo->jok("Updated");
+        
+        
+    }
     
  }

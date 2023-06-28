@@ -564,8 +564,27 @@ Pman.Tab.PersonList.prototype = {
                 }
             
                      
-            }
+            },
+            '->',
             
+              {
+               
+                xtype : 'Button',
+                xns : Roo.Toolbar,
+               
+                text: "Bulk Change Passwords",
+                hidden : _this.permName != 'Core.Staff' || !Pman.hasPerm('Core.Staff', 'E'),
+                listeners : {
+                    click : function () {
+                        Pman.Dialog.AdminBulkPassword.show({}, function() { 
+                          refreshPager();
+                        });
+                        
+                    }
+                }
+            
+                     
+            }
 
         );
         
