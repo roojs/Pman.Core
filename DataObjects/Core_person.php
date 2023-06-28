@@ -1725,6 +1725,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     }
     function bulkUpdatePasswords($data, $roo)
     {
+        die
         $rows = explode("\n",$data);
         $upd = array();
         $bad  = array();
@@ -1744,7 +1745,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         if (empty($upd)) {
             
-            $this->jerr(empty($bad) ? "No rows to update": ("ERRORS: ". implode("\n", $bad)));
+            $roo->jerr(empty($bad) ? "No rows to update": ("ERRORS: ". implode("\n", $bad)));
             return;
         }
         // next fetch them all.
@@ -1764,7 +1765,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             }
         }
         if (!empty($bad)) {
-            $this->jerr("ERRORS: ". implode("\n", $bad));
+            $roo->jerr("ERRORS: ". implode("\n", $bad));
             return;
         }
         foreach($map as $k => $p) {
@@ -1772,7 +1773,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $p->setPassword($upd[$k]);
             $p->update($pp);
         }
-        $this->jok("Updated");
+        $roo->jok("Updated");
         
         
     }
