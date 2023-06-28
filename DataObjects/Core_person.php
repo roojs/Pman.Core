@@ -1751,7 +1751,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::factory('core_person');
         $p->whereAddIn('email', array_keys($upd), 'string');
         foreach($p->fetchAll() as $p) {
-            $map[$p->email] = $p;
+            $map[strtolower($p->email)] = $p;
         }
         foreach($upd as $k=>$nv) {
             if (!isset($map[$k])) {
