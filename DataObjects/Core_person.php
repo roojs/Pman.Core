@@ -1742,6 +1742,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $upd[$bits[0]] = $bits[1];
             
         }
+        if (empty($upd)) {
+            
+            $this->jerr(empty($bad) ? "No rows to update": ("ERRORS: ". implode("\n", $bad)));
+            return;
+        }
         // next fetch them all.
         $p = DB_DataObject::factory('core_person');
         $p->whereAddIn('email', array_keys($upd), 'string');
