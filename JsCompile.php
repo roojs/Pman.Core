@@ -228,9 +228,19 @@ class Pman_Core_JsCompile  extends Pman
             return false;
         }
         
-        
+        // if packer is running, then dont compile - just output onebyone...
         
         require_once 'System.php';
+        $pg = System::which('pgrep');
+        $cmd = "$pg roobuilder";
+        $out = trim(`$cmd`);
+        if (strlen($out) > 0) {
+            return false;
+        }
+        
+        
+        
+        
         $packer = System::which('roojspacker');
         
         
@@ -305,6 +315,15 @@ class Pman_Core_JsCompile  extends Pman
         return false;
         
     }
+    
+    
+    function packIsRunning()
+    {
+        require_once 'System.php';
+      
+        
+    }
+    
     
     // depricated verison using seed.
     function packSeed($files, $output, $translation_base=false)
