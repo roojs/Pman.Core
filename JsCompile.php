@@ -230,17 +230,8 @@ class Pman_Core_JsCompile  extends Pman
         
         // if packer is running, then dont compile - just output onebyone...
         
+        
         require_once 'System.php';
-        $pg = System::which('pgrep');
-        $cmd = "$pg roobuilder";
-        $out = trim(`$cmd`);
-        if (strlen($out) > 0) {
-            return false;
-        }
-        
-        
-        
-        
         $packer = System::which('roojspacker');
         
         
@@ -260,6 +251,17 @@ class Pman_Core_JsCompile  extends Pman
             echo '<!--  use cached compile. -->';
             return true;
         }
+        
+        
+        
+        $pg = System::which('pgrep');
+        $cmd = "$pg roobuilder";
+        $out = trim(`$cmd`);
+        if (strlen($out) > 0) {
+            echo '<!--  onther process is compiling compile. -->';
+            return false;
+        }
+         
         
         if (file_exists($output)) {
             unlink($output);
