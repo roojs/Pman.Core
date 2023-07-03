@@ -318,14 +318,14 @@ class Pman_Core_NotifySend extends Pman
             $retry = 120;
         }
         
-        // if ($mxs === false) {
-            // only retry for 2 day son the MX issue..
-            // if ($retry < 120) {
-            //     $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
-            //     $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
-            //     $w->update($ww);
-            //     $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
-            // }
+        if ($mxs === false) {
+            only retry for 2 day son the MX issue..
+            if ($retry < 120) {
+                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
+                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+                $w->update($ww);
+                $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
+            }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
@@ -336,7 +336,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
             
             
-        // }
+        }
         
         
         
