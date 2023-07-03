@@ -226,6 +226,8 @@ class Pman_Core_Mailer {
             //echo "PROBLEM: {$parts->message}";
             //exit;
         } 
+
+        var_dump($parts);
         
         $isMime = false;
         
