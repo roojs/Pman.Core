@@ -85,11 +85,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-        require_once 'Validate.php';
-        if (!Validate::email('kingsley.man@vougehk.com', true)) {
-            die('b');
-        }
-        die('a');
 
         //print_r($opts);
         if (!empty($opts['DB_DataObject-debug'])) {
