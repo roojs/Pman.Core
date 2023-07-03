@@ -218,16 +218,13 @@ class Pman_Core_Mailer {
         /* With the output try and send an email, using a few tricks in Mail_MimeDecode. */
         require_once 'Mail/mimeDecode.php';
         require_once 'Mail.php';
-        var_dump($mailtext);
         $decoder = new Mail_mimeDecode($mailtext);
         $parts = $decoder->getSendArray();
         if (PEAR::isError($parts)) {
             return $parts;
             //echo "PROBLEM: {$parts->message}";
             //exit;
-        } 
-
-        var_dump($parts);
+        }
         
         $isMime = false;
         
