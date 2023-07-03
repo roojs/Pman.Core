@@ -319,7 +319,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         if ($mxs === false) {
-            only retry for 2 day son the MX issue..
+            // only retry for 2 day son the MX issue..
             if ($retry < 120) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
