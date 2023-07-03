@@ -306,7 +306,8 @@ class Pman_Core_Mailer {
             $parts[2] = $mime->get();
             $parts[1] = $mime->headers($parts[1]);
         }
-         
+        
+        var_dump($parts);
         
         $ret = array(
             'recipents' => $parts[0],
