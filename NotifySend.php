@@ -331,6 +331,7 @@ class Pman_Core_NotifySend extends Pman
             $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
             $w->msgid = '';
             $w->event_id = $ev->id;
+            $w->to_email = $p->email; 
             $w->update($ww);
             $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
             
