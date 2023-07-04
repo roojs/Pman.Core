@@ -6,6 +6,10 @@ class Pman_Core_MessagePreview extends Pman
 {
     var $masterTemplate = 'mail/MessagePreview.html';
     
+    
+    var $showHtml;
+    var $msg;
+    
     function getAuth()
     {
         if (HTML_FlexyFramework::get()->cli) {
@@ -51,6 +55,7 @@ class Pman_Core_MessagePreview extends Pman
             if (!method_exists($t,'notify'.$_REQUEST['evtype'])) {
                 $this->jerr("invalid evtype");
             }
+              
             $m = 'notify'.$_REQUEST['evtype'];
             $this->msg = (object)$t->$m('test@test.com', false, false, false);
            // print_R($this->msg->mailer );

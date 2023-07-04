@@ -228,6 +228,7 @@ class Pman_Core_JsCompile  extends Pman
             return false;
         }
         
+        // if packer is running, then dont compile - just output onebyone...
         
         
         require_once 'System.php';
@@ -250,6 +251,17 @@ class Pman_Core_JsCompile  extends Pman
             echo '<!--  use cached compile. -->';
             return true;
         }
+        
+        
+        
+        $pg = System::which('pgrep');
+        $cmd = "$pg roobuilder";
+        $out = trim(`$cmd`);
+        if (strlen($out) > 0) {
+            echo '<!--  onther process is compiling compile. -->';
+            return false;
+        }
+         
         
         if (file_exists($output)) {
             unlink($output);
@@ -305,6 +317,15 @@ class Pman_Core_JsCompile  extends Pman
         return false;
         
     }
+    
+    
+    function packIsRunning()
+    {
+        require_once 'System.php';
+      
+        
+    }
+    
     
     // depricated verison using seed.
     function packSeed($files, $output, $translation_base=false)
