@@ -255,7 +255,7 @@ class Pman_Core_JsCompile  extends Pman
         
         
         $pg = System::which('pgrep');
-        $cmd = "$pg roobuilder";
+        $cmd = "$pg roojspacker";
         $out = trim(`$cmd`);
         if (strlen($out) > 0) {
             echo '<!--  onther process is compiling compile. -->';
