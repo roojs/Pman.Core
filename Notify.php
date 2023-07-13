@@ -124,7 +124,7 @@ class Pman_Core_Notify extends Pman
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
                     
-                    
+    var $opts; 
     var $force = false;
     function getAuth()
     {
