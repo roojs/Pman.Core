@@ -514,18 +514,6 @@ WHERE (
         static $done = array();
         $clsname = strtolower($clsname);
 
-        if($clsname == 'pman_pressrelease_distributionreport') {
-            var_dump($clsname);
-            var_dump($this->tableName());
-            var_dump($lang);
-            var_dump($ts->template_id);
-            var_dump($ts->updated);
-            var_dump(strtotime($ts->updated));
-            var_dump($fname);
-            var_dump(filemtime($fname));
-            die('e');
-        }
-
         textdomain($clsname);
      
 
@@ -560,7 +548,6 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return false;
         }
-        
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
@@ -596,19 +583,6 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
-
-        if($clsname == 'pman_pressrelease_distributionreport' && $lang == 'zh_CN') {
-            var_dump($clsname);
-            var_dump($this->tableName());
-            var_dump($lang);
-            var_dump($ts->template_id);
-            var_dump($ts->updated);
-            var_dump(strtotime($ts->updated));
-            var_dump($fname);
-            var_dump(filemtime($fname));
-            die('e');
-        }
-        
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
