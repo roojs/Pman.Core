@@ -548,7 +548,6 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return false;
         }
-        die('a');
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
@@ -584,6 +583,7 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
+        die('b');
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
