@@ -548,11 +548,6 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return false;
         }
-        if($clsname != 'pman_pressrelease_distributionreport') {
-            var_dump($clsname);
-            var_dumP($lang);
-            die('b');
-        }
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
