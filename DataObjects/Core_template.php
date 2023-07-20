@@ -584,7 +584,7 @@ WHERE (
             return false;
         }
         
-        if($clsname != 'pman_pressrelease_distributionreport.mo') {
+        if($clsname != 'pman_pressrelease_distributionreport') {
             var_dump($ts->updated);
             var_dump($fname);
             var_dump(filemtime($fname));
