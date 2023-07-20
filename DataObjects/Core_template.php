@@ -546,6 +546,7 @@ WHERE (
         $d->filetype = 'php';
         if($clsname != 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
+            var_dump($this->tableName());
             // var_dump($ts->updated);
             // var_dump($fname);
             // var_dump(filemtime($fname));
