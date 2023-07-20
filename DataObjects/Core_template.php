@@ -583,7 +583,6 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
-        die('c');
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
