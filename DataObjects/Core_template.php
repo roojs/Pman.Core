@@ -585,6 +585,7 @@ WHERE (
         }
         if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
             var_dump($ts->updated);
+            var_dump(strtotime($ts->updated));
             var_dump(filemtime($fname));
             die('b');
         }
