@@ -595,12 +595,6 @@ WHERE (
         $ts->template_id = $d->id;
         $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
-        if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
-            var_dump($ts->updated);
-            var_dump(date('Y-m-d H:i:s', filemtime($fname)));
-            var_dump($words);
-            die('b');
-        }
                
         if (!file_exists($fdir)) {
             //var_dump($fdir);
