@@ -511,7 +511,7 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
-        if($clsname == 'pman_pressrelease_distributionreport' && $lang == 'zh_CN') {
+        if($clsname == 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
             var_dump($this->tableName());
             var_dump($lang);
