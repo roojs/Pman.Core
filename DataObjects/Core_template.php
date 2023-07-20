@@ -514,10 +514,6 @@ WHERE (
         static $done = array();
         $clsname = strtolower($clsname);
 
-        if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
-            die('b');
-        }
-
         textdomain($clsname);
      
 
