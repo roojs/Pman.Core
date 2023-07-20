@@ -524,7 +524,7 @@ WHERE (
         if (!empty($done[$clsname.':'.$lang])) {
             return true; // already sent headers and everything.
         }
-        if($clsname != 'Pman_PressRelease_DistributionReport') {
+        if($clsname != 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
             // var_dump($ts->updated);
             // var_dump($fname);
