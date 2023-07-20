@@ -584,10 +584,12 @@ WHERE (
             return false;
         }
         
-        var_dump($ts->updated);
-        var_dump($fname);
-        var_dump(filemtime($fname));
-        die('d');
+        if($clsname != 'pman_pressrelease_distributionreport.mo') {
+            var_dump($ts->updated);
+            var_dump($fname);
+            var_dump(filemtime($fname));
+            die('d');
+        }
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
