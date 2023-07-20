@@ -548,14 +548,6 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return false;
         }
-        if($clsname != 'pma_pressrelease_distributionreport') {
-            var_dump($clsname);
-            var_dump($this->tableName());
-            // var_dump($ts->updated);
-            // var_dump($fname);
-            // var_dump(filemtime($fname));
-            die('e');
-        }
         
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
@@ -605,6 +597,14 @@ WHERE (
         $ts->template_id = $d->id;
         $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
+        if($clsname != 'pma_pressrelease_distributionreport') {
+            var_dump($clsname);
+            var_dump($this->tableName());
+            // var_dump($ts->updated);
+            // var_dump($fname);
+            // var_dump(filemtime($fname));
+            die('e');
+        }
                
         if (!file_exists($fdir)) {
             //var_dump($fdir);
