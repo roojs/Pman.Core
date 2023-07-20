@@ -544,6 +544,11 @@ WHERE (
             ) = '{$clsname}.php'
        ");
         $d->filetype = 'php';
+        if($clsname != 'pman_pressrelease_distributionreport') {
+            var_dump($clsname);
+            var_dumP($lang);
+            die('b');
+        }
         if (! $d->find(true) ){
             $done[$clsname.':'.$lang] = true;
             return false;
@@ -583,12 +588,7 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
-
-        if($clsname != 'pman_pressrelease_distributionreport') {
-            var_dump($clsname);
-            var_dumP($lang);
-            die('b');
-        }
+        
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
