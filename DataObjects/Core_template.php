@@ -588,6 +588,7 @@ WHERE (
         if($clsname != 'pma_pressrelease_distributionreport') {
             var_dump($clsname);
             var_dump($this->tableName());
+            var_dump($lang);
             var_dump($ts->updated);
             var_dump(strtotime($ts->updated));
             var_dump($fname);
