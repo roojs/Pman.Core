@@ -512,9 +512,9 @@ WHERE (
     function genGetText($clsname, $lang=false)
     {
         if($clsname != 'pman_pressrelease_distributionreport') {
-            var_dump($ts->updated);
-            var_dump($fname);
-            var_dump(filemtime($fname));
+            // var_dump($ts->updated);
+            // var_dump($fname);
+            // var_dump(filemtime($fname));
             die('d');
         }
         static $done = array();
