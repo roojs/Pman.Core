@@ -514,7 +514,7 @@ WHERE (
         static $done = array();
         $clsname = strtolower($clsname);
 
-        if($clsname == 'pman_pressrelease_distributionreport') {
+        if($clsname == 'pman_pressrelease_distributionreport' && $lang == 'zh_CN') {
             var_dump($clsname);
             var_dump($this->tableName());
             var_dump($lang);
