@@ -514,6 +514,10 @@ WHERE (
         static $done = array();
         $clsname = strtolower($clsname);
 
+        if($clsname == 'publisher_insightsreport_volumeovertime') {
+            die('b');
+        }
+
         textdomain($clsname);
      
 
