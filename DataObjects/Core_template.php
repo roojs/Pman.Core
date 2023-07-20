@@ -511,7 +511,10 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
-        // if($clsname == 'pman_pressrelease_distributionreport') {
+        static $done = array();
+        $clsname = strtolower($clsname);
+
+        if($clsname == 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
             var_dump($this->tableName());
             var_dump($lang);
@@ -521,9 +524,7 @@ WHERE (
             var_dump($fname);
             var_dump(filemtime($fname));
             die('e');
-        // }
-        static $done = array();
-        $clsname = strtolower($clsname);
+        }
 
         textdomain($clsname);
      
