@@ -511,6 +511,17 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
+        if($clsname == 'pman_pressrelease_distributionreport' && $lang == 'zh_CN') {
+            var_dump($clsname);
+            var_dump($this->tableName());
+            var_dump($lang);
+            var_dump($ts->template_id);
+            var_dump($ts->updated);
+            var_dump(strtotime($ts->updated));
+            var_dump($fname);
+            var_dump(filemtime($fname));
+            die('e');
+        }
         static $done = array();
         $clsname = strtolower($clsname);
 
