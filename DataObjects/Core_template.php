@@ -511,6 +511,8 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
+        var_dump($lang);
+        die('b');
         static $done = array();
         $clsname = strtolower($clsname);
 
