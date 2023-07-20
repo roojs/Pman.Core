@@ -586,6 +586,7 @@ WHERE (
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
+        die('c');
         //DB_DataObject::debugLevel(1);
 
         $ts = $this->factoryStr();
