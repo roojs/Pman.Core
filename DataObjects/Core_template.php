@@ -583,12 +583,11 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
-        
-        if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
-            return $fname; // file exists and is newer than our updated line.
-        }
         if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
             die('b');
+        }
+        if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
+            return $fname; // file exists and is newer than our updated line.
         }
         //DB_DataObject::debugLevel(1);
 
