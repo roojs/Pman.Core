@@ -511,7 +511,7 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
-        if($clsname != 'pman_pressrelease_distributionreport') {
+        if($clsname != 'Pman_PressRelease_DistributionReport') {
             var_dump($clsname);
             // var_dump($ts->updated);
             // var_dump($fname);
