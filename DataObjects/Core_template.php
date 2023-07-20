@@ -585,7 +585,7 @@ WHERE (
             return false;
         }
 
-        if($clsname == 'pan_pressrelease_distributionreport') {
+        if($clsname == 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
             var_dump($this->tableName());
             var_dump($lang);
