@@ -548,6 +548,7 @@ WHERE (
             $done[$clsname.':'.$lang] = true;
             return false;
         }
+        die('a');
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
