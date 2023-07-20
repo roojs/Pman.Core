@@ -589,6 +589,8 @@ WHERE (
             var_dump($clsname);
             var_dump($this->tableName());
             var_dump($lang);
+            var_dump($ts->template_id);
+            var_dump($lang);
             var_dump($ts->updated);
             var_dump(strtotime($ts->updated));
             var_dump($fname);
