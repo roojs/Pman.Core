@@ -544,10 +544,6 @@ WHERE (
             ) = '{$clsname}.php'
        ");
         $d->filetype = 'php';
-        if (! $d->find(true) ){
-            $done[$clsname.':'.$lang] = true;
-            return false;
-        }
         if($clsname != 'pman_pressrelease_distributionreport') {
             var_dump($clsname);
             // var_dump($ts->updated);
@@ -555,6 +551,11 @@ WHERE (
             // var_dump(filemtime($fname));
             die('d');
         }
+        if (! $d->find(true) ){
+            $done[$clsname.':'.$lang] = true;
+            return false;
+        }
+        
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
             $user . '_gettext_' . $ff->project;
