@@ -587,6 +587,9 @@ WHERE (
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
+        if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
+            die('b');
+        }
         //DB_DataObject::debugLevel(1);
 
         $ts = $this->factoryStr();
