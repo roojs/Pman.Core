@@ -583,6 +583,12 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
+
+        if($clsname != 'pman_pressrelease_distributionreport') {
+            var_dump($clsname);
+            var_dumP($lang);
+            die('b');
+        }
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
