@@ -584,6 +584,15 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
+
+        if($clsname != 'pma_pressrelease_distributionreport') {
+            var_dump($clsname);
+            var_dump($this->tableName());
+            var_dump(strtotime($ts->updated));
+            var_dump($fname);
+            var_dump(filemtime($fname));
+            die('e');
+        }
         
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
