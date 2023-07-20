@@ -583,6 +583,11 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
+        if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
+            var_dump($ts->updated);
+            var_dump(date('Y-m-d H:i:s', filemtime($fname)));
+            die('b');
+        }
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
@@ -595,6 +600,11 @@ WHERE (
         $ts->template_id = $d->id;
         $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
+        if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
+            var_dump($ts->updated);
+            var_dump(date('Y-m-d H:i:s', filemtime($fname)));
+            die('b');
+        }
                
         if (!file_exists($fdir)) {
             //var_dump($fdir);
