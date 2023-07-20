@@ -524,13 +524,6 @@ WHERE (
         if (!empty($done[$clsname.':'.$lang])) {
             return true; // already sent headers and everything.
         }
-        if($clsname != 'pman_pressrelease_distributionreport') {
-            var_dump($clsname);
-            // var_dump($ts->updated);
-            // var_dump($fname);
-            // var_dump(filemtime($fname));
-            die('d');
-        }
         
         putenv("LANGUAGE=$lang");
         if ($lang != 'en') {
@@ -554,6 +547,13 @@ WHERE (
         if (! $d->find(true) ){
             $done[$clsname.':'.$lang] = true;
             return false;
+        }
+        if($clsname != 'pman_pressrelease_distributionreport') {
+            var_dump($clsname);
+            // var_dump($ts->updated);
+            // var_dump($fname);
+            // var_dump(filemtime($fname));
+            die('d');
         }
         $user = 'www-data'; // ?? do we need other ones
         $compileDir = ini_get('session.save_path') .'/' . 
