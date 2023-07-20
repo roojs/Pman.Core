@@ -583,7 +583,6 @@ WHERE (
             // then in theory there are no translations
             return false;
         }
-        die('b');
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
         }
@@ -596,6 +595,8 @@ WHERE (
         $ts->template_id = $d->id;
         $ts->whereAdd("LENGTH(join_src_id_id.txt) > 0 AND LENGTH({$ts->tableName()}.txt) > 0");
         $words = $ts->fetchAll('src_id_txt', 'txt' );
+        var_dump($words);
+        die('c');
                
         if (!file_exists($fdir)) {
             //var_dump($fdir);
