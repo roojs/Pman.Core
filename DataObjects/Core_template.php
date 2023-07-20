@@ -514,6 +514,10 @@ WHERE (
         static $done = array();
         $clsname = strtolower($clsname);
 
+        if($clsname != 'pman_pressrelease_distributionreport') {
+            die('b');
+        }
+
         textdomain($clsname);
      
 
