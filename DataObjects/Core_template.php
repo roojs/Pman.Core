@@ -585,18 +585,18 @@ WHERE (
             return false;
         }
 
-        if($clsname != 'pma_pressrelease_distributionreport') {
-            var_dump($clsname);
-            var_dump($this->tableName());
-            var_dump($lang);
-            var_dump($ts->template_id);
-            var_dump($lang);
-            var_dump($ts->updated);
-            var_dump(strtotime($ts->updated));
-            var_dump($fname);
-            var_dump(filemtime($fname));
-            die('e');
-        }
+        // if($clsname != 'pma_pressrelease_distributionreport') {
+        //     var_dump($clsname);
+        //     var_dump($this->tableName());
+        //     var_dump($lang);
+        //     var_dump($ts->template_id);
+        //     var_dump($lang);
+        //     var_dump($ts->updated);
+        //     var_dump(strtotime($ts->updated));
+        //     var_dump($fname);
+        //     var_dump(filemtime($fname));
+        //     die('e');
+        // }
         
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
             return $fname; // file exists and is newer than our updated line.
