@@ -584,6 +584,7 @@ WHERE (
             return false;
         }
         if($clsname == 'publisher_insightsreport_volumeovertime' && $lang == 'zh_CN') {
+            var_dump($ts->updated);
             die('b');
         }
         if (file_exists($fname) && strtotime($ts->updated) < filemtime($fname)) {
