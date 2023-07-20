@@ -511,13 +511,6 @@ WHERE (
     
     function genGetText($clsname, $lang=false)
     {
-        if($clsname != 'Pman_PressRelease_DistributionReport') {
-            var_dump($clsname);
-            // var_dump($ts->updated);
-            // var_dump($fname);
-            // var_dump(filemtime($fname));
-            die('d');
-        }
         static $done = array();
         $clsname = strtolower($clsname);
 
@@ -530,6 +523,13 @@ WHERE (
 
         if (!empty($done[$clsname.':'.$lang])) {
             return true; // already sent headers and everything.
+        }
+        if($clsname != 'Pman_PressRelease_DistributionReport') {
+            var_dump($clsname);
+            // var_dump($ts->updated);
+            // var_dump($fname);
+            // var_dump(filemtime($fname));
+            die('d');
         }
         
         putenv("LANGUAGE=$lang");
