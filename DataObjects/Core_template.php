@@ -515,6 +515,8 @@ WHERE (
         $clsname = strtolower($clsname);
 
         if($clsname != 'pman_pressrelease_distributionreport') {
+            var_dump($clsname);
+            var_dumP($lang);
             die('b');
         }
 
