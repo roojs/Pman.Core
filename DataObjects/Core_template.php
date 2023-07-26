@@ -498,17 +498,17 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         var_dump($pgdata);
         die('c');
         $filetype = 'xml';
-        
+
         $tmpl = DB_DataObject::factory($this->tableName());
         $tmpl->viewname = $pgdata['base'];
         $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
         
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'xml') {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != $filetype) {
                     $oo = clone($tmpl);
                     $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'xml';
+                    $tmpl->filetype = $filetype;
                     $tmpl->update($oo);
                 }
                 return $tmpl;
@@ -523,11 +523,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
         if ($tmpl->id) {
             $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'xml';
+            $tmpl->filetype = $filetype;
             $tmpl->update($tmpl);
         } else {
             $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'xml';
+            $tmpl->filetype = $filetype;
             $tmpl->lang = 'en';
             $tmpl->insert();
         }
@@ -535,16 +535,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
 
         /*
-        if ($tmpl->id) {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->update($tmpl);
-        } else {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->lang = 'en';
-            $tmpl->insert();
-        }
         
              
         $tmpl->words = $words;
