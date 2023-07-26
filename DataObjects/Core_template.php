@@ -498,7 +498,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $filetype = 'xml';
 
         $tmpl = DB_DataObject::factory($this->tableName());
-        $tmpl->viewname = $pgdata['base'];
+        $tmpl->view_name = $pgdata['base'];
         $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
         
         if ($tmpl->get('template',  $pgdata['template'])) {
