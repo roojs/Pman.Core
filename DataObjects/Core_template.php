@@ -497,6 +497,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     {
         var_dump($pgdata);
         die('c');
+        $filetype = 'xml';
+        
         $tmpl = DB_DataObject::factory($this->tableName());
         $tmpl->viewname = $pgdata['base'];
         $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
