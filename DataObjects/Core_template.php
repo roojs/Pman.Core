@@ -504,7 +504,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'xml') {
                     $oo = clone($tmpl);
                     $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'js';
+                    $tmpl->filetype = 'xml';
                     $tmpl->update($oo);
                 }
                 return $tmpl;
