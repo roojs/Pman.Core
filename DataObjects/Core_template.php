@@ -495,8 +495,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
     function syncPowerpointXMLText($pgdata) 
     {
-        var_dump($pgdata);
-        die('c');
         $filetype = 'xml';
 
         $tmpl = DB_DataObject::factory($this->tableName());
