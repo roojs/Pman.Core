@@ -495,18 +495,19 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
     function syncPowerpointXMLText($pgdata) 
     {
-        $ct = DB_DataObject::factory($this->tableName());
-        $ct->viewname = $pgdata['base'];
-
-        if($ct->get('template', $pgdata['template'])) {
-            if(strtotime($ct->updated) >= filetime($pgdata['template_dir'] . '/' . $pgdata['template'])) {
-                if($ct->is_deleted != 0 || $ct->filetype != 'xml') {
-                    $old = clone($ct);
-                    $ct->is_deleted = 0;
-                    $ct->filetype = 'xml';
-                    $ct->update($old);
+        $tmpl = DB_DataObject::factory($this->tableName());
+        $tmpl->viewname = $pgdata['base'];
+        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
+        
+        if ($tmpl->get('template',  $pgdata['template'])) {
+            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'xml') {
+                    $oo = clone($tmpl);
+                    $tmpl->is_deleted = 0;
+                    $tmpl->filetype = 'js';
+                    $tmpl->update($oo);
                 }
-                return $ct;
+                return $tmpl;
             }
         }
 
