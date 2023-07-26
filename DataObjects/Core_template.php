@@ -521,11 +521,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
         if ($tmpl->id) {
             $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
+            $tmpl->filetype = 'xml';
             $tmpl->update($tmpl);
         } else {
             $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
+            $tmpl->filetype = 'xml';
             $tmpl->lang = 'en';
             $tmpl->insert();
         }
