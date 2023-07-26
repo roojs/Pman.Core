@@ -532,18 +532,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $tmpl->insert();
         }
 
-
-
-        /*
-        
-             
         $tmpl->words = $words;
-            
-        $this->factoryStr()->syncTemplateWords($tmpl);    
-         
-        
+
+        $this->factoryStr()->syncTemplateWords($tmpl);
+
         return $tmpl;
-        */
     }
     
     /*
