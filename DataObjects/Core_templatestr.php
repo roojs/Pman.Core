@@ -504,7 +504,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     
     function translateFlexyString($flexy, $string)
     {
-         $debug = false;;
+         $debug = true;;
         //if (!empty($_REQUEST['_debug'])) { $debug= true; }
         
         // using $flexy->currentTemplate -> find the template we are looking at..
