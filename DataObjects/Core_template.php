@@ -513,7 +513,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             }
         }
 
-        $words = array();
+        $words = $pgdata['words'];
+        $words = array_unique($words);
+
+        if(empty($pgdata['words'])) {
+            return;
+        }
+
 
 
         /*
