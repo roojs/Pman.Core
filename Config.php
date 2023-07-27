@@ -15,7 +15,8 @@ class Pman_Core_Config {
         'json',        
         'curl',
         'gd',
-        'mbstring'
+        'mbstring',
+        'http'
     );
     
     function init($ff, $cfg)
