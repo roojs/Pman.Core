@@ -357,22 +357,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     function syncPhpGetText($pgdata)
     {
-        $tmpl = DB_DataObject::Factory($this->tableName());
-        $tmpl->view_name = $pgdata['base'];
-        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
-        
-        if ($tmpl->get('template',  $pgdata['template'])) {
-            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
-                    $oo = clone($tmpl);
-                    $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'php';
-                    $tmpl->update($oo);
-                }
-                return $tmpl;
-            }
-        }
-        $words = array();
         
         $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
         foreach( $ar as $i=> $tok) {
@@ -393,26 +377,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             
         }
         // create the template...
-        
-        
-        if (!$tmpl->id) {
-            
-            $tmpl->template = $pgdata['template'];
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->insert();
-        } else {
-            $xx =clone($tmpl);
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->update($xx);
-        }
-      
-        $words = array_unique($words);
     }
 
     function syncFileWord($pgdata, $filetype)
@@ -436,6 +400,26 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $words = array();
 
         switch($filetype) {
+            case "php":
+                $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
+                foreach( $ar as $i=> $tok) {
+                    if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
+                        continue;
+                    }
+                    if ($i < 2) {
+                        continue;
+                    }
+                    if (is_array($ar[$i-1]) || $ar[$i-1] != '(') {
+                        continue;
+                    }
+                    if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
+                        continue;
+                    }
+                    $ct = $tok[1][0];
+                    $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
+                    
+                }
+                break;
             case "js":
                 $fc = file_get_contents( $tmpl->currentTemplate );
         
@@ -446,12 +430,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 
                 // ?? seriously adding two arrays?
                 $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
-                $words = array_unique($words);
                 break;
             case "xml":
                 $words = $pgdata['words'];
                 break;
         }
+
+        $words = array_unique($words);
 
         if(empty($words)) {
             return;
