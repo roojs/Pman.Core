@@ -354,30 +354,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     {
         return DB_DataObject::factory('core_templatestr');
     }
-    
-    function syncPhpGetText($pgdata)
-    {
-        
-        $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
-        foreach( $ar as $i=> $tok) {
-            if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
-                continue;
-            }
-            if ($i < 2) {
-                continue;
-            }
-            if (is_array($ar[$i-1]) || $ar[$i-1] != '(') {
-                continue;
-            }
-            if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
-                continue;
-            }
-            $ct = $tok[1][0];
-            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
-            
-        }
-        // create the template...
-    }
 
     function syncFileWord($pgdata, $filetype)
     {
