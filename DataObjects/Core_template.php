@@ -539,8 +539,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
     function syncFileWord($pgdata, $filetype)
     {
-        $filetype = 'xml';
-
         $tmpl = DB_DataObject::Factory($this->tableName());
         $tmpl->view_name = $pgdata['base'];
         $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
@@ -555,6 +553,26 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 }
                 return $tmpl;
             }
+        }
+
+        $words = array();
+
+        switch($filetype) {
+            case "js":
+                $fc = file_get_contents( $tmpl->currentTemplate );
+        
+                preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
+                $words = $outd[1];
+                 
+                preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
+                
+                // ?? seriously adding two arrays?
+                $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
+                $words = array_unique($words);
+                break;
+            case "xml":
+                $words = $pgdata['words'];
+                break;
         }
 
         if(empty($words)) {
