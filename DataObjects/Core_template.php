@@ -362,6 +362,8 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
         
         if ($tmpl->get('template',  $pgdata['template'])) {
+            var_dump($tmpl);
+            die('c');
             if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
                 if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != $filetype) {
                     $oo = clone($tmpl);
