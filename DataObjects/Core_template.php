@@ -419,10 +419,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
 
         if ($tmpl->id) {
+            $oo = clone($tmpl);
             $tmpl->is_deleted = 0;
             $tmpl->filetype = $filetype;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->update($tmpl);
+            $tmpl->update($oo);
         } else {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = $filetype;
