@@ -473,11 +473,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         if ($tmpl->id) {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = $filetype;
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->update($tmpl);
         } else {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = $filetype;
             $tmpl->lang = 'en';
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->insert();
         }
 
