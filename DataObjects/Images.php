@@ -279,6 +279,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
         $fn = $this->getStoreName();
         $b = basename($fn);
+        clearstatcache();
         if (file_exists($fn)) {
             
             if (file_exists($deldir . '/'. $b)) {
@@ -297,12 +298,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $dh = opendir($d);
             while (false !== ($fn = readdir($dh))) {
                 if (substr($fn, 0, strlen($b)) == $b) {
-                    
+                    clearstatcache();
                     if (file_exists($deldir . '/'. $fn)) {
                         unlink($d. '/'. $fn);
                         continue;
                     }
-                    rename($d. '/'. $fn, $deldir .'/'. $fn);
+                    if (file_exists($d. '/'. $fn)) {
+                        rename($d. '/'. $fn, $deldir .'/'. $fn);
+                    }
                     
                 }
             }
