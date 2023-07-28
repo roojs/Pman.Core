@@ -440,7 +440,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
     function syncPhpGetText($pgdata)
     {
-        $this->syncFileWord($pgdata, 'php'); 
+        return $this->syncFileWord($pgdata, 'php'); 
     }
 
     /**
@@ -451,12 +451,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     function syncJsWords($pgdata)
     {
-        $this->syncFileWord($pgdata, 'js');   
+        return $this->syncFileWord($pgdata, 'js');   
     }
 
     function syncPowerpointXMLText($pgdata) 
     {
-        $this->syncFileWord($pgdata, 'xml');
+        return $this->syncFileWord($pgdata, 'xml');
     }
     
     /*
