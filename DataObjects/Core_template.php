@@ -413,19 +413,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         }
       
         $words = array_unique($words);
-        
-        if (!count($words)) {
-            return;
-        }
-        
-             
-        $tmpl->words = $words;
-            
-        $x = DB_DataObject::Factory('core_templatestr');
-        $this->factoryStr()->syncTemplateWords($tmpl);     
-         
-        
-        return $tmpl;
     }
 
     function syncFileWord($pgdata, $filetype)
