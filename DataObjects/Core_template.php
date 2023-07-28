@@ -556,6 +556,27 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
                 return $tmpl;
             }
         }
+
+        if(empty($words)) {
+            return;
+        }
+
+        if ($tmpl->id) {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = $filetype;
+            $tmpl->update($tmpl);
+        } else {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = $filetype;
+            $tmpl->lang = 'en';
+            $tmpl->insert();
+        }
+
+        $tmpl->words = $words;
+
+        $this->factoryStr()->syncTemplateWords($tmpl);
+
+        return $tmpl;
     }
     
     /*
