@@ -414,9 +414,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
         $words = array_unique($words);
 
-        var_dump($words);
-        die('c');
-
         if(empty($words)) {
             return;
         }
@@ -426,6 +423,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
             $tmpl->filetype = $filetype;
             $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
             $tmpl->update($tmpl);
+
+            var_dump($tmpl);
+            die('b');
         } else {
             $tmpl->is_deleted = 0;
             $tmpl->filetype = $filetype;
