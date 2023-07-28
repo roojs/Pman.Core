@@ -349,6 +349,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     }
     
+    // allow reuse in cms templatstr
+    function factoryStr()
+    {
+        return DB_DataObject::factory('core_templatestr');
+    }
     
     function syncPhpGetText($pgdata)
     {
@@ -421,14 +426,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
          
         
         return $tmpl;
-        
-        
-        
-    }
-    // allow reuse in cms templatstr
-    function factoryStr()
-    {
-        return DB_DataObject::factory('core_templatestr');
     }
     
     /**
