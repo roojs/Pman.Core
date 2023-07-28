@@ -438,6 +438,11 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         return $tmpl;
     }
 
+    function syncPhpGetText($pgdata)
+    {
+        $this->syncFileWord($pgdata, 'php'); 
+    }
+
     /**
      * plain JS files use ._(....) to flag 
      * it does not support quoted strings or anything really
