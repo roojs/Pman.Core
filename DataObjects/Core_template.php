@@ -427,22 +427,6 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         return $tmpl;
     }
-    
-    /**
-     * plain JS files use ._(....) to flag 
-     * it does not support quoted strings or anything really
-     * very simple strings only
-     */ 
-    
-    function syncJsWords($pgdata)
-    {
-        $this->syncFileWord($pgdata, 'js');   
-    }
-
-    function syncPowerpointXMLText($pgdata) 
-    {
-        $this->syncFileWord($pgdata, 'xml');
-    }
 
     function syncFileWord($pgdata, $filetype)
     {
@@ -502,6 +486,22 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         $this->factoryStr()->syncTemplateWords($tmpl);
 
         return $tmpl;
+    }
+
+    /**
+     * plain JS files use ._(....) to flag 
+     * it does not support quoted strings or anything really
+     * very simple strings only
+     */ 
+    
+    function syncJsWords($pgdata)
+    {
+        $this->syncFileWord($pgdata, 'js');   
+    }
+
+    function syncPowerpointXMLText($pgdata) 
+    {
+        $this->syncFileWord($pgdata, 'xml');
     }
     
     /*
