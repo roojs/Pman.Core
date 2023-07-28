@@ -439,58 +439,7 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     function syncJsWords($pgdata)
     {
-        $tmpl = DB_DataObject::Factory($this->tableName());
-        $tmpl->view_name = $pgdata['base'];
-        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
-        
-        if ($tmpl->get('template',  $pgdata['template'])) {
-            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'js') {
-                    $oo = clone($tmpl);
-                    $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'js';
-                    $tmpl->update($oo);
-                }
-                return $tmpl;
-            }
-        }
-        $words = array();
-        
-        $fc = file_get_contents( $tmpl->currentTemplate );
-        
-        preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
-        $words = $outd[1];
-         
-        preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
-        
-        // ?? seriously adding two arrays?
-        $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
-        $words = array_unique($words);
-        
-        if (empty($words)) {
-            return;
-        }
-        if ($tmpl->id) {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->update($tmpl);
-        } else {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->lang = 'en';
-            $tmpl->insert();
-        }
-        
-             
-        $tmpl->words = $words;
-            
-        $this->factoryStr()->syncTemplateWords($tmpl);    
-         
-        
-        return $tmpl;
-        
-        
-        
+        $this->syncFileWord($pgdata, 'js');   
     }
 
     function syncPowerpointXMLText($pgdata) 
