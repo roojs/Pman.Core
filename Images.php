@@ -78,6 +78,8 @@ class Pman_Core_Images extends Pman
     var $method = 'inline';
     var $page = false;
     var $is_local = false;
+    var $size;
+    
     
     function get($s, $opts=array()) // determin what to serve!!!!
     {

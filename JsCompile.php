@@ -262,7 +262,7 @@ class Pman_Core_JsCompile  extends Pman
         
         $cmd = "$pg roojspacker";
         $res = `$cmd`;
-        $out = trim($res);
+        $out = empty($res) ? '' : trim($res);
         if (strlen($out) > 0) {
             echo '<!--  onther process is compiling compile. -->';
             return false;

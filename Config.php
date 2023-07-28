@@ -10,6 +10,15 @@ class Pman_Core_Config {
     var $defaults = array(  ); // override... 
     
     
+    // note if other extended 'config's require more, then you porbably need to include these first.
+    var $required_extensions = array(
+        'json',        
+        'curl',
+        'gd',
+        'mbstring',
+        'http'
+    );
+    
     function init($ff, $cfg)
     {
       
@@ -22,6 +31,7 @@ class Pman_Core_Config {
             }
         
         }
+        $this->verifyExtensions();
         
         return $cfg;
     }
@@ -73,6 +83,23 @@ class Pman_Core_Config {
         
         return $cfg;
     }
-    
+    function verifyExtensions()
+    {
+        $error = array();
+        
+        foreach ($this->required_extensions as $e){
+            
+            if(empty($e) || extension_loaded($e)) {
+                continue;
+            }
+            
+            $error[] = "Error: Please install php extension: {$e}";
+        }
+        
+        if(empty($error)){
+           return true; 
+        }
+        die(implode('\n', $error));
+    }
 
 }
