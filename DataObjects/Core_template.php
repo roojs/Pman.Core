@@ -414,6 +414,9 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
 
         $words = array_unique($words);
 
+        var_dump($words);
+        die('c');
+
         if(empty($words)) {
             return;
         }
