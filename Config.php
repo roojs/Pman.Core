@@ -21,7 +21,9 @@ class Pman_Core_Config {
     
     function init($ff, $cfg)
     {
-      
+        
+        
+        
         $cfg = $this->overlayDefaults($cfg);
         
         if (!empty($this->memory_limit)) {
@@ -31,7 +33,17 @@ class Pman_Core_Config {
             }
         
         }
+        
         $this->verifyExtensions();
+        
+        
+        if (!isset($cfg['Pman']['timezone'])) {
+            die("timezone needs setting in Pman[timezone]");
+        }
+        if ($cfg['Pman']['timezone'] != ini_get('date.timezone')) {
+            die("timezone needs setting in php.ini date.timezone = " . $cfg['Pman']['timezone']);
+        }
+        
         
         return $cfg;
     }
