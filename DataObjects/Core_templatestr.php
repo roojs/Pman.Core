@@ -290,6 +290,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             
             $v = trim($v);
 
+            die('c');
             if(empty($v)) {
                 var_dump($cur[md5($v)]);
                 continue;
