@@ -115,6 +115,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 else {
                     $active[] = $x->id;
                 }
+                continue;
             }
 
             // skip empty words
