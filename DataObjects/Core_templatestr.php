@@ -348,7 +348,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $active[] = $cur[$md];
             
             // we have it already? - 
-            $tt->query("UPDATE {$this->tableName()}
+            $t->query("UPDATE {$this->tableName()}
                         SET active= 1
                         WHERE
                         id = ".$cur[$md]);
