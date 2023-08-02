@@ -105,6 +105,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
             if ($up && $x->txt == $obj->$c) {
+                if(empty($x->txt)) {
+                    $deactive[] = $x->id;
+                }
                 continue; // update an no change..
             }
             $x->active = 1;
@@ -114,6 +117,19 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->template_id = 0;
             $x->updated = date('Y-m-d H:i:s', strtotime("NOW"));
             $up ? $x->update() : $x->insert();
+        }
+
+        $deactive = array();
+        if (count(array_values($cur))) {// de-active unused
+
+            $t = DB_DataObject::factory($this->tableName());
+//            echo "de-active current?? \n";
+//            print_r($cur);
+//            echo "\n";
+            $deactive = array_values($cur);
+            $t->query("UPDATE core_templatestr
+                      SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
+                     ");
         }
         
         
