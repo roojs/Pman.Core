@@ -110,8 +110,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 }
                 continue; // update an no change..
             }
-            if(empty($x->txt)) {
 
+            // skip emtpy words
+            if(empty($obj->c)) {
+                continue;
             }
             $x->active = 1;
             $x->src_id = 0;
