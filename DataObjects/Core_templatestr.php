@@ -760,7 +760,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
             $ret[$v['src_id_mdsum']] = $v;
         }
-        var_dump($ret);
+        var_dump(array_values($ret));
         die('test');
 
         // if (empty($req['query']['collapse_translation'])) {
