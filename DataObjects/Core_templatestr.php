@@ -107,7 +107,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
-            var_dump($x);
+            var_dump($x->txt);
+            var_dump($obj->$c);
             die('c');
             if ($up && $x->txt == $obj->$c) {
 
