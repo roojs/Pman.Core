@@ -764,6 +764,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         // avoid duplicate mdsum
         foreach($ar as $v) {
             if(!empty($ret[$v['src_id_mdsum']])) {
+                var_dump('continue');
                 continue;
             }
 
