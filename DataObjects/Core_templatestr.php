@@ -744,7 +744,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         if (empty($r['csvCols'])) {
             return $ret;
         }
-        
+
         if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
             $ret['template_id_view_name'] = 'database';
             $ret['template_id_template'] = $ret['on_table'] . ':' . $ret['on_col'];
@@ -755,11 +755,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
     function postListFilter($ar, $au, $req)
     {
-        $ret = array();
-
         if (empty($r['csvCols'])) {
-            return $ret;
+            return $ar;
         }
+        
+        $ret = array();
 
         // avoid duplicate mdsum
         foreach($ar as $v) {
