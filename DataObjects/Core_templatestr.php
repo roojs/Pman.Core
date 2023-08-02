@@ -761,8 +761,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         $ret = array();
 
-        // avoid duplicate mdsum
+        // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
         foreach($ar as $v) {
+            if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
             if(!empty($ret[$v['src_id_mdsum']])) {
                 continue;
             }
