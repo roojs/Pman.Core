@@ -751,6 +751,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
     function postListFilter($ar, $au, $req)
     {
+        $ret = array();
+
+        foreach($ar as $v) {
+            if(!empty($ret[$v['src_id_mdsum']])) {
+                continue;
+            }
+
+            $ret[$v['src_id_mdsum']]
+        }
         var_dump($ar);
         die('test');
 
