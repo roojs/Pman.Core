@@ -129,10 +129,12 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         if(count($deactive)) {
             $t = DB_DataObject::factory($this->tableName());
+            // deactive the child data
             $t->query("UPDATE core_templatestr
                       SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
                      ");
 
+            // deactive the child data
             $t->query("UPDATE  core_templatestr 
             SET active = 0
             WHERE
@@ -143,20 +145,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 lang != ''
              ");
         }
-
-                //deactive the child data
-                if (empty($deactive)) {
-                    $deactive = array(-1);
-                }
-                $t->query("UPDATE  core_templatestr 
-                        SET active = 0
-                          WHERE
-                            src_id IN (". implode(',' ,$deactive) . ")
-                            AND
-                            template_id = {$tmpl->id}
-                            AND
-                            lang != ''
-                ");
         
         
     }
