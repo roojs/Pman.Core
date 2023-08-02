@@ -753,7 +753,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     {
         $ret = array();
 
-        // avoid duplicate
+        // avoid duplicate mdsum
         foreach($ar as $v) {
             if(!empty($ret[$v['src_id_mdsum']])) {
                 continue;
