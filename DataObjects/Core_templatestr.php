@@ -348,6 +348,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $active[] = $cur[$md];
             
             // we have it already? - 
+            $t = DB_DataObject::factory($this->tableName());
             $t->query("UPDATE {$this->tableName()}
                         SET active= 1
                         WHERE
