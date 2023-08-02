@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up = $x->find(true);
             if ($up && $x->txt == $obj->$c) {
 
-                // deactive empty words
+                // deactivate empty words
                 if(empty($obj->c)) {
                     $deactive[] = $x->id;
                 }
