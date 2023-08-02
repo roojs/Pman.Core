@@ -96,6 +96,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
+        $deactive = array();
         
         foreach($cols as $c) {
             $x = $this->factory($this->tableName());
