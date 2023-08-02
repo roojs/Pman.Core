@@ -745,6 +745,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return $ret;
         }
 
+        // translations for table columns
         if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
             $ret['template_id_view_name'] = 'database';
             $ret['template_id_template'] = $ret['on_table'] . ':' . $ret['on_col'];
@@ -763,7 +764,14 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
         foreach($ar as $v) {
-            if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
+            if(empty($v['on_table']) || empty($v['on_id']) || empty($v['on_col'])) {
+                continue;
+            }
+
+            // translations for table columns
+
+            $key = $v['on_table'] . ':' . $v['on_col'] . ':' . $v['src_id_mdsum'];
+
             if(!empty($ret[$v['src_id_mdsum']])) {
                 continue;
             }
