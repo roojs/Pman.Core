@@ -765,6 +765,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
         foreach($ar as $v) {
             if(empty($v['on_table']) || empty($v['on_id']) || empty($v['on_col'])) {
+                $ret[] = $v;
                 continue;
             }
 
