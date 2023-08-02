@@ -252,8 +252,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     {
         
         $words = $tmpl->words;
-        var_dump($word);
-        exit;
         // mapping for template : 
         //tablename => $n (templatename) 
         //tableid => $k (key value)
