@@ -770,6 +770,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $ret[$v['src_id_mdsum']] = $v;
         }
 
+        $ret = array_values($ret);
+
         var_dump($ret);
         die('a');
         
