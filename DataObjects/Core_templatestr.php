@@ -756,6 +756,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
     function postListFilter($ar, $au, $req)
     {
+        var_dump($ar);
+        die('b');
         return $ar;
         if (empty($req['csvCols'])) {
             return $ar;
