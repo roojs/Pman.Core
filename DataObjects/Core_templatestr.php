@@ -738,10 +738,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
     }
     
-    function toRooArray($r) {
+    function toRooArray($req) {
         $ret = $this->toArray();
 
-        if (empty($r['csvCols'])) {
+        if (empty($req['csvCols'])) {
             return $ret;
         }
 
@@ -758,7 +758,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         if (empty($r['csvCols'])) {
             return $ar;
         }
-        
+
         $ret = array();
 
         // avoid duplicate mdsum
