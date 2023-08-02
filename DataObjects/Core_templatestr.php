@@ -149,6 +149,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         if(count($active)) {
             $t = DB_DataObject::factory($this->tableName());
+            $t->query("UPDATE core_templatestr
+                SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
+            ");
+
             $t->query("UPDATE  core_templatestr 
             SET active = 1
               WHERE
