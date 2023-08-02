@@ -158,7 +158,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
               WHERE
                  src_id IN (". implode(',' ,$active) . ")
                 AND
-                template_id = {$tmpl->id}
+                lang != ''
             ");
         }
         
