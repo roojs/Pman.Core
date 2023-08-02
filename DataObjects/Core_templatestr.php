@@ -97,7 +97,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
         $deactive = array();
-        
+
         foreach($cols as $c) {
             $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
@@ -127,14 +127,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
-        $deactive = array();
-        if (count(array_values($cur))) {// de-active unused
-
+        if(count($deactive)) {
             $t = DB_DataObject::factory($this->tableName());
-//            echo "de-active current?? \n";
-//            print_r($cur);
-//            echo "\n";
-            $deactive = array_values($cur);
             $t->query("UPDATE core_templatestr
                       SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
                      ");
