@@ -740,11 +740,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     
     function toRooArray($r) {
         $ret = $this->toArray();
-        // if(!empty($request['_publication_scope'])) {
-        //     if($ret['parent_id_name'] == 'Regional') {
-        //         $ret['name'] = 'Regional - ' . $ret['name'];
-        //     }
-        // }
+
+        if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
+            $ret['template_id_view_name'] = 'test view name';
+            $ret['template_id_template'] = 'test template';
+        }
 
         // return $ret;
         var_dump($ret);
