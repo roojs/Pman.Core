@@ -746,9 +746,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $ret['template_id_template'] = 'test template';
         }
 
-        // return $ret;
-        var_dump($ret);
-        die('test');
         return $ret;
     }
 }
