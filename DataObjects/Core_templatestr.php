@@ -109,14 +109,12 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up = $x->find(true);
             var_dump($x->txt);
             var_dump($obj->$c);
-            die('c');
             if ($up && $x->txt == $obj->$c) {
 
                 // deactivate empty words
                 if(empty($obj->$c)) {
                     $deactive[] = $x->id;
                 }
-                continue; // update an no change..
             }
 
             // skip empty words
