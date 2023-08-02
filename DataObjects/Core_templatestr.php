@@ -112,6 +112,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 if(empty($obj->$c)) {
                     $deactive[] = $x->id;
                 }
+                else {
+                    $active[] = $x->id;
+                }
             }
 
             // skip empty words
@@ -142,6 +145,17 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 AND
                 lang != ''
              ");
+        }
+
+        if(count($active)) {
+            $t = DB_DataObject::factory($this->tableName());
+            $t->query("UPDATE  core_templatestr 
+            SET active = 1
+              WHERE
+                 src_id IN (". implode(',' ,$active) . ")
+                AND
+                template_id = {$tmpl->id}
+            ");
         }
         
         
