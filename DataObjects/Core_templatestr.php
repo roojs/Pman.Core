@@ -132,7 +132,31 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $t->query("UPDATE core_templatestr
                       SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
                      ");
+
+            $t->query("UPDATE  core_templatestr 
+            SET active = 0
+            WHERE
+                src_id IN (". implode(',' ,$deactive) . ")
+                AND
+                template_id = {$tmpl->id}
+                AND
+                lang != ''
+             ");
         }
+
+                //deactive the child data
+                if (empty($deactive)) {
+                    $deactive = array(-1);
+                }
+                $t->query("UPDATE  core_templatestr 
+                        SET active = 0
+                          WHERE
+                            src_id IN (". implode(',' ,$deactive) . ")
+                            AND
+                            template_id = {$tmpl->id}
+                            AND
+                            lang != ''
+                ");
         
         
     }
