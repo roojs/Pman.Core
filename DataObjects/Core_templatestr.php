@@ -772,12 +772,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
             $key = $v['on_table'] . ':' . $v['on_col'] . ':' . $v['src_id_mdsum'];
 
-            if(!empty($ret[$v['src_id_mdsum']])) {
+            if(!empty($ret[$key])) {
                 continue;
             }
 
-            $ret[$v['src_id_mdsum']] = $v;
+            $ret[$key] = $v;
         }
+
+        var_dump($ret);
+        die('a');
 
         $ret = array_values($ret);
         
