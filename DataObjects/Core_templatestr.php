@@ -107,6 +107,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up = $x->find(true);
             if ($up && $x->txt == $obj->$c) {
 
+                var_dump($c);
                 // deactivate empty words
                 if(empty($obj->c)) {
                     var_dump($obj->c);
