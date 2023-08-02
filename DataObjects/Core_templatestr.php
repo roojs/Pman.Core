@@ -289,6 +289,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             
             
             $v = trim($v);
+
+            if(empty($v)) {
+                continue;
+            }
             
             $md = $keyvalue ? $k : md5($v);
             
