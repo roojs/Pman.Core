@@ -745,6 +745,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return $ret;
         }
 
+        // for download
+
         // translations for table columns
         if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
             $ret['template_id_view_name'] = 'database';
@@ -759,6 +761,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         if (empty($req['csvCols'])) {
             return $ar;
         }
+
+        // for download
 
         $ret = array();
 
