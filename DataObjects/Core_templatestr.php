@@ -753,6 +753,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     {
         $ret = array();
 
+        // avoid duplicate
         foreach($ar as $v) {
             if(!empty($ret[$v['src_id_mdsum']])) {
                 continue;
@@ -760,35 +761,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
             $ret[$v['src_id_mdsum']] = $v;
         }
-        var_dumP($ar);
-        var_dump(array_values($ret));
-        die('test');
-
-        // if (empty($req['query']['collapse_translation'])) {
-        //     return $ar;
-        // }
-
-        // $parent_ids = array();
-        // $ret = array();
-
-        // foreach($ar as &$v) {
-        //     array_push($parent_ids, $v['id']);
-        //     $v['children'] = array();
-        //     $ret[$v['id']] = &$v;
-        // }
-
-        // $pe = DB_DataObject::factory('pressrelease_entry');
-        // $pe->whereAddIn('parent_id', $parent_ids, 'int');
-        // $pe->selectAddAllExcept(array('content', 'word_text'));
-        // if (!empty($req['query']['with_distr_summary'])) {
-        //     $pe->selectAddDistSummary();
-        // }
-        // $pe->find();
-        // while($pe->fetch()) {
-        //     $ret[$pe->parent_id]['children'][] = $pe->toArray();
-        // }
-
-        return $ar;
+        
+        return $ret;
 
     }
 }
