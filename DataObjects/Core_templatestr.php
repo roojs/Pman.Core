@@ -762,7 +762,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         $ret = array();
 
-        // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
         foreach($ar as $v) {
             if(empty($v['on_table']) || empty($v['on_id']) || empty($v['on_col'])) {
                 $ret[] = $v;
@@ -770,6 +769,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             }
 
             // translations for table columns
+            // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
 
             $key = $v['on_table'] . ':' . $v['on_col'] . ':' . $v['src_id_mdsum'];
 
