@@ -105,13 +105,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
             if ($up && $x->txt == $obj->$c) {
+
+                // deactive empty words
                 if(empty($obj->c)) {
                     $deactive[] = $x->id;
                 }
                 continue; // update an no change..
             }
 
-            // skip emtpy words
+            // skip empty words
             if(empty($obj->c)) {
                 continue;
             }
