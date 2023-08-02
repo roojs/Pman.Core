@@ -758,9 +758,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 continue;
             }
 
-            $ret[$v['src_id_mdsum']]
+            $ret[$v['src_id_mdsum']] = $v;
         }
-        var_dump($ar);
+        var_dump($ret);
         die('test');
 
         // if (empty($req['query']['collapse_translation'])) {
