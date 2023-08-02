@@ -109,6 +109,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
                 // deactivate empty words
                 if(empty($obj->c)) {
+                    var_dump($obj->c);
                     $deactive[] = $x->id;
                 }
                 continue; // update an no change..
