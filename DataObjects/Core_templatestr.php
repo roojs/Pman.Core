@@ -99,7 +99,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $deactive = array();
 
         var_dump($cols);
-        die('b');
 
         foreach($cols as $c) {
             $x = $this->factory($this->tableName());
@@ -108,6 +107,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
+            var_dump($x);
+            die('c');
             if ($up && $x->txt == $obj->$c) {
 
                 // deactivate empty words
