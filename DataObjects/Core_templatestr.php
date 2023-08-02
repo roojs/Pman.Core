@@ -105,10 +105,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
             if ($up && $x->txt == $obj->$c) {
-                if(empty($x->txt)) {
+                if(empty($obj->c)) {
                     $deactive[] = $x->id;
                 }
                 continue; // update an no change..
+            }
+            if(empty($x->txt)) {
+
             }
             $x->active = 1;
             $x->src_id = 0;
