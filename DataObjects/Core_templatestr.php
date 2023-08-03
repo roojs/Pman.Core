@@ -191,8 +191,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         $unused = array();
         foreach($cur as $ts) {
+            // old table
             if(empty($tables[$ts->on_table])) {
                 $unused[] = $ts->id;
+                continue;
             }
             var_dump($ts->on_table);
             var_dump($ts->on_col);
