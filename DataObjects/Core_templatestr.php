@@ -173,34 +173,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         
     }
-
-    function syncTableWords()
-    {
-        $ff = HTML_FlexyFramework::get()->Pman_Core;
-            
-        if(empty($ff['DataObjects_Core_templatestr']['tables'])){
-            return;
-        }
-
-        $tables = $ff['DataObjects_Core_templatestr']['tables'];
-
-        $cts = DB_DataObject::factory($this->tableName());
-        $cts->whereAdd('on_table != ""');
-        $old = clone($cts);
-        $cur = $cts->fetchAll();
-
-        $unused = array();
-        foreach($cur as $ts) {
-            // old table
-            if(empty($tables[$ts->on_table])) {
-                $unused[] = $ts->id;
-                continue;
-            }
-            var_dump($ts->on_table);
-            var_dump($ts->on_col);
-        }
-        die('b');
-    }
     
     
     function applyFiltersTree($q,$roo)
