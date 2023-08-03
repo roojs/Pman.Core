@@ -103,7 +103,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $arr = explode(',', $c);
                 $c = $arr[0];
                 $cond = $arr[1];
-                var_dump($arr);
+
+                $ar = explode('=', $cond);
+                $x->$ar[0] = $ar[1];
+                var_dump($x);
                 die('b');
             }
             $x->on_id = $obj->pid();
