@@ -96,7 +96,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
-        $deactive = array();
+        $unused = array();
         $active = array();
 
         foreach($cols as $c) {
@@ -115,6 +115,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 }
             }
 
+            if(empty($obj->$c)) {
+                $deactive[] = $x->id;
+            }
+
 
             $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
@@ -126,7 +130,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             if($up) {
                 // deactivate empty words
                 if(empty($obj->$c)) {
-                    $deactive[] = $x->id;
+                    $unused[] = $x->id;
                 }
                 // activate non-empty words
                 else {
@@ -153,18 +157,18 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
-        if(count($deactive)) {
+        if(count($unused)) {
             $t = DB_DataObject::factory($this->tableName());
             // deactivate the parent data
             $t->query("UPDATE core_templatestr
-                      SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
+                      SET active = 0 WHERE id in (" . implode(',' ,$unused) . ")
                      ");
 
             // deactivate the child data
             $t->query("UPDATE  core_templatestr 
             SET active = 0
             WHERE
-                src_id IN (". implode(',' ,$deactive) . ")
+                src_id IN (". implode(',' , $unused) . ")
                 AND
                 lang != ''
              ");
