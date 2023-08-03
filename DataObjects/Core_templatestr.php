@@ -104,7 +104,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $c = $arr[0];
                 $cond = $arr[1];
             }
-            $x->whereAdd($cond);
             $x->on_id = $obj->pid();
             $x->on_table = $tn;
             $x->on_col = $c;
