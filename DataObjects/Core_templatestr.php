@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
                 // skip if condition not fulfilled
                 if($obj->{$ar[0]} != $ar[1]) {
-                    // continue;
+                    continue;
                 }
             }
 
