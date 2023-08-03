@@ -179,7 +179,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $cts = DB_DataObject::factory($this->tableName());
         $cts->whereAdd('on_table != ""');
         $old = clone($cts);
-        $cur = $cts->fetchAll('mdsum', 'id');
+        $cur = $cts->fetchAll();
         var_dump($cur);
         die();
     }
