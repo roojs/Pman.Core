@@ -96,7 +96,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
-        
+        $deactive = array();
+        $active = array();
+
         foreach($cols as $c) {
             $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
@@ -104,9 +106,28 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
-            if ($up && $x->txt == $obj->$c) {
-                continue; // update an no change..
+
+            if($up) {
+                // deactivate empty words
+                if(empty($obj->$c)) {
+                    $deactive[] = $x->id;
+                }
+                // activate non-empty words
+                else {
+                    $active[] = $x->id;
+                }
+
+                if($x->txt == $obj->$c) {
+                    continue; // skip when no change
+                }
             }
+            else {
+                // skip empty words
+                if(empty($obj->$c)) {
+                    continue;
+                }
+            }
+
             $x->active = 1;
             $x->src_id = 0;
             $x->txt = $obj->$c;
@@ -114,6 +135,39 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->template_id = 0;
             $x->updated = date('Y-m-d H:i:s', strtotime("NOW"));
             $up ? $x->update() : $x->insert();
+        }
+
+        if(count($deactive)) {
+            $t = DB_DataObject::factory($this->tableName());
+            // deactivate the parent data
+            $t->query("UPDATE core_templatestr
+                      SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
+                     ");
+
+            // deactivate the child data
+            $t->query("UPDATE  core_templatestr 
+            SET active = 0
+            WHERE
+                src_id IN (". implode(',' ,$deactive) . ")
+                AND
+                lang != ''
+             ");
+        }
+
+        if(count($active)) {
+            $t = DB_DataObject::factory($this->tableName());
+            // activate the aprent data
+            $t->query("UPDATE core_templatestr
+                SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
+            ");
+            // deactivate the child data
+            $t->query("UPDATE  core_templatestr 
+            SET active = 1
+              WHERE
+                 src_id IN (". implode(',' ,$active) . ")
+                AND
+                lang != ''
+            ");
         }
         
         
@@ -289,6 +343,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             
             
             $v = trim($v);
+
+            // skip empty words
+            if(empty($v)) {
+                continue;
+            }
             
             $md = $keyvalue ? $k : md5($v);
             
@@ -315,7 +374,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $active[] = $cur[$md];
             
             // we have it already? - 
-            $tt->query("UPDATE {$this->tableName()}
+            $t = DB_DataObject::factory($this->tableName());
+            $t->query("UPDATE {$this->tableName()}
                         SET active= 1
                         WHERE
                         id = ".$cur[$md]);
@@ -705,4 +765,55 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
     }
     
+    function toRooArray($req) {
+        $ret = $this->toArray();
+
+        if (empty($req['csvCols'])) {
+            return $ret;
+        }
+
+        // for download
+
+        // translations for table columns
+        if(!empty($ret['on_table']) && !empty($ret['on_id']) && !empty($ret['on_col'])) {
+            $ret['template_id_view_name'] = 'database';
+            $ret['template_id_template'] = $ret['on_table'] . ':' . $ret['on_col'];
+        }
+
+        return $ret;
+    }
+
+    function postListFilter($ar, $au, $req)
+    {
+        if (empty($req['csvCols'])) {
+            return $ar;
+        }
+
+        // for download
+
+        $ret = array();
+
+        foreach($ar as $v) {
+            if(empty($v['on_table']) || empty($v['on_id']) || empty($v['on_col'])) {
+                $ret[] = $v;
+                continue;
+            }
+
+            // translations for table columns
+            // avoid duplicate (same src_id_mdsum, same on_table, same on_col, but different on_id)
+
+            $key = $v['on_table'] . ':' . $v['on_col'] . ':' . $v['src_id_mdsum'];
+
+            if(!empty($ret[$key])) {
+                continue;
+            }
+
+            $ret[$key] = $v;
+        }
+
+        $ret = array_values($ret);
+        
+        return $ret;
+
+    }
 }
