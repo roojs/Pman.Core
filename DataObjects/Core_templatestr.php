@@ -96,6 +96,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
 
+        $used = array();
         foreach($cols as $c) {
 
             // skip if empty string
@@ -126,6 +127,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
             // skip when no change
             if($up && $x->txt == $obj->$c) {
+                $used[] = $x->id;
                 continue;
             }
 
