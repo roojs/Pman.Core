@@ -128,12 +128,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             if($up && $x->txt == $obj->$c) {
                 continue;
             }
-            else {
-                // skip empty words
-                if(empty($obj->$c)) {
-                    continue;
-                }
-            }
 
             $x->active = 1;
             $x->src_id = 0;
