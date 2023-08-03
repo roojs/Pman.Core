@@ -105,7 +105,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 $cond = $arr[1];
 
                 $ar = explode('=', $cond);
-                $x->$ar[0] = $ar[1];
+                $key = $ar[0];
+                $x->$key = $ar[1];
                 var_dump($x);
                 die('b');
             }
