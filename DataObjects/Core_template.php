@@ -349,8 +349,13 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     }
     
-    
-    function syncPhpGetText($pgdata)
+    // allow reuse in cms templatstr
+    function factoryStr()
+    {
+        return DB_DataObject::factory('core_templatestr');
+    }
+
+    function syncFileWord($pgdata, $filetype)
     {
         $tmpl = DB_DataObject::Factory($this->tableName());
         $tmpl->view_name = $pgdata['base'];
@@ -358,79 +363,87 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
         
         if ($tmpl->get('template',  $pgdata['template'])) {
             if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'html') {
+                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != $filetype) {
                     $oo = clone($tmpl);
                     $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'php';
+                    $tmpl->filetype = $filetype;
                     $tmpl->update($oo);
                 }
                 return $tmpl;
             }
         }
+
         $words = array();
+
+        switch($filetype) {
+            case "php":
+                $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
+                foreach( $ar as $i=> $tok) {
+                    if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
+                        continue;
+                    }
+                    if ($i < 2) {
+                        continue;
+                    }
+                    if (is_array($ar[$i-1]) || $ar[$i-1] != '(') {
+                        continue;
+                    }
+                    if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
+                        continue;
+                    }
+                    $ct = $tok[1][0];
+                    $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
+                    
+                }
+                break;
+            case "js":
+                $fc = file_get_contents( $tmpl->currentTemplate );
         
-        $ar = token_get_all(file_get_contents( $tmpl->currentTemplate  ));
-        foreach( $ar as $i=> $tok) {
-            if (!is_array($tok) || $tok[0] != T_CONSTANT_ENCAPSED_STRING) {
-                continue;
-            }
-            if ($i < 2) {
-                continue;
-            }
-            if (is_array($ar[$i-1]) || $ar[$i-1] != '(') {
-                continue;
-            }
-            if (!is_array($ar[$i-2]) || $ar[$i-2][1] != '_') {
-                continue;
-            }
-            $ct = $tok[1][0];
-            $words[] =  str_replace('\\'. $ct, $ct, trim($tok[1] , $ct));
-            
+                preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
+                $words = $outd[1];
+                 
+                preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
+                
+                // ?? seriously adding two arrays?
+                $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
+                break;
+            case "xml":
+                $words = $pgdata['words'];
+                break;
         }
-        // create the template...
-        
-        
-        if (!$tmpl->id) {
-            
-            $tmpl->template = $pgdata['template'];
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->insert();
-        } else {
-            $xx =clone($tmpl);
-            $tmpl->filetype = 'php';
-            $tmpl->is_deleted = 0;
-            $tmpl->lang = 'en'; /// ??? hard coded??
-            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
-            $tmpl->update($xx);
-        }
-      
+
         $words = array_unique($words);
-        
-        if (!count($words)) {
+
+        if(empty($words)) {
             return;
         }
-        
-             
+
+        if ($tmpl->id) {
+            $oo = clone($tmpl);
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = $filetype;
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->update($oo);
+        } else {
+            $tmpl->is_deleted = 0;
+            $tmpl->filetype = $filetype;
+            $tmpl->lang = 'en';
+            $tmpl->updated = date('Y-m-d H:i:s', filemtime($tmpl->currentTemplate));
+            $tmpl->insert();
+        }
+
         $tmpl->words = $words;
-            
-        $x = DB_DataObject::Factory('core_templatestr');
-        $this->factoryStr()->syncTemplateWords($tmpl);     
-         
-        
+
+        $this->factoryStr()->syncTemplateWords($tmpl);
+
         return $tmpl;
-        
-        
-        
     }
-    // allow reuse in cms templatstr
-    function factoryStr()
+
+    function syncPhpGetText($pgdata)
     {
-        return DB_DataObject::factory('core_templatestr');
+        return $this->syncFileWord($pgdata, 'php'); 
     }
-    
+
     /**
      * plain JS files use ._(....) to flag 
      * it does not support quoted strings or anything really
@@ -439,58 +452,12 @@ class Pman_Core_DataObjects_Core_template  extends DB_DataObject
     
     function syncJsWords($pgdata)
     {
-        $tmpl = DB_DataObject::Factory($this->tableName());
-        $tmpl->view_name = $pgdata['base'];
-        $tmpl->currentTemplate = $pgdata['template_dir'] . '/'. $pgdata['template'];
-        
-        if ($tmpl->get('template',  $pgdata['template'])) {
-            if (strtotime($tmpl->updated) >= filemtime( $tmpl->currentTemplate )) {
-                if ($tmpl->is_deleted != 0 ||  $tmpl->filetype != 'js') {
-                    $oo = clone($tmpl);
-                    $tmpl->is_deleted = 0;
-                    $tmpl->filetype = 'js';
-                    $tmpl->update($oo);
-                }
-                return $tmpl;
-            }
-        }
-        $words = array();
-        
-        $fc = file_get_contents( $tmpl->currentTemplate );
-        
-        preg_match_all('/\._\("([^"]+)"\)/', $fc, $outd);
-        $words = $outd[1];
-         
-        preg_match_all('/\._\(\'([^\']+)\'\)/', $fc, $outs);
-        
-        // ?? seriously adding two arrays?
-        $words =  array_diff(array_merge($words, $outs[1]), array_intersect($words, $outs[1]));
-        $words = array_unique($words);
-        
-        if (empty($words)) {
-            return;
-        }
-        if ($tmpl->id) {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->update($tmpl);
-        } else {
-            $tmpl->is_deleted = 0;
-            $tmpl->filetype = 'js';
-            $tmpl->lang = 'en';
-            $tmpl->insert();
-        }
-        
-             
-        $tmpl->words = $words;
-            
-        $this->factoryStr()->syncTemplateWords($tmpl);    
-         
-        
-        return $tmpl;
-        
-        
-        
+        return $this->syncFileWord($pgdata, 'js');   
+    }
+
+    function syncPowerpointXMLText($pgdata) 
+    {
+        return $this->syncFileWord($pgdata, 'xml');
     }
     
     /*
