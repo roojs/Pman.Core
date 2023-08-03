@@ -173,6 +173,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         
     }
+
+    function syncTableWords()
+    {
+        $cts = DB_DataObject::factory($this->tableName());
+        $old = clone($cts);
+        $cur = $cts->fetchAll('mdsum', 'id');
+    }
     
     
     function applyFiltersTree($q,$roo)
