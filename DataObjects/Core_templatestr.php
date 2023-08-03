@@ -180,6 +180,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $cts->whereAdd('on_table != ""');
         $old = clone($cts);
         $cur = $cts->fetchAll('mdsum', 'id');
+        var_dump($cur);
+        die();
     }
     
     
