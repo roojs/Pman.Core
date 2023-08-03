@@ -65,7 +65,7 @@
 class Pman_Core_Mailer {
     var $debug          = 0;
     var $page           = false; /* usually a html_flexyframework_page */
-    var $contents       = false; /* object or array */
+    var $contents       = array(); /* object or array */
     var $template       = false; /* string */
     var $replaceImages  = false; /* boolean */
     var $rcpts   = false;
@@ -107,7 +107,12 @@ class Pman_Core_Mailer {
     }
      
     /**
-     * ---------------- Global Tools ---------------   
+     * ---------------- Global Tools ---------------
+     *
+     * applies this variables to a object
+     * msgid
+     * HTTP_HOIST
+     * 
      */
     
     function toData()
