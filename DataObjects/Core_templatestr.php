@@ -106,6 +106,8 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
                 $ar = explode('=', $cond);
                 $key = $ar[0];
+
+                // skip if condition not fulfilled
                 if($obj->{$ar[0]} != $ar[1]) {
                     continue;
                 }
