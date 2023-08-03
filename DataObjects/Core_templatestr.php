@@ -125,6 +125,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
 
+            if($tn == 'core_enum') {
+                die('b');
+            }
+
             // skip when no change
             if($up && $x->txt == $obj->$c) {
                 $used[] = $x->id;
