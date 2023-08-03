@@ -180,6 +180,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $cts->whereAdd('on_table != ""');
         $old = clone($cts);
         $cur = $cts->fetchAll();
+
+        foreach($cur as $ts) {
+            var_dump($ts->on_table);
+            var_dump($ts->on_col);
+        }
         var_dump($cur);
         die();
     }
