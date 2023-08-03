@@ -84,7 +84,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
      */
     function onTableChange($roo, $obj, $chg)
     {
-        
+        if($tn == 'core_enum') {
+            die('b');
+        }
         $ff = HTML_FlexyFramework::get()->Pman_Core;
             
         if(empty($ff['DataObjects_Core_templatestr']['tables'])){
@@ -124,10 +126,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
-
-            if($tn == 'core_enum') {
-                die('b');
-            }
 
             // skip when no change
             if($up && $x->txt == $obj->$c) {
