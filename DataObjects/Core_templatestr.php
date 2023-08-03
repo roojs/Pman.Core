@@ -99,6 +99,12 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         
         foreach($cols as $c) {
             $x = $this->factory($this->tableName());
+            if(strpos($c, ',') !== false) {
+                $arr = explode(',', $c);
+                $c = $arr[0];
+                $cond = $arr[1];
+            }
+            $x->whereAdd($cond);
             $x->on_id = $obj->pid();
             $x->on_table = $tn;
             $x->on_col = $c;
