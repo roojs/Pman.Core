@@ -778,6 +778,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         $ret = array();
 
+        var_dump($ar);
+        die('b');
+
         foreach($ar as $v) {
             if(empty($v['on_table']) || empty($v['on_id']) || empty($v['on_col'])) {
                 $ret[] = $v;
