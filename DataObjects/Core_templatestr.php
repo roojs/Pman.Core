@@ -117,11 +117,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 }
             }
 
-            if(empty($obj->$c)) {
-                $deactive[] = $x->id;
-            }
-
-
             $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
             $x->on_table = $tn;
@@ -129,19 +124,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
 
-            if($up) {
-                // deactivate empty words
-                if(empty($obj->$c)) {
-                    $unused[] = $x->id;
-                }
-                // activate non-empty words
-                else {
-                    $used[] = $x->id;
-                }
-
-                if($x->txt == $obj->$c) {
-                    continue; // skip when no change
-                }
+            // skip when no change
+            if($up && $x->txt == $obj->$c) {
+                continue;
             }
             else {
                 // skip empty words
@@ -159,38 +144,38 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
-        if(count($unused)) {
-            $t = DB_DataObject::factory($this->tableName());
-            // deactivate the parent data
-            $t->query("UPDATE core_templatestr
-                      SET active = 0 WHERE id in (" . implode(',' ,$unused) . ")
-                     ");
+        // if(count($unused)) {
+        //     $t = DB_DataObject::factory($this->tableName());
+        //     // deactivate the parent data
+        //     $t->query("UPDATE core_templatestr
+        //               SET active = 0 WHERE id in (" . implode(',' ,$unused) . ")
+        //              ");
 
-            // deactivate the child data
-            $t->query("UPDATE  core_templatestr 
-            SET active = 0
-            WHERE
-                src_id IN (". implode(',' , $unused) . ")
-                AND
-                lang != ''
-             ");
-        }
+        //     // deactivate the child data
+        //     $t->query("UPDATE  core_templatestr 
+        //     SET active = 0
+        //     WHERE
+        //         src_id IN (". implode(',' , $unused) . ")
+        //         AND
+        //         lang != ''
+        //      ");
+        // }
 
-        if(count($used)) {
-            $t = DB_DataObject::factory($this->tableName());
-            // activate the aprent data
-            $t->query("UPDATE core_templatestr
-                SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
-            ");
-            // deactivate the child data
-            $t->query("UPDATE  core_templatestr 
-            SET active = 1
-              WHERE
-                 src_id IN (". implode(',' ,$active) . ")
-                AND
-                lang != ''
-            ");
-        }
+        // if(count($used)) {
+        //     $t = DB_DataObject::factory($this->tableName());
+        //     // activate the aprent data
+        //     $t->query("UPDATE core_templatestr
+        //         SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
+        //     ");
+        //     // deactivate the child data
+        //     $t->query("UPDATE  core_templatestr 
+        //     SET active = 1
+        //       WHERE
+        //          src_id IN (". implode(',' ,$active) . ")
+        //         AND
+        //         lang != ''
+        //     ");
+        // }
         
         
     }
