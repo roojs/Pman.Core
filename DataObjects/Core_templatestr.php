@@ -95,11 +95,13 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return;
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
-        
-        $unused = array();
-        $used = array();
 
         foreach($cols as $c) {
+
+            // skip if empty string
+            if(empty($obj->$c)) {
+                continue;
+            }
             
             if(strpos($c, ',') !== false) {
                 $arr = explode(',', $c);
