@@ -185,8 +185,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             var_dump($ts->on_table);
             var_dump($ts->on_col);
         }
-        var_dump($cur);
-        die();
+        die('b');
     }
     
     
