@@ -90,12 +90,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return;
         }
         $tn = $obj->tableName();
-        if($tn == 'core_enum') {
-            die('b');
-        }
         if(empty($ff['DataObjects_Core_templatestr']['tables'][$tn])){
             return;
         }
+        die('b');
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
 
         $used = array();
