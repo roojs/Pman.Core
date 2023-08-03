@@ -176,6 +176,17 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
     function syncTableWords()
     {
+        $ff = HTML_FlexyFramework::get()->Pman_Core;
+            
+        if(empty($ff['DataObjects_Core_templatestr']['tables'])){
+            return;
+        }
+
+        $tables = array();
+        foreach($ff['DataObjects_Core_templatestr']['tables'] as $table => $cols) {
+            $tables[]
+        }
+
         $cts = DB_DataObject::factory($this->tableName());
         $cts->whereAdd('on_table != ""');
         $old = clone($cts);
