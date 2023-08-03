@@ -774,8 +774,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return $ar;
         }
 
-        die('bb');
-
         // for download
 
         $ret = array();
