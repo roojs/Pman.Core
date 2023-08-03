@@ -106,23 +106,28 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
-            if ($up && $x->txt == $obj->$c) {
 
+            if($up) {
                 // deactivate empty words
                 if(empty($obj->$c)) {
                     $deactive[] = $x->id;
                 }
-                // make sure that used words are active
+                // activate non-empty words
                 else {
                     $active[] = $x->id;
                 }
-                continue;
+
+                if($x->txt == $obj->$c) {
+                    continue; // skip when no change
+                }
+            }
+            else {
+                // skip empty words
+                if(empty($obj->$c)) {
+                    continue;
+                }
             }
 
-            // skip empty words
-            if(empty($obj->$c)) {
-                continue;
-            }
             $x->active = 1;
             $x->src_id = 0;
             $x->txt = $obj->$c;
