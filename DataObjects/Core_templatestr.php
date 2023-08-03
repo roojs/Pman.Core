@@ -97,7 +97,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
         
         $unused = array();
-        $active = array();
+        $used = array();
 
         foreach($cols as $c) {
             
@@ -134,7 +134,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 }
                 // activate non-empty words
                 else {
-                    $active[] = $x->id;
+                    $used[] = $x->id;
                 }
 
                 if($x->txt == $obj->$c) {
@@ -174,7 +174,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
              ");
         }
 
-        if(count($active)) {
+        if(count($used)) {
             $t = DB_DataObject::factory($this->tableName());
             // activate the aprent data
             $t->query("UPDATE core_templatestr
