@@ -189,7 +189,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $old = clone($cts);
         $cur = $cts->fetchAll();
 
+        $unused = array();
         foreach($cur as $ts) {
+            if(empty($tables[$ts->on_table])) {
+                $unused[] = $ts->id;
+            }
             var_dump($ts->on_table);
             var_dump($ts->on_col);
         }
