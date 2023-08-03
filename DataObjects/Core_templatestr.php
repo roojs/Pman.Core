@@ -112,6 +112,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 if(empty($obj->$c)) {
                     $deactive[] = $x->id;
                 }
+                // make sure that used words are active
                 else {
                     $active[] = $x->id;
                 }
@@ -150,10 +151,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
 
         if(count($active)) {
             $t = DB_DataObject::factory($this->tableName());
+            // activate the aprent data
             $t->query("UPDATE core_templatestr
                 SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
             ");
-
+            // deactivate the child data
             $t->query("UPDATE  core_templatestr 
             SET active = 1
               WHERE
