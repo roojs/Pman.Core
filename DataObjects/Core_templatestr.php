@@ -93,16 +93,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         if(empty($ff['DataObjects_Core_templatestr']['tables'][$tn])){
             return;
         }
-        die('b');
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
 
         $used = array();
         foreach($cols as $c) {
-
-            // skip if empty string
-            if(empty($obj->$c)) {
-                continue;
-            }
             
             if(strpos($c, ',') !== false) {
                 $arr = explode(',', $c);
@@ -116,6 +110,11 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                 if($obj->{$ar[0]} != $ar[1]) {
                     continue;
                 }
+            }
+
+            // skip if empty string
+            if(empty($obj->$c)) {
+                continue;
             }
 
             $x = $this->factory($this->tableName());
