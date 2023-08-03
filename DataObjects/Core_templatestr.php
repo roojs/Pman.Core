@@ -146,7 +146,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $t->query("UPDATE core_templatestr
                 SET active = 1 WHERE id in (" . implode(',' ,$used) . ")
             ");
-            // deactivate the child data
+            // activate the child data
             $t->query("UPDATE  core_templatestr 
             SET active = 1
               WHERE
