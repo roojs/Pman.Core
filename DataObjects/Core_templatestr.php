@@ -84,7 +84,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
      */
     function onTableChange($roo, $obj, $chg)
     {
-        
         $ff = HTML_FlexyFramework::get()->Pman_Core;
             
         if(empty($ff['DataObjects_Core_templatestr']['tables'])){
@@ -95,12 +94,10 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             return;
         }
         $cols = $ff['DataObjects_Core_templatestr']['tables'][$tn];
-        
-        $deactive = array();
-        $active = array();
 
+        $used = array();
         foreach($cols as $c) {
-            $x = $this->factory($this->tableName());
+            
             if(strpos($c, ',') !== false) {
                 $arr = explode(',', $c);
                 $c = $arr[0];
@@ -114,31 +111,23 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                     continue;
                 }
             }
+
+            // skip if empty string
+            if(empty($obj->$c)) {
+                continue;
+            }
+
+            $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
             $x->on_table = $tn;
             $x->on_col = $c;
             $x->lang = ''; /// eg. base language..
             $up = $x->find(true);
 
-            if($up) {
-                // deactivate empty words
-                if(empty($obj->$c)) {
-                    $deactive[] = $x->id;
-                }
-                // activate non-empty words
-                else {
-                    $active[] = $x->id;
-                }
-
-                if($x->txt == $obj->$c) {
-                    continue; // skip when no change
-                }
-            }
-            else {
-                // skip empty words
-                if(empty($obj->$c)) {
-                    continue;
-                }
+            // skip when no change
+            if($up && $x->txt == $obj->$c) {
+                $used[] = $x->id;
+                continue;
             }
 
             $x->active = 1;
@@ -150,34 +139,18 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
-        if(count($deactive)) {
-            $t = DB_DataObject::factory($this->tableName());
-            // deactivate the parent data
-            $t->query("UPDATE core_templatestr
-                      SET active = 0 WHERE id in (" . implode(',' ,$deactive) . ")
-                     ");
-
-            // deactivate the child data
-            $t->query("UPDATE  core_templatestr 
-            SET active = 0
-            WHERE
-                src_id IN (". implode(',' ,$deactive) . ")
-                AND
-                lang != ''
-             ");
-        }
-
-        if(count($active)) {
+        // make sure the used one are active
+        if(count($used)) {
             $t = DB_DataObject::factory($this->tableName());
             // activate the aprent data
             $t->query("UPDATE core_templatestr
-                SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
+                SET active = 1 WHERE id in (" . implode(',' ,$used) . ")
             ");
-            // deactivate the child data
+            // activate the child data
             $t->query("UPDATE  core_templatestr 
             SET active = 1
               WHERE
-                 src_id IN (". implode(',' ,$active) . ")
+                 src_id IN (". implode(',' ,$used) . ")
                 AND
                 lang != ''
             ");
