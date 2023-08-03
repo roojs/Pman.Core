@@ -139,6 +139,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
+        // make sure the used one are active
         if(count($used)) {
             $t = DB_DataObject::factory($this->tableName());
             // activate the aprent data
