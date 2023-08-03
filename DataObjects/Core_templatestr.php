@@ -100,7 +100,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
         $active = array();
 
         foreach($cols as $c) {
-            $x = $this->factory($this->tableName());
+            
             if(strpos($c, ',') !== false) {
                 $arr = explode(',', $c);
                 $c = $arr[0];
@@ -114,6 +114,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
                     continue;
                 }
             }
+
+
+            $x = $this->factory($this->tableName());
             $x->on_id = $obj->pid();
             $x->on_table = $tn;
             $x->on_col = $c;
