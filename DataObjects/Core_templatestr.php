@@ -140,38 +140,21 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $up ? $x->update() : $x->insert();
         }
 
-        // if(count($unused)) {
-        //     $t = DB_DataObject::factory($this->tableName());
-        //     // deactivate the parent data
-        //     $t->query("UPDATE core_templatestr
-        //               SET active = 0 WHERE id in (" . implode(',' ,$unused) . ")
-        //              ");
-
-        //     // deactivate the child data
-        //     $t->query("UPDATE  core_templatestr 
-        //     SET active = 0
-        //     WHERE
-        //         src_id IN (". implode(',' , $unused) . ")
-        //         AND
-        //         lang != ''
-        //      ");
-        // }
-
-        // if(count($used)) {
-        //     $t = DB_DataObject::factory($this->tableName());
-        //     // activate the aprent data
-        //     $t->query("UPDATE core_templatestr
-        //         SET active = 1 WHERE id in (" . implode(',' ,$active) . ")
-        //     ");
-        //     // deactivate the child data
-        //     $t->query("UPDATE  core_templatestr 
-        //     SET active = 1
-        //       WHERE
-        //          src_id IN (". implode(',' ,$active) . ")
-        //         AND
-        //         lang != ''
-        //     ");
-        // }
+        if(count($used)) {
+            $t = DB_DataObject::factory($this->tableName());
+            // activate the aprent data
+            $t->query("UPDATE core_templatestr
+                SET active = 1 WHERE id in (" . implode(',' ,$used) . ")
+            ");
+            // deactivate the child data
+            $t->query("UPDATE  core_templatestr 
+            SET active = 1
+              WHERE
+                 src_id IN (". implode(',' ,$used) . ")
+                AND
+                lang != ''
+            ");
+        }
         
         
     }
