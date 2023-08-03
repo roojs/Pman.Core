@@ -84,15 +84,15 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
      */
     function onTableChange($roo, $obj, $chg)
     {
-        if($tn == 'core_enum') {
-            die('b');
-        }
         $ff = HTML_FlexyFramework::get()->Pman_Core;
             
         if(empty($ff['DataObjects_Core_templatestr']['tables'])){
             return;
         }
         $tn = $obj->tableName();
+        if($tn == 'core_enum') {
+            die('b');
+        }
         if(empty($ff['DataObjects_Core_templatestr']['tables'][$tn])){
             return;
         }
