@@ -177,6 +177,7 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     function syncTableWords()
     {
         $cts = DB_DataObject::factory($this->tableName());
+        $cts->whereAdd('on_table != ""');
         $old = clone($cts);
         $cur = $cts->fetchAll('mdsum', 'id');
     }
