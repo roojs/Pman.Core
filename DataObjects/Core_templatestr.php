@@ -796,9 +796,6 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $ret[$key] = $v;
         }
 
-        var_dump($ret);
-        die('c');
-
         $ret = array_values($ret);
         
         return $ret;
