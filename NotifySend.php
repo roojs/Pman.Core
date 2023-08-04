@@ -160,7 +160,21 @@ class Pman_Core_NotifySend extends Pman
                     ."\n");
             $this->errorHandler("message has been sent already.\n");
         }
+        // has it failed mutliple times..
         
+        if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
+            $ev = $this->addEvent('NOTIFY', $w,
+                            "Notification event cleared (user has to many failures)" );;
+            $ww = clone($w);
+            $w->sent = $w->sqlValue('NOW()'); // do not update if sent.....
+            $w->msgid = '';
+            $w->event_id = $ev->id;
+            $w->update($ww);
+            $this->errorHandler(date('Y-m-d h:i:s ') . 
+                     "Notification event cleared (user has to many failures)" 
+                    ."\n");
+            $this->errorHandler("user has to many failures.\n");
+        }
         
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
@@ -330,7 +344,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
+            $w->sent =   $w->sqlValue('NOW()'); // why not updated - used to leave as is?
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->to_email = $p->email; 
@@ -345,7 +359,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
+            $w->sent =  $w->sqlValue('NOW()'); 
             $w->msgid = '';
             $w->event_id = $ev->id;
             $w->to_email = $p->email; 
