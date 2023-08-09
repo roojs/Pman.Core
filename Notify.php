@@ -183,6 +183,16 @@ class Pman_Core_Notify extends Pman
         $w = DB_DataObject::factory($this->table);
         $total = 0;
         
+        
+        
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Core_Notify['servers'])) {
+            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
+                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
+            }
+            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+        }
+        
         if (!empty($opts['old'])) {
             // show old and new...
             
@@ -211,13 +221,6 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->Core_Notify['servers'])) {
-            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
-                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
-            }
-            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
-        }
         
     
         
