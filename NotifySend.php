@@ -262,6 +262,7 @@ class Pman_Core_NotifySend extends Pman
         if (isset($email['later'])) {
             $old = clone($w);
             $w->act_when = $email['later'];
+            $this->updateServer($w);
             $w->update($old);
             $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
         }
@@ -339,6 +340,7 @@ class Pman_Core_NotifySend extends Pman
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+                $this->updateServer($w);
                 $w->update($ww);
                 $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
             }
@@ -372,7 +374,9 @@ class Pman_Core_NotifySend extends Pman
         $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
+        // set act when if it's empty...
         $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')) : $w->act_when;
+        
         $w->update($ww);
         
         $ww = clone($w);   
@@ -388,12 +392,19 @@ class Pman_Core_NotifySend extends Pman
             ));
             $core_domain->insert();
         }
+         
+        
+        $this->initHelo();
+        
+        if (!isset($ff->Mail['helo'])) {
+            $this->errorHandler("config Mail[helo] is not set");
+        }
+        
+        
                         
         foreach($mxs as $mx) {
             
-            if (!isset($ff->Mail['helo'])) {
-                $this->errorHandler("config Mail[helo] is not set");
-            }
+           
             $this->debug_str = '';
             $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
@@ -442,6 +453,7 @@ class Pman_Core_NotifySend extends Pman
                     if($core_notify->count()){
                         $old = clone($w);
                         $w->act_when = date("Y-m-d H:i:s", time() + $seconds);
+                        $this->updateServer($w);
                         $w->update($old);
                         $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom}");
                     }
@@ -536,6 +548,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+                $this->updateServer($w);
                 $w->domain_id = $core_domain->id;
                 $w->update($ww);
                 
@@ -575,7 +588,10 @@ class Pman_Core_NotifySend extends Pman
         
         
         $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
-        $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + 5 MINUTES'));
+        $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
+        
+        $this->updateServer($w);
+        
         $w->domain_id = $core_domain->id;
         $w->update($ww);
         $this->errorHandler(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
@@ -685,4 +701,30 @@ class Pman_Core_NotifySend extends Pman
         
         
     }
+    
+    function updateServer($w)
+    {
+        $ff = HTML_FlexyFramework::get();
+         
+        if (empty($ff->Core_Notify['servers'])) {
+            return;
+        }
+        // next server..
+        $w->server_id = ($w->server_id + 1) % count(array_keys($ff->Core_Notify['servers']));
+         
+    }
+    
+     function initHelo()
+    {
+        $ff = HTML_FlexyFramework::get();
+        if (empty($ff->Core_Notify['servers'])) {
+            return;
+        }
+        if (!isset($ff->Core_Notify['servers'][gethostname()]) || !isset($ff->Core_Notify['servers'][gethostname()]['helo']) ) {
+            $this->jerr("Core_Notify['servers']['" . gethostname() . "']['helo'] not set");
+        }
+        $ff->Mail['helo'] = $ff->Core_Notify['servers'][gethostname()]['helo'];
+        
+    }
+    
 }
