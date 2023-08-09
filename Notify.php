@@ -241,7 +241,7 @@ class Pman_Core_Notify extends Pman
         
         //echo "BATCH SIZE: ".  count($ar) . "\n";
        
-        $requeue = array();
+        
         while (true) {
             // only add if we don't have any queued up..
             if (empty($this->queue) && $w->fetch()) {
@@ -253,14 +253,10 @@ class Pman_Core_Notify extends Pman
             
             if (empty($this->queue)) {
                 $this->logecho("COMPLETED MAIN QUEUE - running maxed out domains");
-                if ($pushed === true) {
-                    $pushed = $this->remainingDomainQueue();
+                if ($this->domain_queue !== false) {
+                    $this->queue  = $this->remainingDomainQueue();
+                    $this->domain_queue  = false;
                 }
-                if (empty($pushed)) {
-                    break;
-                }
-                $this->queue = $pushed;
-                $pushed = false;
                 continue;
             }
             
