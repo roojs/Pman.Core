@@ -112,7 +112,7 @@ class Pman_Core_Asset extends Pman {
             $fh = fopen($fn,'r');
             fpassthru($fh);
             fclose($fh);
-            $content = $data;
+             
         }
         
         
