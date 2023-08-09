@@ -273,11 +273,11 @@ class Pman_Core_Notify extends Pman
                 
                 if ($pushed === false) {
                     // we only try once to requeue..
-                    $this->logecho("REQUEING email for next run, as we have maxed out that domain");
+                    $this->logecho("REQUEING - maxed out that domain - {$email}");
                     $requeue[] = $p;
                     continue;
                 }
-                $this->logecho("PUSHING email, as we have maxed out that domain");
+                $this->logecho("PUSHING - maxed out that domain - {$email}");
                 $pushed[] = $p;
                 
                 
