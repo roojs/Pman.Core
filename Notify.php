@@ -574,6 +574,11 @@ class Pman_Core_Notify extends Pman
     
     function pushQueueDomain($e, $email)
     {
+        if ($this->domain_queue === false) {
+            $this->next_queue[] = $e;
+            return;
+        }
+        
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
         if (!isset($this->domain_queue[$dom])) {
