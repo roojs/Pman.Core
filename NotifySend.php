@@ -617,7 +617,9 @@ class Pman_Core_NotifySend extends Pman
         asort($mx_weight,SORT_NUMERIC);
         
         foreach($mx_weight as $k => $weight) {
-            $mxs[] = $mx_records[$k];
+            if (!empty($mx_records[$k])) {
+                $mxs[] = $mx_records[$k];
+            }
         }
         return $mxs;
     }
