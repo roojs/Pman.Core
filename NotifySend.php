@@ -621,7 +621,7 @@ class Pman_Core_NotifySend extends Pman
                 $mxs[] = $mx_records[$k];
             }
         }
-        return $mxs;
+        return empty($mxs) ? false : $mxs;
     }
     
     /**
