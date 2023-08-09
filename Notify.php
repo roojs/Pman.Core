@@ -273,9 +273,11 @@ class Pman_Core_Notify extends Pman
                 
                 if ($pushed === false) {
                     // we only try once to requeue..
+                    $this->logecho("REQUEING email for next run, as we have maxed out that domain");
                     $requeue[] = $p;
                     continue;
                 }
+                $this->logecho("PUSHING email, as we have maxed out that domain");
                 $pushed[] = $p;
                 
                 
@@ -299,6 +301,7 @@ class Pman_Core_Notify extends Pman
         foreach($requeue as $p) {
             $pp = clone($p);
             $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
+            $this->updateServer($p);
             $p->update($pp);
             
         }
@@ -308,7 +311,19 @@ class Pman_Core_Notify extends Pman
         exit;
     }
     
-    
+    // this sequentially distributes requeued emails.. - to other servers.
+    function updateServer($w)
+    {
+        $ff = HTML_FlexyFramework::get();
+        static $num = 0;
+        if (empty($ff->Core_Notify['servers'])) {
+            return;
+        }
+        $num++;
+        // next server..
+        $w->server_id = $num % count(array_keys($ff->Core_Notify['servers']));
+         
+    }
   
     
     function generateNotifications()
