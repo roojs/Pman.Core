@@ -288,20 +288,26 @@ class Pman_Core_Notify extends Pman
             
             
         }
+        if (!empty($this->next_queue)) {
+            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
+            foreach($this->next_queue as $p) {
+                $pp = clone($p);
+                $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
+                $this->updateServer($p);
+                $p->update($pp);
+                
+            }
+        }
         
+        
+        $this->logecho("QUEUE COMPLETE - waiting for pool to end");
         // we should have a time limit here...
         while(count($this->pool)) {
             $this->poolfree();
             sleep(3);
         }
          
-        foreach($this->next_queue as $p) {
-            $pp = clone($p);
-            $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
-            $this->updateServer($p);
-            $p->update($pp);
-            
-        }
+        
         
         
         $this->logecho("DONE");
