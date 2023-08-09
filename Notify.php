@@ -174,7 +174,8 @@ class Pman_Core_Notify extends Pman
         
         $this->generateNotifications();
         
-         
+        $this->assignQueues();
+        
         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         $total = 0;
@@ -206,6 +207,19 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
+        
+        $ff = HTML_FlexyFramework::get();
+        if (!empty($ff->Core_Notify['servers'])) {
+            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
+                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
+            }
+            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+        }
+        
+    
+        
+        
+        $this->addFilter($w);
         
         $w->autoJoin();
         $w->find();
@@ -296,6 +310,9 @@ class Pman_Core_Notify extends Pman
         exit;
     }
     
+    
+  
+    
     function generateNotifications()
     {
         // this should check each module for 'GenerateNotifications.php' class..
@@ -330,7 +347,38 @@ class Pman_Core_Notify extends Pman
     
     }
     
-    
+    function assignQueues()
+    {
+        $ff = HTML_FlexyFramework::get();
+        
+        if (empty($ff->Core_Notify['servers'])) {
+            return;
+        }
+        
+        $num_servers = count(array_keys($ff->Core_Notify['servers']));
+        
+        // 6 seconds on this machne...
+        $p->query("
+            UPDATE
+                {$this->table}
+            SET
+                server_id = ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})
+            WHERE
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW()
+                and
+                server_id < 0
+            ORDER BY
+                id ASC
+            LIMIT
+                20000
+        ");
+
+        
+    }
     
     function run($id, $email='', $cmdOpts="")
     {
