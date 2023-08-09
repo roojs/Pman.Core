@@ -165,7 +165,8 @@ class Pman_Core_Notify extends Pman
     }
     
     var $queue = array();
-    
+    var $domain_queue = array();
+   
     function get($r,$opts=array())    
     {
         $this->parseArgs($opts); 
@@ -571,7 +572,6 @@ class Pman_Core_Notify extends Pman
         return $ret;
         
     }
-    var $domain_queue = array();
     function popQueueDomain($email)
     {
         $ea = explode('@',$email);
