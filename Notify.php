@@ -165,7 +165,7 @@ class Pman_Core_Notify extends Pman
     }
     
     var $queue = array();
-    var $domain_queue = array();
+    var $domain_queue = array(); // false to use nextquee
     var $next_queue = array();
    
     function get($r,$opts=array())    
@@ -273,17 +273,9 @@ class Pman_Core_Notify extends Pman
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
                 // push it to a 'domain specific queue'
-                
-                
-                if ($pushed === false) {
-                    // we only try once to requeue..
-                    $this->logecho("REQUEING - maxed out that domain - {$email}");
-                    $requeue[] = $p;
-                    continue;
-                }
-                $this->logecho("PUSHING - maxed out that domain - {$email}");
-                
+                $this->logecho("REQUEING - maxed out that domain - {$email}");
                 $this->pushQueueDomain($p, $email);
+                  
                 
                 //sleep(3);
                 continue;
@@ -302,7 +294,7 @@ class Pman_Core_Notify extends Pman
             sleep(3);
         }
          
-        foreach($requeue as $p) {
+        foreach($this->next_queue as $p) {
             $pp = clone($p);
             $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
             $this->updateServer($p);
