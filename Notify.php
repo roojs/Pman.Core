@@ -429,10 +429,11 @@ class Pman_Core_Notify extends Pman
         
        
         $pipe = array();
-        $this->logecho("call proc_open $cmd");
+        //$this->logecho("call proc_open $cmd");
         
         
         if ($this->max_pool_size === 1) {
+            this->logecho("call passthru [{$email}] $cmd");
             passthru($cmd);
             return;
         }
@@ -462,7 +463,7 @@ class Pman_Core_Notify extends Pman
             
                 
         );
-        $this->logecho("RUN ({$info['pid']}) $cmd ");
+        $this->logecho("RUN [{$email}] ({$info['pid']}) $cmd ");
     }
     
     function poolfree()
