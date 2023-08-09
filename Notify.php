@@ -257,8 +257,9 @@ class Pman_Core_Notify extends Pman
                 if ($this->domain_queue !== false) {
                     $this->queue  = $this->remainingDomainQueue();
                     $this->domain_queue  = false;
+                    continue;
                 }
-                continue;
+                break; // nothing more in queue.. and no remaining one
             }
             
             
