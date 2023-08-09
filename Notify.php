@@ -228,7 +228,7 @@ class Pman_Core_Notify extends Pman
         
          
         $w->autoJoin();
-        $w->find();
+        $total = $w->find();
         
         
         
