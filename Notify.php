@@ -250,7 +250,7 @@ class Pman_Core_Notify extends Pman
                 $total--;
             }
             
-            $this->logecho("BATCH SIZE: ".  (count($this->queue) + $total) );
+            $this->logecho("BATCH SIZE: Queue=".  count($this->queue) . " TOTAL = " . $total  );
             
             if (empty($this->queue)) {
                 $this->logecho("COMPLETED MAIN QUEUE - running maxed out domains");
