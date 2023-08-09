@@ -103,9 +103,8 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if (!$force && !empty($w->sent) && strtotime($w->act_when) < strtotime($w->sent)) {
-            
-            
-            $this->errorHandler("send repeat to early\n");
+             
+            $this->errorHandler("already sent - repeat to early\n");
         }
         if (!empty($opts['debug'])) {
             print_r($w);
