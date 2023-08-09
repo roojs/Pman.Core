@@ -356,7 +356,7 @@ class Pman_Core_Notify extends Pman
         }
         
         $num_servers = count(array_keys($ff->Core_Notify['servers']));
-        
+        $p = DB_DataObject::factory($this->table);
         // 6 seconds on this machne...
         $p->query("
             UPDATE
