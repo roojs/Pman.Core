@@ -218,9 +218,7 @@ class Pman_Core_Notify extends Pman
         
     
         
-        
-        $this->addFilter($w);
-        
+         
         $w->autoJoin();
         $w->find();
         
