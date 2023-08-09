@@ -192,6 +192,11 @@ class Pman_Core_Notify extends Pman
             }
             $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
         }
+        if (!empty($this->evtype)) {
+            $w->evtype = $this->evtype;
+        }
+        
+        
         
         if (!empty($opts['old'])) {
             // show old and new...
@@ -217,9 +222,6 @@ class Pman_Core_Notify extends Pman
             $w->limit($opts['limit']); // we can run 1000 ...
         }
         
-        if (!empty($this->evtype)) {
-            $w->evtype = $this->evtype;
-        }
         
         
     
