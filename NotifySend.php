@@ -318,25 +318,25 @@ class Pman_Core_NotifySend extends Pman
         // need to handle temporary failure..
        
         
-          // we try for 3 days..
-        $retry = 5;
+          // we try for 2 days..
+        $retry = 15;
         if (strtotime($w->act_start) <  strtotime('NOW - 1 HOUR')) {
             // older that 1 hour.
-            $retry = 15;
+            $retry = 60;
         }
         
         if (strtotime($w->act_start) <  strtotime('NOW - 1 DAY')) {
             // older that 1 day.
-            $retry = 60;
+            $retry = 120;
         }
         if (strtotime($w->act_start) <  strtotime('NOW - 2 DAY')) {
             // older that 1 day.
-            $retry = 120;
+            $retry = 240;
         }
         
         if ($mxs === false) {
-            // only retry for 2 day son the MX issue..
-            if ($retry < 120) {
+            // only retry for 1 day if the MX issue..
+            if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $w->update($ww);
@@ -357,7 +357,7 @@ class Pman_Core_NotifySend extends Pman
         
         
         
-        if (!$force && strtotime($w->act_start) <  strtotime('NOW - 14 DAY')) {
+        if (!$force && strtotime($w->act_start) <  strtotime('NOW - 3 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
             $w->sent =  $w->sqlValue('NOW()'); 
             $w->msgid = '';
