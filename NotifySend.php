@@ -341,7 +341,7 @@ class Pman_Core_NotifySend extends Pman
                 $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
                 $this->updateServer($w);
                 $w->update($ww);
-                $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED\n");
+                $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED {$dom}\n");
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );

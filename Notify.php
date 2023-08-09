@@ -256,7 +256,7 @@ class Pman_Core_Notify extends Pman
                 $this->logecho("COMPLETED MAIN QUEUE - running maxed out domains");
                 if ($this->domain_queue !== false) {
                     $this->queue  = $this->remainingDomainQueue();
-                    $this->domain_queue  = false;
+                     
                     continue;
                 }
                 break; // nothing more in queue.. and no remaining one
@@ -593,6 +593,7 @@ class Pman_Core_Notify extends Pman
         foreach($this->domain_queue as $dom => $ar) {
             $ret = array_merge($ret, $ar);
         }
+        $this->domain_queue = false;
         return $ret;
     }
     
