@@ -445,7 +445,7 @@ class Pman_Core_Notify extends Pman
         
         
         if ($this->max_pool_size === 1) {
-            this->logecho("call passthru [{$email}] $cmd");
+            $this->logecho("call passthru [{$email}] $cmd");
             passthru($cmd);
             return;
         }
