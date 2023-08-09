@@ -334,7 +334,7 @@ class Pman_Core_NotifySend extends Pman
             $retry = 240;
         }
         
-        if ($mxs === false) {
+        if (empty($mxs)) {
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
@@ -350,7 +350,7 @@ class Pman_Core_NotifySend extends Pman
             $w->event_id = $ev->id;
             $w->to_email = $p->email; 
             $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD EMAIL - {$p->email} \n");
+            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD DOMAIN - {$p->email} \n");
             
             
         }
