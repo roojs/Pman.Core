@@ -379,6 +379,20 @@ class Pman_Core_Notify extends Pman
         
         $num_servers = count(array_keys($ff->Core_Notify['servers']));
         $p = DB_DataObject::factory($this->table);
+        $p->whereAdd("
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW() +  INTERVAL 3 HOUR 
+                and
+                server_id < 0"
+            
+        );
+        if ($p->count() < 1) {
+            return;
+        }
+        
         // 6 seconds on this machne...
         $p->query("
             UPDATE
@@ -390,13 +404,13 @@ class Pman_Core_Notify extends Pman
                 and
                 event_id = 0
                 and
-                act_start < NOW()
+                act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id < 0
             ORDER BY
                 id ASC
             LIMIT
-                20000
+                10000
         ");
 
         
