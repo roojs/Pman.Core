@@ -392,7 +392,7 @@ class Pman_Core_Notify extends Pman
         if ($p->count() < 1) {
             return;
         }
-        
+         $p = DB_DataObject::factory($this->table);
         // 6 seconds on this machne...
         $p->query("
             UPDATE
