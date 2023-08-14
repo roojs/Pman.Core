@@ -602,7 +602,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
     }
-    
+    /**
+     *
+     * tries to get an image from then URL - not always has based... - also from the normal url
+     */
     function getFromHashURL($url)
     {
         $id = false;
