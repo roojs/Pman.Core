@@ -18,10 +18,11 @@ ALTER TABLE Images    ADD COLUMN   parent_image_id int(11) NOT NULL default '0';
 ALTER TABLE  Images ADD COLUMN created datetime ;
 ALTER TABLE  Images ADD COLUMN imgtype VARCHAR(32) DEFAULT '' NOT NULL;
 ALTER TABLE  Images ADD COLUMN linkurl VARCHAR(254) DEFAULT '' NOT NULL;
-ALTER TABLE  Images ADD COLUMN descript TEXT NOT NULL;
+ALTER TABLE  Images ADD COLUMN descript TEXT DEFAULT '' NOT NULL;
 ALTER TABLE  Images ADD COLUMN title VARCHAR(128) DEFAULT '' NOT NULL;
 
 ALTER TABLE Images    CHANGE COLUMN   mimetype mimetype  varchar(128) NOT NULL default '';
+ALTER TABLE Images    CHANGE COLUMN   descript descript  TEXT NOT NULL default '';
 
 -- postgres (need better way to support this..)
 -- ALTER TABLE Images    ALTER COLUMN   mimetype  TYPE  varchar(128) ;
