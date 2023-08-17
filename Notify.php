@@ -167,6 +167,7 @@ class Pman_Core_Notify extends Pman
     var $queue = array();
     var $domain_queue = array(); // false to use nextquee
     var $next_queue = array();
+    var $server_id;
    
     function get($r,$opts=array())    
     {
