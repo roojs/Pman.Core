@@ -281,6 +281,7 @@ class Pman_Core_Notify extends Pman
             $black = $this->isBlacklisted($email);
             if ($black !== false) {
                 $this->updateServer($p, $black);
+                continue;
             }
              
             
