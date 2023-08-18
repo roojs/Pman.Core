@@ -330,7 +330,8 @@ class Pman_Core_Notify extends Pman
     function isBlacklisted($email)
     {
         // return current server id..
-        $this->logecho("CHECK BLACKLISTED - {$email}");
+        $ff = HTML_FlexyFramework::get();
+        //$this->logecho("CHECK BLACKLISTED - {$email}");
         if (empty($ff->Core_Notify['servers'])) {
             return false;
         }
@@ -343,11 +344,11 @@ class Pman_Core_Notify extends Pman
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
         
-        $this->logecho("CHECK BLACKLISTED DOM - {$dom}");
+        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
         if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
             return false;
         }
-        $this->logecho("RETURN BLACKLISTED TRUE");
+        //$this->logecho("RETURN BLACKLISTED TRUE");
         return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
     }
     
