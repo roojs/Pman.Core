@@ -255,7 +255,7 @@ class Pman_Core_Notify extends Pman
                 $this->queue[] = clone($w);
                 $total--;
             }
-            
+          
             $this->logecho("BATCH SIZE: Queue=".  count($this->queue) . " TOTAL = " . $total  );
             
             if (empty($this->queue)) {
@@ -275,7 +275,15 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            $email = $p->person() ? $p->person()->email : $p->to_email;
+            // not sure what happesn if person email and to_email is empty!!?
+            $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
+            
+            $black = $this->isBlacklisted($email);
+            if ($black !== false) {
+                $this->updateServer($p, $black);
+                continue;
+            }
+             
             
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
@@ -298,11 +306,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
-                $pp = clone($p);
-                $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
                 $this->updateServer($p);
-                $p->update($pp);
-                
             }
         }
         
@@ -321,17 +325,46 @@ class Pman_Core_Notify extends Pman
         exit;
     }
     
-    // this sequentially distributes requeued emails.. - to other servers.
-    function updateServer($w)
+    
+    function isBlacklisted($email)
+    {
+        // return current server id..
+        if (empty($ff->Core_Notify['servers'])) {
+            return false;
+        }
+      
+        if (!isset($ff->Core_Notify['servers'][gethostname()]['blacklisted'])) {
+            return false;
+        }
+       
+        // get the domain..
+        $ea = explode('@',$email);
+        $dom = strtolower(array_pop($ea));
+        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
+            return false;
+        }
+        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+    }
+    
+    // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
+    function updateServer($w, $exclude = -1)
     {
         $ff = HTML_FlexyFramework::get();
         static $num = 0;
         if (empty($ff->Core_Notify['servers'])) {
             return;
         }
-        $num++;
+        $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
+        if ($exclude == $num ) {
+            $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
+        }
         // next server..
-        $w->server_id = $num % count(array_keys($ff->Core_Notify['servers']));
+        $pp = clone($w);
+        $w->server_id = $num;
+                    
+        $w->act_when = $w->sqlValue('NOW + INTERVAL 1 MINUTE');
+        $w->update($pp);
+        
          
     }
   
