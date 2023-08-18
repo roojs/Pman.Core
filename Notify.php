@@ -346,7 +346,7 @@ class Pman_Core_Notify extends Pman
         return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
     }
     
-    // this sequentially distributes requeued emails.. - to other servers.
+    // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
     function updateServer($w, $exclude = -1)
     {
         $ff = HTML_FlexyFramework::get();
