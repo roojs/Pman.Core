@@ -280,6 +280,7 @@ class Pman_Core_Notify extends Pman
             
             $black = $this->isBlacklisted($email);
             if ($black !== false) {
+                $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
                 $this->updateServer($p, $black);
                 continue;
             }
