@@ -28,13 +28,13 @@ class Pman_Core_Heartbeat extends Pman
         if (!$cd->count()) {
             $cd->display_name = date("Y-m-d H:i:s");
             $cd->insert();
-            die("OK");
+            die("OK - HEARTBEAT WORKING");
         }
         $cd->find(true);
         $cc = clone($cd);
         $cd->display_name = date("Y-m-d H:i:s");
         $cd->update($cc);
-        die("OK");
+        die("OK - HEARTBEAT WORKING");
     }
     
      
