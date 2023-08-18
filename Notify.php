@@ -306,11 +306,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
-                $pp = clone($p);
-                $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
                 $this->updateServer($p);
-                $p->update($pp);
-                
             }
         }
         
@@ -363,7 +359,12 @@ class Pman_Core_Notify extends Pman
             $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
         }
         // next server..
+        $pp = clone($w);
         $w->server_id = $num;
+                    
+        $w->act_when = $w->sqlValue('NOW + INTERVAL 1 MINUTE');
+        $w->update($pp);
+        
          
     }
   
