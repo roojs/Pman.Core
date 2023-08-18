@@ -565,7 +565,7 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
-                    $this->logecho("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']));
                     @unlink($p['out']);
                     
                     // schedule again
@@ -597,7 +597,7 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
+            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
             @unlink($p['out']);
             // at this point we could pop onto the queue the 
             $this->popQueueDomain($p['email']);
