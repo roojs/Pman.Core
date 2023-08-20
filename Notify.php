@@ -281,7 +281,7 @@ class Pman_Core_Notify extends Pman
             $black = $this->isBlacklisted($email);
             if ($black !== false) {
                 $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
-                $this->updateServer($p, $black);
+                $this->updateServer(clone($p), $black);
                 continue;
             }
              
@@ -353,9 +353,12 @@ class Pman_Core_Notify extends Pman
     }
     
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
-    function updateServer($w, $exclude = -1)
+    function updateServer($ww, $exclude = -1)
     {
-        $ff = HTML_FlexyFramework::get();
+$w = DB_DataObject::factory($ww->tableName());
+$w->get($ww->id);
+
+$ff = HTML_FlexyFramework::get();
         static $num = 0;
         if (empty($ff->Core_Notify['servers'])) {
             return;
@@ -368,7 +371,7 @@ class Pman_Core_Notify extends Pman
         $pp = clone($w);
         $w->server_id = $num;
                     
-        $w->act_when = $w->sqlValue('NOW + INTERVAL 1 MINUTE');
+        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
         $w->update($pp);
         
          
