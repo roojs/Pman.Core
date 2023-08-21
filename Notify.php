@@ -231,6 +231,10 @@ class Pman_Core_Notify extends Pman
         $w->autoJoin();
         $total = $w->find();
         
+        if (empty($total)) {
+            $this->logecho("Nothing In Queue - DONE");
+            exit;
+        }
         
         
         if (!empty($opts['list'])) {
@@ -281,7 +285,7 @@ class Pman_Core_Notify extends Pman
             $black = $this->isBlacklisted($email);
             if ($black !== false) {
                 $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
-                $this->updateServer(clone($p), $black);
+                $this->updateServer($p, $black);
                 continue;
             }
              
@@ -355,10 +359,10 @@ class Pman_Core_Notify extends Pman
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
     function updateServer($ww, $exclude = -1)
     {
-$w = DB_DataObject::factory($ww->tableName());
-$w->get($ww->id);
-
-$ff = HTML_FlexyFramework::get();
+        $w = DB_DataObject::factory($ww->tableName());
+        $w->get($ww->id);
+        
+        $ff = HTML_FlexyFramework::get();
         static $num = 0;
         if (empty($ff->Core_Notify['servers'])) {
             return;
