@@ -116,7 +116,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
             $d->query("DROP TRIGGER {$t->Trigger}");
         }
         
-        exit;
+        
     }
     /*
      [Trigger] => account_transaction_before_delete
