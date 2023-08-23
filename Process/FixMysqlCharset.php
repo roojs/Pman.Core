@@ -113,7 +113,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         while ($t->fetch()) {
             $this->triggers[] = $t->toArray('%s', true);
             $d = DB_DataObject::factory($tbl);
-            $d->query("ALTER TABLE {$tbl} DROP trigger {$t->Trigger}");
+            $d->query("DROP TRIGGER {$t->Trigger}");
         }
         
         exit;
