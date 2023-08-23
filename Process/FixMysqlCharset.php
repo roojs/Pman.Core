@@ -136,12 +136,12 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         DB_DataObject::debugLevel(1);
         foreach($this->triggers as $tr) {
             $t = DB_DataObject::factory($tbl);
-            $t->query("CREATE TRIGGER {$tr['Trigger']} 
-                    {$tr['Timing']} {$tr['Event']} ON {$tbl}
-                    FOR EACH ROW
-                    {$tr['Statement']}
-                }
-            );
+            $t->query("
+                CREATE TRIGGER {$tr['Trigger']} 
+                {$tr['Timing']} {$tr['Event']} ON {$tbl}
+                FOR EACH ROW
+                {$tr['Statement']}
+            ");
             
             
             
