@@ -106,8 +106,12 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
     {
         $t = DB_DataObject::factory($tbl);
         $t->query("SHOW TRIGGERS FROM {$t->databaseNickname()} where `table` = '{$tbl}'");
-        //$t->find();
-        $ar = $t->fetchAll();
-        print_r($ar);exit;
+        if (!$t->find()) {
+            return;
+        }
+        while ($t->fetch()) {
+            print_r($t->toArray());
+        }
+        exit;
     }
 }
