@@ -146,7 +146,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
             
             
         }
-        
+        exit;
     }
     
     
