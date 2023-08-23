@@ -102,15 +102,49 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         exit;
     }
     
+    var $triggers = array();
     function disabletriggers($tbl)
     {
-        $t = DB_DataObject::factory($tbl);
-        DB_DataObject::debugLevel(1);
-        $t->query("SHOW TRIGGERS FROM {$t->databaseNickname()} where `table` = '{$tbl}'");
         
+        $t = DB_DataObject::factory($tbl);
+        //DB_DataObject::debugLevel(1);
+        $t->query("SHOW TRIGGERS FROM {$t->databaseNickname()} where `table` = '{$tbl}'");
+        $this->triggers = array();
         while ($t->fetch()) {
-            print_r($t->toArray('%s', true));
+            $this->triggers[] = $t->toArray('%s', true);
+            $d = DB_DataObject::factory($tbl);
+            $d->query("ALTER TABLE {$tbl} DROP trigger {$t->Trigger}");
         }
+        
         exit;
     }
+    /*
+     [Trigger] => account_transaction_before_delete
+    [Event] => DELETE
+    [Table] => account_transaction
+    [Statement] => BEGIN
+            
+            UPDATE `Error: Not allow to delete transaction` SET x = 1;
+
+        END
+    [Timing] => BEFORE
+   */
+    function enabletriggers($tbl)
+    {
+        
+        
+        DB_DataObject::debugLevel(1);
+        foreach($this->triggers as $tr) {
+            $t = DB_DataObject::factory($tbl);
+            $t->query("CREATE TRIGGER {$tr['Trigger']} 
+                    {$tr['Timing']} {$tr['Event']} ON {$tbl} FOR EACH ROW ".
+                    $tr['Statement']);
+            
+            
+            
+        }
+        exit;
+        
+    
+    
 }
