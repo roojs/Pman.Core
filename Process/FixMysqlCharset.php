@@ -44,7 +44,6 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         touch('/tmp/fix_mysql_charset_'. $opts['table']);
         
         $this->disableTriggers($opts['table']);
-        $this->enableTriggers($opts['table']);
         
         $t = DB_DataObject::factory($opts['table']);
         $cols = $t->tableColumns();
@@ -90,13 +89,14 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
             if ($up) {
                 echo "UPDATE $t->id\n";
                 $t->_skip_write_xml= true;
-                DB_DataObject::debugLevel(1);
+                //DB_DataObject::debugLevel(1);
                 $t->update($tt);
-                DB_DataObject::debugLevel(0);
+                //DB_DataObject::debugLevel(0);
                //  print_r($t);exit;; 
             }
         }
-        
+        $this->enableTriggers($opts['table']);
+
         
          
         exit;
@@ -107,7 +107,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
     {
         
         $t = DB_DataObject::factory($tbl);
-         DB_DataObject::debugLevel(1);
+        // DB_DataObject::debugLevel(1);
         $t->query("SHOW TRIGGERS FROM {$t->databaseNickname()} where `table` = '{$tbl}'");
         $this->triggers = array();
         while ($t->fetch()) {
@@ -133,7 +133,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
     {
         
         
-        DB_DataObject::debugLevel(1);
+        //DB_DataObject::debugLevel(1);
         foreach($this->triggers as $tr) {
             $t = DB_DataObject::factory($tbl);
             $t->query("
@@ -145,8 +145,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
             
             
             
-        }
-        exit;
+        } 
     }
     
     
