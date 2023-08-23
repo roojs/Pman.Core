@@ -105,6 +105,7 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
     function disabletriggers($tbl)
     {
         $t = DB_DataObject::factory($tbl);
+        DB_DataObject::debugLevel(1);
         $t->query("SHOW TRIGGERS FROM {$t->databaseNickname()} where `table` = '{$tbl}'");
         if (!$t->find()) {
             return;
