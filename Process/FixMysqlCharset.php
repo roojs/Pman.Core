@@ -43,6 +43,9 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         }
         touch('/tmp/fix_mysql_charset_'. $opts['table']);
         
+        $this->disableTriggers($opts['table']);
+        $this->enableTriggers($opts['table']);
+        
         $t = DB_DataObject::factory($opts['table']);
         $cols = $t->tableColumns();
         $t->selectAdd();
@@ -97,5 +100,14 @@ class Pman_Core_Process_FixMysqlCharset extends Pman_Core_Cli {
         
          
         exit;
+    }
+    
+    function disabletriggers($tbl)
+    {
+        $t = DB_DataObject::factory($tbl);
+        $t->query("SHOW TRIGGERS FROM {$t->databaseName()} where `table` = '{$tbl}");
+        $t->find();
+        $ar = $t->fetchAll();
+        print_r($ar);exit;
     }
 }
