@@ -557,7 +557,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * 
      * 
      */
-    function URL($size , $provider = '/Images/Thumb', $baseURL=false)
+    function URL($size , $provider = '/Images/Thumb', $baseURL=false, $to_type=false)
     {
         if (!$this->id) {
             return 'about:blank';
@@ -593,7 +593,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc = $this->toFileConvert();
 //        print_r($size);
 //        exit;
-        $mt = $this->mimetype;
+        $mt = $to_type == false ? $this->mimetype : $to_type;
         if (!preg_match('#^image/#i',$mt)) {
             $mt = 'image/jpeg';
         }
