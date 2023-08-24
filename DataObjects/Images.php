@@ -593,12 +593,13 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fc = $this->toFileConvert();
 //        print_r($size);
 //        exit;
-        $mt = $to_type == false ? $this->mimetype : $to_type;
+        $mt = $to_type === false ? $this->mimetype : $to_type;
         if (!preg_match('#^image/#i',$mt)) {
             $mt = 'image/jpeg';
         }
         
-        $fc->convert($mt, $size);
+        $cn = $fc->convert($mt, $size);
+        $shorten_name = $this->shorten_name(basename($cn));
         
         return $baseURL . $provider . "/$size/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
     }
@@ -631,13 +632,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     }
     
     
-    function shorten_name()
+    function shorten_name($fn = false)
     {
         if(empty($this->filename)) {
             return;
         }
+        $fn = $fn === false ? $this->filename : $fn;
         
-        $filename = explode('.', $this->filename);
+        $filename = explode('.', $fn);
         $ext = array_pop($filename);
         $name = preg_replace("/[^A-Z0-9.]+/i", '-', implode('-', $filename)) ;
         
