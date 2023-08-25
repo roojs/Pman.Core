@@ -1463,7 +1463,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             return;
         }
-        die('b');
         $c = DB_DataObject::Factory('core_company');
         $tc = $c->count();
         
