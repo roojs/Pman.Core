@@ -1453,9 +1453,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
-            var_dump($this->email);
             $pp->email  =  strtolower(trim($this->email));
-            var_dump($pp->email);
             if ($pp->count()){
                 $roo->jerr("that email already exists in the database");
             }
