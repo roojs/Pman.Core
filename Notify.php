@@ -167,6 +167,7 @@ class Pman_Core_Notify extends Pman
     var $queue = array();
     var $domain_queue = array(); // false to use nextquee
     var $next_queue = array();
+    var $server_id;
    
     function get($r,$opts=array())    
     {
@@ -230,6 +231,10 @@ class Pman_Core_Notify extends Pman
         $w->autoJoin();
         $total = $w->find();
         
+        if (empty($total)) {
+            $this->logecho("Nothing In Queue - DONE");
+            exit;
+        }
         
         
         if (!empty($opts['list'])) {
@@ -254,7 +259,7 @@ class Pman_Core_Notify extends Pman
                 $this->queue[] = clone($w);
                 $total--;
             }
-            
+          
             $this->logecho("BATCH SIZE: Queue=".  count($this->queue) . " TOTAL = " . $total  );
             
             if (empty($this->queue)) {
@@ -274,7 +279,16 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            $email = $p->person() ? $p->person()->email : $p->to_email;
+            // not sure what happesn if person email and to_email is empty!!?
+            $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
+            
+            $black = $this->isBlacklisted($email);
+            if ($black !== false) {
+                $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
+                $this->updateServer($p, $black);
+                continue;
+            }
+             
             
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
@@ -297,11 +311,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
-                $pp = clone($p);
-                $p->act_when = $p->sqlValue('NOW + INTERVAL 1 MINUTE');
                 $this->updateServer($p);
-                $p->update($pp);
-                
             }
         }
         
@@ -320,17 +330,54 @@ class Pman_Core_Notify extends Pman
         exit;
     }
     
-    // this sequentially distributes requeued emails.. - to other servers.
-    function updateServer($w)
+    
+    function isBlacklisted($email)
     {
+        // return current server id..
+        $ff = HTML_FlexyFramework::get();
+        //$this->logecho("CHECK BLACKLISTED - {$email}");
+        if (empty($ff->Core_Notify['servers'])) {
+            return false;
+        }
+      
+        if (!isset($ff->Core_Notify['servers'][gethostname()]['blacklisted'])) {
+            return false;
+        }
+       
+        // get the domain..
+        $ea = explode('@',$email);
+        $dom = strtolower(array_pop($ea));
+        
+        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
+        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
+            return false;
+        }
+        //$this->logecho("RETURN BLACKLISTED TRUE");
+        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+    }
+    
+    // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
+    function updateServer($ww, $exclude = -1)
+    {
+        $w = DB_DataObject::factory($ww->tableName());
+        $w->get($ww->id);
+        
         $ff = HTML_FlexyFramework::get();
         static $num = 0;
         if (empty($ff->Core_Notify['servers'])) {
             return;
         }
-        $num++;
+        $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
+        if ($exclude == $num ) {
+            $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
+        }
         // next server..
-        $w->server_id = $num % count(array_keys($ff->Core_Notify['servers']));
+        $pp = clone($w);
+        $w->server_id = $num;
+                    
+        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
+        $w->update($pp);
+        
          
     }
   
@@ -377,8 +424,30 @@ class Pman_Core_Notify extends Pman
             return;
         }
         
+        if (!isset($ff->Core_Notify['servers'][gethostname()])) {
+            $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
+        }
+        // only run this on the main server...
+        if (array_search(gethostname(),array_keys($ff->Core_Notify['servers'])) > 0) {
+            return;
+        }
+        
         $num_servers = count(array_keys($ff->Core_Notify['servers']));
         $p = DB_DataObject::factory($this->table);
+        $p->whereAdd("
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW() +  INTERVAL 3 HOUR 
+                and
+                server_id < 0"
+            
+        );
+        if ($p->count() < 1) {
+            return;
+        }
+         $p = DB_DataObject::factory($this->table);
         // 6 seconds on this machne...
         $p->query("
             UPDATE
@@ -390,13 +459,13 @@ class Pman_Core_Notify extends Pman
                 and
                 event_id = 0
                 and
-                act_start < NOW()
+                act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id < 0
             ORDER BY
                 id ASC
             LIMIT
-                20000
+                10000
         ");
 
         
@@ -508,7 +577,7 @@ class Pman_Core_Notify extends Pman
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
                     fclose($p['pipes'][2]);
-                    $this->logecho("TERMINATING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']));
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']));
                     @unlink($p['out']);
                     
                     // schedule again
@@ -540,7 +609,7 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
+            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
             @unlink($p['out']);
             // at this point we could pop onto the queue the 
             $this->popQueueDomain($p['email']);

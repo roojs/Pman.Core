@@ -78,8 +78,8 @@ trait Pman_Core_AssetTrait {
         
         $ff = HTML_FlexyFramework::get();
         
-        if (!empty($ff->Pman['isDev']) && !empty($_REQUEST['isDev'])) {
-            echo "<!-- Javascript compile turned off (isDev on) -->\n";
+        if (empty($compiledir) || (!empty($ff->Pman['isDev']) && !empty($_REQUEST['isDev']))) {
+            echo "<!-- Javascript compile turned off (isDev on or mkdir failed) -->\n";
             $this->assetArrayToHtml($files,'js');
             return;
         }

@@ -87,7 +87,9 @@ class Pman_Core_Images extends Pman
         //if (!empty($_GET['_post'])) {
         //   return $this->post();
         //}
-
+     
+        
+        
         $this->is_local = (!empty($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost') ? true : false;
         
         $this->as_mimetype = empty($_REQUEST['as']) ? '' : $_REQUEST['as'];
@@ -286,6 +288,7 @@ class Pman_Core_Images extends Pman
  
     function serve($img)
     {
+        
         $this->sessionState(0); // turn off session... - locking...
         require_once 'File/Convert.php';
         if (!$img->exists()) {
@@ -297,6 +300,8 @@ class Pman_Core_Images extends Pman
         if (empty($this->as_mimetype) || $img->mimetype == 'image/gif') {
             $this->as_mimetype  = $img->mimetype;
         }
+        
+        
         if (!$this->thumb) {
             if ($x->mimetype == $this->as_mimetype) {
                 $x->serveOnly($this->method, $img->filename);
@@ -328,6 +333,7 @@ class Pman_Core_Images extends Pman
         if (!file_exists($fn)) {    
             $this->validateSize();
         }
+       
         
         if(!empty($this->page) && !is_nan($this->page * 1)){
             $x->convert( $this->as_mimetype, $this->size, 0, $this->page);
