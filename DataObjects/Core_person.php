@@ -1667,7 +1667,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 $roo->jerr("that email already exists in the database");
             }
         }
-        die('b');
     }
     
     function generateOathKey()
