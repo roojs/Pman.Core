@@ -1662,7 +1662,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
-            $pp->email  =  $this->email;
+            $pp->email  =  strtolower($this->email);
             var_dump($pp->email);
             $pp->whereAdd('id != ' . $old->id);
             if ($pp->count()){
