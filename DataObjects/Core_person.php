@@ -1656,8 +1656,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
-        die('a');
         $this->email = trim($this->email);
+
+        $p = DB_DataObject::factory('core_person');
+        if ($roo->authUser->id > -1 ||  $p->count() > 1) {
+            $pp = DB_DataObject::factory('core_person');
+            $pp->email  =  trim($this->email);
+            if ($pp->count()){
+                $roo->jerr("that email already exists in the database");
+            }
+            
+            
+            return;
+        }
 
     }
     
