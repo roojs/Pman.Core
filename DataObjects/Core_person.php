@@ -1669,9 +1669,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             return;
         }
-
-        die('a');
-
     }
     
     function generateOathKey()
