@@ -1453,7 +1453,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
-            $pp->email  =  strtolower(trim($this->email));
+            $pp->whereAdd('LOWER(email) = "' . strtolower(trim($this->email)) . '"');
             if ($pp->count()){
                 $roo->jerr("that email already exists in the database");
             }
@@ -1656,17 +1656,20 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function beforeUpdate($old, $q, $roo)
     {
+        DB_DataObject::debugLevel(1);
         $this->email = trim($this->email);
 
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
-            $pp->email  =  strtolower($this->email);
+            $pp->whereAdd('LOWER(email) = "' . strtolower(trim($this->email)) . '"');
             $pp->whereAdd('id != ' . $old->id);
             if ($pp->count()){
                 $roo->jerr("that email already exists in the database");
             }
         }
+
+        die('b');
     }
     
     function generateOathKey()
