@@ -718,6 +718,14 @@ class Pman_Core_NotifySend extends Pman
      function initHelo()
     {
         $ff = HTML_FlexyFramework::get();
+        
+        if (isset($ff->Core_Notify['servers-no-pool'])  &&
+            isset($ff->Core_Notify['servers-no-pool'][gethostname()]) &&
+            isset($ff->Core_Notify['servers-no-pool'][gethostname()]['helo']) ) {
+            $ff->Mail['helo'] = $ff->Core_Notify['servers-no-pool'][gethostname()]['helo'];
+            return;
+        }
+        
         if (empty($ff->Core_Notify['servers'])) {
             return;
         }
