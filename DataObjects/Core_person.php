@@ -1453,7 +1453,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $p = DB_DataObject::factory('core_person');
         if ($roo->authUser->id > -1 ||  $p->count() > 1) {
             $pp = DB_DataObject::factory('core_person');
-            $pp->email  =  trim($this->email);
+            $pp->whereAdd('LOWER(email) = "' . $pp->escape(strtolower(trim($this->email))) . '"');
             if ($pp->count()){
                 $roo->jerr("that email already exists in the database");
             }
@@ -1624,9 +1624,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $ff= HTML_FlexyFramework::get();
         
         $appname = empty($ff->appNameShort) ? $ff->project : $ff->project . '-' . $ff->appNameShort;
-        
         $dname = method_exists($this, 'getDatabaseConnection') ? $this->getDatabaseConnection()->dsn['database'] : $this->databaseNickname();
-        
         $sesPrefix = $appname.'-' .get_class($this) .'-' . $dname;
 
         return $sesPrefix;
@@ -1635,9 +1633,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function loginPublic() // used where???
     {
         $this->isAuth(); // force session start..
-         
         $db = $this->getDatabaseConnection();
-        
         $ff = HTML_FlexyFramework::get();
         
         if(empty($ff->Pman) || empty($ff->Pman['login_public'])){
@@ -1657,6 +1653,16 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     function beforeUpdate($old, $q, $roo)
     {
         $this->email = trim($this->email);
+
+        $p = DB_DataObject::factory('core_person');
+        if ($roo->authUser->id > -1 ||  $p->count() > 1) {
+            $pp = DB_DataObject::factory('core_person');
+            $pp->whereAdd('LOWER(email) = "' . $pp->escape(strtolower(trim($this->email))) . '"');
+            $pp->whereAdd('id != ' . $old->id);
+            if ($pp->count()){
+                $roo->jerr("that email already exists in the database");
+            }
+        }
     }
     
     function generateOathKey()
