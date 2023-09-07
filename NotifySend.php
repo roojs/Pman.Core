@@ -719,10 +719,10 @@ class Pman_Core_NotifySend extends Pman
     {
         $ff = HTML_FlexyFramework::get();
         
-        if (isset($ff->Core_Notify['servers-no-pool'])  &&
-            isset($ff->Core_Notify['servers-no-pool'][gethostname()]) &&
-            isset($ff->Core_Notify['servers-no-pool'][gethostname()]['helo']) ) {
-            $ff->Mail['helo'] = $ff->Core_Notify['servers-no-pool'][gethostname()]['helo'];
+        if (isset($ff->Core_Notify['servers-non-pool'])  &&
+            isset($ff->Core_Notify['servers-non-pool'][gethostname()]) &&
+            isset($ff->Core_Notify['servers-non-pool'][gethostname()]['helo']) ) {
+            $ff->Mail['helo'] = $ff->Core_Notify['servers-non-pool'][gethostname()]['helo'];
             return;
         }
         
