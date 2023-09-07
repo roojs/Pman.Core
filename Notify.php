@@ -123,7 +123,10 @@ class Pman_Core_Notify extends Pman
     
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
-                    
+    
+    var $server_id;
+    
+    
     var $opts; 
     var $force = false;
     function getAuth()
@@ -167,7 +170,7 @@ class Pman_Core_Notify extends Pman
     var $queue = array();
     var $domain_queue = array(); // false to use nextquee
     var $next_queue = array();
-    var $server_id;
+
    
     function get($r,$opts=array())    
     {
