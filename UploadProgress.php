@@ -7,7 +7,7 @@ class Pman_Core_UploadProgress extends Pman
         
         $au = $this->getAuthUser();
         if (!$au) {
-             $this->jerr("Not authenticated", array('authFailure' => true));
+             $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         }
         $this->authUser = $au;
         // check that it's a supplier!!!! 

@@ -11,10 +11,10 @@ class Pman_Core_DatabaseColumns extends Pman {
         $au = $this->getAuthUser();
        
         if (!$au) {  
-            $this->jerr("Not authenticated", array('authFailure' => true));
+            $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         }
         if (!$au->pid()   ) { // not set up yet..
-            $this->jerr("Not authenticated", array('authFailure' => true));
+            $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         }
         
         
