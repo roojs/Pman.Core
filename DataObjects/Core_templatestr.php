@@ -136,6 +136,9 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
             $x->mdsum = md5($obj->$c);
             $x->template_id = 0;
             $x->updated = date('Y-m-d H:i:s', strtotime("NOW"));
+            if($up) {
+                $used[] = $x->id;
+            }
             $up ? $x->update() : $x->insert();
         }
 
