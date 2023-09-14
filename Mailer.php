@@ -127,13 +127,15 @@ class Pman_Core_Mailer {
         
         $content->msgid = empty($content->msgid ) ? md5(time() . rand()) : $content->msgid ;
         
+        // content can override this now
         $ff = HTML_FlexyFramework::get();
         $http_host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : 'pman.HTTP_HOST.not.set';
         if (isset($ff->Pman['HTTP_HOST']) && $http_host != 'localhost') {
             $http_host  = $ff->Pman['HTTP_HOST'];
         }
-        
-        $content->HTTP_HOST = $http_host;
+        if (empty($content->HTTP_HOST )) {
+            $content->HTTP_HOST = $http_host;
+        }
         
         // this should be done by having multiple template sources...!!!
         
