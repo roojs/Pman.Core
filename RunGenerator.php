@@ -56,7 +56,7 @@ class Pman_Core_RunGenerator extends Pman
         parent::getAuth(); // load company!
         $au = $this->getAuthUser();
         if (!$au || $au->company()->comptype != 'OWNER') {
-            $this->jerr("Not authenticated", array('authFailure' => true));
+            $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         }
         $this->authUser = $au;
         return true;

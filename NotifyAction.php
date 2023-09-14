@@ -16,7 +16,7 @@ class Pman_Core_NotifyAction extends Pman
     {
         $au = $this->getAuthUser();
         if (!$au) {
-             $this->jerr("Not authenticated", array('authFailure' => true));
+             $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         }
         // workflow only applicable to owner company..
         if ($au->company()->comptype != 'OWNER') {

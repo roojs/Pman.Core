@@ -62,7 +62,7 @@ class Pman_Core_I18n extends Pman
         //return true;
         $au = $this->getAuthUser();
         //if (!$au) {
-        //    $this->jerr("Not authenticated", array('authFailure' => true));
+        //    $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
         //}
         $this->authUser = $au;
         

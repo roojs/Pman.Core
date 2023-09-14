@@ -710,6 +710,10 @@ class Pman_Core_NotifySend extends Pman
         if (empty($ff->Core_Notify['servers'])) {
             return;
         }
+        // some classes dont support server routing
+        if (!property_exists($w, 'server_id')) {
+            return;
+        }
         // next server..
         $w->server_id = ($w->server_id + 1) % count(array_keys($ff->Core_Notify['servers']));
          
@@ -718,6 +722,14 @@ class Pman_Core_NotifySend extends Pman
      function initHelo()
     {
         $ff = HTML_FlexyFramework::get();
+        
+        if (isset($ff->Core_Notify['servers-non-pool'])  &&
+            isset($ff->Core_Notify['servers-non-pool'][gethostname()]) &&
+            isset($ff->Core_Notify['servers-non-pool'][gethostname()]['helo']) ) {
+            $ff->Mail['helo'] = $ff->Core_Notify['servers-non-pool'][gethostname()]['helo'];
+            return;
+        }
+        
         if (empty($ff->Core_Notify['servers'])) {
             return;
         }
