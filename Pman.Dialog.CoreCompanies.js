@@ -70,7 +70,7 @@ Pman.Dialog.CoreCompanies = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);
@@ -423,7 +423,7 @@ Pman.Dialog.CoreCompanies = {
                                        
                   Pman.Dialog.Image.show({
                       onid :_this.data.id,
-                      ontable : 'core_company',
+                      ontable : 'pressrelease_terminals',
                       imgtype : 'LOGO'
                   }, function(data) {
                       if  (data) {
