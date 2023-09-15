@@ -287,7 +287,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
                 $roo->jok('OK');
             }
             
-            $roo->jerr('EXIST');
+            $roo->jerror('NOTICE-EXIST-CHECK','EXIST');
         }
     }
     
