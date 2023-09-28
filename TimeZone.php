@@ -5,7 +5,7 @@ class Pman_Core_NotifySend extends Pman
 {
     function getAuth()
     {
-        parent::getAuth(); // load company!
+        parent::getAuth();
         $au = $this->getAuthUser();
         
         if (!$au) {  
