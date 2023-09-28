@@ -23,10 +23,9 @@ class Pman_Core_TimeZone extends Pman
             FROM
                 mysql.time_zone_name
         ');
-        // while($ce->fetch()) {
-        //     var_dump($ce);
-        // }
-        print_r($ce->fetchAll()[0]);
+        while($ce->fetch()) {
+            var_dump($ce);
+        }
         die('test');
     }
 
