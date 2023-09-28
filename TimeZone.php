@@ -27,6 +27,40 @@ class Pman_Core_TimeZone extends Pman
             var_dump($ce);
         }
         die('test');
+
+        /*
+                $ar = array();
+        if (isset($_REQUEST['query']['name'])) {
+            $res = $this->checkYahoo($_REQUEST['query']['name']);
+            $data = json_decode($res['response']);
+            $ar = isset($data->quotes) ? $data->quotes : array();
+        }
+        echo json_encode(array(
+            'data' => $ar,
+            'metaData' => array(
+                'id' => 'id',
+                'root' => 'data',
+                'successProperty' => 'success',
+                'totalProperty' => 'total',
+                'fields' => array(
+                    'exchange'  ,
+                    'exchDisp',
+                    'index',
+                    'isYahooFinance'  ,
+                    'longname'  ,
+                    'quoteType'  ,
+                    'score' ,
+                    'shortname',
+                    'symbol'  ,
+                    'typeDisp'
+                )
+            ),
+            'success' => true,
+            'total' => count($ar),
+            
+        ));
+        exit;
+        */
     }
 
     function post($base) {
