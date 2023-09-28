@@ -14,6 +14,7 @@ class Pman_Core_NotifySend extends Pman
         
         function get($base, $opts=array())
         {
+            die('test');
         }
 
         function post($base) {
