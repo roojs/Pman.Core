@@ -10,7 +10,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$au) {
             $this->authUser = false;
-            die("Access denied");
+            return false;
         }
         
         $this->authUser = $au;
