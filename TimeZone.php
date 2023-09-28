@@ -23,7 +23,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         function post($base) {
-            die('invalid post');
+            die('Invalid post');
         }
     
     }
