@@ -26,7 +26,7 @@ class Pman_Core_TimeZone extends Pman
 
         $data = array();
         while($ce->fetch()) {
-            if(strpos($ce->Name, '/') === false) {
+            if(substr_count($ce->Name, '/') != 1) {
                 continue;
             }
             $ar = explode('/', $ce->Name);
