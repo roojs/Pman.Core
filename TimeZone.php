@@ -31,6 +31,7 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
             $ar = explode('/', $ce->Name);
+            // ignore timezone such as 'Etc/GMT+8'
             if($ar[0] == 'Etc') {
                 continue;
             }
