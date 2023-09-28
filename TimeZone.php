@@ -26,7 +26,7 @@ class Pman_Core_TimeZone extends Pman
         // while($ce->fetch()) {
         //     var_dump($ce);
         // }
-        var_dump($ce->fetchAll()[0]);
+        print_r($ce->fetchAll()[0]);
         die('test');
     }
 
