@@ -1,7 +1,7 @@
 <?php
 require_once 'Pman.php';
 
-class Pman_Core_NotifySend extends Pman
+class Pman_Core_TimeZone extends Pman
 {
     function getAuth()
     {
