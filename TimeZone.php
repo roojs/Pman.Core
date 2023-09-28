@@ -17,13 +17,14 @@ class Pman_Core_TimeZone extends Pman
     function get($base, $opts=array())
     {
         $ce = DB_DataObject::factory('core_enum');
-        $ce->query('
+        $res = $ce->query('
             SELECT
                 *
             FROM
                 mysql.time_zone_name
         ');
         var_dump($ce);
+        var_dump($res);
 
         die('test');
     }
