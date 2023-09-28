@@ -27,8 +27,8 @@ class Pman_Core_TimeZone extends Pman
         $res = array();
         while($ce->fetch()) {
             $res[] = array(
-                'name' => $ce->Name;
-            )
+                'name' => $ce->Name
+            );
         }
 
         var_dump($res);
