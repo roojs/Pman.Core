@@ -24,49 +24,29 @@ class Pman_Core_TimeZone extends Pman
                 mysql.time_zone_name
         ');
 
-        $res = array();
+        $data = array();
         while($ce->fetch()) {
-            $res[] = array(
+            $data[] = array(
                 'name' => $ce->Name
             );
         }
 
-        var_dump($res);
-        die('test');
-
-        /*
-                $ar = array();
-        if (isset($_REQUEST['query']['name'])) {
-            $res = $this->checkYahoo($_REQUEST['query']['name']);
-            $data = json_decode($res['response']);
-            $ar = isset($data->quotes) ? $data->quotes : array();
-        }
         echo json_encode(array(
-            'data' => $ar,
+            'data' => $data,
             'metaData' => array(
                 'id' => 'id',
                 'root' => 'data',
                 'successProperty' => 'success',
                 'totalProperty' => 'total',
                 'fields' => array(
-                    'exchange'  ,
-                    'exchDisp',
-                    'index',
-                    'isYahooFinance'  ,
-                    'longname'  ,
-                    'quoteType'  ,
-                    'score' ,
-                    'shortname',
-                    'symbol'  ,
-                    'typeDisp'
+                    'name'
                 )
             ),
             'success' => true,
-            'total' => count($ar),
+            'total' => count($data),
             
         ));
         exit;
-        */
     }
 
     function post($base) {
