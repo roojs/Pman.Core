@@ -12,15 +12,14 @@ class Pman_Core_NotifySend extends Pman
         }
         
         return true;
-        
-        function get($base, $opts=array())
-        {
-            die('test');
-        }
+    }
 
-        function post($base) {
-            die('Invalid post');
-        }
-    
+    function get($base, $opts=array())
+    {
+        die('test');
+    }
+
+    function post($base) {
+        die('Invalid post');
     }
 }
