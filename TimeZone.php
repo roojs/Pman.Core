@@ -12,7 +12,7 @@ class Pman_Core_NotifySend extends Pman
         //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
         return true;
         
-        function get($id, $opts=array())
+        function get($base, $opts=array())
         {
         }
     
