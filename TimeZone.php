@@ -26,6 +26,7 @@ class Pman_Core_TimeZone extends Pman
 
         $data = array();
         while($ce->fetch()) {
+            // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
             if(substr_count($ce->Name, '/') != 1) {
                 continue;
             }
