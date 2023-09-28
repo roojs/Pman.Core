@@ -31,6 +31,9 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
             $ar = explode('/', $ce->Name);
+            if($ar[0] == 'Etc') {
+                continue;
+            }
             $data[] = array(
                 'region' => $ar[0],
                 'area' => $ar[1]
