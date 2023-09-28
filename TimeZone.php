@@ -5,11 +5,16 @@ class Pman_Core_NotifySend extends Pman
 {
     function getAuth()
     {
-        $ff = HTML_FlexyFramework::get();
-        if (!$ff->cli) {
-            $this->errorHandler("access denied");
+        parent::getAuth(); // load company!
+        $au = $this->getAuthUser();
+        
+        if (!$au) {
+            $this->authUser = false;
+            die("Access denied");
         }
-        //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
+        
+        $this->authUser = $au;
+        
         return true;
         
         function get($base, $opts=array())
