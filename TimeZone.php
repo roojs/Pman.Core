@@ -8,12 +8,9 @@ class Pman_Core_NotifySend extends Pman
         parent::getAuth(); // load company!
         $au = $this->getAuthUser();
         
-        if (!$au) {
-            $this->authUser = false;
-            die("Access denied");
+        if (!$au) {  
+            $this->jerr("Not authenticated", array('authFailure' => true));
         }
-        
-        $this->authUser = $au;
         
         return true;
         
