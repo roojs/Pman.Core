@@ -6,9 +6,8 @@ class Pman_Core_NotifySend extends Pman
     function getAuth()
     {
         parent::getAuth();
-        $au = $this->getAuthUser();
         
-        if (!$au) {  
+        if (!$this->getAuthUser()) {  
             $this->jerr("Not authenticated", array('authFailure' => true));
         }
         
