@@ -100,7 +100,7 @@ class Pman_Core_TimeZone extends Pman
 
         $ar = explode('/', $timezone);
 
-        $offset = $offset[0] == '-' ? $offset : '+' . $offset;
+        $offset = substr($offset, 0, 1) == '-' ? $offset : '+' . $offset;
 
         return $ar[1] . ' (GMT ' . $offset . ')';
     }
