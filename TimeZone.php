@@ -93,4 +93,6 @@ class Pman_Core_TimeZone extends Pman
 
         return $ce->offset;
     }
+
+    
 }
