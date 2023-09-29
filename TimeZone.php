@@ -19,7 +19,7 @@ class Pman_Core_TimeZone extends Pman
         $ce = DB_DataObject::factory('core_enum');
         $ce->query('
             SELECT
-                *
+                *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as offset
             FROM
                 mysql.time_zone_name
         ');
