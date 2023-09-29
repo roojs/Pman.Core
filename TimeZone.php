@@ -22,6 +22,8 @@ class Pman_Core_TimeZone extends Pman
                 *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as offset
             FROM
                 mysql.time_zone_name
+            ORDER BY
+                offset
         ');
 
         $data = array();
