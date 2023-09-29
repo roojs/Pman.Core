@@ -50,7 +50,8 @@ class Pman_Core_TimeZone extends Pman
                 'totalProperty' => 'total',
                 'fields' => array(
                     'region',
-                    'area'
+                    'area',
+                    'offset'
                 )
             ),
             'success' => true,
