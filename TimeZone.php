@@ -89,5 +89,8 @@ class Pman_Core_TimeZone extends Pman
             WHERE
                 Name = ' . $ce->escape($timezone) . '
         ');
+        $ce->fetch();
+
+        return $ce->offset;
     }
 }
