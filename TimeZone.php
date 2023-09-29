@@ -87,7 +87,7 @@ class Pman_Core_TimeZone extends Pman
             FROM
                 mysql.time_zone_name
             WHERE
-                Name = ' . $ce->escape($timezone) . '
+                Name = "' . $ce->escape($timezone) . '"
         ');
         $ce->fetch();
 
