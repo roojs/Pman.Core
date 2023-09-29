@@ -92,18 +92,5 @@ class Pman_Core_TimeZone extends Pman
         return empty($ce->offset) ? '' : $ce->offset;
     }
 
-    static function getAreaDisplay($timezone, $offset = false) 
-    {
-        if(empty($offset)) {
-            $offset = self::getOffset($timezone);
-        }
-
-        $ar = explode('/', $timezone);
-
-        $offset = substr($offset, 0, 1) == '-' ? $offset : '+' . $offset;
-
-        return $ar[1] . ' (GMT ' . $offset . ')';
-    }
-
     
 }
