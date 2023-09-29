@@ -37,10 +37,11 @@ class Pman_Core_TimeZone extends Pman
             if($ar[0] == 'Etc') {
                 continue;
             }
+
             $data[] = array(
                 'region' => $ar[0],
                 'area' => $ar[1],
-                'offset' => $ce->offset
+                'offset' => $ce->offset[0] == '-' ? $ce->offset : '+' . $ce->offset
             );
         }
 
