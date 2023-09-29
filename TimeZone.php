@@ -23,7 +23,7 @@ class Pman_Core_TimeZone extends Pman
             FROM
                 mysql.time_zone_name
             ORDER BY
-                offset
+                offset DESC
         ');
 
         $data = array();
