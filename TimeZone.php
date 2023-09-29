@@ -43,13 +43,11 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            $offset = $ce->offset[0] == '-' ? $ce->offset : '+' . $ce->offset;
-
             $data[] = array(
                 'region' => $ar[0],
                 'area' => $ar[1],
                 'offset' => $offset,
-                'areaDisplay' => $ar[1] . ' (GMT ' . $offset . ')'
+                'areaDisplay' => self::getAreaDisplay($ce->Name, $ce->offset)
             );
         }
 
