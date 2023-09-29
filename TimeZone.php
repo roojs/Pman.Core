@@ -99,6 +99,12 @@ class Pman_Core_TimeZone extends Pman
         if(empty($offset)) {
             $offset = self::getOffset($timezone);
         }
+
+        $ar = explode('/', $timezone);
+
+        $offset = $offset[0] == '-' ? $offset : '+' . $offset;
+
+        return $ar[1] . ' (GMT ' . $offset . ')';
     }
 
     
