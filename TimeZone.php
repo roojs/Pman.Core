@@ -21,7 +21,10 @@ class Pman_Core_TimeZone extends Pman
         $data = array();
 
         foreach($data as $tz => $offset) {
-
+            $arr = explode('/', $tz);
+            $data[] = array(
+                'region'
+            )
         }
 
         echo json_encode(array(
