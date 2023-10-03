@@ -102,7 +102,7 @@ class Pman_Core_TimeZone extends Pman
 
         $ar = explode('/', $timezones);
 
-        return $ar[1] . ' (GMT ' . self::$timezones[$timezone] . ')';
+        return $ar[1] . ' (GMT ' . self::$offsets[$timezone] . ')';
     }
 
     
