@@ -99,6 +99,8 @@ class Pman_Core_TimeZone extends Pman
         if(!isset(self::$timezones[$timezone])) {
             return '';
         }
+
+        $ar = explode('/', $timezones);
         
     }
 
