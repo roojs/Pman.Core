@@ -57,16 +57,10 @@ class Pman_Core_TimeZone extends Pman
 
         $timezones = array();
         while($ce->fetch()) {
-            // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
-            if(substr_count($ce->Name, '/') != 1) {
-                continue;
+            if($timezone) {
+                
             }
-
             $ar = explode('/', $ce->Name);
-            // ignore timezone such as 'Etc/GMT+8'
-            if($ar[0] == 'Etc') {
-                continue;
-            }
 
             $data[] = array(
                 'region' => $ar[0],
