@@ -120,7 +120,12 @@ class Pman_Core_TimeZone extends Pman
 
     static function getFloatOffset($timezone)
     {
+        self::getOffsets();
 
+        // invalid timezone
+        if(!isset(self::$offsets[$timezone])) {
+            return 0.0;
+        }
     }
 
     
