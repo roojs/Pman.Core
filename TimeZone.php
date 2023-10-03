@@ -56,10 +56,10 @@ class Pman_Core_TimeZone extends Pman
 
     static $offsets = array();
 
-    static function getTimezones()
+    static function getOffsets()
     {
-        if(!empty(self::$timezones)) {
-            return self::$timezones;
+        if(!empty(self::$offsets)) {
+            return self::$offsets;
         }
 
         $ce = DB_DataObject::factory('core_enum');
