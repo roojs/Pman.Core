@@ -40,7 +40,8 @@ class Pman_Core_TimeZone extends Pman
                 'fields' => array(
                     'region',
                     'area',
-                    'offset'
+                    'offset',
+                    'dipslayArea'
                 )
             ),
             'success' => true,
