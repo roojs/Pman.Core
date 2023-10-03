@@ -79,11 +79,14 @@ class Pman_Core_TimeZone extends Pman
         return $data;
     }
 
-    // Only accept timezone in format of 'XXX/Y'
+    // timezone in format of 'XXX/YYY'
     // 'XXX' caanot be 'Etc'
     static function isValidTimeZone($timezone)
     {
-
+        // invalid timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
+        if(substr_count($ce->Name, '/') != 1) {
+            continue;
+        }
     }
 
     static function getOffset($timezone)
