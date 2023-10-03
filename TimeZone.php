@@ -74,6 +74,8 @@ class Pman_Core_TimeZone extends Pman
                 'offset' => $ce->offset
             );
         }
+
+        return $data;
     }
 
     static function getOffset($timezone)
