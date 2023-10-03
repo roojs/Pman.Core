@@ -83,9 +83,15 @@ class Pman_Core_TimeZone extends Pman
     // 'XXX' caanot be 'Etc'
     static function isValidTimeZone($timezone)
     {
-        // invalid timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
+        // invalid timezones such as 'CET' and 'America/Argentina/Buenos_Aires'
         if(substr_count($ce->Name, '/') != 1) {
             continue;
+        }
+
+        // invalid timezones such as 'Etc/GMT+8'
+        if($ar[0] == 'Etc') 
+        {
+
         }
     }
 
