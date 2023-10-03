@@ -92,7 +92,7 @@ class Pman_Core_TimeZone extends Pman
         // invalid timezones such as 'Etc/GMT+8'
         if($ar[0] == 'Etc') 
         {
-
+            return true;
         }
     }
 
