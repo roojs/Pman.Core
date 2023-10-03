@@ -28,7 +28,7 @@ class Pman_Core_TimeZone extends Pman
             }
 
             $areaStartSeach = strtolower($_REQUEST['query']['area_start']);
-            if(!empty($_REQUEST['query']['area_start']) && substr($arr[1], 0, strlen($_REQUEST['query']['area_start'])) != $_REQUEST['query']['area_start']){
+            if(!empty($areaStartSeach) && substr(strtolower($arr[1]), 0, strlen($areaStartSeach)) != $areaStartSeach){
                 continue;
             }
             $data[] = array(
