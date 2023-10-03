@@ -93,7 +93,14 @@ class Pman_Core_TimeZone extends Pman
 
     static function getOffset($timezone)
     {
-        
+        self::getTimezones();
+
+        // invalid timezone
+        if(!isset(self::$timezones[$timezone])) {
+            return '';
+        }
+
+        $offset = substr(self::$timezones[$timezone], 0, 1) == '-' ? self::$timezones[$timezone] : '+' . self::$timezones[$timezone]
     }
 
     static function getDisplayArea($timezone)
