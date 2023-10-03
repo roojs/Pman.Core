@@ -46,6 +46,10 @@ class Pman_Core_TimeZone extends Pman
 
     static function getTimezones()
     {
+        if(!empty(self::$timezones)) {
+            return self::$timezones;
+        }
+
         $ce = DB_DataObject::factory('core_enum');
         $ce->query('
             SELECT
