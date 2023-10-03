@@ -57,7 +57,6 @@ class Pman_Core_TimeZone extends Pman
                 Name DESC
         ');
 
-        $timezones = array();
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
             if(substr_count($ce->Name, '/') != 1) {
@@ -70,7 +69,7 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            $timezons[$ce->Name] = $ce->offset;
+            self::$timezones[$ce->Name] = $ce->offset;
         }
 
         return $data;
