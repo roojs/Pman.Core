@@ -38,7 +38,6 @@ class Pman_Core_TimeZone extends Pman
                 'successProperty' => 'success',
                 'totalProperty' => 'total',
                 'fields' => array(
-                    'id', 
                     'region',
                     'area',
                     'offset',
