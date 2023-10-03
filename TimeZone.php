@@ -20,7 +20,7 @@ class Pman_Core_TimeZone extends Pman
 
         $data = array();
 
-        foreach($data as $tz => $offset) {
+        foreach(self::$timezones as $tz => $offset) {
             $arr = explode('/', $tz);
             $data[] = array(
                 'region' => $arr[0],
