@@ -118,5 +118,10 @@ class Pman_Core_TimeZone extends Pman
         return $ar[1] . ' (GMT ' . self::$offsets[$timezone] . ')';
     }
 
+    static function getFloatOffset($timezone)
+    {
+
+    }
+
     
 }
