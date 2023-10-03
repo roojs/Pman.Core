@@ -27,7 +27,7 @@ class Pman_Core_TimeZone extends Pman
                 'area' => $arr[1],
                 'offset' => $o,
                 'displayArea' => self::getDisplayArea($tz)
-            )
+            );
         }
 
         echo json_encode(array(
