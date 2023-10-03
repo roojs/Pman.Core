@@ -18,6 +18,10 @@ class Pman_Core_TimeZone extends Pman
     {
         $timezones = self::getTimezones();
 
+        $data = array();
+
+        foreach($data as $t)
+
         echo json_encode(array(
             'data' => $data,
             'metaData' => array(
