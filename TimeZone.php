@@ -42,8 +42,6 @@ class Pman_Core_TimeZone extends Pman
         die('Invalid post');
     }
 
-    static $timezones = array();
-
     static function getTimezones()
     {
         $ce = DB_DataObject::factory('core_enum');
@@ -59,10 +57,16 @@ class Pman_Core_TimeZone extends Pman
 
         $timezones = array();
         while($ce->fetch()) {
-            if(self::isValidTimeZone$timezone) {
-
+            // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
+            if(substr_count($ce->Name, '/') != 1) {
+                continue;
             }
+
             $ar = explode('/', $ce->Name);
+            // ignore timezone such as 'Etc/GMT+8'
+            if($ar[0] == 'Etc') {
+                continue;
+            }
 
             $data[] = array(
                 'region' => $ar[0],
@@ -73,25 +77,6 @@ class Pman_Core_TimeZone extends Pman
         }
 
         return $data;
-    }
-
-    // (1) timezone in format of 'XXX/YYY'
-    // (2) 'XXX' caanot be 'Etc'
-    static function isValidTimeZone($timezone)
-    {
-        // invalid timezones such as 'CET' and 'America/Argentina/Buenos_Aires'
-        if(substr_count($ce->Name, '/') != 1) {
-            return false;
-        }
-
-        $ar = explode('/', $ce->Name);
-        // invalid timezones such as 'Etc/GMT+8'
-        if($ar[0] == 'Etc') 
-        {
-            return false;
-        }
-
-        return true;
     }
 
     static function getOffset($timezone)
