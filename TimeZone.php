@@ -79,6 +79,14 @@ class Pman_Core_TimeZone extends Pman
         return $data;
     }
 
+    // Only accept timezone in format of 'XXX/Y'
+    // 'XXX' caanot be 'Etc'
+
+    static function isValidTimeZone($)
+    {
+
+    }
+
     static function getOffset($timezone)
     {
         $ce = DB_DataObject::factory('core_enum');
