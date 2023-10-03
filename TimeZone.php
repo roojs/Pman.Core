@@ -66,7 +66,7 @@ class Pman_Core_TimeZone extends Pman
         die('Invalid post');
     }
 
-    static $offsets = array();
+    static $timezones = array();
 
     static function getOffsets()
     {
