@@ -70,12 +70,7 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            $data[] = array(
-                'region' => $ar[0],
-                'area' => $ar[1],
-                'offset' => $ce->offset,
-                'displayArea' => self::getOffset($ce->Name)
-            );
+            $timezons[$ce->Name] = $ce->offset;
         }
 
         return $data;
