@@ -85,10 +85,10 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            self::$timezones[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
+            self::$offsets[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
         }
 
-        return self::$timezones;
+        return self::$offsets;
     }
 
     static function getDisplayArea($timezone)
