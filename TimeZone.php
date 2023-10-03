@@ -101,7 +101,7 @@ class Pman_Core_TimeZone extends Pman
             return '';
         }
 
-        $ar = explode('/', $timezones);
+        $ar = explode('/', $timezone);
 
         // e.g. 'Hong_Kong (GMT +08:00)'
         return $ar[1] . ' (GMT ' . self::$offsets[$timezone] . ')';
