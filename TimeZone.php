@@ -33,7 +33,6 @@ class Pman_Core_TimeZone extends Pman
         echo json_encode(array(
             'data' => $data,
             'metaData' => array(
-                'id' => 'id',
                 'root' => 'data',
                 'successProperty' => 'success',
                 'totalProperty' => 'total',
