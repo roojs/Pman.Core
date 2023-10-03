@@ -26,6 +26,7 @@ class Pman_Core_TimeZone extends Pman
                 'region' => $arr[0],
                 'area' => $arr[1],
                 'offset' => $offset
+                'displayArea' => $
             )
         }
 
@@ -88,22 +89,6 @@ class Pman_Core_TimeZone extends Pman
         }
 
         return self::$timezones;
-    }
-
-    static function getOffset($timezone)
-    {
-        $ce = DB_DataObject::factory('core_enum');
-        $ce->query('
-            SELECT
-                TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as offset
-            FROM
-                mysql.time_zone_name
-            WHERE
-                Name = "' . $ce->escape($timezone) . '"
-        ');
-        $ce->fetch();
-
-        return empty($ce->offset) ? '' : $ce->offset;
     }
 
     
