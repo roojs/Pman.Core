@@ -25,7 +25,7 @@ class Pman_Core_TimeZone extends Pman
             $data[] = array(
                 'region' => $arr[0],
                 'area' => $arr[1],
-
+                'offset' => $offset
             )
         }
 
