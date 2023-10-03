@@ -91,5 +91,10 @@ class Pman_Core_TimeZone extends Pman
         return self::$timezones;
     }
 
+    static function getDisplayArea($timezone)
+    {
+
+    }
+
     
 }
