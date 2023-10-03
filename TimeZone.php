@@ -26,6 +26,7 @@ class Pman_Core_TimeZone extends Pman
                 'region' => $arr[0],
                 'area' => $arr[1],
                 'offset' => $o
+                // 'displayArea' => self::getDisplayArea($tz)
             );
         }
 
@@ -39,6 +40,7 @@ class Pman_Core_TimeZone extends Pman
                     'region',
                     'area',
                     'offset'
+                    // 'dipslayArea'
                 )
             ),
             'success' => true,
