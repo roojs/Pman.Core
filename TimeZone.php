@@ -96,7 +96,7 @@ class Pman_Core_TimeZone extends Pman
         self::getTimezones();
 
         // invalid timezone
-        if(!isset(self::$timezones[$timezone])) {
+        if(!isset(self::$offsets[$timezone])) {
             return '';
         }
 
