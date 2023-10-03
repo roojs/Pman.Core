@@ -81,8 +81,7 @@ class Pman_Core_TimeZone extends Pman
 
     // Only accept timezone in format of 'XXX/Y'
     // 'XXX' caanot be 'Etc'
-
-    static function isValidTimeZone($)
+    static function isValidTimeZone($timezone)
     {
 
     }
