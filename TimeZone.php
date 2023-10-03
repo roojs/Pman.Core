@@ -23,7 +23,6 @@ class Pman_Core_TimeZone extends Pman
         foreach(self::$offsets as $tz => $o) {
             $arr = explode('/', $tz);
             $data[] = array(
-                'id' => $tz,
                 'region' => $arr[0],
                 'area' => $arr[1],
                 'offset' => $o,
