@@ -72,7 +72,7 @@ class Pman_Core_TimeZone extends Pman
             self::$timezones[$ce->Name] = $ce->offset;
         }
 
-        return $data;
+        return self::$timezones;
     }
 
     static function getOffset($timezone)
