@@ -42,6 +42,8 @@ class Pman_Core_TimeZone extends Pman
         die('Invalid post');
     }
 
+    static $timezones = array();
+
     static function getTimezones()
     {
         $ce = DB_DataObject::factory('core_enum');
