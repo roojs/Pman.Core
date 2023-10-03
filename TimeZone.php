@@ -16,17 +16,17 @@ class Pman_Core_TimeZone extends Pman
 
     function get($base, $opts=array())
     {
-        self::getTimezones();
+        self::getOffsets();
 
         $data = array();
 
-        foreach(self::$timezones as $tz => $offset) {
+        foreach(self::$offsets as $tz => $o) {
             $arr = explode('/', $tz);
             $data[] = array(
                 'region' => $arr[0],
                 'area' => $arr[1],
-                'offset' => $offset
-                'displayArea' => $
+                'offset' => $o,
+                'displayArea' => self::getDisplayArea($tz)
             )
         }
 
