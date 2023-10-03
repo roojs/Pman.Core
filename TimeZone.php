@@ -26,6 +26,9 @@ class Pman_Core_TimeZone extends Pman
             if(!empty($_REQUEST['region']) && $_REQUEST['region'] != $arr[0]) {
                 continue;
             }
+
+            if(!empty($_REQUEST['query']['area_start'])){
+            }
             $data[] = array(
                 'region' => $arr[0],
                 'area' => $arr[1],
