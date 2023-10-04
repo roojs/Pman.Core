@@ -21,9 +21,7 @@ class Pman_Core_TimeZone extends Pman
         $data = array();
 
         foreach(self::$tiemzones as $tz => $o) {
-            $arr = explode('/', $tz);
-
-            if(!empty($_REQUEST['region']) && $_REQUEST['region'] != $arr[0]) {
+            if(!empty($_REQUEST['region']) && $_REQUEST['region'] != $o['region']) {
                 continue;
             }
 
