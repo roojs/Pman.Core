@@ -104,8 +104,8 @@ class Pman_Core_TimeZone extends Pman
                 'area' => $ar[1],
                 'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
                 'displayArea' => $displayArea . ' ' . $displayOffset,
-                'timeOffset' => $timeOffset,
-                'decimalOffset' => $offsetAr[0] + (($offsetAr[0] < 0) ? (-1 * $offsetAr[1] / 60) : ($offsetAr[1] / 60))
+                'timeOffset' => $timeOffset
+                // 'decimalOffset' => $offsetAr[0] + (($offsetAr[0] < 0) ? (-1 * $offsetAr[1] / 60) : ($offsetAr[1] / 60))
             );
         }
 
