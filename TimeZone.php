@@ -75,7 +75,7 @@ class Pman_Core_TimeZone extends Pman
             FROM
                 mysql.time_zone_name
             ORDER BY
-                offset DESC,
+                timeoffset DESC,
                 Name DESC
         ');
 
