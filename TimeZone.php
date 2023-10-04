@@ -97,19 +97,16 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
+            $displayOffset = '(GMT ' . (substr($ce->timeOffset, 0, 1) == '-') ? '' : '+' . $ce->timeOffset . ')';
+
             self::$timezones[$ce->Name] = array(
                 'region' => $ar[0],
-                'area' => $ar[1]
+                'area' => $ar[1],
+                'displayName' => $ce->Name . ' ' . $displayOffset,
+                'displayArea' => $ar[1] . ' ' . $displayOffset
             );
 
-            self::$timezones[$ce->Name]['displayArea'] = 
-                $ar[1] . 
-                ' (GMT ' . 
-                (substr($ce->timeOffset, 0, 1) == '-') ? '' : '+' .
-                $ce->timeOffset .
-                ')';
-
-
+            $displayOffset = ' (GMT ' . (substr($ce->timeOffset, 0, 1) == '-') ? '' : '+' . $ce->timeOffset . ')';
         }
 
         return self::$offsets;
