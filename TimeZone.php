@@ -97,7 +97,7 @@ class Pman_Core_TimeZone extends Pman
 
             $timeOffset = ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset;
             $displayOffset = '(GMT ' . $timeOffset . ')';
-            $offsetAr = explode(':', $ce->timeOffset);
+            // $offsetAr = explode(':', $ce->timeOffset);
 
             self::$timezones[$ce->Name] = array(
                 'region' => $ar[0],
