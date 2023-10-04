@@ -66,18 +66,18 @@ class Pman_Core_TimeZone extends Pman
         die('Invalid post');
     }
 
-    static $offsets = array();
+    static $timezones = array();
 
-    static function getOffsets()
+    static function getTimezones()
     {
-        if(!empty(self::$offsets)) {
-            return self::$offsets;
+        if(!empty(self::$timezones)) {
+            return self::$timezones;
         }
 
         $ce = DB_DataObject::factory('core_enum');
         $ce->query('
             SELECT
-                *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as offset
+                *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as timeOffset
             FROM
                 mysql.time_zone_name
             ORDER BY
@@ -96,6 +96,12 @@ class Pman_Core_TimeZone extends Pman
             if($ar[0] == 'Etc') {
                 continue;
             }
+
+            $timezones[$ce->Name] = array(
+                'region' => $ar[0],
+                'area' => $ar[1],
+                'timeOffset' => $ce->offset
+            )
 
             self::$offsets[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
         }
