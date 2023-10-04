@@ -105,11 +105,9 @@ class Pman_Core_TimeZone extends Pman
                 'displayName' => $ce->Name . ' ' . $displayOffset,
                 'displayArea' => $ar[1] . ' ' . $displayOffset
             );
-
-            $displayOffset = ' (GMT ' . (substr($ce->timeOffset, 0, 1) == '-') ? '' : '+' . $ce->timeOffset . ')';
         }
 
-        return self::$offsets;
+        return self::$timezones;
     }
 
     static function getDisplayArea($timezone)
