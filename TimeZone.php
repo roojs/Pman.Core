@@ -93,6 +93,7 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
+            $timeOffset = ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset;
             $displayOffset = '(GMT ' . ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset . ')';
             $offsetAr = explode(':', $ce->timeOffset);
 
@@ -101,6 +102,7 @@ class Pman_Core_TimeZone extends Pman
                 'area' => $ar[1],
                 'displayName' => $ce->Name . ' ' . $displayOffset,
                 'displayArea' => $ar[1] . ' ' . $displayOffset,
+                'timeOffset' => 
                 'decimalOffset' => $offsetAr[0] + (($offsetAr[0] < 0) ? (-1 * $offsetAr[1] / 60) : ($offsetAr[1] / 60))
             );
         }
