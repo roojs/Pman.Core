@@ -96,13 +96,12 @@ class Pman_Core_TimeZone extends Pman
             $displayOffset = '(GMT ' . ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset . ')';
             $offsetAr = explode(':', $ce->timeOffset);
             
-
             self::$timezones[$ce->Name] = array(
                 'region' => $ar[0],
                 'area' => $ar[1],
                 'displayName' => $ce->Name . ' ' . $displayOffset,
                 'displayArea' => $ar[1] . ' ' . $displayOffset,
-                'decimalOffset' => $offsetAr[0] . '.' . ($offsetAr[1] / 60)
+                'decimalOffset' => $offsetAr[0] + ($offsetAr[0] < 0 ? (-1 * $offsetAr[1] / 60) : ($offsetAr[1] / 60)
             );
         }
 
