@@ -28,15 +28,13 @@ class Pman_Core_TimeZone extends Pman
             if(
                 !empty($_REQUEST['query']['area_start']) 
                 && 
-                substr(strtolower($arr[1]), 0, strlen($_REQUEST['query']['area_start'])) != strtolower($_REQUEST['query']['area_start'])
+                substr(strtolower($o['area']), 0, strlen($_REQUEST['query']['area_start'])) != strtolower($_REQUEST['query']['area_start'])
             ){
                 continue;
             }
             $data[] = array(
-                'region' => $arr[0],
-                'area' => $arr[1],
-                'offset' => $o,
-                'displayArea' => self::getDisplayArea($tz)
+                'region' => $o['region'],
+                'displayArea' => $o['displayArea']
             );
         }
 
@@ -48,8 +46,6 @@ class Pman_Core_TimeZone extends Pman
                 'totalProperty' => 'total',
                 'fields' => array(
                     'region',
-                    'area',
-                    'offset',
                     'displayArea'
                 )
             ),
