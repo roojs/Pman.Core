@@ -34,7 +34,7 @@ class Pman_Core_TimeZone extends Pman
             }
             $data[] = array(
                 'region' => $o['region'],
-                'displayArea' => $o['display_area']
+                'displayArea' => $o['displayArea']
             );
         }
 
