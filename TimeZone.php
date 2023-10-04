@@ -102,7 +102,8 @@ class Pman_Core_TimeZone extends Pman
                 'area' => $ar[1]
             );
 
-            self::$timezones[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
+            self::$timezones[$ce->Name]['timeOffset'] = substr($ce->timeOffset, 0, 1) == '-' ? $ce->timeOffset : '+' . $ce->timeOffset;
+
         }
 
         return self::$offsets;
