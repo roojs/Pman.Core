@@ -91,7 +91,7 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            $displayOffset = '(GMT ' . (substr($ce->timeOffset, 0, 1) == '-') ? '' : '+' . $ce->timeOffset . ')';
+            $displayOffset = '(GMT ' . ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset . ')';
 
             die($displayOffset);
 
