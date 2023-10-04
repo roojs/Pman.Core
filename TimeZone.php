@@ -102,7 +102,7 @@ class Pman_Core_TimeZone extends Pman
             self::$timezones[$ce->Name] = array(
                 'region' => $ar[0],
                 'area' => $ar[1],
-                'displayName' => $ce->Name . ' ' . $displayOffset,
+                'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
                 'displayArea' => $displayArea . ' ' . $displayOffset,
                 'timeOffset' => $timeOffset,
                 'decimalOffset' => $offsetAr[0] + (($offsetAr[0] < 0) ? (-1 * $offsetAr[1] / 60) : ($offsetAr[1] / 60))
