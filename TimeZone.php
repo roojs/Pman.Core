@@ -97,12 +97,12 @@ class Pman_Core_TimeZone extends Pman
                 continue;
             }
 
-            $timezones[$ce->Name] = array(
+            self::$timezones[$ce->Name] = array(
                 'region' => $ar[0],
                 'area' => $ar[1]
             )
 
-            self::$offsets[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
+            self::$timezones[$ce->Name] = substr($ce->offset, 0, 1) == '-' ? $ce->offset : '+' . $ce->offset;
         }
 
         return self::$offsets;
