@@ -20,11 +20,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     function assignQueues($notify)
     {
          
-        $ns = DB_DataObject::factory('core_notify_server');
-        $ns->poolname = $notify->poolname;
-        $ns->is_active = 1;
-        $ns->orderBy('id ASC');
-        $ids = $ns->fetchAll('id' );
+        
+        $ids = $this->availableServerIds($notify);
         
         
         if (empty($ids)) {
@@ -98,9 +95,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     id IN (". implode(",', $nids"). ')'
             );
         }
-        
-        
-          
+         
         
     }
     function getCurrent($notify)
@@ -115,5 +110,34 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns->find(true);
         return $ns;
     }
-      
+    
+    function availableServerIds($notify)
+    {
+        $ns = DB_DataObject::factory('core_notify_server');
+        $ns->poolname = $notify->poolname;
+        $ns->is_active = 1;
+        $ns->orderBy('id ASC');
+        return  $ns->fetchAll('id' );
+        
+    }
+    
+    function updateNotifyServer($notify, $cn, $exclude = -1)
+    {
+        $w = DB_DataObject::factory($cn->tableName());
+        $w->get($cn->id);
+        
+        
+        $me = $this->getCurrent($notify);
+        $ids = $this->availableServerIds($notify);
+        
+        $newid = $ids[ (array_search($me->id, $ids) +1)  %  count($ids) ];
+        
+        // next server..
+        $pp = clone($w);
+        $w->server_id = $newid;
+                    
+        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
+        $w->update($pp);
+        
+    }
 }
