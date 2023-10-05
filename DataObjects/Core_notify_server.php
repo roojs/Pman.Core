@@ -121,7 +121,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyServer($notify, $cn, $exclude = -1)
+    function updateNotifyToNextServer($notify, $cn, $exclude = -1)
     {
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
