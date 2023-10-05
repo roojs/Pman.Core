@@ -422,61 +422,9 @@ class Pman_Core_Notify extends Pman
     
     function assignQueues()
     {
-        $ff = HTML_FlexyFramework::get();
         
-        if (empty($ff->Core_Notify['servers'])) {
-            return;
-        }
-        
-        if (isset($ff->Core_Notify['servers-non-pool'][gethostname()])) {
-            return; 
-        }
-        
-        if (!isset($ff->Core_Notify['servers'][gethostname()])) {
-            
-            $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
-        }
-        // only run this on the main server...
-        if (array_search(gethostname(),array_keys($ff->Core_Notify['servers'])) > 0) {
-            return;
-        }
-        
-        $num_servers = count(array_keys($ff->Core_Notify['servers']));
-        $p = DB_DataObject::factory($this->table);
-        $p->whereAdd("
-                sent < '2000-01-01'
-                and
-                event_id = 0
-                and
-                act_start < NOW() +  INTERVAL 3 HOUR 
-                and
-                server_id < 0"
-            
-        );
-        if ($p->count() < 1) {
-            return;
-        }
-         $p = DB_DataObject::factory($this->table);
-        // 6 seconds on this machne...
-        $p->query("
-            UPDATE
-                {$this->table}
-            SET
-                server_id = ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})
-            WHERE
-                sent < '2000-01-01'
-                and
-                event_id = 0
-                and
-                act_start < NOW() +  INTERVAL 3 HOUR 
-                and
-                server_id < 0
-            ORDER BY
-                id ASC
-            LIMIT
-                10000
-        ");
-
+        DB_DataObject::Factory('core_notify_server')->assignQueues($this);
+         
         
     }
     
