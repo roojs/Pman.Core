@@ -126,6 +126,7 @@ class Pman_Core_Notify extends Pman
     
     var $server_id;
     
+    var $poolname = 'core';
     
     var $opts; 
     var $force = false;
