@@ -124,7 +124,7 @@ class Pman_Core_Notify extends Pman
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
     
-    var $server_id;
+    var $server;  // core_notify_server
     
     var $poolname = 'core';
     
