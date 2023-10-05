@@ -24,16 +24,17 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns->poolname = $notify->poolname;
         $ns->is_active = 1;
         $ns->orderBy('id ASC');
-        $map = $ns->fetchAll('id' ,'hostname' );
-        $ids = array_keys($map);
+        $ids = $ns->fetchAll('id' );
+        
         
         if (empty($ids)) {
             $notify->jerr("no configured servers in core_notify_server for poolname = {$notify->poolname}");
             
         }
+        $self = $this->getCurrent($notify);
         
         // only run this on the first server...
-        if ($map[gethostname()] != $ids[0]) {
+        if ($self->id != $ids[0]) {
             return; 
         }
         foreach($ids as $rn) {
