@@ -194,13 +194,7 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
-        if (!empty($ff->Core_Notify['servers']) && empty($ff->Core_Notify['servers-non-pool'][gethostname()])) {
-            
-            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
-                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
-            }
-            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
-        }
+        
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
