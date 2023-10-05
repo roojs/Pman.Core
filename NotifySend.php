@@ -257,6 +257,7 @@ class Pman_Core_NotifySend extends Pman
                     ."\n");
         }
         
+         
         
         if (isset($email['later'])) {
             $old = clone($w);
@@ -654,7 +655,8 @@ class Pman_Core_NotifySend extends Pman
             echo "calling :" . get_class($object) . '::' .$m . "\n";
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
-                
+        // fallback if evtype is empty..
+        
         if (method_exists($object, 'toMailerData')) {
             return $object->toMailerData(array(
                 'rcpts'=>$rcpt,
@@ -663,8 +665,12 @@ class Pman_Core_NotifySend extends Pman
             //var_Dump($object);
             //exit;
         }
+        if (method_exists($object, 'toEmail')) {
+            return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
+        }
+        // no way to send this.. - this needs to handle core_notify how we have used it for the approval stuff..
         
-        return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
+        return false;
     }
     
     function debug($str)
