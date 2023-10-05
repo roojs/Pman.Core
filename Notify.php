@@ -191,6 +191,9 @@ class Pman_Core_Notify extends Pman
         
         
         $ff = HTML_FlexyFramework::get();
+        
+        
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
         if (!empty($ff->Core_Notify['servers']) && empty($ff->Core_Notify['servers-non-pool'][gethostname()])) {
             
             if (!isset($ff->Core_Notify['servers'][gethostname()])) {
