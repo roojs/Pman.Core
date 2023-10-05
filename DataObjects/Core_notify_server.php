@@ -28,7 +28,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ids = array_keys($map);
         
         if (empty($ids)) {
-            $this->jerr("no configured servers in core_notify_server for poolname = {$notify->poolname}");
+            $notify->jerr("no configured servers in core_notify_server for poolname = {$notify->poolname}");
             
         }
         
@@ -102,7 +102,21 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
           
         
     }
-    
-    
+    function getCurrent($notify)
+    {
+        $ns = DB_DataObject::factory('core_notify_server');
+        $ns->poolname = $notify->poolname;
+        $ns->is_active = 1;
+        $ns->hostname = gethostname();
+        if (!$ns->count()) {
+            $notify->jerr()
+        }
+      if (!empty($ff->Core_Notify['servers']) && empty($ff->Core_Notify['servers-non-pool'][gethostname()])) {
+            
+            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
+                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
+            }
+            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+        }
     
 }
