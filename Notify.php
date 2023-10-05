@@ -190,7 +190,8 @@ class Pman_Core_Notify extends Pman
         
         
         $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->Core_Notify['servers'])) {
+        if (!empty($ff->Core_Notify['servers']) && empty($ff->Core_Notify['servers-non-pool'][gethostname()])) {
+            
             if (!isset($ff->Core_Notify['servers'][gethostname()])) {
                 $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
             }
