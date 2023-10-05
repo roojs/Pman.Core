@@ -68,7 +68,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $up[ $ids[$r] ][] = $id;
         }
         foreach($up as $sid => $nids) {
-            $p = DB_DataObject::factory($this->table);
+            $p = DB_DataObject::factory($notify->table);
             $p->query("
                 UPDATE
                     {$this->table}
