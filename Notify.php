@@ -427,7 +427,12 @@ class Pman_Core_Notify extends Pman
             return;
         }
         
+        if (isset($ff->Core_Notify['servers-non-pool'][gethostname()])) {
+            return; 
+        }
+        
         if (!isset($ff->Core_Notify['servers'][gethostname()])) {
+            
             $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
         }
         // only run this on the main server...
