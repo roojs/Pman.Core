@@ -42,6 +42,25 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $num_servers = count($ids);
         
+        if ($num_servers == 1) {
+            $p = DB_DataObject::factory($notify->table);
+            $p->query("
+                UPDATE
+                    {$this->table}
+                SET
+                    server_id = {$ids[0]}
+                WHERE
+                    sent < '2000-01-01'
+                    and
+                    event_id = 0
+                    and
+                    act_start < NOW() +  INTERVAL 3 HOUR 
+                    and
+                    server_id < 0
+            ");
+            return;
+        }
+        
         // ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})
         
         
