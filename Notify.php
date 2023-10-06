@@ -130,6 +130,9 @@ class Pman_Core_Notify extends Pman
     
     var $opts; 
     var $force = false;
+    
+    var $clear_interval = '1 WEEK' // how long to clear the old queue of items.
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -194,6 +197,10 @@ class Pman_Core_Notify extends Pman
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
         
         $this->server->assignQueues($this);
+        
+        
+        $this->clearOld('')
+        
         
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
@@ -586,7 +593,41 @@ class Pman_Core_Notify extends Pman
         $this->domain_queue = false;
         return $ret;
     }
-    
+    function clearOld($interval)
+     {
+          if ($this->server->isFirstServer()) {
+            $p = DB_DataObject::factory($this->table);
+            $p->whereAdd("
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW() - INTERVAL {$interval}
+            ");
+           // $p->limit(1000);
+            if ($p->count()) {
+                $ev = $this->addEvent('NOTIFY', false, "RETRY TIME EXCEEDED");
+                $p = DB_DataObject::factory($this->table);
+                $p->query("
+                    UPDATE
+                        {$this->table}
+                    SET
+                        sent = NOW(),
+                        msgid = '',
+                        event_id = {$ev->id}
+                    WHERE
+                        sent < '2000-01-01'
+                        and
+                        event_id = 0
+                        and
+                        act_start < NOW() - INTERVAL 3 DAY
+                    LIMIT
+                        1000
+                ");
+                
+            }
+        }
+     }
     
 
     function output()
