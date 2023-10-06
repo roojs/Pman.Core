@@ -136,23 +136,38 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn, $exclude = -1)
+    function updateNotifyToNextServer( $cn, $email )
     {
         // fixme - this should take into account blacklisted - and return false if no more servers are available
         
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
         
-        $ids = $this->availableServerIds();
+        $servers = $this->availableServerIds();
+        $start = 0;
+        foreach($servers as $i => $s) {
+            if ($s->id == $this->id) {
+                $start = $i;
+            }
+        }
         
-        $start = array_search($this->id, $ids);
-        $offset = $start+1;
-        while ($offset  != )
-        $newid = $ids[ (array_search($this->id, $ids) +1)  %  count($ids) ];
+        $offset = ($start + 1)  % count($ids);
+        $good = false;
+        while ($offset  != $start) {
+            $s = $servers[$offset];
+            if (!$s->isBlacklisted($email)) {
+                $good = $s;
+                break;
+            }
+        }
+        if ($good == false) {
+            return false;
+        }
+        
         
         // next server..
         $pp = clone($w);
-        $w->server_id = $newid;
+        $w->server_id = $good->id;
                     
         $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
         $w->update($pp);
