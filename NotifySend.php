@@ -138,7 +138,7 @@ class Pman_Core_NotifySend extends Pman
              
             $ev = $this->addEvent('NOTIFY', $w,   "Notification event cleared (underlying object does not exist)" );
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            $this->errorHandler(  $ev->remarks);
         }
      
         
@@ -148,14 +148,14 @@ class Pman_Core_NotifySend extends Pman
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
              $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            $this->errorHandler(  $ev->remarks);
         }
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            $this->errorHandler(  $ev->remarks);
         }
         
         // let's work out the last notification sent to this user..
@@ -201,7 +201,7 @@ class Pman_Core_NotifySend extends Pman
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            $this->errorHandler( $ev->remarks);
         }
         if (is_a($email, 'PEAR_Error')) {
             $email =array(
@@ -220,7 +220,7 @@ class Pman_Core_NotifySend extends Pman
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ? $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            $this->errorHandler(  $ev->remarks);
         }
         
          
@@ -229,7 +229,7 @@ class Pman_Core_NotifySend extends Pman
             
             $this->server->updateNotifyToNextServer($w, $email['later'],true);
              
-            $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
+            $this->errorHandler("Delivery postponed by email creator to {$email['later']}");
         }
         
          
@@ -270,7 +270,7 @@ class Pman_Core_NotifySend extends Pman
         if (!Validate::email($p->email, true)) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
+            $this->errorHandler($ev->remarks);
             
         }
         
@@ -308,12 +308,12 @@ class Pman_Core_NotifySend extends Pman
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
-                $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
+                $this->errorHandler($ev->remarks);
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
+            $this->errorHandler($ev->remarks);
             
             
         }
@@ -324,7 +324,7 @@ class Pman_Core_NotifySend extends Pman
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 3 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
             $w->flagDone($ev, '');
-            $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
+            $this->errorHandler(  $ev->remarks);
         }
         
         
@@ -400,7 +400,7 @@ class Pman_Core_NotifySend extends Pman
                     
                     if($core_notify->count()){
                         $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
-                        $this->errorHandler(date('Y-m-d h:i:s ') . " Too many emails sent by {$dom} - requeing");
+                        $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
                      
                     
@@ -458,7 +458,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
                  
-                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT {$w->id} - {$w->remarks}", true);
+                $this->errorHandler( " SENT {$w->id} - {$w->remarks}", true);
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -485,48 +485,51 @@ class Pman_Core_NotifySend extends Pman
                 
                 $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
                 
-                $this->errorHandler(date('Y-m-d h:i:s') . ' ' . $ev->remarks);
+                $this->errorHandler(  $ev->remarks);
             }
+            
             $fail = true;
             break;
         }
-        if ($fail || $next_try_min > (2*24*60)) {
-        // fail.. = log and give up..
-            $errmsg=  $fail ? ($res->userinfo['smtpcode'] . ': ' .$res->toString()) :  " - UNKNOWN ERROR";
+        
+        // after trying all mxs - could not connect...
+        if  (!$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
+            
+            $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
-            $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .
-                       $errmsg);
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->domain_id = $core_domain->id;
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s') . ' - FAILED - '. ($fail ? $res->toString() : "RETRY TIME EXCEEDED\n"));
+            $ev = $this->addEvent('NOTIFYFAIL', $w,  "RETRY TIME EXCEEDED - " .  $errmsg);
+            $w->flagDone($ev, '');
+            $this->errorHandler( $ev->remarks);
         }
         
-        // handle no host availalbe forever...
-        if (strtotime($w->act_start) < strtotime('NOW - 3 DAYS')) {
-            $ev = $this->addEvent('NOTIFYFAIL', $w, "RETRY TIME EXCEEDED - ". $p->email);
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->domain_id = $core_domain->id;
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED - RETRY TIME EXCEEDED\n");
+        if ($fail) { //// !!!!<<< BLACKLIST DETECT?
+        // fail.. = log and give up..
+            $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
+            if (isset($res->userinfo['smtptext'])) {
+                $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+            }
+            
+            $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
+            $w->flagDone($ev, '');
+            
+            $this->errorHandler( $ev->remarks);
         }
         
+        // at this point we just could not find any MX records..
         
-        $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
-        $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
         
-        $this->updateServer($w);
+        // try again.
         
-        $w->domain_id = $core_domain->id;
-        $w->update($ww);
-        $this->errorHandler(date('Y-m-d h:i:s') ." - NO HOST AVAILABLE\n");
+        $ev = $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
+        
+        $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+
+        
+         
+        $this->errorHandler($ev->remarks);
 
         
     }
@@ -636,7 +639,7 @@ class Pman_Core_NotifySend extends Pman
             throw new Pman_Core_NotifySend_Exception_Fail($msg);
         }
         
-        die($msg ."\n");
+        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
         
         
     }
