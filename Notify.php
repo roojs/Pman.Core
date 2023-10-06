@@ -131,7 +131,7 @@ class Pman_Core_Notify extends Pman
     var $opts; 
     var $force = false;
     
-    var $clear_interval = '1 WEEK' // how long to clear the old queue of items.
+    var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
     
     function getAuth()
     {
@@ -593,7 +593,7 @@ class Pman_Core_Notify extends Pman
         $this->domain_queue = false;
         return $ret;
     }
-    function clearOld($interval)
+    function clearOld()
      {
           if ($this->server->isFirstServer()) {
             $p = DB_DataObject::factory($this->table);
@@ -602,7 +602,7 @@ class Pman_Core_Notify extends Pman
                 and
                 event_id = 0
                 and
-                act_start < NOW() - INTERVAL {$interval}
+                act_start < NOW() - INTERVAL {$this->clear_interval}
             ");
            // $p->limit(1000);
             if ($p->count()) {
@@ -620,7 +620,7 @@ class Pman_Core_Notify extends Pman
                         and
                         event_id = 0
                         and
-                        act_start < NOW() - INTERVAL 3 DAY
+                        act_start < NOW() - INTERVAL {$this->clear_interval}
                     LIMIT
                         1000
                 ");
