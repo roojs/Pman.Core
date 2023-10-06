@@ -221,8 +221,12 @@ class Pman_Core_NotifySend extends Pman
         
         if (isset($email['later'])) {
             
-            
-            $this->server->updateNotifyToNextServer($w, $email['later'])
+            if (false == $this->server->updateNotifyToNextServer($w, $email['later'])) {
+                // we could not find another server - we can try again.
+                $pp = clone($w);
+                $w->act_when = $email['later'];
+                $w->update($pp);
+            }
  
             $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
         }
