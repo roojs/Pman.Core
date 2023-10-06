@@ -337,19 +337,10 @@ class Pman_Core_Notify extends Pman
     }
     
     
-    function isBlacklisted($email)
-    {
-        return $this->server->isBlacklisted(); 
-    }
+   
     
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
-    function updateServer($ww, $exclude = -1)
-    {
-        return $this->server->updateNotifyToNextServer( $ww, $email);
-        
-        
-         
-    }
+     
   
     
     function generateNotifications()
