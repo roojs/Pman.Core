@@ -71,6 +71,8 @@ class Pman_Core_NotifySend extends Pman
     );
     var $table = 'core_notify';
     var $error_handler = 'die';
+    var $poolname = 'core';
+    var $server; // core_notify_server
     
     function getAuth()
     {
@@ -106,6 +108,10 @@ class Pman_Core_NotifySend extends Pman
              
             $this->errorHandler("already sent - repeat to early\n");
         }
+        
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+
+        
         if (!empty($opts['debug'])) {
             print_r($w);
             $ff = HTML_FlexyFramework::get();
@@ -349,7 +355,7 @@ class Pman_Core_NotifySend extends Pman
         }
          
         
-        $this->initHelo();
+        $this->server->initHelo();
         
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
@@ -680,25 +686,6 @@ class Pman_Core_NotifySend extends Pman
          
     }
     
-     function initHelo()
-    {
-        $ff = HTML_FlexyFramework::get();
-        
-        if (isset($ff->Core_Notify['servers-non-pool'])  &&
-            isset($ff->Core_Notify['servers-non-pool'][gethostname()]) &&
-            isset($ff->Core_Notify['servers-non-pool'][gethostname()]['helo']) ) {
-            $ff->Mail['helo'] = $ff->Core_Notify['servers-non-pool'][gethostname()]['helo'];
-            return;
-        }
-        
-        if (empty($ff->Core_Notify['servers'])) {
-            return;
-        }
-        if (!isset($ff->Core_Notify['servers'][gethostname()]) || !isset($ff->Core_Notify['servers'][gethostname()]['helo']) ) {
-            $this->jerr("Core_Notify['servers']['" . gethostname() . "']['helo'] not set");
-        }
-        $ff->Mail['helo'] = $ff->Core_Notify['servers'][gethostname()]['helo'];
-        
-    }
+
     
 }
