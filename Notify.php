@@ -284,10 +284,13 @@ class Pman_Core_Notify extends Pman
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             
-            $black = $this->isBlacklisted($email);
+            $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
-                $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
-                $this->updateServer($p, $black);
+                
+                if (false === $this->server->updateNotifyToNextServer($p)) {
+                    $p->updateState("????");
+                }
+                
                 continue;
             }
              
@@ -313,6 +316,7 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
+                
                 $this->updateServer($p);
             }
         }
@@ -341,7 +345,7 @@ class Pman_Core_Notify extends Pman
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
     function updateServer($ww, $exclude = -1)
     {
-        return $this->server->updateNotifyToNextServer( $ww, $exclude);
+        return $this->server->updateNotifyToNextServer( $ww, $email);
         
         
          
