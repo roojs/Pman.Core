@@ -227,13 +227,8 @@ class Pman_Core_NotifySend extends Pman
         
         if (isset($email['later'])) {
             
-            if (false == $this->server->updateNotifyToNextServer($w, $email['later'])) {
-                // we could not find another server - we can try again.
-                $pp = clone($w);
-                $w->act_when = $email['later'];
-                $w->update($pp);
-            }
- 
+            $this->server->updateNotifyToNextServer($w, $email['later'],true);
+             
             $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
         }
         
@@ -487,13 +482,10 @@ class Pman_Core_NotifySend extends Pman
                 }
                 //print_r($res);
                 $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
-                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
-                $this->updateServer($w);
-                $w->domain_id = $core_domain->id;
-                $w->update($ww);
                 
+                $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
                 
-                $this->errorHandler(date('Y-m-d h:i:s') . " - GREYLISTED -  $errmsg \n");
+                $this->errorHandler(date('Y-m-d h:i:s') . ' ' . $ev->remarks);
             }
             $fail = true;
             break;
