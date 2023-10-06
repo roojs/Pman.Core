@@ -316,8 +316,10 @@ class Pman_Core_Notify extends Pman
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
+                if (false === $this->server->updateNotifyToNextServer($p)) {
+                    $p->updateState("????");
+                }
                 
-                $this->updateServer($p);
             }
         }
         
