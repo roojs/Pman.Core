@@ -39,6 +39,18 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return $ns;
     }
     
+    
+    function isFirstServer()
+    {
+        $servers = $this->availableServers();
+        if (empty($servers)) {
+            return false;
+        }
+        // only run this on the first server...
+        return $this->id == $servers[0]->id;
+    }
+    
+    
     // called on current server.
     function assignQueues($notify)
     {
