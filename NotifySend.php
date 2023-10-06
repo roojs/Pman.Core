@@ -440,40 +440,30 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $this->addEvent($successEventName, $w, "{$w->to_email} - {$email['headers']['Subject']}");
                 
                 $ev->writeEventLog($this->debug_str);
+                 
+                $w->flagDone($ev,$email['headers']['Message-Id']);
                 
-                if(strtotime($w->act_when) > strtotime("NOW")){
-                    $w->act_when = date('Y-m-d H:i:s');
-                }
-                
-                $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-                $w->msgid = $email['headers']['Message-Id'];
-                $w->event_id = $ev->id; // sent ok.. - no need to record it..
-                $w->domain_id = $core_domain->id;
-                $w->update($ww);
-                
+                 
                 // enable cc in notify..
                 if (!empty($email['headers']['Cc'])) {
                     $cmailer = Mail::factory('smtp',  isset($ff->Mail) ? $ff->Mail : array() );
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $cmailer->send($email['headers']['Cc'],
-                                  $email['headers'], $email['body']);
+                    $cmailer->send($email['headers']['Cc'],    $email['headers'], $email['body']);
                     
                 }
                 
                 if (!empty($email['bcc'])) {
                     $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
-                    $res = $cmailer->send($email['bcc'],
-                                  $email['headers'], $email['body']);
+                    $res = $cmailer->send($email['bcc'],  $email['headers'], $email['body']);
                     if (!$res || is_a($res, 'PEAR_Error')) {
                         echo "could not send bcc..\n";
                     } else {
                         echo "Sent BCC to {$email['bcc']}\n";
                     }
                 }
-                
-                
-                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT {$w->id} - {$w->to_email} \n", true);
+                 
+                $this->errorHandler(date('Y-m-d h:i:s') . " - SENT {$w->id} - {$w->remarks}", true);
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
