@@ -17,6 +17,9 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
     public $added_dt;
     
     
-    
+    function messageIsBlacklisted($str)
+    {
+        
+    }
     
 }
