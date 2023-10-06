@@ -15,5 +15,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-    
+    function loadOrCreate($dom)
+    {
+        $cd = DB_DataObject::Factory($dom);
+        if ($cd->get('domain', $dom)) {
+            return $cd;
+        }
+        $cd->domain = $dom;
+        $cd->insert();
+        return $cd;
+    }
 }
