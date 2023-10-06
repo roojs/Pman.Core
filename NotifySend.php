@@ -131,7 +131,7 @@ class Pman_Core_NotifySend extends Pman
         if ($o === false)  {
              
             $ev = $this->addEvent('NOTIFY', $w,   "Notification event cleared (underlying object does not exist)" );
-            $w->flagSent($ev, '');
+            $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
      
@@ -141,14 +141,14 @@ class Pman_Core_NotifySend extends Pman
         
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
-             $w->flagSent($ev, '');
+             $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
-            $w->flagSent($ev, '');
+            $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         
@@ -194,7 +194,7 @@ class Pman_Core_NotifySend extends Pman
         
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
-            $w->flagSent($ev, '');
+            $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         if (is_a($email, 'PEAR_Error')) {
@@ -213,7 +213,7 @@ class Pman_Core_NotifySend extends Pman
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
             $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ? $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
-            $w->flagSent($ev, '');
+            $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         
@@ -256,16 +256,19 @@ class Pman_Core_NotifySend extends Pman
             // since some of them have spaces?!?!
         $p->email = trim($p->email);
       
+        // if to_email has not been set!?
+        if (empty($w->to_email) && $w->to_email != $p->email) {
+            $ww = clone($w);
+            $ww->to_email = $p->email;
+            $ww->update($w);
+            $w = clone($ww);
+        }
+      
         
         require_once 'Validate.php';
         if (!Validate::email($p->email, true)) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
-            $ww = clone($w);
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->to_email = $p->email; 
-            $w->update($ww);
+            $w->flagDone($ev, '');
             $this->errorHandler(date('Y-m-d h:i:s ') . "INVALID ADDRESS: " . $p->email. "\n");
             
         }
@@ -303,19 +306,13 @@ class Pman_Core_NotifySend extends Pman
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
-                $w->act_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
-                $this->updateServer($w);
-                $w->update($ww);
-                $this->errorHandler(date('Y-m-d h:i:s') . " - MX LOOKUP FAILED {$dom}\n");
+                $w->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
+                $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
-            $w->sent =   $w->sqlValue('NOW()'); // why not updated - used to leave as is?
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->to_email = $p->email; 
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  BAD DOMAIN - {$p->email} \n");
+            $w->flagDone($ev, '');
+            $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
             
             
         }
