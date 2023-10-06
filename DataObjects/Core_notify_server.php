@@ -136,7 +136,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false)
     {
         // fixme - this should take into account blacklisted - and return false if no more servers are available
         $email = empty($cn->to_email) ? ($cn->person() ? $cn->person()->email : $cn->to_email) : $cn->to_email;
@@ -161,6 +161,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 break;
             }
         }
+        if ($good == false && $allow_same) {
+            $good = $this;
+        }
+        
         if ($good == false) {
             return false;
         }
@@ -199,7 +203,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return ralse; 
     }
-    
+    function initHelo()
+    {
+        
+        $ff->Mail['helo'] = $this->helo;
+        
+    }
     
     
 }
