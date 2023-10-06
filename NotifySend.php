@@ -345,15 +345,7 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
-        $core_domain = DB_DataObject::factory('core_domain');
-        if(!$core_domain->get('domain', $dom)){
-            $core_domain = DB_DataObject::factory('core_domain');
-            $core_domain->setFrom(array(
-                'domain' => $dom
-            ));
-            $core_domain->insert();
-        }
-         
+        $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
         
         $this->server->initHelo();
         
@@ -407,6 +399,7 @@ class Pman_Core_NotifySend extends Pman
                     
                     $core_notify = DB_DataObject::factory($this->table);
                     $core_notify->domain_id = $core_domain->id;
+                    $core_notify->server_id = $this->server->id;
                     $core_notify->whereAdd("
                         sent >= NOW() - INTERVAL $seconds SECOND
                     ");
