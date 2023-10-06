@@ -516,7 +516,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             
             if ($res->userinfo['smtpcode'] == 550) {
-                $this->server->parseResponse($errmsg, $core_domain);
+                $this->server->checkSmtpResponse($errmsg, $core_domain);
             }
             
 
