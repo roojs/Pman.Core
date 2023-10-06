@@ -119,7 +119,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
-            if (!$sent) { 
+            if (!$sent) {   // fix sent.
                 $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
                 $w->update($ww);
             }    
@@ -130,13 +130,13 @@ class Pman_Core_NotifySend extends Pman
         
         if ($o === false)  {
             
+            
+            
+            
             $ev = $this->addEvent('NOTIFY', $w,
-                            "Notification event cleared (underlying object does not exist)" );;
-            $ww = clone($w);
-            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->update($ww);
+                            "Notification event cleared (underlying object does not exist)" );
+            $w->flagSent($ev, '');
+             
             $this->errorHandler(date('Y-m-d h:i:s ') . 
                      "Notification event cleared (underlying object does not exist)" 
                     ."\n");
@@ -149,30 +149,22 @@ class Pman_Core_NotifySend extends Pman
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (not user not active any more)" );;
-            $ww = clone($w);
-            $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->update($ww);
+             $w->flagSent($ev, '');
+           
             $this->errorHandler(date('Y-m-d h:i:s ') . 
                      "Notification event cleared (not user not active any more)" 
                     ."\n");
-            $this->errorHandler("message has been sent already.\n");
         }
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
             $ev = $this->addEvent('NOTIFY', $w,
                             "Notification event cleared (user has to many failures)" );;
-            $ww = clone($w);
-            $w->sent = $w->sqlValue('NOW()'); // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s ') . 
-                     "Notification event cleared (user has to many failures)" 
-                    ."\n");
-            $this->errorHandler("user has to many failures.\n");
+            $w->flagSent($ev, '');
+            
+            
+            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
+            
         }
         
         // let's work out the last notification sent to this user..
@@ -704,7 +696,7 @@ class Pman_Core_NotifySend extends Pman
             throw new Pman_Core_NotifySend_Exception_Fail($msg);
         }
         
-        die($msg);
+        die($msg ."\n");
         
         
     }
