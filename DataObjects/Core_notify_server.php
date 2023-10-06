@@ -136,7 +136,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn )
+    function updateNotifyToNextServer( $cn  $when = false)
     {
         // fixme - this should take into account blacklisted - and return false if no more servers are available
         $email = empty($cn->to_email) ? ($cn->person() ? $cn->person()->email : $cn->to_email) : $cn->to_email;
@@ -170,7 +170,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $pp = clone($w);
         $w->server_id = $good->id;
                     
-        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
+        $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
         $w->update($pp);
         return true;
     }
@@ -179,10 +179,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     function isBlacklisted($email)
     {
         // return current server id..
+        static $cache = array();
         
         // get the domain..
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
+        if (isset($cache[$dom])) {
+            return $cache[$dom];
+        }
         
         $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
         
@@ -190,16 +194,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
         if ($bl->count()) {
+            $cache[$dom] = true;
             return true;
         }
         
-        
-        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
-        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
-            return false;
-        }
-        //$this->logecho("RETURN BLACKLISTED TRUE");
-        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+        return ralse; 
     }
     
     
