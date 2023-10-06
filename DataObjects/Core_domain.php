@@ -18,12 +18,19 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function loadOrCreate($dom)
     {
         // should we validate domain?
+        static $cache = array();
+        if (isset($cache[$dom])) {
+            return $cache[$dom];
+        }
+        
         $cd = DB_DataObject::Factory($dom);
         if ($cd->get('domain', $dom)) {
+            $cache[$dom] = $cd;
             return $cd;
         }
         $cd->domain = $dom;
         $cd->insert();
+        $cache[$dom] = $cd;
         return $cd;
     }
 }
