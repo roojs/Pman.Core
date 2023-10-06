@@ -182,9 +182,7 @@ class Pman_Core_Notify extends Pman
         
         $this->generateNotifications();
         
-        $this->assignQueues();
-        
-        //DB_DataObject::debugLevel(1);
+         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         $total = 0;
         
@@ -194,6 +192,8 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+        
+        $this->server->assignQueues($this);
         
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
@@ -377,13 +377,7 @@ class Pman_Core_Notify extends Pman
     
     }
     
-    function assignQueues()
-    {
-        
-        DB_DataObject::Factory('core_notify_server')->assignQueues($this);
-         
-        
-    }
+     
     
     function run($id, $email='', $cmdOpts="")
     {
