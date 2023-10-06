@@ -335,50 +335,14 @@ class Pman_Core_Notify extends Pman
     
     function isBlacklisted($email)
     {
-        // return current server id..
-        $ff = HTML_FlexyFramework::get();
-        //$this->logecho("CHECK BLACKLISTED - {$email}");
-        if (empty($ff->Core_Notify['servers'])) {
-            return false;
-        }
-      
-        if (!isset($ff->Core_Notify['servers'][gethostname()]['blacklisted'])) {
-            return false;
-        }
-       
-        // get the domain..
-        $ea = explode('@',$email);
-        $dom = strtolower(array_pop($ea));
-        
-        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
-        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
-            return false;
-        }
-        //$this->logecho("RETURN BLACKLISTED TRUE");
-        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+        return $this->server->isBlacklisted(); 
     }
     
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
     function updateServer($ww, $exclude = -1)
     {
-        $w = DB_DataObject::factory($ww->tableName());
-        $w->get($ww->id);
+        return $this->server->updateNotifyToNextServer( $ww, $exclude);
         
-        $ff = HTML_FlexyFramework::get();
-        static $num = 0;
-        if (empty($ff->Core_Notify['servers'])) {
-            return;
-        }
-        $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
-        if ($exclude == $num ) {
-            $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
-        }
-        // next server..
-        $pp = clone($w);
-        $w->server_id = $num;
-                    
-        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
-        $w->update($pp);
         
          
     }
