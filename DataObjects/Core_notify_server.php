@@ -136,7 +136,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn  $when = false)
+    function updateNotifyToNextServer( $cn , $when = false)
     {
         // fixme - this should take into account blacklisted - and return false if no more servers are available
         $email = empty($cn->to_email) ? ($cn->person() ? $cn->person()->email : $cn->to_email) : $cn->to_email;
@@ -168,8 +168,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // next server..
         $pp = clone($w);
-        $w->server_id = $good->id;
-                    
+        $w->server_id = $good->id;   
         $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
         $w->update($pp);
         return true;
