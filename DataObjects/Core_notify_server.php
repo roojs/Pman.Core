@@ -44,7 +44,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
          
         
-        $this->availableServerIds();
+        $servers = $this->availableServers();
+        $ids = array();
+        foreach($servers as $s) {
+            $ids[] = $s->id;
+        }
         
         
         if (empty($ids)) {
@@ -122,13 +126,13 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
         // called on current server.
 
-    function availableServerIds()
+    function availableServers()
     {
         $ns = DB_DataObject::factory('core_notify_server');
         $ns->poolname = $this->poolname;
         $ns->is_active = 1;
         $ns->orderBy('id ASC');
-        return  $ns->fetchAll('id' );
+        return  $ns->fetchAll();
         
     }
     
@@ -141,6 +145,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $ids = $this->availableServerIds();
         
+        $start = array_search($this->id, $ids);
+        $offset = $start+1;
+        while ($offset  != )
         $newid = $ids[ (array_search($this->id, $ids) +1)  %  count($ids) ];
         
         // next server..
