@@ -322,12 +322,8 @@ class Pman_Core_NotifySend extends Pman
         
         if (!$force && strtotime($w->act_start) <  strtotime('NOW - 3 DAY')) {
             $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - GIVE UP - ". $p->email );
-            $w->sent =  $w->sqlValue('NOW()'); 
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->to_email = $p->email; 
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s') . " - FAILED -  GAVE UP TO OLD - {$p->email} \n");
+            $w->flagDone($ev, '');
+            $this->errorHandler(date('Y-m-d h:i:s') . $ev->remarks);
         }
         
         
