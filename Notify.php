@@ -311,7 +311,7 @@ class Pman_Core_Notify extends Pman
             
             
         }
-         $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
+        $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
