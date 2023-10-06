@@ -17,6 +17,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     ###END_AUTOCODE
     function loadOrCreate($dom)
     {
+        // should we validate domain?
         $cd = DB_DataObject::Factory($dom);
         if ($cd->get('domain', $dom)) {
             return $cd;
