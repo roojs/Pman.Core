@@ -344,7 +344,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
-    
+    // after called do not rely on content as it includes NOW()
     function flagDone($event,$msgid)
     {
         $ww = clone($this);
