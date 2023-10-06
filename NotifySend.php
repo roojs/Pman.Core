@@ -261,14 +261,14 @@ class Pman_Core_NotifySend extends Pman
         
             // since some of them have spaces?!?!
         $p->email = trim($p->email);
-      
+        $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
+        $ww = clone($w);
+        $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
+        $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
-        if (empty($w->to_email) && $w->to_email != $p->email) {
-            $ww = clone($w);
-            $ww->to_email = $p->email;
-            $ww->update($w);
-            $w = clone($ww);
-        }
+        $ww->update($w); // if nothing has changed this will not do anything.
+        $w = clone($ww);
+    
       
         
         require_once 'Validate.php';
@@ -345,7 +345,6 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
-        $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
         
         $this->server->initHelo();
         
