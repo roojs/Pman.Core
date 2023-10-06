@@ -300,8 +300,7 @@ class Pman_Core_Notify extends Pman
                 // push it to a 'domain specific queue'
                 $this->logecho("REQUEING - maxed out that domain - {$email}");
                 $this->pushQueueDomain($p, $email);
-                  
-                
+                   
                 //sleep(3);
                 continue;
             }
