@@ -327,8 +327,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         
-        
-        $w->to_email = $p->email; 
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         // set act when if it's empty...
