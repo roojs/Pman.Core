@@ -129,17 +129,10 @@ class Pman_Core_NotifySend extends Pman
         $o = $w->object();
         
         if ($o === false)  {
-            
-            
-            
-            
-            $ev = $this->addEvent('NOTIFY', $w,
-                            "Notification event cleared (underlying object does not exist)" );
-            $w->flagSent($ev, '');
              
-            $this->errorHandler(date('Y-m-d h:i:s ') . 
-                     "Notification event cleared (underlying object does not exist)" 
-                    ."\n");
+            $ev = $this->addEvent('NOTIFY', $w,   "Notification event cleared (underlying object does not exist)" );
+            $w->flagSent($ev, '');
+            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
      
         
@@ -147,24 +140,16 @@ class Pman_Core_NotifySend extends Pman
         $p = $w->person();
         
         if (isset($p->active) && empty($p->active)) {
-            $ev = $this->addEvent('NOTIFY', $w,
-                            "Notification event cleared (not user not active any more)" );;
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
              $w->flagSent($ev, '');
-           
-            $this->errorHandler(date('Y-m-d h:i:s ') . 
-                     "Notification event cleared (not user not active any more)" 
-                    ."\n");
+            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
-            $ev = $this->addEvent('NOTIFY', $w,
-                            "Notification event cleared (user has to many failures)" );;
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             $w->flagSent($ev, '');
-            
-            
             $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
-            
         }
         
         // let's work out the last notification sent to this user..
@@ -208,17 +193,9 @@ class Pman_Core_NotifySend extends Pman
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
         
         if ($email === true)  {
-            
-            $ev = $this->addEvent('NOTIFY', $w,
-                            "Notification event cleared (not required any more)" );;
-            $ww = clone($w);
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s ') . 
-                     "Notification event cleared (not required any more)" 
-                    ."\n");
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
+            $w->flagSent($ev, '');
+            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         if (is_a($email, 'PEAR_Error')) {
             $email =array(
@@ -235,27 +212,18 @@ class Pman_Core_NotifySend extends Pman
          
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
-            $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ?
-                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
-            $ww = clone($w);
-            $w->sent = (!$w->sent || $w->sent == '0000-00-00 00:00:00') ? $w->sqlValue('NOW()') : $w->sent; // do not update if sent.....
-            $w->msgid = '';
-            $w->event_id = $ev->id;
-            $w->to_email = $p->email; 
-            $w->update($ww);
-            $this->errorHandler(date('Y-m-d h:i:s ') . 
-                    (isset($email['error'])  ?
-                            $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable)
-                    ."\n");
+            $ev = $this->addEvent('NOTIFYFAIL', $w, isset($email['error'])  ? $email['error'] : "INTERNAL ERROR  - We can not handle " . $w->ontable); 
+            $w->flagSent($ev, '');
+            $this->errorHandler(date('Y-m-d h:i:s ') . $ev->remarks);
         }
         
          
         
         if (isset($email['later'])) {
-            $old = clone($w);
-            $w->act_when = $email['later'];
-            $this->updateServer($w);
-            $w->update($old);
+            
+            
+            $this->server->updateNotifyToNextServer($w, $email['later'])
+ 
             $this->errorHandler(date('Y-m-d h:i:s ') . " Delivery postponed by email creator to {$email['later']}");
         }
         
