@@ -319,7 +319,6 @@ class Pman_Core_Notify extends Pman
                 if (false === $this->server->updateNotifyToNextServer($p)) {
                     $p->updateState("????");
                 }
-                
             }
         }
         
