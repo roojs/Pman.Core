@@ -209,6 +209,22 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ff->Mail['helo'] = $this->helo;
         
     }
-    
+    function checkSmtpResponse($errmsg, $core_domain)
+    {
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $this->id;
+        $bl->domain_id = $core_domain->id;
+        if ($bl->count()) {
+            return;
+        }
+        // dont have it..
+        if (!$bl->matchBlackList($errmsg)) {
+            return;
+        }
+        $bl->added_dt = $bl->sqlValue("NOW()");
+        $bl->insert();
+        
+        
+    }
     
 }
