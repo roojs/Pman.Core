@@ -134,6 +134,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     function updateNotifyToNextServer( $cn, $exclude = -1)
     {
+        // fixme - this should take into account blacklisted - and 
+        
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
         
@@ -147,6 +149,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     
         $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
         $w->update($pp);
-        
+        return true;
     }
 }
