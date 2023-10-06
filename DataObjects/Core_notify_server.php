@@ -17,21 +17,43 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $is_active;
     public $last_send;
     
+    // most services should call this first..
+    
+    function getCurrent($notify)
+    {
+        static $current = false;;
+        
+        if ($current !== false) {
+            return $current;
+        }
+        
+        $ns = DB_DataObject::factory('core_notify_server');
+        $ns->poolname = $notify->poolname;
+        $ns->is_active = 1;
+        $ns->hostname = gethostname();
+        if (!$ns->count()) {
+            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
+        }
+        $ns->find(true);
+        $current = $ns;
+        return $ns;
+    }
+    
+    // called on current server.
     function assignQueues($notify)
     {
          
         
-        $ids = $this->availableServerIds($notify);
+        $this->availableServerIds();
         
         
         if (empty($ids)) {
             $notify->jerr("no configured servers in core_notify_server for poolname = {$notify->poolname}");
             
         }
-        $self = $this->getCurrent($notify);
-        
+         
         // only run this on the first server...
-        if ($self->id != $ids[0]) {
+        if ($this->id != $ids[0]) {
             return; 
         }
         foreach($ids as $rn) {
@@ -44,7 +66,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $p = DB_DataObject::factory($notify->table);
             $p->query("
                 UPDATE
-                    {$this->table}
+                    {$notify->table}
                 SET
                     server_id = {$ids[0]}
                 WHERE
@@ -98,39 +120,26 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
          
         
     }
-    function getCurrent($notify)
+        // called on current server.
+
+    function availableServerIds()
     {
         $ns = DB_DataObject::factory('core_notify_server');
-        $ns->poolname = $notify->poolname;
-        $ns->is_active = 1;
-        $ns->hostname = gethostname();
-        if (!$ns->count()) {
-            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
-        }
-        $ns->find(true);
-        return $ns;
-    }
-    
-    function availableServerIds($notify)
-    {
-        $ns = DB_DataObject::factory('core_notify_server');
-        $ns->poolname = $notify->poolname;
+        $ns->poolname = $this->poolname;
         $ns->is_active = 1;
         $ns->orderBy('id ASC');
         return  $ns->fetchAll('id' );
         
     }
     
-    function updateNotifyToNextServer($notify, $cn, $exclude = -1)
+    function updateNotifyToNextServer( $cn, $exclude = -1)
     {
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
         
+        $ids = $this->availableServerIds();
         
-        $me = $this->getCurrent($notify);
-        $ids = $this->availableServerIds($notify);
-        
-        $newid = $ids[ (array_search($me->id, $ids) +1)  %  count($ids) ];
+        $newid = $ids[ (array_search($this->id, $ids) +1)  %  count($ids) ];
         
         // next server..
         $pp = clone($w);
