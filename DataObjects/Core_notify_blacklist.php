@@ -36,4 +36,13 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
         return false;
     }
     
+    // delete blacklists older than 1 week (and try again)
+    function prune()
+    {
+        $this->query("
+            DELETE FROM {$this->tableName()} where added_dt < NOW()  - 1 WEEK
+        ");
+            
+    }
+    
 }
