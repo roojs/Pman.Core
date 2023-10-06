@@ -122,6 +122,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             );
         }
          
+        DB_DataObject::factory("core_notify_blacklist")->prune();
         
     }
         // called on current server.
@@ -218,7 +219,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return;
         }
         // dont have it..
-        if (!$bl->matchBlackList($errmsg)) {
+        if (!$bl->messageIsBlacklisted($errmsg)) {
             return;
         }
         $bl->added_dt = $bl->sqlValue("NOW()");
