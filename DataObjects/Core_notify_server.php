@@ -151,4 +151,34 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w->update($pp);
         return true;
     }
+    
+    
+    function isBlacklisted($email)
+    {
+        // return current server id..
+        
+        // get the domain..
+        $ea = explode('@',$email);
+        $dom = strtolower(array_pop($ea));
+        
+        $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
+        
+        $bl = DB_DataObject::factory('core_notify_blacklist');
+        $bl->server_id = $this->id;
+        $bl->domain_id = $cd->id;
+        if ($bl->count()) {
+            return true;
+        }
+        
+        
+        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
+        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
+            return false;
+        }
+        //$this->logecho("RETURN BLACKLISTED TRUE");
+        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
+    }
+    
+    
+    
 }
