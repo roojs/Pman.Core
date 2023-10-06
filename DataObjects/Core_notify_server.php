@@ -136,10 +136,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn, $email )
+    function updateNotifyToNextServer( $cn )
     {
         // fixme - this should take into account blacklisted - and return false if no more servers are available
-        
+        $email = empty($cn->to_email) ? ($cn->person() ? $cn->person()->email : $cn->to_email) : $cn->to_email;
+
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
         
