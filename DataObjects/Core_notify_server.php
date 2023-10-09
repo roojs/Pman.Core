@@ -229,7 +229,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if ($bl->count()) {
             return;
         }
-        // dont have it..
+        // is it a blacklist message
         if (!$bl->messageIsBlacklisted($errmsg)) {
             return;
         }
