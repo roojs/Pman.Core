@@ -92,7 +92,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     and
                     act_start < NOW() +  INTERVAL 3 HOUR 
                     and
-                    server_id < 0
+                    server_id != {$ids[0]}
             ");
             return;
         }
@@ -109,9 +109,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 and
                 act_start < NOW() +  INTERVAL 3 HOUR 
                 and
-                server_id < 0"
-            
-        );
+                server_id NOT IN (" . implode(",", $ids) . ")
+        ");
         if ($p->count() < 1) {
             return;
         }
