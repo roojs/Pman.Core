@@ -21,6 +21,7 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
     {
         $match = array(
             '5.7.0 DT:SPM', // 163.com
+            `5.7.1 H:DYNB`, // some other black list
             'on our block list ',  // live.com
             'spameatingmonkey.net', // spameatingmonkey.net (users)
             'sender is listed on the block', // korian?
