@@ -40,7 +40,7 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
     function prune()
     {
         $this->query("
-            DELETE FROM {$this->tableName()} where added_dt < NOW()  - 1 WEEK
+            DELETE FROM {$this->tableName()} where added_dt < NOW()  - INTERVAL 1 WEEK
         ");
             
     }
