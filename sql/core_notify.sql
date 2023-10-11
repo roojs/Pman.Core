@@ -28,7 +28,7 @@ ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT ''
 
 -- ?? why added???  - probably need to document this..
 ALTER TABLE core_notify ADD COLUMN domain_id INT(11)  NOT NULL  DEFAULT 0;
-ALTER TABLE core_notify ADD COLUMN server_id INT(11) NOT NULL DEFAULT -1
+ALTER TABLE core_notify ADD COLUMN server_id INT(11) NOT NULL DEFAULT -1;
 
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
