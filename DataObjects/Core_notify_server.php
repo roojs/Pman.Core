@@ -117,7 +117,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $p->selectAdd();
         $p->selectAdd("id, ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})  as rn");
-        $kv = $p->fetchAll('id,rn');
+        $kv = $p->fetchAll('id','rn');
         foreach($kv as $id => $r) {
             $up[ $ids[$r] ][] = $id;
         }
