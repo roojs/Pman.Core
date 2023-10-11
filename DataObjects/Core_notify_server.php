@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
         
-        $servers = $this->availableServerIds();
+        $servers = $this->availableServers();
         $start = 0;
         foreach($servers as $i => $s) {
             if ($s->id == $this->id) {
