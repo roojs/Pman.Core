@@ -17,6 +17,62 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $is_active;
     public $last_send;
     
+    
+    
+    function  applyFilters($q, $au, $roo)
+    {
+        if (isset($q['_with_queue_size'])) {
+            $this->addQueueSize();
+        }
+    }
+    
+    
+    function addQueueSize()
+    {
+        // look for database links for server_id (which should find core_notify + others..)
+        $cn = get_class(DB_DataObject::factory('core_notify'));
+        $tables = array();
+        foreach($this->databaseLinks() as $tbl => $kv) {
+            foreach($kv as $k=>$v) {
+                if ($v != 'core_notify_server:id') {
+                    continue;
+                }
+                
+                $test = DB_DAtaObject::factory($tbl);
+                if (!is_a($test, $cn)) {
+                    break;
+                }
+                $tables[] = $tbl;
+            }
+        }
+        if (empty($tables)) {
+            die("OOPS - no tables for notify_server references");
+        }
+        $totals = array();
+        foreach($tables as $t) {
+            $totals[] = "
+                COALESCE((SELECT
+                    count(id)
+                FROM
+                    $t
+                WHERE
+                    server_id = core_notify_server.id
+                AND
+                    sent < '1970-01-01' OR sent IS NULL
+                 and
+                        event_id = 0
+                ),0)
+            ";
+        }
+        $this->selectAdd("(" . implode(" + ", $totals) . ") as in_queue ");
+        
+        
+        
+        
+        
+    }
+    
+    
     // most services should call this first..
     
     function getCurrent($notify)
