@@ -428,7 +428,7 @@ class Pman_Core_NotifySend extends Pman
         
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-             
+             $this->debug("GOT response to send: ". var_export($res,true)); 
             
             if ($res === true) {
                 // success....
