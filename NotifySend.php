@@ -428,6 +428,9 @@ class Pman_Core_NotifySend extends Pman
         
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            if (is_object($res)) {
+                $res->backtrace = array(); 
+            }
             $this->debug("GOT response to send: ". print_r($res,true)); 
             
             if ($res === true) {
@@ -484,7 +487,7 @@ class Pman_Core_NotifySend extends Pman
                     $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
                 //print_r($res);
-                $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
+                $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
                 $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
                 
