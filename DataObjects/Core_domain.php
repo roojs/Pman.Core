@@ -23,7 +23,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return $cache[$dom];
         }
         
-        $cd = DB_DataObject::Factory($dom);
+        $cd = DB_DataObject::Factory($this->tableName());
         if ($cd->get('domain', $dom)) {
             $cache[$dom] = $cd;
             return $cd;
