@@ -217,7 +217,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
     function initHelo()
     {
-        
+        $ff = HTML_FlexyFramework::get();
         $ff->Mail['helo'] = $this->helo;
         
     }
