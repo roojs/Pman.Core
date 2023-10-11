@@ -295,7 +295,9 @@ class Pman_Core_Notify extends Pman
             if ($black !== false) {
                 
                 if (false === $this->server->updateNotifyToNextServer($p)) {
-                    //$p->updateState("????");
+                    $ev = $this->addEvent('NOTIFY', $p, 'BLACKLISTED  FROM our DB');
+                    $this->server->updateNotifyToNextServer($w,  strtotime('NOW +  5 MINUTES'),true);
+                   // $this->errorHandler( $ev->remarks);
                 }
                 
                 continue;
