@@ -230,15 +230,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;
         if ($bl->count()) {
-            return;
+            return true;
         }
         // is it a blacklist message
         if (!$bl->messageIsBlacklisted($errmsg)) {
-            return;
+            return false;
         }
         $bl->added_dt = $bl->sqlValue("NOW()");
         $bl->insert();
-        
+        return true;
         
     }
     
