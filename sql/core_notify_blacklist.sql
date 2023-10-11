@@ -2,7 +2,7 @@ CREATE  TABLE core_notify_blacklist (
     id INT(11) NOT NULL AUTO_INCREMENT ,
     server_id INT(11) NOT NULL DEFAULT 0,
     domain_id INT(11) NOT NULL DEFAULT 0,
-    added DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00',
+    added_dt DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00',
     error_str TEXT NOT NULL DEFAULT '',
     
     PRIMARY KEY (id)
