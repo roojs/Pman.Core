@@ -428,7 +428,7 @@ class Pman_Core_NotifySend extends Pman
         
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-             $this->debug("GOT response to send: ". var_export($res,true)); 
+            $this->debug("GOT response to send: ". var_export($res,true)); 
             
             if ($res === true) {
                 // success....
@@ -461,7 +461,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
                  
-                $this->errorHandler( " SENT {$w->id} - {$w->remarks}", true);
+                $this->errorHandler( " SENT {$w->id} - {$ev->remarks}", true);
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
