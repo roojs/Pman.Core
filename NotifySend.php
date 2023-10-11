@@ -521,7 +521,11 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($res->userinfo['smtpcode'] == 550) {
-                $this->server->checkSmtpResponse($errmsg, $core_domain);
+                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                    $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+                    $this->errorHandler( $ev->remarks);
+                }
             }
             
             
