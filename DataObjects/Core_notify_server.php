@@ -164,7 +164,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             }
         }
         
-        $offset = ($start + 1)  % count($ids);
+        $offset = ($start + 1)  % count($servers);
         $good = false;
         while ($offset  != $start) {
             $s = $servers[$offset];
