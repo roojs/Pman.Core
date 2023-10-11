@@ -282,6 +282,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n->trigger_event_id = $event->id;
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
+            $n->evtype   = $watch->medium;
             
             // does this watch already have a flag...
             $nf = clone($n);
@@ -295,9 +296,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n->act_start( empty($n->act_start) ? date("Y-m-d H:i:s") : $n->act_start );
             $n->insert();
         }
-        
-        
-        
+         
     }
     function initDatabase($roo, $data) {
         foreach($data as $d) {

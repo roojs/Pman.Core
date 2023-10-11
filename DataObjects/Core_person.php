@@ -1455,7 +1455,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $pp = DB_DataObject::factory('core_person');
             $pp->whereAdd('LOWER(email) = "' . $pp->escape(strtolower(trim($this->email))) . '"');
             if ($pp->count()){
-                $roo->jerror("NOTIFY-DUPE-EMAIL", "that email already exists in the database");
+                $roo->jerror("NOTICE-DUPE-EMAIL", "that email already exists in the database");
             }
             
             
@@ -1660,7 +1660,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $pp->whereAdd('LOWER(email) = "' . $pp->escape(strtolower(trim($this->email))) . '"');
             $pp->whereAdd('id != ' . $old->id);
             if ($pp->count()){
-                $roo->jerror("NOTIFY-DUPE-EMAIL", "that email already exists in the database");
+                $roo->jerror("NOTICE-DUPE-EMAIL", "that email already exists in the database");
             }
         }
     }

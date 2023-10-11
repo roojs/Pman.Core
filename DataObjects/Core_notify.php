@@ -344,5 +344,24 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return true;
     }
+    // after called do not rely on content as it includes NOW()
+    function flagDone($event,$msgid)
+    {
+        $ww = clone($this);
+        if(strtotime($this->act_when) > strtotime("NOW")){
+            $this->act_when = $this->sqlValue('NOW()');
+        }
+        $this->sent = $this->sent == '0000-00-00 00:00:00' ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
+        $this->msgid = '';
+        $this->event_id = $event->id;
+        $this->update($ww);
+    }
+    
+    function flagLater($when)
+    {
+        $ww = clone($this);
+        $this->act_when = $when;
+        $this->update($ww);
+    }
     
 }

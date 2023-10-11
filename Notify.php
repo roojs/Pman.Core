@@ -124,11 +124,15 @@ class Pman_Core_Notify extends Pman
     var $evtype = ''; // any notification...
                     // this script should only handle EMAIL notifications..
     
-    var $server_id;
+    var $server;  // core_notify_server
     
+    var $poolname = 'core';
     
     var $opts; 
     var $force = false;
+    
+    var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -181,21 +185,23 @@ class Pman_Core_Notify extends Pman
         
         $this->generateNotifications();
         
-        $this->assignQueues();
-        
-        //DB_DataObject::debugLevel(1);
+         //DB_DataObject::debugLevel(1);
         $w = DB_DataObject::factory($this->table);
         $total = 0;
         
         
         
         $ff = HTML_FlexyFramework::get();
-        if (!empty($ff->Core_Notify['servers'])) {
-            if (!isset($ff->Core_Notify['servers'][gethostname()])) {
-                $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
-            }
-            $w->server_id = array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
-        }
+        
+        
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+        
+        $this->server->assignQueues($this);
+        
+        
+        $this->clearOld();
+        
+        
         if (!empty($this->evtype)) {
             $w->evtype = $this->evtype;
         }
@@ -226,7 +232,7 @@ class Pman_Core_Notify extends Pman
             $w->limit($opts['limit']); // we can run 1000 ...
         }
         
-        
+        $w->server_id = $this->server->id;
         
     
         
@@ -285,10 +291,13 @@ class Pman_Core_Notify extends Pman
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             
-            $black = $this->isBlacklisted($email);
+            $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
-                $this->logecho("DOMAIN blacklisted - {$email} - moving to another pool");
-                $this->updateServer($p, $black);
+                
+                if (false === $this->server->updateNotifyToNextServer($p)) {
+                    $p->updateState("????");
+                }
+                
                 continue;
             }
              
@@ -298,8 +307,7 @@ class Pman_Core_Notify extends Pman
                 // push it to a 'domain specific queue'
                 $this->logecho("REQUEING - maxed out that domain - {$email}");
                 $this->pushQueueDomain($p, $email);
-                  
-                
+                   
                 //sleep(3);
                 continue;
             }
@@ -310,11 +318,13 @@ class Pman_Core_Notify extends Pman
             
             
         }
-         $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
+        $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
         if (!empty($this->next_queue)) {
              
             foreach($this->next_queue as $p) {
-                $this->updateServer($p);
+                if (false === $this->server->updateNotifyToNextServer($p)) {
+                    $p->updateState("????");
+                }
             }
         }
         
@@ -334,55 +344,10 @@ class Pman_Core_Notify extends Pman
     }
     
     
-    function isBlacklisted($email)
-    {
-        // return current server id..
-        $ff = HTML_FlexyFramework::get();
-        //$this->logecho("CHECK BLACKLISTED - {$email}");
-        if (empty($ff->Core_Notify['servers'])) {
-            return false;
-        }
-      
-        if (!isset($ff->Core_Notify['servers'][gethostname()]['blacklisted'])) {
-            return false;
-        }
-       
-        // get the domain..
-        $ea = explode('@',$email);
-        $dom = strtolower(array_pop($ea));
-        
-        //$this->logecho("CHECK BLACKLISTED DOM - {$dom}");
-        if (!in_array($dom, $ff->Core_Notify['servers'][gethostname()]['blacklisted'] )) {
-            return false;
-        }
-        //$this->logecho("RETURN BLACKLISTED TRUE");
-        return array_search(gethostname(),array_keys($ff->Core_Notify['servers']));
-    }
+   
     
     // this sequentially distributes requeued emails.. - to other servers. (can exclude current one if we have that flagged.)
-    function updateServer($ww, $exclude = -1)
-    {
-        $w = DB_DataObject::factory($ww->tableName());
-        $w->get($ww->id);
-        
-        $ff = HTML_FlexyFramework::get();
-        static $num = 0;
-        if (empty($ff->Core_Notify['servers'])) {
-            return;
-        }
-        $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
-        if ($exclude == $num ) {
-            $num = ($num+1) % count(array_keys($ff->Core_Notify['servers']));
-        }
-        // next server..
-        $pp = clone($w);
-        $w->server_id = $num;
-                    
-        $w->act_when = $w->sqlValue('NOW() + INTERVAL 1 MINUTE');
-        $w->update($pp);
-        
-         
-    }
+     
   
     
     function generateNotifications()
@@ -419,60 +384,7 @@ class Pman_Core_Notify extends Pman
     
     }
     
-    function assignQueues()
-    {
-        $ff = HTML_FlexyFramework::get();
-        
-        if (empty($ff->Core_Notify['servers'])) {
-            return;
-        }
-        
-        if (!isset($ff->Core_Notify['servers'][gethostname()])) {
-            $this->jerr("Core_Notify['servers']['" . gethostname() ."'] is not set");
-        }
-        // only run this on the main server...
-        if (array_search(gethostname(),array_keys($ff->Core_Notify['servers'])) > 0) {
-            return;
-        }
-        
-        $num_servers = count(array_keys($ff->Core_Notify['servers']));
-        $p = DB_DataObject::factory($this->table);
-        $p->whereAdd("
-                sent < '2000-01-01'
-                and
-                event_id = 0
-                and
-                act_start < NOW() +  INTERVAL 3 HOUR 
-                and
-                server_id < 0"
-            
-        );
-        if ($p->count() < 1) {
-            return;
-        }
-         $p = DB_DataObject::factory($this->table);
-        // 6 seconds on this machne...
-        $p->query("
-            UPDATE
-                {$this->table}
-            SET
-                server_id = ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})
-            WHERE
-                sent < '2000-01-01'
-                and
-                event_id = 0
-                and
-                act_start < NOW() +  INTERVAL 3 HOUR 
-                and
-                server_id < 0
-            ORDER BY
-                id ASC
-            LIMIT
-                10000
-        ");
-
-        
-    }
+     
     
     function run($id, $email='', $cmdOpts="")
     {
@@ -681,7 +593,41 @@ class Pman_Core_Notify extends Pman
         $this->domain_queue = false;
         return $ret;
     }
-    
+    function clearOld()
+     {
+          if ($this->server->isFirstServer()) {
+            $p = DB_DataObject::factory($this->table);
+            $p->whereAdd("
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW() - INTERVAL {$this->clear_interval}
+            ");
+           // $p->limit(1000);
+            if ($p->count()) {
+                $ev = $this->addEvent('NOTIFY', false, "RETRY TIME EXCEEDED");
+                $p = DB_DataObject::factory($this->table);
+                $p->query("
+                    UPDATE
+                        {$this->table}
+                    SET
+                        sent = NOW(),
+                        msgid = '',
+                        event_id = {$ev->id}
+                    WHERE
+                        sent < '2000-01-01'
+                        and
+                        event_id = 0
+                        and
+                        act_start < NOW() - INTERVAL {$this->clear_interval}
+                    LIMIT
+                        1000
+                ");
+                
+            }
+        }
+     }
     
 
     function output()
