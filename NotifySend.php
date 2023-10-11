@@ -110,7 +110,9 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
-
+        if (!$force && $w->server_id != $this->server_id) {
+            $this->errorHandler("Server id does not match - use force to try again\n");
+        }
         
         if (!empty($opts['debug'])) {
             print_r($w);
