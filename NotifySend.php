@@ -256,9 +256,14 @@ class Pman_Core_NotifySend extends Pman
         
             // since some of them have spaces?!?!
         $p->email = trim($p->email);
-        $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
+        $explode_email = explode('@', $ww->to_email);
+        $dom = array_pop($explode_email);
+        
+        $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
+
+        
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
@@ -277,9 +282,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ff = HTML_FlexyFramework::get();
         
-        $explode_email = explode('@', $p->email);
-        $dom = array_pop($explode_email);
-        
+     
         $mxs = $this->mxs($dom);
         $ww = clone($w);
 
