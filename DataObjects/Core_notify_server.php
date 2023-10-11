@@ -236,6 +236,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if (!$bl->messageIsBlacklisted($errmsg)) {
             return false;
         }
+        $bl->error_str = $errmsg;
         $bl->added_dt = $bl->sqlValue("NOW()");
         $bl->insert();
         return true;
