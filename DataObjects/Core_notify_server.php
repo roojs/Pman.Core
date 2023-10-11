@@ -125,7 +125,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $p = DB_DataObject::factory($notify->table);
             $p->query("
                 UPDATE
-                    {$this->table}
+                    {$notify->table}
                 SET
                     server_id = $sid
                 WHERE
