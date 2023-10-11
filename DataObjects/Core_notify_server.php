@@ -129,7 +129,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 SET
                     server_id = $sid
                 WHERE
-                    id IN (". implode(",', $nids"). ')'
+                    id IN (". implode(',', $nids). ')'
             );
         }
          
