@@ -206,7 +206,8 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        
+        $w->server_id = $this->server->id;
+
         
         if (!empty($opts['old'])) {
             // show old and new...
@@ -232,7 +233,6 @@ class Pman_Core_Notify extends Pman
             $w->limit($opts['limit']); // we can run 1000 ...
         }
         
-        $w->server_id = $this->server->id;
         
     
         
