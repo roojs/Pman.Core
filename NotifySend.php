@@ -520,12 +520,19 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
+            if ($res->userinfo['smtpcode'] == 550) {
+                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                    $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+                    $this->errorHandler( $ev->remarks);
+                }
+            }
+            
+            
             $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
             
-            if ($res->userinfo['smtpcode'] == 550) {
-                $this->server->checkSmtpResponse($errmsg, $core_domain);
-            }
+            
             
 
             $this->errorHandler( $ev->remarks);
