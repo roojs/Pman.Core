@@ -232,7 +232,7 @@ class Pman_Core_Notify extends Pman
             $w->limit($opts['limit']); // we can run 1000 ...
         }
         
-        
+        $w->server_id = $this->server->id;
         
     
         
