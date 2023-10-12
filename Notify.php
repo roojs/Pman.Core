@@ -524,9 +524,13 @@ class Pman_Core_Notify extends Pman
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
-            proc_terminate($p['proc'], 9);
-
-            pcntl_waitpid($p['proc'], $status, WNOHANG);
+            proc_terminate($p['pid'], 9);
+            sleep(1);
+            clearstatcache();
+            if (file_exists('/proc/'. $p['pid'])) {
+                $this->logecho("proc PID={$p['pid']} still here - trying to wait");
+                pcntl_waitpid($p['pid'], $status, WNOHANG);
+            }
 
             //clearstatcache();
             //if (file_exists('/proc/'.$p['pid'])) {
