@@ -473,7 +473,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = 421;
+                $code = -1; 
             }
             
             if ($code < 0) {
@@ -528,14 +528,10 @@ class Pman_Core_NotifySend extends Pman
                     $this->errorHandler( $ev->remarks);
                 }
             }
-            
-            
+             
             $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
-            
-            
-            
-
+             
             $this->errorHandler( $ev->remarks);
         }
         
@@ -544,7 +540,7 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        $ev = $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
+        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
         $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
 
