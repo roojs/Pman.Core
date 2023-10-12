@@ -524,7 +524,7 @@ class Pman_Core_Notify extends Pman
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
-            proc_terminate($p['pid'], 9);
+            proc_terminate($p['proc'], 9);
             sleep(1);
             clearstatcache();
             if (file_exists('/proc/'. $p['pid'])) {
