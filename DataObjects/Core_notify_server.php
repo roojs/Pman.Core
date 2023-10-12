@@ -196,7 +196,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 server_id IN (" . implode(",", $ids) . ")
         ");
         $p->selectAdd();
-        $p->selectAdd('server_id, count(id) as $n');
+        $p->selectAdd('server_id, count(id) as  n');
         $p->groupBy('server_id');
         $in_q = $p->fetchAll('server_id', 'n');
         $totalq = 0;
