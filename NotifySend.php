@@ -473,7 +473,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = 421;
+                $code = -1; 
             }
             
             if ($code < 0) {
