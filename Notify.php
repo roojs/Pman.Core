@@ -404,7 +404,8 @@ class Pman_Core_Notify extends Pman
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
             1 => array("file", $tn, 'w'),  // stdout is a pipe that the child will write to
-            2 => array("pipe", "w") // stderr is a file to write to
+            2 => array("file", $tn, 'w'),   // stderr is a file to write to
+          //  2 => array("pipe", "w") // stderr is a file to write to
          );
         
         static $php = false;
