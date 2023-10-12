@@ -401,10 +401,11 @@ class Pman_Core_Notify extends Pman
         
         
         $tn =  $this->tempName('stdout', true);
+        $tne =  $this->tempName('stderr', true);
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
             1 => array("file", $tn, 'w'),  // stdout is a pipe that the child will write to
-            2 => array("file", $tn, 'w'),   // stderr is a file to write to
+            2 => array("file", $tne, 'w'),   // stderr is a file to write to
           //  2 => array("pipe", "w") // stderr is a file to write to
          );
         
@@ -454,6 +455,7 @@ class Pman_Core_Notify extends Pman
                 'proc' => $p,
                 'pid' => $info['pid'],
                 'out' => $tn,
+                'oute' => $tne,
                 'cmd' => $cmd,
                 'email' => $email,
                 'pipes' => $pipes,
@@ -494,9 +496,10 @@ class Pman_Core_Notify extends Pman
                     proc_terminate($p['proc'], 9);
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
-                    fclose($p['pipes'][2]);
-                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']));
+                    
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
                     @unlink($p['out']);
+                    @unlink($p['oute']);
                     
                     // schedule again
                     $w = DB_DataObject::factory($this->table);
@@ -515,7 +518,6 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             fclose($p['pipes'][0]);
-            fclose($p['pipes'][2]);
             //echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
@@ -529,6 +531,7 @@ class Pman_Core_Notify extends Pman
             //}
             $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
             @unlink($p['out']);
+            @unlink($p['oute']);
             // at this point we could pop onto the queue the 
             $this->popQueueDomain($p['email']);
             
