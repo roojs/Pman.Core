@@ -529,7 +529,7 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
+            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
             @unlink($p['out']);
             @unlink($p['oute']);
             // at this point we could pop onto the queue the 
