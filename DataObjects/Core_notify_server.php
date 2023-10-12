@@ -166,8 +166,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return;
         }
         
-        // ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})
-        
         
         
         $p = DB_DataObject::factory($notify->table);
@@ -180,16 +178,48 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 and
                 server_id NOT IN (" . implode(",", $ids) . ")
         ");
-        if ($p->count() < 1) {
+        $p->orderBy('act_when asc'); //?
+        $total_add = $p->count();
+        if ($total_add < 1) {
             return;
         }
         
+        $to_add = $p->fetchAll('id');
+        
+        $p = DB_DataObject::factory($notify->table);
+        $p->whereAdd("
+                sent < '2000-01-01'
+                and
+                event_id = 0
+                and
+                act_start < NOW() +  INTERVAL 3 HOUR 
+                and
+                server_id IN (" . implode(",", $ids) . ")
+        ");
         $p->selectAdd();
-        $p->selectAdd("id, ((@row_number := CASE WHEN @row_number IS NULL THEN 0 ELSE @row_number END  +1) % {$num_servers})  as rn");
-        $kv = $p->fetchAll('id','rn');
-        foreach($kv as $id => $r) {
-            $up[ $ids[$r] ][] = $id;
+        $p->selectAdd('server_id, count(id) as $n');
+        $p->groupBy('server_id');
+        $in_q = $p->fetchAll('server_id', 'n');
+        $totalq = 0;
+        foreach($in_q as $sid => $n) {
+            $totalq += $n;
         }
+        
+        // new average queue
+        $target_len = floor(  ($totalq + $total_add) / $num_servers );
+        
+        foreach($in_q as $sid => $cq) {
+            
+            $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
+        }
+        foreach($to_add as $i) {
+            $up[  $ids[0] ][] = $i;
+        }
+        
+        // distribution needs to go to ones that have the shortest queues. - so to balance out the queues
+        
+         
+        
         foreach($up as $sid => $nids) {
             if (empty($nids)) {
                 continue;
