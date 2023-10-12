@@ -475,6 +475,9 @@ class Pman_Core_Notify extends Pman
         foreach($this->pool as $p) {
              
             //echo "CHECK PID: " . $p['pid'] . "\n";
+            
+            pcntl_waitpid($p['proc'], $status, WNOHANG);
+            
             $info =  proc_get_status($p['proc']);
             //var_dump($info);
             
@@ -522,7 +525,8 @@ class Pman_Core_Notify extends Pman
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
-            
+            proc_terminate($p['proc'], 9);
+
             
             //clearstatcache();
             //if (file_exists('/proc/'.$p['pid'])) {
