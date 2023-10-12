@@ -75,7 +75,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     // most services should call this first..
     
-    function getCurrent($notify)
+    function getCurrent($notify, $force = false)
     {
         static $current = false;;
         
@@ -84,13 +84,26 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         $ns = DB_DataObject::factory('core_notify_server');
+        
         $ns->poolname = $notify->poolname;
         $ns->is_active = 1;
         $ns->hostname = gethostname();
-        if (!$ns->count()) {
+        $ns->limit(1);
+        if ($ns->find(true)) {
+            $current = $ns;
+            return $ns;
+        }
+        if (!$force) {
             $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
         }
-        $ns->find(true);
+        // fallback to any server - if we are using force. (this is so helo will work...)
+        
+        $ns = DB_DataObject::factory('core_notify_server');
+        $ns->is_active = 1;
+        $ns->hostname = gethostname();
+        if (!$ns->find(true)) {
+            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
+        }
         $current = $ns;
         return $ns;
     }
