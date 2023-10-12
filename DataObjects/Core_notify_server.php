@@ -191,8 +191,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 sent < '2000-01-01'
                 and
                 event_id = 0
-                and
-                act_start < NOW() +  INTERVAL 3 HOUR 
+        
                 and
                 server_id IN (" . implode(",", $ids) . ")
         ");
@@ -209,7 +208,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $target_len = floor(  ($totalq + $total_add) / $num_servers );
         
         foreach($in_q as $sid => $cq) {
-            
+            if ( $target_len - $cq < 1) {
+                continue;
+            }
             $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
         }
         foreach($to_add as $i) {
