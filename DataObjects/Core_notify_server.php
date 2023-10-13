@@ -306,7 +306,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         // return current server id..
         static $cache = array();
-        
+        var_dump($email);
         // get the domain..
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
