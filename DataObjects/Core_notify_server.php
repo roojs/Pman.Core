@@ -311,8 +311,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
          // get the domain..
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
-        if (isset($cache[$dom])) {
-            return $cache[$dom];
+        if (isset( $cache[$this->id . '-'. $dom])) {
+            return  $cache[$this->id . '-'. $dom];
         }
         
         $cd = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
@@ -321,7 +321,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->server_id = $this->id;
         $bl->domain_id = $cd->id;
         if ($bl->count()) {
-            $cache[$dom] = true;
+            $cache[$this->id . '-'. $dom] = true;
             return true;
         }
         
