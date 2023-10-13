@@ -333,11 +333,12 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(  $ev->remarks);
         }
         
+        $retry_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
         
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         // set act when if it's empty...
-        $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')) : $w->act_when;
+        $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? $retry_when : $w->act_when;
         
         $w->update($ww);
         
@@ -492,7 +493,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
-                $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+                $this->server->updateNotifyToNextServer($w,  $retry_when,true);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -524,7 +525,7 @@ class Pman_Core_NotifySend extends Pman
             if ($res->userinfo['smtpcode'] == 550) {
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
                     $this->errorHandler( $ev->remarks);
                 }
             }
@@ -542,7 +543,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
-        $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+        $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
         
          
