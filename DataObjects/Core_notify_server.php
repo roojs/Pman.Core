@@ -283,6 +283,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $good = $s;
                 break;
             }
+             $offset = ($start + 1)  % count($servers);
         }
         if ($good == false && $allow_same) {
             $good = $this;
@@ -306,8 +307,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         // return current server id..
         static $cache = array();
-        var_dump($email);
-        // get the domain..
+         // get the domain..
         $ea = explode('@',$email);
         $dom = strtolower(array_pop($ea));
         if (isset($cache[$dom])) {
