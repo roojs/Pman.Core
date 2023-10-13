@@ -446,7 +446,7 @@ class Pman_Core_NotifySend extends Pman
                 
                 $ev->writeEventLog($this->debug_str);
                  
-                $w->flagDone($ev,$email['headers']['Message-Id']);
+                $w->flagDone($ev, $email['headers']['Message-Id']);
                 
                  
                 // enable cc in notify..
