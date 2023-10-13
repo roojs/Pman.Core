@@ -139,12 +139,12 @@ class Pman_Core_NotifySend extends Pman
         $cev = DB_DataObject::Factory('Events');
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
-        $cev->action = 'NOTIFYSENT';
+        $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
         $cev->limit(1);
         if ($cev->count()) {
             $cev->find(true);
-            $w->flagDone($cev, 'alreadysent');
-            $this->errorHandler( "SENT (fix old) ".  $cev->remarks);
+            $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
         
         
