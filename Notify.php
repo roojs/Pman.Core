@@ -293,11 +293,14 @@ class Pman_Core_Notify extends Pman
             
             $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
-                
+                $this->logecho("Blacklisted - try giving it to next server");
                 if (false === $this->server->updateNotifyToNextServer($p)) {
                     $ev = $this->addEvent('NOTIFY', $p, 'BLACKLISTED  FROM our DB');
-                    $this->server->updateNotifyToNextServer($w,  strtotime('NOW +  5 MINUTES'),true);
+                    // we dont have an althenative server to update it with.
+                    $this->logecho("Blacklisted - next server did not work - try again in 30 mins");
+                    $this->server->updateNotifyToNextServer($w,  date("Y-m-d H:i:s",  strtotime('NOW +  30 MINUTES')),true);
                    // $this->errorHandler( $ev->remarks);
+                   
                 }
                 
                 continue;
@@ -609,6 +612,7 @@ class Pman_Core_Notify extends Pman
     function clearOld()
      {
           if ($this->server->isFirstServer()) {
+            
             $p = DB_DataObject::factory($this->table);
             $p->whereAdd("
                 sent < '2000-01-01'
