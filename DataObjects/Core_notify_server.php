@@ -199,10 +199,18 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $p->selectAdd('server_id, count(id) as  n');
         $p->groupBy('server_id');
         $in_q = $p->fetchAll('server_id', 'n');
+        
+        // if queue is empty it will not get allocated anything.
+        foreach($ids as $sid) {
+            if (!isset($in_q[$sid])) {
+                $in_q[$sid] = 0;
+            }
+        }
         $totalq = 0;
         foreach($in_q as $sid => $n) {
             $totalq += $n;
         }
+        
         
         // new average queue
         $target_len = floor(  ($totalq + $total_add) / $num_servers );
