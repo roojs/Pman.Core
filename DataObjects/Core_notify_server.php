@@ -283,7 +283,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $good = $s;
                 break;
             }
-             $offset = ($start + 1)  % count($servers);
+             $offset = ($offset + 1)  % count($servers);
         }
         if ($good == false && $allow_same) {
             $good = $this;
