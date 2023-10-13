@@ -135,6 +135,19 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("message has been sent already.\n");
         }
         
+        // we have a bug with msgid not getting filled.
+        $cev = DB_DataObject::Factory('Events');
+        $cev->on_table =  $this->table;
+        $cev->on_id =  $w->id;
+        $cev->action = 'NOTIFYSENT';
+        $cev->limit(1);
+        if ($cev->count()) {
+            $cev->find(true);
+            $w->flagDone($cev, 'alreadysent');
+            $this->errorHandler( "SENT (fix old) ".  $cev->remarks);
+        }
+        
+        
         $o = $w->object();
         
         if ($o === false)  {
