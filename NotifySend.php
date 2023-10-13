@@ -124,12 +124,12 @@ class Pman_Core_NotifySend extends Pman
             HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
         }
         
-        $sent = (empty($w->sent) || preg_match('/^(0|1)000/', $w->sent)) ? false : true;
+        $sent = (empty($w->sent) || strtotime( $w->sent) < 100 ) ? false : true;
         
         if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
             if (!$sent) {   // fix sent.
-                $w->sent = preg_match('/^(0|1)000/', $w->sent) ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
+                $w->sent = strtotime( $w->sent) < 100 ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
                 $w->update($ww);
             }    
             $this->errorHandler("message has been sent already.\n");
