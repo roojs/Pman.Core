@@ -216,13 +216,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $target_len = floor(  ($totalq + $total_add) / $num_servers );
         
         foreach($in_q as $sid => $cq) {
-            if ( $target_len - $cq < 1) {
+            if ( $cq > $target_len) {
                 continue;
             }
             $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
         }
-        foreach($to_add as $i) {
-            $up[  $ids[0] ][] = $i;
+        
+        // add the reminder evently
+        foreach($to_add as $n=>$i) {
+            $up[  $ids[$n % $num_servers] ][] = $i;
         }
         
         // distribution needs to go to ones that have the shortest queues. - so to balance out the queues
