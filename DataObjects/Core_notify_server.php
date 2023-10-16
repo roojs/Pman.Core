@@ -127,6 +127,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $servers = $this->availableServers();
         $ids = array();
+        $up = array();
         foreach($servers as $s) {
             $ids[] = $s->id;
         }
@@ -224,6 +225,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // add the reminder evently
         foreach($to_add as $n=>$i) {
+            
             $up[  $ids[$n % $num_servers] ][] = $i;
         }
         
