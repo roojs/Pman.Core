@@ -71,15 +71,19 @@ class Pman_Core_TimeZone extends Pman
         }
 
         $ce = DB_DataObject::factory('core_enum');
-        $ce->query('
+        $ce->query("
             SELECT
-                *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, "UTC")), "%H:%i") as timeOffset
+                *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, 'UTC')), '%H:%i') as timeOffset
             FROM
                 mysql.time_zone_name
+            WHERE
+                Name NOT LIKE '%/%'
+                AND
+                NAME NOT LIKE 'Etc%'
             ORDER BY
                 timeoffset DESC,
                 Name DESC
-        ');
+        ");
 
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
