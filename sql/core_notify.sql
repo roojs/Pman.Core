@@ -28,6 +28,8 @@ ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT ''
 
 -- ?? why added???  - probably need to document this..
 ALTER TABLE core_notify ADD COLUMN domain_id INT(11)  NOT NULL  DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN server_id INT(11) NOT NULL DEFAULT -1;
+
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
@@ -41,6 +43,8 @@ ALTER TABLE core_notify add   index lookup_d (person_id, msgid, ontable);
 ALTER TABLE core_notify ADD   INDEX lookup_e (onid, ontable, person_id, act_when);
 ALTER TABLE core_notify ADD   INDEX lookup_f (to_email);
 alter table core_notify add index lookup_g(sent, act_start, act_when);
+alter table core_notify add   INDEX lookup_h (sent, event_id, server_id, msgid, ontable);
+
 
 ALTER TABLE core_notify ADD INDEX lookup_person_id (person_id);
 ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);

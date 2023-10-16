@@ -206,7 +206,8 @@ class Pman_Core_Notify extends Pman
             $w->evtype = $this->evtype;
         }
         
-        
+        $w->server_id = $this->server->id;
+
         
         if (!empty($opts['old'])) {
             // show old and new...
@@ -232,7 +233,6 @@ class Pman_Core_Notify extends Pman
             $w->limit($opts['limit']); // we can run 1000 ...
         }
         
-        $w->server_id = $this->server->id;
         
     
         
@@ -293,9 +293,14 @@ class Pman_Core_Notify extends Pman
             
             $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
-                
+                $this->logecho("Blacklisted - try giving it to next server");
                 if (false === $this->server->updateNotifyToNextServer($p)) {
-                    $p->updateState("????");
+                    $ev = $this->addEvent('NOTIFY', $p, 'BLACKLISTED  FROM our DB');
+                    // we dont have an althenative server to update it with.
+                    $this->logecho("Blacklisted - next server did not work - try again in 30 mins");
+                    $this->server->updateNotifyToNextServer($w,  date("Y-m-d H:i:s",  strtotime('NOW +  30 MINUTES')),true);
+                   // $this->errorHandler( $ev->remarks);
+                   
                 }
                 
                 continue;
@@ -399,10 +404,12 @@ class Pman_Core_Notify extends Pman
         
         
         $tn =  $this->tempName('stdout', true);
+        $tne =  $this->tempName('stderr', true);
         $descriptorspec = array(
             0 => array("pipe", 'r'),  // stdin is a pipe that the child will read from
             1 => array("file", $tn, 'w'),  // stdout is a pipe that the child will write to
-            2 => array("pipe", "w") // stderr is a file to write to
+            2 => array("file", $tne, 'w'),   // stderr is a file to write to
+          //  2 => array("pipe", "w") // stderr is a file to write to
          );
         
         static $php = false;
@@ -451,6 +458,7 @@ class Pman_Core_Notify extends Pman
                 'proc' => $p,
                 'pid' => $info['pid'],
                 'out' => $tn,
+                'oute' => $tne,
                 'cmd' => $cmd,
                 'email' => $email,
                 'pipes' => $pipes,
@@ -470,6 +478,8 @@ class Pman_Core_Notify extends Pman
         foreach($this->pool as $p) {
              
             //echo "CHECK PID: " . $p['pid'] . "\n";
+            
+            
             $info =  proc_get_status($p['proc']);
             //var_dump($info);
             
@@ -491,9 +501,10 @@ class Pman_Core_Notify extends Pman
                     proc_terminate($p['proc'], 9);
                     //fclose($p['pipes'][1]);
                     fclose($p['pipes'][0]);
-                    fclose($p['pipes'][2]);
-                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']));
+                    
+                    $this->logecho("TERMINATING: ({$p['pid']}) {$p['email']} " . $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
                     @unlink($p['out']);
+                    @unlink($p['oute']);
                     
                     // schedule again
                     $w = DB_DataObject::factory($this->table);
@@ -512,20 +523,25 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             fclose($p['pipes'][0]);
-            fclose($p['pipes'][2]);
             //echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
-            
-            
+             sleep(1);
+            clearstatcache();
+            if (file_exists('/proc/'. $p['pid'])) {
+                $this->logecho("proc PID={$p['pid']} still here - trying to wait");
+                pcntl_waitpid($p['pid'], $status, WNOHANG);
+            }
+
             //clearstatcache();
             //if (file_exists('/proc/'.$p['pid'])) {
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) );
+            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
             @unlink($p['out']);
+            @unlink($p['oute']);
             // at this point we could pop onto the queue the 
             $this->popQueueDomain($p['email']);
             
@@ -596,6 +612,7 @@ class Pman_Core_Notify extends Pman
     function clearOld()
      {
           if ($this->server->isFirstServer()) {
+            
             $p = DB_DataObject::factory($this->table);
             $p->whereAdd("
                 sent < '2000-01-01'

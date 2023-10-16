@@ -109,10 +109,11 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("already sent - repeat to early\n");
         }
         
-        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
-        if (!$force && $w->server_id != $this->server->id) {
+        $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
+        if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - use force to try again\n");
         }
+        
         
         if (!empty($opts['debug'])) {
             print_r($w);
@@ -123,16 +124,29 @@ class Pman_Core_NotifySend extends Pman
             HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
         }
         
-        $sent = (empty($w->sent) || preg_match('/^0000/', $w->sent)) ? false : true;
+        $sent = (empty($w->sent) || strtotime( $w->sent) < 100 ) ? false : true;
         
         if (!$force && (!empty($w->msgid) || $sent)) {
             $ww = clone($w);
             if (!$sent) {   // fix sent.
-                $w->sent = $w->sent == '0000-00-00 00:00:00' ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
+                $w->sent = strtotime( $w->sent) < 100 ? $w->sqlValue('NOW()') :$w->sent; // do not update if sent.....
                 $w->update($ww);
             }    
             $this->errorHandler("message has been sent already.\n");
         }
+        
+        // we have a bug with msgid not getting filled.
+        $cev = DB_DataObject::Factory('Events');
+        $cev->on_table =  $this->table;
+        $cev->on_id =  $w->id;
+        $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
+        $cev->limit(1);
+        if ($cev->count()) {
+            $cev->find(true);
+            $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
+        }
+        
         
         $o = $w->object();
         
@@ -332,11 +346,12 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(  $ev->remarks);
         }
         
+        $retry_when = date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES'));
         
         //$this->addEvent('NOTIFY', $w, 'GREYLISTED ' . $p->email . ' ' . $res->toString());
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         // set act when if it's empty...
-        $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')) : $w->act_when;
+        $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? $retry_when : $w->act_when;
         
         $w->update($ww);
         
@@ -444,7 +459,7 @@ class Pman_Core_NotifySend extends Pman
                 
                 $ev->writeEventLog($this->debug_str);
                  
-                $w->flagDone($ev,$email['headers']['Message-Id']);
+                $w->flagDone($ev, $email['headers']['Message-Id']);
                 
                  
                 // enable cc in notify..
@@ -472,7 +487,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = 421;
+                $code = -1; 
             }
             
             if ($code < 0) {
@@ -491,7 +506,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
-                $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+                $this->server->updateNotifyToNextServer($w,  $retry_when,true);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -520,14 +535,17 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
+            if ($res->userinfo['smtpcode'] == 550) {
+                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    $this->errorHandler( $ev->remarks);
+                }
+            }
+             
             $ev = $this->addEvent('NOTIFYFAIL', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
-            
-            if ($res->userinfo['smtpcode'] == 550) {
-                $this->server->checkSmtpResponse($errmsg, $core_domain);
-            }
-            
-
+             
             $this->errorHandler( $ev->remarks);
         }
         
@@ -536,9 +554,9 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        $ev = $this->addEvent('NOTIFY', $w, 'NO HOST CAN BE CONTACTED:' . $p->email);
+        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
-        $this->server->updateNotifyToNextServer($w,  strtotime('NOW + ' . $retry . ' MINUTES'),true);
+        $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
         
          
