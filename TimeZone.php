@@ -76,10 +76,6 @@ class Pman_Core_TimeZone extends Pman
                 *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, 'UTC')), '%H:%i') as timeOffset
             FROM
                 mysql.time_zone_name
-            WHERE
-                Name NOT LIKE '%/%'
-                AND
-                NAME NOT LIKE 'Etc%'
             ORDER BY
                 timeoffset DESC,
                 Name DESC
