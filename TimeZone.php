@@ -122,43 +122,28 @@ class Pman_Core_TimeZone extends Pman
 
     static function toRegion($tz)
     {
-        if(!self::isValidTimeZone($tz)) {
-            return '';
-        }
         return explode('/', $tz)[0];
     }
 
     static function toArea($tz)
     {
-        if(!self::isValidTimeZone($tz)) {
-            return '';
-        }
         return explode('/', $tz)[1];
     }
     
     static function toTimeOffset($dt, $tz)
     {
-        if(!self::isValidTimeZone($tz)) {
-            return '';
-        }
         $date = new DateTime($dt, new DateTimeZone($tz));
         return $date->format('P');
     }
 
     static function toDisplayArea($dt, $tz)
     {
-        if(!self::isValidTimeZone($tz)) {
-            return '';
-        }
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
     }
 
     static function toDisplayName($dt, $tz)
     {
-        if(!self::isValidTimeZone($tz)) {
-            return '';
-        }
         return self::toRegion($tz) . '/' . self::toDisplayArea($dt, $tz);
     }
 }
