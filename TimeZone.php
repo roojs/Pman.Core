@@ -122,16 +122,16 @@ class Pman_Core_TimeZone extends Pman
 
     static function toRegion($tz)
     {
-        if(self::isValidTimeZone($tz)) {
+        if(!self::isValidTimeZone($tz)) {
             return '';
         }
-
+        
         return explode('/', $tz)[0];
     }
 
     static function toArea($tz)
     {
-        if(!self::isValidTimeZone($tz)) {
+        if(self::isValidTimeZone($tz)) {
             return '';
         }
 
