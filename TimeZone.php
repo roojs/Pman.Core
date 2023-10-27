@@ -109,6 +109,17 @@ class Pman_Core_TimeZone extends Pman
         return self::$timezones;
     }
 
+    function isValidTimeZone($tz) {
+        try {
+            new DateTimeZone($tz);
+        }
+        catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
     static function toRegion($tz)
     {
         return explode('/', $tz)[0];
