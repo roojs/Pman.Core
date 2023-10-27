@@ -122,6 +122,9 @@ class Pman_Core_TimeZone extends Pman
 
     static function toRegion($tz)
     {
+        if(!self::isValidTimeZone($tz)) {
+            return false;
+        }
         return explode('/', $tz)[0];
     }
 
