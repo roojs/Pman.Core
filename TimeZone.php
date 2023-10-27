@@ -77,7 +77,7 @@ class Pman_Core_TimeZone extends Pman
             FROM
                 mysql.time_zone_name
             WHERE
-                Name NOT LIKE '%/%'
+                Name LIKE '%/%'
                 AND
                 NAME NOT LIKE 'Etc%'
             ORDER BY
@@ -87,15 +87,11 @@ class Pman_Core_TimeZone extends Pman
 
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
-            if(substr_count($ce->Name, '/') != 1) {
-                continue;
-            }
+           
 
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
-            if($ar[0] == 'Etc') {
-                continue;
-            }
+           
 
             $displayArea = str_replace('_', ' ', $ar[1]);
 
