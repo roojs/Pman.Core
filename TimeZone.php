@@ -109,10 +109,15 @@ class Pman_Core_TimeZone extends Pman
         return self::$timezones;
     }
     
-    static function getTimeOffset($dt, $tz)
+    static function toTimeOffset($dt, $tz)
     {
         $date = new DateTime($dt, new DateTimeZone($tz));
         return $date->format('P');
+    }
+
+    static function toDisplayName($tz)
+    {
+
     }
 
     
