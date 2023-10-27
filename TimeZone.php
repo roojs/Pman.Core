@@ -140,7 +140,7 @@ class Pman_Core_TimeZone extends Pman
     
     static function toTimeOffset($dt, $tz)
     {
-        if(self::isValidTimeZone($tz)) {
+        if(!self::isValidTimeZone($tz)) {
             return '';
         }
 
