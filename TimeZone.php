@@ -118,7 +118,7 @@ class Pman_Core_TimeZone extends Pman
     static function toDisplayName($dt, $tz)
     {
         $ar = explode('/', $tz->Name);
-        str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')'; 
+        return $ar[0] . '/' . str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')'; 
     }
 
     
