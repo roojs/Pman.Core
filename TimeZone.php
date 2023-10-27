@@ -115,16 +115,16 @@ class Pman_Core_TimeZone extends Pman
         return $date->format('P');
     }
 
+    static function toDisplayArea($dt, $tz)
+    {
+        $ar = explode('/', $tz);
+        return str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
+
+    }
+
     static function toDisplayName($dt, $tz)
     {
         $ar = explode('/', $tz);
-        return $ar[0] . '/' . str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')'; 
-    }
-
-    static function toDisplayArea($tz)
-    {
-        $ar = explode('/', $tz);
-        return str_replace('_', ' ', $ar[1]);
-
+        return $ar[0] . '/' . self::toDisplayArea($dt, $tz);
     }
 }
