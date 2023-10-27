@@ -115,9 +115,10 @@ class Pman_Core_TimeZone extends Pman
         return $date->format('P');
     }
 
-    static function toDisplayName($tz)
+    static function toDisplayName($dt, $tz)
     {
-
+        $ar = explode('/', $tz->Name);
+        str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')'; 
     }
 
     
