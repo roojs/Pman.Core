@@ -110,6 +110,8 @@ class Pman_Core_TimeZone extends Pman
     }
 
     static function isValidTimeZone($tz) {
+        var_dump($tz);
+        die('a');
         try {
             new DateTimeZone($tz);
         }
