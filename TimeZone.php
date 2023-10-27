@@ -144,6 +144,6 @@ class Pman_Core_TimeZone extends Pman
 
     static function toDisplayName($dt, $tz)
     {
-        return self::toRegion($tz) . '/' . self::toDisplayArea($dt, $tz);
+        return self::toRegion($tz) . '//' . self::toDisplayArea($dt, $tz);
     }
 }
