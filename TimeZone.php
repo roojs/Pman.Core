@@ -119,6 +119,8 @@ class Pman_Core_TimeZone extends Pman
             return false;
         }
 
+        die('c');
+
         return true;
     }
 
