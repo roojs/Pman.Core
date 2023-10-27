@@ -114,12 +114,8 @@ class Pman_Core_TimeZone extends Pman
             new DateTimeZone($tz);
         }
         catch (Exception $e) {
-            var_dump($e);
-            die('b');
             return false;
         }
-
-        die('c');
 
         return true;
     }
