@@ -127,14 +127,12 @@ class Pman_Core_TimeZone extends Pman
 
     static function toDisplayArea($dt, $tz)
     {
-        $ar = explode('/', $tz);
-        return str_replace('_', ' ', $ar[1]) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
+        return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
     }
 
     static function toDisplayName($dt, $tz)
     {
-        $ar = explode('/', $tz);
-        return $ar[0] . '/' . self::toDisplayArea($dt, $tz);
+        return self::toRegion($tz) . '/' . self::toDisplayArea($dt, $tz);
     }
 }
