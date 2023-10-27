@@ -76,6 +76,12 @@ class Pman_Core_TimeZone extends Pman
                 *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, 'UTC')), '%H:%i') as timeOffset
             FROM
                 mysql.time_zone_name
+            WHERE
+                Name LIKE '%/%'
+                AND
+                LENGTH(Name) - LENGTH(REPLACE(Name, '/', '')) = 1
+                AND
+                Name NOT LIKE 'Etc%'
             ORDER BY
                 timeoffset DESC,
                 Name DESC
@@ -83,15 +89,11 @@ class Pman_Core_TimeZone extends Pman
 
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
-            if(substr_count($ce->Name, '/') != 1) {
-                continue;
-            }
+           
 
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
-            if($ar[0] == 'Etc') {
-                continue;
-            }
+           
 
             $displayArea = str_replace('_', ' ', $ar[1]);
 
