@@ -134,6 +134,8 @@ class Pman_Core_NotifySend extends Pman
             }    
             $this->errorHandler("message has been sent already.\n");
         }
+
+        die('f');
         
         // we have a bug with msgid not getting filled.
         $cev = DB_DataObject::Factory('Events');
