@@ -87,7 +87,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-        die('e');
 
         //print_r($opts);
         if (!empty($opts['DB_DataObject-debug'])) {
