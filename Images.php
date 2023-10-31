@@ -61,7 +61,7 @@ class Pman_Core_Images extends Pman
     function getAuth()
     {
         parent::getAuth(); // load company!
-        var_dump($au);
+        var_dump($this->authUser);
         die('b');
         //return true;
         $au = $this->getAuthUser();
