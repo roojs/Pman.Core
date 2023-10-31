@@ -79,7 +79,9 @@ class Pman_Core_TimeZone extends Pman
             WHERE
                 Name LIKE '%/%'
                 AND
-                NAME NOT LIKE 'Etc%'
+                Name NOT LIKE '%/%/%'
+                AND
+                Name NOT LIKE 'Etc%'
             ORDER BY
                 timeoffset DESC,
                 Name DESC
@@ -102,13 +104,60 @@ class Pman_Core_TimeZone extends Pman
                 'region' => $ar[0],
                 'area' => $ar[1],
                 'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
-                'displayArea' => $displayArea . ' ' . $displayOffset,
-                'timeOffset' => $timeOffset
+                'displayArea' => $displayArea . ' ' . $displayOffset
             );
         }
 
         return self::$timezones;
     }
 
+    static function isValidTimeZone($tz) {
+        try {
+            new DateTimeZone($tz);
+        }
+        catch (Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    static function toRegion($tz)
+    {
+        if(!self::isValidTimeZone($tz)) {
+            return '';
+        }
+        
+        return explode('/', $tz)[0];
+    }
+
+    static function toArea($tz)
+    {
+        if(!self::isValidTimeZone($tz)) {
+            return '';
+        }
+
+        return explode('/', $tz)[1];
+    }
     
+    static function toTimeOffset($dt, $tz)
+    {
+        if(!self::isValidTimeZone($tz)) {
+            return '';
+        }
+
+        $date = new DateTime($dt, new DateTimeZone($tz));
+        return $date->format('P');
+    }
+
+    static function toDisplayArea($dt, $tz)
+    {
+        return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
+
+    }
+
+    static function toDisplayName($dt, $tz)
+    {
+        return self::toRegion($tz) . '/' . self::toDisplayArea($dt, $tz);
+    }
 }

@@ -126,12 +126,12 @@ Pman.Delete = {
             tab.paging.onClick('refresh');   
         } else if (tab.grid.footer && tab.grid.footer.onClick) {
             // new xtype built grids
-            tab.grid.footer.onClick('refresh');   
+            tab.grid.footer.onClick('refresh');
+        } else if (tab.grid) {
+            tab.grid.getDataSource().load({});
         } else if (tab.refresh) {
             tab.refresh(); // this might cause problems as panels have a refresh method?
-        } else {
-            tab.grid.getDataSource().load();
-        }
+        } 
     
     }
 }
