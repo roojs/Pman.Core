@@ -136,7 +136,6 @@ class Pman_Core_MessagePreview extends Pman
     
     function coreEmailSendTest()
     {
-        die('c');
         $core_email = DB_DataObject::factory('core_email');
         
         if(!$core_email->get($_REQUEST['_id'])){
