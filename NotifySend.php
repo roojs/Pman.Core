@@ -110,6 +110,10 @@ class Pman_Core_NotifySend extends Pman
              
             $this->errorHandler("already sent - repeat to early\n");
         }
+
+
+
+        die('f');
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
         if (!$force &&  $w->server_id != $this->server->id) {
