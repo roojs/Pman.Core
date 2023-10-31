@@ -279,6 +279,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     break;
                 case 'PENDING';
                     $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
+                    $this->whereAdd("sent < '2000-01-01'");
                     break;
                 
                 case 'OPENED';
