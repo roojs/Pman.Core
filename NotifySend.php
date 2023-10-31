@@ -196,6 +196,8 @@ class Pman_Core_NotifySend extends Pman
         $l->limit(1);
         $ar = $l->fetchAll('sent');
         $last = empty($ar) ? date('Y-m-d H:i:s', 0) : $ar[0];
+
+        die('f');
         
         // find last event..
         $ev = DB_DataObject::factory('Events');
