@@ -60,8 +60,8 @@ class Pman_Core_Images extends Pman
             );
     function getAuth()
     {
-        die('b');
         parent::getAuth(); // load company!
+        var_dump($au);
         //return true;
         $au = $this->getAuthUser();
         
