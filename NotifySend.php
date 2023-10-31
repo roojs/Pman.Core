@@ -114,7 +114,6 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("Server id does not match - use force to try again\n");
         }
         
-        die('f');
         
         if (!empty($opts['debug'])) {
             print_r($w);
