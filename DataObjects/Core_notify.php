@@ -323,6 +323,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function sendManual($debug=false)
     {   
+        die('d');
         require_once 'Pman/Core/NotifySend.php';
         
         $send = new Pman_Core_NotifySend();
