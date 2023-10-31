@@ -113,6 +113,10 @@ class Pman_Core_NotifySend extends Pman
         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - use force to try again\n");
         }
+
+
+
+        die('f');
         
         
         if (!empty($opts['debug'])) {
@@ -134,8 +138,6 @@ class Pman_Core_NotifySend extends Pman
             }    
             $this->errorHandler("message has been sent already.\n");
         }
-
-        die('f');
         
         // we have a bug with msgid not getting filled.
         $cev = DB_DataObject::Factory('Events');
