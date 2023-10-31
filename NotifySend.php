@@ -99,8 +99,6 @@ class Pman_Core_NotifySend extends Pman
         $force = empty($opts['force']) ? 0 : 1;
 
 
-
-        die('f');
         
         $w = DB_DataObject::factory($this->table);
 
