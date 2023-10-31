@@ -97,6 +97,10 @@ class Pman_Core_NotifySend extends Pman
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
         $force = empty($opts['force']) ? 0 : 1;
+
+
+
+        die('f');
         
         $w = DB_DataObject::factory($this->table);
 
@@ -113,10 +117,6 @@ class Pman_Core_NotifySend extends Pman
         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - use force to try again\n");
         }
-
-
-
-        die('f');
         
         
         if (!empty($opts['debug'])) {
