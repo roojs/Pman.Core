@@ -352,7 +352,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if(strtotime($this->act_when) > strtotime("NOW")){
             $this->act_when = $this->sqlValue('NOW()');
         }
-        $this->sent = $this->sent == '0000-00-00 00:00:00' ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
+        $this->sent = strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
         $this->msgid = $msgid;
         $this->event_id = $event->id;
         $this->update($ww);

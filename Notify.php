@@ -225,6 +225,7 @@ class Pman_Core_Notify extends Pman
             if (!$this->force) {
                 $w->whereAdd('act_when < NOW()'); // eg.. not if future..
             }
+            
     
             $w->orderBy('act_when ASC'); // oldest first.
             $total = min($w->count(), $opts['limit']);
