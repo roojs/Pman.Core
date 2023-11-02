@@ -5,6 +5,6 @@ CREATE  TABLE core_notify_sender (
     poolname VARCHAR(128) NOT NULL DEFAULT '',
     priority INT NOT NULL DEFAULT 0,
     PRIMARY KEY (id)
-) ENGINE=InnoDB;;
+) ENGINE=InnoDB;
 
 ALTER TABLE core_notify_sender ADD INDEX lookup (email,poolname,is_active);
