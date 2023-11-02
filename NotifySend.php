@@ -367,7 +367,8 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("config Mail[helo] is not set");
         }
         
-        
+        $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+            
                         
         foreach($mxs as $mx) {
             
@@ -443,6 +444,8 @@ class Pman_Core_NotifySend extends Pman
                 
             }
         
+           
+            
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
@@ -535,7 +538,11 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             
-            if ($res->userinfo['smtpcode'] == 550) {
+            if ( $res->userinfo['smtpcode']> 500 ) {
+                
+                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+
+                
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
                     $this->server->updateNotifyToNextServer($w,  $retry_when,true);
