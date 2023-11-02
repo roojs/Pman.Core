@@ -6,6 +6,6 @@ CREATE  TABLE core_notify_sender_blacklist (
     error_str TEXT NOT NULL DEFAULT '',
     
     PRIMARY KEY (id)
-) ENGINE=InnoDB;;
+) ENGINE=InnoDB; 
 
 ALTER TABLE core_notify_sender_blacklist ADD INDEX lookup (sender_id,domain_id);
