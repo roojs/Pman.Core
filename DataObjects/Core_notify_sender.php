@@ -127,7 +127,7 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         if ($bl->count()) {
             return;
         }
-        $bl->error_msg = $errmsg;
+        $bl->error_str = $errmsg;
         $bl->added_dt = $bl->sqlValue('NOW()');
         $bl->insert();
         
