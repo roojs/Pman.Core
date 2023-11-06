@@ -85,8 +85,7 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         
         $ns = DB_DataObject::Factory($this->tableName());
         $ns->setFrom(array(
-            'domain_id' => $to_dom->id,
-            'poolname' => $notify->tableName(),
+             'poolname' => $notify->tableName(),
             'is_active' => 1,
         ));
         $ns->whereAddIn('!id', $bad_ids, 'int');
