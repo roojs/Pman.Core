@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         $bits = explode('@', $notify->to_email);
         $to_dom = DB_DataObject::factory('core_domain')->loadOrCreate($bits[1]);
         
-        $ns = $this->emailToSender($email);
+        $ns = $this->emailToSender($email, $notify);
         $bl->setFrom(array(
             'sender_id' => $ns->id,
             'domain_id' => $to_dom->id,
