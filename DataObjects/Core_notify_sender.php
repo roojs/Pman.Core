@@ -18,17 +18,9 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
     
     
     
-    function emailToSender($email , $notify)
+    function emailAddrToSender($from_addr , $notify)
     {
-        require_once 'Mail/RFC822.php';
-        $parser = new Mail_RFC822();
-        $addresses = $parser->parseAddressList( $email['headers']['From'], 'localhost', false);
-        if (is_a($addresses, 'PEAR_Error')) {
-            return false;
-        }
-        $from_addr = $addresses[0];
-        //print_r($email['headers']['From']);         print_R($from_addr);exit;
-
+        
         $from = $from_addr->mailbox . '@' . $from_addr->host;
 
         $ns = DB_DataObject::Factory($this->tableName());
@@ -46,6 +38,21 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
     }
     
     
+    function emailToAddr($email)
+    {
+        require_once 'Mail/RFC822.php';
+        $parser = new Mail_RFC822();
+        $addresses = $parser->parseAddressList( $email['headers']['From'], 'localhost', false);
+        if (is_a($addresses, 'PEAR_Error')) {
+            return false;
+        }
+        return $addresses[0];
+        //print_r($email['headers']['From']);         print_R($from_addr);exit;
+
+      
+    }
+    
+    
     function filterEmail($email, $notify)
     {
         //
@@ -55,8 +62,9 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         $bits = explode('@', $notify->to_email);
         $to_dom = DB_DataObject::factory('core_domain')->loadOrCreate($bits[1]);
         
+        $from_addr = $this->emailToAddr($email);
         
-        $ns = $this->emailToSender($email, $notify);
+        $ns = $this->emailAddrToSender($from_addr, $notify);
         if ($ns == false) {
             return $email;
         }
@@ -78,6 +86,7 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         $ns = DB_DataObject::Factory($this->tableName());
         $ns->setFrom(array(
             'domain_id' => $to_dom->id,
+            'poolname' => $notify->tableName(),
             'is_active' => 1,
         ));
         $ns->whereAddIn('!id', $bad_ids, 'int');
@@ -107,7 +116,11 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         $bits = explode('@', $notify->to_email);
         $to_dom = DB_DataObject::factory('core_domain')->loadOrCreate($bits[1]);
         
-        $ns = $this->emailToSender($email, $notify);
+        
+        
+        $from_addr = $this->emailToAddr($email);
+        $ns = $this->emailAddrToSender($from_addr, $notify);
+      
         $bl->setFrom(array(
             'sender_id' => $ns->id,
             'domain_id' => $to_dom->id,
