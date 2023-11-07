@@ -279,6 +279,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     break;
                 case 'PENDING';
                     $this->whereAdd('event_id = 0 OR (event_id  > 0 AND act_when > NOW() )');
+                    $this->whereAdd("sent < '2000-01-01'");
                     break;
                 
                 case 'OPENED';
@@ -351,7 +352,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         if(strtotime($this->act_when) > strtotime("NOW")){
             $this->act_when = $this->sqlValue('NOW()');
         }
-        $this->sent = $this->sent == '0000-00-00 00:00:00' ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
+        $this->sent = strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
         $this->msgid = $msgid;
         $this->event_id = $event->id;
         $this->update($ww);

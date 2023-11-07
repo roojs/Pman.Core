@@ -84,6 +84,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         $ns = DB_DataObject::factory('core_notify_server');
+        if (!$ns->count()) {
+            $ns->id = 0;
+            return $ns;
+        }
+        
         
         $ns->poolname = $notify->poolname;
         $ns->is_active = 1;
@@ -111,6 +116,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     function isFirstServer()
     {
+        if (!$this->id) {
+            return true;
+        }
+        
         $servers = $this->availableServers();
         if (empty($servers)) {
             return false;
@@ -123,7 +132,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     // called on current server.
     function assignQueues($notify)
     {
-         
+        if (!$this->id) {
+            return true;
+        }
         
         $servers = $this->availableServers();
         $ids = array();
@@ -265,6 +276,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     function updateNotifyToNextServer( $cn , $when = false, $allow_same = false)
     {
+        if (!$this->id) {
+            return;
+        }
+        
         // fixme - this should take into account blacklisted - and return false if no more servers are available
         $email = empty($cn->to_email) ? ($cn->person() ? $cn->person()->email : $cn->to_email) : $cn->to_email;
 
@@ -310,6 +325,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     function isBlacklisted($email)
     {
+        if (!$this->id) {
+            return false;
+        }
+        
         // return current server id..
         static $cache = array();
          // get the domain..
@@ -333,12 +352,18 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     }
     function initHelo()
     {
+        if (!$this->id) {
+            return;
+        }
         $ff = HTML_FlexyFramework::get();
         $ff->Mail['helo'] = $this->helo;
         
     }
     function checkSmtpResponse($errmsg, $core_domain)
     {
+        if (!$this->id) {
+            return false;
+        }
         $bl = DB_DataObject::factory('core_notify_blacklist');
         $bl->server_id = $this->id;
         $bl->domain_id = $core_domain->id;

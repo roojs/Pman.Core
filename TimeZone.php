@@ -79,7 +79,7 @@ class Pman_Core_TimeZone extends Pman
             WHERE
                 Name LIKE '%/%'
                 AND
-                LENGTH(Name) - LENGTH(REPLACE(Name, '/', '')) = 1
+                Name NOT LIKE '%/%/%'
                 AND
                 Name NOT LIKE 'Etc%'
             ORDER BY
