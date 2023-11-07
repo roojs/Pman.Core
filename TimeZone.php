@@ -86,8 +86,9 @@ class Pman_Core_TimeZone extends Pman
                 AND
                 Name NOT LIKE 'Etc%'
             ORDER BY
-                timeoffset DESC,
-                Name DESC
+                SUBSTRING_INDEX(Name, '/', 1) ASC,
+                timeoffset ASC,
+                Name ASC
         ");
 
         while($ce->fetch()) {
@@ -147,6 +148,10 @@ class Pman_Core_TimeZone extends Pman
     {
         if(!self::isValidTimeZone($tz)) {
             return '';
+        }
+
+        if($dt == '0000-00-00 00:00:00' || $dt == '') {
+            $dt = 'NOW';
         }
 
         $date = new DateTime($dt, new DateTimeZone($tz));
