@@ -69,7 +69,7 @@ class Pman_Core_TimeZone extends Pman
         if(!empty(self::$timezones)) {
             return self::$timezones;
         }
-
+    DB_DataObject::debugLevel(1);
         $ce = DB_DataObject::factory('core_enum');
         $ce->query("
             SELECT
@@ -80,6 +80,10 @@ class Pman_Core_TimeZone extends Pman
                 Name LIKE '%/%'
                 AND
                 Name NOT LIKE '%/%/%'
+                AND
+                Name NOT LIKE 'right%'
+                AND
+                Name NOT LIKE 'posix%'
                 AND
                 Name NOT LIKE 'Etc%'
             ORDER BY
