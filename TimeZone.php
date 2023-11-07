@@ -69,8 +69,7 @@ class Pman_Core_TimeZone extends Pman
         if(!empty(self::$timezones)) {
             return self::$timezones;
         }
-    DB_DataObject::debugLevel(1);
-        $ce = DB_DataObject::factory('core_enum');
+         $ce = DB_DataObject::factory('core_enum');
         $ce->query("
             SELECT
                 *, TIME_FORMAT(TIMEDIFF(NOW(), CONVERT_TZ(NOW(), Name, 'UTC')), '%H:%i') as timeOffset
