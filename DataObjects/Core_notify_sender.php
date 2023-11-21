@@ -94,9 +94,9 @@ class Pman_Core_DataObjects_Core_notify_sender extends DB_DataObject
         }
         $ns->limit(1);
         $ns->find(true);
-        $mail['headers']['From'] = $from_addr->personal . ' <' . $ns->email .'>';
+        $email['headers']['From'] = $from_addr->personal . ' <' . $ns->email .'>';
         
-        return $mail;
+        return $email;
         
         //check blacklist for 
         
