@@ -27,6 +27,10 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
             'sender is listed on the block', // korian?
             'proofpoint.com', // another spam detecotr
             'cloud-security.net', // another spam protector..
+            'spam complain',
+            'ANTISPAM',
+            'probability of spam',
+            
              
         );
         foreach($match as $str) {
