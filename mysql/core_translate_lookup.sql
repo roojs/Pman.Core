@@ -14,13 +14,15 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
 
         DECLARE v_ret TEXT;
         DECLARE v_id INT(11);
+        DECLARE v_src_id INT(11);
+   		DECLARE s_id INT(11);
         
         SET v_id = 0;
         
         SELECT
-            id , txt
+            id , txt, src_id
             INTO
-            v_id, v_ret
+            v_id, v_ret, v_src_id
         FROM
             core_templatestr
         WHERE
@@ -38,6 +40,21 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
         IF v_id < 1 OR LENGTH(v_ret) < 1 THEN
             RETURN in_default;
         END IF;
+
+       	SELECT 
+       		id
+       		INTO
+       		s_id
+       	FROM
+       		core_templatestr
+   	   	WHERE
+   	   		id = v_src_id
+   			AND
+   			mdsum = MD5(in_default);
+		
+		IF s_id IS NULL THEN
+			RETURN in_default;
+		END IF;
         
         RETURN v_ret;
 
