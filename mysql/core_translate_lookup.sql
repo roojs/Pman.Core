@@ -16,6 +16,10 @@ RETURNS TEXT NOT DETERMINISTIC READS SQL DATA
         DECLARE v_id INT(11);
         DECLARE v_src_id INT(11);
    		DECLARE s_id INT(11);
+
+        IF LENGTH(in_default) < 1 THEN
+            RETURN in_default;
+        END IF;
         
         SET v_id = 0;
         
