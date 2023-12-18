@@ -202,7 +202,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function getStoreName() 
     {
-        return self::staticGetStoreName($this->filename, $this->created, $this->id);
+        return self::staticGetStoreName($o);
           
     }
 
