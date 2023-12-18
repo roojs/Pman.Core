@@ -206,12 +206,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
           
     }
 
-    static function staticGetStoreName($filename, $created, $id)
+    static function staticGetStoreName()
     {
         $opts = HTML_FlexyFramework::get()->Pman;
-        $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $filename);
+        $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $o->filename);
         return implode( '/', array(
-            $opts['storedir'], '_images_', date('Y/m', strtotime($created)), $id . '-'. $fn
+            $opts['storedir'], '_images_', date('Y/m', strtotime($o->created)), $o->id . '-'. $fn
         ));
     }
     
