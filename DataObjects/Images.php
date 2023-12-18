@@ -247,7 +247,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         // look for the image in the folder, with matching id.
         // this is problematic..
-        $fn = self::staticGetStoreName();
+        $fn = self::staticGetStoreName($o);
         if (file_exists($fn . '-really-missing')) {
             return false;
         }
@@ -259,7 +259,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 continue;
             }
             $bits = explode('-', $n);
-            if ($bits[0] != $id) {
+            if ($bits[0] != $o->id) {
                 continue;
             }
             if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
