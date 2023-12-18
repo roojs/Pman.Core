@@ -241,6 +241,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         foreach( scandir(dirname($fn)) as $n) {
+            var_dump($n);
+            die('test');
             if (empty($n) || $n[0] == '.') {
                 continue;
             }
