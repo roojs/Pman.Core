@@ -243,7 +243,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         return self::staticCanFix($this);
     }
 
-    function staticCanFix($o)
+    static function staticCanFix($o)
     {
         // look for the image in the folder, with matching id.
         // this is problematic..
