@@ -269,9 +269,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
     function staticCanFix($id)
     {
-                // look for the image in the folder, with matching id.
+        // look for the image in the folder, with matching id.
         // this is problematic..
-        $fn = $this->getStoreName();
+        $fn = self::getStoreName();
         if (file_exists($fn . '-really-missing')) {
             return false;
         }
