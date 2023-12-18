@@ -226,9 +226,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     static function staticExists()
     {
         clearstatcache();
-        $ret =  file_exists(self::getStoreName());
+        $ret =  file_exists(self::staticGetStoreName());
         if (!$ret) {
-            return self::canFix();
+            return self::staticCanFix();
         }
         return $ret;
     }
@@ -247,7 +247,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
     {
         // look for the image in the folder, with matching id.
         // this is problematic..
-        $fn = self::getStoreName();
+        $fn = self::staticGetStoreName();
         if (file_exists($fn . '-really-missing')) {
             return false;
         }
