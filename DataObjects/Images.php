@@ -218,6 +218,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         clearstatcache();
         //var_dump($this->getStoreName());
         $ret =  file_exists($this->getStoreName());
+        var_dump($this->getStoreName());
         if (!$ret) {
             return $this->canFix();
         }
