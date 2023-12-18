@@ -202,11 +202,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function getStoreName() 
     {
-        return self::staticGetStoreName($o);
+        return self::staticGetStoreName($this);
           
     }
 
-    static function staticGetStoreName()
+    static function staticGetStoreName($o)
     {
         $opts = HTML_FlexyFramework::get()->Pman;
         $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $o->filename);
@@ -220,15 +220,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function exists()
     {
-        return self::staticExists();
+        return self::staticExists($this);
     }
 
-    static function staticExists()
+    static function staticExists($o)
     {
         clearstatcache();
-        $ret =  file_exists(self::staticGetStoreName());
+        $ret =  file_exists(self::staticGetStoreName($o));
         if (!$ret) {
-            return self::staticCanFix();
+            return self::staticCanFix($o);
         }
         return $ret;
     }
@@ -240,10 +240,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function canFix() 
     {
-        return self::staticCanFix($this->id);
+        return self::staticCanFix($this);
     }
 
-    function staticCanFix($id)
+    function staticCanFix($o)
     {
         // look for the image in the folder, with matching id.
         // this is problematic..
