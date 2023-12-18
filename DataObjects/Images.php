@@ -220,14 +220,19 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function exists()
     {
+        return self::staticExists();
+    }
+
+    static function staticExists()
+    {
         clearstatcache();
-        //var_dump($this->getStoreName());
-        $ret =  file_exists($this->getStoreName());
+        $ret =  file_exists(self::getStoreName());
         if (!$ret) {
-            return $this->canFix();
+            return self::canFix();
         }
         return $ret;
     }
+
     /**
      * the getStorename code got changed, and some old files may not end up with the correct name anymore.
      * this tries to fix it.
@@ -249,6 +254,36 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             }
             $bits = explode('-', $n);
             if ($bits[0] != $this->id) {
+                continue;
+            }
+            if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
+                continue;
+            }
+            copy(dirname($fn). '/'.  $n, $fn);
+            clearstatcache();
+            return true;
+        }
+        // fixme - flag it as bad
+        touch($fn . '-really-missing');
+    }
+
+    function staticCanFix($id)
+    {
+                // look for the image in the folder, with matching id.
+        // this is problematic..
+        $fn = $this->getStoreName();
+        if (file_exists($fn . '-really-missing')) {
+            return false;
+        }
+        if (!file_exists(dirname($fn))) {
+            return false;
+        }
+        foreach( scandir(dirname($fn)) as $n) {
+            if (empty($n) || $n[0] == '.') {
+                continue;
+            }
+            $bits = explode('-', $n);
+            if ($bits[0] != $id) {
                 continue;
             }
             if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
