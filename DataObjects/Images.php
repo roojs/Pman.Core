@@ -209,6 +209,15 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         ));
           
     }
+
+    static function staticGetStoreName($filename, $created, $id)
+    {
+        $opts = HTML_FlexyFramework::get()->Pman;
+        $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $this->filename);
+        return implode( '/', array(
+            $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
+        ));
+    }
     
     /**
      * does the files exist?
