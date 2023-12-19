@@ -202,12 +202,17 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function getStoreName() 
     {
-        $opts = HTML_FlexyFramework::get()->Pman;
-        $fn = preg_replace('/[^a-z0-9_\.]+/i', '_', $this->filename);
-        return implode( '/', array(
-            $opts['storedir'], '_images_', date('Y/m', strtotime($this->created)), $this->id . '-'. $fn
-        ));
+        return self::staticGetStoreName($this);
           
+    }
+
+    static function staticGetStoreName($o)
+    {
+        $opts = HTML_FlexyFramework::get()->Pman;
+        $fn = preg_replace('/[^a-z0-9\.]+/i', '_', $o->filename);
+        return implode( '/', array(
+            $opts['storedir'], '_images_', date('Y/m', strtotime($o->created)), $o->id . '-'. $fn
+        ));
     }
     
     /**
@@ -215,23 +220,34 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function exists()
     {
+        return self::staticExists($this);
+    }
+
+    static function staticExists($o)
+    {
         clearstatcache();
-        //var_dump($this->getStoreName());
-        $ret =  file_exists($this->getStoreName());
+        $ret =  file_exists(self::staticGetStoreName($o));
         if (!$ret) {
-            return $this->canFix();
+            return self::staticCanFix($o);
         }
         return $ret;
     }
+
     /**
      * the getStorename code got changed, and some old files may not end up with the correct name anymore.
      * this tries to fix it.
      *
      */
-    function canFix() {
+    function canFix() 
+    {
+        return self::staticCanFix($this);
+    }
+
+    static function staticCanFix($o)
+    {
         // look for the image in the folder, with matching id.
         // this is problematic..
-        $fn = $this->getStoreName();
+        $fn = self::staticGetStoreName($o);
         if (file_exists($fn . '-really-missing')) {
             return false;
         }
@@ -243,7 +259,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
                 continue;
             }
             $bits = explode('-', $n);
-            if ($bits[0] != $this->id) {
+            if ($bits[0] != $o->id) {
                 continue;
             }
             if (preg_match('/\.[0-9]+x[0-9]]+\.jpeg$/', $n)) {
