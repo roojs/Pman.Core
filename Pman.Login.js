@@ -350,9 +350,8 @@ Pman.Login =  new Roo.util.Observable({
                 autoCreate : {tag: "input", type: "text", size: "20"}
             }),
 
-            new Roo.form.TextField({
+            new Roo.form.Password({
                 fieldLabel: "Password",
-                inputType: 'text',
                 name: 'password',
                 width:200,
                 autoCreate : {tag: "input", type: "text", size: "20"},
