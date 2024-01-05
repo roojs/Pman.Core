@@ -576,15 +576,19 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         }
         
         
-        
-        $out = array(
-            'REQUEST_URI' => empty($_SERVER['REQUEST_URI']) ? 'cli' : $_SERVER['REQUEST_URI'],
-            'HTTP_USER_AGENT' => empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'],
-            'GET' => empty($_GET) ? array() : $_GET,
-            'POST' =>$p,
-            'FILES' => $files,
-            
-        );
+        $out = array();
+
+        if(!empty($_SERVER['REQUEST_URI'])) {
+            $out = array(
+                'REQUEST_URI' => $_SERVER['REQUEST_URI'],
+                'HTTP_USER_AGENT' => empty($_SERVER['HTTP_USER_AGENT']) ? '' : $_SERVER['HTTP_USER_AGENT'],
+                'GET' => empty($_GET) ? array() : $_GET,
+                'POST' =>$p,
+                'FILES' => $files,
+                
+            );
+        }
+
         if (!empty(self::$deleted)) {
             $out['DELETED_DATAOBJECTS'] = self::$deleted;
         }
