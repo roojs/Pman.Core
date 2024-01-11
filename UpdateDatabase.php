@@ -154,15 +154,14 @@ class Pman_Core_UpdateDatabase extends Pman
             'active' => 1,
             'description' => '9.1 Management System Password Reset',
             'template_dir' => '/Pman/Core/templates/mail/'
-
-            
+ 
         )
     );
     
     var $required_extensions = array(
         'curl',
         'gd',
-        'mstring'
+        'mbstring'
     );
     
     function getAuth() {
