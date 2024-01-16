@@ -10,9 +10,23 @@ trait Pman_Core_RooTrait {
     
     var $debugEnabled = true;
     
+    var $appName;
+    var $appNameShort;
+    var $appModules;
+    var $isDev;
+    var $appDisable;
+    var $appDisabled;
+    var $version ;
+    var $uiConfig ;
+      
+    var $cols = array();
+    var $countWhat;
+    var $colsJname;    
+    var $_hasInit;
+    
     function init() 
     {
-        if (isset($this->_hasInit)) {
+        if (!empty($this->_hasInit)) {
             return;
         }
         
@@ -143,7 +157,7 @@ trait Pman_Core_RooTrait {
         
     }
     
-    var $cols = array();
+    
     
     function loadMap($do, $cfg =array())
     {

@@ -2,6 +2,8 @@
 
 trait Pman_Core_RooPostTrait {
     
+    var $old;
+    
     /**
      * POST method   Roo/TABLENAME  
      * -- creates, updates, or deletes data.
