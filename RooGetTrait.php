@@ -256,6 +256,7 @@ trait Pman_Core_RooGetTrait {
         if (!empty($_REQUEST['_requestMeta']) &&  count($ret)) {
             $meta = $this->meta($x, $ret);
             if ($meta) {
+                $extra = $extra ? $extra: array();
                 $extra['metaData'] = $meta;
             }
         }
