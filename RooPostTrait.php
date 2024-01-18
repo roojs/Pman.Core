@@ -189,8 +189,13 @@ trait Pman_Core_RooPostTrait {
        // echo '<PRE>';print_r($affects);exit;
        // DB_Dataobject::debugLevel(1);
        
-        
-        $clean = create_function('$v', 'return (int)$v;');
+        if (function_exists('create_function')) {
+            $clean = create_function('$v', 'return (int)$v;');
+        } else {
+            $clean = function($v) {
+                return (int)$v;
+            };
+        }
         
         $bits = array_map($clean, explode(',', $req['_delete']));
         
