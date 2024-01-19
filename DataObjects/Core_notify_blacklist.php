@@ -30,7 +30,9 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
             'spam complain',
             'ANTISPAM',
             'probability of spam',
-            
+            'block list by spam', // spamhaus
+            'blocked using Spamhaus',
+            'www.spamhaus.org',
              
         );
         foreach($match as $str) {
