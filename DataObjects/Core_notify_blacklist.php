@@ -32,8 +32,21 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
             'probability of spam',
             'block list by spam', // spamhaus
             'blocked using Spamhaus',
-            'www.spamhaus.org',
-             
+            'spamhaus.org',  // www zen rbl...
+            'detected as Spam',
+            'poor reputation',
+            'AntiSpam',
+            'ip address in rbl',
+            'IP address blacklisted',
+            'spamauditor.org',
+            'detect spam',
+            'message as spam',
+            'DNSBL:RBL',
+            'SpamHaus SBL-XBL',
+            'blocked by sbl-xbl.spam',
+            'Sophos Anti Spam Engine',
+            'spam filters',
+            
         );
         foreach($match as $str) {
             if (strpos($err, $str) !== false) {
