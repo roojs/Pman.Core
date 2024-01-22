@@ -19,7 +19,8 @@ class Pman_Core_DataObjects_Core_notify_sender_blacklist extends DB_DataObject
     function messageIsBlacklisted($err)
     {
         $match = array(
-            'BLOCK-SEND-ER'
+            'BLOCK-SEND-ER',
+            'sender is listed on the block mail' // 'sniper? 
         );
         foreach($match as $str) {
             if (strpos($err, $str) !== false) {
