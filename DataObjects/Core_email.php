@@ -467,9 +467,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         if (is_a($r, 'PEAR_Error')) {
             return $r;
         }
-
-        var_dump($r->toData());
-        die('tt');
+        
         return $r->toData();
     }
     
