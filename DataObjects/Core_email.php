@@ -688,6 +688,9 @@ Content-Transfer-Encoding: 7bit
     function testData($person, $dt , $core_notify)
     {
 	 
+
+        var_dump($person);
+        die('test');
 	// should return the formated email???
 	$pg = HTML_FlexyFramework::get()->page;
 	
