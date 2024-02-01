@@ -498,7 +498,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
 
         var_dump($r->toData());
-        die('test');
+        die('testt');
         
         return $r->send();
     }
