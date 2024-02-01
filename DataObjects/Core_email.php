@@ -492,13 +492,13 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $r = $this->toMailer($obj, $force);
-
-        var_dump($r->toData());
-        die('testt');
         
         if (is_a($r, 'PEAR_Error')) {
             return $r;
         }
+
+        var_dump($r->toData());
+        die('testt');
         
         return $r->send();
     }
