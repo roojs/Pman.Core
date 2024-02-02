@@ -625,7 +625,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function getFromHashURL($url)
     {
-        var_dump($url);
         $id = false;
         if (preg_match('/#image-([0-9]+)$/', $url, $matches)) {
             $id = $matches[1];
