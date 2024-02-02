@@ -639,6 +639,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         if ($id === false ||  $id < 1) {
             return false;
         }
+
+        var_dump($id);
         
         $img = DB_DAtaObject::Factory('images');
         if ($img->get($id)) {
