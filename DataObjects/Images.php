@@ -636,6 +636,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             // supports images.xxxxx.com/{number}/name...
             $id = $matches[1];
         }
+        
         if ($id === false ||  $id < 1) {
             return false;
         }
