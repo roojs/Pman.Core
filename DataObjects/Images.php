@@ -635,6 +635,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         } else if (preg_match('#images[^/]+/([0-9]+)/#i', $url, $matches)) {
             // supports images.xxxxx.com/{number}/name...
             $id = $matches[1];
+        } else if (preg_match('#Thumb/[^/]+/([0-9]+)/#', $url, $matches)) {
+            $id = $matches[1];
         }
         if ($id === false ||  $id < 1) {
             return false;
