@@ -414,9 +414,6 @@ class Pman_Core_Images extends Pman
         }
         //var_dump($ff->Pman_Images['public_baseURL']);
         $baseURL = $ff->Pman_Images['public_baseURL'];
-        var_dump($ff->Pman_Images);
-        var_dumP($baseURL);
-        die('test');
         
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
