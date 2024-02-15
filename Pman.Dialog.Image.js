@@ -319,6 +319,7 @@ Pman.Dialog.Image = {
          },
          {
           xtype : 'TextField',
+          allowBlank : false,
           fieldLabel : _this._strings['ea72bacd2fdfa818907bb9559e6905a1'] /* Upload Image or File */,
           inputType : 'file',
           name : 'imageUpload',

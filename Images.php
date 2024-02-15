@@ -505,15 +505,15 @@ class Pman_Core_Images extends Pman
         }
         
         $w =  is_string($dom) ? false : $dom->getAttribute('width');
-        $h =  is_string($dom) ? false : $dom->getAttribute('width');
+        $h =  is_string($dom) ? false : $dom->getAttribute('height');
         
-        if (!is_string($dom) && (!empty($w) || !empty($h)) )
+        if (!is_string($dom) && (!empty($w) || !empty($h) ) && is_numeric($w) && is_numeric($h))
         {
             // no support for %...
             $thumbsize =
-                (empty($w) ? '0' : $w * 1) .
+                (empty($w) ? '0' : intval($w) * 1) .
                 'x' .
-                (empty($h) ? '0' : $h * 1);
+                (empty($h) ? '0' : intval($h) * 1);
              $provider = '/Images/Thumb';
             
         }
