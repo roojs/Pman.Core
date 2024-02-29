@@ -2,6 +2,8 @@
 
 trait Pman_Core_JsonOutputTrait {
     
+    var $transObj = false;
+    
     function jok($str)
     {
         if ($this->transObj ) {
