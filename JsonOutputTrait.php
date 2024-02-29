@@ -175,6 +175,14 @@ trait Pman_Core_JsonOutputTrait {
    
     
     
+    
+    /**
+     * output data for grids or tree
+     * @ar {Array} ar Array of data
+     * @total {Number|false} total number of records (or false to return count(ar)
+     * @extra {Array} extra key value list of data to pass as extra data.
+     * 
+     */
     function jdata($ar,$total=false, $extra=array(), $cachekey = false)
     {
         // should do mobile checking???
@@ -182,8 +190,7 @@ trait Pman_Core_JsonOutputTrait {
             $total = count($ar);
         }
         $extra=  $extra ? $extra : array();
-        require_once 'Services/JSON.php';
-        $json = new Services_JSON();
+        
         
         $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
                 preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
@@ -199,11 +206,11 @@ trait Pman_Core_JsonOutputTrait {
         if ($retHTML) {
             
             header('Content-type: text/html');
-            echo "<HTML><HEAD></HEAD><BODY>";
+            echo "<HTML><HEAD></HEAD><BODY><![CDATA[";
             // encode html characters so they can be read..
             echo  str_replace(array('<','>'), array('\u003c','\u003e'),
-                        $json->encodeUnsafe(array('success' =>  true, 'total'=> $total, 'data' => $ar) + $extra));
-            echo "</BODY></HTML>";
+                        $this->jsencode(array('success' =>  true, 'total'=> $total, 'data' => $ar) + $extra, false));
+            echo "]]></BODY></HTML>";
             exit;
         }
         
@@ -227,7 +234,7 @@ trait Pman_Core_JsonOutputTrait {
         }
         
       
-        $ret =  $json->encode(array('success' =>  true, 'total'=> $total, 'data' => $ar) + $extra);  
+        $ret =  $this->jsencode(array('success' =>  true, 'total'=> $total, 'data' => $ar) + $extra,true);  
         
         if (!empty($cachekey)) {
             
@@ -237,10 +244,13 @@ trait Pman_Core_JsonOutputTrait {
             }
             file_put_contents($fn, $ret);
         }
+        
         echo $ret;
         exit;
     }
     
+    
+   
     /** a daily cache **/
     function jdataCache($cachekey)
     {
@@ -253,4 +263,5 @@ trait Pman_Core_JsonOutputTrait {
         return false;
         
     }
+    
 }
