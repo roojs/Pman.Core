@@ -59,6 +59,20 @@ trait Pman_Core_JsonOutputTrait {
         return $this->jerror('NOTICE-' . $type, $str, $errors, $content_type);
     }
     
+     /**
+     * jerrAuth: standard auth failure - with data that let's the UI know..
+     */
+    function jerrAuth()
+    {
+        $au = $this->authUser;
+        if ($au) {
+            // is it an authfailure?
+            $this->jerror("LOGIN-NOPERM", "Permission denied to view this resource", array('authFailure' => true));
+        }
+        $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
+    }
+     
+     
     /**
      * Recomended JSON error indicator
      *
