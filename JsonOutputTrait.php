@@ -53,6 +53,12 @@ trait Pman_Core_JsonOutputTrait {
     {
         return $this->jerror('ERROR', $str,$errors,$content_type);
     }
+    
+    function jnotice($type, $str, $errors=array(), $content_type = false)
+    {
+        return $this->jerror('NOTICE-' . $type, $str, $errors, $content_type);
+    }
+    
     /**
      * Recomended JSON error indicator
      *
@@ -164,6 +170,10 @@ trait Pman_Core_JsonOutputTrait {
         exit;
         
     }
+    
+     
+   
+    
     
     function jdata($ar,$total=false, $extra=array(), $cachekey = false)
     {
