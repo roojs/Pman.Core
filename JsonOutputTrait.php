@@ -9,13 +9,10 @@ trait Pman_Core_JsonOutputTrait {
         }
         
         $cli = HTML_FlexyFramework::get()->cli;
-        
         if ($cli) {
             echo "OK: " .$str . "\n";
             exit;
         }
-        require_once 'Services/JSON.php';
-        $json = new Services_JSON();
         
         $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
                 preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
@@ -33,15 +30,16 @@ trait Pman_Core_JsonOutputTrait {
             echo "<HTML><HEAD></HEAD><BODY>";
             // encode html characters so they can be read..
             echo  str_replace(array('<','>'), array('\u003c','\u003e'),
-                        $json->encodeUnsafe(array('success'=> true, 'data' => $str)));
+                        $this->jsencode(array('success'=> true, 'data' => $str), false));
             echo "</BODY></HTML>";
             exit;
         }
         
         
-        echo  $json->encode(array('success'=> true, 'data' => $str));
+        echo  $this->jsencode(array('success'=> true, 'data' => $str),true);
         
         exit;
+        
     }
     
     
