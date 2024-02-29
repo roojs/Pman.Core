@@ -43,25 +43,61 @@ trait Pman_Core_JsonOutputTrait {
     }
     
     
-    function jerr($str, $errors=array(), $content_type = false)
+      /**
+     * ---------------- Standard JSON outputers. - used everywhere
+     * JSON error - simple error with logging.
+     * @see Pman::jerror
+     */
+    
+    function jerr($str, $errors=array(), $content_type = false) // standard error reporting..
+    {
+        return $this->jerror('ERROR', $str,$errors,$content_type);
+    }
+    /**
+     * Recomended JSON error indicator
+     *
+     * 
+     * @param string $type  - normally 'ERROR' - you can use this to track error types.
+     * @param string $message - error message displayed to user.
+     * @param array $errors - optioanl data to pass to front end.
+     * @param string $content_type - use text/plain to return plan text - ?? not sure why...
+     *
+     */
+    
+    function jerror($type, $str, $errors=array(), $content_type = false) // standard error reporting..
     {
         if ($this->transObj) {
             $this->transObj->query('ROLLBACK');
         }
         
-        return $this->jerror('ERROR', $str,$errors,$content_type);
-    }
-    
-    function jerror($type, $str, $errors=array(), $content_type = false) // standard error reporting..
-    {
-        if ($type !== false) {
+        $cli = HTML_FlexyFramework::get()->cli;
+        if ($cli) {
+            echo "ERROR: " .$str . "\n"; // print the error first, as DB might fail..
+        }
+        $pman = HTML_FlexyFramework::get();
+        
+       
+        
+
+        
+        if ($type !== false  &&  empty($pman->nodatabase)) {
+            
+            if(!empty($errors)){
+                DB_DataObject::factory('Events')->writeEventLogExtra($errors);
+            }
+            // various codes that are acceptable.
+            // 
+            if (!preg_match('/^(ERROR|NOTICE|LOG)/', $type )) {
+                $type = 'ERROR-' . $type;
+            }
+            
             $this->addEvent($type, false, $str);
+            
         }
          
         $cli = HTML_FlexyFramework::get()->cli;
         if ($cli) {
-            echo "ERROR: " .$str . "\n";
-            exit;
+            exit(1); // cli --- exit code to stop shell execution if necessary.
         }
         
         
@@ -72,8 +108,7 @@ trait Pman_Core_JsonOutputTrait {
             exit;
         } 
         
-        require_once 'Services/JSON.php';
-        $json = new Services_JSON();
+     // log all errors!!!
         
         $retHTML = isset($_SERVER['CONTENT_TYPE']) && 
                 preg_match('#multipart/form-data#i', $_SERVER['CONTENT_TYPE']);
@@ -86,17 +121,18 @@ trait Pman_Core_JsonOutputTrait {
             $retHTML = isset($_REQUEST['returnHTML']) && $_REQUEST['returnHTML'] !='NO';
         }
         
+        
         if ($retHTML) {
             header('Content-type: text/html');
             echo "<HTML><HEAD></HEAD><BODY>";
-            echo  $json->encodeUnsafe(array(
+            echo  $this->jsencode(array(
                     'success'=> false, 
                     'errorMsg' => $str,
                     'message' => $str, // compate with exeption / loadexception.
 
                     'errors' => $errors ? $errors : true, // used by forms to flag errors.
                     'authFailure' => !empty($errors['authFailure']),
-                ));
+                ), false);
             echo "</BODY></HTML>";
             exit;
         }
@@ -114,14 +150,16 @@ trait Pman_Core_JsonOutputTrait {
                 
         }
         
-        echo $json->encode(array(
+        echo $this->jsencode(array(
             'success'=> false, 
-            'data'=> array(), 
+            'data'=> array(),
+            'code' => $type,
             'errorMsg' => $str,
             'message' => $str, // compate with exeption / loadexception.
             'errors' => $errors ? $errors : true, // used by forms to flag errors.
             'authFailure' => !empty($errors['authFailure']),
-        ));
+        ),true);
+        
         
         exit;
         
