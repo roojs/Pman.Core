@@ -37,7 +37,7 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
             'poor reputation',
             'AntiSpam',
             'ip address in rbl',
-            'IP address blacklisted',
+            'blacklisted',
             'spamauditor.org',
             'detect spam',
             'message as spam',
@@ -46,6 +46,11 @@ class Pman_Core_DataObjects_Core_notify_blacklist extends DB_DataObject
             'blocked by sbl-xbl.spam',
             'Sophos Anti Spam Engine',
             'spam filters',
+            'JunkMail',
+            'block list',
+            'Cloudmark Sender Intelligence',
+            'Blocked by CSI',
+            
             
         );
         foreach($match as $str) {
