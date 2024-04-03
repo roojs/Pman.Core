@@ -12,7 +12,8 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     public $__table = 'core_holiday';               // table name
     public $id;                              
     public $country;                            
-    public $holiday_date;                            
+    public $holiday_date;
+    public $name;
 
     
     /* the code above is auto generated do not remove the tag below */
@@ -25,7 +26,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     );
     
      
-    function updateHolidays($country)
+    function updateHolidays($country, $force = false)
     {
         
         if (!isset(self::$map[$country])) {
@@ -37,14 +38,14 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         $d->country = $country;
         $d->orderBy('holiday_date DESC');
         $d->limit(1);
-        if ($d->count() && $d->find(true) && strtotime($d->holiday_date) > strtotime('NOW + 6 MONTHS')) {
+        if (!$force && $d->count() && $d->find(true) && strtotime($d->holiday_date) > strtotime('NOW + 6 MONTHS')) {
             // no need to fetch..
             return;
         }
         
         
         
-        $data = file_get_contents("https://www.1823.gov.hk/common/ical/gc/en.ics", false,
+        $data = file_get_contents(self::$map[$country], false,
             stream_context_create(array(
                 "ssl"=>array(
                     "verify_peer"=>false,
@@ -61,7 +62,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
             
             $start_dt = false;
             $end_dt = false;
-            
+            $name = '';
             foreach ($lines as $line){
                 
                 if(preg_match('/^DTSTART;VALUE=DATE:([0-9]+)/', $line, $matches)){
@@ -73,7 +74,9 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                     $fmt = substr($matches[1], 0, 4) . "-" . substr($matches[1], 4, 2) . "-" . substr($matches[1], 6, 2);
                     $end_dt = date('Y-m-d', strtotime($fmt));
                 }
-                
+                if(preg_match('/^SUMMARY[^:]*:(.*)/', $line, $matches)){
+                    $name = $matches[1];
+                }
             }
             
             if(empty($start_dt) || empty($end_dt)){
@@ -87,8 +90,13 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                 $d = DB_DataObject::Factory('core_holiday');
                 $d->country = $country;
                 $d->holiday_date = date('Y-m-d', $i);
+                
                 if (!$d->count()) {
+                    $d->name = $name;
                     $d->insert();
+                } else {
+                    $d->name = $name;
+                    $d->update();
                 }
                 
                 
