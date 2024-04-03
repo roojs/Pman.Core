@@ -27,7 +27,7 @@ class Pman_Core_Import_Core_holiday extends Pman_Core_Cli
         DB_DAtaObject::debugLevel(1);
         $d = DB_DataObject::factory('core_holiday');
         $d->updateHolidays('hk');
-        
+        $d->updateHolidays('cny');
     }
     
     function log($str)

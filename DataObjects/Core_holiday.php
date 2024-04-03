@@ -20,7 +20,8 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     
     
     static $map = array(
-        'hk' => 'http://www.1823.gov.hk/common/ical/gc/en.ics'
+        'hk' => 'http://www.1823.gov.hk/common/ical/gc/en.ics',
+        'cny' => 'https://raw.githubusercontent.com/andrewlkho/cny.ics/master/cny.ics', // CNY
     );
     
      
