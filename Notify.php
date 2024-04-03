@@ -178,6 +178,12 @@ class Pman_Core_Notify extends Pman
    
     function get($r,$opts=array())    
     {
+        
+        if ($this->database_is_locked()) {
+            die("LATER - DATABASE IS LOCKED");
+        }
+        
+        
         $this->parseArgs($opts); 
          
         //date_default_timezone_set('UTC');

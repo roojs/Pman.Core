@@ -20,6 +20,12 @@ class Pman_Core_Heartbeat extends Pman
     function post($req)
     {
         $this->initErrorHandling();
+        
+        if ($this->database_is_locked()) {
+            die("FAILED");
+        }
+        
+        
         $cd = DB_DataObject::Factory('core_enum');
         $cd->setFrom(array(
             'etype' => 'heartbeat',
@@ -48,4 +54,6 @@ class Pman_Core_Heartbeat extends Pman
       //  print_r($err);
         die("FAILED");
     }
+    
+   
 }
