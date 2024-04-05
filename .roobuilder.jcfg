@@ -1,0 +1,13 @@
+{
+    "name" : "Pman.Core",
+    "xtype" : "Roo",
+    "fn" : "3ab3f691edabeed20ba58b844cde0cc6",
+    "runhtml" : "<script type=\"text/javascript\">\n Roo.namespace(\"Pman.Dialog\");\n</script>",
+    "rootURL" : "http://localhost/web.Texon/",
+    "base_template" : "roo.builder.html",
+    "html_gen" : "",
+    "DBTYPE" : "",
+    "DBNAME" : "",
+    "DBUSERNAME" : "",
+    "DBPASSWORD" : ""
+}
