@@ -24,6 +24,22 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         'cny' => 'https://raw.githubusercontent.com/andrewlkho/cny.ics/master/cny.ics', // CNY
     );
     
+    
+    function apply_filters($q, $au, $roo)
+    {
+        if (isset($q['date_from'])) {
+            $dt = date("Y-m-d",strtotime($q['date_from']));
+            $this->whereAdd("holiday_date > '$dt'");
+        }
+        if (isset($q['date_to'])) {
+            $dt = date("Y-m-d",strtotime($q['date_to']));
+            $this->whereAdd("holiday_date < '$dt'");
+        }
+        
+        
+    }
+    
+    
      
     function updateHolidays($country)
     {
