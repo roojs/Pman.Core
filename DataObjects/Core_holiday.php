@@ -25,7 +25,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     );
     
     
-    function apply_filters($q, $au, $roo)
+    function applyFilters($q, $au, $roo)
     {
         if (isset($q['date_from'])) {
             $dt = date("Y-m-d",strtotime($q['date_from']));
