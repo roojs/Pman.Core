@@ -73,13 +73,9 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                     $fmt = substr($matches[1], 0, 4) . "-" . substr($matches[1], 4, 2) . "-" . substr($matches[1], 6, 2);
                     $end_dt = date('Y-m-d', strtotime($fmt));
                 }
-<<<<<<< Updated upstream
-                
-=======
                 if(preg_match('/^SUMMARY[^:]*:(.*)/', $line, $matches)){
                     $name = trim($matches[1]);
                 }
->>>>>>> Stashed changes
             }
             
             if(empty($start_dt) || empty($end_dt)){
@@ -95,15 +91,13 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                 $d->holiday_date = date('Y-m-d', $i);
                 if (!$d->count()) {
                     $d->insert();
-<<<<<<< Updated upstream
-=======
+ 
                 } else {
                     $d->find(true);
                     $dd = clone($d);
                     $d->name = $name;
                     $d->update($dd);
->>>>>>> Stashed changes
-                }
+                 }
                 
                 
             }
