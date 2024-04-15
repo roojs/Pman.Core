@@ -230,6 +230,19 @@ class Pman_Core_TimeZone extends Pman
 
     static function toDisplayArea($lang, $dt, $tz)
     {
+        $displayArea = str_replace('_', ' ', self::toArea($tz));
+
+        $ce = DB_DataObject::factory('core_enum');
+        $ce->setFrom(array(
+            'etype' => 'Timezone.Area',
+            'active' => 1,
+            'name' => $displayArea,
+            'display_name' => $displayArea
+        ));
+        if($ce->find(true)) {
+            return $region;
+        }
+
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
     }
