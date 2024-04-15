@@ -126,7 +126,7 @@ class Pman_Core_TimeZone extends Pman
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
 
-            $region =  $ar[0];
+            $region = $ar[0];
             $area = $ar[1];
 
 
