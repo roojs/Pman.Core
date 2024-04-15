@@ -61,7 +61,9 @@ class Pman_Core_Import_Timezone extends Pman
                 " . implode(", \n", $values) . "
         ";
 
-        var_dump($sql);
-        die('test');
+        $ce = DB_DataObject::factory('core_enum');
+        $ce->query($sql);
+        
+        $this->jok('DONE');
     }
 }
