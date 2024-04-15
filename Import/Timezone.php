@@ -54,9 +54,12 @@ class Pman_Core_Import_Timezone extends Pman
             $values[] = "(Timezone.Area, '" . $ar[1] . "', 1, 0, 0, '" . $ar[1] . "', 0)";
         }
 
-
-
-        var_dump($values);
+        $sql = "
+            INSERT INTO
+                core_enum (etype, name, active, seqid, seqmax, display_name, is_system_enum)
+            VALUES
+                " . implode(',', $values) . "
+        ";
         die('test');
     }
 }
