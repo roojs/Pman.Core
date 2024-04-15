@@ -225,7 +225,7 @@ class Pman_Core_TimeZone extends Pman
         if(!$ct->find(true) || empty($ct->txt)) {
             return $region;
         }
-
+        return 'ABC';
         return $ct->txt;
     }
 
