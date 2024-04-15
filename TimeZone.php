@@ -231,6 +231,7 @@ class Pman_Core_TimeZone extends Pman
     static function toDisplayArea($lang, $dt, $tz)
     {
         $displayArea = str_replace('_', ' ', self::toArea($tz));
+        $displayOffset = '(GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
@@ -239,8 +240,23 @@ class Pman_Core_TimeZone extends Pman
             'name' => $displayArea,
             'display_name' => $displayArea
         ));
+
         if($ce->find(true)) {
-            return $region;
+
+        }
+        if($ce->find(true)) {
+            $ct = DB_DataObject::factory('core_templatestr');
+            $ct->setFrom(array(
+                'lang' => $lang,
+                'on_table' => 'core_enum',
+                'on_id' => $ce->id,
+                'on_col' => 'display_name',
+                'active' => 1
+            ));
+
+            if($ct->find(true) && !empty($ct->txt)) {
+                r
+            }
         }
 
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
