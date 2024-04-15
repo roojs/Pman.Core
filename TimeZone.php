@@ -223,6 +223,7 @@ class Pman_Core_TimeZone extends Pman
             'active' => 1
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
+            return 'BCD';
             return $region;
         }
         return 'ABC';
