@@ -45,13 +45,23 @@ class Pman_Core_Import_Timezone extends Pman
 
         $values = array();
 
+        $regions = array();
+        $areas = array();
+
         while($ce->fetch()) {
             $ar = explode('/', $ce->Name);
             $region = $ar[0];
             $area = $ar[1];
 
-            $values[] = "('Timezone.Region', '" . $ar[0] . "', 1, 0, 0, '" . $ar[0] . "', 0)";
-            $values[] = "('Timezone.Area', '" . $ar[1] . "', 1, 0, 0, '" . $ar[1] . "', 0)";
+            if(!in_array($region, $regions)) {
+                $regions[] = $region;
+                $values[] = "('Timezone.Region', '" . $ar[0] . "', 1, 0, 0, '" . $ar[0] . "', 0)";
+            }
+
+            if(!in_array($area, $areas)) {
+                $areas[] = $area;
+                $values[] = "('Timezone.Area', '" . $ar[1] . "', 1, 0, 0, '" . $ar[1] . "', 0)";
+            }
         }
 
         $sql = "
