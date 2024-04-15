@@ -241,25 +241,23 @@ class Pman_Core_TimeZone extends Pman
             'display_name' => $displayArea
         ));
 
-        if($ce->find(true)) {
-
-        }
-        if($ce->find(true)) {
-            $ct = DB_DataObject::factory('core_templatestr');
-            $ct->setFrom(array(
-                'lang' => $lang,
-                'on_table' => 'core_enum',
-                'on_id' => $ce->id,
-                'on_col' => 'display_name',
-                'active' => 1
-            ));
-
-            if($ct->find(true) && !empty($ct->txt)) {
-                r
-            }
+        if(!$ce->find(true)) {
+            return $displayArea . ' ' . $displayOffset;
         }
 
-        return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->setFrom(array(
+            'lang' => $lang,
+            'on_table' => 'core_enum',
+            'on_id' => $ce->id,
+            'on_col' => 'display_name',
+            'active' => 1
+        ));
+        if(!$ct->find(true) || empty($ct->txt)) {
+            return $displayArea . ' ' . $displayOffset;
+        }
+
+        return $ct->txt . ' ' . $displayOffset;
 
     }
 
