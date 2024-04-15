@@ -263,6 +263,6 @@ class Pman_Core_TimeZone extends Pman
 
     static function toDisplayName($lang, $dt, $tz)
     {
-        return self::toRegion($tz) . '/' . self::toDisplayArea($lang, $dt, $tz);
+        return self::toDisplayRegion($lang, $tz) . '/' . self::toDisplayArea($lang, $dt, $tz);
     }
 }
