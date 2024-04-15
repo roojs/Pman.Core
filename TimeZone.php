@@ -145,6 +145,7 @@ class Pman_Core_TimeZone extends Pman
                 'region' => $ar[0],
                 'area' => $ar[1],
                 'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
+                'displayRegion' => $displayRegion,
                 'displayArea' => $displayArea . ' ' . $displayOffset
             );
         }
