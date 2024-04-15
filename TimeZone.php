@@ -93,17 +93,17 @@ class Pman_Core_TimeZone extends Pman
         ");
 
         $regions = DB_DataObject::factory('core_enum');
-        $regions->setFrom(
+        $regions->setFrom(array(
             'etype' => 'Timezone.Region',
             'active' => 1
-        );
+        ));
         $regionIds = $regions->fetchAll('display_name', 'id');
 
         $areas = DB_DataObject::factory('core_enum');
-        $areas->setFrom(
+        $areas->setFrom(array(
             'etype' => 'Timezone.Area',
             'active' => 1
-        );
+        ));
         $areaIds = $areas->fetchAll('display_name', 'id');
 
 
