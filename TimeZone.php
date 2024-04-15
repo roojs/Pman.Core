@@ -94,7 +94,7 @@ class Pman_Core_TimeZone extends Pman
 
         $ct = DB_DataObject::factory('core_templatestr');
         $ct->lang = $lang;
-        $ct->on_table = 'pressrelease_terminals';
+        $ct->on_table = 'core_enum';
         $ct->active = 1;
         $translations = array();
         foreach($ct->fetchAll() as $t) {
@@ -110,6 +110,7 @@ class Pman_Core_TimeZone extends Pman
 
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
+
            
 
             $displayArea = str_replace('_', ' ', $ar[1]);
