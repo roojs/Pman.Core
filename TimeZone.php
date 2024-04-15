@@ -120,8 +120,6 @@ class Pman_Core_TimeZone extends Pman
             }
             $translations[$t->on_id][$t->on_col] = $t->txt;
         }
-        var_dump($translations);
-        die('test');
 
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
