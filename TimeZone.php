@@ -120,7 +120,7 @@ class Pman_Core_TimeZone extends Pman
             }
             $translations[$t->on_id][$t->on_col] = $t->txt;
         }
-        var_dump($translations);
+        var_dump($lang);
         die('test');
 
         while($ce->fetch()) {
