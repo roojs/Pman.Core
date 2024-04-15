@@ -16,7 +16,7 @@ class Pman_Core_TimeZone extends Pman
 
     function get($base, $opts=array())
     {
-        self::getTimezones();
+        self::getTimezones($_REQUEST['lang']);
 
         $data = array();
 
