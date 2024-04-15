@@ -55,12 +55,12 @@ class Pman_Core_Import_Timezone extends Pman
 
             if(!in_array($region, $regions)) {
                 $regions[] = $region;
-                $values[] = "('Timezone.Region', '" . $ar[0] . "', 1, 0, 0, '" . $ar[0] . "', 0)";
+                $values[] = "('Timezone.Region', '" . $region . "', 1, 0, 0, '" . $region . "', 0)";
             }
 
             if(!in_array($area, $areas)) {
                 $areas[] = $area;
-                $values[] = "('Timezone.Area', '" . $ar[1] . "', 1, 0, 0, '" . $ar[1] . "', 0)";
+                $values[] = "('Timezone.Area', '" . $area . "', 1, 0, 0, '" . $area . "', 0)";
             }
         }
 
