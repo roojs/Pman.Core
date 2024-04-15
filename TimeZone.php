@@ -199,6 +199,36 @@ class Pman_Core_TimeZone extends Pman
         return $date->format('P');
     }
 
+    static function toDisplayRegion($lang, $tz) 
+    {
+        $region = explode('/', $tz)[0];
+
+        $ce = DB_DataObject::factory('core_enum');
+        $ce->setFrom(array(
+            'etype' => 'Timezone.Region',
+            'active' => 1,
+            'name' => $region;
+            'display_name' => $region;
+        ));
+        if(!$ce->find(true)) {
+            return $region;
+        }
+
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->setFrom(array(
+            'lang' => $lang,
+            'on_table' => 'core_enum',
+            'on_id' => $ce->id,
+            'on_col' => 'display_name',
+            'active' => 1
+        ));
+        if(!$ct->find(true) || empty($ct->txt) {
+            return $region;
+        }
+
+        return $ct->txt;
+    }
+
     static function toDisplayArea($dt, $tz)
     {
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
