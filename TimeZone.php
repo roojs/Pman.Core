@@ -140,8 +140,8 @@ class Pman_Core_TimeZone extends Pman
             $displayOffset = '(GMT ' . $timeOffset . ')';
 
             self::$timezones[$ce->Name] = array(
-                'region' => $ar[0],
-                'area' => $ar[1],
+                'region' => $region,
+                'area' => $area,
                 'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
                 'displayRegion' => $displayRegion,
                 'displayArea' => $displayArea . ' ' . $displayOffset
