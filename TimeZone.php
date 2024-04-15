@@ -64,7 +64,7 @@ class Pman_Core_TimeZone extends Pman
 
     static $timezones = array();
 
-    static function getTimezones()
+    static function getTimezones($lang)
     {
         if(!empty(self::$timezones)) {
             return self::$timezones;
@@ -90,6 +90,18 @@ class Pman_Core_TimeZone extends Pman
                 timeoffset ASC,
                 Name ASC
         ");
+
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->lang = $this->lang;
+        $ct->on_table = 'pressrelease_terminals';
+        $ct->active = 1;
+        $translations = array();
+        foreach($ct->fetchAll() as $t) {
+            if(empty($t->txt)) {
+                continue;
+            }
+            $translations[$t->on_id][$t->on_col] = $t->txt;
+        }
 
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
