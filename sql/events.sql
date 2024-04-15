@@ -1,6 +1,6 @@
 
 CREATE TABLE Events (
-  id int(11) NOT NULL auto_increment,
+  id bigint NOT NULL auto_increment,
   
   PRIMARY KEY  (id)
 ) ;
@@ -35,6 +35,11 @@ ALTER TABLE Events CHANGE COLUMN Container on_table VARCHAR(64);
 
 -- make action larger..
 ALTER TABLE Events CHANGE COLUMN action action varchar(64)  default NULL;
+
+-- id needs more space..
+ALTER TABLE Events change COLUMN id id bigint  NOT NULL AUTO_INCREMENT;
+
+
 
 ALTER TABLE Events ADD INDEX lookupf (on_id, action, on_table, person_id, event_when, person_table);
 
