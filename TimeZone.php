@@ -50,6 +50,7 @@ class Pman_Core_TimeZone extends Pman
                 'fields' => array(
                     'region',
                     'area',
+                    'displayRegion',
                     'displayArea'
                 )
             ),
