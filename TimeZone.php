@@ -207,8 +207,8 @@ class Pman_Core_TimeZone extends Pman
         $ce->setFrom(array(
             'etype' => 'Timezone.Region',
             'active' => 1,
-            'name' => $region;
-            'display_name' => $region;
+            'name' => $region,
+            'display_name' => $region
         ));
         if(!$ce->find(true)) {
             return $region;
