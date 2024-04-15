@@ -228,7 +228,7 @@ class Pman_Core_TimeZone extends Pman
         return $ct->txt;
     }
 
-    static function toDisplayArea($dt, $tz)
+    static function toDisplayArea($lang, $dt, $tz)
     {
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
