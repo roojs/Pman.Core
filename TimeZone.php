@@ -92,6 +92,13 @@ class Pman_Core_TimeZone extends Pman
                 Name ASC
         ");
 
+        $regions = DB_DataObject::factory('core_enum');
+        $regions->setFrom(
+            'etype' => 'Timezone.Region',
+            'active' => 1
+        );
+
+
         $ct = DB_DataObject::factory('core_templatestr');
         $ct->lang = $lang;
         $ct->on_table = 'core_enum';
@@ -111,8 +118,9 @@ class Pman_Core_TimeZone extends Pman
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
 
-            $region = $displayRegion = $ar[0];
+            $region =  $ar[0];
             $area = $ar[1];
+
 
             if(!empty($translations[$ce->id]['display_name'])) {
                 $displayRegion = $translations[$ce->id]['display_name'];
