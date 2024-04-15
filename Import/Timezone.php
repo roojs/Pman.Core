@@ -58,7 +58,7 @@ class Pman_Core_Import_Timezone extends Pman
             INSERT INTO
                 core_enum (etype, name, active, seqid, seqmax, display_name, is_system_enum)
             VALUES
-                " . implode(',', $values) . "
+                " . implode(", \n", $values) . "
         ";
 
         var_dump($sql);
