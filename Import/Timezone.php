@@ -53,5 +53,8 @@ class Pman_Core_Import_Timezone extends Pman
             $values[] = "(Timezone.Region, '" . $ar[0] . "', 1,  0, 0, '" . $ar[0] . "', 0)";
             $values[] = "(Timezone.Area, '" . $ar[1] . "', 1,  0, 0, '" . $ar[1] . "', 0)";
         }
+
+        var_dump($values);
+        die('test');
     }
 }
