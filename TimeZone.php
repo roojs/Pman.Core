@@ -230,7 +230,6 @@ class Pman_Core_TimeZone extends Pman
 
     static function toDisplayArea($lang, $dt, $tz)
     {
-        $area = self::toArea($tz);
         return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
     }
