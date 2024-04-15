@@ -51,7 +51,7 @@ class Pman_Core_Import_Timezone extends Pman
         while($ce->fetch()) {
             $ar = explode('/', $ce->Name);
             $region = $ar[0];
-            $area = $ar[1];
+            $area = str_replace('_', ' ', $ar[1]);
 
             if(!in_array($region, $regions)) {
                 $regions[] = $region;
