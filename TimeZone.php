@@ -131,7 +131,7 @@ class Pman_Core_TimeZone extends Pman
 
 
             if(!empty($translations[$regionIds[$region]]['display_name'])) {
-                $displayRegion = $translations[$ce->id]['display_name'];
+                $displayRegion = $translations[$regionIds[$region]]['display_name'];
             }
 
            
