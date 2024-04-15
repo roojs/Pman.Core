@@ -92,7 +92,7 @@ class Pman_Core_TimeZone extends Pman
         ");
 
         $ct = DB_DataObject::factory('core_templatestr');
-        $ct->lang = $this->lang;
+        $ct->lang = $lang;
         $ct->on_table = 'pressrelease_terminals';
         $ct->active = 1;
         $translations = array();
