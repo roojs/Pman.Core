@@ -99,6 +99,13 @@ class Pman_Core_TimeZone extends Pman
         );
         $regions = $ce2->fetchAll('id', 'display_name');
 
+        $ce2 = DB_DataObject::factory('core_enum');
+        $ce2->setFrom(
+            'etype' => 'Timezone.Area',
+            'active' => 1
+        );
+        $areas = $ce2->fetchAll('id', 'display_name');
+
 
         $ct = DB_DataObject::factory('core_templatestr');
         $ct->lang = $lang;
