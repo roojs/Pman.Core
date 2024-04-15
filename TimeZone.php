@@ -129,7 +129,7 @@ class Pman_Core_TimeZone extends Pman
             // ignore timezone such as 'Etc/GMT+8'
 
             $region = $displayRegion = $ar[0];
-            $area = $ar[1];
+            $area = $displayArea = $ar[1];
 
 
             if(!empty($translations[$regionIds[$region]]['display_name'])) {
