@@ -60,6 +60,8 @@ class Pman_Core_Import_Timezone extends Pman
             VALUES
                 " . implode(',', $values) . "
         ";
+
+        var_dump($sql);
         die('test');
     }
 }
