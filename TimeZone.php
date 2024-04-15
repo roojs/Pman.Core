@@ -92,11 +92,12 @@ class Pman_Core_TimeZone extends Pman
                 Name ASC
         ");
 
-        $regions = DB_DataObject::factory('core_enum');
-        $regions->setFrom(
+        $ce2 = DB_DataObject::factory('core_enum');
+        $ce2->setFrom(
             'etype' => 'Timezone.Region',
             'active' => 1
         );
+        $regions = $ce2->fetchAll('id', 'display_name');
 
 
         $ct = DB_DataObject::factory('core_templatestr');
