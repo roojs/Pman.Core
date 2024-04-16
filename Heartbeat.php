@@ -39,7 +39,7 @@ class Pman_Core_Heartbeat extends Pman
         $cd->find(true);
         $cc = clone($cd);
         if ( (time() - strtotime($cc->display_name)) < 30) {
-            die("OK - HEATBEAT TO FREQUENT");
+            die("OK - HEATBEAT WORKING");
         }
         
         $cd->display_name = date("Y-m-d H:i:s");
