@@ -410,9 +410,10 @@ class Pman_Core_SimpleExcel extends Pman
             if ( (is_numeric($v) &&  strlen($v) > 1 && substr($v,0,1) == '0' && substr($v,1,1) != '.' )
                     || 
                     $dataFormat == 'string' ) {
+                //var_dump("Write ( {$r}, {$c} ) = " . $v);
                 $worksheet->writeString($start_row+$r, $c, $v, $format);
             } else {
-          
+                //var_dump("Write String ( {$r}, {$c} ) = " . $v);
                 $worksheet->write($start_row+$r, $c, $v, $format);
             }
             

@@ -20,8 +20,25 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
     
     
     static $map = array(
-        'hk' => 'http://www.1823.gov.hk/common/ical/gc/en.ics'
+        'hk' => 'http://www.1823.gov.hk/common/ical/gc/en.ics',
+        'cny' => 'https://raw.githubusercontent.com/andrewlkho/cny.ics/master/cny.ics', // CNY
     );
+    
+    
+    function applyFilters($q, $au, $roo)
+    {
+        if (isset($q['date_from'])) {
+            $dt = date("Y-m-d",strtotime($q['date_from']));
+            $this->whereAdd("holiday_date > '$dt'");
+        }
+        if (isset($q['date_to'])) {
+            $dt = date("Y-m-d",strtotime($q['date_to']));
+            $this->whereAdd("holiday_date < '$dt'");
+        }
+        
+        
+    }
+    
     
      
     function updateHolidays($country)
@@ -72,13 +89,15 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                     $fmt = substr($matches[1], 0, 4) . "-" . substr($matches[1], 4, 2) . "-" . substr($matches[1], 6, 2);
                     $end_dt = date('Y-m-d', strtotime($fmt));
                 }
-                
+                if(preg_match('/^SUMMARY[^:]*:(.*)/', $line, $matches)){
+                    $name = trim($matches[1]);
+                }
             }
             
             if(empty($start_dt) || empty($end_dt)){
                 continue;
             }
-            
+            //DB_DataObject::DebugLevel(1);
             //var_dump($start_dt); var_dump($end_dt); exit;
             
             for ($i = strtotime($start_dt); $i < strtotime($end_dt) ; $i += (60 * 60 * 24)) {
@@ -88,7 +107,13 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
                 $d->holiday_date = date('Y-m-d', $i);
                 if (!$d->count()) {
                     $d->insert();
-                }
+ 
+                } else {
+                    $d->find(true);
+                    $dd = clone($d);
+                    $d->name = $name;
+                    $d->update($dd);
+                 }
                 
                 
             }

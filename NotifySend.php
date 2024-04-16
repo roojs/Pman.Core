@@ -87,7 +87,9 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-
+        //if ($this->database_is_locked()) {
+        //    die("LATER - DATABASE IS LOCKED");
+       // }
         //print_r($opts);
         if (!empty($opts['DB_DataObject-debug'])) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
