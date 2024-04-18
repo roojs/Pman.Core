@@ -16,7 +16,8 @@ class Pman_Core_TimeZone extends Pman
 
     function get($base, $opts=array())
     {
-        self::getTimezones();
+        $this->lang = !empty($_REQUEST['lang']) && in_array($_REQUEST['lang'], array('en', 'zh_CN')) ? $_REQUEST['lang'] : 'en';
+        self::getTimezones($this->lang);
 
         $data = array();
 
@@ -35,6 +36,7 @@ class Pman_Core_TimeZone extends Pman
             $data[] = array(
                 'region' => $o['region'],
                 'area' => $o['area'],
+                'displayRegion' => $o['displayRegion'],
                 'displayArea' => $o['displayArea']
             );
         }
@@ -48,6 +50,7 @@ class Pman_Core_TimeZone extends Pman
                 'fields' => array(
                     'region',
                     'area',
+                    'displayRegion',
                     'displayArea'
                 )
             ),
@@ -64,7 +67,7 @@ class Pman_Core_TimeZone extends Pman
 
     static $timezones = array();
 
-    static function getTimezones()
+    static function getTimezones($lang)
     {
         if(!empty(self::$timezones)) {
             return self::$timezones;
@@ -91,23 +94,61 @@ class Pman_Core_TimeZone extends Pman
                 Name ASC
         ");
 
+        $regions = DB_DataObject::factory('core_enum');
+        $regions->setFrom(array(
+            'etype' => 'Timezone.Region',
+            'active' => 1
+        ));
+        $regionIds = $regions->fetchAll('display_name', 'id');
+
+        $areas = DB_DataObject::factory('core_enum');
+        $areas->setFrom(array(
+            'etype' => 'Timezone.Area',
+            'active' => 1
+        ));
+        $areaIds = $areas->fetchAll('display_name', 'id');
+
+
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->lang = $lang;
+        $ct->on_table = 'core_enum';
+        $ct->active = 1;
+        $translations = array();
+        foreach($ct->fetchAll() as $t) {
+            if(empty($t->txt)) {
+                continue;
+            }
+            $translations[$t->on_id][$t->on_col] = $t->txt;
+        }
+
         while($ce->fetch()) {
             // ignroe timezone such as 'CET' and 'America/Argentina/Buenos_Aires'
            
 
             $ar = explode('/', $ce->Name);
             // ignore timezone such as 'Etc/GMT+8'
-           
 
-            $displayArea = str_replace('_', ' ', $ar[1]);
+            $region = $displayRegion = $ar[0];
+
+            if(!empty($translations[$regionIds[$region]]['display_name'])) {
+                $displayRegion = $translations[$regionIds[$region]]['display_name'];
+            }
+
+            $area =  $ar[1];
+            $displayArea = str_replace('_', ' ', $area);
+
+            if(!empty($translations[$areaIds[$displayArea]]['display_name'])) {
+                $displayArea = $translations[$areaIds[$displayArea]]['display_name'];
+            }
 
             $timeOffset = ((substr($ce->timeOffset, 0, 1) == '-') ? '' : '+') . $ce->timeOffset;
             $displayOffset = '(GMT ' . $timeOffset . ')';
 
             self::$timezones[$ce->Name] = array(
-                'region' => $ar[0],
-                'area' => $ar[1],
+                'region' => $region,
+                'area' => $area,
                 'displayName' => $ar[0] . '/' . $displayArea . ' ' . $displayOffset,
+                'displayRegion' => $displayRegion,
                 'displayArea' => $displayArea . ' ' . $displayOffset
             );
         }
@@ -158,14 +199,70 @@ class Pman_Core_TimeZone extends Pman
         return $date->format('P');
     }
 
-    static function toDisplayArea($dt, $tz)
+    static function toDisplayRegion($lang, $tz) 
     {
-        return str_replace('_', ' ', self::toArea($tz)) . ' (GMT ' . self::toTimeOffset($dt,$tz) . ')';
+        $region = explode('/', $tz)[0];
+
+        $ce = DB_DataObject::factory('core_enum');
+        $ce->setFrom(array(
+            'etype' => 'Timezone.Region',
+            'active' => 1,
+            'name' => $region,
+            'display_name' => $region
+        ));
+        if(!$ce->find(true)) {
+            return $region;
+        }
+
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->setFrom(array(
+            'lang' => $lang,
+            'on_table' => 'core_enum',
+            'on_id' => $ce->id,
+            'on_col' => 'display_name',
+            'active' => 1
+        ));
+        if(!$ct->find(true) || empty($ct->txt)) {
+            return $region;
+        }
+        return $ct->txt;
+    }
+
+    static function toDisplayArea($lang, $dt, $tz)
+    {
+        $displayArea = str_replace('_', ' ', self::toArea($tz));
+        $displayOffset = '(GMT ' . self::toTimeOffset($dt,$tz) . ')';
+
+        $ce = DB_DataObject::factory('core_enum');
+        $ce->setFrom(array(
+            'etype' => 'Timezone.Area',
+            'active' => 1,
+            'name' => $displayArea,
+            'display_name' => $displayArea
+        ));
+
+        if(!$ce->find(true)) {
+            return $displayArea . ' ' . $displayOffset;
+        }
+
+        $ct = DB_DataObject::factory('core_templatestr');
+        $ct->setFrom(array(
+            'lang' => $lang,
+            'on_table' => 'core_enum',
+            'on_id' => $ce->id,
+            'on_col' => 'display_name',
+            'active' => 1
+        ));
+        if(!$ct->find(true) || empty($ct->txt)) {
+            return $displayArea . ' ' . $displayOffset;
+        }
+
+        return $ct->txt . ' ' . $displayOffset;
 
     }
 
-    static function toDisplayName($dt, $tz)
+    static function toDisplayName($lang, $dt, $tz)
     {
-        return self::toRegion($tz) . '/' . self::toDisplayArea($dt, $tz);
+        return self::toDisplayRegion($lang, $tz) . '/' . self::toDisplayArea($lang, $dt, $tz);
     }
 }
