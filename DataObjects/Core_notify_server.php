@@ -303,7 +303,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 break;
             }
             $offset = ($offset + 1)  % count($servers);
-            var_dump($offset);
+            //var_dump($offset);
         }
         if ($good == false && $allow_same) {
             $good = $this;
