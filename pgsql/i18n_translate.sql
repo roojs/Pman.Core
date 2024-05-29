@@ -6,8 +6,7 @@
 CREATE OR REPLACE FUNCTION i18n_translate(text,text,text)
   RETURNS text AS
 $BODY$
--- Copyright (c) 1999-2011 by OpenMFG LLC, d/b/a xTuple. 
--- See www.xtuple.com/CPAL for the full text of the software license.
+ 
 DECLARE
     in_ltype ALIAS FOR $1;
     in_lkey ALIAS FOR $2;
