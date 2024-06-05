@@ -368,7 +368,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $image = DB_DataObject::factory('Images');
         $image->onid = $tbl->id;
         $image->ontable = $tbl->__table;
+        
         $image->filename = $_FILES['imageUpload']['name']; 
+
+        if  (strlen( $_FILES['imageUpload']['name']) > 128) {
+            // although we allow 254 chars.. try and keep it down. - as it seems to cause other problems
+             $image->filename = str_replace('.','', substr($_FILES['imageUpload']['name'], 0, 128)) . "." . $ext;
+        }
+        
         $image->mimetype = $_FILES['imageUpload']['type'];
        
         if (!$image->createFrom($_FILES['imageUpload']['tmp_name'])) {
@@ -460,6 +467,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         
         $ext = $y->toExt(trim((string) $this->mimetype ));
+        
+        if (!empty( $file['name']) && strlen( $file['name']) > 128) {
+            // although we allow 254 chars.. try and keep it down. - as it seems to cause other problems
+            $file['name'] = str_replace('.','', substr($file['name'], 0, 128)) . "." . $ext;
+            
+        }
         
         $this->filename = empty($this->filename) ? 
             $file['name'] : ($this->filename .'.'. $ext); 
