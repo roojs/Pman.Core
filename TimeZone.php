@@ -130,14 +130,14 @@ class Pman_Core_TimeZone extends Pman
 
             $region = $displayRegion = $ar[0];
 
-            if(!empty($translations[$regionIds[$region]]['display_name'])) {
+            if(isset($regionIds[$region]) && !empty($translations[$regionIds[$region]]['display_name'])) {
                 $displayRegion = $translations[$regionIds[$region]]['display_name'];
             }
 
             $area =  $ar[1];
             $displayArea = str_replace('_', ' ', $area);
 
-            if(!empty($translations[$areaIds[$displayArea]]['display_name'])) {
+            if(isset($areaIds[$displayArea]) && !empty($translations[$areaIds[$displayArea]]['display_name'])) {
                 $displayArea = $translations[$areaIds[$displayArea]]['display_name'];
             }
 

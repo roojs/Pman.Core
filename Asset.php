@@ -42,7 +42,7 @@ class Pman_Core_Asset extends Pman {
         $bits = explode('/', $s);
         
         if (empty($bits[0]) || empty($bits[1])  || !isset($this->types[$bits[0]])) {
-            $this->jnotice("invalid url");
+            $this->jnotice("BAD-URL", "invalid url");
         }
        
         $ext = $bits[0];
