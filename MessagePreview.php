@@ -77,8 +77,8 @@ class Pman_Core_MessagePreview extends Pman
         if (!empty($_REQUEST['data'])) {
              
             $md = $mlq->toMailerData(json_decode($_REQUEST['data']));
-             ///echo '<PRE>';  print_r($md);exit;
-            
+             echo '<PRE>';  print_r($md);exit;
+            $this->msg = $md['mailer'];
             //$this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
             
             $this->msg->subject = $mlq->subject;
