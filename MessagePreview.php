@@ -78,9 +78,9 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg = $mlq;
             
             $md = $mlq->toMailerData(json_decode($_REQUEST['data']));
-             
+             echo '<PRE>';  var_dump($md);exit;
             
-            $this->msg->mailer = $md->mailer;
+            $this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
             
             $this->msg->subject = $mlq->subject;
             $this->msg->from_email = $mlq->from_email;
