@@ -79,7 +79,7 @@ class Pman_Core_MessagePreview extends Pman
         }
         $this->msg = $mlq;
         $this->msg->rcpts = "send to <these@people>";
-        
+        print_R($this->msg);
         
     }
     
