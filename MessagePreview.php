@@ -75,12 +75,11 @@ class Pman_Core_MessagePreview extends Pman
             return;
         }
         if (!empty($_REQUEST['data'])) {
-            $this->msg = $mlq;
-            
+             
             $md = $mlq->toMailerData(json_decode($_REQUEST['data']));
              echo '<PRE>';  print_r($md);exit;
             
-            $this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
+            //$this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
             
             $this->msg->subject = $mlq->subject;
             $this->msg->from_email = $mlq->from_email;
