@@ -77,9 +77,9 @@ class Pman_Core_MessagePreview extends Pman
         if (!empty($_REQUEST['data'])) {
              
             $md = $mlq->toMailerData(json_decode($_REQUEST['data']));
-              echo '<PRE>';  print_r($md['mailer']);exit;
-            $this->msg = $md['mailer']->page;
-             
+           // echo '<PRE>';  print_r($md['mailer']);exit;
+            $this->msg = (object)$md['mailer'];
+             /*
              
             //$this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
             
@@ -90,8 +90,8 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg->bodytext = $this->msg->mailer->htmlbody;
             $this->msg->rcpts = empty($this->msg->mailer->rcpts) ? "test@test.com" :
                     $this->msg->mailer->rcpts;
-            
-            echo '<PRE>'; print_R($this->msg);
+            */
+           // echo '<PRE>'; print_R($this->msg);
             return;
             
         }
