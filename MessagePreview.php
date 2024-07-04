@@ -83,7 +83,7 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg->from_name = $mlq->from_name;
             $this->msg->plaintext  = $this->msg->mailer->textbody ;
             $this->msg->bodytext = $this->msg->mailer->htmlbody;
-            $this->msg->rcpts = empty($this->msg->mailer->rcpts) ? array("test@test.com") :
+            $this->msg->rcpts = empty($this->msg->mailer->rcpts) ? "test@test.com" :
                     $this->msg->mailer->rcpts;
             
             echo '<PRE>'; print_R($this->msg);
