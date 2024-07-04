@@ -75,14 +75,14 @@ class Pman_Core_MessagePreview extends Pman
             return;
         }
         if (!empty($_REQUEST['data'])) {
-            var_dump(json_decode($_REQUEST['data']));
+         //   var_dump(json_decode($_REQUEST['data']));
             foreach((array)json_decode($_REQUEST['data']) as $k=>$v) {
                 $mlq->{$k} = $v;
             }
         }
         $this->msg = $mlq;
         $this->msg->rcpts = "send to <these@people>";
-       echo '<PRE>'; print_R($this->msg);
+      // echo '<PRE>'; print_R($this->msg);
         
     }
     
