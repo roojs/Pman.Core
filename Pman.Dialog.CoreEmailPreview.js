@@ -53,6 +53,7 @@ Pman.Dialog.CoreEmailPreview = {
               url: baseURL + '/Core/MessagePreview', 
               method : 'POST',
               params  : {
+                  _get : 1,
                   _id : _this.data.id || '',
                   template_name : _this.data.template_name || '',            
                   _table : _this.data.module,
@@ -67,6 +68,7 @@ Pman.Dialog.CoreEmailPreview = {
               url: baseURL + '/Core/MessagePreview', 
               method : 'POST',
               params  : {
+                  _get : 1,
                   _as_html : 1,
                   _id : _this.data.id || '',
                   template_name : _this.data.template_name || '',
