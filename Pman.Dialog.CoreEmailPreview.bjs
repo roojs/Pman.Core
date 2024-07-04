@@ -1,4 +1,5 @@
 {
+ "gen_extended" : false,
  "items" : [
   {
    "$ xns" : "Roo",
@@ -74,7 +75,8 @@
      "            _table : _this.data.module,",
      "            ontable : _this.data.ontable || '',",
      "            onid : _this.data.onid || '',",
-     "            evtype : _this.data.evtype  || ''",
+     "            evtype : _this.data.evtype  || '',",
+     "            data : _this.data.data || {}",
      "        },",
      "        method : 'GET'",
      "    });",
@@ -87,7 +89,8 @@
      "            _table : _this.data.module,",
      "            ontable : _this.data.ontable || '',",
      "            onid : _this.data.onid  || '',",
-     "            evtype : _this.data.evtype || ''",
+     "            evtype : _this.data.evtype || '',",
+     "            data : _this.data.data || {}",
      "        },",
      "        method : 'GET'",
      "    });",
@@ -104,7 +107,6 @@
  "modOrder" : "001",
  "name" : "Pman.Dialog.CoreEmailPreview",
  "parent" : "",
- "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEmailPreview.bjs",
  "permname" : "",
  "strings" : {
   "006c82ffdd63692a84a259c4f8732842" : "Email Preview",
