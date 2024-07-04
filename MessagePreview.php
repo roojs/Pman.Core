@@ -84,7 +84,9 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg->bodytext = $this->msg->htmlbody;
             $this->msg->subject = $mlq->subject;
             $this->msg->rcpts = "send to <these@people>";
-            /*
+             $this->msg->from_email = $mlq->from_email;
+            $this->msg->from_name = $mlq->from_name;
+         /*
              
             //$this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
             
