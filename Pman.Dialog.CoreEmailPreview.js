@@ -58,7 +58,7 @@ Pman.Dialog.CoreEmailPreview = {
                   ontable : _this.data.ontable || '',
                   onid : _this.data.onid || '',
                   evtype : _this.data.evtype  || '',
-                  data : _this.data.data || {}
+                  data : _this.data.data ? JSON.encode( _this.data.data ) : ''
               },
               method : 'GET'
           });
