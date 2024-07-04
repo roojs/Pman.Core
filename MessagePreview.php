@@ -86,7 +86,7 @@ class Pman_Core_MessagePreview extends Pman
             $this->msg->rcpts = empty($this->msg->mailer->rcpts) ? "test@test.com" :
                     $this->msg->mailer->rcpts;
             
-            //echo '<PRE>'; print_R($this->msg);
+            echo '<PRE>'; print_R($this->msg);
             return;
             
         }
