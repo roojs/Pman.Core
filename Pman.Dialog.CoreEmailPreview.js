@@ -51,7 +51,7 @@ Pman.Dialog.CoreEmailPreview = {
           _self.layout.getRegion('center').showPanel(0);
           _this.panel.load({ 
               url: baseURL + '/Core/MessagePreview', 
-              method : 'POST',
+              
               params  : {
                   _get : 1,
                   _id : _this.data.id || '',
@@ -66,7 +66,7 @@ Pman.Dialog.CoreEmailPreview = {
           });
           _this.hpanel.load({ 
               url: baseURL + '/Core/MessagePreview', 
-              method : 'POST',
+            
               params  : {
                   _get : 1,
                   _as_html : 1,
