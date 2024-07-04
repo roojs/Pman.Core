@@ -74,7 +74,9 @@ class Pman_Core_MessagePreview extends Pman
 
             return;
         }
-        
+        if (!empty($_REQUEST['data'])) {
+            $this->msg = json_decode($_REQUEST['data']);
+        }
         $this->msg = $mlq;
         $this->msg->rcpts = "send to <these@people>";
         
