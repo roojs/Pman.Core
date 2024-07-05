@@ -59,6 +59,34 @@
      },
      "text" : "OK",
      "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "OK",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "OK",
+     "xtype" : "Button"
     }
    ],
    "listeners" : {

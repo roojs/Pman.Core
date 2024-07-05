@@ -104,6 +104,30 @@ Pman.Dialog.CoreEmailPreview = {
       },
       xns : Roo,
       '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
