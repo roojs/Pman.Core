@@ -102,6 +102,10 @@ Pman.Dialog.CoreEmailPreview = {
        click : function (_self, e)
         {
             _this.dialog.hide();
+        },
+       render : function (_self)
+        {
+            _this.buttonsok= this;
         }
       },
       xns : Roo,
@@ -114,6 +118,10 @@ Pman.Dialog.CoreEmailPreview = {
        click : function (_self, e)
         {
             _this.dialog.hide();
+        },
+       render : function (_self)
+        {
+            _this.buttonscancel= this;
         }
       },
       xns : Roo,

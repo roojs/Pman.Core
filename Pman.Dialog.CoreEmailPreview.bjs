@@ -55,6 +55,12 @@
        "{",
        "    _this.dialog.hide();",
        "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.buttonsok= this;",
+       "}"
       ]
      },
      "text" : "OK",
@@ -68,6 +74,12 @@
        "function (_self, e)",
        "{",
        "    _this.dialog.hide();",
+       "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.buttonscancel= this;",
        "}"
       ]
      },
