@@ -90,6 +90,7 @@
       "render" : [
        "function (_self)",
        "{",
+       "    _this.buttonssend = this;",
        "",
        "}"
       ]

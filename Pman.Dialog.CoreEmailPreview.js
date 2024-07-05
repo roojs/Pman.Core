@@ -132,6 +132,7 @@ Pman.Dialog.CoreEmailPreview = {
         },
        render : function (_self)
         {
+            _this.buttonssend = this;
         
         }
       },
