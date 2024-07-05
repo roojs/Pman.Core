@@ -50,6 +50,13 @@ Pman.Dialog.CoreEmailPreview = {
      show : function (_self)
       {
           
+          
+          var btns  = _this.data.btns || ["ok"];
+          _this.buttonsok[ btns.indexOf("ok") > -1 ? 'show' : 'hide']();
+          _this.buttonscancel[ btns.indexOf("cancel") > -1 ? 'show' : 'hide']();
+          _this.buttonssend[ btns.indexOf("send") > -1 ? 'show' : 'hide']();    
+          
+          
           _self.layout.getRegion('center').showPanel(0);
           _this.panel.load({ 
               url: baseURL + '/Core/MessagePreview', 
