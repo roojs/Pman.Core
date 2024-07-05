@@ -105,7 +105,7 @@ Pman.Dialog.CoreEmailPreview = {
         },
        render : function (_self)
         {
-            _this.buttonsok= this;
+            _this.buttonsok = this;
         }
       },
       xns : Roo,
