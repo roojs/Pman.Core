@@ -86,6 +86,12 @@
        "        _this.callback();",
        "    }",
        "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "",
+       "}"
       ]
      },
      "text" : "Send",

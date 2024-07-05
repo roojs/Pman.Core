@@ -129,6 +129,10 @@ Pman.Dialog.CoreEmailPreview = {
             if (_this.callback) {
                 _this.callback();
             }
+        },
+       render : function (_self)
+        {
+        
         }
       },
       xns : Roo,
