@@ -8,6 +8,7 @@ Pman.Dialog.CoreEmailPreview = {
 
  _strings : {
   '4cd8413207629a963225f4314b53adcd' :"Plain",
+  'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '4c4ad5fca2e7a3f74dbb1ced00381aa4' :"HTML",
   '006c82ffdd63692a84a259c4f8732842' :"Email Preview",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
@@ -107,7 +108,7 @@ Pman.Dialog.CoreEmailPreview = {
      },
      {
       xtype : 'Button',
-      text : _this._strings['e0aa021e21dddbd6d8cecec71e9cf564'] /* OK */,
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
         {

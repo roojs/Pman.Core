@@ -71,7 +71,7 @@
        "}"
       ]
      },
-     "text" : "OK",
+     "text" : "Cancel",
      "xtype" : "Button"
     },
     {
@@ -144,7 +144,8 @@
   "006c82ffdd63692a84a259c4f8732842" : "Email Preview",
   "4c4ad5fca2e7a3f74dbb1ced00381aa4" : "HTML",
   "4cd8413207629a963225f4314b53adcd" : "Plain",
-  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK"
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel"
  },
  "title" : ""
 }
