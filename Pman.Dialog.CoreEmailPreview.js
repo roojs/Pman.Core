@@ -8,7 +8,9 @@ Pman.Dialog.CoreEmailPreview = {
 
  _strings : {
   '4cd8413207629a963225f4314b53adcd' :"Plain",
+  'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '4c4ad5fca2e7a3f74dbb1ced00381aa4' :"HTML",
+  '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '006c82ffdd63692a84a259c4f8732842' :"Email Preview",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
  },
@@ -48,23 +50,34 @@ Pman.Dialog.CoreEmailPreview = {
      show : function (_self)
       {
           
+          
+          var btns  = _this.data.btns || ["ok"];
+          _this.buttonsok[ btns.indexOf("ok") > -1 ? 'show' : 'hide']();
+          _this.buttonscancel[ btns.indexOf("cancel") > -1 ? 'show' : 'hide']();
+          _this.buttonssend[ btns.indexOf("send") > -1 ? 'show' : 'hide']();    
+          
+          
           _self.layout.getRegion('center').showPanel(0);
           _this.panel.load({ 
               url: baseURL + '/Core/MessagePreview', 
+              
               params  : {
+                  _get : 1,
                   _id : _this.data.id || '',
                   template_name : _this.data.template_name || '',            
                   _table : _this.data.module,
                   ontable : _this.data.ontable || '',
                   onid : _this.data.onid || '',
                   evtype : _this.data.evtype  || '',
-                  data : _this.data.data || {}
+                  data : _this.data.data ? JSON.stringify( _this.data.data ) : ''
               },
               method : 'GET'
           });
           _this.hpanel.load({ 
               url: baseURL + '/Core/MessagePreview', 
+            
               params  : {
+                  _get : 1,
                   _as_html : 1,
                   _id : _this.data.id || '',
                   template_name : _this.data.template_name || '',
@@ -72,7 +85,7 @@ Pman.Dialog.CoreEmailPreview = {
                   ontable : _this.data.ontable || '',
                   onid : _this.data.onid  || '',
                   evtype : _this.data.evtype || '',
-                  data : _this.data.data || {}
+                   data : _this.data.data ? JSON.stringify( _this.data.data ) : ''
               },
               method : 'GET'
           });
@@ -96,6 +109,46 @@ Pman.Dialog.CoreEmailPreview = {
        click : function (_self, e)
         {
             _this.dialog.hide();
+        },
+       render : function (_self)
+        {
+            _this.buttonsok = this;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        },
+       render : function (_self)
+        {
+            _this.buttonscancel= this;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['94966d90747b97d1f0f206c98a8b1ac3'] /* Send */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+            if (_this.callback) {
+                _this.callback();
+            }
+        },
+       render : function (_self)
+        {
+            _this.buttonssend = this;
+        
         }
       },
       xns : Roo,

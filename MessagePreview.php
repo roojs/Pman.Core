@@ -74,10 +74,39 @@ class Pman_Core_MessagePreview extends Pman
 
             return;
         }
-        
+        if (!empty($_REQUEST['data'])) {
+            $data = json_decode($_REQUEST['data']);
+            // echo '<PRE>';print_R($data);
+            $md = $mlq->toMailerData($data);
+           // echo '<PRE>';  print_r($md['mailer']);exit;
+            $this->msg = $mlq;
+            $this->msg->mailer = (object)$md['mailer'];
+           // echo '<PRE>';  print_r($this->msg);exit;
+             $this->msg->plaintext  = $this->msg->mailer->textbody ;
+            $this->msg->bodytext = $this->msg->mailer->htmlbody;
+            $this->msg->subject = $mlq->subject;
+            $this->msg->rcpts = "send to <these@people>";
+            $this->msg->from_email = $mlq->from_email;
+            $this->msg->from_name = $mlq->from_name;
+         /*
+             
+            //$this->msg->mailer = $mlq->toMailerData(json_decode($_REQUEST['data']));
+            
+            $this->msg->subject = $mlq->subject;
+            $this->msg->from_email = $mlq->from_email;
+            $this->msg->from_name = $mlq->from_name;
+            $this->msg->plaintext  = $this->msg->mailer->textbody ;
+            $this->msg->bodytext = $this->msg->mailer->htmlbody;
+            $this->msg->rcpts = empty($this->msg->mailer->rcpts) ? "test@test.com" :
+                    $this->msg->mailer->rcpts;
+            */
+           // echo '<PRE>'; print_R($this->msg);
+            return;
+            
+        }
         $this->msg = $mlq;
         $this->msg->rcpts = "send to <these@people>";
-        
+      
         
     }
     
