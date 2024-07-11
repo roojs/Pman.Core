@@ -749,7 +749,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     }
                     $aur[$k] = $v;
                     if($k == 'company_id_logo_id_id') {
-                        $aur['company_id_logo_id'] = $v;
+                        $aur['company_id_logo_id'] = $v; // find logo image based on image type instead of logo id
                     }
                 }
             }
