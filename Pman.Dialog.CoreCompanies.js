@@ -103,7 +103,7 @@ Pman.Dialog.CoreCompanies = {
     closable : false,
     collapsible : false,
     draggable : false,
-    height : 400,
+    height : 550,
     modal : true,
     shadow : true,
     title : _this._strings['72b9d3d2e231f1de7a2bd70737f644aa'] /* Add / Edit Organization */,
