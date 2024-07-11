@@ -19,6 +19,7 @@
     },
     {
      "$ xns" : "Roo",
+     "Boolean autoScroll" : true,
      "String title" : "Company Details",
      "autoCreate" : true,
      "fitToFrame" : true,

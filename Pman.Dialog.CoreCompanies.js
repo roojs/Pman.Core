@@ -183,6 +183,7 @@ Pman.Dialog.CoreCompanies = {
      {
       xtype : 'ContentPanel',
       autoCreate : true,
+      autoScroll : true,
       fitToFrame : true,
       region : 'center',
       title : _this._strings['dc9227804a61468a485e682cb932bdf7'] /* Company Details */,
