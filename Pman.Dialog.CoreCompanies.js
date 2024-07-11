@@ -488,7 +488,7 @@ Pman.Dialog.CoreCompanies = {
            if (_this.data.id) {
                _this.imageView.loadImages();
            } else {
-              _this.imageView.el.mask("Save Company First");
+              _this.imageView.el.mask("Save company first");
            }
            
            if (_this.hasUploadWatch) {
@@ -507,7 +507,7 @@ Pman.Dialog.CoreCompanies = {
                 }
                  var id = _this.form.findField('id').getValue() * 1;    
                 if (!id) {
-                    Roo.MessageBox.alert("Error", "Save press release first");
+                    Roo.MessageBox.alert("Error", "Save company first");
                    _this.uploadForm.reset();
                     return;
                 }
