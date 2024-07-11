@@ -751,9 +751,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         // }
-
-        var_dump($aur);
-        die('test');
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();
