@@ -180,66 +180,6 @@
         },
         {
          "$ xns" : "Roo.form",
-         "items" : [
-          {
-           "$ xns" : "Roo.form",
-           "fieldLabel" : "Background Colour",
-           "name" : "background_color",
-           "xtype" : "ColorField"
-          },
-          {
-           "$ valueRenderer" : [
-            "function(v) {",
-            "    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';",
-            "    if (!v) {",
-            "        return \"No Image Available\" + '<BR/>';",
-            "    }",
-            "    return String.format('<a target=\"_new\" href=\"{1}\"><img src=\"{0}\" width=\"150\"></a>', ",
-            "            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',",
-            "            baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..",
-            "    );",
-            "}"
-           ],
-           "$ xns" : "Roo.form",
-           "fieldLabel" : "Logo Image",
-           "height" : 170,
-           "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
-           "name" : "logo_id",
-           "style" : "border: 1px solid #ccc;",
-           "width" : 170,
-           "xtype" : "DisplayField"
-          },
-          {
-           "$ xns" : "Roo",
-           "listeners" : {
-            "click" : [
-             "function (_self, e)",
-             "{",
-             "    var _t = _this.form.findField('logo_id');",
-             "                         ",
-             "    Pman.Dialog.Image.show({",
-             "        onid :_this.data.id,",
-             "        ontable : 'core_company',",
-             "        imgtype : 'LOGO'",
-             "    }, function(data) {",
-             "        if  (data) {",
-             "            _t.setValue(data.id);",
-             "        }",
-             "        ",
-             "    });",
-             "}"
-            ]
-           },
-           "text" : "Add Image",
-           "xtype" : "Button"
-          }
-         ],
-         "labelAlign" : "top",
-         "width" : 200,
-         "xtype" : "Column"
-        },
-        {
-         "$ xns" : "Roo.form",
          "name" : "id",
          "xtype" : "Hidden"
         }
@@ -916,7 +856,6 @@
  "named_strings" : {
   "address_fieldLabel" : "dd7bf230fde8d4836917806aff6a6b27",
   "address_qtip" : "32c4e9483403d60115b21519178e5384",
-  "background_color_fieldLabel" : "35cb9e66ff801a819684ee0fbeabaeeb",
   "code_fieldLabel" : "b33457e7e1cd5dbf1db34a0c60fcb75f",
   "code_qtip" : "733640ec0c9367df1b4d85eb286ed9ae",
   "comptype_id_display_name_emptyText" : "023a5dfa857c4aa0156e6685231a1dbd",
@@ -933,7 +872,6 @@
   "imgtype_fieldLabel" : "8e16a71b3d8217eb80b39b7d8dec4296",
   "imgtype_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "imgtype_qtip" : "471ddaf9e80da04dd5a3a54daa0239b0",
-  "logo_id_fieldLabel" : "bc87ef2144ae15ef4f78211e73948051",
   "mimetype_fieldLabel" : "529701d5ccccf8a1c604c27f48ce7d82",
   "name_fieldLabel" : "e7b47c58815acf1d3afa59a84b5db7fb",
   "name_qtip" : "4ef6052d74436756f08e95fd63949653",
@@ -956,7 +894,6 @@
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "231bc72756b5e6de492aaaa1577f61b1" : "Remarks",
   "32c4e9483403d60115b21519178e5384" : "Enter Address",
-  "35cb9e66ff801a819684ee0fbeabaeeb" : "Background Colour",
   "471ddaf9e80da04dd5a3a54daa0239b0" : "Select Image Type",
   "4ef6052d74436756f08e95fd63949653" : "Enter Company Name",
   "529701d5ccccf8a1c604c27f48ce7d82" : "Mimetype",
@@ -973,9 +910,7 @@
   "b18c29b8470190a02813415a04a2191f" : "Filesize",
   "b33457e7e1cd5dbf1db34a0c60fcb75f" : "Company ID (for filing Ref.)",
   "b78a3223503896721cca1303f776159b" : "Title",
-  "b9c49611cfda3259a2b837b39489e650" : "Add Image",
   "bc3a4c40d007b8d610a16312970e5cb3" : "Enter Phone Number",
-  "bc87ef2144ae15ef4f78211e73948051" : "Logo Image",
   "bcc254b55c4a1babdf1dcb82c207506b" : "Phone",
   "c54b90756cfbeff9217293b567cb2eb0" : "Enter remarks",
   "c9cc8cce247e49bae79f15173ce97354" : "Save",

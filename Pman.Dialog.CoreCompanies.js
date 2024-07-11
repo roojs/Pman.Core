@@ -7,19 +7,17 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreCompanies = {
 
  _strings : {
-  'bc87ef2144ae15ef4f78211e73948051' :"Logo Image",
   '4ef6052d74436756f08e95fd63949653' :"Enter Company Name",
   'cf3a5d25d39613ad5bbc2f5eb0f9b675' :"Enter Fax Number",
-  '35cb9e66ff801a819684ee0fbeabaeeb' :"Background Colour",
   '72b9d3d2e231f1de7a2bd70737f644aa' :"Add / Edit Organization",
   '231bc72756b5e6de492aaaa1577f61b1' :"Remarks",
   'a1fa27779242b4902f7ae3bdd5c6d508' :"Type",
   '8c04eb09879a05470fae436ba76e3bb9' :"Enter Url",
   '471ddaf9e80da04dd5a3a54daa0239b0' :"Select Image Type",
   'e7b47c58815acf1d3afa59a84b5db7fb' :"Company Name",
+  'b18c29b8470190a02813415a04a2191f' :"Filesize",
   '733640ec0c9367df1b4d85eb286ed9ae' :"Enter code",
   '023a5dfa857c4aa0156e6685231a1dbd' :"Select Type",
-  'b18c29b8470190a02813415a04a2191f' :"Filesize",
   'ce8ae9da5b7cd6c3df2929543a9af92d' :"Email",
   'bc3a4c40d007b8d610a16312970e5cb3' :"Enter Phone Number",
   '9810aa2b9f44401be4bf73188ef2b67d' :"Fax",
@@ -27,7 +25,6 @@ Pman.Dialog.CoreCompanies = {
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '11f7b456ca765e9f556f653090045ae7' :"Images / PDF",
   'b33457e7e1cd5dbf1db34a0c60fcb75f' :"Company ID (for filing Ref.)",
-  'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   '55cfeeacad2f92b9fea0a1bbb6449fac' :"Update Image Details",
   '32c4e9483403d60115b21519178e5384' :"Enter Address",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -49,7 +46,6 @@ Pman.Dialog.CoreCompanies = {
   'name_qtip' : '4ef6052d74436756f08e95fd63949653' /* Enter Company Name */ ,
   'tel_fieldLabel' : 'bcc254b55c4a1babdf1dcb82c207506b' /* Phone */ ,
   'address_qtip' : '32c4e9483403d60115b21519178e5384' /* Enter Address */ ,
-  'background_color_fieldLabel' : '35cb9e66ff801a819684ee0fbeabaeeb' /* Background Colour */ ,
   'imgtype_fieldLabel' : '8e16a71b3d8217eb80b39b7d8dec4296' /* Image Type */ ,
   'comptype_id_display_name_emptyText' : '023a5dfa857c4aa0156e6685231a1dbd' /* Select Type */ ,
   'comptype_id_display_name_fieldLabel' : 'a1fa27779242b4902f7ae3bdd5c6d508' /* Type */ ,
@@ -75,8 +71,7 @@ Pman.Dialog.CoreCompanies = {
   'imageUpload_fieldLabel' : 'ea72bacd2fdfa818907bb9559e6905a1' /* Upload Image or File */ ,
   'ontable_value' : '5e40fc8fe5b4bd81365ce50e466dfba7' /* core_company */ ,
   'imgtype_emptyText' : '8535bcc0f05358a583bb432bbadf7e0d' /* Select type */ ,
-  'filesize_fieldLabel' : 'b18c29b8470190a02813415a04a2191f' /* Filesize */ ,
-  'logo_id_fieldLabel' : 'bc87ef2144ae15ef4f78211e73948051' /* Logo Image */ 
+  'filesize_fieldLabel' : 'b18c29b8470190a02813415a04a2191f' /* Filesize */ 
  },
 
  dialog : false,
@@ -395,66 +390,6 @@ Pman.Dialog.CoreCompanies = {
             width : 300,
             xns : Roo.form,
             '|xns' : 'Roo.form'
-           }
-          ]
-         },
-         {
-          xtype : 'Column',
-          labelAlign : 'top',
-          width : 200,
-          xns : Roo.form,
-          '|xns' : 'Roo.form',
-          items  : [
-           {
-            xtype : 'ColorField',
-            fieldLabel : _this._strings['35cb9e66ff801a819684ee0fbeabaeeb'] /* Background Colour */,
-            name : 'background_color',
-            xns : Roo.form,
-            '|xns' : 'Roo.form'
-           },
-           {
-            xtype : 'DisplayField',
-            fieldLabel : _this._strings['bc87ef2144ae15ef4f78211e73948051'] /* Logo Image */,
-            height : 170,
-            icon : 'rootURL + \'images/default/dd/drop-add.gif\'',
-            name : 'logo_id',
-            style : 'border: 1px solid #ccc;',
-            valueRenderer : function(v) {
-                //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';
-                if (!v) {
-                    return "No Image Available" + '<BR/>';
-                }
-                return String.format('<a target="_new" href="{1}"><img src="{0}" width="150"></a>', 
-                        baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',
-                        baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..
-                );
-            },
-            width : 170,
-            xns : Roo.form,
-            '|xns' : 'Roo.form'
-           },
-           {
-            xtype : 'Button',
-            text : _this._strings['b9c49611cfda3259a2b837b39489e650'] /* Add Image */,
-            listeners : {
-             click : function (_self, e)
-              {
-                  var _t = _this.form.findField('logo_id');
-                                       
-                  Pman.Dialog.Image.show({
-                      onid :_this.data.id,
-                      ontable : 'core_company',
-                      imgtype : 'LOGO'
-                  }, function(data) {
-                      if  (data) {
-                          _t.setValue(data.id);
-                      }
-                      
-                  });
-              }
-            },
-            xns : Roo,
-            '|xns' : 'Roo'
            }
           ]
          },
