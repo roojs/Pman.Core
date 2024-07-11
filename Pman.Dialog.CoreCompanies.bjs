@@ -20,6 +20,7 @@
     },
     {
      "$ xns" : "Roo",
+     "String title" : "Company Details",
      "autoCreate" : true,
      "fitToFrame" : true,
      "items" : [
@@ -975,6 +976,7 @@
   "c9d03748d1a54666b5c7a5187109301b" : "Delete Selected File or  Image",
   "ce8ae9da5b7cd6c3df2929543a9af92d" : "Email",
   "cf3a5d25d39613ad5bbc2f5eb0f9b675" : "Enter Fax Number",
+  "dc9227804a61468a485e682cb932bdf7" : "Company Details",
   "dd7bf230fde8d4836917806aff6a6b27" : "Address",
   "e7b47c58815acf1d3afa59a84b5db7fb" : "Company Name",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
