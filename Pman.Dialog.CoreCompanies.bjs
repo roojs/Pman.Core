@@ -847,7 +847,7 @@
    "modal" : true,
    "shadow" : true,
    "title" : "Add / Edit Organization",
-   "width" : 750,
+   "width" : 550,
    "xtype" : "LayoutDialog"
   }
  ],

@@ -107,7 +107,7 @@ Pman.Dialog.CoreCompanies = {
     modal : true,
     shadow : true,
     title : _this._strings['72b9d3d2e231f1de7a2bd70737f644aa'] /* Add / Edit Organization */,
-    width : 750,
+    width : 550,
     xns : Roo,
     '|xns' : 'Roo',
     center : {
