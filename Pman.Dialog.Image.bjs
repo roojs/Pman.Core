@@ -1,5 +1,4 @@
 {
- "gen_extended" : false,
  "items" : [
   {
    "$ uploadProgress" : [
@@ -385,6 +384,7 @@
   "upload_max_filesize_value" : "eb5d45750c7ab13aa8e6bacc80315a30"
  },
  "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.Image.bjs",
  "permname" : "",
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
