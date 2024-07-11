@@ -191,8 +191,6 @@ Pman = new Roo.Document(
         this.layout.beginUpdate();
         this.layout.add('north', new Roo.ContentPanel('title', 'North'));
         var au = Pman.Login.authUser;
-        Roo.log("AAAAAUTH");
-        Roo.log(au);
         if (au.id > 0 && au.company_id_background_color && au.company_id_background_color.length) {
             Roo.get('title').dom.style.backgroundColor = '#' + au.company_id_background_color;
             Roo.get('headerInformation').dom.style.color = this.invertColor('#' + au.company_id_background_color);
