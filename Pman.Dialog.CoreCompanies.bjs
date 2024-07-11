@@ -11,6 +11,7 @@
     {
      "$ xns" : "Roo",
      "* prop" : "center",
+     "String tabPosition" : "top",
      "alwaysShowTabs" : true,
      "autoScroll" : false,
      "closeOnTab" : true,

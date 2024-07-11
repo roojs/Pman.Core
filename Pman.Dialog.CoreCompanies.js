@@ -120,6 +120,7 @@ Pman.Dialog.CoreCompanies = {
      alwaysShowTabs : true,
      autoScroll : false,
      closeOnTab : true,
+     tabPosition : 'top',
      xns : Roo,
      '|xns' : 'Roo'
     },
