@@ -654,6 +654,13 @@ Pman.Dialog.CoreCompanies = {
                              'max-width': '153px',
                                  'overflow': 'hidden',
                                  'white-space': 'nowrap'
+                         },
+                         '.thumb-img' : {
+                             'font-size': '11px',
+                             'font-family' : 'tahoma, verdana, helvetica',
+                             'max-width': '160px',
+                                 'overflow': 'hidden',
+                                 'white-space': 'nowrap'
                          }
              
                      }, Roo.id()
