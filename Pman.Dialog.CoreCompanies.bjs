@@ -1,303 +1,984 @@
 {
- "name" : "Pman.Dialog.CoreCompanies",
- "parent" : "",
- "title" : "",
- "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreCompanies.bjs",
- "permname" : "",
- "modOrder" : "001",
- "strings" : {
-  "ce8ae9da5b7cd6c3df2929543a9af92d" : "Email",
-  "231bc72756b5e6de492aaaa1577f61b1" : "Remarks",
-  "b33457e7e1cd5dbf1db34a0c60fcb75f" : "Company ID (for filing Ref.)",
-  "023a5dfa857c4aa0156e6685231a1dbd" : "Select Type",
-  "8535bcc0f05358a583bb432bbadf7e0d" : "Select type",
-  "733640ec0c9367df1b4d85eb286ed9ae" : "Enter code",
-  "8c04eb09879a05470fae436ba76e3bb9" : "Enter Url",
-  "4ef6052d74436756f08e95fd63949653" : "Enter Company Name",
-  "c54b90756cfbeff9217293b567cb2eb0" : "Enter remarks",
-  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
-  "bcc254b55c4a1babdf1dcb82c207506b" : "Phone",
-  "cf3a5d25d39613ad5bbc2f5eb0f9b675" : "Enter Fax Number",
-  "9f86c00615b1a210935ac28ff8ebbb22" : "Enter Email Address",
-  "e7b47c58815acf1d3afa59a84b5db7fb" : "Company Name",
-  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
-  "32c4e9483403d60115b21519178e5384" : "Enter Address",
-  "b9c49611cfda3259a2b837b39489e650" : "Add Image",
-  "72b9d3d2e231f1de7a2bd70737f644aa" : "Add / Edit Organization",
-  "a1fa27779242b4902f7ae3bdd5c6d508" : "Type",
-  "02a3a357710cc2a5dfdfb74ed012fb59" : "Url",
-  "dd7bf230fde8d4836917806aff6a6b27" : "Address",
-  "c9cc8cce247e49bae79f15173ce97354" : "Save",
-  "bc3a4c40d007b8d610a16312970e5cb3" : "Enter Phone Number",
-  "9810aa2b9f44401be4bf73188ef2b67d" : "Fax",
-  "35cb9e66ff801a819684ee0fbeabaeeb" : "Background Colour",
-  "bc87ef2144ae15ef4f78211e73948051" : "Logo Image"
- },
- "named_strings" : {
-  "name_qtip" : "4ef6052d74436756f08e95fd63949653",
-  "tel_fieldLabel" : "bcc254b55c4a1babdf1dcb82c207506b",
-  "address_qtip" : "32c4e9483403d60115b21519178e5384",
-  "background_color_fieldLabel" : "35cb9e66ff801a819684ee0fbeabaeeb",
-  "comptype_id_display_name_emptyText" : "023a5dfa857c4aa0156e6685231a1dbd",
-  "comptype_id_display_name_fieldLabel" : "a1fa27779242b4902f7ae3bdd5c6d508",
-  "comptype_id_display_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
-  "code_fieldLabel" : "b33457e7e1cd5dbf1db34a0c60fcb75f",
-  "fax_fieldLabel" : "9810aa2b9f44401be4bf73188ef2b67d",
-  "name_fieldLabel" : "e7b47c58815acf1d3afa59a84b5db7fb",
-  "fax_qtip" : "cf3a5d25d39613ad5bbc2f5eb0f9b675",
-  "url_qtip" : "8c04eb09879a05470fae436ba76e3bb9",
-  "remarks_fieldLabel" : "231bc72756b5e6de492aaaa1577f61b1",
-  "code_qtip" : "733640ec0c9367df1b4d85eb286ed9ae",
-  "tel_qtip" : "bc3a4c40d007b8d610a16312970e5cb3",
-  "email_qtip" : "9f86c00615b1a210935ac28ff8ebbb22",
-  "url_fieldLabel" : "02a3a357710cc2a5dfdfb74ed012fb59",
-  "remarks_qtip" : "c54b90756cfbeff9217293b567cb2eb0",
-  "comptype_id_display_name_qtip" : "8535bcc0f05358a583bb432bbadf7e0d",
-  "email_fieldLabel" : "ce8ae9da5b7cd6c3df2929543a9af92d",
-  "address_fieldLabel" : "dd7bf230fde8d4836917806aff6a6b27",
-  "logo_id_fieldLabel" : "bc87ef2144ae15ef4f78211e73948051"
- },
  "items" : [
   {
-   "modal" : true,
-   "shadow" : true,
-   "collapsible" : false,
-   "title" : "Add / Edit Organization",
-   "xtype" : "LayoutDialog",
-   "autoCreate" : true,
-   "width" : 750,
    "$ xns" : "Roo",
+   "autoCreate" : true,
    "closable" : false,
-   "height" : 400,
+   "collapsible" : false,
    "draggable" : false,
+   "height" : 400,
    "items" : [
     {
-     "alwaysShowTabs" : false,
-     "autoScroll" : false,
-     "xtype" : "LayoutRegion",
-     "hideTabs" : true,
      "$ xns" : "Roo",
      "* prop" : "center",
+     "alwaysShowTabs" : false,
+     "autoScroll" : false,
      "closeOnTab" : true,
-     "titlebar" : false
+     "hideTabs" : true,
+     "titlebar" : false,
+     "xtype" : "LayoutRegion"
     },
     {
-     "region" : "center",
-     "fitToFrame" : true,
-     "xtype" : "ContentPanel",
-     "autoCreate" : true,
      "$ xns" : "Roo",
+     "autoCreate" : true,
+     "fitToFrame" : true,
      "items" : [
       {
-       "listeners" : {
-        "actionfailed" : "function(f, act) {\n    _this.dialog.el.unmask();\n    // error msg???\n    Pman.standardActionFailed(f,act);\n              \n}",
-        "rendered" : "function (form)\n{\n    _this.form = form;\n}",
-        "actioncomplete" : "function(f, act) {\n    _this.dialog.el.unmask();\n    //console.log('load completed'); \n    // error messages?????\n    if(act.type == 'setdata'){\n        this.load({ method: 'GET', params: { '_id' : _this.data.id }});\n        return;\n    }\n   \n    if (act.type == 'load') {\n        _this.data = act.result.data;\n        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';\n     \n            \n        if (_this.form.findField('comptype')) {\n            _this.form.findField('comptype')[meth]();\n        }\n         \n       // _this.loaded();\n        return;\n    }\n    \n    \n    if (act.type == 'submit') { // only submitted here if we are \n        _this.dialog.hide();\n       \n        if (_this.callback) {\n            _this.callback.call(this, act.result.data);\n        }\n        return; \n    }\n    // unmask?? \n}"
-       },
        "$ url" : "baseURL + '/Roo/core_company.php'",
-       "fileUpload" : true,
-       "xtype" : "Form",
-       "labelWidth" : 160,
        "$ xns" : "Roo.form",
+       "fileUpload" : true,
        "items" : [
         {
-         "xtype" : "Column",
          "$ xns" : "Roo.form",
-         "width" : 500,
          "items" : [
           {
-           "fieldLabel" : "Company ID (for filing Ref.)",
-           "xtype" : "TextField",
-           "allowBlank" : true,
-           "width" : 100,
            "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "fieldLabel" : "Company ID (for filing Ref.)",
            "name" : "code",
-           "qtip" : "Enter code"
+           "qtip" : "Enter code",
+           "width" : 100,
+           "xtype" : "TextField"
           },
           {
-           "listeners" : {
-            "render" : "function (_self)\n{\n    _this.etypeCombo = _self;\n}"
-           },
-           "alwaysQuery" : true,
-           "listWidth" : 250,
+           "$ xns" : "Roo.form",
            "Boolean allowBlank" : false,
-           "triggerAction" : "all",
+           "alwaysQuery" : true,
+           "displayField" : "display_name",
+           "emptyText" : "Select Type",
            "fieldLabel" : "Type",
            "forceSelection" : true,
-           "selectOnFocus" : true,
-           "pageSize" : 20,
-           "emptyText" : "Select Type",
-           "displayField" : "display_name",
            "hiddenName" : "comptype_id",
-           "minChars" : 2,
-           "valueField" : "id",
-           "xtype" : "ComboBox",
-           "typeAhead" : false,
-           "width" : 200,
-           "$ xns" : "Roo.form",
-           "name" : "comptype_id_display_name",
-           "qtip" : "Select type",
-           "queryParam" : "query[name]",
-           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> : {display_name}</div>",
-           "loadingText" : "Searching...",
            "items" : [
             {
-             "listeners" : {
-              "|beforeload" : "function (_self, o){\n    o.params = o.params || {};\n    // set more here\n    //o.params['query[empty_etype]'] = 1;\n    o.params.etype = 'COMPTYPE';\n}\n"
-             },
-             "xtype" : "Store",
-             "remoteSort" : true,
              "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
              "$ xns" : "Roo.data",
              "* prop" : "store",
              "items" : [
               {
                "$ url" : "baseURL + '/Roo/core_enum.php'",
-               "method" : "GET",
-               "xtype" : "HttpProxy",
                "$ xns" : "Roo.data",
-               "* prop" : "proxy"
+               "* prop" : "proxy",
+               "method" : "GET",
+               "xtype" : "HttpProxy"
               },
               {
-               "id" : "id",
-               "root" : "data",
-               "xtype" : "JsonReader",
                "$ fields" : "[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"}]",
                "$ xns" : "Roo.data",
                "* prop" : "reader",
-               "totalProperty" : "total"
+               "id" : "id",
+               "root" : "data",
+               "totalProperty" : "total",
+               "xtype" : "JsonReader"
               }
-             ]
+             ],
+             "listeners" : {
+              "|beforeload" : [
+               "function (_self, o){",
+               "    o.params = o.params || {};",
+               "    // set more here",
+               "    //o.params['query[empty_etype]'] = 1;",
+               "    o.params.etype = 'COMPTYPE';",
+               "}",
+               ""
+              ]
+             },
+             "remoteSort" : true,
+             "xtype" : "Store"
             }
-           ]
+           ],
+           "listWidth" : 250,
+           "listeners" : {
+            "render" : [
+             "function (_self)",
+             "{",
+             "    _this.etypeCombo = _self;",
+             "}"
+            ]
+           },
+           "loadingText" : "Searching...",
+           "minChars" : 2,
+           "name" : "comptype_id_display_name",
+           "pageSize" : 20,
+           "qtip" : "Select type",
+           "queryParam" : "query[name]",
+           "selectOnFocus" : true,
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> : {display_name}</div>",
+           "triggerAction" : "all",
+           "typeAhead" : false,
+           "valueField" : "id",
+           "width" : 200,
+           "xtype" : "ComboBox"
           },
           {
-           "fieldLabel" : "Company Name",
-           "xtype" : "TextField",
+           "$ xns" : "Roo.form",
            "allowBlank" : false,
-           "width" : 300,
-           "$ xns" : "Roo.form",
+           "fieldLabel" : "Company Name",
            "name" : "name",
-           "qtip" : "Enter Company Name"
+           "qtip" : "Enter Company Name",
+           "width" : 300,
+           "xtype" : "TextField"
           },
           {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
            "fieldLabel" : "Phone",
-           "xtype" : "TextField",
-           "allowBlank" : true,
-           "width" : 300,
-           "$ xns" : "Roo.form",
            "name" : "tel",
-           "qtip" : "Enter Phone Number"
+           "qtip" : "Enter Phone Number",
+           "width" : 300,
+           "xtype" : "TextField"
           },
           {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
            "fieldLabel" : "Fax",
-           "xtype" : "TextField",
-           "allowBlank" : true,
-           "width" : 300,
-           "$ xns" : "Roo.form",
            "name" : "fax",
-           "qtip" : "Enter Fax Number"
+           "qtip" : "Enter Fax Number",
+           "width" : 300,
+           "xtype" : "TextField"
           },
           {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
            "fieldLabel" : "Email",
-           "xtype" : "TextField",
-           "allowBlank" : true,
-           "width" : 300,
-           "$ xns" : "Roo.form",
            "name" : "email",
-           "qtip" : "Enter Email Address"
+           "qtip" : "Enter Email Address",
+           "width" : 300,
+           "xtype" : "TextField"
           },
           {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
            "fieldLabel" : "Url",
-           "xtype" : "TextField",
-           "allowBlank" : true,
-           "width" : 300,
-           "$ xns" : "Roo.form",
            "name" : "url",
-           "qtip" : "Enter Url"
+           "qtip" : "Enter Url",
+           "width" : 300,
+           "xtype" : "TextField"
           },
           {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
            "fieldLabel" : "Address",
-           "xtype" : "TextArea",
-           "allowBlank" : true,
-           "width" : 300,
-           "$ xns" : "Roo.form",
            "name" : "address",
-           "qtip" : "Enter Address"
+           "qtip" : "Enter Address",
+           "width" : 300,
+           "xtype" : "TextArea"
           },
           {
-           "fieldLabel" : "Remarks",
-           "xtype" : "TextArea",
-           "allowBlank" : true,
-           "width" : 300,
            "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "fieldLabel" : "Remarks",
            "height" : 120,
            "name" : "remarks",
-           "qtip" : "Enter remarks"
+           "qtip" : "Enter remarks",
+           "width" : 300,
+           "xtype" : "TextArea"
           }
-         ]
+         ],
+         "width" : 500,
+         "xtype" : "Column"
         },
         {
-         "labelAlign" : "top",
-         "xtype" : "Column",
-         "width" : 200,
          "$ xns" : "Roo.form",
          "items" : [
           {
+           "$ xns" : "Roo.form",
            "fieldLabel" : "Background Colour",
-           "xtype" : "ColorField",
-           "$ xns" : "Roo.form",
-           "name" : "background_color"
+           "name" : "background_color",
+           "xtype" : "ColorField"
           },
           {
+           "$ valueRenderer" : [
+            "function(v) {",
+            "    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';",
+            "    if (!v) {",
+            "        return \"No Image Available\" + '<BR/>';",
+            "    }",
+            "    return String.format('<a target=\"_new\" href=\"{1}\"><img src=\"{0}\" width=\"150\"></a>', ",
+            "            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',",
+            "            baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..",
+            "    );",
+            "}"
+           ],
+           "$ xns" : "Roo.form",
            "fieldLabel" : "Logo Image",
-           "style" : "border: 1px solid #ccc;",
-           "xtype" : "DisplayField",
-           "$ valueRenderer" : "function(v) {\n    //var vp = v ? v : 'Companies:' + _this.data.id + ':-LOGO';\n    if (!v) {\n        return \"No Image Available\" + '<BR/>';\n    }\n    return String.format('<a target=\"_new\" href=\"{1}\"><img src=\"{0}\" width=\"150\"></a>', \n            baseURL + '/Images/Thumb/150x150/' + v + '/logo.jpg',\n            baseURL + '/Images/'+v+'/logo.jpg'           // fixme - put escaped company name..\n    );\n}",
-           "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
-           "width" : 170,
-           "$ xns" : "Roo.form",
            "height" : 170,
-           "name" : "logo_id"
+           "icon" : "rootURL + 'images/default/dd/drop-add.gif'",
+           "name" : "logo_id",
+           "style" : "border: 1px solid #ccc;",
+           "width" : 170,
+           "xtype" : "DisplayField"
           },
           {
+           "$ xns" : "Roo",
            "listeners" : {
-            "click" : "function (_self, e)\n{\n    var _t = _this.form.findField('logo_id');\n                         \n    Pman.Dialog.Image.show({\n        onid :_this.data.id,\n        ontable : 'core_company',\n        imgtype : 'LOGO'\n    }, function(data) {\n        if  (data) {\n            _t.setValue(data.id);\n        }\n        \n    });\n}"
+            "click" : [
+             "function (_self, e)",
+             "{",
+             "    var _t = _this.form.findField('logo_id');",
+             "                         ",
+             "    Pman.Dialog.Image.show({",
+             "        onid :_this.data.id,",
+             "        ontable : 'core_company',",
+             "        imgtype : 'LOGO'",
+             "    }, function(data) {",
+             "        if  (data) {",
+             "            _t.setValue(data.id);",
+             "        }",
+             "        ",
+             "    });",
+             "}"
+            ]
            },
            "text" : "Add Image",
-           "xtype" : "Button",
-           "$ xns" : "Roo"
+           "xtype" : "Button"
           }
-         ]
+         ],
+         "labelAlign" : "top",
+         "width" : 200,
+         "xtype" : "Column"
         },
         {
-         "xtype" : "Hidden",
          "$ xns" : "Roo.form",
-         "name" : "id"
+         "name" : "id",
+         "xtype" : "Hidden"
         }
-       ]
+       ],
+       "labelWidth" : 160,
+       "listeners" : {
+        "actioncomplete" : [
+         "function(f, act) {",
+         "    _this.dialog.el.unmask();",
+         "    //console.log('load completed'); ",
+         "    // error messages?????",
+         "    if(act.type == 'setdata'){",
+         "        this.load({ method: 'GET', params: { '_id' : _this.data.id }});",
+         "        return;",
+         "    }",
+         "   ",
+         "    if (act.type == 'load') {",
+         "        _this.data = act.result.data;",
+         "        var meth = _this.data.comptype == 'OWNER' ? 'disable' : 'enable';",
+         "     ",
+         "            ",
+         "        if (_this.form.findField('comptype')) {",
+         "            _this.form.findField('comptype')[meth]();",
+         "        }",
+         "         ",
+         "       // _this.loaded();",
+         "        return;",
+         "    }",
+         "    ",
+         "    ",
+         "    if (act.type == 'submit') { // only submitted here if we are ",
+         "        _this.dialog.hide();",
+         "       ",
+         "        if (_this.callback) {",
+         "            _this.callback.call(this, act.result.data);",
+         "        }",
+         "        return; ",
+         "    }",
+         "    // unmask?? ",
+         "}"
+        ],
+        "actionfailed" : [
+         "function(f, act) {",
+         "    _this.dialog.el.unmask();",
+         "    // error msg???",
+         "    Pman.standardActionFailed(f,act);",
+         "              ",
+         "}"
+        ],
+        "rendered" : [
+         "function (form)",
+         "{",
+         "    _this.form = form;",
+         "}"
+        ]
+       },
+       "xtype" : "Form"
       }
-     ]
+     ],
+     "region" : "center",
+     "xtype" : "ContentPanel"
     },
     {
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "$ xns" : "Roo",
+       "* prop" : "layout",
+       "items" : [
+        {
+         "$ xns" : "Roo",
+         "* prop" : "center",
+         "xtype" : "LayoutRegion"
+        },
+        {
+         "$ xns" : "Roo",
+         "* prop" : "east",
+         "hidden" : true,
+         "width" : 200,
+         "xtype" : "LayoutRegion"
+        },
+        {
+         "$ xns" : "Roo",
+         "* prop" : "south",
+         "height" : 60,
+         "xtype" : "LayoutRegion"
+        },
+        {
+         "$ xns" : "Roo",
+         "autoScroll" : true,
+         "fitContainer" : true,
+         "fitToFrame" : true,
+         "items" : [
+          {
+           "$ xns" : "Roo",
+           "* prop" : "toolbar",
+           "items" : [
+            {
+             "$ xns" : "Roo.Toolbar",
+             "xtype" : "Fill"
+            },
+            {
+             "$ xns" : "Roo.Toolbar",
+             "listeners" : {
+              "click" : [
+               "function (_self, e)",
+               "{",
+               "    if (!_this.imageView.getSelectedNodes().length) {",
+               "     Roo.MessageBox.alert(\"Error\", \"Select an Image\");",
+               "     return;",
+               "   }",
+               "   var id  = _this.imageView.getNodeData(_this.imageView.getSelectedNodes()[0]).id;",
+               "   _this.imageView.el.mask('Deleting');",
+               "   ",
+               "   Roo.Ajax.request({",
+               "      url : baseURL + '/Roo/Images.php',",
+               "      params : {",
+               "         _delete : id",
+               "      },",
+               "      method : 'POST',",
+               "      success : function() {",
+               "          _this.imageView.loadImages();",
+               "      },",
+               "      failure : function() {",
+               "           _this.imageView.el.unmask();",
+               "           Roo.MessageBox.alert(\"Error\", \"Error deleting image\");",
+               "           return;",
+               "      }",
+               "  });",
+               " }"
+              ]
+             },
+             "text" : "Delete Selected File or  Image",
+             "xtype" : "Button"
+            }
+           ],
+           "xtype" : "Toolbar"
+          },
+          {
+           "$ loadImages" : [
+            "function() {",
+            "",
+            "    var imgbase = typeof(publicBaseURL) != 'undefined' ? publicBaseURL : rootURL + '/release.php';",
+            "",
+            "     this.load({",
+            "        url : baseURL + '/Roo/Images.php',",
+            "        method : 'GET',",
+            "        params : {",
+            "           ontable : 'core_company',",
+            "           onid : _this.data.id,",
+            "           'query[imagesize]' : '150x150',",
+            "           'query[imageBaseURL]' : imgbase",
+            "        },",
+            "        text : 'Loading'",
+            "   });",
+            "   ",
+            "}",
+            ""
+           ],
+           "$ xns" : "Roo",
+           "items" : [
+            {
+             "$ html" : [
+              "'<div class=\"thumb-wrap\"> ' + ",
+              "  '<div class=\"thumb\"><img  src=\"{url_thumb}\" class=\"thumb-img\"></div>' + ",
+              "  '<div class=\"thumblabel\" qtip=\"{linkurl}\">{title}<br/>{linkurl}</div>' + ",
+              "'</div>'"
+             ],
+             "$ xns" : "Roo",
+             "* prop" : "tpl",
+             "xtype" : "Template"
+            }
+           ],
+           "jsonRoot" : "data",
+           "listeners" : {
+            "beforerender" : [
+             "function (_self, data)",
+             "{",
+             "   _this.imageView = _self;",
+             "   ",
+             "   if (this.stylesheet) {",
+             "      return;",
+             "   }",
+             "   this.el.addClass('thumb-browser');",
+             "",
+             "   ",
+             "   this.stylesheet = Roo.util.CSS.createStyleSheet(",
+             "        {",
+             "          '.thumb-browser .thumb-wrap' : {",
+             "                border:'3px solid #EEE',",
+             "                'float':'left',",
+             "                height:'190px',",
+             "                margin:'2px',",
+             "                'padding-left':'5px',",
+             "                'padding-top':'5px',",
+             "                width:'160px'",
+             "            },",
+             "            '.thumb-browser .x-view-selected' : {",
+             "              border:'3px solid #333'",
+             "          ",
+             "            },",
+             "            '.thumblabel' : {",
+             "                'font-size': '11px',",
+             "                'font-family' : 'tahoma, verdana, helvetica',",
+             "                'max-width': '153px',",
+             "                    'overflow': 'hidden',",
+             "                    'white-space': 'nowrap'",
+             "            }",
+             "",
+             "        }, Roo.id()",
+             "        );",
+             "   ",
+             "}"
+            ],
+            "dblclick" : [
+             "function (_self, index, node, e)",
+             "{",
+             "       ",
+             "       if (!node) {",
+             "        return;",
+             "        }",
+             "       var snode = false;",
+             "       try {",
+             "            snode =  _this.imageView.getNodeData(node);",
+             "        } catch (e) {}",
+             "        ",
+             "         ",
+             "        if (!snode) {",
+             "            return;",
+             "        }",
+             "        new Pman.Download({",
+             "            url : baseURL + '/Images/Download/' + snode.id + '/'  + snode.shorten_name",
+             "          }); ",
+             "}"
+            ],
+            "selectionchange" : [
+             "function (_self, selections)",
+             "{",
+             "     ",
+             "     var snode = false;",
+             "     if (selections && selections.length) {",
+             "        try {",
+             "           var snode =  _this.imageView.getNodeData(selections[0]);",
+             "        } catch (e) {}",
+             "    }",
+             "     ",
+             "    if (!snode) {",
+             "         _this.imagePanel.layout.getRegion('east').hide();",
+             "        return;",
+             "    }",
+             "    _this.imagePanel.layout.getRegion('east').show();    ",
+             " ",
+             "    _this.imageForm.setValues(snode);",
+             "}"
+            ]
+           },
+           "singleSelect" : true,
+           "xtype" : "JsonView"
+          }
+         ],
+         "region" : "center",
+         "xtype" : "ContentPanel"
+        },
+        {
+         "$ xns" : "Roo",
+         "items" : [
+          {
+           "$ progressUrl" : "baseURL  + '/Core/UploadProgress.php'",
+           "$ url" : "baseURL + '/Roo/Images.php'",
+           "$ xns" : "Roo.form",
+           "fileUpload" : true,
+           "items" : [
+            {
+             "$ xns" : "Roo.form",
+             "items" : [
+              {
+               "$ xns" : "Roo.form",
+               "Number/String width" : 600,
+               "items" : [
+                {
+                 "$ xns" : "Roo.form",
+                 "allowBlank" : false,
+                 "fieldLabel" : "Upload Image or File",
+                 "inputType" : "file",
+                 "listeners" : {
+                  "change" : [
+                   "function (_self, newValue, oldValue)",
+                   "{",
+                   "    ",
+                   "}"
+                  ]
+                 },
+                 "name" : "imageUpload",
+                 "width" : 250,
+                 "xtype" : "TextField"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "name" : "onid",
+                 "xtype" : "Hidden"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "name" : "ontable",
+                 "value" : "core_company",
+                 "xtype" : "Hidden"
+                }
+               ],
+               "xtype" : "Column"
+              }
+             ],
+             "xtype" : "Row"
+            }
+           ],
+           "labelWidth" : 200,
+           "listeners" : {
+            "actioncomplete" : [
+             "function (_self, action)",
+             "{",
+             "// only action this will handle is submit?",
+             "// should test for errors..",
+             "    if (action.failureType) {",
+             "        _this.uploadForm.el.unmask();",
+             "        _this.uploadSending = false;",
+             "        Roo.MessageBox.alert(\"Error\", \"Upload Failed\");",
+             "        return false;",
+             "    ",
+             "    }",
+             "      ",
+             "    ",
+             "    if (action.type =='submit') {",
+             "         _this.uploadForm.reset();",
+             "           _this.uploadSending = false;",
+             "          _this.uploadForm.el.unmask();         ",
+             "          _this.imageView.loadImages();",
+             "         return;",
+             "    }",
+             "     ",
+             "}"
+            ],
+            "actionfailed" : [
+             "function (_self, action)",
+             "{",
+             "",
+             "   _this.uploadForm.el.unmask();",
+             "   _this.uploadForm.reset();",
+             "    _this.uploadSending = false;",
+             "    Roo.MessageBox.alert(\"Error\", \"Upload Failed\");",
+             "    _this.imageView.loadImages();",
+             "    ",
+             "  ",
+             "}"
+            ],
+            "rendered" : [
+             "function (form)",
+             "{",
+             "  _this.uploadForm = form;",
+             "}"
+            ]
+           },
+           "style" : "margin: 10px;",
+           "xtype" : "Form"
+          }
+         ],
+         "region" : "south",
+         "xtype" : "ContentPanel"
+        },
+        {
+         "$ xns" : "Roo",
+         "items" : [
+          {
+           "$ url" : "baseURL + '/Roo/Images.php'",
+           "$ xns" : "Roo.form",
+           "items" : [
+            {
+             "$ xns" : "Roo.form",
+             "fieldLabel" : "Title",
+             "height" : 50,
+             "name" : "title",
+             "width" : 150,
+             "xtype" : "TextArea"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "alwaysQuery" : true,
+             "displayField" : "name",
+             "editable" : false,
+             "emptyText" : "Select type",
+             "fieldLabel" : "Image Type",
+             "forceSelection" : true,
+             "items" : [
+              {
+               "$ sortInfo" : "{ direction : 'ASC', field: 'id' }",
+               "$ xns" : "Roo.data",
+               "* prop" : "store",
+               "items" : [
+                {
+                 "$ url" : "baseURL + '/Roo/core_enum.php'",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "proxy",
+                 "method" : "GET",
+                 "xtype" : "HttpProxy"
+                },
+                {
+                 "$ fields" : "[]",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "reader",
+                 "id" : "id",
+                 "root" : "data",
+                 "totalProperty" : "total",
+                 "xtype" : "JsonReader"
+                }
+               ],
+               "listeners" : {
+                "|beforeload" : [
+                 "function (_self, o){",
+                 "    o.params = o.params || {};",
+                 "    // set more here",
+                 "       // set more here",
+                 "    o.params.etype=\"Image Types\";",
+                 "}",
+                 ""
+                ]
+               },
+               "remoteSort" : true,
+               "xtype" : "Store"
+              }
+             ],
+             "listWidth" : 200,
+             "loadingText" : "Searching...",
+             "minChars" : 2,
+             "name" : "imgtype",
+             "pageSize" : 20,
+             "qtip" : "Select Image Type",
+             "queryParam" : "query[name]",
+             "selectOnFocus" : true,
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+             "triggerAction" : "all",
+             "typeAhead" : true,
+             "valueField" : "name",
+             "width" : 150,
+             "xtype" : "ComboBox"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "fieldLabel" : "Mimetype",
+             "name" : "mimetype",
+             "readOnly" : true,
+             "width" : 150,
+             "xtype" : "TextField"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "fieldLabel" : "Filesize",
+             "name" : "filesize",
+             "readOnly" : true,
+             "width" : 75,
+             "xtype" : "TextField"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "name" : "id",
+             "xtype" : "Hidden"
+            },
+            {
+             "$ xns" : "Roo",
+             "listeners" : {
+              "click" : [
+               "function (_self, e)",
+               "{",
+               "",
+               "    var lr =  _this.imagePanel.layout.getRegion('east');",
+               "    lr.el.mask(\"Saving\");",
+               "   _this.imageForm.submit();",
+               "}"
+              ]
+             },
+             "text" : "Update Image Details",
+             "xtype" : "Button"
+            }
+           ],
+           "labelAlign" : "top",
+           "listeners" : {
+            "actionfailed" : [
+             "function (_self, action)",
+             "{",
+             "        var lr =  _this.imagePanel.layout.getRegion('east');",
+             "        lr.el.unmask();",
+             "   if (action.failureType ==  Roo.form.Action.CLIENT_INVALID) {",
+             "    Roo.MessageBox.alert(\"Error\", \"Correct All the errors in Red\");",
+             "    return;",
+             "   }",
+             "    Roo.MessageBox.alert(\"Error\", \"Problem sending to server\");",
+             "}"
+            ],
+            "|actioncomplete" : [
+             "function(_self,action)",
+             "{",
+             "    if (action.type == 'setdata') {",
+             "       //_this.dialog.el.mask(\"Loading\");",
+             "       //this.load({ method: 'GET', params: { '_id' : _this.data.id }});",
+             "       return;",
+             "    }",
+             "    if (action.type == 'load') {",
+             "",
+             "        return;",
+             "    }",
+             "    if (action.type =='submit') {",
+             "         _this.selectAfterLoad = this.findField('id').getValue();",
+             "           var lr =  _this.imagePanel.layout.getRegion('east');",
+             "        lr.el.unmask();",
+             "        _this.imageView.loadImages();",
+             "         return;",
+             "    }",
+             "}",
+             ""
+            ],
+            "|rendered" : [
+             "function (form)",
+             "{",
+             "",
+             "    _this.imageForm= form;",
+             "}",
+             ""
+            ]
+           },
+           "method" : "POST",
+           "style" : "margin:10px;",
+           "xtype" : "Form"
+          }
+         ],
+         "region" : "east",
+         "xtype" : "ContentPanel"
+        }
+       ],
+       "xtype" : "BorderLayout"
+      }
+     ],
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+      "activate" : [
+       "function (_self)",
+       "{",
+       "   _this.imagePanel = _self;",
+       "   ",
+       " ",
+       "   ",
+       "//   console.log('activate');",
+       "   if (typeof(_this.imageView) == 'undefined') {",
+       "     return;",
+       "   }",
+       "   _this.imageView.el.unmask();",
+       "   if (_this.data.id) {",
+       "       _this.imageView.loadImages();",
+       "   } else {",
+       "      _this.imageView.el.mask(\"Save Press Release First\");",
+       "   }",
+       "   ",
+       "   if (_this.hasUploadWatch) {",
+       "     return;",
+       "   }",
+       "    _this.hasUploadWatch =true;",
+       "    _this.uploadSending =false;",
+       "    window.setInterval( function() {",
+       "        // prevent warning in editor..",
+       "        if (!_this.uploadForm) {return; }",
+       "         ",
+       "        ",
+       "        var val = _this.uploadForm.findField('imageUpload').getValue();",
+       "        if (!val || !val.length) {",
+       "            return;",
+       "        }",
+       "         var id = _this.form.findField('id').getValue() * 1;    ",
+       "        if (!id) {",
+       "            Roo.MessageBox.alert(\"Error\", \"Save press release first\");",
+       "           _this.uploadForm.reset();",
+       "            return;",
+       "        }",
+       "        if (_this.uploadSending) {",
+       "            return;",
+       "        }",
+       "         _this.uploadSending =true;",
+       "        _this.uploadForm.findField('onid').setValue(_this.data.id);",
+       "        _this.uploadForm.el.mask(\"Sending\");",
+       "        _this.uploadForm.submit.defer(100, _this.uploadForm);",
+       "   ",
+       "  }, 1000)  ",
+       "   ",
+       "}"
+      ]
+     },
+     "region" : "center",
+     "title" : "Images / PDF",
+     "xtype" : "NestedLayoutPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
      },
      "text" : "Cancel",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     },
     {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    if(!_this.form.isValid()){\n        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');\n        return;\n    }\n    \n    new Pman.Request({\n        url : baseURL + '/Roo/Core_company.php',\n        method : 'POST',\n        params : {\n          id : _this.form.findField('id').getValue() * 1,\n          name : _this.form.findField('name').getValue(),\n          _check_name : 1\n        }, \n        success : function(res) {\n            _this.dialog.el.mask(\"Saving\");\n            _this.form.doAction(\"submit\");\n        },\n        failure : function(res) {\n            Roo.MessageBox.confirm(\n                \"Confirm\", \n                \"The company name has been used. Save it anyway?\", \n                function(res) {\n                    if(res != 'yes') {\n                        return;\n                    }\n                    \n                    _this.dialog.el.mask(\"Saving\");\n                    _this.form.doAction(\"submit\");\n                }\n            );\n        }\n    });\n    \n    return;\n    \n}"
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    if(!_this.form.isValid()){",
+       "        Roo.MessageBox.alert('Error', 'Please Correct all the errors in red');",
+       "        return;",
+       "    }",
+       "    ",
+       "    new Pman.Request({",
+       "        url : baseURL + '/Roo/Core_company.php',",
+       "        method : 'POST',",
+       "        params : {",
+       "          id : _this.form.findField('id').getValue() * 1,",
+       "          name : _this.form.findField('name').getValue(),",
+       "          _check_name : 1",
+       "        }, ",
+       "        success : function(res) {",
+       "            _this.dialog.el.mask(\"Saving\");",
+       "            _this.form.doAction(\"submit\");",
+       "        },",
+       "        failure : function(res) {",
+       "            Roo.MessageBox.confirm(",
+       "                \"Confirm\", ",
+       "                \"The company name has been used. Save it anyway?\", ",
+       "                function(res) {",
+       "                    if(res != 'yes') {",
+       "                        return;",
+       "                    }",
+       "                    ",
+       "                    _this.dialog.el.mask(\"Saving\");",
+       "                    _this.form.doAction(\"submit\");",
+       "                }",
+       "            );",
+       "        }",
+       "    });",
+       "    ",
+       "    return;",
+       "    ",
+       "}"
+      ]
      },
      "text" : "Save",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     }
-   ]
+   ],
+   "modal" : true,
+   "shadow" : true,
+   "title" : "Add / Edit Organization",
+   "width" : 750,
+   "xtype" : "LayoutDialog"
   }
- ]
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.CoreCompanies",
+ "named_strings" : {
+  "address_fieldLabel" : "dd7bf230fde8d4836917806aff6a6b27",
+  "address_qtip" : "32c4e9483403d60115b21519178e5384",
+  "background_color_fieldLabel" : "35cb9e66ff801a819684ee0fbeabaeeb",
+  "code_fieldLabel" : "b33457e7e1cd5dbf1db34a0c60fcb75f",
+  "code_qtip" : "733640ec0c9367df1b4d85eb286ed9ae",
+  "comptype_id_display_name_emptyText" : "023a5dfa857c4aa0156e6685231a1dbd",
+  "comptype_id_display_name_fieldLabel" : "a1fa27779242b4902f7ae3bdd5c6d508",
+  "comptype_id_display_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "comptype_id_display_name_qtip" : "8535bcc0f05358a583bb432bbadf7e0d",
+  "email_fieldLabel" : "ce8ae9da5b7cd6c3df2929543a9af92d",
+  "email_qtip" : "9f86c00615b1a210935ac28ff8ebbb22",
+  "fax_fieldLabel" : "9810aa2b9f44401be4bf73188ef2b67d",
+  "fax_qtip" : "cf3a5d25d39613ad5bbc2f5eb0f9b675",
+  "filesize_fieldLabel" : "b18c29b8470190a02813415a04a2191f",
+  "imageUpload_fieldLabel" : "ea72bacd2fdfa818907bb9559e6905a1",
+  "imgtype_emptyText" : "8535bcc0f05358a583bb432bbadf7e0d",
+  "imgtype_fieldLabel" : "8e16a71b3d8217eb80b39b7d8dec4296",
+  "imgtype_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "imgtype_qtip" : "471ddaf9e80da04dd5a3a54daa0239b0",
+  "logo_id_fieldLabel" : "bc87ef2144ae15ef4f78211e73948051",
+  "mimetype_fieldLabel" : "529701d5ccccf8a1c604c27f48ce7d82",
+  "name_fieldLabel" : "e7b47c58815acf1d3afa59a84b5db7fb",
+  "name_qtip" : "4ef6052d74436756f08e95fd63949653",
+  "ontable_value" : "5e40fc8fe5b4bd81365ce50e466dfba7",
+  "remarks_fieldLabel" : "231bc72756b5e6de492aaaa1577f61b1",
+  "remarks_qtip" : "c54b90756cfbeff9217293b567cb2eb0",
+  "tel_fieldLabel" : "bcc254b55c4a1babdf1dcb82c207506b",
+  "tel_qtip" : "bc3a4c40d007b8d610a16312970e5cb3",
+  "title_fieldLabel" : "b78a3223503896721cca1303f776159b",
+  "url_fieldLabel" : "02a3a357710cc2a5dfdfb74ed012fb59",
+  "url_qtip" : "8c04eb09879a05470fae436ba76e3bb9"
+ },
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreCompanies.bjs",
+ "permname" : "",
+ "strings" : {
+  "023a5dfa857c4aa0156e6685231a1dbd" : "Select Type",
+  "02a3a357710cc2a5dfdfb74ed012fb59" : "Url",
+  "11f7b456ca765e9f556f653090045ae7" : "Images / PDF",
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "231bc72756b5e6de492aaaa1577f61b1" : "Remarks",
+  "32c4e9483403d60115b21519178e5384" : "Enter Address",
+  "35cb9e66ff801a819684ee0fbeabaeeb" : "Background Colour",
+  "471ddaf9e80da04dd5a3a54daa0239b0" : "Select Image Type",
+  "4ef6052d74436756f08e95fd63949653" : "Enter Company Name",
+  "529701d5ccccf8a1c604c27f48ce7d82" : "Mimetype",
+  "55cfeeacad2f92b9fea0a1bbb6449fac" : "Update Image Details",
+  "5e40fc8fe5b4bd81365ce50e466dfba7" : "core_company",
+  "72b9d3d2e231f1de7a2bd70737f644aa" : "Add / Edit Organization",
+  "733640ec0c9367df1b4d85eb286ed9ae" : "Enter code",
+  "8535bcc0f05358a583bb432bbadf7e0d" : "Select type",
+  "8c04eb09879a05470fae436ba76e3bb9" : "Enter Url",
+  "8e16a71b3d8217eb80b39b7d8dec4296" : "Image Type",
+  "9810aa2b9f44401be4bf73188ef2b67d" : "Fax",
+  "9f86c00615b1a210935ac28ff8ebbb22" : "Enter Email Address",
+  "a1fa27779242b4902f7ae3bdd5c6d508" : "Type",
+  "b18c29b8470190a02813415a04a2191f" : "Filesize",
+  "b33457e7e1cd5dbf1db34a0c60fcb75f" : "Company ID (for filing Ref.)",
+  "b78a3223503896721cca1303f776159b" : "Title",
+  "b9c49611cfda3259a2b837b39489e650" : "Add Image",
+  "bc3a4c40d007b8d610a16312970e5cb3" : "Enter Phone Number",
+  "bc87ef2144ae15ef4f78211e73948051" : "Logo Image",
+  "bcc254b55c4a1babdf1dcb82c207506b" : "Phone",
+  "c54b90756cfbeff9217293b567cb2eb0" : "Enter remarks",
+  "c9cc8cce247e49bae79f15173ce97354" : "Save",
+  "c9d03748d1a54666b5c7a5187109301b" : "Delete Selected File or  Image",
+  "ce8ae9da5b7cd6c3df2929543a9af92d" : "Email",
+  "cf3a5d25d39613ad5bbc2f5eb0f9b675" : "Enter Fax Number",
+  "dd7bf230fde8d4836917806aff6a6b27" : "Address",
+  "e7b47c58815acf1d3afa59a84b5db7fb" : "Company Name",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "ea72bacd2fdfa818907bb9559e6905a1" : "Upload Image or File"
+ },
+ "title" : ""
 }
