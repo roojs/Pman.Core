@@ -795,7 +795,7 @@
        "   if (_this.data.id) {",
        "       _this.imageView.loadImages();",
        "   } else {",
-       "      _this.imageView.el.mask(\"Save Press Release First\");",
+       "      _this.imageView.el.mask(\"Save Company First\");",
        "   }",
        "   ",
        "   if (_this.hasUploadWatch) {",
