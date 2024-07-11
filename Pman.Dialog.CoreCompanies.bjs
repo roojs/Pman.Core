@@ -11,11 +11,9 @@
     {
      "$ xns" : "Roo",
      "* prop" : "center",
-     "alwaysShowTabs" : false,
+     "alwaysShowTabs" : true,
      "autoScroll" : false,
      "closeOnTab" : true,
-     "hideTabs" : true,
-     "titlebar" : false,
      "xtype" : "LayoutRegion"
     },
     {
