@@ -730,6 +730,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $c->find(true);
         
         $aur = array_merge( $c->toArray(),$aur);
+
+        var_dump($c);
         
         if (empty($c->company_id_logo_id_id))  {
                  
