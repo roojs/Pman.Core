@@ -735,7 +735,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                  
             $im = DB_Dataobject::factory('Images');
             $im->ontable = DB_DataObject::factory('core_company')->tableName();
-            $im->onid = $c->id;
+            $im->onid = $this->company_id;
             $im->imgtype = 'LOGO';
             $im->orderBy('id desc');
             $im->limit(1);
