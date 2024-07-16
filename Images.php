@@ -295,8 +295,13 @@ class Pman_Core_Images extends Pman
             $this->imgErr("serve = missing-image", $img->getStoreName());
              
         }
+
 //        print_r($img);exit;
         $x = $img->toFileConvert();
+        if ($img->mimetype == 'image/svg+xml') {
+            $x->serveOnly($this->method, $img->filename);
+            exit;
+        }
         if (empty($this->as_mimetype) || $img->mimetype == 'image/gif') {
             $this->as_mimetype  = $img->mimetype;
         }
