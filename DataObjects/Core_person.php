@@ -719,24 +719,25 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
         
         //DB_DataObject::debugLevel(1);
-        $c = DB_Dataobject::factory('core_company');
-        $im = DB_Dataobject::factory('Images');
-        $c->joinAdd($im, 'LEFT');
-        $c->selectAdd();
-        $c->selectAs($c, 'company_id_%s');
-        $c->selectAs($im, 'company_id_logo_id_%s');
-        $c->id = $this->company_id;
-        $c->limit(1);
-        $c->find(true);
+        // $c = DB_Dataobject::factory('core_company');
+        // $im = DB_Dataobject::factory('Images');
+        // $c->joinAdd($im, 'LEFT');
+        // $c->selectAdd();
+        // $c->selectAs($c, 'company_id_%s');
+        // $c->selectAs($im, 'company_id_logo_id_%s');
+        // $c->id = $this->company_id;
+        // $c->limit(1);
+        // $c->find(true);
         
-        $aur = array_merge( $c->toArray(),$aur);
+        // $aur = array_merge( $c->toArray(),$aur);
         
-        if (empty($c->company_id_logo_id_id))  {
+        // if (empty($c->company_id_logo_id_id))  {
                  
             $im = DB_Dataobject::factory('Images');
             $im->ontable = DB_DataObject::factory('core_company')->tableName();
             $im->onid = $c->id;
             $im->imgtype = 'LOGO';
+            $im->orderBy('id desc');
             $im->limit(1);
             $im->selectAdd();
             $im->selectAs($im,  'company_id_logo_id_%s');
@@ -747,9 +748,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                         continue;
                     }
                     $aur[$k] = $v;
+                    if($k == 'company_id_logo_id_id') {
+                        $aur['company_id_logo_id'] = $v; // use the latest image with image type 'LOGO' instead of using the image with 'logo_id'
+                    }
                 }
             }
-        }
+        // }
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();

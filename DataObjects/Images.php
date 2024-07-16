@@ -603,7 +603,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $baseURL = '';
         }
        
-        if ($size < 0) {
+        if ($size < 0 || $this->mimetype == 'image/svg+xml') {
             $provider = preg_replace('#/Thumb$#', '', $provider);
             
             return $baseURL . $provider . "/{$this->id}/{$shorten_name}"; // -- this breaks the rss feed #image-{$this->id}";
