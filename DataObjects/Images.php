@@ -145,6 +145,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             
             if (empty($imgs) || empty($imgs[0]) || empty($imgs[1])) {
                 // it's a file!!!!
+                if($this->mimetype == 'image/svg+xml') {
+                    $xml = simplexml_load_file($file);
+                    $attr = $xml->attributes();
+                    $this->width = $attr->width; 
+                    $this->height = $attr->height;
+                }
             } else {
                 list($this->width , $this->height)  = $imgs;
             }
