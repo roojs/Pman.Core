@@ -520,9 +520,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $_SESSION[get_class($this)][$sesPrefix .'-auth'] = serialize((object)$d);
         
         $pp = DB_DAtaObject::Factory($this->tableName());
-        $pp->get($this->pid());
         $pp->autoJoin();
-        
+        $pp->get($this->pid());
+
         self::$authUser = $pp;
         // ensure it's written so that ajax calls can fetch it..
         
