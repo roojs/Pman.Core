@@ -1,0 +1,140 @@
+{
+ "gen_extended" : false,
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "closable" : false,
+   "collapsible" : false,
+   "height" : 300,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "autoScroll" : false,
+     "titlebar" : false,
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "   if (!_this.frm) {",
+       "       return;",
+       "   }",
+       "  _this.frm.dom.contentWindow.print();",
+       "   ",
+       "",
+       "   ",
+       "   ",
+       "}"
+      ]
+     },
+     "text" : "Print",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "     _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Close Window",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "autoScroll" : false,
+     "fitContainer" : false,
+     "fitToFrame" : false,
+     "listeners" : {
+      "activate" : [
+       "function (_self)",
+       "{",
+       "    ",
+       "}"
+      ]
+     },
+     "region" : "center",
+     "xtype" : "ContentPanel"
+    }
+   ],
+   "listeners" : {
+    "show" : [
+     "  function (_self)",
+     "                 {",
+     "    if (!_this.dialog) { ",
+     "        _this.dialog = _self; ",
+     "    }",
+     "    _self.getLayout().beginUpdate();",
+     "    _self.moveTo(35,35);",
+     "    _self.resizeTo(window.innerWidth - 70,window.innerHeight - 70);",
+     "    _self.getLayout().endUpdate();",
+     "    ",
+     "",
+     "",
+     "    if (!_this.frm) {",
+     "        var el =     _self.getLayout().getRegion('center').getPanel(0).getEl();",
+     "        _this.frm = el.createChild({ tag: 'iframe', src : 'about:blank'});",
+     "        _this.frm.dom.style.border = '0px';",
+     "        _this.frm.dom.style.overflow = 'auto';",
+     "    }",
+     " ",
+     "    if (!_this.frm) {    // in ... builder ",
+     "        return;",
+     "    }",
+     "",
+     "    var sz = _self.getLayout().getRegion('center').bodyEl.getSize();",
+     "    _this.frm.dom.width = sz.width;",
+     "    _this.frm.dom.height = sz.height;",
+     "    ",
+     "    ",
+     "    ",
+     "    if (!_this.data) {",
+     "    // for testing.. should not happen!",
+     "     //   _this.frm.dom.src=  baseURL + '/Cash/Print/1.html';",
+     "       return;",
+     "    }",
+     "    ",
+     "",
+     "    if (typeof(_this.data.head) != 'undefined') {",
+     "        _this.frm.dom.contentWindow.document.head.innerHTML = _this.data.head;",
+     "    }",
+     "    ",
+     "    if (typeof(_this.data.body) != 'undefined') {",
+     "        _this.frm.dom.contentWindow.document.body.innerHTML = _this.data.body;",
+     "    }",
+     "    if (typeof(_this.data.title) != 'undefined') {            ",
+     "        _self.setTitle(_this.data.title);",
+     "        _this.frm.dom.contentWindow.document.title = _this.data.title;",
+     "    }",
+     "    ",
+     "    ",
+     " }"
+    ]
+   },
+   "modal" : true,
+   "resizable" : false,
+   "title" : "Preview Print",
+   "width" : 500,
+   "xtype" : "LayoutDialog"
+  }
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.CorePrintPreview",
+ "parent" : "",
+ "permname" : "",
+ "strings" : {
+  "13dba24862cf9128167a59100e154c8d" : "Print",
+  "57b1416ba37ead15b87058a4d1314307" : "Preview Print",
+  "ad513e4f467bdbd8b7e6a7ed511f7fa3" : "Close Window"
+ },
+ "title" : ""
+}
