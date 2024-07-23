@@ -544,7 +544,7 @@ Pman.Dialog.CoreCompanies = {
                Roo.log('IMAGE BASE');
                Roo.log(rootURL);
                Roo.log(baseURL);
-               var imgbase = typeof(publicBaseURL) != 'undefined' ? publicBaseURL : rootURL + '/crm.php';
+               var imgbase = typeof(publicBaseURL) != 'undefined' ? publicBaseURL : baseURL;
            
                 this.load({
                    url : baseURL + '/Roo/Images.php',
