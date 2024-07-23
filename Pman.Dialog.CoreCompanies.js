@@ -541,7 +541,10 @@ Pman.Dialog.CoreCompanies = {
            xtype : 'JsonView',
            jsonRoot : 'data',
            loadImages : function() {
-           
+               Roo.log('IMAGE BASE');
+               Roo.log(publicBaseURL);
+               Roo.log(rootURL);
+               Roo.log(baseURL);
                var imgbase = typeof(publicBaseURL) != 'undefined' ? publicBaseURL : rootURL + '/crm.php';
            
                 this.load({
