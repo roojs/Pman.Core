@@ -236,6 +236,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if ($this->company && ($logo = $this->company->logo())) {
             $this->appLogo = $this->baseURL . '/Images/Thumb/x100/'. $logo->id .'/' . $logo->filename;
         }
+        var_dump($this);
         die('test');
 
         if (!empty($req['password1'])) {
