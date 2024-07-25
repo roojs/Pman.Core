@@ -231,12 +231,6 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     function onInsert($req, $roo)
     {
-        $i = DB_DataObject::factory('core_company');
-        $i->get(2);
-        $logo = $i->logo();
-        $html = $i->logoImageToHTML('100x50');
-        var_dump($html);
-        die('test');
         if (!empty($req['password1'])) {
             $this->setPassword($req['password1']);
             $this->update();
