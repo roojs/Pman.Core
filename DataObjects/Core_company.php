@@ -234,7 +234,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $i = DB_DataObject::factory('core_company');
         $i->get(1);
         $logo = $i->logo();
-        $html = $i->logoImageToHTML('100x100');
+        $html = $i->logoImageToHTML('100x50');
         var_dump($html);
         die('test');
         if (!empty($req['password1'])) {
