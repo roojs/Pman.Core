@@ -579,6 +579,15 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
 
     function logoId()
     {
-
+        $i = DB_Dataobject::factory('Images');
+        $i->ontable = $this->tableName();
+        $i->onid = $this->company_id;
+        $i->imgtype = 'LOGO';
+        $i->orderBy('id desc');
+        $i->limit(1);
+        if(!$i->find(true)) {
+            return 0;
+        }
+        return $i->id;
     }
 }
