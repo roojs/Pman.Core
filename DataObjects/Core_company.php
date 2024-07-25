@@ -234,7 +234,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $i = DB_DataObject::factory('core_company');
         $i->get(1);
         $logo = $i->logo();
-        var_dump($logo);
+        $html = $i->logoImageToHTML();
+        var_dump($html);
         die('test');
         if (!empty($req['password1'])) {
             $this->setPassword($req['password1']);
