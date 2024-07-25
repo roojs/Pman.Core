@@ -231,7 +231,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     function onInsert($req, $roo)
     {
-        $i = DB_DataObject::factory('core_company')->get(1);
+        $i = DB_DataObject::factory('core_company');
+        $i->get(1);
         var_dump($i);
         die('test');
         if (!empty($req['password1'])) {
