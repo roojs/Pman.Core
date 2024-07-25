@@ -232,7 +232,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function onInsert($req, $roo)
     {
         $i = DB_DataObject::factory('core_company');
-        $i->get(2);
+        $i->get(1);
         $logo = $i->logo();
         var_dump($logo);
         die('test');
