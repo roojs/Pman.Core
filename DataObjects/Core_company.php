@@ -231,6 +231,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     function onInsert($req, $roo)
     {
+        die('test');
         if (!empty($this->logo_id)) { // update images table to sycn with this..
             $img = DB_DataObject::factory('Images');
             if ($img->get($this->logo_id) && ($img->onid != $this->id)) {
@@ -602,6 +603,6 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
 
     function logoId()
     {
-        
+
     }
 }
