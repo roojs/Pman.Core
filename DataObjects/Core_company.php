@@ -234,23 +234,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if (!empty($req['password1'])) {
             $this->setPassword($req['password1']);
             $this->update();
-        }
-        $img = DB_DataObject::factory('Images');
-        $img->onid= 0;
-        
-        $img->ontable = $this->tableName();
-        $img->imgtype = 'LOGO';
-        // should check uploader!!!
-        if ($img->find()) {
-            while($img->fetch()) {
-                $ii = clone($img);
-                $ii->onid = $this->id;
-                $ii->update();
-                $this->logo_id = $ii->id;
-            }
-            $this->update();
-        }
-        
+        }        
     }
     
     function beforeInsert($q, $roo)
