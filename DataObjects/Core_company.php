@@ -233,7 +233,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         $this->company = DB_DataObject::factory('core_company');
         $this->company->get(2);
-        $logo = $this->company->logo()
+        $logo = $this->company->logo();
         var_dump($logo);
         if ($this->company && ($logo = $this->company->logo())) {
             $this->appLogo = $this->baseURL . '/Images/Thumb/x100/'. $logo->id .'/' . $logo->filename;
