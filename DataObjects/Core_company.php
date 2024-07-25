@@ -219,7 +219,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function onUpload($controller)
     {
         $image = DB_DataObject::factory('Images');
-        return $image->onUploadWithTbl($this);
+        return $image->onUploadWithTbl($this, 'logo_id');
          
     }
     function  onUpdate($old, $req,$roo) 
