@@ -372,11 +372,11 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function logoImageToHTML($size)
     {
-        $i = DB_DataObject::factory('Images');
-        if (!$this->logo_id || !$i->get($this->logo_id)) {
+        $logo = $this->logo();
+        if(!$logo) {
             return '';
         }
-        return $i->toHTML($size);
+        return $logo->toHTML($size);
         
     }
      function firstImage($filter='image/%')
