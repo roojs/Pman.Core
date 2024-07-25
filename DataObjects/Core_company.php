@@ -234,7 +234,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if (!empty($req['password1'])) {
             $this->setPassword($req['password1']);
             $this->update();
-        }        
+        }
     }
     
     function beforeInsert($q, $roo)
