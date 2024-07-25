@@ -586,7 +586,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         $i = DB_Dataobject::factory('Images');
         $i->ontable = $this->tableName();
-        $i->onid = $this->company_id;
+        $i->onid = $this->id;
         $i->imgtype = 'LOGO';
         $i->orderBy('id desc');
         $i->limit(1);
