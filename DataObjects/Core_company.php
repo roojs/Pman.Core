@@ -219,7 +219,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function onUpload($controller)
     {
         $image = DB_DataObject::factory('Images');
-        return $image->onUploadWithTbl($this, 'logo_id');
+        return $image->onUploadWithTbl($this, false, array('imgtype' => 'LOGO'));
          
     }
     function  onUpdate($old, $req,$roo) 
@@ -231,33 +231,10 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     }
     function onInsert($req, $roo)
     {
-        if (!empty($this->logo_id)) { // update images table to sycn with this..
-            $img = DB_DataObject::factory('Images');
-            if ($img->get($this->logo_id) && ($img->onid != $this->id)) {
-                $img->onid = $this->id;
-                $img->update();
-            }
-        }
         if (!empty($req['password1'])) {
             $this->setPassword($req['password1']);
             $this->update();
         }
-        $img = DB_DataObject::factory('Images');
-        $img->onid= 0;
-        
-        $img->ontable = $this->tableName();
-        $img->imgtype = 'LOGO';
-        // should check uploader!!!
-        if ($img->find()) {
-            while($img->fetch()) {
-                $ii = clone($img);
-                $ii->onid = $this->id;
-                $ii->update();
-                $this->logo_id = $ii->id;
-            }
-            $this->update();
-        }
-        
     }
     
     function beforeInsert($q, $roo)
@@ -395,11 +372,11 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function logoImageToHTML($size)
     {
-        $i = DB_DataObject::factory('Images');
-        if (!$this->logo_id || !$i->get($this->logo_id)) {
+        $logo = $this->logo();
+        if(!$logo) {
             return '';
         }
-        return $i->toHTML($size);
+        return $logo->toHTML($size);
         
     }
      function firstImage($filter='image/%')
@@ -598,5 +575,19 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         }
         
         return false;
+    }
+
+    function logo()
+    {
+        $i = DB_Dataobject::factory('Images');
+        $i->ontable = $this->tableName();
+        $i->onid = $this->id;
+        $i->imgtype = 'LOGO';
+        $i->orderBy('id desc');
+        $i->limit(1);
+        if(!$i->find(true)) {
+            return false;
+        }
+        return $i;
     }
 }

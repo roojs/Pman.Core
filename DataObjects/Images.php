@@ -351,7 +351,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      * onUpload (singlely attached image to a table)
      */
     
-    function onUploadWithTbl($tbl,  $fld)
+    function onUploadWithTbl($tbl,  $fld, $opts = array())
     {
         if ( $tbl->__table == 'Images') {
             return; // not upload to self...
@@ -362,7 +362,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         ) {
             return false;
         }
-        if ($tbl->$fld) {
+        if ($fld != false && $tbl->$fld) {
             HTML_FlexyFramework::get()->page->jerr("updating images is disabled");
             exit;
             $image = DB_DataObject::factory('Images');
@@ -375,7 +375,8 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $image->onid = $tbl->id;
         $image->ontable = $tbl->__table;
         
-        $image->filename = $_FILES['imageUpload']['name']; 
+        $image->filename = $_FILES['imageUpload']['name'];
+        $image->setFrom($opts);
 
         if  (strlen( $_FILES['imageUpload']['name']) > 128) {
             // although we allow 254 chars.. try and keep it down. - as it seems to cause other problems
@@ -388,7 +389,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             return false;
         }
         $old = clone($tbl);
-        $tbl->$fld = $image->id;
+        if ($fld != false) {
+            $tbl->$fld = $image->id;
+        }
         $tbl->update($old);
          
     }
