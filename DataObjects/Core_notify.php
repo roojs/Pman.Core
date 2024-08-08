@@ -357,10 +357,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->event_id = $event->id;
         if($event->action == 'NOTIFYFAIL') {
             $mrm = DB_DataObject::factory('mail_reject_match');
-            $rejectMatches = array();
-            foreach($mrm->fetchAll('id', 'match_regex') as $id => $regex){
-                $rejectMatches[$id] = '/('.implode('|', explode("\n", $regex)) .')/i';
-            }
+            $mrm->getMatchId('hello world');
         }
         $this->update($ww);
     }
