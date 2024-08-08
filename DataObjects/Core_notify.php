@@ -355,10 +355,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
         $this->msgid = $msgid;
         $this->event_id = $event->id;
-        if($event->action == 'NOTIFYFAIL') {
-            $mrm = DB_DataObject::factory('mail_reject_match');
-            $mrm->getMatchId('hello world');
-        }
         $this->update($ww);
     }
     
