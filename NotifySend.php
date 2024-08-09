@@ -554,6 +554,9 @@ class Pman_Core_NotifySend extends Pman
              
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
+            if (method_exists($w, 'matchReject')) {
+                $w->matchReject($errmsg);
+            }
              
             $this->errorHandler( $ev->remarks);
         }
