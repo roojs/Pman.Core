@@ -38,10 +38,10 @@ class Pman_Core_ConvertStyle extends Pman
             return $ui['scheme'] .'://'.$ui['host']. $url;
         }
         
-        if (substr($ui['path'], -1) == '/') {
+        if (!empty($ui['path']) && substr($ui['path'], -1) == '/') {
            return $ui['scheme'] .'://'.$ui['host']. $ui['path'] . $url;
         }
-        if (!strlen($ui['path'])) {
+        if (empty($ui['path'])  || !strlen($ui['path'])) {
             return $ui['scheme'] .'://'.$ui['host']. '/' . $url;
            
         }
