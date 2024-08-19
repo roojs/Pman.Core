@@ -465,6 +465,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
         }
 
+        var_dump($affects);
+        die('test');
+
         foreach($affects as $k => $true) {
             $ka = explode('.', $k);
 
