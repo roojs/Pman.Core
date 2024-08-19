@@ -435,7 +435,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
-        $affectedTables = false;
+        $affectedColumns = false;
         $ff = HTML_FlexyFramework::get();
         
         if (
