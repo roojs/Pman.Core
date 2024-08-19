@@ -458,8 +458,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 }
 
                 if(empty($affectedCols) || !empty($affectedCols) && !in_array($tbl .'.' . $col, $affectedCols)) {
+                    $affects[$tbl .'.' . $col] = true;
                 }
-                $affects[$tbl .'.' . $col] = true;
             }
         }
 
