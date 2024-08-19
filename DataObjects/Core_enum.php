@@ -435,7 +435,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
-        $affectedColumns = false;
+        $affectedColumns = array();
         $ff = HTML_FlexyFramework::get();
         
         if (
@@ -443,6 +443,11 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             !empty($ff->Pman_Core['core_enum_merge_affects']) && 
             !empty($ff->Pman_Core['core_enum_merge_affects'][$this->etype])
         ) {
+            foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
+                foreach($cols as $col) {
+                    $affect
+                }
+            }
             $affectedTables = $ff->Pman_Core['core_enum_merge_affects'][$this->etype];
         }
 
