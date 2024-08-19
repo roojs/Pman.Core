@@ -435,22 +435,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
-        $affectedColumns = array();
-        $ff = HTML_FlexyFramework::get();
-        
-        if (
-            !empty($ff->Pman_Core) && 
-            !empty($ff->Pman_Core['core_enum_merge_affects']) && 
-            !empty($ff->Pman_Core['core_enum_merge_affects'][$this->etype])
-        ) {
-            foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
-                foreach($cols as $col) {
-                    $affectedColumns[] = $tbl . '.' . $col;
-                }
-            }
-        }
-
-        var_dump($affectedColumns);
         foreach($all_links as $tbl => $links) {
             
             foreach($links as $col => $totbl_col) {
@@ -460,6 +444,24 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                 }
 
                 $affects[$tbl .'.' . $col] = true;
+            }
+        }
+
+        var_dump($affects);
+
+        $ff = HTML_FlexyFramework::get();
+        
+        if (
+            !empty($ff->Pman_Core) && 
+            !empty($ff->Pman_Core['core_enum_merge_affects']) && 
+            !empty($ff->Pman_Core['core_enum_merge_affects'][$this->etype])
+        ) {
+            foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
+                foreach($cols as $col) {
+                    if(isset($affect[$tbl .'.' . $col])) {
+                        unset($affect[$tbl .'.' . $col]);
+                    }
+                }
             }
         }
 
