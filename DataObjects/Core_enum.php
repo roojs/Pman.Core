@@ -445,13 +445,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         ) {
             foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
                 foreach($cols as $col) {
-                    $affectColumns = $tbl . '.' . $col;
+                    $affectColumns[] = $tbl . '.' . $col;
                 }
             }
-            $affectedTables = $ff->Pman_Core['core_enum_merge_affects'][$this->etype];
         }
 
-        var_dump($affectedTables);
+        var_dump($affectedColumns);
         foreach($all_links as $tbl => $links) {
             
             foreach($links as $col => $totbl_col) {
