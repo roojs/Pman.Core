@@ -435,6 +435,8 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
+        die('test'); 
+
         foreach($all_links as $tbl => $links) {
             foreach($links as $col => $totbl_col) {
                 $to = explode(':', $totbl_col);
