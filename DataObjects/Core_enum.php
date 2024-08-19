@@ -447,6 +447,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
 
         var_dump($affects);
+        $ff = HTML_FlexyFramework::get();
+        
+        if (!empty($ff->Pman_Core) && !empty($ff->Pman_Core['core_enum_merge_affects'])) {
+            $this->jerr("config[Pman_Core] is not set");
+        }
+        
+        if(isset($ff->Pman_Core['DataObjects_Core_templatestr']['tables'])){
         die('test'); 
 
         foreach($affects as $k => $true) {
