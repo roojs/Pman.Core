@@ -437,6 +437,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
 
         var_dump($this->id);
         var_dump($merge_to);
+        var_dump($all_links);
         die('test'); 
 
         foreach($all_links as $tbl => $links) {
