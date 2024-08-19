@@ -459,9 +459,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         ) {
             foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
                 foreach($cols as $col) {
-                    if(isset($affects[$tbl .'.' . $col])) {
-                        unset($affects[$tbl .'.' . $col]);
-                    }
+                    $affectedCols[] = $tbl . '.' . $col;
                 }
             }
         }
