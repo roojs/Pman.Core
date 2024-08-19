@@ -457,17 +457,13 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     continue;
                 }
 
-                if(!empty($affectedCols) && !in_array($tbl .'.' . $col, $affectedCols)) {
+                if(empty($affectedCols) || !empty($affectedCols) && !in_array($tbl .'.' . $col, $affectedCols)) {
                 }
                 $affects[$tbl .'.' . $col] = true;
             }
         }
 
-        // var_dump($affects);
-
-        var_dump($affectedCols);
-
-        // var_dump($affects);
+        var_dump($affects);
         
         die('test'); 
 
