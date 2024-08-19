@@ -446,7 +446,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             $affectedTables = $ff->Pman_Core['core_enum_merge_affects'][$this->etype];
         }
 
-        var_dump($all_links);
+        var_dump($affectedTables);
         foreach($all_links as $tbl => $links) {
             
             foreach($links as $col => $totbl_col) {
