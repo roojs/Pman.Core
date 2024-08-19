@@ -457,16 +457,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
                     continue;
                 }
 
-                if(
-                    // no affected columns specified => affect all columns
-                    !isset($affectedCols) ||
-                    // affected columns specified => affect specified columns only
-                    !empty($affectedCols) && in_array($tbl .'.' . $col, $affectedCols)
-                ) {
-                    $affects[$tbl .'.' . $col] = true;
-                }
-
-                // affected columns specified
+                // not one of the affected columns specified => skip
                 if(isset($affectedCols) && !in_array($tbl .'.' . $col, $affectedCols)) {
                     continue;
                 }
