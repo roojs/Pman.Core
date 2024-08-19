@@ -447,7 +447,7 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
         }
 
-        var_dump($affects);
+        // var_dump($affects);
         $affectedCols = array();
 
         $ff = HTML_FlexyFramework::get();
@@ -464,7 +464,9 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
             }
         }
 
-        var_dump($affects);
+        var_dump($affectedCols);
+
+        // var_dump($affects);
         
         die('test'); 
 
