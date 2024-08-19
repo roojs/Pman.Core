@@ -435,6 +435,12 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
+        $ff = HTML_FlexyFramework::get();
+        
+        if (!empty($ff->Pman_Core) && !empty($ff->Pman_Core['core_enum_merge_affects'])) {
+            var_dump($ff->Pman_Core['core_enum_merge_affects']);
+        }
+
         foreach($all_links as $tbl => $links) {
             foreach($links as $col => $totbl_col) {
                 $to = explode(':', $totbl_col);
@@ -447,11 +453,6 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         }
 
         var_dump($affects);
-        $ff = HTML_FlexyFramework::get();
-        
-        if (!empty($ff->Pman_Core) && !empty($ff->Pman_Core['core_enum_merge_affects'])) {
-            var_dump($ff->Pman_Core['core_enum_merge_affects']);
-        }
         
         die('test'); 
 
