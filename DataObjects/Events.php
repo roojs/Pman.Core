@@ -543,7 +543,6 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             }
             
         }
-        var_dump($file);
         
         // Remove all the password from logs...
         $p =  empty($_POST) ? array() : $_POST;
