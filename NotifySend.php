@@ -302,8 +302,8 @@ class Pman_Core_NotifySend extends Pman
         
      
         $mxs = $this->mxs($dom);
-        if (method_exists($ww, 'updateDomainMX')) {
-            $ww->updateDomainMX(empty($mxs) ? 0 : 1);
+        if (method_exists($w, 'updateDomainMX')) {
+            $w->updateDomainMX(empty($mxs) ? 0 : 1);
         }
         $ww = clone($w);
 
