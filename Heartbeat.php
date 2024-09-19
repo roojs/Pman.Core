@@ -29,7 +29,7 @@ class Pman_Core_Heartbeat extends Pman
         $cd = DB_DataObject::Factory('core_enum');
         $cd->setFrom(array(
             'etype' => 'heartbeat',
-            'name' => 'last_update'
+            'name' => 'last_update_'. gethostname()
         ));
         if (!$cd->count()) {
             $cd->display_name = date("Y-m-d H:i:s");
