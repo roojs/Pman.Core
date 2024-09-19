@@ -9,9 +9,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
   
-    public $__table = 'core_domain';
-    public $id;
-    public $domain;
+    var $__table = 'core_domain';
+    var $id;
+    var $domain;
+    var $mx_updated;
+    var $has_mx;
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
