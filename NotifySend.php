@@ -302,6 +302,9 @@ class Pman_Core_NotifySend extends Pman
         
      
         $mxs = $this->mxs($dom);
+        if (method_exists($w, 'updateDomainMX')) {
+            $w->updateDomainMX(empty($mxs) ? 0 : 1);
+        }
         $ww = clone($w);
 
         // we might fail doing this...
@@ -325,6 +328,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         if (empty($mxs)) {
+            
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
                 $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
