@@ -21,6 +21,8 @@ class Pman_Core_Import_Timezone extends Pman
     
     function get($part = '', $opts=array())
     {
+        phpinfo();
+        die('test');
         $ce = DB_DataObject::factory('core_enum');
         $ce->query("
             SELECT
