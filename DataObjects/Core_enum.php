@@ -435,13 +435,32 @@ class Pman_Core_DataObjects_Core_enum extends DB_DataObject
         $x = $this->factory($tn);
         $all_links = $x->databaseLinks();
 
+        $ff = HTML_FlexyFramework::get();
+        if (
+            !empty($ff->Pman_Core) && 
+            !empty($ff->Pman_Core['core_enum_merge_affects']) && 
+            !empty($ff->Pman_Core['core_enum_merge_affects'][$this->etype])
+        ) {
+            $affectedCols = array();
+            foreach($ff->Pman_Core['core_enum_merge_affects'][$this->etype] as $tbl => $cols) {
+                foreach($cols as $col) {
+                    $affectedCols[] = $tbl . '.' . $col;
+                }
+            }
+        }
+
         foreach($all_links as $tbl => $links) {
+            
             foreach($links as $col => $totbl_col) {
                 $to = explode(':', $totbl_col);
                 if ($to[0] != $this->tableName()) {
                     continue;
                 }
 
+                // not one of the affected columns specified => skip
+                if(isset($affectedCols) && !in_array($tbl .'.' . $col, $affectedCols)) {
+                    continue;
+                }
                 $affects[$tbl .'.' . $col] = true;
             }
         }
