@@ -271,9 +271,6 @@ class Pman_Core_NotifySend extends Pman
          if (!empty($opts['send-to'])) {
             $p->email = $opts['send-to'];
         }
-
-        var_dump($p->email);
-        die('test');
         
             // since some of them have spaces?!?!
         $p->email = trim($p->email);
@@ -284,6 +281,8 @@ class Pman_Core_NotifySend extends Pman
         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
+        var_dump($ww->to_email);
+        die('test');
         
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
