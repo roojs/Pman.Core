@@ -148,7 +148,6 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
-        die('test');
         
         
         $o = $w->object();
@@ -176,6 +175,8 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
+
+        die('test');
         
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
