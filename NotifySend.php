@@ -390,6 +390,15 @@ class Pman_Core_NotifySend extends Pman
                     'debug_handler' => array($this, 'debugHandler')
             ));
 
+            var_dump(array(
+                'host'    => $mx ,
+                'localhost' => $ff->Mail['helo'],
+                'timeout' => 15,
+                'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
+                //'debug' => isset($opts['debug']) ?  1 : 0,
+                'debug' => 1,
+                'debug_handler' => array($this, 'debugHandler')
+            ));
             var_dump($p->email);
             die('test');
             
