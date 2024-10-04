@@ -105,12 +105,12 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
-        die('test');
 
         if (!$force && !empty($w->sent) && strtotime($w->act_when) < strtotime($w->sent)) {
              
             $this->errorHandler("already sent - repeat to early\n");
         }
+        die('test');
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
         if (!$force &&  $w->server_id != $this->server->id) {
