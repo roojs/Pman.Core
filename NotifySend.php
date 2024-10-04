@@ -390,7 +390,7 @@ class Pman_Core_NotifySend extends Pman
                     'debug_handler' => array($this, 'debugHandler')
             ));
 
-            var_dump($ff->Mail);
+            var_dump($ff->Core_Notify);
             die('test');
             
             // if the host is the mail host + it's authenticated add auth details
