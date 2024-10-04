@@ -87,6 +87,7 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
+        die('test');
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
        // }
