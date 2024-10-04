@@ -341,9 +341,6 @@ class Pman_Core_NotifySend extends Pman
             
             
         }
-
-        var_dump($p->email);
-        die('test');
         
         
         
