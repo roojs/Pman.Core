@@ -110,7 +110,6 @@ class Pman_Core_NotifySend extends Pman
              
             $this->errorHandler("already sent - repeat to early\n");
         }
-        die('test');
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
         if (!$force &&  $w->server_id != $this->server->id) {
@@ -145,10 +144,12 @@ class Pman_Core_NotifySend extends Pman
         $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
         $cev->limit(1);
         if ($cev->count()) {
+            die('test2');
             $cev->find(true);
             $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
+        die('test');
         
         
         $o = $w->object();
