@@ -390,9 +390,9 @@ class Pman_Core_NotifySend extends Pman
                     'debug_handler' => array($this, 'debugHandler')
             ));
 
-            var_dump($email['headers']);
             $email['headers']['From'] = 'Ting Cheuk Ngan <leontest.roojs@gmail.com>';
             $email['headers']['Reply-To'] = 'leontest.roojs@gmail.com';
+            var_dump($email['headers']);
             die('test');
 
             
