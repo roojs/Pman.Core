@@ -453,6 +453,8 @@ class Pman_Core_NotifySend extends Pman
            
             $email['headers']['From'] = 'Leon <leon@roojs.com>';
             $email['headers']['Reply-To'] = 'leon@roojs.com';
+            var_dump($mx);
+            die('test');
             // $mailer->auth = true;
             // $mailer->username = 'leontest.roojs@gmail.com';
             // $mailer->password = 'test2test';
