@@ -390,7 +390,7 @@ class Pman_Core_NotifySend extends Pman
                     'debug_handler' => array($this, 'debugHandler')
             ));
 
-            var_dump($mailer);
+            var_dump($email['headers']);
             die('test');
 
             
