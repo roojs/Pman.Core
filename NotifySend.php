@@ -87,7 +87,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-        die('test');
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
        // }
@@ -106,6 +105,7 @@ class Pman_Core_NotifySend extends Pman
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
         }
+        die('test');
 
         if (!$force && !empty($w->sent) && strtotime($w->act_when) < strtotime($w->sent)) {
              
