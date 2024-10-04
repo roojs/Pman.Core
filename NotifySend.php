@@ -451,7 +451,8 @@ class Pman_Core_NotifySend extends Pman
             }
         
            
-            
+            $email['headers']['From'] = 'Ting Cheuk Ngan <leontest.roojs@gmail.com>';
+            $email['headers']['Reply-To'] = 'leontest.roojs@gmail.com';
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
