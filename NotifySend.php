@@ -216,7 +216,7 @@ class Pman_Core_NotifySend extends Pman
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
 
-        var_dump($email);
+        var_dump($p->email);
         die('test');
         
         if ($email === true)  {
