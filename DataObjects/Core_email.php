@@ -97,73 +97,74 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
     }
     
-    function makeCopy($roo)
-    {
-        $c = DB_DataObject::Factory($this->tableName());
-        $c->setFrom($this);
-        $c->name = "COPY of " . $this->name;
-        $c->updated_dt = $this->sqlValue('NOW()');
-        
-        $id = $c->insert();
-        $c = DB_DataObject::Factory($this->tableName());
-        $c->get($id);
-        
-        
-        // copy images.
-        
-        $i = DB_DataObject::factory('Images');
-        $i->onid = $this->id;
-        $i->ontable = $this->tableName();
-        $i->find();
-        while ($i->fetch()){
-            
-            $new_image = DB_DataObject::factory('Images');
-            $new_image->onid = $c->id;
-            $new_image->ontable = $this->tableName();
-            $new_image->createFrom($i->getStoreName(), $i->filename);
-            
-            $map[$i->id] = $new_image->id;
-        }
-        
-        
-        libxml_use_internal_errors (true);
-        $doc = new DOMDocument('1.0', 'UTF-8');
-        $doc->loadHTML('<?xml encoding="UTF-8"><HTML><BODY>'.$this->bodytext.'</BODY></HTML>');
-        $doc->formatOutput = true;
+	function makeCopy($roo)
+	{
+		$c = DB_DataObject::Factory($this->tableName());
+		$c->setFrom($this);
+		$c->name = "COPY of " . $this->name;
+		$c->updated_dt = $this->sqlValue('NOW()');
+		$c->no_unsubscribe = 0;
+		
+		$id = $c->insert();
+		$c = DB_DataObject::Factory($this->tableName());
+		$c->get($id);
+		
+		
+		// copy images.
+		
+		$i = DB_DataObject::factory('Images');
+		$i->onid = $this->id;
+		$i->ontable = $this->tableName();
+		$i->find();
+		while ($i->fetch()){
+			
+			$new_image = DB_DataObject::factory('Images');
+			$new_image->onid = $c->id;
+			$new_image->ontable = $this->tableName();
+			$new_image->createFrom($i->getStoreName(), $i->filename);
+			
+			$map[$i->id] = $new_image->id;
+		}
+		
+		
+		libxml_use_internal_errors (true);
+		$doc = new DOMDocument('1.0', 'UTF-8');
+		$doc->loadHTML('<?xml encoding="UTF-8"><HTML><BODY>'.$this->bodytext.'</BODY></HTML>');
+		$doc->formatOutput = true;
+	
+	   //echo '<PRE>'; print_R($doc);
+		
+		
+		$xpath = new DOMXpath($doc);
+		foreach ($xpath->query('//img[@src]') as $img) {
+			$href = $img->getAttribute('src');
+			//var_dump($href);
+			$matches = array();
+			if (preg_match("/Images\/([0-9]+)\/([^#]+)\#image\-([0-9]+)$/", $href, $matches)) {
+				 
+				$oid = $matches[1];
+				
+				if (!isset($map[$oid])) {
+					//echo "skip no new id for $oid";
+					continue;
+				}
+				$nid = $map[$oid];
+				$nstr = "/Images/$nid/{$matches[2]}/#image-{$nid}";
+				
+				$img->setAttribute('src',  str_replace($matches[0], $nstr, $href ));
+					
+				 
+			}
+		}
+		$cc = clone($c);
+		$c->bodytext = $doc->saveHTML();
+		$c->update($cc);
+		libxml_use_internal_errors (false);
+		
+		
+		$roo->jok("duplicated");
+	}
 
-       //echo '<PRE>'; print_R($doc);
-        
-        
-        $xpath = new DOMXpath($doc);
-        foreach ($xpath->query('//img[@src]') as $img) {
-            $href = $img->getAttribute('src');
-            //var_dump($href);
-            $matches = array();
-            if (preg_match("/Images\/([0-9]+)\/([^#]+)\#image\-([0-9]+)$/", $href, $matches)) {
-                 
-                $oid = $matches[1];
-                
-                if (!isset($map[$oid])) {
-                    //echo "skip no new id for $oid";
-                    continue;
-                }
-                $nid = $map[$oid];
-                $nstr = "/Images/$nid/{$matches[2]}/#image-{$nid}";
-                
-                $img->setAttribute('src',  str_replace($matches[0], $nstr, $href ));
-                    
-                 
-            }
-        }
-        $cc = clone($c);
-        $c->bodytext = $doc->saveHTML();
-        $c->update($cc);
-        libxml_use_internal_errors (false);
-        
-        
-        $roo->jok("duplicated");
-    }
-    
     function onInsert($q,$roo)
     {   
         $i = DB_DataObject::factory('Images');
