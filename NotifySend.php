@@ -456,11 +456,12 @@ class Pman_Core_NotifySend extends Pman
             $mailer->auth = true;
             $mailer->username = 'leontest.roojs@gmail.com';
             $mailer->password = 'test2test';
+            $mailer->host = 'smtp.gmail.com';
             // var_dump($email['headers']);
             // var_dump($p->email);
             // var_dump($dom);
-            var_dump($mailer->host);
-            die('test');
+            // var_dump($mailer->host);
+            // die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
