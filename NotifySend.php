@@ -382,6 +382,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
                     'host'    => $mx ,
+                    'port' => 587,
                     'localhost' => $ff->Mail['helo'],
                     'timeout' => 15,
                     'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
