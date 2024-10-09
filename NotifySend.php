@@ -463,6 +463,11 @@ class Pman_Core_NotifySend extends Pman
             // var_dump($p->email);
             // var_dump($dom);
             var_dump($mailer->host);
+            error_reporting(E_ALL);
+
+            var_dump(fsockopen("mail.roojs.com", 25, $errno, $errstr));
+            var_dump($errno);
+            var_dump($errstr);
             die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
