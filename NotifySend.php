@@ -504,7 +504,6 @@ class Pman_Core_NotifySend extends Pman
                 $this->errorHandler( " SENT {$w->id} - {$ev->remarks}", true);
             }
             // what type of error..
-            var_dump($res);
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
