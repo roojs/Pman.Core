@@ -450,25 +450,16 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
-            // $email['headers']['To'] = 'leon@roojs.com';
-            // $email['headers']['To'] = 'leontest.roojs@gmail.com';
-            $email['headers']['From'] = 'Leon <leon@roojs.com>';
-            $email['headers']['Reply-To'] = 'leon@roojs.com';
-            // $email['headers']['From'] = 'Ting Cheuk Ngan <leontest.roojs@gmail.com>';
-            // $email['headers']['Reply-To'] = 'leontest.roojs@gmail.com';
-            // $mailer->auth = true;
-            // $mailer->username = 'leontest.roojs@gmail.com';
-            // $mailer->password = 'test2test';
-            // var_dump($email['headers']);
-            // var_dump($p->email);
-            // var_dump($dom);
-            // var_dump($mailer->host);
+            var_dump($email['headers']);
+            var_dump($p->email);
+            var_dump($dom);
+            var_dump($mailer->host);
             // error_reporting(E_ALL);
 
             // var_dump(fsockopen("gmail-smtp-in.l.google.com", 25, $errno, $errstr, 3));
             // var_dump($errno);
             // var_dump($errstr);
-            // die('test');
+            die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
@@ -555,7 +546,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if($res->userinfo['smtpcode'] == 530 && strpos($res->userinfo['smtptext'], '#5.7.0 Must issue a STARTTLS command first')) {
-
+            
         }
 
         
