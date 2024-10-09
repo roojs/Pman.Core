@@ -453,8 +453,8 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['From'] = 'Leon <leon@roojs.com>';
             $email['headers']['Reply-To'] = 'leon@roojs.com';
             $email['headers']['To'] = 'leon@roojs.com';
-            var_dump($email['headers']);
-            die('test');
+            // var_dump($email['headers']);
+            // die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
