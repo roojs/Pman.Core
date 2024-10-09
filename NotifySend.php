@@ -557,6 +557,9 @@ class Pman_Core_NotifySend extends Pman
         // if($res->userinfo['smtpcode'] == 530 && strpos($res->userinfo['smtptext'], '#5.7.0 Must issue a STARTTLS command first')) {
 
         // }
+
+        var_dumP($res->userinfo);
+        
         
         if ($fail) { //// !!!!<<< BLACKLIST DETECT?
         // fail.. = log and give up..
