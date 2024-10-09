@@ -450,10 +450,10 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
-            var_dump($email['headers']);
-            var_dump($p->email);
-            var_dump($dom);
-            var_dump($mailer->host);
+            // var_dump($email['headers']);
+            // var_dump($p->email);
+            // var_dump($dom);
+            // var_dump($mailer->host);
 
             // error_reporting(E_ALL);
             // var_dump(fsockopen("mail2.bisnis.com", 25, $errno, $errstr, 3));
