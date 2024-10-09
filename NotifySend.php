@@ -450,7 +450,7 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
-            $email['headers']['To'] = 'leontest.roojs@gmail.com';
+            $email['headers']['To'] = 'leon@roojs.com';
             $email['headers']['From'] = 'Leon <leon@roojs.com>';
             $email['headers']['Reply-To'] = 'leon@roojs.com';
             // $email['headers']['From'] = 'Ting Cheuk Ngan <leontest.roojs@gmail.com>';
