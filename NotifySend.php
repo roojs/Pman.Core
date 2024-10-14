@@ -280,6 +280,8 @@ class Pman_Core_NotifySend extends Pman
         $dom = array_pop($explode_email);
         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
+
+        
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
