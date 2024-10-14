@@ -138,7 +138,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // we have a bug with msgid not getting filled.
-        $cev = DB_DataObject::Factory('Events');
+        $cev = DB_DataObject::Factory('Events');wip_leon_T8292_add_starttls_support
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
         $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
@@ -389,7 +389,6 @@ class Pman_Core_NotifySend extends Pman
                     'debug' => 1,
                     'debug_handler' => array($this, 'debugHandler')
             ));
-
             
             // if the host is the mail host + it's authenticated add auth details
             // this normally will happen if you sent  Pman_Core_NotifySend['host']
