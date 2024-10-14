@@ -281,7 +281,7 @@ class Pman_Core_NotifySend extends Pman
         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
-        
+
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
@@ -533,7 +533,6 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler( $ev->remarks);
         }
-
         
         if ($fail) { //// !!!!<<< BLACKLIST DETECT?
         // fail.. = log and give up..
