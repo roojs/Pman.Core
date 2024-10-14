@@ -138,7 +138,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // we have a bug with msgid not getting filled.
-        $cev = DB_DataObject::Factory('Events');wip_leon_T8292_add_starttls_support
+        $cev = DB_DataObject::Factory('Events');
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
         $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
