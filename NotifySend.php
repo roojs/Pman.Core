@@ -145,8 +145,8 @@ class Pman_Core_NotifySend extends Pman
         $cev->limit(1);
         if ($cev->count()) {
             $cev->find(true);
-            // $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
-            // $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
+            $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
         
         
