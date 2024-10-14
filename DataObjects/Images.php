@@ -1045,7 +1045,9 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $cmd = "{$pdfinfo} {$file}";
 
         $ret = `$cmd`;
-
+        if (empty($ret)) {
+            return $page;
+        }
         $info = explode("\n", $ret);
 
         foreach ($info as $i){
