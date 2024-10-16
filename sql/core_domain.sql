@@ -8,6 +8,8 @@ CREATE TABLE core_domain (
 ALTER TABLE core_domain ADD COLUMN domain VARCHAR(255) NOT NULL DEFAULT '';
 ALTER TABLE core_domain ADD COLUMN has_mx int(2) NOT NULL  DEFAULT 0;
 ALTER TABLE core_domain ADD COLUMN mx_updated DATETIME NOT NULL DEFAULT '1000-01-01 00:00:00';
-ALTER TABLE core_domain ADD COLUMN   appid VARCHAR(255) NOT NULL DEFAULT ''; -- used by mail_imap_user
+ALTER TABLE core_domain ADD COLUMN appid VARCHAR(255) NOT NULL DEFAULT ''; -- used by mail_imap_user
+ALTER TABLE core_domain ADD COLUMN client_secret VARCHAR(255) NOT NULL DEFAULT ''; -- used by mail_imap_user
+ALTER TABLE core_domain ADD COLUMN redirect VARCHAR(255) NOT NULL DEFAULT ''; -- used by mail_imap_user
 
 CREATE UNIQUE INDEX ui_domain ON core_domain (domain);
