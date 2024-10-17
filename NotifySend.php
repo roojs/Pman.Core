@@ -180,7 +180,7 @@ class Pman_Core_NotifySend extends Pman
                 $ev = $lastEvent;
             }
             else {
-                $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
+                // $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             }
             var_dump($ev);
             die('test');
