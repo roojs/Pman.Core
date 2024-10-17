@@ -171,6 +171,12 @@ class Pman_Core_NotifySend extends Pman
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
+            $notifyTable =  DB_DataObject::factory($this->table);
+            $notifyTable->to_email = $w->to_email;
+            $notifyTable->selectAdd();
+            $notifyTable->selectAdd('MAX(event_id) AS max_event_id');
+            $notifyTable->find(true);
+            var_dump($notifyTable);
             die('test');
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             $w->flagDone($ev, '');
