@@ -182,8 +182,6 @@ class Pman_Core_NotifySend extends Pman
             else {
                 $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             }
-            var_dumP($ev);
-            die('test');
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
