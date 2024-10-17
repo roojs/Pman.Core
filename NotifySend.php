@@ -176,7 +176,7 @@ class Pman_Core_NotifySend extends Pman
             $notifyTable->selectAdd();
             $notifyTable->selectAdd('MAX(event_id) AS max_event_id');
             $notifyTable->find(true);
-            var_dump($notifyTable);
+            var_dump($notifyTable->max_event_id);
             die('test');
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             $w->flagDone($ev, '');
