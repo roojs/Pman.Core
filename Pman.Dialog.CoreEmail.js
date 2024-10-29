@@ -241,6 +241,16 @@ Pman.Dialog.CoreEmail = {
        ],
        items  : [
         {
+         xtype : 'Item',
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
+        },
+        {
+         xtype : 'Item',
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
+        },
+        {
          xtype : 'Fill',
          xns : Roo.Toolbar,
          '|xns' : 'Roo.Toolbar'

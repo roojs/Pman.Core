@@ -33,6 +33,14 @@
        "* prop" : "toolbar",
        "items" : [
         {
+         "$ xns" : "Roo.Toolbar",
+         "xtype" : "Item"
+        },
+        {
+         "$ xns" : "Roo.Toolbar",
+         "xtype" : "Item"
+        },
+        {
          "$ xns" : "Roo",
          "* prop" : "buttons[]",
          "listeners" : {
