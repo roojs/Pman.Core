@@ -20,8 +20,8 @@ Pman.Dialog.CoreEmail = {
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
-  '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
+  '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
@@ -137,62 +137,6 @@ Pman.Dialog.CoreEmail = {
     buttons : [
      {
       xtype : 'Button',
-      text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
-      listeners : {
-       click : function (_self, e)
-        {
-            //_this.dialog.hide();
-            Roo.log(_this.data.module);
-            Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
-        },
-       render : function (_self)
-        {
-            _this.preview_btn = _self;
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
-     {
-      xtype : 'Button',
-      text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
-      listeners : {
-       click : function (_self, e)
-        {
-            //_this.dialog.hide();
-        
-            var id = _this.form.findField('id').getValue();
-            
-            if(id*1 < 1){
-                Roo.MessageBox.alert('Error', 'Please save the message frist!');
-                return;
-            }
-           
-            new Pman.Request({
-                url : baseURL + '/Core/MessagePreview',
-                method : 'POST',
-                mask: 'Sending',
-                params : {
-                    _id : id,
-                    _table : _this.data.module
-                }, 
-                success : function(res) { 
-                    if(res.data == 'SUCCESS'){
-                        Roo.MessageBox.alert("Email Sent", 'The report was sent to your email (HTML format).');
-                    }
-                }
-            });
-        },
-       render : function (_self)
-        {
-            _this.html_preview = _self;
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
-     {
-      xtype : 'Button',
       text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
@@ -237,6 +181,64 @@ Pman.Dialog.CoreEmail = {
        xtype : 'Toolbar',
        xns : Roo,
        '|xns' : 'Roo',
+       buttons : [
+        {
+         xtype : 'Button',
+         text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
+         listeners : {
+          click : function (_self, e)
+           {
+               //_this.dialog.hide();
+               Roo.log(_this.data.module);
+               Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
+           },
+          render : function (_self)
+           {
+               _this.preview_btn = _self;
+           }
+         },
+         xns : Roo,
+         '|xns' : 'Roo'
+        },
+        {
+         xtype : 'Button',
+         text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
+         listeners : {
+          click : function (_self, e)
+           {
+               //_this.dialog.hide();
+           
+               var id = _this.form.findField('id').getValue();
+               
+               if(id*1 < 1){
+                   Roo.MessageBox.alert('Error', 'Please save the message frist!');
+                   return;
+               }
+              
+               new Pman.Request({
+                   url : baseURL + '/Core/MessagePreview',
+                   method : 'POST',
+                   mask: 'Sending',
+                   params : {
+                       _id : id,
+                       _table : _this.data.module
+                   }, 
+                   success : function(res) { 
+                       if(res.data == 'SUCCESS'){
+                           Roo.MessageBox.alert("Email Sent", 'The report was sent to your email (HTML format).');
+                       }
+                   }
+               });
+           },
+          render : function (_self)
+           {
+               _this.html_preview = _self;
+           }
+         },
+         xns : Roo,
+         '|xns' : 'Roo'
+        }
+       ],
        items  : [
         {
          xtype : 'Fill',
@@ -1077,27 +1079,7 @@ Pman.Dialog.CoreEmail = {
          ]
         }
        ]
-      },
-      buttons : [
-       {
-        xtype : 'Button',
-        text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
-        listeners : {
-         click : function (_self, e)
-          {
-              //_this.dialog.hide();
-              Roo.log(_this.data.module);
-              Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
-          },
-         render : function (_self)
-          {
-              _this.preview_btn = _self;
-          }
-        },
-        xns : Roo,
-        '|xns' : 'Roo'
-       }
-      ]
+      }
      },
      {
       xtype : 'GridPanel',
