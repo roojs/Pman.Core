@@ -13,18 +13,16 @@ Pman.Dialog.CoreEmail = {
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
-  'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
+  'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
-  '884df8e413319ff51a3f5f528606238a' :"Use template",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
-  '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
+  '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
-  'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -35,27 +33,21 @@ Pman.Dialog.CoreEmail = {
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
-  '31bb2f6e9b8fb11cbb7fb63c6025223f' :"Select Template",
   'b78a3223503896721cca1303f776159b' :"Title",
-  '278c491bdd8a53618c149c4ac790da34' :"Template",
+  'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
-  'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
   'fff0d600f8a0b5e19e88bfb821dd1157' :"Images"
  },
  _named_strings : {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
-  'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
-  'template_qtip' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
-  'template_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
-  'template_emptyText' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
@@ -246,118 +238,6 @@ Pman.Dialog.CoreEmail = {
        xns : Roo,
        '|xns' : 'Roo',
        items  : [
-        {
-         xtype : 'Button',
-         text : _this._strings['884df8e413319ff51a3f5f528606238a'] /* Use template */,
-         xns : Roo.Toolbar,
-         '|xns' : 'Roo.Toolbar',
-         menu : {
-          xtype : 'Menu',
-          xns : Roo.menu,
-          '|xns' : 'Roo.menu',
-          items  : [
-           {
-            xtype : 'Item',
-            text : _this._strings['dc0de523c25be298ba751c63c694109e'] /* Responsive Email (1) */,
-            listeners : {
-             click : function (_self, e)
-              {
-              
-                  var l = document.location;
-                  new Pman.Request({
-              
-                      url : baseURL + '/Core/ImportMailMessage.php',
-              
-                      method: 'POST',
-                      mask : "Loading",
-                      params : {
-                            importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html'
-                     },
-                      success : function (res) {
-              
-                       _this.form.findField('bodytext').setValue(res.data);
-                      }
-                
-                  });
-              }
-            },
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu'
-           }
-          ]
-         }
-        },
-        {
-         xtype : 'ComboBox',
-         allowBlank : true,
-         alwaysQuery : true,
-         displayField : 'file',
-         editable : false,
-         emptyText : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
-         fieldLabel : _this._strings['278c491bdd8a53618c149c4ac790da34'] /* Template */,
-         forceSelection : true,
-         hiddenName : 'template',
-         listWidth : 400,
-         loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-         minChars : 2,
-         name : 'template',
-         pageSize : 20,
-         qtip : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
-         selectOnFocus : true,
-         tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{file}</b> </div>',
-         triggerAction : 'all',
-         typeAhead : true,
-         valueField : 'file',
-         width : 200,
-         listeners : {
-          select : function (combo, record, index)
-           {
-              
-           /*
-               (function() { 
-                   combo.setValue('');
-               }).defer(100);
-           */    
-               if(!record){
-                   return;
-               }
-               _this.form.findField('bodytext').setValue(record.data.content);
-           
-           }
-         },
-         xns : Roo.form,
-         '|xns' : 'Roo.form',
-         store : {
-          xtype : 'Store',
-          remoteSort : true,
-          sortInfo : { direction : 'DESC', field: 'file' },
-          listeners : {
-           beforeload : function (_self, o){
-                o.params = o.params || {};
-                // set more here
-               
-            }
-          },
-          xns : Roo.data,
-          '|xns' : 'Roo.data',
-          proxy : {
-           xtype : 'HttpProxy',
-           method : 'GET',
-           url : baseURL + '/Core/MailTemplateList.php',
-           xns : Roo.data,
-           '|xns' : 'Roo.data'
-          },
-          reader : {
-           xtype : 'JsonReader',
-           fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}],
-           id : 'name',
-           root : 'data',
-           totalProperty : 'total',
-           xns : Roo.data,
-           '|xns' : 'Roo.data'
-          }
-         }
-        },
         {
          xtype : 'Fill',
          xns : Roo.Toolbar,
