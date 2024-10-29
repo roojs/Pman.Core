@@ -12,6 +12,9 @@ Pman.Dialog.CoreImportUrl = {
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK",
   'e6b391a8d2c4d45902a23a8b6585703d' :"URL"
  },
+ _named_strings : {
+  'importUrl_fieldLabel' : 'e6b391a8d2c4d45902a23a8b6585703d' /* URL */ 
+ },
 
  dialog : false,
  callback:  false,
@@ -24,7 +27,7 @@ Pman.Dialog.CoreImportUrl = {
 
   this.callback = cb;
   this.data = data;
-  this.dialog.show(this.data._el);
+  this.dialog.show.apply(this.dialog,  Array.prototype.slice.call(arguments).slice(2));
   if (this.form) {
    this.form.reset();
    this.form.setValues(data);

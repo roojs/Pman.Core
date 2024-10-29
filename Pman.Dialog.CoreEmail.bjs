@@ -45,59 +45,6 @@
               "click" : [
                "function (_self, e)",
                "{",
-               "    Pman.Dialog.CoreImportUrl.show({",
-               "        target : '/Core/ImportMailMessage.php'",
-               "    }, function(data) {",
-               "        if  (data) {",
-               "          //  Roo.log(data);",
-               "            _this.form.findField('bodytext').setValue(data);",
-               "        }",
-               "    });",
-               "}"
-              ]
-             },
-             "text" : "URL",
-             "xtype" : "Item"
-            },
-            {
-             "$ xns" : "Roo.menu",
-             "listeners" : {
-              "click" : [
-               "function (_self, e)",
-               "{",
-               "    Pman.Dialog.Image.show({",
-               "        _url : baseURL + '/Core/ImportMailMessage.php'",
-               "    }, function(data) {",
-               "        if  (data) {",
-               "            _this.form.findField('bodytext').setValue(data);",
-               "        }",
-               "    });",
-               "}"
-              ]
-             },
-             "text" : "Html File",
-             "xtype" : "Item"
-            }
-           ],
-           "xtype" : "Menu"
-          }
-         ],
-         "text" : "Import",
-         "xtype" : "Button"
-        },
-        {
-         "$ xns" : "Roo.Toolbar",
-         "items" : [
-          {
-           "$ xns" : "Roo.menu",
-           "* prop" : "menu",
-           "items" : [
-            {
-             "$ xns" : "Roo.menu",
-             "listeners" : {
-              "click" : [
-               "function (_self, e)",
-               "{",
                "",
                "    var l = document.location;",
                "    new Pman.Request({",
@@ -1554,12 +1501,11 @@
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
  "parent" : "",
- "path" : "/home/alan/gitlive/Pman.Core/Pman.Dialog.CoreEmail.bjs",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreEmail.bjs",
  "permname" : "",
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "1351017ac6423911223bc19a8cb7c653" : "Filename",
-  "1bd18d39370b7f26c1c5e18067b74c6f" : "Html File",
   "2393ad754ba179442d85e415d1d5167c" : "Displayorder",
   "278c491bdd8a53618c149c4ac790da34" : "Template",
   "28690be026c0bb9003aa58e45e5662ca" : "Enabled - will be sent out",
@@ -1576,7 +1522,6 @@
   "5feb9bf3c03b32635135006cbacb9542" : "Insert Field",
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
-  "72d6d7a1885885bb55a565fd1070581a" : "Import",
   "884df8e413319ff51a3f5f528606238a" : "Use template",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
@@ -1590,7 +1535,6 @@
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "dc0de523c25be298ba751c63c694109e" : "Responsive Email (1)",
   "e44b145bd8b49b06e0ad2ced1ad56466" : "Plain Text",
-  "e6b391a8d2c4d45902a23a8b6585703d" : "URL",
   "e9968623956c15023d54335ea3699855" : "Convert Html to Text",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
