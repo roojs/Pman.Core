@@ -34,11 +34,55 @@
        "items" : [
         {
          "$ xns" : "Roo.Toolbar",
-         "xtype" : "Item"
+         "listeners" : {
+          "|click" : [
+           "function()",
+           "{",
+           "    //_this.dialog.hide();",
+           "    Roo.log(_this.data.module);",
+           "    Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });",
+           "}",
+           ""
+          ]
+         },
+         "text" : "Preview",
+         "xtype" : "Button"
         },
         {
          "$ xns" : "Roo.Toolbar",
-         "xtype" : "Item"
+         "listeners" : {
+          "|click" : [
+           "function()",
+           "{",
+           "    //_this.dialog.hide();",
+           "",
+           "    var id = _this.form.findField('id').getValue();",
+           "    ",
+           "    if(id*1 < 1){",
+           "        Roo.MessageBox.alert('Error', 'Please save the message frist!');",
+           "        return;",
+           "    }",
+           "   ",
+           "    new Pman.Request({",
+           "        url : baseURL + '/Core/MessagePreview',",
+           "        method : 'POST',",
+           "        mask: 'Sending',",
+           "        params : {",
+           "            _id : id,",
+           "            _table : _this.data.module",
+           "        }, ",
+           "        success : function(res) { ",
+           "            if(res.data == 'SUCCESS'){",
+           "                Roo.MessageBox.alert(\"Email Sent\", 'The report was sent to your email (HTML format).');",
+           "            }",
+           "        }",
+           "    });",
+           "}",
+           ""
+          ]
+         },
+         "text" : "Send me a test copy",
+         "xtype" : "Button"
         },
         {
          "$ xns" : "Roo",
