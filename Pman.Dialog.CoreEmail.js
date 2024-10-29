@@ -1077,7 +1077,27 @@ Pman.Dialog.CoreEmail = {
          ]
         }
        ]
-      }
+      },
+      buttons : [
+       {
+        xtype : 'Button',
+        text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
+        listeners : {
+         click : function (_self, e)
+          {
+              //_this.dialog.hide();
+              Roo.log(_this.data.module);
+              Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
+          },
+         render : function (_self)
+          {
+              _this.preview_btn = _self;
+          }
+        },
+        xns : Roo,
+        '|xns' : 'Roo'
+       }
+      ]
      },
      {
       xtype : 'GridPanel',

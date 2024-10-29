@@ -61,6 +61,28 @@
       },
       {
        "$ xns" : "Roo",
+       "* prop" : "buttons[]",
+       "listeners" : {
+        "click" : [
+         "function (_self, e)",
+         "{",
+         "    //_this.dialog.hide();",
+         "    Roo.log(_this.data.module);",
+         "    Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });",
+         "}"
+        ],
+        "render" : [
+         "function (_self)",
+         "{",
+         "    _this.preview_btn = _self;",
+         "}"
+        ]
+       },
+       "text" : "Preview",
+       "xtype" : "Button"
+      },
+      {
+       "$ xns" : "Roo",
        "* prop" : "layout",
        "items" : [
         {
