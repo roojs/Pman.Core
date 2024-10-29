@@ -181,64 +181,6 @@ Pman.Dialog.CoreEmail = {
        xtype : 'Toolbar',
        xns : Roo,
        '|xns' : 'Roo',
-       buttons : [
-        {
-         xtype : 'Button',
-         text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
-         listeners : {
-          click : function (_self, e)
-           {
-               //_this.dialog.hide();
-               Roo.log(_this.data.module);
-               Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
-           },
-          render : function (_self)
-           {
-               _this.preview_btn = _self;
-           }
-         },
-         xns : Roo,
-         '|xns' : 'Roo'
-        },
-        {
-         xtype : 'Button',
-         text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
-         listeners : {
-          click : function (_self, e)
-           {
-               //_this.dialog.hide();
-           
-               var id = _this.form.findField('id').getValue();
-               
-               if(id*1 < 1){
-                   Roo.MessageBox.alert('Error', 'Please save the message frist!');
-                   return;
-               }
-              
-               new Pman.Request({
-                   url : baseURL + '/Core/MessagePreview',
-                   method : 'POST',
-                   mask: 'Sending',
-                   params : {
-                       _id : id,
-                       _table : _this.data.module
-                   }, 
-                   success : function(res) { 
-                       if(res.data == 'SUCCESS'){
-                           Roo.MessageBox.alert("Email Sent", 'The report was sent to your email (HTML format).');
-                       }
-                   }
-               });
-           },
-          render : function (_self)
-           {
-               _this.html_preview = _self;
-           }
-         },
-         xns : Roo,
-         '|xns' : 'Roo'
-        }
-       ],
        items  : [
         {
          xtype : 'Button',
