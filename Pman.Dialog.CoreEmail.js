@@ -174,7 +174,6 @@ Pman.Dialog.CoreEmail = {
       listeners : {
        click : function (_self, e)
         {
-            _this.dialog.hide();
             
             if(typeof(Pman.Dialog.CrmMailingListQueue) != 'undefined' && typeof(Pman.Tab.Crm) != 'undefined') {
                 Pman.Dialog.CrmMailingListQueue.show( {
