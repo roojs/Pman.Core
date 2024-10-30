@@ -51,6 +51,12 @@
         {
          "$ xns" : "Roo.Toolbar",
          "listeners" : {
+          "render" : [
+           "function (_self)",
+           "{",
+           "",
+           "}"
+          ],
           "|click" : [
            "function()",
            "{",
