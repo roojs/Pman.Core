@@ -23,6 +23,7 @@ Pman.Dialog.CoreEmail = {
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
+  '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -162,6 +163,18 @@ Pman.Dialog.CoreEmail = {
                  _this.form.doAction("submit");
             });
         
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['94966d90747b97d1f0f206c98a8b1ac3'] /* Send */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
         }
       },
       xns : Roo,
