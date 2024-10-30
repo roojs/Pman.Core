@@ -35,6 +35,12 @@
         {
          "$ xns" : "Roo.Toolbar",
          "listeners" : {
+          "render" : [
+           "function (_self)",
+           "{",
+           "    _this.preview_btn = _self;",
+           "}"
+          ],
           "|click" : [
            "function()",
            "{",
@@ -54,7 +60,7 @@
           "render" : [
            "function (_self)",
            "{",
-           "",
+           "    _this.html_preview = _self;",
            "}"
           ],
           "|click" : [

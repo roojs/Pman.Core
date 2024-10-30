@@ -219,6 +219,10 @@ Pman.Dialog.CoreEmail = {
                //_this.dialog.hide();
                Roo.log(_this.data.module);
                Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
+           },
+          render : function (_self)
+           {
+               _this.preview_btn = _self;
            }
          },
          xns : Roo.Toolbar,
@@ -256,7 +260,7 @@ Pman.Dialog.CoreEmail = {
            },
           render : function (_self)
            {
-           
+               _this.html_preview = _self;
            }
          },
          xns : Roo.Toolbar,
