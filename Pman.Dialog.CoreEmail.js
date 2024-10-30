@@ -175,6 +175,19 @@ Pman.Dialog.CoreEmail = {
        click : function (_self, e)
         {
             _this.dialog.hide();
+            
+            if(typeof(Pman.Dialog.CrmMailingListQueue) != 'undefined' && typeof(Pman.Tab.Crm) != 'undefined') {
+                Pman.Dialog.CrmMailingListQueue.show( {
+                    id : 0,
+                    message_id : _this.form.findField('id').getValue(),
+                    message_id_name : sel.data.name
+                }, function() {
+                    // change the tab to queue...
+                    var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
+                    Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+                });
+            }
+            
         }
       },
       xns : Roo,
