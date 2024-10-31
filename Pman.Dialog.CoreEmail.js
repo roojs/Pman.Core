@@ -190,6 +190,10 @@ Pman.Dialog.CoreEmail = {
                 });
             }
             
+        },
+       render : function (_self)
+        {
+        
         }
       },
       xns : Roo,
