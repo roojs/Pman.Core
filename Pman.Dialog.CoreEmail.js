@@ -486,8 +486,6 @@ Pman.Dialog.CoreEmail = {
                      
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
-                     Roo.log('SET DATA');
-                     console.log(_this.form.findField('stripo_id').getValue());
                      if(_this.form.findField('stripo_id').getValue() > 0) {
                          _this.stripoUpdate.show();
                      }
