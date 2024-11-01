@@ -526,6 +526,7 @@ Pman.Dialog.CoreEmail = {
                  if (action.type =='submit') {
                  
                      _this.dialog.el.unmask();
+                     Roo.log(_this.data);
                      if(_this.data.id*1 > 0){
                          _this.dialog.hide();
                           if (_this.callback) {
