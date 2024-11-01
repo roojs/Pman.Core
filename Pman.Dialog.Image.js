@@ -121,7 +121,7 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
-          _this.form.findField('imageUpload').el.inputEl().on('change', () => console.log('CHANGE'));
+          _this.form.findField('imageUpload').el.on('change', () => console.log('CHANGE'));
           _this.form.findField('imageUpload').el.dom.click();
       
           // this does not really work - escape on the borders works..
