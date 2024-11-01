@@ -1125,6 +1125,12 @@ Pman.Dialog.CoreEmail = {
              name : 'id',
              xns : Roo.form,
              '|xns' : 'Roo.form'
+            },
+            {
+             xtype : 'Hidden',
+             name : '\"\"',
+             xns : Roo.form,
+             '|xns' : 'Roo.form'
             }
            ]
           }

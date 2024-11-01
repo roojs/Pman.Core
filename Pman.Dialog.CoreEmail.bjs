@@ -884,6 +884,11 @@
              "$ xns" : "Roo.form",
              "name" : "id",
              "xtype" : "Hidden"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "String name" : "\"\"",
+             "xtype" : "Hidden"
             }
            ],
            "labelAlign" : "right",
