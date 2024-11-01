@@ -98,7 +98,7 @@
         },
         {
          "$ xns" : "Roo.Toolbar",
-         "String text" : "\"\"",
+         "String text" : "Refresh from Stripo",
          "listeners" : {
           "click" : [
            "function (_self, e)",
@@ -1444,7 +1444,6 @@
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "94966d90747b97d1f0f206c98a8b1ac3" : "Send",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
-  "9d4568c009d203ab10e33ea9953a0264" : "\"\"",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",
@@ -1460,6 +1459,7 @@
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
   "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
+  "f3017f202748e13d3554a15cbbd1b767" : "Refresh from Stripo",
   "fff0d600f8a0b5e19e88bfb821dd1157" : "Images"
  },
  "title" : ""

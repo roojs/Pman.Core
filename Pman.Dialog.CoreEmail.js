@@ -16,7 +16,7 @@ Pman.Dialog.CoreEmail = {
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
-  '9d4568c009d203ab10e33ea9953a0264' :"\"\"",
+  'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
@@ -273,7 +273,7 @@ Pman.Dialog.CoreEmail = {
         },
         {
          xtype : 'Button',
-         text : _this._strings['9d4568c009d203ab10e33ea9953a0264'] /* "" */,
+         text : _this._strings['f3017f202748e13d3554a15cbbd1b767'] /* Refresh from Stripo */,
          listeners : {
           click : function (_self, e)
            {
