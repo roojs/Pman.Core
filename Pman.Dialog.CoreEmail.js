@@ -177,8 +177,6 @@ Pman.Dialog.CoreEmail = {
             _this.dialog.hide();
             
             if(typeof(Pman.Dialog.CrmMailingListQueue) != 'undefined' && typeof(Pman.Tab.Crm) != 'undefined') {
-                Roo.log(_this.form.findField('id').getValue());
-                Roo.log(_this.form.findField('name').getValue());
                 Pman.Dialog.CrmMailingListQueue.show( {
                     id : 0,
                     message_id : _this.form.findField('id').getValue(),
