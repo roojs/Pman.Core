@@ -277,11 +277,6 @@ Pman.Dialog.CoreEmail = {
          listeners : {
           click : function (_self, e)
            {
-               Roo.log('CLICK');
-               Roo.log(_this.data);
-               if(typeof(_this.data.stripo_id) != 'undefined' && _this.data.stripo_id > 0) {
-                   
-               }
            },
           render : function (_self)
            {
