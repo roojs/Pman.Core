@@ -191,7 +191,7 @@ Pman.Dialog.CoreEmail = {
                     Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
                 });
                 if (_this.callback) {
-                    _this.callback.call(_this, action.result.data);
+                    _this.callback.call(_this, _this.data);
                 }
             });
         
