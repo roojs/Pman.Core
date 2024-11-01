@@ -121,6 +121,8 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
+          Roo.log('UPLOAD SHOW');
+          Roo.log(_this.form.findField('imageUpload'));
       
           // this does not really work - escape on the borders works..
           // resize to fit.. if we have styled stuff...
