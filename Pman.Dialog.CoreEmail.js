@@ -468,6 +468,10 @@ Pman.Dialog.CoreEmail = {
                      
                      _this.html_preview.hide();
                      _this.preview_btn.hide();
+                     
+                     if(typeof(_this.data.stripo_id) == 'undefined' || _this.data.stripo_id == 0) {
+                         _this.stripoUpdate.hide();
+                     }
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
