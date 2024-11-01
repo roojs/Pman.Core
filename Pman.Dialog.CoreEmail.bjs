@@ -1381,6 +1381,9 @@
     "show" : [
      "function (_self)",
      "{",
+     "    if(typeof(_this.data.stripo_id) == 'undefined' || _this.data.stripo_id > 0) {",
+     "        _this.stripoUpdate.hide();",
+     "    }",
      "    ",
      "    _self.layout.getRegion('center').showPanel(0);",
      "    var w = Roo.lib.Dom.getViewWidth();\r",
