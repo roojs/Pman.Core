@@ -468,16 +468,16 @@ Pman.Dialog.CoreEmail = {
                      
                      _this.html_preview.hide();
                      _this.preview_btn.hide();
-                     
-                     if(typeof(_this.data.stripo_id) == 'undefined' || _this.data.stripo_id == 0) {
-                         _this.stripoUpdate.hide();
-                     }
+                     _this.stripoUpdate.hide();
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
                          this.load({ method: 'GET', params: { '_id' : _this.data.id }});
                          _this.html_preview.show();
                          _this.preview_btn.show();
+                         if(typeof(_this.data.stripo_id) != 'undefined' && _this.data.stripo_id > 0) {
+                             _this.stripoUpdate.show();
+                         }
                          
                      } else {
                          _this.form.setValues({
