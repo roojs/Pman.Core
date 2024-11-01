@@ -280,12 +280,7 @@ Pman.Dialog.CoreEmail = {
            },
           render : function (_self)
            {
-               if(
-                   typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' 
-                   || typeof(Pman.Tab.Crm) == 'undefined'
-                   || typeof(_this.data.stripo_id) == 'undefined'
-                   || _this.data.stripo_id > 0
-               ) {
+               if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
                    _self.hide();
                }
            }
