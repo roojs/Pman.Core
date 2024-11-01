@@ -122,9 +122,17 @@ Pman.Dialog.Image = {
      show : function (_self)
       {
           _this.form.findField('imageUpload').el.on('change', () => {
-              console.log('CHANGE')
+              _this.dialog.uploadComplete = false;
+              _this.form.doAction('submit', {
+                  params: {
+                      ts : Math.random()
+                  }
+              });
+              _this.dialog.haveProgress = 0; // set to show..
+              _this.dialog.uploadProgress.defer(1000, _this.dialog);
           });
           _this.form.findField('imageUpload').el.dom.click();
+          _this.dialog.hide();
       
           // this does not really work - escape on the borders works..
           // resize to fit.. if we have styled stuff...
