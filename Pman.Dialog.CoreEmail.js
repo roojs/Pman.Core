@@ -93,7 +93,7 @@ Pman.Dialog.CoreEmail = {
     listeners : {
      show : function (_self)
       {
-          if(typeof(_this.data.stripo_id) == 'undefined' || _this.data.stripo_id > 0) {
+          if(typeof(_this.data.stripo_id) == 'undefined' || _this.data.stripo_id == 0) {
               _this.stripoUpdate.hide();
           }
           
