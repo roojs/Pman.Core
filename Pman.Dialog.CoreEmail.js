@@ -530,6 +530,13 @@ Pman.Dialog.CoreEmail = {
                      
                      if (_this.form.findField('id').getValue() * 1 < 1) {
                          _this.form.findField('id').setValue(action.result.data.id);
+                         
+                         if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
+                             if(_this.form.findField('stripo_id').getValue() > 0) {
+                                 _this.stripoUpdate.show();
+                             }
+                             _this.sendBtn.show();
+                         }
                          return;
                      }
                      
