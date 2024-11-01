@@ -277,7 +277,8 @@ Pman.Dialog.CoreEmail = {
          listeners : {
           click : function (_self, e)
            {
-               _this.grid.footer.onClick('first');
+               Roo.log('CLICK');
+               Roo.log(_this.data);
            },
           render : function (_self)
            {
