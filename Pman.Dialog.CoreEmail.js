@@ -143,6 +143,9 @@ Pman.Dialog.CoreEmail = {
        click : function (_self, e)
         {
             _this.dialog.hide();
+            if (_this.callback) {
+                _this.callback.call(_this, _this.data);
+            }
         }
       },
       xns : Roo,
