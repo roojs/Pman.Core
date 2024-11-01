@@ -282,7 +282,8 @@ Pman.Dialog.CoreEmail = {
           render : function (_self)
            {
                if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
-                   _self.hide();
+                   Roo.log('HIDE');
+                   //_self.hide();
                }
            }
          },
