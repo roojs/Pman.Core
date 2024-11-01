@@ -284,7 +284,6 @@ Pman.Dialog.CoreEmail = {
                    },
                    mask : 'loading ...',
                    success : function(res) {
-                       _this.dialog.hide();
                        var stylePos = res.data.html.indexOf("</head>");
                        var bodytext = res.data.html.slice(0, stylePos) 
                            + "<style type='text/css'>" + res.data.css + "</style>"
