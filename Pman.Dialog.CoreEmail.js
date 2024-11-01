@@ -524,6 +524,7 @@ Pman.Dialog.CoreEmail = {
                      return;
                  }
                  if (action.type =='submit') {
+                     var module = _this.data.module;
                  
                      _this.dialog.el.unmask();
                      _this.data = action.result.data;
@@ -531,7 +532,7 @@ Pman.Dialog.CoreEmail = {
                      if (_this.form.findField('id').getValue() * 1 < 1) {
                          _this.form.findField('id').setValue(action.result.data.id);
                          
-                         if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
+                         if(typeof(module) != 'undefined' && module == 'crm_mailing_list_message') {
                              if(_this.form.findField('stripo_id').getValue() > 0) {
                                  _this.stripoUpdate.show();
                              }
