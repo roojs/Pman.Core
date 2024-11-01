@@ -528,12 +528,11 @@ Pman.Dialog.CoreEmail = {
                      _this.dialog.el.unmask();
                      if(_this.data.id*1 > 0){
                          _this.dialog.hide();
+                          if (_this.callback) {
+                             _this.callback.call(_this, action.result.data);
+                          }
+                          _this.form.reset();
                      }
-                 
-                      if (_this.callback) {
-                         _this.callback.call(_this, action.result.data);
-                      }
-                      _this.form.reset();
                       return;
                  }
              },
