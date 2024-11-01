@@ -174,17 +174,24 @@ Pman.Dialog.CoreEmail = {
       listeners : {
        click : function (_self, e)
         {
-            _this.dialog.hide();
             
-            Pman.Dialog.CrmMailingListQueue.show( {
-                id : 0,
-                message_id : _this.form.findField('id').getValue(),
-                message_id_name : _this.form.findField('name').getValue()
-            }, function() {
-                // change the tab to queue...
-                var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
-                Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+            _this.form.preValidate(function(res) {
+                if (!res) {
+                    return; //failed.
+                }
+                _this.dialog.hide();
+                
+                Pman.Dialog.CrmMailingListQueue.show( {
+                    id : 0,
+                    message_id : _this.form.findField('id').getValue(),
+                    message_id_name : _this.form.findField('name').getValue()
+                }, function() {
+                    // change the tab to queue...
+                    var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
+                    Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+                });
             });
+        
             
         },
        render : function (_self)
