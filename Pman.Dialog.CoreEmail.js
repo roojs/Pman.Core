@@ -280,6 +280,7 @@ Pman.Dialog.CoreEmail = {
            },
           render : function (_self)
            {
+               _this.stirpoUpdate = this;
                if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
                    _self.hide();
                }
