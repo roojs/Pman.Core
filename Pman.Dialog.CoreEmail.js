@@ -278,6 +278,12 @@ Pman.Dialog.CoreEmail = {
           click : function (_self, e)
            {
                _this.grid.footer.onClick('first');
+           },
+          render : function (_self)
+           {
+               if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
+                   _self.hide();
+               }
            }
          },
          xns : Roo.Toolbar,
