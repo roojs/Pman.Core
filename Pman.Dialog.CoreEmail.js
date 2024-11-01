@@ -295,7 +295,7 @@ Pman.Dialog.CoreEmail = {
                            + "<style type='text/css'>" + res.data.css + "</style>"
                            + res.data.html.slice(stylePos);
                            
-                       _this.form.findField('bodytext').setValue(bodytext);
+                       _this.form.findField('bodytext').setValue(res.data.html);
                        
                        new Pman.Request({
                            url : baseURL + '/Core/ImportMailMessage.php',
