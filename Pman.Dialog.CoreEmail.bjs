@@ -98,6 +98,19 @@
         },
         {
          "$ xns" : "Roo.Toolbar",
+         "String text" : "\"\"",
+         "listeners" : {
+          "click" : [
+           "function (_self, e)",
+           "{",
+           "    _this.grid.footer.onClick('first');",
+           "}"
+          ]
+         },
+         "xtype" : "Button"
+        },
+        {
+         "$ xns" : "Roo.Toolbar",
          "xtype" : "Fill"
         },
         {
@@ -1431,6 +1444,7 @@
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "94966d90747b97d1f0f206c98a8b1ac3" : "Send",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
+  "9d4568c009d203ab10e33ea9953a0264" : "\"\"",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",

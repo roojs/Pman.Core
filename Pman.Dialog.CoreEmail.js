@@ -16,6 +16,7 @@ Pman.Dialog.CoreEmail = {
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
+  '9d4568c009d203ab10e33ea9953a0264' :"\"\"",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
@@ -35,9 +36,9 @@ Pman.Dialog.CoreEmail = {
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
   'b78a3223503896721cca1303f776159b' :"Title",
-  'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
+  'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
   'fff0d600f8a0b5e19e88bfb821dd1157' :"Images"
@@ -265,6 +266,18 @@ Pman.Dialog.CoreEmail = {
           render : function (_self)
            {
                _this.html_preview = _self;
+           }
+         },
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
+        },
+        {
+         xtype : 'Button',
+         text : _this._strings['9d4568c009d203ab10e33ea9953a0264'] /* "" */,
+         listeners : {
+          click : function (_self, e)
+           {
+               _this.grid.footer.onClick('first');
            }
          },
          xns : Roo.Toolbar,
