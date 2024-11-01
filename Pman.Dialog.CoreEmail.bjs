@@ -887,7 +887,7 @@
             },
             {
              "$ xns" : "Roo.form",
-             "String name" : "\"\"",
+             "String name" : "stripo_id",
              "xtype" : "Hidden"
             }
            ],
