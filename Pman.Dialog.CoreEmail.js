@@ -472,6 +472,7 @@ Pman.Dialog.CoreEmail = {
                          this.load({ method: 'GET', params: { '_id' : _this.data.id }});
                          _this.html_preview.show();
                          _this.preview_btn.show();
+                         Roo.log('SET DATA');
                          console.log(_this.form.findField('stripo_id').getValue());
                          if(_this.form.findField('stripo_id').getValue() > 0) {
                              _this.stripoUpdate.show();
