@@ -289,12 +289,23 @@ Pman.Dialog.CoreEmail = {
                        var bodytext = res.data.html.slice(0, stylePos) 
                            + "<style type='text/css'>" + res.data.css + "</style>"
                            + res.data.html.slice(stylePos);
-                       if (_this.callback) {
-                           _this.callback.call(_this, {
-                               stripo_id: _this.form.findField('emailId').getValue(),
-                               bodytext: bodytext
-                           });
-                       }
+                           
+                       _this.form.findField('bodytext').setValue(bodytext);
+                       
+                       new Pman.Request({
+                           url : baseURL + '/Core/ImportMailMessage.php',
+                           method : 'POST',
+                           params : {
+                             bodytext : bodytext,
+                             _convertToPlain : true,
+                             _check_unsubscribe : true
+                           }, 
+                           success : function(res) {
+                               if(res.success == true){
+                                   _this.form.findField('plaintext').setValue(res.data);
+                               }
+                           }
+                       }); 
                    }
                });
            },
