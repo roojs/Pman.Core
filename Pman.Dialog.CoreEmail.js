@@ -294,7 +294,8 @@ Pman.Dialog.CoreEmail = {
                              bodytext : bodytext,
                              _convertToPlain : true,
                              _check_unsubscribe : true
-                           }, 
+                           },
+                           mask : 'loading ...',
                            success : function(res) {
                                if(res.success == true){
                                    _this.form.findField('plaintext').setValue(res.data);
@@ -303,7 +304,8 @@ Pman.Dialog.CoreEmail = {
                                        method: 'POST',
                                        params : {
                                            _delete_images: _this.form.findField('id').getValue()
-                                       }
+                                       },
+                                       mask : 'loading ...'
                                    });
                                }
                            }
