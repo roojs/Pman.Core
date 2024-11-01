@@ -533,6 +533,9 @@ Pman.Dialog.CoreEmail = {
                          _this.form.findField('id').setValue(action.result.data.id);
                          
                          if(typeof(module) != 'undefined' && module == 'crm_mailing_list_message') {
+                             _this.html_preview.show();
+                             _this.preview_btn.show();
+                             
                              if(_this.form.findField('stripo_id').getValue() > 0) {
                                  _this.stripoUpdate.show();
                              }
