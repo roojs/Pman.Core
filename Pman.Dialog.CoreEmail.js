@@ -519,6 +519,7 @@ Pman.Dialog.CoreEmail = {
                      if(_this.form.findField('stripo_id').getValue() > 0) {
                          _this.stripoUpdate.show();
                      }
+                     Roo.log(_this.data);
                      
                      if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
                          _this.sendBtn.show();
