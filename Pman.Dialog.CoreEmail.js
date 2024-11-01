@@ -276,6 +276,27 @@ Pman.Dialog.CoreEmail = {
          listeners : {
           click : function (_self, e)
            {
+               new Pman.Request({
+                   url : baseURL + '/MediaOutreachCRM/Stripo',
+                   method : 'GET',
+                   params : {
+                       emailId: _this.form.findField('emailId').getValue()
+                   },
+                   mask : 'loading ...',
+                   success : function(res) {
+                       _this.dialog.hide();
+                       var stylePos = res.data.html.indexOf("</head>");
+                       var bodytext = res.data.html.slice(0, stylePos) 
+                           + "<style type='text/css'>" + res.data.css + "</style>"
+                           + res.data.html.slice(stylePos);
+                       if (_this.callback) {
+                           _this.callback.call(_this, {
+                               stripo_id: _this.form.findField('emailId').getValue(),
+                               bodytext: bodytext
+                           });
+                       }
+                   }
+               });
            },
           render : function (_self)
            {
