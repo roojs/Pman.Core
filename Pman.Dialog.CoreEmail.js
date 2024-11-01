@@ -146,6 +146,7 @@ Pman.Dialog.CoreEmail = {
             if (_this.callback) {
                 _this.callback.call(_this, _this.data);
             }
+            _this.form.reset();
         }
       },
       xns : Roo,
@@ -196,6 +197,7 @@ Pman.Dialog.CoreEmail = {
                     var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
                     Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
                 });
+                _this.form.reset();
             });
         
             
