@@ -495,6 +495,7 @@ Pman.Dialog.CoreEmail = {
                      _this.html_preview.hide();
                      _this.preview_btn.hide();
                      _this.stripoUpdate.hide();
+                     _this.sendBtn.hide();
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
@@ -517,6 +518,10 @@ Pman.Dialog.CoreEmail = {
                      
                      if(_this.form.findField('stripo_id').getValue() > 0) {
                          _this.stripoUpdate.show();
+                     }
+                     
+                     if(typeof(Pman.Dialog.CrmMailingListQueue) == 'undefined' || typeof(Pman.Tab.Crm) == 'undefined') {
+                         _this.sendBtn.show();
                      }
                      
                      return;
