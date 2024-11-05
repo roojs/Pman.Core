@@ -214,8 +214,6 @@ Pman.Dialog.Image = {
         listeners : {
          actioncomplete : function(_self,act)
           {
-              Roo.log('ACTION COMPLETE');
-              Roo.log(act.type);
               _this.dialog.uploadComplete = true;
               _this.dialog.haveProgress = 2; 
               Roo.MessageBox.hide(); // force hiding
