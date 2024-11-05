@@ -143,11 +143,11 @@ class Pman_Core_NotifySend extends Pman
         $cev->on_id =  $w->id;
         $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
         $cev->limit(1);
-        // if ($cev->count()) {
-        //     $cev->find(true);
-        //     $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
-        //     $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
-        // }
+        if ($cev->count()) {
+            $cev->find(true);
+            $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
+            $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
+        }
         
         
         $o = $w->object();
@@ -182,8 +182,8 @@ class Pman_Core_NotifySend extends Pman
             } else {
                 $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (user has to many failures)" );;
             }
-            // $w->flagDone($ev, '');
-            // $this->errorHandler($ev->remarks);
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
         }
         
         // let's work out the last notification sent to this user..
@@ -225,10 +225,6 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
-
-        unset($email['body']);
-        var_dump($email);
-        die('test');
         
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
