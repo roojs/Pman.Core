@@ -99,9 +99,6 @@ class Pman_Core_NotifySend extends Pman
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
         $force = empty($opts['force']) ? 0 : 1;
-
-        var_dump($force);
-        die('test');
         
         $w = DB_DataObject::factory($this->table);
 
