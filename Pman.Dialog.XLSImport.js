@@ -315,12 +315,12 @@ Pman.Dialog.XLSImport = {
            listeners : {
             beforerender : function (_self)
              {
-             
+                 Roo.log('BEFORE RENDER');
+                 _this.dbColCombo = this;
              },
             render : function (_self)
              {
                  Roo.log('RENDER');
-                 _this.dbColCombo = this;
              }
            },
            xns : Roo.form,
