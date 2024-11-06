@@ -63,9 +63,9 @@ Pman.Dialog.XLSImport = {
     title : _this._strings['f77f8c0e4a05a384a886554d76cbd6b1'] /* Import XLS */,
     width : 700,
     listeners : {
-     beforeshow : function (_self)
+     show : function (_self)
       {
-          _this.grid.ds.load({});
+      
       }
     },
     xns : Roo,

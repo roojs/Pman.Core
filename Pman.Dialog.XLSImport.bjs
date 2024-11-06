@@ -465,10 +465,10 @@
     }
    ],
    "listeners" : {
-    "beforeshow" : [
+    "show" : [
      "function (_self)",
      "{",
-     "    _this.grid.ds.load({});",
+     "",
      "}"
     ]
    },
