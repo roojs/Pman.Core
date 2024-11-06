@@ -57,25 +57,20 @@ Pman.Dialog.XLSImport = {
     listeners : {
      show : function (_self)
       {
-          Roo.log('IMPORT XLS SHOW');
-          Roo.log(_this.data);
-          
           var records = [];
-          records.push(new Roo.data.Record({
-              'header_name' : 'test1',
-              'row_1': 'test2',
-              'row_2': 'test3',
-              'db_col': 'test4',
-              'db_col_name': 'test5'
-          }));
+          _this.data.header.forEach(function(h, index) {
+              records.push(new Roo.data.Record({
+                  'header_name' : h,
+                  'row_1': _this.data.rows.length > 0 ? _this.data.rows[0][h] : '',
+                  'row_2': _this.data.rows.length > 1 ? _this.data.rows[1][h] : '',
+                  'db_col': '',
+                  'db_col_name': ''
+              }));
+          });
           
            records.forEach(function(r) {
                _this.grid.ds.add(r);
            });
-           
-           Roo.log('COMBO');
-           Roo.log(_this.dbColCombo);
-           Roo.log(_this.grid);
           
           var dbCols = [
               ['0', "--not set--"],
