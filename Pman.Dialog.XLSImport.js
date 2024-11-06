@@ -160,7 +160,6 @@ Pman.Dialog.XLSImport = {
                                 _this.data.fileId = data.id;
                                 _this.data.data = data.data;
                                 _this.dialog.fireEvent('show', _this.dialog);
-                                _
                             });
                             
                         }
