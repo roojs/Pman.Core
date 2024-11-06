@@ -168,7 +168,7 @@ Pman.Dialog.XLSImport = {
                             }
                             
                             Pman.Dialog.Image.show({
-                                _url : baseURL + '/PressRelease/Import/Journalist'
+                                _url : _this.data.url
         
                             }, function (data) {
                                 _this.data.fileId = data.id;
