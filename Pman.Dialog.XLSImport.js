@@ -120,6 +120,8 @@ Pman.Dialog.XLSImport = {
                 data.push(d);
             });
             
+            Roo.log(d);
+            
             Roo.log(_this.data.fileId);
             /*
             // do some checks?
