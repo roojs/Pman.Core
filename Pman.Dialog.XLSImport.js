@@ -142,9 +142,10 @@ Pman.Dialog.XLSImport = {
                 {
                     Roo.MessageBox.show({
                         title: "Fix these issues, and try uploading again", 
-                        multiline : 500,
-                        value : res.errorMsg,
-                        buttons : {UploadAgain: true, Cancel: true}
+                        multiline: 500,
+                        value: res.errorMsg,
+                        buttons: Roo.MessageBox.OKCANCEL,
+                        buttonText: {ok: "Upload Again", cancel: "Cancel"}
                     });
                 }
             });
