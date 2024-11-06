@@ -148,6 +148,20 @@ Pman.Dialog.XLSImport = {
                         closable: false,
                         fn: function(res) {
                             console.log(res);
+                            if(res == 'cancel') {
+                                _this.dialog.hide();
+                                return;
+                            }
+                            
+                            Pman.Dialog.Image.show({
+                                _url : baseURL + '/PressRelease/Import/Journalist'
+        
+                            }, function (data) {
+                                _this.data.fileId = data.id;
+                                _this.data.data = data.data;
+                                _
+                            });
+                            
                         }
                     });
                 }
