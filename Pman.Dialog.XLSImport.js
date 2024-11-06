@@ -120,6 +120,11 @@ Pman.Dialog.XLSImport = {
        click : function (_self, e)
         {
             var rec = _this.grid.getDataSource().data.items;
+            var map = {};
+            
+            Roo.each(rec, function(r) {
+                map[r.data.header] = r.data.db_col;
+            });
             
             new Pman.Request({
                 method: 'POST',
@@ -127,7 +132,7 @@ Pman.Dialog.XLSImport = {
                 mask: 'Validating',
                 params: {
                     fileId: _this.data.fileId,
-                    colMap: Roo.encode(rec.map(r => r.data.db_col)),
+                    colMap: map,
                     _validate: 1
                 },
                 success: function(res) {
