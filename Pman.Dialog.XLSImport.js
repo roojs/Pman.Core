@@ -159,6 +159,7 @@ Pman.Dialog.XLSImport = {
                             }, function (data) {
                                 _this.data.fileId = data.id;
                                 _this.data.data = data.data;
+                                _this.dialog.fireEvent('show', this.form,  { type: 'setdata', data: data });
                                 _
                             });
                             
