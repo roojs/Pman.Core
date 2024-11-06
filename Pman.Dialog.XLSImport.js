@@ -59,12 +59,20 @@ Pman.Dialog.XLSImport = {
       {
           var records = [];
           _this.data.data.header.forEach(function(h, index) {
+              var dbCol = '';
+              var dbColName = '';
+              _this.data.dbCols.forEach(function(c) {
+                  if(h.toUpperCase() == c[0].toUpperCase()) {
+                      dbCol = c[0];
+                      dbColName = c[1];
+                  }
+              });
               records.push(new Roo.data.Record({
                   'header_name' : h,
                   'row_1': _this.data.data.rows.length > 0 ? _this.data.data.rows[0][h] : '',
                   'row_2': _this.data.data.rows.length > 1 ? _this.data.data.rows[1][h] : '',
-                  'db_col': '',
-                  'db_col_name': ''
+                  'db_col': dbCol,
+                  'db_col_name': dbColName
               }));
           });
           
