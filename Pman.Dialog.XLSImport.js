@@ -96,6 +96,7 @@ Pman.Dialog.XLSImport = {
               ['remarks', 'Notes'],
               ['news_beat', 'News Beat']
           ];
+          
           var records = [];
           dbCols.forEach(function(c){
               records.push(new Roo.data.Record({
