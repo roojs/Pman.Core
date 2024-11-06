@@ -67,6 +67,11 @@ Pman.Dialog.XLSImport = {
                       dbColName = c[1];
                   }
               });
+              
+              if(typeof(_this.data.map) != 'undefined') {
+                  
+              }
+              
               records.push(new Roo.data.Record({
                   'header_name' : h,
                   'row_1': _this.data.data.rows.length > 0 ? _this.data.data.rows[0][h] : '',
