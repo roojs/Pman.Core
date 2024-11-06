@@ -59,6 +59,21 @@ Pman.Dialog.XLSImport = {
       {
           Roo.log('IMPORT XLS SHOW');
           Roo.log(_this.data);
+          
+          var records = [];
+          records.push(new Roo.data.Record({
+              'header_name' : 'test1',
+              'row_1': 'test2',
+              'row_2': 'test3',
+              'db_col': 'test4',
+              'db_col_name': 'test5'
+          }));
+          
+           records.forEach(function(r) {
+               _this.grid.ds.add(r);
+           });
+           
+           Roo.log(_this.dbColCombo);
       }
     },
     xns : Roo,
@@ -210,48 +225,15 @@ Pman.Dialog.XLSImport = {
        xns : Roo.grid,
        '|xns' : 'Roo.grid',
        dataSource : {
-        xtype : 'Store',
-        remoteSort : true,
-        listeners : {
-         beforeload : function (_self, o)
-          {
-              o.params = o.params || {};
-              o.params._id = _this.data._id;
-          //    this.proxy.loadResponse = this.loadResponse;
-          }
-        },
+        xtype : 'SimpleStore',
+        fields : [
+            {name: 'header_name', type: 'string'},
+            {name: 'row_1', type: 'string'},
+            {name: 'row_2', type: 'string'},
+            {name: 'db_col', type: 'string'}
+        ],
         xns : Roo.data,
-        '|xns' : 'Roo.data',
-        proxy : {
-         xtype : 'HttpProxy',
-         method : 'GET',
-         url : baseURL + '/Crm/Import/ImportAddress.php',
-         xns : Roo.data,
-         '|xns' : 'Roo.data'
-        },
-        reader : {
-         xtype : 'JsonReader',
-         fields : [
-             {
-                 'name': 'header_name',
-                 'type': 'string'
-             },
-             {
-                 'name': 'db_col',
-                 'type': 'string'
-             },
-             {
-                 'name': 'db_col_name',
-                 'type': 'string'
-             },
-             'row_1', 'row_2'
-         ],
-         id : 'id',
-         root : 'data',
-         totalProperty : 'total',
-         xns : Roo.data,
-         '|xns' : 'Roo.data'
-        }
+        '|xns' : 'Roo.data'
        },
        sm : {
         xtype : 'CellSelectionModel',
@@ -265,6 +247,9 @@ Pman.Dialog.XLSImport = {
          header : _this._strings['35c31ea9e29f774dba060916d184fe7d'] /* Your Data */,
          renderer : function(v,x,r)
          {
+             Roo.log(v);
+             Roo.log(x);
+             Roo.log(r);
              return String.format('{0}', v);
          },
          width : 150,
@@ -302,7 +287,6 @@ Pman.Dialog.XLSImport = {
          renderer : function(v,r,x)
          {
              return String.format('{0}', (v) ? x.data.db_col_name : '');
-         //    return String.format('{0}', v);
          },
          width : 150,
          xns : Roo.grid,
@@ -327,6 +311,12 @@ Pman.Dialog.XLSImport = {
            value : 0,
            valueField : 'col',
            width : 150,
+           listeners : {
+            render : function (_self)
+             {
+                 _this.dbColCombo = this;
+             }
+           },
            xns : Roo.form,
            '|xns' : 'Roo.form',
            store : {
