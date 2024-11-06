@@ -314,11 +314,7 @@
         "|render" : [
          "function() ",
          "{",
-         "    _this.grid = this; ",
-         "    //_this.dialog = Pman.Dialog.FILL_IN",
-         "    //if (_this.panel.active) {",
-         "       //this.ds.load({});",
-         "    //}",
+         "    _this.grid = this;",
          "}"
         ]
        },
@@ -326,18 +322,6 @@
        "xtype" : "EditorGrid"
       }
      ],
-     "listeners" : {
-      "|activate" : [
-       "function() ",
-       "{",
-       "    _this.grid = this; ",
-       "    //_this.dialog = Pman.Dialog.FILL_IN",
-       "    //if (_this.panel.active) {",
-       "       //_this.data_grid.ds.load({});",
-       "    //}",
-       "}"
-      ]
-     },
      "region" : "center",
      "xtype" : "GridPanel"
     },
@@ -468,7 +452,8 @@
     "show" : [
      "function (_self)",
      "{",
-     "",
+     "    Roo.log('IMPORT XLS SHOW');",
+     "    Roo.log(_this.data);",
      "}"
     ]
    },

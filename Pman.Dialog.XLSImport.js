@@ -65,7 +65,8 @@ Pman.Dialog.XLSImport = {
     listeners : {
      show : function (_self)
       {
-      
+          Roo.log('IMPORT XLS SHOW');
+          Roo.log(_this.data);
       }
     },
     xns : Roo,
@@ -202,16 +203,6 @@ Pman.Dialog.XLSImport = {
       fitContainer : true,
       fitToframe : true,
       region : 'center',
-      listeners : {
-       activate : function() 
-        {
-            _this.grid = this; 
-            //_this.dialog = Pman.Dialog.FILL_IN
-            //if (_this.panel.active) {
-               //_this.data_grid.ds.load({});
-            //}
-        }
-      },
       xns : Roo,
       '|xns' : 'Roo',
       grid : {
@@ -222,11 +213,7 @@ Pman.Dialog.XLSImport = {
        listeners : {
         render : function() 
          {
-             _this.grid = this; 
-             //_this.dialog = Pman.Dialog.FILL_IN
-             //if (_this.panel.active) {
-                //this.ds.load({});
-             //}
+             _this.grid = this;
          }
        },
        xns : Roo.grid,
