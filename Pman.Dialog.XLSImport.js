@@ -61,8 +61,8 @@ Pman.Dialog.XLSImport = {
           _this.data.data.header.forEach(function(h, index) {
               records.push(new Roo.data.Record({
                   'header_name' : h,
-                  'row_1': _this.data.rows.length > 0 ? _this.data.data.rows[0][h] : '',
-                  'row_2': _this.data.rows.length > 1 ? _this.data.data.rows[1][h] : '',
+                  'row_1': _this.data.data.rows.length > 0 ? _this.data.data.rows[0][h] : '',
+                  'row_2': _this.data.data.rows.length > 1 ? _this.data.data.rows[1][h] : '',
                   'db_col': '',
                   'db_col_name': ''
               }));
