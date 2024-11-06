@@ -324,6 +324,7 @@
      "         _this.grid.ds.add(r);",
      "     });",
      "     ",
+     "     Roo.log('COMBO');",
      "     Roo.log(_this.dbColCombo);",
      "}"
     ]
