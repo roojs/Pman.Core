@@ -154,6 +154,7 @@ Pman.Dialog.XLSImport = {
                 },
                 failure : function(res)
                 {
+                    // show errors
                     Roo.MessageBox.show({
                         title: "Fix these issues, and try uploading again", 
                         multiline: 500,
@@ -161,12 +162,13 @@ Pman.Dialog.XLSImport = {
                         buttons: {ok: "Upload Again", cancel: "Cancel"},
                         closable: false,
                         fn: function(res) {
-                            console.log(res);
+                            // close everything
                             if(res == 'cancel') {
                                 _this.dialog.hide();
                                 return;
                             }
                             
+                            // upload again
                             Pman.Dialog.Image.show({
                                 _url : _this.data.url
         
