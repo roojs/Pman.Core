@@ -111,6 +111,15 @@ Pman.Dialog.XLSImport = {
       listeners : {
        click : function (_self, e)
         {
+            var rec = _this.grid.getDataSource().data.items;
+            
+            Roo.each(rec, function(v,k){
+                var d = {};
+                d.header_index = k;
+                d.db_col = v.data.db_col ? v.data.db_col : '';
+                data.push(d);
+            });
+            
             Roo.log(_this.data.fileId);
             /*
             // do some checks?
