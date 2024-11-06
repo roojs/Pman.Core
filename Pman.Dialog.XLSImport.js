@@ -121,7 +121,7 @@ Pman.Dialog.XLSImport = {
                 data.push(d);
             });
             
-            Roo.log(d);
+            Roo.log(data);
             
             Roo.log(_this.data.fileId);
             /*
