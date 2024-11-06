@@ -59,6 +59,9 @@ Pman.Dialog.Image = {
     resizable : false,
     shadow : true,
     title : _this._strings['2859a4ae58ae4e25abdfc530f814e42f'] /* Upload an Image or File */,
+    uploadCallback : function() {
+    
+    },
     uploadComplete : false,
     uploadProgress : function()
     {
@@ -120,7 +123,18 @@ Pman.Dialog.Image = {
     width : 500,
     listeners : {
      show : function (_self)
-      {
+      {   
+          var callback = () => {
+              _this.dialog.uploadComplete = false;
+              _this.form.doAction('submit', {
+                  params: {
+                      ts : Math.random()
+                  }
+              });
+              _this.dialog.haveProgress = 0; // set to show..
+              _this.dialog.uploadProgress.defer(1000, _this.dialog);
+          };
+          _this.form.findField('imageUpload').el.on
           _this.form.findField('imageUpload').el.on('change', () => {
               _this.dialog.uploadComplete = false;
               _this.form.doAction('submit', {
