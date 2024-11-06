@@ -313,8 +313,13 @@ Pman.Dialog.XLSImport = {
            valueField : 'col',
            width : 150,
            listeners : {
+            beforerender : function (_self)
+             {
+             
+             },
             render : function (_self)
              {
+                 Roo.log('RENDER');
                  _this.dbColCombo = this;
              }
            },
