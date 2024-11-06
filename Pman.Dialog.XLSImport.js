@@ -8,8 +8,8 @@ Pman.Dialog.XLSImport = {
 
  _strings : {
   '57f21c454b7a90784699cce8315fa4bf' :"1st Row",
+  'f77f8c0e4a05a384a886554d76cbd6b1' :"Import XLS",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
-  'd43be1310be47177dbded34c26c4e9ed' :"Import Contacts",
   'b4daba1e7a3f227329f66e17180aebcc' :"Import into Mailing List:",
   '72d6d7a1885885bb55a565fd1070581a' :"Import",
   'f7aec8fa9a417536bfb549b4bbf83af0' :"Database col",
@@ -60,7 +60,7 @@ Pman.Dialog.XLSImport = {
     height : 500,
     modal : true,
     resizable : true,
-    title : _this._strings['d43be1310be47177dbded34c26c4e9ed'] /* Import Contacts */,
+    title : _this._strings['f77f8c0e4a05a384a886554d76cbd6b1'] /* Import XLS */,
     width : 700,
     listeners : {
      beforeshow : function (_self)

@@ -474,7 +474,7 @@
    },
    "modal" : true,
    "resizable" : true,
-   "title" : "Import Contacts",
+   "title" : "Import XLS",
    "width" : 700,
    "xtype" : "LayoutDialog"
   }
@@ -501,10 +501,10 @@
   "81a5726cb8da16023374870e4f8282e0" : "Select a List ",
   "b4daba1e7a3f227329f66e17180aebcc" : "Import into Mailing List:",
   "cfcd208495d565ef66e7dff9f98764da" : "0",
-  "d43be1310be47177dbded34c26c4e9ed" : "Import Contacts",
   "dcce7ae3bed98022daa78cd837c7ac54" : "Select col",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
+  "f77f8c0e4a05a384a886554d76cbd6b1" : "Import XLS",
   "f7aec8fa9a417536bfb549b4bbf83af0" : "Database col"
  },
  "title" : ""
