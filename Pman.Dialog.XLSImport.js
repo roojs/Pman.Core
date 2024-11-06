@@ -129,6 +129,10 @@ Pman.Dialog.XLSImport = {
                 map.push(d);
             });
             
+            rec.map(r => r.data.db_col);
+            
+            
+            
             new Pman.Request({
                 method: 'POST',
                 url: _this.data.url,
