@@ -333,6 +333,7 @@
      "     ",
      "     Roo.log('COMBO');",
      "     Roo.log(_this.dbColCombo);",
+     "     Roo.log(_this.grid);",
      "}"
     ]
    },

@@ -75,6 +75,7 @@ Pman.Dialog.XLSImport = {
            
            Roo.log('COMBO');
            Roo.log(_this.dbColCombo);
+           Roo.log(_this.grid);
       }
     },
     xns : Roo,
