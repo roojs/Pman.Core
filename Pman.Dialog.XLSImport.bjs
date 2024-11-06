@@ -140,21 +140,6 @@
                "xtype" : "SimpleStore"
               }
              ],
-             "listeners" : {
-              "beforerender" : [
-               "function (_self)",
-               "{",
-               "    Roo.log('BEFORE RENDER');",
-               "    _this.dbColCombo = this;",
-               "}"
-              ],
-              "render" : [
-               "function (_self)",
-               "{",
-               "    Roo.log('RENDER');",
-               "}"
-              ]
-             },
              "mode" : "local",
              "name" : "db_col_name",
              "selectOnFocus" : false,
