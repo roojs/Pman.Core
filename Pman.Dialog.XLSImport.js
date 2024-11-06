@@ -61,6 +61,7 @@ Pman.Dialog.XLSImport = {
           _this.data.data.headers.forEach(function(h, index) {
               var dbCol = '';
               var dbColName = '';
+              // map if header name matches column display name
               _this.data.dbCols.forEach(function(c) {
                   if(h.toUpperCase() == c[1].toUpperCase()) {
                       dbCol = c[0];
@@ -69,7 +70,12 @@ Pman.Dialog.XLSImport = {
               });
               
               if(typeof(_this.data.map) != 'undefined') {
-                  
+                  _this.data.dbCols.forEach(function(c) {
+                      if(_this.data.map) {
+                          dbCol = c[0];
+                          dbColName = c[1];
+                      }
+                  });
               }
               
               records.push(new Roo.data.Record({
