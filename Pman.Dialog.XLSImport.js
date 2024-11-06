@@ -72,7 +72,7 @@ Pman.Dialog.XLSImport = {
               if(typeof(_this.data.map) != 'undefined') {
                   // use provided mapping if available
                   _this.data.dbCols.forEach(function(c) {
-                      if(_this.data.map[h.toUpperCase()] == c[0]) {
+                      if(_this.data.map[h] == c[0]) {
                           dbCol = c[0];
                           dbColName = c[1];
                       }
