@@ -1,81 +1,128 @@
 {
- "name" : "Pman.Dialog.CoreImportUrl",
- "parent" : "",
- "title" : "",
- "path" : "/home/johns/gitlive/Pman.Core/Pman.Dialog.CoreImportUrl.bjs",
- "permname" : "",
- "modOrder" : "001",
- "strings" : {
-  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
-  "c8c55f55be8cbe3141db7e26ab0a8b4e" : "Import URL",
-  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
-  "e6b391a8d2c4d45902a23a8b6585703d" : "URL"
- },
  "items" : [
   {
-   "modal" : true,
-   "collapsible" : false,
-   "title" : "Import URL",
-   "xtype" : "LayoutDialog",
-   "width" : 500,
    "$ xns" : "Roo",
    "closable" : false,
-   "resizable" : false,
-   "height" : 140,
+   "collapsible" : false,
    "draggable" : false,
+   "height" : 140,
    "items" : [
     {
-     "xtype" : "LayoutRegion",
      "$ xns" : "Roo",
-     "* prop" : "center"
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
     },
     {
-     "region" : "center",
-     "xtype" : "ContentPanel",
      "$ xns" : "Roo",
      "items" : [
       {
-       "listeners" : {
-        "actioncomplete" : "function (_self, action)\n{\n     if (action.type == 'setdata') {\n        if(_this.data.target){\n            _this.form.url = baseURL + _this.data.target;\n        }\r\n       // _this.dialog.el.mask(\"Loading\");\r\n       // if(_this.data.id*1 > 0)\r\n       //     this.load({ method: 'GET', params: { '_id' : _this.data.id }});\r\n       \r\n       return;\r\n    }\r\n    if (action.type == 'load') {\r\n \r\n        return;\r\n    }\r\n    if (action.type =='submit') {\r\n    \r\n        //action.result.data\r\n        _this.dialog.hide();\r\n    //    Roo.log(_this.callback);\r\n         if (_this.callback) {\r\n            _this.callback.call(_this, action.result.data);\r\n         }\r\n         _this.form.reset();\r\n         return;\r\n    }\n}",
-        "rendered" : "function (form)\n{\n    _this.form= form;\n}"
-       },
        "$ url" : "baseURL",
-       "method" : "POST",
-       "xtype" : "Form",
-       "style" : "margin:10px;",
        "$ xns" : "Roo.form",
        "items" : [
         {
+         "$ xns" : "Roo.form",
          "fieldLabel" : "URL",
-         "xtype" : "TextField",
+         "name" : "importUrl",
          "vtype" : "url",
          "width" : 250,
-         "$ xns" : "Roo.form",
-         "name" : "importUrl"
+         "xtype" : "TextField"
         }
-       ]
+       ],
+       "listeners" : {
+        "actioncomplete" : [
+         "function (_self, action)",
+         "{",
+         "     if (action.type == 'setdata') {",
+         "        if(_this.data.target){",
+         "            _this.form.url = baseURL + _this.data.target;",
+         "        }\r",
+         "       // _this.dialog.el.mask(\"Loading\");\r",
+         "       // if(_this.data.id*1 > 0)\r",
+         "       //     this.load({ method: 'GET', params: { '_id' : _this.data.id }});\r",
+         "       \r",
+         "       return;\r",
+         "    }\r",
+         "    if (action.type == 'load') {\r",
+         " \r",
+         "        return;\r",
+         "    }\r",
+         "    if (action.type =='submit') {\r",
+         "    \r",
+         "        //action.result.data\r",
+         "        _this.dialog.hide();\r",
+         "    //    Roo.log(_this.callback);\r",
+         "         if (_this.callback) {\r",
+         "            _this.callback.call(_this, action.result.data);\r",
+         "         }\r",
+         "         _this.form.reset();\r",
+         "         return;\r",
+         "    }",
+         "}"
+        ],
+        "rendered" : [
+         "function (form)",
+         "{",
+         "    _this.form= form;",
+         "}"
+        ]
+       },
+       "method" : "POST",
+       "style" : "margin:10px;",
+       "xtype" : "Form"
       }
-     ]
+     ],
+     "region" : "center",
+     "xtype" : "ContentPanel"
     },
     {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    _this.dialog.hide();\n}"
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
      },
      "text" : "Cancel",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     },
     {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
      "listeners" : {
-      "click" : "function (_self, e)\n{\n    _this.form.doAction(\"submit\");\n}"
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.form.doAction(\"submit\");",
+       "}"
+      ]
      },
      "text" : "OK",
-     "xtype" : "Button",
-     "$ xns" : "Roo",
-     "* prop" : "buttons[]"
+     "xtype" : "Button"
     }
-   ]
+   ],
+   "modal" : true,
+   "resizable" : false,
+   "title" : "Import URL",
+   "width" : 500,
+   "xtype" : "LayoutDialog"
   }
- ]
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.CoreImportUrl",
+ "named_strings" : {
+  "importUrl_fieldLabel" : "e6b391a8d2c4d45902a23a8b6585703d"
+ },
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreImportUrl.bjs",
+ "permname" : "",
+ "strings" : {
+  "c8c55f55be8cbe3141db7e26ab0a8b4e" : "Import URL",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
+  "e6b391a8d2c4d45902a23a8b6585703d" : "URL",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "title" : ""
 }

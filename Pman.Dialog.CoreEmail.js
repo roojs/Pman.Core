@@ -12,21 +12,19 @@ Pman.Dialog.CoreEmail = {
   'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
-  '72d6d7a1885885bb55a565fd1070581a' :"Import",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
-  'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
+  'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
-  '884df8e413319ff51a3f5f528606238a' :"Use template",
-  'e6b391a8d2c4d45902a23a8b6585703d' :"URL",
+  'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
+  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
-  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
-  'dc0de523c25be298ba751c63c694109e' :"Responsive Email (1)",
+  '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -35,14 +33,11 @@ Pman.Dialog.CoreEmail = {
   '4994a8ffeba4ac3140beb89e8d41f174' :"Language",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
-  '1bd18d39370b7f26c1c5e18067b74c6f' :"Html File",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
-  '31bb2f6e9b8fb11cbb7fb63c6025223f' :"Select Template",
   'b78a3223503896721cca1303f776159b' :"Title",
-  '278c491bdd8a53618c149c4ac790da34' :"Template",
-  '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
+  '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
@@ -50,15 +45,11 @@ Pman.Dialog.CoreEmail = {
  },
  _named_strings : {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
-  'template_fieldLabel' : '278c491bdd8a53618c149c4ac790da34' /* Template */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
-  'template_qtip' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
-  'template_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
-  'template_emptyText' : '31bb2f6e9b8fb11cbb7fb63c6025223f' /* Select Template */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
@@ -102,7 +93,6 @@ Pman.Dialog.CoreEmail = {
     listeners : {
      show : function (_self)
       {
-          
           _self.layout.getRegion('center').showPanel(0);
           var w = Roo.lib.Dom.getViewWidth();
           var h = Roo.lib.Dom.getViewHeight();        this.resizeTo(w-50, h-50);
@@ -148,67 +138,15 @@ Pman.Dialog.CoreEmail = {
     buttons : [
      {
       xtype : 'Button',
-      text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
-      listeners : {
-       click : function (_self, e)
-        {
-            //_this.dialog.hide();
-            Roo.log(_this.data.module);
-            Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
-        },
-       render : function (_self)
-        {
-            _this.preview_btn = _self;
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
-     {
-      xtype : 'Button',
-      text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
-      listeners : {
-       click : function (_self, e)
-        {
-            //_this.dialog.hide();
-        
-            var id = _this.form.findField('id').getValue();
-            
-            if(id*1 < 1){
-                Roo.MessageBox.alert('Error', 'Please save the message frist!');
-                return;
-            }
-           
-            new Pman.Request({
-                url : baseURL + '/Core/MessagePreview',
-                method : 'POST',
-                mask: 'Sending',
-                params : {
-                    _id : id,
-                    _table : _this.data.module
-                }, 
-                success : function(res) { 
-                    if(res.data == 'SUCCESS'){
-                        Roo.MessageBox.alert("Email Sent", 'The report was sent to your email (HTML format).');
-                    }
-                }
-            });
-        },
-       render : function (_self)
-        {
-            _this.html_preview = _self;
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
-     {
-      xtype : 'Button',
       text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
       listeners : {
        click : function (_self, e)
         {
             _this.dialog.hide();
+            if (_this.callback) {
+                _this.callback.call(_this, _this.data);
+            }
+            _this.form.reset();
         }
       },
       xns : Roo,
@@ -233,6 +171,44 @@ Pman.Dialog.CoreEmail = {
       },
       xns : Roo,
       '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['94966d90747b97d1f0f206c98a8b1ac3'] /* Send */,
+      listeners : {
+       click : function (_self, e)
+        {
+            
+            _this.form.preValidate(function(res) {
+                if (!res) {
+                    return; //failed.
+                }
+                _this.dialog.hide();
+                if (_this.callback) {
+                    _this.callback.call(_this, _this.data);
+                }
+                
+                Pman.Dialog.CrmMailingListQueue.show( {
+                    id : 0,
+                    message_id : _this.form.findField('id').getValue(),
+                    message_id_name : _this.form.findField('name').getValue()
+                }, function() {
+                    // change the tab to queue...
+                    var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
+                    Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+                });
+                _this.form.reset();
+            });
+        
+            
+        },
+       render : function (_self)
+        {
+            _this.sendBtn = this;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
@@ -251,165 +227,114 @@ Pman.Dialog.CoreEmail = {
        items  : [
         {
          xtype : 'Button',
-         text : _this._strings['72d6d7a1885885bb55a565fd1070581a'] /* Import */,
-         xns : Roo.Toolbar,
-         '|xns' : 'Roo.Toolbar',
-         menu : {
-          xtype : 'Menu',
-          xns : Roo.menu,
-          '|xns' : 'Roo.menu',
-          items  : [
+         text : _this._strings['31fde7b05ac8952dacf4af8a704074ec'] /* Preview */,
+         listeners : {
+          click : function()
            {
-            xtype : 'Item',
-            text : _this._strings['e6b391a8d2c4d45902a23a8b6585703d'] /* URL */,
-            listeners : {
-             click : function (_self, e)
-              {
-                  Pman.Dialog.CoreImportUrl.show({
-                      target : '/Core/ImportMailMessage.php'
-                  }, function(data) {
-                      if  (data) {
-                        //  Roo.log(data);
-                          _this.form.findField('bodytext').setValue(data);
-                      }
-                  });
-              }
-            },
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu'
+               //_this.dialog.hide();
+               Roo.log(_this.data.module);
+               Pman.Dialog.CoreEmailPreview.show({ id : _this.form.findField('id').getValue(), module : _this.data.module });
            },
+          render : function (_self)
            {
-            xtype : 'Item',
-            text : _this._strings['1bd18d39370b7f26c1c5e18067b74c6f'] /* Html File */,
-            listeners : {
-             click : function (_self, e)
-              {
-                  Pman.Dialog.Image.show({
-                      _url : baseURL + '/Core/ImportMailMessage.php'
-                  }, function(data) {
-                      if  (data) {
-                          _this.form.findField('bodytext').setValue(data);
-                      }
-                  });
-              }
-            },
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu'
+               _this.preview_btn = _self;
            }
-          ]
-         }
+         },
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
         },
         {
          xtype : 'Button',
-         text : _this._strings['884df8e413319ff51a3f5f528606238a'] /* Use template */,
-         xns : Roo.Toolbar,
-         '|xns' : 'Roo.Toolbar',
-         menu : {
-          xtype : 'Menu',
-          xns : Roo.menu,
-          '|xns' : 'Roo.menu',
-          items  : [
-           {
-            xtype : 'Item',
-            text : _this._strings['dc0de523c25be298ba751c63c694109e'] /* Responsive Email (1) */,
-            listeners : {
-             click : function (_self, e)
-              {
-              
-                  var l = document.location;
-                  new Pman.Request({
-              
-                      url : baseURL + '/Core/ImportMailMessage.php',
-              
-                      method: 'POST',
-                      mask : "Loading",
-                      params : {
-                            importUrl : l.protocol +'//' + l.host +   rootURL + '/Pman/Crm/mail_templates/responsive1.html'
-                     },
-                      success : function (res) {
-              
-                       _this.form.findField('bodytext').setValue(res.data);
-                      }
-                
-                  });
-              }
-            },
-            xns : Roo.menu,
-            '|xns' : 'Roo.menu'
-           }
-          ]
-         }
-        },
-        {
-         xtype : 'ComboBox',
-         allowBlank : true,
-         alwaysQuery : true,
-         displayField : 'file',
-         editable : false,
-         emptyText : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
-         fieldLabel : _this._strings['278c491bdd8a53618c149c4ac790da34'] /* Template */,
-         forceSelection : true,
-         hiddenName : 'template',
-         listWidth : 400,
-         loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-         minChars : 2,
-         name : 'template',
-         pageSize : 20,
-         qtip : _this._strings['31bb2f6e9b8fb11cbb7fb63c6025223f'] /* Select Template */,
-         selectOnFocus : true,
-         tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{file}</b> </div>',
-         triggerAction : 'all',
-         typeAhead : true,
-         valueField : 'file',
-         width : 200,
+         text : _this._strings['5b8ef4e762c00a15a41cfc26dc3ef99c'] /* Send me a test copy */,
          listeners : {
-          select : function (combo, record, index)
+          click : function()
            {
-              
-           /*
-               (function() { 
-                   combo.setValue('');
-               }).defer(100);
-           */    
-               if(!record){
+               //_this.dialog.hide();
+           
+               var id = _this.form.findField('id').getValue();
+               
+               if(id*1 < 1){
+                   Roo.MessageBox.alert('Error', 'Please save the message frist!');
                    return;
                }
-               _this.form.findField('bodytext').setValue(record.data.content);
-           
+              
+               new Pman.Request({
+                   url : baseURL + '/Core/MessagePreview',
+                   method : 'POST',
+                   mask: 'Sending',
+                   params : {
+                       _id : id,
+                       _table : _this.data.module
+                   }, 
+                   success : function(res) { 
+                       if(res.data == 'SUCCESS'){
+                           Roo.MessageBox.alert("Email Sent", 'The report was sent to your email (HTML format).');
+                       }
+                   }
+               });
+           },
+          render : function (_self)
+           {
+               _this.html_preview = _self;
            }
          },
-         xns : Roo.form,
-         '|xns' : 'Roo.form',
-         store : {
-          xtype : 'Store',
-          remoteSort : true,
-          sortInfo : { direction : 'DESC', field: 'file' },
-          listeners : {
-           beforeload : function (_self, o){
-                o.params = o.params || {};
-                // set more here
-               
-            }
-          },
-          xns : Roo.data,
-          '|xns' : 'Roo.data',
-          proxy : {
-           xtype : 'HttpProxy',
-           method : 'GET',
-           url : baseURL + '/Core/MailTemplateList.php',
-           xns : Roo.data,
-           '|xns' : 'Roo.data'
-          },
-          reader : {
-           xtype : 'JsonReader',
-           fields : [{"name":"file","type":"string"},{"name":"content","type":"string"}],
-           id : 'name',
-           root : 'data',
-           totalProperty : 'total',
-           xns : Roo.data,
-           '|xns' : 'Roo.data'
-          }
-         }
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
+        },
+        {
+         xtype : 'Button',
+         text : _this._strings['f3017f202748e13d3554a15cbbd1b767'] /* Refresh from Stripo */,
+         listeners : {
+          click : function (_self, e)
+           {
+               new Pman.Request({
+                   url : baseURL + '/MediaOutreachCRM/Stripo',
+                   method : 'GET',
+                   params : {
+                       emailId: _this.form.findField('stripo_id').getValue()
+                   },
+                   mask : 'loading ...',
+                   success : function(res) {
+                       var stylePos = res.data.html.indexOf("</head>");
+                       var bodytext = res.data.html.slice(0, stylePos) 
+                           + "<style type='text/css'>" + res.data.css + "</style>"
+                           + res.data.html.slice(stylePos);
+                           
+                       _this.form.findField('bodytext').setValue(res.data.html);
+                       
+                       new Pman.Request({
+                           url : baseURL + '/Core/ImportMailMessage.php',
+                           method : 'POST',
+                           params : {
+                             bodytext : bodytext,
+                             _convertToPlain : true,
+                             _check_unsubscribe : true
+                           },
+                           mask : 'loading ...',
+                           success : function(res) {
+                               if(res.success == true){
+                                   _this.form.findField('plaintext').setValue(res.data);
+                                   new Pman.Request({
+                                       url: baseURL + '/Roo/crm_mailing_list_message',
+                                       method: 'POST',
+                                       params : {
+                                           _delete_images: _this.form.findField('id').getValue()
+                                       },
+                                       mask : 'loading ...'
+                                   });
+                               }
+                           }
+                       }); 
+                   }
+               });
+           },
+          render : function (_self)
+           {
+               _this.stripoUpdate = this;
+           }
+         },
+         xns : Roo.Toolbar,
+         '|xns' : 'Roo.Toolbar'
         },
         {
          xtype : 'Fill',
@@ -591,6 +516,8 @@ Pman.Dialog.CoreEmail = {
                      
                      _this.html_preview.hide();
                      _this.preview_btn.hide();
+                     _this.stripoUpdate.hide();
+                     _this.sendBtn.hide();
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
@@ -611,13 +538,37 @@ Pman.Dialog.CoreEmail = {
                      
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
+                     if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
+                         if(_this.form.findField('stripo_id').getValue() > 0) {
+                             _this.stripoUpdate.show();
+                         }
+                         _this.sendBtn.show();
+                     }
+                     
                      return;
                  }
                  if (action.type =='submit') {
+                     var module = _this.data.module;
                  
                      _this.dialog.el.unmask();
+                     _this.data = action.result.data;
+                     
+                     if (_this.form.findField('id').getValue() * 1 < 1) {
+                         _this.form.findField('id').setValue(action.result.data.id);
+                         
+                         if(typeof(module) != 'undefined' && module == 'crm_mailing_list_message') {
+                             _this.html_preview.show();
+                             _this.preview_btn.show();
+                             
+                             if(_this.form.findField('stripo_id').getValue() > 0) {
+                                 _this.stripoUpdate.show();
+                             }
+                             _this.sendBtn.show();
+                         }
+                         return;
+                     }
+                     
                      _this.dialog.hide();
-                 
                       if (_this.callback) {
                          _this.callback.call(_this, action.result.data);
                       }
@@ -1242,6 +1193,12 @@ Pman.Dialog.CoreEmail = {
             {
              xtype : 'Hidden',
              name : 'id',
+             xns : Roo.form,
+             '|xns' : 'Roo.form'
+            },
+            {
+             xtype : 'Hidden',
+             name : 'stripo_id',
              xns : Roo.form,
              '|xns' : 'Roo.form'
             }
