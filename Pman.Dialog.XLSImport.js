@@ -62,7 +62,7 @@ Pman.Dialog.XLSImport = {
               var dbCol = '';
               var dbColName = '';
               _this.data.dbCols.forEach(function(c) {
-                  if(h.toUpperCase() == c[0].toUpperCase()) {
+                  if(h.toUpperCase() == c[1].toUpperCase()) {
                       dbCol = c[0];
                       dbColName = c[1];
                   }
