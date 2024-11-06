@@ -123,7 +123,7 @@ Pman.Dialog.XLSImport = {
             var map = {};
             
             Roo.each(rec, function(r) {
-                map[r.data.header] = r.data.db_col;
+                map[r.data.header_name] = r.data.db_col;
             });
             
             new Pman.Request({
