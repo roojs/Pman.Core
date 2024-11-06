@@ -117,7 +117,7 @@ Pman.Dialog.XLSImport = {
             Roo.each(rec, function(v,k){
                 var d = {};
                 d.header_index = k;
-                d.db_col = v.data.db_col ? v.data.db_col : '';
+                d.db_col = v.data.db_col * 1 ? v.data.db_col : '';
                 data.push(d);
             });
             
