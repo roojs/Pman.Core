@@ -361,7 +361,6 @@ Pman.Dialog.XLSImport = {
        },
        sm : {
         xtype : 'CellSelectionModel',
-        enter_is_tab : true,
         xns : Roo.grid,
         '|xns' : 'Roo.grid'
        },

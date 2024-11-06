@@ -26,7 +26,6 @@
         {
          "$ xns" : "Roo.grid",
          "* prop" : "sm",
-         "enter_is_tab" : true,
          "xtype" : "CellSelectionModel"
         },
         {
