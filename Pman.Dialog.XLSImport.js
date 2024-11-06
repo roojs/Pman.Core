@@ -145,7 +145,10 @@ Pman.Dialog.XLSImport = {
                         multiline: 500,
                         value: res.errorMsg,
                         buttons: {ok: "Upload Again", cancel: "Cancel"},
-                        closable: false
+                        closable: false,
+                        fn: function(res) {
+                            console.log(res);
+                        }
                     });
                 }
             });
