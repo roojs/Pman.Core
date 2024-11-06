@@ -58,7 +58,7 @@ Pman.Dialog.XLSImport = {
      show : function (_self)
       {
           var records = [];
-          _this.data.data.header.forEach(function(h, index) {
+          _this.data.data.headers.forEach(function(h, index) {
               var dbCol = '';
               var dbColName = '';
               _this.data.dbCols.forEach(function(c) {
