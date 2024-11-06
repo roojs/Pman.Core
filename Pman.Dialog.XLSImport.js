@@ -111,6 +111,7 @@ Pman.Dialog.XLSImport = {
       listeners : {
        click : function (_self, e)
         {
+            var data = [];
             var rec = _this.grid.getDataSource().data.items;
             
             Roo.each(rec, function(v,k){
