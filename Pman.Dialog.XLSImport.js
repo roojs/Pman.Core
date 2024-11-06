@@ -362,12 +362,6 @@ Pman.Dialog.XLSImport = {
        sm : {
         xtype : 'CellSelectionModel',
         enter_is_tab : true,
-        listeners : {
-         tabend : function (_self)
-          {
-              _this.addItemBtn.fireEvent('click', _this.addItemBtn);
-          }
-        },
         xns : Roo.grid,
         '|xns' : 'Roo.grid'
        },
