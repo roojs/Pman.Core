@@ -101,9 +101,13 @@ Pman.Dialog.XLSImport = {
           */
           var records = [];
           records.push(new Roo.data.Record({
+              'col': 'firstname',
+              'name': 'First Name'
+          }));
+          
+          records.forEach(function(r) {
+              _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store.add(r);
           });
-           
-           _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store
       }
     },
     xns : Roo,
