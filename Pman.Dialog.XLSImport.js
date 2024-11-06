@@ -144,7 +144,8 @@ Pman.Dialog.XLSImport = {
                         title: "Fix these issues, and try uploading again", 
                         multiline: 500,
                         value: res.errorMsg,
-                        buttons: {ok: "Upload Again", cancel: "Cancel"}
+                        buttons: {ok: "Upload Again", cancel: "Cancel"},
+                        closable: false
                     });
                 }
             });
