@@ -318,7 +318,6 @@
          "}"
         ]
        },
-       "loadMask" : true,
        "xtype" : "EditorGrid"
       }
      ],

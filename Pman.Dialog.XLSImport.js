@@ -209,7 +209,6 @@ Pman.Dialog.XLSImport = {
        xtype : 'EditorGrid',
        autoExpandColumn : 'db_col',
        clicksToEdit : 1,
-       loadMask : true,
        listeners : {
         render : function() 
          {
