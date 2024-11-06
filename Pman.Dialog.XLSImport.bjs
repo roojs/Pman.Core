@@ -169,6 +169,7 @@
       "click" : [
        "function (_self, e)",
        "{",
+       "    /*",
        "    // do some checks?",
        "    ",
        "    var setName = false;",
@@ -263,6 +264,7 @@
        "        }",
        "    });",
        "    //_this.form.doAction(\"submit\");",
+       "    */",
        "",
        "}"
       ]

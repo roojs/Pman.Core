@@ -111,6 +111,7 @@ Pman.Dialog.XLSImport = {
       listeners : {
        click : function (_self, e)
         {
+            /*
             // do some checks?
             
             var setName = false;
@@ -205,6 +206,7 @@ Pman.Dialog.XLSImport = {
                 }
             });
             //_this.form.doAction("submit");
+            */
         
         }
       },
