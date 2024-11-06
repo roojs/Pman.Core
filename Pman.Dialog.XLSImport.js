@@ -119,10 +119,12 @@ Pman.Dialog.XLSImport = {
               ['news_beat', 'News Beat']
           ];
           var records = [];
-          records.push(new Roo.data.Record({
-              'col': 'firstname',
-              'name': 'First Name'
-          }));
+          dbCols.forEach(function(c){
+              records.push(new Roo.data.Record({
+                  'col': c[0],
+                  'name': c[1]
+              }));
+          });
           
           records.forEach(function(r) {
               _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store.add(r);
