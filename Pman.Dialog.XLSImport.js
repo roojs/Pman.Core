@@ -87,7 +87,7 @@ Pman.Dialog.XLSImport = {
               ['language', 'Language'],
               ['publication_scope', 'Publication Scope'],
               ['media_type', 'Media Type'],
-              ['url', 'Website']
+              ['url', 'Website'],
               ['phone', 'Office Phone'],
               ['phone_direct', 'Direct Phone'],
               ['phone_mobile', 'Mobile Phone'],
