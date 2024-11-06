@@ -111,6 +111,7 @@ Pman.Dialog.XLSImport = {
       listeners : {
        click : function (_self, e)
         {
+            Roo.log(_this.data.fileId);
             /*
             // do some checks?
             
