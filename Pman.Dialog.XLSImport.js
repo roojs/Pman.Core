@@ -150,7 +150,7 @@ Pman.Dialog.XLSImport = {
                     _validate: 1
                 },
                 success: function(res) {
-                    Roo.log('SUCCESS');
+                    Pman.Dialog.PressReleaseJournalistImport.show({data: res.data});
                 },
                 failure : function(res)
                 {
