@@ -101,6 +101,7 @@ Pman.Dialog.XLSImport = {
           */
           
           var dbCols = [
+              [ '0', "--not set--"]
               ['firstname', 'First Name'],
               ['lastname', 'Last Name'],
               ['role', 'Job Title'],
