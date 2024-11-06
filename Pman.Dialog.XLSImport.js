@@ -121,10 +121,6 @@ Pman.Dialog.XLSImport = {
                 data.push(d);
             });
             
-            Roo.log(data);
-            
-            Roo.log(_this.data.fileId);
-            
             new Pman.Request({
                 method: 'POST',
                 url: _this.data.url,
