@@ -281,9 +281,6 @@ Pman.Dialog.XLSImport = {
          header : _this._strings['35c31ea9e29f774dba060916d184fe7d'] /* Your Data */,
          renderer : function(v,x,r)
          {
-             Roo.log(v);
-             Roo.log(x);
-             Roo.log(r);
              return String.format('{0}', v);
          },
          width : 150,
