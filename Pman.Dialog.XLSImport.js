@@ -76,6 +76,8 @@ Pman.Dialog.XLSImport = {
            Roo.log('COMBO');
            Roo.log(_this.dbColCombo);
            Roo.log(_this.grid);
+           
+           _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store
       }
     },
     xns : Roo,
@@ -317,26 +319,6 @@ Pman.Dialog.XLSImport = {
            '|xns' : 'Roo.form',
            store : {
             xtype : 'SimpleStore',
-            data : [
-                [ '0', "--not set--"],
-                [ 'firstname', "First Name" ],
-                [ 'lastname', "Last Name" ],
-                [ 'phone_direct', "Phone Direct" ],
-                [ 'phone_mobile', 'Mobile Phone' ],
-                [ 'email', "Email" ],
-                [ 'alt_email', "Secondary Email" ],
-                [ 'fax', "Fax" ],
-                [ 'nametype1', "name ('given name family name')" ],
-                [ 'nametype2', "name ('family name given name')" ],
-                [ 'company_name', "Company Name" ] ,
-                [ 'lang', "Language Spoken" ],
-                [ 'client_of_competitor', 'Client of Competitor'],
-                [ 'company_type', 'Company Type'],
-                [ 'role', 'Job Title'],
-                [ 'client_industry', 'Client Industry'],
-                [ 'company_website', "Website" ],
-                [ 'office_country', 'Country' ]
-            ],
             fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'} ],
             xns : Roo.data,
             '|xns' : 'Roo.data'
