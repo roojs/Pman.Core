@@ -76,9 +76,10 @@ Pman.Dialog.XLSImport = {
               }));
           });
           
-           records.forEach(function(r) {
-               _this.grid.ds.add(r);
-           });
+          _this.grid.ds.removeAll();
+          records.forEach(function(r) {
+              _this.grid.ds.add(r);
+          });
           
           var records = [];
           _this.data.dbCols.forEach(function(c){
@@ -88,6 +89,7 @@ Pman.Dialog.XLSImport = {
               }));
           });
           
+          _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store.removeAll();
           records.forEach(function(r) {
               _this.grid.colModel.getColumnByDataIndex('db_col').editor.field.store.add(r);
           });
