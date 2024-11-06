@@ -137,6 +137,15 @@ Pman.Dialog.XLSImport = {
                 },
                 success: function(res) {
                     Roo.log('SUCCESS');
+                },
+                failure : function(res)
+                {
+                    Roo.MessageBox.show({
+                        title: "Fix these issues, and try uploading again", 
+                        multiline : 500,
+                        value : res.errorMsg,
+                        buttons : {UploadAgain: true, Cancel: true}
+                    });
                 }
             });
             /*
