@@ -127,7 +127,7 @@ Pman.Dialog.XLSImport = {
                 mask: 'Validating',
                 params: {
                     fileId: _this.data.fileId,
-                    data: Roo.encode(rec.map(r => r.data.db_col)),
+                    colMap: Roo.encode(rec.map(r => r.data.db_col)),
                     _validate: 1
                 },
                 success: function(res) {
