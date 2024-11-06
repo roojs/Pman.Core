@@ -1,9 +1,511 @@
 {
- "items" : [],
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "closable" : false,
+   "collapsible" : false,
+   "height" : 500,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "background" : false,
+     "fitContainer" : true,
+     "fitToframe" : true,
+     "items" : [
+      {
+       "$ xns" : "Roo.grid",
+       "* prop" : "grid",
+       "autoExpandColumn" : "db_col",
+       "clicksToEdit" : 1,
+       "items" : [
+        {
+         "$ xns" : "Roo.grid",
+         "* prop" : "sm",
+         "enter_is_tab" : true,
+         "listeners" : {
+          "tabend" : [
+           "function (_self)",
+           "{",
+           "    _this.addItemBtn.fireEvent('click', _this.addItemBtn);",
+           "}"
+          ]
+         },
+         "xtype" : "CellSelectionModel"
+        },
+        {
+         "$ xns" : "Roo",
+         "* prop" : "toolbar",
+         "items" : [
+          {
+           "$ xns" : "Roo.Toolbar",
+           "text" : "Import into Mailing List:",
+           "xtype" : "TextItem"
+          },
+          {
+           "$ xns" : "Roo.form",
+           "allowBlank" : true,
+           "alwaysQuery" : true,
+           "displayField" : "name",
+           "editable" : false,
+           "emptyText" : "Select a List ",
+           "forceSelection" : true,
+           "items" : [
+            {
+             "$ sortInfo" : "{ field : 'name' , direction : 'ASC' }",
+             "$ xns" : "Roo.data",
+             "* prop" : "store",
+             "items" : [
+              {
+               "$ url" : "baseURL + '/Roo/Crm_mailing_list.php'",
+               "$ xns" : "Roo.data",
+               "* prop" : "proxy",
+               "method" : "GET",
+               "xtype" : "HttpProxy"
+              },
+              {
+               "$ fields" : [
+                "[",
+                "    {",
+                "        'name': 'id',",
+                "        'type': 'int'",
+                "    },",
+                "    {",
+                "        'name': 'name',",
+                "        'type': 'string'",
+                "    }",
+                "]"
+               ],
+               "$ xns" : "Roo.data",
+               "* prop" : "reader",
+               "id" : "id",
+               "root" : "data",
+               "totalProperty" : "total",
+               "xtype" : "JsonReader"
+              }
+             ],
+             "listeners" : {
+              "|beforeload" : [
+               "function (_self, o)",
+               "{",
+               "    o.params = o.params || {};",
+               "    ",
+               "}"
+              ]
+             },
+             "xtype" : "Store"
+            }
+           ],
+           "listWidth" : 250,
+           "listeners" : {
+            "|render" : [
+             "function (_self)",
+             "{",
+             "  _this.mailing_list = _self;",
+             "}"
+            ]
+           },
+           "loadingText" : "Searching...",
+           "minChars" : 2,
+           "name" : "name",
+           "pageSize" : 20,
+           "qtip" : "Select Person ",
+           "queryParam" : "query[name]",
+           "selectOnFocus" : true,
+           "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>",
+           "triggerAction" : "all",
+           "typeAhead" : true,
+           "valueField" : "id",
+           "width" : 150,
+           "xtype" : "ComboBox"
+          },
+          {
+           "$ xns" : "Roo.Toolbar",
+           "listeners" : {
+            "click" : [
+             "function (_self, e)",
+             "{",
+             "    Pman.Dialog.CrmMailingList.show(",
+             "        { id : 0,  owner_id : Pman.Login.authUserId, is_import : 1} ,",
+             "        function(res) {",
+             "          _this.mailing_list.setValue(res);",
+             "       }",
+             "    ); ",
+             "}"
+            ]
+           },
+           "text" : "Add",
+           "xtype" : "Button"
+          }
+         ],
+         "xtype" : "Toolbar"
+        },
+        {
+         "$ xns" : "Roo.data",
+         "* prop" : "dataSource",
+         "items" : [
+          {
+           "$ url" : "baseURL + '/Crm/Import/ImportAddress.php'",
+           "$ xns" : "Roo.data",
+           "* prop" : "proxy",
+           "method" : "GET",
+           "xtype" : "HttpProxy"
+          },
+          {
+           "$ fields" : [
+            "[",
+            "    {",
+            "        'name': 'header_name',",
+            "        'type': 'string'",
+            "    },",
+            "    {",
+            "        'name': 'db_col',",
+            "        'type': 'string'",
+            "    },",
+            "    {",
+            "        'name': 'db_col_name',",
+            "        'type': 'string'",
+            "    },",
+            "    'row_1', 'row_2'",
+            "]"
+           ],
+           "$ xns" : "Roo.data",
+           "* prop" : "reader",
+           "id" : "id",
+           "root" : "data",
+           "totalProperty" : "total",
+           "xtype" : "JsonReader"
+          }
+         ],
+         "listeners" : {
+          "beforeload" : [
+           "function (_self, o)",
+           "{",
+           "    o.params = o.params || {};",
+           "    o.params._id = _this.data._id;",
+           "//    this.proxy.loadResponse = this.loadResponse;",
+           "}"
+          ]
+         },
+         "remoteSort" : true,
+         "xtype" : "Store"
+        },
+        {
+         "$ renderer" : [
+          "function(v,x,r)",
+          "{",
+          "    return String.format('{0}', v);",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "header_name",
+         "header" : "Your Data",
+         "width" : 150,
+         "xtype" : "ColumnModel"
+        },
+        {
+         "$ renderer" : [
+          "function(v,x,r)",
+          "{",
+          "    return String.format('{0}', v);",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "row_1",
+         "header" : "1st Row",
+         "width" : 150,
+         "xtype" : "ColumnModel"
+        },
+        {
+         "$ renderer" : [
+          "function(v,x,r)",
+          "{",
+          "    return String.format('{0}', v);",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "row_2",
+         "header" : "2st Row",
+         "width" : 150,
+         "xtype" : "ColumnModel"
+        },
+        {
+         "$ renderer" : [
+          "function(v,r,x)",
+          "{",
+          "    return String.format('{0}', (v) ? x.data.db_col_name : '');",
+          "//    return String.format('{0}', v);",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "colModel[]",
+         "dataIndex" : "db_col",
+         "header" : "Database col",
+         "items" : [
+          {
+           "$ xns" : "Roo.grid",
+           "* prop" : "editor",
+           "items" : [
+            {
+             "$ xns" : "Roo.form",
+             "* prop" : "field",
+             "allowBlank" : true,
+             "displayField" : "name",
+             "editable" : false,
+             "emptyText" : "Select col",
+             "hiddenName" : "db_col",
+             "items" : [
+              {
+               "$ data" : [
+                "[",
+                "    [ '0', \"--not set--\"],",
+                "    [ 'firstname', \"First Name\" ],",
+                "    [ 'lastname', \"Last Name\" ],",
+                "    [ 'phone_direct', \"Phone Direct\" ],",
+                "    [ 'phone_mobile', 'Mobile Phone' ],",
+                "    [ 'email', \"Email\" ],",
+                "    [ 'alt_email', \"Secondary Email\" ],",
+                "    [ 'fax', \"Fax\" ],",
+                "    [ 'nametype1', \"name ('given name family name')\" ],",
+                "    [ 'nametype2', \"name ('family name given name')\" ],",
+                "    [ 'company_name', \"Company Name\" ] ,",
+                "    [ 'lang', \"Language Spoken\" ],",
+                "    [ 'client_of_competitor', 'Client of Competitor'],",
+                "    [ 'company_type', 'Company Type'],",
+                "    [ 'role', 'Job Title'],",
+                "    [ 'client_industry', 'Client Industry'],",
+                "    [ 'company_website', \"Website\" ],",
+                "    [ 'office_country', 'Country' ]",
+                "]"
+               ],
+               "$ fields" : "[ {name: 'col', type: 'string'}, { name: 'name', type: 'string'} ]",
+               "$ xns" : "Roo.data",
+               "* prop" : "store",
+               "xtype" : "SimpleStore"
+              }
+             ],
+             "mode" : "local",
+             "name" : "db_col_name",
+             "selectOnFocus" : false,
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+             "triggerAction" : "all",
+             "typeAhead" : true,
+             "value" : 0,
+             "valueField" : "col",
+             "width" : 150,
+             "xtype" : "ComboBox"
+            }
+           ],
+           "xtype" : "GridEditor"
+          }
+         ],
+         "width" : 150,
+         "xtype" : "ColumnModel"
+        }
+       ],
+       "listeners" : {
+        "|render" : [
+         "function() ",
+         "{",
+         "    _this.grid = this; ",
+         "    //_this.dialog = Pman.Dialog.FILL_IN",
+         "    //if (_this.panel.active) {",
+         "       //this.ds.load({});",
+         "    //}",
+         "}"
+        ]
+       },
+       "loadMask" : true,
+       "xtype" : "EditorGrid"
+      }
+     ],
+     "listeners" : {
+      "|activate" : [
+       "function() ",
+       "{",
+       "    _this.grid = this; ",
+       "    //_this.dialog = Pman.Dialog.FILL_IN",
+       "    //if (_this.panel.active) {",
+       "       //_this.data_grid.ds.load({});",
+       "    //}",
+       "}"
+      ]
+     },
+     "region" : "center",
+     "xtype" : "GridPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Cancel",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    // do some checks?",
+       "    ",
+       "    var setName = false;",
+       "    var setEmail = false;",
+       "    var setCompany = false;",
+       "    var setCompanyType = false;",
+       "    ",
+       "     ",
+       "    var rec = _this.grid.getDataSource().data.items;",
+       "    var data =  [] ; ",
+       "    Roo.each(rec, function(v,k){",
+       "        var a = {};",
+       "        a.header_index = k;",
+       "        a.db_col = (v.data.db_col) ? v.data.db_col : '';",
+       "        switch(a.db_col) {",
+       "            case 'email' :",
+       "                setEmail = true;",
+       "                break;",
+       "            case 'firstname' :",
+       "            case 'lastname' :",
+       "            case 'nametype1':",
+       "            case 'nametype2':",
+       "                setName = true;",
+       "                break;",
+       "            case 'company_name' :",
+       "                setCompany = true;",
+       "                break;",
+       "            case 'company_type' :",
+       "                setCompanyType = true;",
+       "                break;",
+       "        }",
+       "        data.push(a);",
+       "    });",
+       "    ",
+       "    if(!setName) {",
+       "        Roo.MessageBox.alert('Error', 'Please set First Name or Last Name');",
+       "        return;",
+       "    }",
+       "    ",
+       "    if(!setEmail) {",
+       "        Roo.MessageBox.alert('Error', 'Please set Email');",
+       "        return;",
+       "    }",
+       "    if(!setCompany) {",
+       "        Roo.MessageBox.alert('Error', 'Please set Company');",
+       "        return;",
+       "    }",
+       "    if(!setCompanyType) {",
+       "        Roo.MessageBox.alert('Error', 'Please set Company Type');",
+       "        return;",
+       "    }",
+       "    Roo.log(data);",
+       "    ",
+       "    if (!(1*  _this.mailing_list.getValue())) {",
+       "        Roo.MessageBox.alert('Error',",
+       "         'Select a mailing list to add this to' + ",
+       "         ' (its a good idea to create a new on specifically for your uploads)');",
+       "        return;",
+       "",
+       "    } ",
+       "    ",
+       "    new Pman.Request({",
+       "        method : 'POST',",
+       "        url : baseURL + '/Crm/Import/ImportAddress',",
+       "        mask : 'Uploading',",
+       "        timeout: 60000,",
+       "        params : { ",
+       "            _id : _this.data._id,",
+       "            _import: 1,",
+       "            mailing_list_id : _this.mailing_list.getValue(),",
+       "            data: Roo.encode(data)",
+       "        },",
+       "        success : function(res){",
+       " ",
+       "            _this.dialog.hide();",
+       "        },",
+       "        failure : function(res)",
+       "        {",
+       "            //Roo.log(res);",
+       "            Roo.MessageBox.show( {",
+       "                title: \"Fix these issues, and try uploading again\", ",
+       "                prompt : true,",
+       "                multiline : 500,",
+       "                value : res.errorMsg,",
+       "                buttons : Roo.MessageBox.OK ",
+       "            });",
+       "              ",
+       "",
+       "            ",
+       "            return true;",
+       "        ",
+       "        }",
+       "    });",
+       "    //_this.form.doAction(\"submit\");",
+       "",
+       "}"
+      ]
+     },
+     "text" : "Import",
+     "xtype" : "Button"
+    }
+   ],
+   "listeners" : {
+    "beforeshow" : [
+     "function (_self)",
+     "{",
+     "    _this.grid.ds.load({});",
+     "}"
+    ]
+   },
+   "modal" : true,
+   "resizable" : true,
+   "title" : "Import Contacts",
+   "width" : 700,
+   "xtype" : "LayoutDialog"
+  }
+ ],
  "modOrder" : "001",
  "name" : "Pman.Dialog.XLSImport",
+ "named_strings" : {
+  "db_col_name_emptyText" : "dcce7ae3bed98022daa78cd837c7ac54",
+  "db_col_name_value" : "cfcd208495d565ef66e7dff9f98764da",
+  "name_emptyText" : "81a5726cb8da16023374870e4f8282e0",
+  "name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "name_qtip" : "340c2ee497b85d5954b01c64de7f44f6"
+ },
  "parent" : "",
  "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.XLSImport.bjs",
  "permname" : "",
+ "strings" : {
+  "1243daf593fa297e07ab03bf06d925af" : "Searching...",
+  "340c2ee497b85d5954b01c64de7f44f6" : "Select Person ",
+  "35c31ea9e29f774dba060916d184fe7d" : "Your Data",
+  "5578591ead1e76e5eca8723f992950e1" : "2st Row",
+  "57f21c454b7a90784699cce8315fa4bf" : "1st Row",
+  "72d6d7a1885885bb55a565fd1070581a" : "Import",
+  "81a5726cb8da16023374870e4f8282e0" : "Select a List ",
+  "b4daba1e7a3f227329f66e17180aebcc" : "Import into Mailing List:",
+  "cfcd208495d565ef66e7dff9f98764da" : "0",
+  "d43be1310be47177dbded34c26c4e9ed" : "Import Contacts",
+  "dcce7ae3bed98022daa78cd837c7ac54" : "Select col",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel",
+  "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
+  "f7aec8fa9a417536bfb549b4bbf83af0" : "Database col"
+ },
  "title" : ""
 }
