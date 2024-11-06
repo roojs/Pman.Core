@@ -78,7 +78,7 @@ Pman.Dialog.XLSImport = {
            Roo.log(_this.grid);
           
           var dbCols = [
-              ['0', "--not set--"]
+              ['0', "--not set--"],
               ['firstname', 'First Name'],
               ['lastname', 'Last Name'],
               ['role', 'Job Title'],
@@ -99,6 +99,7 @@ Pman.Dialog.XLSImport = {
           
           var records = [];
           dbCols.forEach(function(c){
+              Roo.log(c);
               records.push(new Roo.data.Record({
                   'col': c[0],
                   'name': c[1]
