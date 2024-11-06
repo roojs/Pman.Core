@@ -9,25 +9,17 @@ Pman.Dialog.XLSImport = {
  _strings : {
   '57f21c454b7a90784699cce8315fa4bf' :"1st Row",
   'f77f8c0e4a05a384a886554d76cbd6b1' :"Import XLS",
-  'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
-  'b4daba1e7a3f227329f66e17180aebcc' :"Import into Mailing List:",
   '72d6d7a1885885bb55a565fd1070581a' :"Import",
   'f7aec8fa9a417536bfb549b4bbf83af0' :"Database col",
-  '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'cfcd208495d565ef66e7dff9f98764da' :"0",
-  '340c2ee497b85d5954b01c64de7f44f6' :"Select Person ",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '81a5726cb8da16023374870e4f8282e0' :"Select a List ",
   '5578591ead1e76e5eca8723f992950e1' :"2st Row",
   '35c31ea9e29f774dba060916d184fe7d' :"Your Data",
   'dcce7ae3bed98022daa78cd837c7ac54' :"Select col"
  },
  _named_strings : {
-  'name_qtip' : '340c2ee497b85d5954b01c64de7f44f6' /* Select Person  */ ,
-  'name_emptyText' : '81a5726cb8da16023374870e4f8282e0' /* Select a List  */ ,
   'db_col_name_emptyText' : 'dcce7ae3bed98022daa78cd837c7ac54' /* Select col */ ,
-  'db_col_name_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ ,
-  'name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ 
+  'db_col_name_value' : 'cfcd208495d565ef66e7dff9f98764da' /* 0 */ 
  },
 
  dialog : false,
@@ -217,104 +209,6 @@ Pman.Dialog.XLSImport = {
        },
        xns : Roo.grid,
        '|xns' : 'Roo.grid',
-       toolbar : {
-        xtype : 'Toolbar',
-        xns : Roo,
-        '|xns' : 'Roo',
-        items  : [
-         {
-          xtype : 'TextItem',
-          text : _this._strings['b4daba1e7a3f227329f66e17180aebcc'] /* Import into Mailing List: */,
-          xns : Roo.Toolbar,
-          '|xns' : 'Roo.Toolbar'
-         },
-         {
-          xtype : 'ComboBox',
-          allowBlank : true,
-          alwaysQuery : true,
-          displayField : 'name',
-          editable : false,
-          emptyText : _this._strings['81a5726cb8da16023374870e4f8282e0'] /* Select a List  */,
-          forceSelection : true,
-          listWidth : 250,
-          loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-          minChars : 2,
-          name : 'name',
-          pageSize : 20,
-          qtip : _this._strings['340c2ee497b85d5954b01c64de7f44f6'] /* Select Person  */,
-          queryParam : 'query[name]',
-          selectOnFocus : true,
-          tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b></div>',
-          triggerAction : 'all',
-          typeAhead : true,
-          valueField : 'id',
-          width : 150,
-          listeners : {
-           render : function (_self)
-            {
-              _this.mailing_list = _self;
-            }
-          },
-          xns : Roo.form,
-          '|xns' : 'Roo.form',
-          store : {
-           xtype : 'Store',
-           sortInfo : { field : 'name' , direction : 'ASC' },
-           listeners : {
-            beforeload : function (_self, o)
-             {
-                 o.params = o.params || {};
-                 
-             }
-           },
-           xns : Roo.data,
-           '|xns' : 'Roo.data',
-           proxy : {
-            xtype : 'HttpProxy',
-            method : 'GET',
-            url : baseURL + '/Roo/Crm_mailing_list.php',
-            xns : Roo.data,
-            '|xns' : 'Roo.data'
-           },
-           reader : {
-            xtype : 'JsonReader',
-            fields : [
-                {
-                    'name': 'id',
-                    'type': 'int'
-                },
-                {
-                    'name': 'name',
-                    'type': 'string'
-                }
-            ],
-            id : 'id',
-            root : 'data',
-            totalProperty : 'total',
-            xns : Roo.data,
-            '|xns' : 'Roo.data'
-           }
-          }
-         },
-         {
-          xtype : 'Button',
-          text : _this._strings['ec211f7c20af43e742bf2570c3cb84f9'] /* Add */,
-          listeners : {
-           click : function (_self, e)
-            {
-                Pman.Dialog.CrmMailingList.show(
-                    { id : 0,  owner_id : Pman.Login.authUserId, is_import : 1} ,
-                    function(res) {
-                      _this.mailing_list.setValue(res);
-                   }
-                ); 
-            }
-          },
-          xns : Roo.Toolbar,
-          '|xns' : 'Roo.Toolbar'
-         }
-        ]
-       },
        dataSource : {
         xtype : 'Store',
         remoteSort : true,
