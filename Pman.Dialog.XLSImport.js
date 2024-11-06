@@ -76,32 +76,9 @@ Pman.Dialog.XLSImport = {
            Roo.log('COMBO');
            Roo.log(_this.dbColCombo);
            Roo.log(_this.grid);
-           
-           /*
-           [
-          [ '0', "--not set--"],
-          [ 'firstname', "First Name" ],
-          [ 'lastname', "Last Name" ],
-          [ 'phone_direct', "Phone Direct" ],
-          [ 'phone_mobile', 'Mobile Phone' ],
-          [ 'email', "Email" ],
-          [ 'alt_email', "Secondary Email" ],
-          [ 'fax', "Fax" ],
-          [ 'nametype1', "name ('given name family name')" ],
-          [ 'nametype2', "name ('family name given name')" ],
-          [ 'company_name', "Company Name" ] ,
-          [ 'lang', "Language Spoken" ],
-          [ 'client_of_competitor', 'Client of Competitor'],
-          [ 'company_type', 'Company Type'],
-          [ 'role', 'Job Title'],
-          [ 'client_industry', 'Client Industry'],
-          [ 'company_website', "Website" ],
-          [ 'office_country', 'Country' ]
-      ]
-          */
           
           var dbCols = [
-              [ '0', "--not set--"]
+              ['0', "--not set--"]
               ['firstname', 'First Name'],
               ['lastname', 'Last Name'],
               ['role', 'Job Title'],
