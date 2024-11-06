@@ -99,7 +99,6 @@ Pman.Dialog.XLSImport = {
           
           var records = [];
           dbCols.forEach(function(c){
-              Roo.log(c);
               records.push(new Roo.data.Record({
                   'col': c[0],
                   'name': c[1]
