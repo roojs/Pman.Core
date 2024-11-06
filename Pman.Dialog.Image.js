@@ -133,7 +133,7 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
-          _this.form.findField('imageUpload').el.on('change', _this.uploadCallback);
+          _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);
           _this.form.findField('imageUpload').el.dom.click();
           _this.dialog.hide();
       
