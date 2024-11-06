@@ -57,6 +57,7 @@ Pman.Dialog.XLSImport = {
     listeners : {
      show : function (_self)
       {
+          Roo.log(_this.data);
           var records = [];
           _this.data.header.forEach(function(h, index) {
               records.push(new Roo.data.Record({
