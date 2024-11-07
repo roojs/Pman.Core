@@ -150,7 +150,7 @@ Pman.Dialog.XLSImport = {
                     _validate: 1
                 },
                 success: function(res) {
-                    Pman.Dialog.PressReleaseJournalistImport.show({data: res.data});
+                    Pman.Dialog.PressReleaseJournalistImport.show({map: map, data: res.data});
                 },
                 failure : function(res)
                 {
