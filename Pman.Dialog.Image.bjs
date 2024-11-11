@@ -333,9 +333,10 @@
     "show" : [
      "function (_self)",
      "{",
-     "    _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);",
-     "    _this.form.findField('imageUpload').el.dom.click();",
-     "    _this.dialog.hide();",
+     "    Roo.log('SHOW');",
+     "    //_this.form.findField('imageUpload').el.on('change', _self.uploadCallback);",
+     "    //_this.form.findField('imageUpload').el.dom.click();",
+     "    //_this.dialog.hide();",
      "",
      "    // this does not really work - escape on the borders works..",
      "    // resize to fit.. if we have styled stuff...",
