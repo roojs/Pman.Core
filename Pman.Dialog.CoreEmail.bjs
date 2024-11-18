@@ -409,6 +409,66 @@
                "valueField" : "id",
                "width" : 300,
                "xtype" : "ComboBox"
+              },
+              {
+               "$ xns" : "Roo.form",
+               "Boolean forceSelection" : true,
+               "allowBlank" : true,
+               "alwaysQuery" : true,
+               "displayField" : "name",
+               "editable" : false,
+               "emptyText" : "Select BCC Group",
+               "fieldLabel" : "BCC Group",
+               "hiddenName" : "bcc_group_id",
+               "items" : [
+                {
+                 "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "store",
+                 "items" : [
+                  {
+                   "$ url" : "baseURL + '/Roo/Core_group'",
+                   "$ xns" : "Roo.data",
+                   "* prop" : "proxy",
+                   "method" : "GET",
+                   "xtype" : "HttpProxy"
+                  },
+                  {
+                   "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
+                   "$ xns" : "Roo.data",
+                   "* prop" : "reader",
+                   "id" : "name",
+                   "root" : "data",
+                   "totalProperty" : "total",
+                   "xtype" : "JsonReader"
+                  }
+                 ],
+                 "listeners" : {
+                  "|beforeload" : [
+                   "function (_self, o){",
+                   "    o.params = o.params || {};",
+                   "    ",
+                   "    o.params._direct_return = 1;",
+                   "}",
+                   ""
+                  ]
+                 },
+                 "remoteSort" : true,
+                 "xtype" : "Store"
+                }
+               ],
+               "loadingText" : "Searching...",
+               "minChars" : 2,
+               "name" : "bcc_group_id_name",
+               "pageSize" : 25,
+               "qtip" : "Select BCC Group",
+               "selectOnFocus" : true,
+               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
+               "triggerAction" : "all",
+               "typeAhead" : true,
+               "valueField" : "id",
+               "width" : 300,
+               "xtype" : "ComboBox"
               }
              ],
              "xtype" : "Row"

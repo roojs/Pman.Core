@@ -707,6 +707,60 @@ Pman.Dialog.CoreEmail = {
                  '|xns' : 'Roo.data'
                 }
                }
+              },
+              {
+               xtype : 'ComboBox',
+               allowBlank : true,
+               alwaysQuery : true,
+               displayField : 'name',
+               editable : false,
+               emptyText : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
+               fieldLabel : _this._strings['68b00d723d37122f64da8d9939f836f0'] /* BCC Group */,
+               forceSelection : true,
+               hiddenName : 'bcc_group_id',
+               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+               minChars : 2,
+               name : 'bcc_group_id_name',
+               pageSize : 25,
+               qtip : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
+               selectOnFocus : true,
+               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
+               triggerAction : 'all',
+               typeAhead : true,
+               valueField : 'id',
+               width : 300,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               store : {
+                xtype : 'Store',
+                remoteSort : true,
+                sortInfo : { direction : 'ASC', field: 'name' },
+                listeners : {
+                 beforeload : function (_self, o){
+                      o.params = o.params || {};
+                      
+                      o.params._direct_return = 1;
+                  }
+                },
+                xns : Roo.data,
+                '|xns' : 'Roo.data',
+                proxy : {
+                 xtype : 'HttpProxy',
+                 method : 'GET',
+                 url : baseURL + '/Roo/Core_group',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data'
+                },
+                reader : {
+                 xtype : 'JsonReader',
+                 fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
+                 id : 'name',
+                 root : 'data',
+                 totalProperty : 'total',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data'
+                }
+               }
               }
              ]
             },
