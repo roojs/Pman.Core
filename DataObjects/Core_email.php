@@ -695,7 +695,7 @@ Content-Transfer-Encoding: 7bit
         if(empty($this->test_class)){
             $pg->jerr("[{$this->name}] does not has test class");
         }
-        
+        var_dumP($this->test_class);
         require_once "{$this->test_class}.php";
         
         $cls = str_replace('/', '_', $this->test_class);
