@@ -95,6 +95,7 @@ class Pman_Core_NotifySend extends Pman
     var $error_handler = 'die';
     var $poolname = 'core';
     var $server; // core_notify_server
+    var $debug;
     
     function getAuth()
     {
@@ -146,6 +147,7 @@ class Pman_Core_NotifySend extends Pman
                 $ff->Core_Mailer = array();
             }
             HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
+            $this->debug = true;
         }
         
         $sent = (empty($w->sent) || strtotime( $w->sent) < 100 ) ? false : true;
@@ -719,7 +721,9 @@ class Pman_Core_NotifySend extends Pman
     {
         $this->debug_str .= strlen($this->debug_str) ? "\n" : '';
         $this->debug_str .= $message;
-        //echo $message ."\n";
+        if ($this->debug) { 
+            echo $message ."\n";
+        }
     }
     
     function errorHandler($msg, $success = false)
