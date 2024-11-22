@@ -436,7 +436,10 @@ class Pman_Core_NotifySend extends Pman
                 $mailer->username = $ff->Mail['username'];
                 $mailer->password = $ff->Mail['password'];        
             }
-            
+            if (isset($ff->Core_Notify['tls'])) {
+                // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
+                $mailer->tls = $ff->Core_Notify['tls'];
+            }
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
                 // we might want to regex 'office365 as a mx host 
