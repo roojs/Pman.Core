@@ -488,8 +488,10 @@ class Pman_Core_NotifySend extends Pman
                         $mailer->port = $settings['port'];
                     }
                     if (isset($settings['socket_options'])) {
-                        $mailer->socket_options = $settings['socket_options'];
-                        
+                        $mailer->socket_options = $settings['socket_options']; 
+                    }
+                    if (isset($settings['tls'])) {
+                        $mailer->tls = $settings['tls'];
                     }
                     
                     
