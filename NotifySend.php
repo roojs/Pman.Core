@@ -25,6 +25,28 @@ require_once 'Pman.php';
  * Pman_Core_NotifySend[host] = 'localhost' << to override direct sending..
  * Mail[helo] << helo host name
  * Mail[socket_options] << any socket option.
+ *
+ *
+ *'Core_Notify' => array(
+            'routes' => array(
+                'smtp.office365.com' => array(
+                    'domains' => array(
+                          'XXX' << list of domains..
+                    ),
+                    'mx' => array(
+                        '/outlook\.com$/'   // regex of mx
+                    ),
+                    'username' => 'USERNAME', 
+                    'password' => 'PASSWORD',
+                    'port' => 465,
+                    'rate' => 100  // how many per hour.
+                ),
+                
+            )
+        ),
+ *
+ *  
+ * 
  */
 class Pman_Core_NotifySend_Exception_Success extends Exception {}
 class Pman_Core_NotifySend_Exception_Fail extends Exception {}
@@ -416,10 +438,23 @@ class Pman_Core_NotifySend extends Pman
                 
                 // we might want to regex 'office365 as a mx host 
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
-                    if(!in_array($dom, $settings['domains'])){
+                    
+                    $match = false;
+                    
+                    
+                    if(in_array($dom, $settings['domains'])){
+                        $match = true;
+                    }
+                    if (!$match && !empty($settings['mx'])) {
+                        foreach($settings['mx'] as $mmx) {
+                            if (preg_match($mmx, $mx)) {
+                                $match = true;
+                            }
+                        }
+                    }
+                    if (!$match) {
                         continue;
                     }
-                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
                     // if it's newer that '1' minute...
                     // then shunt it..
