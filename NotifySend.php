@@ -163,7 +163,8 @@ class Pman_Core_NotifySend extends Pman
         $cev = DB_DataObject::Factory('Events');
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
-        $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
+        // force will override failed. (not not sent.)
+        $cev->whereAddIn("action", $force ? array('NOTIFYSENT') : array('NOTIFYSENT', 'NOTIFYFAIL'), 'string');
         $cev->limit(1);
         if ($cev->count()) {
             $cev->find(true);
