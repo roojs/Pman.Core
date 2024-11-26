@@ -328,12 +328,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
                 
             }
-
-            if($watch->last_event_only) {
-                $old = clone($n);
-                $n->act_start($n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE"));
-                $n->update($old);
-            }
             
             
             $n->trigger_person_id = $event->person_id;
@@ -341,6 +335,33 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
             $n->evtype   = $watch->medium;
+
+            $cn = clone($n);
+            // there is a notification
+            if($cn->find(true)) {
+                // sent notification => skip
+                if($cn->event_id > 0 && strtotime($cn->sent) < strtotime('now')) {
+                    continue
+                }
+                // else pending notication
+                // no update => skip
+                if(!$lastEventOnly) {
+                    return;
+                }
+
+                // update
+                $old = clone($cn);
+                $cn->act_when = $cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE");
+                $cn->act_start = $cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE");
+                $cn->update();
+                return;
+            }
+
+            if($watch->last_event_only) {
+                $
+                $n->act_start($n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE"));
+                $n->update($old);
+            }
             
             // does this watch already have a flag...
             $nf = clone($n);
