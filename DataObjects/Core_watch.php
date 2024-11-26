@@ -328,6 +328,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
                 
             }
+
+            if($watch->last_event_only) {
+                $old = clone($n);
+                $n->act_start($n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE"));
+                $n->update($old);
+            }
             
             
             $n->trigger_person_id = $event->person_id;
