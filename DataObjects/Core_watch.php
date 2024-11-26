@@ -86,8 +86,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     if(!is_null($arr) && is_array($arr)) {
                         foreach($arr as $event) {
                             $events[] = array(
-                                'table' => explode("::", $event)[0],
-                                'action' => explode("::", $event)[1]
+                                'table' => explode(":", $event)[0],
+                                'action' => explode(":", $event)[1]
                             );
                         }
                     }
