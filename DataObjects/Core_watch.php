@@ -335,7 +335,28 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
             $n->evtype   = $watch->medium;
+
+            $cn = clone($n);
+            // there is a notification
+            if($cn->find(true)) {
+                // sent notification => skip
+                if($cn->event_id > 0 && strtotime($cn->sent) < strtotime('now')) {
+                    continue;
+                }
+                // else pending notication
+                // no update => skip
+                if(!$watch->last_event_only) {
+                    continue;
+                }
+
+                // update
+                $old = clone($cn);
+                $cn->act_start($cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE"));
+                $cn->update();
+                continue;
+            }
             
+            /*
             // does this watch already have a flag...
             $nf = clone($n);
             $nf->whereAdd("sent < '2000-01-01'");
@@ -344,6 +365,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
+            */
 
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ? $n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE") : $n->act_start );
