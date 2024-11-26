@@ -345,16 +345,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
                 // else pending notication
                 // no update => skip
-                if(!$lastEventOnly) {
-                    return;
+                if(!$watch->last_event_only) {
+                    continue;
                 }
 
                 // update
                 $old = clone($cn);
-                $cn->act_when = $cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE");
-                $cn->act_start = $cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE");
+                $cn->act_start($cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE"));
                 $cn->update();
-                return;
+                continue;
             }
 
             if($watch->last_event_only) {
