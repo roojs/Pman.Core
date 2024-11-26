@@ -355,13 +355,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 $cn->update();
                 continue;
             }
-
-            if($watch->last_event_only) {
-                $
-                $n->act_start($n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE"));
-                $n->update($old);
-            }
             
+            /*
             // does this watch already have a flag...
             $nf = clone($n);
             $nf->whereAdd("sent < '2000-01-01'");
@@ -370,6 +365,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
+            */
+            
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ? $n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE") : $n->act_start );
             $n->insert();
