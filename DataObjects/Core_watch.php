@@ -348,6 +348,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
                 // update
                 $old = clone($cn);
+                $cn->trigger_person_id = $event->person_id;
+                $cn->trigger_event_id = $event->id;
                 $cn->act_start($cn->sqlValue("NOW() + INTERVAL {$delay} MINUTE"));
                 $cn->update();
                 continue;
