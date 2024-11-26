@@ -345,7 +345,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
             //echo "inserting notify?";
-            $n->act_start( empty($n->act_start) ? $n->sqlValue("NOW() + INTERVAL {$delay} MINUTE") : $n->act_start );
+            $n->act_start( empty($n->act_start) ? $n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE") : $n->act_start );
             $n->insert();
         }
          
