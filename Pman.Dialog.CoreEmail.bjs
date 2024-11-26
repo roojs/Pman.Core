@@ -409,66 +409,6 @@
                "valueField" : "id",
                "width" : 300,
                "xtype" : "ComboBox"
-              },
-              {
-               "$ xns" : "Roo.form",
-               "Boolean forceSelection" : true,
-               "allowBlank" : true,
-               "alwaysQuery" : true,
-               "displayField" : "name",
-               "editable" : false,
-               "emptyText" : "Select To Group",
-               "fieldLabel" : "To Group",
-               "hiddenName" : "to_group_id",
-               "items" : [
-                {
-                 "$ sortInfo" : "{ direction : 'ASC', field: 'name' }",
-                 "$ xns" : "Roo.data",
-                 "* prop" : "store",
-                 "items" : [
-                  {
-                   "$ url" : "baseURL + '/Roo/Core_group'",
-                   "$ xns" : "Roo.data",
-                   "* prop" : "proxy",
-                   "method" : "GET",
-                   "xtype" : "HttpProxy"
-                  },
-                  {
-                   "$ fields" : "[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"int\"}]",
-                   "$ xns" : "Roo.data",
-                   "* prop" : "reader",
-                   "id" : "name",
-                   "root" : "data",
-                   "totalProperty" : "total",
-                   "xtype" : "JsonReader"
-                  }
-                 ],
-                 "listeners" : {
-                  "|beforeload" : [
-                   "function (_self, o){",
-                   "    o.params = o.params || {};",
-                   "    ",
-                   "    o.params._direct_return = 1;",
-                   "}",
-                   ""
-                  ]
-                 },
-                 "remoteSort" : true,
-                 "xtype" : "Store"
-                }
-               ],
-               "loadingText" : "Searching...",
-               "minChars" : 2,
-               "name" : "to_group_id_name",
-               "pageSize" : 25,
-               "qtip" : "Select To Group",
-               "selectOnFocus" : true,
-               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>",
-               "triggerAction" : "all",
-               "typeAhead" : true,
-               "valueField" : "id",
-               "width" : 300,
-               "xtype" : "ComboBox"
               }
              ],
              "xtype" : "Row"
@@ -1566,11 +1506,7 @@
   "language_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
   "subject_fieldLabel" : "c7892ebbb139886662c6f2fc8c450710",
-  "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676",
-  "to_group_id_name_emptyText" : "96b8abfe6c73696acc6dba37ffcdee89",
-  "to_group_id_name_fieldLabel" : "b6de8a3b6f3cbaca516c1548856cc41d",
-  "to_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
-  "to_group_id_name_qtip" : "96b8abfe6c73696acc6dba37ffcdee89"
+  "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
  "parent" : "",
  "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreEmail.bjs",
@@ -1594,11 +1530,9 @@
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "94966d90747b97d1f0f206c98a8b1ac3" : "Send",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
-  "96b8abfe6c73696acc6dba37ffcdee89" : "Select To Group",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",
-  "b6de8a3b6f3cbaca516c1548856cc41d" : "To Group",
   "b78a3223503896721cca1303f776159b" : "Title",
   "b9c49611cfda3259a2b837b39489e650" : "Add Image",
   "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",

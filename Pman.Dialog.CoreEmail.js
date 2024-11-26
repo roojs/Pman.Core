@@ -27,10 +27,8 @@ Pman.Dialog.CoreEmail = {
   '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
-  '96b8abfe6c73696acc6dba37ffcdee89' :"Select To Group",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
-  'b6de8a3b6f3cbaca516c1548856cc41d' :"To Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
   '4994a8ffeba4ac3140beb89e8d41f174' :"Language",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
@@ -47,9 +45,6 @@ Pman.Dialog.CoreEmail = {
  },
  _named_strings : {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
-  'to_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
-  'to_group_id_name_fieldLabel' : 'b6de8a3b6f3cbaca516c1548856cc41d' /* To Group */ ,
-  'to_group_id_name_qtip' : '96b8abfe6c73696acc6dba37ffcdee89' /* Select To Group */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
@@ -58,7 +53,6 @@ Pman.Dialog.CoreEmail = {
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
-  'to_group_id_name_emptyText' : '96b8abfe6c73696acc6dba37ffcdee89' /* Select To Group */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
@@ -675,60 +669,6 @@ Pman.Dialog.CoreEmail = {
                name : 'bcc_group_id_name',
                pageSize : 25,
                qtip : _this._strings['2c466a2c159463f1d9ef5a7b57b52827'] /* Select BCC Group */,
-               selectOnFocus : true,
-               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
-               triggerAction : 'all',
-               typeAhead : true,
-               valueField : 'id',
-               width : 300,
-               xns : Roo.form,
-               '|xns' : 'Roo.form',
-               store : {
-                xtype : 'Store',
-                remoteSort : true,
-                sortInfo : { direction : 'ASC', field: 'name' },
-                listeners : {
-                 beforeload : function (_self, o){
-                      o.params = o.params || {};
-                      
-                      o.params._direct_return = 1;
-                  }
-                },
-                xns : Roo.data,
-                '|xns' : 'Roo.data',
-                proxy : {
-                 xtype : 'HttpProxy',
-                 method : 'GET',
-                 url : baseURL + '/Roo/Core_group',
-                 xns : Roo.data,
-                 '|xns' : 'Roo.data'
-                },
-                reader : {
-                 xtype : 'JsonReader',
-                 fields : [{"name":"name","type":"string"},{"name":"id","type":"int"}],
-                 id : 'name',
-                 root : 'data',
-                 totalProperty : 'total',
-                 xns : Roo.data,
-                 '|xns' : 'Roo.data'
-                }
-               }
-              },
-              {
-               xtype : 'ComboBox',
-               allowBlank : true,
-               alwaysQuery : true,
-               displayField : 'name',
-               editable : false,
-               emptyText : _this._strings['96b8abfe6c73696acc6dba37ffcdee89'] /* Select To Group */,
-               fieldLabel : _this._strings['b6de8a3b6f3cbaca516c1548856cc41d'] /* To Group */,
-               forceSelection : true,
-               hiddenName : 'to_group_id',
-               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
-               minChars : 2,
-               name : 'to_group_id_name',
-               pageSize : 25,
-               qtip : _this._strings['96b8abfe6c73696acc6dba37ffcdee89'] /* Select To Group */,
                selectOnFocus : true,
                tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
                triggerAction : 'all',
