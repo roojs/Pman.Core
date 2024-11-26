@@ -341,7 +341,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             if($cn->find(true)) {
                 // sent notification => skip
                 if($cn->event_id > 0 && strtotime($cn->sent) < strtotime('now')) {
-                    continue
+                    continue;
                 }
                 // else pending notication
                 // no update => skip
@@ -366,7 +366,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
             */
-            
+
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ? $n->sqlValue("NOW() + INTERVAL {$watch->no_minutes} MINUTE") : $n->act_start );
             $n->insert();
