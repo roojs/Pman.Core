@@ -69,6 +69,58 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             
         }
+
+        if(!empty($q['_watchable_events'])) {
+            $ff = HTML_FlexyFramework::get();
+
+            $host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : 'pman.HTTP_HOST.not.set';
+            $scheme = isset($ff->Pman['SCHEME']) ? $ff->Pman['SCHEME'] : (($host == 'localhost') ? 'http' : 'https');
+
+
+            $events = array();
+
+            foreach(explode(",", $ff->enable) as $module) {
+                $file = file_get_contents($scheme . '://' . $host . $ff->rootURL . "/Pman/" . $module . "/watchable_events.json");
+                if($file !== false) {
+                    $arr = json_decode($file);
+                    if(!is_null($arr) && is_array($arr)) {
+                        foreach($arr as $event) {
+                            $events[] = array(
+                                'table' => explode(":", $event)[0],
+                                'action' => explode(":", $event)[1]
+                            );
+                        }
+                    }
+                }
+            }
+
+            $roo->jdata($events);
+        }
+
+        if(!empty($q['_watchable_actions'])) {
+            $ff = HTML_FlexyFramework::get();
+
+            $host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : 'pman.HTTP_HOST.not.set';
+            $scheme = isset($ff->Pman['SCHEME']) ? $ff->Pman['SCHEME'] : (($host == 'localhost') ? 'http' : 'https');
+
+            $actions = array();
+
+            foreach(explode(",", $ff->enable) as $module) {
+                $file = file_get_contents($scheme . '://' . $host . $ff->rootURL . "/Pman/" . $module . "/watchable_actions.json");
+                if($file !== false) {
+                    $arr = json_decode($file);
+                    if(!is_null($arr) && is_array($arr)) {
+                        foreach($arr as $action) {
+                            $actions[] = array(
+                                'action' => $action
+                            );
+                        }
+                    }
+                }
+            }
+
+            $roo->jdata($actions);
+        }
         
     }
     
