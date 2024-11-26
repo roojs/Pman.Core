@@ -329,9 +329,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
             }
             
-            
-            $n->trigger_person_id = $event->person_id;
-            $n->trigger_event_id = $event->id;
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
             $n->evtype   = $watch->medium;
@@ -355,6 +352,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 $cn->update();
                 continue;
             }
+
+            $n->trigger_person_id = $event->person_id;
+            $n->trigger_event_id = $event->id;
             
             /*
             // does this watch already have a flag...
