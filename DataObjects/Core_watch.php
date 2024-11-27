@@ -69,6 +69,63 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             
         }
+
+        if(!empty($q['_watchable_events'])) {
+            $ff = HTML_FlexyFramework::get();
+
+            
+            $events = array();
+
+            foreach(explode(",", $ff->enable) as $module) {
+                $fn = $ff->rootDir."/Pman/$module/watchable_events.json";
+                if (!file_exists($fn) || !is_readable($fn)) {
+                    continue;
+                }
+                
+                $arr = json_decode(file_get_contents($fn));
+                if(is_null($arr) || is_array($arr)) {
+                    continue;
+                }
+                foreach($arr as $event) {
+                    $events[] = array(
+                        'table' => explode(":", $event)[0],
+                        'action' => explode(":", $event)[1]
+                    );
+                }
+            }
+
+            $roo->jdata($events);
+        }
+
+        if(!empty($q['_watchable_actions'])) {
+            $ff = HTML_FlexyFramework::get();
+
+            
+            $actions = array();
+
+            foreach(explode(",", $ff->enable) as $module) {
+                
+                $fn = $ff->rootDir."/Pman/$module/watchable_events.json";
+                if (!file_exists($fn) || !is_readable($fn)) {
+                    continue;
+                }
+                
+                $arr = json_decode(file_get_contents($fn));
+                if(is_null($arr) || is_array($arr)) {
+                    continue;
+                }
+                
+                     
+                foreach($arr as $action) {
+                    $actions[] = array(
+                        'action' => $action
+                    );
+                }
+                  
+            }
+
+            $roo->jdata($actions);
+        }
         
     }
     
@@ -277,12 +334,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
             }
             
-            
-            $n->trigger_person_id = $event->person_id;
-            $n->trigger_event_id = $event->id;
             $n->person_id = $watch->person_id;
             $n->watch_id =  $watch->id;
             $n->evtype   = $watch->medium;
+
+            $n->trigger_person_id = $event->person_id;
+            $n->trigger_event_id = $event->id;
             
             // does this watch already have a flag...
             $nf = clone($n);
@@ -292,8 +349,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
+
             //echo "inserting notify?";
-            $n->act_start( empty($n->act_start) ? date("Y-m-d H:i:s") : $n->act_start );
+            $n->act_start( empty($n->act_start) ?
+                    $n->sqlValue("NOW()" . (empty($watch->no_minutes) ? "" : " + INTERVAL {$watch->no_minutes} MINUTE"))
+                    : $n->act_start );
             $n->insert();
         }
          
