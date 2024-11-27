@@ -83,7 +83,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
                 
                 $arr = json_decode(file_get_contents($fn));
-                if(is_null($arr) || is_array($arr)) {
+                if(is_null($arr) || !is_array($arr)) {
                     continue;
                 }
                 foreach($arr as $event) {
@@ -105,13 +105,13 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
             foreach(explode(",", $ff->enable) as $module) {
                 
-                $fn = $ff->rootDir."/Pman/$module/watchable_events.json";
+                $fn = $ff->rootDir."/Pman/$module/watchable_actions.json";
                 if (!file_exists($fn) || !is_readable($fn)) {
                     continue;
                 }
                 
                 $arr = json_decode(file_get_contents($fn));
-                if(is_null($arr) || is_array($arr)) {
+                if(is_null($arr) || !is_array($arr)) {
                     continue;
                 }
                 
