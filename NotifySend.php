@@ -25,6 +25,28 @@ require_once 'Pman.php';
  * Pman_Core_NotifySend[host] = 'localhost' << to override direct sending..
  * Mail[helo] << helo host name
  * Mail[socket_options] << any socket option.
+ *
+ *
+ *'Core_Notify' => array(
+            'routes' => array(
+                'smtp.office365.com' => array(
+                    'domains' => array(
+                          'XXX' << list of domains..
+                    ),
+                    'mx' => array(
+                        '/outlook\.com$/'   // regex of mx
+                    ),
+                    'username' => 'USERNAME', 
+                    'password' => 'PASSWORD',
+                    'port' => 465,
+                    'rate' => 100  // how many per hour.
+                ),
+                
+            )
+        ),
+ *
+ *  
+ * 
  */
 class Pman_Core_NotifySend_Exception_Success extends Exception {}
 class Pman_Core_NotifySend_Exception_Fail extends Exception {}
@@ -73,6 +95,7 @@ class Pman_Core_NotifySend extends Pman
     var $error_handler = 'die';
     var $poolname = 'core';
     var $server; // core_notify_server
+    var $debug;
     
     function getAuth()
     {
@@ -87,6 +110,7 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
+        // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
        // }
@@ -124,6 +148,7 @@ class Pman_Core_NotifySend extends Pman
                 $ff->Core_Mailer = array();
             }
             HTML_FlexyFramework::get()->Core_Mailer['debug'] = true;
+            $this->debug = true;
         }
         
         $sent = (empty($w->sent) || strtotime( $w->sent) < 100 ) ? false : true;
@@ -141,7 +166,8 @@ class Pman_Core_NotifySend extends Pman
         $cev = DB_DataObject::Factory('Events');
         $cev->on_table =  $this->table;
         $cev->on_id =  $w->id;
-        $cev->whereAdd("action IN ('NOTIFYSENT', 'NOTIFYFAIL')");
+        // force will override failed. (not not sent.)
+        $cev->whereAddIn("action", $force ? array('NOTIFYSENT') : array('NOTIFYSENT', 'NOTIFYFAIL'), 'string');
         $cev->limit(1);
         if ($cev->count()) {
             $cev->find(true);
@@ -411,15 +437,31 @@ class Pman_Core_NotifySend extends Pman
                 $mailer->username = $ff->Mail['username'];
                 $mailer->password = $ff->Mail['password'];        
             }
-            
+            if (isset($ff->Core_Notify['tls'])) {
+                // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
+                $mailer->tls = $ff->Core_Notify['tls'];
+            }
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
                 // we might want to regex 'office365 as a mx host 
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
-                    if(!in_array($dom, $settings['domains'])){
+                    
+                    $match = false;
+                    
+                    
+                    if(in_array($dom, $settings['domains'])){
+                        $match = true;
+                    }
+                    if (!$match && !empty($settings['mx'])) {
+                        foreach($settings['mx'] as $mmx) {
+                            if (preg_match($mmx, $mx)) {
+                                $match = true;
+                            }
+                        }
+                    }
+                    if (!$match) {
                         continue;
                     }
-                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
                     // if it's newer that '1' minute...
                     // then shunt it..
@@ -450,8 +492,10 @@ class Pman_Core_NotifySend extends Pman
                         $mailer->port = $settings['port'];
                     }
                     if (isset($settings['socket_options'])) {
-                        $mailer->socket_options = $settings['socket_options'];
-                        
+                        $mailer->socket_options = $settings['socket_options']; 
+                    }
+                    if (isset($settings['tls'])) {
+                        $mailer->tls = $settings['tls'];
                     }
                     
                     
@@ -683,7 +727,9 @@ class Pman_Core_NotifySend extends Pman
     {
         $this->debug_str .= strlen($this->debug_str) ? "\n" : '';
         $this->debug_str .= $message;
-        //echo $message ."\n";
+        if ($this->debug) { 
+            echo $message ."\n";
+        }
     }
     
     function errorHandler($msg, $success = false)
