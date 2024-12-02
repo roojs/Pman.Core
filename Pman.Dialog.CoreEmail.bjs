@@ -1452,7 +1452,7 @@
        "}"
       ]
      },
-     "text" : "Send",
+     "text" : "Save & Send",
      "xtype" : "Button"
     }
    ],
@@ -1528,7 +1528,7 @@
   "5feb9bf3c03b32635135006cbacb9542" : "Insert Field",
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
-  "94966d90747b97d1f0f206c98a8b1ac3" : "Send",
+  "6fa7053e67f9aca02815e903a655ef3d" : "Save & Send",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
