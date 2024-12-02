@@ -287,12 +287,7 @@ Pman.Dialog.CoreEmail = {
                    },
                    mask : 'loading ...',
                    success : function(res) {
-                       var stylePos = res.data.html.indexOf("</head>");
-                       var bodytext = res.data.html.slice(0, stylePos) 
-                           + "<style type='text/css'>" + res.data.css + "</style>"
-                           + res.data.html.slice(stylePos);
-                           
-                       _this.form.findField('bodytext').setValue(res.data.html);
+                       _this.form.findField('bodytext').setValue(res.data);
                        
                        new Pman.Request({
                            url : baseURL + '/Core/ImportMailMessage.php',
