@@ -1410,7 +1410,7 @@
        "}"
       ]
      },
-     "text" : "Save",
+     "text" : "Save & Close",
      "xtype" : "Button"
     },
     {
@@ -1538,12 +1538,12 @@
   "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",
   "c4ca4238a0b923820dcc509a6f75849b" : "1",
   "c7892ebbb139886662c6f2fc8c450710" : "Subject",
-  "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "e44b145bd8b49b06e0ad2ced1ad56466" : "Plain Text",
   "e9968623956c15023d54335ea3699855" : "Convert Html to Text",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
+  "f17e5ca935b6316c9bcfbf6dbd4165ce" : "Save & Close",
   "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
   "f3017f202748e13d3554a15cbbd1b767" : "Refresh from Stripo",
   "fff0d600f8a0b5e19e88bfb821dd1157" : "Images"
