@@ -527,6 +527,7 @@ Pman.Dialog.CoreEmail = {
                  }
                  if (action.type == 'load') {
                      _this.dialog.el.unmask();
+                     _this.saveBtn.setText('Save & Close');
                      
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
