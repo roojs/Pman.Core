@@ -288,7 +288,7 @@ Pman.Dialog.CoreEmail = {
           click : function (_self, e)
            {
                new Pman.Request({
-                   url : baseURL + '/MediaOutreachCRM/Stripo',
+                   url : baseURL + '/Crm/Stripo',
                    method : 'GET',
                    params : {
                        emailId: _this.form.findField('stripo_id').getValue()
