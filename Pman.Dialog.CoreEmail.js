@@ -170,7 +170,7 @@ Pman.Dialog.CoreEmail = {
         },
        render : function (_self)
         {
-        
+            _this.saveBtn = this;
         }
       },
       xns : Roo,

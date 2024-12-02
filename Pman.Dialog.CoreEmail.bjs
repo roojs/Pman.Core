@@ -1424,7 +1424,7 @@
       "render" : [
        "function (_self)",
        "{",
-       "",
+       "    _this.saveBtn = this;",
        "}"
       ]
      },
