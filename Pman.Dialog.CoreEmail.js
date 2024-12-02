@@ -167,6 +167,10 @@ Pman.Dialog.CoreEmail = {
                  _this.form.doAction("submit");
             });
         
+        },
+       render : function (_self)
+        {
+        
         }
       },
       xns : Roo,
