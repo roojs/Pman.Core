@@ -293,7 +293,7 @@ Pman.Dialog.CoreEmail = {
                            url : baseURL + '/Core/ImportMailMessage.php',
                            method : 'POST',
                            params : {
-                             bodytext : bodytext,
+                             bodytext : res.data,
                              _convertToPlain : true,
                              _check_unsubscribe : true
                            },
