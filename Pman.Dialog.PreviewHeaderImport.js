@@ -10,6 +10,7 @@ Pman.Dialog.PreviewHeaderImport = {
   '57f21c454b7a90784699cce8315fa4bf' :"1st Row",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
   'b4daba1e7a3f227329f66e17180aebcc' :"Import into Mailing List:",
+  '274e4d0b0c96974c2d6e57e250622c1a' :"Example Content",
   'f7aec8fa9a417536bfb549b4bbf83af0' :"Database col",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   'cfcd208495d565ef66e7dff9f98764da' :"0",
@@ -17,7 +18,6 @@ Pman.Dialog.PreviewHeaderImport = {
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   'a1556f1f07081d341ab3e0eae7368cc4' :"Preview Headers from XLS",
   '81a5726cb8da16023374870e4f8282e0' :"Select a List ",
-  '5578591ead1e76e5eca8723f992950e1' :"2st Row",
   '35c31ea9e29f774dba060916d184fe7d' :"Your Data",
   'ad3d06d03d94223fa652babc913de686' :"Validate",
   'dcce7ae3bed98022daa78cd837c7ac54' :"Select col"
@@ -92,10 +92,20 @@ Pman.Dialog.PreviewHeaderImport = {
                   });
               }
               
+              var exampleContent = '';
+              
+              // find a non-empty value starting from the second row
+              for(var rowIndex = 1; rowIndex < _this.data.data.rows.length; rowIndex++) {
+                  if(_this.data.data.rows[rowIndex][index].length > 0) {
+                      exampleContent = _this.data.data.rows[rowIndex][index];
+                      break;
+                  }
+              }
+              
               records.push(new Roo.data.Record({
                   'header_name' : h,
                   'row_1': _this.data.data.rows.length > 0 ? _this.data.data.rows[0][index] : '',
-                  'row_2': _this.data.data.rows.length > 1 ? _this.data.data.rows[1][index] : '',
+                  'row_2': exampleContent,
                   'db_col': dbCol,
                   'db_col_name': dbColName
               }));
@@ -455,7 +465,7 @@ Pman.Dialog.PreviewHeaderImport = {
         {
          xtype : 'ColumnModel',
          dataIndex : 'row_2',
-         header : _this._strings['5578591ead1e76e5eca8723f992950e1'] /* 2st Row */,
+         header : _this._strings['274e4d0b0c96974c2d6e57e250622c1a'] /* Example Content */,
          renderer : function(v,x,r)
          {
              return String.format('{0}', v);
