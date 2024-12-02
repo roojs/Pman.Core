@@ -183,6 +183,10 @@ Pman.Dialog.CoreEmail = {
                 if (!res) {
                     return; //failed.
                 }
+                
+                _this.form.doAction("submit");
+                
+                _this.saveAndSend = true;
                 _this.dialog.hide();
                 if (_this.callback) {
                     _this.callback.call(_this, _this.data);
