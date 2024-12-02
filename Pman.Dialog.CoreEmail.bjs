@@ -985,6 +985,7 @@
              "        ",
              "        if (_this.form.findField('id').getValue() * 1 < 1) {",
              "            _this.form.findField('id').setValue(action.result.data.id);",
+             "            _this.saveBtn.setText('Save & Close');",
              "            ",
              "            if(typeof(module) != 'undefined' && module == 'crm_mailing_list_message') {",
              "                _this.html_preview.show();",
