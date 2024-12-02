@@ -224,7 +224,7 @@ Pman.Dialog.PreviewHeaderImport = {
                     if(typeof(_this.data.disableMailingList) == 'undefined') {
                         config['mailingListId'] = _this.mailing_list.getValue();
                     }
-                    Pman.Dialog.CrmPreviewRowsImport.show(config);
+                    Pman.Dialog.PreviewRowsImport.show(config);
                 },
                 failure : function(res)
                 {
@@ -267,7 +267,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                         if(typeof(_this.data.disableMailingList) != 'undefined') {
                                             config.disableMailingList = _this.data.disableMailingList;
                                         }
-                                        Pman.Dialog.CrmPreviewHeaderImport.show(config);
+                                        Pman.Dialog.PreviewHeaderImport.show(config);
                                     });
                                 }
                             });
