@@ -108,10 +108,12 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         for (  $i =0; $i < $advance +1; $i++) {
             $ut = strtotime("NOW + $i DAYS");
             $day = strtoupper(date("D", $ut));
+            var_dump($day);
             if (in_array($day, $days)) {
                 $usedays[] = date("Y-m-d", $ut);
             }
         }
+        die('test');
                
         //print_r($this);
         
