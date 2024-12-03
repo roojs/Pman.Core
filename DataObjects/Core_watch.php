@@ -179,6 +179,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 $v['delay_minutes'] = $v['delay_minutes'] % 60;
             }
         }
+
+        return $ar;
     }
     
     function listActions($roo, $q) {
