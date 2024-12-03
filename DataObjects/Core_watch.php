@@ -144,7 +144,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $new = DB_DataObject::factory('core_watch');
             $new->setFrom($cw->toArray());
             $new->person_id = 0;
-            $new->isnert();
+            $new->insert();
         }
     }
 
