@@ -563,6 +563,7 @@ Pman.Dialog.CoreEmail = {
                       }
                       
                       if(typeof(_this.saveAndSend) != 'undefined' && _this.saveAndSend === true) {
+                         _this.saveAndSend = false;
                          Pman.Dialog.CrmMailingListQueue.show( {
                              id : 0,
                              message_id : _this.form.findField('id').getValue(),
