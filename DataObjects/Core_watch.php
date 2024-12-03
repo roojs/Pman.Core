@@ -132,6 +132,20 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     function toRooSingleArray($au,$q)
     {
         $ret = $this->toArray();
+
+        $ret['delay_days'] = 0;
+        $ret['delay_hours'] = 0;
+        $ret['delay_minutes'] = $ret['no_minutes'];
+        if($ret['delay_minutes'] >= 720) {
+            $ret['delay_days'] = floor($ret['delay_minutes'] / 720);
+            $ret['delay_minutes'] = $ret['delay_minutes'] % 720;
+        }
+
+        if($ret['delay_minutes'] >= 60) {
+            $ret['delay_hours'] = floor($ret['delay_minutes'] / 60);
+            $ret['delay_minutes'] = $ret['delay_minutes'] % 60;
+        }
+
         if (empty($q['_split_event_name'])) {
             return $ret;
         }
@@ -147,6 +161,24 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         return $ret;
         
         
+    }
+
+    function postListFilter($ar, $au, $req)
+    {
+        foreach($ar as &$v) {
+            $v['delay_days'] = 0;
+            $v['delay_hours'] = 0;
+            $v['delay_minutes'] = $v['no_minutes'];
+            if($v['delay_minutes'] >= 720) {
+                $v['delay_days'] = floor($v['delay_minutes'] / 720);
+                $v['delay_minutes'] = $v['delay_minutes'] % 720;
+            }
+    
+            if($v['delay_minutes'] >= 60) {
+                $v['delay_hours'] = floor($v['delay_minutes'] / 60);
+                $v['delay_minutes'] = $v['delay_minutes'] % 60;
+            }
+        }
     }
     
     function listActions($roo, $q) {
