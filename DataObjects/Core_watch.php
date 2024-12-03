@@ -134,6 +134,18 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if(isset($request['delay_days']) && isset($request['delay_hours']) && isset($request['delay_minutes'])) {
             $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $request['delay_minutes'];
         }
+        if(!empty($request['_copy'])) {
+            $cw = DB_DataObject::factory('core_watch');
+
+            if(!$cw->get($request['_copy'])) {
+                $roo->jerr('No watch with id ' . $request['_copy']);
+            }
+            
+            $new = DB_DataObject::factory('core_watch');
+            $new->setFrom($cw->toArray());
+            $new->person_id = 0;
+            $new->isnert();
+        }
     }
 
     function  beforeUpdate($old, $request, $roo)
