@@ -138,6 +138,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
     function  beforeUpdate($old, $request, $roo)
     {
+        var_dump($request);
         if(isset($request['delay_days']) && isset($request['delay_hours']) && isset($requset['delay_minutes'])) {
             $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $requset['delay_minutes'];
         }
