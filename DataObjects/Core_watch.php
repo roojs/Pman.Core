@@ -132,14 +132,14 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     function beforeInsert($request, $roo)
     {
         if(isset($request['delay_days']) && isset($request['delay_hours']) && isset($request['delay_minutes'])) {
-            $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $requset['delay_minutes'];
+            $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $request['delay_minutes'];
         }
     }
 
     function  beforeUpdate($old, $request, $roo)
     {
         if(isset($request['delay_days']) && isset($request['delay_hours']) && isset($request['delay_minutes'])) {
-            $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $requset['delay_minutes'];
+            $this->no_minutes = $request['delay_days'] * 720 + $request['delay_hours'] * 60 + $request['delay_minutes'];
         }
     }
     
