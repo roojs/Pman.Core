@@ -23,8 +23,8 @@ Pman.Dialog.CoreEmail = {
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
+  '6fa7053e67f9aca02815e903a655ef3d' :"Save & Send",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
-  '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -167,6 +167,10 @@ Pman.Dialog.CoreEmail = {
                  _this.form.doAction("submit");
             });
         
+        },
+       render : function (_self)
+        {
+            _this.saveBtn = this;
         }
       },
       xns : Roo,
@@ -174,7 +178,7 @@ Pman.Dialog.CoreEmail = {
      },
      {
       xtype : 'Button',
-      text : _this._strings['94966d90747b97d1f0f206c98a8b1ac3'] /* Send */,
+      text : _this._strings['6fa7053e67f9aca02815e903a655ef3d'] /* Save & Send */,
       listeners : {
        click : function (_self, e)
         {
@@ -183,21 +187,9 @@ Pman.Dialog.CoreEmail = {
                 if (!res) {
                     return; //failed.
                 }
-                _this.dialog.hide();
-                if (_this.callback) {
-                    _this.callback.call(_this, _this.data);
-                }
                 
-                Pman.Dialog.CrmMailingListQueue.show( {
-                    id : 0,
-                    message_id : _this.form.findField('id').getValue(),
-                    message_id_name : _this.form.findField('name').getValue()
-                }, function() {
-                    // change the tab to queue...
-                    var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
-                    Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
-                });
-                _this.form.reset();
+                _this.saveAndSend = true;
+                _this.form.doAction("submit");
             });
         
             
@@ -288,25 +280,20 @@ Pman.Dialog.CoreEmail = {
           click : function (_self, e)
            {
                new Pman.Request({
-                   url : baseURL + '/MediaOutreachCRM/Stripo',
+                   url : baseURL + '/Crm/Stripo',
                    method : 'GET',
                    params : {
                        emailId: _this.form.findField('stripo_id').getValue()
                    },
                    mask : 'loading ...',
                    success : function(res) {
-                       var stylePos = res.data.html.indexOf("</head>");
-                       var bodytext = res.data.html.slice(0, stylePos) 
-                           + "<style type='text/css'>" + res.data.css + "</style>"
-                           + res.data.html.slice(stylePos);
-                           
-                       _this.form.findField('bodytext').setValue(res.data.html);
+                       _this.form.findField('bodytext').setValue(res.data);
                        
                        new Pman.Request({
                            url : baseURL + '/Core/ImportMailMessage.php',
                            method : 'POST',
                            params : {
-                             bodytext : bodytext,
+                             bodytext : res.data,
                              _convertToPlain : true,
                              _check_unsubscribe : true
                            },
@@ -535,6 +522,7 @@ Pman.Dialog.CoreEmail = {
                  }
                  if (action.type == 'load') {
                      _this.dialog.el.unmask();
+                     _this.saveBtn.setText('Save & Close');
                      
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
@@ -555,6 +543,7 @@ Pman.Dialog.CoreEmail = {
                      
                      if (_this.form.findField('id').getValue() * 1 < 1) {
                          _this.form.findField('id').setValue(action.result.data.id);
+                         _this.saveBtn.setText('Save & Close');
                          
                          if(typeof(module) != 'undefined' && module == 'crm_mailing_list_message') {
                              _this.html_preview.show();
@@ -571,6 +560,19 @@ Pman.Dialog.CoreEmail = {
                      _this.dialog.hide();
                       if (_this.callback) {
                          _this.callback.call(_this, action.result.data);
+                      }
+                      
+                      if(typeof(_this.saveAndSend) != 'undefined' && _this.saveAndSend === true) {
+                         _this.saveAndSend = false;
+                         Pman.Dialog.CrmMailingListQueue.show( {
+                             id : 0,
+                             message_id : _this.form.findField('id').getValue(),
+                             message_id_name : _this.form.findField('name').getValue()
+                         }, function() {
+                             // change the tab to queue...
+                             var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
+                             Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+                         });
                       }
                       _this.form.reset();
                       return;
