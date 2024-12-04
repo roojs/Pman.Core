@@ -144,11 +144,22 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     if(empty($ar)) {
                         continue;
                     }
+                    $class = get_class(DB_DataObject::factory($ar[0]));
 
-                    $table = $ar[0];
-                    $method = $ar[1];
-
-                    $object = DB_DataObject::factory($table);
+                    try {
+                        $method = new ReflectionMethod("{$class}::{$ar[1]}");
+                        if($method->isStatic()) {
+                            var_dump('IS STATIC');
+                        }
+                        else {
+                            var_dump('IS NOT STATIC');
+                        }
+                    }
+                    catch (ReflectionException $e)
+                    {
+                        var_dump('NOT A METHOD');
+                        continue;
+                    }
 
                     var_dump($table);
                     var_dump($method);
