@@ -294,7 +294,7 @@ class Pman_Core_UpdateDatabase extends Pman
      * 
      * except any matching /migrate/
      */
-    function importSQL()
+    function importSQL($modules = false)
     {
         
         // loop through all the modules, and see if they have a importSQL method?
@@ -314,7 +314,7 @@ class Pman_Core_UpdateDatabase extends Pman
         
        
         
-        $ar = $this->modulesList();
+        $ar = !empty($modules) ? $modules : $this->modulesList();
         
         
         foreach($ar as $m) {
@@ -538,6 +538,11 @@ class Pman_Core_UpdateDatabase extends Pman
                         continue;
                     }
                     $matches = array();
+                    
+                    if (preg_match("/Using a password on the command line interface can be insecure/", $line)) {
+                        continue;
+                    }
+                    
                     if (!preg_match('/^ERROR\s+([0-9]+)/', $line, $matches)) {
                         echo " ---- {$line}\n"; flush();
                         continue;
