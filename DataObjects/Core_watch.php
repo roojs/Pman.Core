@@ -129,7 +129,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
                     try {
                         $class = get_class(DB_DataObject::factory($ar[0]));
-                        
+
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
                         if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
                             // instance method
@@ -139,6 +139,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     catch (ReflectionException $e)
                     {
                         // not exists
+                        continue;
+                    }
+                    catch (Exception $e)
+                    {
+                        var_dump('NO TABLE');
                         continue;
                     }
 
