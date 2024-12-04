@@ -414,6 +414,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $n = clone($nn);
             if (!$watch->person_id) { // no people??? bugs in watch table
                 if(($dom = $this->getTableAndMethodFromMedium($watch->medium)) === false) {
+                    // invalid medium
                     continue;
                 }
                 // in some scenarios (like watching for new articles)
