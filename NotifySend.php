@@ -683,6 +683,14 @@ class Pman_Core_NotifySend extends Pman
             echo "calling :" . get_class($object) . '::' .$m . "\n";
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
+
+        $type = explode(':', $notify->evtype);
+        
+        if(!empty($type[1]) && method_exists($object,$type[1])){
+            $m = $type[1];
+            echo "calling :" . get_class($object) . '::' .$m . "\n";
+            return $object->$m($rcpt, $last_sent_date, $notify, $force);
+        }
         
         $type = explode('::', $notify->evtype);
         
