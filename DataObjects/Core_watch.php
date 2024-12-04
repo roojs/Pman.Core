@@ -122,18 +122,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
                     try {
                         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-                        $table = DB_DataObject::factory($ar[0]);
-                        if(PEAR::isError($table)) {
+                        $object = DB_DataObject::factory($ar[0]);
+                        if(PEAR::isError($object)) {
                             // table does not exists
                             continue;
                         }
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-
-                        var_dump($table);
-                        if(!empty($q['_watchable_actions_table']) && $table != $q['_watchable_actions_table']) {
-                            // only accept action from request table
-                            continue;
-                        }
 
                         $class = get_class($table);
 
