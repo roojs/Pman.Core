@@ -136,11 +136,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                             continue;
                         }
                     }
-                    // catch (ReflectionException $e)
-                    // {
-                    //     // not exists
-                    //     continue;
-                    // }
+                    catch (ReflectionException $e)
+                    {
+                        // not exists
+                        continue;
+                    }
                     catch (Exception $e)
                     {
                         var_dump('NO TABLE');
