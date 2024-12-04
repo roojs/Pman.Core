@@ -116,7 +116,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
 
                 $r = DB_DataObject::factory('core_notify_recur');
-                $r::recurCall();
+                Pman_Core_DataObjects_Core_notify_recur::recurCall();
                      
                 foreach($arr as $action) {
                     if(($ar = $this->getTableAndMethodFromMedium($action)) === false) {
