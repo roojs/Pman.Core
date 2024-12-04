@@ -116,14 +116,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
                      
                 foreach($arr as $action) {
-                    $ar = false;
-                    if(strpos($action, '::') !== false) {
-                        $ar = explode("::", $action);
-                    }
-                    else if(strpos($action, ':') !== false) {
-                        $ar = explode(":", $action);
-                    }
-                    else {
+                    if(($ar = $this->getTableAndMethodFromMedium($action)) === false) {
                         continue;
                     }
 
