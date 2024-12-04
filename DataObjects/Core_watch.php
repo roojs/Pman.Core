@@ -117,6 +117,14 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
                 $class = get_class(DB_DataObject::factory('core_notify_recur'));
                 var_dump($class);
+
+                try {
+                    $method = new ReflectionMethod("$class::recurCall");
+                }
+                catch (ReflectionException $e)
+                {
+
+                }
                 
                      
                 foreach($arr as $action) {
