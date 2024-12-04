@@ -130,8 +130,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
                     try {
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
-                        if($method->isStatic()) {
-                            $static = true;
+                        if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
+                            // instance method
+                            continue;
                         }
                     }
                     catch (ReflectionException $e)
