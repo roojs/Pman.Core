@@ -225,7 +225,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     static function recurCall()
     {
-        
+        var_dump('AAA');
     }
     
 }
