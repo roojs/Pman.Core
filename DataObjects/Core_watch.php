@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     if(strpos('::', $action) !== false) {
                         $ar = explode("::", $action);
                     }
-                    if(empty($arr)) {
+                    if(empty($ar)) {
                         continue;
                     }
 
