@@ -159,9 +159,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         continue;
                     }
 
-
-
                     $actions[] = array(
+                        'static' => $static,
                         'action' => $action
                     );
                 }
