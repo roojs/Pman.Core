@@ -250,6 +250,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
+        $method = $ar[1];
+
         // empty onid => call the static method from medium
         if(empty($this->onid)) {
             try {
@@ -268,10 +270,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 return false;
             }
 
-            $method = $ar[1];
-
             return $class::$method($person, $last_sent_date, $notify_object, $force);
         }
+
+        // non-empty onid => call the instance method from medium on object with id 'onid'
+        $
 
 
     }
