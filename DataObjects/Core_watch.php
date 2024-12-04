@@ -135,7 +135,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                             // get an instance method but statis method required
                             continue;
                         }
-                        if($method->isStatic() && empty($q['_watchable_static_actions'])) {
+                        if($method->isStatic() && !empty($q['_watchable_instance_actions'])) {
                             // get a static method but instance method required
                             continue;
                         }
