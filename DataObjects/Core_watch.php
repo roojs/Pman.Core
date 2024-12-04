@@ -120,6 +120,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         continue;
                     }
 
+                    if(!empty($q['_watchable_actions_table']) && $ar[0] != $q['_watchable_actions_table']) {
+                        // only accept action from request table
+                        continue;
+                    }
+
                     try {
                         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                         $object = DB_DataObject::factory($ar[0]);
