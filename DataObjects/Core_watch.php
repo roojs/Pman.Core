@@ -486,6 +486,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
         }
     }
+
+    function getTableAndMethodFromMedium($medium)
+    {
+        
+    }
     
      
 }
