@@ -487,6 +487,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
     }
 
+    /**
+     * get table and method from medium
+     */
     function getTableAndMethodFromMedium($medium)
     {
         $res = false;
