@@ -236,7 +236,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             }
 
             $object = DB_DataObject::factory($ar[0]);
-            $object->get($)
 
             // table / method does not exists
             if(!method_exists($ar[0], $ar[1])) {
