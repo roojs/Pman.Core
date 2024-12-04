@@ -166,19 +166,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
         
         foreach($notifytimes as $time){
-           
-            if (isset($old[$time])) {
-                // we already have it...
-                $oo = DB_DataObject::Factory('core_notify');
-                $oo->get($old[$time]);
-                $oc = clone($oo);
-                $oo->evtype = $this->method()->name;
-                $oo->update($oc);
-                
-                unset($old[$time]);
-                continue;
-            }
-            
             if (strtotime($time) < time()) { // should not happen, just in case...
                continue;
             }
@@ -196,9 +183,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $add->insert();
         }
         foreach($old as $date => $id ) {
-                $del = DB_DataObject::factory('core_notify');
-                $del->get($id);
-                $del->delete();
+            $del = DB_DataObject::factory('core_notify');
+            $del->get($id);
+            $del->delete();
         }
         //echo("UPDATED");
 
