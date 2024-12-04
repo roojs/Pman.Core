@@ -178,7 +178,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             // do not have a notify event... creat it..
             $add = DB_DataObject::factory('core_notify');
             $add->setFrom(array(
-                "recur_id" => $this->id,
                 "act_start" => $time,
                 "act_when" => $time,
                 "person_id" => $this->person_id,
