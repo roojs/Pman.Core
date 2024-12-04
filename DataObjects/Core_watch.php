@@ -103,9 +103,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             $actions = array();
 
-            $r = DB_DataObject::factory('core_notify_recur');
-            $r->recurCall('AA', 'BB');
-
             foreach(explode(",", $ff->enable) as $module) {
                 
                 $fn = $ff->rootDir."/Pman/$module/watchable_actions.json";
