@@ -124,7 +124,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     try {
                         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                         $table = DB_DataObject::factory($ar[0]);
-                        var_dump($table);
+                        var_dump(PEAR::isError($table));
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
                         $class = get_class($table);
 
