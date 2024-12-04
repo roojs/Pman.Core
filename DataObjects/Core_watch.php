@@ -161,17 +161,16 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     {
         $ret = $this->toArray();
 
-        $ret['delay_days'] = 0;
-        $ret['delay_hours'] = 0;
-        $ret['delay_minutes'] = $ret['no_minutes'];
-        if($ret['delay_minutes'] >= 720) {
-            $ret['delay_days'] = floor($ret['delay_minutes'] / 720);
-            $ret['delay_minutes'] = $ret['delay_minutes'] % 720;
-        }
+        $ret['delay_value'] = $ret['no_minutes'];
+        $ret['delay_unit'] = 'minute';
 
-        if($ret['delay_minutes'] >= 60) {
-            $ret['delay_hours'] = floor($ret['delay_minutes'] / 60);
-            $ret['delay_minutes'] = $ret['delay_minutes'] % 60;
+        if($ret['no_minutes'] >= 720 && $ret['no_minutes'] % 720 == 0) {
+            $ret['delay_value'] = $ret['no_minutes'] / 720;
+            $ret['delay_unit'] = 'day';
+        }
+        else if ($ret['no_minutes'] >= 60 && $ret['no_minutes'] % 60 == 0) {
+            $ret['delay_value'] = $ret['no_minutes'] / 60;
+            $ret['delay_unit'] = 'hour';
         }
 
         if (empty($q['_split_event_name'])) {
