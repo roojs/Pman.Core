@@ -223,6 +223,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
 
+    /**
+     * call from NotifySend
+     * make email for notify with evtype = 'core_notify_recur::recurCall' and ontable = 'core_notify_recur'
+     */
     function recurCall()
     {
         if(empty($this->onid)) {
