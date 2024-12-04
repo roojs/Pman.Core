@@ -61,6 +61,12 @@ class Pman_Core_UpdateDatabase extends Pman
             'min' => 1,
             'max' => 1,
         ),
+        'only-module-sql-table' => array(
+            'desc' => 'Only run sql import on this table - eg. core_domain',
+            'default' => '',
+            'min' => 1,
+            'max' => 1,
+        ),
         'skip-mysql-checks' => array(
             'desc' => 'Skip mysql checks',
             'default' => '',
@@ -324,7 +330,7 @@ class Pman_Core_UpdateDatabase extends Pman
                 continue;
             }
             
-            echo "Importing SQL from module $m\n";
+            //echo "Importing SQL from module $m\n";
             if (!empty($this->opts['only-module-sql']) && $m != $this->opts['only-module-sql']) {
                 continue;
             }
@@ -523,6 +529,10 @@ class Pman_Core_UpdateDatabase extends Pman
                 if (!strlen(trim($fn))) {
                     continue;
                 }
+                if (!empty($this->opts['only-module-sql-table']) && basename($fn) != $this->opts['only-module-sql-table'].'.sql') {
+                    continue;
+                }
+                        
                 
                 $cmd = "$mysql_cmd -f < " . escapeshellarg($fn) ." 2>&1" ;
                 
