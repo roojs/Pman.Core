@@ -117,6 +117,25 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 
                      
                 foreach($arr as $action) {
+                    $arr = false;
+                    if(strpos(':', $action)) {
+                        $arr = explode(":", $action);
+                    }
+                    if(strpos('::', $action)) {
+                        $arr = explode("::", $action);
+                    }
+                    if(empty($arr)) {
+                        continue;
+                    }
+
+                    $table = $arr[0];
+                    $method = $arr[1];
+
+                    var_dump($table);
+                    var_dump($method);
+
+
+
                     $actions[] = array(
                         'action' => $action
                     );
