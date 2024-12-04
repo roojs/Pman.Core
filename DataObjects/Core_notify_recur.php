@@ -98,9 +98,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     function beforeDelete($dependants_array, $roo)
     {
         $n = DB_DataObject::Factory("core_notify");
-        $n->recur_id = $this->id;
+        $n->ontable = 'core_notify_recur';
+        $n->onid = $this->id;
         $n->whereAdd('act_start > NOW() OR act_when > NOW()');
-        // should delete old events that have not occurred...
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
 
