@@ -76,6 +76,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         return $e;
     }
     
+    function person()
+    {
+        $p = DB_DAtaObject::factory('core_person');
+        $p->get($this->person_id);
+        return $p;
+    }
+
     function generateNotifications()
     {
         //DB_DataObject::debugLevel(1);
@@ -86,13 +93,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $w->generateNotificationsSingle();
         
         }
-    }
-    
-    function person()
-    {
-        $p = DB_DAtaObject::factory('core_person');
-        $p->get($this->person_id);
-        return $p;
     }
     
     function beforeDelete($dependants_array, $roo)
