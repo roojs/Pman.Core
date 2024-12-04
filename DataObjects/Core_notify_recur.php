@@ -189,9 +189,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 "act_start" => $time,
                 "act_when" => $time,
                 "person_id" => $this->person_id,
-                "onid" => $this->onid,
-                "ontable" => $this->ontable,
-                'evtype' => $this->method()->name,
+                "onid" => $this->id,
+                "ontable" => 'core_notify_recur',
+                'evtype' => 'core_notify_recur::recurCall'
             ));
             $add->insert();
         }
