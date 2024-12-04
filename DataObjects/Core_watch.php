@@ -146,11 +146,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         // not exists
                         continue;
                     }
-                    catch (Exception $e)
-                    {
-                        var_dump('NO TABLE');
-                        continue;
-                    }
 
                     $actions[] = array(
                         'action' => $action
