@@ -128,8 +128,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     }
                     $class = get_class(DB_DataObject::factory($ar[0]));
 
-                    $static = false;
-
                     try {
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
                         if($method->isStatic()) {
@@ -142,7 +140,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     }
 
                     $actions[] = array(
-                        'static' => $static,
                         'action' => $action
                     );
                 }
