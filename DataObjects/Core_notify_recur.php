@@ -227,7 +227,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
      * call from NotifySend
      * make email for notify with evtype = 'core_notify_recur::recurCall' and ontable = 'core_notify_recur'
      */
-    function recurCall($person, $last_sent_date, $notify_object, $forc)
+    function recurCall($person, $last_sent_date, $notify_object, $force)
     {
         if(empty($this->onid)) {
             // invalid medium
