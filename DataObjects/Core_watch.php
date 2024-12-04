@@ -213,7 +213,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     function postListFilter($ar, $au, $req)
     {
         foreach($ar as &$v) {
-            $v['delay_value'] = empty($ret['no_minutes']) ? 0 : $ret['no_minutes'];
+            $v['delay_value'] = empty($v['no_minutes']) ? 0 : $v['no_minutes'];
             $v['delay_unit'] = 'minutes';
     
             if($v['no_minutes'] >= 720 && $v['no_minutes'] % 720 == 0) {
