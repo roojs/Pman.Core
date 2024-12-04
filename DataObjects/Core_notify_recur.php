@@ -237,13 +237,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
      */
     function recurCall($person, $last_sent_date, $notify_object, $force)
     {
+        // invalid medium
+        if(($ar = $this->getTableAndMethodFromMedium($this->medium)) === false) {
+            return false;
+        }
+
         // empty onid => call the static method from medium
         if(empty($this->onid)) {
-            // invalid medium
-            if(($ar = $this->getTableAndMethodFromMedium($this->medium)) === false) {
-                return false;
-            }
-
             try {
                 PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                 $object = DB_DataObject::factory($ar[0]);
