@@ -226,8 +226,34 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     function recurCall()
     {
         if(empty($this->onid)) {
-
+            $ar = $this->getTableAndMethodFromMedium($this->medium);
         }
+    }
+
+    /**
+     * get table and method from medium
+     * 
+     * @param string $medium medium
+     * @return array|boolean return array of table name and method name if valid, else return false
+     */
+    function getTableAndMethodFromMedium($medium)
+    {
+        $res = false;
+        if(strpos($medium, '::') !== false) {
+            $res = explode("::", $medium);
+        }
+        else if(strpos($medium, ':') !== false) {
+            $res = explode(":", $medium);
+        }
+        else {
+            return false;
+        }
+
+        if(count($res) != 2) {
+            return false;
+        }
+
+        return $res;
     }
     
 }
