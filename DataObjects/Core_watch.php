@@ -88,7 +88,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
                 foreach($arr as $event) {
                     $ar = explode(":", $event);
-                    if(!empty($q['_watchable_events_table']) && $ar[0] != $q['_watchable_actions_table']) {
+                    if(!empty($q['_watchable_events_table']) && $ar[0] != $q['_watchable_events_table']) {
                         // only accept action from request table
                         continue;
                     }
