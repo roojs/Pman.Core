@@ -193,6 +193,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     function postListFilter($ar, $au, $req)
     {
         foreach($ar as &$v) {
+            var_dump($ret['no_minutes']);
             $v['delay_value'] = $ret['no_minutes'];
             $v['delay_unit'] = 'minute';
     
