@@ -162,15 +162,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $ret = $this->toArray();
 
         $ret['delay_value'] = empty($v['no_minutes']) ? 0 : $v['no_minutes'];
-        $ret['delay_unit'] = 'minute';
+        $ret['delay_unit'] = 'minutes';
 
         if($ret['no_minutes'] >= 720 && $ret['no_minutes'] % 720 == 0) {
             $ret['delay_value'] = $ret['no_minutes'] / 720;
-            $ret['delay_unit'] = 'day';
+            $ret['delay_unit'] = 'days';
         }
         else if ($ret['no_minutes'] >= 60 && $ret['no_minutes'] % 60 == 0) {
             $ret['delay_value'] = $ret['no_minutes'] / 60;
-            $ret['delay_unit'] = 'hour';
+            $ret['delay_unit'] = 'hours';
         }
 
         if (empty($q['_split_event_name'])) {
@@ -194,15 +194,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     {
         foreach($ar as &$v) {
             $v['delay_value'] = empty($ret['no_minutes']) ? 0 : $ret['no_minutes'];
-            $v['delay_unit'] = 'minute';
+            $v['delay_unit'] = 'minutes';
     
             if($v['no_minutes'] >= 720 && $v['no_minutes'] % 720 == 0) {
                 $v['delay_value'] = $v['no_minutes'] / 720;
-                $v['delay_unit'] = 'day';
+                $v['delay_unit'] = 'days';
             }
             else if ($v['no_minutes'] >= 60 && $v['no_minutes'] % 60 == 0) {
                 $v['delay_value'] = $v['no_minutes'] / 60;
-                $v['delay_unit'] = 'hour';
+                $v['delay_unit'] = 'hours';
             }
         }
 
