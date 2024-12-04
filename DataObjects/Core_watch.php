@@ -140,6 +140,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         // not exists
                         continue;
                     }
+                    catch (Exception $e)
+                    {
+                        continue;
+                    }
 
                     $actions[] = array(
                         'action' => $action
