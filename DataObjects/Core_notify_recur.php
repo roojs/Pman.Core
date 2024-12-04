@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             $reflectionMethod = new ReflectionMethod("{$class}::{$method}");
             if(!$reflectionMethod->isStatic() && empty($this->onid)) {
-                // onid is empty but the method is instance
+                // onid is empty but the method is not static
                 return false;
             }
             if($reflectionMethod->isStatic() && !empty($this->onid)) {
