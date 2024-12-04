@@ -413,8 +413,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         foreach($watches as $watch) {
             $n = clone($nn);
             if (!$watch->person_id) { // no people??? bugs in watch table
-                $dom = explode(':',$watch->medium);
-                if (count($dom) != 2) {
+                if(($dom = $this->getTableAndMethodFromMedium($watch->medium)) === false) {
                     continue;
                 }
                 // in some scenarios (like watching for new articles)
