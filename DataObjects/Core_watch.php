@@ -124,8 +124,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     try {
                         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                         $table = DB_DataObject::factory($ar[0]);
-                        var_dump(PEAR::isError($table));
+                        if(PEAR::isError($table)) {
+                            // table does not exists
+                            continue;
+                        }
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+
                         $class = get_class($table);
 
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
@@ -141,12 +145,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     }
                     catch (ReflectionException $e)
                     {
-                        // not exists
-                        continue;
-                    }
-                    catch (Exception $e)
-                    {
-                        var_dump("NOTABLE");
+                        // method does not exist
                         continue;
                     }
 
