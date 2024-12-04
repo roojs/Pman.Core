@@ -229,6 +229,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
      */
     function recurCall($person, $last_sent_date, $notify_object, $force)
     {
+        // empty onid => call the static method from medium
         if(empty($this->onid)) {
             // invalid medium
             if(($ar = $this->getTableAndMethodFromMedium($this->medium)) === false) {
