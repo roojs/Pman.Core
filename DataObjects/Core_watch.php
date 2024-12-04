@@ -495,6 +495,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         else if(strpos($medium, ':') !== false) {
             $res = explode(":", $medium);
         }
+        else {
+            return false;
+        }
 
         if(count($res) != 2) {
             return false;
