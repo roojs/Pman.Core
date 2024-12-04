@@ -116,6 +116,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
 
                 $object = DB_DataObject::factory('core_notify_recur');
+                var_dump($object.name);
                 var_dump(method_exists($object, 'recurCalll'));
                 
                      
