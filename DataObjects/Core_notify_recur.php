@@ -166,11 +166,20 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
         
         foreach($notifytimes as $time){
+            
             if (strtotime($time) < time()) { // should not happen, just in case...
                continue;
             }
 
             if (isset($old[$time])) {
+                // we already have it...
+                $oo = DB_DataObject::Factory('core_notify');
+                $oo->get($old[$time]);
+                $oc = clone($oo);
+                $oo->person_id = $this->person_id;
+                $oo->onid = $this->id;
+                $oo->update($oc);
+                
                 unset($old[$time]);
                 continue;
             }
