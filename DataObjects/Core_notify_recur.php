@@ -242,17 +242,17 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             return false;
         }
 
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        $object = DB_DataObject::factory($ar[0]);
+        if(PEAR::isError($object)) {
+            // table does not exist
+            return false;
+        }
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+
         // empty onid => call the static method from medium
         if(empty($this->onid)) {
             try {
-                PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-                $object = DB_DataObject::factory($ar[0]);
-                if(PEAR::isError($object)) {
-                    // table does not exist
-                    return false;
-                }
-                PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-
                 $class = get_class($object);
 
                 $method = new ReflectionMethod("{$class}::{$ar[1]}");
@@ -272,6 +272,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             return $class::$method($person, $last_sent_date, $notify_object, $force);
         }
+
+
     }
 
     /**
