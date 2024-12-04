@@ -55,18 +55,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
              
         }
-         
-        
-         
-        
-        
-    }
-    function notifytimesRange($advance) {
-        
-        $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
-        $end  = min( new DateTime("NOW + $advance DAYS"),  new DateTime($this->dtend ) )->format('Y-m-d H:i:s');
-        
-        return array($start, $end);
     }
     
     function method()
@@ -102,6 +90,14 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $n->onid = $this->id;
         $n->whereAdd('act_start > NOW() OR act_when > NOW()');
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+    }
+
+    function notifytimesRange($advance) {
+        
+        $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
+        $end  = min( new DateTime("NOW + $advance DAYS"),  new DateTime($this->dtend ) )->format('Y-m-d H:i:s');
+        
+        return array($start, $end);
     }
 
     function notifytimes($advance)
