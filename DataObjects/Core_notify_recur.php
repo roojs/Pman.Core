@@ -235,10 +235,27 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 return false;
             }
 
-            $object = DB_DataObject::factory($ar[0]);
+            try {
+                PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+                $object = DB_DataObject::factory($ar[0]);
+                if(PEAR::isError($object)) {
+                    // table does not exist
+                    return false;
+                }
+                PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
-            // table / method does not exists
-            if(!method_exists($ar[0], $ar[1])) {
+                $class = get_class($object);
+
+                $method = new ReflectionMethod("{$class}::{$ar[1]}");
+                if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
+                    // get an instance method but a statis method is required
+                    continue;
+                }
+
+            }
+            catch (ReflectionException $e)
+            {
+                // method does not exist
                 return false;
             }
 

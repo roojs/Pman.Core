@@ -135,7 +135,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
                         $object = DB_DataObject::factory($ar[0]);
                         if(PEAR::isError($object)) {
-                            // table does not exists
+                            // table does not exist
                             continue;
                         }
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
