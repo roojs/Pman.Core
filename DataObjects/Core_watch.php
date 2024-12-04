@@ -142,6 +142,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     }
                     catch (Exception $e)
                     {
+                        var_dump("NOTABLE");
                         continue;
                     }
 
