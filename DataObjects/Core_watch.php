@@ -126,9 +126,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     if(empty($ar)) {
                         continue;
                     }
-                    $class = get_class(DB_DataObject::factory($ar[0]));
 
                     try {
+                        $class = get_class(DB_DataObject::factory($ar[0]));
+                        
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
                         if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
                             // instance method
