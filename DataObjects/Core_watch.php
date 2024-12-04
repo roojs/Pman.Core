@@ -135,6 +135,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                             // instance method
                             continue;
                         }
+                        if($method->isStatic() && empty($q['_watchable_static_actions'])) {
+                            // instance method
+                            continue;
+                        }
+
                     }
                     catch (ReflectionException $e)
                     {
