@@ -123,6 +123,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     if($method->isStatic()) {
                         var_dump('IS STATIC');
                     }
+                    else {
+                        var_dump('IS NOT STATIC');
+                    }
                 }
                 catch (ReflectionException $e)
                 {
