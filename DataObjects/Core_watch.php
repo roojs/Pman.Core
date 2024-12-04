@@ -99,7 +99,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
         if(!empty($q['_watchable_actions'])) {
             $ff = HTML_FlexyFramework::get();
-
             
             $actions = array();
 
