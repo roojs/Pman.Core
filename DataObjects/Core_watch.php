@@ -114,24 +114,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 if(is_null($arr) || !is_array($arr)) {
                     continue;
                 }
-
-                $class = get_class(DB_DataObject::factory('core_notify_recur'));
-                var_dump($class);
-
-                try {
-                    $method = new ReflectionMethod("$class::person");
-                    if($method->isStatic()) {
-                        var_dump('IS STATIC');
-                    }
-                    else {
-                        var_dump('IS NOT STATIC');
-                    }
-                }
-                catch (ReflectionException $e)
-                {
-                    var_dump('NOT A METHOD');
-                }
-                
                      
                 foreach($arr as $action) {
                     $ar = false;
