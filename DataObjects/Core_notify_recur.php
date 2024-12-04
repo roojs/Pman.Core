@@ -270,7 +270,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             $method = $ar[1];
 
-            return $class::$method($person, $last_sent_date, $notify_object, $forc);
+            return $class::$method($person, $last_sent_date, $notify_object, $force);
         }
     }
 
