@@ -177,7 +177,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 $oo->get($old[$time]);
                 $oc = clone($oo);
                 $oo->person_id = $this->person_id;
-                $oo->onid = $this->id;
                 $oo->update($oc);
                 
                 unset($old[$time]);
