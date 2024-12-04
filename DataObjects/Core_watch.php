@@ -131,6 +131,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     $table = $ar[0];
                     $method = $ar[1];
 
+                    $object = DB_DataObject::factory($table);
+
                     var_dump($table);
                     var_dump($method);
 
