@@ -142,7 +142,22 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
     }
     
+    function person()
+    {
+        $p = DB_DAtaObject::factory('core_person');
+        $p->get($this->person_id);
+        return $p;
+    }
     
+    function beforeDelete($dependants_array, $roo)
+    {
+        $n = DB_DataObject::Factory("core_notify");
+        $n->recur_id = $this->id;
+        $n->whereAdd('act_start > NOW() OR act_when > NOW()');
+        // should delete old events that have not occurred...
+        $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+    }
+
     function generateNotificationsSingle()
     {
         
@@ -194,22 +209,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         }
         //echo("UPDATED");
 
-    }
-    
-    function person()
-    {
-        $p = DB_DAtaObject::factory('core_person');
-        $p->get($this->person_id);
-        return $p;
-    }
-    
-    function beforeDelete($dependants_array, $roo)
-    {
-        $n = DB_DataObject::Factory("core_notify");
-        $n->recur_id = $this->id;
-        $n->whereAdd('act_start > NOW() OR act_when > NOW()');
-        // should delete old events that have not occurred...
-        $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
 
     function onUpdate($old, $request,$roo)
