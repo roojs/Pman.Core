@@ -129,6 +129,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         }
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
+                        var_dump($table);
                         if(!empty($q['_watchable_actions_table']) && $table != $q['_watchable_actions_table']) {
                             // only accept action from request table
                             continue;
