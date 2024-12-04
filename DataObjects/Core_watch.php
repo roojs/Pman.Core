@@ -134,7 +134,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                         }
                         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
-                        $class = get_class($table);
+                        $class = get_class($object);
 
                         $method = new ReflectionMethod("{$class}::{$ar[1]}");
                         if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
