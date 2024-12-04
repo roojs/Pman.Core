@@ -202,14 +202,17 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     }
 
-    // function setFromRoo($req)
-    // {
-    //     // $ret = $this->setFrom($req);
-    //     // if (isset($req['dt_day_start'])) {
-    //     //     $this->dtstart = date('Y-m-d H:i:00', strtotime($req['publish_dt_day'] . ' ' . $req['publish_dt_hr'] . ':00'));
-    //     // }
-    //     // return $ret;
-    // }
+    function setFromRoo($req)
+    {
+        $ret = $this->setFrom($req);
+        if (isset($req['dtstart_day'])) {
+            $this->dtstart = date('Y-m-d 00:00:00', strtotime($req['dtstart_day']));
+        }
+        if (isset($req['dtend_day'])) {
+            $this->dtend = date('Y-m-d 00:00:00', strtotime($req['dtend_day']));
+        }
+        return $ret;
+    }
 
     function onUpdate($old, $request,$roo)
     {
