@@ -181,7 +181,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     {
         $ret = $this->toArray();
 
-        $ret['delay_value'] = empty($v['no_minutes']) ? 0 : $v['no_minutes'];
+        $ret['delay_value'] = empty($ret['no_minutes']) ? 0 : $ret['no_minutes'];
         $ret['delay_unit'] = 'minutes';
 
         if($ret['no_minutes'] >= 720 && $ret['no_minutes'] % 720 == 0) {
