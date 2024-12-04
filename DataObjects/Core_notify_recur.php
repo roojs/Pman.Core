@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             try {
                 $class = get_class($object);
 
-                $reflectionMethod = new ReflectionMethod("{$class}::{$ar[1]}");
+                $reflectionMethod = new ReflectionMethod("{$class}::{$method}");
                 if(!$reflectionMethod->isStatic()) {
                     // method is not static
                     return false;
