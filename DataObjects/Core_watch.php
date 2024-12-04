@@ -489,7 +489,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
     function getTableAndMethodFromMedium($medium)
     {
-        
+        $res = false;
+        if(strpos($medium, '::') !== false) {
+            $res = explode("::", $medium);
+        }
+        else if(strpos($medium, ':') !== false) {
+            $res = explode(":", $medium);
+        }
+
+        return $res;
     }
     
      
