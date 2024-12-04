@@ -257,12 +257,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             $reflectionMethod = new ReflectionMethod("{$class}::{$method}");
 
-            // empty onid => call the static method from medium
             if(!$reflectionMethod->isStatic() && empty($this->onid)) {
                 // onid is empty but the method is not static
                 return false;
             }
-             // non-empty onid => call the instance method from medium on object with id 'onid'
+
             if($reflectionMethod->isStatic() && !empty($this->onid)) {
                 // onid is not empty but the method is static
                 return false;
@@ -272,6 +271,18 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         catch (ReflectionException $e)
         {
             // method does not exist
+            return false;
+        }
+
+        // empty onid => call the static method from medium
+        if(empty($this->onid)) {
+            return $class::$method($person, $last_sent_date, $notify_object, $force);
+        }
+
+        // non-empty onid => call the instance method from medium on object with id 'onid'
+
+        if(empty($object->get($this->onid))) {
+            // no such object with id 'onid'
             return false;
         }
 
