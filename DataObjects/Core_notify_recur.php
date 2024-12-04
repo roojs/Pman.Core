@@ -202,6 +202,13 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     }
 
+    function beforeUpdate($old, $request, $roo)
+    {
+        // if (isset($request['dt_start_day'])) {
+        //     $this-
+        // }
+    }
+
     function onUpdate($old, $request,$roo)
     {
         $this->generateNotificationsSingle();
