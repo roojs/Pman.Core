@@ -203,16 +203,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         return $p;
     }
     
-    function onUpdate($old, $request,$roo)
-    {
-        $this->generateNotificationsSingle();
-        
-    }
-    function onInsert($request,$roo)
-    {
-        $this->generateNotificationsSingle();
-        
-    }
     function beforeDelete($dependants_array, $roo)
     {
         $n = DB_DataObject::Factory("core_notify");
@@ -220,6 +210,18 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $n->whereAdd('act_start > NOW() OR act_when > NOW()');
         // should delete old events that have not occurred...
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+    }
+
+    function onUpdate($old, $request,$roo)
+    {
+        $this->generateNotificationsSingle();
+        
+    }
+
+    function onInsert($request,$roo)
+    {
+        $this->generateNotificationsSingle();
+        
     }
 
     /**
@@ -263,8 +265,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             return $class::$method($person, $last_sent_date, $notify_object, $forc);
         }
-
-
     }
 
     /**
