@@ -155,7 +155,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
     function generateNotificationsSingle()
     {
         $notifytimes = $this->notifyTimes(2);
-        //echo "{$this->person()->email}\n";
         
         $newSearch = DB_DataObject::factory('core_notify');
         $newSearch->whereAdd( 'act_start > NOW()');
@@ -196,11 +195,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $add->insert();
         }
         foreach($old as $date => $id ) {
-                $del = DB_DataObject::factory('core_notify');
-                $del->get($id);
-                $del->delete();
+            $del = DB_DataObject::factory('core_notify');
+            $del->get($id);
+            $del->delete();
         }
-        //echo("UPDATED");
 
     }
 
