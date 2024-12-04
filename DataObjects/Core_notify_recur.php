@@ -235,6 +235,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 return false;
             }
 
+            $object = DB_DataObject($ar[0]);
+
             // table / method does not exists
             if(!method_exists($ar[0], $ar[1])) {
                 return false;
@@ -245,6 +247,8 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
             return $class::$method;
         }
+
+
     }
 
     /**
