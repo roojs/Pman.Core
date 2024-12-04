@@ -258,8 +258,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 // method does not exist
                 return false;
             }
-
-            $class = get_class($ar[0]);
+            
             $method = $ar[1];
 
             return $class::$method;
