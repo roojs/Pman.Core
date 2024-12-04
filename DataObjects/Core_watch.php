@@ -119,7 +119,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 var_dump($class);
 
                 try {
-                    $method = new ReflectionMethod("$class::recurCalll");
+                    $method = new ReflectionMethod("$class::recurCall");
                     if($method->isStatic()) {
                         var_dump('IS STATIC');
                     }
