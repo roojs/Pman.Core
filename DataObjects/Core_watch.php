@@ -489,6 +489,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
     /**
      * get table and method from medium
+     * 
+     * @param string $medium medium
+     * @return array|boolean return array of table name and method name if valid, else return false
      */
     function getTableAndMethodFromMedium($medium)
     {
