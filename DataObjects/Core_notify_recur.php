@@ -223,9 +223,11 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
 
-    static function recurCall()
+    function recurCall()
     {
-        var_dump('AAA');
+        if(empty($this->onid)) {
+
+        }
     }
     
 }
