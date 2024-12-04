@@ -106,7 +106,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     function notifytimes($advance)
     {
-        
         // make a list of datetimes when notifies need to be generated for.
         // it starts 24 hours ago.. or when dtstart
         
