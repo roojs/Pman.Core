@@ -258,10 +258,10 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
                 // method does not exist
                 return false;
             }
-            
+
             $method = $ar[1];
 
-            return $class::$method;
+            return $class::$method($person, $last_sent_date, $notify_object, $forc);
         }
 
 
