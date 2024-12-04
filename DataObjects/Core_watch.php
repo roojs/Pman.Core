@@ -159,6 +159,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
     }
 
+    function getTableAndMethodFromMedium($medium) {
+
+    }
+
     function beforeInsert($request, $roo)
     {
         if(isset($request['delay_value']) && isset($request['delay_unit'])) {
