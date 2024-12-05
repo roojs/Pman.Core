@@ -409,8 +409,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             return;
         }
 
-        var_dump($now);
-        die('test');
+        if($event->action == 'MESSAGESENT') {
+            var_dump($now);
+            die('test');
+        }
 
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $event->on_table;
