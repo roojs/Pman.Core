@@ -474,6 +474,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
 
+            var_dump($now);
+
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ?
                 (
