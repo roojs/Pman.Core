@@ -55,18 +55,6 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             $this->whereAdd( "join_person_id_id.name LIKE '{$this->escape($q['query']['person_id_name'])}%'");
              
         }
-         
-        
-         
-        
-        
-    }
-    function notifytimesRange($advance) {
-        
-        $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
-        $end  = min( new DateTime("NOW + $advance DAYS"),  new DateTime($this->dtend ) )->format('Y-m-d H:i:s');
-        
-        return array($start, $end);
     }
     
     function method()
@@ -76,9 +64,44 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         return $e;
     }
     
+    function person()
+    {
+        $p = DB_DAtaObject::factory('core_person');
+        $p->get($this->person_id);
+        return $p;
+    }
+
+    function generateNotifications()
+    {
+        //DB_DataObject::debugLevel(1);
+        $w = DB_DataObject::factory($this->tableName());
+        $w->find();
+        
+        while($w->fetch()){
+            $w->generateNotificationsSingle();
+        
+        }
+    }
+    
+    function beforeDelete($dependants_array, $roo)
+    {
+        $n = DB_DataObject::Factory("core_notify");
+        $n->ontable = 'core_notify_recur';
+        $n->onid = $this->id;
+        $n->whereAdd('act_start > NOW() OR act_when > NOW()');
+        $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+    }
+
+    function notifytimesRange($advance) {
+        
+        $start = date('Y-m-d H:i:s', max(strtotime("NOW"), strtotime($this->dtstart)));
+        $end  = min( new DateTime("NOW + $advance DAYS"),  new DateTime($this->dtend ) )->format('Y-m-d H:i:s');
+        
+        return array($start, $end);
+    }
+
     function notifytimes($advance)
     {
-        
         // make a list of datetimes when notifies need to be generated for.
         // it starts 24 hours ago.. or when dtstart
         
@@ -118,110 +141,178 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         
         foreach($usedays as $d){
             foreach($hours as $h){
-                $date = new DateTime($d. ' ' . $h, new DateTimeZone($this->tz));
-                $tz= ini_get('date.timezone');
-                if(!empty($tz)){
-                    $date->setTimezone(new DateTimeZone($tz));
-                }
-                
+                $date = new DateTime($d. ' ' . $h);
                 $ret[] = $date->format('Y-m-d H:i:s');
             }
         }
         return $ret;
     }
-    
-    function generateNotifications()
-    {
-        //DB_DataObject::debugLevel(1);
-        $w = DB_DataObject::factory($this->tableName());
-        $w->find();
-        
-        while($w->fetch()){
-            $w->generateNotificationsSingle();
-        
-        }
-    }
-    
-    
+
     function generateNotificationsSingle()
     {
-        
-
         $notifytimes = $this->notifyTimes(2);
-        //echo "{$this->person()->email}\n";
-        //print_R($notifytimes);
         
         $newSearch = DB_DataObject::factory('core_notify');
         $newSearch->whereAdd( 'act_start > NOW()');
-        $newSearch->recur_id = $this->id;
+        $newSearch->ontable = 'core_notify_recur';
+        $newSearch->onid = $this->id;
         $old = $newSearch->fetchAll('act_start', 'id');
         // returns array('2012-12-xx'=>12, 'date' => id....)
 
         
         foreach($notifytimes as $time){
-           
+            
+            if (strtotime($time) < time()) { // should not happen, just in case...
+               continue;
+            }
+
             if (isset($old[$time])) {
                 // we already have it...
                 $oo = DB_DataObject::Factory('core_notify');
                 $oo->get($old[$time]);
                 $oc = clone($oo);
-                $oo->evtype = $this->method()->name;
+                $oo->person_id = $this->person_id;
                 $oo->update($oc);
                 
                 unset($old[$time]);
                 continue;
             }
             
-            if (strtotime($time) < time()) { // should not happen, just in case...
-               continue;
-            }
-            
             // do not have a notify event... creat it..
             $add = DB_DataObject::factory('core_notify');
             $add->setFrom(array(
-                "recur_id" => $this->id,
                 "act_start" => $time,
                 "act_when" => $time,
                 "person_id" => $this->person_id,
-                "onid" => $this->onid,
-                "ontable" => $this->ontable,
-                'evtype' => $this->method()->name,
+                "onid" => $this->id,
+                "ontable" => 'core_notify_recur',
+                'evtype' => 'core_notify_recur::recurCall'
             ));
             $add->insert();
         }
         foreach($old as $date => $id ) {
-                $del = DB_DataObject::factory('core_notify');
-                $del->get($id);
-                $del->delete();
+            $del = DB_DataObject::factory('core_notify');
+            $del->get($id);
+            $del->delete();
         }
-        //echo("UPDATED");
 
     }
-    
-    function person()
+
+    function setFromRoo($req)
     {
-        $p = DB_DAtaObject::factory('core_person');
-        $p->get($this->person_id);
-        return $p;
+        $ret = $this->setFrom($req);
+        if (isset($req['dtstart_day'])) {
+            $this->dtstart = date('Y-m-d 00:00:00', strtotime($req['dtstart_day']));
+        }
+        if (isset($req['dtend_day'])) {
+            $this->dtend = date('Y-m-d 00:00:00', strtotime($req['dtend_day']));
+        }
+        return $ret;
     }
-    
+
+    function toRooSingleArray() 
+    {
+        $ret = $this->toArray();
+        $ret['dtstart_day'] = date('Y-m-d', strtotime($this->dtstart));
+        $ret['dtend_day'] = date('Y-m-d', strtotime($this->dtend));
+
+        return $ret;
+    }
+
     function onUpdate($old, $request,$roo)
     {
         $this->generateNotificationsSingle();
         
     }
+
     function onInsert($request,$roo)
     {
         $this->generateNotificationsSingle();
         
     }
-    function beforeDelete($dependants_array, $roo)
+
+    /**
+     * call from NotifySend
+     * make email for notify with evtype = 'core_notify_recur::recurCall' and ontable = 'core_notify_recur'
+     */
+    function recurCall($person, $last_sent_date, $notify_object, $force)
     {
-        $n = DB_DataObject::Factory("core_notify");
-        $n->recur_id = $this->id;
-        $n->whereAdd('act_start > NOW() OR act_when > NOW()');
-        // should delete old events that have not occurred...
-        $n->delete(DB_DATAOBJECT_WHEREADD_ONLY);
+        // invalid medium
+        if(($ar = $this->getTableAndMethodFromMedium($this->medium)) === false) {
+            return false;
+        }
+
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        $object = DB_DataObject::factory($ar[0]);
+        if(PEAR::isError($object)) {
+            // table does not exist
+            return false;
+        }
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+
+        $method = $ar[1];
+
+        try {
+            $class = get_class($object);
+
+            $reflectionMethod = new ReflectionMethod("{$class}::{$method}");
+
+            if(!$reflectionMethod->isStatic() && empty($this->onid)) {
+                // onid is empty but the method is not static
+                return false;
+            }
+
+            if($reflectionMethod->isStatic() && !empty($this->onid)) {
+                // onid is not empty but the method is static
+                return false;
+            }
+
+        }
+        catch (ReflectionException $e)
+        {
+            // method does not exist
+            return false;
+        }
+
+        // empty onid => call the static method from medium
+        if(empty($this->onid)) {
+            return $class::$method($person, $last_sent_date, $notify_object, $force);
+        }
+
+        // non-empty onid => call the instance method from medium on object with id 'onid'
+
+        if(empty($object->get($this->onid))) {
+            // no such object with id 'onid'
+            return false;
+        }
+
+        return $object->$method($person, $last_sent_date, $notify_object, $force);
+    }
+
+    /**
+     * get table and method from medium
+     * 
+     * @param string $medium medium
+     * @return array|boolean return array of table name and method name if valid, else return false
+     */
+    function getTableAndMethodFromMedium($medium)
+    {
+        $res = false;
+        if(strpos($medium, '::') !== false) {
+            $res = explode("::", $medium);
+        }
+        else if(strpos($medium, ':') !== false) {
+            $res = explode(":", $medium);
+        }
+        else {
+            return false;
+        }
+
+        if(count($res) != 2) {
+            return false;
+        }
+
+        return $res;
     }
     
 }

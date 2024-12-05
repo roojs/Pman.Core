@@ -87,9 +87,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     continue;
                 }
                 foreach($arr as $event) {
+                    $ar = explode(":", $event);
+                    if(!empty($q['_watchable_events_table']) && $ar[0] != $q['_watchable_events_table']) {
+                        // only accept event from request table
+                        continue;
+                    }
+
                     $events[] = array(
-                        'table' => explode(":", $event)[0],
-                        'action' => explode(":", $event)[1]
+                        'table' => $ar[0],
+                        'action' => $ar[1]
                     );
                 }
             }
@@ -99,7 +105,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
         if(!empty($q['_watchable_actions'])) {
             $ff = HTML_FlexyFramework::get();
-
             
             $actions = array();
 
@@ -114,9 +119,46 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 if(is_null($arr) || !is_array($arr)) {
                     continue;
                 }
-                
                      
                 foreach($arr as $action) {
+                    if(($ar = $this->getTableAndMethodFromMedium($action)) === false) {
+                        // invalid action
+                        continue;
+                    }
+
+                    if(!empty($q['_watchable_actions_table']) && $ar[0] != $q['_watchable_actions_table']) {
+                        // only accept action from request table
+                        continue;
+                    }
+
+                    try {
+                        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+                        $object = DB_DataObject::factory($ar[0]);
+                        if(PEAR::isError($object)) {
+                            // table does not exist
+                            continue;
+                        }
+                        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+
+                        $class = get_class($object);
+
+                        $method = new ReflectionMethod("{$class}::{$ar[1]}");
+                        if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
+                            // get an instance method but a statis method is required
+                            continue;
+                        }
+                        if($method->isStatic() && !empty($q['_watchable_instance_actions'])) {
+                            // get a static method but an instance method is required
+                            continue;
+                        }
+
+                    }
+                    catch (ReflectionException $e)
+                    {
+                        // method does not exist
+                        continue;
+                    }
+
                     $actions[] = array(
                         'action' => $action
                     );
@@ -128,10 +170,71 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
         
     }
+
+    function beforeInsert($request, $roo)
+    {
+        if(isset($request['delay_value']) && isset($request['delay_unit'])) {
+            switch($request['delay_unit']) {
+                case 'days':
+                    $this->no_minutes = $request['delay_value'] * 1440;
+                    break;
+                case 'hours':
+                    $this->no_minutes = $request['delay_value'] * 60;
+                    break;
+                case 'minutes':
+                    $this->no_minutes = $request['delay_value'];
+                    break;
+            }
+        }
+        if(!empty($request['_copy'])) {
+            $cw = DB_DataObject::factory('core_watch');
+
+            if(!$cw->get($request['_copy'])) {
+                $roo->jerr('No watch with id ' . $request['_copy']);
+            }
+            
+            $new = DB_DataObject::factory('core_watch');
+            $new->setFrom($cw->toArray());
+            $new->person_id = 0;
+            $new->insert();
+
+            $roo->jok('DONE');
+        }
+    }
+
+    function  beforeUpdate($old, $request, $roo)
+    {
+        if(isset($request['delay_value']) && isset($request['delay_unit'])) {
+            switch($request['delay_unit']) {
+                case 'days':
+                    $this->no_minutes = $request['delay_value'] * 1440;
+                    break;
+                case 'hours':
+                    $this->no_minutes = $request['delay_value'] * 60;
+                    break;
+                case 'minutes':
+                    $this->no_minutes = $request['delay_value'];
+                    break;
+            }
+        }
+    }
     
     function toRooSingleArray($au,$q)
     {
         $ret = $this->toArray();
+
+        $ret['delay_value'] = empty($ret['no_minutes']) ? 0 : $ret['no_minutes'];
+        $ret['delay_unit'] = 'minutes';
+
+        if($ret['no_minutes'] >= 1440 && $ret['no_minutes'] % 1440 == 0) {
+            $ret['delay_value'] = $ret['no_minutes'] / 1440;
+            $ret['delay_unit'] = 'days';
+        }
+        else if ($ret['no_minutes'] >= 60 && $ret['no_minutes'] % 60 == 0) {
+            $ret['delay_value'] = $ret['no_minutes'] / 60;
+            $ret['delay_unit'] = 'hours';
+        }
+
         if (empty($q['_split_event_name'])) {
             return $ret;
         }
@@ -147,6 +250,25 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         return $ret;
         
         
+    }
+
+    function postListFilter($ar, $au, $req)
+    {
+        foreach($ar as &$v) {
+            $v['delay_value'] = empty($v['no_minutes']) ? 0 : $v['no_minutes'];
+            $v['delay_unit'] = 'minutes';
+    
+            if($v['no_minutes'] >= 1440 && $v['no_minutes'] % 1440 == 0) {
+                $v['delay_value'] = $v['no_minutes'] / 1440;
+                $v['delay_unit'] = 'days';
+            }
+            else if ($v['no_minutes'] >= 60 && $v['no_minutes'] % 60 == 0) {
+                $v['delay_value'] = $v['no_minutes'] / 60;
+                $v['delay_unit'] = 'hours';
+            }
+        }
+
+        return $ar;
     }
     
     function listActions($roo, $q) {
@@ -273,7 +395,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      * 
      */
     
-    function notifyEvent($event)
+    function notifyEvent($event, $now = false)
     {
         //print_r($event);
         //DB_DataObject::DebugLevel(1);
@@ -286,6 +408,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if (empty($event->action)) {
             return;
         }
+
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $event->on_table;
         $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
@@ -294,9 +417,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->active = 1;
         
         // not sure why this is here... - it breaks on the reader article -> 
-        if ($event->person_id) {
-            $w->whereAdd('person_id != '. (int) $event->person_id);
-        }
+        // if ($event->person_id) {
+        //     $w->whereAdd('person_id != '. (int) $event->person_id);
+        // }
  
         $watches = $w->fetchAll();
         
@@ -309,8 +432,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         foreach($watches as $watch) {
             $n = clone($nn);
             if (!$watch->person_id) { // no people??? bugs in watch table
-                $dom = explode(':',$watch->medium);
-                if (count($dom) != 2) {
+                if(($dom = $this->getTableAndMethodFromMedium($watch->medium)) === false) {
+                    // invalid medium
                     continue;
                 }
                 // in some scenarios (like watching for new articles)
@@ -352,7 +475,12 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ?
+                (
+                    empty($now) ?
                     $n->sqlValue("NOW()" . (empty($watch->no_minutes) ? "" : " + INTERVAL {$watch->no_minutes} MINUTE"))
+                    :
+                    $n->sqlValue($now . (empty($watch->no_minutes) ? "" : " + INTERVAL {$watch->no_minutes} MINUTE"))
+                )
                     : $n->act_start );
             $n->insert();
         }
@@ -375,6 +503,32 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             
             
         }
+    }
+
+    /**
+     * get table and method from medium
+     * 
+     * @param string $medium medium
+     * @return array|boolean return array of table name and method name if valid, else return false
+     */
+    function getTableAndMethodFromMedium($medium)
+    {
+        $res = false;
+        if(strpos($medium, '::') !== false) {
+            $res = explode("::", $medium);
+        }
+        else if(strpos($medium, ':') !== false) {
+            $res = explode(":", $medium);
+        }
+        else {
+            return false;
+        }
+
+        if(count($res) != 2) {
+            return false;
+        }
+
+        return $res;
     }
     
      
