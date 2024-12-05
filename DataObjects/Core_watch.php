@@ -409,6 +409,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             return;
         }
 
+        var_dump($now);
+        die('test');
+
         $w = DB_DataObject::factory('core_watch');
         $w->ontable = $event->on_table;
         $w->whereAdd('onid = 0 OR onid='. ((int) $event->on_id));
