@@ -419,9 +419,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $w->active = 1;
         
         // not sure why this is here... - it breaks on the reader article -> 
-        if ($event->person_id) {
-            $w->whereAdd('person_id != '. (int) $event->person_id);
-        }
+        // if ($event->person_id) {
+        //     $w->whereAdd('person_id != '. (int) $event->person_id);
+        // }
  
         $watches = $w->fetchAll();
 
