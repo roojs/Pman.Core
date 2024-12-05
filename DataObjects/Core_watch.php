@@ -473,6 +473,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 continue;
             }
 
+            if($event->action == 'MESSAGESENT') {
+                var_dump($now . (empty($watch->no_minutes) ? "" : " + INTERVAL {$watch->no_minutes} MINUTE"));
+                die('test');
+            }
+
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ?
                 (
