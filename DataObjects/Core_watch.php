@@ -421,6 +421,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
  
         $watches = $w->fetchAll();
+
+        var_dump($watches);
         
         //print_R($watches); 
         
