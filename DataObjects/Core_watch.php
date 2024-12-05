@@ -421,8 +421,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
  
         $watches = $w->fetchAll();
-
-        var_dump($watches);
         
         //print_R($watches); 
         
@@ -473,8 +471,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 // we have a item in the queue for that waiting to be sent..
                 continue;
             }
-
-            var_dump($now);
 
             //echo "inserting notify?";
             $n->act_start( empty($n->act_start) ?
