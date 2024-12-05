@@ -210,7 +210,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
         return $ret;
     }
 
-    function toRooSingleArray() 
+    function toRooSingleArray($authUser, $request) 
     {
         $ret = $this->toArray();
         $ret['dtstart_day'] = date('Y-m-d', strtotime($this->dtstart));
