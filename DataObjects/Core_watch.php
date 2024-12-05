@@ -176,7 +176,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if(isset($request['delay_value']) && isset($request['delay_unit'])) {
             switch($request['delay_unit']) {
                 case 'days':
-                    $this->no_minutes = $request['delay_value'] * 720;
+                    $this->no_minutes = $request['delay_value'] * 1440;
                     break;
                 case 'hours':
                     $this->no_minutes = $request['delay_value'] * 60;
@@ -207,7 +207,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         if(isset($request['delay_value']) && isset($request['delay_unit'])) {
             switch($request['delay_unit']) {
                 case 'days':
-                    $this->no_minutes = $request['delay_value'] * 720;
+                    $this->no_minutes = $request['delay_value'] * 1440;
                     break;
                 case 'hours':
                     $this->no_minutes = $request['delay_value'] * 60;
@@ -226,8 +226,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         $ret['delay_value'] = empty($ret['no_minutes']) ? 0 : $ret['no_minutes'];
         $ret['delay_unit'] = 'minutes';
 
-        if($ret['no_minutes'] >= 720 && $ret['no_minutes'] % 720 == 0) {
-            $ret['delay_value'] = $ret['no_minutes'] / 720;
+        if($ret['no_minutes'] >= 1440 && $ret['no_minutes'] % 1440 == 0) {
+            $ret['delay_value'] = $ret['no_minutes'] / 1440;
             $ret['delay_unit'] = 'days';
         }
         else if ($ret['no_minutes'] >= 60 && $ret['no_minutes'] % 60 == 0) {
@@ -258,8 +258,8 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             $v['delay_value'] = empty($v['no_minutes']) ? 0 : $v['no_minutes'];
             $v['delay_unit'] = 'minutes';
     
-            if($v['no_minutes'] >= 720 && $v['no_minutes'] % 720 == 0) {
-                $v['delay_value'] = $v['no_minutes'] / 720;
+            if($v['no_minutes'] >= 1440 && $v['no_minutes'] % 1440 == 0) {
+                $v['delay_value'] = $v['no_minutes'] / 1440;
                 $v['delay_unit'] = 'days';
             }
             else if ($v['no_minutes'] >= 60 && $v['no_minutes'] % 60 == 0) {
