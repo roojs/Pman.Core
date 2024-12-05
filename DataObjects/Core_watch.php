@@ -395,7 +395,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
      * 
      */
     
-    function notifyEvent($event)
+    function notifyEvent($event, $now = false)
     {
         //print_r($event);
         //DB_DataObject::DebugLevel(1);
