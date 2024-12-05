@@ -695,6 +695,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (method_exists($object, 'toMailerData')) {
             return $object->toMailerData(array(
+                'msgid' => $notify->tableName() . '-' . $notify->id,
                 'rcpts'=>$rcpt,
                 'person'=>$rcpt, // added as mediaoutreach used this?
             )); //this is core_email - i think it's only used for testing...
