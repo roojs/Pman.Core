@@ -246,10 +246,10 @@ class Pman_Core_Mailer {
         ));
         // clean up the headers...
         
-        
-        $parts[1]['Message-Id'] = '<' .   $content->msgid   .
+        if (empty($parts[1]['Message-Id'])) {
+            $parts[1]['Message-Id'] = '<' .   $content->msgid   .
                                      '@' . $content->HTTP_HOST .'>';
-        
+        }
           
         if ($htmlbody !== false) {
             // got a html headers...

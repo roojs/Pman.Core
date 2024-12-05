@@ -124,7 +124,7 @@ class Pman_Core_NotifySend extends Pman
         // phpinfo();exit;
         $force = empty($opts['force']) ? 0 : 1;
         
-        $w = DB_DataObject::factory($this->table);
+        $w = DB_DataObject::factory($this->table); // core_notify usually.
 
         if (!$w->get($id)) {
             $this->errorHandler("invalid id\n");
@@ -704,6 +704,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (method_exists($object, 'toMailerData')) {
             return $object->toMailerData(array(
+                'msgid' => $notify->tableName() . '-' . $notify->id,
                 'rcpts'=>$rcpt,
                 'person'=>$rcpt, // added as mediaoutreach used this?
             )); //this is core_email - i think it's only used for testing...
