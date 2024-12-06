@@ -1,4 +1,4 @@
-ga<?php
+<?php
 /**
  * Table Definition for Images
  */
