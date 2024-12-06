@@ -242,14 +242,9 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
             return false;
         }
 
-        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        // if it fails... - it should not!!!! - config should solve this..
         $object = DB_DataObject::factory($ar[0]);
-        if(PEAR::isError($object)) {
-            // table does not exist
-            return false;
-        }
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-
+         
         $method = $ar[1];
 
         try {
