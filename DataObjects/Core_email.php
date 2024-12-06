@@ -321,6 +321,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         return $unsubscribe;
     }
+	
+	
+	
     
     /**
      * convert email with contents into a core mailer object. - ready to send..
@@ -417,7 +420,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $ui = posix_getpwuid(posix_geteuid());
         
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
+        $cachePath = $this->cacheDir() . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
         
         if($force || !$this->isGenerated($cachePath)){
             $this->cachedMailWithOutImages($force, empty($contents['replace_links']) ? false : $contents['replace_links']);
@@ -425,7 +428,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
          
         require_once 'Pman/Core/Mailer.php';
         
-        $templateDir = session_save_path() . '/email-cache-' . $ui['name'] ;
+        $templateDir = $this->cacheDir() ;
         
         $cfg = array(
             'template'=> $this->tableName() . '-' . $this->id,
@@ -453,7 +456,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         $r = new Pman_Core_Mailer($cfg);
         
-        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        $imageCache = $this->cacheDir()  . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         if(file_exists($imageCache) && filesize($imageCache)){
             $images = json_decode(file_get_contents($imageCache), true);
@@ -499,13 +502,22 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         
         return $r->send();
     }
+	
+	function cacheDir()
+	{
+		$ui = posix_getpwuid(posix_geteuid());
+		$ff = HTML_FlexyFramework::get();
+        
+        return  session_save_path() . '/email-cache-' . $ff->appNameShort . '-' . $ui['name'] ;
+        
+	}
+	
     
     function cachedMailWithOutImages($force = false, $replace_links = true)
     {  
         
-        $ui = posix_getpwuid(posix_geteuid());
-        
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
+         
+        $cachePath = $this->cacheDir() .  '/mail/' . $this->tableName() . '-' . $this->id . '.txt';
           
         if (!$force && $this->isGenerated($cachePath)) {
             return;
@@ -548,7 +560,7 @@ Content-Transfer-Encoding: 7bit
         
         $this->processRelacements($replace_links);
         
-        $cachePath = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
+        $cachePath = $this->cacheDir() . '/mail/' . $this->tableName() . '-' . $this->id . '.body.html';
         
         if (!file_exists(dirname($cachePath))) {
             mkdir(dirname($cachePath), 0700, true);
@@ -574,7 +586,7 @@ Content-Transfer-Encoding: 7bit
     {
         $ui = posix_getpwuid(posix_geteuid());
         
-        $imageCache = session_save_path() . '/email-cache-' . $ui['name'] . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
+        $imageCache =$this->cacheDir() . '/mail/' . $this->tableName() . '-' . $this->id . '-images.txt';
         
         $ids = $this->attachmentIds();
         
