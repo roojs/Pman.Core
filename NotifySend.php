@@ -461,6 +461,8 @@ class Pman_Core_NotifySend extends Pman
                     if (!$match) {
                         continue;
                     }
+                    
+                   
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
                     // if it's newer that '1' minute...
                     // then shunt it..
@@ -496,7 +498,7 @@ class Pman_Core_NotifySend extends Pman
                     if (isset($settings['tls'])) {
                         $mailer->tls = $settings['tls'];
                     }
-                    
+                    $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
                     
                     break;
                 }
