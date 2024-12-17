@@ -522,6 +522,9 @@ Pman.Dialog.CoreEmail = {
                              'from_name' : Pman.Login.authUser.name,
                              'from_email' : Pman.Login.authUser.email
                          });
+                         if(_this.data.fromName) {
+                             _this.form.findField('from_name').setValue('LLLLL');
+                         }
                      }
                     return;
                  }
