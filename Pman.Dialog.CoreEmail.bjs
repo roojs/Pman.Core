@@ -387,6 +387,7 @@
                  "function (combo, record, index)",
                  "{",
                  "    Roo.log(record);",
+                 "    _this",
                  "}"
                 ]
                },

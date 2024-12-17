@@ -677,6 +677,7 @@ Pman.Dialog.CoreEmail = {
                 select : function (combo, record, index)
                  {
                      Roo.log(record);
+                     _this
                  }
                },
                xns : Roo.form,
