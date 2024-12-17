@@ -146,6 +146,7 @@ Pman.Dialog.PreviewRowsImport = {
           var validateEmail = function() {
               new Pman.Request({
                   url: _this.data.url,
+                  timeout : 60000,
                   params: {
                       _validate_email: emails[validateIndex]['email']
                   },
