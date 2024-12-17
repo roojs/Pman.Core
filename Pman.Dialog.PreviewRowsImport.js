@@ -42,6 +42,7 @@ Pman.Dialog.PreviewRowsImport = {
     height : 400,
     minHeight : 400,
     minWidth : 1300,
+    modal : true,
     resizable : true,
     title : _this._strings['0600a5eb111ff39e7603c8b957a9c767'] /* Preview Rows from XLS */,
     width : 950,
