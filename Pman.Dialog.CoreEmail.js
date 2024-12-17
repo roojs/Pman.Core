@@ -676,8 +676,7 @@ Pman.Dialog.CoreEmail = {
                listeners : {
                 select : function (combo, record, index)
                  {
-                     Roo.log(record);
-                     _this
+                     _this.form.findField('from_name').setValue(record.data.name);
                  }
                },
                xns : Roo.form,
