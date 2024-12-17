@@ -695,7 +695,7 @@ Pman.Dialog.CoreEmail = {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
                       if(_this.data.module == 'crm_mailing_list_message') {
-                          
+                          o.params._message_senders = 1;
                       }
                   }
                 },
