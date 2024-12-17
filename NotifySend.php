@@ -314,7 +314,11 @@ class Pman_Core_NotifySend extends Pman
         $p->email = trim($p->email);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
-         
+        
+        if (!empty($opts['send-to'])) {
+            $ww->to_email = $opts['send-to']; // override send to
+        }
+        
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
         
