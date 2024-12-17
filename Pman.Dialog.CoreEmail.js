@@ -694,7 +694,7 @@ Pman.Dialog.CoreEmail = {
                 listeners : {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
-                      o.params._sender_for_message = 1;
+                      o.params._message_sender = 1;
                   }
                 },
                 xns : Roo.data,
