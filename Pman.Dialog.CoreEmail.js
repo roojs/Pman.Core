@@ -520,14 +520,26 @@ Pman.Dialog.CoreEmail = {
                      } else {
                          _this.form.setValues({
                              'from_name' : Pman.Login.authUser.name,
-                             'from_email' : Pman.Login.authUser.email
+                             'from_email' : Pman.Login.authUser.email,
+                             'language': Pman.Login.authUser.lang == '' ? 'en' : Pman.Login.authUser.lang
                          });
-                         if(_this.data.from_name && _this.data.from_email) {
-                             _this.form.setValues({
-                                 'from_name' : _this.data.from_name,
-                                 'from_email' : _this.data.from_email
-                             });
-                         }
+                         
+                         Pman.Request({
+                             url: baseURL + '/Roo/Mail_imap_user.php',
+                             method: 'GET',
+                             params: {
+                                 _email_senders: 1
+                             },
+                             success: function(res) {
+                                 if(!res.data.length) {
+                                     return;
+                                 }
+                                 _this.form.setValues({
+                                     'from_name' : res.data[0].name,
+                                     'from_email' : res.data[0].email
+                                 });
+                             }
+                         });
                      }
                     return;
                  }
@@ -695,7 +707,7 @@ Pman.Dialog.CoreEmail = {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
                       if(_this.data.module == 'crm_mailing_list_message') {
-                          o.params._message_senders = 1;
+                          o.params._email_senders = 1;
                       }
                   }
                 },
