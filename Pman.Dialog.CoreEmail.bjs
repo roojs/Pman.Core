@@ -339,14 +339,6 @@
               },
               {
                "$ xns" : "Roo.form",
-               "allowBlank" : false,
-               "fieldLabel" : "Email address",
-               "name" : "from_email",
-               "width" : 300,
-               "xtype" : "TextField"
-              },
-              {
-               "$ xns" : "Roo.form",
                "allowBlank" : true,
                "alwaysQuery" : true,
                "bool editable" : false,
