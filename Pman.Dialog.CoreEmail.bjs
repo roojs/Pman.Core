@@ -389,7 +389,7 @@
                  "xtype" : "Store"
                 }
                ],
-               "listWidth" : 400,
+               "listWidth" : 300,
                "loadingText" : "Searching...",
                "minChars" : 1,
                "name" : "from_email",
@@ -400,7 +400,7 @@
                "triggerAction" : "all",
                "typeAhead" : false,
                "valueField" : "id",
-               "width" : 200,
+               "width" : 300,
                "xtype" : "ComboBox"
               },
               {

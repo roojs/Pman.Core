@@ -670,7 +670,7 @@ Pman.Dialog.CoreEmail = {
                emptyText : _this._strings['8a10310fb61d63d1711b319163eff1b1'] /* Select email */,
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                forceSelection : true,
-               listWidth : 400,
+               listWidth : 300,
                loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
                minChars : 1,
                name : 'from_email',
@@ -681,7 +681,7 @@ Pman.Dialog.CoreEmail = {
                triggerAction : 'all',
                typeAhead : false,
                valueField : 'id',
-               width : 200,
+               width : 300,
                xns : Roo.form,
                '|xns' : 'Roo.form',
                store : {
