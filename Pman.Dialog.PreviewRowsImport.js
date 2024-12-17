@@ -55,13 +55,13 @@ Pman.Dialog.PreviewRowsImport = {
           var cols = [{
               dataIndex: 'valid',
               header: 'Valid',
-              renderer: v => String.format('{0}', v),
+              renderer: function (v) { return  String.format('{0}', v); },
               width: 30
           }];
           
           var missingEmail = true;
           
-          Roo.each(_this.data.data.headers, (h, index) => {
+          Roo.each(_this.data.data.headers, function(h, index)  {
               // no mapping
               if(_this.data.colMap[index] == '') {
                   return;
@@ -87,7 +87,7 @@ Pman.Dialog.PreviewRowsImport = {
               cols.push({
                   dataIndex: _this.data.colMap[index],
                   header: header,
-                  renderer: (v, x, r) => {
+                  renderer: function (v, x, r) {
                       if(r.data.valid === '') {
                           if(r.data[_this.data.colMap[index] + '_valid'] === true) {
                               return String.format('<span style="color: green;">{0}</span>', v);
@@ -104,11 +104,11 @@ Pman.Dialog.PreviewRowsImport = {
               fields: fields
           });
           
-          Roo.each(_this.data.data.rows, r => {
+          Roo.each(_this.data.data.rows, function(r)  {
               var data = {
                   valid: 'V'
               };
-              Roo.each(_this.data.data.headers, (h, index) => {
+              Roo.each(_this.data.data.headers, function (h, index)  {
                   // no mapping
                   if(_this.data.colMap[index] == '') {
                       return;
@@ -128,8 +128,8 @@ Pman.Dialog.PreviewRowsImport = {
           
           var emails = [];
           
-          Roo.each(_this.data.data.rows, (r, i) => {
-              Roo.each(_this.data.data.headers, (h, headerIndex) => {
+          Roo.each(_this.data.data.rows, function (r, i) {
+              Roo.each(_this.data.data.headers, function (h, headerIndex)  {
                   if(_this.data.emailCols.includes(_this.data.colMap[headerIndex]) && r[headerIndex] != '') {
                       emails.push({
                           email: r[headerIndex],
@@ -148,6 +148,10 @@ Pman.Dialog.PreviewRowsImport = {
                   url: _this.data.url,
                   params: {
                       _validate_email: emails[validateIndex]['email']
+                  },
+                  failure : function(res)
+                  {
+                      validateEmail(); // try again?
                   },
                   success: function(res) {
                       var rowIndex = emails[validateIndex]['rowIndex'];
@@ -174,7 +178,7 @@ Pman.Dialog.PreviewRowsImport = {
                           
                           var errors = [];
                           
-                          Roo.each(emails, e => {
+                          Roo.each(emails, function(e)  {
                               if(e.error !== false) {
                                   errors.push(e.error);
                                   _this.validIndexes.remove(e.rowIndex);
