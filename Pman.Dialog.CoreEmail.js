@@ -17,6 +17,7 @@ Pman.Dialog.CoreEmail = {
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
   'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
+  'ce8ae9da5b7cd6c3df2929543a9af92d' :"Email",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
@@ -25,6 +26,7 @@ Pman.Dialog.CoreEmail = {
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   '6fa7053e67f9aca02815e903a655ef3d' :"Save & Send",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
+  '8a10310fb61d63d1711b319163eff1b1' :"Select email",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
@@ -47,11 +49,14 @@ Pman.Dialog.CoreEmail = {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
+  'from_email_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
   'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
+  'from_email_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
+  'from_email_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
@@ -655,6 +660,58 @@ Pman.Dialog.CoreEmail = {
                width : 300,
                xns : Roo.form,
                '|xns' : 'Roo.form'
+              },
+              {
+               xtype : 'ComboBox',
+               allowBlank : true,
+               alwaysQuery : true,
+               displayField : 'email',
+               editable : false,
+               emptyText : _this._strings['8a10310fb61d63d1711b319163eff1b1'] /* Select email */,
+               fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
+               forceSelection : true,
+               listWidth : 400,
+               loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
+               minChars : 1,
+               name : 'from_email',
+               pageSize : 20,
+               qtip : _this._strings['ce8ae9da5b7cd6c3df2929543a9af92d'] /* Email */,
+               selectOnFocus : true,
+               tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> {email}</div>',
+               triggerAction : 'all',
+               typeAhead : false,
+               valueField : 'id',
+               width : 200,
+               xns : Roo.form,
+               '|xns' : 'Roo.form',
+               store : {
+                xtype : 'Store',
+                remoteSort : true,
+                sortInfo : { direction : 'ASC', field: 'email' },
+                listeners : {
+                 beforeload : function (_self, o){
+                      o.params = o.params || {};
+                      o.params._sender_for_message = 1;
+                  }
+                },
+                xns : Roo.data,
+                '|xns' : 'Roo.data',
+                proxy : {
+                 xtype : 'HttpProxy',
+                 method : 'GET',
+                 url : baseURL + '/Roo/mail_imap_user',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data'
+                },
+                reader : {
+                 xtype : 'JsonReader',
+                 id : 'id',
+                 root : 'data',
+                 totalProperty : 'total',
+                 xns : Roo.data,
+                 '|xns' : 'Roo.data'
+                }
+               }
               },
               {
                xtype : 'ComboBox',
