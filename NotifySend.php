@@ -300,17 +300,21 @@ class Pman_Core_NotifySend extends Pman
         // should we fetch the watch that caused it.. - which should contain the method to call..
         // --send-to=test@xxx.com
        
+       
+        if (!empty($opts['send-to'])) {
+            $email['send-to'] = $opts['send-to'];
+        }
+       
         if (!empty($email['send-to'])) {
             $p->email = $email['send-to'];
         }
-         if (!empty($opts['send-to'])) {
-            $p->email = $opts['send-to'];
-        }
+       
         
             // since some of them have spaces?!?!
         $p->email = trim($p->email);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
+         
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
         
