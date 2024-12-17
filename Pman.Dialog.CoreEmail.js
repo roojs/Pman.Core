@@ -673,6 +673,12 @@ Pman.Dialog.CoreEmail = {
                typeAhead : false,
                valueField : 'id',
                width : 300,
+               listeners : {
+                select : function (combo, record, index)
+                 {
+                 
+                 }
+               },
                xns : Roo.form,
                '|xns' : 'Roo.form',
                store : {

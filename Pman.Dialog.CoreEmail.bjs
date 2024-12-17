@@ -382,6 +382,14 @@
                 }
                ],
                "listWidth" : 300,
+               "listeners" : {
+                "select" : [
+                 "function (combo, record, index)",
+                 "{",
+                 "",
+                 "}"
+                ]
+               },
                "loadingText" : "Searching...",
                "minChars" : 1,
                "name" : "from_email",
