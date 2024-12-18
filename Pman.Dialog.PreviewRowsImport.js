@@ -161,7 +161,7 @@ Pman.Dialog.PreviewRowsImport = {
                   },
                   failure : function(res)
                   {
-                      //validateEmail(); // try again?
+                      validateEmail(); // try again?
                   },
                   success: function(res) {
                       var rowIndex = emails[validateIndex]['rowIndex'];
