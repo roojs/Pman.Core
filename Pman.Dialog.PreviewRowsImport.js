@@ -202,7 +202,8 @@ Pman.Dialog.PreviewRowsImport = {
                                           method : 'GET',
                                           params: {
                                               'fileId': _this.data.fileId,
-                                              'emails': Roo.encode(emails)
+                                              'emails': Roo.encode(emails),
+                                              'emailCols': Roo.encode(_this.data.emailCols)
                                           }
                                       });
                                   }
