@@ -1,9 +1,9 @@
 {
- "gen_extended" : false,
  "items" : [
   {
    "$ xns" : "Roo",
    "Boolean closable" : false,
+   "Boolean modal" : true,
    "height" : 400,
    "items" : [
     {
@@ -300,6 +300,7 @@
  "modOrder" : "001",
  "name" : "Pman.Dialog.PreviewRowsImport",
  "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.PreviewRowsImport.bjs",
  "permname" : "",
  "strings" : {
   "0600a5eb111ff39e7603c8b957a9c767" : "Preview Rows from XLS",
