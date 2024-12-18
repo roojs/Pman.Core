@@ -144,7 +144,7 @@ Pman.Dialog.PreviewRowsImport = {
           
           var emailColIndexes = [];
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
-              if(_this.data.emailCols.includes(_this.data.colMap[headerIndex]) && r[headerIndex] != '') {
+              if(_this.data.emailCols.includes(_this.data.colMap[headerIndex])) {
                   emailColIndexes.push(headerIndex);
               }
           });
