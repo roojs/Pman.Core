@@ -42,6 +42,7 @@ Pman.Dialog.PreviewRowsImport = {
     height : 400,
     minHeight : 400,
     minWidth : 1300,
+    modal : true,
     resizable : true,
     title : _this._strings['0600a5eb111ff39e7603c8b957a9c767'] /* Preview Rows from XLS */,
     width : 950,
@@ -141,6 +142,13 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
+          var emailColIndexes = [];
+          Roo.each(_this.data.data.headers, function (h, headerIndex)  {
+              if(_this.data.emailCols.includes(_this.data.colMap[headerIndex])) {
+                  emailColIndexes.push(headerIndex);
+              }
+          });
+          
           var validateIndex = 0;
           
           var validateEmail = function() {
@@ -148,6 +156,7 @@ Pman.Dialog.PreviewRowsImport = {
                   url: _this.data.url,
                   timeout : 60000,
                   params: {
+                      _validate_email_file_id: _this.data.fileId,
                       _validate_email: emails[validateIndex]['email']
                   },
                   failure : function(res)
@@ -201,7 +210,7 @@ Pman.Dialog.PreviewRowsImport = {
                                           method : 'GET',
                                           params: {
                                               'fileId': _this.data.fileId,
-                                              'emails': Roo.encode(emails)
+                                              'emailColIndexes': Roo.encode(emailColIndexes)
                                           }
                                       });
                                   }
