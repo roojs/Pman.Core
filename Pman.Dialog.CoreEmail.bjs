@@ -1,4 +1,5 @@
 {
+ "gen_extended" : false,
  "items" : [
   {
    "$ xns" : "Roo",
@@ -339,11 +340,72 @@
               },
               {
                "$ xns" : "Roo.form",
-               "allowBlank" : false,
+               "allowBlank" : true,
+               "alwaysQuery" : true,
+               "bool editable" : false,
+               "displayField" : "email",
+               "emptyText" : "Select email",
                "fieldLabel" : "Email address",
+               "forceSelection" : true,
+               "items" : [
+                {
+                 "$ sortInfo" : "{ direction : 'ASC', field: 'email' }",
+                 "$ xns" : "Roo.data",
+                 "* prop" : "store",
+                 "items" : [
+                  {
+                   "$ url" : "baseURL + '/Roo/mail_imap_user'",
+                   "$ xns" : "Roo.data",
+                   "* prop" : "proxy",
+                   "method" : "GET",
+                   "xtype" : "HttpProxy"
+                  },
+                  {
+                   "$ xns" : "Roo.data",
+                   "* prop" : "reader",
+                   "id" : "id",
+                   "root" : "data",
+                   "totalProperty" : "total",
+                   "xtype" : "JsonReader"
+                  }
+                 ],
+                 "listeners" : {
+                  "|beforeload" : [
+                   "function (_self, o){",
+                   "    o.params = o.params || {};",
+                   "    if(_this.data.module == 'crm_mailing_list_message') {",
+                   "        o.params._email_senders = 1;",
+                   "        ",
+                   "    }",
+                   "}",
+                   ""
+                  ]
+                 },
+                 "remoteSort" : true,
+                 "xtype" : "Store"
+                }
+               ],
+               "listWidth" : 300,
+               "listeners" : {
+                "select" : [
+                 "function (combo, record, index)",
+                 "{",
+                 "    _this.form.findField('from_name').setValue(record.data.name);",
+                 "}"
+                ]
+               },
+               "loadingText" : "Searching...",
+               "minChars" : 1,
                "name" : "from_email",
+               "pageSize" : 20,
+               "qtip" : "Email",
+               "selectOnFocus" : true,
+               "tpl" : "<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> {email}</div>",
+               "triggerAction" : "all",
+               "typeAhead" : false,
+               "valueField" : "id",
                "width" : 300,
-               "xtype" : "TextField"
+               "xtype" : "ComboBox"
               },
               {
                "$ xns" : "Roo.form",
@@ -952,7 +1014,25 @@
              "        } else {",
              "            _this.form.setValues({",
              "                'from_name' : Pman.Login.authUser.name,",
-             "                'from_email' : Pman.Login.authUser.email",
+             "                'from_email' : Pman.Login.authUser.email,",
+             "                'language': Pman.Login.authUser.lang == '' ? 'en' : Pman.Login.authUser.lang",
+             "            });",
+             "            ",
+             "            Pman.Request({",
+             "                url: baseURL + '/Roo/Mail_imap_user.php',",
+             "                method: 'GET',",
+             "                params: {",
+             "                    _email_senders: 1",
+             "                },",
+             "                success: function(res) {",
+             "                    if(!res.data.length) {",
+             "                        return;",
+             "                    }",
+             "                    _this.form.setValues({",
+             "                        'from_name' : res.data[0].name,",
+             "                        'from_email' : res.data[0].email",
+             "                    });",
+             "                }",
              "            });",
              "        }",
              "       return;",
@@ -1505,7 +1585,10 @@
   "bcc_group_id_name_fieldLabel" : "68b00d723d37122f64da8d9939f836f0",
   "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "bcc_group_id_name_qtip" : "2c466a2c159463f1d9ef5a7b57b52827",
+  "from_email_emptyText" : "8a10310fb61d63d1711b319163eff1b1",
   "from_email_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
+  "from_email_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "from_email_qtip" : "ce8ae9da5b7cd6c3df2929543a9af92d",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "language_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
@@ -1513,7 +1596,6 @@
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
  "parent" : "",
- "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreEmail.bjs",
  "permname" : "",
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
@@ -1533,6 +1615,7 @@
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "6fa7053e67f9aca02815e903a655ef3d" : "Save & Send",
+  "8a10310fb61d63d1711b319163eff1b1" : "Select email",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
@@ -1543,6 +1626,7 @@
   "c4ca4238a0b923820dcc509a6f75849b" : "1",
   "c7892ebbb139886662c6f2fc8c450710" : "Subject",
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
+  "ce8ae9da5b7cd6c3df2929543a9af92d" : "Email",
   "e44b145bd8b49b06e0ad2ced1ad56466" : "Plain Text",
   "e9968623956c15023d54335ea3699855" : "Convert Html to Text",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
