@@ -365,4 +365,32 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->update($ww);
     }
     
+    // used by bounce processing - in pman.mail
+    function processBounce($res, $msg, $roo)
+    {
+     
+        // we need the message id..
+        $match = array();
+        if (empty($res['msgid']) || !preg_match('/^core_notify-([0-9]+)@/', $res['msgid'], $match)) {
+            return false; // can't handle it.
+        }
+        $cn = DB_DataObject::Factory('core_notify');
+        if (!$cn->get($match[0])) {
+            return "could not find nogify id from {$res['msgid']}";
+        }
+        // this is a hard bounce so we add a counter onto the failed record.
+        // do we add an event? - guess so..
+        $ev = $roo->addEvent('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}" );
+        $old = clone($cn);
+        $cn->event_id = $ev->id;
+        $cn->update($old);
+        
+        $p = $cn->person();
+        // crm only has 1 deliveyr person..
+        $po = clone($p);
+        $p->email_fails++;
+        $p->update($po);
+        return $p;
+    }
+        
 }
