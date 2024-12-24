@@ -371,12 +371,15 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
      
         // we need the message id..
         $match = array();
-        if (empty($res['msgid']) || !preg_match('/^core_notify-([0-9]+)@/', $res['msgid'], $match)) {
-            return false; // can't handle it.
+        if (empty($res['msgid'])) {
+            return "could not find message id"; // can't handle it.
+        }
+        if (!preg_match('/^core_notify-([0-9]+)@/', $res['msgid'], $match)) {
+            return "could not find message id in {$res['msgid']}"; // can't handle it.
         }
         $cn = DB_DataObject::Factory('core_notify');
         if (!$cn->get($match[0])) {
-            return "could not find nogify id from {$res['msgid']}";
+            return "could not find notify id from {$res['msgid']}";
         }
         // this is a hard bounce so we add a counter onto the failed record.
         // do we add an event? - guess so..
