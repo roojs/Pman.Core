@@ -534,22 +534,28 @@ Pman.Dialog.CoreEmail = {
                              'language': Pman.Login.authUser.lang == '' ? 'en' : Pman.Login.authUser.lang
                          });
                          
-                         Pman.Request({
-                             url: baseURL + '/Roo/Mail_imap_user.php',
-                             method: 'GET',
-                             params: {
-                                 _email_senders: 1
-                             },
-                             success: function(res) {
-                                 if(!res.data.length) {
-                                     return;
+                         _this.form.findField('from_email_text').setValue(_this.form.findField('from_email').getValue());
+                         
+                         
+                         if(typeof(Pman.Mail) != 'undefined') {
+                             Pman.Request({
+                                 url: baseURL + '/Roo/Mail_imap_user.php',
+                                 method: 'GET',
+                                 params: {
+                                     _email_senders: 1
+                                 },
+                                 success: function(res) {
+                                     if(!res.data.length) {
+                                         return;
+                                     }
+                                     _this.form.setValues({
+                                         'from_name' : res.data[0].name,
+                                         'from_email' : res.data[0].email
+                                     });
+                                     _this.form.findField('from_email_name').setValue(_this.form.findField('from_email').getValue());
                                  }
-                                 _this.form.setValues({
-                                     'from_name' : res.data[0].name,
-                                     'from_email' : res.data[0].email
-                                 });
-                             }
-                         });
+                             });
+                         }
                      }
                     return;
                  }
