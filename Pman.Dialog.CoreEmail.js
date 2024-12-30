@@ -530,7 +530,7 @@ Pman.Dialog.CoreEmail = {
                          });
                          
                          var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
-                         _this.form.findField(emailField).setValue(_this.from.findField('from_email').getValue());
+                         _this.form.findField(emailField).setValue(_this.form.findField('from_email').getValue());
                          
                          Pman.Request({
                              url: baseURL + '/Roo/Mail_imap_user.php',
@@ -558,7 +558,7 @@ Pman.Dialog.CoreEmail = {
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
                      var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
-                     _this.form.findField(emailField).setValue(_this.from.findField('from_email').getValue());
+                     _this.form.findField(emailField).setValue(_this.form.findField('from_email').getValue());
                      
                      if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
                          if(_this.form.findField('stripo_id').getValue() > 0) {
