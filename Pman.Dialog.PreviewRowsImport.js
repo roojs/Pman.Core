@@ -149,6 +149,8 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
+          var oldEmails = [];
+          
           var validateIndex = 0;
           
           var validateEmail = function() {
