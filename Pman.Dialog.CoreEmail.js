@@ -552,7 +552,7 @@ Pman.Dialog.CoreEmail = {
                                          'from_name' : res.data[0].name,
                                          'from_email' : res.data[0].email
                                      });
-                                     _this.form.findField('from_email_name').setValue(_this.form.findField('from_email').getValue());
+                                     _this.form.findField('from_email_combo').setValue(_this.form.findField('from_email').getValue());
                                  }
                              });
                          }
