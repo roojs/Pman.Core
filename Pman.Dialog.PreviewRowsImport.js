@@ -229,6 +229,7 @@ Pman.Dialog.PreviewRowsImport = {
               url: _this.data.url,
               timeout : 60000,
               params: {
+                  _get_new_emails: 1,
                   fileId: _this.data.fileId,
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
