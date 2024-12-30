@@ -230,8 +230,7 @@ Pman.Dialog.PreviewRowsImport = {
               timeout : 60000,
               params: {
                   fileId: _this.data.fileId,
-                  colMap: Roo.encode(_this.data.colMap),
-                  emailCols: _this.data.emailCols
+                  emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
                   Roo.log(res);
