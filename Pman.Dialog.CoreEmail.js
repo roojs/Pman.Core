@@ -536,6 +536,8 @@ Pman.Dialog.CoreEmail = {
                          
                          var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
                          _this.form.findField(emailField).setValue(_this.form.findField('from_email').getValue());
+                         Roo.log('EMAIL FIELD: ' + emailField);
+                         Roo.log('EMAIL: ' + _this.form.findField('from_email').getValue());
                          
                          Pman.Request({
                              url: baseURL + '/Roo/Mail_imap_user.php',
