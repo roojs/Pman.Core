@@ -414,7 +414,7 @@ Pman.Dialog.CoreEmail = {
            method : 'POST',
            preValidate : function(done_callback) {
                var fromValues = _this.form.getValues();
-               _this.form.findField('from_email').setValue(typeof(Pman.Mail) == 'undefined' ? 
+               _this.form.findField('from_email').setValue(typeof(Pman.Mail) != 'undefined' ? 
                    fromValues.from_email_text : 
                    fromValues.from_email_combo
                );
