@@ -413,15 +413,11 @@ Pman.Dialog.CoreEmail = {
            labelWidth : 120,
            method : 'POST',
            preValidate : function(done_callback) {
-               var fromEmail = _this.form.findField('from_email_combo').getValue();
-               Roo.log(_this.form.findField('from_email_combo').getValue());
-               Roo.log(_this.form.findField('from_email_text').getValue());
-               Roo.log(_this.form.getValues());
-               if(typeof(Pman.Mail) == 'undefined') {
-                    fromEmail = _this.form.findField('from_email_text').getValue();
-               }
-               Roo.log('FROM EMAIL: ' + fromEmail);
-               _this.form.findField('from_email').setValue(fromEmail);
+               var fromValues = _this.form.getValues();
+               _this.form.findField('from_email').setValue(typeof(Pman.Mail) == 'undefined' ? 
+                   fromValues.from_email_text : 
+                   fromValues.from_email_combo
+               );
                
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
