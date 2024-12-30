@@ -339,7 +339,7 @@
               },
               {
                "$ xns" : "Roo.form",
-               "allowBlank" : false,
+               "allowBlank" : true,
                "fieldLabel" : "Email address",
                "listeners" : {
                 "render" : [
