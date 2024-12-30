@@ -339,7 +339,7 @@
               },
               {
                "$ xns" : "Roo.form",
-               "String queryParam" : "query['user']",
+               "String queryParam" : "search[email]",
                "allowBlank" : true,
                "alwaysQuery" : true,
                "bool editable" : true,

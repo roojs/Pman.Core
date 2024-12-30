@@ -685,7 +685,7 @@ Pman.Dialog.CoreEmail = {
                name : 'from_email',
                pageSize : 20,
                qtip : _this._strings['ce8ae9da5b7cd6c3df2929543a9af92d'] /* Email */,
-               queryParam : 'query[\'user\']',
+               queryParam : 'search[email]',
                selectOnFocus : true,
                tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> {email}</div>',
                triggerAction : 'all',
