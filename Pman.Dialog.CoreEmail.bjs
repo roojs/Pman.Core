@@ -345,7 +345,7 @@
                 "render" : [
                  "function (_self)",
                  "{",
-                 "    if(typeof(Pman.Mail) == 'undefined') {",
+                 "    if(typeof(Pman.Mail) != 'undefined') {",
                  "        _self.hide();",
                  "    }",
                  "}"
@@ -408,7 +408,7 @@
                 "render" : [
                  "function (_self)",
                  "{",
-                 "    if(typeof(Pman.Mail) != 'undefined') {",
+                 "    if(typeof(Pman.Mail) == 'undefined') {",
                  "        _self.hide();",
                  "    }",
                  "}"
