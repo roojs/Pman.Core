@@ -341,7 +341,7 @@
                "$ xns" : "Roo.form",
                "allowBlank" : true,
                "alwaysQuery" : true,
-               "bool editable" : false,
+               "bool editable" : true,
                "displayField" : "email",
                "emptyText" : "Select email",
                "fieldLabel" : "Email address",

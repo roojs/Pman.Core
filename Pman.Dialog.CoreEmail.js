@@ -675,7 +675,7 @@ Pman.Dialog.CoreEmail = {
                allowBlank : true,
                alwaysQuery : true,
                displayField : 'email',
-               editable : false,
+               editable : true,
                emptyText : _this._strings['8a10310fb61d63d1711b319163eff1b1'] /* Select email */,
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                forceSelection : true,
