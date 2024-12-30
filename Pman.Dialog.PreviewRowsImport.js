@@ -231,6 +231,7 @@ Pman.Dialog.PreviewRowsImport = {
               params: {
                   _get_new_emails: 1,
                   fileId: _this.data.fileId,
+                  colMap: Roo.encode(_this.data.colMap),
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
