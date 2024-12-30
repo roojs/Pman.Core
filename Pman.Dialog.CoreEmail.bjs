@@ -1012,6 +1012,11 @@
              "$ xns" : "Roo.form",
              "String name" : "stripo_id",
              "xtype" : "Hidden"
+            },
+            {
+             "$ xns" : "Roo.form",
+             "String name" : "from_email",
+             "xtype" : "Hidden"
             }
            ],
            "labelAlign" : "right",

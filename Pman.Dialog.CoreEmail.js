@@ -1306,6 +1306,12 @@ Pman.Dialog.CoreEmail = {
              name : 'stripo_id',
              xns : Roo.form,
              '|xns' : 'Roo.form'
+            },
+            {
+             xtype : 'Hidden',
+             name : 'from_email',
+             xns : Roo.form,
+             '|xns' : 'Roo.form'
             }
            ]
           }
