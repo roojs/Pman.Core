@@ -352,7 +352,7 @@
                  "}"
                 ]
                },
-               "name" : "from_email",
+               "name" : "from_email_text",
                "width" : 300,
                "xtype" : "TextField"
               },
@@ -423,7 +423,7 @@
                },
                "loadingText" : "Searching...",
                "minChars" : 1,
-               "name" : "from_email",
+               "name" : "from_email_combo",
                "pageSize" : 20,
                "qtip" : "Email",
                "selectOnFocus" : true,
@@ -1612,10 +1612,11 @@
   "bcc_group_id_name_fieldLabel" : "68b00d723d37122f64da8d9939f836f0",
   "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "bcc_group_id_name_qtip" : "2c466a2c159463f1d9ef5a7b57b52827",
-  "from_email_emptyText" : "8a10310fb61d63d1711b319163eff1b1",
-  "from_email_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
-  "from_email_loadingText" : "1243daf593fa297e07ab03bf06d925af",
-  "from_email_qtip" : "ce8ae9da5b7cd6c3df2929543a9af92d",
+  "from_email_combo_emptyText" : "8a10310fb61d63d1711b319163eff1b1",
+  "from_email_combo_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
+  "from_email_combo_loadingText" : "1243daf593fa297e07ab03bf06d925af",
+  "from_email_combo_qtip" : "ce8ae9da5b7cd6c3df2929543a9af92d",
+  "from_email_text_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "language_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
