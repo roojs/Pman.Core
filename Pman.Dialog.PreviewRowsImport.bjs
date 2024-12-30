@@ -292,8 +292,10 @@
      "        });",
      "    };",
      "    ",
+     "    /*",
      "    Roo.MessageBox.progress(\"Validating emails\", \"Starting\");",
      "    validateEmail();",
+     "    */",
      "}"
     ]
    },
