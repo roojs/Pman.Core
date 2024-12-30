@@ -695,7 +695,7 @@ Pman.Dialog.CoreEmail = {
                listeners : {
                 render : function (_self)
                  {
-                     if(typeof(Pman.Mail) != 'undefined') {
+                     if(typeof(Pman.Mail) == 'undefined') {
                          _self.hide();
                      }
                  }
@@ -728,7 +728,7 @@ Pman.Dialog.CoreEmail = {
                listeners : {
                 render : function (_self)
                  {
-                     if(typeof(Pman.Mail) == 'undefined') {
+                     if(typeof(Pman.Mail) != 'undefined') {
                          _self.hide();
                      }
                  },
