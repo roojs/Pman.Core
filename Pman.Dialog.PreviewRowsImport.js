@@ -225,6 +225,19 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
+          new Pman.Request({
+              url: _this.data.url,
+              timeout : 60000,
+              params: {
+                  fileId: _this.data.fileId,
+                  colMap: Roo.encode(_this.data.colMap),
+                  emailCols: _this.data.emailCols
+              },
+              success: function(res) {
+                  Roo.log(res);
+              }
+          }
+          
           /*
           Roo.MessageBox.progress("Validating emails", "Starting");
           validateEmail();
