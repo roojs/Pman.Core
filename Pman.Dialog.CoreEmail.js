@@ -712,6 +712,9 @@ Pman.Dialog.CoreEmail = {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
                       o.params._email_senders = 1;
+                     o.params['_multisort'] = JSON.stringify(
+                         { sort : { 'is_public' : 'DESC', 'name': 'ASC' }, order : [ 'is_public', 'name' ]}
+                     );
                   }
                 },
                 xns : Roo.data,
