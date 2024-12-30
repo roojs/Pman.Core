@@ -237,14 +237,11 @@ Pman.Dialog.PreviewRowsImport = {
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
-                  Roo.log(res);
+                  oldEmails = res.data;
+                  Roo.MessageBox.progress("Validating emails", "Starting");
+                  validateEmail();
               }
           });
-          
-          /*
-          Roo.MessageBox.progress("Validating emails", "Starting");
-          validateEmail();
-          */
       }
     },
     xns : Roo,
