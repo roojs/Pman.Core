@@ -533,7 +533,7 @@ Pman.Dialog.CoreEmail = {
                          _this.form.findField('from_email_text').setValue(_this.form.findField('from_email').getValue());
                          
                          
-                         if(typeof(Pman.Mail) != 'undefined') {
+                         if(typeof(Pman.Mail) == 'undefined') {
                              Pman.Request({
                                  url: baseURL + '/Roo/Mail_imap_user.php',
                                  method: 'GET',
