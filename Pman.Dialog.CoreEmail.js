@@ -529,6 +529,9 @@ Pman.Dialog.CoreEmail = {
                              'language': Pman.Login.authUser.lang == '' ? 'en' : Pman.Login.authUser.lang
                          });
                          
+                         var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
+                         _this.form.findField(emailField).setValue(Pman.Login.authUser.email);
+                         
                          Pman.Request({
                              url: baseURL + '/Roo/Mail_imap_user.php',
                              method: 'GET',
