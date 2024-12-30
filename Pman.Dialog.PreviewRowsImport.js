@@ -149,7 +149,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
-          var oldEmails = [];
+          var newEmails = [];
           
           var validateIndex = 0;
           
@@ -239,7 +239,7 @@ Pman.Dialog.PreviewRowsImport = {
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
-                  oldEmails = res.data;
+                  newEmails = res.data;
                   validateEmail();
               }
           });
