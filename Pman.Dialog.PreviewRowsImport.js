@@ -235,7 +235,7 @@ Pman.Dialog.PreviewRowsImport = {
               success: function(res) {
                   Roo.log(res);
               }
-          }
+          });
           
           /*
           Roo.MessageBox.progress("Validating emails", "Starting");
