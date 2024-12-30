@@ -345,7 +345,9 @@
                 "render" : [
                  "function (_self)",
                  "{",
-                 "",
+                 "    if(typeof(Pman.Mail) == 'undefined') {",
+                 "        _self.hide();",
+                 "    }",
                  "}"
                 ]
                },

@@ -679,7 +679,9 @@ Pman.Dialog.CoreEmail = {
                listeners : {
                 render : function (_self)
                  {
-                 
+                     if(typeof(Pman.Mail) == 'undefined') {
+                         _self.hide();
+                     }
                  }
                },
                xns : Roo.form,
