@@ -417,7 +417,9 @@ Pman.Dialog.CoreEmail = {
                if(typeof(Pman.Mail) == 'undefined') {
                     fromEmail = _this.form.findField('from_email_text').getValue();
                }
+               Roo.log('FROM EMAIL: ' + fromEmail);
                _this.form.findField('from_email').setValue(fromEmail);
+               
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
                if(!_this.form.findField('bodytext').editorcore.sourceEditMode){
