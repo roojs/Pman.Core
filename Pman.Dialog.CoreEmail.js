@@ -673,7 +673,7 @@ Pman.Dialog.CoreEmail = {
               {
                xtype : 'TextField',
                allowBlank : false,
-               fieldLabel : _this._strings['5da618e8e4b89c66fe86e32cdafde142'] /* From */,
+               fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                name : 'from_email',
                width : 300,
                xns : Roo.form,

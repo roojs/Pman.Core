@@ -340,7 +340,7 @@
               {
                "$ xns" : "Roo.form",
                "allowBlank" : false,
-               "fieldLabel" : "From",
+               "fieldLabel" : "Email address",
                "name" : "from_email",
                "width" : 300,
                "xtype" : "TextField"
