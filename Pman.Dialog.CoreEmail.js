@@ -695,7 +695,9 @@ Pman.Dialog.CoreEmail = {
                listeners : {
                 render : function (_self)
                  {
-                     Roo.log(Pman);
+                     if(typeof(Pman.Mail) == 'undefined') {
+                         _self.hide();
+                     }
                  },
                 select : function (combo, record, index)
                  {
