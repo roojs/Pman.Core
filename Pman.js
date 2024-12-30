@@ -637,8 +637,12 @@ Pman = new Roo.Document(
         }
         var td = new Date();
         var daysSince = Math.floor(td.getElapsed(value) / (1000 * 60*60*24));
+        
+        if (daysSince < 1) {
+            return value.dateFormat('g:ia');
+        }
         if (daysSince < 7) {
-            return value.dateFormat('D H:i');
+            return value.dateFormat('D g:ia');
         }
         
         // same month
