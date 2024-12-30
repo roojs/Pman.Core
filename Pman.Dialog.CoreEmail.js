@@ -413,9 +413,11 @@ Pman.Dialog.CoreEmail = {
            labelWidth : 120,
            method : 'POST',
            preValidate : function(done_callback) {
-               
+               var fromEmail = _this.form.findField('from_email_combo').getValue();
                if(typeof(Pman.Mail) == 'undefined') {
+                    fromEmail = _this.form.findField('from_email_text').getValue();
                }
+               _this.form.findField('from_email').setValue(fromEmail);
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
                if(!_this.form.findField('bodytext').editorcore.sourceEditMode){
