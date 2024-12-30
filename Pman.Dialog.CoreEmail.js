@@ -414,6 +414,8 @@ Pman.Dialog.CoreEmail = {
            method : 'POST',
            preValidate : function(done_callback) {
                
+               if(typeof(Pman.Mail) == 'undefined') {
+               }
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
                if(!_this.form.findField('bodytext').editorcore.sourceEditMode){
