@@ -384,6 +384,12 @@
                ],
                "listWidth" : 300,
                "listeners" : {
+                "render" : [
+                 "function (_self)",
+                 "{",
+                 "    Roo.log(Pman);",
+                 "}"
+                ],
                 "select" : [
                  "function (combo, record, index)",
                  "{",

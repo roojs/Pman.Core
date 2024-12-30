@@ -693,6 +693,10 @@ Pman.Dialog.CoreEmail = {
                valueField : 'id',
                width : 300,
                listeners : {
+                render : function (_self)
+                 {
+                     Roo.log(Pman);
+                 },
                 select : function (combo, record, index)
                  {
                      _this.form.findField('from_name').setValue(record.data.name);
