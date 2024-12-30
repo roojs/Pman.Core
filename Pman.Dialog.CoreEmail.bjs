@@ -339,6 +339,14 @@
               },
               {
                "$ xns" : "Roo.form",
+               "allowBlank" : false,
+               "fieldLabel" : "From",
+               "name" : "from_email",
+               "width" : 300,
+               "xtype" : "TextField"
+              },
+              {
+               "$ xns" : "Roo.form",
                "String queryParam" : "search[email]",
                "allowBlank" : true,
                "alwaysQuery" : true,

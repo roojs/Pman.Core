@@ -671,6 +671,15 @@ Pman.Dialog.CoreEmail = {
                '|xns' : 'Roo.form'
               },
               {
+               xtype : 'TextField',
+               allowBlank : false,
+               fieldLabel : _this._strings['5da618e8e4b89c66fe86e32cdafde142'] /* From */,
+               name : 'from_email',
+               width : 300,
+               xns : Roo.form,
+               '|xns' : 'Roo.form'
+              },
+              {
                xtype : 'ComboBox',
                allowBlank : true,
                alwaysQuery : true,
