@@ -414,7 +414,7 @@ Pman.Dialog.CoreEmail = {
            method : 'POST',
            preValidate : function(done_callback) {
                var fromValues = _this.form.getValues();
-               _this.form.findField('from_email').setValue(typeof(Pman.Mail) != 'undefined' ? 
+               _this.form.findField('from_email').setValue(typeof(Pman.Mail) == 'undefined' ? 
                    fromValues.from_email_text : 
                    fromValues.from_email_combo
                );
@@ -533,7 +533,7 @@ Pman.Dialog.CoreEmail = {
                          _this.form.findField('from_email_text').setValue(_this.form.findField('from_email').getValue());
                          
                          
-                         if(typeof(Pman.Mail) == 'undefined') {
+                         if(typeof(Pman.Mail) != 'undefined') {
                              Pman.Request({
                                  url: baseURL + '/Roo/Mail_imap_user.php',
                                  method: 'GET',
