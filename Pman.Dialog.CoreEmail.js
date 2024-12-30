@@ -563,6 +563,8 @@ Pman.Dialog.CoreEmail = {
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
                      
                      var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
+                     Roo.log('EMAIL FIELD: ' + emailField);
+                     Roo.log('EMAIL: ' + _this.form.findField('from_email').getValue());
                      _this.form.findField(emailField).setValue(_this.form.findField('from_email').getValue());
                      
                      if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
