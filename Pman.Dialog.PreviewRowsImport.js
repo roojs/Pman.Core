@@ -227,6 +227,8 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
+          Roo.MessageBox.progress("Validating emails", "Starting");
+          
           new Pman.Request({
               url: _this.data.url,
               timeout : 60000,
@@ -238,7 +240,6 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   oldEmails = res.data;
-                  Roo.MessageBox.progress("Validating emails", "Starting");
                   validateEmail();
               }
           });
