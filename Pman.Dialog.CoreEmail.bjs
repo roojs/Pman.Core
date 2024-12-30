@@ -341,6 +341,14 @@
                "$ xns" : "Roo.form",
                "allowBlank" : false,
                "fieldLabel" : "Email address",
+               "listeners" : {
+                "render" : [
+                 "function (_self)",
+                 "{",
+                 "",
+                 "}"
+                ]
+               },
                "name" : "from_email",
                "width" : 300,
                "xtype" : "TextField"

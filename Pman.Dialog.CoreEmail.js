@@ -676,6 +676,12 @@ Pman.Dialog.CoreEmail = {
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                name : 'from_email',
                width : 300,
+               listeners : {
+                render : function (_self)
+                 {
+                 
+                 }
+               },
                xns : Roo.form,
                '|xns' : 'Roo.form'
               },
