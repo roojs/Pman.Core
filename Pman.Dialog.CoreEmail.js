@@ -672,6 +672,7 @@ Pman.Dialog.CoreEmail = {
               },
               {
                xtype : 'TextField',
+               actionMode : 'fieldEl',
                allowBlank : true,
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                name : 'from_email',
