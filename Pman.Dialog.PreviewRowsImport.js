@@ -255,6 +255,7 @@ Pman.Dialog.PreviewRowsImport = {
                   if(!emails.length) {
                       Roo.MessageBox.hide();
                       _this.validIndexes = Array.from(_this.data.data.rows.keys());
+                      return;
                   }
                   validateEmail();
               }
