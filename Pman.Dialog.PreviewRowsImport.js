@@ -239,7 +239,6 @@ Pman.Dialog.PreviewRowsImport = {
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
-                  /*
                   var oldEmails = res.data;
                   emails = emails.filter(function(emailObj) {
                       if(!oldEmails.includes(emailObj.email)) {
@@ -257,7 +256,6 @@ Pman.Dialog.PreviewRowsImport = {
                       Roo.MessageBox.hide();
                       _this.validIndexes = Array.from(_this.data.data.rows.keys());
                   }
-                  */
                   validateEmail();
               }
           });
