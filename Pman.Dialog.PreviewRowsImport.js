@@ -240,10 +240,16 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  // existing emails are valid
-                  // no need to revalidate
                   emails = emails.filter(function(emailObj) {
-                      return !oldEmails.includes(emailObj.email)
+                      if(!oldEmails.includes(emailObj.email)) {
+                          return true;
+                      }
+                      
+                      // existing emails are valid
+                      // no need to revalidate
+                      _this.grid.dataSource.getAt(rowIndex).set(emailCol + '_valid', true);
+                      
+                      return false;
                   });
                   validateEmail();
               }
