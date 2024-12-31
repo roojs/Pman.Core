@@ -251,6 +251,10 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       return false;
                   });
+                  
+                  if(!emails.length) {
+                      Roo.MessageBox.hide();
+                  }
                   validateEmail();
               }
           });
