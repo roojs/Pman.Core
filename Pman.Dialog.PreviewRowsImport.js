@@ -227,7 +227,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          Roo.MessageBox.progress("Validating emails", "Starting");
+          //Roo.MessageBox.progress("Validating emails", "Starting");
           
           new Pman.Request({
               url: _this.data.url,
@@ -243,6 +243,9 @@ Pman.Dialog.PreviewRowsImport = {
                   emails = emails.filter(function(emailObj) {
                       return !oldEmails.includes(emailObj.email)
                   });
+                  Roo.log(oldEmails);
+                  Roo.log(emails);
+                  //validateEmail();
               }
           });
       }
