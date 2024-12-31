@@ -154,8 +154,8 @@ Pman.Dialog.PreviewRowsImport = {
           var validateIndex = 0;
           
           var validateEmail = function() {
-              var rowIndex = emails[validateIndex]['rowIndex'];
               var email = emails[validateIndex]['email'];
+              var rowIndex = emails[validateIndex]['rowIndex'];
               
               // no need to validate existing emails
               if(oldEmails.include(email)) {
