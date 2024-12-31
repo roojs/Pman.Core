@@ -149,8 +149,6 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
-          var oldEmails = [];
-          
           var validateIndex = 0;
           
           var validateEmail = function() {
@@ -241,11 +239,11 @@ Pman.Dialog.PreviewRowsImport = {
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
-                  oldEmails = res.data;
+                  var oldEmails = res.data;
                   emails.filter(function(emailObj) {
                       return !oldEmails.includes(emailObj.email)
                   });
-                  Roo.log($oldEmails);
+                  Roo.log(oldEmails);
                   Roo.log(emails);
                   //validateEmail();
               }
