@@ -47,17 +47,18 @@ Pman.Dialog.CoreEmail = {
  },
  _named_strings : {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
+  'from_email_combo_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
+  'from_email_combo_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
-  'from_email_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
-  'from_email_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
-  'from_email_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
+  'from_email_text_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
-  'from_email_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'from_email_combo_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'from_email_combo_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
   'test_class_fieldLabel' : 'b337c8a67244afb6551ee1f8f9717676' /* Test Class <BR/> (for system reference only) */ 
@@ -412,6 +413,11 @@ Pman.Dialog.CoreEmail = {
            labelWidth : 120,
            method : 'POST',
            preValidate : function(done_callback) {
+               var fromValues = _this.form.getValues();
+               _this.form.findField('from_email').setValue(typeof(Pman.Mail) == 'undefined' ? 
+                   fromValues.from_email_text : 
+                   fromValues.from_email_combo
+               );
                
                Roo.MessageBox.progress("Uploading Images", "Uploading");
                
@@ -524,22 +530,28 @@ Pman.Dialog.CoreEmail = {
                              'language': Pman.Login.authUser.lang == '' ? 'en' : Pman.Login.authUser.lang
                          });
                          
-                         Pman.Request({
-                             url: baseURL + '/Roo/Mail_imap_user.php',
-                             method: 'GET',
-                             params: {
-                                 _email_senders: 1
-                             },
-                             success: function(res) {
-                                 if(!res.data.length) {
-                                     return;
+                         _this.form.findField('from_email_text').setValue(_this.form.findField('from_email').getValue());
+                         
+                         
+                         if(typeof(Pman.Mail) != 'undefined') {
+                             Pman.Request({
+                                 url: baseURL + '/Roo/Mail_imap_user.php',
+                                 method: 'GET',
+                                 params: {
+                                     _email_senders: 1
+                                 },
+                                 success: function(res) {
+                                     if(!res.data.length) {
+                                         return;
+                                     }
+                                     _this.form.setValues({
+                                         'from_name' : res.data[0].name,
+                                         'from_email' : res.data[0].email
+                                     });
+                                     _this.form.findField('from_email_combo').setValue(_this.form.findField('from_email').getValue());
                                  }
-                                 _this.form.setValues({
-                                     'from_name' : res.data[0].name,
-                                     'from_email' : res.data[0].email
-                                 });
-                             }
-                         });
+                             });
+                         }
                      }
                     return;
                  }
@@ -548,6 +560,9 @@ Pman.Dialog.CoreEmail = {
                      _this.saveBtn.setText('Save & Close');
                      
                      _this.form.findField('bodytext').originalValue = _this.form.findField('bodytext').getValue();
+                     
+                     var emailField = typeof(Pman.Mail) == 'undefined' ? 'from_email_text' : 'from_email_combo';
+                     _this.form.findField(emailField).setValue(_this.form.findField('from_email').getValue());
                      
                      if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
                          if(_this.form.findField('stripo_id').getValue() > 0) {
@@ -671,20 +686,39 @@ Pman.Dialog.CoreEmail = {
                '|xns' : 'Roo.form'
               },
               {
+               xtype : 'TextField',
+               actionMode : 'fieldEl',
+               allowBlank : true,
+               fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
+               name : 'from_email_text',
+               width : 300,
+               listeners : {
+                render : function (_self)
+                 {
+                     if(typeof(Pman.Mail) != 'undefined') {
+                         _self.hide();
+                     }
+                 }
+               },
+               xns : Roo.form,
+               '|xns' : 'Roo.form'
+              },
+              {
                xtype : 'ComboBox',
                allowBlank : true,
                alwaysQuery : true,
                displayField : 'email',
-               editable : false,
+               editable : true,
                emptyText : _this._strings['8a10310fb61d63d1711b319163eff1b1'] /* Select email */,
                fieldLabel : _this._strings['b357b524e740bc85b9790a0712d84a30'] /* Email address */,
                forceSelection : true,
                listWidth : 300,
                loadingText : _this._strings['1243daf593fa297e07ab03bf06d925af'] /* Searching... */,
                minChars : 1,
-               name : 'from_email',
+               name : 'from_email_combo',
                pageSize : 20,
                qtip : _this._strings['ce8ae9da5b7cd6c3df2929543a9af92d'] /* Email */,
+               queryParam : 'search[email]',
                selectOnFocus : true,
                tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> {email}</div>',
                triggerAction : 'all',
@@ -692,6 +726,12 @@ Pman.Dialog.CoreEmail = {
                valueField : 'id',
                width : 300,
                listeners : {
+                render : function (_self)
+                 {
+                     if(typeof(Pman.Mail) == 'undefined') {
+                         _self.hide();
+                     }
+                 },
                 select : function (combo, record, index)
                  {
                      _this.form.findField('from_name').setValue(record.data.name);
@@ -706,10 +746,10 @@ Pman.Dialog.CoreEmail = {
                 listeners : {
                  beforeload : function (_self, o){
                       o.params = o.params || {};
-                      if(_this.data.module == 'crm_mailing_list_message') {
-                          o.params._email_senders = 1;
-                          
-                      }
+                      o.params._email_senders = 1;
+                     o.params['_multisort'] = JSON.stringify(
+                         { sort : { 'is_public' : 'DESC', 'name': 'ASC' }, order : [ 'is_public', 'name' ]}
+                     );
                   }
                 },
                 xns : Roo.data,
@@ -1276,6 +1316,12 @@ Pman.Dialog.CoreEmail = {
             {
              xtype : 'Hidden',
              name : 'stripo_id',
+             xns : Roo.form,
+             '|xns' : 'Roo.form'
+            },
+            {
+             xtype : 'Hidden',
+             name : 'from_email',
              xns : Roo.form,
              '|xns' : 'Roo.form'
             }
