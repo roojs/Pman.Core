@@ -245,7 +245,9 @@ Pman.Dialog.PreviewRowsImport = {
                   emails.filter(function(emailObj) {
                       return !oldEmails.includes(emailObj.email)
                   });
-                  validateEmail();
+                  Roo.log($oldEmails);
+                  Roo.log(emails);
+                  //validateEmail();
               }
           });
       }
