@@ -158,11 +158,6 @@ Pman.Dialog.PreviewRowsImport = {
               var rowIndex = emails[validateIndex]['rowIndex'];
               var emailCol = emails[validateIndex]['col'];
               
-              // existing emails are valid
-              // no need to revalidate
-              if(oldEmails.include(email)) {
-                  _this.grid.dataSource.getAt(rowIndex).set(emailCol + '_valid', true);
-              }
               new Pman.Request({
                   url: _this.data.url,
                   timeout : 60000,
