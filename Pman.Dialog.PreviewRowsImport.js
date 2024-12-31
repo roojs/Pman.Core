@@ -240,12 +240,9 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  emails.filter(function(emailObj) {
+                  emails = emails.filter(function(emailObj) {
                       return !oldEmails.includes(emailObj.email)
                   });
-                  Roo.log(oldEmails);
-                  Roo.log(emails);
-                  //validateEmail();
               }
           });
       }
