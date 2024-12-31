@@ -149,12 +149,16 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
-          var newEmails = [];
+          var oldEmails = [];
           
           var validateIndex = 0;
           
           var validateEmail = function() {
-              if(!newEmails.include(emails[validateIndex]['email'])) {
+              var rowIndex = emails[validateIndex]['rowIndex'];
+              
+              // no need to validate existing emails
+              if(oldEmails.include(emails[validateIndex]['email'])) {
+                  _this.grid.dataSource.getAt(rowIndex).set(emails[validateIndex]['col'] + '_valid', true);
               }
               new Pman.Request({
                   url: _this.data.url,
@@ -168,8 +172,6 @@ Pman.Dialog.PreviewRowsImport = {
                       validateEmail(); // try again?
                   },
                   success: function(res) {
-                      var rowIndex = emails[validateIndex]['rowIndex'];
-                      
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
                           _this.grid.dataSource.getAt(rowIndex).set('valid', '');
