@@ -155,9 +155,10 @@ Pman.Dialog.PreviewRowsImport = {
           
           var validateEmail = function() {
               var rowIndex = emails[validateIndex]['rowIndex'];
+              var email = emails[validateIndex]['email'];
               
               // no need to validate existing emails
-              if(oldEmails.include(emails[validateIndex]['email'])) {
+              if(oldEmails.include(email)) {
                   _this.grid.dataSource.getAt(rowIndex).set(emails[validateIndex]['col'] + '_valid', true);
               }
               new Pman.Request({
@@ -165,7 +166,7 @@ Pman.Dialog.PreviewRowsImport = {
                   timeout : 60000,
                   params: {
                       _validate_email_file_id: _this.data.fileId,
-                      _validate_email: emails[validateIndex]['email']
+                      _validate_email: email
                   },
                   failure : function(res)
                   {
