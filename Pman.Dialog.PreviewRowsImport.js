@@ -154,6 +154,8 @@ Pman.Dialog.PreviewRowsImport = {
           var validateIndex = 0;
           
           var validateEmail = function() {
+              if(!newEmails.include(emails[validateIndex]['email'])) {
+              }
               new Pman.Request({
                   url: _this.data.url,
                   timeout : 60000,
@@ -233,13 +235,13 @@ Pman.Dialog.PreviewRowsImport = {
               url: _this.data.url,
               timeout : 60000,
               params: {
-                  _get_new_emails: 1,
+                  _get_old_emails: 1,
                   fileId: _this.data.fileId,
                   colMap: Roo.encode(_this.data.colMap),
                   emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
-                  newEmails = res.data;
+                  oldEmails = res.data;
                   validateEmail();
               }
           });
