@@ -242,6 +242,9 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   oldEmails = res.data;
+                  emails.filter(function(emailObj) {
+                      return !oldEmails.includes(emailObj.email)
+                  });
                   validateEmail();
               }
           });
