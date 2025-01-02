@@ -140,7 +140,7 @@ Pman.Login =  new Roo.util.Observable({
                 msg : res.errorMsg ? res.errorMsg : "Your session has expired. Please login again.",
                 buttons: {ok : true},
                 fn : function() {
-                    Pman.Login.show();
+                    Pman.Login.logout();
                 }
             });
             return;
