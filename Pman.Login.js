@@ -135,8 +135,14 @@ Pman.Login =  new Roo.util.Observable({
             if (typeof(Pman.Preview) != 'undefined') {
                 Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
             }
-            Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : 
-                "Error getting authentication statussss. - try reloading"); 
+            Roo.MessageBox.show({
+                title : "Error",
+                msg : res.errorMsg ? res.errorMsg : "Your session has expired. Please login again.",
+                buttons: {ok : true},
+                fn : function() {
+                    Pman.Login.show();
+                }
+            });
             return;
         }
             
