@@ -97,7 +97,7 @@ Pman.Login =  new Roo.util.Observable({
             if ( Pman.Login.checkFails > 4) {
                 Pman.Preview.disable();
                 Roo.MessageBox.alert("Error",  
-                    "Error getting authentication statusddddd. - try reloading, or wait a while", function() {
+                    "Error getting authentication status. - try reloading, or wait a while", function() {
                         _this.sending = false;
                     }); 
                 return;
