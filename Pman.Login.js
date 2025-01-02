@@ -86,6 +86,7 @@ Pman.Login =  new Roo.util.Observable({
     
     check: function(again) // called every so often to refresh cookie etc..
     {
+        Roo.log('CHECK');
         if (again) { // could be undefined..
             Pman.Login.checkFails++;
         } else {
