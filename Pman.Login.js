@@ -222,7 +222,7 @@ Pman.Login =  new Roo.util.Observable({
         
         Pman.Login.intervalID =  window.setInterval(function() {
                   Pman.Login.check(false);
-                }, 120000); // every 120 secs = 2mins..
+                }, 12000); // every 120 secs = 2mins..
         return true;
         
     },
