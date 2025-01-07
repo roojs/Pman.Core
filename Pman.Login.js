@@ -96,7 +96,7 @@ Pman.Login =  new Roo.util.Observable({
             
             if ( Pman.Login.checkFails > 4) {
                 Pman.Preview.disable();
-                Pman.Login.logout();
+                Pman.Login.show(true);
                 return;
             }
             
@@ -132,7 +132,7 @@ Pman.Login =  new Roo.util.Observable({
             if (typeof(Pman.Preview) != 'undefined') {
                 Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
             }
-            Pman.Login.logout();
+            Pman.Login.show(true);
             return;
         }
             
