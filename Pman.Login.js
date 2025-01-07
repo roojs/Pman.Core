@@ -314,6 +314,16 @@ Pman.Login =  new Roo.util.Observable({
                      
                     Roo.state.Manager.set('Pman.Login.username.'+appNameShort,  Pman.Login.form.findField('username').getValue() );
                     Roo.state.Manager.set('Pman.Login.lang.'+appNameShort,  Pman.Login.form.findField('lang').getValue() );
+
+                    // session expired && login as another user => reload
+                    if(
+                        Pman.Login.oldAuthUser && 
+                        Pman.Login.oldAuthUser.email != Pman.Login.form.findField('username').getValue()
+                    ) {
+                        window.onbeforeunload = function() { };
+                        document.location = baseURL + '?ts=' + Math.random();
+                    }
+
                     Pman.Login.fillAuth(act.result.data);
                       
                     Pman.Login.dialog.hide();
@@ -327,14 +337,6 @@ Pman.Login =  new Roo.util.Observable({
                     if (Pman.Login.callback) {
                         Pman.Login.callback();
                      
-                    }
-
-                    // session expired && login as another user => reload
-                    if(
-                        Pman.Login.oldAuthUser && 
-                        Pman.Login.oldAuthUser.email != Pman.Login.form.findField('username').getValue()
-                    ) {
-                        document.location = baseURL + '?ts=' + Math.random();
                     }
                     
                 }
