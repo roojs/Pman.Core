@@ -328,6 +328,14 @@ Pman.Login =  new Roo.util.Observable({
                         Pman.Login.callback();
                      
                     }
+
+                    // session expired && login as another user => reload
+                    if(
+                        Pman.Login.oldAuthUser && 
+                        Pman.Login.oldAuthUser.email != Pman.Login.form.findField('username').getValue()
+                    ) {
+                        document.location = baseURL + '?ts=' + Math.random();
+                    }
                     
                 }
             }
