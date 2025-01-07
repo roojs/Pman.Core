@@ -356,14 +356,6 @@ Pman.Login =  new Roo.util.Observable({
                 listeners : {
                     specialkey : function(e,ev) {
                         if (ev.keyCode == 13) {
-                            // session expired && login as another user => reload
-                            if(
-                                Pman.Login.oldAuthUser && 
-                                Pman.Login.oldAuthUser.email != Pman.Login.form.findField('username').getValue()
-                            ) {
-                                document.location = baseURL + '?ts=' + Math.random();
-                            }
-                            
                             Pman.Login.dialog.el.mask("Logging in");
                             Pman.Login.form.doAction('submit', {
                                     url: baseURL + '/Login',
