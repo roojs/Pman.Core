@@ -321,6 +321,10 @@ Pman.Dialog.PreviewRowsImport = {
                 var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportStart + batchImportLimit);
                 params['rowIndexes'] = Roo.encode(rowIndexes);
                 
+                if(batchImportStart + batchImportLimit >= total) {
+                    params['_import_end'] = 1;
+                }
+                
                 new Pman.Request({
                     method: 'POST',
                     url: _this.data.url,
