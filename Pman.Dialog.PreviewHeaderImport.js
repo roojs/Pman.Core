@@ -211,7 +211,7 @@ Pman.Dialog.PreviewHeaderImport = {
             
             var total = _this.data.data.rows.length;
             var batchValidateStart = 0;
-            var batchValidateLimit = 1;
+            var batchValidateLimit = 50;
             
             var validateRows = function() {
                 new Pman.Request({
