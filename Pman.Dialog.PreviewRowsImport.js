@@ -313,25 +313,13 @@ Pman.Dialog.PreviewRowsImport = {
                 params['mailingListId'] = _this.data.mailingListId;
             }
             
-            /*
-            
-            new Pman.Request({
-                method: 'POST',
-                url: _this.data.url,
-                mask: 'Importing',
-                params: params,
-                success: function(res) {
-                    _this.dialog.hide();
-                }
-            });
-            
-            */
-            
             var total = _this.validIndexes.length;
             var batchImportStart = 0;
             var batchImportLimit = 50;
             
             var importRows = function() {
+                Roo.log(batchImportStart);
+                Roo.log(batchImportLimit);
                 var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportLimit);
                 params['rowIndexes'] = Roo.encode(rowIndexes);
                 
@@ -356,7 +344,7 @@ Pman.Dialog.PreviewRowsImport = {
                 });
             };
             
-            //Roo.MessageBox.progress("Importing Rows", "Starting");
+            Roo.MessageBox.progress("Importing Rows", "Starting");
             importRows();
             
         }
