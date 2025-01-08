@@ -312,6 +312,8 @@ Pman.Dialog.PreviewRowsImport = {
                 params['mailingListId'] = _this.data.mailingListId;
             }
             
+            Roo.log(params);
+            
             /*
             
             new Pman.Request({
