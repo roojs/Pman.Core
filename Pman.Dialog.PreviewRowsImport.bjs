@@ -294,6 +294,7 @@
      "        });",
      "    };",
      "    ",
+     "    /*",
      "    Roo.MessageBox.progress(\"Validating emails\", \"Starting\");",
      "    ",
      "    new Pman.Request({",
@@ -327,6 +328,7 @@
      "            validateEmail();",
      "        }",
      "    });",
+     "    */",
      "}"
     ]
    },
