@@ -312,6 +312,8 @@ Pman.Dialog.PreviewRowsImport = {
                 params['mailingListId'] = _this.data.mailingListId;
             }
             
+            /*
+            
             new Pman.Request({
                 method: 'POST',
                 url: _this.data.url,
@@ -321,6 +323,10 @@ Pman.Dialog.PreviewRowsImport = {
                     _this.dialog.hide();
                 }
             });
+            
+            */
+            
+            
         }
       },
       xns : Roo,
