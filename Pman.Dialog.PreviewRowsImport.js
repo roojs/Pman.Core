@@ -311,7 +311,7 @@ Pman.Dialog.PreviewRowsImport = {
             
             var total = _this.validIndexes.length;
             var batchImportStart = 0;
-            var batchImportLimit = 50;
+            var batchImportLimit = 1;
             
             var importRows = function() {
                 var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportStart + batchImportLimit);
