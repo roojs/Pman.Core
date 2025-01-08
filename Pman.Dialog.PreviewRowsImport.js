@@ -227,7 +227,6 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          /*
           Roo.MessageBox.progress("Validating emails", "Starting");
           
           new Pman.Request({
@@ -261,7 +260,6 @@ Pman.Dialog.PreviewRowsImport = {
                   validateEmail();
               }
           });
-          */
       }
     },
     xns : Roo,
