@@ -302,6 +302,7 @@ Pman.Dialog.PreviewRowsImport = {
        click : function (_self, e)
         {
             _this.validIndexes = Array.from(_this.data.data.rows.keys());
+            Roo.log
             
             var params = {
                 fileId: _this.data.fileId,
@@ -318,9 +319,7 @@ Pman.Dialog.PreviewRowsImport = {
             var batchImportLimit = 50;
             
             var importRows = function() {
-                Roo.log(batchImportStart);
-                Roo.log(batchImportLimit);
-                var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportLimit);
+                var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportStart + batchImportLimit);
                 params['rowIndexes'] = Roo.encode(rowIndexes);
                 
                 new Pman.Request({
