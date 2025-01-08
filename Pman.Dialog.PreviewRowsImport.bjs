@@ -116,7 +116,7 @@
        "    var batchImportLimit = 50;",
        "    ",
        "    var importRows = function() {",
-       "        var rowIndexes = _this.validIndexes.slice(batchImoprtStart, batchImportLimit);",
+       "        var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportLimit);",
        "        params['rowIndexes'] = Roo.encode(rowIndexes);",
        "        ",
        "        Roo.log(params);",
