@@ -302,7 +302,6 @@ Pman.Dialog.PreviewRowsImport = {
        click : function (_self, e)
         {
             _this.validIndexes = Array.from(_this.data.data.rows.keys());
-            Roo.log
             
             var params = {
                 fileId: _this.data.fileId,
