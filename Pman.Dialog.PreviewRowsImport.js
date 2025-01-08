@@ -306,7 +306,6 @@ Pman.Dialog.PreviewRowsImport = {
             var params = {
                 fileId: _this.data.fileId,
                 colMap: Roo.encode(_this.data.colMap),
-                rowIndexes: Roo.encode(_this.validIndexes),
                 _import: 1
             };
             
@@ -333,6 +332,12 @@ Pman.Dialog.PreviewRowsImport = {
             var batchImportLimit = 50;
             
             var importRows = function() {
+                var rowIndexes = _this.validIndexes.slice(batchImoprtStart, batchImportLimit);
+                params['rowIndexes'] = Roo.encode(rowIndexes);
+                
+                Roo.log(params);
+                
+                /*
                 new Pman.Request({
                     method: 'POST',
                     url: _this.data.url,
@@ -342,9 +347,10 @@ Pman.Dialog.PreviewRowsImport = {
                         _this.dialog.hide();
                     }
                 });
+                */
             };
             
-            Roo.MessageBox.progress("Importing Rows", "Starting");
+            //Roo.MessageBox.progress("Importing Rows", "Starting");
             importRows();
             
         }
