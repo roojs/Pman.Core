@@ -226,7 +226,6 @@ Pman.Dialog.PreviewRowsImport = {
                   }
               });
           };
-          /*
           
           Roo.MessageBox.progress("Validating emails", "Starting");
           
@@ -261,7 +260,6 @@ Pman.Dialog.PreviewRowsImport = {
                   validateEmail();
               }
           });
-          */
       }
     },
     xns : Roo,
@@ -301,8 +299,6 @@ Pman.Dialog.PreviewRowsImport = {
       listeners : {
        click : function (_self, e)
         {
-            _this.validIndexes = Array.from(_this.data.data.rows.keys());
-            
             var params = {
                 fileId: _this.data.fileId,
                 colMap: Roo.encode(_this.data.colMap),
