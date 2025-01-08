@@ -328,7 +328,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                 config['mailingListId'] = _this.mailing_list.getValue();
                             }
                             Pman.Dialog.PreviewRowsImport.show(config);
-                            
+                            return;
                         }
                         validateRows();
                     },
