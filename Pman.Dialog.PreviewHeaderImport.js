@@ -308,8 +308,10 @@ Pman.Dialog.PreviewHeaderImport = {
                     },
                     success: function(res) {
                         batchValidateStart += batchValidateLimit;
-                        Roo.MessageBox.updateProcess(batchValidateStart / total,
-                            batchValidateStart + ' / ' + total + ' rows validated');
+                        Roo.MessageBox.updateProgress(
+                            batchValidateStart / total,
+                            batchValidateStart + ' / ' + total + ' rows validated'
+                        );
                         if(batchValidateStart >= total) {
                             Roo.MessageBox.hide();
                             _this.dialog.hide();
