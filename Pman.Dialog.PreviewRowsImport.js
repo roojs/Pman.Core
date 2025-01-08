@@ -324,7 +324,6 @@ Pman.Dialog.PreviewRowsImport = {
                 new Pman.Request({
                     method: 'POST',
                     url: _this.data.url,
-                    mask: 'Importing',
                     params: params,
                     success: function(res) {
                         batchImportStart += batchImportLimit;
