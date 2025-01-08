@@ -290,6 +290,7 @@ Pman.Dialog.PreviewHeaderImport = {
             
             */
             
+            var total = _this.data.data.rows.length;
             var batchValidateStart = 0;
             var batchValidateLimit = 50;
             
@@ -308,6 +309,8 @@ Pman.Dialog.PreviewHeaderImport = {
                     }
                 });
             }
+            
+            Roo.MessageBox.progress("Updating domain mx", "Starting");
             
             validateRows();
             
