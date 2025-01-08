@@ -335,19 +335,25 @@ Pman.Dialog.PreviewRowsImport = {
                 var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportLimit);
                 params['rowIndexes'] = Roo.encode(rowIndexes);
                 
-                Roo.log(params);
-                
-                /*
                 new Pman.Request({
                     method: 'POST',
                     url: _this.data.url,
                     mask: 'Importing',
                     params: params,
                     success: function(res) {
-                        _this.dialog.hide();
+                        batchImportStart += batchImportLimit;
+                        Roo.MessageBox.updateProgress(
+                            batchImportStart / total,
+                            batchImportStart + ' / ' + total + ' rows imported'
+                        );
+                        if(batchImportStart >= total) {
+                            Roo.MessageBox.hide();
+                            _this.dialog.hide();
+                            return;
+                        }
+                        importRows();
                     }
                 });
-                */
             };
             
             //Roo.MessageBox.progress("Importing Rows", "Starting");
