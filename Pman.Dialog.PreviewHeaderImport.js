@@ -209,6 +209,8 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
+            /*
+            
             new Pman.Request({
                 method: 'POST',
                 url: _this.data.url,
@@ -285,6 +287,29 @@ Pman.Dialog.PreviewHeaderImport = {
                     });
                 }
             });
+            
+            */
+            
+            var batchValidateStart = 0;
+            var batchValidateLimit = 50;
+            
+            var validateRows = function() {
+                new Pman.Request({
+                    method: 'POST',
+                    url: _this.data.url,
+                    mask: 'Validating',
+                    params: {
+                        fileId: _this.data.fileId,
+                        colMap: Roo.encode(colMap),
+                        nameMap: Roo.encode(nameMap),
+                        _validate: 1
+                    },
+                    success: function(res) {
+                    }
+                });
+            }
+            
+            validateRows();
             
         }
       },
