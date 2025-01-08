@@ -314,8 +314,6 @@ Pman.Dialog.PreviewRowsImport = {
                 params['mailingListId'] = _this.data.mailingListId;
             }
             
-            Roo.log(params);
-            
             /*
             
             new Pman.Request({
@@ -330,6 +328,24 @@ Pman.Dialog.PreviewRowsImport = {
             
             */
             
+            var total = _this.validIndexes.length;
+            var batchImportStart = 0;
+            var batchImportLimit = 50;
+            
+            var importRows = function() {
+                new Pman.Request({
+                    method: 'POST',
+                    url: _this.data.url,
+                    mask: 'Importing',
+                    params: params,
+                    success: function(res) {
+                        _this.dialog.hide();
+                    }
+                });
+            };
+            
+            Roo.MessageBox.progress("Importing Rows", "Starting");
+            importRows();
             
         }
       },
