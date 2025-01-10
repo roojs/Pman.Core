@@ -31,6 +31,7 @@ Pman.Login =  new Roo.util.Observable({
     
     authUserId: 0,
     authUser: { id : false },
+    oldAuthUser: false,
        
     checkFails : 0,
     versionWarn: false,
@@ -96,10 +97,7 @@ Pman.Login =  new Roo.util.Observable({
             
             if ( Pman.Login.checkFails > 4) {
                 Pman.Preview.disable();
-                Roo.MessageBox.alert("Error",  
-                    "Error getting authentication status. - try reloading, or wait a while", function() {
-                        _this.sending = false;
-                    }); 
+                Pman.Login.show();
                 return;
             }
             
@@ -135,8 +133,7 @@ Pman.Login =  new Roo.util.Observable({
             if (typeof(Pman.Preview) != 'undefined') {
                 Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
             }
-            Roo.MessageBox.alert("Error", res.errorMsg ? res.errorMsg : 
-                "Error getting authentication status. - try reloading"); 
+            Pman.Login.show();
             return;
         }
             
@@ -175,6 +172,7 @@ Pman.Login =  new Roo.util.Observable({
         this.startAuthCheck();
         this.authUserId = au.id;
         this.authUser = au;
+        this.oldAuthUser = au;
         this.lastChecked = new Date();
         // if login is used on other applicaitons..
         if (Pman.fireEvent) { Pman.fireEvent('authrefreshed', au); }
@@ -316,6 +314,16 @@ Pman.Login =  new Roo.util.Observable({
                      
                     Roo.state.Manager.set('Pman.Login.username.'+appNameShort,  Pman.Login.form.findField('username').getValue() );
                     Roo.state.Manager.set('Pman.Login.lang.'+appNameShort,  Pman.Login.form.findField('lang').getValue() );
+
+                    // session expired && login as another user => reload
+                    if(
+                        Pman.Login.oldAuthUser && 
+                        Pman.Login.oldAuthUser.email != Pman.Login.form.findField('username').getValue()
+                    ) {
+                        window.onbeforeunload = function() { };
+                        document.location = baseURL + '?ts=' + Math.random();
+                    }
+
                     Pman.Login.fillAuth(act.result.data);
                       
                     Pman.Login.dialog.hide();
