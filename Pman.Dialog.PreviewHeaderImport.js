@@ -209,82 +209,104 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
-            new Pman.Request({
-                method: 'POST',
-                url: _this.data.url,
-                mask: 'Validating',
-                params: {
-                    fileId: _this.data.fileId,
-                    colMap: Roo.encode(colMap),
-                    nameMap: Roo.encode(nameMap),
-                    _validate: 1
-                },
-                success: function(res) {
-                    _this.dialog.hide();
-                    var config = {
-                        url: _this.data.url,
+            var total = _this.data.data.rows.length;
+            var batchValidateStart = 0;
+            var batchValidateLimit = 50;
+            
+            var validateRows = function() {
+                new Pman.Request({
+                    method: 'POST',
+                    url: _this.data.url,
+                    params: {
                         fileId: _this.data.fileId,
-                        data: res.data,
-                        dbCols: _this.data.dbCols,
-                        emailCols: _this.data.emailCols,
-                        colMap: colMap
-                    };
-                    
-                    if(typeof(_this.data.disableMailingList) == 'undefined') {
-                        config['mailingListId'] = _this.mailing_list.getValue();
-                    }
-                    Pman.Dialog.PreviewRowsImport.show(config);
-                },
-                failure : function(res)
-                {
-                    // show errors
-                    Roo.MessageBox.show({
-                        title: "Fix these issues, and try uploading again", 
-                        multiline: 500,
-                        value: res.errorMsg,
-                        buttons: {ok: "Upload Again", cancel: "Cancel"},
-                        closable: false,
-                        fn: function(res) {
-                            // close message box
-                            if(res == 'cancel') {
-                                return;
-                            }
-                            
-                            // delete old uploaded files
-                            new Pman.Request({
-                                method: 'POST',
+                        colMap: Roo.encode(colMap),
+                        nameMap: Roo.encode(nameMap),
+                        _validate: 1,
+                        _validate_start: batchValidateStart,
+                        _validate_limit: batchValidateLimit
+                    },
+                    success: function(res) {
+                        batchValidateStart += batchValidateLimit;
+                        Roo.MessageBox.updateProgress(
+                            batchValidateStart / total,
+                            batchValidateStart + ' / ' + total + ' rows validated'
+                        );
+                        if(batchValidateStart >= total) {
+                            Roo.MessageBox.hide();
+                            _this.dialog.hide();
+                            var config = {
                                 url: _this.data.url,
-                                mask: 'Deleting old uploaded files',
-                                params: {
-                                    _delete: _this.data.fileId
-                                },
-                                success: function(res) {
-                                    _this.dialog.hide();
-                                    // upload again
-                                    Pman.Dialog.Image.show({
-                                        _url : _this.data.url
-        
-                                    }, function (data) {
-                                        var config = {
-                                            url: _this.data.url,
-                                            fileId: data.id,
-                                            data: data.data,
-                                            dbCols: _this.data.dbCols,
-                                            emailCols: _this.data.emailCols,
-                                            map: map
-                                        };
-                                        if(typeof(_this.data.disableMailingList) != 'undefined') {
-                                            config.disableMailingList = _this.data.disableMailingList;
-                                        }
-                                        Pman.Dialog.PreviewHeaderImport.show(config);
-                                    });
-                                }
-                            });
+                                fileId: _this.data.fileId,
+                                data: res.data,
+                                dbCols: _this.data.dbCols,
+                                emailCols: _this.data.emailCols,
+                                colMap: colMap
+                            };
                             
+                            if(typeof(_this.data.disableMailingList) == 'undefined') {
+                                config['mailingListId'] = _this.mailing_list.getValue();
+                            }
+                            Pman.Dialog.PreviewRowsImport.show(config);
+                            return;
                         }
-                    });
-                }
-            });
+                        validateRows();
+                    },
+                    failure : function(res)
+                    {
+                        // show errors
+                        Roo.MessageBox.show({
+                            title: "Fix these issues, and try uploading again", 
+                            multiline: 500,
+                            value: res.errorMsg,
+                            buttons: {ok: "Upload Again", cancel: "Cancel"},
+                            closable: false,
+                            fn: function(res) {
+                                // close message box
+                                if(res == 'cancel') {
+                                    return;
+                                }
+                                
+                                // delete old uploaded files
+                                new Pman.Request({
+                                    method: 'POST',
+                                    url: _this.data.url,
+                                    mask: 'Deleting old uploaded files',
+                                    params: {
+                                        _delete: _this.data.fileId
+                                    },
+                                    success: function(res) {
+                                        _this.dialog.hide();
+                                        // upload again
+                                        Pman.Dialog.Image.show({
+                                            _url : _this.data.url
+        
+                                        }, function (data) {
+                                            var config = {
+                                                url: _this.data.url,
+                                                fileId: data.id,
+                                                data: data.data,
+                                                dbCols: _this.data.dbCols,
+                                                emailCols: _this.data.emailCols,
+                                                map: map
+                                            };
+                                            if(typeof(_this.data.disableMailingList) != 'undefined') {
+                                                config.disableMailingList = _this.data.disableMailingList;
+                                            }
+                                            Pman.Dialog.PreviewHeaderImport.show(config);
+                                        });
+                                    }
+                                });
+                                
+                            }
+                        });
+                    }
+                });
+            }
+            
+            Roo.MessageBox.progress("Validating Rows", "Starting");
+            
+            validateRows();
+            
         }
       },
       xns : Roo,
