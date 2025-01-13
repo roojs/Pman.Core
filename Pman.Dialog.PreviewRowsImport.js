@@ -150,6 +150,8 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
+          Roo.log(emails);
+          
           var emailColIndexes = [];
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               if(_this.data.emailCols.includes(_this.data.colMap[headerIndex])) {
@@ -176,12 +178,14 @@ Pman.Dialog.PreviewRowsImport = {
                       validateEmail(); // try again?
                   },
                   success: function(res) {
+                      var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
-                          _this.grid.dataSource.getAt(rowIndex).set('valid', '');
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
                       }
                       else {
-                          var rec = _this.grid.dataSource.getAt(rowIndex);
                           if(rec) {
                               rec.set(emailCol + '_valid', true);
                           }
