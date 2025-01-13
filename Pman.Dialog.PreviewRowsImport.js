@@ -105,6 +105,8 @@ Pman.Dialog.PreviewRowsImport = {
               fields: fields
           });
           
+          var rowsDisplayed = 0;
+          
           Roo.each(_this.data.data.rows, function(r)  {
               var data = {
                   valid: 'V'
@@ -117,12 +119,12 @@ Pman.Dialog.PreviewRowsImport = {
                   data[_this.data.colMap[index]] = r[index];
               });
               
-              if(rowDisplayed == 100) {
+              if(rowsDisplayed == 100) {
                   return;
               }
               
               ds.add(new Roo.data.Record(data));
-              rowDisplayed ++;
+              rowsDisplayed ++;
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
