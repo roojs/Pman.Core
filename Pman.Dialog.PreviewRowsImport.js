@@ -105,6 +105,8 @@ Pman.Dialog.PreviewRowsImport = {
               fields: fields
           });
           
+          var rowsDisplayed = 0;
+          
           Roo.each(_this.data.data.rows, function(r)  {
               var data = {
                   valid: 'V'
@@ -117,7 +119,13 @@ Pman.Dialog.PreviewRowsImport = {
                   data[_this.data.colMap[index]] = r[index];
               });
               
+              // display maximum 100 rows
+              if(rowsDisplayed == 100) {
+                  return;
+              }
+              
               ds.add(new Roo.data.Record(data));
+              rowsDisplayed ++;
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
@@ -168,12 +176,17 @@ Pman.Dialog.PreviewRowsImport = {
                       validateEmail(); // try again?
                   },
                   success: function(res) {
+                      var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
-                          _this.grid.dataSource.getAt(rowIndex).set('valid', '');
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
                       }
                       else {
-                          _this.grid.dataSource.getAt(rowIndex).set(emailCol + '_valid', true);
+                          if(rec) {
+                              rec.set(emailCol + '_valid', true);
+                          }
                       }
                       
                       validateIndex ++;
@@ -247,7 +260,10 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       // existing emails are valid
                       // no need to revalidate
-                      _this.grid.dataSource.getAt(emailObj.rowIndex).set(emailObj.col + '_valid', true);
+                      var rec = _this.grid.dataSource.getAt(emailObj.rowIndex);
+                      if(rec) {
+                          rec.set(emailObj.col + '_valid', true);
+                      }
                       
                       return false;
                   });
