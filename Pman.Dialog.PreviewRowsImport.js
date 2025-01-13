@@ -119,6 +119,7 @@ Pman.Dialog.PreviewRowsImport = {
                   data[_this.data.colMap[index]] = r[index];
               });
               
+              // display maximum 100 rows
               if(rowsDisplayed == 100) {
                   return;
               }
