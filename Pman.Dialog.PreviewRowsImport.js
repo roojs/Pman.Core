@@ -121,7 +121,7 @@ Pman.Dialog.PreviewRowsImport = {
               
               // display maximum 100 rows
               if(rowsDisplayed == 100) {
-                  return;
+                  //return;
               }
               
               ds.add(new Roo.data.Record(data));
@@ -255,7 +255,7 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       // existing emails are valid
                       // no need to revalidate
-                      _this.grid.dataSource.getAt(emailObj.rowIndex).set(emailObj.col + '_valid', true);
+                      //_this.grid.dataSource.getAt(emailObj.rowIndex).set(emailObj.col + '_valid', true);
                       
                       return false;
                   });
