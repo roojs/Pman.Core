@@ -255,7 +255,10 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       // existing emails are valid
                       // no need to revalidate
-                      _this.grid.dataSource.getAt(emailObj.rowIndex).set(emailObj.col + '_valid', true);
+                      var rec = _this.grid.dataSource.getAt(emailObj.rowIndex);
+                      if(rec) {
+                          rec.set(emailObj.col + '_valid', true);
+                      }
                       
                       return false;
                   });
