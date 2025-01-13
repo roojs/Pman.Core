@@ -117,7 +117,12 @@ Pman.Dialog.PreviewRowsImport = {
                   data[_this.data.colMap[index]] = r[index];
               });
               
+              if(rowDisplayed == 100) {
+                  return;
+              }
+              
               ds.add(new Roo.data.Record(data));
+              rowDisplayed ++;
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
