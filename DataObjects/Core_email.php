@@ -385,14 +385,14 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $contents['rcpts'] = $admin;
         }
         if (empty($contents['rcpts']) && $this->to_group_id > 0) {
-	    $members = $this->to_group()->members();
-	    $contents['rcpts'] = array();
-	    foreach($this->to_group()->members() as $m) {
-		$contents['rcpts'][] = $m->email;
-	    }
-	    //var_dump($contents['rcpts']);
-	    
-	}
+			$members = $this->to_group()->members();
+			$contents['rcpts'] = array();
+			foreach($this->to_group()->members() as $m) {
+				$contents['rcpts'][] = $m->email;
+			}
+			//var_dump($contents['rcpts']);
+			
+		}
         //subject replacement
         if(empty($contents['subject'])){
            $contents['subject'] = $this->subject; 
