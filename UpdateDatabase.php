@@ -164,6 +164,63 @@ class Pman_Core_UpdateDatabase extends Pman
         )
     );
     
+    var $enums = array(
+        array(
+            'etype' => '',
+            'name' => 'COMPTYPE',
+            'display_name' =>  'Company Types',
+            'is_system_enum' => 1,
+            'cn' => array(
+                array(
+                    'name' => 'OWNER',
+                    'display_name' => 'Owner',
+                    'seqid' => 999, // last...
+                    'is_system_enum' => 1,
+                )
+                
+            )
+        ),
+        array(
+            'etype' => '',
+            'name' => 'HtmlEditor.font-family',
+            'display_name' =>  'HTML Editor font families',
+            'is_system_enum' => 1,
+            'cn' => array(
+                array(
+                    'name' => 'Helvetica,Arial,sans-serif',
+                    'display_name' => 'Helvetica',
+                    
+                ),
+                
+                array(
+                    'name' => 'Courier New',
+                    'display_name' => 'Courier',
+                     
+                ),
+                array(
+                    'name' => 'Tahoma',
+                    'display_name' => 'Tahoma',
+                    
+                ),
+                array(
+                    'name' => 'Times New Roman,serif',
+                    'display_name' => 'Times',
+                   
+                ),
+                array(
+                    'name' => 'Verdana',
+                    'display_name' => 'Verdana',
+                    
+                ),
+                
+                    
+                
+            )
+        )
+       
+    );
+    
+    
     var $required_extensions = array(
         'curl',
         'gd',
@@ -799,64 +856,8 @@ class Pman_Core_UpdateDatabase extends Pman
 
         $enum = DB_DataObject::Factory('core_enum');
         //DB_DAtaObject::debugLevel(1);
-        $enum->initEnums(
-            array(
-                array(
-                    'etype' => '',
-                    'name' => 'COMPTYPE',
-                    'display_name' =>  'Company Types',
-                    'is_system_enum' => 1,
-                    'cn' => array(
-                        array(
-                            'name' => 'OWNER',
-                            'display_name' => 'Owner',
-                            'seqid' => 999, // last...
-                            'is_system_enum' => 1,
-                        )
-                        
-                    )
-                ),
-                array(
-                    'etype' => '',
-                    'name' => 'HtmlEditor.font-family',
-                    'display_name' =>  'HTML Editor font families',
-                    'is_system_enum' => 1,
-                    'cn' => array(
-                        array(
-                            'name' => 'Helvetica,Arial,sans-serif',
-                            'display_name' => 'Helvetica',
-                            
-                        ),
-                        
-                        array(
-                            'name' => 'Courier New',
-                            'display_name' => 'Courier',
-                             
-                        ),
-                        array(
-                            'name' => 'Tahoma',
-                            'display_name' => 'Tahoma',
-                            
-                        ),
-                        array(
-                            'name' => 'Times New Roman,serif',
-                            'display_name' => 'Times',
-                           
-                        ),
-                        array(
-                            'name' => 'Verdana',
-                            'display_name' => 'Verdana',
-                            
-                        ),
-                        
-                            
-                        
-                    )
-                )
-               
-            )
-        ); 
-        
+        $enum->initEnums($this->enums);
+             
     }
     function updateDataGroups()
     {
