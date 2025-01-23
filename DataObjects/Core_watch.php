@@ -121,43 +121,22 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 }
                      
                 foreach($arr as $action) {
-                    if(($ar = $this->getTableAndMethodFromMedium($action)) === false) {
-                        // invalid action
+                    
+                    $method = $this->actionAsReflection($action, $roo);
+                    if ($method === false) {
+                        continue;  
+                    }
+                    
+                    if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
+                        // get an instance method but a statis method is required
+                        continue;
+                    }
+                    if($method->isStatic() && !empty($q['_watchable_instance_actions'])) {
+                        // get a static method but an instance method is required
                         continue;
                     }
 
-                    if(!empty($q['_watchable_actions_table']) && $ar[0] != $q['_watchable_actions_table']) {
-                        // only accept action from request table
-                        continue;
-                    }
-
-                    try {
-                        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-                        $object = DB_DataObject::factory($ar[0]);
-                        if(PEAR::isError($object)) {
-                            // table does not exist
-                            continue;
-                        }
-                        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-
-                        $class = get_class($object);
-
-                        $method = new ReflectionMethod("{$class}::{$ar[1]}");
-                        if(!$method->isStatic() && !empty($q['_watchable_static_actions'])) {
-                            // get an instance method but a statis method is required
-                            continue;
-                        }
-                        if($method->isStatic() && !empty($q['_watchable_instance_actions'])) {
-                            // get a static method but an instance method is required
-                            continue;
-                        }
-
-                    }
-                    catch (ReflectionException $e)
-                    {
-                        // method does not exist
-                        continue;
-                    }
+                     
 
                     $actions[] = array(
                         'action' => $action
@@ -170,6 +149,39 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
         
     }
+    // used to verify watchable actions, and get the callable one..
+    function actionAsReflection($str, $roo)
+    {
+        $ar = $this->getTableAndMethodFromMedium($str);
+        if ($ar === false) {   
+            return false;
+        }
+
+        PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
+        $object = DB_DataObject::factory($ar[0]);
+        if(PEAR::isError($object)) {
+            // table does not exist
+            false;
+        }
+        PEAR::staticPopErrorHandling();
+
+        
+        if (!method_exists($object, $ar[1])) {
+            if (!$roo) {
+                return;
+            }
+            $roo->jerr("method does not exist: {$ar[1]}");
+        }
+        $class = get_class($object);
+        
+        $method = new ReflectionMethod("{$class}::{$ar[1]}");
+        return $method;
+        
+        
+    }
+    
+    
+    
 
     function beforeInsert($request, $roo)
     {
@@ -431,7 +443,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
         foreach($watches as $watch) {
             $n = clone($nn);
-            if (!$watch->person_id) { // no people??? bugs in watch table
+            
+            // this is used by the commit code to monitor repos?
+            // 
+            
+            $method = $this->actionAsReflection($watch->medium, false);
+             
+            // this only works with static methods,
+            // otherwise only a notification will be created.
+            if (!$watch->person_id && $method && $method->isStatic()) {  
                 if(($dom = $this->getTableAndMethodFromMedium($watch->medium)) === false) {
                     // invalid medium
                     continue;
@@ -449,12 +469,11 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                 //echo "calling {$watch->medium}\n";
                 // the triggered method, can either do something
                 // or modify the notify event..
-                if ($do->{$dom[1]}($event, $n) !== false) {
+                if ($do->{$dom[1]}($event, $n, $watch) !== false) {
                     //echo "method did not return false?";
                     continue;
                 }
-                
-                
+                  
             }
             
             $n->person_id = $watch->person_id;

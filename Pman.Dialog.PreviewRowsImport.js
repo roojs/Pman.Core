@@ -105,6 +105,8 @@ Pman.Dialog.PreviewRowsImport = {
               fields: fields
           });
           
+          var rowsDisplayed = 0;
+          
           Roo.each(_this.data.data.rows, function(r)  {
               var data = {
                   valid: 'V'
@@ -117,7 +119,13 @@ Pman.Dialog.PreviewRowsImport = {
                   data[_this.data.colMap[index]] = r[index];
               });
               
+              // display maximum 100 rows
+              if(rowsDisplayed == 100) {
+                  return;
+              }
+              
               ds.add(new Roo.data.Record(data));
+              rowsDisplayed ++;
           });
           
           _this.grid.reconfigure(ds, new Roo.grid.ColumnModel(cols));
@@ -168,12 +176,17 @@ Pman.Dialog.PreviewRowsImport = {
                       validateEmail(); // try again?
                   },
                   success: function(res) {
+                      var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
-                          _this.grid.dataSource.getAt(rowIndex).set('valid', '');
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
                       }
                       else {
-                          _this.grid.dataSource.getAt(rowIndex).set(emailCol + '_valid', true);
+                          if(rec) {
+                              rec.set(emailCol + '_valid', true);
+                          }
                       }
                       
                       validateIndex ++;
@@ -247,7 +260,10 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       // existing emails are valid
                       // no need to revalidate
-                      _this.grid.dataSource.getAt(emailObj.rowIndex).set(emailObj.col + '_valid', true);
+                      var rec = _this.grid.dataSource.getAt(emailObj.rowIndex);
+                      if(rec) {
+                          rec.set(emailObj.col + '_valid', true);
+                      }
                       
                       return false;
                   });
@@ -302,7 +318,6 @@ Pman.Dialog.PreviewRowsImport = {
             var params = {
                 fileId: _this.data.fileId,
                 colMap: Roo.encode(_this.data.colMap),
-                rowIndexes: Roo.encode(_this.validIndexes),
                 _import: 1
             };
             
@@ -310,15 +325,41 @@ Pman.Dialog.PreviewRowsImport = {
                 params['mailingListId'] = _this.data.mailingListId;
             }
             
-            new Pman.Request({
-                method: 'POST',
-                url: _this.data.url,
-                mask: 'Importing',
-                params: params,
-                success: function(res) {
-                    _this.dialog.hide();
+            var total = _this.validIndexes.length;
+            var batchImportStart = 0;
+            var batchImportLimit = 50;
+            
+            var importRows = function() {
+                var rowIndexes = _this.validIndexes.slice(batchImportStart, batchImportStart + batchImportLimit);
+                params['rowIndexes'] = Roo.encode(rowIndexes);
+                
+                if(batchImportStart + batchImportLimit >= total) {
+                    params['_import_end'] = 1;
                 }
-            });
+                
+                new Pman.Request({
+                    method: 'POST',
+                    url: _this.data.url,
+                    params: params,
+                    success: function(res) {
+                        batchImportStart += batchImportLimit;
+                        Roo.MessageBox.updateProgress(
+                            batchImportStart / total,
+                            batchImportStart + ' / ' + total + ' rows imported'
+                        );
+                        if(batchImportStart >= total) {
+                            Roo.MessageBox.hide();
+                            _this.dialog.hide();
+                            return;
+                        }
+                        importRows();
+                    }
+                });
+            };
+            
+            Roo.MessageBox.progress("Importing Rows", "Starting");
+            importRows();
+            
         }
       },
       xns : Roo,
