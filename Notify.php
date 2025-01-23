@@ -297,7 +297,11 @@ class Pman_Core_Notify extends Pman
             }
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
-            
+            if (empty($email)) {
+                $ev = $this->addEvent('NOTIFYFAIL', $p,   "Notification event cleared (email is empty)" );
+                $p->flagDone($ev, '');
+                continue;
+            }
             $black = $this->server->isBlacklisted($email);
             if ($black !== false) {
                 $this->logecho("Blacklisted - try giving it to next server");
