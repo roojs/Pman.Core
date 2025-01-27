@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         // we need the message id..
         $match = array();
         if (empty($res['msgid'])) {
-            return "could not find message id"; // can't handle it.
+            return "could not find message id (none available)"; // can't handle it.
         }
         if (!preg_match('/^core_notify-([0-9]+)@/', $res['msgid'], $match)) {
             return "could not find message id in {$res['msgid']}"; // can't handle it.
