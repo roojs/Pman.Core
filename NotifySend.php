@@ -689,7 +689,7 @@ class Pman_Core_NotifySend extends Pman
         $m = 'notify'. $notify->evtype;
         //var_dump(get_class($object) . '::' .$m);
         if (!empty($notify->evtype) && method_exists($object,$m)) {
-            echo "calling :" . get_class($object) . '::' .$m . "\n";
+            $this->debug("calling :" . get_class($object) . '::' .$m );
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
         
@@ -697,7 +697,7 @@ class Pman_Core_NotifySend extends Pman
         
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
-            echo "calling :" . get_class($object) . '::' .$m . "\n";
+            $this->debug("calling :" . get_class($object) . '::' .$m );
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
 
@@ -705,7 +705,7 @@ class Pman_Core_NotifySend extends Pman
         
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
-            echo "calling :" . get_class($object) . '::' .$m . "\n";
+            $this->debug("calling :" . get_class($object) . '::' .$m );
             return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
         

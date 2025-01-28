@@ -380,8 +380,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return "could not find message id in {$res['msgid']}"; // can't handle it.
         }
         $cn = DB_DataObject::Factory('core_notify');
-        if (!$cn->get($match[0])) {
-            return "could not find notify id from {$res['msgid']}";
+        if (!$cn->get($match[1])) {
+            return "could not find notify id from {$match[1]} / {$res['msgid']}";
         }
         // this is a hard bounce so we add a counter onto the failed record.
         // do we add an event? - guess so..
