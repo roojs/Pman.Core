@@ -133,7 +133,7 @@ class Pman_Core_DataObjects_Core_curr_rate extends DB_DataObject
     }
     function rate($cur, $when)
     {
-        $when === false ? date('Y-m-d H:i:s') : $when;
+        $when = $when === false ? date('Y-m-d H:i:s') : $when;
         $this->loadRates(); // check if we have an rates.
         
         $r = DB_DataObject::factory('core_curr_rate');
