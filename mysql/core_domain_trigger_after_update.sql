@@ -10,7 +10,7 @@ CREATE TRIGGER core_domain_trigger_after_update
         FOR EACH ROW
         BEGIN
             IF (OLD.mx_updated != NEW.mx_updated AND  NEW.has_mx = 0) THEN
-                  UPDATE core_domain set email_fails =  0 WHERE id = NEW.person_id;
+                  UPDATE core_domain set no_mx_dt =  NOW() WHERE id = NEW.id;
             END IF;
         END;
 $$
