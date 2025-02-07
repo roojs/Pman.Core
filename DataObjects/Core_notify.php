@@ -242,7 +242,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             $this->whereAdd("join_event_id_id.remarks LIKE '%".$this->escape($q['search']['contains']) ."%'");
             
         }
-        if (isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events',  'core_watch'))) {
+        if (empty($q['_skip_ontable_join']) && isset($q['ontable']) && !in_array($q['ontable'], array('Person', 'Events',  'core_watch'))) {
             // this will only work on tables not joined to ours.
             
             //DB_DAtaObject::DebugLevel(1);
