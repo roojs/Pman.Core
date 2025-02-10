@@ -44,7 +44,15 @@ Pman.Login =  new Roo.util.Observable({
         // load 
        
         if (this.window_id === false) {
-            this.window_id = crypto.randomUUID();
+            
+            // persitant in windows..
+            this.window_id = window.sessionStorage.getItem('windowid');
+            if (!this.window_id) {
+                this.window_id = crypto.randomUUID();
+                window.sessionStorage.getItem('windowid', this.window_id);
+                
+            }
+
         }
         
          
@@ -57,7 +65,7 @@ Pman.Login =  new Roo.util.Observable({
         // if we are - then it will load the page,
         // otherwise - show login.
         new Pman.Request({  
-            url: baseURL + '/Login',  
+            url: baseURL + '/Core/Auth/State',  
             params: {
                 getAuthUser: true,
                 window_id : this.window_id
@@ -85,7 +93,31 @@ Pman.Login =  new Roo.util.Observable({
                 Pman.onload();
                 return false;
             },
-            failure : Pman.Login.show,
+            failure :  function(res)  {
+                //Roo.log(res);
+                if (res.code == 'NOTICE-MULTI-WIN') {
+                    Roo.MessageBox.show({
+                        title: "Multiple Windows",
+                        msg: "You are currently using this application in another window, What do you want to do?",
+                        buttons : {ok: "Logout other window", cancel: true},
+                        fn : function(r) {
+                            if (r == 'ok') {
+                                this.show(false, false, { logout_other_windows : 1 });
+                                return;
+                            }
+                            window.close();
+                            
+                        },
+                        scope: this
+                        
+                    });
+                    
+                    
+                } else {
+                    this.show();
+                }
+                
+            },
             scope : Pman.Login
               
         });  
@@ -112,11 +144,9 @@ Pman.Login =  new Roo.util.Observable({
             return;
         }
         this.sending = true;
-        if (!this.checkConnection) {
-            this.checkConnection = new Roo.data.Connection();
-        }
-        this.checkConnection.request({
-            url: baseURL + '/Login',  
+        
+        new Pman.Request({
+            url: baseURL + '/Core/Auth/State',  
             params: {
                 getAuthUser: true,
                 window_id : this.window_id
@@ -135,7 +165,34 @@ Pman.Login =  new Roo.util.Observable({
     {
         this.authUser = -1;
         this.sending = false;
-         //console.log(res);
+        if (res.code = "NOTICE-MULTI-WIN") {
+             
+            Roo.MessageBox.show({
+                title: "Multiple Windows",
+                msg: "You are currently using this application in another window, What do you want to do?",
+                buttons : {ok: "Logout other window", cancel: true},
+                fn : function(r) {
+                    if (r == 'ok') {
+                        this.show(true, false, { logout_other_windows : 1 });
+                        return;
+                    }
+                    window.onbeforeunload = function() { };
+                    document.location = baseURL + '?ts=' + Math.random();
+                    
+                },
+                scope: this
+                
+            });
+            return;            
+        }
+        if (res.code = "FORCE-LOGOUT") {
+            Roo.MessageBox.alert("Forced Logout", "You have been logged out by the Administrator", function() {
+                window.onbeforeunload = function() { };
+                document.location = baseURL + '?ts=' + Math.random();
+            });
+            return;
+        }
+        console.log(["failed", res]);
         if ( Pman.Login.checkFails > 2) {
             if (typeof(Pman.Preview) != 'undefined') {
                 Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
@@ -149,15 +206,14 @@ Pman.Login =  new Roo.util.Observable({
     },
     
     
-    success : function(response, opts)  // check successfull...
+    success : function(res)  // check successfull...
     {  
         this.sending = false;
-        var res = Pman.processResponse(response);
-        if (!res.success) {
-            return this.failure(response, opts);
+         if (!res.success) {
+            return this.failure(res);
         }
         if (!res.data || !res.data.id) {
-            return this.failure(response,opts);
+            return this.failure(res);
         }
         //console.log(res);
         this.fillAuth(res.data);
@@ -267,10 +323,10 @@ Pman.Login =  new Roo.util.Observable({
                 return;
             }
             new Pman.Request({
-                url: baseURL + '/Login.js',
+                url: baseURL + '/Core/Auth/PasswordRequest',
                 mask : "Sending Password Reset email",
                 params: {
-                    passwordRequest: n
+                    email: n
                 },
                 method: 'POST',  
                 success:  function(res)  {  // check successfull...
@@ -292,7 +348,7 @@ Pman.Login =  new Roo.util.Observable({
         {
             Pman.Login.dialog.el.mask("Logging in");
             Pman.Login.form.doAction('submit', {
-                    url: baseURL + '/Login',
+                    url: baseURL + '/Core/Auth/Login',
                     method: 'POST'
             });
         });
@@ -415,10 +471,14 @@ Pman.Login =  new Roo.util.Observable({
                 }
             
             }),
-            new Roo.form.HiddenField({
+            new Roo.form.Hidden({
                 name: 'window_id',
-                value : this.window.id
+                value : this.window_id
             }),
+             new Roo.form.Hidden({
+                name: 'logout_other_windows',
+                value : 0
+            })
 
         );
          
@@ -477,7 +537,7 @@ Pman.Login =  new Roo.util.Observable({
     
      
     
-    show: function (modal, cb) 
+    show: function (modal, cb, values) 
     {
         if (this.disabled) {
             return;
@@ -526,6 +586,9 @@ Pman.Login =  new Roo.util.Observable({
             'username' : Roo.state.Manager.get('Pman.Login.username.'+appNameShort, ''),
             'lang' : Roo.state.Manager.get('Pman.Login.lang.'+appNameShort, 'en')
         });
+        if (typeof(values) != 'undefined' ) {
+            this.form.setValues(values);
+        }
         Pman.Login.switchLang(Roo.state.Manager.get('Pman.Login.lang.'+appNameShort, ''));
         if (this.form.findField('username').getValue().length > 0 ){
             this.form.findField('password').focus();
@@ -542,8 +605,8 @@ Pman.Login =  new Roo.util.Observable({
     {
         window.onbeforeunload = function() { }; // false does not work for IE..
         Pman.Login.authUserId = -1;
-        Roo.Ajax.request({  
-            url: baseURL + '/Login.html',  
+        new Pman.Request({  
+            url: baseURL + '/Core/Auth/Logout',  
             params: {
                 logout: 1,
                 window_id : this.window_id
