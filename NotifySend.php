@@ -343,6 +343,11 @@ class Pman_Core_NotifySend extends Pman
         
         $ff = HTML_FlexyFramework::get();
 
+        // the domain DOESN'T HAVE mx record in the last dns check checked within last 7 day
+        if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 7 day')) {
+
+        }
+
         // recheck dns after 7 days if the domain DOESN'T HAVE mx record in the last check
         // recheck dns after 30 days if the domain HAS mx records in the last check
         if(
@@ -360,10 +365,6 @@ class Pman_Core_NotifySend extends Pman
                 $core_domain->no_mx_dt = date('Y-m-d H:i:s');
             }
             $core_domain->update($oldDomain);
-
-            if(!$core_domain->has_mx) {
-
-            }
         }
         
      
