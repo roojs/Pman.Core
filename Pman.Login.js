@@ -581,7 +581,7 @@ Pman.Login =  new Roo.util.Observable({
         if (this.form) {
             
                
-            function formLabel(name, val) {
+            var  formLabel = function(name, val) {
                 
                 var lbl = Pman.Login.form.findField( name ).el.dom.parentNode.parentNode;
                 if (lbl.getElementsByTagName('label').length) {
@@ -591,7 +591,7 @@ Pman.Login =  new Roo.util.Observable({
                 }
                    
                 lbl.innerHTML = val;
-            }
+            };
             
             formLabel('password', "Password"+':');
             formLabel('username', "Email Address"+':');
