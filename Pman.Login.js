@@ -117,7 +117,7 @@ Pman.Login =  new Roo.util.Observable({
             this.checkConnection = new Roo.data.Connection();
         }
         this.checkConnection.request({
-            url: baseURL + '/Login.js',  
+            url: baseURL + '/Login',  
             params: {
                 getAuthUser: true,
                 window_id : this.window_id
