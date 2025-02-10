@@ -416,7 +416,11 @@ Pman.Login =  new Roo.util.Observable({
                     }
                 }
             
-            })
+            }),
+            new Roo.form.HiddenField({
+                name: 'window_id',
+                value : this.window.id
+            }),
 
         );
          
