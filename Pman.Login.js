@@ -567,15 +567,15 @@ Pman.Login =  new Roo.util.Observable({
         
         var  formLabel = function(name, val) {
                 
-                var lbl = Pman.Login.form.findField( name ).el.dom.parentNode.parentNode;
-                if (lbl.getElementsByTagName('label').length) {
-                    lbl = lbl.getElementsByTagName('label')[0];
-                } else  {
-                    lbl = lbl.parentNode.getElementsByTagName('label')[0];
-                }
-                   
-                lbl.innerHTML = val;
-            };
+            var lbl = Pman.Login.form.findField( name ).el.dom.parentNode.parentNode;
+            if (lbl.getElementsByTagName('label').length) {
+                lbl = lbl.getElementsByTagName('label')[0];
+            } else  {
+                lbl = lbl.parentNode.getElementsByTagName('label')[0];
+            }
+               
+            lbl.innerHTML = val;
+        };
         
         if (!lang || !lang.length) {
             return;
@@ -594,9 +594,7 @@ Pman.Login =  new Roo.util.Observable({
         Roo.apply(_T, _T[lang]);
         // just need to set the text values for everything...
         if (this.form) {
-            
-               
-            
+             
             
             formLabel('password', "Password"+':');
             formLabel('username', "Email Address"+':');
