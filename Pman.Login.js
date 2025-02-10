@@ -43,6 +43,10 @@ Pman.Login =  new Roo.util.Observable({
     {
         // load 
        
+        if (this.window_id === false) {
+            this.window_id = crypto.randomUUID();
+        }
+        
          
         if (Roo.get('loading')) {
             Roo.get('loading').remove();
@@ -53,7 +57,9 @@ Pman.Login =  new Roo.util.Observable({
         Roo.Ajax.request({  
             url: baseURL + '/Login.js',  
             params: {
-                getAuthUser: true
+                getAuthUser: true,
+                window_id : this.window_id
+                
             },  
             method: 'GET',  
             success:  function(response, opts)  {  // check successfull...
@@ -111,7 +117,8 @@ Pman.Login =  new Roo.util.Observable({
         this.checkConnection.request({
             url: baseURL + '/Login.js',  
             params: {
-                getAuthUser: true
+                getAuthUser: true,
+                window_id : this.window_id
             },  
             method: 'GET',  
             success:  Pman.Login.success,
@@ -534,7 +541,8 @@ Pman.Login =  new Roo.util.Observable({
         Roo.Ajax.request({  
             url: baseURL + '/Login.html',  
             params: {
-                logout: 1
+                logout: 1,
+                window_id : this.window_id
             },  
             method: 'GET',
             failure : function() {
