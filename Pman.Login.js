@@ -53,9 +53,11 @@ Pman.Login =  new Roo.util.Observable({
         }
         this.switchLang('en');
        
-        // check if we are logged in..
+        // inital check if we are logged in..
+        // if we are - then it will load the page,
+        // otherwise - show login.
         Roo.Ajax.request({  
-            url: baseURL + '/Login.js',  
+            url: baseURL + '/Login',  
             params: {
                 getAuthUser: true,
                 window_id : this.window_id
