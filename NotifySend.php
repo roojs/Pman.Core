@@ -346,18 +346,20 @@ class Pman_Core_NotifySend extends Pman
         // recheck dns after 7 days if the domain DOESN'T HAVE mx record in the last check
         // recheck dns after 30 days if the domain HAS mx records in the last check
         if(
-            $core_domain->has_mx == 0 && strtotime($core_domain->mx_updated) < strtotime('now - 7 day')
+            !$core_domain->has_mx && strtotime($core_domain->mx_updated) < strtotime('now - 7 day')
             ||
-            $core_domain->has_mx == 1 && strtotime($core_domain->mx_updated) < strtotime('now - 30 day')
+            $core_domain->has_mx && strtotime($core_domain->mx_updated) < strtotime('now - 30 day')
         ) 
         {
             $oldDomain = clone($core_domain);
             $core_domain->has_mx = checkdnsrr($dom, 'MX');
             $core_domain->mx_updated = date('Y-m-d H:i:s');
-            if($oldDomain->has_mx != $core_domain->has_mx && !$core_domain->hasMX) {
+
+            // 
+            if($oldDomain->has_mx != $core_domain->has_mx && !$core_domain->has_mx) {
                 $core_domain->no_mx_dt = date('Y-m-d H:i:s');
             }
-            $core_domain->
+            $core_domain->update($oldDomain);
         }
         
      
