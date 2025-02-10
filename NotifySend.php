@@ -342,6 +342,14 @@ class Pman_Core_NotifySend extends Pman
         
         
         $ff = HTML_FlexyFramework::get();
+
+        // recheck dns after 7 days if the domain doesn't has mx record in the last check
+        if(
+            $core_domain->has_mx == 0 && strtotime($core_domain->mx_updated) < strtotime('now - 7 day')
+        ) 
+        {
+            $hasMX = checkdnsrr($dom, 'MX');
+        }
         
      
         $mxs = $this->mxs($dom);
