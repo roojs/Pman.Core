@@ -19,9 +19,7 @@ re-arrange language code...
 Pman.Login =  new Roo.util.Observable({
     
     events : {
-        
         'render' : true
-       
     },
     disabled : false,
     
@@ -36,6 +34,8 @@ Pman.Login =  new Roo.util.Observable({
     checkFails : 0,
     versionWarn: false,
     sending : false,
+    
+    window_id : false, // we generate a UID so that we can track opened windows (and allow force logout / single window restrictions etc.)
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
     
