@@ -355,11 +355,15 @@ class Pman_Core_NotifySend extends Pman
             $core_domain->has_mx = checkdnsrr($dom, 'MX');
             $core_domain->mx_updated = date('Y-m-d H:i:s');
 
-            // 
+            // when a domain changes from having mx records to having no mx record
             if($oldDomain->has_mx != $core_domain->has_mx && !$core_domain->has_mx) {
                 $core_domain->no_mx_dt = date('Y-m-d H:i:s');
             }
             $core_domain->update($oldDomain);
+
+            if(!$core_domain->has_mx) {
+
+            }
         }
         
      
