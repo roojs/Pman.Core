@@ -343,36 +343,11 @@ class Pman_Core_NotifySend extends Pman
         
         $ff = HTML_FlexyFramework::get();
 
-        // the domain DOESN'T HAVE mx record in the last dns check checked within last 7 day
-        if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 7 day')) {
+        // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
+        if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 5 day')) {
             $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
-        }
-
-        // recheck dns after 7 days if the domain DOESN'T HAVE mx record in the last check
-        // recheck dns after 30 days if the domain HAS mx records in the last check
-        if(
-            !$core_domain->has_mx && strtotime($core_domain->mx_updated) < strtotime('now - 7 day')
-            ||
-            $core_domain->has_mx && strtotime($core_domain->mx_updated) < strtotime('now - 30 day')
-        ) 
-        {
-            $oldDomain = clone($core_domain);
-            $core_domain->has_mx = checkdnsrr($dom, 'MX');
-            $core_domain->mx_updated = date('Y-m-d H:i:s');
-
-            // when a domain changes from having mx records to having no mx record
-            if($oldDomain->has_mx != $core_domain->has_mx && !$core_domain->has_mx) {
-                $core_domain->no_mx_dt = date('Y-m-d H:i:s');
-            }
-            $core_domain->update($oldDomain);
-
-            if(!$core_domain->has_mx) {
-                $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
-                $w->flagDone($ev, '');
-                $this->errorHandler($ev->remarks);
-            }
         }
         
      
@@ -411,7 +386,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->errorHandler($ev->remarks);
             }
             
-            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             
