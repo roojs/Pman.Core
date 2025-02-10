@@ -564,6 +564,19 @@ Pman.Login =  new Roo.util.Observable({
         }); 
     },
     switchLang : function (lang) {
+        
+        var  formLabel = function(name, val) {
+                
+                var lbl = Pman.Login.form.findField( name ).el.dom.parentNode.parentNode;
+                if (lbl.getElementsByTagName('label').length) {
+                    lbl = lbl.getElementsByTagName('label')[0];
+                } else  {
+                    lbl = lbl.parentNode.getElementsByTagName('label')[0];
+                }
+                   
+                lbl.innerHTML = val;
+            };
+        
         if (!lang || !lang.length) {
             return;
         }
@@ -583,17 +596,7 @@ Pman.Login =  new Roo.util.Observable({
         if (this.form) {
             
                
-            var  formLabel = function(name, val) {
-                
-                var lbl = Pman.Login.form.findField( name ).el.dom.parentNode.parentNode;
-                if (lbl.getElementsByTagName('label').length) {
-                    lbl = lbl.getElementsByTagName('label')[0];
-                } else  {
-                    lbl = lbl.parentNode.getElementsByTagName('label')[0];
-                }
-                   
-                lbl.innerHTML = val;
-            };
+            
             
             formLabel('password', "Password"+':');
             formLabel('username', "Email Address"+':');
