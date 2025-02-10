@@ -56,7 +56,7 @@ Pman.Login =  new Roo.util.Observable({
         // inital check if we are logged in..
         // if we are - then it will load the page,
         // otherwise - show login.
-        Roo.Ajax.request({  
+        new Pman.Request({  
             url: baseURL + '/Login',  
             params: {
                 getAuthUser: true,
@@ -64,14 +64,13 @@ Pman.Login =  new Roo.util.Observable({
                 
             },  
             method: 'GET',  
-            success:  function(response, opts)  {  // check successfull...
+            success:  function(res)  {  // check successfull...
             
-                var res = Pman.processResponse(response);
                 this.checkFails =0;
                 if (!res.success) { // error!
                     this.checkFails = 5;
                     //console.log('call failure');
-                    return Pman.Login.failure(response,opts);
+                    return Pman.Login.failure(res);
                 }
                 
                 
