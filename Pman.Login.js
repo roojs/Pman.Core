@@ -178,7 +178,7 @@ Pman.Login =  new Roo.util.Observable({
                     }
                     window.onbeforeunload = function() { };
                     document.location = "about:blank";
-                    window.close();
+                    window.close(); // will probably not work.
                 },
                 scope: this
                 
