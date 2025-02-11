@@ -96,6 +96,22 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
         
            
     }
+    /**
+     * window checking
+     *  * we use window.sessionStorage on the client to identify windows.
+     *
+     * couple of things
+     *  * restrict user to single window ?? (now or later?)
+     *  * allow admin to log out a user (by flagging core_person_windows to logout)
+     *    * This is a force logout - and affects the 'State calls'
+     *  * if login is presented - (eg session timeout on an existing window)
+     *    * we might have a record of that user being logged in.
+     *    *   ( normally this is ok - unless the force logout exists - in which case we return forced-logout )
+     * 
+     *
+     *
+     */
+    
     function window_check($user)
     {
         if (empty($_REQUEST['window_id']) || empty($_REQUEST['app_id'])) { // we don't do any checks on no window data.
