@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman/Core/Auth.php';
+require_once 'Pman/Core/Auth/Required.php';
 
 /***
 * 
