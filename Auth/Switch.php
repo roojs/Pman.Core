@@ -18,7 +18,7 @@ require_once 'Pman/Core/Auth.php';
 
 class Pman_Core_Auth_Switch extends Pman_Core_Auth
 { 
-    function get($v, $opts=array())
+    function post($v, $opts=array())
     {
         
         $tbl = empty($ff->Pman['authTable']) ? 'core_person' : $ff->Pman['authTable'];
