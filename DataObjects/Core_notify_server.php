@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns->is_active = 1;
         $ns->hostname = gethostname();
         if (!$ns->find(true)) {
-            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
+            $notify->jerr("Server not found for this serverr " .  gethostname() . " in core_notify_server" );
         }
         $current = $ns;
         return $ns;
