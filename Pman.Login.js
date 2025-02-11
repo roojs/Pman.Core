@@ -321,7 +321,7 @@ Pman.Login =  new Roo.util.Observable({
             if (cb) {
                 cb();
             }
-            Pman.onLoad();
+            Pman.onload();
         });
         return;
      
