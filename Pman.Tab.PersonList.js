@@ -548,7 +548,7 @@ Pman.Tab.PersonList.prototype = {
                                 user_id : s[0].data.id
                             },
                             
-                            method : 'GET',
+                            method : 'POST',
                             success : function() {
                                 document.location = baseURL + '?ts=' + Math.random();
                                 
