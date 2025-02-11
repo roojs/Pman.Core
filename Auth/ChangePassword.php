@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Pman/Core/Auth.php';
+require_once 'Pman/Core/Auth/Required.php';
 
 /***
 * 
@@ -17,17 +17,15 @@ require_once 'Pman/Core/Auth.php';
 
 
 
-class Pman_Core_Auth_ChangePassword extends Pman_Core_Auth
+class Pman_Core_Auth_ChangePassword extends Pman_Core_Auth_Required
 { 
     
-   
+     
     
     function post($v, $opts=array())
     {
         $au = $this->getAuthUser();
-        if (!$au) {
-			$this->jerr("Password change attempted when not logged in");
-		}
+        
 		$uu = clone($au);
 		$au->setPassword($_REQUEST['passwd1']);
 		$au->update($uu);
