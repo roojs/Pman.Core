@@ -318,7 +318,9 @@ Pman.Login =  new Roo.util.Observable({
         values = values || {};
         values.modal = modal; // why?
         Pman.Dialog.Login.show(values, function() {
-            cb();
+            if (cb) {
+                cb();
+            }
             Pman.onLoad();
         });
         return;
