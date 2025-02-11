@@ -102,7 +102,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         $this->ip_checking();
         
-        $this->window_checking($u);
+        $this->window_check($u);
         
         
         $u->login();
@@ -228,7 +228,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
      *
      *
      */
-    function window_checking($user)
+    
+    function window_check($user)
     {
         if (empty($_REQUEST['window_id'])) { // we don't do any checks on no window data.
             return;
@@ -238,29 +239,27 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $mw = clone($w);
         $w->window_id = $_REQUEST['window_id'];
         if (!$w->find(true)) {
+            
             if (!$mw->count()) {
                 return;
+            
             }
-            if (!empty($_REQUEST['logout_other_windows'])) {
-                foreach($mw->fetchAll() as $mw) {
-                    $mmw = clone($mw);
-                    $mw->delete();
-                }
-                return;
-            }
-            $this->jnotice("MULTI-WIN", "window already exists for user");
-            // no record exists - it's ok - it's created later
             return;
         }
         if ($w->force_logout) {
-            $u->logout();
+            $user->logout();
             session_regenerate_id(true);
             session_commit();
-            $this->jnotice("FORCE-LOGOUT", "this window must be reloaded");
+            $this->jnotice("FORCE-LOGOUT", "Logout forced");
+            return;
         }
+        
+        // if the user does not have other windows open - and we don't have a record - we do allow this.
+        
         
          
     }
+     
     function window_register($user)
     {
         if (empty($_REQUEST['window_id'])) { // we don't do any checks on no window data.
