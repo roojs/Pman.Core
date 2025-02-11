@@ -62,12 +62,12 @@ class Pman_Core_Auth_Logout extends Pman_Core_Auth
         $w->person_id = $user->id;
         $w->window_id = $_REQUEST['window_id'];
         $w->app_id = $_REQUEST['app_id'];
-       
+		$w->find();
+        while ($w->fetch()) {
+			$ww = clone($w);
+			$ww->delete();
+		}
         
-        if (!$w->find(true)) {
-            return;
-        }
-        $w->delete();
     }
 	
 }
