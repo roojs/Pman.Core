@@ -268,6 +268,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
         $w->window_id = $_REQUEST['window_id'];
+		$w->app_id = $_REQUEST['app_id'];
         $w->login_dt = $w->sqlValue("NOW()");
         
         if ($w->count()) {
