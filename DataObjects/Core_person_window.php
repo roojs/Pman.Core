@@ -21,4 +21,91 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+    function register($user, $req)
+    {
+        if (empty($req['window_id']) )   { // we don't do any checks on no window data.
+            return;
+        }
+        
+        $w = DB_DataObject::factory('core_person_window');
+        $w->person_id = $user->id;
+        $w->window_id = $req['window_id'];
+        $ff = HTML_FlexyFramework::get();
+		$w->app_id = $ff->appNameShort;
+        $w->login_dt = $w->sqlValue("NOW()");
+        
+        if ($w->count()) {
+            $ff->page->jnotice("MULTI-WIN", "window already exists for user");
+        }
+        $w->insert();
+    }
+     /**
+     * window checking
+     *  * we use window.sessionStorage on the client to identify windows.
+     *
+     * couple of things
+     *  * restrict user to single window ?? (now or later?)
+     *  * allow admin to log out a user (by flagging core_person_windows to logout)
+     *    * This is a force logout - and affects the 'State calls'
+     *  * if login is presented - (eg session timeout on an existing window)
+     *    * we might have a record of that user being logged in.
+     *    *   ( normally this is ok - unless the force logout exists - in which case we return forced-logout )
+     * 
+     *
+     *
+     */
+    
+    function  check($user, $req)
+    {
+        if (empty($req['window_id']) ) { // we don't do any checks on no window data.
+            return;
+        }
+        $w = DB_DataObject::factory('core_person_window');
+        $w->person_id = $user->id;
+        $ff = HTML_FlexyFramework::get();
+		$w->app_id = $ff->appNameShort;
+        $mw = clone($w);
+        $w->window_id = $req['window_id'];
+        if (!$w->find(true)) {
+            if (!$mw->count()) {
+                return;
+            }
+            if (!empty($req['logout_other_windows'])) {
+                foreach($mw->fetchAll() as $mw) {
+                    $mmw = clone($mw);
+                    $mw->delete();
+                }
+                return;
+            }
+            $ff->page->jnotice("MULTI-WIN", "window already exists for user");
+            // no record exists - it's ok - it's created later
+            return;
+        }
+        if ($w->force_logout) {
+            $u->logout();
+            session_regenerate_id(true);
+            session_commit();
+            $ff->page->jnotice("FORCE-LOGOUT", "this window must be reloaded");
+        }
+        
+         
+    }
+    function clear($user, $req)
+    {
+        if (empty($req['window_id'])) { // we don't do any checks on no window data.
+            return;
+        }
+        $w = DB_DataObject::factory('core_person_window');
+        $w->person_id = $user->id;
+        $w->window_id = $_REQUEST['window_id'];
+        $ff = HTML_FlexyFramework::get();
+		$w->app_id = $ff->appNameShort;
+		$w->find();
+        while ($w->fetch()) {
+			$ww = clone($w);
+			$ww->delete();
+		}
+        
+    }
+    
 }

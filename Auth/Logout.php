@@ -30,7 +30,9 @@ class Pman_Core_Auth_Logout extends Pman_Core_Auth
           
             
             $u->logout();
-			$this->window_remove($u);
+			
+			DB_DataObject::factory('core_person_window')->clear($u, $_REQUEST);
+			
             session_regenerate_id(true);
             session_commit(); 
 
@@ -53,22 +55,7 @@ class Pman_Core_Auth_Logout extends Pman_Core_Auth
         return $this->get($v, $opts);
     }
 	
-	function window_remove($user)
-    {
-        if (empty($_REQUEST['window_id']) || empty($_REQUEST['app_id'])) { // we don't do any checks on no window data.
-            return;
-        }
-        $w = DB_DataObject::factory('core_person_window');
-        $w->person_id = $user->id;
-        $w->window_id = $_REQUEST['window_id'];
-        $w->app_id = $_REQUEST['app_id'];
-		$w->find();
-        while ($w->fetch()) {
-			$ww = clone($w);
-			$ww->delete();
-		}
-        
-    }
+	
 	
 }
         
