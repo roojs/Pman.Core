@@ -186,7 +186,7 @@ Pman.Login =  new Roo.util.Observable({
             });
             return;            
         }
-        if (res.code = "FORCE-LOGOUT") {
+        if (res.code = "NOTICE-FORCE-LOGOUT") {
             Roo.MessageBox.alert("Forced Logout", "You have been logged out by the Administrator", function() {
                 window.onbeforeunload = function() { };
                 document.location = baseURL + '?ts=' + Math.random();
