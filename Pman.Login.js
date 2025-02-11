@@ -317,7 +317,8 @@ Pman.Login =  new Roo.util.Observable({
         }
         values = values || {};
         values.modal = modal; // why?
-        Pman.Dialog.Login.show(values, function() {
+        Pman.Dialog.Login.show(values, function(data) {
+            this.fillAuth(data);  
             if (cb) {
                 cb();
             }
