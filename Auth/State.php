@@ -103,25 +103,29 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
         }
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
+        $mw = clone($w);
         $w->window_id = $_REQUEST['window_id'];
         if (!$w->find(true)) {
-            $w = DB_DataObject::factory('core_person_window');
-            $w->person_id = $user->id;
-            if ($w->count()) {
-                $this->jnotice("MULTI-WIN", "window already exists for user");
+            if (!$mw->count()) {
+                return;
             }
+            if (!empty($_REQUEST['logout_other_windows'])) {
+                foreach($mw->fetchAll() as $mw) {
+                    $mmw = clone($mw);
+                    $mw->delete();
+                }
+                return;
+            }
+            $this->jnotice("MULTI-WIN", "window already exists for user");
+            // no record exists - it's ok - it's created later
             return;
         }
         if ($w->force_logout) {
-            $user->logout();
+            $u->logout();
             session_regenerate_id(true);
             session_commit();
-            $this->jnotice("FORCE-LOGOUT", "Logout forced");
-            return;
+            $this->jnotice("FORCE-LOGOUT", "this window must be reloaded");
         }
-        
-        // if the user does not have other windows open - and we don't have a record - we do allow this.
-        
         
          
     }
