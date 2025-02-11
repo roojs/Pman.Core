@@ -246,9 +246,8 @@ Pman.Login =  new Roo.util.Observable({
         
         this.checkFails =0;
         
-        if (Pman.loadUserInterface) {
-            Pman.loadUserInterface(); // BS version
-        } else  if (Pman.onload) { 
+        
+        if (Pman.onload) { 
             Pman.onload(); // classic roo..
         }
         if (Pman.Login.callback) {
@@ -318,7 +317,10 @@ Pman.Login =  new Roo.util.Observable({
         }
         values = values || {};
         values.modal = modal; // why?
-        Pman.Dialog.Login.show(values, cb);
+        Pman.Dialog.Login.show(values, function() {
+            cb();
+            Pman.onLoad();
+        });
         return;
      
         
