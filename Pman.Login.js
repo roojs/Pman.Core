@@ -203,9 +203,9 @@ Pman.Login =  new Roo.util.Observable({
         
         console.log(["failed", res]);
         if ( Pman.Login.checkFails > 2) {
-            if (typeof(Pman.Preview) != 'undefined') {
-                Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
-            }
+            //if (typeof(Pman.Preview) != 'undefined') {
+            //    Pman.Preview.disable(); // not sure why this was added - but MO chrome does not have it.
+            //}
             Pman.Login.show();
             return;
         }
