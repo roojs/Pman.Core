@@ -94,6 +94,16 @@ Pman.Login =  new Roo.util.Observable({
                 return false;
             },
             failure :  function(res)  {
+                
+                if(window.location.pathname.substr(baseURL.length).match(/\/PasswordReset\//)){
+                    Pman.Dialog.AdminPasswordReset.show({}, function(){
+                        window.location.href = baseURL;
+                    });
+                    return;
+                }
+                 
+
+                
                 //Roo.log(res);
                 if (res.code == 'NOTICE-MULTI-WIN') {
                     Roo.MessageBox.show({
@@ -111,11 +121,11 @@ Pman.Login =  new Roo.util.Observable({
                         scope: this
                         
                     });
+                    return;
                     
-                    
-                } else {
-                    this.show();
-                }
+                } 
+                this.show();
+                
                 
             },
             scope : Pman.Login
