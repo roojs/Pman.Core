@@ -193,6 +193,9 @@ Pman.Login =  new Roo.util.Observable({
             });
             return;
         }
+        // other responses?
+        
+        
         console.log(["failed", res]);
         if ( Pman.Login.checkFails > 2) {
             if (typeof(Pman.Preview) != 'undefined') {
