@@ -55,12 +55,13 @@ class Pman_Core_Auth_Logout extends Pman_Core_Auth
 	
 	function window_remove($user)
     {
-        if (empty($_REQUEST['window_id'])) { // we don't do any checks on no window data.
+        if (empty($_REQUEST['window_id']) || empty($_REQUEST['app_id']) { // we don't do any checks on no window data.
             return;
         }
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
         $w->window_id = $_REQUEST['window_id'];
+        $w->app_id = $_REQUEST['app_id'];
        
         
         if (!$w->find(true)) {
