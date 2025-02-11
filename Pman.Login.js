@@ -194,7 +194,12 @@ Pman.Login =  new Roo.util.Observable({
             return;
         }
         // other responses?
-        
+        if (res.code = "LOGIN-NOAUTH") {
+            // not logged in...
+            Pman.Login.show();
+            return;
+            
+        }
         
         console.log(["failed", res]);
         if ( Pman.Login.checkFails > 2) {
