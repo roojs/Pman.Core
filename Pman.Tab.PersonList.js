@@ -545,7 +545,7 @@ Pman.Tab.PersonList.prototype = {
                         new Pman.Request({
                             url : baseURL+ '/Core/Auth/Switch',
                             params  :{
-                                'switch' : s[0].data.id
+                                user_id : s[0].data.id
                             },
                             
                             method : 'GET',
