@@ -177,7 +177,7 @@ Pman.Login =  new Roo.util.Observable({
                         return;
                     }
                     window.onbeforeunload = function() { };
-                    document.location = baseURL + '?ts=' + Math.random();
+                    window.close();
                     
                 },
                 scope: this
