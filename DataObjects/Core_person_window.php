@@ -13,7 +13,9 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $id;                              // int(11)  not_null primary_key auto_increment
     public $person_id;
     public $window_id;                            // string(64)  not_null
+    public $app_id;
     public $login_dt;
+    public $app_id;
     public $force_logout;
 
     
