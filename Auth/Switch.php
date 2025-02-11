@@ -24,7 +24,10 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth
         $tbl = empty($ff->Pman['authTable']) ? 'core_person' : $ff->Pman['authTable'];
         $u = DB_DataObject::factory($tbl);
         if (!$u->isAuth()) {
-            $this->err("not logged in");
+            $this->jnotice("AUTH-FAILED", "not logged in");
+        }
+        if (empty($_REQUEST['user_id'])) {
+            $this->jnotice("NOUID", "Missing User id");
         }
         
         $au = $u->getAuthUser();
@@ -35,7 +38,7 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth
         }
                 
         $u = DB_DataObject::factory($tbl);
-        $u->get($id);
+        $u->get($_REQUEST['user_id']);
         if (!$u->active()) {
             $this->jerr('Account disabled');
         }
