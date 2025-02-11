@@ -213,56 +213,12 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         return;
     }
-    /**
-     * window checking
-     *  * we use window.sessionStorage on the client to identify windows.
-     *
-     * couple of things
-     *  * restrict user to single window ?? (now or later?)
-     *  * allow admin to log out a user (by flagging core_person_windows to logout)
-     *    * This is a force logout - and affects the 'State calls'
-     *  * if login is presented - (eg session timeout on an existing window)
-     *    * we might have a record of that user being logged in.
-     *    *   ( normally this is ok - unless the force logout exists - in which case we return forced-logout )
-     * 
-     *
-     *
-     */
+   
     
-    function window_check($user)
-    {
-        if (empty($_REQUEST['window_id'])) { // we don't do any checks on no window data.
-            return;
-        }
-        $w = DB_DataObject::factory('core_person_window');
-        $w->person_id = $user->id;
-        $mw = clone($w);
-        $w->window_id = $_REQUEST['window_id'];
-        if (!$w->find(true)) {
-            
-            if (!$mw->count()) {
-                return;
-            
-            }
-            return;
-        }
-        if ($w->force_logout) {
-            $user->logout();
-            session_regenerate_id(true);
-            session_commit();
-            $this->jnotice("FORCE-LOGOUT", "Logout forced");
-            return;
-        }
-        
-        // if the user does not have other windows open - and we don't have a record - we do allow this.
-        
-        
-         
-    }
      
     function window_register($user)
     {
-        if (empty($_REQUEST['window_id'])) { // we don't do any checks on no window data.
+        if (empty($_REQUEST['window_id']) || empty($_REQUEST['app_id']))   { // we don't do any checks on no window data.
             return;
         }
         $w = DB_DataObject::factory('core_person_window');
