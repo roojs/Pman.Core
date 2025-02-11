@@ -102,12 +102,13 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         $this->ip_checking();
         
-        $this->window_check($u);
-        
-        
+		
+        DB_DataObject::factory('core_person_window')->check($u, $_REQUEST);
+         
         $u->login();
         
-        $this->window_register($u);
+		DB_DataObject::factory('core_person_window')->register($u, $_REQUEST);
+        
         // we might need this later..
         $this->addEvent("LOGIN". $this->event_suffix, false, session_id());
 		
@@ -213,24 +214,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         return;
     }
-   
     
-     
-    function window_register($user)
-    {
-        if (empty($_REQUEST['window_id']) || empty($_REQUEST['app_id']))   { // we don't do any checks on no window data.
-            return;
-        }
-        $w = DB_DataObject::factory('core_person_window');
-        $w->person_id = $user->id;
-        $w->window_id = $_REQUEST['window_id'];
-		$w->app_id = $_REQUEST['app_id'];
-        $w->login_dt = $w->sqlValue("NOW()");
-        
-        if ($w->count()) {
-            $this->jnotice("MULTI-WIN", "window already exists for user");
-        }
-        $w->insert();
-    }
     
 }
