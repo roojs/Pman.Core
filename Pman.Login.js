@@ -211,8 +211,7 @@ Pman.Login =  new Roo.util.Observable({
         }
             
         Pman.Login.check.defer(1000, Pman.Login, [ true ]);
-        return;  
-    },
+     },
     
     
     success : function(res)  // check successfull...
