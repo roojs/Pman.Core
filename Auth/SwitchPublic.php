@@ -16,14 +16,12 @@ require_once 'Pman/Core/Auth.php';
 
 
 
-class Pman_Core_Auth_SwitchPublic extends Pman_Core_Auth
+class Pman_Core_Auth_SwitchPublic extends Pman_Core_Auth_Required
 { 
+   
     function get($v, $opts=array())
     {
-        $u = $this->userdb();
-        if (!$u->isAuth()) {
-            $this->err("not logged in");
-        }
+         
         $u = $this->userdb();
         $u->get($id);
         
