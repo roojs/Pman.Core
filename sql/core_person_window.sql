@@ -4,7 +4,6 @@ CREATE  TABLE core_person_window (
   window_id VARCHAR(64) NOT NULL DEFAULT '',
   app_id VARCHAR(128) NOT NULL DEFAULT '',
   person_id INT NOT NULL DEFAULT 0,
-  
   force_logout INT(2) NOT NULL DEFAULT 0,
   PRIMARY KEY (id)
 );
