@@ -43,7 +43,7 @@ Pman.Login =  new Roo.util.Observable({
     {
         // load 
        
-        if (this.window_id === false) {
+        if (this.window_id === false && document.location.protocol == 'https:') {
             // persitant in windows..
             this.window_id = window.sessionStorage.getItem('windowid');
             if (!this.window_id) {
