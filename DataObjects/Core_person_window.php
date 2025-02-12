@@ -34,8 +34,8 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
 		$w->app_id = $ff->appNameShort;
         $w->login_dt = $w->sqlValue("NOW()");
         
-        if ($w->count()) {
-            $ff->page->jnotice("MULTI-WIN", "window already exists for user");
+        if ($w->count() > 2) {
+            $ff->page->jnotice("MULTI-WIN", "window already exists for user (max 2 per user)");
         }
         $w->insert();
     }
