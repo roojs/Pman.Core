@@ -34,6 +34,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
 		$w->app_id = $ff->appNameShort;
         
         if ($w->count() ) {
+            $w->find(true);
+            $ww = clone($w);
+            $w->login_dt = $w->sqlValue("NOW()");
+            $w->update($ww);
             return; /// already registered?
         }
         $w->login_dt = $w->sqlValue("NOW()");
