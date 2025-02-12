@@ -85,7 +85,8 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
                 }
                 return;
             }
-            $ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
+            // allow multiwindows at present
+            //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
             return;
         }
