@@ -68,7 +68,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->window_id = $req['window_id'];
         if (!$w->find(true)) {
             if (!$mw->count()) {
+                // we should create it?
+                $this->register($user, $req);
                 return;
+                
             }
             if (!empty($req['logout_other_windows'])) {
                 foreach($mw->fetchAll() as $mw) {
