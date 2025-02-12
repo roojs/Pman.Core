@@ -23,8 +23,6 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth_Required
     function post($v, $opts=array())
     {
         
-        $tbl = empty($ff->Pman['authTable']) ? 'core_person' : $ff->Pman['authTable'];
-         
         if (empty($_REQUEST['user_id'])) {
             $this->jnotice("NOUID", "Missing User id");
         }
