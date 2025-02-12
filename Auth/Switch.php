@@ -34,7 +34,7 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth_Required
             $this->jerr("User switching not permitted");
         }
                 
-        $u = DB_DataObject::factory($tbl);
+        $u = $this->userdb();
         $u->get($_REQUEST['user_id']);
         if (!$u->active()) {
             $this->jerr('Account disabled');

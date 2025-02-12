@@ -18,14 +18,12 @@ require_once 'Pman/Core/Auth.php';
 
 class Pman_Core_Auth_HasCompanyOwner extends Pman_Core_Auth
 { 
-    function get($v, $opts=array())
+    function post($v, $opts=array())
     {
         
         $core_company = DB_DataObject::factory('core_company');
         $core_company->comptype = 'OWNER';
         $this->jok($core_company->count());
     }
-    function post($v, $opts){
-        return $this->get($v, $opts);
-    }
+     
 } 

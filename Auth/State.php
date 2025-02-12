@@ -25,30 +25,41 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
     function get($v, $opts=array()) 
     {
         
-         // remove for normal use - it's a secuirty hole!
-        //DB_DataObject::debugLevel(1);
+        // remove for normal use - it's a secuirty hole!
+         
         if (!empty($_REQUEST['_debug'])) {
            // DB_DataObject::debugLevel(1);
         }
-        // 
-       $u = $this->userdb();
         
+        $u = $this->userdb();
         
         if (!$u->isAuth()) {
-            $this->jok(array(
-                'id' => 0
-            ));
-            exit;
+            $this->jok(array( 'id' => 0 ));
+            //exit;
         }
         
-        //die("got here?");
         $au = $u->getAuthUser();
         
         DB_DataObject::factory('core_person_window')->check($au, $_REQUEST);
         
-           
+        $this->isUserValid($au);
+        
         $this->returnUser($au);
+        
+        
+        
     }
+    function isUserValid($u)
+    {
+        $ff= HTML_FlexyFramework::get();
+        $ct = isset($ff->Pman['auth_comptype']) ? $ff->Pman['auth_comptype'] : 'OWNER';
+        if ($u->company()->comptype != $ct) {
+            //print_r($u->company());
+            $this->jerror('LOGIN-BADUSER'. $this->event_suffix, "Login not permited to outside companies"); // serious failure
+        }
+        
+    }
+    
     
     function returnUser($au)
     {

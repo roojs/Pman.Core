@@ -11,7 +11,7 @@ require_once 'Pman/Core/Auth.php';
 
 
 
-class Pman_Core_Auth_SwitchPublic extends Pman_Core_Auth_Required
+class Pman_Core_Auth_Required extends Pman_Core_Auth 
 { 
     function getAuth()
     {

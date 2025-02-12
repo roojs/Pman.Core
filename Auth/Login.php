@@ -28,7 +28,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     }
     function post($v, $opts= array())
     {
-        //DB_DataObject::debugLevel(1);
+        
 
         $u = $this->userdb();
         
@@ -45,8 +45,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
         
-	// this was removed before - not quite sure why.
-	// when a duplicate login account is created, this stops the old one from interfering..
+		// this was removed before - not quite sure why.
+		// when a duplicate login account is created, this stops the old one from interfering..
         $u->active = 1;
         
         // empty username = not really a hacking attempt.
@@ -74,13 +74,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         // check if config allows non-owner passwords.
         // auth_company = "OWNER" // auth_company = "CLIENT" or blank for all?
         // perhaps it should support arrays..
-        $ff= HTML_FlexyFramework::get();
-        $ct = isset($ff->Pman['auth_comptype']) ? $ff->Pman['auth_comptype'] : 'OWNER';
-        if ($u->company()->comptype != $ct) {
-            //print_r($u->company());
-            $this->jerror('LOGIN-BADUSER'. $this->event_suffix, "Login not permited to outside companies"); // serious failure
-        }
-        
+        $this->isUserValid($u);
         
         // note we trim \x10 -- line break - as it was injected the front end
         // may have an old bug on safari/chrome that added that character in certian wierd scenarios..
@@ -125,10 +119,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         }
          // log it..
 
-        parent::get($v, $opts);
-        exit;
+        $this->returnUser($u); // in state..
          
-        
     }
     function ip_lookup()
     {
