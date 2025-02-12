@@ -67,7 +67,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $mw = clone($w);
         $w->window_id = $req['window_id'];
         if (!$w->find(true)) {
-            if (!$mw->count()) {
+            if ($mw->count() < 3) {
                 // we should create it?
                 $w->login_dt = $w->sqlValue("NOW()");
                 $w->insert();
@@ -81,7 +81,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
                 }
                 return;
             }
-            $ff->page->jnotice("MULTI-WIN", "window already exists for user");
+            $ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
             return;
         }
