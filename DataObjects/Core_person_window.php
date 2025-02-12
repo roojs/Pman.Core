@@ -71,7 +71,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $mw = clone($w);
         $w->window_id = $req['window_id'];
         if (!$w->find(true)) {
-            if ($mw->count() < 3) {
+            if ($mw->count()) {
                 // we should create it?
                 $w->login_dt = $w->sqlValue("NOW()");
                 $w->insert();
