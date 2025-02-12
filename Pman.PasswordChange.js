@@ -178,7 +178,7 @@ Pman.PasswordChange = {
         }
         
         this.form.doAction('submit', {
-            url: baseURL + '/Login.html',
+            url: baseURL + '/Core/Auth/ChangePassword',
             method: 'POST',
             params: {
                 changePassword: true,
