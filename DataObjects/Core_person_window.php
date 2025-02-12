@@ -32,11 +32,11 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->window_id = $req['window_id'];
         $ff = HTML_FlexyFramework::get();
 		$w->app_id = $ff->appNameShort;
-        $w->login_dt = $w->sqlValue("NOW()");
         
-        if ($w->count() > 2) {
-            $ff->page->jnotice("MULTI-WIN", "window already exists for user (max 2 per user)");
+        if ($w->count() ) {
+            return; /// already registered?
         }
+        $w->login_dt = $w->sqlValue("NOW()");
         $w->insert();
     }
      /**
