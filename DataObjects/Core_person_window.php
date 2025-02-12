@@ -69,7 +69,8 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if (!$w->find(true)) {
             if (!$mw->count()) {
                 // we should create it?
-                $this->register($user, $req);
+                $w->login_dt = $w->sqlValue("NOW()");
+                $w->insert();
                 return;
                 
             }

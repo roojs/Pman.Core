@@ -44,15 +44,12 @@ Pman.Login =  new Roo.util.Observable({
         // load 
        
         if (this.window_id === false) {
-            
             // persitant in windows..
             this.window_id = window.sessionStorage.getItem('windowid');
             if (!this.window_id) {
                 this.window_id = crypto.randomUUID();
-                window.sessionStorage.setItem('windowid', this.window_id);
-                
+                window.sessionStorage.setItem('windowid', this.window_id);               
             }
-
         }
         
          
