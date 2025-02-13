@@ -44,12 +44,12 @@ Pman.Login =  new Roo.util.Observable({
     {
         // load 
        
-        if (this.window_id === false && document.location.protocol == 'https:') {
+        if (Pman.Login.window_id === false && document.location.protocol == 'https:') {
             // persitant in windows..
-            this.window_id = window.sessionStorage.getItem('windowid');
-            if (!this.window_id) {
-                this.window_id = crypto.randomUUID();
-                window.sessionStorage.setItem('windowid', this.window_id);               
+            Pman.Login.window_id = window.sessionStorage.getItem('windowid');
+            if (!Pman.Login.window_id) {
+                Pman.Login.window_id = crypto.randomUUID();
+                window.sessionStorage.setItem('windowid', Pman.Login.window_id);               
             }
         }
         
