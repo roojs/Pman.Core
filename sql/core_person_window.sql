@@ -14,7 +14,7 @@ ALTER TABLE core_person_window ADD last_access_dt  DATETIME NOT NULL DEFAULT '10
     
 ALTER TABLE core_person_window ADD ip VARCHAR(32) NOT NULL DEFAULT '';
 ALTER TABLE core_person_window ADD user_agent VARCHAR(254) NOT NULL DEFAULT '';
-ALTER TABLE core_person_window ADD status ENUM('IN','OUT','KILL') NOT NULL DEFAULT 'IN';;
+ALTER TABLE core_person_window ADD status ENUM('IN','OUT','KILL') NOT NULL DEFAULT 'IN';
 
 
 -- drop
