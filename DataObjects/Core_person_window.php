@@ -16,7 +16,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $app_id;
     public $login_dt;
   
-    public $force_logout; // replace with state?
+    //public $force_logout; // replace with state?
     public $last_access_dt;
     
     public $ip;    // this is for information only?
