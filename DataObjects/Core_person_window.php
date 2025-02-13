@@ -191,7 +191,39 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     function person()
     {
         $p = DB_DataObject::Factory('core_person');
-        $p->get($this->person_id);
+        return $p->get($this->person_id) ? $p : false;
         return $p;
+    }
+    
+     
+    function beforeInsert($q,$roo )
+    {
+        
+        if (empty($q['status'])  || empty($q['person_id']) || $q['status'] != 'KILL') {
+            $roo->jnotice("INVALIDURL", "no direct insert to server");
+        }
+        $w = DB_DataObject::factory('core_person_window');
+        $w->person_id = $q['person_id'];
+        if (!$w->person()) {
+            $roo->jnotice("INVALIDURL", "invalid person id");
+        }
+        $w->status = 'IN';
+        foreach($w->fetchAll() as $w) {
+            $ww = clone($w);
+            $w->status = 'KILL';
+            $w->update($ww);
+        }
+        $roo->jok("Killed");
+        
+    }
+    function beforeDelete($dependants_array, $roo, $request)
+    {
+        $roo->jnotice("INVALIDURL", "no direct delete to server");
+        
+    }
+    function beforeUpdate($old,$request,$roo)
+    {
+        $roo->jnotice("INVALIDURL", "no direct update to server");
+        
     }
 }
