@@ -64,6 +64,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if (empty($req['window_id']) )   { // we don't do any checks on no window data.
             return;
         }
+        $this->cleanup();
         
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
