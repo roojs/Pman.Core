@@ -127,7 +127,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         }
         
         if ($w->status == 'KILL') {
-            $u->logout();
+            $this->person()->logout();
             session_regenerate_id(true);
             session_commit();
             $ff->page->jnotice("FORCE-LOGOUT", "this window must be reloaded");
