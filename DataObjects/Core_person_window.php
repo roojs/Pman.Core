@@ -16,8 +16,46 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $app_id;
     public $login_dt;
   
-    public $force_logout;
-
+    public $force_logout; // replace with state?
+    public $last_access_dt;
+    
+    public $ip;    // this is for information only?
+    public $browser_id;  // this is for information only?
+    public $state;  // ENUM  LOGIN|LOGOUT|FORCE_LOGOUT  (only look for LOGIN if existing)
+    
+    
+       /**
+     * window checking
+     *  * we use window.sessionStorage on the client to identify windows.
+     *  * we will use ?? to check on browser?
+     *  *
+     *
+     
+     * Load/Reload
+     *   * do we have any windows open? (except this one?)
+     *     * close other windows -> then always login?
+     *     * do what - blank window?
+     *   * next => send 'clear logins'
+     *     * then login or show UI
+     *
+     * Login:
+     *   * login - fails if we are already logged in?
+     *   * 
+     *   
+     *
+     * Regular Checking?
+     *
+     * couple of things
+     *  * restrict user to single window ?? (now or later?)
+     *  * allow admin to log out a user (by flagging core_person_windows to logout)
+     *    * This is a force logout - and affects the 'State calls'
+     *  * if login is presented - (eg session timeout on an existing window)
+     *    * we might have a record of that user being logged in.
+     *    *   ( normally this is ok - unless the force logout exists - in which case we return forced-logout )
+     * 
+     *
+     *
+     */
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -43,21 +81,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->login_dt = $w->sqlValue("NOW()");
         $w->insert();
     }
-     /**
-     * window checking
-     *  * we use window.sessionStorage on the client to identify windows.
-     *
-     * couple of things
-     *  * restrict user to single window ?? (now or later?)
-     *  * allow admin to log out a user (by flagging core_person_windows to logout)
-     *    * This is a force logout - and affects the 'State calls'
-     *  * if login is presented - (eg session timeout on an existing window)
-     *    * we might have a record of that user being logged in.
-     *    *   ( normally this is ok - unless the force logout exists - in which case we return forced-logout )
-     * 
-     *
-     *
-     */
+  
     
     function  check($user, $req)
     {
