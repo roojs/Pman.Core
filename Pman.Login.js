@@ -36,6 +36,7 @@ Pman.Login =  new Roo.util.Observable({
     sending : false,
     
     window_id : false, // we generate a UID so that we can track opened windows (and allow force logout / single window restrictions etc.)
+    logging_out : false,
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
     
@@ -204,7 +205,7 @@ Pman.Login =  new Roo.util.Observable({
         }
         if (res.code == 'NOTICE-FORCE-LOGOUT') {
             // kill the rechecks..
-            
+            Pman.Login.logging_out = true;
             Roo.MessageBox.alert("Forced Logout", "You have been logged out by the Administrator", function() {
                 Pman.Login.logout();
             });
