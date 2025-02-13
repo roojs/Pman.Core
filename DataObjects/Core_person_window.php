@@ -115,7 +115,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
                 return;
                 
             }
-            $ff->page->syslog("No login found - but appears to be logged in {$this->person()->email}");
+            $ff->page->errorlog("No login found - but appears to be logged in {$this->person()->email}");
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
