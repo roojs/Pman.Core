@@ -111,18 +111,18 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $mw->status = 'IN';
             if ($mw->count()) {
                 // we should create it?
-                $ff->page->errorlog("No login found - but have multiple logins for {$this->user()->email}");
+                $ff->page->errorlog("No login found - but have multiple logins for {$this->person()->email}");
                 return;
                 
             }
-            $ff->page->syslog("No login found - but appears to be logged in {$this->user()->email}");
+            $ff->page->syslog("No login found - but appears to be logged in {$this->person()->email}");
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
             return;
         }
         if ($w->status == 'OUT') {
-            $ff->page->errorlog("User session appears to be logged out {$this->user()->email}");
+            $ff->page->errorlog("User session appears to be logged out {$this->person()->email}");
             return;
         }
         
