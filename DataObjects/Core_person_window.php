@@ -172,4 +172,19 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         
         return $_SERVER['REMOTE_ADDR'];
     }
+    
+    function cleanup()
+    {
+        $w = DB_DataObject::factory('core_person_window');
+        $w->query("
+                DELETE FROM
+                    core_person_window
+                WHERE
+                    last_access_dt < NOW() - INTERVAL 1 DAY
+                AND
+                    last_access_dt > '1970-01-01'
+        ");
+        
+        
+    }
 }
