@@ -543,12 +543,12 @@ Pman.Tab.PersonList.prototype = {
                             return;
                         }
                         new Pman.Request({
-                            url : baseURL+ '/Login.php',
+                            url : baseURL+ '/Core/Auth/Switch',
                             params  :{
-                                'switch' : s[0].data.id
+                                user_id : s[0].data.id
                             },
                             
-                            method : 'GET',
+                            method : 'POST',
                             success : function() {
                                 document.location = baseURL + '?ts=' + Math.random();
                                 
