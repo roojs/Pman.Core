@@ -188,4 +188,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         
         
     }
+    function person()
+    {
+        $p = DB_DataObject::Factory('core_person');
+        $p->get($this->person_id);
+        return $p;
+    }
 }
