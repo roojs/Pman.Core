@@ -304,9 +304,11 @@ trait Pman_Core_JsonOutputTrait {
     
     function errorlog($msg)
     {
+        ob_start();
         $de = ini_set('display_errors', 0);
         trigger_error($msg , E_USER_NOTICE);
         ini_set('display_errors', $de );
+        ob_end_clean();
     }
     
 }
