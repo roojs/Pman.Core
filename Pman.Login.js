@@ -43,8 +43,8 @@ Pman.Login =  new Roo.util.Observable({
     onLoad : function() // called on page load...
     {
         // load 
-       
-        if (Pman.Login.window_id === false && document.location.protocol == 'https:') {
+        // exclude chrome extensions.
+        if (Pman.Login.window_id === false && (document.location.protocol == 'https:' || document.location.protocol == 'http:' )) {
             // persitant in windows..
             Pman.Login.window_id = window.sessionStorage.getItem('windowid');
             if (!Pman.Login.window_id) {
