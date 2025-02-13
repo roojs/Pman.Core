@@ -130,6 +130,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $w->person()->logout();
             session_regenerate_id(true);
             session_commit();
+            $ww  = clone($w);
+            $w->status = 'OUT';
+            $w->update($ww);
+            
             $ff->page->jnotice("FORCE-LOGOUT", "this window must be reloaded");
         }
         $ww = clone($w);
