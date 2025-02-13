@@ -20,8 +20,8 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $last_access_dt;
     
     public $ip;    // this is for information only?
-    public $browser_id;  // this is for information only?
-    public $state;  // ENUM  LOGIN|LOGOUT|FORCE_LOGOUT  (only look for LOGIN if existing)
+    public $user_agent;  // this is for information only?
+    public $state;  // ENUM  IN|OUT|KILL (default IN)
     
     
        /**
@@ -74,11 +74,20 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if ($w->count() ) {
             $w->find(true);
             $ww = clone($w);
+            
             $w->login_dt = $w->sqlValue("NOW()");
+            $w->last_access_dt = $w->login_dt;
+            $w->state = 'IN';
             $w->update($ww);
             return; /// already registered?
         }
+        
         $w->login_dt = $w->sqlValue("NOW()");
+        $w->last_access_dt = $w->login_dt;
+        
+        $w->ip = $this->ip_lookup();
+        $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $w->state = 'IN';
         $w->insert();
     }
   
@@ -92,34 +101,41 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->person_id = $user->id;
         $ff = HTML_FlexyFramework::get();
 		$w->app_id = $ff->appNameShort;
+       
+        
         $mw = clone($w);
         $w->window_id = $req['window_id'];
+         
         if (!$w->find(true)) {
+            $mw->status = 'IN';
             if ($mw->count()) {
                 // we should create it?
-                $w->login_dt = $w->sqlValue("NOW()");
-                $w->insert();
+                $ff->page->syslog("No login found - but have multiple logins for {$this->user()->email}");
                 return;
                 
             }
-            if (!empty($req['logout_other_windows'])) {
-                foreach($mw->fetchAll() as $mw) {
-                    $mmw = clone($mw);
-                    $mw->delete();
-                }
-                return;
-            }
+            $ff->page->syslog("No login found - but appears to be logged in {$this->user()->email}");
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
             return;
         }
-        if ($w->force_logout) {
+        if ($w->status == 'OUT') {
+            $ff->page->syslog("User session appears to be logged out {$this->user()->email}");
+            return;
+        }
+        
+        if ($w->status == 'KILL') {
             $u->logout();
             session_regenerate_id(true);
             session_commit();
             $ff->page->jnotice("FORCE-LOGOUT", "this window must be reloaded");
         }
+        $ww = clone($w);
+        
+        $w->last_access_dt = $w->sqlValue("NOW()");;
+        //$w->state = 'IN'; // ?? needed?  since it can only get her eif status is in...
+        $w->update($ww);
         
          
     }
@@ -136,9 +152,24 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
 		$w->find();
         while ($w->fetch()) {
 			$ww = clone($w);
-			$ww->delete();
+			$ww->status = 'OUT';
+            $ww->last_access_dt = $ww->sqlValue("NOW()");;
+            $ww->update($w);
 		}
         
+        
     }
-    
+    function ip_lookup()
+    {
+
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+            return $_SERVER['HTTP_CLIENT_IP'];
+        }
+        
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        
+        return $_SERVER['REMOTE_ADDR'];
+    }
 }
