@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $mw->status = 'IN';
             if ($mw->count()) {
                 // we should create it?
-                $ff->page->syslog("No login found - but have multiple logins for {$this->user()->email}");
+                $ff->page->errorlog("No login found - but have multiple logins for {$this->user()->email}");
                 return;
                 
             }
@@ -122,7 +122,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             return;
         }
         if ($w->status == 'OUT') {
-            $ff->page->syslog("User session appears to be logged out {$this->user()->email}");
+            $ff->page->errorlog("User session appears to be logged out {$this->user()->email}");
             return;
         }
         
