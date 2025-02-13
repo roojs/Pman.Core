@@ -78,7 +78,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             
             $w->login_dt = $w->sqlValue("NOW()");
             $w->last_access_dt = $w->login_dt;
-            $w->state = 'IN';
+            $w->status = 'IN';
             $w->update($ww);
             return; /// already registered?
         }
@@ -88,7 +88,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         
         $w->ip = $this->ip_lookup();
         $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
-        $w->state = 'IN';
+        $w->status = 'IN';
         $w->insert();
     }
   
@@ -135,7 +135,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $ww = clone($w);
         
         $w->last_access_dt = $w->sqlValue("NOW()");;
-        //$w->state = 'IN'; // ?? needed?  since it can only get her eif status is in...
+        //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
         $w->update($ww);
         
          
