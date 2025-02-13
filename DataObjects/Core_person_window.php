@@ -21,7 +21,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     
     public $ip;    // this is for information only?
     public $user_agent;  // this is for information only?
-    public $state;  // ENUM  IN|OUT|KILL (default IN)
+    public $status;  // ENUM  IN|OUT|KILL (default IN)
     
     
        /**
