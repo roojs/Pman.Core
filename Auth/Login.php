@@ -117,7 +117,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 				$u->lang($_REQUEST['lang']);
 			}
         }
-         // log it..
+		// get again with join..
+		$u = $this->getAuthUser();
+         
 
         $this->returnUser($u); // in state..
          
