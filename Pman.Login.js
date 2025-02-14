@@ -36,19 +36,20 @@ Pman.Login =  new Roo.util.Observable({
     sending : false,
     
     window_id : false, // we generate a UID so that we can track opened windows (and allow force logout / single window restrictions etc.)
+    logging_out : false,
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
     
     onLoad : function() // called on page load...
     {
         // load 
-       
-        if (this.window_id === false && document.location.protocol == 'https:') {
+        // exclude chrome extensions.
+        if (Pman.Login.window_id === false && (document.location.protocol == 'https:' || document.location.protocol == 'http:' )) {
             // persitant in windows..
-            this.window_id = window.sessionStorage.getItem('windowid');
-            if (!this.window_id) {
-                this.window_id = crypto.randomUUID();
-                window.sessionStorage.setItem('windowid', this.window_id);               
+            Pman.Login.window_id = window.sessionStorage.getItem('windowid');
+            if (!Pman.Login.window_id) {
+                Pman.Login.window_id = crypto.randomUUID();
+                window.sessionStorage.setItem('windowid', Pman.Login.window_id);               
             }
         }
         
@@ -141,6 +142,10 @@ Pman.Login =  new Roo.util.Observable({
     
     check: function(again) // called every so often to refresh cookie etc..
     {
+        if (Pman.Login.logging_out) {
+            return; // don't keep rechecking if we are already about to log out.
+        }
+        
         if (again) { // could be undefined..
             Pman.Login.checkFails++;
         } else {
@@ -203,8 +208,10 @@ Pman.Login =  new Roo.util.Observable({
             return;            
         }
         if (res.code == 'NOTICE-FORCE-LOGOUT') {
+            // kill the rechecks..
+            Pman.Login.logging_out = true;
             Roo.MessageBox.alert("Forced Logout", "You have been logged out by the Administrator", function() {
-                this.logout();
+                Pman.Login.logout();
             });
             return;
         }
