@@ -23,7 +23,32 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $user_agent;  // this is for information only?
     public $status;  // ENUM  IN|OUT|KILL (default IN)
     
-    
+    function applyFilters($q, $au, $roo)
+    {
+        $g = $au->groups('name');
+        if (!in_array('Administrators', $au->groups('name'))) {
+            $roo->jnotice("NOPERM", "Only admins can view this");
+        }
+        
+        if (isset($q['_with_person_data'])) {
+            $this->_join .= "
+                LEFT JOIN core_person as join_person_id_id ON (join_person_id_id.id=core_person_window.person_id)
+            ";
+            $this->selectAdd("
+                join_person_id_id.name as person_id_name,
+                join_person_id_id.email as person_id_email
+            ");
+            if (!empty($q['search']['name'])) {
+                $n = $this->escape($q['search']['name']);
+                $this->whereAdd("
+                    join_person_id_id.name LIKE '%{$n}%'
+                    OR
+                    join_person_id_id.email LIKE '%{$n}%'
+                ");
+            }
+        }
+        
+    }
        /**
      * window checking
      *  * we use window.sessionStorage on the client to identify windows.
@@ -185,14 +210,14 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     
     function cleanup()
     {
+        // last_access_dt is set when we login - so it's always current.
         $w = DB_DataObject::factory('core_person_window');
         $w->query("
                 DELETE FROM
                     core_person_window
                 WHERE
                     last_access_dt < NOW() - INTERVAL 1 DAY
-                AND
-                    last_access_dt > '1970-01-01'
+                 
         ");
         
         
