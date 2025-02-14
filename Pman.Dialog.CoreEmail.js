@@ -307,19 +307,6 @@ Pman.Dialog.CoreEmail = {
                            success : function(res) {
                                if(res.success == true){
                                    _this.form.findField('plaintext').setValue(res.data);
-                                   new Pman.Request({
-                                       url: baseURL + '/Crm/Stripo',
-                                       method: 'GET',
-                                       mask: 'loading ...',
-                                       success: function(res) {
-                                           Roo.each(res.data, function(email) {
-                                               if(email.emailId == _this.form.findField('stripo_id').getValue()) {
-                                                   _this.form.findField('subject').setValue(email.title);
-                                                   _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
-                                               }
-                                           });
-                                       }
-                                   });
                                }
                            }
                        }); 
@@ -352,7 +339,26 @@ Pman.Dialog.CoreEmail = {
                            deleteImages();
                        }
                    });
-               }
+               };
+               
+               var updatePlainText = function() {
+                   new Pman.Request({
+                       url : baseURL + '/Core/ImportMailMessage.php',
+                       method : 'POST',
+                       params : {
+                         bodytext : res.data,
+                         _convertToPlain : true,
+                         _check_unsubscribe : true
+                       },
+                       mask : 'loading ...',
+                       success : function(res) {
+                           if(res.success == true){
+                               _this.form.findField('plaintext').setValue(res.data);
+                               updateSubjectAndName();
+                           }
+                       }
+                   }); 
+               };
            },
           render : function (_self)
            {
