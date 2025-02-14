@@ -186,8 +186,10 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             "DELETE FROM
                 core_notify
             WHERE
-                watch_id = {$this->id}"
-        );
+                watch_id = {$this->id}
+            AND
+                event_id < 1
+        ");
     }
     
     
