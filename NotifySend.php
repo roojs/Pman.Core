@@ -187,6 +187,8 @@ class Pman_Core_NotifySend extends Pman
         
         
         $p = $w->person();
+        var_dump($p);
+        die('test');
         
         if (isset($p->active) && empty($p->active)) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not user not active any more)" );;
