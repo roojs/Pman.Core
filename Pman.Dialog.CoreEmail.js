@@ -207,6 +207,32 @@ Pman.Dialog.CoreEmail = {
       },
       xns : Roo,
       '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['6fa7053e67f9aca02815e903a655ef3d'] /* Save & Send */,
+      listeners : {
+       click : function (_self, e)
+        {
+            
+            _this.form.preValidate(function(res) {
+                if (!res) {
+                    return; //failed.
+                }
+                
+                _this.saveAndSend = true;
+                _this.form.doAction("submit");
+            });
+        
+            
+        },
+       render : function (_self)
+        {
+            _this.sendBtn = this;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [

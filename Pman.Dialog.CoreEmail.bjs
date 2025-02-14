@@ -1612,6 +1612,36 @@
      },
      "text" : "Save & Send",
      "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    ",
+       "    _this.form.preValidate(function(res) {",
+       "        if (!res) {",
+       "            return; //failed.",
+       "        }",
+       "        ",
+       "        _this.saveAndSend = true;",
+       "        _this.form.doAction(\"submit\");",
+       "    });",
+       "",
+       "    ",
+       "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.sendBtn = this;",
+       "}"
+      ]
+     },
+     "text" : "Save & Send",
+     "xtype" : "Button"
     }
    ],
    "listeners" : {
