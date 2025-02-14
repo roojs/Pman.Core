@@ -308,12 +308,20 @@ Pman.Dialog.CoreEmail = {
                                if(res.success == true){
                                    _this.form.findField('plaintext').setValue(res.data);
                                    new Pman.Request({
-                                       url: baseURL + '/Roo/crm_mailing_list_message',
-                                       method: 'POST',
-                                       params : {
-                                           _delete_images: _this.form.findField('id').getValue()
-                                       },
-                                       mask : 'loading ...'
+                                       url: baseURL + '/Crm/Stripo',
+                                       method: 'GET',
+                                       mask: 'loading ...',
+                                       success: function(res) {
+                                           Roo.log(res);
+                                           new Pman.Request({
+                                               url: baseURL + '/Roo/crm_mailing_list_message',
+                                               method: 'POST',
+                                               params : {
+                                                   _delete_images: _this.form.findField('id').getValue()
+                                               },
+                                               mask : 'loading ...'
+                                           });
+                                       }
                                    });
                                }
                            }
