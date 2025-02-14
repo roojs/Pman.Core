@@ -187,7 +187,7 @@ class Pman_Core_NotifySend extends Pman
         
         
         $p = $w->person();
-        var_dump($p);
+        $p::BAD_EMAIL_FAILS;
         die('test');
         
         if (isset($p->active) && empty($p->active)) {
