@@ -318,14 +318,6 @@ Pman.Dialog.CoreEmail = {
                                                    _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
                                                }
                                            });
-                                           new Pman.Request({
-                                               url: baseURL + '/Roo/crm_mailing_list_message',
-                                               method: 'POST',
-                                               params : {
-                                                   _delete_images: _this.form.findField('id').getValue()
-                                               },
-                                               mask : 'loading ...'
-                                           });
                                        }
                                    });
                                }
@@ -333,6 +325,34 @@ Pman.Dialog.CoreEmail = {
                        }); 
                    }
                });
+               
+               var deleteImages = function() {
+                   new Pman.Request({
+                       url: baseURL + '/Roo/crm_mailing_list_message',
+                       method: 'POST',
+                       params : {
+                           _delete_images: _this.form.findField('id').getValue()
+                       },
+                       mask : 'loading ...'
+                   });
+               };
+               
+               var updateSubjectAndName = function() {
+                   new Pman.Request({
+                       url: baseURL + '/Crm/Stripo',
+                       method: 'GET',
+                       mask: 'loading ...',
+                       success: function(res) {
+                           Roo.each(res.data, function(email) {
+                               if(email.emailId == _this.form.findField('stripo_id').getValue()) {
+                                   _this.form.findField('subject').setValue(email.title);
+                                   _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
+                               }
+                           });
+                           deleteImages();
+                       }
+                   });
+               }
            },
           render : function (_self)
            {
