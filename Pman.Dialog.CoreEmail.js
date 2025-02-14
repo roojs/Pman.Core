@@ -313,12 +313,12 @@ Pman.Dialog.CoreEmail = {
                    });
                };
                
-               var updatePlainText = function() {
+               var updatePlainText = function(bodytext) {
                    new Pman.Request({
                        url : baseURL + '/Core/ImportMailMessage.php',
                        method : 'POST',
                        params : {
-                         bodytext : res.data,
+                         bodytext : bodytext,
                          _convertToPlain : true,
                          _check_unsubscribe : true
                        },
@@ -342,7 +342,7 @@ Pman.Dialog.CoreEmail = {
                        mask : 'loading ...',
                        success : function(res) {
                            _this.form.findField('bodytext').setValue(res.data);
-                           updatePlainText();
+                           updatePlainText(res.data);
                        }
                    });
                };
