@@ -229,6 +229,19 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             }
         }
     }
+
+    function onUpdate()
+    {
+        // delete pending notification
+        DB_DataObject::factory('core_notify')->query(
+            "DELETE FROM
+                core_notify
+            WHERE
+                watch_id = {$this->id}
+            AND
+                event_id < 1
+        ");
+    }
     
     function toRooSingleArray($au,$q)
     {
