@@ -32,7 +32,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $u = $this->userdb();
         
-        $ip = $this->ip_lookup();
+        $ip =  DB_DataObject::factory('core_person_window')->ip_lookup();
         // ratelimit
         if (!empty($ip)) {
             //DB_DataObject::DebugLevel(1);
@@ -117,23 +117,12 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 				$u->lang($_REQUEST['lang']);
 			}
         }
-         // log it..
+		// get again with join..
+		$u = $this->getAuthUser();
+         
 
         $this->returnUser($u); // in state..
          
-    }
-    function ip_lookup()
-    {
-
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])){
-            return $_SERVER['HTTP_CLIENT_IP'];
-        }
-        
-        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }
-        
-        return $_SERVER['REMOTE_ADDR'];
     }
     
     function ip_checking()
@@ -142,7 +131,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
         
-        $ip = $this->ip_lookup();
+        $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
         
         if(empty($ip)){
             $this->jerr('BAD-IP-ADDRESS', array('ip' => $ip));

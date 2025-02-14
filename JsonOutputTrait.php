@@ -280,13 +280,13 @@ trait Pman_Core_JsonOutputTrait {
         
     }
     
-     function jsencode($v, $header = false)
+    function jsencode($v, $header = false)
     {
         if ($header) {
             header("Content-type: text/javascript");
         }
         if (function_exists("json_encode")) {
-            $ret=  json_encode($v);
+            $ret =  json_encode($v);
             if ($ret !== false) {
                 return $ret;
             }
@@ -297,6 +297,18 @@ trait Pman_Core_JsonOutputTrait {
         
         
         
+    }
+    /**
+     * log to the apache log silently..
+     */
+    
+    function errorlog($msg)
+    {
+        ob_start();
+        $de = ini_set('display_errors', 0);
+        trigger_error($msg , E_USER_NOTICE);
+        ini_set('display_errors', $de );
+        ob_end_clean();
     }
     
 }

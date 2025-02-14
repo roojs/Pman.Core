@@ -258,7 +258,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // need to work out a way to handle that.
         $ff= HTML_FlexyFramework::get();
         if (php_sapi_name() != "cli" && (empty($_SERVER['PHP_AUTH_USER']) || !empty($ff->disable_http_auth)))  {
-             @session_start();
+            @session_start();
         }
         
          
@@ -281,6 +281,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     return true;
                 }
             }
+            $this->_auth_error = "INVALID-USER";
             unset($_SESSION[get_class($this)][$sesPrefix .'-auth']);
             unset($_SESSION[get_class($this)][$sesPrefix .'-timeout']);
             //setcookie('Pman.timeout', -1, time() + (30*60), '/');
@@ -313,6 +314,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         //die("test init");
         if (!$this->canInitializeSystem()) {
           //  die("can not init");
+            $this->_auth_error = "NO-SESSION";
             return false;
         }
         

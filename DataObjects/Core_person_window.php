@@ -16,12 +16,12 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $app_id;
     public $login_dt;
   
-    public $force_logout; // replace with state?
+    //public $force_logout; // replace with state?
     public $last_access_dt;
     
     public $ip;    // this is for information only?
-    public $browser_id;  // this is for information only?
-    public $state;  // ENUM  LOGIN|LOGOUT|FORCE_LOGOUT  (only look for LOGIN if existing)
+    public $user_agent;  // this is for information only?
+    public $status;  // ENUM  IN|OUT|KILL (default IN)
     
     
        /**
@@ -64,6 +64,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if (empty($req['window_id']) )   { // we don't do any checks on no window data.
             return;
         }
+        $this->cleanup();
         
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
@@ -74,11 +75,23 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         if ($w->count() ) {
             $w->find(true);
             $ww = clone($w);
+            
             $w->login_dt = $w->sqlValue("NOW()");
+            $w->last_access_dt = $w->login_dt;
+            $w->status = 'IN';
+            // these might have been empty?
+            $w->ip = $this->ip_lookup();
+            $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
             $w->update($ww);
             return; /// already registered?
         }
+        
         $w->login_dt = $w->sqlValue("NOW()");
+        $w->last_access_dt = $w->login_dt;
+        
+        $w->ip = $this->ip_lookup();
+        $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+        $w->status = 'IN';
         $w->insert();
     }
   
@@ -92,34 +105,45 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->person_id = $user->id;
         $ff = HTML_FlexyFramework::get();
 		$w->app_id = $ff->appNameShort;
+       
+        
         $mw = clone($w);
         $w->window_id = $req['window_id'];
+         
         if (!$w->find(true)) {
+            $mw->status = 'IN';
             if ($mw->count()) {
                 // we should create it?
-                $w->login_dt = $w->sqlValue("NOW()");
-                $w->insert();
+                $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
                 return;
                 
             }
-            if (!empty($req['logout_other_windows'])) {
-                foreach($mw->fetchAll() as $mw) {
-                    $mmw = clone($mw);
-                    $mw->delete();
-                }
-                return;
-            }
+            $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
             return;
         }
-        if ($w->force_logout) {
-            $u->logout();
+        if ($w->status == 'OUT') {
+            $ff->page->errorlog("User session appears to be logged out {$w->person()->email}");
+            return;
+        }
+        
+        if ($w->status == 'KILL') {
+            $w->person()->logout();
             session_regenerate_id(true);
             session_commit();
+            $ww  = clone($w);
+            $w->status = 'OUT';
+            $w->update($ww);
+            
             $ff->page->jnotice("FORCE-LOGOUT", "this window must be reloaded");
         }
+        $ww = clone($w);
+        
+        $w->last_access_dt = $w->sqlValue("NOW()");;
+        //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
+        $w->update($ww);
         
          
     }
@@ -136,9 +160,79 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
 		$w->find();
         while ($w->fetch()) {
 			$ww = clone($w);
-			$ww->delete();
+			$ww->status = 'OUT';
+            $ww->last_access_dt = $ww->sqlValue("NOW()");;
+            $ww->update($w);
 		}
         
+        
+    }
+    function ip_lookup()
+    {
+        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        }
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+            return $_SERVER['HTTP_CLIENT_IP'];
+        }
+        
+        if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        
+        return $_SERVER['REMOTE_ADDR'];
     }
     
+    function cleanup()
+    {
+        $w = DB_DataObject::factory('core_person_window');
+        $w->query("
+                DELETE FROM
+                    core_person_window
+                WHERE
+                    last_access_dt < NOW() - INTERVAL 1 DAY
+                AND
+                    last_access_dt > '1970-01-01'
+        ");
+        
+        
+    }
+    function person()
+    {
+        $p = DB_DataObject::Factory('core_person');
+        return $p->get($this->person_id) ? $p : false;
+        return $p;
+    }
+    
+     
+    function beforeInsert($q,$roo )
+    {
+        
+        if (empty($q['status'])  || empty($q['person_id']) || $q['status'] != 'KILL') {
+            $roo->jnotice("INVALIDURL", "no direct insert to server");
+        }
+        $w = DB_DataObject::factory('core_person_window');
+        $w->person_id = $q['person_id'];
+        if (!$w->person()) {
+            $roo->jnotice("INVALIDURL", "invalid person id");
+        }
+        $w->status = 'IN';
+        foreach($w->fetchAll() as $w) {
+            $ww = clone($w);
+            $w->status = 'KILL';
+            $w->update($ww);
+        }
+        $roo->jok("Killed");
+        
+    }
+    function beforeDelete($dependants_array, $roo, $request)
+    {
+        $roo->jnotice("INVALIDURL", "no direct delete to server");
+        
+    }
+    function beforeUpdate($old,$request,$roo)
+    {
+        $roo->jnotice("INVALIDURL", "no direct update to server");
+        
+    }
 }

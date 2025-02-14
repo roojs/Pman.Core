@@ -34,7 +34,7 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
         $u = $this->userdb();
         
         if (!$u->isAuth()) {
-            $this->jok(array( 'id' => 0 ));
+            $this->jok(array( 'id' => 0 , 'code' => empty($u->_auth_error) ? '' : $u->_auth_error ));
             //exit;
         }
         
