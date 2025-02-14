@@ -79,6 +79,9 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             $w->login_dt = $w->sqlValue("NOW()");
             $w->last_access_dt = $w->login_dt;
             $w->status = 'IN';
+            // these might have been empty?
+            $w->ip = $this->ip_lookup();
+            $w->user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
             $w->update($ww);
             return; /// already registered?
         }
