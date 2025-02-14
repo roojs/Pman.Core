@@ -221,7 +221,7 @@ Pman.Dialog.CoreEmail = {
                     return; //failed.
                 }
                 
-                _this.saveAndSend = true;
+                _this.sendTest = true;
                 _this.form.doAction("submit");
             });
         
