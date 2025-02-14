@@ -285,34 +285,6 @@ Pman.Dialog.CoreEmail = {
          listeners : {
           click : function (_self, e)
            {
-               new Pman.Request({
-                   url : baseURL + '/Crm/Stripo',
-                   method : 'GET',
-                   params : {
-                       emailId: _this.form.findField('stripo_id').getValue()
-                   },
-                   mask : 'loading ...',
-                   success : function(res) {
-                       _this.form.findField('bodytext').setValue(res.data);
-                       
-                       new Pman.Request({
-                           url : baseURL + '/Core/ImportMailMessage.php',
-                           method : 'POST',
-                           params : {
-                             bodytext : res.data,
-                             _convertToPlain : true,
-                             _check_unsubscribe : true
-                           },
-                           mask : 'loading ...',
-                           success : function(res) {
-                               if(res.success == true){
-                                   _this.form.findField('plaintext').setValue(res.data);
-                               }
-                           }
-                       }); 
-                   }
-               });
-               
                var deleteImages = function() {
                    new Pman.Request({
                        url: baseURL + '/Roo/crm_mailing_list_message',
@@ -359,6 +331,23 @@ Pman.Dialog.CoreEmail = {
                        }
                    }); 
                };
+               
+               var updateBodyText = function() {
+                   new Pman.Request({
+                       url : baseURL + '/Crm/Stripo',
+                       method : 'GET',
+                       params : {
+                           emailId: _this.form.findField('stripo_id').getValue()
+                       },
+                       mask : 'loading ...',
+                       success : function(res) {
+                           _this.form.findField('bodytext').setValue(res.data);
+                           updatePlainText();
+                       }
+                   });
+               };
+               
+               updateBodyText();
            },
           render : function (_self)
            {
