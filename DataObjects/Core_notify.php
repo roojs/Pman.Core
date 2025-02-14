@@ -397,13 +397,4 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $p->update($po);
         return $p;
     }
-
-    /**
-     * do nothing
-     * to be overriden
-     */
-    function markEmailBad()
-    {
-        return;
-    }
 }
