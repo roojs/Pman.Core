@@ -232,7 +232,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
 
     function onUpdate()
     {
-        // delete pending notification
+        // delete pending notifications
         DB_DataObject::factory('core_notify')->query(
             "DELETE FROM
                 core_notify
