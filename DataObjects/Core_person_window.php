@@ -210,14 +210,14 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     
     function cleanup()
     {
+        // last_access_dt is set when we login - so it's always current.
         $w = DB_DataObject::factory('core_person_window');
         $w->query("
                 DELETE FROM
                     core_person_window
                 WHERE
                     last_access_dt < NOW() - INTERVAL 1 DAY
-                AND
-                    last_access_dt > '1970-01-01'
+                 
         ");
         
         
