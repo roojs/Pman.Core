@@ -169,7 +169,9 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     }
     function ip_lookup()
     {
-
+        if (!empty($_SERVER['HTTP_CF_CONNECTING_IP'])) {
+            return $_SERVER['HTTP_CF_CONNECTING_IP'];
+        }
         if (!empty($_SERVER['HTTP_CLIENT_IP'])){
             return $_SERVER['HTTP_CLIENT_IP'];
         }
