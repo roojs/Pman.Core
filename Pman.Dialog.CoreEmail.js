@@ -625,6 +625,7 @@ Pman.Dialog.CoreEmail = {
                              _this.stripoUpdate.show();
                          }
                          _this.sendBtn.show();
+                         _this.sendTestBtn.show();
                      }
                      
                      return;
