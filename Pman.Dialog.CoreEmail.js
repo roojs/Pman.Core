@@ -571,6 +571,7 @@ Pman.Dialog.CoreEmail = {
                      _this.preview_btn.hide();
                      _this.stripoUpdate.hide();
                      _this.sendBtn.hide();
+                     _this.sendTestBtn.hide();
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
