@@ -110,6 +110,7 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
+        die('test');
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -334,7 +335,7 @@ class Pman_Core_NotifySend extends Pman
         
         require_once 'Validate.php';
         if (!Validate::email($p->email)) {
-            $w->markEmailBad();
+            $p->updateFails(isset($w->field) ? $w->field : 'email', $p::BAD_EMAIL_FAILS);
             $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
