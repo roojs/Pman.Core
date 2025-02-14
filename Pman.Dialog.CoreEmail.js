@@ -312,7 +312,6 @@ Pman.Dialog.CoreEmail = {
                                        method: 'GET',
                                        mask: 'loading ...',
                                        success: function(res) {
-                                           Roo.log(res);
                                            Roo.each(res.data, function(email) {
                                                if(email.emailId == _this.form.findField('stripo_id').getValue()) {
                                                    _this.form.findField('subject').setValue(email.title);
