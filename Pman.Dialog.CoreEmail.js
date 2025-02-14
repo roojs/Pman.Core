@@ -17,6 +17,7 @@ Pman.Dialog.CoreEmail = {
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
   'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
+  'de57d217310a391ad6c5f41d651ddae2' :"Send to test group",
   'ce8ae9da5b7cd6c3df2929543a9af92d' :"Email",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
@@ -210,7 +211,7 @@ Pman.Dialog.CoreEmail = {
      },
      {
       xtype : 'Button',
-      text : _this._strings['6fa7053e67f9aca02815e903a655ef3d'] /* Save & Send */,
+      text : _this._strings['de57d217310a391ad6c5f41d651ddae2'] /* Send to test group */,
       listeners : {
        click : function (_self, e)
         {
@@ -228,7 +229,7 @@ Pman.Dialog.CoreEmail = {
         },
        render : function (_self)
         {
-            _this.sendBtn = this;
+            _this.sendTestBtn = this;
         }
       },
       xns : Roo,

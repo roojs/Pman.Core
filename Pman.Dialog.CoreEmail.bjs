@@ -1636,11 +1636,11 @@
       "render" : [
        "function (_self)",
        "{",
-       "    _this.sendBtn = this;",
+       "    _this.sendTestBtn = this;",
        "}"
       ]
      },
-     "text" : "Save & Send",
+     "text" : "Send to test group",
      "xtype" : "Button"
     }
    ],
@@ -1733,6 +1733,7 @@
   "c7892ebbb139886662c6f2fc8c450710" : "Subject",
   "c9cc8cce247e49bae79f15173ce97354" : "Save",
   "ce8ae9da5b7cd6c3df2929543a9af92d" : "Email",
+  "de57d217310a391ad6c5f41d651ddae2" : "Send to test group",
   "e44b145bd8b49b06e0ad2ced1ad56466" : "Plain Text",
   "e9968623956c15023d54335ea3699855" : "Convert Html to Text",
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
