@@ -230,7 +230,7 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         }
     }
 
-    function onUpdate()
+    function onUpdate($old, $request,$roo, $event)
     {
         // delete pending notifications
         DB_DataObject::factory('core_notify')->query(
