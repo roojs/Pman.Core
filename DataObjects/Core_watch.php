@@ -180,6 +180,15 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
         
     }
     
+    function beforeDelete()
+    {
+        DB_DataObject::factory('core_notify')->query(
+            "DELETE FROM
+                core_notify
+            WHERE
+                watch_id = {$this->id}"
+        );
+    }
     
     
 
