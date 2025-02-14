@@ -675,7 +675,8 @@ Pman.Dialog.CoreEmail = {
                          Pman.Dialog.CrmMailingListQueue.show( {
                              id : 0,
                              message_id : _this.form.findField('id').getValue(),
-                             message_id_name : _this.form.findField('name').getValue()
+                             message_id_name : _this.form.findField('name').getValue(),
+                             _send_test: 1
                          }, function() {
                              // change the tab to queue...
                              var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
