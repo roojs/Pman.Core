@@ -54,6 +54,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     ###END_AUTOCODE
     
     static $authUser = false;
+
+    const BAD_EMAIL_FAILS = 10;
     
  
     function owner()
@@ -1791,6 +1793,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $roo->jok("Updated");
         
         
+    }
+
+    function updateFails($field, $fails)
+    {
+        return;
     }
     
  }

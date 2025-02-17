@@ -30,6 +30,7 @@ ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT ''
 ALTER TABLE core_notify ADD COLUMN domain_id INT(11)  NOT NULL  DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN server_id INT(11) NOT NULL DEFAULT -1;
 
+ALTER TABLE core_notify ADD COLUMN reject_match_id INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
@@ -49,3 +50,4 @@ alter table core_notify add   INDEX lookup_h (sent, event_id, server_id, msgid, 
 ALTER TABLE core_notify ADD INDEX lookup_person_id (person_id);
 ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);
 
+ALTER TABLE core_notify ADD   INDEX lookup_reject (person_id, reject_match_id, event_id);
