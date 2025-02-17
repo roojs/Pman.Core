@@ -64,8 +64,7 @@ Pman.Login =  new Roo.util.Observable({
         // otherwise - show login.
         new Pman.Request({  
             url: baseURL + '/Core/Auth/State',  
-            params: {
-                getAuthUser: true,
+            params: { 
                 window_id : this.window_id,
                 _require_window : 1  // we require that this window is logged in - otherwise we force the user to login again (and create a session)
                 
