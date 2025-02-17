@@ -17,6 +17,7 @@ Pman.Dialog.CoreEmail = {
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
   'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
+  'de57d217310a391ad6c5f41d651ddae2' :"Send to test group",
   'ce8ae9da5b7cd6c3df2929543a9af92d' :"Email",
   '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
@@ -207,6 +208,32 @@ Pman.Dialog.CoreEmail = {
       },
       xns : Roo,
       '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['de57d217310a391ad6c5f41d651ddae2'] /* Send to test group */,
+      listeners : {
+       click : function (_self, e)
+        {
+            
+            _this.form.preValidate(function(res) {
+                if (!res) {
+                    return; //failed.
+                }
+                
+                _this.sendTest = true;
+                _this.form.doAction("submit");
+            });
+        
+            
+        },
+       render : function (_self)
+        {
+            _this.sendTestBtn = this;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [
@@ -285,41 +312,69 @@ Pman.Dialog.CoreEmail = {
          listeners : {
           click : function (_self, e)
            {
-               new Pman.Request({
-                   url : baseURL + '/Crm/Stripo',
-                   method : 'GET',
-                   params : {
-                       emailId: _this.form.findField('stripo_id').getValue()
-                   },
-                   mask : 'loading ...',
-                   success : function(res) {
-                       _this.form.findField('bodytext').setValue(res.data);
-                       
-                       new Pman.Request({
-                           url : baseURL + '/Core/ImportMailMessage.php',
-                           method : 'POST',
-                           params : {
-                             bodytext : res.data,
-                             _convertToPlain : true,
-                             _check_unsubscribe : true
-                           },
-                           mask : 'loading ...',
-                           success : function(res) {
-                               if(res.success == true){
-                                   _this.form.findField('plaintext').setValue(res.data);
-                                   new Pman.Request({
-                                       url: baseURL + '/Roo/crm_mailing_list_message',
-                                       method: 'POST',
-                                       params : {
-                                           _delete_images: _this.form.findField('id').getValue()
-                                       },
-                                       mask : 'loading ...'
-                                   });
+               var deleteImages = function() {
+                   new Pman.Request({
+                       url: baseURL + '/Roo/crm_mailing_list_message',
+                       method: 'POST',
+                       params : {
+                           _delete_images: _this.form.findField('id').getValue()
+                       },
+                       mask : 'loading ...'
+                   });
+               };
+               
+               var updateSubjectAndName = function() {
+                   new Pman.Request({
+                       url: baseURL + '/Crm/Stripo',
+                       method: 'GET',
+                       mask: 'loading ...',
+                       success: function(res) {
+                           Roo.each(res.data, function(email) {
+                               if(email.emailId == _this.form.findField('stripo_id').getValue()) {
+                                   _this.form.findField('subject').setValue(email.title);
+                                   _this.form.findField('name').setValue((new Date(email.updatedTime)).format('d M y') + ' - ' + email.title);
                                }
+                           });
+                           deleteImages();
+                       }
+                   });
+               };
+               
+               var updatePlainText = function(bodytext) {
+                   new Pman.Request({
+                       url : baseURL + '/Core/ImportMailMessage.php',
+                       method : 'POST',
+                       params : {
+                         bodytext : bodytext,
+                         _convertToPlain : true,
+                         _check_unsubscribe : true
+                       },
+                       mask : 'loading ...',
+                       success : function(res) {
+                           if(res.success == true){
+                               _this.form.findField('plaintext').setValue(res.data);
+                               updateSubjectAndName();
                            }
-                       }); 
-                   }
-               });
+                       }
+                   }); 
+               };
+               
+               var updateBodyText = function() {
+                   new Pman.Request({
+                       url : baseURL + '/Crm/Stripo',
+                       method : 'GET',
+                       params : {
+                           emailId: _this.form.findField('stripo_id').getValue()
+                       },
+                       mask : 'loading ...',
+                       success : function(res) {
+                           _this.form.findField('bodytext').setValue(res.data);
+                           updatePlainText(res.data);
+                       }
+                   });
+               };
+               
+               updateBodyText();
            },
           render : function (_self)
            {
@@ -516,6 +571,7 @@ Pman.Dialog.CoreEmail = {
                      _this.preview_btn.hide();
                      _this.stripoUpdate.hide();
                      _this.sendBtn.hide();
+                     _this.sendTestBtn.hide();
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
@@ -569,6 +625,7 @@ Pman.Dialog.CoreEmail = {
                              _this.stripoUpdate.show();
                          }
                          _this.sendBtn.show();
+                         _this.sendTestBtn.show();
                      }
                      
                      return;
@@ -612,6 +669,20 @@ Pman.Dialog.CoreEmail = {
                              Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
                          });
                       }
+                      
+                      if(typeof(_this.sendTest) != 'undefined' && _this.sendTest == true) {
+                         _this.sendTest = false;
+                         Pman.Dialog.CrmMailingListQueue.show( {
+                             id : 0,
+                             message_id : _this.form.findField('id').getValue(),
+                             message_id_name : _this.form.findField('name').getValue(),
+                             _send_test: 1
+                         }, function() {
+                             // change the tab to queue...
+                             var i = Pman.Tab.Crm.layout.getRegion('center').panels.indexOf(Pman.Tab.Crm.layout.getRegion('center').getActivePanel());
+                             Pman.Tab.Crm.layout.getRegion('center').showPanel(i + 1);
+                         });
+                     }
                       _this.form.reset();
                       return;
                  }

@@ -23,7 +23,32 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     public $user_agent;  // this is for information only?
     public $status;  // ENUM  IN|OUT|KILL (default IN)
     
-    
+    function applyFilters($q, $au, $roo)
+    {
+        $g = $au->groups('name');
+        if (!in_array('Administrators', $au->groups('name'))) {
+            $roo->jnotice("NOPERM", "Only admins can view this");
+        }
+        
+        if (isset($q['_with_person_data'])) {
+            $this->_join .= "
+                LEFT JOIN core_person as join_person_id_id ON (join_person_id_id.id=core_person_window.person_id)
+            ";
+            $this->selectAdd("
+                join_person_id_id.name as person_id_name,
+                join_person_id_id.email as person_id_email
+            ");
+            if (!empty($q['search']['name'])) {
+                $n = $this->escape($q['search']['name']);
+                $this->whereAdd("
+                    join_person_id_id.name LIKE '%{$n}%'
+                    OR
+                    join_person_id_id.email LIKE '%{$n}%'
+                ");
+            }
+        }
+        
+    }
        /**
      * window checking
      *  * we use window.sessionStorage on the client to identify windows.
@@ -99,7 +124,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     function  check($user, $req)
     {
         if (empty($req['window_id']) ) { // we don't do any checks on no window data.
-            return;
+            return true;
         }
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
@@ -112,21 +137,26 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
          
         if (!$w->find(true)) {
             $mw->status = 'IN';
+            
+            if (!empty($req['_require_window'])) {
+                return false;
+            }
+            
             if ($mw->count()) {
                 // we should create it?
                 $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
-                return;
-                
+            } else {
+                $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
             }
-            $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+            
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
-            return;
+            return true;
         }
         if ($w->status == 'OUT') {
             $ff->page->errorlog("User session appears to be logged out {$w->person()->email}");
-            return;
+            return true;
         }
         
         if ($w->status == 'KILL') {
@@ -144,6 +174,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->last_access_dt = $w->sqlValue("NOW()");;
         //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
         $w->update($ww);
+         return true;
         
          
     }
@@ -185,14 +216,14 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     
     function cleanup()
     {
+        // last_access_dt is set when we login - so it's always current.
         $w = DB_DataObject::factory('core_person_window');
         $w->query("
                 DELETE FROM
                     core_person_window
                 WHERE
                     last_access_dt < NOW() - INTERVAL 1 DAY
-                AND
-                    last_access_dt > '1970-01-01'
+                 
         ");
         
         
