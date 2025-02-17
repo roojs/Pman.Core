@@ -333,7 +333,8 @@ class Pman_Core_NotifySend extends Pman
       
         
         require_once 'Validate.php';
-        if (!Validate::email($p->email, true)) {
+        if (!Validate::email($p->email)) {
+            $p->updateFails(isset($w->field) ? $w->field : 'email', $p::BAD_EMAIL_FAILS);
             $ev = $this->addEvent('NOTIFYFAIL', $w, "INVALID ADDRESS: " . $p->email);
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
@@ -342,6 +343,14 @@ class Pman_Core_NotifySend extends Pman
         
         
         $ff = HTML_FlexyFramework::get();
+
+        // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
+        // then DON't recheck dns
+        if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 5 day')) {
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
         
      
         $mxs = $this->mxs($dom);
@@ -379,7 +388,7 @@ class Pman_Core_NotifySend extends Pman
                 $this->errorHandler($ev->remarks);
             }
             
-            $ev = $this->addEvent('NOTIFYFAIL', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             
