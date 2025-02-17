@@ -174,6 +174,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->last_access_dt = $w->sqlValue("NOW()");;
         //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
         $w->update($ww);
+         return true;
         
          
     }
