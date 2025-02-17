@@ -67,7 +67,7 @@ Pman.Login =  new Roo.util.Observable({
             params: {
                 getAuthUser: true,
                 window_id : this.window_id,
-                app_id : appNameShort
+                _require_window : 1  // we require that this window is logged in - otherwise we force the user to login again (and create a session)
                 
             },  
             method: 'GET',  
