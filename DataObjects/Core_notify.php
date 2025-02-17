@@ -388,13 +388,15 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $ev = $roo->addEvent('NOTIFYBOUNCE', $cn, "Found imap bounce {$msg->id}" );
         $old = clone($cn);
         $cn->event_id = $ev->id;
+         
+        if($res['match'] !== false) {
+            $cn->reject_match_id = $res['match']->id;  // this will trigger fails begin updated..
+        }
         $cn->update($old);
         
+         
         $p = $cn->person();
-        // crm only has 1 deliveyr person..
-        $po = clone($p);
-        $p->email_fails++;
-        $p->update($po);
+        
         return $p;
     }
 }
