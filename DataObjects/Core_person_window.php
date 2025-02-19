@@ -159,7 +159,9 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             return true;
         }
         if ($w->status == 'OUT') {
-            $ff->page->errorlog("User session appears to be logged out {$w->person()->email}");
+            if ($log_error) {
+                $ff->page->errorlog("User session appears to be logged out {$w->person()->email}");
+            }
             return true;
         }
         
