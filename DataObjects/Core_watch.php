@@ -181,7 +181,6 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
     }
     
     
-    
 
     function beforeInsert($request, $roo)
     {
@@ -228,6 +227,22 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
                     $this->no_minutes = $request['delay_value'];
                     break;
             }
+        }
+    }
+
+    function onUpdate($old, $request,$roo, $event)
+    {
+        // becomes inactive
+        if($old->active != $this->active && !$this->active) {
+            // delete pending notifications
+            DB_DataObject::factory('core_notify')->query(
+                "DELETE FROM
+                    core_notify
+                WHERE
+                    watch_id = {$this->id}
+                AND
+                    event_id < 1
+            ");
         }
     }
     
