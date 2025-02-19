@@ -121,7 +121,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     }
   
     
-    function  check($user, $req)
+    function  check($user, $req, $log_error = true)
     {
         if (empty($req['window_id']) ) { // we don't do any checks on no window data.
             return true;
@@ -144,9 +144,13 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             
             if ($mw->count()) {
                 // we should create it?
-                $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
+                if ($log_error) {
+                    $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
+                }
             } else {
-                $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+                if ($log_error) {
+                    $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+                }
             }
             
             // allow multiwindows at present
