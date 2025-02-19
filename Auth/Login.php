@@ -97,7 +97,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $this->ip_checking();
         
 		
-        DB_DataObject::factory('core_person_window')->check($u, $_REQUEST);
+        DB_DataObject::factory('core_person_window')->check($u, $_REQUEST, false);
          
         $u->login();
         

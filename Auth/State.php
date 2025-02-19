@@ -40,7 +40,9 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
         
         $au = $u->getAuthUser();
         
-        DB_DataObject::factory('core_person_window')->check($au, $_REQUEST);
+        if (!DB_DataObject::factory('core_person_window')->check($au, $_REQUEST)) {
+             $this->jok(array( 'id' => 0 , 'code' => 'new-window'));
+        }
         
         $this->isUserValid($au);
         

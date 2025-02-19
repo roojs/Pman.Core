@@ -121,10 +121,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
     }
   
     
-    function  check($user, $req)
+    function  check($user, $req, $log_error = true)
     {
         if (empty($req['window_id']) ) { // we don't do any checks on no window data.
-            return;
+            return true;
         }
         $w = DB_DataObject::factory('core_person_window');
         $w->person_id = $user->id;
@@ -137,21 +137,30 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
          
         if (!$w->find(true)) {
             $mw->status = 'IN';
+            
+            if (!empty($req['_require_window'])) {
+                return false;
+            }
+            
             if ($mw->count()) {
                 // we should create it?
-                $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
-                return;
-                
+                if ($log_error) {
+                    $ff->page->errorlog("No login found - but have multiple logins for {$w->person()->email}");
+                }
+            } else {
+                if ($log_error) {
+                    $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+                }
             }
-            $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+            
             // allow multiwindows at present
             //$ff->page->jnotice("MULTI-WIN", "You have to many windows  open");
             // no record exists - it's ok - it's created later
-            return;
+            return true;
         }
         if ($w->status == 'OUT') {
             $ff->page->errorlog("User session appears to be logged out {$w->person()->email}");
-            return;
+            return true;
         }
         
         if ($w->status == 'KILL') {
@@ -169,6 +178,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->last_access_dt = $w->sqlValue("NOW()");;
         //$w->status = 'IN'; // ?? needed?  since it can only get her eif status is in...
         $w->update($ww);
+         return true;
         
          
     }

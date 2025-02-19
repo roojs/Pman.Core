@@ -40,6 +40,7 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth_Required
             $this->jerr('Account disabled');
         }
         $u->login();
+        DB_DataObject::factory('core_person_window')->register($u, $_REQUEST);
             // we might need this later..
         $this->addEvent("LOGIN-SWITCH-USER". $this->event_suffix, false, $au->name . ' TO ' . $u->name);
         $this->jok("SWITCH");
