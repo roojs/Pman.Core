@@ -82,7 +82,7 @@ Pman.Dialog.ChooseFile = {
             
             if (_this.callback) {
                 _this.callback.call(_this, {
-                    id: sel.id
+                    file: sel
                 });
             }
             
