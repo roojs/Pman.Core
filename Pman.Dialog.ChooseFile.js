@@ -198,7 +198,9 @@ Pman.Dialog.ChooseFile = {
               o.params = o.params || {};
               o.params.onid = Pman.Login.authUser.id;
               o.params.ontable = 'core_person';
-              o.params['search[filename]'] = _this.searchBox.getValue();
+              if(_this.searchBox.getValue()) {
+                  o.params['search[filename]'] = _this.searchBox.getValue();
+              }
           }
         },
         xns : Roo.data,
