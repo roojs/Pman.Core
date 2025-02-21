@@ -76,7 +76,6 @@ Pman.Dialog.ChooseFile = {
        click : function (_self, e)
         {
             var sel = _this.grid.getSelectionModel().getSelected();
-            Roo.log(sel);
             if(!sel) {
                 Roo.MessageBox.alert('Error', 'Please select one file');
                 return;
@@ -87,6 +86,8 @@ Pman.Dialog.ChooseFile = {
                     id: sel.id
                 });
             }
+            
+            _this.dialog.hide();
         }
       },
       xns : Roo,
