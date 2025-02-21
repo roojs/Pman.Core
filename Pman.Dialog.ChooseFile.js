@@ -8,7 +8,6 @@ Pman.Dialog.ChooseFile = {
 
  _strings : {
   '6ab1321e1dea607035c8000a52002499' :"Displaying Files {0} - {1} of {2}",
-  '8807c97721e343cdc1fa2444cc00415b' :"Thumb",
   'be464219de4567dd548c3a6dfe9be5c6' :"No Files found",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '91f3a2c0e4424c87689525da44c4db11' :"Files",
@@ -179,17 +178,6 @@ Pman.Dialog.ChooseFile = {
          renderer : function(v, x, r) {
              return String.format('{0}', v); 
          },
-         xns : Roo.grid,
-         '|xns' : 'Roo.grid'
-        },
-        {
-         xtype : 'ColumnModel',
-         dataIndex : 'url_thumb',
-         header : _this._strings['8807c97721e343cdc1fa2444cc00415b'] /* Thumb */,
-         renderer : function(v, x, r) { 
-             return v ? "<img src='" + v + "' width=150 height=150>" : "";
-         },
-         width : 160,
          xns : Roo.grid,
          '|xns' : 'Roo.grid'
         }
