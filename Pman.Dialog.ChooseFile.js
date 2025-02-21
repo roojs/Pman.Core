@@ -128,7 +128,7 @@ Pman.Dialog.ChooseFile = {
               o.params = o.params || {};
               o.params.onid = Pman.Login.authUser.id;
               o.params.ontable = 'core_person';
-              o.params['query[imagesize]'] = '40x40';
+              o.params['query[imagesize]'] = '150x150';
           }
         },
         xns : Roo.data,
@@ -171,7 +171,7 @@ Pman.Dialog.ChooseFile = {
          dataIndex : 'url_thumb',
          header : _this._strings['8807c97721e343cdc1fa2444cc00415b'] /* Thumb */,
          renderer : function(v, x, r) { 
-             return v ? "<img src='" + v + "' width=40 height=40>" : "";
+             return v ? "<img src='" + v + "' width=150 height=150>" : "";
          },
          xns : Roo.grid,
          '|xns' : 'Roo.grid'
