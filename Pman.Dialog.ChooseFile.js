@@ -75,6 +75,17 @@ Pman.Dialog.ChooseFile = {
       listeners : {
        click : function (_self, e)
         {
+            _this.grid.getSelectionModel().getSelected();
+            /*
+            if (_this.callback) {
+                _this.callback.call(_this, {
+                    stripo_id: _this.form.findField('emailId').getValue(),
+                    bodytext: res.data,
+                    subject: _this.form.findField('subject').getValue(),
+                    name: _this.form.findField('name').getValue()
+                });
+            }
+            */
         }
       },
       xns : Roo,
