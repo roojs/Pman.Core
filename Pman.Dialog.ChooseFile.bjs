@@ -86,14 +86,14 @@
         },
         {
          "$ renderer" : [
-          "function(v, x, r) {",
-          "    return String.format('{0}', v); ",
+          "function(v, x, r) { ",
+          "    return v ? \"<img src='\" + v + \"' width=40 height=40>\" : \"\";",
           "}"
          ],
          "$ xns" : "Roo.grid",
          "* prop" : "cm[]",
-         "dataIndex" : "filename",
-         "header" : "Name",
+         "dataIndex" : "url_thumb",
+         "header" : "Thumb",
          "xtype" : "ColumnModel"
         }
        ],
@@ -165,6 +165,7 @@
   "49ee3087348e8d44e1feda1917443987" : "Name",
   "55c0c397d15c15f5a1ab5c0dec919ac0" : "Choose from existing files",
   "6ab1321e1dea607035c8000a52002499" : "Displaying Files {0} - {1} of {2}",
+  "8807c97721e343cdc1fa2444cc00415b" : "Thumb",
   "91f3a2c0e4424c87689525da44c4db11" : "Files",
   "be464219de4567dd548c3a6dfe9be5c6" : "No Files found",
   "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
