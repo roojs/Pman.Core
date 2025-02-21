@@ -92,6 +92,9 @@ Pman.Dialog.ChooseFile = {
       listeners : {
        activate : function() {
             _this.panel = this;
+            if(_this.grid) {
+                _this.grid.footer.onClick('first');
+            }
         }
       },
       xns : Roo,
