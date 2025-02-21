@@ -1,0 +1,174 @@
+{
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "closable" : false,
+   "collapsible" : false,
+   "height" : 480,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "background" : false,
+     "fitContainer" : true,
+     "fitToframe" : true,
+     "items" : [
+      {
+       "$ xns" : "Roo.grid",
+       "* prop" : "grid",
+       "autoExpandColumn" : "filename",
+       "items" : [
+        {
+         "$ sortInfo" : "{ field : 'filename', direction: 'ASC' }",
+         "$ xns" : "Roo.data",
+         "* prop" : "dataSource",
+         "items" : [
+          {
+           "$ url" : "baseURL + '/Roo/Images'",
+           "$ xns" : "Roo.data",
+           "* prop" : "proxy",
+           "method" : "GET",
+           "xtype" : "HttpProxy"
+          },
+          {
+           "$ xns" : "Roo.data",
+           "* prop" : "reader",
+           "id" : "id",
+           "root" : "data",
+           "totalProperty" : "total",
+           "xtype" : "JsonReader"
+          }
+         ],
+         "listeners" : {
+          "beforeload" : [
+           "function (_self, o)",
+           "{",
+           "    o.params = o.params || {};",
+           "    o.params.onid = Pman.Login.authUser.id;",
+           "    o.params.ontable = 'core_person';",
+           "    o.params['query[imagesize]'] = '150x150';",
+           "}"
+          ]
+         },
+         "remoteSort" : true,
+         "xtype" : "Store"
+        },
+        {
+         "$ xns" : "Roo.grid",
+         "* prop" : "sm",
+         "Boolean singleSelect" : true,
+         "xtype" : "RowSelectionModel"
+        },
+        {
+         "$ renderer" : [
+          "function(v, x, r) {",
+          "    return String.format('{0}', v); ",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "cm[]",
+         "dataIndex" : "filename",
+         "header" : "Name",
+         "xtype" : "ColumnModel"
+        },
+        {
+         "$ xns" : "Roo",
+         "* prop" : "footer",
+         "displayInfo" : true,
+         "displayMsg" : "Displaying Files {0} - {1} of {2}",
+         "emptyMsg" : "No Files found",
+         "pageSize" : 25,
+         "xtype" : "PagingToolbar"
+        },
+        {
+         "$ renderer" : [
+          "function(v, x, r) {",
+          "    return String.format('{0}', v); ",
+          "}"
+         ],
+         "$ xns" : "Roo.grid",
+         "* prop" : "cm[]",
+         "dataIndex" : "filename",
+         "header" : "Name",
+         "xtype" : "ColumnModel"
+        }
+       ],
+       "listeners" : {
+        "|render" : [
+         "function() ",
+         "{",
+         "    _this.grid = this;",
+         "    this.footer.onClick('first');",
+         "}"
+        ]
+       },
+       "loadMask" : true,
+       "xtype" : "Grid"
+      }
+     ],
+     "listeners" : {
+      "|activate" : [
+       "function() {",
+       "    _this.panel = this;",
+       "}"
+      ]
+     },
+     "region" : "center",
+     "title" : "Files",
+     "xtype" : "GridPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Cancel",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "}"
+      ]
+     },
+     "text" : "OK",
+     "xtype" : "Button"
+    }
+   ],
+   "modal" : true,
+   "resizable" : true,
+   "title" : "Choose from existing files",
+   "width" : 550,
+   "xtype" : "LayoutDialog"
+  }
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.ChooseFile",
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.ChooseFile.bjs",
+ "permname" : "",
+ "strings" : {
+  "49ee3087348e8d44e1feda1917443987" : "Name",
+  "55c0c397d15c15f5a1ab5c0dec919ac0" : "Choose from existing files",
+  "6ab1321e1dea607035c8000a52002499" : "Displaying Files {0} - {1} of {2}",
+  "91f3a2c0e4424c87689525da44c4db11" : "Files",
+  "be464219de4567dd548c3a6dfe9be5c6" : "No Files found",
+  "e0aa021e21dddbd6d8cecec71e9cf564" : "OK",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "title" : ""
+}
