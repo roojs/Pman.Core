@@ -143,7 +143,6 @@ Pman.Dialog.ChooseFile = {
               o.params = o.params || {};
               o.params.onid = Pman.Login.authUser.id;
               o.params.ontable = 'core_person';
-              o.params['query[imagesize]'] = '150x150';
           }
         },
         xns : Roo.data,
