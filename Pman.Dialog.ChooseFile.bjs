@@ -82,6 +82,65 @@
          "emptyMsg" : "No Files found",
          "pageSize" : 25,
          "xtype" : "PagingToolbar"
+        },
+        {
+         "$ xns" : "Roo",
+         "* prop" : "toolbar",
+         "items" : [
+          {
+           "$ xns" : "Roo.form",
+           "emptyText" : "Search",
+           "listeners" : {
+            "render" : [
+             "function (_self)",
+             "{",
+             "    _this.searchBox = _self;",
+             "}"
+            ],
+            "specialkey" : [
+             "function (_self, e)",
+             "{",
+             "     if (e.getKey() == 13) {",
+             "        _this.grid.footer.onClick('first');",
+             "     }",
+             "}"
+            ]
+           },
+           "queryParam" : "query[search]",
+           "xtype" : "TextField"
+          },
+          {
+           "$ icon" : "rootURL + '/Pman/templates/images/search.gif'",
+           "$ xns" : "Roo.Toolbar",
+           "cls" : "x-btn-icon",
+           "listeners" : {
+            "|click" : [
+             "function (_self, e)",
+             "{",
+             "    _this.grid.footer.onClick('first');",
+             "}"
+            ]
+           },
+           "xtype" : "Button"
+          },
+          {
+           "$ icon" : "rootURL + '/Pman/templates/images/edit-clear.gif'",
+           "$ xns" : "Roo.Toolbar",
+           "cls" : "x-btn-icon",
+           "listeners" : {
+            "|click" : [
+             "function (_self, e)",
+             "{",
+             "   _this.searchBox.setValue('');",
+             "  ",
+             "    _this.grid.footer.onClick('first');",
+             "}"
+            ]
+           },
+           "xtype" : "Button"
+          }
+         ],
+         "xtype" : "Toolbar"
         }
        ],
        "listeners" : {
@@ -165,6 +224,7 @@
  "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.ChooseFile.bjs",
  "permname" : "",
  "strings" : {
+  "13348442cc6a27032d2b4aa28b75a5d3" : "Search",
   "49ee3087348e8d44e1feda1917443987" : "Name",
   "55c0c397d15c15f5a1ab5c0dec919ac0" : "Choose from existing files",
   "6ab1321e1dea607035c8000a52002499" : "Displaying Files {0} - {1} of {2}",

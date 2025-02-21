@@ -8,6 +8,7 @@ Pman.Dialog.ChooseFile = {
 
  _strings : {
   '6ab1321e1dea607035c8000a52002499' :"Displaying Files {0} - {1} of {2}",
+  '13348442cc6a27032d2b4aa28b75a5d3' :"Search",
   'be464219de4567dd548c3a6dfe9be5c6' :"No Files found",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '91f3a2c0e4424c87689525da44c4db11' :"Files",
@@ -132,6 +133,60 @@ Pman.Dialog.ChooseFile = {
         pageSize : 25,
         xns : Roo,
         '|xns' : 'Roo'
+       },
+       toolbar : {
+        xtype : 'Toolbar',
+        xns : Roo,
+        '|xns' : 'Roo',
+        items  : [
+         {
+          xtype : 'TextField',
+          emptyText : _this._strings['13348442cc6a27032d2b4aa28b75a5d3'] /* Search */,
+          queryParam : 'query[search]',
+          listeners : {
+           render : function (_self)
+            {
+                _this.searchBox = _self;
+            },
+           specialkey : function (_self, e)
+            {
+                 if (e.getKey() == 13) {
+                    _this.grid.footer.onClick('first');
+                 }
+            }
+          },
+          xns : Roo.form,
+          '|xns' : 'Roo.form'
+         },
+         {
+          xtype : 'Button',
+          cls : 'x-btn-icon',
+          icon : rootURL + '/Pman/templates/images/search.gif',
+          listeners : {
+           click : function (_self, e)
+            {
+                _this.grid.footer.onClick('first');
+            }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
+         },
+         {
+          xtype : 'Button',
+          cls : 'x-btn-icon',
+          icon : rootURL + '/Pman/templates/images/edit-clear.gif',
+          listeners : {
+           click : function (_self, e)
+            {
+               _this.searchBox.setValue('');
+              
+                _this.grid.footer.onClick('first');
+            }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
+         }
+        ]
        },
        dataSource : {
         xtype : 'Store',
