@@ -75,7 +75,8 @@ Pman.Dialog.ChooseFile = {
       listeners : {
        click : function (_self, e)
         {
-            _this.grid.getSelectionModel().getSelected();
+            var sel = _this.grid.getSelectionModel().getSelected();
+            Roo.log(sel);
             /*
             if (_this.callback) {
                 _this.callback.call(_this, {
