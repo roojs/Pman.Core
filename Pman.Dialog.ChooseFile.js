@@ -173,6 +173,7 @@ Pman.Dialog.ChooseFile = {
          renderer : function(v, x, r) { 
              return v ? "<img src='" + v + "' width=150 height=150>" : "";
          },
+         width : 200,
          xns : Roo.grid,
          '|xns' : 'Roo.grid'
         }

@@ -92,6 +92,7 @@
          ],
          "$ xns" : "Roo.grid",
          "* prop" : "cm[]",
+         "Number width" : 200,
          "dataIndex" : "url_thumb",
          "header" : "Thumb",
          "xtype" : "ColumnModel"
