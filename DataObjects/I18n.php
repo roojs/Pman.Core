@@ -120,7 +120,18 @@ class Pman_Core_DataObjects_I18n extends DB_DataObject
     
     function applyFilters($q, $au)
     {
-        $this->buildDB();
+        if (isset($q['inlang']) && isset($q['ltype'])) {
+            $qc = DB_DataObject::Factory('i18n');
+            $qc->setFrom(array(
+                'inlang' => $q['inlang'],
+                'ltype' => $q['ltype'],
+            ));
+            if (!$qc->count()) {
+                $this->buildDB(); // don't build unless we have no results.
+            }
+        }
+        
+        
         //DB_DataObject::debugLevel(1);
         if (!empty($q['query']['_with_en'])) {
             
