@@ -145,9 +145,7 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             if ($mw->count()) {
                 // we should create it?
                 if ($log_error) {
-                    $mw->fetchAll();
-                    
-                    
+  
                     $ff->page->errorlog("No login found - wid:{$req['window_id']} but have multiple logins for {$w->person()->email}");
                     $ff->page->errorlog(print_R($mw->fetchAll(false,false,'toArray'), true));
                     
