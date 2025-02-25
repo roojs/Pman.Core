@@ -196,8 +196,7 @@ Pman.Dialog.ChooseFile = {
          beforeload : function (_self, o)
           {
               o.params = o.params || {};
-              o.params.onid = Pman.Login.authUser.id;
-              o.params.ontable = 'core_person';
+              o.params['_from_core_person'] = Pman.Login.authUser.id;
               if(_this.searchBox.getValue()) {
                   o.params['search[filename]'] = _this.searchBox.getValue();
               }
