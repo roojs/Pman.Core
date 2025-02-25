@@ -208,7 +208,7 @@ Pman.Dialog.ChooseFile = {
         proxy : {
          xtype : 'HttpProxy',
          method : 'GET',
-         url : baseURL + '/Roo/Images',
+         url : baseURL + '/Roo/mail_imap_file',
          xns : Roo.data,
          '|xns' : 'Roo.data'
         },

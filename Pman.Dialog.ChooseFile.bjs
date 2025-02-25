@@ -28,7 +28,7 @@
          "* prop" : "dataSource",
          "items" : [
           {
-           "$ url" : "baseURL + '/Roo/Images'",
+           "$ url" : "baseURL + '/Roo/mail_imap_file'",
            "$ xns" : "Roo.data",
            "* prop" : "proxy",
            "method" : "GET",
