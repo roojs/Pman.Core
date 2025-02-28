@@ -61,7 +61,7 @@ class Pman_Core_DataObjects_Core_office extends DB_DataObject
         $p = DB_DAtaObject::Factory('core_person');
         
         if (!is_a($dependants_array[0], get_class($p))) {
-            $roo->jerr("dep is not a person..");
+            $roo->jerr("dependancy is not a person..- ". get_class($dependants_array[0]));
             return true;
         }
         
