@@ -285,7 +285,7 @@ Pman.Dialog.PreviewRowsImport = {
                       );
                       
                       
-                      if(emails.length == validateIndex) {
+                      if(urls.length == validateIndex) {
                           Roo.MessageBox.hide();
                           return;
                       }
