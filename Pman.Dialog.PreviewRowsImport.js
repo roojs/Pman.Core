@@ -176,6 +176,8 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
+          Roo.log(urlColIndexes);
+          
           var validateIndex = 0;
           
           var validateEmail = function() {
