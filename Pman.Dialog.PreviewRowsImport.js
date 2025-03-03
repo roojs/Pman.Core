@@ -269,10 +269,12 @@ Pman.Dialog.PreviewRowsImport = {
                   params: {
                       _validate_url: url
                   },
+                  /*
                   failure : function(res)
                   {
                       validateUrl(); // try again?
                   },
+                  */
                   success: function(res) {
                       /*
                       var rec = _this.grid.dataSource.getAt(rowIndex);
