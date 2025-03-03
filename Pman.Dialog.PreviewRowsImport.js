@@ -276,6 +276,7 @@ Pman.Dialog.PreviewRowsImport = {
                   },
                   */
                   success: function(res) {
+                      Roo.log('res');
                       /*
                       var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
