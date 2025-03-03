@@ -262,8 +262,6 @@ Pman.Dialog.PreviewRowsImport = {
               var rowIndex = urls[validateIndex]['rowIndex'];
               var urlCol = urls[validateIndex]['col'];
               
-              Roo.log(urls[validateIndex]);
-              /*
               
               new Pman.Request({
                   url: _this.data.url,
@@ -274,9 +272,10 @@ Pman.Dialog.PreviewRowsImport = {
                   },
                   failure : function(res)
                   {
-                      validateEmail(); // try again?
+                      validateUrl(); // try again?
                   },
                   success: function(res) {
+                      /*
                       var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
@@ -337,9 +336,9 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       
                       validateEmail();
+                      */
                   }
               });
-              */
           };
           
           validateUrl();
