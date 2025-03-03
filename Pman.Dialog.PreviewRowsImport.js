@@ -138,6 +138,7 @@ Pman.Dialog.PreviewRowsImport = {
           }
           
           var emails = [];
+          var urls = [];
           
           Roo.each(_this.data.data.rows, function (r, i) {
               Roo.each(_this.data.data.headers, function (h, headerIndex)  {
@@ -149,8 +150,19 @@ Pman.Dialog.PreviewRowsImport = {
                           col: _this.data.colMap[headerIndex]
                       });
                   }
+                  
+                  if(_this.data.urlCols.includes(_this.data.colMap[headerIndex]) && r[headerIndex] != '') {
+                      urls.push({
+                          url: r[headerIndex],
+                          error: false,
+                          rowIndex: i,
+                          col: _this.data.colMap[headerIndex]
+                      });
+                  }
               });
           });
+          
+          Roo.log(urls);
           
           var emailColIndexes = [];
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
