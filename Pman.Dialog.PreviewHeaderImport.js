@@ -288,6 +288,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                                 data: data.data,
                                                 dbCols: _this.data.dbCols,
                                                 emailCols: _this.data.emailCols,
+                                                urlCols: _this.data.urlCols,
                                                 map: map
                                             };
                                             if(typeof(_this.data.disableMailingList) != 'undefined') {
