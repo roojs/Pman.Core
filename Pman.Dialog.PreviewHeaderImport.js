@@ -240,6 +240,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                 data: res.data,
                                 dbCols: _this.data.dbCols,
                                 emailCols: _this.data.emailCols,
+                                urlCols: _this.data.urlCols,
                                 colMap: colMap
                             };
                             
