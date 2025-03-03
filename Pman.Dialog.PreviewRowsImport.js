@@ -60,8 +60,6 @@ Pman.Dialog.PreviewRowsImport = {
               width: 30
           }];
           
-          Roo.log(_this.data);
-          
           var missingEmail = true;
           
           Roo.each(_this.data.data.headers, function(h, index)  {
@@ -277,6 +275,7 @@ Pman.Dialog.PreviewRowsImport = {
                   */
                   success: function(res) {
                       Roo.log('res');
+                      Roo.log(res);
                       /*
                       var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
