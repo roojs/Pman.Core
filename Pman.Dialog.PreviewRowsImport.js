@@ -60,6 +60,8 @@ Pman.Dialog.PreviewRowsImport = {
               width: 30
           }];
           
+          Roo.log(_this.data);
+          
           var missingEmail = true;
           
           Roo.each(_this.data.data.headers, function(h, index)  {
@@ -253,8 +255,6 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  Roo.log(emails);
-                  Roo.log(oldEmails);
                   emails = emails.filter(function(emailObj) {
                       if(!oldEmails.includes(emailObj.email)) {
                           return true;
