@@ -255,6 +255,7 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
+                  Roo.log(oldEmails);
                   emails = emails.filter(function(emailObj) {
                       if(!oldEmails.includes(emailObj.email)) {
                           return true;
