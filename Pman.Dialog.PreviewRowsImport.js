@@ -171,6 +171,9 @@ Pman.Dialog.PreviewRowsImport = {
               if(_this.data.emailCols.includes(_this.data.colMap[headerIndex])) {
                   emailColIndexes.push(headerIndex);
               }
+              if(_this.data.urlCols.includes(_this.data.colMap[headerIndex])) {
+                  urlColIndexes.push(headerIndex);
+              }
           });
           
           var validateIndex = 0;
