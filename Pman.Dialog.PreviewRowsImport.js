@@ -255,6 +255,8 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
+          Roo.MessageBox.progress("Validating urls", "Starting");
+          
           var validateUrl = function() {
               var url = urls[validateIndex]['url'];
               var rowIndex = urls[validateIndex]['rowIndex'];
@@ -267,27 +269,13 @@ Pman.Dialog.PreviewRowsImport = {
                   params: {
                       _validate_url: url
                   },
-                  /*
                   failure : function(res)
                   {
                       validateUrl(); // try again?
                   },
-                  */
                   success: function(res) {
-                      Roo.log('res');
-                      Roo.log(res);
-                      /*
-                      var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
-                          emails[validateIndex]['error'] = res.data.errorMsg;
-                          if(rec) {
-                              rec.set('valid', '');
-                          }
-                      }
-                      else {
-                          if(rec) {
-                              rec.set(emailCol + '_valid', true);
-                          }
+                          urls[validateIndex]['error'] = res.data.errorMsg;
                       }
                       
                       validateIndex ++;
@@ -337,7 +325,6 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       
                       validateEmail();
-                      */
                   }
               });
           };
