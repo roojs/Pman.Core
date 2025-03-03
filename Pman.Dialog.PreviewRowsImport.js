@@ -162,8 +162,6 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
-          Roo.log(urls);
-          
           var emailColIndexes = [];
           var urlColIndexes = [];
           
@@ -175,8 +173,6 @@ Pman.Dialog.PreviewRowsImport = {
                   urlColIndexes.push(headerIndex);
               }
           });
-          
-          Roo.log(urlColIndexes);
           
           var validateIndex = 0;
           
