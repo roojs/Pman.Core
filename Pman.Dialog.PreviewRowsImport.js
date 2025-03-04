@@ -244,15 +244,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          Roo.MessageBox.progress("Validating emails", "Starting");
-          
-          var emailColIndexes = validateTypes[typeToIndex['email']].filter(function(ci) {
-              return ci.type == 'email';
-          }).map(function(ci) {
-              return ci.colIndex;
-          });
-          
-          /*
+          // Roo.MessageBox.progress("Validating emails", "Starting");
           
           new Pman.Request({
               url: _this.data.url,
@@ -261,7 +253,7 @@ Pman.Dialog.PreviewRowsImport = {
                   _get_old_emails: 1,
                   fileId: _this.data.fileId,
                   colMap: Roo.encode(_this.data.colMap),
-                  emailColIndexes: Roo.encode(emailColIndexes)
+                  emailColIndexes: Roo.encode(validateTypes[typeToIndex['email']]['colIndexes'])
               },
               success: function(res) {
                   var oldEmails = res.data;
@@ -291,7 +283,6 @@ Pman.Dialog.PreviewRowsImport = {
                   validateEmail();
               }
           });
-          */
           
           return;
           
