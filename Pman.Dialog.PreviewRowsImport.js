@@ -224,6 +224,7 @@ Pman.Dialog.PreviewRowsImport = {
           
           var validateIndex = 0;
           
+          // validate an email
           var validateEmail = function() {
               var email = emails[validateIndex]['email'];
               var rowIndex = emails[validateIndex]['rowIndex'];
