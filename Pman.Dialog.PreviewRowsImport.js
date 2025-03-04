@@ -135,9 +135,6 @@ Pman.Dialog.PreviewRowsImport = {
               return;
           }
           
-          var emails = [];
-          var urls = [];
-          
           // types of values to be validated
           var validateTypes = [];
           var typeToIndex = {};
