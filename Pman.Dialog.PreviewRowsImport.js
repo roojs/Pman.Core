@@ -362,8 +362,6 @@ Pman.Dialog.PreviewRowsImport = {
               return ci.type == 'email';
           });
           
-          
-          
           new Pman.Request({
               url: _this.data.url,
               timeout : 60000,
