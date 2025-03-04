@@ -334,6 +334,8 @@ Pman.Dialog.PreviewRowsImport = {
                       return;
                       */
                   }
+                  
+                  // start validating emails
                   validateEmail();
               }
           });
