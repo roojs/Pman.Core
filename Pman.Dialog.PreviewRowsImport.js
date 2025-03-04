@@ -326,10 +326,13 @@ Pman.Dialog.PreviewRowsImport = {
                   
                   // no email to be validated
                   if(!emails.length) {
-                      
+                      // validate urls
+                      validateUrls();
+                      /*
                       Roo.MessageBox.hide();
                       _this.validIndexes = Array.from(_this.data.data.rows.keys());
                       return;
+                      */
                   }
                   validateEmail();
               }
