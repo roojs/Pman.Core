@@ -138,8 +138,8 @@ Pman.Dialog.PreviewRowsImport = {
           var emails = [];
           var urls = [];
           
-          // columns to be validated
-          var validateCols = [];
+          // types to be validated
+          var validateTypes = [];
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
@@ -165,6 +165,9 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
+          /*
+          
+          var validateTypeIndex = 0;
           
           var validateType = function(type, values) {
               Roo.MessageBox.progress("Validating " + type + "s", "Starting");
@@ -182,6 +185,7 @@ Pman.Dialog.PreviewRowsImport = {
               // validate url
               validateUrl();
           };
+          */
           return;
           
           // after all validations are done
