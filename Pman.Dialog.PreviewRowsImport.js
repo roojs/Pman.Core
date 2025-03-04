@@ -225,8 +225,7 @@ Pman.Dialog.PreviewRowsImport = {
                               method : 'GET',
                               params: {
                                   'fileId': _this.data.fileId,
-                                  'emailColIndexes': Roo.encode(emailColIndexes),
-                                  'urlColIndexes': Roo.encode(urlColIndexes)
+                                  'validateColIndexes': Roo.encode(validateColIndexes)
                               }
                           });
                       }
