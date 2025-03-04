@@ -171,8 +171,10 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
-          // validate value with a type
           var validateTypeIndex = 0;
+          var validateValueIndex = 0;
+          
+          // validate values with a type
           var validateType = function() {
               var type = validateTypes[validateTypeIndex]['type'];
               var values = validateTypes[validateTypeIndex]['values'];
@@ -180,6 +182,13 @@ Pman.Dialog.PreviewRowsImport = {
               Roo.MessageBox.progress("Validating " + type + "s", "Starting");
               
               validateTypeIndex ++;
+              
+              // no values with this type to be validated
+              if(!values.length) {
+                  validateType
+              }
+              
+              validateValueIndex = 0;
               
               // validation is done
               if(validateTypes.length == validateTypeIndex) {
@@ -190,6 +199,57 @@ Pman.Dialog.PreviewRowsImport = {
               }
               
               validateType();
+          };
+          
+          // validate a value
+          var validateValue = function() {
+              var url = urls[validateIndex]['url'];
+              var rowIndex = urls[validateIndex]['rowIndex'];
+              var urlCol = urls[validateIndex]['col'];
+              
+              
+              new Pman.Request({
+                  url: _this.data.url,
+                  timeout : 60000,
+                  params: {
+                      fileId: _this.data.fileId,
+                      _validate_type: 'url',
+                      _validate_value: url
+                  },
+                  failure : function(res)
+                  {
+                      validateUrl(); // try again?
+                  },
+                  success: function(res) {
+                      var rec = _this.grid.dataSource.getAt(rowIndex);
+                      if(!res.data.valid) {
+                          urls[validateIndex]['error'] = res.data.errorMsg;
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
+                      }
+                      else {
+                          if(rec) {
+                              rec.set(urlCol + '_valid', true);
+                          }
+                      }
+                      
+                      validateIndex ++;
+                      Roo.MessageBox.updateProgress(
+                          validateIndex / urls.length,
+                          validateIndex + " / " + urls.length + " emails validated"
+                      );
+                      
+                      // url validation is done
+                      if(urls.length == validateIndex) {
+                          // post validation
+                          onValidate();
+                          return;
+                      }
+                      
+                      validateUrl();
+                  }
+              });
           };
           
           return;
