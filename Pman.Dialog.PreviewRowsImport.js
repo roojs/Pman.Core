@@ -138,8 +138,8 @@ Pman.Dialog.PreviewRowsImport = {
           var emails = [];
           var urls = [];
           
-          // types to be validated
-          var validateTypes = {};
+          // values to be validated
+          var validateValues = {};
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
@@ -155,12 +155,11 @@ Pman.Dialog.PreviewRowsImport = {
                           });
                       });
                       
-                      validateCols.push({
+                      validateTypes[validateCol.type] = {
                           colIndex: headerIndex,
                           name: _this.data.colMap[headerIndex],
-                          type: validateCol.type,
                           values: values
-                      });
+                      };
                   }
               });
           });
