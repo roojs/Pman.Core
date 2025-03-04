@@ -306,6 +306,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
+          // see if there is any email to be validated
           Roo.MessageBox.progress("Validating emails", "Starting");
           
           new Pman.Request({
