@@ -260,7 +260,7 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       else {
                           if(rec) {
-                              rec.set(emailCol + '_valid', true);
+                              rec.set(urlCol + '_valid', true);
                           }
                       }
                       
