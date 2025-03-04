@@ -209,7 +209,7 @@ Pman.Dialog.PreviewRowsImport = {
           var validateValue = function() {
               var vv = validateTypes[validateTypeIndex]['values'][validateValueIndex];
               
-              var value = vv['value']
+              var value = vv['value'];
               var rowIndex = vv['rowIndex'];
               var col = _this.data.colMap[vv['colIndex']];
               
