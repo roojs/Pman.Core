@@ -314,7 +314,7 @@
      "    ",
      "    // see if there is any url to be validated",
      "    var beforeValidateUrl = function() {",
-     "        Roo.MessageBox.progress(\"Validating emails\", \"Starting\");",
+     "        Roo.MessageBox.progress(\"Validating urls\", \"Starting\");",
      "        ",
      "        // no url to be validated",
      "        if(!urls.length) {",
