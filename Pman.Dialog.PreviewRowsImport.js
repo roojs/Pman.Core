@@ -150,7 +150,7 @@ Pman.Dialog.PreviewRowsImport = {
                       if(!types.includes(type)) {
                           types.push(type);
                           validateTypes.push({
-                              type: validateCol.type,
+                              type: type,
                               values: []
                           });
                       };
