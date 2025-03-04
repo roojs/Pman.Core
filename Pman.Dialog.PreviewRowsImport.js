@@ -258,9 +258,8 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  var emails = validateTypes[typeToIndex['email']]['values'];
                   
-                  emails = validateTypes[typeToIndex['email']]['values'].filter(function(emailObj) {
+                  validateTypes[typeToIndex['email']]['values'] = validateTypes[typeToIndex['email']]['values'].filter(function(emailObj) {
                       if(!oldEmails.includes(emailObj.value)) {
                           return true;
                       }
