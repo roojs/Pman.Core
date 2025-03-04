@@ -148,15 +148,12 @@ Pman.Dialog.PreviewRowsImport = {
                       var type = validateCol.type;
                       
                       if(!types.includes(type)) {
-                          
+                          types.push(type);
+                          validateTypes.push({
+                              type: validateCol.type,
+                              values: values
+                          });
                       };
-                      
-                      
-                      
-                      validateTypes.push({
-                          type: validateCol.type,
-                          values: values
-                      });
                       
                       if(typeof(validateValues[type]) == 'undefined') {
                           validateValues[type] = [];
