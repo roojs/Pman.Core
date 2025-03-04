@@ -364,9 +364,6 @@ Pman.Dialog.PreviewRowsImport = {
               success: function(res) {
                   var oldEmails = res.data;
                   emails = emails.filter(function(emailObj) {
-                      if(emailObj.email == 'alexryu@kgbc.com') {
-                          return true;
-                      }
                       if(!oldEmails.includes(emailObj.email)) {
                           return true;
                       }
