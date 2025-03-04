@@ -247,8 +247,6 @@ Pman.Dialog.PreviewRowsImport = {
               validateValueIndex = 0;
               validateValue();
               
-              validateTypeIndex ++;
-              
               /*
               
               // validation is done

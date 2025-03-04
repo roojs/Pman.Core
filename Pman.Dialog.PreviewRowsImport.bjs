@@ -339,8 +339,6 @@
      "        validateValueIndex = 0;",
      "        validateValue();",
      "        ",
-     "        validateTypeIndex ++;",
-     "        ",
      "        /*",
      "        ",
      "        // validation is done",
