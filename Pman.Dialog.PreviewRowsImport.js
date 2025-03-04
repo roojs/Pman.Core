@@ -245,7 +245,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          Roo.MessageBox.progress("Validating emails", "Starting");
+          Roo.MessageBox.progress("Validation", "Starting");
           
           new Pman.Request({
               url: _this.data.url,
