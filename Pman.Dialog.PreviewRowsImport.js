@@ -151,7 +151,7 @@ Pman.Dialog.PreviewRowsImport = {
                           values.push({
                               value: r[headerIndex],
                               error: false,
-                              rowIndex: i
+                              rowIndex: rowIndex
                           });
                       });
                       
