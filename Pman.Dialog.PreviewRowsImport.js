@@ -160,7 +160,7 @@ Pman.Dialog.PreviewRowsImport = {
                           if(r[headerIndex] == '') {
                               return;
                           }
-                          validateTypes[typeToIndex[type]].push({
+                          validateTypes[typeToIndex[type]]['values'].push({
                               value: r[headerIndex],
                               error: false,
                               rowIndex: rowIndex,
