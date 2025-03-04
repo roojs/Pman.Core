@@ -371,6 +371,9 @@ Pman.Dialog.PreviewRowsImport = {
                       return false;
                   });
                   
+                  Roo.log('EMAILS');
+                  Roo.log(emails);
+                  
                   // no email to be validated
                   if(!emails.length) {
                       // validate url if any
