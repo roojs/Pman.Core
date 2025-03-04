@@ -169,7 +169,8 @@ Pman.Dialog.PreviewRowsImport = {
                           vType['values'].push({
                               value: r[headerIndex],
                               error: false,
-                              rowIndex: rowIndex
+                              rowIndex: rowIndex,
+                              colIndex: headerIndex
                           });
                       });
                   }
