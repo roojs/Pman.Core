@@ -140,7 +140,7 @@ Pman.Dialog.PreviewRowsImport = {
           
           // types of values to be validated
           var validateTypes = [];
-          var types = [];
+          var typeToIndex = {};
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
@@ -154,8 +154,6 @@ Pman.Dialog.PreviewRowsImport = {
                               values: []
                           });
                       };
-                      
-                      var values = [];
                       
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
                           if(r[headerIndex] == '') {
