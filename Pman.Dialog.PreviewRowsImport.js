@@ -206,11 +206,11 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       else {
                           if(rec) {
-                              rec.set(urlCol + '_valid', true);
+                              rec.set(col + '_valid', true);
                           }
                       }
                       
-                      validateIndex ++;
+                      validateValueIndex ++;
                       Roo.MessageBox.updateProgress(
                           validateIndex / urls.length,
                           validateIndex + " / " + urls.length + " emails validated"
