@@ -224,7 +224,7 @@ Pman.Dialog.PreviewRowsImport = {
                               method : 'GET',
                               params: {
                                   'fileId': _this.data.fileId,
-                                  'validateColIndexes': Roo.encode(validateColIndexes)
+                                  'validateCols': Roo.encode(validateCols)
                               }
                           });
                       }
@@ -358,7 +358,7 @@ Pman.Dialog.PreviewRowsImport = {
           // see if there is any email to be validated
           Roo.MessageBox.progress("Validating emails", "Starting");
           
-          var emailColIndexes = validateColIndexes.filter(function(ci) {
+          var emailColIndexes = validateCols.filter(function(ci) {
               return ci.type == 'email';
           }).map(function(ci) {
               return ci.colIndex;
