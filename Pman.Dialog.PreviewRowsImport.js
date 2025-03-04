@@ -339,11 +339,6 @@ Pman.Dialog.PreviewRowsImport = {
                   if(!emails.length) {
                       // see if there is any url to be validated
                       beforeValidateUrl();
-                      /*
-                      Roo.MessageBox.hide();
-                      _this.validIndexes = Array.from(_this.data.data.rows.keys());
-                      return;
-                      */
                   }
                   
                   // start validating emails
