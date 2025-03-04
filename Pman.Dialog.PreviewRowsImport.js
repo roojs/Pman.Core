@@ -245,7 +245,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          //Roo.MessageBox.progress("Validation", "Starting");
+          Roo.MessageBox.progress("Validation", "Starting");
           
           new Pman.Request({
               url: _this.data.url,
@@ -274,10 +274,8 @@ Pman.Dialog.PreviewRowsImport = {
                       return false;
                   });
                   
-                  Roo.log(validateTypes);
-                  
                   // start validation
-                  //validateValue();
+                  validateValue();
               }
           });
           
