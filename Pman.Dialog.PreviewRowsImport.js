@@ -249,9 +249,10 @@ Pman.Dialog.PreviewRowsImport = {
                           validateIndex + " / " + urls.length + " emails validated"
                       );
                       
-                      
+                      // url validation is done
                       if(urls.length == validateIndex) {
-                          Roo.MessageBox.hide();
+                          // post validation
+                          onValidate();
                           return;
                       }
                       
