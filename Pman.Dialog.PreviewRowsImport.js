@@ -171,14 +171,8 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
-          Roo.log(validateTypes);
-          
-              
-          /*
-          
-          var validateTypeIndex = 0;
-          
           // validate value with a type
+          var validateTypeIndex = 0;
           var validateType = function() {
               var type = validateTypes[validateTypeIndex]['type'];
               var values = validateTypes[validateTypeIndex]['values'];
@@ -196,7 +190,6 @@ Pman.Dialog.PreviewRowsImport = {
               
               validateType();
           };
-          */
           
           return;
           
