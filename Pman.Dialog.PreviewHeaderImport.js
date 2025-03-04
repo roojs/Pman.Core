@@ -239,8 +239,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                 fileId: _this.data.fileId,
                                 data: res.data,
                                 dbCols: _this.data.dbCols,
-                                emailCols: _this.data.emailCols,
-                                urlCols: _this.data.urlCols,
+                                validateCols: _this.data.validateCols,
                                 colMap: colMap
                             };
                             
@@ -287,8 +286,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                                 fileId: data.id,
                                                 data: data.data,
                                                 dbCols: _this.data.dbCols,
-                                                emailCols: _this.data.emailCols,
-                                                urlCols: _this.data.urlCols,
+                                                validateCols: _this.data.validateCols,
                                                 map: map
                                             };
                                             if(typeof(_this.data.disableMailingList) != 'undefined') {
