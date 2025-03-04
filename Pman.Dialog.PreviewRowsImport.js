@@ -183,24 +183,13 @@ Pman.Dialog.PreviewRowsImport = {
               
               var errors = [];
               
-              // email errors
-              var emailFails = 0;
-              Roo.each(emails, function(e)  {
-                  if(e.error !== false) {
-                      emailFails ++;
-                      errors.push(e.error);
-                      _this.validIndexes.remove(e.rowIndex);
-                  }
-              });
-              
-              // url errors
-              var urlFails = 0;
-              Roo.each(urls, function(u) {
-                  if(u.error !== false) {
-                      urlFails ++;
-                      errors.push(u.error);
-                      _this.validIndexes.remove(u.rowIndex);
-                  }
+              Roo.each(validateTypes, function(vType) {
+                  Roo.each(vType['values'], function(vValue) {
+                      if(vValue['error'] !== false) {
+                          errors.push(vValue['error']);
+                          _this.validIndexes.remove(vValue['rowIndex']);
+                      }
+                  });
               });
               
               
