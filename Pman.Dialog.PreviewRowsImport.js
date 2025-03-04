@@ -152,7 +152,8 @@ Pman.Dialog.PreviewRowsImport = {
                           
                           validateTypes.push({
                               type: type,
-                              values: []
+                              values: [],
+                              colIndexes: []
                           });
                       }
                       
@@ -163,8 +164,7 @@ Pman.Dialog.PreviewRowsImport = {
                           validateTypes[typeToIndex[type]]['values'].push({
                               value: r[headerIndex],
                               error: false,
-                              rowIndex: rowIndex,
-                              colIndex: headerIndex
+                              rowIndex: rowIndex
                           });
                       });
                   }
@@ -239,10 +239,54 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          Roo.MessageBox.progress("Validation", "Starting");
+          Roo.MessageBox.progress("Validating emails", "Starting");
           
-          // start validation
-          validateValue();
+          var emailColIndexes = validateTypes[typeToIndex['email']].filter(function(ci) {
+              return ci.type == 'email';
+          }).map(function(ci) {
+              return ci.colIndex;
+          });
+          
+          /*
+          
+          new Pman.Request({
+              url: _this.data.url,
+              timeout : 60000,
+              params: {
+                  _get_old_emails: 1,
+                  fileId: _this.data.fileId,
+                  colMap: Roo.encode(_this.data.colMap),
+                  emailColIndexes: Roo.encode(emailColIndexes)
+              },
+              success: function(res) {
+                  var oldEmails = res.data;
+                  emails = emails.filter(function(emailObj) {
+                      if(!oldEmails.includes(emailObj.email)) {
+                          return true;
+                      }
+                      
+                      // existing emails are valid
+                      // no need to revalidate
+                      var rec = _this.grid.dataSource.getAt(emailObj.rowIndex);
+                      if(rec) {
+                          rec.set(emailObj.col + '_valid', true);
+                      }
+                      
+                      return false;
+                  });
+                  
+                  // no email to be validated
+                  if(!emails.length) {
+                      // validate url if any
+                      beforeValidateUrl();
+                      return;
+                  }
+                  
+                  // validate email
+                  validateEmail();
+              }
+          });
+          */
           
           return;
           
@@ -422,53 +466,6 @@ Pman.Dialog.PreviewRowsImport = {
                   }
               });
           };
-          
-          // see if there is any email to be validated
-          Roo.MessageBox.progress("Validating emails", "Starting");
-          
-          var emailColIndexes = validateCols.filter(function(ci) {
-              return ci.type == 'email';
-          }).map(function(ci) {
-              return ci.colIndex;
-          });
-          
-          new Pman.Request({
-              url: _this.data.url,
-              timeout : 60000,
-              params: {
-                  _get_old_emails: 1,
-                  fileId: _this.data.fileId,
-                  colMap: Roo.encode(_this.data.colMap),
-                  emailColIndexes: Roo.encode(emailColIndexes)
-              },
-              success: function(res) {
-                  var oldEmails = res.data;
-                  emails = emails.filter(function(emailObj) {
-                      if(!oldEmails.includes(emailObj.email)) {
-                          return true;
-                      }
-                      
-                      // existing emails are valid
-                      // no need to revalidate
-                      var rec = _this.grid.dataSource.getAt(emailObj.rowIndex);
-                      if(rec) {
-                          rec.set(emailObj.col + '_valid', true);
-                      }
-                      
-                      return false;
-                  });
-                  
-                  // no email to be validated
-                  if(!emails.length) {
-                      // validate url if any
-                      beforeValidateUrl();
-                      return;
-                  }
-                  
-                  // validate email
-                  validateEmail();
-              }
-          });
       }
     },
     xns : Roo,
