@@ -335,13 +335,10 @@ Pman.Dialog.PreviewRowsImport = {
                       return false;
                   });
                   
-                  // no email to be validated
                   if(!emails.length) {
-                      // see if there is any url to be validated
                       beforeValidateUrl();
                   }
                   
-                  // start validating emails
                   validateEmail();
               }
           });
