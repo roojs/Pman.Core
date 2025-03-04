@@ -216,19 +216,20 @@ Pman.Dialog.PreviewRowsImport = {
                           validateValueIndex + " / " + vTypes['values'].length + " " + type + " validated"
                       );
                       
-                      // url validation is done
-                      if(urls.length == validateIndex) {
-                          // post validation
-                          onValidate();
+                      // validation of values from a type is done
+                      if(vTypes['values'].length == validateValueIndex) {
+                          // validate values with next type
+                          validateTypeIndex ++;
+                          validateType();
                           return;
                       }
                       
-                      validateUrl();
+                      validateValue();
                   }
               });
           };
           
-          // validate values with a type
+          // validate values from a type
           var validateType = function() {
               var type = validateTypes[validateTypeIndex]['type'];
               var values = validateTypes[validateTypeIndex]['values'];
