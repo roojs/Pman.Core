@@ -154,7 +154,8 @@ Pman.Dialog.PreviewRowsImport = {
                           validateValues[type].push({
                               value: r[headerIndex],
                               error: false,
-                              rowIndex: rowIndex
+                              rowIndex: rowIndex,
+                              colIndex: headerIndex
                           });
                       });
                   }
