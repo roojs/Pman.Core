@@ -202,6 +202,10 @@ Pman.Dialog.PreviewRowsImport = {
               
               
               if(errors.length) {
+                  Roo.MessageBox.hide();
+                  Roo.log(urlFails);
+                  Roo.log(emailFails);
+                  /*
                   // show errors
                   Roo.MessageBox.show({
                       title: emailFails + " emails and " + urlFails + " urls have failed, " +
@@ -217,11 +221,13 @@ Pman.Dialog.PreviewRowsImport = {
                               method : 'GET',
                               params: {
                                   'fileId': _this.data.fileId,
-                                  'emailColIndexes': Roo.encode(emailColIndexes)
+                                  'emailColIndexes': Roo.encode(emailColIndexes),
+                                  'urlColIndexes': Roo.encode(urlColIndexes)
                               }
                           });
                       }
                   });
+                  */
               }
               
               return;
