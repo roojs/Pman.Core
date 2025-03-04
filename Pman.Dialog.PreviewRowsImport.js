@@ -224,7 +224,7 @@ Pman.Dialog.PreviewRowsImport = {
           var beforeValidateUrl = function() {
               Roo.MessageBox.progress("Validating emails", "Starting");
               if(!urls.length) {
-              
+                  onValidate();
               }
           };
           
@@ -345,6 +345,7 @@ Pman.Dialog.PreviewRowsImport = {
                   if(!emails.length) {
                       // validate url if any
                       beforeValidateUrl();
+                      return;
                   }
                   
                   // validate email
