@@ -197,6 +197,9 @@ Pman.Dialog.PreviewRowsImport = {
                   errMsg = fails + " " + vType['type'] + " have failed,<br>" + errMsg;
               });
               
+              Roo.log(errMsg);
+              return;
+              
               
               
               if(errors.length) {
