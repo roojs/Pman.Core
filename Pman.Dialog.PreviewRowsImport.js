@@ -242,7 +242,9 @@ Pman.Dialog.PreviewRowsImport = {
                   url: _this.data.url,
                   timeout : 60000,
                   params: {
-                      _validate_url: url
+                      fileId: _this.data.fileId,
+                      _validate_type: 'url',
+                      _validate_value: url
                   },
                   failure : function(res)
                   {
