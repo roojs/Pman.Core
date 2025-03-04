@@ -364,9 +364,6 @@ Pman.Dialog.PreviewRowsImport = {
               return ci.colIndex;
           });
           
-          Roo.log(emailColIndexes);
-          return;
-          
           new Pman.Request({
               url: _this.data.url,
               timeout : 60000,
