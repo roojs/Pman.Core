@@ -247,7 +247,11 @@ Pman.Dialog.PreviewRowsImport = {
               validateValueIndex = 0;
               validateValue();
               
+              return;
+              
               validateTypeIndex ++;
+              
+              /*
               
               // validation is done
               if(validateTypes.length == validateTypeIndex) {
@@ -258,6 +262,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
               
               validateType();
+              */
           };
           
           validateType();
