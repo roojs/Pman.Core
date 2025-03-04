@@ -165,6 +165,9 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
+              
+          /*
+          
           var validateTypeIndex = 0;
           
           // validate value with a type
@@ -185,6 +188,8 @@ Pman.Dialog.PreviewRowsImport = {
               
               validateType();
           };
+          */
+          
           return;
           
           // after all validations are done
