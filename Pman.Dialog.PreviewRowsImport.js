@@ -275,15 +275,8 @@ Pman.Dialog.PreviewRowsImport = {
                       return false;
                   });
                   
-                  // no email to be validated
-                  if(!emails.length) {
-                      // validate url if any
-                      beforeValidateUrl();
-                      return;
-                  }
-                  
-                  // validate email
-                  validateEmail();
+                  // start validation
+                  validateValue();
               }
           });
           
