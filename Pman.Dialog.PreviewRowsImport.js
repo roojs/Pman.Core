@@ -213,7 +213,7 @@ Pman.Dialog.PreviewRowsImport = {
                       validateValueIndex ++;
                       Roo.MessageBox.updateProgress(
                           validateValueIndex / vTypes['values'].length,
-                          validateValueIndex + " / " + vTypes['values'].length + " " + type + "s validated"
+                          validateValueIndex + " / " + vTypes['values'].length + " " + type + " validated"
                       );
                       
                       // url validation is done
