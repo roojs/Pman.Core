@@ -356,7 +356,6 @@ Pman.Dialog.PreviewRowsImport = {
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  Roo.log(emails);
                   emails = emails.filter(function(emailObj) {
                       if(!oldEmails.includes(emailObj.email)) {
                           return true;
@@ -371,9 +370,6 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       return false;
                   });
-                  
-                  Roo.log('EMAILS');
-                  Roo.log(emails);
                   
                   // no email to be validated
                   if(!emails.length) {
