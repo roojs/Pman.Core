@@ -176,45 +176,50 @@ Pman.Dialog.PreviewRowsImport = {
           var onValidate = function() {
               Roo.MessageBox.hide();
               _this.validIndexes = Array.from(_this.data.data.rows.keys());
-              return;
-              /*
-                          Roo.MessageBox.hide();
-                          
-                          _this.validIndexes = Array.from(_this.data.data.rows.keys());
-                          
-                          var errors = [];
-                          
-                          Roo.each(emails, function(e)  {
-                              if(e.error !== false) {
-                                  errors.push(e.error);
-                                  _this.validIndexes.remove(e.rowIndex);
+              
+              var errors = [];
+              
+              // email errors
+              Roo.each(emails, function(e)  {
+                  if(e.error !== false) {
+                      errors.push(e.error);
+                      _this.validIndexes.remove(e.rowIndex);
+                  }
+              });
+              
+              // url errors
+              Roo.each(urls, function(u) {
+                  if(u.error !== false) {
+                      errors.push(e.error);
+                      _this.validIndexes.remove(e.rowIndex);
+                  }
+              });
+              
+              
+              
+              if(errors.length) {
+                  // show errors
+                  Roo.MessageBox.show({
+                      title: errors.length + " emails have failed, we will import the contacts without bad email", 
+                      multiline: 500,
+                      value: errors.join("\n"),
+                      buttons: {ok: "Download failed contacts"},
+                      closable: false,
+                      fn: function(res) {
+                          new Pman.Download({
+                              newWindow :  true,
+                              url : _this.data.url,
+                              method : 'GET',
+                              params: {
+                                  'fileId': _this.data.fileId,
+                                  'emailColIndexes': Roo.encode(emailColIndexes)
                               }
                           });
-                          
-                          if(errors.length) {
-                              // show errors
-                              Roo.MessageBox.show({
-                                  title: errors.length + " emails have failed, we will import the contacts without bad email", 
-                                  multiline: 500,
-                                  value: errors.join("\n"),
-                                  buttons: {ok: "Download failed contacts"},
-                                  closable: false,
-                                  fn: function(res) {
-                                      new Pman.Download({
-                                          newWindow :  true,
-                                          url : _this.data.url,
-                                          method : 'GET',
-                                          params: {
-                                              'fileId': _this.data.fileId,
-                                              'emailColIndexes': Roo.encode(emailColIndexes)
-                                          }
-                                      });
-                                  }
-                              });
-                          }
-                          
-                          return;
-              */
+                      }
+                  });
+              }
+              
+              return;
           }
           
           var validateIndex = 0;
