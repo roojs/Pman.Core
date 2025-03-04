@@ -182,14 +182,19 @@ Pman.Dialog.PreviewRowsImport = {
               _this.validIndexes = Array.from(_this.data.data.rows.keys());
               
               var errors = [];
+              var errMsg = '';
               
               Roo.each(validateTypes, function(vType) {
+                  var fails = 0;
                   Roo.each(vType['values'], function(vValue) {
                       if(vValue['error'] !== false) {
+                          fails++;
                           errors.push(vValue['error']);
                           _this.validIndexes.remove(vValue['rowIndex']);
                       }
                   });
+                  
+                  errMsg = fails + " " + vType['type'] + " have failed,<br>" + errMsg;
               });
               
               
@@ -198,8 +203,7 @@ Pman.Dialog.PreviewRowsImport = {
                   Roo.MessageBox.hide();
                   // show errors
                   Roo.MessageBox.show({
-                      title: emailFails + " emails and " + urlFails + " urls have failed, " +
-                          "we will import the contacts without bad email and bad url", 
+                      title: errMsg + "we will import the contacts without bad email and bad url", 
                       multiline: 500,
                       value: errors.join("\n"),
                       buttons: {ok: "Download failed contacts"},
