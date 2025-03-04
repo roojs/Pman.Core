@@ -165,7 +165,23 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
-          Roo.log(validateCols);
+          
+          var validateType = function(type, values) {
+              Roo.MessageBox.progress("Validating " + type + "s", "Starting");
+              
+              // no values to be validated
+              if(!urls.length) {
+                  // post validation
+                  onValidate();
+                  return;
+              }
+              
+              // reset validateIndex
+              validateIndex = 0;
+              
+              // validate url
+              validateUrl();
+          };
           return;
           
           // after all validations are done
