@@ -236,37 +236,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          // validate values from a type
-          var validateType = function() {
-              var type = validateTypes[validateTypeIndex]['type'];
-              var values = validateTypes[validateTypeIndex]['values'];
-              
-              // no values with this type to be validated
-              if(!values.length) {
-                  // validate values with next type
-                  validateTypeIndex ++;
-                  validateType();
-                  return;
-              }
-              
-              Roo.MessageBox.progress("Validating " + type, "Starting");
-              
-              validateValueIndex = 0;
-              validateValue();
-              
-              /*
-              
-              // validation is done
-              if(validateTypes.length == validateTypeIndex) {
-                  Roo.MessageBox.hide();
-                  // post validation
-                  // onValidate();
-                  return;
-              }
-              
-              validateType();
-              */
-          };
+          Roo.MessageBox.progress("Validation", "Starting");
           
           // start validation
           validateValue();
