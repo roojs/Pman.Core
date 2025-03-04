@@ -180,16 +180,20 @@ Pman.Dialog.PreviewRowsImport = {
               var errors = [];
               
               // email errors
+              var emailFails = 0;
               Roo.each(emails, function(e)  {
                   if(e.error !== false) {
+                      emailFails ++;
                       errors.push(e.error);
                       _this.validIndexes.remove(e.rowIndex);
                   }
               });
               
               // url errors
+              var urlFails = 0;
               Roo.each(urls, function(u) {
                   if(u.error !== false) {
+                      urlFails ++;
                       errors.push(e.error);
                       _this.validIndexes.remove(e.rowIndex);
                   }
@@ -200,7 +204,8 @@ Pman.Dialog.PreviewRowsImport = {
               if(errors.length) {
                   // show errors
                   Roo.MessageBox.show({
-                      title: errors.length + " emails have failed, we will import the contacts without bad email", 
+                      title: emailFails + " emails and " + urlFails + " urls have failed, " +
+                          "we will import the contacts without bad email and bad url", 
                       multiline: 500,
                       value: errors.join("\n"),
                       buttons: {ok: "Download failed contacts"},
