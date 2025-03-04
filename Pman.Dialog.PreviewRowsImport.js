@@ -206,7 +206,7 @@ Pman.Dialog.PreviewRowsImport = {
               var type = vType['type'];
               var value = vValue['value'];
               var rowIndex = vValue['rowIndex'];
-              var col = _this.data.colMap[vValue['colIndex']];
+              var col = vValue['col'];
               
               new Pman.Request({
                   url: _this.data.url,
