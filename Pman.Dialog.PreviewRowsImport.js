@@ -147,7 +147,7 @@ Pman.Dialog.PreviewRowsImport = {
                   if(validateCol.name == _this.data.colMap[headerIndex]) {
                       var type = validateCol.type;
                       
-                      if(typeof(typeToIndex) == 'undefined') {
+                      if(typeof(typeToIndex[type]) == 'undefined') {
                           typeToIndex[type] = validateTypes.length;
                           
                           validateTypes.push({
