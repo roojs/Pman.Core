@@ -144,7 +144,7 @@ Pman.Dialog.PreviewRowsImport = {
           Roo.each(_this.data.data.rows, function (r, i) {
               Roo.each(_this.data.data.headers, function (h, headerIndex)  {
                   Roo.each(_this.data.validateCols, function(validateCol) {
-                      if(validateCol.name.includes(_this.data.colMap[headerIndex]) && r[headerIndex] != '') {
+                      if(validateCol.name == _this.data.colMap[headerIndex] && r[headerIndex] != '') {
                           validateValues.push({
                               value: r[headerIndex],
                               error: false,
