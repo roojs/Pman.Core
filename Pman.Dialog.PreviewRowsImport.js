@@ -203,7 +203,6 @@ Pman.Dialog.PreviewRowsImport = {
               
               if(errors.length) {
                   Roo.MessageBox.hide();
-                  /*
                   // show errors
                   Roo.MessageBox.show({
                       title: emailFails + " emails and " + urlFails + " urls have failed, " +
@@ -225,7 +224,6 @@ Pman.Dialog.PreviewRowsImport = {
                           });
                       }
                   });
-                  */
               }
               
               return;
