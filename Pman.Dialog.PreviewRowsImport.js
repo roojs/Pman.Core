@@ -147,7 +147,7 @@ Pman.Dialog.PreviewRowsImport = {
                       var type = validateCol.type;
                       
                       if(typeof(validateValues[type]) == 'undefined') {
-                          validateValues[type] = [];
+                          validateValues[type] = {};
                       }
                       
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
