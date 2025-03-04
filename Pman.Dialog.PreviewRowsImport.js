@@ -170,7 +170,7 @@ Pman.Dialog.PreviewRowsImport = {
               Roo.MessageBox.progress("Validating " + type + "s", "Starting");
               
               // no values to be validated
-              if(!urls.length) {
+              if(!values.length) {
                   // post validation
                   onValidate();
                   return;
