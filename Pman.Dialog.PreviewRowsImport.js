@@ -210,7 +210,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          var startValidateUrl = function() {
+          var validateUrls = function() {
           };
           
           var validateIndex = 0;
@@ -326,6 +326,7 @@ Pman.Dialog.PreviewRowsImport = {
                   
                   // no email to be validated
                   if(!emails.length) {
+                      
                       Roo.MessageBox.hide();
                       _this.validIndexes = Array.from(_this.data.data.rows.keys());
                       return;
