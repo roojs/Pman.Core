@@ -138,27 +138,6 @@ Pman.Dialog.PreviewRowsImport = {
           var emails = [];
           var urls = [];
           
-          // values to be validated
-          var validateValues = [];
-          
-          Roo.each(_this.data.data.rows, function (r, i) {
-              Roo.each(_this.data.data.headers, function (h, headerIndex)  {
-                  Roo.each(_this.data.validateCols, function(validateCol) {
-                      if(validateCol.name == _this.data.colMap[headerIndex] && r[headerIndex] != '') {
-                          validateValues.push({
-                              value: r[headerIndex],
-                              error: false,
-                              rowIndex: i,
-                              col: _this.data.colMap[headerIndex],
-                              type: validateCol.type
-                          });
-                      }
-                  });
-              });
-          });
-          
-          Roo.log(validateValues);
-          
           // columns to be validated
           var validateCols = [];
           
@@ -167,7 +146,16 @@ Pman.Dialog.PreviewRowsImport = {
                   if(validateCol.name == _this.data.colMap[headerIndex]) {
                       validateCols.push({
                           colIndex: headerIndex,
+                          col: _this.data.colMap[headerIndex],
                           type: validateCol.type
+                      });
+                      
+                      Roo.each(_this.data.data.rows, function(r, rowIndex) {
+                          validateValues.push({
+                              value: r[headerIndex],
+                              error: false,
+                              rowIndex: i
+                          });
                       });
                   }
               });
