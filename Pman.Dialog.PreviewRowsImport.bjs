@@ -448,6 +448,7 @@
      "        },",
      "        success: function(res) {",
      "            var oldEmails = res.data;",
+     "            Roo.log(emails);",
      "            emails = emails.filter(function(emailObj) {",
      "                if(!oldEmails.includes(emailObj.email)) {",
      "                    return true;",
