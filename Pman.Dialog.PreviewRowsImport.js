@@ -177,7 +177,8 @@ Pman.Dialog.PreviewRowsImport = {
           // validate a value
           var validateValue = function() {
               var vType = validateTypes[validateTypeIndex];
-              var vValue = vType['values'][validateValueIndex];
+              var vValues = vVType['values'];
+              var vValue = vValues[validateValueIndex];
               
               var type = vType['type'];
               var value = vValue['value'];
@@ -212,12 +213,12 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       validateValueIndex ++;
                       Roo.MessageBox.updateProgress(
-                          validateValueIndex / vType['values'].length,
-                          validateValueIndex + " / " + vType['values'].length + " " + type + " validated"
+                          validateValueIndex / vValues.length,
+                          validateValueIndex + " / " + vValues.length + " " + type + " validated"
                       );
                       
                       // validation of values with a type is done
-                      if(vType['values'].length == validateValueIndex) {
+                      if(vValues.length == validateValueIndex) {
                           // validate values with the next type
                           validateTypeIndex ++;
                           // reset
