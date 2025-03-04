@@ -203,8 +203,6 @@ Pman.Dialog.PreviewRowsImport = {
               
               if(errors.length) {
                   Roo.MessageBox.hide();
-                  Roo.log(urlFails);
-                  Roo.log(emailFails);
                   /*
                   // show errors
                   Roo.MessageBox.show({
@@ -253,8 +251,12 @@ Pman.Dialog.PreviewRowsImport = {
                       validateUrl(); // try again?
                   },
                   success: function(res) {
+                      var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
                           urls[validateIndex]['error'] = res.data.errorMsg;
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
                       }
                       
                       validateIndex ++;
