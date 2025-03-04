@@ -216,12 +216,19 @@ Pman.Dialog.PreviewRowsImport = {
                           validateValueIndex + " / " + vTypes['values'].length + " " + type + " validated"
                       );
                       
-                      // validation of values from a type is done
+                      // validation of values with a type is done
                       if(vTypes['values'].length == validateValueIndex) {
-                          // validate values with next type
+                          // validate values with the next type
                           validateTypeIndex ++;
-                          validateType();
-                          return;
+                          // reset
+                          validateValueIndex = 0;
+                          
+                          // validation is done
+                          if(validateTypes.length == validateTypeIndex) {
+                              Roo.MessageBox.hide();
+                              Roo.log('DONE');
+                              return;
+                          }
                       }
                       
                       validateValue();
