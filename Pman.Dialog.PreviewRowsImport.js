@@ -144,11 +144,8 @@ Pman.Dialog.PreviewRowsImport = {
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
                   if(validateCol.name == _this.data.colMap[headerIndex]) {
-                      validateCols.push({
-                          colIndex: headerIndex,
-                          col: _this.data.colMap[headerIndex],
-                          type: validateCol.type
-                      });
+                      // values to be validated
+                      var values = [];
                       
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
                           validateValues.push({
@@ -156,6 +153,13 @@ Pman.Dialog.PreviewRowsImport = {
                               error: false,
                               rowIndex: i
                           });
+                      });
+                      
+                      validateCols.push({
+                          colIndex: headerIndex,
+                          col: _this.data.colMap[headerIndex],
+                          type: validateCol.type,
+                          values: values
                       });
                   }
               });
