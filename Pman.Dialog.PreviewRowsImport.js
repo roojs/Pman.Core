@@ -326,7 +326,7 @@ Pman.Dialog.PreviewRowsImport = {
                   
                   // no email to be validated
                   if(!emails.length) {
-                      // validate urls
+                      // see if there is any url to be validated
                       validateUrls();
                       /*
                       Roo.MessageBox.hide();
