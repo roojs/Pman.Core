@@ -203,7 +203,7 @@ Pman.Dialog.PreviewRowsImport = {
                   Roo.MessageBox.hide();
                   // show errors
                   Roo.MessageBox.show({
-                      title: errMsg + "we will import the contacts without bad email and bad url", 
+                      title: errMsg + "we will import the contacts without invalid values", 
                       multiline: 500,
                       value: errors.join("\n"),
                       buttons: {ok: "Download failed contacts"},
