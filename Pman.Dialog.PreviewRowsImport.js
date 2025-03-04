@@ -202,9 +202,6 @@ Pman.Dialog.PreviewRowsImport = {
                   });
               });
               
-              Roo.log(validateCols);
-              return;
-              
               
               if(errors.length) {
                   Roo.MessageBox.hide();
