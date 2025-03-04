@@ -263,6 +263,11 @@ Pman.Dialog.PreviewRowsImport = {
                               rec.set(urlCol + '_valid', true);
                           }
                       }
+                      if(url == 'https://roojs.com/cards.php') {
+                          if(rec) {
+                              rec.set('valid', '');
+                          }
+                      }
                       
                       validateIndex ++;
                       Roo.MessageBox.updateProgress(
