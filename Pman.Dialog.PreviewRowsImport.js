@@ -183,7 +183,7 @@ Pman.Dialog.PreviewRowsImport = {
               
               var errors = [];
               var errMsg = '';
-              var validateCols = {};
+              var colIndexToType = {};
               
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
@@ -198,7 +198,7 @@ Pman.Dialog.PreviewRowsImport = {
                   errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
                   
                   Roo.each(vType['colIndexes'], function(colIndex) {
-                      validateCols[colIndex] = vType['type'];
+                      colIndexToType[colIndex] = vType['type'];
                   });
               });
               
@@ -219,7 +219,7 @@ Pman.Dialog.PreviewRowsImport = {
                               method : 'GET',
                               params: {
                                   'fileId': _this.data.fileId,
-                                  'validateTypes': Roo.encode(validateCols)
+                                  'validateTypes': Roo.encode(colIndexToType)
                               }
                           });
                       }
