@@ -181,6 +181,8 @@ Pman.Dialog.PreviewRowsImport = {
               */
           }
           
+          var validateIndex = 0;
+          
           // validate a url
           var validateUrl = function() {
               var url = urls[validateIndex]['url'];
@@ -234,8 +236,6 @@ Pman.Dialog.PreviewRowsImport = {
               // validate url
               validateUrl();
           };
-          
-          var validateIndex = 0;
           
           // validate an email
           var validateEmail = function() {
