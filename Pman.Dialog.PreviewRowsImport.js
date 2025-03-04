@@ -176,8 +176,25 @@ Pman.Dialog.PreviewRowsImport = {
           
           // validate a value
           var validateValue = function() {
+              // validation is done
+              if(validateTypeIndex == validateTypes.length) {
+                  Roo.MessageBox.hide();
+                  Roo.log('DONE');
+                  return;
+              }
               var vType = validateTypes[validateTypeIndex];
               var vValues = vVType['values'];
+              
+              // validation of values with this type is done
+              if(validateValueIndex == vValues.length) {
+                  // validate values with the next type
+                  validateTypeIndex ++;
+                  // reset
+                  validateValueIndex = 0;
+                  validateValue();
+                  return;
+              }
+              
               var vValue = vValues[validateValueIndex];
               
               var type = vType['type'];
@@ -216,21 +233,6 @@ Pman.Dialog.PreviewRowsImport = {
                           validateValueIndex / vValues.length,
                           validateValueIndex + " / " + vValues.length + " " + type + " validated"
                       );
-                      
-                      // validation of values with a type is done
-                      if(vValues.length == validateValueIndex) {
-                          // validate values with the next type
-                          validateTypeIndex ++;
-                          // reset
-                          validateValueIndex = 0;
-                          
-                          // validation is done
-                          if(validateTypes.length == validateTypeIndex) {
-                              Roo.MessageBox.hide();
-                              Roo.log('DONE');
-                              return;
-                          }
-                      }
                       
                       validateValue();
                   }
