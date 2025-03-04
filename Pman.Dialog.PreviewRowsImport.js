@@ -230,6 +230,8 @@ Pman.Dialog.PreviewRowsImport = {
                   onValidate();
                   return;
               }
+              
+              validateUrl();
           };
           
           var validateIndex = 0;

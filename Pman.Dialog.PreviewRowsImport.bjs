@@ -322,6 +322,8 @@
      "            onValidate();",
      "            return;",
      "        }",
+     "        ",
+     "        validateUrl();",
      "    };",
      "    ",
      "    var validateIndex = 0;",
