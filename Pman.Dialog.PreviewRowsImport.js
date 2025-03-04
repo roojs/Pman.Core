@@ -360,7 +360,12 @@ Pman.Dialog.PreviewRowsImport = {
           
           var emailColIndexes = validateColIndexes.filter(function(ci) {
               return ci.type == 'email';
+          }).map(function(ci) {
+              return ci.colIndex;
           });
+          
+          Roo.log(emailColIndexes);
+          return;
           
           new Pman.Request({
               url: _this.data.url,
@@ -369,9 +374,7 @@ Pman.Dialog.PreviewRowsImport = {
                   _get_old_emails: 1,
                   fileId: _this.data.fileId,
                   colMap: Roo.encode(_this.data.colMap),
-                  emailColIndexes: Roo.encode(emailColIndexes.map(function(ci) {
-                      return ci.colIndex;
-                  }))
+                  emailColIndexes: Roo.encode(emailColIndexes)
               },
               success: function(res) {
                   var oldEmails = res.data;
