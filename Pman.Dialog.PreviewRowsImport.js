@@ -183,6 +183,7 @@ Pman.Dialog.PreviewRowsImport = {
               
               var errors = [];
               var errMsg = '';
+              var validateCols = {};
               
               Roo.each(validateTypes, function(vType) {
                   var fails = 0;
@@ -196,10 +197,6 @@ Pman.Dialog.PreviewRowsImport = {
                   
                   errMsg = fails + " " + vType['type'] + " have failed,<br>" + errMsg;
               });
-              
-              Roo.log(errMsg);
-              return;
-              
               
               
               if(errors.length) {
