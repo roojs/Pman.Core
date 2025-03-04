@@ -157,7 +157,7 @@ Pman.Dialog.PreviewRowsImport = {
                       
                       validateCols.push({
                           colIndex: headerIndex,
-                          col: _this.data.colMap[headerIndex],
+                          name: _this.data.colMap[headerIndex],
                           type: validateCol.type,
                           values: values
                       });
