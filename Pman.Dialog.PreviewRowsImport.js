@@ -176,6 +176,9 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
+          Roo.log(validateTypes);
+          return;
+          
           var validateTypeIndex = 0;
           var validateValueIndex = 0;
           
