@@ -179,19 +179,20 @@ Pman.Dialog.PreviewRowsImport = {
               var type = validateTypes[validateTypeIndex]['type'];
               var values = validateTypes[validateTypeIndex]['values'];
               
-              validateTypeIndex ++;
-              
               Roo.MessageBox.progress("Validating " + type + "s", "Starting");
               
               // no values with this type to be validated
               if(!values.length) {
                   // validate values with next type
+                  validateTypeIndex ++;
                   validateType();
                   return;
               }
               
               validateValueIndex = 0;
               validateValue();
+              
+              validateTypeIndex ++;
               
               // validation is done
               if(validateTypes.length == validateTypeIndex) {
@@ -206,9 +207,9 @@ Pman.Dialog.PreviewRowsImport = {
           
           // validate a value
           var validateValue = function() {
-              var url = urls[validateIndex]['url'];
+              var value = urls[validateIndex]['url'];
               var rowIndex = urls[validateIndex]['rowIndex'];
-              var urlCol = urls[validateIndex]['col'];
+              var col = _this.data.colMap[urls[validateIndex]['colIndex']];
               
               
               new Pman.Request({
