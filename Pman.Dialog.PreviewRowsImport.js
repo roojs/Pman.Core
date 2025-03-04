@@ -140,11 +140,23 @@ Pman.Dialog.PreviewRowsImport = {
           
           // types of values to be validated
           var validateTypes = [];
+          var types = [];
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
                   if(validateCol.name == _this.data.colMap[headerIndex]) {
                       var type = validateCol.type;
+                      
+                      if(!types.includes(type)) {
+                          
+                      };
+                      
+                      
+                      
+                      validateTypes.push({
+                          type: validateCol.type,
+                          values: values
+                      });
                       
                       if(typeof(validateValues[type]) == 'undefined') {
                           validateValues[type] = [];
