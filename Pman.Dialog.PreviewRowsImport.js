@@ -151,6 +151,9 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                       
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
+                          if(r[headerIndex] == '') {
+                              return;
+                          }
                           validateValues[type].push({
                               value: r[headerIndex],
                               error: false,
