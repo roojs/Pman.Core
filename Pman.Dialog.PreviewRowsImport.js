@@ -139,7 +139,7 @@ Pman.Dialog.PreviewRowsImport = {
           var urls = [];
           
           // types to be validated
-          var validateTypes = [];
+          var validateTypes = {};
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
