@@ -175,6 +175,7 @@ Pman.Dialog.PreviewRowsImport = {
                       });
                   }
               });
+              
           });
           
           // after all validations are done
@@ -225,6 +226,8 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                   });
               }
+              
+                      Roo.log(_this.validIndexes);
               
               return;
           }
