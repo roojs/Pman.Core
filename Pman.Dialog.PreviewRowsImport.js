@@ -139,7 +139,7 @@ Pman.Dialog.PreviewRowsImport = {
           var urls = [];
           
           // values to be validated
-          var validateValues = {};
+          var validateValues = [];
           
           Roo.each(_this.data.data.headers, function (h, headerIndex)  {
               Roo.each(_this.data.validateCols, function(validateCol) {
