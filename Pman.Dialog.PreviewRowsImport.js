@@ -256,11 +256,11 @@ Pman.Dialog.PreviewRowsImport = {
                   },
                   success: function(res) {
                       var rec = _this.grid.dataSource.getAt(rowIndex);
+                      if(rec) {
+                          rec.set('valid', '');
+                      }
                       if(!res.data.valid) {
                           emails[validateIndex]['error'] = res.data.errorMsg;
-                          if(rec) {
-                              rec.set('valid', '');
-                          }
                       }
                       else {
                           if(rec) {
