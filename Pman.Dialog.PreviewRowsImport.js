@@ -195,7 +195,7 @@ Pman.Dialog.PreviewRowsImport = {
                       }
                   });
                   
-                  errMsg = fails + " " + vType['type'] + " have failed,<br>" + errMsg;
+                  errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
                   
                   Roo.each(vType['colIndexes'], function(colIndex) {
                       validateCols[colIndex] = vType['type'];
