@@ -319,6 +319,8 @@
      "            });",
      "        }",
      "        ",
+     "        Roo.log(_this.validIndexes);",
+     "        ",
      "        return;",
      "    }",
      "    ",

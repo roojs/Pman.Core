@@ -227,6 +227,8 @@ Pman.Dialog.PreviewRowsImport = {
                   });
               }
               
+              Roo.log(_this.validIndexes);
+              
               return;
           }
           
