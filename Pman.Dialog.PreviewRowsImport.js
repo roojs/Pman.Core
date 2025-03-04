@@ -200,7 +200,7 @@ Pman.Dialog.PreviewRowsImport = {
                   success: function(res) {
                       var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
-                          vv['error'] = res.data.errorMsg;
+                          vValue['error'] = res.data.errorMsg;
                           if(rec) {
                               rec.set('valid', '');
                           }
