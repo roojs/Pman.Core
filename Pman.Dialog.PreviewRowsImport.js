@@ -174,39 +174,6 @@ Pman.Dialog.PreviewRowsImport = {
           var validateTypeIndex = 0;
           var validateValueIndex = 0;
           
-          // validate values with a type
-          var validateType = function() {
-              var type = validateTypes[validateTypeIndex]['type'];
-              var values = validateTypes[validateTypeIndex]['values'];
-              
-              Roo.MessageBox.progress("Validating " + type + "s", "Starting");
-              
-              // no values with this type to be validated
-              if(!values.length) {
-                  // validate values with next type
-                  validateTypeIndex ++;
-                  validateType();
-                  return;
-              }
-              
-              validateValueIndex = 0;
-              validateValue();
-              
-              validateTypeIndex ++;
-              
-              // validation is done
-              if(validateTypes.length == validateTypeIndex) {
-                  Roo.MessageBox.hide();
-                  // post validation
-                  // onValidate();
-                  return;
-              }
-              
-              validateType();
-          };
-          
-          validateType();
-          
           // validate a value
           var validateValue = function() {
               var vv = validateTypes[validateTypeIndex]['values'][validateValueIndex];
@@ -267,6 +234,39 @@ Pman.Dialog.PreviewRowsImport = {
               });
               */
           };
+          
+          // validate values with a type
+          var validateType = function() {
+              var type = validateTypes[validateTypeIndex]['type'];
+              var values = validateTypes[validateTypeIndex]['values'];
+              
+              Roo.MessageBox.progress("Validating " + type + "s", "Starting");
+              
+              // no values with this type to be validated
+              if(!values.length) {
+                  // validate values with next type
+                  validateTypeIndex ++;
+                  validateType();
+                  return;
+              }
+              
+              validateValueIndex = 0;
+              validateValue();
+              
+              validateTypeIndex ++;
+              
+              // validation is done
+              if(validateTypes.length == validateTypeIndex) {
+                  Roo.MessageBox.hide();
+                  // post validation
+                  // onValidate();
+                  return;
+              }
+              
+              validateType();
+          };
+          
+          validateType();
           
           return;
           
