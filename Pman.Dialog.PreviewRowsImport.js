@@ -172,7 +172,7 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
-          var postValidate = function() {
+          var onValidate = function() {
           }
           
           var validateUrl = function() {
