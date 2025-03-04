@@ -157,7 +157,7 @@ Pman.Dialog.PreviewRowsImport = {
                           });
                       }
                       
-                      var vType = validateTypes[typeToIndex[index]];
+                      var vType = validateTypes[typeToIndex[type]];
                       if(!vType['colIndexes'].includes(headerIndex)) {
                           vType['colIndexes'].push(headerIndex);
                       }
