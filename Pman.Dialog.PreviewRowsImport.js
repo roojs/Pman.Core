@@ -160,7 +160,6 @@ Pman.Dialog.PreviewRowsImport = {
                               value: r[headerIndex],
                               error: false,
                               rowIndex: rowIndex,
-                              colIndex: headerIndex
                           });
                       });
                   }
