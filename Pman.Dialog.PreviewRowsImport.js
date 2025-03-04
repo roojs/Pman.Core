@@ -211,6 +211,9 @@ Pman.Dialog.PreviewRowsImport = {
           };
           
           var validateUrls = function() {
+              Roo.MessageBox.progress("Validating emails", "Starting");
+              if(!urls.length) {
+              }
           };
           
           var validateIndex = 0;
@@ -327,7 +330,7 @@ Pman.Dialog.PreviewRowsImport = {
                   // no email to be validated
                   if(!emails.length) {
                       // see if there is any url to be validated
-                      validateUrls();
+                      beforeValidateUrl();
                       /*
                       Roo.MessageBox.hide();
                       _this.validIndexes = Array.from(_this.data.data.rows.keys());
