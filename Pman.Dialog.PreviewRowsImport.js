@@ -158,25 +158,11 @@ Pman.Dialog.PreviewRowsImport = {
                               colIndex: headerIndex
                           });
                       });
-                      // values to be validated
-                      var values = [];
-                      
-                      Roo.each(_this.data.data.rows, function(r, rowIndex) {
-                          values.push({
-                              value: r[headerIndex],
-                              error: false,
-                              rowIndex: rowIndex
-                          });
-                      });
-                      
-                      validateTypes[validateCol.type] = {
-                          colIndex: headerIndex,
-                          name: _this.data.colMap[headerIndex],
-                          values: values
-                      };
                   }
               });
           });
+          
+          Roo.log(validateValues);
           
           /*
           
