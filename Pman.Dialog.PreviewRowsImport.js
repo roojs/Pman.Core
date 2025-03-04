@@ -149,7 +149,8 @@ Pman.Dialog.PreviewRowsImport = {
                               value: r[headerIndex],
                               error: false,
                               rowIndex: i,
-                              col: _this.data.colMap[headerIndex]
+                              col: _this.data.colMap[headerIndex],
+                              type: validateCol.type
                           });
                       }
                   });
