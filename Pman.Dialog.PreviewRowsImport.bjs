@@ -361,7 +361,7 @@
      "    };",
      "    ",
      "    // start validation",
-     "    validateType();",
+     "    validateValue();",
      "    ",
      "    return;",
      "    ",

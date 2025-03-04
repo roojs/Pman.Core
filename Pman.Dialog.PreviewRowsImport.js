@@ -269,7 +269,7 @@ Pman.Dialog.PreviewRowsImport = {
           };
           
           // start validation
-          validateType();
+          validateValue();
           
           return;
           
