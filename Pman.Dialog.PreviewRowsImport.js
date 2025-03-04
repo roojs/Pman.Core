@@ -151,12 +151,12 @@ Pman.Dialog.PreviewRowsImport = {
                           validateValues[type] = {};
                       }
                       
-                      if(typeof(validateValues[type][name]) == 'undefined') {
-                          validateValues[type][name] = [];
+                      if(typeof(validateValues[type][headerIndex]) == 'undefined') {
+                          validateValues[type][headerIndex] = [];
                       }
                       
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
-                          validateValues[type][name].push({
+                          validateValues[type][headerIndex].push({
                               value: r[headerIndex],
                               error: false,
                               rowIndex: rowIndex,
