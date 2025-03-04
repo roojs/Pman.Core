@@ -165,29 +165,26 @@ Pman.Dialog.PreviewRowsImport = {
               });
           });
           
-          Roo.log(validateValues);
-          
-          /*
-          
           var validateTypeIndex = 0;
           
-          var validateType = function(type, values) {
+          // validate value with a type
+          var validateType = function() {
+              var type = validateTypes[validateTypeIndex]['type'];
+              var values = validateTypes[validateTypeIndex]['values'];
+              
               Roo.MessageBox.progress("Validating " + type + "s", "Starting");
               
-              // no values to be validated
-              if(!values.length) {
+              validateTypeIndex ++;
+              
+              // validation is done
+              if(validateTypes.length == validateTypeIndex) {
                   // post validation
                   onValidate();
                   return;
               }
               
-              // reset validateIndex
-              validateIndex = 0;
-              
-              // validate url
-              validateUrl();
+              validateType();
           };
-          */
           return;
           
           // after all validations are done
