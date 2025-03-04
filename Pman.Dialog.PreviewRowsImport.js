@@ -231,6 +231,7 @@ Pman.Dialog.PreviewRowsImport = {
                   return;
               }
               
+              // validate url
               validateUrl();
           };
           
