@@ -213,6 +213,13 @@ Pman.Dialog.PreviewRowsImport = {
               var rowIndex = vv['rowIndex'];
               var col = _this.data.colMap[vv['colIndex']];
               
+              Roo.log(vv);
+              Roo.log(value);
+              Roo.log(rowIndex);
+              Roo.log(col);
+              
+              /*
+              
               
               new Pman.Request({
                   url: _this.data.url,
@@ -256,6 +263,7 @@ Pman.Dialog.PreviewRowsImport = {
                       validateUrl();
                   }
               });
+              */
           };
           
           return;
