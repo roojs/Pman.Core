@@ -157,11 +157,16 @@ Pman.Dialog.PreviewRowsImport = {
                           });
                       }
                       
+                      var vType = validateTypes[typeToIndex[index]];
+                      if(!vType['colIndexes'].includes(headerIndex)) {
+                          vType['colIndexes'].push(headerIndex);
+                      }
+                      
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
                           if(r[headerIndex] == '') {
                               return;
                           }
-                          validateTypes[typeToIndex[type]]['values'].push({
+                          vType['values'].push({
                               value: r[headerIndex],
                               error: false,
                               rowIndex: rowIndex
