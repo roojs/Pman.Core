@@ -219,7 +219,7 @@ Pman.Dialog.PreviewRowsImport = {
                               method : 'GET',
                               params: {
                                   'fileId': _this.data.fileId,
-                                  'validateTypes': Roo.encode(validateCols)
+                                  'validateCols': Roo.encode(validateCols)
                               }
                           });
                       }
