@@ -258,6 +258,11 @@ Pman.Dialog.PreviewRowsImport = {
                               rec.set('valid', '');
                           }
                       }
+                      else {
+                          if(rec) {
+                              rec.set(emailCol + '_valid', true);
+                          }
+                      }
                       
                       validateIndex ++;
                       Roo.MessageBox.updateProgress(
