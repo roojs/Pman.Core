@@ -223,8 +223,12 @@ Pman.Dialog.PreviewRowsImport = {
           // see if there is any url to be validated
           var beforeValidateUrl = function() {
               Roo.MessageBox.progress("Validating emails", "Starting");
+              
+              // no url to be validated
               if(!urls.length) {
+                  // post validation
                   onValidate();
+                  return;
               }
           };
           
