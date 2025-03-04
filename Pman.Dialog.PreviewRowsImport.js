@@ -172,6 +172,9 @@ Pman.Dialog.PreviewRowsImport = {
               }
           });
           
+          var postValidate = function() {
+          }
+          
           var validateUrl = function() {
               var url = urls[validateIndex]['url'];
               var rowIndex = urls[validateIndex]['rowIndex'];
