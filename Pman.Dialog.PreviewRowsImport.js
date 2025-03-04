@@ -196,7 +196,14 @@ Pman.Dialog.PreviewRowsImport = {
                   });
                   
                   errMsg = fails + " " + vType['type'] + " have failed,<br>" + errMsg;
+                  
+                  Roo.each(vType['colIndexes'], function(colIndex) {
+                      validateCols[colIndex] = vType['type'];
+                  });
               });
+              
+              Roo.log(validateCols);
+              return;
               
               
               if(errors.length) {
