@@ -155,6 +155,8 @@ Pman.Dialog.PreviewRowsImport = {
                           });
                       };
                       
+                      var values = [];
+                      
                       Roo.each(_this.data.data.rows, function(r, rowIndex) {
                           if(r[headerIndex] == '') {
                               return;
