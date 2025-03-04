@@ -195,7 +195,7 @@ Pman.Dialog.PreviewRowsImport = {
                   if(u.error !== false) {
                       urlFails ++;
                       errors.push(u.error);
-                      _this.validIndexes.remove(e.rowIndex);
+                      _this.validIndexes.remove(u.rowIndex);
                   }
               });
               
