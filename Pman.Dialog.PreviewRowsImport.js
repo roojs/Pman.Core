@@ -210,7 +210,7 @@ Pman.Dialog.PreviewRowsImport = {
               });
           };
           
-          var validateUrls = function() {
+          var beforeValidateUrls = function() {
               Roo.MessageBox.progress("Validating emails", "Starting");
               if(!urls.length) {
               }
