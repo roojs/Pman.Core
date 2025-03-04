@@ -183,8 +183,9 @@ Pman.Dialog.PreviewRowsImport = {
               
               // validation is done
               if(validateTypes.length == validateTypeIndex) {
+                  Roo.MessageBox.hide();
                   // post validation
-                  onValidate();
+                  // onValidate();
                   return;
               }
               
