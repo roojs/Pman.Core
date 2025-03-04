@@ -194,7 +194,7 @@ Pman.Dialog.PreviewRowsImport = {
               Roo.each(urls, function(u) {
                   if(u.error !== false) {
                       urlFails ++;
-                      errors.push(e.error);
+                      errors.push(u.error);
                       _this.validIndexes.remove(e.rowIndex);
                   }
               });
