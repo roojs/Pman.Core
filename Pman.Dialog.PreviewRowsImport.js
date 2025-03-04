@@ -234,8 +234,6 @@ Pman.Dialog.PreviewRowsImport = {
               var type = validateTypes[validateTypeIndex]['type'];
               var values = validateTypes[validateTypeIndex]['values'];
               
-              Roo.MessageBox.progress("Validating " + type, "Starting");
-              
               // no values with this type to be validated
               if(!values.length) {
                   // validate values with next type
@@ -243,6 +241,8 @@ Pman.Dialog.PreviewRowsImport = {
                   validateType();
                   return;
               }
+              
+              Roo.MessageBox.progress("Validating " + type, "Starting");
               
               validateValueIndex = 0;
               validateValue();
