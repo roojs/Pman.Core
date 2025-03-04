@@ -189,7 +189,7 @@ Pman.Dialog.PreviewRowsImport = {
                   return;
               }
               var vType = validateTypes[validateTypeIndex];
-              var vValues = vVType['values'];
+              var vValues = vType['values'];
               
               // validation of values with this type is done
               if(validateValueIndex == vValues.length) {
