@@ -205,6 +205,8 @@ Pman.Dialog.PreviewRowsImport = {
               validateType();
           };
           
+          validateType();
+          
           // validate a value
           var validateValue = function() {
               var vv = validateTypes[validateTypeIndex]['values'][validateValueIndex];
