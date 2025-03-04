@@ -174,11 +174,9 @@ Pman.Dialog.PreviewRowsImport = {
           
           // after all validations are done
           var onValidate = function() {
-              /*
               Roo.MessageBox.hide();
               _this.validIndexes = Array.from(_this.data.data.rows.keys());
               return;
-              */
               /*
                           Roo.MessageBox.hide();
                           
