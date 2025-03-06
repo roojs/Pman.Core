@@ -135,112 +135,167 @@ Pman.Dialog.PreviewRowsImport = {
               return;
           }
           
-          var emails = [];
+          // types of values to be validated
+          var validateTypes = [];
+          var typeToIndex = {};
           
-          Roo.each(_this.data.data.rows, function (r, i) {
-              Roo.each(_this.data.data.headers, function (h, headerIndex)  {
-                  if(_this.data.emailCols.includes(_this.data.colMap[headerIndex]) && r[headerIndex] != '') {
-                      emails.push({
-                          email: r[headerIndex],
-                          error: false,
-                          rowIndex: i,
-                          col: _this.data.colMap[headerIndex]
+          Roo.each(_this.data.data.headers, function (h, headerIndex)  {
+              Roo.each(_this.data.validateCols, function(validateCol) {
+                  if(validateCol.name == _this.data.colMap[headerIndex]) {
+                      var type = validateCol.type;
+                      
+                      if(typeof(typeToIndex[type]) == 'undefined') {
+                          typeToIndex[type] = validateTypes.length;
+                          
+                          validateTypes.push({
+                              type: type,
+                              values: [],
+                              colIndexes: []
+                          });
+                      }
+                      
+                      var vType = validateTypes[typeToIndex[type]];
+                      if(!vType['colIndexes'].includes(headerIndex)) {
+                          vType['colIndexes'].push(headerIndex);
+                      }
+                      
+                      Roo.each(_this.data.data.rows, function(r, rowIndex) {
+                          if(r[headerIndex] == '') {
+                              return;
+                          }
+                          vType['values'].push({
+                              value: r[headerIndex],
+                              error: false,
+                              rowIndex: rowIndex,
+                              col: _this.data.colMap[headerIndex]
+                          });
                       });
                   }
               });
+              
           });
           
-          var emailColIndexes = [];
-          Roo.each(_this.data.data.headers, function (h, headerIndex)  {
-              if(_this.data.emailCols.includes(_this.data.colMap[headerIndex])) {
-                  emailColIndexes.push(headerIndex);
+          // after all validations are done
+          var onValidate = function() {
+              _this.validIndexes = Array.from(_this.data.data.rows.keys());
+              
+              var errors = [];
+              var errMsg = '';
+              var colIndexToType = {};
+              
+              Roo.each(validateTypes, function(vType) {
+                  var fails = 0;
+                  Roo.each(vType['values'], function(vValue) {
+                      if(vValue['error'] !== false) {
+                          fails++;
+                          errors.push(vValue['error']);
+                          _this.validIndexes.remove(vValue['rowIndex']);
+                      }
+                  });
+                  
+                  errMsg = fails + " " + vType['type'] + " have failed, " + errMsg;
+                  
+                  Roo.each(vType['colIndexes'], function(colIndex) {
+                      colIndexToType[colIndex] = vType['type'];
+                  });
+              });
+              
+              
+              if(errors.length) {
+                  Roo.MessageBox.hide();
+                  // show errors
+                  Roo.MessageBox.show({
+                      title: errMsg + "we will import the contacts without invalid values", 
+                      multiline: 500,
+                      value: errors.join("\n"),
+                      buttons: {ok: "Download failed contacts"},
+                      closable: false,
+                      fn: function(res) {
+                          new Pman.Download({
+                              newWindow :  true,
+                              url : _this.data.url,
+                              method : 'GET',
+                              params: {
+                                  'fileId': _this.data.fileId,
+                                  'validateTypes': Roo.encode(colIndexToType)
+                              }
+                          });
+                      }
+                  });
               }
-          });
+              
+              return;
+          }
           
-          var validateIndex = 0;
+          var validateTypeIndex = 0;
+          var validateValueIndex = 0;
           
-          var validateEmail = function() {
-              var email = emails[validateIndex]['email'];
-              var rowIndex = emails[validateIndex]['rowIndex'];
-              var emailCol = emails[validateIndex]['col'];
+          // validate a value
+          var validateValue = function() {
+              // validation is done
+              if(validateTypeIndex == validateTypes.length) {
+                  Roo.MessageBox.hide();
+                  onValidate();
+                  return;
+              }
+              var vType = validateTypes[validateTypeIndex];
+              var vValues = vType['values'];
+              
+              // validation of values with this type is done
+              if(validateValueIndex == vValues.length) {
+                  // validate values with the next type
+                  validateTypeIndex ++;
+                  // reset
+                  validateValueIndex = 0;
+                  validateValue();
+                  return;
+              }
+              
+              var vValue = vValues[validateValueIndex];
+              
+              var type = vType['type'];
+              var value = vValue['value'];
+              var rowIndex = vValue['rowIndex'];
+              var col = vValue['col'];
               
               new Pman.Request({
                   url: _this.data.url,
                   timeout : 60000,
                   params: {
-                      _validate_email_file_id: _this.data.fileId,
-                      _validate_email: email
+                      fileId: _this.data.fileId,
+                      _validate_type: type,
+                      _validate_value: value
                   },
                   failure : function(res)
                   {
-                      validateEmail(); // try again?
+                      validateValue(); // try again?
                   },
                   success: function(res) {
                       var rec = _this.grid.dataSource.getAt(rowIndex);
                       if(!res.data.valid) {
-                          emails[validateIndex]['error'] = res.data.errorMsg;
+                          vValue['error'] = res.data.errorMsg;
                           if(rec) {
                               rec.set('valid', '');
                           }
                       }
                       else {
                           if(rec) {
-                              rec.set(emailCol + '_valid', true);
+                              rec.set(col + '_valid', true);
                           }
                       }
                       
-                      validateIndex ++;
+                      validateValueIndex ++;
                       Roo.MessageBox.updateProgress(
-                          validateIndex / emails.length,
-                          validateIndex + " / " + emails.length + " emails validated"
+                          validateValueIndex / vValues.length,
+                          validateValueIndex + " / " + vValues.length + " " + type + " validated"
                       );
                       
-                      
-                      if(emails.length == validateIndex) {
-                          Roo.MessageBox.hide();
-                          
-                          _this.validIndexes = Array.from(_this.data.data.rows.keys());
-                          
-                          var errors = [];
-                          
-                          Roo.each(emails, function(e)  {
-                              if(e.error !== false) {
-                                  errors.push(e.error);
-                                  _this.validIndexes.remove(e.rowIndex);
-                              }
-                          });
-                          
-                          if(errors.length) {
-                              // show errors
-                              Roo.MessageBox.show({
-                                  title: errors.length + " emails have failed, we will import the contacts without bad email", 
-                                  multiline: 500,
-                                  value: errors.join("\n"),
-                                  buttons: {ok: "Download failed contacts"},
-                                  closable: false,
-                                  fn: function(res) {
-                                      new Pman.Download({
-                                          newWindow :  true,
-                                          url : _this.data.url,
-                                          method : 'GET',
-                                          params: {
-                                              'fileId': _this.data.fileId,
-                                              'emailColIndexes': Roo.encode(emailColIndexes)
-                                          }
-                                      });
-                                  }
-                              });
-                          }
-                          
-                          return;
-                      }
-                      
-                      validateEmail();
+                      validateValue();
                   }
               });
           };
           
-          Roo.MessageBox.progress("Validating emails", "Starting");
+          Roo.MessageBox.progress("Validation", "Starting");
           
           new Pman.Request({
               url: _this.data.url,
@@ -249,12 +304,13 @@ Pman.Dialog.PreviewRowsImport = {
                   _get_old_emails: 1,
                   fileId: _this.data.fileId,
                   colMap: Roo.encode(_this.data.colMap),
-                  emailColIndexes: Roo.encode(emailColIndexes)
+                  emailColIndexes: Roo.encode(validateTypes[typeToIndex['email']]['colIndexes'])
               },
               success: function(res) {
                   var oldEmails = res.data;
-                  emails = emails.filter(function(emailObj) {
-                      if(!oldEmails.includes(emailObj.email)) {
+                  
+                  validateTypes[typeToIndex['email']]['values'] = validateTypes[typeToIndex['email']]['values'].filter(function(emailObj) {
+                      if(!oldEmails.includes(emailObj.value)) {
                           return true;
                       }
                       
@@ -268,12 +324,8 @@ Pman.Dialog.PreviewRowsImport = {
                       return false;
                   });
                   
-                  if(!emails.length) {
-                      Roo.MessageBox.hide();
-                      _this.validIndexes = Array.from(_this.data.data.rows.keys());
-                      return;
-                  }
-                  validateEmail();
+                  // start validation
+                  validateValue();
               }
           });
       }
