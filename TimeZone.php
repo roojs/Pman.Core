@@ -243,6 +243,12 @@ class Pman_Core_TimeZone extends Pman
         $displayArea = str_replace('_', ' ', self::toArea($tz));
         $displayOffset = '(GMT ' . self::toTimeOffset($dt,$tz) . ')';
 
+        static $cache = array();
+        $key = $lang . '::' . $displayArea;
+        if(isset($cache[$key])) {
+            return $cache[$key];
+        }
+
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
             'etype' => 'Timezone.Area',
