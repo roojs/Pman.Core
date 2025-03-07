@@ -203,6 +203,12 @@ class Pman_Core_TimeZone extends Pman
     {
         $region = explode('/', $tz)[0];
 
+        static $cache = array();
+        $key = $lang . '::' . $region;
+        if(isset($cache[$key])) {
+            return $cache[$key];
+        }
+
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
             'etype' => 'Timezone.Region',
@@ -211,6 +217,7 @@ class Pman_Core_TimeZone extends Pman
             'display_name' => $region
         ));
         if(!$ce->find(true)) {
+            $cache[$key] = $region;
             return $region;
         }
 
