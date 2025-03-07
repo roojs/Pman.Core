@@ -218,7 +218,7 @@ class Pman_Core_TimeZone extends Pman
         ));
         if(!$ce->find(true)) {
             $cache[$key] = $region;
-            return $region;
+            return $cache[$key];
         }
 
         $ct = DB_DataObject::factory('core_templatestr');
@@ -231,11 +231,11 @@ class Pman_Core_TimeZone extends Pman
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
             $cache[$key] = $region;
-            return $region;
+            return $cache[$key];
         }
 
         $cache[$key] = $ct->txt;
-        return $ct->txt;
+        return $cache[$key];
     }
 
     static function toDisplayArea($lang, $dt, $tz)
@@ -259,7 +259,7 @@ class Pman_Core_TimeZone extends Pman
 
         if(!$ce->find(true)) {
             $cache[$key] = $displayArea . ' ' . $displayOffset;
-            return $displayArea . ' ' . $displayOffset;
+            return $cache[$key];
         }
 
         $ct = DB_DataObject::factory('core_templatestr');
@@ -272,11 +272,11 @@ class Pman_Core_TimeZone extends Pman
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
             $cache[$key] = $displayArea . ' ' . $displayOffset;
-            return $displayArea . ' ' . $displayOffset;
+            return $cache[$key];
         }
 
         $cache[$key] = $ct->txt . ' ' . $displayOffset;
-        return $ct->txt . ' ' . $displayOffset;
+        return $cache[$key];
 
     }
 
