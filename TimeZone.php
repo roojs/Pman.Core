@@ -230,13 +230,11 @@ class Pman_Core_TimeZone extends Pman
             'on_col' => 'display_name',
             'active' => 1
         ));
-        if(!$ct->find(true) || empty($ct->txt)) {
-            return $region;
-        }
 
-        $cache[$key] = $ct->txt;
-        
-        return $ct->txt;
+        $cache[$key] = (!$ct->find(true) || empty($ct->txt)) ? $region : $ct->txt;
+
+        return $cache[$key];
+
     }
 
     static function toDisplayArea($lang, $dt, $tz)
