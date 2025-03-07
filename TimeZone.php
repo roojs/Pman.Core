@@ -233,6 +233,8 @@ class Pman_Core_TimeZone extends Pman
             $cache[$key] = $region;
             return $region;
         }
+
+        $cache[$key] = $ct->txt;
         return $ct->txt;
     }
 
