@@ -206,7 +206,7 @@ class Pman_Core_TimeZone extends Pman
         static $cache = array();
         $key = $lang . '::' . $region;
         if(isset($cache[$key])) {
-            return $cache[$key];
+            // return $cache[$key];
         }
 
         $ce = DB_DataObject::factory('core_enum');
