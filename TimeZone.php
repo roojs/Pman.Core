@@ -203,6 +203,14 @@ class Pman_Core_TimeZone extends Pman
     {
         $region = explode('/', $tz)[0];
 
+        static $cache = array();
+
+        $key = $region . '::' . $lang;
+        
+        if (isset($cache[$key])) {
+            return $cache[$key];
+        }
+
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
             'etype' => 'Timezone.Region',
