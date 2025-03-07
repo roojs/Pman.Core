@@ -258,6 +258,7 @@ class Pman_Core_TimeZone extends Pman
         ));
 
         if(!$ce->find(true)) {
+            $cache[$key] = $displayArea . ' ' . $displayOffset;
             return $displayArea . ' ' . $displayOffset;
         }
 
@@ -270,9 +271,11 @@ class Pman_Core_TimeZone extends Pman
             'active' => 1
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
+            $cache[$key] = $displayArea . ' ' . $displayOffset;
             return $displayArea . ' ' . $displayOffset;
         }
 
+        $cache[$key] = $ct->txt . ' ' . $displayOffset;
         return $ct->txt . ' ' . $displayOffset;
 
     }
