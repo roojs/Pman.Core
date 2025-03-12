@@ -655,7 +655,10 @@ Pman.Dialog.CoreEmail = {
                              }
                              _this.sendBtn.show();
                          }
-                         return;
+                         
+                         if(typeof(_this.sendTest) == 'undefined' || _this.sendTest !== true) {
+                             return;
+                         }
                      }
                      
                      _this.dialog.hide();
