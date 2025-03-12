@@ -636,6 +636,7 @@ Pman.Dialog.CoreEmail = {
                      return;
                  }
                  if (action.type =='submit') {
+                     Roo.log('SUBMIT');
                      var module = _this.data.module;
                  
                      _this.dialog.el.unmask();
