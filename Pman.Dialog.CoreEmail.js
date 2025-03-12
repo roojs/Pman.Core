@@ -217,8 +217,6 @@ Pman.Dialog.CoreEmail = {
         {
             
             _this.form.preValidate(function(res) {
-                Roo.log("PREVALIDATE RESULT");
-                Roo.log(res);
                 if (!res) {
                     return; //failed.
                 }
