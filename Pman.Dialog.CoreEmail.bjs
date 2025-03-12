@@ -1643,6 +1643,8 @@
        "{",
        "    ",
        "    _this.form.preValidate(function(res) {",
+       "        Roo.log(\"PREVALIDATE RESULT\");",
+       "        Roo.log(res);",
        "        if (!res) {",
        "            return; //failed.",
        "        }",
