@@ -572,6 +572,11 @@ Pman.Dialog.CoreEmail = {
                      _this.stripoUpdate.hide();
                      _this.sendBtn.hide();
                      _this.sendTestBtn.hide();
+                     
+                     
+                     if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
+                         _this.sendTestBtn.show();
+                     }
                          
                      if(_this.data.id*1 > 0){
                          _this.dialog.el.mask("Loading");
