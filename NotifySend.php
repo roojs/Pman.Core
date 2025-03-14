@@ -292,7 +292,7 @@ class Pman_Core_NotifySend extends Pman
             
         }
 
-        var_dump($email);
+        var_dump($email['headers']);
         die('test');
         
         
