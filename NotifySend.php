@@ -174,7 +174,6 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
         
-        DB_DataObject::debugLevel(1);
         $o = $w->object();
         
         if ($o === false)  {
