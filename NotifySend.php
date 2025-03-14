@@ -291,6 +291,9 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+
+        var_dump($email);
+        die('test');
         
         
             
