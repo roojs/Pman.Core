@@ -193,6 +193,8 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(  $ev->remarks);
         }
 
+        var_dump($p->tableName());
+        die('test');
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
