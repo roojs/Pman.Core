@@ -139,8 +139,6 @@ class Pman_Core_NotifySend extends Pman
         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - use force to try again\n");
         }
-
-        die('test');
         
         
         if (!empty($opts['debug'])) {
@@ -185,6 +183,10 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
+
+
+
+        die('test');
      
         
         
