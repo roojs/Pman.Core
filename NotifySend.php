@@ -321,6 +321,9 @@ class Pman_Core_NotifySend extends Pman
         
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
+
+        var_dump($dom);
+        die('test');
         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
