@@ -195,10 +195,7 @@ class Pman_Core_NotifySend extends Pman
 
         if($w->person_table == 'mail_imap_actor') {
             $p->email = $p->email();
-        } 
-
-        var_dump($p->email);
-        die('test');
+        }
 
         // has it failed mutliple times..
         
