@@ -193,6 +193,13 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(  $ev->remarks);
         }
 
+        if($w->person_table == 'mail_imap_actor') {
+            $p->email = $p->email();
+        } 
+
+        var_dump($p->email);
+        die('test');
+
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
