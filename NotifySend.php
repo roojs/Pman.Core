@@ -100,16 +100,27 @@ class Pman_Core_NotifySend extends Pman
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
-        if (!$ff->cli) {
+        if ($ff->cli) {
+            return true;
+        }
+        if (empty($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
             $this->errorHandler("access denied");
         }
         //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
         return true;
         
     }
+    function post($id, $opts = array())
+    {
+        $opts = $_REQUEST; // kludgy...
+        $this->get($id, $opts); // wrapper to allow it to be called from http.
+        
+    }
    
     function get($id,$opts=array())
     {
+        
+        
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -250,7 +261,7 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
-        
+         
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
             $w->flagDone($ev, '');
@@ -261,8 +272,8 @@ class Pman_Core_NotifySend extends Pman
                 'error' => $email->toString()
             );
         }
-        
-        if (empty($p) && !empty($email['recipients'])) {
+      
+        if ((empty($p) || empty($p->id)) && !empty($email['recipients'])) {
             // make a fake person..
             $p = (object) array(
                 'email' => $email['recipients']
@@ -321,7 +332,7 @@ class Pman_Core_NotifySend extends Pman
         
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
-        
+         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
         
