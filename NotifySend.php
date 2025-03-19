@@ -415,12 +415,6 @@ class Pman_Core_NotifySend extends Pman
         // we can only update act_when if it has not been sent already (only happens when running in force mode..)
         // set act when if it's empty...
         $w->act_when =  (!$w->act_when || $w->act_when == '0000-00-00 00:00:00') ? $retry_when : $w->act_when;
-
-
-
-
-        var_dump($dom);
-        die('test');
         
         $w->update($ww);
         
