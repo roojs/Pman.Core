@@ -345,10 +345,6 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler($ev->remarks);
             
         }
-
-
-        var_dump($dom);
-        die('test');
         
         
         $ff = HTML_FlexyFramework::get();
