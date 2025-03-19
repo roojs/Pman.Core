@@ -534,10 +534,7 @@ class Pman_Core_NotifySend extends Pman
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
-            $this->debug("GOT response to send: ". print_r($res,true)); 
-
-            var_dump($res);
-            die('test');
+            $this->debug("GOT response to send: ". print_r($res,true));
             
             if ($res === true) {
                 // success....
