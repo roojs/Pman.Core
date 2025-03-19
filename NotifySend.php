@@ -268,9 +268,6 @@ class Pman_Core_NotifySend extends Pman
                 'email' => $email['recipients']
             );
         }
-
-        var_dump($w->person_table);
-        die('test');
          
         if ($email === false || isset($email['error']) || empty($p)) {
             // object returned 'false' - it does not know how to send it..
