@@ -100,6 +100,7 @@ class Pman_Core_NotifySend extends Pman
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
+        
         if ($ff->cli) {
             return true;
         }
@@ -577,7 +578,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
                  
-                $this->errorHandler( " SENT {$w->id} - {$ev->remarks}", true);
+                $this->successHandler("SENT {$w->id} - {$ev->remarks}");
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -760,7 +761,7 @@ class Pman_Core_NotifySend extends Pman
         }
         echo $str . "\n";
     }
-    function output()
+    function output() // framework output caller..
     {
         $this->errorHandler("done\n");
     }
@@ -775,21 +776,25 @@ class Pman_Core_NotifySend extends Pman
         }
     }
     
-    function errorHandler($msg, $success = false)
+    function errorHandler($msg)
     {
         if($this->error_handler == 'exception'){
-            if($success){
-                throw new Pman_Core_NotifySend_Exception_Success($msg);
-            }
-            
             throw new Pman_Core_NotifySend_Exception_Fail($msg);
         }
-        
+        if (!$this->cli) {
+            $this->jnotice("SENDFAIL", $msg );
+        }
         die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
         
         
     }
-    
+    function successHandler($msg, $success = false)
+    {
+        if (!$this->cli) {
+            $this->jok($msg);
+        }
+        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
+    }
     function updateServer($w)
     {
         $ff = HTML_FlexyFramework::get();
