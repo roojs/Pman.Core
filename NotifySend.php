@@ -323,7 +323,7 @@ class Pman_Core_NotifySend extends Pman
        
         
             // since some of them have spaces?!?!
-        $p->email = trim($p->email);
+        $p->email = empty($p->email) ? '' : trim($p->email);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
         
