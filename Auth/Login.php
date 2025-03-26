@@ -195,6 +195,11 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         return;
     }
+
+    function updateCloudflare()
+    {
+        
+    }
     
     
 }
