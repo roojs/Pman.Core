@@ -204,6 +204,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         var_dump($ff);
 
+        die('test');
+
         /*
         // Headers for API requests
         $headers = array(
