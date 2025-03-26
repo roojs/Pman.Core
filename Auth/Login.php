@@ -207,20 +207,14 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
 
 
-
-        var_dump($baseURL);
-        var_dump($zoneId);
-        var_dump($apiToken);
-
-        die('test');
-
-        /*
         // Headers for API requests
         $headers = array(
             "Authorization: Bearer $apiToken",
             "Content-Type: application/json"
         );
-        */
+
+        var_dump(listFirewallRules($baseURL, $headers));
+        die('test');
     }
     
     // Function to list all firewall rules
