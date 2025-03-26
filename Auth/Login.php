@@ -95,6 +95,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         }
         
         $this->ip_checking();
+
+        $this->updateCloudflare();
         
 		
         DB_DataObject::factory('core_person_window')->check($u, $_REQUEST, false);
