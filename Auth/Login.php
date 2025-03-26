@@ -202,6 +202,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     {
         $ff = HTML_FlexyFramework::get();
 
+        $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
+        var_dump($ip);
+
         $baseURL = $ff->Pman_Core_Auth['cloudflare']['baseURL'];
         $zoneId = $ff->Pman_Core_Auth['cloudflare']['zoneId'];
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
