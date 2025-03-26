@@ -233,51 +233,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if ($httpCode == 200) {
             return json_decode($response, true)['result'];
         } else {
-            echo "Failed to fetch firewall rules: $httpCode - $response\n";
+            // echo "Failed to fetch firewall rules: $httpCode - $response\n";
             return [];
         }
-    }
-
-    // Function to delete a firewall rule
-    function deleteFirewallRule($ruleId, $zoneId, $headers) {
-        $deleteUrl = $GLOBALS['baseUrl'] . "/$ruleId";
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $deleteUrl);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode == 200) {
-            echo "Successfully deleted firewall rule with ID: $ruleId\n";
-        } else {
-            echo "Failed to delete firewall rule with ID: $ruleId - $httpCode - $response\n";
-            exit;
-        }
-    }
-
-    // Function to delete all firewall rules
-    function deleteAllFirewallRules($zoneId, $headers) {
-        $rules = listFirewallRules($GLOBALS['baseUrl'] . '?per_page=1000', $headers);
-        print_r($rules); 
-        if (empty($rules)) {
-            echo "No firewall rules found.\n";
-            return;
-        }
-        $n = 0;
-        foreach ($rules as $rule) {
-            if ($rule['mode'] != 'block' && $rule['mode'] != 'challenge') {
-                continue;
-            }
-            if ($rule['scope']['email'] != 'jennifer.kok@media-outreach.com') {
-                continue;
-            }
-            
-            deleteFirewallRule($rule['id'], $zoneId, $headers);
-            $n++;
-        }
-        return $n;
     }
 }
