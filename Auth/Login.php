@@ -239,7 +239,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
                 'notes' => 'logged in via portal'
             ];
 
-            var_dump($data);
+            // var_dump($data);
+            var_dump($ff);
         }
         die('test');
     }
