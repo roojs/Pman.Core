@@ -223,7 +223,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // set mode to 'whitelist' and notes to 'logged in via {$appName}'
         $data = [
-            'mode' => 'whitelist',
+            'mode' => 'challenge',
             'configuration' => [
                 'target' => 'ip',
                 'value' => $ip
