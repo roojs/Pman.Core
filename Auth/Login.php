@@ -223,7 +223,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         foreach($rules as $rule) {
             // matching ip -> skip
-            if($rules['configuration']['target'] == 'ip' || $rules['configuration']['value'] == $ip) {
+            if($rules['configuration']['target'] == 'ip' && $rules['configuration']['value'] == $ip) {
                 $matchingRule = $rule;
                 break;
             }
