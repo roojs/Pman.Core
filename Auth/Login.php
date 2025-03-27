@@ -239,40 +239,15 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
-        $rules
-        
-
-
-
-        var_dump($rule);
-        die('test');
-
-        $matchingRule = false;
-
-        foreach($rules as $rule) {
-            // matching ip -> skip
-            if($rule['configuration']['target'] == 'ip' && $rule['configuration']['value'] == $ip) {
-                $matchingRule = $rule;
-                break;
-            }
-        }
-
-
-        var_dump($data);
-
-        // no rule for the client ip -> add one
-        if($matchingRule === false) {
-            var_dump('ADD');
-            // $this->addFirewallRule($url, $headers, $data);
-            die('test');
-        }
+        $rule = $rules[0];
 
         // matching rule's mode is not 'whitelist' -> update
-        if($matchingRule['mode'] != 'whitelist') {
+        if($rule['mode'] != 'whitelist') {
             var_dump('UPDATE');
-            var_dump($matchingRule['id']);
+            // var_dump($matchingRule['id']);
             // $this->updateFirewallRule($url, $headers, $data, $matchingRule['id']);
         }
+
         die('test');
     }
     
