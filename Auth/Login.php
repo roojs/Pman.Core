@@ -306,7 +306,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         curl_close($ch);
     
         if ($httpCode != 200) {
-            $this->jnotice("CLOUDFLAREFAIL", "Failed to update firewall rule with ID: $ruleId - $httpCode - $response\n");
+            ini_set('display_errors', '0');
+            trigger_error("Failed to update firewall rule with ID: $ruleId - $httpCode - $response\n");
+            ini_set('display_errors', '1');
         }
     }
 
