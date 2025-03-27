@@ -154,7 +154,8 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
                 }
             } else {
                 if ($log_error) {
-                    $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+                    $ff->page->jerror("LOGIN-BAD", "There was a problem with your login \n" .
+                                      " - Please try logging in again - you were previously logged in as {$w->person()->email}");
                 }
             }
             
