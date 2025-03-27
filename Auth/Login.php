@@ -285,9 +285,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
     
-        if ($httpCode == 200) {
-            // echo "Successfully added firewall rule\n";
-        } else {
+        if ($httpCode != 200) {
             $this->jnotice("CLOUDFLAREFAIL", "Failed to add firewall rule: $httpCode - $response");
         }
     }
@@ -305,9 +303,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
     
-        if ($httpCode == 200) {
-            // echo "Successfully updated firewall rule with ID: $ruleId\n";
-        } else {
+        if ($httpCode != 200) {
             $this->jnotice("CLOUDFLAREFAIL", "Failed to update firewall rule with ID: $ruleId - $httpCode - $response\n");
         }
     }
