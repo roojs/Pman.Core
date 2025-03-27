@@ -202,9 +202,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     {
         $ff = HTML_FlexyFramework::get();
 
-        if(empty($ff->Pman_Coer_Auth['clodflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
-            $this->jnotice('NOINFO', 'no info');
-            // die('no info');
+        if(empty($ff->Pman_Core_Auth['clodflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
             return;
         }
 
@@ -214,8 +212,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
         if(empty($ip)) {
-            die('no ip');
-            // return;
+            return;
         }
 
         // Headers for API requests
