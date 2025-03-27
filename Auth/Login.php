@@ -210,9 +210,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
-        ini_set('display_errors', '0');
-        trigger_error('HIAA');
-        ini_set('display_errors', '1');
 
         if(!empty($ip)) {
             return;
