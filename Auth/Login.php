@@ -225,7 +225,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             // matching ip -> skip
             if($rule['configuration']['target'] == 'ip' && $rule['configuration']['value'] == $ip) {
                 $matchingRule = $rule;
-                var_dump('MATCH!!!!!!!!!!!!!!!');
                 break;
             }
         }
