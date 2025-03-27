@@ -204,8 +204,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         if(empty($ff->Pman_Coer_Auth['clodflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
             $this->jnotice('NOINFO', 'no info');
-            die('no info');
-            // return;
+            // die('no info');
+            return;
         }
 
         $baseURL = $ff->Pman_Coe_Auth['cloudflare']['baseURL'];
