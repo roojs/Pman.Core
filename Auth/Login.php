@@ -233,10 +233,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
 
-        // var_dump($rules);
-        // die('test');
-
-
+        // no such rule -> add
         if(empty($rules)) {
             $this->addFirewallRule($baseURL, $headers, $data);
             return;
@@ -249,8 +246,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             $this->updateFirewallRule($baseURL, $headers, $data, $rule['id']);
             return;
         }
-
-        $this->deleteFirewallRule($baseURL, $headers, $rule['id']);
     }
     
     // Function to get firewall rules by ip
@@ -308,24 +303,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if ($httpCode != 200) {
             ini_set('display_errors', '0');
             trigger_error("Failed to update firewall rule with ID: $ruleId - $httpCode - $response");
-            ini_set('display_errors', '1');
-        }
-    }
-
-    // Function to delete a firewall rule
-    function deleteFirewallRule($url, $headers, $ruleId) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "$url/$ruleId");
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode != 200) {
-            ini_set('display_errors', '0');
-            trigger_error("Failed to delete firewall rule with ID: $ruleId - $httpCode - $response");
             ini_set('display_errors', '1');
         }
     }
