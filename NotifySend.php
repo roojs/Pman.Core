@@ -794,7 +794,7 @@ class Pman_Core_NotifySend extends Pman
     function successHandler($msg)
     {
         if (!$this->cli) {
-            $this->jok($msg);
+            $this->jok(str_replace("\n", "<br/>", $msg));
         }
         die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
     }
