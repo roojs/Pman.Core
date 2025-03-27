@@ -227,18 +227,24 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
 
+        $data = [
+            'mode' => 'whitelist',
+            'configuration' => [
+                'target' => 'ip',
+                'value' => $ip
+            ],
+            'notes' => "logged in via $ff->appName"
+        ];
+
         // no rule for the client ip -> add one
         if($matchingRule === false) {
-            $data = [
-                'mode' => 'whitelist',
-                'configuration' => [
-                    'target' => 'ip',
-                    'value' => $ip
-                ],
-                'notes' => "logged in via $ff->appName"
-            ];
 
-            var_dump($data);
+            var_dump('ADD');
+        }
+
+        if($matchingRule['mode'] != 'whitelist') {
+            var_dump('UPDATE');
+            var_dump($matchingRule);
         }
         die('test');
     }
