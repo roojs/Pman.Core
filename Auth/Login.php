@@ -250,7 +250,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
-        $this->deleteFirewallRule($baseURL, $headers, $ip);
+        $this->deleteFirewallRule($baseURL, $headers, $rule['id']);
     }
     
     // Function to get firewall rules by ip
