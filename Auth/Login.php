@@ -247,7 +247,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             var_dump('UPDATE');
             var_dump($matchingRule['id']);
             // $this->updateFirewallRule($url, $headers, $data, $matchingRule['id']);
-            var_dump($matchingRule);
         }
         die('test');
     }
