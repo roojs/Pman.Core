@@ -290,8 +290,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if ($httpCode == 200) {
             // echo "Successfully added firewall rule\n";
         } else {
-            // echo "Failed to add firewall rule: $httpCode - $response\n";
-            exit;
+            $this->jnotice("CLOUDFLAREFAIL", "Failed to add firewall rule: $httpCode - $response");
         }
     }
 
