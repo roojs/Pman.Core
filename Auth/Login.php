@@ -234,7 +234,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
 
-        if(empty($rule)) {
+        if(empty($rules)) {
             // $this->addFirewallRule($url, $headers, $data);
             return;
         }
