@@ -210,7 +210,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
-        $ip = '188.166.177.24';
+        // $ip = '188.166.177.24';
 
         if(empty($ip)) {
             return;
@@ -246,6 +246,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             $this->updateFirewallRule($url, $headers, $data, $rule['id']);
             return;
         }
+
+        $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
+
+        var_dump($rules);
 
         die('test');
     }
