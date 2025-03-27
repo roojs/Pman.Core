@@ -231,9 +231,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             'notes' => "logged in via $ff->appName"
         ];
 
-        var_dump($data);
-        die('test');
-
         $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
 
         if(empty($rules)) {
