@@ -238,7 +238,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
 
         if(empty($rules)) {
-            $this->addFirewallRule($url, $headers, $data);
+            $this->addFirewallRule($baseURL, $headers, $data);
             return;
         }
 
@@ -246,7 +246,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // matching rule's mode is not 'whitelist' -> update
         if($rule['mode'] != 'whitelist') {
-            $this->updateFirewallRule($url, $headers, $data, $rule['id']);
+            $this->updateFirewallRule($baseURL, $headers, $data, $rule['id']);
             return;
         }
 
