@@ -261,8 +261,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         die('test');
     }
     
-    // Function to list all firewall rules
-    function listFirewallRules($url, $headers) 
+    // Function to get a firewall rule by ip
+    function getFirewallRuleByIp($url, $headers, $ip) 
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
