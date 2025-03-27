@@ -100,16 +100,28 @@ class Pman_Core_NotifySend extends Pman
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
-        if (!$ff->cli) {
+        
+        if ($ff->cli) {
+            return true;
+        }
+        if (empty($_SERVER['REQUEST_METHOD']) || $_SERVER['REQUEST_METHOD'] != 'POST') {
             $this->errorHandler("access denied");
         }
         //HTML_FlexyFramework::ensureSingle(__FILE__, $this);
         return true;
         
     }
+    function post($id, $opts = array())
+    {
+        $opts = $_REQUEST; // kludgy...
+        $this->get($id, $opts); // wrapper to allow it to be called from http.
+        
+    }
    
     function get($id,$opts=array())
     {
+        
+        
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -254,7 +266,7 @@ class Pman_Core_NotifySend extends Pman
          
         // this may modify $p->email. (it will not update it though)
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
-        
+         
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
             $w->flagDone($ev, '');
@@ -265,8 +277,8 @@ class Pman_Core_NotifySend extends Pman
                 'error' => $email->toString()
             );
         }
-        
-        if (empty($p) && !empty($email['recipients'])) {
+      
+        if ((empty($p) || empty($p->id)) && !empty($email['recipients'])) {
             // make a fake person..
             $p = (object) array(
                 'email' => $email['recipients']
@@ -315,7 +327,7 @@ class Pman_Core_NotifySend extends Pman
        
         
             // since some of them have spaces?!?!
-        $p->email = trim($p->email);
+        $p->email = empty($p->email) ? '' : trim($p->email);
         $ww = clone($w);
         $ww->to_email = empty($ww->to_email) ? $p->email : $ww->to_email;
         
@@ -325,7 +337,7 @@ class Pman_Core_NotifySend extends Pman
         
         $explode_email = explode('@', $ww->to_email);
         $dom = array_pop($explode_email);
-        
+         
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
         
@@ -462,6 +474,10 @@ class Pman_Core_NotifySend extends Pman
                 // you can set Core_Notify:tls to true to force it to use tls on all connections (where available)
                 $mailer->tls = $ff->Core_Notify['tls'];
             }
+            if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
+                $mailer->tls = false;
+            }
+             
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
                 // we might want to regex 'office365 as a mx host 
@@ -569,7 +585,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
                  
-                $this->errorHandler( " SENT {$w->id} - {$ev->remarks}", true);
+                $this->successHandler("SENT {$w->id} - {$ev->remarks}");
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -752,7 +768,7 @@ class Pman_Core_NotifySend extends Pman
         }
         echo $str . "\n";
     }
-    function output()
+    function output() // framework output caller..
     {
         $this->errorHandler("done\n");
     }
@@ -767,21 +783,25 @@ class Pman_Core_NotifySend extends Pman
         }
     }
     
-    function errorHandler($msg, $success = false)
+    function errorHandler($msg)
     {
         if($this->error_handler == 'exception'){
-            if($success){
-                throw new Pman_Core_NotifySend_Exception_Success($msg);
-            }
-            
             throw new Pman_Core_NotifySend_Exception_Fail($msg);
         }
-        
+        if (!$this->cli) {
+            $this->jnotice("SENDFAIL", $msg );
+        }
         die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
         
         
     }
-    
+    function successHandler($msg, $success = false)
+    {
+        if (!$this->cli) {
+            $this->jok($msg);
+        }
+        die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
+    }
     function updateServer($w)
     {
         $ff = HTML_FlexyFramework::get();

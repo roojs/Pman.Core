@@ -203,6 +203,12 @@ class Pman_Core_TimeZone extends Pman
     {
         $region = explode('/', $tz)[0];
 
+        static $cache = array();
+        $key = $lang . '::' . $region;
+        if(isset($cache[$key])) {
+            return $cache[$key];
+        }
+
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
             'etype' => 'Timezone.Region',
@@ -211,7 +217,8 @@ class Pman_Core_TimeZone extends Pman
             'display_name' => $region
         ));
         if(!$ce->find(true)) {
-            return $region;
+            $cache[$key] = $region;
+            return $cache[$key];
         }
 
         $ct = DB_DataObject::factory('core_templatestr');
@@ -223,15 +230,24 @@ class Pman_Core_TimeZone extends Pman
             'active' => 1
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
-            return $region;
+            $cache[$key] = $region;
+            return $cache[$key];
         }
-        return $ct->txt;
+
+        $cache[$key] = $ct->txt;
+        return $cache[$key];
     }
 
     static function toDisplayArea($lang, $dt, $tz)
     {
         $displayArea = str_replace('_', ' ', self::toArea($tz));
         $displayOffset = '(GMT ' . self::toTimeOffset($dt,$tz) . ')';
+
+        static $cache = array();
+        $key = $lang . '::' . $displayArea;
+        if(isset($cache[$key])) {
+            return $cache[$key];
+        }
 
         $ce = DB_DataObject::factory('core_enum');
         $ce->setFrom(array(
@@ -242,7 +258,8 @@ class Pman_Core_TimeZone extends Pman
         ));
 
         if(!$ce->find(true)) {
-            return $displayArea . ' ' . $displayOffset;
+            $cache[$key] = $displayArea . ' ' . $displayOffset;
+            return $cache[$key];
         }
 
         $ct = DB_DataObject::factory('core_templatestr');
@@ -254,10 +271,12 @@ class Pman_Core_TimeZone extends Pman
             'active' => 1
         ));
         if(!$ct->find(true) || empty($ct->txt)) {
-            return $displayArea . ' ' . $displayOffset;
+            $cache[$key] = $displayArea . ' ' . $displayOffset;
+            return $cache[$key];
         }
 
-        return $ct->txt . ' ' . $displayOffset;
+        $cache[$key] = $ct->txt . ' ' . $displayOffset;
+        return $cache[$key];
 
     }
 
