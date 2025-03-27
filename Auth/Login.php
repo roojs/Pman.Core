@@ -221,7 +221,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     }
     
     // Function to list all firewall rules
-    function listFirewallRules($url, $headers) {
+    function listFirewallRules($url, $headers) 
+    {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -235,6 +236,26 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         } else {
             // echo "Failed to fetch firewall rules: $httpCode - $response\n";
             return [];
+        }
+    }
+
+    // Function to add a firewall eul
+    function addFirewallRule($url, $headers, $data) 
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    
+        if ($httpCode == 200) {
+            echo "Successfully deleted firewall rule with ID: $ruleId\n";
+        } else {
+            echo "Failed to delete firewall rule with ID: $ruleId - $httpCode - $response\n";
+            exit;
         }
     }
 }
