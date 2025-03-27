@@ -265,7 +265,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     function getFirewallRuleByIp($url, $headers, $ip) 
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_URL, $url . "?configuration.target=$ip&configuration.value=192.0.2.1");
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
