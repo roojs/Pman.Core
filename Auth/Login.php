@@ -315,4 +315,26 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             exit;
         }
     }
+
+    // Function to delete a firewall rule
+    /*
+    function deleteFirewallRule($ruleId, $zoneId, $headers) {
+        $deleteUrl = $GLOBALS['baseUrl'] . "/$ruleId";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $deleteUrl);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode == 200) {
+            echo "Successfully deleted firewall rule with ID: $ruleId\n";
+        } else {
+            echo "Failed to delete firewall rule with ID: $ruleId - $httpCode - $response\n";
+            exit;
+        }
+    }
+    */
 }
