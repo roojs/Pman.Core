@@ -308,7 +308,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     
         if ($httpCode != 200) {
             ini_set('display_errors', '0');
-            trigger_error("Failed to update firewall rule with ID: $ruleId - $httpCode - $response\n");
+            trigger_error("Failed to update firewall rule with ID: $ruleId - $httpCode - $response");
             ini_set('display_errors', '1');
         }
     }
@@ -324,11 +324,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($httpCode == 200) {
-            echo "Successfully deleted firewall rule with ID: $ruleId\n";
-        } else {
-            echo "Failed to delete firewall rule with ID: $ruleId - $httpCode - $response\n";
-            exit;
+        if ($httpCode != 200) {
+            ini_set('display_errors', '0');
+            trigger_error("Failed to delete firewall rule with ID: $ruleId - $httpCode - $response");
+            ini_set('display_errors', '1');
         }
     }
 }
