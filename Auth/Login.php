@@ -217,6 +217,20 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         );
 
         var_dump($this->listFirewallRules($baseURL, $headers));
+        $rules = $this->listFirewallRules($baseURL, $headers);
+
+        foreach($rules as $rule) {
+            // non matching ip -> skip
+            if($rules['configuration']['target'] != 'ip' || $rules['configuration']['value'] != $ip) {
+                continue;
+            }
+            // ok -> skip
+            if($rules['mode'] == 'whitelist') {
+                continue;
+            }
+
+
+        }
         die('test');
     }
     
