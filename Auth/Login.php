@@ -230,7 +230,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
 
-        var_dump($rule);
+        var_dump($matchingRule);
         die('test');
     }
     
