@@ -238,13 +238,14 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // no rule for the client ip -> add one
         if($matchingRule === false) {
-
-            var_dump('ADD');
+            // var_dump('ADD');
+            $this->addFirewallRule($url, $headers, $data);
             die('test');
         }
 
         if($matchingRule['mode'] != 'whitelist') {
-            var_dump('UPDATE');
+            // var_dump('UPDATE');
+            $this->updateFirewallRule($url, $headers, $data);
             var_dump($matchingRule);
         }
         die('test');
