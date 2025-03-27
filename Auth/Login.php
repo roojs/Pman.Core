@@ -286,6 +286,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
     // Function to update a firewall rule
     function updateFirewallRule($url, $headers, $data, $ruleId) 
     {
+        $updateUrl = "$url/$ruleId";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
