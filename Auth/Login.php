@@ -227,6 +227,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
 
+        // set mode to 'whitelist' and notes to 'logged in via {$appName}'
         $data = [
             'mode' => 'whitelist',
             'configuration' => [
@@ -245,6 +246,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             die('test');
         }
 
+        // matching rule's mode is not 'whitelist' -> update
         if($matchingRule['mode'] != 'whitelist') {
             var_dump('UPDATE');
             var_dump($matchingRule['id']);
