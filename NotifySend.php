@@ -578,7 +578,10 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
                  
-                $this->successHandler("SENT {$w->id} - {$ev->remarks}");
+                $this->successHandler("Message to {$w->to_email} was successfully sent\n".
+                                    "Message Id: {$w->id}\n" .
+                                    "Subject: {$email['headers']['Subject']}"
+                                  );
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -788,7 +791,7 @@ class Pman_Core_NotifySend extends Pman
         
         
     }
-    function successHandler($msg, $success = false)
+    function successHandler($msg)
     {
         if (!$this->cli) {
             $this->jok($msg);
