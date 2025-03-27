@@ -204,16 +204,13 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
-        if(empty($ff->Pman_Coer_Auth['cloudflare']['baseeURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
+        if(empty($ff->Pman_Coer_Auth['cloudflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
             die('no info');
             // return;
         }
 
         $baseURL = $ff->Pman_Coe_Auth['cloudflare']['baseURL'];
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
-
-        die('test');
-
 
         // Headers for API requests
         $headers = array(
