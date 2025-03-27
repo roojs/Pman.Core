@@ -232,12 +232,15 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             'notes' => "logged in via $ff->appName"
         ];
 
-        $rule = $this->getFirewallRuleByIp($baseURL, $headers, $ip);
+        $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
 
         if(empty($rule)) {
             // $this->addFirewallRule($url, $headers, $data);
             return;
         }
+
+        $rules
+        
 
 
 
@@ -273,8 +276,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         die('test');
     }
     
-    // Function to get a firewall rule by ip
-    function getFirewallRuleByIp($url, $headers, $ip) 
+    // Function to get firewall rules by ip
+    function getFirewallRulesByIp($url, $headers, $ip) 
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url . "?configuration.target=ip&configuration.value=$ip");
