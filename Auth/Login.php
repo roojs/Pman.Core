@@ -275,7 +275,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if ($httpCode == 200) {
             return json_decode($response, true)['result'];
         } else {
-            $this->jnotice("CLOUDFLAREFAIL", "Failed to get firewall rule with ip $ip: $httpCode - $response");
+            $this->jnotice("CLOUDFLAREFAIL", "Failed to get firewall rule with ip: $ip - $httpCode - $response");
         }
     }
 
