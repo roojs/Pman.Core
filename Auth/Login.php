@@ -211,13 +211,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
         ini_set('display_errors', '0');
-        trigger_error('HI');
+        trigger_error('HIAA');
         ini_set('display_errors', '1');
-        var_dump($ip);
-        die('test');
-        // $ip = '188.166.177.24';
 
-        if(empty($ip)) {
+        if(!empty($ip)) {
             return;
         }
 
