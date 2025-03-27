@@ -218,7 +218,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             "Content-Type: application/json"
         );
 
-        $rules = $this->getFirewallRuleByIp($baseURL, $headers);
+        $rules = $this->getFirewallRuleByIp($baseURL, $headers, $ip);
 
         $matchingRule = false;
 
