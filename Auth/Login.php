@@ -245,7 +245,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -254,9 +253,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         curl_close($ch);
     
         if ($httpCode == 200) {
-            echo "Successfully deleted firewall rule with ID: $ruleId\n";
+            // echo "Successfully deleted firewall rule with ID: $ruleId\n";
         } else {
-            echo "Failed to delete firewall rule with ID: $ruleId - $httpCode - $response\n";
+            // echo "Failed to add firewall rule: $httpCode - $response\n";
             exit;
         }
     }
