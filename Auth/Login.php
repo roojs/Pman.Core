@@ -235,11 +235,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
                     'target' => 'ip',
                     'value' => $ip
                 ],
-                'notes' => 'logged in via portal'
+                'notes' => "logged in via $ff->appName"
             ];
 
-            // var_dump($data);
-            var_dump($ff);
+            var_dump($data);
         }
         die('test');
     }
