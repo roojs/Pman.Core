@@ -223,7 +223,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // set mode to 'whitelist' and notes to 'logged in via {$appName}'
         $data = [
-            'mode' => 'challenge',
+            'mode' => 'whitelist',
             'configuration' => [
                 'target' => 'ip',
                 'value' => $ip
@@ -233,8 +233,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
 
-        var_dump($rules);
-        die('test');
+        // var_dump($rules);
+        // die('test');
 
 
         if(empty($rules)) {
