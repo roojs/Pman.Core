@@ -266,11 +266,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         if ($httpCode == 200) {
             return json_decode($response, true)['result'];
-        } else {
-            ini_set('display_errors', '0');
-            trigger_error("Failed to get firewall rule with ip: $ip - $httpCode - $response");
-            ini_set('display_errors', '1');
         }
+        ini_set('display_errors', '0');
+        trigger_error("Failed to get firewall rule with ip: $ip - $httpCode - $response");
+        ini_set('display_errors', '1');
     }
 
     // Function to add a firewall rule
@@ -287,7 +286,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         curl_close($ch);
     
         if ($httpCode != 200) {
-            $this->jnotice("CLOUDFLAREFAIL", "Failed to add firewall rule: $httpCode - $response");
+            ini_set('display_errors', '0');
+            trigger_error("Failed to add firewall rule: $httpCode - $response");
+            ini_set('display_errors', '1');
         }
     }
 
