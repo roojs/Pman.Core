@@ -240,6 +240,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         if($matchingRule === false) {
 
             var_dump('ADD');
+            die('test');
         }
 
         if($matchingRule['mode'] != 'whitelist') {
