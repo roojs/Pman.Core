@@ -203,7 +203,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $ff = HTML_FlexyFramework::get();
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
-        var_dump($ip);
 
         $baseURL = $ff->Pman_Core_Auth['cloudflare']['baseURL'];
         $zoneId = $ff->Pman_Core_Auth['cloudflare']['zoneId'];
@@ -229,7 +228,19 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
 
-        var_dump($matchingRule);
+        // no rule for the client ip -> add one
+        if($matchingRule === false) {
+            $data = [
+                'mode' => 'whitelist',
+                'configuration' => [
+                    'target' => 'ip',
+                    'value' => $ip
+                ],
+                'notes' => 'logged in via portal'
+            ];
+
+            var_dump($data);
+        }
         die('test');
     }
     
