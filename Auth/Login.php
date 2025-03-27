@@ -243,9 +243,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // matching rule's mode is not 'whitelist' -> update
         if($rule['mode'] != 'whitelist') {
-            // var_dump('UPDATE');
-            var_dump($rule['id']);
-            // $this->updateFirewallRule($url, $headers, $data, $rule['id']);
+            $this->updateFirewallRule($url, $headers, $data, $rule['id']);
+            return;
         }
 
         die('test');
