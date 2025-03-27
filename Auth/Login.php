@@ -221,7 +221,24 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             "Content-Type: application/json"
         );
 
+        // set mode to 'whitelist' and notes to 'logged in via {$appName}'
+        $data = [
+            'mode' => 'whitelist',
+            'configuration' => [
+                'target' => 'ip',
+                'value' => $ip
+            ],
+            'notes' => "logged in via $ff->appName"
+        ];
+
         $rule = $this->getFirewallRuleByIp($baseURL, $headers, $ip);
+
+        if(empty($rule)) {
+            // $this->addFirewallRule($url, $headers, $data);
+            return;
+        }
+
+
 
         var_dump($rule);
         die('test');
@@ -236,15 +253,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             }
         }
 
-        // set mode to 'whitelist' and notes to 'logged in via {$appName}'
-        $data = [
-            'mode' => 'whitelist',
-            'configuration' => [
-                'target' => 'ip',
-                'value' => $ip
-            ],
-            'notes' => "logged in via $ff->appName"
-        ];
 
         var_dump($data);
 
@@ -262,6 +270,23 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             // $this->updateFirewallRule($url, $headers, $data, $matchingRule['id']);
         }
         die('test');
+    }
+
+    function listFirewallRules($url, $headers) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    
+        if ($httpCode == 200) {
+            return json_decode($response, true)['result'];
+        } else {
+            echo "Failed to fetch firewall rules: $httpCode - $response\n";
+            return [];
+        }
     }
     
     // Function to get a firewall rule by ip
