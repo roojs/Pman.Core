@@ -582,6 +582,14 @@ class Pman_Core_NotifySend extends Pman
                         echo "Sent BCC to {$email['bcc']}\n";
                     }
                 }
+
+                if (method_exists($w, 'matchReject')) {
+                    $w->matchReject($errmsg);
+                }
+
+                if($w->ontable == 'mail_imap_message_user' && $w->evtype = 'MAIL') {
+                    $p->email = $p->email();
+                }
                  
                 $this->successHandler("SENT {$w->id} - {$ev->remarks}");
             }
