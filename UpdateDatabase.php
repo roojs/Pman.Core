@@ -621,7 +621,8 @@ class Pman_Core_UpdateDatabase extends Pman
                         case 1060: //    Duplicate column name
                         case 1061: // Duplicate key name - triggered by add index.. but could hide error. - unlikely though.
                         case 1091: // drop index -- name does not exist.. might hide errors..
-                        
+                       // case 1118: // this is a row sze to large - Not event sure
+   
                         case 1146: // drop a index on an unknown table.. - happens rarely...
                         case 1054: // Unknown column -- triggered by CHANGE COLUMN - but may hide other errrors..
                             $continue = 1;
