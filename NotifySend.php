@@ -120,6 +120,9 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
+        var_dump($opts);
+        var_dumP($id);
+        die('test');
         
         
         // DB_DataObject::debugLevel(5);
