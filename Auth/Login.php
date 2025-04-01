@@ -228,7 +228,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
                 'target' => 'ip',
                 'value' => $ip
             ),
-            'notes' => "logged in via $ff->appName"
+            'notes' => "logged in via {$ff->appName}"
         );
 
         $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
