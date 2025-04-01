@@ -542,10 +542,21 @@ Pman.Tab.PersonList.prototype = {
                             Roo.MessageBox.alert("Error",  "Select a Person");
                             return;
                         }
+
+                        if (Pman.Login.window_id === false && (document.location.protocol == 'https:' || document.location.protocol == 'http:' )) {
+                            // persitant in windows..
+                            Pman.Login.window_id = window.sessionStorage.getItem('windowid');
+                            if (!Pman.Login.window_id) {
+                                Pman.Login.window_id = crypto.randomUUID();
+                                window.sessionStorage.setItem('windowid', Pman.Login.window_id);               
+                            }
+                        }
+
                         new Pman.Request({
                             url : baseURL+ '/Core/Auth/Switch',
                             params  :{
-                                user_id : s[0].data.id
+                                user_id : s[0].data.id,
+                                window_id: Pman.Login.window_id
                             },
                             
                             method : 'POST',
