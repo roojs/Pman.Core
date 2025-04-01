@@ -119,9 +119,7 @@ class Pman_Core_NotifySend extends Pman
     }
    
     function get($id,$opts=array())
-    {
-        
-        
+    {   
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -186,7 +184,6 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
         
-        
         $o = $w->object();
         
         if ($o === false)  {
@@ -205,6 +202,11 @@ class Pman_Core_NotifySend extends Pman
              $w->flagDone($ev, '');
             $this->errorHandler(  $ev->remarks);
         }
+
+        if($w->person_table == 'mail_imap_actor') {
+            $p->email = $p->email();
+        }
+
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
@@ -341,6 +343,7 @@ class Pman_Core_NotifySend extends Pman
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
         $w = clone($ww);
+        
     
       
         
@@ -545,7 +548,9 @@ class Pman_Core_NotifySend extends Pman
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
-            $this->debug("GOT response to send: ". print_r($res,true)); 
+            $this->debug("GOT response to send: ". print_r($res,true));
+
+
             
             if ($res === true) {
                 // success....
@@ -577,8 +582,19 @@ class Pman_Core_NotifySend extends Pman
                         echo "Sent BCC to {$email['bcc']}\n";
                     }
                 }
+
+                if (method_exists($w, 'matchReject')) {
+                    $w->matchReject($errmsg);
+                }
+
+                if($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL') {
+                    $o->postSend($this);
+                }
                  
-                $this->successHandler("SENT {$w->id} - {$ev->remarks}");
+                $this->successHandler("Message to {$w->to_email} was successfully sent\n".
+                                    "Message Id: {$w->id}\n" .
+                                    "Subject: {$email['headers']['Subject']}"
+                                  );
             }
             // what type of error..
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
@@ -788,10 +804,10 @@ class Pman_Core_NotifySend extends Pman
         
         
     }
-    function successHandler($msg, $success = false)
+    function successHandler($msg)
     {
         if (!$this->cli) {
-            $this->jok($msg);
+            $this->jok(str_replace("\n", "<br/>", $msg));
         }
         die(date('Y-m-d h:i:s') . ' ' . $msg ."\n");
     }

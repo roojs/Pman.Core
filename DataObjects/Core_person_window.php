@@ -143,19 +143,31 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             }
             
             if ($mw->count()) {
+                
+                // means this user has logins  (on other windows, but not this one)
+                $this->register($user, $req);
+                return true;
+                /*
                 // we should create it?
                 if ($log_error) {
-  
-                    $ff->page->errorlog(
-                        "No login found - wid:{$req['window_id']} but have multiple logins for {$w->person()->email}\n" . 
-                        print_R($mw->fetchAll(false,false,'toArray'), true)
-                    );
+                    $ff->page->jerror("LOGIN-BAD",
+                        "There appears to be a problem with the user you have logged in as - please try logging in again");
+                    //$ff->page->errorlog(
+                    //    "No login found - wid:{$req['window_id']} but have multiple logins for {$w->person()->email}\n" . 
+                    //    print_R($mw->fetchAll(false,false,'toArray'), true)
+                    //);
                     
                 }
+                */
             } else {
+                $this->register($user, $req);
+                return true;
+                    /*
                 if ($log_error) {
-                    $ff->page->errorlog("No login found - but appears to be logged in {$w->person()->email}");
+                    $ff->page->jerror("LOGIN-BAD", "There was a problem with your login \n" .
+                                      " - Please try logging in again - you were previously logged in as {$w->person()->email}");
                 }
+                */
             }
             
             // allow multiwindows at present
