@@ -105,6 +105,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         // we might need this later..
         $this->addEvent("LOGIN". $this->event_suffix, false, session_id());
+
+        $this->updateCloudflare();
 		
 		
 		
@@ -195,6 +197,109 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         
         return;
     }
+
+    function updateCloudflare()
+    {
+        $ff = HTML_FlexyFramework::get();
+
+        if(empty($ff->Pman_Core_Auth['cloudflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
+            return;
+        }
+
+        $baseURL = $ff->Pman_Core_Auth['cloudflare']['baseURL'];
+        $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
+
+        $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
+
+        if(empty($ip)) {
+            return;
+        }
+
+        // Headers for API requests
+        $headers = array(
+            "Authorization: Bearer $apiToken",
+            "Content-Type: application/json"
+        );
+
+        // set mode to 'whitelist' and notes to 'logged in via {$appName}'
+        $data = array(
+            'mode' => 'whitelist',
+            'configuration' => array(
+                'target' => 'ip',
+                'value' => $ip
+            ),
+            'notes' => "logged in via {$ff->appName}"
+        );
+
+        $rules = $this->getFirewallRulesByIp($baseURL, $headers, $ip);
+
+        // no such rule -> add
+        if(empty($rules)) {
+            $this->addFirewallRule($baseURL, $headers, $data);
+            return;
+        }
+
+        $rule = $rules[0];
+
+        // matching rule's mode is not 'whitelist' -> update
+        if($rule['mode'] != 'whitelist') {
+            $this->updateFirewallRule($baseURL, $headers, $data, $rule['id']);
+            return;
+        }
+    }
     
+    // Function to get firewall rules by ip
+    function getFirewallRulesByIp($url, $headers, $ip) 
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url . "?configuration.target=ip&configuration.value=$ip");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode == 200) {
+            return json_decode($response, true)['result'];
+        }
+		
+        $this->errorlog("Failed to get firewall rule with ip: $ip - $httpCode - $response");
+        
+    }
+
+    // Function to add a firewall rule
+    function addFirewallRule($url, $headers, $data) 
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
     
+        if ($httpCode != 200) {
+            $this->errorlog("Failed to add firewall rule: $httpCode - $response");
+        }
+    }
+
+    // Function to update a firewall rule
+    function updateFirewallRule($url, $headers, $data, $ruleId) 
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "$url/$ruleId");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+    
+        if ($httpCode != 200) {
+            $this->errorlog("Failed to update firewall rule with ID: $ruleId - $httpCode - $response");
+        }
+    }
 }
