@@ -562,7 +562,6 @@ class Pman_Core_NotifySend extends Pman
                 $ev->writeEventLog($this->debug_str);
                  
                 $w->flagDone($ev, $email['headers']['Message-Id']);
-                
                  
                 // enable cc in notify..
                 if (!empty($email['headers']['Cc'])) {
@@ -581,10 +580,6 @@ class Pman_Core_NotifySend extends Pman
                     } else {
                         echo "Sent BCC to {$email['bcc']}\n";
                     }
-                }
-
-                if (method_exists($w, 'matchReject')) {
-                    $w->matchReject($errmsg);
                 }
 
                 if($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL') {
