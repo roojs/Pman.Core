@@ -45,9 +45,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(!$this->server_id || !$server->get($this->server_id)) {
                 return false;
             }
-            $cache[$this->domain_id] = $server;
+            $cache[$this->server_id] = $server;
         }
-        return  $cache[$this->domain_id];
+        return  $cache[$this->server_id];
     }
     
     
