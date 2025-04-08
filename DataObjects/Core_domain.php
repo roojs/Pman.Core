@@ -14,6 +14,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     var $domain;
     var $mx_updated;
     var $has_mx;
+    var $server_id; // mail_imap_server
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -34,5 +35,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $cd->insert();
         $cache[$dom] = $cd;
         return $cd;
+    }
+    function server()
+    {
+        static $cache = array();
+        if (!isset($cache[$this->server_id])) {
+            
+            $server = DB_DataObject::factory('mail_imap_server');
+            if(!$this->server_id || !$server->get($this->server_id)) {
+                return false;
+            }
+            $cache[$this->domain_id] = $server;
+        }
+        return  $cache[$this->domain_id];
     }
 }
