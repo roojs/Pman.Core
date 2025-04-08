@@ -49,4 +49,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         return  $cache[$this->domain_id];
     }
+    
+    
+    
 }
