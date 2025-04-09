@@ -399,4 +399,31 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return $p;
     }
+
+    /**
+     * if there is no change, update mx_updated only after 5 days since last udpate
+     * if there is a change, update has_mx and mx_updated
+     * if has_mx changes from 1 to 0, updae no_mx_dt
+     */
+    function updateDomainMX($hasMX) 
+    {
+        $cd = DB_DataObject::factory('core_domain');
+        $cd->get($this->domain_id);
+        $old = clone($cd);
+        if($cd->has_mx != $hasMX) {
+            $cd->has_mx = $hasMX;
+            $cd->mx_updated = date('Y-m-d H:i:s');
+            // expired
+            if(!$cd->has_mx) {
+                $cd->no_mx_dt = date('Y-m-d H:i:s');
+            }
+        }
+        else {
+            // not updated within last 5 days
+            if(strtotime($cd->mx_updated) < strtotime('NOW - 5 day')) {
+                $cd->mx_updated = date('Y-m-d H:i:s');
+            }
+        }
+        $cd->update($old);
+    }
 }
