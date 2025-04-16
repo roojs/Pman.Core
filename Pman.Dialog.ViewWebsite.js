@@ -61,6 +61,7 @@ Pman.Dialog.ViewWebsite = {
           var size = _this.websiteViewPanel.el.getSize();
           
           Roo.log(_this.websiteViewPanel);
+          Roo.log(size);
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
