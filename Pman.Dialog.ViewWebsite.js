@@ -58,7 +58,13 @@ Pman.Dialog.ViewWebsite = {
               return;
           }
           
+          var size = _this.websiteViewPanel.el.getSize();
           
+          _this.websiteViewPanel.setContent(
+              '<iframe ' + 
+              'style="border: 0px;width:' + size.width +'px;height:' + size.height +'px" ' +
+              'src="' + url + '"/>'
+          );
       }
     },
     xns : Roo,
