@@ -62,7 +62,7 @@ Pman.Dialog.ViewWebsite = {
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
-              'style="border: 0px;width:' + size.width +'px;' +
+              'style="border: 0px;width:' + size.width +'px;" ' +
               'src="' + url + '"/>'
           );
       }
