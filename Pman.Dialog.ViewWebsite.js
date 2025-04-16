@@ -36,7 +36,7 @@ Pman.Dialog.ViewWebsite = {
    var _this = this;
    this.dialog = Roo.factory({
     xtype : 'LayoutDialog',
-    closable : false,
+    closable : true,
     collapsible : false,
     draggable : false,
     height : 400,
