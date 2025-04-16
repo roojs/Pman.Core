@@ -7,9 +7,8 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.ViewWebsite = {
 
  _strings : {
-  '801ab24683a4a8c433c6eb40c48bcd9d' :"Download",
   '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",
-  'ea4788705e6873b424c65e91c2846b19' :"Cancel"
+  'a60852f204ed8028c1c58808b746d115' :"Ok"
  },
 
  dialog : false,
@@ -79,51 +78,11 @@ Pman.Dialog.ViewWebsite = {
     buttons : [
      {
       xtype : 'Button',
-      text : _this._strings['ea4788705e6873b424c65e91c2846b19'] /* Cancel */,
+      text : _this._strings['a60852f204ed8028c1c58808b746d115'] /* Ok */,
       listeners : {
        click : function (_self, e)
         {
             _this.dialog.hide();
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
-     {
-      xtype : 'Button',
-      text : _this._strings['801ab24683a4a8c433c6eb40c48bcd9d'] /* Download */,
-      listeners : {
-       click : function (_self, e)
-        {
-            
-            var params = false;
-            
-            if(typeof(_this.data.id) !== 'undefined') {
-                params = {_download: _this.data.id};
-            }
-            
-            if(
-                typeof(_this.data.name) !== 'undefined' &&
-                typeof(_this.data.mimetype) !== 'undefined' &&
-                typeof(_this.data.data_url) !== 'undefined'
-            ) {
-                params = {
-                    _download_name: _this.data.name,
-                    _download_mimetype: _this.data.mimetype,
-                    _download_data_url: _this.data.data_url
-                };
-            }
-            
-            if(params === false) {
-                Roo.MessageBox.alert("Error", "Missing id or name & mimetype & data_url");
-                return;
-            }
-            
-            new Pman.Download({
-                url: baseURL + '/Roo/Mail_imap_file.php',
-                method: 'GET',
-                params: params
-            });
         }
       },
       xns : Roo,
