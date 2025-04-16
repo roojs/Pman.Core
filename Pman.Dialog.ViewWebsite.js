@@ -58,12 +58,15 @@ Pman.Dialog.ViewWebsite = {
               return;
           }
           
+          _this.dialog.setTitle('View URL: ' + url);
+          
           var vw = Roo.lib.Dom.getViewWidth();
           var vh = Roo.lib.Dom.getViewHeight();
           _this.dialog.resizeTo(vw * 0.9, vh * 0.9);
           _this.dialog.moveTo(vw * 0.05, vh * 0.05);
           
           var size = _this.dialog.layout.getRegion('center').el.getSize();
+          
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
