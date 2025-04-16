@@ -96,7 +96,7 @@ Pman.Dialog.ViewWebsite = {
       listeners : {
        render : function (_self)
         {
-            _this.imageViewPanel = this;
+            _this.websiteViewPanel = this;
         }
       },
       xns : Roo,
