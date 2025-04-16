@@ -4,7 +4,7 @@
 
 Roo.namespace('Pman.Dialog');
 
-Pman.Dialog.ViewWebsite = {
+Pman.Dialog.CoreViewWebsite = {
 
  _strings : {
   '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",

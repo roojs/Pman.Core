@@ -81,9 +81,9 @@
   }
  ],
  "modOrder" : "001",
- "name" : "Pman.Dialog.ViewWebsite",
+ "name" : "Pman.Dialog.CoreViewWebsite",
  "parent" : "",
- "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.ViewWebsite.bjs",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreViewWebsite.bjs",
  "permname" : "",
  "strings" : {
   "1e35fe802ad1aaf4414fd68ad3157675" : "View Website",
