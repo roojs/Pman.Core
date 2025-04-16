@@ -58,11 +58,7 @@ Pman.Dialog.ViewWebsite = {
               return;
           }
           
-          var s = _this.dialog.layout.getRegion('center').el.getSize();
-          var size = _this.websiteViewPanel.el.getSize();
-          
-          Roo.log(s);
-          Roo.log(size);
+          var size = _this.dialog.layout.getRegion('center').el.getSize();
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
