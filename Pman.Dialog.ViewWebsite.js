@@ -48,24 +48,17 @@ Pman.Dialog.ViewWebsite = {
      show : function (_self)
       {
           var url = false;
-          if(typeof(_this.data.id) !== 'undefined') {
-              var params = {_download: _this.data.id};
-              url = baseURL + '/Roo/Mail_imap_file.php?' + Roo.urlEncode(params || {});
-          }
           
-          if(typeof(_this.data.data_url) !== 'undefined') {
-              url = _this.data.data_url;
+          if(typeof(_this.data.url) !== 'undefined') {
+              url = _this.data.url;
           }
           
           if(url === false) {
-              Roo.MessageBox.alert("Error", "Missing id or name & mimetype & data_url");
+              Roo.MessageBox.alert("Error", "Missing url");
               return;
           }
           
-          _this.imageViewPanel.el.setWidth('100%');
-          _this.imageViewPanel.el.setHeight('100%');
-          _this.imageViewPanel.el.setStyle('textAlign', 'center');
-          _this.imageViewPanel.setContent("<img style='width:100%; height:100%; object-fit:contain;' src='" + url + "' />");
+          
       }
     },
     xns : Roo,
