@@ -91,34 +91,16 @@ Pman.Dialog.ViewWebsite = {
     ],
     items  : [
      {
-      xtype : 'NestedLayoutPanel',
+      xtype : 'ContentPanel',
       region : 'center',
-      xns : Roo,
-      '|xns' : 'Roo',
-      layout : {
-       xtype : 'BorderLayout',
-       xns : Roo,
-       '|xns' : 'Roo',
-       center : {
-        xtype : 'LayoutRegion',
-        xns : Roo,
-        '|xns' : 'Roo'
-       },
-       items  : [
+      listeners : {
+       render : function (_self)
         {
-         xtype : 'ContentPanel',
-         region : 'center',
-         listeners : {
-          render : function (_self)
-           {
-               _this.imageViewPanel = this;
-           }
-         },
-         xns : Roo,
-         '|xns' : 'Roo'
+            _this.imageViewPanel = this;
         }
-       ]
-      }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ]
    });

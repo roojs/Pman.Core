@@ -14,35 +14,16 @@
     },
     {
      "$ xns" : "Roo",
-     "items" : [
-      {
-       "$ xns" : "Roo",
-       "* prop" : "layout",
-       "items" : [
-        {
-         "$ xns" : "Roo",
-         "* prop" : "center",
-         "xtype" : "LayoutRegion"
-        },
-        {
-         "$ xns" : "Roo",
-         "listeners" : {
-          "render" : [
-           "function (_self)",
-           "{",
-           "    _this.imageViewPanel = this;",
-           "}"
-          ]
-         },
-         "region" : "center",
-         "xtype" : "ContentPanel"
-        }
-       ],
-       "xtype" : "BorderLayout"
-      }
-     ],
+     "listeners" : {
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.imageViewPanel = this;",
+       "}"
+      ]
+     },
      "region" : "center",
-     "xtype" : "NestedLayoutPanel"
+     "xtype" : "ContentPanel"
     },
     {
      "$ xns" : "Roo",
