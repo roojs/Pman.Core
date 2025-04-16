@@ -8,8 +8,8 @@ Pman.Dialog.ViewWebsite = {
 
  _strings : {
   '801ab24683a4a8c433c6eb40c48bcd9d' :"Download",
-  'ea4788705e6873b424c65e91c2846b19' :"Cancel",
-  '36ec304aae173e40778a39721cdd7731' :"View images"
+  '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",
+  'ea4788705e6873b424c65e91c2846b19' :"Cancel"
  },
 
  dialog : false,
@@ -43,7 +43,7 @@ Pman.Dialog.ViewWebsite = {
     height : 400,
     modal : true,
     resizable : false,
-    title : _this._strings['36ec304aae173e40778a39721cdd7731'] /* View images */,
+    title : _this._strings['1e35fe802ad1aaf4414fd68ad3157675'] /* View Website */,
     width : 600,
     listeners : {
      show : function (_self)
