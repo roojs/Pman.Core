@@ -58,9 +58,10 @@ Pman.Dialog.ViewWebsite = {
               return;
           }
           
+          var s = _this.dialog.layout.getRegion('center').el.getSize();
           var size = _this.websiteViewPanel.el.getSize();
           
-          Roo.log(_this.websiteViewPanel);
+          Roo.log(s);
           Roo.log(size);
           
           _this.websiteViewPanel.setContent(
