@@ -1,0 +1,148 @@
+{
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "closable" : false,
+   "collapsible" : false,
+   "draggable" : false,
+   "height" : 400,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "items" : [
+      {
+       "$ xns" : "Roo",
+       "* prop" : "layout",
+       "items" : [
+        {
+         "$ xns" : "Roo",
+         "* prop" : "center",
+         "xtype" : "LayoutRegion"
+        },
+        {
+         "$ xns" : "Roo",
+         "listeners" : {
+          "render" : [
+           "function (_self)",
+           "{",
+           "    _this.imageViewPanel = this;",
+           "}"
+          ]
+         },
+         "region" : "center",
+         "xtype" : "ContentPanel"
+        }
+       ],
+       "xtype" : "BorderLayout"
+      }
+     ],
+     "region" : "center",
+     "xtype" : "NestedLayoutPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Cancel",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    ",
+       "    var params = false;",
+       "    ",
+       "    if(typeof(_this.data.id) !== 'undefined') {",
+       "        params = {_download: _this.data.id};",
+       "    }",
+       "    ",
+       "    if(",
+       "        typeof(_this.data.name) !== 'undefined' &&",
+       "        typeof(_this.data.mimetype) !== 'undefined' &&",
+       "        typeof(_this.data.data_url) !== 'undefined'",
+       "    ) {",
+       "        params = {",
+       "            _download_name: _this.data.name,",
+       "            _download_mimetype: _this.data.mimetype,",
+       "            _download_data_url: _this.data.data_url",
+       "        };",
+       "    }",
+       "    ",
+       "    if(params === false) {",
+       "        Roo.MessageBox.alert(\"Error\", \"Missing id or name & mimetype & data_url\");",
+       "        return;",
+       "    }",
+       "    ",
+       "    new Pman.Download({",
+       "        url: baseURL + '/Roo/Mail_imap_file.php',",
+       "        method: 'GET',",
+       "        params: params",
+       "    });",
+       "}"
+      ]
+     },
+     "text" : "Download",
+     "xtype" : "Button"
+    }
+   ],
+   "listeners" : {
+    "show" : [
+     "function (_self)",
+     "{",
+     "    var url = false;",
+     "    if(typeof(_this.data.id) !== 'undefined') {",
+     "        var params = {_download: _this.data.id};",
+     "        url = baseURL + '/Roo/Mail_imap_file.php?' + Roo.urlEncode(params || {});",
+     "    }",
+     "    ",
+     "    if(typeof(_this.data.data_url) !== 'undefined') {",
+     "        url = _this.data.data_url;",
+     "    }",
+     "    ",
+     "    if(url === false) {",
+     "        Roo.MessageBox.alert(\"Error\", \"Missing id or name & mimetype & data_url\");",
+     "        return;",
+     "    }",
+     "    ",
+     "    _this.imageViewPanel.el.setWidth('100%');",
+     "    _this.imageViewPanel.el.setHeight('100%');",
+     "    _this.imageViewPanel.el.setStyle('textAlign', 'center');",
+     "    _this.imageViewPanel.setContent(\"<img style='width:100%; height:100%; object-fit:contain;' src='\" + url + \"' />\");",
+     "}"
+    ]
+   },
+   "modal" : true,
+   "resizable" : false,
+   "title" : "View images",
+   "width" : 600,
+   "xtype" : "LayoutDialog"
+  }
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.ViewWebsite",
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.ViewWebsite.bjs",
+ "permname" : "",
+ "strings" : {
+  "36ec304aae173e40778a39721cdd7731" : "View images",
+  "801ab24683a4a8c433c6eb40c48bcd9d" : "Download",
+  "ea4788705e6873b424c65e91c2846b19" : "Cancel"
+ },
+ "title" : ""
+}
