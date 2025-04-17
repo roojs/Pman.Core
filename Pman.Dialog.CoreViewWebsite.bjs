@@ -1,0 +1,93 @@
+{
+ "items" : [
+  {
+   "$ xns" : "Roo",
+   "closable" : true,
+   "collapsible" : false,
+   "draggable" : false,
+   "height" : 400,
+   "items" : [
+    {
+     "$ xns" : "Roo",
+     "* prop" : "center",
+     "xtype" : "LayoutRegion"
+    },
+    {
+     "$ xns" : "Roo",
+     "listeners" : {
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.websiteViewPanel = this;",
+       "}"
+      ]
+     },
+     "region" : "center",
+     "xtype" : "ContentPanel"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Ok",
+     "xtype" : "Button"
+    }
+   ],
+   "listeners" : {
+    "show" : [
+     "function (_self)",
+     "{",
+     "    var url = false;",
+     "    ",
+     "    if(typeof(_this.data.url) !== 'undefined') {",
+     "        url = _this.data.url;",
+     "    }",
+     "    ",
+     "    if(url === false) {",
+     "        Roo.MessageBox.alert(\"Error\", \"Missing url\");",
+     "        return;",
+     "    }",
+     "    ",
+     "    _this.dialog.setTitle('View URL: ' + url);",
+     "    ",
+     "    var vw = Roo.lib.Dom.getViewWidth();",
+     "    var vh = Roo.lib.Dom.getViewHeight();",
+     "    _this.dialog.resizeTo(vw * 0.9, vh * 0.9);",
+     "    _this.dialog.moveTo(vw * 0.05, vh * 0.05);",
+     "    ",
+     "    var size = _this.dialog.layout.getRegion('center').el.getSize();",
+     "    ",
+     "    ",
+     "    _this.websiteViewPanel.setContent(",
+     "        '<iframe ' + ",
+     "        'style=\"border: 0px;width:' + size.width +'px;height:' + size.height + 'px\" ' +",
+     "        'src=\"' + url + '\"/>'",
+     "    );",
+     "}"
+    ]
+   },
+   "modal" : true,
+   "resizable" : false,
+   "title" : "View Website",
+   "width" : 600,
+   "xtype" : "LayoutDialog"
+  }
+ ],
+ "modOrder" : "001",
+ "name" : "Pman.Dialog.CoreViewWebsite",
+ "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreViewWebsite.bjs",
+ "permname" : "",
+ "strings" : {
+  "1e35fe802ad1aaf4414fd68ad3157675" : "View Website",
+  "a60852f204ed8028c1c58808b746d115" : "Ok"
+ },
+ "title" : ""
+}
