@@ -582,9 +582,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                 }
 
-                if(
-                    ($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL')
-                 ) {
+                if($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL') {
                     $o->postSend($this);
                 }
                  
