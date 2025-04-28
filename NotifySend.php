@@ -585,6 +585,12 @@ class Pman_Core_NotifySend extends Pman
                 if($w->ontable == 'mail_imap_message_user' && $w->evtype == 'MAIL') {
                     $o->postSend($this);
                 }
+
+                $m = 'onNotify'. $w->evtype;
+                if (!empty($w->evtype) && method_exists($o,$m)) {
+                    $this->debug("calling :" . get_class($o) . '::' .$m );
+                    $o->$m($w);
+                }
                  
                 $this->successHandler("Message to {$w->to_email} was successfully sent\n".
                                     "Message Id: {$w->id}\n" .
