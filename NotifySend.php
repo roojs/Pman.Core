@@ -588,8 +588,8 @@ class Pman_Core_NotifySend extends Pman
 
                 $m = 'onNotify'. $w->evtype;
                 if (!empty($w->evtype) && method_exists($o,$m)) {
-                    $this->debug("calling :" . get_class($this, $o) . '::' .$m );
-                    $o->$m($w);
+                    $this->debug("calling :" . get_class($o) . '::' .$m );
+                    $o->$m($this,$w);
                 }
                  
                 $this->successHandler("Message to {$w->to_email} was successfully sent\n".
