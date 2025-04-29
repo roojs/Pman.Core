@@ -14,16 +14,19 @@ ALTER TABLE core_notify ADD COLUMN  person_id int(11)  NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  msgid varchar(128)  NOT NULL  DEFAULT '';
 
 ALTER TABLE core_notify ADD COLUMN  sent DATETIME ;
-ALTER TABLE core_notify ADD COLUMN  event_id int(11)  NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN  event_id BIGINT NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  watch_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE core_notify ADD COLUMN  trigger_person_id INT(11) NOT NULL DEFAULT 0;
-ALTER TABLE core_notify ADD COLUMN  trigger_event_id INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN  trigger_event_id BIGINT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
 
 
 -- old mysql..
-ALTER TABLE core_notify CHANGE COLUMN bounced event_id INT(11) NOT NULL DEFAULT 0;
+--ALTER TABLE core_notify CHANGE COLUMN bounced event_id BIGINT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify CHANGE COLUMN event_id BIGINT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify CHANGE COLUMN trigger_event_id BIGINT NOT NULL DEFAULT 0;
+
 ALTER TABLE core_notify ADD COLUMN person_table VARCHAR(256) NOT NULL DEFAULT '';
 
 -- ?? why added???  - probably need to document this..
