@@ -290,6 +290,10 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler(  $ev->remarks);
         }
         
+
+        if(empty($email['headers']['Date'])) {
+            $email['headers']['Date'] = date('r'); 
+        }
          
         
         if (isset($email['later'])) {
