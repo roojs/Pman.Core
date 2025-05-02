@@ -237,6 +237,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        if(!empty($q['search']['email_or_name'])) {
+            $this->whereAdd("
+                join_crm_person_id_id.name LIKE '%" . $this->escape($q['search']['email_or_name']) . "%'
+                OR
+                core_notify.to_email LIKE '%" . $this->escape($q['search']['email_or_name']) . "%'
+            ");
+        }
         
         if (!empty($q['search']['contains'])) {
             $this->whereAdd("join_event_id_id.remarks LIKE '%".$this->escape($q['search']['contains']) ."%'");
