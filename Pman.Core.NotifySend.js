@@ -1,5 +1,9 @@
 Pman.Core.NotifySend = {
-
+    /**
+     * 
+     * @param {array} notifications array of core_notify object
+     * @param {*} callback 
+     */
     sendEmails: function(notifications, callback) {
         var errorMsgs = [];
                         
