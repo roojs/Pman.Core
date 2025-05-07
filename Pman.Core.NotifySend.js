@@ -1,10 +1,10 @@
 Pman.Core.NotifySend = {
 
-    sendEmails: function(emails, callback) {
+    sendEmails: function(notifications, callback) {
         var errorMsgs = [];
                         
         var i = 0;  
-        var total = emails.length;
+        var total = notificaitons.length;
         
         var postSend = function() {
             i++;
