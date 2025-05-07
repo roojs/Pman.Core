@@ -1,7 +1,10 @@
 Pman.Core.NotifySend = {
+    emails: [],
+    
     sendEmails: function(emails, callback) {
 
-    }
+    },
+
     sendEmail: function() {
         var notificationId = notifications[i]['id'];
         new Pman.Request({
