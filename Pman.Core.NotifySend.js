@@ -8,7 +8,7 @@ Pman.Core.NotifySend = {
         var errorMsgs = [];
                         
         var i = 0;  
-        var total = notificaitons.length;
+        var total = notificatons.length;
         
         var postSend = function() {
             i++;
