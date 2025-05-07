@@ -1,6 +1,5 @@
 Pman.Core.NotifySend = {
     /**
-     * 
      * @param {array} notifications array of core_notify object
      */
     sendEmails: function(notifications) {
@@ -50,30 +49,5 @@ Pman.Core.NotifySend = {
         Roo.MessageBox.progress("Email Sending", "Starting");
         
         sendEmail();
-    },
-
-    /**
-     * 
-     * @param {number} index index of notification to be sent
-     */
-    sendEmail: function(index) 
-    {
-        var notificationId = notifications[index]['id'];
-        new Pman.Request({
-            url: baseURL + '/Core/NotifySend/' + notificationId,
-            params: {
-                force: 1
-            },
-            method: 'POST',
-            success: function(res)
-            {
-                postSend();
-            },
-            failure: function (res)
-            {
-                errorMsgs.push(notifications[index]['to_email'] + ': ' + res.errorMsg);
-                postSend();
-            }
-        });
     }
 };
