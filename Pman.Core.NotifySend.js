@@ -1,8 +1,8 @@
 Pman.Core.NotifySend = {
     emails: [],
-    
-    sendEmails: function(emails, callback) {
 
+    sendEmails: function(emails, callback) {
+        this.emails = emails
     },
 
     sendEmail: function() {
