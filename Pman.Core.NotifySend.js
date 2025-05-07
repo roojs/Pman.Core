@@ -1,4 +1,6 @@
-Pman.NotifySend = {
+Pman.Core = Pman.Core || {};
+
+Pman.Core.NotifySend = {
     /**
      * @param {array} notifications array of core_notify object
      */
