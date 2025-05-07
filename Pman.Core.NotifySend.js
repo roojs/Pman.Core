@@ -58,7 +58,7 @@ Pman.Core.NotifySend = {
      */
     sendEmail: function(index) 
     {
-        var notificationId = notifications[i]['id'];
+        var notificationId = notifications[index]['id'];
         new Pman.Request({
             url: baseURL + '/Core/NotifySend/' + notificationId,
             params: {
@@ -71,7 +71,7 @@ Pman.Core.NotifySend = {
             },
             failure: function (res)
             {
-                errorMsgs.push(notifications[i]['to_email'] + ': ' + res.errorMsg);
+                errorMsgs.push(notifications[index]['to_email'] + ': ' + res.errorMsg);
                 postSend();
             }
         });
