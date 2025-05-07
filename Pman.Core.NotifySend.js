@@ -52,7 +52,11 @@ Pman.Core.NotifySend = {
         sendEmail();
     },
 
-    sendEmail: function() 
+    /**
+     * 
+     * @param {number} index index of notification to be sent
+     */
+    sendEmail: function(index) 
     {
         var notificationId = notifications[i]['id'];
         new Pman.Request({
