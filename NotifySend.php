@@ -503,7 +503,8 @@ class Pman_Core_NotifySend extends Pman
                         !empty($settings['auth']) &&
                         $settings['auth'] == 'XOAUTH2' // oauth2 method can be used
                     ) {
-                        var_dumP($mx);
+                        $match = true;
+                        var_dump($email['headers']);
                         die('test2');
                     }
                     if(!$match && in_array($dom, $settings['domains'])){
