@@ -541,6 +541,12 @@ class Pman_Core_NotifySend extends Pman
                         if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
                             continue;
                         }
+
+                        $settings['username'] = $fromUser->email;
+                        $settings['password'] = $fromUser->token;
+
+                        var_dump($settings);
+                        die('test');
                     }
                     
                    
