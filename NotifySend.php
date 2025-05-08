@@ -532,6 +532,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
             
+                        // server is oauth?
                         if(!$s->is_oauth) {
                             continue;
                         }
