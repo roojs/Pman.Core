@@ -500,7 +500,7 @@ class Pman_Core_NotifySend extends Pman
                     // mail_imap_user exists for 'From' email
                     if($fromUser !== false && !empty($settings['is_outlook'])) {
                         var_dump($dom);
-                        // $mxRecords = dns_get_record($)
+                        $mxRecords = dns_get_record($dom, DNS_MX);
                         die('test2');
                     }
                     if(!$match && in_array($dom, $settings['domains'])){
