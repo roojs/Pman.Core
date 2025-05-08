@@ -502,6 +502,8 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
 
+                    $host = $server;
+
                     // check if there is a mail_imap_user for the 'From' email before using oauth
                     if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
                         // extract sender's email from 'From'
@@ -546,6 +548,7 @@ class Pman_Core_NotifySend extends Pman
                         var_dump($s->smtp_host);
                         die('test');
 
+                        $server = $s->smtp
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token;
                     }
