@@ -507,10 +507,10 @@ class Pman_Core_NotifySend extends Pman
                                 $match = true;
                             }
                         }
+                        var_dumP($match);
+                        die('test2');
                     }
-
-                    var_dumP($match);
-                    die('test2');
+                    
                     if (!$match) {
                         continue;
                     }
