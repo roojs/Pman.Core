@@ -496,12 +496,14 @@ class Pman_Core_NotifySend extends Pman
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
                     
                     $match = false;
+
+                    var_dump(in_array($dom, $settings['domains']));
                     
                     // mail_imap_user exists for 'From' email
                     if(
                         $fromUser !== false && // mail_imap_user exists for 'From' email
                         strpos($mx, 'outlook.com') !== false && // 'To' email is a outlook user
-                        !empty($settings['is_outlook'])
+                        !empty($settings['is_outlook']) // outlook method available
                     ) {
                         var_dumP($mx);
                         die('test2');
