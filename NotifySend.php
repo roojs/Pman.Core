@@ -445,16 +445,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
-
-        $from = $email['headers']['From'];
-        $fromUser = DB_DataObject::factory('mail_imap_user');
-        $fromUser->setFrom(array(
-            'is_active' => 1
-        ));
-        if(!$fromUser->get('email', $from)) {
-            $fromUser = false;
-        }
-            
                         
         foreach($mxs as $mx) {
             
@@ -511,8 +501,13 @@ class Pman_Core_NotifySend extends Pman
                     if (!$match) {
                         continue;
                     }
-                    
+
                     var_dump($settings['auth']);
+                    if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
+                                            if(!empty($settings['auth']))
+                    var_dump($settings['auth']);
+                    die('test');
+                    }
                     die('test');
                     
                    
