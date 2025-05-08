@@ -508,12 +508,12 @@ class Pman_Core_NotifySend extends Pman
                         }
                     }
 
-                    var_dump($settings['auth']);
-                    die('test');
-
                     if (!$match) {
                         continue;
                     }
+                    
+                    var_dump($settings['auth']);
+                    die('test');
                     
                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
