@@ -497,12 +497,11 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
                     
-                    // mail_imap_user exists for 'From' email
                     if(
                         $fromUser !== false && // mail_imap_user exists for 'From' email
                         strpos($mx, 'outlook.com') !== false && // 'To' email is a outlook user
                         !empty($settings['auth']) &&
-                        $settings['auth'] == 'XOAUTH2'
+                        $settings['auth'] == 'XOAUTH2' // oauth2 method can be used
                     ) {
                         var_dumP($mx);
                         die('test2');
