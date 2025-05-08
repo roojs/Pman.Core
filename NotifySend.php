@@ -512,6 +512,7 @@ class Pman_Core_NotifySend extends Pman
                         $fromUser->setFrom(array(
                             'is_active' => 1
                         ));
+                        $fromUser->whereAdd("token != ''");
                         if(!$fromUser->get('email', $from)) {
                             continue;
                         }
