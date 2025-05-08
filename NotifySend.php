@@ -496,8 +496,6 @@ class Pman_Core_NotifySend extends Pman
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
                     
                     $match = false;
-
-                    var_dump(in_array($dom, $settings['domains']));
                     
                     // mail_imap_user exists for 'From' email
                     if(
