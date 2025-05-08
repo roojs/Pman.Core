@@ -513,9 +513,8 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
                     }
-                    die('test');
-                    }
-                    die('test');
+
+                    die('test2');
                     
                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
