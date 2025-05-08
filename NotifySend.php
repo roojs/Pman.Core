@@ -508,6 +508,9 @@ class Pman_Core_NotifySend extends Pman
                         }
                     }
 
+                    var_dump($settings['auth']);
+                    die('test');
+
                     if (!$match) {
                         continue;
                     }
