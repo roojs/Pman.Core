@@ -497,6 +497,7 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
                     
+                    // 'From' mail_imap_user exists
                     if($fromUser !== false && !empty($settings['is_outlook'])) {
 
                         die('test2');
