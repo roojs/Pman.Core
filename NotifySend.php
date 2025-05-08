@@ -502,9 +502,16 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
 
-                    var_dump($settings['auth']);
                     // check if there is a mail_imap_user for the 'From' email before using oauth
                     if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
+                        $from = $email['headers']['From'];
+                        $fromUser = DB_DataObject::factory('mail_imap_user');
+                        $fromUser->setFrom(array(
+                            'is_active' => 1
+                        ));
+                        if(!$fromUser->get('email', $from)) {
+                            continue;
+                        }
                     }
                                             if(!empty($settings['auth']))
                     var_dump($settings['auth']);
