@@ -479,9 +479,6 @@ class Pman_Core_NotifySend extends Pman
             if (isset($ff->Core_Notify['tls_exclude']) && in_array($mx, $ff->Core_Notify['tls_exclude'])) {
                 $mailer->tls = false;
             }
-
-            var_dump($ff->Core_Notify);
-            die('test');
              
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
