@@ -455,9 +455,6 @@ class Pman_Core_NotifySend extends Pman
         if(!$fromUser->get('email', $from)) {
             $fromUser = false;
         }
-
-        var_dump($mxs);
-        die('test3');
             
                         
         foreach($mxs as $mx) {
