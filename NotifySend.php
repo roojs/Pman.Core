@@ -512,8 +512,31 @@ class Pman_Core_NotifySend extends Pman
                         $fromUser->setFrom(array(
                             'is_active' => 1
                         ));
-                        $fromUser->whereAdd("token != ''");
                         if(!$fromUser->get('email', $from)) {
+                            continue;
+                        }
+
+                        if($fromUser->is_reply_to_only) {
+                            continue;
+                        }
+            
+                        $s = $this->server();
+            
+                        if($s === false) {
+                            continue;
+                        }
+            
+                        $sv = $s->is_valid();
+                        if ($sv !== true) {
+                            continue;
+                        }
+            
+                        if(!$s->is_oauth) {
+                            continue;
+                        }
+            
+                        // has the token expired or does not exist
+                        if (empty($this->token) || empty($this->id_token) || empty($this->code)) {
                             continue;
                         }
                     }
