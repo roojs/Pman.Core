@@ -480,7 +480,7 @@ class Pman_Core_NotifySend extends Pman
                 $mailer->tls = false;
             }
 
-            var_dump($ff->CoreNotify);
+            var_dump($ff->Core_Notify);
             die('test');
              
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
