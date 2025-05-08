@@ -505,6 +505,7 @@ class Pman_Core_NotifySend extends Pman
                     ) {
                         $match = true;
                         var_dump($email['headers']);
+                        var_dump($mx);
                         die('test2');
                     }
                     if(!$match && in_array($dom, $settings['domains'])){
