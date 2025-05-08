@@ -445,7 +445,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
-        
+
         $from = $email['headers']['From'];
         $fromUser = DB_DataObject::factory('mail_imap_user');
         $fromUser->setFrom(array(
@@ -497,7 +497,7 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
                     
-                    if(!empty($settings['is_outlook'])) {
+                    if($fromUser !== false && !empty($settings['is_outlook'])) {
 
                         die('test2');
                     }
