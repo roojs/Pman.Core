@@ -543,7 +543,7 @@ class Pman_Core_NotifySend extends Pman
                         }
 
                         var_dumP($server);
-                        var_dump($server->smtp_host);
+                        var_dump($s->smtp_host);
                         die('test');
 
                         $settings['username'] = $fromUser->email;
