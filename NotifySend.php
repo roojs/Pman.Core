@@ -499,15 +499,13 @@ class Pman_Core_NotifySend extends Pman
                     if(!$match && in_array($dom, $settings['domains'])){
                         $match = true;
                     }
-                    
+
                     if (!$match && !empty($settings['mx'])) {
                         foreach($settings['mx'] as $mmx) {
-                            var_dump($mmx);
                             if (preg_match($mmx, $mx)) {
                                 $match = true;
                             }
                         }
-                        var_dumP($match);
                     }
 
                     if (!$match) {
