@@ -445,6 +445,8 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+
+        die('test');
             
                         
         foreach($mxs as $mx) {
