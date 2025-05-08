@@ -544,9 +544,6 @@ class Pman_Core_NotifySend extends Pman
 
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token;
-
-                        var_dump($settings);
-                        die('test');
                     }
                     
                    
