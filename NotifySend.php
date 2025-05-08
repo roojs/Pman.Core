@@ -538,12 +538,10 @@ class Pman_Core_NotifySend extends Pman
                         }
             
                         // has the token expired or does not exist
-                        if (empty($this->token) || empty($this->id_token) || empty($this->code)) {
+                        if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
                             continue;
                         }
                     }
-
-                    die('test2');
                     
                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
