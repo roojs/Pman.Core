@@ -520,7 +520,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
             
-                        $s = $this->server();
+                        $s = $fromUser->server();
             
                         if($s === false) {
                             continue;
