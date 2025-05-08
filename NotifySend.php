@@ -513,8 +513,6 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
                     }
-                                            if(!empty($settings['auth']))
-                    var_dump($settings['auth']);
                     die('test');
                     }
                     die('test');
