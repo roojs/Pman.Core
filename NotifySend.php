@@ -445,7 +445,8 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
-        var_dump($email['headers']);
+        $from = $email['headers']['From'];
+        var_dump($from);
         die('test');
             
                         
