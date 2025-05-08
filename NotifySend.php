@@ -451,7 +451,7 @@ class Pman_Core_NotifySend extends Pman
             $fromUser = false;
         }
 
-        var_dump($from);
+        var_dump($fromUser);
         die('test');
             
                         
