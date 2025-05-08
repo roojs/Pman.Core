@@ -487,8 +487,10 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
                     
-                    
-                    if(in_array($dom, $settings['domains'])){
+                    if(!empty($settings['is_outlook']) && ) {
+
+                    }
+                    if(!$match && in_array($dom, $settings['domains'])){
                         $match = true;
                     }
                     if (!$match && !empty($settings['mx'])) {
