@@ -457,6 +457,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         var_dump($mxs);
+        die('test3');
             
                         
         foreach($mxs as $mx) {
