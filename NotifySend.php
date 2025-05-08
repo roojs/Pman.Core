@@ -495,6 +495,7 @@ class Pman_Core_NotifySend extends Pman
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
                     
                     $match = false;
+                    $useOAuth = false;
 
                     if(!$match && in_array($dom, $settings['domains'])){
                         $match = true;
