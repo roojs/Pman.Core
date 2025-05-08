@@ -506,7 +506,7 @@ class Pman_Core_NotifySend extends Pman
                     if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
                         preg_match('/<([^>]+)>|^([^<>]+)$/', $email['headers']['From'], $matches);
                         $from = end($matches);
-                        die($from);
+                        
                         $fromUser = DB_DataObject::factory('mail_imap_user');
                         $fromUser->setFrom(array(
                             'is_active' => 1
