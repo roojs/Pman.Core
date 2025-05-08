@@ -495,18 +495,7 @@ class Pman_Core_NotifySend extends Pman
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
                     
                     $match = false;
-                    
-                    if(
-                        $fromUser !== false && // mail_imap_user exists for 'From' email
-                        strpos($mx, 'outlook.com') !== false && // 'To' email is a outlook user
-                        !empty($settings['auth']) &&
-                        $settings['auth'] == 'XOAUTH2' // oauth2 method can be used
-                    ) {
-                        $match = true;
-                        var_dump($email['headers']);
-                        var_dump($mx);
-                        die('test2');
-                    }
+
                     if(!$match && in_array($dom, $settings['domains'])){
                         $match = true;
                     }
@@ -517,6 +506,9 @@ class Pman_Core_NotifySend extends Pman
                             }
                         }
                     }
+
+                    var_dumP($match);
+                    die('test');
                     if (!$match) {
                         continue;
                     }
