@@ -526,6 +526,7 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
             
+                        // server is set up correctly?
                         $sv = $s->is_valid();
                         if ($sv !== true) {
                             continue;
