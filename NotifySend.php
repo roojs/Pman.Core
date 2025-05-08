@@ -501,6 +501,11 @@ class Pman_Core_NotifySend extends Pman
                     if (!$match) {
                         continue;
                     }
+
+                    var_dump($settings);
+                    var_dump($email['headers']);
+                    var_dump($dom);
+                    die('test');
                     
                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
@@ -546,6 +551,8 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
+
+            die('test');
         
            
             
