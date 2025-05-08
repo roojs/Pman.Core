@@ -501,6 +501,7 @@ class Pman_Core_NotifySend extends Pman
                     }
                     if (!$match && !empty($settings['mx'])) {
                         foreach($settings['mx'] as $mmx) {
+                            var_dump($mmx);
                             if (preg_match($mmx, $mx)) {
                                 $match = true;
                             }
