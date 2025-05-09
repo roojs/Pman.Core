@@ -531,8 +531,6 @@ class Pman_Core_NotifySend extends Pman
                                 empty($fromUser->name) ? 
                                 $fromUser->email:
                                 "{$fromUser->name} <{$fromUser->email}>";
-                            var_dump($email['headers']);
-                            die('test');
                         }
             
                         $s = $fromUser->server();
