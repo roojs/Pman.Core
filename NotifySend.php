@@ -521,6 +521,8 @@ class Pman_Core_NotifySend extends Pman
                         if($fromUser->is_reply_to_only) {
                             $sendAsUser = DB_DataObject::factory('mail_imap_user');
                             $sendAsUser->get($fromUser->send_as_id);
+
+                            var_dump($sendAsUser->toArray());
                             die('test');
                             continue;
                         }
