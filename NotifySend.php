@@ -519,6 +519,7 @@ class Pman_Core_NotifySend extends Pman
                         }
 
                         if($fromUser->is_reply_to_only) {
+                            $sendAsUser->get($fromUser->sendAsId);
                             die('test');
                             continue;
                         }
