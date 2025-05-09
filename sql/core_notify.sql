@@ -23,7 +23,7 @@ ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
 
 
 -- old mysql..
---ALTER TABLE core_notify CHANGE COLUMN bounced event_id BIGINT NOT NULL DEFAULT 0;
+-- ALTER TABLE core_notify CHANGE COLUMN bounced event_id BIGINT NOT NULL DEFAULT 0;
 ALTER TABLE core_notify CHANGE COLUMN event_id BIGINT NOT NULL DEFAULT 0;
 ALTER TABLE core_notify CHANGE COLUMN trigger_event_id BIGINT NOT NULL DEFAULT 0;
 
