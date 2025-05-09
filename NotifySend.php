@@ -526,9 +526,9 @@ class Pman_Core_NotifySend extends Pman
                             }
 
 
-                            var_dump($sendAsUser->toArray());
+                            $fromUser = $sendAsUser;
+                            var_dump($fromUser);
                             die('test');
-                            continue;
                         }
             
                         $s = $fromUser->server();
