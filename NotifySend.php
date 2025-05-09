@@ -529,6 +529,7 @@ class Pman_Core_NotifySend extends Pman
                             $fromUser = $sendAsUser;
                             var_dump($email['headers']);
                             $email['headers']['From'] = $fromUser->email;
+                            var_dump($email['headers']);
                             die('test');
                         }
             
