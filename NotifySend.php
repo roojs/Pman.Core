@@ -548,10 +548,6 @@ class Pman_Core_NotifySend extends Pman
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token;
                     }
-
-                    var_dumP($settings);
-                    var_dump($email['headers']);
-                    die('test');
                     
                    
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
