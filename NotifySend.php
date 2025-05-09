@@ -557,8 +557,6 @@ class Pman_Core_NotifySend extends Pman
 
                         $host = $s->smtp_host;
                         $settings['port'] = $s->smtp_port;
-                        var_dump($s->smtp_port);
-                        die('test');
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token;
                     }
