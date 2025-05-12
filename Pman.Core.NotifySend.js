@@ -14,7 +14,7 @@ Pman.Core.NotifySend = function(notifications)
     this.sendEmail();
 }
     
-Roo.apply(Roo.Core.NotifySend.prototype, {    
+Roo.apply(Pman.Core.NotifySend.prototype, {    
     
     notifications : false,
     errorMsgs : false,
