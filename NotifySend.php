@@ -445,7 +445,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
-            
                         
         foreach($mxs as $mx) {
             
@@ -486,11 +485,11 @@ class Pman_Core_NotifySend extends Pman
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
                     
                     $match = false;
-                    
-                    
+
                     if(in_array($dom, $settings['domains'])){
                         $match = true;
                     }
+
                     if (!$match && !empty($settings['mx'])) {
                         foreach($settings['mx'] as $mmx) {
                             if (preg_match($mmx, $mx)) {
@@ -498,8 +497,68 @@ class Pman_Core_NotifySend extends Pman
                             }
                         }
                     }
+
                     if (!$match) {
                         continue;
+                    }
+
+                    $host = $server;
+
+                    // check if there is a mail_imap_user for the 'From' email before using oauth
+                    if(!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
+                        // extract sender's email from 'From'
+                        preg_match('/<([^>]+)>|^([^<>]+)$/', $email['headers']['From'], $matches);
+                        $from = end($matches);
+
+                        $fromUser = DB_DataObject::factory('mail_imap_user');
+                        $fromUser->setFrom(array(
+                            'is_active' => 1
+                        ));
+                        if(!$fromUser->get('email', $from)) {
+                            continue;
+                        }
+
+                        if($fromUser->is_reply_to_only) {
+                            $sendAsUser = DB_DataObject::factory('mail_imap_user');
+                            // reply only and not send_as_id
+                            if(!$sendAsUser->get($fromUser->send_as_id)) {
+                                continue;
+                            }
+
+
+                            $fromUser = $sendAsUser;
+                            $email['headers']['From'] = 
+                                empty($fromUser->name) ? 
+                                $fromUser->email:
+                                "{$fromUser->name} <{$fromUser->email}>";
+                        }
+            
+                        $s = $fromUser->server();
+            
+                        if($s === false) {
+                            continue;
+                        }
+            
+                        // server is set up correctly?
+                        $sv = $s->is_valid();
+                        if ($sv !== true) {
+                            continue;
+                        }
+            
+                        // server is oauth?
+                        if(!$s->is_oauth) {
+                            continue;
+                        }
+            
+                        // has the token expired or does not exist
+                        if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
+                            continue;
+                        }
+
+                        $host = $s->smtp_host;
+                        $settings['port'] = $s->smtp_port;
+                        $settings['username'] = $fromUser->email;
+                        $settings['password'] = $fromUser->token;
                     }
                     
                    
@@ -525,28 +584,21 @@ class Pman_Core_NotifySend extends Pman
                      
                     
                     
-                    $mailer->host = $server;
+                    $mailer->host = $host;
                     $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
                     $mailer->username = $settings['username'];
                     $mailer->password = $settings['password'];
                     if (isset($settings['port'])) {
                         $mailer->port = $settings['port'];
                     }
-                    if (isset($settings['socket_options'])) {
-                        $mailer->socket_options = $settings['socket_options']; 
-                    }
-                    if (isset($settings['tls'])) {
-                        $mailer->tls = $settings['tls'];
-                    }
+                    $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array('ssl' => array('verify_peer_name' => false));
+                    $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
                     
                     break;
                 }
                 
             }
-        
-           
-            
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
