@@ -20,7 +20,16 @@ CREATE TRIGGER core_notify_trigger_after_update
                 AND
                 crm_person_id > 0
             THEN
-            END IF; 
+                CALL core_notify_crm_update(
+                    OLD.reject_match_id,
+                    NEW.reject_match_id,
+                    NEW.crm_person_id,
+                    NEW.id,
+                    NEW.msgid,
+                    NEW.event_id,
+                    NEW.to_email
+                );
+            END IF;
         END;
 $$
  
