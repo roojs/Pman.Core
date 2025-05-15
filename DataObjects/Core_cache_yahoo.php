@@ -27,7 +27,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         newsQueryId=news_ss_symbols&
         enableCb=true
     */
-    static function checkYahoo($str) 
+    function checkYahoo($str) 
     {
         $request = http_build_query(array(
             'q'=>$str,
