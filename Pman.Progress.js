@@ -6,11 +6,10 @@
  *  -- it will call a method with either '1' id or a batch..?
  *  
  */
-
-
+ 
 Pman.Progress = function(cfg)
 {
-    Roo.apply(this, cfg)
+    Roo.apply(this, cfg);
     
     this.items = Array.from(cfg.items); // copy...
     this.items_len = this.items.length;
@@ -36,8 +35,7 @@ Pman.Progress = function(cfg)
             
         }
     ); 
-    
-      
+     
 }
 
 Roo.apply(Pman.Progress.prototype, {
