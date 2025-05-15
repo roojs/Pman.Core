@@ -29,6 +29,14 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
     */
     function checkYahoo($str) 
     {
+       
+        $ccy = DB_DataObject::factory('core_cache_yahoo');
+        if($ccy->get('query', $str)) {
+            return array(
+                'code' => 200,
+                'response' => $ccy->result,
+            );
+        }
         $request = http_build_query(array(
             'q'=>$str,
             'quotesCount'=>12,
@@ -37,14 +45,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
             'multiQuoteQueryId'=>'multi_quote_single_token_query',
             'newsQueryId'=>'news_ss_symbols'
         ));
-
-        $ccy = DB_DataObject::factory('core_cache_yahoo');
-        if($ccy->get('query', $request)) {
-            return array(
-                'code' => 200,
-                'response' => $ccy->result,
-            );
-        }
+        
 
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
  
