@@ -89,7 +89,12 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 'result' => $body_res
             ));
         }
-
+        if ($http_code == 429) {
+                // log errors...
+            ini_set('display_errors', '0');
+            trigger_error("URL: {$url}\n {$res['response']}");
+            ini_set('display_errors', '1');
+        }
         
         return array(
             'code' => $http_code,
