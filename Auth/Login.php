@@ -212,6 +212,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
+        if($ip == '::1') {
+            var_dump('stpo');
+        }
+
         var_dump($ip);
         die('test');
 
