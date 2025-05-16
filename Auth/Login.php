@@ -212,6 +212,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
+        var_dump($ip);
+        die('test');
+
         if(empty($ip)) {
             return;
         }
