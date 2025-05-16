@@ -134,7 +134,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         }
         
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
-        var_dump($_SERVER);
         
         if(empty($ip)){
             $this->jerr('BAD-IP-ADDRESS', array('ip' => $ip));
@@ -201,8 +200,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
     function updateCloudflare()
     {
-        var_dump($ip);
-        die('test');
+        
         $ff = HTML_FlexyFramework::get();
 
         if(empty($ff->Pman_Core_Auth['cloudflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
