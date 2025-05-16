@@ -200,6 +200,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
     function updateCloudflare()
     {
+        var_dump($ip);
+        die('test');
         $ff = HTML_FlexyFramework::get();
 
         if(empty($ff->Pman_Core_Auth['cloudflare']['baseURL']) || empty($ff->Pman_Core_Auth['cloudflare']['apiToken'])) {
