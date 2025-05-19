@@ -225,7 +225,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         // whitelist the address
         $fw->update($ip, "logged in via {$ff->appName}");
 
-        // $fw->delete('37f829d714154042a2a94300cc5e7d99');
+        $fw->delete('9f5f914b802f489ca767e14a028be127');
 
         $rules = $fw->get($ip);
         var_dump($rules);
