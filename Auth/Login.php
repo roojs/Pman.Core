@@ -230,6 +230,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
+        var_dump($fw);
+        die('test');
+
         // Headers for API requests
         $headers = array(
             "Authorization: Bearer $apiToken",
