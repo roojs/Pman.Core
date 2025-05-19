@@ -223,9 +223,9 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
         // whitelist the address
-        // $fw->update($ip, "logged in via {$ff->appName}");
+        $fw->update($ip, "logged in via {$ff->appName}");
 
-        $fw->delete('37f829d714154042a2a94300cc5e7d99');
+        // $fw->delete('37f829d714154042a2a94300cc5e7d99');
 
         $rules = $fw->get($ip);
         var_dump($rules);
