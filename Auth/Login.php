@@ -222,6 +222,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
+        $fw->request($ip);
+
         var_dump($fw);
         die('test');
 
