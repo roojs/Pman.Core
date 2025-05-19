@@ -226,7 +226,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // Headers for API requests
         $headers = array(
-            "Authorization: Bearer $ff->Pman_Core_Auth['cloudflare']['apiToken']",
+            "Authorization: Bearer " . $ff->Pman_Core_Auth['cloudflare']['apiToken'],
             "Content-Type: application/json"
         );
 
