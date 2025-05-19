@@ -222,7 +222,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
-        $rules = $fw->update($ip);
+        $rules = $fw->update($ip, "logged in via {$ff->appName}");
 
         // Headers for API requests
         $headers = array(
