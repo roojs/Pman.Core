@@ -214,7 +214,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // don't whitelist loopback address
         if($ip == '::1' || strpos($ip, '127.') === 0) {
-            return;
+            // return;
         }
 
         if(empty($ip)) {
