@@ -224,41 +224,5 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // whitelist the address
         $rules = $fw->update($ip, "logged in via {$ff->appName}");
-
-        // Headers for API requests
-        $headers = array(
-            "Authorization: Bearer " . $ff->Pman_Core_Auth['cloudflare']['apiToken'],
-            "Content-Type: application/json"
-        );
-
-        // set mode to 'whitelist' and notes to 'logged in via {$appName}'
-        $data = array(
-            'mode' => 'whitelist',
-            'configuration' => array(
-                'target' => 'ip',
-                'value' => $ip
-            ),
-            'notes' => "logged in via {$ff->appName}"
-        );
-
-        $rules2 = $this->getFirewallRulesByIp("https://api.cloudflare.com/client/v4/accounts/" . $ff->Pman_Core_Auth['cloudflare']['account'] . "/firewall/access_rules/rules", $headers, $ip);
-
-        var_dump($rules);
-        var_dumP($rules2);
-        die('test');
-
-        // no such rule -> add
-        if(empty($rules)) {
-            $this->addFirewallRule($baseURL, $headers, $data);
-            return;
-        }
-
-        $rule = $rules[0];
-
-        // matching rule's mode is not 'whitelist' -> update
-        if($rule['mode'] != 'whitelist') {
-            $this->updateFirewallRule($baseURL, $headers, $data, $rule['id']);
-            return;
-        }
     }
 }
