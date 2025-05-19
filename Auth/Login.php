@@ -211,7 +211,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // don't whitelist loopback address
         if($ip == '::1' || strpos($ip, '127.') === 0) {
-            // return;
+            return;
         }
 
         if(empty($ip)) {
@@ -224,11 +224,5 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // whitelist the address
         $fw->update($ip, "logged in via {$ff->appName}");
-
-        $fw->delete('9f5f914b802f489ca767e14a028be127');
-
-        $rules = $fw->get($ip);
-        var_dump($rules);
-        die('test');
     }
 }
