@@ -240,7 +240,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             'notes' => "logged in via {$ff->appName}"
         );
 
-        $rules2 = $this->getFirewallRulesByIp("https://api.cloudflare.com/client/v4/accounts/" . $ff->Pman_Core_Auth['cloudflare']['account'] " . /firewall/access_rules/rules", $headers, $ip);
+        $rules2 = $this->getFirewallRulesByIp("https://api.cloudflare.com/client/v4/accounts/" . $ff->Pman_Core_Auth['cloudflare']['account'] . "/firewall/access_rules/rules", $headers, $ip);
 
         var_dump($rules);
         var_dumP($rules2);
