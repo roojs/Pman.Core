@@ -214,6 +214,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // don't whitelist localhost
         if($ip == '::1') {
+            var_dump($ip);
             die('aa');
             return;
         }
