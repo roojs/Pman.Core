@@ -207,15 +207,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
-        $account = $ff->Pman_Core_Auth['cloudflare']['account'];
-        $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
-
-        var_dump($account);
-        var_dump($apiToken);
-
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
-        var_dumP($ip);
-        die('test');
 
         // don't whitelist loopback address
         if($ip == '::1' || strpos($ip, '127.') === 0) {
