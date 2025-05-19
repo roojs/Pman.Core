@@ -214,8 +214,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // don't whitelist localhost
         if($ip == '::1') {
-            var_dump($ip);
-            die('aa');
             return;
         }
 
@@ -230,8 +228,6 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         );
 
         // set mode to 'whitelist' and notes to 'logged in via {$appName}'
-        var_dump($ip);
-        die('test');
         $data = array(
             'mode' => 'whitelist',
             'configuration' => array(
