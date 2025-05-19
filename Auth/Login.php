@@ -212,7 +212,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
-        // don't whitelist localhost
+        // don't whitelist any addresses from loopback range
         if($ip == '::1' || strpos($ip, '127.') === 0) {
             return;
         }
