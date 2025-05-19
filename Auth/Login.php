@@ -207,7 +207,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
-        $account = $ff->Pman_Core_Auth['cloudflare']['acount'];
+        $account = $ff->Pman_Core_Auth['cloudflare']['account'];
         $apiToken = $ff->Pman_Core_Auth['cloudflare']['apiToken'];
 
         var_dump($account);
