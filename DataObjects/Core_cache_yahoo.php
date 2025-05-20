@@ -50,18 +50,9 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
  
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-        ));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($ch);
-        var_dump($response);
-        die('test');
 
         $header = array(
-            "Host: query1.finance.yahoo.com",
-            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
-            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
         );
         
         if(!empty($header)){
@@ -71,18 +62,15 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         
-        // curl_setopt($ch, CURLOPT_HEADER, true);
-        // curl_setopt($ch, CURLOPT_VERBOSE, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         
         $verbose = fopen('php://temp', 'w+');
         curl_setopt($ch, CURLOPT_STDERR, $verbose);
         
         $response = curl_exec($ch);
-
-        var_dump($response);
-        die('test');
         
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         
