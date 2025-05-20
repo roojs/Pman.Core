@@ -78,7 +78,12 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $body_res = substr($response, $header_size);
         
         $http_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
-        var_dump($verbose);
+
+        rewind($verbose);
+        $verboseLog = stream_get_contents($verbose);
+        fclose($verbose);
+
+        echo nl2br($verboseLog); // Display verbose log (headers included)
         die('test');
         
         curl_close($ch);
