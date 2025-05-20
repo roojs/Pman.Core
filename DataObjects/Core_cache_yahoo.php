@@ -49,6 +49,8 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
 
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
 
+        $url = "https://query1.finance.yahoo.com/v1/finance/search?q=123&quotesCount=12&newsCount=0&quotesQueryId=tss_match_phrase_query&multiQuoteQueryId=multi_quote_single_token_query&newsQueryId=news_ss_symbols";
+
         $ch = curl_init($url);
 
         $headers = [
