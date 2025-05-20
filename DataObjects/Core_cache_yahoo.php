@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         
         curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
+        // curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         
@@ -79,11 +79,12 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         
         $http_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
 
-        rewind($verbose);
-        $verboseLog = stream_get_contents($verbose);
-        fclose($verbose);
+        // rewind($verbose);
+        // $verboseLog = stream_get_contents($verbose);
+        // fclose($verbose);
 
-        echo nl2br($verboseLog); // Display verbose log (headers included)
+        // echo nl2br($verboseLog); // Display verbose log (headers included)
+        var_dump($http_code);
         die('test');
         
         curl_close($ch);
