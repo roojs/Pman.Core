@@ -50,6 +50,9 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
  
         $ch = curl_init($url);
+        $response = curl_exec($ch);
+        var_dump($response);
+        die('test');
 
         $header = array(
             "Host: query1.finance.yahoo.com",
