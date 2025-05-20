@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         
-        // curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
         // curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
         // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -76,6 +76,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         
         $header_res = substr($response, 0, $header_size);
+        var_dump($header_res);
         $body_res = substr($response, $header_size);
         
         $http_code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
