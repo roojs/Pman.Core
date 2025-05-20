@@ -51,6 +51,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
  
         $ch = curl_init($url);
         $response = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         var_dump($response);
         die('test');
 
