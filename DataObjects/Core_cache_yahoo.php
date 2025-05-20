@@ -65,6 +65,10 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0); // Ensure HTTP/2 is used
 
+        // Set cookie handling
+curl_setopt($ch, CURLOPT_COOKIEJAR, "/tmp/cookies.txt"); // Save cookies
+curl_setopt($ch, CURLOPT_COOKIEFILE, "/tmp/cookies.txt"); // Send stored cookies
+
         $response = curl_exec($ch);
         curl_close($ch);
 
