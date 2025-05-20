@@ -65,7 +65,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         
         $verbose = fopen('php://temp', 'w+');
         curl_setopt($ch, CURLOPT_STDERR, $verbose);
