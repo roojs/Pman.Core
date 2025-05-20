@@ -48,6 +48,30 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         
 
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
+
+        $ch = curl_init($url);
+
+        $headers = [
+            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/130.0.0.0 Safari/537.36",
+            "Accept: */*",
+            "Accept-Encoding: gzip, deflate, br"
+        ];
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0); // Ensure HTTP/2 is used
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Output response
+        echo $response;
+
+        die('test');
  
         $ch = curl_init($url);
 
