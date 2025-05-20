@@ -52,9 +52,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $ch = curl_init($url);
 
         $header = array(
-            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
-            "Accept: application/json",
-            "Connection: keep-alive"
+            "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
         );
         
         if(!empty($header)){
