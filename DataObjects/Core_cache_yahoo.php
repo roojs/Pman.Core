@@ -92,7 +92,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if ($http_code == 429) {
                 // log errors...
             ini_set('display_errors', '0');
-            trigger_error("URL: {$url}\n {$res['response']}");
+            trigger_error("URL: {$url}\n {$response}");
             ini_set('display_errors', '1');
         }
         

@@ -29,19 +29,23 @@ class Pman_Core_Config {
         if (!empty($this->memory_limit)) {
             $mem = ini_get('memory_limit');
             if (php_sapi_name() != 'cli' && $this->to_bytes($mem) < $this->to_bytes($this->memory_limit)) {
-                trigger_error("increase the memory limit settings to 2048M or more", E_USER_ERROR);
+                trigger_error("increase the memory limit settings to 2048M or more", E_USER_WARNING);
+                exit(1);
             }
         
         }
         
         $this->verifyExtensions();
         
-        
+          
+           
         if (!isset($cfg['Pman']['timezone'])) {
-            trigger_error("timezone needs setting in Pman[timezone]", E_USER_ERROR);
+            trigger_error("timezone needs setting in Pman[timezone]", E_USER_WARNING);
+            exit(1);
         }
         if ($cfg['Pman']['timezone'] != ini_get('date.timezone')) {
-            trigger_error("timezone needs setting in php.ini date.timezone = " . $cfg['Pman']['timezone'], E_USER_ERROR);
+            trigger_error("timezone needs setting in php.ini date.timezone = " . $cfg['Pman']['timezone'], E_USER_WARNING);
+            exit(1);
         }
         
         
@@ -111,7 +115,8 @@ class Pman_Core_Config {
         if(empty($error)){
            return true; 
         }
-        trigger_error("Missing Extensions: \n" . implode('\n', $error), E_USER_ERROR);
+        trigger_error("Missing Extensions: \n" . implode('\n', $error), E_USER_WARNING);
+        exit(1);
     }
 
 }
