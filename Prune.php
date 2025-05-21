@@ -111,6 +111,8 @@ class Pman_Core_Prune extends Pman
         $after = $f->count();
         echo "DELETED : " . ($before - $after) . " records\n";
 
+        // just delete all files for events after 6 months?
+        // probably ok - as we only use them to debug (and if we have a backup working - they will be there)
         
         $ce = DB_DataObject::Factory('core_events_archive');
         $ce->deleteUserFiles($inM);
