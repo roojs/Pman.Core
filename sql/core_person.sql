@@ -24,7 +24,9 @@ ALTER TABLE core_person ADD COLUMN   country varchar(8) default '';
 
 -- do not set SQL mode here - it needs to be done in the mysql config (updatedatabase checks for this)
 -- SET SQL_MODE='ALLOW_INVALID_DATES';
-ALTER TABLE core_person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '0000-00-00';
+ALTER TABLE core_person ADD COLUMN   birth_date DATE NOT NULL DEFAULT '1000-01-01';
+ALTER TABLE core_person CHANGE COLUMN  birth_date birth_date DATE NOT NULL DEFAULT '1000-01-01';
+
 
 -- main contact details
 ALTER TABLE core_person ADD COLUMN   email varchar(256)  NOT NULL DEFAULT '';

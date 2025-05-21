@@ -21,10 +21,10 @@ ALTER TABLE Events ADD COLUMN   dupe_id INT(11) NOT NULL DEFAULT 0;
 ALTER TABLE Events ADD COLUMN   remarks text ;
  
 
---#very old code..
+-- #very old code..
 ALTER TABLE Events CHANGE COLUMN EventID id INT(11) AUTO_INCREMENT NOT NULL;
 
---# this are for pre-postgres support code..
+-- # this are for pre-postgres support code..
 ALTER TABLE Events CHANGE COLUMN User person_name VARCHAR(128);
 -- ALTER TABLE Events RENAME COLUMN User TO person_name;
 ALTER TABLE Events CHANGE COLUMN Date event_when DATETIME ;
