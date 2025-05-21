@@ -77,15 +77,12 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
                   Events 
               WHERE 
                   id 
-                 IN 
-                    (
-                     ". implode(',', $ids) . "
-                     )
+                 IN   (". implode(',', $eids) . ")
              ");
              
      
         // looping seems to be far quicker than IN() or any other version..
-        foreach($ids as $id) {     
+        foreach($ids as $eid) {     
             $p->query("                        
                       DELETE FROM  
                           Events 
@@ -96,100 +93,18 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
                    
         $p->query("                        
                   DELETE FROM  
-                      pressrelease_notify                        
-                  WHERE  
-                      ontable = 'pressrelease_entry' 
-                  AND 
-                      onid = $onid
+                      core_notify                        
+                  WHERE
+                      id in (" . implode(',', $ids) . ")
               ");       
-        $p->query("
-              UPDATE 
-                  pressrelease_entry 
-              SET 
-                  archived_dist_summary_all =   
-                  (            
-                      SELECT 
-                         count(id) 
-                      FROM   
-                          pressrelease_notify_archive 
-                      WHERE
-                          onid = $onid
-                      AND
-                          ontable = 'pressrelease_entry'
-                      AND
-                          evtype = 'MAIL'
-                  ),
-                  archived_dist_summary_complete = 
-                  (            
-                      SELECT 
-                          count(id)                       
-                      FROM   
-                          pressrelease_notify_archive 
-                      WHERE
-                          onid = $onid
-                      AND
-                         ontable = 'pressrelease_entry'
-                      AND
-                         sent < NOW()
-                      AND
-                        event_id > 0
-                      AND
-                        evtype = 'MAIL' 
-                  ),
-                  archived_dist_summary_fail = 
-                  (            
-                      SELECT 
-                          count(id)  
-                      FROM   
-                          pressrelease_notify_archive 
-                      WHERE
-                          onid = $onid
-                      AND
-                          ontable = 'pressrelease_entry'
-                      AND
-                          event_id > 0
-                      AND
-                          evtype = 'MAIL'
-                      AND
-                          msgid = ''     
-                  ),
-                  archived_dist_open_summary = 
-                  (            
-                      SELECT 
-                          count(id) 
-                      FROM   
-                          pressrelease_notify_archive
-                      WHERE
-                          onid = $onid
-                      AND
-                          ontable = 'pressrelease_entry'
-                      AND
-                          evtype = 'MAIL'
-                      AND
-                          is_open = 1 
-                  )    
-              WHERE
-                   id = $onid
-             ");        
-                           
+                    
         $p->query("COMMIT");
         
         
         // 100000 in (10.52 sec) (249 days)
         // 500000 in (11-35 sec) (150 days)
         
-        $p = DB_DataObject::factory('Events');
-        $p->query("
-            DELETE FROM
-                 pressrelease_notify_archive 
-            WHERE
-                act_start < NOW() - INTERVAL 2 YEAR
-            ORDER BY
-                id ASC
-            LIMIT
-                50000
-        ");
-                
+        
         
         
         //$p->query("DROP TEMPORARY TABLE IF EXISTS $temp_table");
