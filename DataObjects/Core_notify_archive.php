@@ -30,14 +30,14 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
     public $to_email;
  
  
-    function archive()
+    function archive($months)
     {
         
         $start_time = date("Y-m-d H:i:s");
         echo "$start_time : Start archive core notify\r\n";
 
         $pe = DB_DataObject::factory('core_notify');
-        $pe->whereAdd('act_when < NOW() - INTERVAL 6 MONTH');
+        $pe->whereAdd("act_when < NOW() - INTERVAL {$months} MONTH");
         $pe->orderBy('id ASC');
         $pe->limit(10000);
         $ids = $pe->fetchAll('id');
