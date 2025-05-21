@@ -112,57 +112,8 @@ class Pman_Core_Prune extends Pman
         echo "DELETED : " . ($before - $after) . " records\n";
 
         
+        $ce = DB_DataObject::Factory('core_events_archive');
+        $ce->deleteUserFiles($inM);
         
-        
-        // pruning is for our press project - so we do not clean up dependant tables at present..
-        
-        if (function_exists('posix_getpwuid')) {
-            $uinfo = posix_getpwuid( posix_getuid () ); 
-         
-            $user = $uinfo['name'];
-        } else {
-            $user = getenv('USERNAME'); // windows.
-        }
-        
-        $ff = HTML_Flexyframework::get()->Pman;
-        
-        $y = date("Y");
-        $m = date("m");
-        $rootDir = $ff['storedir'].'/_events_/'.$user;
-        
-        $dirs = array_filter(glob($rootDir."/*"), 'is_dir');
-        foreach($dirs as $d){
-            $mdirs = array_filter(glob($d."/*"), 'is_dir');
-            foreach($mdirs as $md){
-                $dirDate = str_replace($rootDir."/", '', $md);
-                if(strtotime($dirDate."/01") < strtotime("now - {$inM} months")){
-                    //echo "remove $md\n";
-                    $this->delTree($md);
-                      //  echo $md . " is removed. \n";
-                    
-                }
-            }
-        }
-        
-        exit;
     }
-    
-    function delTree($dir)
-    {
-        $files = array_diff(scandir($dir), array('.','..'));
-        echo "$dir : Removing " . count($files) . " files\n";
-        clearstatcache();
-        foreach ($files as $file){
-            if (!file_exists("$dir/$file")) {
-                continue;
-            }
-            if (is_dir("$dir/$file")) {
-                $this->delTree("$dir/$file");
-                continue;
-            }
-            unlink("$dir/$file");
-        }
-        return rmdir($dir); 
-    }
-    
 }
