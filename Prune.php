@@ -48,40 +48,14 @@ class Pman_Core_Prune extends Pman
     
     function prune($inM)
     {
-        // 40 seconds ? to delete 100K records..
-       // DB_DataObject::debugLevel(1);
-       /*
-        $f = DB_DataObject::Factory('Events');
-        $f->query("
-            DELETE FROM Events where 
-                  event_when < NOW() - INTERVAL {$inM} MONTH
-                  AND
-                  action != 'NOTIFY'
-                  LIMIT 100000
-        ");
-        */
-        // notificication events occur alot - so we should trash them more frequently..
-      /*  $f = DB_DataObject::Factory('reader_article');
-        $f->query("
-            DELETE FROM Events where 
-                  event_when < NOW() - INTERVAL 1 MONTH
-                  AND
-                  action IN ('NOTIFY')
-                  LIMIT 100000
-        ");
-        */
-        // rather than deleting them all, it's probably best to just delete notify events that occured to often.
-        // eg. when we tried to deliver multiple times without success...
-        /*
-         *
-         SELECT on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm FROM Events
-         WHERE action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK GROUP BY  on_id, on_table HAVING  mm > 2 ORDER BY mm desc;
-         */
+      
         
         //DB_DataObject::debugLevel(1);
         $f = DB_DataObject::Factory('Events');
         $before = $f->count();
-
+        
+        
+        /// deletes events on 'NOTIFY' that are dupes..
         $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
         $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
@@ -109,10 +83,19 @@ class Pman_Core_Prune extends Pman
         
         $f = DB_DataObject::Factory('Events');
         $after = $f->count();
-        echo "DELETED : " . ($before - $after) . " records\n";
+        echo "DELETED : " . ($before - $after) . " events records\n";
 
-        // just delete all files for events after 6 months?
-        // probably ok - as we only use them to debug (and if we have a backup working - they will be there)
+        // clean up archiver 
+        
+        $f = DB_DataObject::Factory('core_notify');
+        $before = $f->count();
+        $cn  = DB_DataObject::Factory('core_notify_archive');
+        $cn->archive($inM);
+        $f = DB_DataObject::Factory('core_notify');
+        $after = $f->count();
+        
+        echo "DELETED : " . ($before - $after) . " core_notify records\n";
+
         
         $ce = DB_DataObject::Factory('core_events_archive');
         $ce->deleteUserFiles($inM);
