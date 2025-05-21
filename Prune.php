@@ -81,20 +81,21 @@ class Pman_Core_Prune extends Pman
             ");
         }
         
-        $f = DB_DataObject::Factory('Events');
-        $after = $f->count();
-        echo "DELETED : " . ($before - $after) . " events records\n";
-
+        
         // clean up archiver 
         
         $f = DB_DataObject::Factory('core_notify');
-        $before = $f->count();
+        $nbefore = $f->count();
         $cn  = DB_DataObject::Factory('core_notify_archive');
         $cn->archive($inM);
         $f = DB_DataObject::Factory('core_notify');
-        $after = $f->count();
+        $nafter = $f->count();
         
-        echo "DELETED : " . ($before - $after) . " core_notify records\n";
+        echo "DELETED : " . ($nbefore - $nafter) . " core_notify records\n";
+
+        $f = DB_DataObject::Factory('Events');
+        $after = $f->count();
+        echo "DELETED : " . ($before - $after) . " events records\n";
 
         
         $ce = DB_DataObject::Factory('core_events_archive');
