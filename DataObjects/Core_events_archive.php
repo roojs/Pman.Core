@@ -61,6 +61,32 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
         }
         return rmdir($dir); 
     }
-    
+    function archiveEvents($ids)
+    {
+        $p->query("
+              REPLACE INTO
+                  core_events_archive   
+              SELECT * from 
+                  Events 
+              WHERE 
+                  id 
+                 IN 
+                    (
+                     ". implode(',', $ids) . "
+                     )
+             ");
+             
+     
+        // looping seems to be far quicker than IN() or any other version..
+        foreach($ids as $id) {     
+            $p->query("                        
+                      DELETE FROM  
+                          Events 
+                      WHERE   
+                          id = {$id}
+            ");
+        }
+                   
+    }
     
 }
