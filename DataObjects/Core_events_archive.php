@@ -88,5 +88,24 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
         }
                    
     }
+    function deleteOldEvents()
+    {
+        
+        // 100000 in (10.52 sec) (249 days)
+        // 500000 in (11-35 sec) (150 days)
+        
+        $p = DB_DataObject::factory('Events');
+        $p->query("
+            DELETE FROM
+                 pressrelease_notify_archive 
+            WHERE
+                act_start < NOW() - INTERVAL 2 YEAR
+            ORDER BY
+                id ASC
+            LIMIT
+                50000
+        ");
+    }        
+        
     
 }
