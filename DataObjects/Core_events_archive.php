@@ -107,7 +107,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
             }
             $this->query("BEGIN");
             $this->archiveEvents($ids);
-            $this->query("COMMIT"):
+            $this->query("COMMIT");
         }
         
     }
