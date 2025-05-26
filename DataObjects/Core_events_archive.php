@@ -96,12 +96,19 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
         if ($month < 3) {
             return;
         }
-        $e = DB_DataObject::factory('Events');
-        $e->whereAdd("event_when < NOW() - INTERVAL {$month} MONTH");
-        $e->orderBy('id ASC');
-        $e->limit(10000);
-        $ids = $e->fetchAll('id');
-        $this->archiveEvents($ids);
+        for($i = 0; $i < 50;$i++) {
+            $e = DB_DataObject::factory('Events');
+            $e->whereAdd("event_when < NOW() - INTERVAL {$month} MONTH");
+            $e->orderBy('id ASC');
+            $e->limit(10000); // we have over 133k events per day
+            $ids = $e->fetchAll('id');
+            if (empty($ids)) {
+                return;
+            }
+            $this->query("BEGIN");
+            $this->archiveEvents($ids);
+            $this->query("COMMIT"):
+        }
         
     }
          
