@@ -92,22 +92,22 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $ns->poolname = $notify->poolname;
         $ns->is_active = 1;
-        $ns->hostname = gethostname();
+        $ns->hostname = gethostbyaddr("127.0.1.1");
         $ns->limit(1);
-        if ($ns->find(true)) {
+        if (stlen($ns->hostname) && $ns->find(true)) {
             $current = $ns;
             return $ns;
         }
         if (!$force) {
-            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
+            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         // fallback to any server - if we are using force. (this is so helo will work...)
         
         $ns = DB_DataObject::factory('core_notify_server');
         $ns->is_active = 1;
-        $ns->hostname = gethostname();
+        $ns->hostname = gethostbyaddr("127.0.1.1");
         if (!$ns->find(true)) {
-            $notify->jerr("Server not found for this server " .  gethostname() . " in core_notify_server" );
+            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         $current = $ns;
         return $ns;
