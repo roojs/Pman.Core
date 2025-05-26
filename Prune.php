@@ -67,6 +67,7 @@ class Pman_Core_Prune extends Pman
         $ar = $f->fetchAll();
 
         foreach($ar as $f) {
+            
             $q = DB_DataObject::Factory('Events');
             $q->query("DELETE FROM Events where 
                   action = 'NOTIFY'
@@ -98,7 +99,10 @@ class Pman_Core_Prune extends Pman
         echo "DELETED : " . ($before - $after) . " events records\n";
 
         
+        
+        
         $ce = DB_DataObject::Factory('core_events_archive');
+        $ce->moveToArchive($inM);
         $ce->deleteUserFiles($inM);
         
     }
