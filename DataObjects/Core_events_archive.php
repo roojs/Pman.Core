@@ -92,7 +92,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
     
     function moveToArchive($month)
     {
-        $month = inval($month);
+        $month = intval($month);
         if ($month < 3) {
             return;
         }
