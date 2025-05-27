@@ -94,7 +94,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns->is_active = 1;
         $ns->hostname = gethostbyaddr("127.0.1.1");
         $ns->limit(1);
-        if (stlen($ns->hostname) && $ns->find(true)) {
+        if (strlen($ns->hostname) && $ns->find(true)) {
             $current = $ns;
             return $ns;
         }
@@ -106,9 +106,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $ns = DB_DataObject::factory('core_notify_server');
         $ns->is_active = 1;
         $ns->hostname = gethostbyaddr("127.0.1.1");
-        if (!$ns->find(true)) {
+        if (!strlen($ns->hostname) ||  !$ns->find(true)) {
             $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
+        
         $current = $ns;
         return $ns;
     }
