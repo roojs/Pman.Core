@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
     }
     function archiveEvents($ids)
     {
-        $p->query("
+        $this->query("
               REPLACE INTO
                   core_events_archive   
               SELECT * from 
@@ -79,7 +79,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
      
         // looping seems to be far quicker than IN() or any other version..
         foreach($ids as $id) {     
-            $p->query("                        
+            $this->query("                        
                       DELETE FROM  
                           Events 
                       WHERE   
