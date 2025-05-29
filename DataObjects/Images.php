@@ -256,6 +256,12 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         $fn = self::staticGetStoreName($o);
         clearstatcache();
         if (file_exists($fn)) {
+            
+            if (file_exists($fn . '-really-missing')) {
+                unlink($fn . '-really-missing');
+                return false;
+            }
+            
             return true;
         }
         
