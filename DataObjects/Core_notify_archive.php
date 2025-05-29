@@ -87,7 +87,7 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
                       DELETE FROM  
                           Events 
                       WHERE   
-                          id = {$id}
+                          id = {$eid}
             ");
         }
                    
