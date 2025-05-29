@@ -61,6 +61,25 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
         }
         return rmdir($dir); 
     }
+    
+    function deleteOld($yr)
+    {
+        $yr = (int)$yr;
+        $p = DB_DataObject::factory('core_events_archive');
+        $p->query("
+            DELETE FROM
+                core_events_archive
+            WHERE
+                event_when < NOW() - INTERVAL {$yr} YEAR
+            ORDER BY
+                id ASC
+            LIMIT
+                500000
+        ");
+    }
+    
+  
+    
     function archiveEvents($ids)
     {
         $this->query("
@@ -90,7 +109,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
     }
     
     
-    function moveToArchive($month)
+    function moveToArchive($month, $etype = false)
     {
         $month = intval($month);
         if ($month < 3) {
@@ -99,6 +118,12 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
         for($i = 0; $i < 50;$i++) {
             $e = DB_DataObject::factory('Events');
             $e->whereAdd("event_when < NOW() - INTERVAL {$month} MONTH");
+            if ($etype !== $false) {
+                $e->whereAdd('action', $etype, 'string');
+            }
+                
+            
+            
             $e->orderBy('id ASC');
             $e->limit(10000); // we have over 133k events per day
             $ids = $e->fetchAll('id');
