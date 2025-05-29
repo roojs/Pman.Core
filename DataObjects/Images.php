@@ -254,6 +254,11 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         // look for the image in the folder, with matching id.
         // this is problematic..
         $fn = self::staticGetStoreName($o);
+        clearstatcache();
+        if (file_exists($fn)) {
+            return true;
+        }
+        
         if (file_exists($fn . '-really-missing')) {
             return false;
         }
