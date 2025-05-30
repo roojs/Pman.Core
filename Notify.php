@@ -550,7 +550,10 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
-            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " . file_get_contents($p['out']) . " : " . file_get_contents($p['oute']));
+            $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " .
+                (file_exists($p['out']) ?  file_get_contents($p['out']) : "output DELETED?") . " : " .
+                (file_exists($p['oute']) ?  file_get_contents($p['oute']) : "error output DELETED?") . " : "
+            );
             @unlink($p['out']);
             @unlink($p['oute']);
             // at this point we could pop onto the queue the 
