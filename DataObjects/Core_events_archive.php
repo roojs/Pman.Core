@@ -119,7 +119,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
             $e = DB_DataObject::factory('Events');
             $e->whereAdd("event_when < NOW() - INTERVAL {$month} MONTH");
             if ($etype !== false) {
-                $e->whereAdd('action', $etype, 'string');
+                $e->whereAddIn('action', $etype, 'string');
             }
                 
             
