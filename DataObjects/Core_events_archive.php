@@ -126,13 +126,19 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
             
             $e->orderBy('id ASC');
             $e->limit(10000); // we have over 133k events per day
-            $ids = $e->fetchAll('id');
+            $all_ids = $e->fetchAll('id');
             if (empty($ids)) {
                 return;
             }
-            $this->query("BEGIN");
-            $this->archiveEvents($ids);
-            $this->query("COMMIT");
+              // do this in batches?
+            while (count($all_ids)) {
+            
+                $ids = array_splice($all_ids, 0, 50);
+          
+                $this->query("BEGIN");
+                $this->archiveEvents($ids);
+                $this->query("COMMIT");
+            }
         }
         
     }
