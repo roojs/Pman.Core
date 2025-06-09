@@ -21,6 +21,7 @@ ALTER TABLE core_notify ADD COLUMN  trigger_event_id BIGINT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN  to_email varchar(255)  NOT NULL  DEFAULT '';
 
+alter table core_notify add column language varchar(5) not null default 'en';
 
 -- old mysql..
 -- ALTER TABLE core_notify CHANGE COLUMN bounced event_id BIGINT NOT NULL DEFAULT 0;
