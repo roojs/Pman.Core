@@ -4,11 +4,11 @@
 
  
 DROP TRIGGER IF EXISTS core_notify_trigger_after_update;
-DROP TRIGGER IF EXISTS core_notify_trigger_after_update_crm;
+DROP TRIGGER IF EXISTS core_notify_trigger_after_update_crm; -- old version - not used anymore
 
 DELIMITER $$
  
-CREATE TRIGGER core_notify_trigger_after_update_crm AFTER UPDATE on core_notify
+CREATE TRIGGER core_notify_trigger_after_update AFTER UPDATE on core_notify
     FOR EACH ROW
     BEGIN
     
@@ -23,6 +23,8 @@ CREATE TRIGGER core_notify_trigger_after_update_crm AFTER UPDATE on core_notify
                 UPDATE `Error: Can not update core_notify action dates  after its sent` SET x = 1;
         END IF;
         
+        
+        -- crm support on crm_person (in here as we cant support muliple triggers..
         
         IF
             OLD.person_table = 'crm_person'
