@@ -286,7 +286,7 @@ trait Pman_Core_JsonOutputTrait {
             header("Content-type: text/javascript");
         }
         if (function_exists("json_encode")) {
-            $ret =  json_encode($v);
+            $ret = empty($q['_pretty']) ? json_encode($v) : json_encode($v, JSON_PRETTY_PRINT);
             if ($ret !== false) {
                 return $ret;
             }

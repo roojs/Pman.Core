@@ -52,7 +52,7 @@ Pman.Dialog.PersonEditor.prototype = {
                     closeOnTab: true,
                     alwaysShowTabs: false
                 }
-            },this.dialogConfig)
+            },this.cr)
         );
         
         this.dialog.addKeyListener(27, this.dialog.hide, this.dialog);
@@ -599,7 +599,7 @@ Pman.Dialog.PersonEditor.prototype = {
     
     saveSend : function(bt, e)
     {
-        this.save(bt,e, 1)
+        this.save(bt,e, 1);
     },
     sendAfterSave : 0,
     save : function(bt, e, andsend)
