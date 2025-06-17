@@ -296,6 +296,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
                 $html->item(0)->appendChild($element);
             }
             
+            var_dump("CHANGE SRC");
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, empty($this->plaintext) ? '' : $this->plaintext);
         }
         
