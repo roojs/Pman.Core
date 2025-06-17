@@ -782,7 +782,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             'ltype' => 'l',
             'inlang' => 'en',
             'is_active' => 1,
-            'lval' => $aur['lang']
+            'lkey' => $aur['lang']
         ));
 
         $aur['lang_name'] = $aur['lang'];
