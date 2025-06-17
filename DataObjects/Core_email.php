@@ -297,9 +297,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             
             $this->plaintext = str_replace("{unsubscribe_link}", $unsubscribe, empty($this->plaintext) ? '' : $this->plaintext);
         }
-
-        var_dump($unsubscribe);
-        var_dump($cfg);
         
         
         $this->bodytext = $doc->saveHTML();
