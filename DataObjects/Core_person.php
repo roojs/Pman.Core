@@ -776,6 +776,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $aur['require_oath'] = $oath_require ?  $oath_require->val : 0;
         
         $aur['core_person_settings'] = $this->settings();
+
+        $i18n = DB_DataObject::factory('i18n');
+        $i18n->setFrom(array(
+            'ltype' => 'l',
+            'inlang' => 'en',
+            'is_active' => 1,
+            'lval' => $aur['lang']
+        ));
+
+        $aur['lang_name'] = $aur['lang'];
+        if($i18n->find(true)) {
+            $aur['lang_name'] = $i18n->lval;
+        }
         
         return $aur;
     }
