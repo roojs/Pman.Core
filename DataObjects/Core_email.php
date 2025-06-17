@@ -299,6 +299,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
 
         var_dump($unsubscribe);
+        var_dump($cfg);
         
         
         $this->bodytext = $doc->saveHTML();
