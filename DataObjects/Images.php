@@ -170,7 +170,6 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         //DB_DataObject::debugLevel(1);
         if (!$this->id) {
-            var_dump('INSERTED');
             $this->insert();
         } else {
             $this->update();
