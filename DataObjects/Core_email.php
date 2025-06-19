@@ -282,6 +282,9 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $a->setAttribute('href', $l);
             
         }
+
+
+        die('test');
         
         if(!empty($unsubscribe) && !empty($cfg)){
             $element = $doc->createElement('img');
