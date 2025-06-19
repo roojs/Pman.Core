@@ -244,8 +244,6 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         }
         
         $unsubscribe = $this->unsubscribe_url();
-
-        die('test');
         
         foreach ($xpath->query('//a[@href]') as $a) { 
             
