@@ -10,7 +10,7 @@ Pman.Dialog.Office = {
             return;
         }
         
-        this.dialog = new Ext.LayoutDialog(Ext.get(document.body).createChild({tag:'div'}),  { 
+        this.dialog = new Roo.LayoutDialog(Roo.get(document.body).createChild({tag:'div'}),  { 
             autoCreated: true,
             title: "Edit Office / Department / Sub Company",
             modal: true,
@@ -40,7 +40,7 @@ Pman.Dialog.Office = {
         
         var dg = Pman.Dialog.Office;
         
-        this.form = new Ext.form.Form({
+        this.form = new Roo.form.Form({
             labelWidth: 250 ,
             listeners : {
                 actionfailed : function(f, act) {
@@ -147,7 +147,7 @@ Pman.Dialog.Office = {
          
         this.form.render(ef.dom);
 
-        var vp = this.dialog.getLayout().add('center', new Ext.ContentPanel(ef, {
+        this.dialog.getLayout().add('center', new Roo.ContentPanel(ef, {
             autoCreate : true,
             //title: 'Org Details',
             //toolbar: this.tb,
@@ -179,7 +179,7 @@ Pman.Dialog.Office = {
     save : function()
     {
          this.form.doAction('submit', {
-            url: baseURL + '/Roo/Office.html',
+            url: baseURL + '/Roo/core_office',
             method: 'POST',
             params: {
                 _id: this._id ,
