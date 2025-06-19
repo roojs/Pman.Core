@@ -248,6 +248,8 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
         foreach ($xpath->query('//a[@href]') as $a) { 
             
             $href = $a->getAttribute('href');
+
+            var_dumP($href);
             
             if(preg_match('/#unsubscribe/', $href) && !empty($unsubscribe)){
                 var_dump($unsubscribe);
