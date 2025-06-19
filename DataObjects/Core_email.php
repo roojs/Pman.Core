@@ -250,6 +250,7 @@ class Pman_Core_DataObjects_Core_email extends DB_DataObject
             $href = $a->getAttribute('href');
             
             if(preg_match('/#unsubscribe/', $href) && !empty($unsubscribe)){
+                var_udmp($unsubscribe);
                 $a->setAttribute('href', $unsubscribe);
                 continue;
             }
