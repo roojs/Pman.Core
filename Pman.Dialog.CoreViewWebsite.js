@@ -102,8 +102,8 @@ Pman.Dialog.CoreViewWebsite = {
             new Pman.Request({
                 url: baseURL + '/Roo/Clipping_domain.php',
                 method: 'POST',
-                mask: 'loading ...',
-                timeout: 600000,
+                mask: 'importing ...',
+                timeout: 60000, // timeout after 60 seconds
                 params: {
                     id: _this.data.import_domain_id,
                     _import_release_clippings: _this.data.import_release_id
