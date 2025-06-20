@@ -7,6 +7,7 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreViewWebsite = {
 
  _strings : {
+  '72d6d7a1885885bb55a565fd1070581a' :"Import",
   '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",
   'a60852f204ed8028c1c58808b746d115' :"Ok"
  },
@@ -73,6 +74,15 @@ Pman.Dialog.CoreViewWebsite = {
               'style="border: 0px;width:' + size.width +'px;height:' + size.height + 'px" ' +
               'src="' + url + '"/>'
           );
+          
+          _this.importBtn.hide();
+          if(
+              typeof(_this.data.import_release_id !== 'undefined')
+              &&
+              typeof(_this.data.import_domain_id != 'undefined')
+          ) {
+              _this.importBtn.show();
+          }
       }
     },
     xns : Roo,
@@ -83,6 +93,32 @@ Pman.Dialog.CoreViewWebsite = {
      '|xns' : 'Roo'
     },
     buttons : [
+     {
+      xtype : 'Button',
+      text : _this._strings['72d6d7a1885885bb55a565fd1070581a'] /* Import */,
+      listeners : {
+       click : function (_self, e)
+        {
+            new Pman.Request({
+                url: baseURL + '/Roo/Clipping_domain.php',
+                method: 'POST',
+                mask: 'loading ...',
+                timeout: 600000,
+                params: {
+                    id: _this.data.import_domain_id,
+                    _import_release_clippings: _this.data.import_release_id
+                }
+            });
+            _this.dialog.hide();
+        },
+       render : function (_self)
+        {
+            _this.importBtn = _self;
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
      {
       xtype : 'Button',
       text : _this._strings['a60852f204ed8028c1c58808b746d115'] /* Ok */,

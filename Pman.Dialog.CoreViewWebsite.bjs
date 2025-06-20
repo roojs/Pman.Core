@@ -32,6 +32,36 @@
       "click" : [
        "function (_self, e)",
        "{",
+       "    new Pman.Request({",
+       "        url: baseURL + '/Roo/Clipping_domain.php',",
+       "        method: 'POST',",
+       "        mask: 'loading ...',",
+       "        timeout: 600000,",
+       "        params: {",
+       "            id: _this.data.import_domain_id,",
+       "            _import_release_clippings: _this.data.import_release_id",
+       "        }",
+       "    });",
+       "    _this.dialog.hide();",
+       "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.importBtn = _self;",
+       "}"
+      ]
+     },
+     "text" : "Import",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
        "    _this.dialog.hide();",
        "}"
       ]
@@ -70,6 +100,15 @@
      "        'style=\"border: 0px;width:' + size.width +'px;height:' + size.height + 'px\" ' +",
      "        'src=\"' + url + '\"/>'",
      "    );",
+     "    ",
+     "    _this.importBtn.hide();",
+     "    if(",
+     "        typeof(_this.data.import_release_id !== 'undefined')",
+     "        &&",
+     "        typeof(_this.data.import_domain_id != 'undefined')",
+     "    ) {",
+     "        _this.importBtn.show();",
+     "    }",
      "}"
     ]
    },
@@ -87,6 +126,7 @@
  "permname" : "",
  "strings" : {
   "1e35fe802ad1aaf4414fd68ad3157675" : "View Website",
+  "72d6d7a1885885bb55a565fd1070581a" : "Import",
   "a60852f204ed8028c1c58808b746d115" : "Ok"
  },
  "title" : ""
