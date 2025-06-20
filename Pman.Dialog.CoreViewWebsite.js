@@ -103,7 +103,7 @@ Pman.Dialog.CoreViewWebsite = {
                 url: baseURL + '/Roo/Clipping_domain.php',
                 method: 'POST',
                 mask: 'importing ...',
-                timeout: 60000, // timeout after 60 seconds
+                timeout: 600000, // timeout after 60 seconds
                 params: {
                     id: _this.data.import_domain_id,
                     _import_release_clipping: _this.data.import_release_id
