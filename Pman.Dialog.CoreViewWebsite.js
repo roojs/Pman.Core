@@ -109,7 +109,6 @@ Pman.Dialog.CoreViewWebsite = {
                     _import_release_clipping: _this.data.import_release_id
                 }
             });
-            _this.dialog.hide();
         },
        render : function (_self)
         {
