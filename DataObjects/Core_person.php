@@ -777,19 +777,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         $aur['core_person_settings'] = $this->settings();
 
-        $i18n = DB_DataObject::factory('i18n');
-        $i18n->setFrom(array(
-            'ltype' => 'l',
-            'inlang' => 'en',
-            'is_active' => 1,
-            'lkey' => $aur['lang']
-        ));
-
-        $aur['lang_name'] = $aur['lang'];
-        if($i18n->find(true)) {
-            $aur['lang_name'] = $i18n->lval;
-        }
-        
+        $aur['lang_name'] = DB_DataObject::factory('i18n')->translate('en','l', $aur['lang']);
+          
         return $aur;
     }
     
@@ -1090,13 +1079,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             
             
 
-            if ( $q['query']['not_in_directory'] > -1) {
+            if ( $q['query']['not_in_directory'] > -1 && $q['company_id'] > 0) {
                 $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
                 // can list current - so that it does not break!!!
                 $this->whereAdd("$tn_p.id NOT IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
-                        project_id = " . $q['query']['not_in_directory'] . " AND 
-                        company_id = " . $this->company_id . ')');
+                        project_id = " . inval($q['query']['not_in_directory']) . " AND 
+                        company_id = " . intval($q['company_id']) . ')');
+                        
             }
         }
            
