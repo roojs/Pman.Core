@@ -8,6 +8,7 @@ Pman.Core = Pman.Core || {};
 Pman.Core.NotifySend = function(notifications)
 {
     this.notifications = notifications;
+    this.sentMsgs = [];
     this.errorMsgs = [];
     this.total = notifications.length;
     Roo.MessageBox.progress("Email Sending", "Starting");
@@ -17,6 +18,7 @@ Pman.Core.NotifySend = function(notifications)
 Roo.apply(Pman.Core.NotifySend.prototype, {    
     
     notifications : false,
+    sentMsgs : false,
     errorMsgs : false,
     total : false,
     i : 0,
@@ -32,6 +34,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             method: 'POST',
             success: function(res)
             {
+                this.sentMsgs.push(this.notifications[this.i]['to_email']);
                 this.postSend();
             },
             failure: function (res)
@@ -48,13 +51,23 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             this.i + " / " + this.total + " emails sent");
         if(this.i >= this.total) {
             Roo.MessageBox.hide();
-            
-            // show errors if any
-            if(this.errorMsgs.length) {
-                Roo.MessageBox.alert('Error', this.errorMsgs.join('<br>'));
-                return;
+
+            var msg = '';
+
+            if(this.sentMsgs.length) {
+                msg += 'This has been sent to:<br>';
+                msg += this.sentMsgs.join('<br>');
             }
-            Roo.MessageBox.alert('Sent', 'Your message was successfully sent');
+
+            if(this.errorMsgs.length) {
+                if(msg.length) {
+                    msg += '<br><br>';
+                }
+                msg += 'Failed to send to:<br>';
+                msg += this.errorMsgs.join('<br>');
+            }
+
+            Roo.MessageBox.alert('Result', msg);
             return;
         }
         this.sendEmail();
