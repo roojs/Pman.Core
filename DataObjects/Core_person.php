@@ -1093,10 +1093,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             if ( $q['query']['not_in_directory'] > -1) {
                 $tn_pd = DB_DataObject::Factory('ProjectDirectory')->tableName();
                 // can list current - so that it does not break!!!
-                $this->whereAdd("$tn_p.id NOT IN 
+                /**$this->whereAdd("$tn_p.id NOT IN 
                     ( SELECT distinct person_id FROM $tn_pd WHERE
                         project_id = " . $q['query']['not_in_directory'] . " AND 
                         company_id = " . $this->company_id . ')');
+                        */
             }
         }
            
