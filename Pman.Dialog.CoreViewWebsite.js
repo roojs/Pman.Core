@@ -74,15 +74,6 @@ Pman.Dialog.CoreViewWebsite = {
               'style="border: 0px;width:' + size.width +'px;height:' + size.height + 'px" ' +
               'src="' + url + '"/>'
           );
-          
-          _this.importBtn.hide();
-          if(
-              typeof(_this.data.import_release_id !== 'undefined')
-              &&
-              typeof(_this.data.import_domain_id != 'undefined')
-          ) {
-              _this.importBtn.show();
-          }
       }
     },
     xns : Roo,
