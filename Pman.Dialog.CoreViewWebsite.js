@@ -7,7 +7,6 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreViewWebsite = {
 
  _strings : {
-  '72d6d7a1885885bb55a565fd1070581a' :"Import",
   '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",
   'a60852f204ed8028c1c58808b746d115' :"Ok"
  },
@@ -84,31 +83,6 @@ Pman.Dialog.CoreViewWebsite = {
      '|xns' : 'Roo'
     },
     buttons : [
-     {
-      xtype : 'Button',
-      text : _this._strings['72d6d7a1885885bb55a565fd1070581a'] /* Import */,
-      listeners : {
-       click : function (_self, e)
-        {
-            new Pman.Request({
-                url: baseURL + '/Roo/Clipping_domain.php',
-                method: 'POST',
-                mask: 'importing ...',
-                timeout: 60000, // timeout after 60 seconds
-                params: {
-                    id: _this.data.import_domain_id,
-                    _import_release_clipping: _this.data.import_release_id
-                }
-            });
-        },
-       render : function (_self)
-        {
-            _this.importBtn = _self;
-        }
-      },
-      xns : Roo,
-      '|xns' : 'Roo'
-     },
      {
       xtype : 'Button',
       text : _this._strings['a60852f204ed8028c1c58808b746d115'] /* Ok */,
