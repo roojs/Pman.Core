@@ -48,6 +48,7 @@ Pman.Dialog.CoreViewWebsite = {
     listeners : {
      show : function (_self)
       {
+          Roo.log('CORE SHOW');
           var url = false;
           
           if(typeof(_this.data.url) !== 'undefined') {
