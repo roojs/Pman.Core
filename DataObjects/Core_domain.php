@@ -52,6 +52,24 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         return  $cache[$this->server_id];
     }
+
+    function beforeUpdate($old, $q, $roo)
+    {
+        if(!empty($q['_update_mx'])) {
+            $this->updateMx();
+        }
+    }
+
+    function updateMx()
+    {
+        $cd->has_mx = checkdnsrr($domain, 'MX');
+        $cd->mx_updated = date('Y-m-d H:i:s');
+        // expired
+        if(!$cd->has_mx) {
+            $cd->no_mx_dt = date('Y-m-d H:i:s');
+        }
+        $cd->update($old);
+    }
     
     
     
