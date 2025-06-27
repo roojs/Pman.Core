@@ -64,7 +64,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function updateMx()
     {
         $old = clone($this);
-
+        
         $this->has_mx = checkdnsrr($this->domain, 'MX');
         $this->mx_updated = date('Y-m-d H:i:s');
         // expired
