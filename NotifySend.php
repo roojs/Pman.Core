@@ -452,13 +452,14 @@ class Pman_Core_NotifySend extends Pman
             $this->debug_str = '';
             $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
             $mailer = Mail::factory('smtp', array(
-                    'host'    => $mx ,
-                    'localhost' => $ff->Mail['helo'],
-                    'timeout' => 15,
-                    'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
-                    //'debug' => isset($opts['debug']) ?  1 : 0,
-                    'debug' => 1,
-                    'debug_handler' => array($this, 'debugHandler')
+                'host'    => $mx ,
+                'localhost' => $ff->Mail['helo'],
+                'timeout' => 15,
+                'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
+                //'debug' => isset($opts['debug']) ?  1 : 0,
+                'debug' => 1,
+                'debug_handler' => array($this, 'debugHandler'),
+                'dkim' => true
             ));
             
             // if the host is the mail host + it's authenticated add auth details
