@@ -4,7 +4,16 @@
  *
  *  incomming - list of IDs
  *  -- it will call a method with either '1' id or a batch..?
- *  
+ *
+ * usage:
+ *   cfg:
+ *      items
+ *      title
+ *      message_prefix
+ *      success : on done..
+ *      url:
+ *      base_params
+ *      batch_size (default 1)
  */
  
 Pman.Progress = function(cfg)
@@ -24,8 +33,7 @@ Pman.Progress = function(cfg)
         this.doItem();
         return;
     }
-    var _this = this;
-    Roo.MessageBox.confirm("Confirm", String.format(this.confirm,  this.items.length ),
+     Roo.MessageBox.confirm("Confirm", String.format(this.confirm,  this.items.length ),
         function(btn) {
             if (btn != 'yes') {
                 return;
@@ -62,7 +70,7 @@ Roo.apply(Pman.Progress.prototype, {
             url: this.url,
             method: 'POST',
             params: params,
-            success: function(response) {
+            success: function( ) {
             
                 if (! this.items.length) {
                     Roo.MessageBox.hide();
@@ -98,8 +106,7 @@ Roo.apply(Pman.Progress.prototype, {
         var ids = this.batch_size > 1 ? this.items.splice(0, this.batch_size).join(',') : this.items.shift();
         
         
-        var res = this;
-        this.doCall( ids  );
+         this.doCall( ids  );
     }
     
     
