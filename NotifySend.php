@@ -365,7 +365,7 @@ class Pman_Core_NotifySend extends Pman
 
         // the domain DOESN'T HAVE mx record in the recent dns check (within last 5 days)
         // then DON't recheck dns
-        if(!$core_domain->has_mx && (empty($core_domain->mx_updated) || strtotime($core_domain->mx_updated) > strtotime('now - 5 day'))) {
+        if(!$core_domain->has_mx && strtotime($core_domain->mx_updated) > strtotime('now - 5 day')) {
             $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
