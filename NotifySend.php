@@ -511,12 +511,6 @@ class Pman_Core_NotifySend extends Pman
                         preg_match('/<([^>]+)>|^([^<>]+)$/', $email['headers']['From'], $matches);
                         $from = end($matches);
 
-                        var_dump($server);
-                        var_dump($dom);
-                        var_dump($mx);
-                        var_dump($from);
-                        die('test');
-
                         $fromUser = DB_DataObject::factory('mail_imap_user');
                         $fromUser->setFrom(array(
                             'is_active' => 1
