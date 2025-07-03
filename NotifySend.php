@@ -613,13 +613,13 @@ class Pman_Core_NotifySend extends Pman
             if($ff->cli && $useOAuth) {
                 // token expired
                 if($oAuthExpired) {
-                    var_dump($expired);
+                    var_dump('EXPIRED');
                     die('test');
                 }
 
                 // not expired
 
-                
+
                 $ret = $mailer->getSMTPObject();
                 // Authentication unsuccessful
                 if(
