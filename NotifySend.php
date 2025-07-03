@@ -503,11 +503,6 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
 
-                    var_dump($server);
-                    var_dump($dom);
-                    var_dump($mx);
-                    die('test');
-
                     $host = $server;
 
                     // check if there is a mail_imap_user for the 'From' email before using oauth
