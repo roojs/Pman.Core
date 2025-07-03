@@ -68,7 +68,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
 
                 var regex = '/^FAILED - 535:5.7.3 Authentication unsuccessful/';
                 if(regex.test(errorMsgs[0])) {
-                    
+                    msg = 'LOGIN IN AGAIN';
                 }
 
 
