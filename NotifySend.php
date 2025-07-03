@@ -608,7 +608,9 @@ class Pman_Core_NotifySend extends Pman
             if($ff->cli) {
                 $ret = $mailer->getSMTPObject();
                 if(is_object($ret)) {
+                    var_dump($ret->userinfo);
 
+                    $errmsg = $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
                 }
             }
             /*
@@ -617,8 +619,6 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             */
-
-            var_dump($ret->userinfo);
             die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
