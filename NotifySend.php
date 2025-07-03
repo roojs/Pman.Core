@@ -553,10 +553,8 @@ class Pman_Core_NotifySend extends Pman
             
                         // has the token expired or does not exist
                         if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
-                            die('test2');
                             continue;
                         }
-                        die('test3');
 
                         $host = $s->smtp_host;
                         $settings['port'] = $s->smtp_port;
