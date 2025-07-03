@@ -397,6 +397,7 @@ class Pman_Core_NotifySend extends Pman
             // older that 1 day.
             $retry = 240;
         }
+        die('test');
         
         if (empty($mxs)) {
             
