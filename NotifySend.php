@@ -604,13 +604,18 @@ class Pman_Core_NotifySend extends Pman
                 
             }
 
-            $ret = $mailer->getSMTPObject();
+            // test smtp connection first before send
+            if($ff->cli) {
+                $ret = $mailer->getSMTPObject();
+                
+            }
             /*
             $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
             */
+
             var_dump($ret->userinfo);
             die('test');
             
