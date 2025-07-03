@@ -598,11 +598,7 @@ class Pman_Core_NotifySend extends Pman
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
                     
-                    // triggered from a post request
-                    if($ff->cli) {
-
-                    }
-                    die('test');
+                    $useOAuth = true;
                     break;
                 }
                 
