@@ -484,11 +484,6 @@ class Pman_Core_NotifySend extends Pman
                 
                 // we might want to regex 'office365 as a mx host 
                 foreach ($ff->Core_Notify['routes'] as $server => $settings){
-
-                    var_dump($server);
-                    var_dump($dom);
-                    var_dump($mx);
-                    die('test');
                     
                     $match = false;
 
@@ -507,6 +502,11 @@ class Pman_Core_NotifySend extends Pman
                     if (!$match) {
                         continue;
                     }
+
+                    var_dump($server);
+                    var_dump($dom);
+                    var_dump($mx);
+                    die('test');
 
                     $host = $server;
 
