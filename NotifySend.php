@@ -607,12 +607,12 @@ class Pman_Core_NotifySend extends Pman
             // test smtp connection first before send
             if($ff->cli) {
                 $ret = $mailer->getSMTPObject();
-                if(is_object($ret)) {
-                    var_dump($ret->userinfo);
-
-                    $errmsg = $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
-
-                    var_dump($errmsg);
+                if(is_object($ret) && !empty($ret->userinfo['smtpcode']) && $ret->userinfo['smtp'] == '535') {
+                    if($ret->userinfo['smtp'])
+                    $errmsg = $ret->userinfo['smtpcode'] . ': ' . $ret->toString();
+                    if (isset($res->userinfo['smtptext'])) {
+                        $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+                    }
                 }
             }
             /*
