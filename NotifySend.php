@@ -603,6 +603,10 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
+
+            $ret = $mailer->getSMTPObject();
+            var_dump($ret);
+            die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
