@@ -499,6 +499,10 @@ class Pman_Core_NotifySend extends Pman
                         }
                     }
 
+                    var_dump($dom);
+                    var_dump($mx);
+                    die('test');
+
                     if (!$match) {
                         continue;
                     }
