@@ -607,7 +607,7 @@ class Pman_Core_NotifySend extends Pman
             // test smtp connection first before send
             if($ff->cli) {
                 $ret = $mailer->getSMTPObject();
-                if(is_object($ret) && !empty($ret->userinfo['smtpcode']) && $ret->userinfo['smtpcode'] == '535') {
+                if(is_object($ret) && !empty($ret->userinfoo['smtpcode']) && $ret->userinfo['smtpcode'] == '535') {
                     var_dump('AAA');
                 }
             }
