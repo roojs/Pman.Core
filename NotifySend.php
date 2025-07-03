@@ -556,6 +556,7 @@ class Pman_Core_NotifySend extends Pman
                             die('test2');
                             continue;
                         }
+                        die('test3');
 
                         $host = $s->smtp_host;
                         $settings['port'] = $s->smtp_port;
