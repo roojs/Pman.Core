@@ -611,6 +611,8 @@ class Pman_Core_NotifySend extends Pman
                     var_dump($ret->userinfo);
 
                     $errmsg = $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
+
+                    var_dump($ret->userinfo);
                 }
             }
             /*
