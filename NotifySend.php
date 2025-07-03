@@ -562,6 +562,8 @@ class Pman_Core_NotifySend extends Pman
                         $settings['port'] = $s->smtp_port;
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token . '1';
+
+                        $useOAuth = true;
                     }
                     
                    
@@ -597,7 +599,7 @@ class Pman_Core_NotifySend extends Pman
                     $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array('ssl' => array('verify_peer_name' => false));
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
-                    
+
                     break;
                 }
                 
