@@ -607,7 +607,9 @@ class Pman_Core_NotifySend extends Pman
             // test smtp connection first before send
             if($ff->cli) {
                 $ret = $mailer->getSMTPObject();
-                
+                if(is_object($ret)) {
+
+                }
             }
             /*
             $errmsg=   $res->userinfo['smtpcode'] . ': ' .$res->toString();
