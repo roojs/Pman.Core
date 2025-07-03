@@ -480,8 +480,6 @@ class Pman_Core_NotifySend extends Pman
                 $mailer->tls = false;
             }
              
-            $useOAuth = false;
-            $oAuthExpired = false;
             if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
                 
                 // we might want to regex 'office365 as a mx host 
@@ -558,16 +556,10 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
 
-                        if(strtotime($fromUser->expires) < time()) {
-                            $oAuthExpired = true;
-                        }
-
                         $host = $s->smtp_host;
                         $settings['port'] = $s->smtp_port;
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $fromUser->token;
-
-                        $useOAuth = true;
                     }
                     
                    
