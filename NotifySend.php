@@ -609,7 +609,6 @@ class Pman_Core_NotifySend extends Pman
                 
             }
 
-            /*
             // test smtp connection first before send if it is triggered by a post request
             if($ff->cli && $useOAuth) {
                 // token expired
@@ -634,7 +633,6 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
             die('test');
-            */
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
