@@ -604,11 +604,18 @@ class Pman_Core_NotifySend extends Pman
                 
             }
 
-            // test smtp connection first before send for post request
+            // test smtp connection first before send if it is triggered by a post request
             if($ff->cli) {
                 $ret = $mailer->getSMTPObject();
-                if(is_object($ret) && !empty($ret->userinfo['smtpcode']) && $ret->userinfo['smtpcode'] == '535') {
-                    var_dump('AAA');
+                // Authentication unsuccessful
+                if(
+                    is_object($ret) && 
+                    !empty($ret->userinfo['smtpcode']) && 
+                    $ret->userinfo['smtpcode'] == '535'
+                    !empty($ret->userinfo['smtptext']) &&
+                    preg_match("/5.7.3 Authentication unsuccessful/", $ret->userinfo['smtptext'])
+                ) {
+                    var_dump("A");
                 }
             }
             /*
