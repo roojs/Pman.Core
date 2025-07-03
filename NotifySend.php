@@ -605,7 +605,7 @@ class Pman_Core_NotifySend extends Pman
             }
 
             $ret = $mailer->getSMTPObject();
-            var_dump($ret);
+            var_dump($ret->getMessage());
             die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
