@@ -65,6 +65,10 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
                 }
                 msg += 'Failed to send to:<br>';
                 msg += this.errorMsgs.join('<br>');
+
+                var regex = '/^FAILED - 535:5.7.3 Authentication unsuccessful/';
+
+
             }
 
             Roo.MessageBox.alert('Result', msg);
