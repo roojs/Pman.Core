@@ -611,7 +611,7 @@ class Pman_Core_NotifySend extends Pman
                 if(
                     is_object($ret) && 
                     !empty($ret->userinfo['smtpcode']) && 
-                    $ret->userinfo['smtpcode'] == '535'
+                    $ret->userinfo['smtpcode'] == '535' &&
                     !empty($ret->userinfo['smtptext']) &&
                     preg_match("/5.7.3 Authentication unsuccessful/", $ret->userinfo['smtptext'])
                 ) {
