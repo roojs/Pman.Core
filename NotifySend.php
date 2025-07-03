@@ -611,11 +611,15 @@ class Pman_Core_NotifySend extends Pman
 
             // test smtp connection first before send if it is triggered by a post request
             if($ff->cli && $useOAuth) {
-                // oauth 
+                // token expired
                 if($oAuthExpired) {
                     var_dump($expired);
                     die('test');
                 }
+
+                // not expired
+
+                
                 $ret = $mailer->getSMTPObject();
                 // Authentication unsuccessful
                 if(
