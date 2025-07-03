@@ -557,6 +557,10 @@ class Pman_Core_NotifySend extends Pman
                             continue;
                         }
 
+                        if(strtotime($fromUser->expires) < time()) {
+                            var_dump('EXPIRED');
+                        }
+
                         $host = $s->smtp_host;
                         $settings['port'] = $s->smtp_port;
                         $settings['username'] = $fromUser->email;
