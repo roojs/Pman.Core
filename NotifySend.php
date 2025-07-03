@@ -559,7 +559,7 @@ class Pman_Core_NotifySend extends Pman
                         }
 
                         if(strtotime($fromUser->expires) < time()) {
-                            var_dump('EXPIRED');
+                            $oAuthExpired = true;
                         }
 
                         $host = $s->smtp_host;
