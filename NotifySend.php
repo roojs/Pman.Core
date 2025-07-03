@@ -600,31 +600,6 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
-
-            // test smtp connection first before send if it is triggered by a post request
-            if($ff->cli && $useOAuth) {
-                // token expired
-                if($oAuthExpired) {
-                    var_dump('EXPIRED');
-                    die('test');
-                }
-
-                // not expired
-
-
-                $ret = $mailer->getSMTPObject();
-                // Authentication unsuccessful
-                if(
-                    is_object($ret) && 
-                    !empty($ret->userinfo['smtpcode']) && 
-                    $ret->userinfo['smtpcode'] == '535' &&
-                    !empty($ret->userinfo['smtptext']) &&
-                    preg_match("/5.7.3 Authentication unsuccessful/", $ret->userinfo['smtptext'])
-                ) {
-                    var_dump("A");
-                }
-            }
-            die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
