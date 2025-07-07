@@ -224,14 +224,8 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $e->whereAdd('event_when > NOW() - INTERVAL 2 WEEK');
         // we have already whitelisted this ip address within last two weeks
         if($e->count()) {
-            die('whitelisted');
             return;
         }
-
-        $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
-
-        var_dump('whitelist');
-        die('test');
 
         require_once 'Services/Cloudflare/Firewall.php';
 
@@ -239,5 +233,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         // whitelist the address
         $fw->update($ip, "logged in via {$ff->appName}");
+
+        $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
     }
 }
