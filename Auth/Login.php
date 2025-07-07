@@ -218,6 +218,10 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
+        $e = DB_DataObject::factory('Events');
+        $e->action = 'CLOUDFLARE-WHITELIST';
+        $e->remarks = $ip;
+
         $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
 
         var_dump($ip);
