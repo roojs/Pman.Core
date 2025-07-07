@@ -209,17 +209,17 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $ip = DB_DataObject::factory('core_person_window')->ip_lookup();
 
-        var_dump($ip);
-        die('test');
-
         // don't whitelist loopback address
         if($ip == '::1' || strpos($ip, '127.') === 0) {
-            return;
+            // return;
         }
 
         if(empty($ip)) {
             return;
         }
+
+        var_dump($ip);
+        die('test');
 
         require_once 'Services/Cloudflare/Firewall.php';
 
