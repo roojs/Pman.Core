@@ -221,6 +221,11 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
         $e = DB_DataObject::factory('Events');
         $e->action = 'CLOUDFLARE-WHITELIST';
         $e->remarks = $ip;
+        $e->whereAdd('event_when > NOW() - INTERVAL 2 WEEK');
+        // we have already whitelisted this ip address within last two weeks
+        if($e->count()) {
+            return;
+        }
 
         $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
 
