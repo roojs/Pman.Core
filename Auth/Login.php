@@ -218,7 +218,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
-        $this->addEvent("CLOUDFLARE-WHITELIST", false, "{$ip}: logged in via {$ff->appName}");
+        $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
 
         var_dump($ip);
         die('test');
