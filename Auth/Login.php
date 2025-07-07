@@ -230,7 +230,7 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
 
         $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
 
-        var_dump($ip);
+        var_dump('whitelist');
         die('test');
 
         require_once 'Services/Cloudflare/Firewall.php';
