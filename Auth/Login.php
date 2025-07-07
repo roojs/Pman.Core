@@ -218,11 +218,22 @@ class Pman_Core_Auth_Login extends Pman_Core_Auth_State
             return;
         }
 
+        $e = DB_DataObject::factory('Events');
+        $e->action = 'CLOUDFLARE-WHITELIST';
+        $e->remarks = $ip;
+        $e->whereAdd('event_when > NOW() - INTERVAL 2 WEEK');
+        // we have already whitelisted this ip address within last two weeks
+        if($e->count()) {
+            return;
+        }
+
         require_once 'Services/Cloudflare/Firewall.php';
 
         $fw = new Services_Cloudflare_Firewall($ff->Pman_Core_Auth['cloudflare']);
 
         // whitelist the address
         $fw->update($ip, "logged in via {$ff->appName}");
+
+        $this->addEvent("CLOUDFLARE-WHITELIST", false, $ip);
     }
 }
