@@ -41,6 +41,64 @@ class Pman_Core_DataObjects_Core_templatestr extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        if(!empty($q['_langlist_with_translations'])) {
+            /**
+             * With active translations
+             */
+            $x = DB_Dataobject::Factory('core_templatestr');
+            $x->_join .= "
+                LEFT JOIN
+                    core_template join_template_id_id
+                ON
+                    core_templatestr.template_id = join_template_id_id.id
+            ";
+            $x->selectAdd();
+            $x->selectAdd("
+                distinct(core_templatestr.lang) as lang,
+                i18n_translate('l', core_templatestr.lang, 'en') as lang_name
+            ");
+            $x->whereAdd("
+                core_templatestr.lang != ''
+                AND
+                core_templatestr.active = 1
+                AND
+                core_templatestr.txt != ''
+            ");
+
+            if(!empty($q['_templates'])) {
+                $templates = json_decode($q['_templates']);
+                if(!empty($templates)) {
+                    $conds = array();
+                    foreach($templates as $template) {
+                        $bits = explode("::", $template);
+                        $conds[] = "(join_template_id_id.view_name = '{$x->escape($bits[0])}' AND join_template_id_id.template = '{$x->escape($bits[1])}')";
+                    }
+                    $x->whereAdd(implode(" OR ", $conds));
+                }
+            }
+            $ret = array();
+
+            $en = false;
+            foreach( $x->fetchAll() as $l) {
+                if($l->lang == 'en') {
+                    $en = true;
+                }
+                $ret[] = array(
+                    'text'=>$l->lang_name,
+                    'id' => $l->lang
+                );
+            }
+
+            // always add English
+            if (!$en) {
+                array_unshift($ret, array(
+                    'text'=>'English',
+                    'id' => 'en'
+                ));
+            }
+            $roo->jdata($ret);
+        }
+
         if (!empty($q['_tree'])) {
             $this->applyFiltersTree($q,$roo);
         }
