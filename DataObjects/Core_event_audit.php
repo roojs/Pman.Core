@@ -127,7 +127,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
             'to' => $new
         ), JSON_PRETTY_PRINT);
 
-        $e = $roo->addEvent('EDIT', $this, $remarks);
+        $e = $roo->addEvent('EDIT', $newObj, $remarks);
         $e->writeEventLog($json);
     }
 }
