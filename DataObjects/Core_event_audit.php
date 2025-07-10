@@ -111,14 +111,12 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         $diff = array();
 
         foreach($new as $k => $v) {
-            // there is a change -> keep
-            if($old[$k] != $v) {
+            // no change -> skip
+            if($old[$k] === $v) {
                 continue;
             }
 
-            // no change -> not needed
-            unset($old[$k]);
-            unset($new[$k]);
+
         }
 
         // no difference -> no log needed
