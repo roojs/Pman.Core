@@ -108,6 +108,8 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         $old = array_intersect_key($old, $new);
         $new = array_intersect_key($new, $old);
 
+        $diff = array();
+
         foreach($new as $k => $v) {
             // there is a change -> keep
             if($old[$k] != $v) {
