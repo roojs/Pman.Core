@@ -100,6 +100,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
 
         $old = $oldObj->toArray();
         $new = $newObj->toArray();
+        $new['email'] = '2234@aaaa';
 
         // only keep keys shared by both arrays
         $old = array_intersect_key($old, $new);
