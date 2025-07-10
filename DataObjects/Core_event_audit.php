@@ -86,16 +86,17 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
     /**
      * log changes to a record in the database in an event
      * 
+     * @param object $roo
      * @param DB_DataObject $old old DB_DataObject
      * @param DB_DataObject $new updated DB_DataObject
      * @param array $remarks remarks (e.g. updated by script XXX)
      */
-    static function logChanges($oldObj, $newObj, $remarks)
+    static function logChanges($roo, $oldObj, $newObj, $remarks)
     {
         var_dump($oldObj instanceof DB_Dataobject);
         var_dump($newObj instanceof DB_Dataobject);
         die('test');
-        
+
         // only keep keys shared by both arrays
         $old = array_intersect_key($old, $new);
         $new = array_intersect_key($new, $old);
