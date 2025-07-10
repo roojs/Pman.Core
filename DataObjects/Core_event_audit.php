@@ -104,9 +104,6 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         $new['fax'] = '2222';
         $new['lastname'] = '';
 
-        var_dump($new);
-        die('test');
-
         // only keep keys shared by both arrays
         $old = array_intersect_key($old, $new);
         $new = array_intersect_key($new, $old);
