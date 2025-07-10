@@ -117,6 +117,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
             unset($new[$k]);
         }
 
+        // no difference -> no log needed
         if(empty($new)) {
             return;
         }
