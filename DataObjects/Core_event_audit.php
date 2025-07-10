@@ -123,14 +123,11 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         }
 
         // no difference -> no log needed
-        if(empty($new)) {
+        if(empty($diff)) {
             return;
         }
 
-        $json = json_encode(array(
-            'from' => $old,
-            'to' => $new
-        ), JSON_PRETTY_PRINT);
+        $json = json_encode($diff, JSON_PRETTY_PRINT);
 
         $e = $roo->addEvent('EDIT', $newObj, $remarks);
         $e->writeEventLog($json);
