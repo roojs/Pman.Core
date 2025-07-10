@@ -83,5 +83,40 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         
     }
     
-     
+    /**
+     * log changes to a record in the database in an event
+     * 
+     * @param DB_DataObject $old old DB_DataObject
+     * @param DB_DataObject $new updated DB_DataObject
+     * @param array $remarks remarks (e.g. updated by script XXX)
+     */
+    static function logChanges($old, $new, $remarks)
+    {
+        // only keep keys shared by both arrays
+        $old = array_intersect_key($old, $new);
+        $new = array_intersect_key($new, $old);
+
+        foreach($new as $k => $v) {
+            // there is a change -> keep
+            if($old[$k] != $v) {
+                continue;
+            }
+
+            // no change -> not needed
+            unset($old[$k]);
+            unset($new[$k]);
+        }
+
+        if(empty($new)) {
+            return;
+        }
+
+        $json = json_encode(array(
+            'from' => $old,
+            'to' => $new
+        ), JSON_PRETTY_PRINT);
+
+        $e = $roo->addEvent('EDIT', $this, $remarks);
+        $e->writeEventLog($json);
+    }
 }
