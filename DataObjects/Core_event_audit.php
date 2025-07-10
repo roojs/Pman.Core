@@ -116,7 +116,10 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
                 continue;
             }
 
-            // $
+            $diff[] = array(
+                'from' => $old[$k],
+                'to' => $v
+            );
         }
 
         // no difference -> no log needed
