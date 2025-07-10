@@ -98,6 +98,9 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
             return;
         }
 
+        $old = $oldObj->toArray();
+        $new = $newObj->toArray();
+
         // only keep keys shared by both arrays
         $old = array_intersect_key($old, $new);
         $new = array_intersect_key($new, $old);
