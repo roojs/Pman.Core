@@ -93,7 +93,7 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
      */
     static function logChanges($roo, $oldObj, $newObj, $remarks)
     {
-        var_dump($oldObj instanceof DB_Dataobject);
+        var_dump($oldObj instanceof Pman_Crm_DataObjects_Crm_person);
         var_dump($newObj instanceof DB_Dataobject);
         die('test');
 
