@@ -86,12 +86,10 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
     /**
      * log changes to a record in the database in an event
      * 
-     * @param object $roo
      * @param DB_DataObject $old old DB_DataObject
      * @param DB_DataObject $new updated DB_DataObject
-     * @param array $remarks remarks (e.g. updated by script XXX)
      */
-    static function logChanges($roo, $oldObj, $newObj, $remarks)
+    static function diffChanges($oldObj, $newObj)
     {
         // not dataobject
         if(!$oldObj instanceof DB_Dataobject || !$newObj instanceof DB_Dataobject) {
@@ -121,12 +119,9 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
 
         // no difference -> no log needed
         if(empty($diff)) {
-            return;
+            return false;
         }
 
-        $json = json_encode($diff, JSON_PRETTY_PRINT);
-
-        $e = $roo->addEvent('EDIT', $newObj, $remarks);
-        $e->writeEventLog($json);
+        return $diff;
     }
 }

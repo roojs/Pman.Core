@@ -521,6 +521,43 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
         return false;
     }
     
+    // write a log by comparing two dataobjects
+    function writeEventLogDiff($old,$new)
+    {
+        $is_o = is_a($old, 'DB_DataObject') || is_a($old, 'PDO_DataObject');
+        $is_n = is_a($new, 'DB_DataObject') || is_a($new, 'PDO_DataObject');
+        if (!$is_o || !$is_n) {
+            return;
+        }
+        
+        $old = $oldObj->toArray();
+        $new = $newObj->toArray();
+
+        // only keep keys shared by both arrays
+        $old = array_intersect_key($old, $new);
+        $new = array_intersect_key($new, $old);
+
+        $diff = array();
+
+        foreach($new as $k => $v) {
+            // no change -> skip
+            if($old[$k] === $v) {
+                continue;
+            }
+
+            $diff[$k] = array(
+                'from' => $old[$k],
+                'to' => $v
+            );
+        }
+
+        // no difference -> no log needed
+        if(empty($diff)) {
+            return;
+        }
+        $json = json_encode($diff, JSON_PRETTY_PRINT);
+        $this->writeEventLog($json);
+    }
     
     
     function writeEventLog($extra_data  = false)
