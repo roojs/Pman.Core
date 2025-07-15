@@ -74,6 +74,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 $userAgent = preg_replace('/Version\/[\d\.]+/', 'Chrome/125.0.6422.28', $userAgent);
                 $userAgent = preg_replace('/Safari\/[\d\.]+/', 'Safari/537.36', $userAgent);
             }
+            // var_dump($)
 
         }
 
@@ -81,6 +82,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         // $userAgent = "Mozilla/5.0 (X11; Arch Linux; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chromium/125.0.6422.21 Safari/537.36"; // OK
         // $userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/125.0.6422.28 Safari/537.36"; // OK
         // $userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) SEOAnalyzerBot/1.0 Chrome/125.0.6422.21 Safari/537.36"; // OK
+        $userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15";
 
         // $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.45 Safari/537.36"; // OK
         // $userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:126.0) Gecko/20100101 Firefox/126.0"; // OK
