@@ -37,6 +37,14 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 'response' => '{"finance":{"result":null,"error":{"code":"Bad Request","description":"Missing required query parameter=q"}}}'
             );
         }
+
+
+        if($ccy->get('query', $str)) {
+            return array(
+                'code' => 200,
+                'response' => $ccy->result,
+            );
+        }
        
         $ccy = DB_DataObject::factory('core_cache_yahoo');
         $request = http_build_query(array(
@@ -47,13 +55,6 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
             'multiQuoteQueryId'=>'multi_quote_single_token_query',
             'newsQueryId'=>'news_ss_symbols'
         ));
-
-        if($ccy->get('query', $request)) {
-            return array(
-                'code' => 200,
-                'response' => $ccy->result,
-            );
-        }
         
 
         $url =     'https://query1.finance.yahoo.com/v1/finance/search?' . $request;
@@ -118,7 +119,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if($http_code == 200) {
             $ccy = DB_DataObject::factory('core_cache_yahoo');
             $ccy->setFrom(array(
-                'query' => $request,
+                'query' => $str,
                 'result' => $body_res
             ));
             $ccy->insert();
