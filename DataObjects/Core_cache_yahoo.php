@@ -83,8 +83,6 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
             }
         }
 
-        $userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36";
-
         $header = array(
             "User-Agent: {$userAgent}"
         );
