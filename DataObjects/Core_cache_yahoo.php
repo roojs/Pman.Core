@@ -74,7 +74,8 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 $userAgent = preg_replace('/Version\/[\d\.]+/', 'Chrome/125.0.6422.28', $userAgent);
                 $userAgent = preg_replace('/Safari\/[\d\.]+/', 'Safari/537.36', $userAgent);
             }
-            // var_dump($)
+            var_dump($userAgent);
+            die('test');
 
         }
 
