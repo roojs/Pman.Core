@@ -27,7 +27,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         newsQueryId=news_ss_symbols&
         enableCb=true
     */
-    function checkYahoo($str, $userAgent) 
+    function checkYahoo($str) 
     {
         // parameter q is requried
         if(empty($str)) {
@@ -62,6 +62,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36";
         if(!empty($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
+            var_dump($userAgent);
             $userAgent = preg_replace(
                 '/\(.*?\)/', 
                 '(Windows NT 10.0; Win64; x64)', 
