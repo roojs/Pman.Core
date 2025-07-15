@@ -37,16 +37,15 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 'response' => '{"finance":{"result":null,"error":{"code":"Bad Request","description":"Missing required query parameter=q"}}}'
             );
         }
-
-
+        
+        $ccy = DB_DataObject::factory('core_cache_yahoo');
         if($ccy->get('query', $str)) {
             return array(
                 'code' => 200,
                 'response' => $ccy->result,
             );
         }
-       
-        $ccy = DB_DataObject::factory('core_cache_yahoo');
+
         $request = http_build_query(array(
             'q'=>$str,
             'quotesCount'=>12,
