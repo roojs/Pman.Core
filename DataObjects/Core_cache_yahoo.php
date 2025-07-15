@@ -62,12 +62,18 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36";
         if(!empty($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
+            $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15";
             $userAgent = preg_replace(
                 '/\(.*?\)/', 
                 '(Windows NT 10.0; Win64; x64)', 
                 $userAgent, 
                 1
             );
+            if (strpos($userAgent, 'Safari') !== false && strpos($userAgent, 'Chrome') === false) {
+                // Replace Version/X.X and Safari/X.X.X with Chrome version
+                $userAgent = preg_replace('/Version\/[\d\.]+/', 'Chrome/125.0.6422.28', $userAgent);
+                $userAgent = preg_replace('/Safari\/[\d\.]+/', 'Safari/537.36', $userAgent);
+            }
 
         }
 
