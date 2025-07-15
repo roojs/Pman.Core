@@ -90,6 +90,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 'query' => $request,
                 'result' => $body_res
             ));
+            $ccy->insert();
         }
         if ($http_code == 429) {
                 // log errors...
