@@ -86,7 +86,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
 
 
         $header = array(
-            "User-Agent: {$userAgent}")
+            "User-Agent: {$userAgent}"
         );
         
         if(!empty($header)){
