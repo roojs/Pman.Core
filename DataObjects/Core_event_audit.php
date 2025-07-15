@@ -82,46 +82,4 @@ class Pman_Core_DataObjects_Core_event_audit extends DB_DataObject
         return $x->id;
         
     }
-    
-    /**
-     * log changes to a record in the database in an event
-     * 
-     * @param DB_DataObject $old old DB_DataObject
-     * @param DB_DataObject $new updated DB_DataObject
-     */
-    static function diffChanges($oldObj, $newObj)
-    {
-        // not dataobject
-        if(!$oldObj instanceof DB_Dataobject || !$newObj instanceof DB_Dataobject) {
-            return;
-        }
-
-        $old = $oldObj->toArray();
-        $new = $newObj->toArray();
-
-        // only keep keys shared by both arrays
-        $old = array_intersect_key($old, $new);
-        $new = array_intersect_key($new, $old);
-
-        $diff = array();
-
-        foreach($new as $k => $v) {
-            // no change -> skip
-            if($old[$k] === $v) {
-                continue;
-            }
-
-            $diff[$k] = array(
-                'from' => $old[$k],
-                'to' => $v
-            );
-        }
-
-        // no difference -> no log needed
-        if(empty($diff)) {
-            return false;
-        }
-
-        return $diff;
-    }
 }
