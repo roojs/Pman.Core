@@ -31,6 +31,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
     {
         // parameter q is requried
         if(empty($str)) {
+            // no request sent
             return array(
                 'code' => 400,
                 'response' => '{"finance":{"result":null,"error":{"code":"Bad Request","description":"Missing required query parameter=q"}}}'
