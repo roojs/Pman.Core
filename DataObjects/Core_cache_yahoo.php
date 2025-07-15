@@ -59,9 +59,9 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
  
         $ch = curl_init($url);
 
-        $userAgent = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chromium/122.0.6264.92 Safari/537.36";
+        // $userAgent = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chromium/122.0.6264.92 Safari/537.36";
         // $userAgent = "Mozilla/5.0 (X11; Arch Linux; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Brave/1.68.118 Chrome/122.0.6261.112 Safari/537.36";
-        // $userAgent = "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15";
+        $userAgent = "Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15";
         // $userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6264.111 Safari/537.36";
         $header = array(
             // this results in 429 for some reason
