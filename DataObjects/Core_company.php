@@ -510,7 +510,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         
         $enum = DB_DataObject::Factory('core_enum')->lookup('COMPTYPE', 'OWNER'  );
         $companies = DB_DataObject::factory('core_company');
-        $companies->comptype_id = $enum;
+        $companies->whereAdd("comptype_id = {$enum} OR comptype = 'OWNER'"); // support old way...
+        
         if ($companies->find(true)) {
             $cache = clone($companies);
             return $companies;
