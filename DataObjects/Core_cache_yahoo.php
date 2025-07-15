@@ -65,7 +65,8 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         // $userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.6264.111 Safari/537.36";
         // $userAgent = "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chromium/122.0.6264.92 Safari/537.36"; // OK
         // $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.6367.45 Safari/537.36";
-        $userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:126.0) Gecko/20100101 Firefox/126.0";
+        // $userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:126.0) Gecko/20100101 Firefox/126.0";
+        $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.3 Safari/605.1.15";
         $header = array(
             // this results in 429 for some reason
             // "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
