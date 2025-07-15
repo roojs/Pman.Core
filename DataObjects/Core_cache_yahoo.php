@@ -92,7 +92,9 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
             ));
             $ccy->insert();
         }
-        if ($http_code == 429) {
+        // 400 Bad Request: Missing required query parameter=q
+        // 429 Too Many Request
+        if ($http_code == 429 || $http_code = 400) {
                 // log errors...
             ini_set('display_errors', '0');
             trigger_error("URL: {$url}\n {$response}");
