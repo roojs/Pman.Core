@@ -63,13 +63,15 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if(!empty($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-            // always change the os to windows
+            // always change the os to Windows
             $userAgent = preg_replace(
                 '/\(.*?\)/', 
                 '(Windows NT 10.0; Win64; x64)', 
                 $userAgent, 
                 1
             );
+
+            // change the browser to Chrome if the it is Safari
             if (strpos($userAgent, 'Safari') !== false && strpos($userAgent, 'Chrome') === false) {
                 // Replace Version/X.X and Safari/X.X.X with Chrome version
                 $userAgent = preg_replace('/Version\/[\d\.]+/', 'Chrome/125.0.6422.28', $userAgent);
