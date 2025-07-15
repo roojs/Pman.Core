@@ -63,6 +63,8 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if(!empty($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
+            // chrome in linux won't work
+
             // always change the os to Windows
             $userAgent = preg_replace(
                 '/\(.*?\)/', 
@@ -79,7 +81,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
             }
         }
 
-        $userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15";
+        $userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36";
 
         $header = array(
             "User-Agent: {$userAgent}"
