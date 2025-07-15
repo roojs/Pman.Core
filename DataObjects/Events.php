@@ -530,8 +530,8 @@ class Pman_Core_DataObjects_Events extends DB_DataObject
             return;
         }
         
-        $old = $oldObj->toArray();
-        $new = $newObj->toArray();
+        $old = $old->toArray();
+        $new = $new->toArray();
 
         // only keep keys shared by both arrays
         $old = array_intersect_key($old, $new);
