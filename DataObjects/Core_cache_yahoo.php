@@ -62,6 +62,9 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         $header = array(
             "User-Agent: " . (!empty($userAgent) ? $userAgent : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36")
         );
+
+        var_dump($header);
+        die('test');
         
         if(!empty($header)){
           curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
