@@ -29,6 +29,13 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
     */
     function checkYahoo($str) 
     {
+        // parameter q is requried
+        if(empty($str)) {
+            return array(
+                'code' => 400,
+                'response' => '{"finance":{"result":null,"error":{"code":"Bad Request","description":"Missing required query parameter=q"}}}'
+            );
+        }
        
         $ccy = DB_DataObject::factory('core_cache_yahoo');
         if($ccy->get('query', $str)) {
