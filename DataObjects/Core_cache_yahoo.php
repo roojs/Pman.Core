@@ -63,7 +63,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if(!empty($_SERVER['HTTP_USER_AGENT'])) {
             $userAgent = $_SERVER['HTTP_USER_AGENT'];
 
-            // chrome in linux / mac will fail
+            // Chrome in Linux / Mac will fail
 
             // always change the os to Windows
             $userAgent = preg_replace(
@@ -73,7 +73,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 1
             );
 
-            // safari in windows will fail
+            // Safari in Windows will fail
 
             // change the browser to Chrome if the it is Safari
             if (strpos($userAgent, 'Safari') !== false && strpos($userAgent, 'Chrome') === false) {
