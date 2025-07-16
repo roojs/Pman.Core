@@ -29,7 +29,15 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
     */
     function checkYahoo($str) 
     {
-       
+        // parameter q is requried
+        if(empty($str)) {
+            // no request sent
+            return array(
+                'code' => 400,
+                'response' => '{"finance":{"result":null,"error":{"code":"Bad Request","description":"Missing required query parameter=q"}}}'
+            );
+        }
+        
         $ccy = DB_DataObject::factory('core_cache_yahoo');
         if($ccy->get('query', $str)) {
             return array(
@@ -37,6 +45,7 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
                 'response' => $ccy->result,
             );
         }
+
         $request = http_build_query(array(
             'q'=>$str,
             'quotesCount'=>12,
@@ -51,10 +60,32 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
  
         $ch = curl_init($url);
 
+        $userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36";
+        if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+            $userAgent = $_SERVER['HTTP_USER_AGENT'];
+
+            // Chrome in Linux / Mac will fail
+
+            // always change the os to Windows
+            $userAgent = preg_replace(
+                '/\(.*?\)/', 
+                '(Windows NT 10.0; Win64; x64)', 
+                $userAgent, 
+                1
+            );
+
+            // Safari in Windows will fail
+
+            // change the browser to Chrome if the it is Safari
+            if (strpos($userAgent, 'Safari') !== false && strpos($userAgent, 'Chrome') === false) {
+                // Replace Version/X.X and Safari/X.X.X with Chrome version
+                $userAgent = preg_replace('/Version\/[\d\.]+/', 'Chrome/125.0.6422.28', $userAgent);
+                $userAgent = preg_replace('/Safari\/[\d\.]+/', 'Safari/537.36', $userAgent);
+            }
+        }
+
         $header = array(
-            // this results in 429 for some reason
-            // "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
-            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"
+            "User-Agent: {$userAgent}"
         );
         
         if(!empty($header)){
@@ -87,9 +118,10 @@ class Pman_Core_DataObjects_Core_Cache_Yahoo extends DB_DataObject
         if($http_code == 200) {
             $ccy = DB_DataObject::factory('core_cache_yahoo');
             $ccy->setFrom(array(
-                'query' => $request,
+                'query' => $str,
                 'result' => $body_res
             ));
+            $ccy->insert();
         }
         if ($http_code == 429) {
                 // log errors...
