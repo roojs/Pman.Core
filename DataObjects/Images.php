@@ -709,10 +709,10 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
      */
     function toHTML($size, $provider = '/Images/Thumb', $extra = '') 
     {
-        var_dump($size);
-        var_dump($provider);
-        var_dump($extra);
-        die('test');
+        // var_dump($size);
+        // var_dump($provider);
+        // var_dump($extra);
+        // die('test');
         
         
         $sz = explode('x', $size);
