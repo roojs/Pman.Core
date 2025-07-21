@@ -655,6 +655,7 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
 
     function shortURL($rootURL)
     {
+        $filename = preg_replace('/[^a-zA-Z0-9-_\.]/', '', $filename);
         return "{$rootURL}/i/Download/{$this->id}/{$this->filename}";
     }
 
