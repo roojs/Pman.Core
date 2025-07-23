@@ -239,6 +239,11 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
+        $companies = DB_DataObject::factory($this->tableName());
+        if($companies->get('name', $this->name)){
+            $roo->jnotice("DUPE", "{$this->name} already exsit!");
+        }
+        
         // we still use comptype in some old systems...
         
         if(!empty($q['comptype']) && empty($q['comptype_id'])) {
@@ -276,7 +281,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         if($companies->find(true)){
             $roo->jnotice("DUPE", "{$this->name} already exsit!");
         }
-        
+
         // we still use comptype in some old systems...
         
         if(!empty($q['comptype']) && empty($q['comptype_id'])) {
