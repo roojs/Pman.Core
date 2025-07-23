@@ -270,6 +270,13 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     
     function beforeUpdate($old, $q,$roo)
     {
+        $companies = DB_DataObject::factory($this->tableName());
+        $companies->whereAdd("name = '{$this->name}' AND id != {$this->id}");
+            
+        if($companies->find(true)){
+            $roo->jnotice("DUPE", "{$this->name} already exsit!");
+        }
+        
         // we still use comptype in some old systems...
         
         if(!empty($q['comptype']) && empty($q['comptype_id'])) {
