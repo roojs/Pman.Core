@@ -395,7 +395,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 // delete the email in 'Outbox'
                 $mimu->deleteMessage();
 
-                $mim = $this->message();
+                $mim = $mimu->message();
 
                 // delete file refs
                 $mifr  = DB_DataObject::Factory('mail_imap_file_ref');
