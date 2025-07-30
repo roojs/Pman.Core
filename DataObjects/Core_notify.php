@@ -419,7 +419,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     WHERE
                         reply_to_msg_id = {$mim->id}
                     OR
-                        to_msg_id = {$mim->id}
+                        top_msg_id = {$mim->id}
                 ");
 
                 /*
