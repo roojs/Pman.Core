@@ -393,7 +393,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             if($deleteEmail) {
                 $mimu = $this->object();
                 // delete the email in 'Outbox'
-                $mimu->deleteMessages();
+                $mimu->deleteMessage();
 
                 $mim = $this->message();
 
