@@ -392,7 +392,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             if($deleteEmail) {
                 $mimu = $this->object();
                 $fromUser = $mimu->imap_user();
-
                 $outbox = $fromUser->folder("Outbox");
 
                 // move message from Outbox to Sent
