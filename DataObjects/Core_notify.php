@@ -364,10 +364,10 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
 
             $cn = DB_DataObject::factory('core_notify');
             $cn->setFrom(array(
-                'evtype' => 'MAIL',
-                'ontable' => 'mail_imap_message_user',
+                'evtype' => $this->evtype,
+                'ontable' => $this->ontable,
                 'person_id' => $this->person_id,
-                'person_table' => 'mail_imap_actor',
+                'person_table' => $this->person_table,
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
             if(empty($msgid)) {
