@@ -388,9 +388,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 $deleteEmail = false;
             }
 
-            // fail to send the email to all recipients -> delete the email in the 'Outbox'
+            // fail to send the email to all recipients -> delete the email
             if($deleteEmail) {
                 $mimu = $this->object();
+                // delete the email in 'Outbox'
+                $mimu->deleteMessages();
+
                 $mim = $this->message();
 
                 // delete file refs
@@ -422,22 +425,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                         top_msg_id = {$mim->id}
                 ");
 
+                // delete message user
                 $mimu->delete();
 
                 // delete message
                 $mim->expunge();
-            
-
-                /*
-                $fromUser = $mimu->imap_user();
-                $outbox = $fromUser->folder("Outbox");
-
-                // move message from Outbox to Sent
-                $ret = $this->moveTo($sent);
-                if (is_a($ret, 'PEAR_Error')) {
-                    $roo->jerr($ret->toString());
-                }
-                */
             }
         }
     }
