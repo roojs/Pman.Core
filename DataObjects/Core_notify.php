@@ -397,7 +397,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 $s = $u->server();
                 $imap = $s->connect($u);
                 var_dump($imap->deleteMessages($mimu->imap_uid, true));
-                $imap->expunge();
+                var_dump($imap->expunge());
 
                 $mim = $mimu->message();
 
