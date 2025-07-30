@@ -402,7 +402,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                         msg_id = {$mim->id}
                 ");
                 
-                // delete message_actor
+                // delete message actor
                 $mima  = DB_DataObject::Factory('mail_imap_message_actor');
                 $mima->query("
                     DELETE FROM
@@ -411,6 +411,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                         msg_id = {$mim->id}
                 ");
 
+                // delete message refs
                 $mimr = DB_DataObject::Factory('mail_imap_message_ref');
                 $mimr->query("
                     DELETE FROM
