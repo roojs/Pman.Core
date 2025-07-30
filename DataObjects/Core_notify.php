@@ -386,6 +386,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 }
 
                 // else keep the email
+                // e.g. one of the email is pending
+                // e.g. one of the email is delivered successfuly
                 $deleteEmail = false;
             }
 
