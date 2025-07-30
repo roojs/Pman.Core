@@ -394,7 +394,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // all email 
             if($deleteEmail) {
                 $mimu = $this->object();
-                $fromUser = $this->imap_user();
+                $fromUser = $mimu->imap_user();
 
                 $sent = $fromUser->folder("Sent", true);
                 if (!$sent) {
