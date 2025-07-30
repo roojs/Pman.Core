@@ -380,27 +380,21 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
             foreach($cn->fetchAll() as $n) {
-                // fail to send the email to all recipients -> delete the email in the 'Outbox'
                 if(empty($this->msgid) && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
                     continue;
                 }
 
-                // else keep the email
-                // e.g. some emails are delivered successfuly
-                // e.g. some emails are pending
+                // some emails are pending / delivered -> keep the email
                 $deleteEmail = false;
             }
 
-            // all email send fails
+            // fail to send the email to all recipients -> delete the email in the 'Outbox'
             if($deleteEmail) {
                 $mimu = $this->object();
                 $fromUser = $mimu->imap_user();
 
-                $sent = $fromUser->folder("Outbox", true);
-                if (!$sent) {
-                    $roo->jerr("No Sent folder exists");
-                }
-        
+                $outbox = $fromUser->folder("Outbox");
+
                 // move message from Outbox to Sent
                 $ret = $this->moveTo($sent);
                 if (is_a($ret, 'PEAR_Error')) {
