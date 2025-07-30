@@ -391,6 +391,67 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // fail to send the email to all recipients -> delete the email in the 'Outbox'
             if($deleteEmail) {
                 $mimu = $this->object();
+                $mim = $this->message();
+
+                // files_ref
+                $m  = DB_DataObject::Factory('mail_imap_file_ref');
+                $m->whereAddIn('msg_id', $ids, 'int');
+                echo "DELETE ". $m->count() . " File references\n";
+                
+                $m->delete();
+
+                /*
+                
+                // message_actor
+                $m  = DB_DataObject::Factory('mail_imap_message_actor');
+                $m->whereAddIn('msg_id', $ids, 'int');
+                echo "DELETE ". $m->count() . " Actor References \n";
+            
+                $m->delete();
+                
+                // message_ref
+                //  reply_to_msg_id; // int(11) NOT NULL default 0,
+                //  top_msg_id; //  int(11) NOT NULL default 0,
+                $m = DB_DataObject::Factory('mail_imap_message_ref');
+                $m->whereAddIn('reply_to_msg_id', $ids, 'int');
+                echo "DELETE ". $m->count() . " reply-to References (linked-to)\n";
+
+                $m->delete();
+                
+                $m = DB_DataObject::Factory('mail_imap_message_ref');
+                $m->whereAddIn('top_msg_id', $ids, 'int');
+                echo "DELETE ". $m->count() . " reply-to References (of)\n";
+                $m->delete();
+            
+                
+                
+                echo "DELETE ". count($ids) . " Messages\n";
+                $m  = DB_DataObject::Factory('mail_imap_message');
+                $m->whereAddIn('id', $ids, 'int');
+                $mm = clone($m);
+                foreach($m->fetchAll() as $m) {
+                    $m->expunge();
+                }
+            
+                
+                // clean this as well.
+                // files <<
+                
+                $m = DB_DataObject::Factory('mail_imap_file');
+                $days = intval($days);
+                $m->whereAdd("
+                    created_dt < NOW() - INTERVAL {$days} DAY
+                    AND
+                    id NOT IN (SELECT file_id from mail_imap_file_ref)
+                ");
+                $m->limit(1000);
+                echo "DELETE ". $m->count() . " Files\n";
+
+                foreach($m->fetchAll() as $m) {
+                    $m->expunge();
+                }
+                */
+                /*
                 $fromUser = $mimu->imap_user();
                 $outbox = $fromUser->folder("Outbox");
 
@@ -399,6 +460,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 if (is_a($ret, 'PEAR_Error')) {
                     $roo->jerr($ret->toString());
                 }
+                */
             }
         }
     }
