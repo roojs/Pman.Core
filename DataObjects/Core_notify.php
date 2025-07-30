@@ -422,7 +422,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                         top_msg_id = {$mim->id}
                 ");
 
-                /*
+                // delete message
+                $mim->expunge();
                 
                 echo "DELETE ". count($ids) . " Messages\n";
                 $m  = DB_DataObject::Factory('mail_imap_message');
@@ -431,6 +432,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 foreach($m->fetchAll() as $m) {
                     $m->expunge();
                 }
+
+                /*
             
                 
                 // clean this as well.
