@@ -410,8 +410,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     WHERE
                         msg_id = {$mima->id}
                 ");
-
-                /*
                 
                 // message_ref
                 //  reply_to_msg_id; // int(11) NOT NULL default 0,
