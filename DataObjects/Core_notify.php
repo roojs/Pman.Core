@@ -396,6 +396,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 // delete file refs
                 $m  = DB_DataObject::Factory('mail_imap_file_ref');
                 $m->whereAddIn('msg_id', array($mim->id), 'int');
+                $m->msg_id = $mim->id;
                 $m->delete();
 
                 /*
