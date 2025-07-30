@@ -386,8 +386,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 }
 
                 // else keep the email
-                // e.g. one of the email is pending -> keep it in the 'Outbox'
-                // e.g. one of the email is delivered successfuly -> keep it in the 'Sent'
+                // e.g. some emails is pending
+                // e.g. some emails is delivered successfuly
                 $deleteEmail = false;
             }
 
