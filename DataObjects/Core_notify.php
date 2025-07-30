@@ -392,7 +392,10 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             // fail to send the email to all recipients -> delete the email
             if($deleteEmail) {
                 $mimu = $this->object();
+
                 // delete the email in 'Outbox'
+                $mimu->folder()->selectMailBox();
+                // $mimu->deleteMessage();
                 $u = $mimu->imap_user();
                 $s = $u->server();
                 $imap = $s->connect($u);
