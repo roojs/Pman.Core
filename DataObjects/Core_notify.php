@@ -404,11 +404,21 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 
                 // delete message_actor
                 $mima  = DB_DataObject::Factory('mail_imap_message_actor');
-                $mifr->query("
+                $mima->query("
                     DELETE FROM
                         mail_imap_message_actor
                     WHERE
-                        msg_id = {$mima->id}
+                        msg_id = {$mim->id}
+                ");
+
+                $mimr = DB_DataObject::Factory('mail_imap_message_ref');
+                $mimr->query("
+                    DELETE FROM
+                        mail_imap_message_ref
+                    WHERE
+                        reply_to_msg_id = {$mim->id}
+                    OR
+                        to_msg_id = {$mim->id}
                 ");
                 
                 // message_ref
