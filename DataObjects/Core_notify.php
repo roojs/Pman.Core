@@ -391,12 +391,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 $deleteEmail = false;
             }
 
-            // all email 
+            // all email send fails
             if($deleteEmail) {
                 $mimu = $this->object();
                 $fromUser = $mimu->imap_user();
 
-                $sent = $fromUser->folder("Sent", true);
+                $sent = $fromUser->folder("Outbox", true);
                 if (!$sent) {
                     $roo->jerr("No Sent folder exists");
                 }
