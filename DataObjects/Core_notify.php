@@ -370,7 +370,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'person_table' => 'mail_imap_actor',
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
-            $cn->i
             if(empty($msgid)) {
 
             }
