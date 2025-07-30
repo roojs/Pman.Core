@@ -386,14 +386,26 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 }
 
                 // else keep the email
-                // e.g. some emails is pending
-                // e.g. some emails is delivered successfuly
+                // e.g. some emails are delivered successfuly
+                // e.g. some emails are pending
                 $deleteEmail = false;
             }
 
             // all email 
             if($deleteEmail) {
+                $mimu = $this->object();
+                $fromUser = $this->imap_user();
 
+                $sent = $fromUser->folder("Sent", true);
+                if (!$sent) {
+                    $roo->jerr("No Sent folder exists");
+                }
+        
+                // move message from Outbox to Sent
+                $ret = $this->moveTo($sent);
+                if (is_a($ret, 'PEAR_Error')) {
+                    $roo->jerr($ret->toString());
+                }
             }
         }
     }
