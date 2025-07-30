@@ -358,9 +358,18 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     // after called do not rely on content as it includes NOW()
     function flagDone($event,$msgid)
     {
+        $ww = clone($this);
+        if(strtotime($this->act_when) > strtotime("NOW")){
+            $this->act_when = $this->sqlValue('NOW()');
+        }
+        $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
+        $this->msgid = $msgid;
+        $this->event_id = $event->id;
+        $this->update($ww);
+
         // for 'Write Email'
         if($this->ontable == 'mail_imap_message_user' && $this->evtype == 'MAIL') {
-            $failed = false;
+            $deleteEmail = true;
 
             $cn = DB_DataObject::factory('core_notify');
             $cn->setFrom(array(
@@ -370,18 +379,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'person_table' => $this->person_table,
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
-            if(empty($msgid)) {
-
+            foreach($cn->fetchAll() as $n) {
+                // if email is delivered to one of the recipients successfully -> 
+                if($n->delivered()) {
+                    $deleteEmail = false;
+                }
             }
         }
-        $ww = clone($this);
-        if(strtotime($this->act_when) > strtotime("NOW")){
-            $this->act_when = $this->sqlValue('NOW()');
-        }
-        $this->sent = empty($this->sent) || strtotime($this->sent) < 1 ? $this->sqlValue('NOW()') :$this->sent; // do not update if sent.....
-        $this->msgid = $msgid;
-        $this->event_id = $event->id;
-        $this->update($ww);
     }
     
     function flagLater($when)
