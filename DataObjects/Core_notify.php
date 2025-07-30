@@ -382,9 +382,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             foreach($cn->fetchAll() as $n) {
                 // if email is delivered to at leastone of the recipients successfully -> keep the email
                 // msgid  = '' AND event_id > 0 AND act_when < NOW()
-                if($n->delivered() && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
-                    $deleteEmail = false;
+                if(empty($this->msgid) && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
+                    continue;
                 }
+
+                // if the email is delivered to at least one of the recipients successfully -> keep the email
+                $deleteEmail = false;
             }
         }
     }
