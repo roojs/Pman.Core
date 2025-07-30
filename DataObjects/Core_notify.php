@@ -401,15 +401,15 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     WHERE
                         msg_id = {$mim->id}
                 ");
-
-                /*
                 
-                // message_actor
+                // delete message_actor
                 $m  = DB_DataObject::Factory('mail_imap_message_actor');
                 $m->whereAddIn('msg_id', $ids, 'int');
                 echo "DELETE ". $m->count() . " Actor References \n";
             
                 $m->delete();
+
+                /*
                 
                 // message_ref
                 //  reply_to_msg_id; // int(11) NOT NULL default 0,
