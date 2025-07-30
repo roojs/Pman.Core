@@ -368,24 +368,24 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $this->update($ww);
 
         // for 'Write Email'
-        if($this->ontable == 'mail_imap_message_user' && $this->evtype == 'MAIL') {
-            $deleteEmail = true;
+        // if($this->ontable == 'mail_imap_message_user' && $this->evtype == 'MAIL') {
+        //     $deleteEmail = true;
 
-            $cn = DB_DataObject::factory('core_notify');
-            $cn->setFrom(array(
-                'evtype' => $this->evtype,
-                'ontable' => $this->ontable,
-                'person_id' => $this->person_id,
-                'person_table' => $this->person_table,
-                'mail_imap_actor_id' => $this->mail_imap_actor_id
-            ));
-            foreach($cn->fetchAll() as $n) {
-                // if email is delivered to at leastone of the recipients successfully -> keep the email
-                if($n->delivered()) {
-                    $deleteEmail = false;
-                }
-            }
-        }
+        //     $cn = DB_DataObject::factory('core_notify');
+        //     $cn->setFrom(array(
+        //         'evtype' => $this->evtype,
+        //         'ontable' => $this->ontable,
+        //         'person_id' => $this->person_id,
+        //         'person_table' => $this->person_table,
+        //         'mail_imap_actor_id' => $this->mail_imap_actor_id
+        //     ));
+        //     foreach($cn->fetchAll() as $n) {
+        //         // if email is delivered to at leastone of the recipients successfully -> keep the email
+        //         if($n->delivered()) {
+        //             $deleteEmail = false;
+        //         }
+        //     }
+        // }
     }
     
     function flagLater($when)
