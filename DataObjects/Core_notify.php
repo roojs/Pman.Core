@@ -420,22 +420,8 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     OR
                         to_msg_id = {$mim->id}
                 ");
-                
-                // message_ref
-                //  reply_to_msg_id; // int(11) NOT NULL default 0,
-                //  top_msg_id; //  int(11) NOT NULL default 0,
-                $m = DB_DataObject::Factory('mail_imap_message_ref');
-                $m->whereAddIn('reply_to_msg_id', $ids, 'int');
-                echo "DELETE ". $m->count() . " reply-to References (linked-to)\n";
 
-                $m->delete();
-                
-                $m = DB_DataObject::Factory('mail_imap_message_ref');
-                $m->whereAddIn('top_msg_id', $ids, 'int');
-                echo "DELETE ". $m->count() . " reply-to References (of)\n";
-                $m->delete();
-            
-                
+                /*
                 
                 echo "DELETE ". count($ids) . " Messages\n";
                 $m  = DB_DataObject::Factory('mail_imap_message');
