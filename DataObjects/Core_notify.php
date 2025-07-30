@@ -380,8 +380,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
             foreach($cn->fetchAll() as $n) {
-                // if email is delivered to at leastone of the recipients successfully -> keep the email
-                // msgid  = '' AND event_id > 0 AND act_when < NOW()
+                // fails
                 if(empty($this->msgid) && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
                     continue;
                 }
