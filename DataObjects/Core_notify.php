@@ -422,29 +422,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                         top_msg_id = {$mim->id}
                 ");
 
+                $mimu->delete();
+
                 // delete message
                 $mim->expunge();
-
-                /*
             
-                
-                // clean this as well.
-                // files <<
-                
-                $m = DB_DataObject::Factory('mail_imap_file');
-                $days = intval($days);
-                $m->whereAdd("
-                    created_dt < NOW() - INTERVAL {$days} DAY
-                    AND
-                    id NOT IN (SELECT file_id from mail_imap_file_ref)
-                ");
-                $m->limit(1000);
-                echo "DELETE ". $m->count() . " Files\n";
 
-                foreach($m->fetchAll() as $m) {
-                    $m->expunge();
-                }
-                */
                 /*
                 $fromUser = $mimu->imap_user();
                 $outbox = $fromUser->folder("Outbox");
