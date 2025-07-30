@@ -380,7 +380,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
             foreach($cn->fetchAll() as $n) {
-                // if email is delivered to one of the recipients successfully -> 
+                // if email is delivered to at leastone of the recipients successfully -> keep the email
                 if($n->delivered()) {
                     $deleteEmail = false;
                 }
