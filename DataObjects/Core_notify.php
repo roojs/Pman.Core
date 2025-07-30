@@ -385,7 +385,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                     continue;
                 }
 
-                // if the email is delivered to at least one of the recipients successfully -> keep the email
+                // else keep the email
                 $deleteEmail = false;
             }
 
