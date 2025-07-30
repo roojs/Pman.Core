@@ -393,11 +393,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 $mimu = $this->object();
                 $mim = $this->message();
 
-                // files_ref
+                // delete file refs
                 $m  = DB_DataObject::Factory('mail_imap_file_ref');
-                $m->whereAddIn('msg_id', $ids, 'int');
-                echo "DELETE ". $m->count() . " File references\n";
-                
+                $m->whereAddIn('msg_id', array($mim->id), 'int');
                 $m->delete();
 
                 /*
