@@ -395,8 +395,9 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 // delete the email in 'Outbox'
                 $u = $mimu->imap_user();
                 $s = $u->server();
-                $imap = $s->connect($u); // debugging on!
-                $imap->deleteMessages($this->imap_uid, true);
+                $imap = $s->connect($u);
+                $imap->deleteMessages($mimu->imap_uid, true);
+                $imap->expunge();
 
                 $mim = $mimu->message();
 
