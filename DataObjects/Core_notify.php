@@ -358,6 +358,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     // after called do not rely on content as it includes NOW()
     function flagDone($event,$msgid)
     {
+        // for 'Write Email'
+        if($this->ontable == 'mail_imap_message_user' && $this->evtype == 'MAIL') {
+            // failed
+            if(empty($msgid)) {
+
+            }
+        }
         $ww = clone($this);
         if(strtotime($this->act_when) > strtotime("NOW")){
             $this->act_when = $this->sqlValue('NOW()');
