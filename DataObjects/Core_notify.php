@@ -380,7 +380,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'mail_imap_actor_id' => $this->mail_imap_actor_id
             ));
             foreach($cn->fetchAll() as $n) {
-                // fail to send the email too all the recipients -> delete the email in the 'Outbox
+                // fail to send the email to all recipients -> delete the email in the 'Outbox'
                 if(empty($this->msgid) && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
                     continue;
                 }
@@ -391,7 +391,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
 
             // all email 
             if($deleteEmail) {
-                
+
             }
         }
     }
