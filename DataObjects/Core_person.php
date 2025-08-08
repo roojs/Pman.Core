@@ -312,14 +312,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // at this point all http auth stuff is done, so we can init session
         
-        
         //die("test init");
         if (!$this->canInitializeSystem()) {
           //  die("can not init");
             $this->_auth_error = "NO-SESSION";
             return false;
         }
-        var_dump("AUTO");
         
         
         $auto_auth_allow = false;
