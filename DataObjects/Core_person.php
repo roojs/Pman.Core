@@ -318,7 +318,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $this->_auth_error = "NO-SESSION";
             return false;
         }
-        var_dump("C");
         
         
         $auto_auth_allow = false;
