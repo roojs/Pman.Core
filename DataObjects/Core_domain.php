@@ -55,6 +55,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function beforeUpdate($old, $q, $roo)
     {
+        if(!empty($q['_update_mx'])) {
+            $this->updateMx();
+            $roo->jok('DONE');
+        }
+
         if(isset($q['is_mx_valid'])) {
             $isMxValid = $this->no_mx_dt == '1000-01-01 00:00:00' ? 1 : 0;
 
@@ -72,11 +77,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $this->no_mx_dt = date('Y-m-d H:i:s');
                 }
             }
-        }
-
-        if(!empty($q['_update_mx'])) {
-            $this->updateMx();
-            $roo->jok('DONE');
         }
     }
 
