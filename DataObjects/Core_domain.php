@@ -74,7 +74,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         $this->update($old);
     }
-    
+
+    function toRooSingleArray($authUser, $request)
+    {
+        $ret = $this->toArray();
+
+        $ret['is_mx_valid'] = $ret['no_mx_dt'] == '1000-01-01 00:00:00' ? 1 : 0;
+        
+        return $ret;
+    }
     
     
 }
