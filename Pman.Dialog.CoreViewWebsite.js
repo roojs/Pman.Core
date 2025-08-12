@@ -73,15 +73,6 @@ Pman.Dialog.CoreViewWebsite = {
               'style="border: 0px;width:' + size.width +'px;height:' + size.height + 'px" ' +
               'src="' + url + '"/>'
           );
-          
-          fetch(url)
-          .then(function(res) {
-              return res.text();
-          })
-          .then(function(html) {
-              console.log("FETCH");
-              console.log(html);
-          });
       }
     },
     xns : Roo,
