@@ -12,6 +12,9 @@ class Pman_Core_ViewWebsite extends Pman
     
     function get($base='', $opts = array())
     {
+        if(empty($_REQUEST['url'])) {
+            die('missing url');
+        }
         $ch = curl_init('https://api.xmware.com/statenewsnetwork/latest/?feed=MOUT&key=mediaKjWOlqkkWo&page=1');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true); // Include headers in output
