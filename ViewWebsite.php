@@ -15,8 +15,6 @@ class Pman_Core_ViewWebsite extends Pman
         if(empty($_REQUEST['url'])) {
             die('missing url');
         }
-        var_dump($_REQUEST['url']);
-        die('test');
         $ch = curl_init($_REQUEST['url']);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HEADER, true); // Include headers in output
