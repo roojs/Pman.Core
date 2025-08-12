@@ -16,7 +16,8 @@ class Pman_Core_ViewWebsite extends Pman
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
         curl_close($ch);
-        $this->jdata($response);
+        header('Content-type: text/html');
+        echo $response;
         exit;
     }
 
