@@ -67,13 +67,12 @@ Pman.Dialog.CoreViewWebsite = {
           
           var size = _this.dialog.layout.getRegion('center').el.getSize();
           
-          if (url.startsWith('/')) {
-              url = window.location.origin + url;
+          // different origin
+          if (!url.startsWith('/')) {
+              url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
+                  "url": url
+              });
           }
-          
-          url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
-              "url": url
-          });
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
