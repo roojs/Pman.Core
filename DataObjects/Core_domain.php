@@ -103,5 +103,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $ret;
     }
     
-    
+    function applyFilters($q, $au, $roo)
+    {
+        if (!empty($q['query']['domain'])) {
+            $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
+        }
+    }
 }
