@@ -69,9 +69,11 @@ Pman.Dialog.CoreViewWebsite = {
           
           // different origin
           if (!url.startsWith('/')) {
+          /*
               url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
                   "url": url
               });
+          */
           }
           
           _this.websiteViewPanel.setContent(
