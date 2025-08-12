@@ -68,7 +68,7 @@ Pman.Dialog.CoreViewWebsite = {
           var size = _this.dialog.layout.getRegion('center').el.getSize();
           
           if (url.startsWith('/')) {
-              url = baseURL + url;
+              url = root + url;
           }
           
           url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
