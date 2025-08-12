@@ -31,7 +31,7 @@ class Pman_Core_ViewWebsite extends Pman
         // Set Content-Type header for browser
         header("Content-Type: $contentType");
         curl_close($ch);
-        echo $response;
+        echo $body;
         exit;
     }
 
