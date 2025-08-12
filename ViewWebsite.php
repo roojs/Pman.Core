@@ -1,3 +1,6 @@
+
+<?php
+
 require_once 'Pman.php';
 
 class Pman_Core_ViewWebsite extends Pman 
