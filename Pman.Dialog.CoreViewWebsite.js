@@ -73,6 +73,17 @@ Pman.Dialog.CoreViewWebsite = {
               'style="border: 0px;width:' + size.width +'px;height:' + size.height + 'px" ' +
               'src="' + url + '"/>'
           );
+          
+          fetch(baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
+              "url": url
+          }))
+          .then(function(res) {
+              return res.text();
+          })
+          .then(function(html) {
+              console.log('FETCH');
+              console.log(html);
+          });
       }
     },
     xns : Roo,
