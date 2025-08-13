@@ -49,7 +49,9 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     {
         
         $tn = $this->tableName();
-        $this->selectAdd("i18n_translate('c' , {$tn}.country, 'en') as country_display_name ");
+        if(empty($q['_skip_country_display_name'])) {
+            $this->selectAdd("i18n_translate('c' , {$tn}.country, 'en') as country_display_name ");
+        }
       
         $tn = $this->tableName();
         //DB_DataObject::debugLevel(1);
@@ -99,17 +101,19 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
             
         }
         // ADD comptype_display name.. = for combos..
-        $this->selectAdd("
-            (SELECT display_name
-                FROM
-                    core_enum
-                WHERE
-                    etype='comptype'
-                    AND
-                    name={$tn}.comptype
-                LIMIT 1
-                ) as comptype_display_name
-        ");
+        if(empty($q['_skip_comptype_display_name'])) {
+            $this->selectAdd("
+                (SELECT display_name
+                    FROM
+                        core_enum
+                    WHERE
+                        etype='comptype'
+                        AND
+                        name={$tn}.comptype
+                    LIMIT 1
+                    ) as comptype_display_name
+            ");
+        }
         
         if(!empty($q['query']['name']) || !empty($q['search']['name'])){
             
