@@ -71,6 +71,8 @@ Pman.Dialog.CoreViewWebsite = {
           
           var size = _this.dialog.layout.getRegion('center').el.getSize();
           
+          _this.websiteViewPanel.el.dom.parentElement.style.overflow = 'hidden';
+          
           // different origin
           if (!url.startsWith('/')) {
               // allow scroll
