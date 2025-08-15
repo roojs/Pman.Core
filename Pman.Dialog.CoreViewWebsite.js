@@ -47,7 +47,9 @@ Pman.Dialog.CoreViewWebsite = {
     listeners : {
      show : function (_self)
       {
+          // reset
           _this.websiteViewPanel.setContent('');
+          _this.websiteViewPanel.el.dom.parentElement.style.overflow = 'hidden';
           
           var url = false;
           
@@ -71,7 +73,6 @@ Pman.Dialog.CoreViewWebsite = {
           
           var size = _this.dialog.layout.getRegion('center').el.getSize();
           
-          _this.websiteViewPanel.el.dom.parentElement.style.overflow = 'hidden';
           
           // different origin
           if (!url.startsWith('/')) {
