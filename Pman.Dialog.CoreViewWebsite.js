@@ -69,8 +69,8 @@ Pman.Dialog.CoreViewWebsite = {
           
           // different origin
           if (!url.startsWith('/')) {
-              Roo.log(_self);
-              Roo.log(_this.websiteViewPanel);
+              // allow scroll
+              _this.websiteViewPanel.el.dom.parentElement.style.overflow = 'auto';
               fetch(baseURL + '/Core/ViewWebsite', {
                   method: 'POST',
                   headers: {'Content-Type': 'application/x-www-form-urlencoded'},
