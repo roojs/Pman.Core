@@ -7,7 +7,13 @@ class Pman_Core_ViewWebsite extends Pman
 {
     function getAuth() 
     {
-        return true;
+        $au = $this->getAuthUser();
+        if (!$au) {
+             $this->jerror("LOGIN-NOAUTH", "Not authenticated", array('authFailure' => true));
+        }
+        $this->authUser = $au;
+        
+        return true; 
     }
     
     function get($base='', $opts = array())
