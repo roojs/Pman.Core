@@ -83,6 +83,14 @@ Pman.Dialog.CoreViewWebsite = {
                           var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
                           _this.websiteViewPanel.setContent(formatted);
                       });
+                  } else if (contentType && contentType.includes('application/rss+xml')) { 
+                      return res.text().then(function(xml) {
+                          var escaped = xml
+                            .replace(/&/g, '&amp;')
+                            .replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;');
+                          _this.websiteViewPanel.setContent(escaped);
+                      });
                   } else {
                       return res.text().then(function(html) {
                           _this.websiteViewPanel.setContent('<div>' + html + '</div>');
