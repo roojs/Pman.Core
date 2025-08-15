@@ -75,14 +75,18 @@ Pman.Dialog.CoreViewWebsite = {
               body: new URLSearchParams({"url": url})
           })
           .then(function(res) {
-              console.log(res);
-              return res.text();
+              var contentType = response.headers.get('Content-Type');
+              if (contentType && contentType.includes('application/json')) {
+                  return res.json().then(json => {
+                      const formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+                      _this.websiteViewPanel.setContent(formatted);
+                  });
+              } else {
+                  return response.text().then(html => {
+                      _this.websiteViewPanel.setContent('<div>' + html + '</div>');
+                  });
+              }
           })
-          .then(function(html) {
-              _this.websiteViewPanel.setContent(
-                  '<div>' + html + '</div>'
-              );
-          });
           return;
       }
           
