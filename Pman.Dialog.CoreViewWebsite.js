@@ -60,6 +60,8 @@ Pman.Dialog.CoreViewWebsite = {
               return;
           }
           
+          _this.websiteViewPanel.setContent('Loading...');
+          
           _this.dialog.setTitle('View URL: ' + url);
           
           var vw = Roo.lib.Dom.getViewWidth();
