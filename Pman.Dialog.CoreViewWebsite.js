@@ -70,7 +70,21 @@ Pman.Dialog.CoreViewWebsite = {
           // different origin
           if (!url.startsWith('/')) {
               url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
-                  "url": url
+                  "url": url,
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+              });
+
+              fetch(url, {
+                  method: 'POST',
+
+              })
+              .then(function(res) {
+                  return res.text();
+              })
+              .then(function(html) {
+                  Roo.log(html);
               });
           }
           
