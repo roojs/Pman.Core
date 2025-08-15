@@ -85,7 +85,14 @@ Pman.Dialog.CoreViewWebsite = {
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
-                          var escaped = xml
+                          var parser = new DOMParser();
+                          var xmlDoc = parser.parseFromString(xmlString, "application/xml");
+      
+                          // Serialize back to string with formatting
+                          var serializer = new XMLSerializer();
+                          var prettyXML = serializer.serializeToString(xmlDoc);
+                          
+                          var escaped = prettyXML
                             .replace(/&/g, '&amp;')
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;');
