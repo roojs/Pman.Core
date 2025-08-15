@@ -69,20 +69,9 @@ Pman.Dialog.CoreViewWebsite = {
           
           // different origin
           if (!url.startsWith('/')) {
-            fetch(baseURL + '/', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: new URLSearchParams({"url": url})
-            })
-            .then(function(res) {
-                return res.text();
-            })
-            .then(function(html) {
-                _this.websiteViewPanel.setContent(
-                    '<div>' + html + '</div>'
-                );
-            });
-            return;
+              url = baseURL + '/Core/ViewWebsite?' + new URLSearchParams({
+                  "url": url
+              });
           }
           
           _this.websiteViewPanel.setContent(
