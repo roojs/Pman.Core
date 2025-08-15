@@ -41,6 +41,8 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     public $address2;
     public $address3;
     
+    public $parent_id;
+    
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -244,6 +246,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
     function beforeInsert($q, $roo)
     {
         $companies = DB_DataObject::factory($this->tableName());
+        $companies->parent_id = empty($this->parent_id) ? 0 : $this->parent_id;
         if($companies->get('name', $this->name)){
             $roo->jnotice("DUPE", "{$this->name} already exists!");
         }
@@ -282,7 +285,7 @@ class Pman_Core_DataObjects_Core_Company extends DB_DataObject
         $companies = DB_DataObject::factory($this->tableName());
         $companies->name  = $this->name;
         $companies->whereAdd("id != {$this->id}");
-            
+        $companies->parent_id = empty($this->parent_id) ? 0 : $this->parent_id;
         if($companies->find(true)){
             $roo->jnotice("DUPE", "{$this->name} already exists!");
         }

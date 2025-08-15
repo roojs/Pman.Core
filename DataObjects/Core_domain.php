@@ -59,6 +59,25 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $this->updateMx();
             $roo->jok('DONE');
         }
+
+        if(isset($q['is_mx_valid'])) {
+            $isMxValid = $this->no_mx_dt == '1000-01-01 00:00:00' ? 1 : 0;
+
+            // update mx manually
+            if($q['is_mx_valid'] != $isMxValid) {
+                $this->mx_updated = date('Y-m-d H:i:s');
+                // invalid to valid
+                if($q['is_mx_valid']) {
+                    $this->has_ns = 1;
+                    $this->no_mx_dt = '1000-01-01 00:00:00';
+                }
+                // valid to invalid
+                else {
+                    $this->has_ns = 0;
+                    $this->no_mx_dt = date('Y-m-d H:i:s');
+                }
+            }
+        }
     }
 
     function updateMx()
@@ -74,7 +93,20 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         $this->update($old);
     }
+
+    function toRooSingleArray($authUser, $request)
+    {
+        $ret = $this->toArray();
+
+        $ret['is_mx_valid'] = $ret['no_mx_dt'] == '1000-01-01 00:00:00' ? 1 : 0;
+        
+        return $ret;
+    }
     
-    
-    
+    function applyFilters($q, $au, $roo)
+    {
+        if (!empty($q['query']['domain'])) {
+            $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
+        }
+    }
 }
