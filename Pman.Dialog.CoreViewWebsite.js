@@ -76,16 +76,18 @@ Pman.Dialog.CoreViewWebsite = {
                     }
               });
 
-              fetch(url, {
-                  method: 'POST',
-
-              })
-              .then(function(res) {
-                  return res.text();
-              })
-              .then(function(html) {
-                  Roo.log(html);
-              });
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(function(res) {
+                return res.text();
+            })
+            .then(function(html) {
+                Roo.log(html);
+            });
           }
           
           _this.websiteViewPanel.setContent(
