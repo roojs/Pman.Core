@@ -77,12 +77,12 @@ Pman.Dialog.CoreViewWebsite = {
           .then(function(res) {
               var contentType = response.headers.get('Content-Type');
               if (contentType && contentType.includes('application/json')) {
-                  return res.json().then(json => {
+                  return res.json().then(function(json) {
                       var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
                       _this.websiteViewPanel.setContent(formatted);
                   });
               } else {
-                  return response.text().then(html => {
+                  return response.text().then(function(html) {
                       _this.websiteViewPanel.setContent('<div>' + html + '</div>');
                   });
               }
