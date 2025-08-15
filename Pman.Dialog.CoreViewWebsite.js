@@ -47,6 +47,8 @@ Pman.Dialog.CoreViewWebsite = {
     listeners : {
      show : function (_self)
       {
+          _this.websiteViewPanel.setContent('');
+          
           var url = false;
           
           if(typeof(_this.data.url) !== 'undefined') {
