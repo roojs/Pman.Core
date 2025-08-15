@@ -67,28 +67,29 @@ Pman.Dialog.CoreViewWebsite = {
           
           var size = _this.dialog.layout.getRegion('center').el.getSize();
           
-      // different origin
-      if (!url.startsWith('/')) {
-          fetch(baseURL + '/Core/ViewWebsite', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-              body: new URLSearchParams({"url": url})
-          })
-          .then(function(res) {
-              var contentType = res.headers.get('Content-Type');
-              if (contentType && contentType.includes('application/json')) {
-                  return res.json().then(function(json) {
-                      var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
-                      _this.websiteViewPanel.setContent(formatted);
-                  });
-              } else {
-                  return res.text().then(function(html) {
-                      _this.websiteViewPanel.setContent('<div>' + html + '</div>');
-                  });
-              }
-          });
-          return;
-      }
+          // different origin
+          if (!url.startsWith('/')) {
+              Roo.log(_this.websiteViewPanel);
+              fetch(baseURL + '/Core/ViewWebsite', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                  body: new URLSearchParams({"url": url})
+              })
+              .then(function(res) {
+                  var contentType = res.headers.get('Content-Type');
+                  if (contentType && contentType.includes('application/json')) {
+                      return res.json().then(function(json) {
+                          var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+                          _this.websiteViewPanel.setContent(formatted);
+                      });
+                  } else {
+                      return res.text().then(function(html) {
+                          _this.websiteViewPanel.setContent('<div>' + html + '</div>');
+                      });
+                  }
+              });
+              return;
+          }
           
           _this.websiteViewPanel.setContent(
               '<iframe ' + 
