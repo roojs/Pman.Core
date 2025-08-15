@@ -86,7 +86,7 @@ Pman.Dialog.CoreViewWebsite = {
                       _this.websiteViewPanel.setContent('<div>' + html + '</div>');
                   });
               }
-          })
+          });
           return;
       }
           

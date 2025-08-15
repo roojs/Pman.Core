@@ -83,7 +83,7 @@
      "                _this.websiteViewPanel.setContent('<div>' + html + '</div>');",
      "            });",
      "        }",
-     "    })",
+     "    });",
      "    return;",
      "}",
      "    ",
