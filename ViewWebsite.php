@@ -18,6 +18,11 @@ class Pman_Core_ViewWebsite extends Pman
     
     function get($base='', $opts = array())
     {
+        die('invalid get');
+    }
+
+    function post($base = '')
+    {
         if(empty($_REQUEST['url'])) {
             die('missing url');
         }
@@ -42,10 +47,5 @@ class Pman_Core_ViewWebsite extends Pman
         curl_close($ch);
         echo $body;
         exit;
-    }
-
-    function post($base = '')
-    {
-        die('invalid post');
     }
 }
