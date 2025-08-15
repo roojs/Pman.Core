@@ -69,7 +69,7 @@ Pman.Dialog.CoreViewWebsite = {
           
           // different origin
           if (!url.startsWith('/')) {
-            fetch(baseURL + '/Core/ViewWebsite', {
+            fetch(baseURL + '/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 body: new URLSearchParams({"url": url})
