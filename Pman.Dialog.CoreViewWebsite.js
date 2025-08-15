@@ -98,7 +98,7 @@ Pman.Dialog.CoreViewWebsite = {
                             .replace(/&/g, '&amp;')
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;');
-                          _this.websiteViewPanel.setContent('<pre id="rss-output" style="white-space: pre-wrap;">' + escaped + '</pre>');
+                          _this.websiteViewPanel.setContent('<pre>' + escaped + '</pre>');
                       });
                   } else {
                       return res.text().then(function(html) {
