@@ -80,6 +80,7 @@ Pman.Dialog.CoreViewWebsite = {
             .then(function(html) {
                 Roo.log(html);
             });
+            return;
           }
           
           _this.websiteViewPanel.setContent(
