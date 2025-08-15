@@ -78,9 +78,8 @@ Pman.Dialog.CoreViewWebsite = {
 
             fetch(url, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: new URLSearchParams({"url": url})
             })
             .then(function(res) {
                 return res.text();
