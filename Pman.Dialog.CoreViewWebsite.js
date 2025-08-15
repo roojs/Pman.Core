@@ -142,7 +142,6 @@ Pman.Dialog.CoreViewWebsite = {
     items  : [
      {
       xtype : 'ContentPanel',
-      autoScroll : true,
       region : 'center',
       listeners : {
        render : function (_self)
