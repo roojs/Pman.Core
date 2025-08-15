@@ -78,7 +78,7 @@ Pman.Dialog.CoreViewWebsite = {
               var contentType = response.headers.get('Content-Type');
               if (contentType && contentType.includes('application/json')) {
                   return res.json().then(json => {
-                      const formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+                      var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
                       _this.websiteViewPanel.setContent(formatted);
                   });
               } else {
