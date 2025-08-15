@@ -75,6 +75,7 @@ Pman.Dialog.CoreViewWebsite = {
               body: new URLSearchParams({"url": url})
           })
           .then(function(res) {
+              console.log(res);
               return res.text();
           })
           .then(function(html) {
