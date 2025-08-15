@@ -69,6 +69,7 @@ Pman.Dialog.CoreViewWebsite = {
           
           // different origin
           if (!url.startsWith('/')) {
+              Roo.log(_self);
               Roo.log(_this.websiteViewPanel);
               fetch(baseURL + '/Core/ViewWebsite', {
                   method: 'POST',
