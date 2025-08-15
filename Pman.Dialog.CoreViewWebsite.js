@@ -78,7 +78,9 @@ Pman.Dialog.CoreViewWebsite = {
                 return res.text();
             })
             .then(function(html) {
-                Roo.log(html);
+                _this.websiteViewPanel.setContent(
+                    '<div>' + html + '</div>';
+                );
             });
             return;
           }
