@@ -78,7 +78,6 @@ Pman.Dialog.CoreViewWebsite = {
               var contentType = res.headers.get('Content-Type');
               if (contentType && contentType.includes('application/json')) {
                   return res.json().then(function(json) {
-                      var formatted = ' <div style="overflow:auto;"><pre>' + JSON.stringify(json, null, 2) + '</pre></div>';
                       _this.websiteViewPanel.setContent(formatted);
                   });
               } else {
@@ -121,6 +120,7 @@ Pman.Dialog.CoreViewWebsite = {
     items  : [
      {
       xtype : 'ContentPanel',
+      autoScroll : true,
       region : 'center',
       listeners : {
        render : function (_self)
