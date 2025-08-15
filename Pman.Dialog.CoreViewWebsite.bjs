@@ -84,7 +84,7 @@
      "            } else if (contentType && contentType.includes('application/rss+xml')) { ",
      "                return res.text().then(function(xml) {",
      "                    var parser = new DOMParser();",
-     "                    var xmlDoc = parser.parseFromString(xmlString, \"application/xml\");",
+     "                    var xmlDoc = parser.parseFromString(xml, \"application/xml\");",
      "",
      "                    // Serialize back to string with formatting",
      "                    var serializer = new XMLSerializer();",
