@@ -128,20 +128,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        $this->selectAddPersonReferenceCount();
-        if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
-            $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
-            $this->orderBy("{$q['sort']} $dir");
-        }
-
-        if(!empty($q['_reference'])) {
-            switch($q['_reference']) {
-                case 'with_references':
-                    $this->whereAddWithPersonRefernceCount();
-                    break;
-                case 'without_reference':
-                    $this->whereAddWithoutPersonRefenceCount();
-                    break;
+        if(!empty($q['_with_reference_count'])) {
+            $this->selectAddPersonReferenceCount();
+            if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
+                $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
+                $this->orderBy("{$q['sort']} $dir");
+            }
+    
+            if(!empty($q['_reference_status'])) {
+                switch($q['_reference_status']) {
+                    case 'with_references':
+                        $this->whereAddWithPersonRefernceCount();
+                        break;
+                    case 'without_reference':
+                        $this->whereAddWithoutPersonRefenceCount();
+                        break;
+                }
             }
         }
     }
