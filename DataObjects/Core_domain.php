@@ -135,22 +135,33 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $affects[$tbl .'.' . $col] = true;
             }
         }
+        
         var_dump($affects);
         die('test');
         
-        // $affects  = array();
-        
-        // $all_links = $x->databaseLinks();
-        
-        // foreach($all_links as $tbl => $links) {
-        //     foreach($links as $col => $totbl_col) {
-        //         $to = explode(':', $totbl_col);
-        //         if ($to[0] != $x->tableName()) {
-        //             continue;
-        //         }
-                
-        //         $affects[$tbl .'.' . $col] = true;
+        // $match_ar = array();
+        // foreach($affects as $k=> $true) {
+        //     $ka = explode('.', $k);
+            
+        //     $chk = DB_DataObject::factory($ka[0]);
+        //     if (!is_a($chk,'DB_DataObject') && !is_a($chk,'PDO_DataObject'))  {
+        //         $this->jerr('Unable to load referenced table, check the links config: ' .$ka[0]);
         //     }
+        //    // print_r(array($chk->tablename() , $ka[1] ,  $xx->tablename() , $this->key ));
+        //     $chk->{$ka[1]} =  $xx->{$this->key};
+            
+        //     if (count($chk->keys())) {
+        //         $matches = $chk->count();
+        //     } else {
+        //         //DB_DataObject::DebugLevel(1);
+        //         $matches = $chk->count($ka[1]);
+        //     }
+            
+        //     if ($matches) {
+        //         $chk->_match_key = $ka[1];
+        //         $match_ar[] = clone($chk);
+        //         continue;
+        //     }          
         // }
     }
 }
