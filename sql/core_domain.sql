@@ -14,3 +14,4 @@ ALTER TABLE core_domain ADD COLUMN client_secret VARCHAR(255) NOT NULL DEFAULT '
 ALTER TABLE core_domain ADD COLUMN server_id INT NOT NULL DEFAULT 0;
  
 CREATE UNIQUE INDEX ui_domain ON core_domain (domain);
+CREATE INDEX ix_mx_updated ON core_domain(mx_updated);
