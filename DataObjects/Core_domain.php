@@ -108,5 +108,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
+
+        if(!empty($q['_status'])) {
+            switch($q['_status']) {
+                case 'invalid-mx':
+                    $this->has_mx = 0;
+                    $this->whereAdd("mx_updated != '1000-01-01 00:00:00'");
+                    break;
+            }
+        }
     }
 }
