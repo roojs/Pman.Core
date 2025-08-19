@@ -136,7 +136,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         if(!empty($q['_reference'])) {
             switch($q['_reference']) {
-                case 'with_reference':
+                case 'with_references':
                     $this->whereAdd("person_reference_count != 0");
                     break;
                 case 'without_reference':
