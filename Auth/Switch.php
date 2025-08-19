@@ -23,9 +23,9 @@ class Pman_Core_Auth_Switch extends Pman_Core_Auth_Required
     function post($v, $opts=array())
     {
         
-        if (empty($_REQUEST['user_id'])) {
+        // if (empty($_REQUEST['user_id'])) {
             $this->jnotice("NOUID", "Missing User id");
-        }
+        // }
         
         $au = $this->authUser;
         
