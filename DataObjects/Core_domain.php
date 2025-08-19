@@ -115,6 +115,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $this->has_mx = 0;
                     $this->whereAdd("mx_updated != '1000-01-01 00:00:00'");
                     break;
+                case 'valid_mx':
+                    $this->has_mx = 0;
+                    $this->whereAdd("mx_updated != '1000-01-01 00:00:00'");
+                    break;
             }
         }
 
