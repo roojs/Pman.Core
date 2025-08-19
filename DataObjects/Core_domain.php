@@ -134,16 +134,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $this->orderBy("{$q['sort']} $dir");
         }
 
-        if(!empty($q['_reference'])) {
-            switch($q['_reference']) {
-                case 'with_references':
-                    $this->whereAdd("person_reference_count != 0");
-                    break;
-                case 'without_reference':
-                    $this->whereAdd("person_reference_count = 0");
-                    break;
-            }
-        }
+        // if(!empty($q['_reference'])) {
+        //     switch($q['_reference']) {
+        //         case 'with_references':
+        //             $this->whereAdd("person_reference_count != 0");
+        //             break;
+        //         case 'without_reference':
+        //             $this->whereAdd("person_reference_count = 0");
+        //             break;
+        //     }
+        // }
     }
 
     function selectAddPersonReferenceCount()
