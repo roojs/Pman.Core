@@ -118,4 +118,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
     }
+
+    function postListFilter($ar, $au, $req, $roo)
+    {
+    }
 }
