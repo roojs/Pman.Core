@@ -110,6 +110,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!empty($q['_status'])) {
+            $badCond = "
+                (
+                    core_domain.has_mx = 0 
+                AND 
+                    core_domain.mx_updated != '1000-01-01 00:00:00'
+                )
+            ";
+
             switch($q['_status']) {
                 case 'invalid_mx':
                     $this->has_mx = 0;
