@@ -63,6 +63,7 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         $d->limit(1);
         if ($d->count() && $d->find(true) && strtotime($d->holiday_date) > strtotime('NOW + 6 MONTHS')) {
             // no need to fetch..
+            var_dump("NO NEED TO FETCH");
             return;
         }
         
