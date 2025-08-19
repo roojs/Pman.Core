@@ -118,7 +118,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        $this->selectAdd("0 as person_reference_count");
+        $this->selectAddPersonReferenceCount();
     }
 
     function selectAddPersonReferenceCount()
