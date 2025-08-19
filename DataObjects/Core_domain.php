@@ -121,8 +121,21 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function postListFilter($ar, $au, $req, $roo)
     {
-        $map = $this->links();
-        var_dumP($map);
+        $affects  = array();
+        
+        $all_links = $this->databaseLinks();
+        
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $this->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
+        }
+        var_dump($affects);
         die('test');
         
         // $affects  = array();
