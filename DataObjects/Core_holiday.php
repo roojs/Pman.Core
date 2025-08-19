@@ -38,6 +38,13 @@ class Pman_Core_DataObjects_Core_holiday extends DB_DataObject
         
         
     }
+
+    function beforeInsert($request, $roo)
+    {
+        if(!empty($request['_update_database'])) {
+            $roo->jok("UPDATED");
+        }
+    }
     
     
      
