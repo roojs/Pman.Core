@@ -117,5 +117,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     break;
             }
         }
+
+        $this->selectAdd("0 as no_references");
     }
 }
