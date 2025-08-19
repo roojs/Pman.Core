@@ -151,13 +151,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $this->selectAdd("0 as person_reference_count");
     }
 
-    function whereAddWithPersonRefernceCount()
-    {
-        // all domains have no person reference count
-        $this->whereAdd("1 = 0");
-    }
+    // function whereAddWithPersonRefernceCount()
+    // {
+    //     // all domains have no person reference count
+    //     $this->whereAdd("1 = 0");
+    // }
 
-    function whereAddWithoutPersonRefenceCount()
-    {
-    }
+    // function whereAddWithoutPersonRefenceCount()
+    // {
+    // }
 }
