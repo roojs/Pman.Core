@@ -73,9 +73,9 @@ Pman.Dialog.PreviewHeaderImport = {
           _this.mailing_list.setValue('');
           
           _this.data.dbCols = _this.data.dbCols.sort((a, b) => {
-              // Always keep "--not set--" at the beginning
-              if (a[1] === '--not set--') return -1;
-              if (b[1] === '--not set--') return 1;
+              // Always keep empty first value at the beginning
+              if (a[0] === '') return -1;
+              if (b[0] === '') return 1;
               
               // Sort the rest alphabetically by display name (case-insensitive)
               return a[1].toLowerCase().localeCompare(b[1].toLowerCase());
