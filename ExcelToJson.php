@@ -53,7 +53,7 @@ class Pman_Core_ExcelToJson extends Pman_Roo
         $rows = array();
         $extra = array();
         
-        while(false !== ($n = fgetcsv($fh,10000, ',', '"'))) {
+        while(false !== ($n = fgetcsv($fh,null,",",'"',"\\"))) {
           
             
             if(!strlen(trim(implode('', $n)))){ // blank line;
