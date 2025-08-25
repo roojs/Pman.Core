@@ -78,7 +78,7 @@ Pman.Dialog.PreviewHeaderImport = {
               if (a[0] === '') {
                   return -1;
               }
-              if (b[0] === '') {
+              if (b[0] === '') { 
                   return 1;
               }
               
