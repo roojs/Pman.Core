@@ -86,6 +86,8 @@ Pman.Dialog.PreviewHeaderImport = {
               // Sort the rest alphabetically by display name (case-insensitive)
               return a[1].toLowerCase().localeCompare(b[1].toLowerCase());
           });
+          
+          Roo.log(_this.data.data.map);
       
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
