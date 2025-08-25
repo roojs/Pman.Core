@@ -65,7 +65,6 @@ Pman.Dialog.PreviewHeaderImport = {
     listeners : {
      show : function (_self)
       {
-          Roo.log(_this.data);
           if(typeof(_this.data.disableMailingList) != 'undefined' && _this.data.disableMailingList === true) {
               _this.mailing_list.hide();
               _this.mailing_list_text.hide();
