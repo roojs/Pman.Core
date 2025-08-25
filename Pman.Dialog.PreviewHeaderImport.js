@@ -86,6 +86,7 @@ Pman.Dialog.PreviewHeaderImport = {
               return a[1].toLowerCase().localeCompare(b[1].toLowerCase());
           });
           
+          // use stored mapping if any
           var key = 'ExcelUploadMapping::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
       
