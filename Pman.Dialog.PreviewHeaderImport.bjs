@@ -220,7 +220,12 @@
            "* prop" : "editor",
            "items" : [
             {
-             "$ tpl" : "<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>",
+             "$ tpl" : [
+              "(function() {",
+              "    Roo.log('A');",
+              "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
+              "})();"
+             ],
              "$ xns" : "Roo.form",
              "* prop" : "field",
              "allowBlank" : true,
