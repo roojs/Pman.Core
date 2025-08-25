@@ -220,6 +220,7 @@
            "* prop" : "editor",
            "items" : [
             {
+             "$ tpl" : "<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>",
              "$ xns" : "Roo.form",
              "* prop" : "field",
              "allowBlank" : true,
@@ -238,7 +239,6 @@
              "mode" : "local",
              "name" : "db_col_name",
              "selectOnFocus" : false,
-             "tpl" : "<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>",
              "triggerAction" : "all",
              "typeAhead" : true,
              "value" : 0,
