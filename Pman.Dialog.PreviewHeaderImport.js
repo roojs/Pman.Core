@@ -228,8 +228,6 @@ Pman.Dialog.PreviewHeaderImport = {
             
             var key = 'ExcelUpload::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
-            Roo.log("LOCAL STORAGE");
-            Roo.log(Roo.decode(localStorage.getItem(key)));
             
             
             var total = _this.data.data.rows.length;
