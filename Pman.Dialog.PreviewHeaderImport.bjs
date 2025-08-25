@@ -238,13 +238,7 @@
              "mode" : "local",
              "name" : "db_col_name",
              "selectOnFocus" : false,
-             "tpl" : [
-              "(function(x) {",
-              "    Roo.log('A');",
-              "    Roo.log(x);",
-              "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
-              "})()"
-             ],
+             "tpl" : "<div class=\"x-grid-cell-text x-btn button\" style=\"{style}\">{name}</div>",
              "triggerAction" : "all",
              "typeAhead" : true,
              "value" : 0,
