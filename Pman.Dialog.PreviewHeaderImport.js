@@ -72,6 +72,7 @@ Pman.Dialog.PreviewHeaderImport = {
           }
           _this.mailing_list.setValue('');
           
+          // sort database cols
           _this.data.dbCols = _this.data.dbCols.sort((a, b) => {
               // Always keep empty first value at the beginning
               if (a[0] === '') return -1;
