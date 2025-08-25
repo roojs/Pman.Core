@@ -221,8 +221,9 @@
            "items" : [
             {
              "$ tpl" : [
-              "(function() {",
+              "(function(x) {",
               "    Roo.log('A');",
+              "    Roo.log(x);",
               "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
               "})()"
              ],

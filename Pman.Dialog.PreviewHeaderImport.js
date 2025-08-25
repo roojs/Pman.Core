@@ -536,8 +536,9 @@ Pman.Dialog.PreviewHeaderImport = {
            mode : 'local',
            name : 'db_col_name',
            selectOnFocus : false,
-           tpl : (function() {
+           tpl : (function(x) {
                Roo.log('A');
+               Roo.log(x);
                return '<div class="x-grid-cell-text x-btn button">{name}{required}</div>';
            })(),
            triggerAction : 'all',
