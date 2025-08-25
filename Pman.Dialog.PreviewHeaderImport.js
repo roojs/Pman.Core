@@ -88,6 +88,8 @@ Pman.Dialog.PreviewHeaderImport = {
           
           var key = 'ExcelUpload::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
+          
+          Roo.log(map);
       
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
