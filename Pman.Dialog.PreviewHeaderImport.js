@@ -131,7 +131,7 @@ Pman.Dialog.PreviewHeaderImport = {
               }));
           });
           
-          Roo.log(dbColRequired);
+          Roo.log(records);
           
           _this.grid.ds.removeAll();
           records.forEach(function(r) {
