@@ -229,7 +229,7 @@
              "hiddenName" : "db_col",
              "items" : [
               {
-               "$ fields" : "[ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'int'}]",
+               "$ fields" : "[ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'boolean'}]",
                "$ xns" : "Roo.data",
                "* prop" : "store",
                "xtype" : "SimpleStore"

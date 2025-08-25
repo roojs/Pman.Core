@@ -546,7 +546,7 @@ Pman.Dialog.PreviewHeaderImport = {
            '|xns' : 'Roo.form',
            store : {
             xtype : 'SimpleStore',
-            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'int'}],
+            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'boolean'}],
             xns : Roo.data,
             '|xns' : 'Roo.data'
            }
