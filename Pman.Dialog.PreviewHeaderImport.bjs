@@ -220,13 +220,6 @@
            "* prop" : "editor",
            "items" : [
             {
-             "$ tpl" : [
-              "(function(x) {",
-              "    Roo.log('A');",
-              "    Roo.log(x);",
-              "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
-              "})()"
-             ],
              "$ xns" : "Roo.form",
              "* prop" : "field",
              "allowBlank" : true,
@@ -245,6 +238,13 @@
              "mode" : "local",
              "name" : "db_col_name",
              "selectOnFocus" : false,
+             "tpl" : [
+              "(function(x) {",
+              "    Roo.log('A');",
+              "    Roo.log(x);",
+              "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
+              "})()"
+             ],
              "triggerAction" : "all",
              "typeAhead" : true,
              "value" : 0,
@@ -529,7 +529,7 @@
      "        records.push(new Roo.data.Record({",
      "            'col': c[0],",
      "            'name': c[1],",
-     "            'required': c[2]",
+     "            'style': c[2] ? \"font-weight:bold;\" : ''",
      "        }));",
      "    });",
      "    ",

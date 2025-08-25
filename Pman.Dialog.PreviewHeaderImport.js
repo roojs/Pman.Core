@@ -137,7 +137,7 @@ Pman.Dialog.PreviewHeaderImport = {
               records.push(new Roo.data.Record({
                   'col': c[0],
                   'name': c[1],
-                  'required': c[2]
+                  'style': c[2] ? "font-weight:bold;" : ''
               }));
           });
           
@@ -537,11 +537,7 @@ Pman.Dialog.PreviewHeaderImport = {
            mode : 'local',
            name : 'db_col_name',
            selectOnFocus : false,
-           tpl : (function(x) {
-               Roo.log('A');
-               Roo.log(x);
-               return '<div class="x-grid-cell-text x-btn button">{name}{required}</div>';
-           })(),
+           tpl : '(function(x) {\n    Roo.log(\'A\');\n    Roo.log(x);\n    return \'<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>\';\n})()',
            triggerAction : 'all',
            typeAhead : true,
            value : 0,
