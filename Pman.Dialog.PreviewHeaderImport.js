@@ -136,7 +136,8 @@ Pman.Dialog.PreviewHeaderImport = {
           _this.data.dbCols.forEach(function(c){
               records.push(new Roo.data.Record({
                   'col': c[0],
-                  'name': c[1]
+                  'name': c[1],
+                  'required': c[2]
               }));
           });
           
