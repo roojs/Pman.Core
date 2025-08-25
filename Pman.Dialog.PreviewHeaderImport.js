@@ -428,7 +428,7 @@ Pman.Dialog.PreviewHeaderImport = {
                 Pman.Dialog.CrmMailingList.show(
                     { id : 0,  owner_id : Pman.Login.authUserId, is_import : 1} ,
                     function(res) {
-                      _this.mailing_list.setValue(res);
+                      _this.mailing_list.setFromData(res);
                    }
                 ); 
             },
