@@ -227,7 +227,7 @@ Pman.Dialog.PreviewHeaderImport = {
             }
             
             var key = 'ExcelUpload::' + _this.data.fileName;
-            localeStorage.setItem(key, map);
+            localStorage.setItem(key, map);
             
             Roo.log(localStorage.getItem(key));
             
