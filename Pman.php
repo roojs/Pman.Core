@@ -11,8 +11,8 @@ class Pman_Core_Pman {
     
     function init ($pg)
     {
-
-        $this->updateHolidays($request['_update_database']);
+        $ch = DB_DataObject::factory('core_holiday');
+        $ch->updateHolidays($request['_update_database']);
         
         
         $group = DB_DataObject::factory('core_group');
