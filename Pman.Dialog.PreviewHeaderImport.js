@@ -229,6 +229,7 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
+            // store mapping so that the mapping can be reused when the same file is uploaded again
             var key = 'ExcelUploadMapping::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
             
