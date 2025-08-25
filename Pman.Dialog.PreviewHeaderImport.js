@@ -226,7 +226,9 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
-            Roo.log(_this.data.fileName);
+            var key = 'ExcelUpload::' + _this.data.fileName;
+            localeStorage.setItem(key, map);
+            
             
             var total = _this.data.data.rows.length;
             var batchValidateStart = 0;
