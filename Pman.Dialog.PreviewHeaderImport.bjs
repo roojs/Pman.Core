@@ -224,7 +224,7 @@
               "(function() {",
               "    Roo.log('A');",
               "    return '<div class=\"x-grid-cell-text x-btn button\">{name}{required}</div>';",
-              "})();"
+              "})()"
              ],
              "$ xns" : "Roo.form",
              "* prop" : "field",

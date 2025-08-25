@@ -539,7 +539,7 @@ Pman.Dialog.PreviewHeaderImport = {
            tpl : (function() {
                Roo.log('A');
                return '<div class="x-grid-cell-text x-btn button">{name}{required}</div>';
-           })();,
+           })(),
            triggerAction : 'all',
            typeAhead : true,
            value : 0,
