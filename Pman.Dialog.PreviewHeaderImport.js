@@ -86,7 +86,7 @@ Pman.Dialog.PreviewHeaderImport = {
               return a[1].toLowerCase().localeCompare(b[1].toLowerCase());
           });
           
-          var key = 'ExcelUpload::' + _this.data.fileName;
+          var key = 'ExcelUploadMapping::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
       
           var records = [];
@@ -229,7 +229,7 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
-            var key = 'ExcelUpload::' + _this.data.fileName;
+            var key = 'ExcelUploadMapping::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
             
             
