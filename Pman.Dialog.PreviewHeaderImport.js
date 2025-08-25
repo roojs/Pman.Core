@@ -90,11 +90,13 @@ Pman.Dialog.PreviewHeaderImport = {
           _this.data.data.headers.forEach(function(h, index) {
               var dbCol = '';
               var dbColName = '';
+              var dbColRequired = false;
               // map if header name matches column display name
               _this.data.dbCols.forEach(function(c) {
                   if(h.toUpperCase() == c[1].toUpperCase()) {
                       dbCol = c[0];
                       dbColName = c[1];
+                      dbColRequired = c[2];
                   }
               });
               
@@ -104,6 +106,7 @@ Pman.Dialog.PreviewHeaderImport = {
                       if(_this.data.map[h] == c[0]) {
                           dbCol = c[0];
                           dbColName = c[1];
+                          dbColRequired = c[2];
                       }
                   });
               }
@@ -123,7 +126,8 @@ Pman.Dialog.PreviewHeaderImport = {
                   'row_1': _this.data.data.rows.length > 0 ? _this.data.data.rows[0][index] : '',
                   'row_2': exampleContent,
                   'db_col': dbCol,
-                  'db_col_name': dbColName
+                  'db_col_name': dbColName,
+                  'db_col_required': 
               }));
           });
           
