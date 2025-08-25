@@ -70,6 +70,7 @@ Pman.Dialog.PreviewHeaderImport = {
               _this.mailing_list_text.hide();
               _this.mailing_list_add.hide();
           }
+          _this.mailing_list.setValue('');
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
               var dbCol = '';
