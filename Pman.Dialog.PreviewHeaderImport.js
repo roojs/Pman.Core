@@ -536,7 +536,7 @@ Pman.Dialog.PreviewHeaderImport = {
            mode : 'local',
            name : 'db_col_name',
            selectOnFocus : false,
-           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
+           tpl : '<div class=\"x-grid-cell-text x-btn button\">{name}</div>',
            triggerAction : 'all',
            typeAhead : true,
            value : 0,
