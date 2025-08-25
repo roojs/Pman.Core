@@ -536,7 +536,7 @@ Pman.Dialog.PreviewHeaderImport = {
            mode : 'local',
            name : 'db_col_name',
            selectOnFocus : false,
-           tpl : '<div class=\"x-grid-cell-text x-btn button\">{{name}</div>',
+           tpl : '<div class=\"x-grid-cell-text x-btn button\">{{name}{required}</div>',
            triggerAction : 'all',
            typeAhead : true,
            value : 0,
@@ -546,7 +546,7 @@ Pman.Dialog.PreviewHeaderImport = {
            '|xns' : 'Roo.form',
            store : {
             xtype : 'SimpleStore',
-            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'} ],
+            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'boolean'}],
             xns : Roo.data,
             '|xns' : 'Roo.data'
            }
