@@ -88,8 +88,6 @@ Pman.Dialog.PreviewHeaderImport = {
           
           var key = 'ExcelUpload::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
-          
-          Roo.log(map);
       
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
@@ -103,10 +101,10 @@ Pman.Dialog.PreviewHeaderImport = {
                   }
               });
               
-              if(typeof(_this.data.map) != 'undefined') {
+              if(map !== false) {
                   // use provided mapping if available
                   _this.data.dbCols.forEach(function(c) {
-                      if(_this.data.map[h] == c[0]) {
+                      if(map[h] == c[0]) {
                           dbCol = c[0];
                           dbColName = c[1];
                       }
