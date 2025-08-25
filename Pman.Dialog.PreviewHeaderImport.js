@@ -73,7 +73,7 @@ Pman.Dialog.PreviewHeaderImport = {
           _this.mailing_list.setValue('');
           
           // sort database cols
-          _this.data.dbCols = _this.data.dbCols.sort((a, b) => {
+          _this.data.dbCols = _this.data.dbCols.sort(function(a, b) {
               // Always keep empty first value at the beginning
               if (a[0] === '') return -1;
               if (b[0] === '') return 1;
