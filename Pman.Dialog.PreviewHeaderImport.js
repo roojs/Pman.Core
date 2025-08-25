@@ -127,9 +127,11 @@ Pman.Dialog.PreviewHeaderImport = {
                   'row_2': exampleContent,
                   'db_col': dbCol,
                   'db_col_name': dbColName,
-                  'db_col_required': 
+                  'db_col_required': dbColRequired
               }));
           });
+          
+          Roo.log(dbColRequired);
           
           _this.grid.ds.removeAll();
           records.forEach(function(r) {
