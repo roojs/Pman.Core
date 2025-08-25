@@ -226,6 +226,8 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
+            Roo.log(_this.data.fileName);
+            
             var total = _this.data.data.rows.length;
             var batchValidateStart = 0;
             var batchValidateLimit = 50;
