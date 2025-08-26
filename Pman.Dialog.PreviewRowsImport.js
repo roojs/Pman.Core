@@ -257,6 +257,9 @@ Pman.Dialog.PreviewRowsImport = {
                                       if(typeof(_this.data.disableMailingList) != 'undefined') {
                                           config.disableMailingList = _this.data.disableMailingList;
                                       }
+                                      
+                                      Roo.log("CONFIG");
+                                      Roo.log(config);
                                       Pman.Dialog.PreviewHeaderImport.show(config);
                                   });
                               }
