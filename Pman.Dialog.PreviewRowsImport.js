@@ -268,7 +268,7 @@ Pman.Dialog.PreviewRowsImport = {
                   },
                   failure : function(res)
                   {
-                      // validateValue(); // try again?
+                      validateValue(); // try again?
                   },
                   success: function(res) {
                       var rec = _this.grid.dataSource.getAt(rowIndex);
