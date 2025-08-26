@@ -87,7 +87,7 @@ Pman.Dialog.PreviewHeaderImport = {
           });
           
           // reuse stored mapping if any
-          var key = 'ExcelUploadMapping::' + _this.data.fileName;
+          var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
       
           var records = [];
@@ -231,7 +231,7 @@ Pman.Dialog.PreviewHeaderImport = {
             }
             
             // store mapping so that the mapping can be reused when the same file (with same file name) is uploaded again
-            var key = 'ExcelUploadMapping::' + _this.data.fileName;
+            var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
             
             
