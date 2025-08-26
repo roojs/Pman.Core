@@ -254,8 +254,8 @@ Pman.Dialog.PreviewRowsImport = {
                                           dbCols: _this.data.dbCols,
                                           validateCols: _this.data.validateCols
                                       };
-                                      if(typeof(_this.data.disableMailingList) != 'undefined') {
-                                          config.disableMailingList = _this.data.disableMailingList;
+                                      if(typeof(_this.data.mailingListId) === 'undefined') {
+                                          config.disableMailingList = true;
                                       }
                                       
                                       Roo.log("CONFIG");
