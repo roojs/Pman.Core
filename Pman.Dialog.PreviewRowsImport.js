@@ -208,16 +208,57 @@ Pman.Dialog.PreviewRowsImport = {
                       title: errMsg + "we will import the contacts without invalid values", 
                       multiline: 500,
                       value: errors.join("\n"),
-                      buttons: {ok: "Download failed contacts"},
+                      buttons: {yes: "Download failed contacts", no: "Upload Again", cancel: "Cancel"},
                       closable: false,
                       fn: function(res) {
-                          new Pman.Download({
-                              newWindow :  true,
-                              url : _this.data.url,
-                              method : 'GET',
+                          // Cancel
+                          if(res == 'cancel') {
+                              return;
+                          }
+                          
+                          // Download failed contacts
+                          if(res == 'yes') {
+                              new Pman.Download({
+                                  newWindow :  true,
+                                  url : _this.data.url,
+                                  method : 'GET',
+                                  params: {
+                                      'fileId': _this.data.fileId,
+                                      'validateTypes': Roo.encode(colIndexToType)
+                                  }
+                              });
+                              return;
+                          }
+                          
+                          // Upload Again
+                          
+                          // delete old uploaded files
+                          new Pman.Request({
+                              method: 'POST',
+                              url: _this.data.url,
+                              mask: 'Deleting old uploaded files',
                               params: {
-                                  'fileId': _this.data.fileId,
-                                  'validateTypes': Roo.encode(colIndexToType)
+                                  _delete: _this.data.fileId
+                              },
+                              success: function(res) {
+                                  _this.dialog.hide();
+                                  // upload again
+                                  Pman.Dialog.Image.show({
+                                      _url : _this.data.url
+      
+                                  }, function (data) {
+                                      var config = {
+                                          url: _this.data.url,
+                                          fileId: data.id,
+                                          data: data.data,
+                                          dbCols: _this.data.dbCols,
+                                          validateCols: _this.data.validateCols
+                                      };
+                                      if(typeof(_this.data.disableMailingList) != 'undefined') {
+                                          config.disableMailingList = _this.data.disableMailingList;
+                                      }
+                                      Pman.Dialog.PreviewHeaderImport.show(config);
+                                  });
                               }
                           });
                       }
