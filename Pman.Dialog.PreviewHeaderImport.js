@@ -312,8 +312,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                                 fileId: data.id,
                                                 data: data.data,
                                                 dbCols: _this.data.dbCols,
-                                                validateCols: _this.data.validateCols,
-                                                map: map
+                                                validateCols: _this.data.validateCols
                                             };
                                             if(typeof(_this.data.disableMailingList) != 'undefined') {
                                                 config.disableMailingList = _this.data.disableMailingList;
