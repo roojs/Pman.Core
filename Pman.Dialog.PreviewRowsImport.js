@@ -258,8 +258,6 @@ Pman.Dialog.PreviewRowsImport = {
                                           config.disableMailingList = true;
                                       }
                                       
-                                      Roo.log("CONFIG");
-                                      Roo.log(config);
                                       Pman.Dialog.PreviewHeaderImport.show(config);
                                   });
                               }
