@@ -363,7 +363,8 @@ class Pman_Core_Mailer {
         }
         
         $mail = Mail::factory($this->mail_method,$mailOptions);
-        if ($this->debug) {
+        
+         if ($this->debug) {
             $mail->debug = (bool) $this->debug;
         }
         
