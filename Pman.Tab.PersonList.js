@@ -13,7 +13,7 @@
 Pman.Tab.PersonList = function(config)
 {
     Roo.apply(this, config);
-}
+};
 
 Pman.Tab.PersonList.prototype = {
     
@@ -28,7 +28,7 @@ Pman.Tab.PersonList.prototype = {
     hideDelete : false,
     
     // beforeload handler... -- override on extended versions..
-    beforeload: function(t, o) {
+    beforeload: function() {
         //console.log(o.params);
         // teams!?!
         alert('person list not configured');
@@ -51,7 +51,7 @@ Pman.Tab.PersonList.prototype = {
     {
         alert('person list not configured');
         return false;
-        return [
+        /*return [
             this.c_name(),
             this.c_office_id_name(),
             this.c_role(),
@@ -59,13 +59,14 @@ Pman.Tab.PersonList.prototype = {
             this.c_fax(),
             this.c_email(),
             this.c_active()
-        ]
+        ];
+        */
     },
     
     dialog: function () {
         alert('person list not configured');
         return false;
-        return Pman.Dialog.PersonStaff;
+       // return Pman.Dialog.PersonStaff;
     },
     bulkAdd : function() {
         //return Pman.Dialog.PersonBulkAdd
@@ -74,7 +75,7 @@ Pman.Tab.PersonList.prototype = {
     newDefaults : function() {
         alert('person list not configured');
         return false;
-        return {
+        /*return {
             
             id : 0,
             company_id : Pman.Login.authUser.company_id,
@@ -83,6 +84,7 @@ Pman.Tab.PersonList.prototype = {
             company_id_tel : Pman.Login.authUser.company_id_tel,
             company_id_fax : Pman.Login.authUser.company_id_fax
         };
+        */
     },
          
     
@@ -175,7 +177,7 @@ Pman.Tab.PersonList.prototype = {
         
         var refreshPager = function() {
             _this.refresh();
-        }
+        };
         this.layout.beginUpdate();
         
         var frm = this.layout.getRegion('center').getEl().createChild({tag:'div'});
@@ -247,7 +249,7 @@ Pman.Tab.PersonList.prototype = {
                 loadMask: true,
 
                 listeners : {
-                    rowdblclick : function(g, ri, e) {
+                    rowdblclick : function(g, ri) {
                         var s = g.getDataSource().getAt(ri).data;
                         if (_this.dialog() && Pman.hasPerm(_this.permName, 'E')) {
                             _this.dialog().show(s,refreshPager);
@@ -255,7 +257,7 @@ Pman.Tab.PersonList.prototype = {
                         
                         
                     },
-                    cellclick : function (_self, rowIndex, columnIndex, e)
+                    cellclick : function (_self, rowIndex, columnIndex)
                     {   
                         var di = this.colModel.getDataIndex(columnIndex);
                         if (di != 'active') {
@@ -329,7 +331,7 @@ Pman.Tab.PersonList.prototype = {
             );
         }
         
-        var _this = this;
+        
         //if (this.permName == 'Core.Staff') {
                 
             this.paging.add( '-',
@@ -542,8 +544,10 @@ Pman.Tab.PersonList.prototype = {
                             Roo.MessageBox.alert("Error",  "Select a Person");
                             return;
                         }
-
-                        if (Pman.Login.window_id === false && (document.location.protocol == 'https:' || document.location.protocol == 'http:' )) {
+                        var has_crypto = document.location.protocol == 'https:' || (
+                            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'    
+                        );
+                        if (Pman.Login.window_id === false && has_crypto) {
                             // persitant in windows..
                             Pman.Login.window_id = window.sessionStorage.getItem('windowid');
                             if (!Pman.Login.window_id) {

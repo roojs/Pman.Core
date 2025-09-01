@@ -70,6 +70,25 @@ Pman.Dialog.PreviewHeaderImport = {
               _this.mailing_list_text.hide();
               _this.mailing_list_add.hide();
           }
+          
+          // sort database cols
+          _this.data.dbCols = _this.data.dbCols.sort(function(a, b) {
+              // Always keep empty first value at the beginning
+              if (a[0] === '') {
+                  return -1;
+              }
+              if (b[0] === '') { 
+                  return 1;
+              }
+              
+              // Sort the rest alphabetically by display name (case-insensitive)
+              return a[1].toLowerCase().localeCompare(b[1].toLowerCase());
+          });
+          
+          // reuse stored mapping if any
+          var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
+          var map = Roo.decode(localStorage.getItem(key)) || false;
+      
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
               var dbCol = '';
@@ -82,10 +101,10 @@ Pman.Dialog.PreviewHeaderImport = {
                   }
               });
               
-              if(typeof(_this.data.map) != 'undefined') {
+              if(map !== false) {
                   // use provided mapping if available
                   _this.data.dbCols.forEach(function(c) {
-                      if(_this.data.map[h] == c[0]) {
+                      if(map[h] == c[0]) {
                           dbCol = c[0];
                           dbColName = c[1];
                       }
@@ -120,7 +139,8 @@ Pman.Dialog.PreviewHeaderImport = {
           _this.data.dbCols.forEach(function(c){
               records.push(new Roo.data.Record({
                   'col': c[0],
-                  'name': c[1]
+                  'name': c[1],
+                  'style': c[2] ? "font-weight:bold;" : ''
               }));
           });
           
@@ -209,6 +229,11 @@ Pman.Dialog.PreviewHeaderImport = {
                 return;
             }
             
+            // store mapping so that the mapping can be reused when the same file (with same file name) is uploaded again
+            var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
+            localStorage.setItem(key, Roo.encode(map));
+            
+            
             var total = _this.data.data.rows.length;
             var batchValidateStart = 0;
             var batchValidateLimit = 50;
@@ -286,8 +311,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                                 fileId: data.id,
                                                 data: data.data,
                                                 dbCols: _this.data.dbCols,
-                                                validateCols: _this.data.validateCols,
-                                                map: map
+                                                validateCols: _this.data.validateCols
                                             };
                                             if(typeof(_this.data.disableMailingList) != 'undefined') {
                                                 config.disableMailingList = _this.data.disableMailingList;
@@ -428,7 +452,7 @@ Pman.Dialog.PreviewHeaderImport = {
                 Pman.Dialog.CrmMailingList.show(
                     { id : 0,  owner_id : Pman.Login.authUserId, is_import : 1} ,
                     function(res) {
-                      _this.mailing_list.setValue(res);
+                      _this.mailing_list.setFromData(res);
                    }
                 ); 
             },
@@ -520,7 +544,7 @@ Pman.Dialog.PreviewHeaderImport = {
            mode : 'local',
            name : 'db_col_name',
            selectOnFocus : false,
-           tpl : '<div class=\"x-grid-cell-text x-btn button\"><b>{name}</b> </div>',
+           tpl : '<div class=\"x-grid-cell-text x-btn button\" style=\"{style}\">{name}</div>',
            triggerAction : 'all',
            typeAhead : true,
            value : 0,
@@ -530,7 +554,7 @@ Pman.Dialog.PreviewHeaderImport = {
            '|xns' : 'Roo.form',
            store : {
             xtype : 'SimpleStore',
-            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'} ],
+            fields : [ {name: 'col', type: 'string'}, { name: 'name', type: 'string'}, {name: 'required', type: 'boolean'}],
             xns : Roo.data,
             '|xns' : 'Roo.data'
            }

@@ -207,7 +207,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (PEAR::isError($mail)) {
             return $mail;
         } 
-        $oe = error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+        $oe = error_reporting(E_ALL & ~E_NOTICE);
         $ret = $mail->send($ar['recipients'],$ar['headers'],$ar['body']);
         error_reporting($oe);
        

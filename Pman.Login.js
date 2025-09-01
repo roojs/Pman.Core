@@ -43,8 +43,11 @@ Pman.Login =  new Roo.util.Observable({
     onLoad : function() // called on page load...
     {
         // load 
-        // exclude chrome extensions.
-        if (Pman.Login.window_id === false && (document.location.protocol == 'https:' || document.location.protocol == 'http:' )) {
+        // exclude chrome extensions. - this only works on https (crypto is not available in http - except localhost
+        var has_crypto = document.location.protocol == 'https:' || (
+            document.location.protocol == 'http:'  && document.location.hostname == 'localhost'    
+        );
+        if (Pman.Login.window_id === false && has_crypto) {
             // persitant in windows..
             Pman.Login.window_id = window.sessionStorage.getItem('windowid');
             if (!Pman.Login.window_id) {

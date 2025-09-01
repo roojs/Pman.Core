@@ -432,7 +432,7 @@ trait Pman_Core_RooPostTrait {
                $p = $lock->person();
                
                
-               $this->jerr( "Record was locked by " . $p->name . " at " .$lock->created.
+               $this->jnotice("LOCKED", "Record was locked by " . $p->name . " at " .$lock->created.
                            " - Please confirm you wish to save" 
                            , array('needs_confirm' => true)); 
           
