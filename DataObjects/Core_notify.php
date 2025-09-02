@@ -380,7 +380,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             ));
             foreach($cn->fetchAll() as $n) {
                 // failed
-                if(empty($this->msgid) && $this->event_id > 0 && strtotime($this->act_when) < strtotime("NOW")) {
+                if(empty($n->msgid) && $n->event_id > 0 && strtotime($n->act_when) < strtotime("NOW")) {
                     continue;
                 }
 
