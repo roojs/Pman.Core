@@ -376,8 +376,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 'evtype' => $this->evtype,
                 'ontable' => $this->ontable,
                 'person_id' => $this->person_id,
-                'person_table' => $this->person_table,
-                'mail_imap_actor_id' => $this->mail_imap_actor_id
+                'person_table' => $this->person_table
             ));
             foreach($cn->fetchAll() as $n) {
                 // failed
