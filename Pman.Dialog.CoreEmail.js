@@ -561,7 +561,8 @@ Pman.Dialog.CoreEmail = {
                 
                  if (action.type == 'setdata') {
                  
-                     setInterval(_this.form.findField('bodytext').autosave, 5000);
+                     var bt = _this.form.findField('bodytext');
+                     bt.autosave.defer(5000,bt);
                      
                      _this.data.module = _this.data.module || 'crm_mailing_list_message';
                      
@@ -572,6 +573,11 @@ Pman.Dialog.CoreEmail = {
                      _this.stripoUpdate.hide();
                      _this.sendBtn.hide();
                      _this.sendTestBtn.hide();
+                     
+                     
+                       if (typeof(_this.data._fields) != 'undefined') {
+                           _this.unsubscribeselect.store.proxy.data = _this.data._fields;
+                       }
                      
                      
                      if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
@@ -1055,6 +1061,7 @@ Pman.Dialog.CoreEmail = {
                            _self.pushValue();
                        }
                        */
+                   
                        
                        new Pman.Request({
                            url : baseURL + '/Roo/Events.php',
@@ -1069,11 +1076,19 @@ Pman.Dialog.CoreEmail = {
                            },
                            success : function() {
                                _self.originalValue = _self.getValue();
+                               if (_this.dialog.isVisible()) {
+                                   _self.autosave.defer(5000, _self);
+                               }
+                               
                                
                            },
                            failure : function() 
                            {
                                Roo.log('body autosave failed?!');
+                               // try again.
+                               if (_this.dialog.isVisible()) {
+                                   _self.autosave.defer(5000, _self);
+                               }
                            }
                        });
                        
