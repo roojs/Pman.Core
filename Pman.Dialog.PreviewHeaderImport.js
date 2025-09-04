@@ -88,8 +88,6 @@ Pman.Dialog.PreviewHeaderImport = {
           // reuse stored mapping if any
           var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
           var map = Roo.decode(localStorage.getItem(key)) || false;
-          Roo.log('USE MAP FORM KEY ' + key);
-          Roo.log(map);
       
           var records = [];
           _this.data.data.headers.forEach(function(h, index) {
@@ -234,8 +232,6 @@ Pman.Dialog.PreviewHeaderImport = {
             // store mapping so that the mapping can be reused when the same file (with same file name) is uploaded again
             var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
-            Roo.log('STORE MAP FORM KEY ' + key);
-            Roo.log(map);
             
             
             var total = _this.data.data.rows.length;
