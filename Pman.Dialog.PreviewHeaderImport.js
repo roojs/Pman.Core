@@ -266,7 +266,6 @@ Pman.Dialog.PreviewHeaderImport = {
                             var config = {
                                 url: _this.data.url,
                                 fileId: _this.data.fileId,
-                                fileName: _this.data.fileName,
                                 data: res.data,
                                 dbCols: _this.data.dbCols,
                                 validateCols: _this.data.validateCols,
@@ -314,6 +313,7 @@ Pman.Dialog.PreviewHeaderImport = {
                                             var config = {
                                                 url: _this.data.url,
                                                 fileId: data.id,
+                                                fileName: _this.data.fileName,
                                                 data: data.data,
                                                 dbCols: _this.data.dbCols,
                                                 validateCols: _this.data.validateCols
