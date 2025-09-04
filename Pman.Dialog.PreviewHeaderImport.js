@@ -232,6 +232,8 @@ Pman.Dialog.PreviewHeaderImport = {
             // store mapping so that the mapping can be reused when the same file (with same file name) is uploaded again
             var key = 'PreviewHeaderImportMapping::' + _this.data.fileName;
             localStorage.setItem(key, Roo.encode(map));
+            Roo.log('STORE MAP');
+            Roo.log(map);
             
             
             var total = _this.data.data.rows.length;
