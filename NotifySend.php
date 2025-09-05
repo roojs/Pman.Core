@@ -86,6 +86,13 @@ class Pman_Core_NotifySend extends Pman
             'short' => 't',
             'min' => 0,
             'max' => 1,
+        ),
+        'reply-to-id' => array(
+            'desc' => 'Message ID to reply to (for email threading)',
+            'default' => '',
+            'short' => 'r',
+            'min' => 0,
+            'max' => 1,
         )
         
         
@@ -131,6 +138,9 @@ class Pman_Core_NotifySend extends Pman
         
         // Extract replyToId from options if provided
         $replyToId = isset($opts['replyToId']) ? $opts['replyToId'] : null;
+        if (empty($replyToId) && isset($opts['reply-to-id'])) {
+            $replyToId = $opts['reply-to-id'];
+        }
         
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
