@@ -86,13 +86,6 @@ class Pman_Core_NotifySend extends Pman
             'short' => 't',
             'min' => 0,
             'max' => 1,
-        ),
-        'reply-to-id' => array(
-            'desc' => 'Message ID to reply to (for email threading)',
-            'default' => '',
-            'short' => 'r',
-            'min' => 0,
-            'max' => 1,
         )
         
         
@@ -134,12 +127,6 @@ class Pman_Core_NotifySend extends Pman
         //print_r($opts);
         if (!empty($opts['DB_DataObject-debug'])) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
-        }
-        
-        // Extract replyToId from options if provided
-        $replyToId = isset($opts['replyToId']) ? $opts['replyToId'] : null;
-        if (empty($replyToId) && isset($opts['reply-to-id'])) {
-            $replyToId = $opts['reply-to-id'];
         }
         
         //DB_DataObject::debugLevel(1);
@@ -276,7 +263,7 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
-        $email =  $this->makeEmail($o, $p, $last, $w, $force, $replyToId);
+        $email =  $this->makeEmail($o, $p, $last, $w, $force);
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -808,13 +795,13 @@ class Pman_Core_NotifySend extends Pman
          
      }
      **/
-    function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false, $replyToId = null)
+    function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
     {
         $m = 'notify'. $notify->evtype;
         //var_dump(get_class($object) . '::' .$m);
         if (!empty($notify->evtype) && method_exists($object,$m)) {
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
         
         $type = explode('::', $notify->evtype);
@@ -822,7 +809,7 @@ class Pman_Core_NotifySend extends Pman
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
 
         $type = explode(':', $notify->evtype);
@@ -830,7 +817,7 @@ class Pman_Core_NotifySend extends Pman
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force);
         }
         
         // fallback if evtype is empty..
@@ -845,7 +832,7 @@ class Pman_Core_NotifySend extends Pman
             //exit;
         }
         if (method_exists($object, 'toEmail')) {
-            return $object->toEmail($rcpt, $last_sent_date, $notify, $force, $replyToId);
+            return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
         }
         // no way to send this.. - this needs to handle core_notify how we have used it for the approval stuff..
         
