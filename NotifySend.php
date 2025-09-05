@@ -129,6 +129,9 @@ class Pman_Core_NotifySend extends Pman
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
         }
         
+        // Extract replyToId from options if provided
+        $replyToId = isset($opts['replyToId']) ? $opts['replyToId'] : null;
+        
         //DB_DataObject::debugLevel(1);
         //date_default_timezone_set('UTC');
         // phpinfo();exit;
@@ -263,7 +266,7 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
-        $email =  $this->makeEmail($o, $p, $last, $w, $force);
+        $email =  $this->makeEmail($o, $p, $last, $w, $force, $replyToId);
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -308,6 +311,20 @@ class Pman_Core_NotifySend extends Pman
             $HOST = gethostname();
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
+        }
+        
+        // Handle reply functionality
+        if (!empty($replyToId)) {
+            // Add In-Reply-To header
+            $email['headers']['In-Reply-To'] = $replyToId;
+            
+            // Add References header (should include the original message ID)
+            $email['headers']['References'] = $replyToId;
+            
+            // Modify subject to include Re: prefix if not already present
+            if (!empty($email['headers']['Subject']) && !preg_match('/^Re:\s*/i', $email['headers']['Subject'])) {
+                $email['headers']['Subject'] = 'Re: ' . $email['headers']['Subject'];
+            }
         }
         
         
@@ -777,13 +794,13 @@ class Pman_Core_NotifySend extends Pman
          
      }
      **/
-    function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false)
+    function makeEmail($object, $rcpt, $last_sent_date, $notify, $force =false, $replyToId = null)
     {
         $m = 'notify'. $notify->evtype;
         //var_dump(get_class($object) . '::' .$m);
         if (!empty($notify->evtype) && method_exists($object,$m)) {
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
         }
         
         $type = explode('::', $notify->evtype);
