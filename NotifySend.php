@@ -808,7 +808,7 @@ class Pman_Core_NotifySend extends Pman
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
         }
 
         $type = explode(':', $notify->evtype);
@@ -816,7 +816,7 @@ class Pman_Core_NotifySend extends Pman
         if(!empty($type[1]) && method_exists($object,$type[1])){
             $m = $type[1];
             $this->debug("calling :" . get_class($object) . '::' .$m );
-            return $object->$m($rcpt, $last_sent_date, $notify, $force);
+            return $object->$m($rcpt, $last_sent_date, $notify, $force, $replyToId);
         }
         
         // fallback if evtype is empty..
