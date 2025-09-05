@@ -831,7 +831,7 @@ class Pman_Core_NotifySend extends Pman
             //exit;
         }
         if (method_exists($object, 'toEmail')) {
-            return $object->toEmail($rcpt, $last_sent_date, $notify, $force);
+            return $object->toEmail($rcpt, $last_sent_date, $notify, $force, $replyToId);
         }
         // no way to send this.. - this needs to handle core_notify how we have used it for the approval stuff..
         
