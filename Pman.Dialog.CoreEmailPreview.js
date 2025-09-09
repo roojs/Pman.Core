@@ -10,6 +10,7 @@ Pman.Dialog.CoreEmailPreview = {
   '4cd8413207629a963225f4314b53adcd' :"Plain",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '4c4ad5fca2e7a3f74dbb1ced00381aa4' :"HTML",
+  '3e29c8bf3180540cda150b5417d21ece' :"Send Manually (copy and paste this)",
   '94966d90747b97d1f0f206c98a8b1ac3' :"Send",
   '006c82ffdd63692a84a259c4f8732842' :"Email Preview",
   'e0aa021e21dddbd6d8cecec71e9cf564' :"OK"
@@ -55,7 +56,7 @@ Pman.Dialog.CoreEmailPreview = {
           _this.buttonsok[ btns.indexOf("ok") > -1 ? 'show' : 'hide']();
           _this.buttonscancel[ btns.indexOf("cancel") > -1 ? 'show' : 'hide']();
           _this.buttonssend[ btns.indexOf("send") > -1 ? 'show' : 'hide']();    
-          
+          _this.buttonsmanual[ btns.indexOf("manual") > -1 ? 'show' : 'hide']();    
           
           _self.layout.getRegion('center').showPanel(0);
           _this.panel.load({ 
@@ -148,6 +149,26 @@ Pman.Dialog.CoreEmailPreview = {
        render : function (_self)
         {
             _this.buttonssend = this;
+        
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['3e29c8bf3180540cda150b5417d21ece'] /* Send Manually (copy and paste this) */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+            if (_this.callback) {
+                _this.callback("manual");
+            }
+        },
+       render : function (_self)
+        {
+            _this.buttonsmanual = this;
         
         }
       },
