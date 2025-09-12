@@ -310,24 +310,6 @@ class Pman_Core_NotifySend extends Pman
             
         }
         
-        // Handle reply functionality
-        // if (!empty($replyToId)) {
-        //     $this->debug("Setting up reply to message: $replyToId");
-            
-        //     // Add In-Reply-To header
-        //     $email['headers']['In-Reply-To'] = $replyToId;
-            
-        //     // Add References header (should include the original message ID)
-        //     $email['headers']['References'] = $replyToId;
-            
-        //     // Modify subject to include Re: prefix if not already present
-        //     if (!empty($email['headers']['Subject']) && !preg_match('/^Re:\s*/i', $email['headers']['Subject'])) {
-        //         $email['headers']['Subject'] = 'Re: ' . $email['headers']['Subject'];
-        //     }
-            
-        //     $this->debug("Reply headers set - In-Reply-To: {$email['headers']['In-Reply-To']}, References: {$email['headers']['References']}");
-        // }
-        
         
             
         
