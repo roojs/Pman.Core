@@ -98,7 +98,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         $ret = $this->toArray();
 
-        $ret['is_mx_valid'] = $ret['no_mx_dt'] == '1000-01-01 00:00:00' ? 1 : 0;
+        $ret['is_mx_valid'] = $ret['has_mx'] == 0 && $ret['mx_updated'] != '1000-01-01 00:00:00' ? 0 : 1;
         
         return $ret;
     }
@@ -108,5 +108,59 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
+
+        if(!empty($q['_status'])) {
+            $badCond = "
+                (
+                    core_domain.has_mx = 0 
+                AND 
+                    core_domain.mx_updated != '1000-01-01 00:00:00'
+                )
+            ";
+
+            switch($q['_status']) {
+                case 'invalid_mx':
+                    $this->whereAdd("{$badCond}");
+                    break;
+                case 'valid_mx':
+                    $this->whereAdd("NOT({$badCond})");
+                    break;
+            }
+        }
+
+        if(!empty($q['_with_reference_count'])) {
+            $this->selectAddPersonReferenceCount();
+            if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
+                $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
+                $this->orderBy("{$q['sort']} $dir");
+            }
+    
+            if(!empty($q['_reference_status'])) {
+                switch($q['_reference_status']) {
+                    case 'with_references':
+                        $this->whereAddWithPersonRefernceCount();
+                        break;
+                    case 'without_reference':
+                        $this->whereAddWithoutPersonRefenceCount();
+                        break;
+                }
+            }
+        }
+    }
+
+    function selectAddPersonReferenceCount()
+    {
+        $this->selectAdd("0 as person_reference_count");
+    }
+
+    function whereAddWithPersonRefernceCount()
+    {
+        // all domains have no person reference count
+        $this->whereAdd("1 = 0");
+    }
+
+    function whereAddWithoutPersonRefenceCount()
+    {
+        // all domains have no person reference count
     }
 }
