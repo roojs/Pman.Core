@@ -187,7 +187,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $arr = explode('.', $k);
                 $tbl = $arr[0];
                 $col = $arr[1];
-                $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl}";
+                $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl} WHERE {$tbl}.{$col} = 2";
                 /*
                 $this->_join .= "
                     LEFT JOIN (
