@@ -142,15 +142,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if(!empty($q['_get_references'])) {
-            $cd = DB_DataObject::factory('core_domain');
-            if(!$cd->get($q['_get_references'])) {
-                $roo->jerr('Invalid domain ID');
-            }
-            $references = $this->getPersonReferences($cd->id, $roo);
-            $roo->jdata($references);
-        }
-
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
