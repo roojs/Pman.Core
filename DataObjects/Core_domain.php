@@ -190,22 +190,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 if($tbl == 'pressrelease_notify_archive') {
                     continue;
                 }
-                $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl} WHERE {$tbl}.{$col} = 2";
-                /*
-                $this->_join .= "
-                    LEFT JOIN (
-                        SELECT domain_id, COUNT(*) AS count
-                        FROM (
-                            SELECT domain1_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
-                            UNION ALL
-                            SELECT domain2_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
-                            UNION ALL
-                            SELECT domain3_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
-                        ) AS combined
-                        GROUP BY domain_id
-                    ) domain_person_count ON domain_person_count.domain_id = core_domain.id
-                ";
-                */
+                $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl}";
             }
             $this->_join .= "
                 LEFT JOIN (
