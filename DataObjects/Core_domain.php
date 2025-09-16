@@ -166,6 +166,25 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!empty($q['_with_reference_count'])) {
+            // build a list of tables to queriy for dependant data..
+            $map = $this->links();
+            
+            $affects  = array();
+            
+            $all_links = $x->databaseLinks();
+            
+            foreach($all_links as $tbl => $links) {
+                foreach($links as $col => $totbl_col) {
+                    $to = explode(':', $totbl_col);
+                    if ($to[0] != $x->tableName()) {
+                        continue;
+                    }
+                    
+                    $affects[$tbl .'.' . $col] = true;
+                }
+            }
+
+            die('test');
             $this->selectAddPersonReferenceCount();
             if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
                 $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
