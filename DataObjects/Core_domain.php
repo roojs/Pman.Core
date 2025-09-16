@@ -53,6 +53,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return  $cache[$this->server_id];
     }
 
+    function beforeInsert($q,$roo)
+    {
+        if (!empty($q['_delete_ids'])) {
+            $this->batchDelete(explode(',', $q['_delete_ids']), $roo);
+            $roo->jok('DONE');
+        }
+    }
+
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_update_mx'])) {
