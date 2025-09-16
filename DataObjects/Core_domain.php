@@ -72,10 +72,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         // delete domains
-        $cd = DB_DataObject::factory('clipping_domain');
+        $cd = DB_DataObject::factory('core_domain');
         $sql = "
             DELETE
-                FROM clipping_domain
+                FROM core_domain
             WHERE
             id IN (" . implode(',', $ids). ")
         ";
