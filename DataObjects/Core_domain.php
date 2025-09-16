@@ -181,16 +181,28 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 }
             }
 
+            $sql = array();
+
             foreach($affects as $k => $true) {
                 $arr = explode('.', $k);
                 $tbl = $arr[0];
                 $col = $arr[1];
+                $sql[] = "SELECT {$tbl}.{$col} FROM {$tbl}";
+                /*
                 $this->_join .= "
-                    LEFT JOIN
-                        {$tbl} AS join_domain_id_{$tbl}_{$col}
-                    ON 
-                        join_domain_id_{$tbl}_{$col}.{$col} = {$this->tableName()}.id
+                    LEFT JOIN (
+                        SELECT domain_id, COUNT(*) AS count
+                        FROM (
+                            SELECT domain1_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
+                            UNION ALL
+                            SELECT domain2_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
+                            UNION ALL
+                            SELECT domain3_id AS domain_id FROM pressrelease_contact WHERE deleted_by_id = 0
+                        ) AS combined
+                        GROUP BY domain_id
+                    ) domain_person_count ON domain_person_count.domain_id = core_domain.id
                 ";
+                */
             }
             var_dump($this->_join);
             die('test');
