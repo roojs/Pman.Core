@@ -187,7 +187,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $col = $arr[1];
                 $this->_join .= "
                     LEFT JOIN
-                        {$tbl} 
+                        {$tbl} join_{$tbl}_{$col}
                     ON 
                         {$tbl}.{$col} = {$this->tableName()}.id
                 ";
