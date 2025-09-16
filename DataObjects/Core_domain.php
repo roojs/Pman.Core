@@ -229,6 +229,24 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $this->selectAdd("0 as person_reference_count");
     }
 
+    function selectAddReferenceCount()
+    {
+        $this->_join .= "
+            LEFT JOIN (
+                SELECT domain_id, COUNT(*) AS count
+                FROM (
+                    SELECT domain_id FROM core_notify WHERE domain_id IS NOT NULL
+                    UNION ALL
+                    SELECT domain_id FROM core_notify_blacklist WHERE domain_id IS NOT NULL
+                    UNION ALL
+                    SELECT domain_id FROM core_notify_sender_blacklist WHERE domain_id IS NOT NULL
+                ) AS combined
+                GROUP BY domain_id
+            ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
+        ";
+        $this->selectAdd("IFNULL(domain_reference_count.count, 0) AS reference_count");
+    }
+
     function whereAddWithPersonRefernceCount()
     {
         // all domains have no person reference count
