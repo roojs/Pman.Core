@@ -166,8 +166,38 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!empty($q['_with_reference_count'])) {            
-            $this->selectAddReferenceCount();
-            if(!empty($q['sort']) && $q['sort'] == 'reference_count' && !empty($q['dir'])) {
+            $affects  = array();
+            
+            $all_links = $this->databaseLinks();
+            
+            foreach($all_links as $tbl => $links) {
+                foreach($links as $col => $totbl_col) {
+                    $to = explode(':', $totbl_col);
+                    if ($to[0] != $this->tableName()) {
+                        continue;
+                    }
+                    
+                    $affects[$tbl .'.' . $col] = true;
+                }
+            }
+
+            foreach($affects as $k => $true) {
+                $arr = explode('.', $k);
+                $tbl = $arr[0];
+                $col = $arr[1];
+                $this->_join .= "
+                    LEFT JOIN
+                        {$tbl} AS join_domain_id_{$tbl}_{$col}
+                    ON 
+                        join_domain_id_{$tbl}_{$col}.{$col} = {$this->tableName()}.id
+                ";
+            }
+            var_dump($this->_join);
+            die('test');
+
+            die('test');
+            $this->selectAddPersonReferenceCount();
+            if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
                 $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
                 $this->orderBy("{$q['sort']} $dir");
             }
@@ -175,10 +205,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
                     case 'with_references':
-                        $this->whereAdd("IFNULL(domain_reference_count.count, 0) > 0");
+                        $this->whereAddWithPersonRefernceCount();
                         break;
                     case 'without_reference':
-                        $this->whereAdd("IFNULL(domain_reference_count.count, 0) = 0");
+                        $this->whereAddWithoutPersonRefenceCount();
                         break;
                 }
             }
@@ -197,24 +227,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function selectAddPersonReferenceCount()
     {
         $this->selectAdd("0 as person_reference_count");
-    }
-
-    function selectAddReferenceCount()
-    {
-        $this->_join .= "
-            LEFT JOIN (
-                SELECT domain_id, COUNT(*) AS count
-                FROM (
-                    SELECT domain_id FROM core_notify WHERE domain_id IS NOT NULL
-                    UNION ALL
-                    SELECT domain_id FROM core_notify_blacklist WHERE domain_id IS NOT NULL
-                    UNION ALL
-                    SELECT domain_id FROM core_notify_sender_blacklist WHERE domain_id IS NOT NULL
-                ) AS combined
-                GROUP BY domain_id
-            ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
-        ";
-        $this->selectAdd("IFNULL(domain_reference_count.count, 0) AS reference_count");
     }
 
     function whereAddWithPersonRefernceCount()
