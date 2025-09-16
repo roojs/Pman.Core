@@ -61,6 +61,31 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
     }
 
+    function batchDelete($ids, $roo)
+    {
+        $cd = DB_DataObject::factory('core_domain');
+        $cd->whereAddIn('id', $ids, 'int');
+        $domains = $cd->fetchAll();
+
+        foreach($domains as $domain) {
+            $domain->beforeDelete(array(), $roo);
+        }
+
+        // delete domains
+        $cd = DB_DataObject::factory('clipping_domain');
+        $sql = "
+            DELETE
+                FROM clipping_domain
+            WHERE
+            id IN (" . implode(',', $ids). ")
+        ";
+        $cd->query($sql);
+
+        foreach($domains as $domain) {
+            $domain->onDelete(array(), $roo);
+        }
+    }
+
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_update_mx'])) {
