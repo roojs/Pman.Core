@@ -1,5 +1,4 @@
 {
- "gen_extended" : false,
  "items" : [
   {
    "$ xns" : "Roo",
@@ -1741,6 +1740,7 @@
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
  "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreEmail.bjs",
  "permname" : "",
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
