@@ -83,9 +83,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         ";
         $cd->query($sql);
 
-        var_dump($sql);
-        die('test');
-
         if(method_exists($this, 'onDelete')) {
             foreach($domains as $domain) {
                 $domain->onDelete(array(), $roo);
