@@ -144,7 +144,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         if(!empty($q['_get_references'])) {
             $references = $this->getReferences($q['_get_references'], $roo);
-            $roo->jok(json_encode($references));
+            $roo->jdata($references);
         }
 
         if (!empty($q['query']['domain'])) {
