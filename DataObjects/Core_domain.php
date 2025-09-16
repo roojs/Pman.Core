@@ -173,7 +173,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             foreach($all_links as $tbl => $links) {
                 foreach($links as $col => $totbl_col) {
                     $to = explode(':', $totbl_col);
-                    if ($to[0] != $x->tableName()) {
+                    if ($to[0] != $this->tableName()) {
                         continue;
                     }
                     
