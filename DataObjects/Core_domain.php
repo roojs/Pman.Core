@@ -61,6 +61,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!empty($q['_get_references'])) {
+            var_dump($q['_get_references']);
             die('test');
         }
     }
