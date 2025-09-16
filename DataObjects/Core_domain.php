@@ -201,6 +201,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     GROUP BY domain_id
                 ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
             ";
+            $this->selectAdd("IFNULL(domain_reference_count.count, 0) AS reference_count");
+
             var_dump($this->_join);
             die('test');
 
