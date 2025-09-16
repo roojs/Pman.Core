@@ -169,8 +169,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $affects  = array();
             
             $all_links = $this->databaseLinks();
-
-            var_dump($all_links);
             
             foreach($all_links as $tbl => $links) {
                 foreach($links as $col => $totbl_col) {
@@ -183,7 +181,17 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 }
             }
 
-            var_dump($affects);
+            foreach($affects as $k => $true) {
+                $arr = explode('.', $k);
+                $tbl = $arr[0];
+                $col = $arr[1];
+                $this->_join .= "
+                    LEFT JOIN
+                        {$tbl} 
+                    ON 
+                        {$tbl}.{$col} = {$this->tableName()}.id
+                ";
+            }
             die('test');
 
             die('test');
