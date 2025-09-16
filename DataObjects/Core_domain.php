@@ -147,7 +147,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(!$cd->get($q['_get_references'])) {
                 $roo->jerr('Invalid domain ID');
             }
-            $references = $this->getReferences($cd->id, $roo);
+            $references = $this->getPersonReferences($cd->id, $roo);
             $roo->jdata($references);
         }
 
