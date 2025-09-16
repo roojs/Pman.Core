@@ -168,6 +168,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if(!empty($q['_with_reference_count'])) {
             // build a list of tables to queriy for dependant data..
             $map = $this->links();
+
+            var_dump($map);
+            die('test');
             
             $affects  = array();
             
