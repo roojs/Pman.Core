@@ -166,42 +166,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if(!empty($q['_with_reference_count'])) {            
-            $affects  = array();
-            
-            $all_links = $this->databaseLinks();
-            
-            foreach($all_links as $tbl => $links) {
-                foreach($links as $col => $totbl_col) {
-                    $to = explode(':', $totbl_col);
-                    if ($to[0] != $this->tableName()) {
-                        continue;
-                    }
-                    
-                    $affects[$tbl .'.' . $col] = true;
-                }
-            }
 
-            $sql = array();
-
-            foreach($affects as $k => $true) {
-                $arr = explode('.', $k);
-                $tbl = $arr[0];
-                $col = $arr[1];
-                if($tbl == 'pressrelease_notify_archive') {
-                    continue;
-                }
-                $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl}";
-            }
-            $this->_join .= "
-                LEFT JOIN (
-                    SELECT domain_id, COUNT(*) AS count
-                    FROM (
-                        " . implode("\n UNION ALL \n", $sql) . "
-                    ) AS combined
-                    GROUP BY domain_id
-                ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
-            ";
-            $this->selectAdd("IFNULL(domain_reference_count.count, 0) AS reference_count");
 
             var_dump($this->_join);
             die('test');
@@ -235,9 +200,44 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
     }
 
-    function selectAddPersonReferenceCount()
+    function selectAddReferenceCount()
     {
-        $this->selectAdd("0 as person_reference_count");
+        $affects  = array();
+
+        $all_links = $this->databaseLinks();
+        
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $this->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
+        }
+
+        $sql = array();
+
+        foreach($affects as $k => $true) {
+            $arr = explode('.', $k);
+            $tbl = $arr[0];
+            $col = $arr[1];
+            if($tbl == 'pressrelease_notify_archive') {
+                continue;
+            }
+            $sql[] = "SELECT {$tbl}.{$col} AS domain_id FROM {$tbl}";
+        }
+        $this->_join .= "
+            LEFT JOIN (
+                SELECT domain_id, COUNT(*) AS count
+                FROM (
+                    " . implode("\n UNION ALL \n", $sql) . "
+                ) AS combined
+                GROUP BY domain_id
+            ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
+        ";
+        $this->selectAdd("IFNULL(domain_reference_count.count, 0) AS reference_count");
     }
 
     function whereAddWithPersonRefernceCount()
