@@ -204,7 +204,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 ";
                 */
             }
-            var_dump($this->_join);
+            var_dump($sql);
             die('test');
 
             die('test');
