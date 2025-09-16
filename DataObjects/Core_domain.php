@@ -192,6 +192,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                         {$tbl}.{$col} = {$this->tableName()}.id
                 ";
             }
+            var_dump($this->_join);
             die('test');
 
             die('test');
