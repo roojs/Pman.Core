@@ -209,4 +209,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         // all domains have no person reference count
     }
+
+    function getPersonReferences($domainId, $roo)
+    {
+        return array();
+    }
 }
