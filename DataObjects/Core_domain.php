@@ -168,7 +168,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if(!empty($q['_with_reference_count'])) {            
             $affects  = array();
             
-            $all_links = $x->databaseLinks();
+            $all_links = $this->databaseLinks();
             
             foreach($all_links as $tbl => $links) {
                 foreach($links as $col => $totbl_col) {
