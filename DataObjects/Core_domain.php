@@ -143,10 +143,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function applyFilters($q, $au, $roo)
     {
         if(!empty($q['_get_references'])) {
-            var_dump($q['_get_references']);
-            die('test');
+            $this->getReferences($q['_get_references'], $roo);
         }
-        
+
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
