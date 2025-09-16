@@ -165,13 +165,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
-        if(!empty($q['_with_reference_count'])) {
-            // build a list of tables to queriy for dependant data..
-            $map = $this->links();
-
-            var_dump($map);
-            die('test');
-            
+        if(!empty($q['_with_reference_count'])) {            
             $affects  = array();
             
             $all_links = $x->databaseLinks();
@@ -186,6 +180,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                     $affects[$tbl .'.' . $col] = true;
                 }
             }
+
+            var_dump($affects);
+            die('test');
 
             die('test');
             $this->selectAddPersonReferenceCount();
