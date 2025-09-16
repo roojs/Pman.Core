@@ -59,6 +59,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $this->batchDelete(explode(',', $q['_delete_ids']), $roo);
             $roo->jok('DONE');
         }
+
+        if(!empty($q['_get_references'])) {
+            die('test');
+        }
     }
 
     function batchDelete($ids, $roo)
