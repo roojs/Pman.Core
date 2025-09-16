@@ -204,6 +204,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 ";
                 */
             }
+            $this->_join .= "
+            LEFT JOIN (
+                SELECT domain_id, COUNT(*) AS count
+                FROM (
+                    " . implode(' UNION ALL ', $sql) . "
+                ) AS combined
+                GROUP BY domain_id
+            ) domain_person_count ON domain_person_count.domain_id = core_domain.id
+        ";
             var_dump($sql);
             die('test');
 
