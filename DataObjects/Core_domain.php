@@ -81,8 +81,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             WHERE
             id IN (" . implode(',', $ids). ")
         ";
-        var_dump($sql);
-        die('test');
         $cd->query($sql);
 
         if(method_exists($this, 'onDelete')) {
