@@ -183,6 +183,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 }
             }
         }
+
+        if(!empty($q['_get_references'])) {
+            $cd = DB_DataObject::factory('core_domain');
+            if(!$cd->get($q['_get_references'])) {
+                $roo->jerr('Invalid domain ID');
+            }
+            $references = $this->getPersonReferences($cd->id, $roo);
+            $roo->jdata($references);
+        }
     }
 
     function selectAddPersonReferenceCount()
