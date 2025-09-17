@@ -487,6 +487,9 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
 
+                    var_dumP($dom);
+                    die('test');
+
                     if(in_array($dom, $settings['domains'])){
                         $match = true;
                     }
