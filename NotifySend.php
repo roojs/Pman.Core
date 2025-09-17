@@ -489,7 +489,6 @@ class Pman_Core_NotifySend extends Pman
 
                     var_dumP($dom);
                     var_dumP($settings);
-                    die('test');
 
                     if(in_array($dom, $settings['domains'])){
                         $match = true;
@@ -502,6 +501,9 @@ class Pman_Core_NotifySend extends Pman
                             }
                         }
                     }
+
+                    var_dump($match ? "match" : "no match");
+                    die('test');
 
                     if (!$match) {
                         continue;
