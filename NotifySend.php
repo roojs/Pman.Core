@@ -487,9 +487,6 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
 
-                    var_dumP($dom);
-                    var_dumP($settings);
-
                     if(in_array($dom, $settings['domains'])){
                         $match = true;
                     }
@@ -501,9 +498,6 @@ class Pman_Core_NotifySend extends Pman
                             }
                         }
                     }
-
-                    var_dump($match ? "match" : "no match");
-                    die('test');
 
                     if (!$match) {
                         continue;
@@ -606,8 +600,6 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
-
-            die('before send');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             if (is_object($res)) {
