@@ -86,6 +86,13 @@ class Pman_Core_NotifySend extends Pman
             'short' => 't',
             'min' => 0,
             'max' => 1,
+        ),
+        'use-xoauth2' => array(
+            'desc' => 'Use XOAUTH2 authentication',
+            'default' => 0,
+            'short' => 'x',
+            'min' => 0,
+            'max' => 0,
         )
         
         
