@@ -73,6 +73,11 @@ Pman.Gnumeric = function (cfg)
         rowspan: 1
           
     };
+    
+    /**
+     * @cfg {String} dateFormat Default date format for HTML output (default: 'd/M/Y')
+     */
+    this.dateFormat = 'd/M/Y';
      
     this.load();
     
@@ -565,9 +570,22 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //this.createCell(cs.r,cs.c);
             //return;
         }
-        this.grid[cs.r][cs.c].value=  v;
-        if (this.grid[cs.r][cs.c].dom) {
-            this.grid[cs.r][cs.c].dom.textContent=  v;
+        // Handle date conversion for ValueType=40
+        if (vt == 40) {
+            if (!(typeof v === 'string' && v.match(/^\d{4}-\d{2}-\d{2}$/))) {
+                throw "Pman.Gnumeric: Date value must be in Y-m-d format (e.g., '2024-01-15') when ValueType=40. Received: '" + v + "'";
+            }
+            // Convert Y-m-d format to Gnumeric date serial number
+            var dateValue = (Date.parseDate(v, "Y-m-d") - new Date(1899, 11, 30)) / 86400000 + 1;
+            this.grid[cs.r][cs.c].value = dateValue;
+            if (this.grid[cs.r][cs.c].dom) {
+                this.grid[cs.r][cs.c].dom.textContent = dateValue;
+            }
+        } else {
+            this.grid[cs.r][cs.c].value = v;
+            if (this.grid[cs.r][cs.c].dom) {
+                this.grid[cs.r][cs.c].dom.textContent = v;
+            }
         }
         
         
@@ -1650,18 +1668,26 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 var value = g.value[0] == '=' ? 'CALCULATED' : g.value;
                 
+                // Handle date formatting for ValueType=40 or specific date formats
                 try {
-                    if(
+                    if (g.valueType == 40 && g.value[0] != '=' && !isNaN(value * 1) && value != 0) {
+                        // Convert Gnumeric date serial number to Date object
+                        var dateObj = new Date(value * 24 * 60 * 60 * 1000 + new Date(1899, 11, 30).getTime());
+                        value = dateObj.format(this.dateFormat);
+                    } else if (
+                        g.styles && g.styles[0] && g.styles[0].firstElementChild && 
                         g.styles[0].firstElementChild.getAttribute('Format') == "D\\-MMM\\-YYYY;@" &&
                         g.value[0] != '=' &&
                         !isNaN(value * 1) && 
                         value != 0
                     ){
-                        value = new Date(value * 24 * 60 * 60 * 1000 + new Date('1899-12-30').getTime()).format('d-M-Y');
+                        // Legacy date format handling
+                        var dateObj = new Date(value * 24 * 60 * 60 * 1000 + new Date('1899-12-30').getTime());
+                        value = dateObj.format(this.dateFormat);
                     }
                     
                 } catch(e) {
-                    
+                    // Keep original value if date conversion fails
                 }
                 
                 if(g.valueFormat == 'image') {
