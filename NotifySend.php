@@ -583,7 +583,6 @@ class Pman_Core_NotifySend extends Pman
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
 
-                    var_dump("MATCH");
                      
                     
                     
