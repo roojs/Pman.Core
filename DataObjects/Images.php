@@ -44,8 +44,14 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
             $i->get($q['image_id']);
             $roo->jok($i->toBase64());
         }
-        
 
+        if(!empty($q['query']['min_width'])) {
+            $this->whereAdd("Images.width >= {$this->escape($q['query']['min_width'])}");
+        }
+
+        if(!empty($q['query']['min_height'])) {
+            $this->whereAdd("Images.height >= {$this->escape($q['query']['min_height'])}");
+        }
     }
     
     function checkPerm($lvl, $au)
