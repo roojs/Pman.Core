@@ -304,6 +304,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             if (typeof(_t.grid[row]) == 'undefined') {
                 _t.grid[row] ={};
             }
+            if (vt == 40 && isNaN(val)) {
+                vf = _t.dateFormat;
+            }
             _t.grid[row][col] = Roo.applyIf({
                 valueType : vt,
                 valueFormat : vf,
