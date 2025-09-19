@@ -582,7 +582,6 @@ class Pman_Core_NotifySend extends Pman
                         $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
-
                      
                     
                     
