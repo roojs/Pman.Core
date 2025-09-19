@@ -33,7 +33,14 @@
            }
       }
     });
-    
+    for reference valuetype values..
+    	VALUE_EMPTY	= 10,
+	VALUE_BOOLEAN	= 20,
+	VALUE_FLOAT	= 40,
+	VALUE_ERROR	= 50,
+	VALUE_STRING	= 60,
+	VALUE_CELLRANGE = 70,
+	VALUE_ARRAY	= 80
 
 </code></pre>
 * 
@@ -571,19 +578,16 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //return;
         }
         // Handle date conversion for ValueType=40 or Date objects
-        if (vt == 40 || v instanceof Date) {
+        if ( v instanceof Date) {
             var dateValue;
-            if (v instanceof Date) {
-                // Convert Date object to Gnumeric date serial number
-                dateValue = (v.getTime() - new Date(1899, 11, 30).getTime()) / 86400000 + 1;
-                // Auto-set ValueType to 40 for Date objects
-                vt = 40;
-            } else if (typeof v === 'string' && v.match(/^\d{4}-\d{2}-\d{2}$/)) {
-                // Convert Y-m-d format to Gnumeric date serial number
-                dateValue = (Date.parseDate(v, "Y-m-d") - new Date(1899, 11, 30)) / 86400000 + 1;
-            } else {
-                throw "Pman.Gnumeric: Date value must be a Date object or Y-m-d format string (e.g., '2024-01-15') when ValueType=40. Received: '" + v + "'";
-            }
+            vf = vf || this.dateFormat;
+            vt = 40;
+            // Convert Date object to Gnumeric date serial number
+            dateValue = (v.getTime() - new Date(1899, 11, 30).getTime()) / 86400000 + 1;
+            // Auto-set ValueType to 40 for Date objects
+            
+                
+            
             this.grid[cs.r][cs.c].value = dateValue;
             if (this.grid[cs.r][cs.c].dom) {
                 this.grid[cs.r][cs.c].dom.textContent = dateValue;
@@ -924,9 +928,9 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                         break;
                         
                     case 'date':
-                        vt = 30;
+                        vt = 40;
                         //ValueFormat="d/m/yyyy" 38635  
-                        var vf = 'd/m/yyy';
+                        var vf = this.dateFormat;
                         if (cols[col].getAttribute('xls:dateformat')) {
                             vf= cols[col].getAttribute('xls:dateformat');
                         }
@@ -955,7 +959,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                     cell_value_text = '' + ((cell_value_text * 1) / 100);
                 }
 
-                if (cell_value_text.length && (vt == 30) && xlstype == 'date') {
+                if (cell_value_text.length && (vt == 40) && xlstype == 'date') {
                     var bits = cell_value_text.split(/-/);
                     var cur = new Date(bits[0],bits[1]-1,bits[2]);
                     cell_value_text = '' + Math.round((cur.getTime() - Date.UTC(1899,11,30)) / (24 * 60 * 60 * 1000));
@@ -1677,7 +1681,7 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
                 
                 // Handle date formatting for ValueType=40 or specific date formats
                 try {
-                    if (g.valueType == 40 && g.value[0] != '=' && !isNaN(value * 1) && value != 0) {
+                    if (g.valueType == 40 && g.value[0] != '=' && !isNaN(value * 1) && value != 0 && g.valueFormat == this.dateFormat) {
                         // Convert Gnumeric date serial number to Date object
                         var dateObj = new Date(value * 24 * 60 * 60 * 1000 + new Date(1899, 11, 30).getTime());
                         value = dateObj.format(this.dateFormat);
