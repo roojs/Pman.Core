@@ -570,13 +570,20 @@ Roo.extend(Pman.Gnumeric, Roo.util.Observable, {
             //this.createCell(cs.r,cs.c);
             //return;
         }
-        // Handle date conversion for ValueType=40
-        if (vt == 40) {
-            if (!(typeof v === 'string' && v.match(/^\d{4}-\d{2}-\d{2}$/))) {
-                throw "Pman.Gnumeric: Date value must be in Y-m-d format (e.g., '2024-01-15') when ValueType=40. Received: '" + v + "'";
+        // Handle date conversion for ValueType=40 or Date objects
+        if (vt == 40 || v instanceof Date) {
+            var dateValue;
+            if (v instanceof Date) {
+                // Convert Date object to Gnumeric date serial number
+                dateValue = (v.getTime() - new Date(1899, 11, 30).getTime()) / 86400000 + 1;
+                // Auto-set ValueType to 40 for Date objects
+                vt = 40;
+            } else if (typeof v === 'string' && v.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                // Convert Y-m-d format to Gnumeric date serial number
+                dateValue = (Date.parseDate(v, "Y-m-d") - new Date(1899, 11, 30)) / 86400000 + 1;
+            } else {
+                throw "Pman.Gnumeric: Date value must be a Date object or Y-m-d format string (e.g., '2024-01-15') when ValueType=40. Received: '" + v + "'";
             }
-            // Convert Y-m-d format to Gnumeric date serial number
-            var dateValue = (Date.parseDate(v, "Y-m-d") - new Date(1899, 11, 30)) / 86400000 + 1;
             this.grid[cs.r][cs.c].value = dateValue;
             if (this.grid[cs.r][cs.c].dom) {
                 this.grid[cs.r][cs.c].dom.textContent = dateValue;
