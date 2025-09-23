@@ -225,7 +225,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if($tbl == 'pressrelease_notify_archive') {
                 continue;
             }
-            $sql[] = "SELECT {$tbl}.{$col} AS domain_id, COUNT(*) AS cnt FROM {$tbl}";
+            $sql[] = "SELECT {$tbl}.{$col} AS domain_id, COUNT(*) AS cnt FROM {$tbl} WHERE {$tbl}.{$col} > 0 GROUP BY {$tbl}.{$col}";
         }
         $this->_join .= "
             LEFT JOIN (
