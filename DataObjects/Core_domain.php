@@ -252,30 +252,41 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function getReferences($domainId, $roo)
     {
-        $domainId = $this->escape($domainId);
+        $affects  = array();
 
-        $pc = DB_DataObject::factory('pressrelease_contact');
-        $pc->whereAdd("domain1_id = {$domainId} OR domain2_id = {$domainId} OR domain3_id = {$domainId}");
-        $pc->whereAdd("deleted_by_id = 0");
-        $pc->selectAdd();
-        $pc->selectAdd('id, firstname, lastname');
-        $pc->selectAdd("
-            CASE
-                WHEN domain1_id = {$domainId} THEN email
-                WHEN domain2_id = {$domainId} THEN email2
-                WHEN domain3_id = {$domainId} THEN email3
-                ELSE ''
-            END AS email
-        ");
-        $ret = array();
-        foreach($pc->fetchAll() as $p) {
-            $ret[] = array(
-                'id' => $p->id,
-                'firstname' => $p->firstname,
-                'lastname' => $p->lastname,
-                'email' => $p->email
-            );
+        $all_links = $this->databaseLinks();
+        
+        foreach($all_links as $tbl => $links) {
+            foreach($links as $col => $totbl_col) {
+                $to = explode(':', $totbl_col);
+                if ($to[0] != $this->tableName()) {
+                    continue;
+                }
+                
+                $affects[$tbl .'.' . $col] = true;
+            }
         }
-        return $ret;
+
+        $sql = array();
+
+        foreach($affects as $k => $true) {
+            $arr = explode('.', $k);
+            $tbl = $arr[0];
+            $col = $arr[1];
+            if(in_array($tbl, $this->getReferenceCountExcludeList())) {
+                continue;
+            }
+            $sql[] = "SELECT {$tbl} AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
+        }
+        $this->_join .= "
+            LEFT JOIN (
+                SELECT domain_id, SUM(count) AS count
+                FROM (
+                    " . implode("\n UNION ALL \n", $sql) . "
+                ) AS combined
+                GROUP BY domain_id
+            ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
+        ";
+        $this->selectAdd("COALESCE(domain_reference_count.count, 0) AS reference_count");
     }
 }
