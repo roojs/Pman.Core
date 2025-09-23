@@ -249,4 +249,33 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         $this->whereAdd("COALESCE(domain_reference_count.count, 0) = 0");
     }
+
+    function getReferences($domainId, $roo)
+    {
+        $domainId = $this->escape($domainId);
+
+        $pc = DB_DataObject::factory('pressrelease_contact');
+        $pc->whereAdd("domain1_id = {$domainId} OR domain2_id = {$domainId} OR domain3_id = {$domainId}");
+        $pc->whereAdd("deleted_by_id = 0");
+        $pc->selectAdd();
+        $pc->selectAdd('id, firstname, lastname');
+        $pc->selectAdd("
+            CASE
+                WHEN domain1_id = {$domainId} THEN email
+                WHEN domain2_id = {$domainId} THEN email2
+                WHEN domain3_id = {$domainId} THEN email3
+                ELSE ''
+            END AS email
+        ");
+        $ret = array();
+        foreach($pc->fetchAll() as $p) {
+            $ret[] = array(
+                'id' => $p->id,
+                'firstname' => $p->firstname,
+                'lastname' => $p->lastname,
+                'email' => $p->email
+            );
+        }
+        return $ret;
+    }
 }
