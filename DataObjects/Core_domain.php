@@ -279,7 +279,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $sql[] = "SELECT '{$tbl}' AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
         }
         $cd = DB_DataObject::factory('core_domain');
-        $res = $cd->query(implode("\n UNION ALL \n", $sql));
+        $res = $cd->query(implode("\n UNION ALL \n", $sql) . " HAVING count > 0");
         $ret = array();
         while($cd->fetch()) {
             $ret[] = array(
