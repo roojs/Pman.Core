@@ -35,17 +35,25 @@ class Pman_Core_DataObjects_Images extends DB_DataObject
         
         if(!empty($q['search']['filename'])){
             $this->whereAdd("
-                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' OR $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
+                $tn.filename LIKE '%{$this->escape($q['search']['filename'])}%' 
+                OR 
+                $tn.title LIKE '%{$this->escape($q['search']['filename'])}%'
             ");
         }
 
         if(!empty($q['_to_base64']) && !empty($q['image_id'])) {
-            $i = DB_DataObject::factory("Images");
+            $i = DB_DataObject::factory($tn);
             $i->get($q['image_id']);
             $roo->jok($i->toBase64());
         }
-        
 
+        if(!empty($q['query']['min_width'])) {
+            $this->whereAdd("{$tn}.width >= " . intval($q['query']['min_width']));
+        }
+
+        if(!empty($q['query']['min_height'])) {
+            $this->whereAdd("{$tn}.height >= " . intval($q['query']['min_height']));
+        }
     }
     
     function checkPerm($lvl, $au)
