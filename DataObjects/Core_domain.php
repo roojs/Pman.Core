@@ -172,8 +172,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
                 $this->orderBy("{$q['sort']} $dir");
             }
-
-            /*
     
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
@@ -185,7 +183,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                         break;
                 }
             }
-                */
         }
 
         if(!empty($q['_get_references'])) {
