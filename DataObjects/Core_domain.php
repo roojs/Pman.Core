@@ -280,13 +280,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         $cd = DB_DataObject::factory('core_domain');
         $res = $cd->query(implode("\n UNION ALL \n", $sql));
-        var_dump($res);
-        die('test');
         $ret = array();
-        foreach($cd->fetch() as $table) {
+        while($cd->fetch()) {
             $ret[] = array(
-                'tbl' => $table->tbl,
-                'count' => $table->count
+                'tbl' => $cd->tbl,
+                'count' => $cd->count
             );
         }
         return $ret;
