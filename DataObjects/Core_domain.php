@@ -221,7 +221,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $arr = explode('.', $k);
             $tbl = $arr[0];
             $col = $arr[1];
-            if($tbl == 'pressrelease_notify_archive') {
+            if(in_array($tbl, $this->getReferenceExcludeList()) {
                 continue;
             }
             $sql[] = "SELECT {$tbl}.{$col} AS domain_id, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} > 0 GROUP BY {$tbl}.{$col}";
