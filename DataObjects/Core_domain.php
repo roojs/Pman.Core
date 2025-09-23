@@ -276,10 +276,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(in_array($tbl, $this->getReferenceCountExcludeList())) {
                 continue;
             }
-            $sql[] = "SELECT '{$tbl}' AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
+            $sql[] = "SELECT '{$tbl}' AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)} HAVING count > 0";
         }
         $cd = DB_DataObject::factory('core_domain');
-        $res = $cd->query(implode("\n UNION ALL \n", $sql) . " HAVING count > 0");
+        $res = $cd->query(implode("\n UNION ALL \n", $sql));
         $ret = array();
         while($cd->fetch()) {
             $ret[] = array(
