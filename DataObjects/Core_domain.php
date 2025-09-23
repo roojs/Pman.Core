@@ -221,7 +221,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $arr = explode('.', $k);
             $tbl = $arr[0];
             $col = $arr[1];
-            if(in_array($tbl, $this->getReferenceExcludeList()) {
+            if(in_array($tbl, $this->getReferenceExcludeList())) {
                 continue;
             }
             $sql[] = "SELECT {$tbl}.{$col} AS domain_id, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} > 0 GROUP BY {$tbl}.{$col}";
@@ -236,5 +236,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
         ";
         $this->selectAdd("COALESCE(domain_reference_count.count, 0) AS reference_count");
+    }
+
+    function getReferenceExcludeList()
+    {
+        return array('pressrelease_notify_archive');
     }
 }
