@@ -168,13 +168,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if(!empty($q['_with_reference_count'])) {    
             $this->selectAddReferenceCount();
 
-            /*
-
-            $this->selectAddPersonReferenceCount();
-            if(!empty($q['sort']) && $q['sort'] == 'person_reference_count' && !empty($q['dir'])) {
+            if(!empty($q['sort']) && $q['sort'] == 'reference_count' && !empty($q['dir'])) {
                 $dir = $q['dir'] == 'DESC' ? 'DESC' : 'ASC';
                 $this->orderBy("{$q['sort']} $dir");
             }
+
+            /*
     
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
