@@ -240,6 +240,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function getReferenceExcludeList()
     {
-        return array('pressrelease_notify_archive');
+        return array();
     }
 }
