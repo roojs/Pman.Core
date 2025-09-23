@@ -58,3 +58,4 @@ ALTER TABLE core_notify ADD INDEX lookup_person_id (person_id);
 ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);
 
 ALTER TABLE core_notify ADD   INDEX lookup_reject (person_id, reject_match_id, event_id);
+ALTER TABLE core_notify ADD INDEX ix_domain_id (domain_id);
