@@ -284,10 +284,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $ret = array();
         foreach($cd->fetch() as $table) {
             $ret[] = array(
-                'id' => $p->id,
-                'firstname' => $p->firstname,
-                'lastname' => $p->lastname,
-                'email' => $p->email
+                'tbl' => $table->tbl,
+                'count' => $table->count
             );
         }
         return $ret;
