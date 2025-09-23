@@ -239,4 +239,14 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         return array();
     }
+
+    function whereAddWithRefernceCount()
+    {
+        $this->whereAdd("COALESCE(domain_reference_count.count, 0) > 0");
+    }
+
+    function whereAddWithoutRefenceCount()
+    {
+        $this->whereAdd("COALESCE(domain_reference_count.count, 0) = 0");
+    }
 }
