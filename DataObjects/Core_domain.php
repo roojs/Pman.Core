@@ -228,7 +228,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         $this->_join .= "
             LEFT JOIN (
-                SELECT domain_id, COUNT(*) AS count
+                SELECT domain_id, SUM(count) AS count
                 FROM (
                     " . implode("\n UNION ALL \n", $sql) . "
                 ) AS combined
