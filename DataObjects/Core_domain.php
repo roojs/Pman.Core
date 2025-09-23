@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(in_array($tbl, $this->getReferenceCountExcludeList())) {
                 continue;
             }
-            $sql[] = "SELECT {$tbl} AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
+            $sql[] = "SELECT '{$tbl}' AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
         }
         $cd = DB_DataObject::factory('core_domain');
         $cd->query(implode("\n UNION ALL \n", $sql));
