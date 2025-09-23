@@ -279,7 +279,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $sql[] = "SELECT {$tbl} AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
         }
         $cd = DB_DataObject::factory('core_domain');
-        $cd->query($sql);
+        $cd->query(implode("\n UNION ALL \n", $sql));
         $cd->find();
         $ret = array();
         foreach($cd->fetch() as $table) {
