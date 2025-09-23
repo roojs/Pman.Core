@@ -278,15 +278,17 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
             $sql[] = "SELECT {$tbl} AS tbl, COUNT(*) AS count FROM {$tbl} WHERE {$tbl}.{$col} = {$this->escape($domainId)}";
         }
-        $this->_join .= "
-            LEFT JOIN (
-                SELECT domain_id, SUM(count) AS count
-                FROM (
-                    " . implode("\n UNION ALL \n", $sql) . "
-                ) AS combined
-                GROUP BY domain_id
-            ) domain_reference_count ON domain_reference_count.domain_id = core_domain.id
-        ";
-        $this->selectAdd("COALESCE(domain_reference_count.count, 0) AS reference_count");
+        $cd = DB_DataObject::factory('core_domain');
+        $cd->query($sql);
+        $ret = array();
+        foreach($pc->fetchAll() as $p) {
+            $ret[] = array(
+                'id' => $p->id,
+                'firstname' => $p->firstname,
+                'lastname' => $p->lastname,
+                'email' => $p->email
+            );
+        }
+        return $ret;
     }
 }
