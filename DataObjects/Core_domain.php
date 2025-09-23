@@ -176,10 +176,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if(!empty($q['_reference_status'])) {
                 switch($q['_reference_status']) {
                     case 'with_references':
-                        $this->whereAddWithPersonRefernceCount();
+                        $this->whereAddWithRefernceCount();
                         break;
                     case 'without_reference':
-                        $this->whereAddWithoutPersonRefenceCount();
+                        $this->whereAddWithoutRefenceCount();
                         break;
                 }
             }
