@@ -238,20 +238,4 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         ";
         $this->selectAdd("COALESCE(domain_reference_count.count, 0) AS reference_count");
     }
-
-    function whereAddWithPersonRefernceCount()
-    {
-        // all domains have no person reference count
-        $this->whereAdd("1 = 0");
-    }
-
-    function whereAddWithoutPersonRefenceCount()
-    {
-        // all domains have no person reference count
-    }
-
-    function getPersonReferences($domainId, $roo)
-    {
-        return array();
-    }
 }
