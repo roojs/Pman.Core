@@ -104,28 +104,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         $old = clone($this);
 
-        $this->has_mx = checkdnsrr($this->domain, 'MX');
+        $this->has_mx = $this->hasValidMx($this->domain);
         $this->mx_updated = date('Y-m-d H:i:s');
         $this->no_mx_dt = '1000-01-01 00:00:00';
-        
-        // Check if MX records exist but mail servers are unreachable
-        if ($this->has_mx) {
-            $mx_records = array();
-            $mx_weight = array();
-            if (getmxrr($this->domain, $mx_records, $mx_weight)) {
-                $all_unreachable = true;
-                foreach($mx_records as $mx_record) {
-                    if (checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
-                        $all_unreachable = false;
-                        break;
-                    }
-                }
-                if ($all_unreachable) {
-                    // MX records exist but none of the mail servers are reachable
-                    $this->has_mx = 0;
-                }
-            }
-        }
         
         // expired
         if(!$this->has_mx) {
