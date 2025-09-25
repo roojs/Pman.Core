@@ -404,36 +404,14 @@ class Pman_Core_NotifySend extends Pman
         
         if (empty($mxs)) {
             
-            // Check if we found MX records but they don't resolve
-            $mx_records = array();
-            $mx_weight = array();
-            $has_mx_but_no_resolution = false;
-            if (getmxrr($dom, $mx_records, $mx_weight)) {
-                $has_mx_but_no_resolution = true;
-                foreach($mx_records as $mx_record) {
-                    if (!checkdnsrr($mx_record, 'A') && !checkdnsrr($mx_record, 'AAAA')) {
-                        $has_mx_but_no_resolution = true;
-                        break;
-                    }
-                }
-            }
-            
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
-                if ($has_mx_but_no_resolution) {
-                    $this->addEvent('NOTIFY', $w, 'MX RECORDS FOUND BUT MAIL SERVERS UNREACHABLE ' . $dom );
-                } else {
-                    $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
-                }
+                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
                 $w->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
                 $this->errorHandler($ev->remarks);
             }
             
-            if ($has_mx_but_no_resolution) {
-                $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - MX RECORDS EXIST BUT MAIL SERVERS UNREACHABLE - ". $p->email );
-            } else {
-                $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - NO MX RECORDS - ". $p->email );
-            }
+            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             
@@ -767,25 +745,7 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        // Check if we found MX records but they don't resolve
-        $mx_records = array();
-        $mx_weight = array();
-        $has_mx_but_no_resolution = false;
-        if (getmxrr($dom, $mx_records, $mx_weight)) {
-            $has_mx_but_no_resolution = true;
-            foreach($mx_records as $mx_record) {
-                if (!checkdnsrr($mx_record, 'A') && !checkdnsrr($mx_record, 'AAAA')) {
-                    $has_mx_but_no_resolution = true;
-                    break;
-                }
-            }
-        }
-        
-        if ($has_mx_but_no_resolution) {
-            $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - MX RECORDS EXIST BUT MAIL SERVERS UNREACHABLE: ' . $p->email);
-        } else {
-            $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED: ' . $p->email);
-        }
+        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
         $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
