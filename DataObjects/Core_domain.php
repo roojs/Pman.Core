@@ -95,9 +95,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (getmxrr($this->domain, $mx_records, $mx_weight)) {
                 $all_unreachable = true;
                 foreach($mx_records as $mx_record) {
-                    var_dump($mx_record);
-                    var_dump(checkdnsrr($mx_record, 'A'));
-                    var_dump(checkdnsrr($mx_record, 'AAAA'));
                     if (checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
                         $all_unreachable = false;
                         break;
