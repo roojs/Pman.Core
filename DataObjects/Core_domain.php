@@ -103,7 +103,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 if ($all_unreachable) {
                     // MX records exist but none of the mail servers are reachable
                     $this->has_mx = 0;
-                    $this->no_mx_dt = date('Y-m-d H:i:s');
                 }
             }
         }
