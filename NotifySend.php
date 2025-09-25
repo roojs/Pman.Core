@@ -772,9 +772,13 @@ class Pman_Core_NotifySend extends Pman
         
         foreach($mx_weight as $k => $weight) {
             if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
+                // Validate that the MX hostname is actually resolvable
+                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
+                    $mxs[] = $mx_records[$k];
+                }
             }
         }
+
         return empty($mxs) ? false : $mxs;
     }
     
