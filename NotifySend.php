@@ -780,6 +780,8 @@ class Pman_Core_NotifySend extends Pman
                 }
             }
         }
+
+        var_dump($mxs);
         return empty($mxs) ? false : $mxs;
     }
     
