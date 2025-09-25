@@ -80,6 +80,26 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
     }
 
+    function hasValidMx($domain)
+    {
+        if(!checkdnsrr($domain, 'MX')) {
+            return false;
+        }
+
+        $mx_records = array();
+        $mx_weight = array();
+        if(getmxrr($domain, $mx_records, $mx_weight)) {
+            foreach($mx_records as $mx_record) {
+                if(checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
+                    return true;
+                }
+            }
+        }
+
+        // MX records exist but none of the mail servers are reachable
+        return false;
+    }
+
     function updateMx()
     {
         $old = clone($this);
