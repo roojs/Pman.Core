@@ -342,10 +342,6 @@ class Pman_Core_NotifySend extends Pman
          
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
-        // Update domain MX status if it's been more than 5 days since last check
-        if (strtotime($core_domain->mx_updated) < strtotime('now - 5 day')) {
-            $core_domain->updateMx();
-        }
         
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
