@@ -819,9 +819,6 @@ class Pman_Core_NotifySend extends Pman
                 // Validate that the MX hostname is actually resolvable
                 if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
                     $mxs[] = $mx_records[$k];
-                } else {
-                    // Log that we found an MX record but the hostname doesn't resolve
-                    error_log("MX record found for {$fqdn}: {$mx_records[$k]} but hostname does not resolve");
                 }
             }
         }
