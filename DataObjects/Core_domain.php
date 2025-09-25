@@ -96,6 +96,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
 
+        var_dump("NO VALID");
+
         // MX records exist but none of the mail servers are reachable
         return false;
     }
