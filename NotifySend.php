@@ -342,6 +342,10 @@ class Pman_Core_NotifySend extends Pman
          
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
+        // Update domain MX status if it's been more than 5 days since last check
+        if (strtotime($core_domain->mx_updated) < strtotime('now - 5 day')) {
+            $core_domain->updateMx();
+        }
         
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
@@ -400,14 +404,36 @@ class Pman_Core_NotifySend extends Pman
         
         if (empty($mxs)) {
             
+            // Check if we found MX records but they don't resolve
+            $mx_records = array();
+            $mx_weight = array();
+            $has_mx_but_no_resolution = false;
+            if (getmxrr($dom, $mx_records, $mx_weight)) {
+                $has_mx_but_no_resolution = true;
+                foreach($mx_records as $mx_record) {
+                    if (!checkdnsrr($mx_record, 'A') && !checkdnsrr($mx_record, 'AAAA')) {
+                        $has_mx_but_no_resolution = true;
+                        break;
+                    }
+                }
+            }
+            
             // only retry for 1 day if the MX issue..
             if ($retry < 240) {
-                $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
+                if ($has_mx_but_no_resolution) {
+                    $this->addEvent('NOTIFY', $w, 'MX RECORDS FOUND BUT MAIL SERVERS UNREACHABLE ' . $dom );
+                } else {
+                    $this->addEvent('NOTIFY', $w, 'MX LOOKUP FAILED ' . $dom );
+                }
                 $w->flagLater(date('Y-m-d H:i:s', strtotime('NOW + ' . $retry . ' MINUTES')));
                 $this->errorHandler($ev->remarks);
             }
             
-            $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - BAD DOMAIN - ". $p->email );
+            if ($has_mx_but_no_resolution) {
+                $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - MX RECORDS EXIST BUT MAIL SERVERS UNREACHABLE - ". $p->email );
+            } else {
+                $ev = $this->addEvent('NOTIFYBADMX', $w, "BAD ADDRESS - NO MX RECORDS - ". $p->email );
+            }
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
             
@@ -741,7 +767,25 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
+        // Check if we found MX records but they don't resolve
+        $mx_records = array();
+        $mx_weight = array();
+        $has_mx_but_no_resolution = false;
+        if (getmxrr($dom, $mx_records, $mx_weight)) {
+            $has_mx_but_no_resolution = true;
+            foreach($mx_records as $mx_record) {
+                if (!checkdnsrr($mx_record, 'A') && !checkdnsrr($mx_record, 'AAAA')) {
+                    $has_mx_but_no_resolution = true;
+                    break;
+                }
+            }
+        }
+        
+        if ($has_mx_but_no_resolution) {
+            $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - MX RECORDS EXIST BUT MAIL SERVERS UNREACHABLE: ' . $p->email);
+        } else {
+            $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED: ' . $p->email);
+        }
         
         $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
@@ -772,7 +816,13 @@ class Pman_Core_NotifySend extends Pman
         
         foreach($mx_weight as $k => $weight) {
             if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
+                // Validate that the MX hostname is actually resolvable
+                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
+                    $mxs[] = $mx_records[$k];
+                } else {
+                    // Log that we found an MX record but the hostname doesn't resolve
+                    error_log("MX record found for {$fqdn}: {$mx_records[$k]} but hostname does not resolve");
+                }
             }
         }
         return empty($mxs) ? false : $mxs;
