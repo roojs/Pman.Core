@@ -172,9 +172,9 @@ class Pman_Core_DataObjects_Core_watch extends DB_DataObject
             }
             $roo->jerr("method does not exist: {$ar[1]}");
         }
-        $class = get_class($object);
         
-        $method = new ReflectionMethod("{$class}::{$ar[1]}");
+        
+        $method = new ReflectionMethod($object,  $ar[1]);
         return $method;
         
         

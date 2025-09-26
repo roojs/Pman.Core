@@ -455,7 +455,16 @@ class Pman_Core_NotifySend extends Pman
                 'host'    => $mx ,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
-                'socket_options' =>  isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : null,
+                'socket_options' =>  
+                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                        'ssl' => array(
+                            'verify_peer_name' => false,
+                            'verify_peer' => false, 
+                            'allow_self_signed' => true
+                        )
+                    ),
+                
+                 
                 //'debug' => isset($opts['debug']) ?  1 : 0,
                 'debug' => 1,
                 'debug_handler' => array($this, 'debugHandler'),
@@ -592,7 +601,13 @@ class Pman_Core_NotifySend extends Pman
                     if (isset($settings['port'])) {
                         $mailer->port = $settings['port'];
                     }
-                    $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array('ssl' => array('verify_peer_name' => false));
+                    $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                        'ssl' => array(
+                            'verify_peer_name' => false,
+                             'verify_peer' => false, 
+                             'allow_self_signed' => true
+                        )
+                    );
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
 
@@ -757,9 +772,13 @@ class Pman_Core_NotifySend extends Pman
         
         foreach($mx_weight as $k => $weight) {
             if (!empty($mx_records[$k])) {
-                $mxs[] = $mx_records[$k];
+                // Validate that the MX hostname is actually resolvable
+                if (checkdnsrr($mx_records[$k], 'A') || checkdnsrr($mx_records[$k], 'AAAA')) {
+                    $mxs[] = $mx_records[$k];
+                }
             }
         }
+
         return empty($mxs) ? false : $mxs;
     }
     

@@ -109,6 +109,30 @@
      },
      "text" : "Send",
      "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "    if (_this.callback) {",
+       "        _this.callback(\"manual\");",
+       "    }",
+       "}"
+      ],
+      "render" : [
+       "function (_self)",
+       "{",
+       "    _this.buttonsmanual = this;",
+       "",
+       "}"
+      ]
+     },
+     "text" : "Send Manually (copy and paste this)",
+     "xtype" : "Button"
     }
    ],
    "listeners" : {
@@ -121,7 +145,7 @@
      "    _this.buttonsok[ btns.indexOf(\"ok\") > -1 ? 'show' : 'hide']();",
      "    _this.buttonscancel[ btns.indexOf(\"cancel\") > -1 ? 'show' : 'hide']();",
      "    _this.buttonssend[ btns.indexOf(\"send\") > -1 ? 'show' : 'hide']();    ",
-     "    ",
+     "    _this.buttonsmanual[ btns.indexOf(\"manual\") > -1 ? 'show' : 'hide']();    ",
      "    ",
      "    _self.layout.getRegion('center').showPanel(0);",
      "    _this.panel.load({ ",
@@ -171,6 +195,7 @@
  "permname" : "",
  "strings" : {
   "006c82ffdd63692a84a259c4f8732842" : "Email Preview",
+  "3e29c8bf3180540cda150b5417d21ece" : "Send Manually (copy and paste this)",
   "4c4ad5fca2e7a3f74dbb1ced00381aa4" : "HTML",
   "4cd8413207629a963225f4314b53adcd" : "Plain",
   "94966d90747b97d1f0f206c98a8b1ac3" : "Send",
