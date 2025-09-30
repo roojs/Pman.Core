@@ -340,6 +340,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w->get($cn->id);
 
         if($server_ipv6 != null) {
+            $server_ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
+            $server_ipv6_range->id = $server_ipv6->range_id;
+            if ($server_ipv6_range->find(true)) {
+            }
             // next server..
             $pp = clone($w);
             $w->server_id = $server_ipv6->server_id;
