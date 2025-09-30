@@ -327,7 +327,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null)
     {
         if (!$this->id) {
             return;
@@ -338,6 +338,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
+
+        if($server_ipv6 != null) {
+            // next server..
+            $pp = clone($w);
+            $w->server_id = $server_ipv6->server_id;
+            $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
+            $w->update($pp);
+            return true;
+        }
         
         $servers = $this->availableServers();
         $start = 0;
