@@ -159,6 +159,8 @@ class Pman_Core_NotifySend extends Pman
                 $this->server_ipv6 = $ipv6;
             }
         }
+
+        die('test');
         
         
         if (!empty($opts['debug'])) {
