@@ -205,7 +205,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                         $cnsi->domain_id = $this->id;
                         $cnsi->ipv6_addr = $aaaa_records[0]['ipv6'];
                         $cnsi->insert();
-                        break;
+                        return;
                     }
                 }
             }
