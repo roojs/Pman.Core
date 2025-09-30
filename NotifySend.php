@@ -457,7 +457,10 @@ class Pman_Core_NotifySend extends Pman
         }
         
         var_dump($this->server_ipv6);
-        $sender = DB_DataObject::factory('core_notify_sender')->get($this->server->ipv6_sender_id);
+        $sender = DB_DataObject::factory('core_notify_sender');
+        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
+            $email['headers']['From'] = $sender->email;
+        }
         // $email['headers']['From'] = $this->server_ipv6
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
 
