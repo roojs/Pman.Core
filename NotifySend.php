@@ -359,7 +359,7 @@ class Pman_Core_NotifySend extends Pman
         $ww->update($w); // if nothing has changed this will not do anything.
         $w = clone($ww);
 
-        var_dump($core_domain->domain);
+        $this->setupIpv6ForDomain($core_domain);
         die('test');
         
     
