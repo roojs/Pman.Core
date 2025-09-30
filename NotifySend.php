@@ -147,9 +147,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
-        if (!$force &&  $w->server_id != $this->server->id) {
-            $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
-        }
         
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
@@ -160,6 +157,12 @@ class Pman_Core_NotifySend extends Pman
                 $this->server_ipv6 = $ipv6;
             }
         }
+
+        if (!$force &&  $w->server_id != $this->server->id) {
+            $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
+        }
+
+        die('test');
         
         
         if (!empty($opts['debug'])) {
