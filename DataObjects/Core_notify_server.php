@@ -304,9 +304,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     $update_notification->get($notification->id);
                     $update_notification->server_id = $ipv6_range->server_id;
                     $update_notification->update();
+                    $assignedIds[] = $notification->id;
                 }
             }
         }
+        return $assignedIds;
     }
         // called on current server.
 
