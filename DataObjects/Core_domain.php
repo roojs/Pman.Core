@@ -187,6 +187,28 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function setUpIpv6()
     {
-        
+        if (empty($this->domain)) {
+            return;
+        }
+
+        // Get MX records for the domain
+        $mx_records = array();
+        if (getmxrr($this->domain, $mx_records)) {
+            // Check if any MX record has AAAA record
+            foreach ($mx_records as $mx) {
+                $aaaa_records = dns_get_record($mx, DNS_AAAA);
+                if (!empty($aaaa_records)) {
+                    $range = DB_DataObject::factory('core_notify_server_ipv6_range')->findRange($aaaa_records[0]['ipv6']);
+                    if($range) {
+                        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+                        $cnsi->range_id = $range->id;
+                        $cnsi->domain_id = $this->id;
+                        $cnsi->ipv6_addr = $aaaa_records[0]['ipv6'];
+                        $cnsi->insert();
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
