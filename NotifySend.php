@@ -706,7 +706,10 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
-                $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                // Don't assign next server if IPv6 is configured
+                if (empty($this->server_ipv6)) {
+                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                }
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -742,7 +745,10 @@ class Pman_Core_NotifySend extends Pman
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    // Don't assign next server if IPv6 is configured
+                    if (empty($this->server_ipv6)) {
+                        $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    }
                     $this->errorHandler( $ev->remarks);
                 }
             }
