@@ -358,9 +358,6 @@ class Pman_Core_NotifySend extends Pman
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
         $w = clone($ww);
-
-        $this->setupIpv6ForDomain($core_domain);
-        die('test');
         
     
       
