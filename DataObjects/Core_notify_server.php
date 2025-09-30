@@ -274,6 +274,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function assignQueuesByIPv6Domain($notify)
     {
+        $assignedIds = array();
         // Get all pending notifications that have domain_id
         $p = DB_DataObject::factory($notify->table);
         $p->whereAdd("
