@@ -935,7 +935,11 @@ class Pman_Core_NotifySend extends Pman
                 if (!empty($aaaa_records)) {
                     $range = DB_DataObject::factory('core_notify_server_ipv6_range')->findRange($aaaa_records[0]['ipv6']);
                     if($range) {
-
+                        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+                        $cnsi->range_id = $range->id;
+                        $cnsi->domain_id = $core_domain->id;
+                        $cnsi->insert();
+                        break;
                     }
                 }
             }
