@@ -339,6 +339,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
 
+        // set to ipv6 server if available
+        // update act_when
         if($server_ipv6 != null) {
             $pp = clone($w);
 
