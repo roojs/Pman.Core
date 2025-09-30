@@ -10,3 +10,4 @@ CREATE  TABLE core_notify_server (
 ) ENGINE=InnoDB;;
 
 ALTER TABLE core_notify_server ADD INDEX lookup (hostname,poolname,is_active);
+ALTER TABLE core_notify_server ADD COLUMN ipv6 INT(11) NOT NULL DEFAULT 0;
