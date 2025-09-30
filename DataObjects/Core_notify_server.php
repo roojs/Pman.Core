@@ -266,6 +266,48 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         DB_DataObject::factory("core_notify_blacklist")->prune();
         
     }
+    
+    /**
+     * Assign servers based on IPv6 domain assignments
+     * If domain_id exists in server_ipv6, set the server_id to the same server
+     * If no domain_id match, leave for normal assignment
+     */
+    function assignQueuesByIPv6Domain($notify)
+    {
+        // Get all pending notifications that have domain_id
+        $p = DB_DataObject::factory($notify->table);
+        $p->whereAdd("
+            sent < '2000-01-01'
+            and
+            event_id = 0
+            and
+            act_start < NOW() + INTERVAL 3 HOUR
+            and
+            domain_id > 0
+        ");
+        
+        $pending_notifications = $p->fetchAll();
+        
+        foreach ($pending_notifications as $notification) {
+            // Check if this domain_id has an IPv6 server assignment
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->domain_id = $notification->domain_id;
+            
+            if ($ipv6->find(true)) {
+                // Get the server_id from the IPv6 range
+                $ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
+                $ipv6_range->id = $ipv6->range_id;
+                
+                if ($ipv6_range->find(true)) {
+                    // Update the notification to use the assigned server
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $ipv6_range->server_id;
+                    $update_notification->update();
+                }
+            }
+        }
+    }
         // called on current server.
 
     function availableServers()
