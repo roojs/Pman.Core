@@ -274,6 +274,13 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function assignQueuesByIPv6Domain($notify)
     {
+        // Get available servers to validate assignments
+        $available_servers = $this->availableServers();
+        $available_server_ids = array();
+        foreach ($available_servers as $server) {
+            $available_server_ids[] = $server->id;
+        }
+        
         // Get all pending notifications that have domain_id
         $p = DB_DataObject::factory($notify->table);
         $p->whereAdd("
@@ -299,11 +306,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $ipv6_range->id = $ipv6->range_id;
                 
                 if ($ipv6_range->find(true)) {
-                    // Update the notification to use the assigned server
-                    $update_notification = DB_DataObject::factory($notify->table);
-                    $update_notification->get($notification->id);
-                    $update_notification->server_id = $ipv6_range->server_id;
-                    $update_notification->update();
+                    // Only assign if the server is available
+                    if (in_array($ipv6_range->server_id, $available_server_ids)) {
+                        // Update the notification to use the assigned server
+                        $update_notification = DB_DataObject::factory($notify->table);
+                        $update_notification->get($notification->id);
+                        $update_notification->server_id = $ipv6_range->server_id;
+                        $update_notification->update();
+                    }
                 }
             }
         }
