@@ -403,13 +403,19 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return false; 
     }
-    function initHelo()
+    function initHelo($server_ipv6 = null)
     {
         if (!$this->id) {
             return;
         }
         $ff = HTML_FlexyFramework::get();
-        $ff->Mail['helo'] = $this->helo;
+        
+        // Use IPv6 PTR if available, otherwise use the regular helo
+        if (!empty($server_ipv6) && !empty($server_ipv6->ipv6_ptr)) {
+            $ff->Mail['helo'] = $server_ipv6->ipv6_ptr;
+        } else {
+            $ff->Mail['helo'] = $this->helo;
+        }
         
     }
     function checkSmtpResponse($errmsg, $core_domain)
