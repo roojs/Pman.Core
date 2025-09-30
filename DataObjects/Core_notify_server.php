@@ -420,10 +420,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff = HTML_FlexyFramework::get();
         
-        // Use IPv6 PTR if available, otherwise use the regular helo
-        $server_ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
-        if (!empty($server_ipv6) && $server_ipv6_range->get($server_ipv6->range_id) && !empty($server_ipv6_range->ipv6_ptr)) {
-            $ff->Mail['helo'] = $server_ipv6_range->ipv6_ptr;
+        if (!empty($server_ipv6) && !empty($server_ipv6->server_id_ipv6_ptr)) {
+            $ff->Mail['helo'] = $server_ipv6->server_id_ipv6_ptr;
         } else {
             $ff->Mail['helo'] = $this->helo;
         }
