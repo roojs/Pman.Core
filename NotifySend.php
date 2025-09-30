@@ -938,6 +938,7 @@ class Pman_Core_NotifySend extends Pman
                         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
                         $cnsi->range_id = $range->id;
                         $cnsi->domain_id = $core_domain->id;
+                        $cnsi->ipv6_addr = $aaaa_records[0]['ipv6'];
                         $cnsi->insert();
                         break;
                     }
