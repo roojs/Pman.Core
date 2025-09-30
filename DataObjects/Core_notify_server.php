@@ -272,7 +272,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * If domain_id exists in server_ipv6, set the server_id to the same server
      * If no domain_id match, leave for normal assignment
      */
-    function assignQueuesByIPv6Domain($notify, $available_server_ids)
+    function assignQueuesByIPv6Domain($notify)
     {
         // Get all pending notifications that have domain_id
         $p = DB_DataObject::factory($notify->table);
@@ -299,14 +299,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $ipv6_range->id = $ipv6->range_id;
                 
                 if ($ipv6_range->find(true)) {
-                    // Only assign if the server is available
-                    if (in_array($ipv6_range->server_id, $available_server_ids)) {
-                        // Update the notification to use the assigned server
-                        $update_notification = DB_DataObject::factory($notify->table);
-                        $update_notification->get($notification->id);
-                        $update_notification->server_id = $ipv6_range->server_id;
-                        $update_notification->update();
-                    }
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $ipv6_range->server_id;
+                    $update_notification->update();
                 }
             }
         }
