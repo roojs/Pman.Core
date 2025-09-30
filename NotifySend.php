@@ -150,6 +150,20 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
+        // Fetch IPv6 server configuration if available
+        $this->server_ipv6 = null;
+        if (!empty($w->domain_id)) {
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->domain_id = $w->domain_id;
+            if ($ipv6->find(true)) {
+                $ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
+                $ipv6_range->id = $ipv6->range_id;
+                if ($ipv6_range->find(true)) {
+                    $this->server_ipv6 = $ipv6_range;
+                }
+            }
+        }
+        
         
         if (!empty($opts['debug'])) {
             print_r($w);
