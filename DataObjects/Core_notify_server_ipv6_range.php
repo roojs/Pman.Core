@@ -10,8 +10,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6_range extends DB_DataObject
     /* the code below is auto generated do not remove the above tag */
 
     public $__table = 'core_notify_server_ipv6_range';    // table name
-    public $id;                              // int(11)  not_null primary_key auto_increment
-    public $server_id;                       // int(11)  not_null
+    public $id;                              // int  not_null primary_key auto_increment
+    public $server_id;                       // int  not_null
+    public $sender_id;                       // int  not_null
     public $ipv6_range_from;                 // varchar(255)  not_null
     public $ipv6_range_to;                   // varchar(255)  not_null
     public $ipv6_ptr;                        // varchar(255)  not_null
