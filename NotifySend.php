@@ -944,5 +944,22 @@ class Pman_Core_NotifySend extends Pman
         }
     }
 
+    /*
+    function findRange($ipv6_addr) 
+    {
+        if (empty($ipv6_addr)) {
+            return false;
+        }
+        $ipv6_addr = $this->escape($ipv6_addr);
+        $cnsir = DB_DataObject::factory('core_notify_server_ipv6_range');
+        $cnsir->whereAdd("INET6_ATON('{$ipv6_addr}') >= INET6_ATON(ipv6_range_from)");
+        $cnsir->whereAdd("INET6_ATON('{$ipv6_addr}') <= INET6_ATON(ipv6_range_to)");
+        if($cnsir->find(true)) {
+            return $cnsir;
+        }
+        return $false;
+    }
+    */
+
     
 }
