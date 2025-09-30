@@ -933,7 +933,7 @@ class Pman_Core_NotifySend extends Pman
             foreach ($mx_records as $mx) {
                 $aaaa_records = dns_get_record($mx, DNS_AAAA);
                 if (!empty($aaaa_records)) {
-                    var_dump($aaaa_records[0]['ipv6']);
+                    var_dump(DB_DataObject::factory('core_notify_server_ipv6_range')->findRange($aaaa_records[0]['ipv6']));
                     return;
                 }
             }
