@@ -733,12 +733,22 @@ class Pman_Core_NotifySend extends Pman
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
 
+                    // Check if we can set up IPv6 for this domain
                     if($this->server_ipv6 == null) {
-
-                    } 
-                    
-                    // $this->server->updateNotifyToNextServer($w,  $retry_when,true, $this->server_ipv6);
-                    $this->errorHandler( $ev->remarks);
+                        // Check if the target MX has AAAA record
+                        if ($this->checkMxHasAaaaRecord($core_domain)) {
+                            // Set up IPv6 for this domain if we have IPv6 configured
+                            $this->setupIpv6ForDomain($core_domain);
+                        } else {
+                            // No AAAA record - give up
+                            $this->errorHandler($ev->remarks);
+                            return;
+                        }
+                    } else {
+                        // Already have IPv6 configured - give up
+                        $this->errorHandler($ev->remarks);
+                        return;
+                    }
                 }
             }
              
