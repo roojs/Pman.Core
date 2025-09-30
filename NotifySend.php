@@ -714,7 +714,7 @@ class Pman_Core_NotifySend extends Pman
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
-            
+            /* Blacklisted is now a hard failure
             if ( $res->userinfo['smtpcode']> 500 ) {
                 
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
@@ -726,7 +726,7 @@ class Pman_Core_NotifySend extends Pman
                     $this->errorHandler( $ev->remarks);
                 }
             }
-             
+            */
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
             if (method_exists($w, 'matchReject')) {
