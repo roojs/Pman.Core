@@ -602,7 +602,7 @@ class Pman_Core_NotifySend extends Pman
                     ");
                     
                     if($core_notify->count()){
-                        $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
+                        $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
                      
@@ -700,7 +700,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
-                $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                $this->server->updateNotifyToNextServer($w,  $retry_when,true, $this->server_ipv6);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -736,7 +736,7 @@ class Pman_Core_NotifySend extends Pman
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    $this->server->updateNotifyToNextServer($w,  $retry_when,true, $this->server_ipv6);
                     $this->errorHandler( $ev->remarks);
                 }
             }
@@ -757,7 +757,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
-        $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
+        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
 
         
          
