@@ -744,11 +744,8 @@ class Pman_Core_NotifySend extends Pman
                             $this->errorHandler($ev->remarks);
                             return;
                         }
-                    } else {
-                        // Already have IPv6 configured - give up
-                        $this->errorHandler($ev->remarks);
-                        return;
                     }
+                    
                 }
             }
              
