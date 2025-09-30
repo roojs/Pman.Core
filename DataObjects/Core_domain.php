@@ -198,10 +198,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             foreach ($mx_records as $mx) {
                 $aaaa_records = dns_get_record($mx, DNS_AAAA);
                 if (!empty($aaaa_records)) {
-                    $range = DB_DataObject::factory('core_notify_server_ipv6_range')->findRange($aaaa_records[0]['ipv6']);
-                    if($range) {
+                    $server = DB_DataObject::factory('core_notify_server')->findServerByIpv6($aaaa_records[0]['ipv6']);
+                    if($server) {
                         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-                        $cnsi->range_id = $range->id;
+                        $cnsi->server_id = $server->id;
                         $cnsi->domain_id = $this->id;
                         $cnsi->ipv6_addr = $aaaa_records[0]['ipv6'];
                         $cnsi->insert();
