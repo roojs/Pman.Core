@@ -737,6 +737,7 @@ class Pman_Core_NotifySend extends Pman
                     // Check if we can set up IPv6 for this domain
                     if($this->server_ipv6 == null) {
                         $this->setupIpv6ForDomain($core_domain);
+                        $core_domain->setUpIpv6();
                     }
                     $this->errorHandler($ev->remarks);
                     
