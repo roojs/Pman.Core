@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         // First, assign servers based on IPv6 domain assignments
-        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify, $ids);
+        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
@@ -304,17 +304,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $ipv6_range->id = $ipv6->range_id;
                 
                 if ($ipv6_range->find(true)) {
-                    // Only assign if the server is available
-                    if (in_array($ipv6_range->server_id, $available_server_ids)) {
-                        $update_notification = DB_DataObject::factory($notify->table);
-                        $update_notification->get($notification->id);
-                        $update_notification->server_id = $ipv6_range->server_id;
-                        $update_notification->update();
-                        $assignedIds[] = $notification->id;
-                    } else {
-                        // Log or handle case where IPv6 server is not available
-                        // This notification will be processed by normal assignment logic
-                    }
+                    // Assign the IPv6 server regardless of availability status
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $ipv6_range->server_id;
+                    $update_notification->update();
+                    $assignedIds[] = $notification->id;
                 }
             }
         }
