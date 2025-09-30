@@ -933,12 +933,12 @@ class Pman_Core_NotifySend extends Pman
             foreach ($mx_records as $mx) {
                 $aaaa_records = dns_get_record($mx, DNS_AAAA);
                 if (!empty($aaaa_records)) {
-                    return true; // Found AAAA record
+                    return;
                 }
             }
         }
         
-        return false;
+        return;
     }
     
     /**
