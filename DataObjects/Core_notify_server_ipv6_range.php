@@ -25,35 +25,27 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6_range extends DB_DataObject
             return false;
         }
         
-        // Convert IPv6 address to binary representation for comparison
-        $target_addr = inet_pton($ipv6_addr);
-        if ($target_addr === false) {
-            return false; // Invalid IPv6 address
-        }
+        // Use SQL INET6_ATON to find the matching range
+        $db = $this->getDatabaseConnection();
+        $ipv6_addr_escaped = $db->escape($ipv6_addr);
         
-        // Get all IPv6 ranges
-        $ranges = DB_DataObject::factory('core_notify_server_ipv6_range');
-        $ranges->find();
+        $sql = "
+            SELECT id, server_id, ipv6_range_from, ipv6_range_to, ipv6_ptr
+            FROM core_notify_server_ipv6_range
+            WHERE INET6_ATON('$ipv6_addr_escaped') >= INET6_ATON(ipv6_range_from)
+            AND INET6_ATON('$ipv6_addr_escaped') <= INET6_ATON(ipv6_range_to)
+            LIMIT 1
+        ";
         
-        while ($ranges->fetch()) {
-            // Convert range boundaries to binary
-            $range_from = inet_pton($ranges->ipv6_range_from);
-            $range_to = inet_pton($ranges->ipv6_range_to);
-            
-            if ($range_from === false || $range_to === false) {
-                continue; // Skip invalid ranges
-            }
-            
-            // Check if the target address is within the range
-            if ($target_addr >= $range_from && $target_addr <= $range_to) {
-                // Found matching range - copy the range data to this object
-                $this->id = $ranges->id;
-                $this->server_id = $ranges->server_id;
-                $this->ipv6_range_from = $ranges->ipv6_range_from;
-                $this->ipv6_range_to = $ranges->ipv6_range_to;
-                $this->ipv6_ptr = $ranges->ipv6_ptr;
-                return true;
-            }
+        $result = $db->query($sql);
+        if ($result && $row = $result->fetchRow()) {
+            // Found matching range - populate this object
+            $this->id = $row['id'];
+            $this->server_id = $row['server_id'];
+            $this->ipv6_range_from = $row['ipv6_range_from'];
+            $this->ipv6_range_to = $row['ipv6_range_to'];
+            $this->ipv6_ptr = $row['ipv6_ptr'];
+            return true;
         }
         
         return false; // No matching range found
