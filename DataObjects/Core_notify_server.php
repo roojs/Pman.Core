@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         // First, assign servers based on IPv6 domain assignments
-        $assignedIPV6Ids = $this->assignQueuesByIPv6Domain($notify);
+        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
@@ -193,6 +193,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id NOT IN (" . implode(",", $ids) . ")
+                and
+                id NOT IN (" . implode(",", $assignedIPv6Ids) . ")
         ");
         $p->orderBy('act_when asc'); //?
         $total_add = $p->count();
