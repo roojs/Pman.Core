@@ -13,3 +13,4 @@ ALTER TABLE core_notify_server ADD INDEX lookup (hostname,poolname,is_active);
 ALTER TABLE core_notify_server ADD COLUMN ipv6_range_from VARCHAR(255) NOT NULL DEFAULT '';
 ALTER TABLE core_notify_server ADD COLUMN ipv6_range_to VARCHAR(255) NOT NULL DEFAULT '';
 ALTER TABLE core_notify_server ADD COLUMN ipv6_ptr VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE core_notify_server ADD COLUMN sender_id INT NOT NULL DEFAULT 0;
