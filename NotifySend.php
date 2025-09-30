@@ -312,7 +312,10 @@ class Pman_Core_NotifySend extends Pman
         
         if (isset($email['later'])) {
              
-            $this->server->updateNotifyToNextServer($w, $email['later'],true);
+            // Don't assign next server if IPv6 is configured
+            if (empty($this->server_ipv6)) {
+                $this->server->updateNotifyToNextServer($w, $email['later'],true);
+            }
              
             $this->errorHandler("Delivery postponed by email creator to {$email['later']}");
         }
@@ -602,7 +605,10 @@ class Pman_Core_NotifySend extends Pman
                     ");
                     
                     if($core_notify->count()){
-                        $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
+                        // Don't assign next server if IPv6 is configured
+                        if (empty($this->server_ipv6)) {
+                            $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
+                        }
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
                      
