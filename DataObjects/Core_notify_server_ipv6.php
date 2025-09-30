@@ -17,4 +17,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
+    function applyFilters($q, $au, $roo)
+    {
+        if(!empty($q['search']['name'])){
+            $s = $this->escape($q['search']['name']);
+            $this->whereAdd("join_domain_id_id.domain like '%$s%'");
+        }
+    }
 }
