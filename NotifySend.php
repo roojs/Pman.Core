@@ -739,12 +739,9 @@ class Pman_Core_NotifySend extends Pman
                         if ($this->checkMxHasAaaaRecord($core_domain)) {
                             // Set up IPv6 for this domain if we have IPv6 configured
                             $this->setupIpv6ForDomain($core_domain);
-                        } else {
-                            // No AAAA record - give up
-                            $this->errorHandler($ev->remarks);
-                            return;
                         }
                     }
+                    $this->errorHandler($ev->remarks);
                     
                 }
             }
