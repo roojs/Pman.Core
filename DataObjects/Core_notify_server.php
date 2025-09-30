@@ -156,7 +156,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         // First, assign servers based on IPv6 domain assignments
-        $this->assignQueuesByIPv6Domain($notify);
+        $this->assignQueuesByIPv6Domain($notify, $ids);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
@@ -272,15 +272,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * If domain_id exists in server_ipv6, set the server_id to the same server
      * If no domain_id match, leave for normal assignment
      */
-    function assignQueuesByIPv6Domain($notify)
+    function assignQueuesByIPv6Domain($notify, $available_server_ids)
     {
-        // Get available servers to validate assignments
-        $available_servers = $this->availableServers();
-        $available_server_ids = array();
-        foreach ($available_servers as $server) {
-            $available_server_ids[] = $server->id;
-        }
-        
         // Get all pending notifications that have domain_id
         $p = DB_DataObject::factory($notify->table);
         $p->whereAdd("
