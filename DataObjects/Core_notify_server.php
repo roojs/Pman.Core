@@ -276,7 +276,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * If domain_id exists in server_ipv6, set the server_id to the same server
      * If no domain_id match, leave for normal assignment
      */
-    function assignQueuesByIPv6Domain($notify, $available_server_ids)
+    function assignQueuesByIPv6Domain($notify)
     {
         $assignedIds = array();
         // Get all pending notifications that have domain_id
