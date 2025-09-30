@@ -913,34 +913,4 @@ class Pman_Core_NotifySend extends Pman
         $w->server_id = ($w->server_id + 1) % count(array_keys($ff->Core_Notify['servers']));
          
     }
-    
-    /**
-     * Set up IPv6 for the domain if we have IPv6 configured
-     */
-    function setupIpv6ForDomain($core_domain)
-    {
-        if (empty($core_domain->domain)) {
-            return;
-        }
-
-        // Get MX records for the domain
-        $mx_records = array();
-        if (getmxrr($core_domain->domain, $mx_records)) {
-            // Check if any MX record has AAAA record
-            foreach ($mx_records as $mx) {
-                $aaaa_records = dns_get_record($mx, DNS_AAAA);
-                if (!empty($aaaa_records)) {
-                    $range = DB_DataObject::factory('core_notify_server_ipv6_range')->findRange($aaaa_records[0]['ipv6']);
-                    if($range) {
-                        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-                        $cnsi->range_id = $range->id;
-                        $cnsi->domain_id = $core_domain->id;
-                        $cnsi->ipv6_addr = $aaaa_records[0]['ipv6'];
-                        $cnsi->insert();
-                        break;
-                    }
-                }
-            }
-        }
-    }
 }
