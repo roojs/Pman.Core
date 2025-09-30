@@ -25,29 +25,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6_range extends DB_DataObject
             return false;
         }
         
-        // Use SQL INET6_ATON to find the matching range
-        $db = $this->getDatabaseConnection();
-        $ipv6_addr_escaped = $db->escape($ipv6_addr);
         
-        $sql = "
-            SELECT id, server_id, ipv6_range_from, ipv6_range_to, ipv6_ptr
-            FROM core_notify_server_ipv6_range
-            WHERE INET6_ATON('$ipv6_addr_escaped') >= INET6_ATON(ipv6_range_from)
-            AND INET6_ATON('$ipv6_addr_escaped') <= INET6_ATON(ipv6_range_to)
-            LIMIT 1
-        ";
-        
-        $result = $db->query($sql);
-        if ($result && $row = $result->fetchRow()) {
-            // Found matching range - populate this object
-            $this->id = $row['id'];
-            $this->server_id = $row['server_id'];
-            $this->ipv6_range_from = $row['ipv6_range_from'];
-            $this->ipv6_range_to = $row['ipv6_range_to'];
-            $this->ipv6_ptr = $row['ipv6_ptr'];
-            return true;
-        }
-        
-        return false; // No matching range found
     }
 }
