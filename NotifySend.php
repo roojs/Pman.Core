@@ -156,11 +156,7 @@ class Pman_Core_NotifySend extends Pman
             $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
             $ipv6->domain_id = $w->domain_id;
             if ($ipv6->find(true)) {
-                $ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
-                $ipv6_range->id = $ipv6->range_id;
-                if ($ipv6_range->find(true)) {
-                    $this->server_ipv6 = $ipv6_range;
-                }
+                $this->server_ipv6 = $ipv6;
             }
         }
         
