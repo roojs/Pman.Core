@@ -299,18 +299,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $ipv6->domain_id = $notification->domain_id;
             
             if ($ipv6->find(true)) {
-                // Get the server_id from the IPv6 range
-                $ipv6_range = DB_DataObject::factory('core_notify_server_ipv6_range');
-                $ipv6_range->id = $ipv6->range_id;
-                
-                if ($ipv6_range->find(true)) {
-                    // Assign the IPv6 server regardless of availability status
-                    $update_notification = DB_DataObject::factory($notify->table);
-                    $update_notification->get($notification->id);
-                    $update_notification->server_id = $ipv6_range->server_id;
-                    $update_notification->update();
-                    $assignedIds[] = $notification->id;
-                }
+                // Assign the IPv6 server regardless of availability status
+                $update_notification = DB_DataObject::factory($notify->table);
+                $update_notification->get($notification->id);
+                $update_notification->server_id = $ipv6->server_id;
+                $update_notification->update();
+                $assignedIds[] = $notification->id;
             }
         }
         return $assignedIds;
