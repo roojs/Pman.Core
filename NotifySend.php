@@ -456,9 +456,11 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("config Mail[helo] is not set");
         }
         
+        var_dump($this->server_ipv6);
+        // $email['headers']['From'] = $this->server_ipv6
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
 
-        var_dumP($email['headers']);
+        // var_dumP($email['headers']);
         die('test');
                         
         foreach($mxs as $mx) {
