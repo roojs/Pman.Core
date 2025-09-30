@@ -923,7 +923,7 @@ class Pman_Core_NotifySend extends Pman
     function setupIpv6ForDomain($core_domain)
     {
         if (empty($core_domain->domain)) {
-            return false;
+            return;
         }
 
         // Get MX records for the domain
@@ -933,7 +933,7 @@ class Pman_Core_NotifySend extends Pman
             foreach ($mx_records as $mx) {
                 $aaaa_records = dns_get_record($mx, DNS_AAAA);
                 if (!empty($aaaa_records)) {
-                    var_dump($aaaa_records);
+                    var_dump($aaaa_records[0]['ipv6']);
                     return;
                 }
             }
