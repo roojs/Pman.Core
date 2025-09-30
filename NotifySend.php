@@ -923,6 +923,59 @@ class Pman_Core_NotifySend extends Pman
          
     }
     
+    /**
+     * Check if the target MX has AAAA record (IPv6 support)
+     */
+    function checkMxHasAaaaRecord($core_domain)
+    {
+        if (empty($core_domain->domain)) {
+            return false;
+        }
+        
+        // Get MX records for the domain
+        $mx_records = array();
+        if (getmxrr($core_domain->domain, $mx_records)) {
+            // Check if any MX record has AAAA record
+            foreach ($mx_records as $mx) {
+                $aaaa_records = dns_get_record($mx, DNS_AAAA);
+                if (!empty($aaaa_records)) {
+                    return true; // Found AAAA record
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Set up IPv6 for the domain if we have IPv6 configured
+     */
+    function setupIpv6ForDomain($core_domain)
+    {
+        if (empty($core_domain->domain)) {
+            return false;
+        }
+        
+        // Check if we have any IPv6 ranges configured
+        $ipv6_ranges = DB_DataObject::factory('core_notify_server_ipv6_range');
+        $ipv6_ranges->find();
+        
+        if ($ipv6_ranges->N > 0) {
+            // Get the first available IPv6 range
+            $ipv6_ranges->fetch();
+            
+            // Create IPv6 entry for this domain
+            $ipv6_entry = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6_entry->range_id = $ipv6_ranges->id;
+            $ipv6_entry->domain_id = $core_domain->id;
+            $ipv6_entry->ipv6_addr = ''; // Individual address not needed for domain-based assignment
+            $ipv6_entry->insert();
+            
+            return true;
+        }
+        
+        return false;
+    }
 
     
 }
