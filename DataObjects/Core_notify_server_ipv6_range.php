@@ -24,7 +24,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6_range extends DB_DataObject
         if (empty($ipv6_addr)) {
             return false;
         }
-        
-        
+        $ipv6_addr = $this->escape($ipv6_addr);
+        $cnsir = DB_DataObject::factory('core_notify_server_ipv6_range');
+        $cnsir->whereAdd("INET6_ATON('{$ipv6_addr}') >= INET6_ATON(ipv6_range_from)");
+        $cnsir->whereAdd("INET6_ATON('{$ipv6_addr}') <= INET6_ATON(ipv6_range_to)");
+        $cnsir->find(true);
+        return $cnsir;
     }
 }
