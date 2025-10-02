@@ -484,7 +484,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return false;
         }
 
-        
+        var_dump(inet_pton($this->ipv6_range_from));
     }
     
 }
