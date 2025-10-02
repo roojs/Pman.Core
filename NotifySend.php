@@ -753,6 +753,12 @@ class Pman_Core_NotifySend extends Pman
 
                 $shouldRetry = false;
 
+                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+
+                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                    $shouldRetry = true;
+                }
+
                 // blocked by Spamhaus
                 if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
                     $shouldRetry = false;
@@ -760,12 +766,6 @@ class Pman_Core_NotifySend extends Pman
                     if($core_domain->setUpIpv6($this->server)) {
                         $shouldRetry = true;
                     }
-                }
-
-                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-
-                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                    $shouldRetry = true;
                 }
 
                 if($shouldRetry) {
