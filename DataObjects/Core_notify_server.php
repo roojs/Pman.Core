@@ -273,9 +273,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // new average queue
         $target_len = floor(  ($totalq + $total_add) / $num_servers );
-
-        var_dump($target_len);
-        die('test');
         
         foreach($in_q as $sid => $cq) {
             if ( $cq > $target_len) {
