@@ -755,11 +755,6 @@ class Pman_Core_NotifySend extends Pman
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-
-                    // Check if we can set up IPv6 for this domain
-                    if($this->server_ipv6 == null) {
-                        $core_domain->setUpIpv6($this->server);
-                    }
                     $this->errorHandler($ev->remarks);
                     
                 }
