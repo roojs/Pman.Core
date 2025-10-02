@@ -453,6 +453,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff = HTML_FlexyFramework::get();
         
+        var_dump($server_ipv6);
+        die('test');
         if (!empty($server_ipv6) && !empty($server_ipv6->server_id_ipv6_ptr)) {
             $ff->Mail['helo'] = $server_ipv6->server_id_ipv6_ptr;
         } else {
