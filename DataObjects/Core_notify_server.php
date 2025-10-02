@@ -484,7 +484,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return false;
         }
 
-        var_dump($this->ipv6ToDeciaml($this->ipv6_range_from));
+        var_dump($this->ipv6ToDecimal($this->ipv6_range_from));
         die('test');
     }
 
