@@ -241,6 +241,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if ($total_add < 1) {
             return;
         }
+
+        var_dump($total_add);
+        die('test');
         
         $to_add = $p->fetchAll('id');
         
