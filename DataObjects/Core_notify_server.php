@@ -200,7 +200,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         $num_servers = count($ids);
-        var_dump($num_servers);
+        var_dump("AAA");
         die('test');
         
         if ($num_servers == 1) {
