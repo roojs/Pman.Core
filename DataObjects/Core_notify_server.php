@@ -443,5 +443,21 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return true;
         
     }
+
+    function findServerWithIpv6()
+    {
+        $server = DB_DataObject::factory('core_notify_server');
+        $server->whereAdd("
+            ipv6_range_from != ''
+            and
+            ipv6_range_to != ''
+            and
+            ipv6_ptr != ''
+        ");
+        if($server->find(true)) {
+            return $server;
+        }
+        return false;
+    }
     
 }
