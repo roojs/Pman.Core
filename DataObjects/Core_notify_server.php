@@ -278,7 +278,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if ( $cq > $target_len) {
                 continue;
             }
-            $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
+            $up[ $sid ] = array_splice($to_add, 0, $target_len - $cq);
         }
 
         
