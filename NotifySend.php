@@ -149,6 +149,7 @@ class Pman_Core_NotifySend extends Pman
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
 
         $this->server->assignQueues($this);
+        die('test');
         
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
