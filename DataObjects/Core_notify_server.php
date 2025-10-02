@@ -495,8 +495,21 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
 
         $start = $this->ipv6ToDecimal($this->ipv6_range_from);
+        if($start === false) {
+            return false;
+        }
         $end = $this->ipv6ToDecimal($this->ipv6_range_to);
-        $used = array_map(fn($ipv6) => $this->ipv6ToDecimal($ipv6), $usedIPv6);
+        if($end === false) {
+            return false;
+        }
+        $used = array();
+        foreach($usedIPv6 as $ipv6) {
+            $decimal = $this->ipv6ToDecimal($ipv6);
+            if($decimal === false) {
+                continue;
+            }
+            $used[] = $decimal;
+        }
         $usedSet = array_flip($used);
     
         // Start from the next address after 'from'
@@ -511,10 +524,16 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return false; // All addresses used
     }
 
+    /**
+     * Convert ipv6 to decimal
+     * 
+     * @param string $ip
+     * @return string
+     */
     function ipv6ToDecimal($ip) {
         $binary = inet_pton($ip);
         if ($binary === false) {
-            throw new InvalidArgumentException("Invalid IPv6 address: $ip");
+            return false;
         }
         
         // Convert to hex string
@@ -530,6 +549,13 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return $decimal;
     }
     
+
+    /**
+     * Convert decimal to ipv6
+     * 
+     * @param string $dec
+     * @return string
+     */
     function decimalToIPv6($dec) {
         // Convert decimal to hex
         $hex = '';
