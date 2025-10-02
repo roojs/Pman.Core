@@ -761,14 +761,15 @@ class Pman_Core_NotifySend extends Pman
                         $this->errorHandler( $ev->remarks);
                     }
                 }
+                else {
+                    DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
-                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-
-                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                    $this->errorHandler( $ev->remarks);
-                    
+                    if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                        $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                        $this->errorHandler( $ev->remarks);
+                        
+                    }
                 }
             }
             
