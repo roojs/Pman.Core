@@ -478,6 +478,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return false;
     }
 
+    /**
+     * Find the smallest unused ipv6 address in the range
+     * If no unused ipv6 address is found, return false
+     * 
+     * @return string|false
+     */
     function findSmallestUnusedIpv6()
     {
         if($this->ipv6_range_from == '' || $this->ipv6_range_to == '') {
