@@ -759,6 +759,7 @@ class Pman_Core_NotifySend extends Pman
             }
             */
 
+            // blocked by Spamhaus
             if(strpos($errmsg, 'blocked using Spamhaus') !== false && $this->server_ipv6 == null) {
                 // Check if we can set up IPv6 for this domain
                 $core_domain->setUpIpv6($this->server);
