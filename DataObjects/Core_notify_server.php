@@ -286,9 +286,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             
             $up[  $ids[$n % $num_servers] ][] = $i;
         }
-
-        var_dump($to_add);
-        var_dump($up);
         die('test');
         
         // distribution needs to go to ones that have the shortest queues. - so to balance out the queues
