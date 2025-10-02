@@ -217,6 +217,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return;
         }
 
+        $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
+
         if(!empty($currentServer->ipv6_range_from) && !empty($currentServer->ipv6_range_to) && !empty($currentServer->ipv6_ptr)) {
             $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             $cnsi->server_id = $server->id;
