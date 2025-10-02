@@ -472,18 +472,27 @@ class Pman_Core_NotifySend extends Pman
            
             $this->debug_str = '';
             $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            // Prepare socket options with IPv6 binding if available
+            $socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                'ssl' => array(
+                    'verify_peer_name' => false,
+                    'verify_peer' => false, 
+                    'allow_self_signed' => true
+                )
+            );
+            
+            // Add IPv6 binding if server_ipv6 is configured
+            if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
+                $socket_options['socket'] = array(
+                    'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
+                );
+            }
+            
             $mailer = Mail::factory('smtp', array(
                 'host'    => $mx ,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
-                'socket_options' =>  
-                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-                        'ssl' => array(
-                            'verify_peer_name' => false,
-                            'verify_peer' => false, 
-                            'allow_self_signed' => true
-                        )
-                    ),
+                'socket_options' => $socket_options,
                 
                  
                 //'debug' => isset($opts['debug']) ?  1 : 0,
@@ -622,13 +631,23 @@ class Pman_Core_NotifySend extends Pman
                     if (isset($settings['port'])) {
                         $mailer->port = $settings['port'];
                     }
-                    $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                    // Prepare socket options with IPv6 binding if available
+                    $route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                         'ssl' => array(
                             'verify_peer_name' => false,
                              'verify_peer' => false, 
                              'allow_self_signed' => true
                         )
                     );
+                    
+                    // Add IPv6 binding if server_ipv6 is configured
+                    if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
+                        $route_socket_options['socket'] = array(
+                            'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
+                        );
+                    }
+                    
+                    $mailer->socket_options = $route_socket_options;
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
 
