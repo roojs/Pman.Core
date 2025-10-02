@@ -194,14 +194,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         // First, assign servers based on IPv6 domain assignments
-        // $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
+        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
         
         $num_servers = count($ids);
-        var_dump("AAA");
-        die('test');
         
         if ($num_servers == 1) {
             $p = DB_DataObject::factory($notify->table);
