@@ -227,9 +227,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return;
         }
 
-        var_dump($ipv6_addr);
-        die('test');
-
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $cnsi->server_id = $server->id;
         $cnsi->domain_id = $this->id;
