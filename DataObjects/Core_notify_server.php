@@ -264,6 +264,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $in_q[$sid] = 0;
             }
         }
+        var_dump($in_q);
         $totalq = 0;
         foreach($in_q as $sid => $n) {
             $totalq += $n;
