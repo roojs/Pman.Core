@@ -502,7 +502,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             }
             $current = bcadd($current, '1');
         }
-        return null; // All addresses used
+        return false; // All addresses used
     }
 
     function ipv6ToDecimal($ip) {
