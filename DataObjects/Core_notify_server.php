@@ -501,6 +501,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $decimal = '0';
         for ($i = 0; $i < strlen($hex); $i++) {
             $decimal = bcmul($decimal, '16');
+            var_dump($decimal);
             $decimal = bcadd($decimal, hexdec($hex[$i]));
         }
         
