@@ -148,8 +148,8 @@ class Pman_Core_NotifySend extends Pman
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
 
-        // $this->server->assignQueues($this);
-        // die('test');
+        $this->server->assignQueues($this);
+        die('test');
         
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
@@ -751,7 +751,7 @@ class Pman_Core_NotifySend extends Pman
             if ( $res->userinfo['smtpcode']> 500 ) {
                 
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-                
+
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     // Check if we can set up IPv6 for this domain
                     if($this->server_ipv6 == null) {
