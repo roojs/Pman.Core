@@ -354,6 +354,9 @@ class Pman_Core_NotifySend extends Pman
          
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
+        $core_domain->assignQueues($this);
+        die('test');
+
         
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
