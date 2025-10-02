@@ -162,6 +162,9 @@ class Pman_Core_NotifySend extends Pman
         if (!$force &&  $w->server_id != $this->server->id && $this->server_ipv6 == null) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
+
+        $this->server->assignQueues($this);
+        die('test');
         
         if (!empty($opts['debug'])) {
             print_r($w);
