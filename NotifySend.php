@@ -755,6 +755,7 @@ class Pman_Core_NotifySend extends Pman
                 if(strpos(strtolower($errmsg), 'spamhaus') !== false && $this->server_ipv6 == null) {
                     // Check if we can set up IPv6 for this domain
                     if($core_domain->setUpIpv6($this->server)) {
+                        // IPv6 set up successfully -> retry later
                         $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
                         $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
                         $this->errorHandler( $ev->remarks);
