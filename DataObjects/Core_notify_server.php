@@ -330,9 +330,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         ");
         
         $pending_notifications = $p->fetchAll();
-
-        var_dump($pending_notifications);
-        die('test');
         
         foreach ($pending_notifications as $notification) {
             // Check if this domain_id has an IPv6 server assignment
