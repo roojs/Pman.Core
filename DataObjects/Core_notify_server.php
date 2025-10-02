@@ -181,6 +181,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         foreach($servers as $s) {
             $ids[] = $s->id;
         }
+
+        var_dump($servers);
         
         
         if (empty($ids)) {
