@@ -25,6 +25,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $this->addQueueSize();
         }
     }
+
+    function beforeUpdate($old, $q, $roo)
+    {
+    }
     
     
     function addQueueSize()
