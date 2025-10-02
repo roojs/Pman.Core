@@ -268,6 +268,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         foreach($in_q as $sid => $n) {
             $totalq += $n;
         }
+
+        var_dumP($totalq);
+        die('test');
         
         
         // new average queue
