@@ -751,7 +751,6 @@ class Pman_Core_NotifySend extends Pman
             if ( $res->userinfo['smtpcode']> 500 ) {
                 
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     // Check if we can set up IPv6 for this domain
