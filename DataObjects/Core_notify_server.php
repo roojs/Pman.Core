@@ -345,7 +345,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $assignedIds[] = $notification->id;
             }
         }
-        var_dump($assignedIds);
         return $assignedIds;
     }
         // called on current server.
