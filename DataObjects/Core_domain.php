@@ -185,6 +185,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         // all domains have no person reference count
     }
 
+    /**
+     * Check if the domain has an AAAA record
+     * 
+     * @return bool
+     */
     function hasAAAARecord()
     {
         if (empty($this->domain)) {
