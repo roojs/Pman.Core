@@ -28,6 +28,33 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function beforeUpdate($old, $q, $roo)
     {
+        if(!empty($q['ipv6_range_from'])) {
+            $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
+            $core_domain->setUpIpv6();
+        }
+
+        if(
+            !empty($q['ipv6_range_from'])
+            ||
+            !empty($q['ipv6_range_to'])
+            ||
+            !empty($q['ipv6_ptr'])
+            ||
+            !empty($q['ipv6_sender_id'])
+        ) {
+            if(empty($q['ipv6_range_from'])) {
+                $roo->jerr("IPv6 range from is required");
+            }
+            if(empty($q['ipv6_range_to'])) {
+                $roo->jerr("IPv6 range to is required");
+            }
+            if(empty($q['ipv6_ptr'])) {
+                $roo->jerr("IPv6 ptr is required");
+            }
+            if(empty($q['ipv6_sender_id'])) {
+                $roo->jerr("IPv6 sender is required");
+            }
+        }
     }
     
     
