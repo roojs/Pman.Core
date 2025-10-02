@@ -466,14 +466,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $current = clone($server);
         $current->hostname = gethostbyaddr("127.0.1.1");
 
+                // if no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+                if($server->find(true)) {
+                    return $server;
+                }
+
+                die('aa');
         // if current server has ipv6 range and ptr, return it
         if($current->find(true)) {
             return $current;
-        }
-
-        // if no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
-        if($server->find(true)) {
-            return $server;
         }
         return false;
     }
