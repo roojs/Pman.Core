@@ -484,8 +484,25 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return false;
         }
 
-        var_dump($this->ipv6ToDecimal($this->ipv6_range_from));
-        die('test');
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->server_id = $this->id;
+        $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
+
+        $start = ipv6ToDecimal($this->ipv6_range_from);
+        $end = ipv6ToDecimal($this->ipv6_range_to);
+        $used = array_map('ipv6ToDecimal', $usedIPv6);
+        $usedSet = array_flip($used);
+    
+        // Start from the next address after 'from'
+        $current = bcadd($start, '1');
+        
+        while (bccomp($current, $end) <= 0) {
+            if (!isset($usedSet[$current])) {
+                return decimalToIPv6($current);
+            }
+            $current = bcadd($current, '1');
+        }
+        return null; // All addresses used
     }
 
     function ipv6ToDecimal($ip) {
