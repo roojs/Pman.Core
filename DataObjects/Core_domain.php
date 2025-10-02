@@ -211,6 +211,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return false;
     }
 
+    /**
+     * Set up ipv6 for the domain
+     * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
+     * 
+     * @return void
+     */
     function setUpIpv6()
     {
         if(!$this->hasAAAARecord()) {
