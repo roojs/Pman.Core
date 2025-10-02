@@ -33,6 +33,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $core_domain->setUpIpv6();
         }
 
+        // if any of the ipv6 fields are set, make sure all of them are set
         if(
             !empty($q['ipv6_range_from'])
             ||
