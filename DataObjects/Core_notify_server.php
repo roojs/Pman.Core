@@ -496,7 +496,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         // Convert to hex string
         $hex = bin2hex($binary);
-        var_dump($hex);
         
         // Convert hex to decimal using bcmath
         $decimal = '0';
