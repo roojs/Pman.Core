@@ -215,7 +215,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * Set up ipv6 for the domain
      * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
      * 
-     * @return bool true if successful, false otherwise
+     * @return core_notify_server_ipv6|false
      */
     function setUpIpv6()
     {
@@ -241,6 +241,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $cnsi->insert();
         }
 
-        return true;
+        return $cnsi;
     }
 }
