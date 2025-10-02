@@ -479,5 +479,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         return false;
     }
+
+    function findSmallestUnusedIpv6()
+    {
+    }
     
 }
