@@ -121,6 +121,9 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
+        $cns = DB_DataObject::factory('core_notify_server');
+        $cns->assignQueuesByIPv6Domain($this);
+        die('test');
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
