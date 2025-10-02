@@ -505,7 +505,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         while (bccomp($current, $end) <= 0) {
             if (!isset($usedSet[$current])) {
-                return decimalToIPv6($current);
+                return $this->decimalToIPv6($current);
             }
             $current = bcadd($current, '1');
         }
