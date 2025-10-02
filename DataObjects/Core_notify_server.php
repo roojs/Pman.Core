@@ -444,6 +444,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
 
+    /**
+     * Find a server with ipv6 range and ptr
+     * If current server has ipv6 range and ptr, return it
+     * If no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+     * If no server has ipv6 range and ptr, return false
+     * 
+     * @return core_notify_server
+     */
     function findServerWithIpv6()
     {
         $server = DB_DataObject::factory('core_notify_server');
@@ -460,10 +468,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $current = clone($server);
         $current->hostname = gethostbyaddr("127.0.1.1");
 
+        // if current server has ipv6 range and ptr, return it
         if($current->find(true)) {
             return $current;
         }
 
+        // if no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
         if($server->find(true)) {
             return $server;
         }
