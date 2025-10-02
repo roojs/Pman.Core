@@ -306,6 +306,8 @@ class Pman_Core_NotifySend extends Pman
         if(empty($email['headers']['Date'])) {
             $email['headers']['Date'] = date('r'); 
         }
+
+        $email['later'] = '2025-10-03 10:00:00';
          
         
         if (isset($email['later'])) {
