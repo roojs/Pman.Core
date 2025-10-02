@@ -280,9 +280,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             }
             $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
         }
-
-        var_dump($up);
-        die('test');
         
         // add the reminder evently
         foreach($to_add as $n=>$i) {
