@@ -454,6 +454,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             and
             ipv6_ptr != ''
         ");
+        $server->is_active = 1;
+        $server->limit(1);
+
+        $current = clone($server);
+        $current->hostname = gethostbyaddr("127.0.1.1");
+        $server->limit(1);
         if($server->find(true)) {
             return $server;
         }
