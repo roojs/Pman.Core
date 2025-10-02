@@ -749,7 +749,7 @@ class Pman_Core_NotifySend extends Pman
 
             // permanent failure
             // IPv6 not set up yet
-            if ( $res->userinfo['smtpcode']> 500) {
+            if ( $res->userinfo['smtpcode']> 500 && $this->server_ipv6 == null) {
 
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
