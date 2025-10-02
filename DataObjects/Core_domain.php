@@ -222,10 +222,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return;
         }
 
+        $ipv6_addr = $server->findSmallestUnusedIpv6();
+        if(!$ipv6_addr) {
+            return;
+        }
+
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $cnsi->server_id = $server->id;
         $cnsi->domain_id = $this->id;
-        $cnsi->ipv6_addr = $server->findSmallestUnusedIpv6();
+        $cnsi->ipv6_addr = $ipv6_addr;
         var_dump($cnsi->ipv6_addr);
         die('test');
         if(!$cnsi->find(true)) {
