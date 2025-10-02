@@ -756,12 +756,13 @@ class Pman_Core_NotifySend extends Pman
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                    // blacklisted -> retry later
+                    // blacklisted -> retry
                     $shouldRetry = true;
                 }
 
                 // blocked by Spamhaus
                 if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
+                    // no IPv6 can be set up -> don't retry
                     $shouldRetry = false;
                     // IPv6 set up successfully
                     if($core_domain->setUpIpv6($this->server)) {
