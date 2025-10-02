@@ -484,7 +484,46 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return false;
         }
 
-        var_dump(inet_pton($this->ipv6_range_from));
+        var_dump($this->ipv6ToDeciaml($this->ipv6_range_from));
+        die('test');
+    }
+
+    function ipv6ToDecimal($ip) {
+        $binary = inet_pton($ip);
+        if ($binary === false) {
+            throw new InvalidArgumentException("Invalid IPv6 address: $ip");
+        }
+        
+        // Convert to hex string
+        $hex = bin2hex($binary);
+        
+        // Convert hex to decimal using bcmath
+        $decimal = '0';
+        for ($i = 0; $i < strlen($hex); $i++) {
+            $decimal = bcmul($decimal, '16');
+            $decimal = bcadd($decimal, hexdec($hex[$i]));
+        }
+        
+        return $decimal;
+    }
+    
+    function decimalToIPv6($dec) {
+        // Convert decimal to hex
+        $hex = '';
+        $temp = $dec;
+        
+        while (bccomp($temp, '0') > 0) {
+            $remainder = bcmod($temp, '16');
+            $hex = dechex($remainder) . $hex;
+            $temp = bcdiv($temp, '16', 0);
+        }
+        
+        // Pad to 32 characters (128 bits)
+        $hex = str_pad($hex, 32, '0', STR_PAD_LEFT);
+        
+        // Convert hex to binary and then to IPv6
+        $binary = hex2bin($hex);
+        return inet_ntop($binary);
     }
     
 }
