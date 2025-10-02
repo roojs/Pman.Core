@@ -752,7 +752,7 @@ class Pman_Core_NotifySend extends Pman
             if ( $res->userinfo['smtpcode']> 500 && $this->server_ipv6 == null) {
 
                 // blocked by Spamhaus
-                if(strpos(strtolower($errmsg), 'spamhaus') !== false && $this->server_ipv6 == null) {
+                if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
                     // Check if we can set up IPv6 for this domain
                     if($core_domain->setUpIpv6($this->server)) {
                         // IPv6 set up successfully -> retry later
