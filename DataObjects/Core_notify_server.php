@@ -243,8 +243,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         $to_add = $p->fetchAll('id');
-        var_dump($to_add);
-        die('test');
         
         $p = DB_DataObject::factory($notify->table);
         $p->whereAdd("
