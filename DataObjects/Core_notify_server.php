@@ -480,6 +480,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function findSmallestUnusedIpv6()
     {
+        if($this->ipv6_range_from == '' || $this->ipv6_range_to == '') {
+            return false;
+        }
+
+        
     }
     
 }
