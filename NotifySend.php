@@ -751,6 +751,16 @@ class Pman_Core_NotifySend extends Pman
             // IPv6 not set up yet
             if ( $res->userinfo['smtpcode']> 500 && $this->server_ipv6 == null) {
 
+                // blocked by Spamhaus
+                if(strpos(strtolower($errmsg), 'spamhaus') !== false && $this->server_ipv6 == null) {
+                    // Check if we can set up IPv6 for this domain
+                    if($core_domain->setUpIpv6($this->server)) {
+                        $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                        $this->errorHandler( $ev->remarks);
+                    }
+                }
+
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
