@@ -354,6 +354,9 @@ class Pman_Core_NotifySend extends Pman
          
         $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($dom);
 
+        $core_domain->setUpIpv6();
+        die('test');
+
         
         $ww->domain_id = $core_domain->id;
         // if to_email has not been set!?
@@ -746,7 +749,7 @@ class Pman_Core_NotifySend extends Pman
 
                     // Check if we can set up IPv6 for this domain
                     if($this->server_ipv6 == null) {
-                        $core_domain->setUpIpv6();
+                        $core_domain->setUpIpv6($this->server);
                     }
                     $this->errorHandler($ev->remarks);
                     
