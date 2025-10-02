@@ -46,8 +46,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(empty($q['ipv6_range_from'])) {
                 $roo->jerr("IPv6 range from is required");
             }
+            if(filter_var($q['ipv6_range_from'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range from is not a valid IPv6 address");
+            }
             if(empty($q['ipv6_range_to'])) {
                 $roo->jerr("IPv6 range to is required");
+            }
+            if(filter_var($q['ipv6_range_to'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range to is not a valid IPv6 address");
             }
             if(empty($q['ipv6_ptr'])) {
                 $roo->jerr("IPv6 ptr is required");
