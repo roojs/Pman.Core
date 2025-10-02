@@ -496,7 +496,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         $start = ipv6ToDecimal($this->ipv6_range_from);
         $end = ipv6ToDecimal($this->ipv6_range_to);
-        $used = array_map('ipv6ToDecimal', $usedIPv6);
+        $used = array_map([$this, 'ipv6ToDecimal'], $usedIPv6);
         $usedSet = array_flip($used);
     
         // Start from the next address after 'from'
