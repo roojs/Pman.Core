@@ -747,7 +747,7 @@ class Pman_Core_NotifySend extends Pman
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
-            /* Blacklisted is now a hard failure
+
             if ( $res->userinfo['smtpcode']> 500 ) {
                 
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
@@ -755,16 +755,13 @@ class Pman_Core_NotifySend extends Pman
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    // Check if we can set up IPv6 for this domain
+                    if($this->server_ipv6 == null) {
+                        $core_domain->setUpIpv6($this->server);
+                    }
                     $this->errorHandler($ev->remarks);
                     
                 }
-            }
-            */
-
-            // Check if we can set up IPv6 for this domain
-            if($this->server_ipv6 == null) {
-                $core_domain->setUpIpv6($this->server);
             }
             
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
