@@ -232,7 +232,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id NOT IN (" . implode(",", $ids) . ")
-                " . !empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "" . "
+                " . (!empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "") . "
         ");
         $p->orderBy('act_when asc'); //?
         $total_add = $p->count();
