@@ -526,9 +526,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     /**
      * Convert ipv6 to decimal
+     * If invalid ipv6 address, return false
      * 
      * @param string $ip
-     * @return string
+     * @return string|false
      */
     function ipv6ToDecimal($ip) {
         $binary = inet_pton($ip);
