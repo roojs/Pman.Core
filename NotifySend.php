@@ -771,6 +771,27 @@ class Pman_Core_NotifySend extends Pman
                         
                     }
                 }
+
+                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+
+                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+
+                    $shouldRetry = true;
+
+                    if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
+                        $shouldRetry = false;
+                        if($core_domain->setUpIpv6($this->server)) {
+                            $shouldRetry = true;
+                        }
+                    }
+
+                    if($shouldRetry) {
+                        $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                        $this->errorHandler( $ev->remarks);
+                    }
+                    
+                }
             }
             
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
