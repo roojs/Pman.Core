@@ -443,20 +443,5 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return true;
         
     }
-
-    function findServerByIpv6($ipv6_addr)
-    {
-        if (empty($ipv6_addr)) {
-            return false;
-        }
-        $ipv6_addr = $this->escape($ipv6_addr);
-        $cns = DB_DataObject::factory('core_notify_server');
-        $cns->whereAdd("INET6_ATON('{$ipv6_addr}') >= INET6_ATON(ipv6_range_from)");
-        $cns->whereAdd("INET6_ATON('{$ipv6_addr}') <= INET6_ATON(ipv6_range_to)");
-        if($cns->find(true)) {
-            return $cns;
-        }
-        return false;
-    }
     
 }
