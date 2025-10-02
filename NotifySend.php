@@ -751,26 +751,25 @@ class Pman_Core_NotifySend extends Pman
             // IPv6 not set up yet
             if ( $res->userinfo['smtpcode']> 500 && $this->server_ipv6 == null) {
 
+                $shouldRetry = true;
+
+                // blocked by Spamhaus
+                if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
+                    $shouldRetry = false;
+                    // IPv6 set up successfully
+                    if($core_domain->setUpIpv6($this->server)) {
+                        $shouldRetry = true;
+                    }
+                }
+
+                
+
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-
-                    $shouldRetry = true;
-
-                    // blocked by Spamhaus
-                    if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
-                        $shouldRetry = false;
-                        // IPv6 set up successfully
-                        if($core_domain->setUpIpv6($this->server)) {
-                            $shouldRetry = true;
-                        }
-                    }
-
-                    if($shouldRetry) {
-                        $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                        $this->errorHandler( $ev->remarks);
-                    }
+                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
+                    $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                    $this->errorHandler( $ev->remarks);
                     
                 }
             }
