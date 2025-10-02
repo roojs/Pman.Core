@@ -498,6 +498,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $end = ipv6ToDecimal($this->ipv6_range_to);
         $usedIPv6 = ["2a01:111::1", "2a01:111::2"];
         $used = array_map(fn($ipv6) => ipv6ToDecimal($ipv6), $usedIPv6);
+        var_dump($used);
+        die('test');
         $usedSet = array_flip($used);
     
         // Start from the next address after 'from'
