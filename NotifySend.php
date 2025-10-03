@@ -766,10 +766,10 @@ class Pman_Core_NotifySend extends Pman
                 // blocked by Spamhaus
                 if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
                     // no IPv6 can be set up -> don't retry
-                    // $shouldRetry = false;
+                    $shouldRetry = false;
                     // IPv6 set up successfully
                     if($this->server_ipv6 = $core_domain->setUpIpv6()) {
-                        $shouldRetry = true;
+                        // $shouldRetry = true;
                     }
                 }
 
