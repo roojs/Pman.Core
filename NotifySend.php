@@ -769,7 +769,7 @@ class Pman_Core_NotifySend extends Pman
                     $shouldRetry = false;
                     // IPv6 set up successfully
                     if($this->server_ipv6 = $core_domain->setUpIpv6()) {
-                        // $shouldRetry = true;
+                        $shouldRetry = true;
                     }
                 }
 
