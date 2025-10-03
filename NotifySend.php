@@ -462,9 +462,6 @@ class Pman_Core_NotifySend extends Pman
         }
 
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
-
-        // var_dumP($email['headers']);
-        // var_dump($ff->Mail['helo']);
                         
         foreach($mxs as $mx) {
             
@@ -481,9 +478,6 @@ class Pman_Core_NotifySend extends Pman
             );
             
             $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
-
-            // var_dump($socket_options);
-            // die('test');
             
             $mailer = Mail::factory('smtp', array(
                 'host'    => $mx ,
