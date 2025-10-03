@@ -314,12 +314,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         
         //die("test init");
-        if (!$this->canInitializeSystem()) {
-          //  die("can not init");
-            $this->_auth_error = "NO-SESSION";
-            return false;
-        }
-        
+       
         
         $auto_auth_allow = false;
         if (!empty($ff->Pman['local_autoauth']) && $ff->Pman['local_autoauth'] === true) {
@@ -349,6 +344,14 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($_SERVER['PATH_INFO']) ||  $_SERVER['PATH_INFO'] == '/Login') {
             $auto_auth_allow  = false;
         }
+
+        if (!$auto_auth_allow && !$this->canInitializeSystem()) {
+            //  die("can not init");
+              $this->_auth_error = "NO-SESSION";
+              return false;
+          }
+          
+
          //var_dump($auto_auth_allow);
         // local auth - 
         $default_admin = false;
