@@ -163,8 +163,8 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
 
-        $this->server->assignQueues($this);
-        die('test');
+        // $this->server->assignQueues($this);
+        // die('test');
         
         if (!empty($opts['debug'])) {
             print_r($w);
