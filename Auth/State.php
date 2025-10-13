@@ -55,8 +55,9 @@ class Pman_Core_Auth_State extends Pman_Core_Auth
     {
         $ff= HTML_FlexyFramework::get();
         $ct = isset($ff->Pman['auth_comptype']) ? $ff->Pman['auth_comptype'] : 'OWNER';
+         
         if ($u->company()->comptype != $ct) {
-            //print_r($u->company());
+              
             $this->jerror('LOGIN-BADUSER'. $this->event_suffix, "Login not permited to outside companies"); // serious failure
         }
         

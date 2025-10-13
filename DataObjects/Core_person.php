@@ -365,6 +365,11 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             $member->whereAdd("
                 join_user_id_id.id IS NOT NULL
             ");
+            if ($ff->Pman['local_autoauth'] !== true) {
+                $member->whereAdd("
+                    join_user_id_id.email = '" . $member->escape($ff->Pman['local_autoauth']) . "'
+                ");
+            }
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 $default_admin->autoJoin();
