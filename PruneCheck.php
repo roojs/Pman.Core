@@ -122,7 +122,7 @@ class Pman_Core_PruneCheck extends Pman
         
         $cn = DB_DataObject::factory('core_notify');
         $cn->whereAddIn('id', $ids , 'int');
-        $eids = array_unique($pe->fetchAll('event_id'));
+        $eids = array_unique($cn->fetchAll('event_id'));
         
         // Count records that would be archived (linked to archived core_notify records)
         $events = DB_DataObject::factory('Events');
