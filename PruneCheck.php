@@ -102,15 +102,7 @@ class Pman_Core_PruneCheck extends Pman
         // Count records that would be archived (linked to archived core_notify records)
         $events = DB_DataObject::factory('Events');
         $events->whereAddIn('id', $prunable_event_ids, 'int');
-        $prunable_records = $events->count();
-
-        $this->results['(linked to core_notify) Events'] = array(
-            'table' => 'Events',
-            'total_records' => $total_records,
-            'prunable_records' => $prunable_records,
-            'runs_needed' => $runs_needed,
-            'status' => $this->getStatus($runs_needed)
-        );
+        $prunable_event_records = $events->count();
 
         $this->results['core_notify'] = array(
             'table' => 'core_notify',
