@@ -99,7 +99,7 @@ class Pman_Core_PruneCheck extends Pman
         // Calculate runs needed (based on 10,000 limit per run from Core_notify_archive)
         $runs_needed = ceil($prunable_records / 10000);
 
-        // Count records that would be archived (linked to archived core_notify records)
+        // Count records that would be archived (linked to core_notify records to be pruned)
         $events = DB_DataObject::factory('Events');
         $events->whereAddIn('id', $prunable_event_ids, 'int');
         $prunable_event_records = $events->count();
