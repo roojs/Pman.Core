@@ -115,7 +115,7 @@ class Pman_Core_PruneCheck extends Pman
      */
     function checkNotifyEvents($ids)
     {
-        echo "Checking Events table for duplicate NOTIFY records that need cleanup\n";
+        echo "Checking Events table for events linked to archived core_notify records\n";
         // Count total records
         $events = DB_DataObject::factory('Events');
         $total_records = $events->count();
