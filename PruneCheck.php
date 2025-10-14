@@ -75,6 +75,10 @@ class Pman_Core_PruneCheck extends Pman
             $this->checkEvents();
         }
         
+        if (!$specific_table || $specific_table === 'Events_duplicates') {
+            $this->checkDuplicateCoreNotify();
+        }
+        
         $this->outputNagiosResults();
     }
     
