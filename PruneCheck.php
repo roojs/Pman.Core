@@ -169,6 +169,9 @@ class Pman_Core_PruneCheck extends Pman
         foreach ($duplicate_groups as $group) {
             $prunable_records += ($group->mm - 1); // Keep 1, delete the rest
         }
+
+        echo "Total duplicate groups: " . count($duplicate_groups) . "\n";
+        echo "Total prunable records: " . $prunable_records . "\n";
         
         // Calculate runs needed (based on 10,000 limit per run from Core/Prune)
         $runs_needed = ceil(count($duplicate_groups) / 10000);
