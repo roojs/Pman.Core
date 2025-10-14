@@ -218,7 +218,7 @@ class Pman_Core_PruneCheck extends Pman
             // Build status message
             $status_messages[] = sprintf(
                 "%s: %d / %d prunable records, %d runs needed" .
-                " (%d " . (isset($result['prunable_groups_per_run']) ? 'groups' : '') . " records per run)",
+                " (%d " . (isset($result['prunable_groups_per_run']) ? 'groups of ' : '') . "records per run)",
                 $table,
                 $result['prunable_records'],
                 $result['total_records'],
