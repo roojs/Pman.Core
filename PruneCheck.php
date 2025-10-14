@@ -120,15 +120,10 @@ class Pman_Core_PruneCheck extends Pman
         $events = DB_DataObject::factory('Events');
         $total_records = $events->count();
         
-        // Count duplicate NOTIFY events older than 1 week (based on Core/Prune logic)
-        $events = DB_DataObject::factory('Events');
-        $events->selectAdd();
-        $events->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
-        $events->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
-        $events->groupBy('on_id, on_table');
-        $events->having("mm > 2");
-        $events->orderBy('mm desc');
-        $duplicate_groups = $events->fetchAll();
+        // Count records that would be archived (linked to archived core_notify records)
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->whereAddIn('id', $ids , 'int');
+        $eids = array_unique($pe->fetchAll('event_id'));
         
         // Calculate total duplicate records that would be deleted
         $prunable_records = 0;
