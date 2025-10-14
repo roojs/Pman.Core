@@ -16,11 +16,9 @@ class Pman_Core_PruneCheck extends Pman
     static $cli_desc = "Core Prune Check -- Nagios monitoring for Core pruning backlog";
     static $cli_opts = array(
         'table' => array(
-            'desc' => 'Specific table to check (core_notify, Events)',
+            'desc' => 'Specific table to check (core_notify, Events, Events_duplicates)',
             'default' => '',
             'short' => 't',
-            'min' => 1,
-            'max' => 1,
         ),
         'warning' => array(
             'desc' => 'Warning threshold (number of runs needed)',
