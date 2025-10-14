@@ -136,6 +136,7 @@ class Pman_Core_PruneCheck extends Pman
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
+            'prunable_event_records' => 0, // Not applicable
             'runs_needed' => $runs_needed,
             'status' => $this->getStatus($runs_needed)
         );
