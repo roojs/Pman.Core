@@ -110,8 +110,8 @@ class Pman_Core_PruneCheck extends Pman
             'table' => 'core_notify',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
-            'prunable_event_records' => $prunable_event_records,
             'runs_needed' => $runs_needed,
+            'prunable_records_per_run' => 10000,
             'status' => $this->getStatus($runs_needed)
         );
     }
@@ -138,8 +138,8 @@ class Pman_Core_PruneCheck extends Pman
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
-            'prunable_event_records' => 0, // Not applicable
             'runs_needed' => $runs_needed,
+            'prunable_records_per_run' => 500000,
             'status' => $this->getStatus($runs_needed)
         );
     }
@@ -177,8 +177,8 @@ class Pman_Core_PruneCheck extends Pman
             'table' => 'Duplicate Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
-            'prunable_event_records' => 0, // Not applicable
             'runs_needed' => $runs_needed,
+            'prunable_records_per_run' => 10000,
             'status' => $this->getStatus($runs_needed)
         );
     }
