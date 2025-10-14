@@ -174,7 +174,7 @@ class Pman_Core_PruneCheck extends Pman
             
             // Build status message
             $status_messages[] = sprintf(
-                "%10s | %10d | %10d | %10d",
+                "%20s | %10d | %10d | %10d",
                 $table,
                 $result['total_records'],
                 $result['prunable_records'],
@@ -186,7 +186,7 @@ class Pman_Core_PruneCheck extends Pman
         $message = implode("\n", $status_messages);
         
         echo $overall_status . "\n";
-        echo sprintf("%10s | %10s | %10s | %10s\n", "Table", "Total", "Prunable", "Runs Needed");
+        echo sprintf("%20s | %10s | %10s | %10s\n", "Table", "Total", "Prunable", "Runs Needed");
         echo $message . "\n";
         
         // Exit with appropriate code
