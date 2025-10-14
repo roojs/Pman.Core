@@ -180,6 +180,7 @@ class Pman_Core_PruneCheck extends Pman
             'prunable_records' => $prunable_records,
             'runs_needed' => $runs_needed,
             'prunable_records_per_run' => 10000,
+            'prunable_groups_per_run' => 10000,
             'status' => $this->getStatus($runs_needed)
         );
     }
