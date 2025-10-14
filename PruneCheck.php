@@ -219,7 +219,7 @@ class Pman_Core_PruneCheck extends Pman
             $status_messages[] = sprintf(
                 "%10s - %s: %d / %d prunable records, %d runs needed" .
                 " (%d " . (isset($result['prunable_groups_per_run']) ? 'groups of ' : '') . "records per run)",
-                $status,
+                $result['status'],
                 $table,
                 $result['prunable_records'],
                 $result['total_records'],
@@ -239,7 +239,6 @@ class Pman_Core_PruneCheck extends Pman
         // Output Nagios format
         $message = implode("\n", $status_messages);
         
-        echo "STATUS: {$overall_status}\n";
         echo $message . "\n";
         
         // Exit with appropriate code
