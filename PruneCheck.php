@@ -211,6 +211,7 @@ class Pman_Core_PruneCheck extends Pman
         // Output Nagios format
         $message = implode("\n", $status_messages);
         
+        echo $overall_status . "\n";
         echo sprintf("%30s| %10s | %10s | %10s\n", "Table", "Total", "Prunable", "Runs Needed");
         echo sprintf("%s\n%s\n", $overall_status, $message);
         
