@@ -93,7 +93,8 @@ class Pman_Core_PruneCheck extends Pman
         // Count records that would be archived (older than specified months)
         $cn = DB_DataObject::factory('core_notify');
         $cn->whereAdd("act_when < NOW() - INTERVAL {$this->months} MONTH");
-        $prunable_records = $cn->count();
+        $prunable_ids = $cn->fetchAll('id');
+        $prunable_records = count($prunable_ids);
         
         // Calculate runs needed (based on 10,000 limit per run from Core_notify_archive)
         $runs_needed = ceil($prunable_records / 10000);
@@ -106,13 +107,13 @@ class Pman_Core_PruneCheck extends Pman
             'status' => $this->getStatus($runs_needed)
         );
 
-        $this->checkNotifyEvents();
+        $this->checkNotifyEvents($prunable_ids);
     }
 
     /**
      * Check Events table for duplicate NOTIFY records that need cleanup
      */
-    function checkNotifyEvents()
+    function checkNotifyEvents($ids)
     {
         echo "Checking Events table for duplicate NOTIFY records that need cleanup\n";
         // Count total records
