@@ -173,8 +173,8 @@ class Pman_Core_PruneCheck extends Pman
         // Calculate runs needed (based on 10,000 limit per run from Core/Prune)
         $runs_needed = ceil(count($duplicate_groups) / 10000);
         
-        $this->results['Events_duplicates'] = array(
-            'table' => 'Events_duplicates',
+        $this->results['Duplicate Events'] = array(
+            'table' => 'Duplicate Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
             'prunable_event_records' => 0, // Not applicable
