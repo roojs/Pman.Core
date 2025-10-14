@@ -111,7 +111,7 @@ class Pman_Core_PruneCheck extends Pman
     }
 
     /**
-     * Check Events table for duplicate NOTIFY records that need cleanup
+     * Check Event table pruning status (for events linked to archived core_notify records)
      */
     function checkNotifyEvents($ids)
     {
