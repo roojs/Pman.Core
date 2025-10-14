@@ -132,7 +132,7 @@ class Pman_Core_PruneCheck extends Pman
         // Calculate runs needed (based on 10,000 limit per run from Core_events_archive)
         $runs_needed = ceil($prunable_records / 10000);
         
-        $this->results['(linked to core_notify) Events'] = array(
+        $this->results['Events (linked to core_notify)'] = array(
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
@@ -200,7 +200,7 @@ class Pman_Core_PruneCheck extends Pman
             
             // Build status message
             $status_messages[] = sprintf(
-                "%30s | %10d | %10d | %10d",
+                "%-30s | %10d | %10d | %10d",
                 $table,
                 $result['total_records'],
                 $result['prunable_records'],
