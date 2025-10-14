@@ -111,30 +111,7 @@ class Pman_Core_PruneCheck extends Pman
         $events = DB_DataObject::factory('Events');
         $events->whereAddIn('id', $prunable_event_ids, 'int');
         $prunable_records = $events->count();
-    }
 
-    /**
-     * Check Event table pruning status (for events linked to archived core_notify records)
-     */
-    function checkNotifyEvents($ids)
-    {
-        echo "Checking Events table for events linked to archived core_notify records\n";
-        // Count total records
-        $events = DB_DataObject::factory('Events');
-        $total_records = $events->count();
-        
-        $cn = DB_DataObject::factory('core_notify');
-        $cn->whereAddIn('id', $ids , 'int');
-        $eids = array_unique($cn->fetchAll('event_id'));
-        
-        // Count records that would be archived (linked to archived core_notify records)
-        $events = DB_DataObject::factory('Events');
-        $events->whereAddIn('id', $eids, 'int');
-        $prunable_records = $events->count();
-        
-        // Calculate runs needed (based on 10,000 limit per run from Core_events_archive)
-        $runs_needed = ceil($prunable_records / 10000);
-        
         $this->results['(linked to core_notify) Events'] = array(
             'table' => 'Events',
             'total_records' => $total_records,
