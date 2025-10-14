@@ -135,7 +135,7 @@ class Pman_Core_PruneCheck extends Pman
         // Calculate runs needed (based on 500,000 limit per run from Core_events_archive moveToArchive)
         $runs_needed = ceil($prunable_records / 500000);
         
-        $this->results['Events'] = array(
+        $this->results['Old Events'] = array(
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
