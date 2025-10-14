@@ -223,6 +223,14 @@ class Pman_Core_PruneCheck extends Pman
                 $result['runs_needed'],
                 $result['prunable_records_per_run']
             );
+
+            if(isset($result['prunable_event_records'])){
+                $status_messages[] = sprintf(
+                    "%s: %d prunable event records",
+                    $table,
+                    $result['prunable_event_records']
+                );
+            }
         }
         
         // Output Nagios format
