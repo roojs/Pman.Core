@@ -130,8 +130,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
         $w->person_id = $user->id;
         $ff = HTML_FlexyFramework::get();
 		$w->app_id = $ff->appNameShort;
-       
         
+        if (!empty($ff->Pman['local_autoauth']) ) { // we don't do any checks on no window data.
+            return true;
+        }
         $mw = clone($w);
         $w->window_id = $req['window_id'];
          

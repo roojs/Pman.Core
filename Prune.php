@@ -91,11 +91,11 @@ class Pman_Core_Prune extends Pman
         $f = DB_DataObject::Factory('core_notify');
         $nafter = $f->count();
         
-        echo "DELETED : " . ($nbefore - $nafter) . " core_notify records\n";
+        echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify records\n";
 
         $f = DB_DataObject::Factory('Events');
         $after = $f->count();
-        echo "DELETED : " . ($before - $after) . " events records\n";
+        echo "DELETED : " . ($before - $after) . "/{$before} events records\n";
 
         
         
