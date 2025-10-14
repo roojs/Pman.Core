@@ -94,7 +94,7 @@ class Pman_Core_PruneCheck extends Pman
         $cn = DB_DataObject::factory('core_notify');
         $cn->whereAdd("act_when < NOW() - INTERVAL {$this->months} MONTH");
         $prunable_event_ids = $cn->fetchAll('id', 'event_id');
-        $prunable_records = count($prunable_ids);
+        $prunable_records = count($prunable_event_ids);
         
         // Calculate runs needed (based on 10,000 limit per run from Core_notify_archive)
         $runs_needed = ceil($prunable_records / 10000);
