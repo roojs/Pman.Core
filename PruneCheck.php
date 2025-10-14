@@ -150,7 +150,7 @@ class Pman_Core_PruneCheck extends Pman
      */
     function checkDuplicateCoreNotify()
     {
-        echo "Checking duplicate Events\n";
+        echo "Checking duplicate events\n";
         // Count total records
         $events = DB_DataObject::factory('Events');
         $total_records = $events->count();
