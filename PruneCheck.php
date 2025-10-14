@@ -122,7 +122,7 @@ class Pman_Core_PruneCheck extends Pman
      */
     function checkEvents()
     {
-        echo "Checking Events table\n";
+        echo "Checking old events\n";
         // Count total records
         $events = DB_DataObject::factory('Events');
         $total_records = $events->count();
@@ -135,7 +135,7 @@ class Pman_Core_PruneCheck extends Pman
         // Calculate runs needed (based on 500,000 limit per run from Core_events_archive moveToArchive)
         $runs_needed = ceil($prunable_records / 500000);
         
-        $this->results['Old Events'] = array(
+        $this->results['Old events'] = array(
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
@@ -150,7 +150,7 @@ class Pman_Core_PruneCheck extends Pman
      */
     function checkDuplicateCoreNotify()
     {
-        echo "Checking Events_duplicates table\n";
+        echo "Checking duplicate Events\n";
         // Count total records
         $events = DB_DataObject::factory('Events');
         $total_records = $events->count();
