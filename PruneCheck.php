@@ -107,9 +107,10 @@ class Pman_Core_PruneCheck extends Pman
             'status' => $this->getStatus($runs_needed)
         );
 
-        $cn = DB_DataObject::factory('core_notify');
-        $cn->whereAddIn('id', $prunable_ids , 'int');
-        $eids = array_unique($cn->fetchAll('event_id'));
+        // Count records that would be archived (linked to archived core_notify records)
+        $events = DB_DataObject::factory('Events');
+        $events->whereAddIn('id', $prunable_event_ids, 'int');
+        $prunable_records = $events->count();
     }
 
     /**
