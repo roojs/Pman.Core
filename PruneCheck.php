@@ -145,6 +145,45 @@ class Pman_Core_PruneCheck extends Pman
     }
     
     /**
+     * Check Events table for duplicate NOTIFY records that need cleanup
+     */
+    function checkDuplicateCoreNotify()
+    {
+        echo "Checking Events_duplicates table\n";
+        // Count total records
+        $events = DB_DataObject::factory('Events');
+        $total_records = $events->count();
+        
+        // Count duplicate NOTIFY events older than 1 week (based on Core/Prune logic)
+        $events = DB_DataObject::factory('Events');
+        $events->selectAdd();
+        $events->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
+        $events->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
+        $events->groupBy('on_id, on_table');
+        $events->having("mm > 2");
+        $events->orderBy('mm desc');
+        $duplicate_groups = $events->fetchAll();
+        
+        // Calculate total duplicate records that would be deleted
+        $prunable_records = 0;
+        foreach ($duplicate_groups as $group) {
+            $prunable_records += ($group->mm - 1); // Keep 1, delete the rest
+        }
+        
+        // Calculate runs needed (based on 10,000 limit per run from Core/Prune)
+        $runs_needed = ceil(count($duplicate_groups) / 10000);
+        
+        $this->results['Events_duplicates'] = array(
+            'table' => 'Events_duplicates',
+            'total_records' => $total_records,
+            'prunable_records' => $prunable_records,
+            'prunable_event_records' => 0, // Not applicable
+            'runs_needed' => $runs_needed,
+            'status' => $this->getStatus($runs_needed)
+        );
+    }
+    
+    /**
      * Determine status based on runs needed
      */
     function getStatus($runs_needed)
