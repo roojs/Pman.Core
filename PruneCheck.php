@@ -98,15 +98,6 @@ class Pman_Core_PruneCheck extends Pman
         
         // Calculate runs needed (based on 10,000 limit per run from Core_notify_archive)
         $runs_needed = ceil($prunable_records / 10000);
-        
-        $this->results['core_notify'] = array(
-            'table' => 'core_notify',
-            'total_records' => $total_records,
-            'prunable_records' => $prunable_records,
-            'prunable_event_records' => $prunable_event_records,
-            'runs_needed' => $runs_needed,
-            'status' => $this->getStatus($runs_needed)
-        );
 
         // Count records that would be archived (linked to archived core_notify records)
         $events = DB_DataObject::factory('Events');
@@ -117,6 +108,15 @@ class Pman_Core_PruneCheck extends Pman
             'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
+            'runs_needed' => $runs_needed,
+            'status' => $this->getStatus($runs_needed)
+        );
+
+        $this->results['core_notify'] = array(
+            'table' => 'core_notify',
+            'total_records' => $total_records,
+            'prunable_records' => $prunable_records,
+            'prunable_event_records' => $prunable_event_records,
             'runs_needed' => $runs_needed,
             'status' => $this->getStatus($runs_needed)
         );
