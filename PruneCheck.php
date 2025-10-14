@@ -131,8 +131,8 @@ class Pman_Core_PruneCheck extends Pman
         $events->whereAdd("event_when < NOW() - INTERVAL {$this->months} MONTH");
         $prunable_records = $events->count();
         
-        // Calculate runs needed (based on 10,000 limit per run from Core_events_archive)
-        $runs_needed = ceil($prunable_records / 10000);
+        // Calculate runs needed (based on 500,000 limit per run from Core_events_archive moveToArchive)
+        $runs_needed = ceil($prunable_records / 500000);
         
         $this->results['Events'] = array(
             'table' => 'Events',
