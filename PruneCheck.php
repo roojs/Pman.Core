@@ -112,9 +112,6 @@ class Pman_Core_PruneCheck extends Pman
         $events->whereAddIn('id', $prunable_event_ids, 'int');
         $prunable_records = $events->count();
 
-        // Calculate runs needed (based on 10,000 limit per run from Core_notify_archive)
-        $runs_needed = ceil($prunable_records / 10000);
-
         $this->results['(linked to core_notify) Events'] = array(
             'table' => 'Events',
             'total_records' => $total_records,
