@@ -229,7 +229,7 @@ class Pman_Core_PruneCheck extends Pman
 
             if(isset($result['prunable_event_records'])){
                 $status_messages[] = sprintf(
-                    "%s: %d prunable event records",
+                    "           - %s: %d prunable event records",
                     $table,
                     $result['prunable_event_records']
                 );
