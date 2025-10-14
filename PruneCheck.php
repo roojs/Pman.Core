@@ -125,17 +125,16 @@ class Pman_Core_PruneCheck extends Pman
         $cn->whereAddIn('id', $ids , 'int');
         $eids = array_unique($pe->fetchAll('event_id'));
         
-        // Calculate total duplicate records that would be deleted
-        $prunable_records = 0;
-        foreach ($duplicate_groups as $group) {
-            $prunable_records += ($group->mm - 1); // Keep 1, delete the rest
-        }
+        // Count records that would be archived (older than specified months)
+        $events = DB_DataObject::factory('Events');
+        $events->whereAddIn('id', $eids, 'int');
+        $prunable_records = $events->count();
         
-        // Calculate runs needed (based on 10,000 limit per run from Core/Prune)
-        $runs_needed = ceil(count($duplicate_groups) / 10000);
+        // Calculate runs needed (based on 10,000 limit per run from Core_events_archive)
+        $runs_needed = ceil($prunable_records / 10000);
         
-        $this->results['NotifyEvents'] = array(
-            'table' => 'NotifyEvents',
+        $this->results['Events'] = array(
+            'table' => 'Events',
             'total_records' => $total_records,
             'prunable_records' => $prunable_records,
             'runs_needed' => $runs_needed,
