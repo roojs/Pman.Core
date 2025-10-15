@@ -39,7 +39,7 @@ class Pman_Core_DataObjects_Core_notify_archive extends DB_DataObject
         $pe = DB_DataObject::factory('core_notify');
         $pe->whereAdd("act_when < NOW() - INTERVAL {$months} MONTH");
         $pe->orderBy('id ASC');
-        $pe->limit(10000);
+        $pe->limit(100000);
         $ids = $pe->fetchAll('id');
         if (empty($ids)) {
             return;

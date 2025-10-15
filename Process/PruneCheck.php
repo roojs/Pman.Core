@@ -101,7 +101,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         $events = DB_DataObject::factory('Events');
         
         $cn_old->whereAdd("act_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
-        $cn_old->limit(100000); // 10x more records to prune than events
+        $cn_old->limit(1000000); // 10x more records to prune than events
         $prunable_event_ids = $cn_old->fetchAll( 'event_id');
         
         $events->whereAddIn('id', $prunable_event_ids, 'int');
@@ -111,7 +111,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             'total_records' => $cn->count(),
             'prunable_records' => count($prunable_event_ids),
             'prunable_event_records' => $events->count(),
-            'prunable_records_per_run' => 10000
+            'prunable_records_per_run' => 100000
         );
     }
     

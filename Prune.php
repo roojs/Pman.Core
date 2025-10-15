@@ -93,16 +93,15 @@ class Pman_Core_Prune extends Pman
         
         echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify records\n";
 
-        $f = DB_DataObject::Factory('Events');
-        $after = $f->count();
-        echo "DELETED : " . ($before - $after) . "/{$before} events records\n";
-
-        
         
         
         $ce = DB_DataObject::Factory('core_events_archive');
         $ce->moveToArchive($inM);
         $ce->deleteUserFiles($inM);
-        
+       
+        $f = DB_DataObject::Factory('Events');
+        $after = $f->count();
+        echo "DELETED : " . ($before - $after) . "/{$before} events records\n";
+
     }
 }
