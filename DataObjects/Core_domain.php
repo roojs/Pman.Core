@@ -18,6 +18,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
+    function applyFilters($q, $au, $roo)
+    {
+        if(!empty($q['_include_mail_config'])) {
+            $this->joinAddMailServer();
+        }
+    }
     function loadOrCreate($dom)
     {
         // should we validate domain?
