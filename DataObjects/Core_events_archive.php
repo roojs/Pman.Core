@@ -112,10 +112,10 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
     function moveToArchive($month, $etype = false)
     {
         $month = intval($month);
-        if ($month < 3) {
+        if ($month < 2) {
             return;
         }
-        for($i = 0; $i < 50;$i++) {
+        for($i = 0; $i < 100;$i++) {
             $e = DB_DataObject::factory('Events');
             $e->whereAdd("event_when < NOW() - INTERVAL {$month} MONTH");
             if ($etype !== false) {
