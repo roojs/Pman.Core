@@ -49,18 +49,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mid->server();
     }
 
-    function joinAddServer()
-    {
-        $this->_join .= "
-            LEFT JOIN
-                mail_imap_server AS join_server_id_id
-            ON
-                join_server_id_id.id = core_domain.server_id
-        ";
-        $mis = DB_DataObject::factory('mail_imap_server');
-        $this->selectAs($mis, 'server_%s', 'join_server_id_id');
-    }
-
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['_update_mx'])) {
