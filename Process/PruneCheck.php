@@ -40,6 +40,11 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             'short' => 'm',
             'min' => 1,
             'max' => 1,
+        ),
+        'debug' => array(
+            'desc' => 'Enable debug mode (triggers DB_DataObject::debugLevel(1))',
+            'default' => false,
+            'short' => 'd',
         )
     );
     
@@ -61,6 +66,10 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
     {
         $this->opts = $opts;
         
+        // Enable debug mode if requested
+        if (!empty($opts['debug'])) {
+            DB_DataObject::debugLevel(1);
+        }
          
         // Use introspection to find all check methods
         $methods = get_class_methods($this);
