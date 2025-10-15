@@ -41,7 +41,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     }
     function server()
     {
-        static $cache = array();
         $mid = DB_DataObject::factory('mail_imap_domain');
         if(!$mid->get('domain', $this->domain)) {
             return false;
