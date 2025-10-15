@@ -9,9 +9,9 @@
  * @author System
  */
 
-require_once 'Pman.php';
+require_once 'Pman/Core/Cli.php';
 
-class Pman_Core_Process_PruneCheck extends Pman
+class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
 {
     static $cli_desc = "Core Prune Check -- Nagios monitoring for Core pruning backlog";
     static $cli_opts = array(
@@ -116,8 +116,8 @@ class Pman_Core_Process_PruneCheck extends Pman
         
         $this->results['Old Events'] = array(
             'table' => 'Events',
-            'total_records' => $events->count(),
-            'prunable_records' => $events_old->count(),
+            'total_records' => $events->count(), // 15 seconds
+            'prunable_records' => $events_old->count(), // 11 seconds
             'prunable_records_per_run' => 500000
         );
     }
