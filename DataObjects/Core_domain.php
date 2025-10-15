@@ -134,6 +134,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
+        $this->joinAddServer();
+        
         if (!empty($q['query']['domain'])) {
             $this->whereAdd("core_domain.domain like '%{$this->escape($q['query']['domain'])}%'");
         }
