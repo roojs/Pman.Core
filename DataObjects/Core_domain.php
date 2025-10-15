@@ -19,23 +19,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
 
-    function applyFilters($q, $au, $roo)
-    {
-        $this->joinAddServer();
-    }
-
-    function joinAddServer()
-    {
-        $this->_join .= "
-            LEFT JOIN
-                mail_imap_server AS join_server_id_id
-            ON
-                join_server_id_id.id = core_domain.server_id
-        ";
-        $mis = DB_DataObject::factory('mail_imap_server');
-        $this->selectAs($mis, 'server_%s', 'join_server_id_id');
-    }
-
     function loadOrCreate($dom)
     {
         // should we validate domain?
@@ -64,6 +47,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return false;
         }
         return $mid->server();
+    }
+
+    function joinAddServer()
+    {
+        $this->_join .= "
+            LEFT JOIN
+                mail_imap_server AS join_server_id_id
+            ON
+                join_server_id_id.id = core_domain.server_id
+        ";
+        $mis = DB_DataObject::factory('mail_imap_server');
+        $this->selectAs($mis, 'server_%s', 'join_server_id_id');
     }
 
     function beforeUpdate($old, $q, $roo)
