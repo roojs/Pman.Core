@@ -45,6 +45,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             'desc' => 'Enable debug mode (triggers DB_DataObject::debugLevel(1))',
             'default' => false,
             'short' => 'd',
+            'max' => 1,
         )
     );
     
