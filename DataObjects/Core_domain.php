@@ -18,6 +18,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
     function loadOrCreate($dom)
     {
         // should we validate domain?
@@ -41,16 +42,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     }
     function server()
     {
-        static $cache = array();
-        if (!isset($cache[$this->server_id])) {
-            
-            $server = DB_DataObject::factory('mail_imap_server');
-            if(!$this->server_id || !$server->get($this->server_id)) {
-                return false;
-            }
-            $cache[$this->server_id] = $server;
+        $mid = DB_DataObject::factory('mail_imap_domain');
+        if(!$mid->get('domain', $this->domain)) {
+            return false;
         }
-        return  $cache[$this->server_id];
+        return $mid->server();
     }
 
     function beforeUpdate($old, $q, $roo)
