@@ -53,6 +53,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
         // Roo.MessageBox.updateProgress(this.i / this.total,
             // this.i + " / " + this.total + " emails sent");
         this.notification.updateBody(this.i + " / " + this.total + " emails sent");
+        this.notification.updateProgress(this.i / this.total * 1.0);
         if(this.i >= this.total) {
             // Roo.MessageBox.hide();
             this.notification.setTimeout(5); 
@@ -76,7 +77,6 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             return;
         }
 
-        this.notification.updateProgress(this.i / this.total * 1.0);
         this.sendEmail();
     }
 });
