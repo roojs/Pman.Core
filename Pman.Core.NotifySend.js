@@ -73,7 +73,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
                 msg += this.errorMsgs.join('<br>');
             }
 
-            // Roo.MessageBox.alert('Result', msg);
+            Roo.MessageBox.alert('Result', msg);
             return;
         }
 
