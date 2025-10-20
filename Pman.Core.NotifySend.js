@@ -72,7 +72,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             this.notification.setTimeout(5);
 
             if(this.errorMsgs.length) {
-                Roo.MessageBox.alert("alert", msg);
+                Roo.MessageBox.alert("Result", msg);
             }
             return;
         }
