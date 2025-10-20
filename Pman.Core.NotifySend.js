@@ -11,7 +11,15 @@ Pman.Core.NotifySend = function(notifications)
     this.sentMsgs = [];
     this.errorMsgs = [];
     this.total = notifications.length;
-    Roo.MessageBox.progress("Email Sending", "Starting");
+    // Roo.MessageBox.progress("Email Sending", "Starting");
+    this.notification = new Roo.bootstrap.Toast({
+        title : f.title,
+        listeners : {
+            close : function() {
+                f.cancelled = true;
+            }
+        }
+    });
     this.sendEmail();
 }
     
@@ -47,10 +55,10 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
     },
     postSend : function() {
         this.i++;
-        Roo.MessageBox.updateProgress(this.i / this.total,
+        // Roo.MessageBox.updateProgress(this.i / this.total,
             this.i + " / " + this.total + " emails sent");
         if(this.i >= this.total) {
-            Roo.MessageBox.hide();
+            // Roo.MessageBox.hide();
 
             var msg = '';
 
@@ -67,7 +75,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
                 msg += this.errorMsgs.join('<br>');
             }
 
-            Roo.MessageBox.alert('Result', msg);
+            // Roo.MessageBox.alert('Result', msg);
             return;
         }
         this.sendEmail();
