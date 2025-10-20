@@ -78,9 +78,7 @@ class Pman_Core_Prune extends Pman
         $this->archiveNotify($inM);
         $this->archiveEvents($inM);
     }
-     
-
-    }
+      
     function pruneEventDupes($inM)
     {
         /// deletes events on 'NOTIFY' that are dupes..
