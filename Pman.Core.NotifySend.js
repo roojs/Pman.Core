@@ -69,7 +69,11 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             }
 
             this.notification.updateBody(msg);
-            this.notification.setTimeout(5); 
+            this.notification.setTimeout(5);
+
+            if(this.errorMsgs.length) {
+                Roo.MessageBox.alert("alert", msg);
+            }
             return;
         }
 
