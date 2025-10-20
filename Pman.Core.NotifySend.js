@@ -13,7 +13,7 @@ Pman.Core.NotifySend = function(notifications)
     this.total = notifications.length;
     // Roo.MessageBox.progress("Email Sending", "Starting");
     this.notification = new Roo.bootstrap.Toast({
-        title : "Email Sending",
+        title : "Email Sending"
     });
     this.sendEmail();
 }
