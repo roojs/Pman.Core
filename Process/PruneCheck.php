@@ -125,7 +125,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         
         $events_old->whereAdd("event_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
         
-        $this->results['Old Events'] = array(
+        $this->results['Events-core'] = array(
             'table' => 'Events',
             'total_records' => $events->count(), // 15 seconds
             'prunable_records' => $events_old->count(), // 11 seconds
