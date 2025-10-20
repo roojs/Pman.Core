@@ -128,8 +128,10 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
             $e->limit(10000); // we have over 133k events per day
             $all_ids = $e->fetchAll('id');
             if (empty($ids)) {
+                echo "moveToArchive got NO old events?\n";
                 return;
             }
+            echo "moveToArchive got ". count($ids) . " events\n";
               // do this in batches?
             while (count($all_ids)) {
             
