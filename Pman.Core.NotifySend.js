@@ -56,7 +56,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
     postSend : function() {
         this.i++;
         // Roo.MessageBox.updateProgress(this.i / this.total,
-            this.i + " / " + this.total + " emails sent");
+            // this.i + " / " + this.total + " emails sent");
         if(this.i >= this.total) {
             // Roo.MessageBox.hide();
 
