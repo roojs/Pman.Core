@@ -60,6 +60,7 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
         this.notification.updateBody(this.i + " / " + this.total + " emails sent");
         if(this.i >= this.total) {
             // Roo.MessageBox.hide();
+            this.notification.setTimeout(5); 
 
             var msg = '';
 
@@ -79,6 +80,8 @@ Roo.apply(Pman.Core.NotifySend.prototype, {
             // Roo.MessageBox.alert('Result', msg);
             return;
         }
+
+        this.notification.updateProgress(this.i / this.total * 1.0);
         this.sendEmail();
     }
 });
