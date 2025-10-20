@@ -14,11 +14,6 @@ Pman.Core.NotifySend = function(notifications)
     // Roo.MessageBox.progress("Email Sending", "Starting");
     this.notification = new Roo.bootstrap.Toast({
         title : "Email Sending",
-        listeners : {
-            close : function() {
-                f.cancelled = true;
-            }
-        }
     });
     this.sendEmail();
 }
