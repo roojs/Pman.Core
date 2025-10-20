@@ -15,7 +15,7 @@ class Pman_Core_Prune extends Pman
     static $cli_opts = array(
         'months' => array(
             'desc' => 'How many months',
-            //'default' => 0,
+            'default' => 6,
             'short' => 'm',
             'min' => 1,
             'max' => 1,
@@ -26,6 +26,13 @@ class Pman_Core_Prune extends Pman
             'default' => '',
             'short' => 't',
             'min' => 1,
+            'max' => 1,
+        ),
+        'debug' => array(
+            'desc'=> 'add debugging',
+            'default' => 0,
+            'short' => 'd',
+            'min' => 1, 
             'max' => 1,
         )
     );
@@ -50,7 +57,9 @@ class Pman_Core_Prune extends Pman
        
         $f = DB_DataObject::Factory('Events');
         $this->events_before = $f->count();
-        
+        if (!empty($opts['debug'])) {
+            DB_DataObject::debugLevel(1);
+        }
 
         if (!empty($opts['test'])) {
             $m = "prune{$opts['test']}";
