@@ -15,11 +15,25 @@ class Pman_Core_Prune extends Pman
     static $cli_opts = array(
         'months' => array(
             'desc' => 'How many months',
-            //'default' => 0,
+            'default' => 6,
             'short' => 'm',
             'min' => 1,
             'max' => 1,
             
+        ),
+        'test' => array(
+            'desc' => 'what to test? Events, Notify',
+            'default' => '',
+            'short' => 't',
+            'min' => 1,
+            'max' => 1,
+        ),
+        'debug' => array(
+            'desc'=> 'add debugging',
+            'default' => 0,
+            'short' => 'd',
+            'min' => 1, 
+            'max' => 1,
         )
     );
     var $cli = false;
@@ -41,20 +55,41 @@ class Pman_Core_Prune extends Pman
     {
          // prune irrelivant stuff..
        
-        
-        
+        $f = DB_DataObject::Factory('Events');
+        $this->events_before = $f->count();
+        if (!empty($opts['debug'])) {
+            DB_DataObject::debugLevel(1);
+        }
+
+        if (!empty($opts['test'])) {
+            $m = "prune{$opts['test']}";
+            if (!method_exists($this, $m)) {
+                die("invalid test method $m\n");
+            }
+            $this->$m((int)$opts['months']);
+            die("done\n");
+
+        }
+      
+
         $this->prune((int)$opts['months']);
     }
-    
+    var $events_before = 0;
+
     function prune($inM)
     {
       
         
         //DB_DataObject::debugLevel(1);
-        $f = DB_DataObject::Factory('Events');
-        $before = $f->count();
-        
-        
+       
+      
+        $this->pruneEventDupes();
+        $this->archiveNotify($inM);
+        $this->archiveEvents($inM);
+    }
+      
+    function pruneEventDupes($inM)
+    {
         /// deletes events on 'NOTIFY' that are dupes..
         $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
@@ -80,10 +115,11 @@ class Pman_Core_Prune extends Pman
                   
             ");
         }
-        
-        
+    }
         // clean up archiver 
-        
+    
+    function pruneNotify($inM)
+    {
         $f = DB_DataObject::Factory('core_notify');
         $nbefore = $f->count();
         $cn  = DB_DataObject::Factory('core_notify_archive');
@@ -92,7 +128,9 @@ class Pman_Core_Prune extends Pman
         $nafter = $f->count();
         
         echo "DELETED : " . ($nbefore - $nafter) . "/{$nbefore} core_notify records\n";
-
+    }
+    function pruneEvents($inM)
+    {
         
         
         $ce = DB_DataObject::Factory('core_events_archive');
@@ -101,7 +139,7 @@ class Pman_Core_Prune extends Pman
        
         $f = DB_DataObject::Factory('Events');
         $after = $f->count();
-        echo "DELETED : " . ($before - $after) . "/{$before} events records\n";
+        echo "DELETED : " . ($this->events_before - $after) . "/{$this->events_before} events records\n";
 
     }
 }

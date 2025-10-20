@@ -125,7 +125,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         
         $events_old->whereAdd("event_when < NOW() - INTERVAL {$this->opts['months']} MONTH");
         
-        $this->results['Old Events'] = array(
+        $this->results['Events-core'] = array(
             'table' => 'Events',
             'total_records' => $events->count(), // 15 seconds
             'prunable_records' => $events_old->count(), // 11 seconds
@@ -167,7 +167,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         $status_str = array('OK', 'WARNING', 'CRITICAL');
         $overall_status = 0;
         $status_messages = array();
-        
+        $error_messages =  array();
         foreach ($this->results as $table => $result) {
             // Calculate runs needed on-the-fly
             $records_per_run = isset($result['prunable_groups_per_run']) ? $result['prunable_groups_per_run'] : $result['prunable_records_per_run'];
@@ -183,7 +183,7 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             
             
             // Build status message
-            $status_messages[] = sprintf(
+            $add = sprintf(
                 "%s - %s: %d / %d prunable records, %d runs needed" .
                     " (%d " . (isset($result['prunable_groups_per_run']) ? 'groups of ' : '') . 
                     "records per run)",
@@ -194,7 +194,12 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
                 $runs_needed,
                 $records_per_run
             );
-
+            
+            if ($status > 0) {
+                $status_messages[] = $add;
+            } else {
+                $error_messages[] = $add;
+            }
             if(isset($result['prunable_event_records'])){
                 $status_messages[] = sprintf(
                     "-------- %s: %d prunable event records",
@@ -203,7 +208,9 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
                 );
             }
         }
-      
+        if (!empty($error_messages)) {
+            echo implode("\n", $error_messages)  . "\n";
+        }
         
         echo implode("\n", $status_messages)  . "\n";
         
