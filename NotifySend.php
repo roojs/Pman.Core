@@ -123,8 +123,34 @@ class Pman_Core_NotifySend extends Pman
 
         require_once 'Mail.php';
 
+        // Debug the environment first
+        echo "=== Environment Debug ===\n";
+        echo "PHP Version: " . phpversion() . "\n";
+        echo "getservbyname('smtp', 'tcp'): " . var_export(getservbyname('smtp', 'tcp'), true) . "\n";
+        echo "posix_uname() available: " . (function_exists('posix_uname') ? 'YES' : 'NO') . "\n";
+        if (function_exists('posix_uname')) {
+            $uname = posix_uname();
+            echo "posix_uname() nodename: " . $uname['nodename'] . "\n";
+        }
+        echo "Net_SMTP class available: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        echo "\n";
+
         // Test with different configurations to isolate the issue
         echo "=== Testing Mail_smtpmx with different configurations ===\n\n";
+        
+        // Test 0: Check if Mail::factory works at all
+        echo "Test 0: Testing Mail::factory creation\n";
+        $mailer0 = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true
+        ));
+        
+        if (is_object($mailer0)) {
+            echo "Mail::factory() successful - created object of type: " . get_class($mailer0) . "\n";
+        } else {
+            echo "Mail::factory() failed - returned: " . var_export($mailer0, true) . "\n";
+        }
+        echo "\n";
         
         // Test 1: Default PEAR error handling
         echo "Test 1: Default PEAR error handling\n";
@@ -133,13 +159,17 @@ class Pman_Core_NotifySend extends Pman
             'test' => true
         ));
         
-        $res1 = $mailer1->send('leon@roojs.com', array(
-            'To' => 'leon@roojs.com',
-            'From' => 'test@example.com'
-        ), '');
-        
-        echo "Result 1: " . gettype($res1) . " - ";
-        var_dump($res1);
+        if (is_object($mailer1)) {
+            $res1 = $mailer1->send('leon@roojs.com', array(
+                'To' => 'leon@roojs.com',
+                'From' => 'test@example.com'
+            ), '');
+            
+            echo "Result 1: " . gettype($res1) . " - ";
+            var_dump($res1);
+        } else {
+            echo "Result 1: Cannot call send() on non-object\n";
+        }
         echo "\n";
         
         // Test 2: With PEAR_ERROR_RETURN
