@@ -133,6 +133,20 @@ class Pman_Core_NotifySend extends Pman
             echo "posix_uname() nodename: " . $uname['nodename'] . "\n";
         }
         echo "Net_SMTP class available: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        
+        // Try to manually include Net_SMTP
+        echo "Trying to include Net/SMTP.php...\n";
+        $include_result = @include_once '/home/leon/gitlive/pear/Net/SMTP.php';
+        echo "Include result: " . var_export($include_result, true) . "\n";
+        echo "Net_SMTP class available after include: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        
+        // Check for any PHP errors
+        if (function_exists('error_get_last')) {
+            $error = error_get_last();
+            if ($error) {
+                echo "Last PHP error: " . $error['message'] . " in " . $error['file'] . ":" . $error['line'] . "\n";
+            }
+        }
         echo "\n";
 
         // Test with different configurations to isolate the issue
