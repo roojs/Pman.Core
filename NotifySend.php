@@ -135,7 +135,7 @@ class Pman_Core_NotifySend extends Pman
             echo "Testing connection to: $mx \n";
             
             // Use the EXACT same configuration as real code
-            $mailer = Mail::factory('smtpmx', array(
+            $mailer = Mail::factory('smtp', array(
                 'host'    => $mx,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
@@ -149,12 +149,10 @@ class Pman_Core_NotifySend extends Pman
                     ),
                 'debug' => 1,
                 'debug_handler' => array($this, 'debugHandler'),
-                'dkim' => true,
-                'test' => true
+                'dkim' => true
             ));
             
-            // $email = 'nitishchandra@indianews.com';
-            $email = 'leon@roojs.com';
+            $email = 'nitishchandra@indianews.com';
             $headers = array(
                 'To'   => $email,  
                 'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
