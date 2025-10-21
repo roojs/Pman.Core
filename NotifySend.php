@@ -121,53 +121,26 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
 
-        // Test the EXACT same configuration as the real code
-        require_once 'Mail.php';
-        
+        // Test SMTP connections without sending emails
         $ff = HTML_FlexyFramework::get();
         
-        // Get MX records the same way as real code
-        // $mxs = $this->mxs('indianews.com');
-        $mxs = $this->mxs('roojs.com');
-        echo 'MX records: ' . print_r($mxs, true) . "\n";
+        // Test the problematic domain
+        $mxs = $this->mxs('indianews.com');
+        echo 'MX records for indianews.com: ' . print_r($mxs, true) . "\n";
         
         foreach($mxs as $mx) {
-            echo "Testing connection to: $mx \n";
+            echo "Testing SMTP connection to: $mx:25\n";
             
-            // Use the EXACT same configuration as real code
-            $mailer = Mail::factory('smtp', array(
-                'host'    => $mx,
-                'localhost' => $ff->Mail['helo'],
-                'timeout' => 15,
-                'socket_options' =>  
-                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-                        'ssl' => array(
-                            'verify_peer_name' => false,
-                            'verify_peer' => false, 
-                            'allow_self_signed' => true
-                        )
-                    ),
-                'debug' => 1,
-                'debug_handler' => array($this, 'debugHandler'),
-                'dkim' => true
-            ));
+            // Method 1: Direct socket connection test
+            $this->testSocketConnection($mx, 25);
             
-            $email = 'nitishchandra@indianews.com';
-            $headers = array(
-                'To'   => $email,  
-                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
-                'Subject' => 'Test Email'
-            );
+            // Method 2: SMTP HELO test (connects and sends HELO, then disconnects)
+            $this->testSmtpHelo($mx, $ff->Mail['helo']);
             
-            $res = $mailer->send($email, $headers, 'Test body');
+            // Method 3: PEAR Mail with test mode
+            $this->testPearMail($mx, $ff);
             
-            if (is_object($res)) {
-                $this->debug("Connection failed to $mx: " . $res->message);
-                $this->debug("Error code: " . (isset($res->code) ? $res->code : 'unknown'));
-                $this->debug("User info: " . print_r($res->userinfo, true));
-            } else {
-                $this->debug("Connection successful to $mx");
-            }
+            echo "\n";
         }
         
         $this->jok('DONE');
