@@ -121,29 +121,79 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
         require_once 'Mail.php';
-
-
-        $email = 'leon@roojs.com';
-
-        $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true // No data sent
-        ));
-
-        // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
         
-        $res = $mailer->send($email, array(
-            'To'   => $email,  
-            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
-        ), '');
-
-        // error if fails to connect to the email
-        if (is_object($res)) {
-            // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-            return "cannot send to " . $email;
+        // Fix the Net_SMTP dependency issue
+        if (!class_exists('Net_Socket')) {
+            require_once '/home/leon/gitlive/pear/Net/Socket.php';
+        }
+        if (!class_exists('Net_SMTP')) {
+            require_once '/home/leon/gitlive/pear/Net/SMTP.php';
         }
 
-        // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+        echo "=== Testing Email Send to leon@roojs.com ===\n";
+        
+        $email = 'leon@roojs.com';
+        $mxs = $this->mxs('roojs.com');
+        echo "MX records for roojs.com: " . print_r($mxs, true) . "\n";
+        
+        $mx = $mxs[0];
+        echo "Using MX server: $mx\n";
+        
+        $ff = HTML_FlexyFramework::get();
+        echo "HELO hostname: " . $ff->Mail['helo'] . "\n";
+
+        // Set PEAR error handling to return errors instead of throwing them
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        
+        $mailer = Mail::factory('smtp', array(
+            'host'    => $mx,
+            'localhost' => $ff->Mail['helo'],
+            'timeout' => 15,
+            'socket_options' =>  
+                isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                    'ssl' => array(
+                        'verify_peer_name' => false,
+                        'verify_peer' => false, 
+                        'allow_self_signed' => true
+                    )
+                ),
+            'debug' => 1,
+            'debug_handler' => array($this, 'debugHandler'),
+            'dkim' => true
+        ));
+
+        if (is_object($mailer)) {
+            echo "Mail::factory() successful - created object of type: " . get_class($mailer) . "\n";
+        } else {
+            echo "Mail::factory() failed - returned: " . var_export($mailer, true) . "\n";
+            $this->jok('FAILED - Could not create mailer');
+            return;
+        }
+
+        echo "\nAttempting to send email...\n";
+        
+        // Suppress stream_socket_client warnings and capture them for proper error handling
+        $oe = error_reporting(E_ALL & ~E_WARNING);
+        $res = $mailer->send($email, array(
+            'To'   => $email,  
+            'From'   => 'leon@roojs.com',
+            'Subject' => 'Test Email from MediaOutreach System',
+            'Date' => date('r')
+        ), 'This is a test email to verify the email sending system is working properly.');
+        error_reporting($oe);
+
+        echo "\nSend result: " . gettype($res) . "\n";
+        
+        if ($res === true) {
+            echo "✓ Email sent successfully!\n";
+        } elseif (is_object($res)) {
+            echo "✗ Email send failed:\n";
+            echo "Error: " . $res->getMessage() . "\n";
+            echo "Code: " . $res->getCode() . "\n";
+            echo "Full error: " . $res->toString() . "\n";
+        } else {
+            echo "✗ Unexpected return value: " . var_export($res, true) . "\n";
+        }
         $this->jok('DONE');
         
         // DB_DataObject::debugLevel(5);
