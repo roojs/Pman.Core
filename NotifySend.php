@@ -714,7 +714,7 @@ class Pman_Core_NotifySend extends Pman
             }
 
             if($isTimeOut) {
-                $errmsg .= " (CONNECTION TIMEOUT)";
+                $errmsg .= " (Connection timed out)";
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w,  "RETRY TIME EXCEEDED - " .  $errmsg);
