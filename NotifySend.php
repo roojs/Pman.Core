@@ -131,7 +131,10 @@ class Pman_Core_NotifySend extends Pman
 
         $email = 'nitishchandra@indianews.com';
 
-        stream_socket_client($email);
+        $fp = stream_socket_client($email);
+        if($fp) {
+            fclose($fp);
+        }
         $this->jok('DONE');
 
         $res = $mailer->send($email, array(
