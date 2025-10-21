@@ -141,9 +141,10 @@ class Pman_Core_DataObjects_Core_person_window extends DB_DataObject
             }
             // Cache is stale but we have the data - use it instead of finding
             $w = DB_DataObject::factory('core_person_window');
-            $w->setFrom($cached);
+            $w->get($cached['id']);
+            $ww= clone($w);
             $w->last_access_dt = date('Y-m-d H:i:s');
-            $w->update($cached);
+            $w->update($ww);
             
             // Update cache with new timestamp
             $_SESSION[__CLASS__][$req['window_id']] = $w->toArray();
