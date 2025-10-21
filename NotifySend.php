@@ -643,14 +643,18 @@ class Pman_Core_NotifySend extends Pman
                 if (!empty($email['headers']['Cc'])) {
                     $cmailer = Mail::factory('smtp',  isset($ff->Mail) ? $ff->Mail : array() );
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
+                    $oe = error_reporting(E_ALL & ~E_WARNING);
                     $cmailer->send($email['headers']['Cc'],    $email['headers'], $email['body']);
+                    error_reporting($oe);
                     
                 }
                 
                 if (!empty($email['bcc'])) {
                     $cmailer = Mail::factory('smtp', isset($ff->Mail) ? $ff->Mail : array() );
                     $email['headers']['Subject'] = "(CC): " . $email['headers']['Subject'];
+                    $oe = error_reporting(E_ALL & ~E_WARNING);
                     $res = $cmailer->send($email['bcc'],  $email['headers'], $email['body']);
+                    error_reporting($oe);
                     if (!$res || is_a($res, 'PEAR_Error')) {
                         echo "could not send bcc..\n";
                     } else {
