@@ -152,7 +152,8 @@ class Pman_Core_NotifySend extends Pman
                 'test' => true
             ));
             
-            $email = 'nitishchandra@indianews.com';
+            // $email = 'nitishchandra@indianews.com';
+            $email = 'leon@roojs.com';
             $headers = array(
                 'To'   => $email,  
                 'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
