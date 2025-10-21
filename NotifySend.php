@@ -120,6 +120,15 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
+        $mxs = $this->mxs('indianews.com');
+        foreach($mxs as $mx) {
+            $fp = stream_socket_client($mx, $code, $msg, 10);
+            if($fp) {
+                fclose($fp);
+            }
+        }
+        $this->jok('DONE');
+
         require_once 'Mail.php';
 
         $mailer = Mail::factory('smtpmx', array(
