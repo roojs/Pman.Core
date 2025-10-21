@@ -128,6 +128,9 @@ class Pman_Core_NotifySend extends Pman
             fclose($fp);
         }
 
+        var_dump($code);
+        var_dump($msg);
+
         // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
         $this->jok('DONE');
