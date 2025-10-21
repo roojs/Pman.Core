@@ -953,6 +953,100 @@ class Pman_Core_NotifySend extends Pman
          
     }
     
+    /**
+     * Test SMTP connection without sending emails
+     */
+    function testSocketConnection($host, $port = 25) {
+        echo "  Testing socket connection to $host:$port...\n";
+        
+        $context = stream_context_create(array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false,
+                'allow_self_signed' => true
+            )
+        ));
+        
+        $start_time = microtime(true);
+        $fp = @stream_socket_client("$host:$port", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context);
+        $end_time = microtime(true);
+        
+        if ($fp) {
+            echo "  ✓ Socket connection successful (took " . round(($end_time - $start_time) * 1000, 2) . "ms)\n";
+            fclose($fp);
+            return true;
+        } else {
+            echo "  ✗ Socket connection failed: $errstr (errno: $errno)\n";
+            return false;
+        }
+    }
+    
+    /**
+     * Test SMTP HELO command without sending emails
+     */
+    function testSmtpHelo($host, $helo_host) {
+        echo "  Testing SMTP HELO to $host...\n";
+        
+        $context = stream_context_create(array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false,
+                'allow_self_signed' => true
+            )
+        ));
+        
+        $fp = @stream_socket_client("$host:25", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context);
+        
+        if (!$fp) {
+            echo "  ✗ SMTP connection failed: $errstr\n";
+            return false;
+        }
+        
+        // Read initial greeting
+        $response = fgets($fp, 1024);
+        echo "  Server greeting: " . trim($response) . "\n";
+        
+        // Send HELO
+        fwrite($fp, "HELO $helo_host\r\n");
+        $response = fgets($fp, 1024);
+        echo "  HELO response: " . trim($response) . "\n";
+        
+        // Send QUIT
+        fwrite($fp, "QUIT\r\n");
+        fgets($fp, 1024);
+        
+        fclose($fp);
+        echo "  ✓ SMTP HELO test completed\n";
+        return true;
+    }
+    
+    /**
+     * Test PEAR Mail with test mode
+     */
+    function testPearMail($host, $ff) {
+        echo "  Testing PEAR Mail with test mode...\n";
+        
+        require_once 'Mail.php';
+        
+        // Test with smtpmx (supports test mode)
+        $mailer = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true
+        ));
+        
+        $res = $mailer->send('test@example.com', array(
+            'To' => 'test@example.com',
+            'From' => 'test@example.com'
+        ), '');
+        
+        if (is_object($res)) {
+            echo "  ✗ PEAR Mail test failed: " . $res->message . "\n";
+            return false;
+        } else {
+            echo "  ✓ PEAR Mail test successful\n";
+            return true;
+        }
+    }
 
     
 }
