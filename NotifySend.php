@@ -133,11 +133,9 @@ class Pman_Core_NotifySend extends Pman
         echo "=== Testing Email Send to leon@roojs.com ===\n";
         
         $email = 'leon@roojs.com';
-        $mxs = $this->mxs('roojs.com');
-        echo "MX records for roojs.com: " . print_r($mxs, true) . "\n";
-        
-        $mx = $mxs[0];
-        echo "Using MX server: $mx\n";
+        $dom = 'roojs.com';
+        $mxs = $this->mxs($dom);
+        echo "MX records for $dom: " . print_r($mxs, true) . "\n";
         
         $ff = HTML_FlexyFramework::get();
         echo "HELO hostname: " . $ff->Mail['helo'] . "\n";
@@ -145,22 +143,78 @@ class Pman_Core_NotifySend extends Pman
         // Set PEAR error handling to return errors instead of throwing them
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
         
-        $mailer = Mail::factory('smtp', array(
-            'host'    => $mx,
-            'localhost' => $ff->Mail['helo'],
-            'timeout' => 15,
-            'socket_options' =>  
-                isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-                    'ssl' => array(
-                        'verify_peer_name' => false,
-                        'verify_peer' => false, 
-                        'allow_self_signed' => true
-                    )
-                ),
-            'debug' => 1,
-            'debug_handler' => array($this, 'debugHandler'),
-            'dkim' => true
-        ));
+        // Test each MX server like the real NotifySend does
+        foreach($mxs as $mx) {
+            echo "\n--- Trying MX server: $mx ---\n";
+            
+            $this->debug_str = '';
+            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            
+            $mailer = Mail::factory('smtp', array(
+                'host'    => $mx,
+                'localhost' => $ff->Mail['helo'],
+                'timeout' => 15,
+                'socket_options' =>  
+                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                        'ssl' => array(
+                            'verify_peer_name' => false,
+                            'verify_peer' => false, 
+                            'allow_self_signed' => true
+                        )
+                    ),
+                'debug' => 1,
+                'debug_handler' => array($this, 'debugHandler'),
+                'dkim' => true
+            ));
+            
+            // Check for SMTP routing configuration (like the real NotifySend)
+            $routed_host = null;
+            if(!empty($ff->Core_Notify) && !empty($ff->Core_Notify['routes'])){
+                echo "Checking SMTP routing configuration...\n";
+                foreach ($ff->Core_Notify['routes'] as $server => $settings){
+                    $match = false;
+                    
+                    if(in_array($dom, $settings['domains'])){
+                        $match = true;
+                        echo "Domain $dom matches route for $server\n";
+                    }
+                    
+                    if (!$match && !empty($settings['mx'])) {
+                        foreach($settings['mx'] as $mmx) {
+                            if (preg_match($mmx, $mx)) {
+                                $match = true;
+                                echo "MX $mx matches regex $mmx for route $server\n";
+                            }
+                        }
+                    }
+                    
+                    if ($match) {
+                        $routed_host = $server;
+                        echo "Routing through: $routed_host\n";
+                        break;
+                    }
+                }
+            }
+            
+            if ($routed_host) {
+                echo "Using routed host: $routed_host instead of $mx\n";
+                $mailer = Mail::factory('smtp', array(
+                    'host'    => $routed_host,
+                    'localhost' => $ff->Mail['helo'],
+                    'timeout' => 15,
+                    'socket_options' =>  
+                        isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                            'ssl' => array(
+                                'verify_peer_name' => false,
+                                'verify_peer' => false, 
+                                'allow_self_signed' => true
+                            )
+                        ),
+                    'debug' => 1,
+                    'debug_handler' => array($this, 'debugHandler'),
+                    'dkim' => true
+                ));
+            }
 
         if (is_object($mailer)) {
             echo "Mail::factory() successful - created object of type: " . get_class($mailer) . "\n";
