@@ -678,7 +678,7 @@ class Pman_Core_NotifySend extends Pman
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
                 $code = -1; 
-                if(strpos($res->toString(), 'Connection timed out') !== false) {
+                if(strpos($res->toString(), 'Failed to connect socket: Connection timed out') !== false) {
                     $isTimeOut = true;
                 }
             }
