@@ -120,6 +120,28 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
+        require_once 'Mail.php';
+
+        $mailer = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true // No data sent
+        ));
+
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+
+        $res = $mailer->send($email, array(
+            'To'   => $email,  
+            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
+        ), '');
+
+        // error if fails to connect to the email
+        if (is_object($res)) {
+            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+            return "cannot send to " . $email;
+        }
+
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+        $this->jok('DONE');
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -437,7 +459,6 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
-        
         $this->server->initHelo();
         
         if (!isset($ff->Mail['helo'])) {
@@ -616,7 +637,11 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
+            // Suppress stream_socket_client warnings and capture them for proper error handling
+            $oe = error_reporting(E_ALL & ~E_WARNING);
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            error_reporting($oe);
+            
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
