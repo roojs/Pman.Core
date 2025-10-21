@@ -216,38 +216,44 @@ class Pman_Core_NotifySend extends Pman
                 ));
             }
 
-        if (is_object($mailer)) {
-            echo "Mail::factory() successful - created object of type: " . get_class($mailer) . "\n";
-        } else {
-            echo "Mail::factory() failed - returned: " . var_export($mailer, true) . "\n";
-            $this->jok('FAILED - Could not create mailer');
-            return;
-        }
+            if (is_object($mailer)) {
+                echo "Mail::factory() successful - created object of type: " . get_class($mailer) . "\n";
+            } else {
+                echo "Mail::factory() failed - returned: " . var_export($mailer, true) . "\n";
+                continue; // Try next MX server
+            }
 
-        echo "\nAttempting to send email...\n";
-        
-        // Suppress stream_socket_client warnings and capture them for proper error handling
-        $oe = error_reporting(E_ALL & ~E_WARNING);
-        $res = $mailer->send($email, array(
-            'To'   => $email,  
-            'From'   => 'leon@roojs.com',
-            'Subject' => 'Test Email from MediaOutreach System',
-            'Date' => date('r')
-        ), 'This is a test email to verify the email sending system is working properly.');
-        error_reporting($oe);
+            echo "\nAttempting to send email...\n";
+            
+            // Suppress stream_socket_client warnings and capture them for proper error handling
+            $oe = error_reporting(E_ALL & ~E_WARNING);
+            $res = $mailer->send($email, array(
+                'To'   => $email,  
+                'From'   => 'leon@roojs.com',
+                'Subject' => 'Test Email from MediaOutreach System',
+                'Date' => date('r')
+            ), 'This is a test email to verify the email sending system is working properly.');
+            error_reporting($oe);
 
-        echo "\nSend result: " . gettype($res) . "\n";
-        
-        if ($res === true) {
-            echo "✓ Email sent successfully!\n";
-        } elseif (is_object($res)) {
-            echo "✗ Email send failed:\n";
-            echo "Error: " . $res->getMessage() . "\n";
-            echo "Code: " . $res->getCode() . "\n";
-            echo "Full error: " . $res->toString() . "\n";
-        } else {
-            echo "✗ Unexpected return value: " . var_export($res, true) . "\n";
+            echo "\nSend result: " . gettype($res) . "\n";
+            
+            if ($res === true) {
+                echo "✓ Email sent successfully via $mx!\n";
+                $this->jok('SUCCESS - Email sent');
+                return; // Success, exit the loop
+            } elseif (is_object($res)) {
+                echo "✗ Email send failed via $mx:\n";
+                echo "Error: " . $res->getMessage() . "\n";
+                echo "Code: " . $res->getCode() . "\n";
+                echo "Full error: " . $res->toString() . "\n";
+                // Continue to next MX server
+            } else {
+                echo "✗ Unexpected return value: " . var_export($res, true) . "\n";
+                // Continue to next MX server
+            }
         }
+        
+        echo "\n✗ All MX servers failed\n";
         $this->jok('DONE');
         
         // DB_DataObject::debugLevel(5);
