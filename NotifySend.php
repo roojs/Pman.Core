@@ -439,6 +439,8 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         $this->server->initHelo();
+        var_dump($ff->Mail['helo']);
+        die('test');
         
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
