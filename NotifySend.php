@@ -129,7 +129,7 @@ class Pman_Core_NotifySend extends Pman
 
         $email = 'leon@roojs.com';
 
-        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
@@ -138,11 +138,11 @@ class Pman_Core_NotifySend extends Pman
 
         // error if fails to connect to the email
         if (is_object($res)) {
-            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+            // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
             echo $res->toString();
         }
 
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+        // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
         $this->jok('DONE');
         // DB_DataObject::debugLevel(5);
