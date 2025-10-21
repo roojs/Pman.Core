@@ -120,6 +120,8 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
+        stream_socket_client('172.104.114.91:25', $errno, $errstr, 10);
+        die('test');
         
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
