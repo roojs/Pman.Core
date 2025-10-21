@@ -136,7 +136,7 @@ class Pman_Core_NotifySend extends Pman
             'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
         ), '');
 
-        var_dump($res);
+        var_dump($res->message);
 
         // error if fails to connect to the email
         if (is_object($res)) {
