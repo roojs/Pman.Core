@@ -121,6 +121,11 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
         require_once 'Mail.php';
+        
+        // Fix the Net_SMTP dependency issue
+        if (!class_exists('Net_SMTP')) {
+            require_once '/home/leon/gitlive/pear/Net/SMTP.php';
+        }
 
         $email = 'leon@roojs.com';
 
@@ -133,11 +138,15 @@ class Pman_Core_NotifySend extends Pman
 
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
+        echo "Net_SMTP class available before send: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        
         $res = $mailer->send($email, array(
             'To'   => $email,  
             'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
         ), '');
 
+        echo "Return value type: " . gettype($res) . "\n";
+        echo "Return value: ";
         var_dump($res);
 
         // error if fails to connect to the email
