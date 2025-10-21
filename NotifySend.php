@@ -122,6 +122,11 @@ class Pman_Core_NotifySend extends Pman
     {   
 
         require_once 'Mail.php';
+        
+        // Fix the Net_SMTP dependency issue
+        if (!class_exists('Net_SMTP')) {
+            require_once '/home/leon/gitlive/pear/Net/SMTP.php';
+        }
 
         // Debug the environment first
         echo "=== Environment Debug ===\n";
@@ -132,7 +137,7 @@ class Pman_Core_NotifySend extends Pman
             $uname = posix_uname();
             echo "posix_uname() nodename: " . $uname['nodename'] . "\n";
         }
-        echo "Net_SMTP class available: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        echo "Net_SMTP class available (after fix): " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
         
         // Check include path
         echo "PHP include_path: " . get_include_path() . "\n";
