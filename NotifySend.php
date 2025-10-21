@@ -870,6 +870,19 @@ class Pman_Core_NotifySend extends Pman
         }
     }
     
+    function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext = null)
+    {
+        // Suppress only stream_socket_client connection warnings
+        if ($errno == E_WARNING && 
+            strpos($errstr, 'stream_socket_client(): Unable to connect') !== false) {
+            // Suppress this specific warning
+            return true;
+        }
+        
+        // Let all other errors be handled normally
+        return false;
+    }
+    
     function errorHandler($msg)
     {
         if($this->error_handler == 'exception'){
