@@ -129,6 +129,8 @@ class Pman_Core_NotifySend extends Pman
             'test' => true // No data sent
         ));
 
+        var_dump($mailer);
+
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $res = $mailer->send($email, array(
