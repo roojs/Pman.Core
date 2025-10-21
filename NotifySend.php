@@ -132,7 +132,7 @@ class Pman_Core_NotifySend extends Pman
         echo 'MX records: ' . print_r($mxs, true) . "\n";
         
         foreach($mxs as $mx) {
-            $this->debug("Testing connection to: $mx");
+            echo "Testing connection to: $mx \n";
             
             // Use the EXACT same configuration as real code
             $mailer = Mail::factory('smtp', array(
