@@ -120,32 +120,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-        require_once 'Mail.php';
-
-        $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true // No data sent
-        ));
-        $mailer->debug = true;
-
-        $email = 'leon@roojs.com';
-
-        // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-
-        $res = $mailer->send($email, array(
-            'To'   => $email,  
-            'From'   => 'leon@roojs.com'
-        ), '');
-
-        // error if fails to connect to the email
-        if (is_object($res)) {
-            // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-            echo $res->toString();
-        }
-
-        // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-
-        $this->jok('DONE');
         
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
