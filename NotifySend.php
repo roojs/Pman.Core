@@ -123,7 +123,7 @@ class Pman_Core_NotifySend extends Pman
 
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
-        $fp = stream_socket_client('216.163.188.190:25', $code, $msg, 3);
+        $fp = stream_socket_client('216.163.188.190:25', $code, $msg, 1);
         if($fp) {
             fclose($fp);
         }
