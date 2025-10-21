@@ -134,11 +134,20 @@ class Pman_Core_NotifySend extends Pman
         }
         echo "Net_SMTP class available: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
         
+        // Check include path
+        echo "PHP include_path: " . get_include_path() . "\n";
+        
         // Try to manually include Net_SMTP
         echo "Trying to include Net/SMTP.php...\n";
         $include_result = @include_once '/home/leon/gitlive/pear/Net/SMTP.php';
         echo "Include result: " . var_export($include_result, true) . "\n";
         echo "Net_SMTP class available after include: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
+        
+        // Try with relative path
+        echo "Trying to include with relative path...\n";
+        $include_result2 = @include_once 'Net/SMTP.php';
+        echo "Relative include result: " . var_export($include_result2, true) . "\n";
+        echo "Net_SMTP class available after relative include: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
         
         // Check for any PHP errors
         if (function_exists('error_get_last')) {
