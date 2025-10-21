@@ -147,7 +147,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
-        if (!$force &&  $w->server_id != $this->server->id) {
+         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
@@ -439,8 +439,6 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         $this->server->initHelo();
-        var_dump($ff->Mail['helo']);
-        die('test');
         
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
