@@ -120,8 +120,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
-        // Set up custom error handler to suppress only stream_socket_client warnings
-        $original_error_handler = set_error_handler(array($this, 'customErrorHandler'));
         
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
