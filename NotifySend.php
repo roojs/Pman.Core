@@ -443,6 +443,8 @@ class Pman_Core_NotifySend extends Pman
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
         }
+
+        $isTimeOut = false;
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
                         
