@@ -148,7 +148,8 @@ class Pman_Core_NotifySend extends Pman
                     ),
                 'debug' => 1,
                 'debug_handler' => array($this, 'debugHandler'),
-                'dkim' => true
+                'dkim' => true,
+                'test' => true
             ));
             
             $email = 'nitishchandra@indianews.com';
