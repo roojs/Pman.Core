@@ -752,6 +752,10 @@ class Pman_Core_NotifySend extends Pman
          
         $this->errorHandler($ev->remarks);
 
+        // Restore original error handler
+        if (isset($original_error_handler)) {
+            set_error_handler($original_error_handler);
+        }
         
     }
     function mxs($fqdn)
