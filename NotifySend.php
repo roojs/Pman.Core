@@ -129,6 +129,8 @@ class Pman_Core_NotifySend extends Pman
 
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
+        $email = 'nitishchandra@indianews.com';
+
         $res = $mailer->send($email, array(
             'To'   => $email,  
             'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
