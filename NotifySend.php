@@ -120,6 +120,7 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {
+        /*
         require_once 'Mail.php';
 
         $mailer = Mail::factory('smtpmx', array(
@@ -145,6 +146,8 @@ class Pman_Core_NotifySend extends Pman
         // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
 
         $this->jok('DONE');
+        */
+        
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
