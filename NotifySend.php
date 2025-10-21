@@ -129,13 +129,7 @@ class Pman_Core_NotifySend extends Pman
 
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
-        $email = 'nitishchandra@indianews.com';
-
-        $fp = stream_socket_client('216.163.188.190:25', $code, $msg, 10);
-        if($fp) {
-            fclose($fp);
-        }
-        $this->jok('DONE');
+        $email = '216.163.188.190:25';
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
