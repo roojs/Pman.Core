@@ -129,10 +129,10 @@ class Pman_Core_NotifySend extends Pman
         // Get MX records the same way as real code
         // $mxs = $this->mxs('indianews.com');
         $mxs = $this->mxs('roojs.com');
-        $this->jok('MX records: ' . print_r($mxs, true));
+        $this->debug('MX records: ' . print_r($mxs, true));
         
         foreach($mxs as $mx) {
-            $this->jok("Testing connection to: $mx");
+            $this->debug("Testing connection to: $mx");
             
             // Use the EXACT same configuration as real code
             $mailer = Mail::factory('smtp', array(
@@ -164,11 +164,11 @@ class Pman_Core_NotifySend extends Pman
             $res = $mailer->send($email, $headers, 'Test body');
             
             if (is_object($res)) {
-                $this->jok("Connection failed to $mx: " . $res->message);
-                $this->jok("Error code: " . (isset($res->code) ? $res->code : 'unknown'));
-                $this->jok("User info: " . print_r($res->userinfo, true));
+                $this->debug("Connection failed to $mx: " . $res->message);
+                $this->debug("Error code: " . (isset($res->code) ? $res->code : 'unknown'));
+                $this->debug("User info: " . print_r($res->userinfo, true));
             } else {
-                $this->jok("Connection successful to $mx");
+                $this->debug("Connection successful to $mx");
             }
         }
         
