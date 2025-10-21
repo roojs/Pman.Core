@@ -138,15 +138,20 @@ class Pman_Core_NotifySend extends Pman
             'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
         ), '');
 
+        echo "Return value type: " . gettype($res) . "\n";
+        echo "Return value: ";
         var_dump($res);
-
-        // error if fails to connect to the email
-        if (is_object($res)) {
-            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-            return "cannot send to " . $email;
+        
+        if ($res === null) {
+            echo "NULL returned - this is unusual for Mail_smtpmx\n";
+        } elseif ($res === true) {
+            echo "TRUE returned - success (test mode or real send)\n";
+        } elseif (is_object($res)) {
+            echo "PEAR_Error object returned - error occurred\n";
+            echo "Error message: " . $res->getMessage() . "\n";
+        } else {
+            echo "Unexpected return value\n";
         }
-
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         
         $this->jok('DONE');
         
