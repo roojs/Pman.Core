@@ -781,17 +781,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();
-        
-        // Cache group membership in session
-        if (!isset($_SESSION[__CLASS__]['membership']) || 
-            !is_array($_SESSION[__CLASS__]['membership']) ||
-            isset($_SESSION[__CLASS__]['membership']['groups'])) {
-            // Cache miss or old format - fetch and cache
-            $g = DB_DataObject::Factory('core_group_member');
-            $groups = $g->listGroupMembership($this, 'name');
-            $_SESSION[__CLASS__]['membership'] = $groups;
-        }
-        $aur['groups'] = $_SESSION[__CLASS__]['membership'];
+        $g = DB_DataObject::Factory('core_group_member');
+        $aur['groups']  = $g->listGroupMembership($this, 'name');
         
         $aur['passwd'] = '';
         $aur['dailykey'] = '';
@@ -861,24 +852,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // ------ STANDARD PERMISSION HANDLING.
         $isOwner = $this->company()->comptype == 'OWNER';
-        
-        // Use cached group membership if available, otherwise fetch
-        if (isset($_SESSION[__CLASS__]['membership']) && 
-            is_array($_SESSION[__CLASS__]['membership']) &&
-            !isset($_SESSION[__CLASS__]['membership']['groups'])) {
-            // Use cached groups (convert names to IDs)
-            $g = DB_DataObject::Factory('core_group');
-            $g->whereAddIn('name', $_SESSION[__CLASS__]['membership'], 'string');
-            $grps = $g->fetchAll('id');
-            
-            // Check if user is admin from cached groups
-            $isAdmin = in_array('Administrators', $_SESSION[__CLASS__]['membership']);
-        } else {
-            // Cache miss - fetch fresh
-            $g = DB_DataObject::Factory('core_group_member');
-            $grps = $g->listGroupMembership($this);
-            $isAdmin = $g->inAdmin;
-        }
+        $g = DB_DataObject::Factory('core_group_member');
+        $grps = $g->listGroupMembership($this);
+       //var_dump($grps);
+        $isAdmin = $g->inAdmin;   //???  what???
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
         // then load all those 
