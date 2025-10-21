@@ -139,7 +139,7 @@ class Pman_Core_NotifySend extends Pman
         // error if fails to connect to the email
         if (is_object($res)) {
             PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-            return "cannot send to " . $email;
+            echo $res->toString();
         }
 
         PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
