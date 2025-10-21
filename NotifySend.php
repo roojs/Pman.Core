@@ -620,7 +620,6 @@ class Pman_Core_NotifySend extends Pman
             
             // Set up custom error handler to suppress only stream_socket_client connection timeout warnings
             $original_error_handler = set_error_handler(array($this, 'customErrorHandler'));
-            $mailer->port = 26;
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             // Restore original error handler
             if (isset($original_error_handler)) {
