@@ -127,7 +127,7 @@ class Pman_Core_NotifySend extends Pman
             'test' => true // No data sent
         ));
 
-        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $email = 'nitishchandra@indianews.com';
 
@@ -140,11 +140,11 @@ class Pman_Core_NotifySend extends Pman
 
         // error if fails to connect to the email
         if (is_object($res)) {
-            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+            // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
             echo "cannot send to " . $email;
         }
 
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+        // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         $this->jok('DONE');
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
