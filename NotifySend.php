@@ -125,7 +125,6 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
         
         $ff = HTML_FlexyFramework::get();
-        $this->server->initHelo();
         
         // Get MX records the same way as real code
         $mxs = $this->mxs('indianews.com');
