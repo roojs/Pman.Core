@@ -130,6 +130,7 @@ class Pman_Core_NotifySend extends Pman
         // $mxs = $this->mxs('indianews.com');
         $mxs = $this->mxs('roojs.com');
         $this->debug('MX records: ' . print_r($mxs, true));
+        die('test');
         
         foreach($mxs as $mx) {
             $this->debug("Testing connection to: $mx");
