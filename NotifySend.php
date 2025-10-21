@@ -131,6 +131,9 @@ class Pman_Core_NotifySend extends Pman
 
         $email = 'nitishchandra@indianews.com';
 
+        stream_socket_client($email);
+        $this->jok('DONE');
+
         $res = $mailer->send($email, array(
             'To'   => $email,  
             'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
