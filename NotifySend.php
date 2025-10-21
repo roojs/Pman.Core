@@ -134,8 +134,6 @@ class Pman_Core_NotifySend extends Pman
             'test' => true // No data sent
         ));
 
-        var_dump($mailer);
-
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         echo "Net_SMTP class available before send: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
