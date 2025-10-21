@@ -120,40 +120,18 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
-        $mxs = $this->mxs('indianews.com');
-        foreach($mxs as $mx) {
-            $fp = stream_socket_client($mx, $code, $msg, 10);
-            if($fp) {
-                fclose($fp);
-            }
-        }
-        $this->jok('DONE');
-
-        require_once 'Mail.php';
-
-        $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true // No data sent
-        ));
 
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $email = 'nitishchandra@indianews.com';
 
-        $res = $mailer->send($email, array(
-            'To'   => $email,  
-            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
-        ), '');
-
-        var_dump($res->message);
-
-        // error if fails to connect to the email
-        if (is_object($res)) {
-            // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
-            echo "cannot send to " . $email;
+        $fp = stream_socket_client(216.163.188.190:25, $code, $msg, 10);
+        if($fp) {
+            fclose($fp);
         }
 
         // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+
         $this->jok('DONE');
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
