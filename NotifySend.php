@@ -120,136 +120,31 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
-
         require_once 'Mail.php';
-        
-        // Fix the Net_SMTP dependency issue
-        if (!class_exists('Net_SMTP')) {
-            require_once '/home/leon/gitlive/pear/Net/SMTP.php';
-        }
 
-        // Debug the environment first
-        echo "=== Environment Debug ===\n";
-        echo "PHP Version: " . phpversion() . "\n";
-        echo "getservbyname('smtp', 'tcp'): " . var_export(getservbyname('smtp', 'tcp'), true) . "\n";
-        echo "posix_uname() available: " . (function_exists('posix_uname') ? 'YES' : 'NO') . "\n";
-        if (function_exists('posix_uname')) {
-            $uname = posix_uname();
-            echo "posix_uname() nodename: " . $uname['nodename'] . "\n";
-        }
-        echo "Net_SMTP class available (after fix): " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
-        
-        // Check include path
-        echo "PHP include_path: " . get_include_path() . "\n";
-        
-        // Try to manually include Net_SMTP
-        echo "Trying to include Net/SMTP.php...\n";
-        $include_result = @include_once '/home/leon/gitlive/pear/Net/SMTP.php';
-        echo "Include result: " . var_export($include_result, true) . "\n";
-        echo "Net_SMTP class available after include: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
-        
-        // Try with relative path
-        echo "Trying to include with relative path...\n";
-        $include_result2 = @include_once 'Net/SMTP.php';
-        echo "Relative include result: " . var_export($include_result2, true) . "\n";
-        echo "Net_SMTP class available after relative include: " . (class_exists('Net_SMTP') ? 'YES' : 'NO') . "\n";
-        
-        // Check for any PHP errors
-        if (function_exists('error_get_last')) {
-            $error = error_get_last();
-            if ($error) {
-                echo "Last PHP error: " . $error['message'] . " in " . $error['file'] . ":" . $error['line'] . "\n";
-            }
-        }
-        echo "\n";
+        $email = 'leon@roojs.com';
 
-        // Test with different configurations to isolate the issue
-        echo "=== Testing Mail_smtpmx with different configurations ===\n\n";
-        
-        // Test 0: Check if Mail::factory works at all
-        echo "Test 0: Testing Mail::factory creation\n";
-        $mailer0 = Mail::factory('smtpmx', array(
+        $mailer = Mail::factory('smtpmx', array(
             'timeout' => 15,
-            'test' => true
+            'test' => true // No data sent
         ));
-        
-        if (is_object($mailer0)) {
-            echo "Mail::factory() successful - created object of type: " . get_class($mailer0) . "\n";
-        } else {
-            echo "Mail::factory() failed - returned: " . var_export($mailer0, true) . "\n";
-        }
-        echo "\n";
-        
-        // Test 1: Default PEAR error handling
-        echo "Test 1: Default PEAR error handling\n";
-        $mailer1 = Mail::factory('smtpmx', array(
-            'timeout' => 15,  // Longer timeout
-            'test' => true
-        ));
-        
-        if (is_object($mailer1)) {
-            $res1 = $mailer1->send('leon@roojs.com', array(
-                'To' => 'leon@roojs.com',
-                'From' => 'test@example.com'
-            ), '');
-            
-            echo "Result 1: " . gettype($res1) . " - ";
-            var_dump($res1);
-        } else {
-            echo "Result 1: Cannot call send() on non-object\n";
-        }
-        echo "\n";
-        
-        // Test 2: With PEAR_ERROR_RETURN
-        echo "Test 2: With PEAR_ERROR_RETURN\n";
+
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-        
-        $mailer2 = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true
-        ));
-        
-        $res2 = $mailer2->send('leon@roojs.com', array(
-            'To' => 'leon@roojs.com',
-            'From' => 'test@example.com'
+
+        $res = $mailer->send($email, array(
+            'To'   => $email,  
+            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
         ), '');
-        
-        echo "Result 2: " . gettype($res2) . " - ";
-        var_dump($res2);
-        echo "\n";
-        
-        // Test 3: With very short timeout (your original)
-        echo "Test 3: With 1 second timeout\n";
-        $mailer3 = Mail::factory('smtpmx', array(
-            'timeout' => 1,
-            'test' => true
-        ));
-        
-        $res3 = $mailer3->send('leon@roojs.com', array(
-            'To' => 'leon@roojs.com',
-            'From' => 'test@example.com'
-        ), '');
-        
-        echo "Result 3: " . gettype($res3) . " - ";
-        var_dump($res3);
-        echo "\n";
-        
-        // Test 4: Test the problematic domain
-        echo "Test 4: Testing indianews.com (the problematic domain)\n";
-        $mailer4 = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true
-        ));
-        
-        $res4 = $mailer4->send('nitishchandra@indianews.com', array(
-            'To' => 'nitishchandra@indianews.com',
-            'From' => 'test@example.com'
-        ), '');
-        
-        echo "Result 4: " . gettype($res4) . " - ";
-        var_dump($res4);
-        echo "\n";
-        
+
+        var_dump($res);
+
+        // error if fails to connect to the email
+        if (is_object($res)) {
+            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+            return "cannot send to " . $email;
+        }
+
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         $this->jok('DONE');
         
         // DB_DataObject::debugLevel(5);
