@@ -126,6 +126,7 @@ class Pman_Core_NotifySend extends Pman
             'timeout' => 15,
             'test' => true // No data sent
         ));
+        $mailer->debug = true;
 
         $email = 'leon@roojs.com';
 
