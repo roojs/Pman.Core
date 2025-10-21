@@ -127,7 +127,8 @@ class Pman_Core_NotifySend extends Pman
         $ff = HTML_FlexyFramework::get();
         
         // Get MX records the same way as real code
-        $mxs = $this->mxs('indianews.com');
+        // $mxs = $this->mxs('indianews.com');
+        $mxs = $this->mxs('roojs.com');
         $this->jok('MX records: ' . print_r($mxs, true));
         
         foreach($mxs as $mx) {
