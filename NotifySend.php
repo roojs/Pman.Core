@@ -127,11 +127,13 @@ class Pman_Core_NotifySend extends Pman
             'test' => true // No data sent
         ));
 
+        $email = 'leon@roojs.com';
+
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
-            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
+            'From'   => 'leon@roojs.com'
         ), '');
 
         // error if fails to connect to the email
