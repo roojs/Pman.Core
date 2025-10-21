@@ -131,7 +131,7 @@ class Pman_Core_NotifySend extends Pman
 
         $email = 'nitishchandra@indianews.com';
 
-        $fp = stream_socket_client($email);
+        $fp = stream_socket_client('216.163.188.190:25');
         if($fp) {
             fclose($fp);
         }
