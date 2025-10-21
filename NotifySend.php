@@ -121,54 +121,29 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
 
-        // Test the EXACT same configuration as the real code
         require_once 'Mail.php';
-        
-        $ff = HTML_FlexyFramework::get();
-        
-        // Get MX records the same way as real code
-        // $mxs = $this->mxs('indianews.com');
-        $mxs = $this->mxs('roojs.com');
-        echo 'MX records: ' . print_r($mxs, true) . "\n";
-        
-        foreach($mxs as $mx) {
-            echo "Testing connection to: $mx \n";
-            
-            // Use the EXACT same configuration as real code
-            $mailer = Mail::factory('smtp', array(
-                'host'    => $mx,
-                'localhost' => $ff->Mail['helo'],
-                'timeout' => 15,
-                'socket_options' =>  
-                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-                        'ssl' => array(
-                            'verify_peer_name' => false,
-                            'verify_peer' => false, 
-                            'allow_self_signed' => true
-                        )
-                    ),
-                'debug' => 1,
-                'debug_handler' => array($this, 'debugHandler'),
-                'dkim' => true
-            ));
-            
-            $email = 'nitishchandra@indianews.com';
-            $headers = array(
-                'To'   => $email,  
-                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
-                'Subject' => 'Test Email'
-            );
-            
-            $res = $mailer->send($email, $headers, 'Test body');
-            
-            if (is_object($res)) {
-                $this->debug("Connection failed to $mx: " . $res->message);
-                $this->debug("Error code: " . (isset($res->code) ? $res->code : 'unknown'));
-                $this->debug("User info: " . print_r($res->userinfo, true));
-            } else {
-                $this->debug("Connection successful to $mx");
-            }
+
+        $mailer = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true // No data sent
+        ));
+
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+
+        $email = 'nitishchandra@indianews.com';
+
+        $res = $mailer->send($email, array(
+            'To'   => $email,  
+            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
+        ), '');
+
+        // error if fails to connect to the email
+        if (is_object($res)) {
+            PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+            return "cannot send to " . $email;
         }
+
+        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         
         $this->jok('DONE');
         
