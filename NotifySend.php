@@ -129,7 +129,7 @@ class Pman_Core_NotifySend extends Pman
             'test' => true // No data sent
         ));
 
-        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
@@ -144,7 +144,7 @@ class Pman_Core_NotifySend extends Pman
             return "cannot send to " . $email;
         }
 
-        PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
+        // PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, array($this, 'onPearError'));
         $this->jok('DONE');
         
         // DB_DataObject::debugLevel(5);
