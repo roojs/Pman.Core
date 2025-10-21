@@ -132,7 +132,7 @@ class Pman_Core_DataObjects_Core_events_archive extends Pman_Core_DataObjects_Ev
                 echo "moveToArchive got NO old events?\n";
                 return;
             }
-            echo "moveToArchive got ". count($all_ids) . " events\n";
+            echo date("Y-m-d H:i:s") . " moveToArchive got ". count($all_ids) . " events\n";
               // do this in batches?
             while (count($all_ids)) {
             

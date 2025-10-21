@@ -682,9 +682,21 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($this->company_id)) {
             return false;
         }
+        
+        static $cache = array();
+        
+        // Check if we have cached this company
+        if (isset($cache[$this->company_id])) {
+            return $cache[$this->company_id];
+        }
+        
         $x = DB_DataObject::factory('core_company');
         $x->autoJoin();
         $x->get($this->company_id);
+        
+        // Cache the result
+        $cache[$this->company_id] = $x;
+        
         return $x;
     }
     function loadCompany()
@@ -769,8 +781,15 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
       
         // perms + groups.
         $aur['perms']  = $this->getPerms();
-        $g = DB_DataObject::Factory('core_group_member');
-        $aur['groups']  = $g->listGroupMembership($this, 'name');
+        
+        // Cache group membership in session
+        if (!isset($_SESSION[__CLASS__]['membership'])) {
+            // Cache miss - fetch and cache
+            $g = DB_DataObject::Factory('core_group_member');
+            $groups = $g->listGroupMembership($this, 'name');
+            $_SESSION[__CLASS__]['membership'] = $groups;
+        }
+        $aur['groups'] = $_SESSION[__CLASS__]['membership'];
         
         $aur['passwd'] = '';
         $aur['dailykey'] = '';
@@ -840,9 +859,19 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         
         // ------ STANDARD PERMISSION HANDLING.
         $isOwner = $this->company()->comptype == 'OWNER';
-        $g = DB_DataObject::Factory('core_group_member');
-        $grps = $g->listGroupMembership($this);
-       //var_dump($grps);
+        
+        // Use cached group membership if available, otherwise fetch
+        if (isset($_SESSION[__CLASS__]['membership'])) {
+            // Use cached groups (convert names to IDs)
+            $g = DB_DataObject::Factory('core_group');
+            $g->whereAddIn('name', $_SESSION[__CLASS__]['membership'], 'string');
+            $grps = $g->fetchAll('id');
+        } else {
+            // Cache miss - fetch fresh
+            $g = DB_DataObject::Factory('core_group_member');
+            $grps = $g->listGroupMembership($this);
+        }
+        
         $isAdmin = $g->inAdmin;   //???  what???
         //echo '<PRE>'; print_r($grps);var_dump($isAdmin);
         // the load all the perms for those groups, and add them all together..
