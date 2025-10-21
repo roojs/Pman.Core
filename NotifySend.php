@@ -129,9 +129,7 @@ class Pman_Core_NotifySend extends Pman
         // Get MX records the same way as real code
         // $mxs = $this->mxs('indianews.com');
         $mxs = $this->mxs('roojs.com');
-        var_dump($mxs);
-        $this->debug('MX records: ' . print_r($mxs, true));
-        die('test');
+        echo 'MX records: ' . print_r($mxs, true) . "\n";
         
         foreach($mxs as $mx) {
             $this->debug("Testing connection to: $mx");
