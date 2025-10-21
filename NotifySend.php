@@ -872,14 +872,15 @@ class Pman_Core_NotifySend extends Pman
     
     function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext = null)
     {
-        // Suppress only stream_socket_client connection warnings
+        // Suppress only stream_socket_client connection timeout warnings
         if ($errno == E_WARNING && 
-            strpos($errstr, 'stream_socket_client(): Unable to connect') !== false) {
-            // Suppress this specific warning
+            strpos($errstr, 'stream_socket_client(): Unable to connect') !== false &&
+            strpos($errstr, '(Connection timed out)') !== false) {
+            // Suppress only connection timeout warnings
             return true;
         }
         
-        // Let all other errors be handled normally
+        // Let all other errors be handled normally (including connection refused, etc.)
         return false;
     }
     
