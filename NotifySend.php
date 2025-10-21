@@ -135,7 +135,7 @@ class Pman_Core_NotifySend extends Pman
             echo "Testing connection to: $mx \n";
             
             // Use the EXACT same configuration as real code
-            $mailer = Mail::factory('smtp', array(
+            $mailer = Mail::factory('smtpmx', array(
                 'host'    => $mx,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
