@@ -678,9 +678,9 @@ class Pman_Core_NotifySend extends Pman
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
                 $code = -1; 
-                var_dump($res->toString());
-                var_dump($res->code);
-                $isTimeOut = true;
+                if(strpos($res->toString(), 'Connection timed out') !== false) {
+                    $isTimeOut = true;
+                }
             }
             
             if ($code < 0) {
