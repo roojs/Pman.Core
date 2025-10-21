@@ -121,26 +121,53 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
 
-        // Test SMTP connections without sending emails
+        // Test the EXACT same configuration as the real code
+        require_once 'Mail.php';
+        
         $ff = HTML_FlexyFramework::get();
         
-        // Test the problematic domain
-        $mxs = $this->mxs('indianews.com');
-        echo 'MX records for indianews.com: ' . print_r($mxs, true) . "\n";
+        // Get MX records the same way as real code
+        // $mxs = $this->mxs('indianews.com');
+        $mxs = $this->mxs('roojs.com');
+        echo 'MX records: ' . print_r($mxs, true) . "\n";
         
         foreach($mxs as $mx) {
-            echo "Testing SMTP connection to: $mx:25\n";
+            echo "Testing connection to: $mx \n";
             
-            // Method 1: Direct socket connection test
-            $this->testSocketConnection($mx, 25);
+            // Use the EXACT same configuration as real code
+            $mailer = Mail::factory('smtp', array(
+                'host'    => $mx,
+                'localhost' => $ff->Mail['helo'],
+                'timeout' => 15,
+                'socket_options' =>  
+                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                        'ssl' => array(
+                            'verify_peer_name' => false,
+                            'verify_peer' => false, 
+                            'allow_self_signed' => true
+                        )
+                    ),
+                'debug' => 1,
+                'debug_handler' => array($this, 'debugHandler'),
+                'dkim' => true
+            ));
             
-            // Method 2: SMTP HELO test (connects and sends HELO, then disconnects)
-            $this->testSmtpHelo($mx, $ff->Mail['helo']);
+            $email = 'nitishchandra@indianews.com';
+            $headers = array(
+                'To'   => $email,  
+                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>',
+                'Subject' => 'Test Email'
+            );
             
-            // Method 3: PEAR Mail with test mode
-            $this->testPearMail($mx, $ff);
+            $res = $mailer->send($email, $headers, 'Test body');
             
-            echo "\n";
+            if (is_object($res)) {
+                $this->debug("Connection failed to $mx: " . $res->message);
+                $this->debug("Error code: " . (isset($res->code) ? $res->code : 'unknown'));
+                $this->debug("User info: " . print_r($res->userinfo, true));
+            } else {
+                $this->debug("Connection successful to $mx");
+            }
         }
         
         $this->jok('DONE');
@@ -926,100 +953,6 @@ class Pman_Core_NotifySend extends Pman
          
     }
     
-    /**
-     * Test SMTP connection without sending emails
-     */
-    function testSocketConnection($host, $port = 25) {
-        echo "  Testing socket connection to $host:$port...\n";
-        
-        $context = stream_context_create(array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false,
-                'allow_self_signed' => true
-            )
-        ));
-        
-        $start_time = microtime(true);
-        $fp = @stream_socket_client("$host:$port", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context);
-        $end_time = microtime(true);
-        
-        if ($fp) {
-            echo "  ✓ Socket connection successful (took " . round(($end_time - $start_time) * 1000, 2) . "ms)\n";
-            fclose($fp);
-            return true;
-        } else {
-            echo "  ✗ Socket connection failed: $errstr (errno: $errno)\n";
-            return false;
-        }
-    }
-    
-    /**
-     * Test SMTP HELO command without sending emails
-     */
-    function testSmtpHelo($host, $helo_host) {
-        echo "  Testing SMTP HELO to $host...\n";
-        
-        $context = stream_context_create(array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false,
-                'allow_self_signed' => true
-            )
-        ));
-        
-        $fp = @stream_socket_client("$host:25", $errno, $errstr, 15, STREAM_CLIENT_CONNECT, $context);
-        
-        if (!$fp) {
-            echo "  ✗ SMTP connection failed: $errstr\n";
-            return false;
-        }
-        
-        // Read initial greeting
-        $response = fgets($fp, 1024);
-        echo "  Server greeting: " . trim($response) . "\n";
-        
-        // Send HELO
-        fwrite($fp, "HELO $helo_host\r\n");
-        $response = fgets($fp, 1024);
-        echo "  HELO response: " . trim($response) . "\n";
-        
-        // Send QUIT
-        fwrite($fp, "QUIT\r\n");
-        fgets($fp, 1024);
-        
-        fclose($fp);
-        echo "  ✓ SMTP HELO test completed\n";
-        return true;
-    }
-    
-    /**
-     * Test PEAR Mail with test mode
-     */
-    function testPearMail($host, $ff) {
-        echo "  Testing PEAR Mail with test mode...\n";
-        
-        require_once 'Mail.php';
-        
-        // Test with smtpmx (supports test mode)
-        $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 15,
-            'test' => true
-        ));
-        
-        $res = $mailer->send('test@example.com', array(
-            'To' => 'test@example.com',
-            'From' => 'test@example.com'
-        ), '');
-        
-        if (is_object($res)) {
-            echo "  ✗ PEAR Mail test failed: " . $res->message . "\n";
-            return false;
-        } else {
-            echo "  ✓ PEAR Mail test successful\n";
-            return true;
-        }
-    }
 
     
 }
