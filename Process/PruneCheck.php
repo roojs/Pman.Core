@@ -196,9 +196,9 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
             );
             
             if ($status > 0) {
-                $status_messages[] = $add;
-            } else {
                 $error_messages[] = $add;
+            } else {
+                $status_messages[] = $add;
             }
             if(isset($result['prunable_event_records'])){
                 $status_messages[] = sprintf(
