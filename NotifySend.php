@@ -619,6 +619,10 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            // Restore original error handler
+            if (isset($original_error_handler)) {
+                set_error_handler($original_error_handler);
+            }
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
@@ -751,11 +755,6 @@ class Pman_Core_NotifySend extends Pman
         
          
         $this->errorHandler($ev->remarks);
-
-        // Restore original error handler
-        if (isset($original_error_handler)) {
-            set_error_handler($original_error_handler);
-        }
         
     }
     function mxs($fqdn)
