@@ -122,10 +122,11 @@ class Pman_Core_NotifySend extends Pman
     {   
         $mxs = $this->mxs('indianews.com');
         foreach($mxs as $mx) {
-            $fp = stream_socket_client($mx, $code, $msg, 10);
-            if($fp) {
-                fclose($fp);
-            }
+            // $fp = stream_socket_client($mx, $code, $msg, 10);
+            // if($fp) {
+            //     fclose($fp);
+            // }
+            var_dump($mx);
         }
         $this->jok('DONE');
 
