@@ -124,13 +124,14 @@ class Pman_Core_NotifySend extends Pman
         require_once 'Mail.php';
 
         $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 15,
+            'timeout' => 1,
             'test' => true // No data sent
         ));
 
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
-        $email = 'nitishchandra@indianews.com';
+        // $email = 'nitishchandra@indianews.com';
+        $email = 'leon@roojs.com';
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
