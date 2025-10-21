@@ -616,7 +616,6 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
-            // Suppress stream_socket_client warnings and capture them for proper error handling
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             
             if (is_object($res)) {
