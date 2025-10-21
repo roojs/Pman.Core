@@ -123,35 +123,74 @@ class Pman_Core_NotifySend extends Pman
 
         require_once 'Mail.php';
 
-        $mailer = Mail::factory('smtpmx', array(
-            'timeout' => 1,
-            'test' => true // No data sent
-        ));
-
-        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-
-        // $email = 'nitishchandra@indianews.com';
-        $email = 'leon@roojs.com';
-
-        $res = $mailer->send($email, array(
-            'To'   => $email,  
-            'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
-        ), '');
-
-        echo "Return value type: " . gettype($res) . "\n";
-        echo "Return value: ";
-        var_dump($res);
+        // Test with different configurations to isolate the issue
+        echo "=== Testing Mail_smtpmx with different configurations ===\n\n";
         
-        if ($res === null) {
-            echo "NULL returned - this is unusual for Mail_smtpmx\n";
-        } elseif ($res === true) {
-            echo "TRUE returned - success (test mode or real send)\n";
-        } elseif (is_object($res)) {
-            echo "PEAR_Error object returned - error occurred\n";
-            echo "Error message: " . $res->getMessage() . "\n";
-        } else {
-            echo "Unexpected return value\n";
-        }
+        // Test 1: Default PEAR error handling
+        echo "Test 1: Default PEAR error handling\n";
+        $mailer1 = Mail::factory('smtpmx', array(
+            'timeout' => 15,  // Longer timeout
+            'test' => true
+        ));
+        
+        $res1 = $mailer1->send('leon@roojs.com', array(
+            'To' => 'leon@roojs.com',
+            'From' => 'test@example.com'
+        ), '');
+        
+        echo "Result 1: " . gettype($res1) . " - ";
+        var_dump($res1);
+        echo "\n";
+        
+        // Test 2: With PEAR_ERROR_RETURN
+        echo "Test 2: With PEAR_ERROR_RETURN\n";
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+        
+        $mailer2 = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true
+        ));
+        
+        $res2 = $mailer2->send('leon@roojs.com', array(
+            'To' => 'leon@roojs.com',
+            'From' => 'test@example.com'
+        ), '');
+        
+        echo "Result 2: " . gettype($res2) . " - ";
+        var_dump($res2);
+        echo "\n";
+        
+        // Test 3: With very short timeout (your original)
+        echo "Test 3: With 1 second timeout\n";
+        $mailer3 = Mail::factory('smtpmx', array(
+            'timeout' => 1,
+            'test' => true
+        ));
+        
+        $res3 = $mailer3->send('leon@roojs.com', array(
+            'To' => 'leon@roojs.com',
+            'From' => 'test@example.com'
+        ), '');
+        
+        echo "Result 3: " . gettype($res3) . " - ";
+        var_dump($res3);
+        echo "\n";
+        
+        // Test 4: Test the problematic domain
+        echo "Test 4: Testing indianews.com (the problematic domain)\n";
+        $mailer4 = Mail::factory('smtpmx', array(
+            'timeout' => 15,
+            'test' => true
+        ));
+        
+        $res4 = $mailer4->send('nitishchandra@indianews.com', array(
+            'To' => 'nitishchandra@indianews.com',
+            'From' => 'test@example.com'
+        ), '');
+        
+        echo "Result 4: " . gettype($res4) . " - ";
+        var_dump($res4);
+        echo "\n";
         
         $this->jok('DONE');
         
