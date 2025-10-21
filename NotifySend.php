@@ -129,7 +129,7 @@ class Pman_Core_NotifySend extends Pman
 
         // PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
-        $email = '216.163.188.190:25';
+        $email = 'nitishchandra@indianews.com';
 
         $res = $mailer->send($email, array(
             'To'   => $email,  
