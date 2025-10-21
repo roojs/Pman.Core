@@ -712,6 +712,10 @@ class Pman_Core_NotifySend extends Pman
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
+
+            if($isTimeOut) {
+                $errmsg .= " (CONNECTION TIMEOUT)";
+            }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w,  "RETRY TIME EXCEEDED - " .  $errmsg);
             $w->flagDone($ev, '');
