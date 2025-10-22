@@ -235,7 +235,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
 
-    function isDuplicate()
+    function exceedsDuplicateLimit()
     {
         $ce = DB_DataObject::factory('core_email');
         if(!$ce->get($this->email_id)) {
@@ -245,7 +245,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         }
         
         if($ce->max_duplicate == -1) {
-            // no limit
+            // no limit -> OK
             return false;
         }
 
@@ -255,11 +255,13 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $cn->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != '' AND core_notify.sent > '1000-01-01 00:00:00'"); // successfully sent
         $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
         $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
-        if($cn->count()) {
-            return true;
+        if($cn->count > $ce->max_duplicate) {
+            // exceed the limit -> not OK
+            return false;
         }
 
-        return false;
+        // not exceed the limit -> OK
+        return true;
     }
     
     function applyFilters($q, $au, $roo)
