@@ -58,6 +58,7 @@ Pman.Dialog.CoreEmail = {
   'from_email_combo_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'from_email_combo_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
+  'max_duplicate_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
@@ -782,10 +783,10 @@ Pman.Dialog.CoreEmail = {
                  {
                   xtype : 'NumberField',
                   allowBlank : false,
-                  allowDecimals : true,
+                  allowDecimals : false,
                   fieldLabel : _this._strings['5da618e8e4b89c66fe86e32cdafde142'] /* From */,
-                  name : 'from_name',
-                  width : 300,
+                  name : 'max_duplicate',
+                  width : 100,
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }

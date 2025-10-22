@@ -372,11 +372,11 @@
                   },
                   {
                    "$ xns" : "Roo.form",
-                   "Boolean allowDecimals" : true,
+                   "Boolean allowDecimals" : false,
                    "allowBlank" : false,
                    "fieldLabel" : "From",
-                   "name" : "from_name",
-                   "width" : 300,
+                   "name" : "max_duplicate",
+                   "width" : 100,
                    "xtype" : "NumberField"
                   }
                  ],
@@ -1921,6 +1921,7 @@
   "from_email_text_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "language_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
+  "max_duplicate_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
   "subject_fieldLabel" : "c7892ebbb139886662c6f2fc8c450710",
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
