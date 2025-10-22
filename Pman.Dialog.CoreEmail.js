@@ -17,7 +17,6 @@ Pman.Dialog.CoreEmail = {
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   '231bc72756b5e6de492aaaa1577f61b1' :"Remarks",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
-  '9d4568c009d203ab10e33ea9953a0264' :"\"\"",
   'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
   'b2902068bd468131aae5469000ead0f9' :"Displaying Notifications{0} - {1} of {2}",
   '67edd3b99247c9eb5884a02802a20fa7' :"Delivered",
@@ -52,6 +51,7 @@ Pman.Dialog.CoreEmail = {
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
+  '6d765c43388bd1f1843a9ed6ffbad0b2' :"Maximum number of emails allowed to be sent to the same person on a day",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
   'fff0d600f8a0b5e19e88bfb821dd1157' :"Images"
  },
@@ -59,7 +59,7 @@ Pman.Dialog.CoreEmail = {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
   'from_email_combo_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'from_email_combo_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
-  'daily_email_limit_qtip' : '9d4568c009d203ab10e33ea9953a0264' /* "" */ ,
+  'daily_email_limit_qtip' : '6d765c43388bd1f1843a9ed6ffbad0b2' /* Maximum number of emails allowed to be sent to the same person on a day */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
@@ -758,7 +758,7 @@ Pman.Dialog.CoreEmail = {
                   allowDecimals : false,
                   fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
                   name : 'daily_email_limit',
-                  qtip : _this._strings['9d4568c009d203ab10e33ea9953a0264'] /* "" */,
+                  qtip : _this._strings['6d765c43388bd1f1843a9ed6ffbad0b2'] /* Maximum number of emails allowed to be sent to the same person on a day */,
                   width : 50,
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
