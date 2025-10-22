@@ -257,7 +257,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
         if($cn->count > $ce->max_duplicate) {
             // exceed the limit -> not OK
-            return false;
+            return true;
         }
 
         // not exceed the limit -> OK
