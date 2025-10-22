@@ -1443,6 +1443,12 @@ Pman.Dialog.CoreEmail = {
                   name : 'daily_email_limit',
                   qtip : _this._strings['6d765c43388bd1f1843a9ed6ffbad0b2'] /* Maximum number of emails allowed to be sent to the same person on a day */,
                   width : 50,
+                  listeners : {
+                   render : function (_self)
+                    {
+                    
+                    }
+                  },
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }
