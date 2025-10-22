@@ -420,7 +420,7 @@ Pman.Dialog.CoreEmail = {
             listeners : {
              click : function (_self, e)
               {
-                  var el = _this.dialog.layout.getRegion('east');
+                  var el = _this.dialog.layout.getRegion('center').getPanel(0).layout.getRegion('east');
                   if (el.visible) {
                       el.hide();
                   } else {
