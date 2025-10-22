@@ -1443,8 +1443,7 @@ Pman.Dialog.CoreEmail = {
                   listeners : {
                    render : function (_self)
                     {
-                        Roo.log(_self);
-                        _self.fieldEl.attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');
+                        _self.fieldEl.down('label').attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');
                     }
                   },
                   xns : Roo.form,
