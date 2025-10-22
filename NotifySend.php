@@ -226,7 +226,7 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if($w->reachEmailLimit()) {
-            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach eamil limit)" );
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
