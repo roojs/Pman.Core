@@ -1804,6 +1804,7 @@ Pman.Dialog.CoreEmail = {
          beforeload : function (_self, options)
           {
               options.params = options.params || {};
+              options.params._email_template = 
               
               /*
               
