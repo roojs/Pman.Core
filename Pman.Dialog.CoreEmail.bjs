@@ -2314,7 +2314,7 @@
       }
      ],
      "region" : "center",
-     "title" : "Details",
+     "title" : "Message",
      "xtype" : "NestedLayoutPanel"
     },
     {
@@ -4298,7 +4298,6 @@
   "38be0abb8dcd2feda6d12b0f0cfb553d" : "Business Focus",
   "396ecabf0cd1f9503e591418851ef406" : "Edit / Create Message",
   "3a03f13c6360d706b597de533eadb22d" : "Honorific",
-  "3ec365dd533ddb7ef3d1c111186ce872" : "Details",
   "4994a8ffeba4ac3140beb89e8d41f174" : "Language",
   "4c2a8fe7eaf24721cc7a9f0175115bd4" : "Message",
   "4da9ac510e44c4852d1290ab76b985a8" : "Key Decision Maker",
