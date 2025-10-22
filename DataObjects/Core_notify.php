@@ -244,6 +244,10 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return false;
         }
         
+        if($ce->max_duplicate == -1) {
+            // no limit
+            return false;
+        }
 
         $cn = DB_DataObject::factory('core_notify');
         $cn->email_id = $this->email_id; // same email template
