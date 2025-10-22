@@ -1432,7 +1432,6 @@ Pman.Dialog.CoreEmail = {
                },
                {
                 xtype : 'Row',
-                hideLabels : true,
                 xns : Roo.form,
                 '|xns' : 'Roo.form',
                 items  : [

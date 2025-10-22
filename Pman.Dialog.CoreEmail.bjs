@@ -1059,7 +1059,6 @@
                 },
                 {
                  "$ xns" : "Roo.form",
-                 "hideLabels" : true,
                  "items" : [
                   {
                    "$ xns" : "Roo.form",
