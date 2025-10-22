@@ -36,7 +36,7 @@ ALTER TABLE core_email ADD INDEX lookup_owner_id (owner_id);
 
 ALTER TABLE core_email ADD COLUMN language varchar(5)  NOT NULL DEFAULT 'en';
 
-ALTER TABLE core_email ADD COLUMN max_duplicate INT NOT NULL DEFAULT -1; -- number of duplicate emails allowed to be sent to the same person on the same day (-1 means no limit)
+ALTER TABLE core_email ADD COLUMN daily_email_limit INT NOT NULL DEFAULT 0; -- number of emails allowed to be sent to the same person on the same day (0 means no limit)
 
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
