@@ -226,10 +226,12 @@ class Pman_Core_NotifySend extends Pman
         }
 
         if($w->isDuplicate()) {
+            die("is duplicate");
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (duplicate notification)" );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
+        die('test');
         
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
