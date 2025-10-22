@@ -113,7 +113,7 @@ Pman.Dialog.CoreEmail = {
           this.center();    
           var ew = Math.max(250, w-320);
           var eh = Math.max(250, h-350) ;
-          var e = _this.dialog.layout.getRegion('east');
+          var e = _this.dialog.layout.getRegion('center').getPanel(0).layout.getRegion('east');
           if (e.visible) {
               e.hide();
           }
