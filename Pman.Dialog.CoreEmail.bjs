@@ -341,6 +341,15 @@
                   },
                   {
                    "$ xns" : "Roo.form",
+                   "Boolean allowDecimals" : false,
+                   "allowBlank" : false,
+                   "fieldLabel" : "Maximum duplicate allowed",
+                   "name" : "max_duplicate",
+                   "width" : 50,
+                   "xtype" : "NumberField"
+                  },
+                  {
+                   "$ xns" : "Roo.form",
                    "Number labelWidth" : 0,
                    "String labelSeparator" : " ",
                    "items" : [
@@ -540,15 +549,6 @@
                    "valueField" : "id",
                    "width" : 300,
                    "xtype" : "ComboBox"
-                  },
-                  {
-                   "$ xns" : "Roo.form",
-                   "Boolean allowDecimals" : false,
-                   "allowBlank" : false,
-                   "fieldLabel" : "Maximum duplicate allowed",
-                   "name" : "max_duplicate",
-                   "width" : 50,
-                   "xtype" : "NumberField"
                   }
                  ],
                  "xtype" : "Row"
