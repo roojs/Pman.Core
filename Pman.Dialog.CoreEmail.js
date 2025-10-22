@@ -9,38 +9,49 @@ Pman.Dialog.CoreEmail = {
  _strings : {
   'e44b145bd8b49b06e0ad2ced1ad56466' :"Plain Text",
   '2f26e35d61be90501e099089dc533638' :"Select Images",
-  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
+  'f2a6c498fb90ee345d997f888fce3b18' :"Delete",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
+  '231bc72756b5e6de492aaaa1577f61b1' :"Remarks",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
   'f3017f202748e13d3554a15cbbd1b767' :"Refresh from Stripo",
+  'b2902068bd468131aae5469000ead0f9' :"Displaying Notifications{0} - {1} of {2}",
+  '67edd3b99247c9eb5884a02802a20fa7' :"Delivered",
+  '5fb1f955b45e38e31789286a1790398d' :"ALL",
+  '9c9745a343efeacc9efe9b7222b27afb' :"Ref#",
   'de57d217310a391ad6c5f41d651ddae2' :"Send to test group",
   'ce8ae9da5b7cd6c3df2929543a9af92d' :"Email",
-  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
+  '318e5e65b99bb99f6ec676ac53045808' :"No Notifications found",
   '6f16a5f8ff5d75ab84c018adacdfcbb7' :"Field",
   'ec211f7c20af43e742bf2570c3cb84f9' :"Add",
+  '2393ad754ba179442d85e415d1d5167c' :"Displayorder",
   'e9968623956c15023d54335ea3699855' :"Convert Html to Text",
   '1243daf593fa297e07ab03bf06d925af' :"Searching...",
   '5b8ef4e762c00a15a41cfc26dc3ef99c' :"Send me a test copy",
   '6fa7053e67f9aca02815e903a655ef3d' :"Save & Send",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   '8a10310fb61d63d1711b319163eff1b1' :"Select email",
+  '5b7d0fb4422f6d5854b9827293ece5ea' :"Sent Date",
   '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
+  'ec53a8c4f07baed5d8825072c89799be' :"Status",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
+  '535636e1c190a6979d982d4944f3794a' :"Message History",
   '4994a8ffeba4ac3140beb89e8d41f174' :"Language",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
   'b78a3223503896721cca1303f776159b' :"Title",
-  '1351017ac6423911223bc19a8cb7c653' :"Filename",
+  '801ab24683a4a8c433c6eb40c48bcd9d' :"Download",
+  'b8f079438b0f54f53c0ddea303b2cd8d' :"Remove from Queue",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
+  '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
@@ -54,11 +65,13 @@ Pman.Dialog.CoreEmail = {
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
+  'cm_status_name_value' : '5fb1f955b45e38e31789286a1790398d' /* ALL */ ,
   'from_email_text_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'from_email_combo_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
   'bcc_group_id_name_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
+  'cm_status_name_fieldLabel' : 'ec53a8c4f07baed5d8825072c89799be' /* Status */ ,
   'from_email_combo_loadingText' : '1243daf593fa297e07ab03bf06d925af' /* Searching... */ ,
   'bcc_group_id_name_fieldLabel' : '68b00d723d37122f64da8d9939f836f0' /* BCC Group */ ,
   'subject_fieldLabel' : 'c7892ebbb139886662c6f2fc8c450710' /* Subject */ ,
@@ -1422,6 +1435,251 @@ Pman.Dialog.CoreEmail = {
            ]
           }
          ]
+        }
+       ]
+      }
+     },
+     {
+      xtype : 'GridPanel',
+      background : true,
+      fitContainer : true,
+      fitToframe : true,
+      region : 'center',
+      tableName : 'Groups',
+      title : _this._strings['535636e1c190a6979d982d4944f3794a'] /* Message History */,
+      listeners : {
+       activate : function() {
+            _this.mpanel = this;
+            if (_this.mgrid) {
+                _this.mgrid.footer.onClick('first');
+            }
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo',
+      grid : {
+       xtype : 'Grid',
+       autoExpandColumn : 'event_id_remarks',
+       loadMask : true,
+       listeners : {
+        celldblclick : function (_self, rowIndex, columnIndex, e)
+         {
+             var r = _self.ds.getAt(rowIndex);
+             if(r.data.event_id) {
+                 Pman.Dialog.CoreViewWebsite.show({url: baseURL + '/Admin/EventView/' + r.data.event_id + '.html'});
+             }
+             
+         },
+        render : function() 
+         {
+             _this.mgrid = this; 
+             //_this.dialog = Pman.Dialog.FILL_IN
+             if (_this.mpanel.active) {
+                this.footer.onClick('first');
+             }
+         }
+       },
+       xns : Roo.grid,
+       '|xns' : 'Roo.grid',
+       footer : {
+        xtype : 'PagingToolbar',
+        displayInfo : true,
+        displayMsg : _this._strings['b2902068bd468131aae5469000ead0f9'] /* Displaying Notifications{0} - {1} of {2} */,
+        emptyMsg : _this._strings['318e5e65b99bb99f6ec676ac53045808'] /* No Notifications found */,
+        pageSize : 25,
+        xns : Roo,
+        '|xns' : 'Roo',
+        items  : [
+         {
+          xtype : 'Button',
+          text : _this._strings['801ab24683a4a8c433c6eb40c48bcd9d'] /* Download */,
+          listeners : {
+           click : function (_self, e)
+            {
+                new Pman.Download({
+                    grid : _this.mgrid
+                });
+                Roo.MessageBox.alert("Notice", "Report will download shortly");
+            }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
+         }
+        ]
+       },
+       toolbar : {
+        xtype : 'Toolbar',
+        xns : Roo,
+        '|xns' : 'Roo',
+        items  : [
+         {
+          xtype : 'ComboBox',
+          allowBlank : false,
+          displayField : 'fname',
+          editable : false,
+          fieldLabel : _this._strings['ec53a8c4f07baed5d8825072c89799be'] /* Status */,
+          hiddenName : 'cm_status',
+          listWidth : 200,
+          mode : 'local',
+          name : 'cm_status_name',
+          triggerAction : 'all',
+          value : _this._strings['5fb1f955b45e38e31789286a1790398d'] /* ALL */,
+          valueField : 'ftype',
+          width : 150,
+          listeners : {
+           render : function (_self)
+            {
+              _this.status = _self;
+            },
+           select : function (combo, record, index)
+            {
+                Roo.log('select');
+                _this.mgrid.footer.onClick('first');
+            }
+          },
+          xns : Roo.form,
+          '|xns' : 'Roo.form',
+          store : {
+           xtype : 'SimpleStore',
+           data : [ 
+               [ 'ALL', "All"],
+               [ 'SUCCESS' , "Delivered Succesfully"],
+               [ 'FAILED', "Delivery Failed"] ,
+               [ 'PENDING', "Pending Delivery"] 
+           ],
+           fields : [  'ftype', 'fname'],
+           xns : Roo.data,
+           '|xns' : 'Roo.data'
+          }
+         },
+         {
+          xtype : 'Fill',
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
+         },
+         {
+          xtype : 'Button',
+          cls : 'x-btn-text-icon',
+          icon : rootURL + '/Pman/templates/images/trash.gif',
+          text : _this._strings['b8f079438b0f54f53c0ddea303b2cd8d'] /* Remove from Queue */,
+          listeners : {
+           click : function()
+            {
+                var s = _this.mgrid.getSelectionModel().getSelected();
+                
+                if(!s || s.data.id * 1 < 1){
+                    return;
+                }
+                
+                if(s.data.msgid.length){
+                    Roo.MessageBox.alert("Error", "This notification has been sent!");
+                    return;
+                }
+                
+                Pman.genericDelete(_this, 'core_notify'); 
+            }
+          },
+          xns : Roo.Toolbar,
+          '|xns' : 'Roo.Toolbar'
+         }
+        ]
+       },
+       dataSource : {
+        xtype : 'Store',
+        remoteSort : true,
+        sortInfo : { field : 'act_when', direction: 'DESC' },
+        listeners : {
+         beforeload : function (_self, options)
+          {
+              options.params = options.params || {};
+              
+              options.params.ontable = 'crm_mailing_list_queue';
+              
+              options.params.crm_person_id = _this.form.findField('id').getValue();
+              options.params['query[status]'] = _this.status.getValue();
+          }
+        },
+        xns : Roo.data,
+        '|xns' : 'Roo.data',
+        proxy : {
+         xtype : 'HttpProxy',
+         method : 'GET',
+         url : baseURL + '/Roo/Core_notify.php',
+         xns : Roo.data,
+         '|xns' : 'Roo.data'
+        },
+        reader : {
+         xtype : 'JsonReader',
+         fields : [
+             {
+                 'name': 'id',
+                 'type': 'int'
+             }
+         ],
+         id : 'id',
+         root : 'data',
+         totalProperty : 'total',
+         xns : Roo.data,
+         '|xns' : 'Roo.data'
+        }
+       },
+       sm : {
+        xtype : 'RowSelectionModel',
+        singleSelect : true,
+        xns : Roo.grid,
+        '|xns' : 'Roo.grid'
+       },
+       colModel : [
+        {
+         xtype : 'ColumnModel',
+         dataIndex : 'id',
+         header : _this._strings['9c9745a343efeacc9efe9b7222b27afb'] /* Ref# */,
+         renderer : function(v) 
+         { 
+             return String.format('{0}', v );
+         },
+         width : 50,
+         xns : Roo.grid,
+         '|xns' : 'Roo.grid'
+        },
+        {
+         xtype : 'ColumnModel',
+         dataIndex : 'sent',
+         header : _this._strings['5b7d0fb4422f6d5854b9827293ece5ea'] /* Sent Date */,
+         renderer : function(v) 
+         { 
+             return String.format('{0}', (v) ? v.format('d/M/Y h:ia') : '' );
+         },
+         width : 120,
+         xns : Roo.grid,
+         '|xns' : 'Roo.grid'
+        },
+        {
+         xtype : 'ColumnModel',
+         dataIndex : 'msgid',
+         header : _this._strings['67edd3b99247c9eb5884a02802a20fa7'] /* Delivered */,
+         renderer : function(v) { return String.format('{0}', v ? 'YES' : 'NO'); },
+         width : 75,
+         xns : Roo.grid,
+         '|xns' : 'Roo.grid'
+        },
+        {
+         xtype : 'ColumnModel',
+         dataIndex : 'ontable_id_message_id_subject',
+         header : _this._strings['4c2a8fe7eaf24721cc7a9f0175115bd4'] /* Message */,
+         renderer : function(v) { return String.format('<span qtip="{0}">{0}</span>', v ); },
+         width : 200,
+         xns : Roo.grid,
+         '|xns' : 'Roo.grid'
+        },
+        {
+         xtype : 'ColumnModel',
+         dataIndex : 'event_id_remarks',
+         header : _this._strings['231bc72756b5e6de492aaaa1577f61b1'] /* Remarks */,
+         renderer : function(v) { return String.format('<span qtip="{0}">{0}</span>', v ); },
+         width : 200,
+         xns : Roo.grid,
+         '|xns' : 'Roo.grid'
         }
        ]
       }
