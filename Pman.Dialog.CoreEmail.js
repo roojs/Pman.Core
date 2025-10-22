@@ -780,8 +780,9 @@ Pman.Dialog.CoreEmail = {
                   ]
                  },
                  {
-                  xtype : 'Number',
+                  xtype : 'NumberField',
                   allowBlank : false,
+                  allowDecimals : true,
                   fieldLabel : _this._strings['5da618e8e4b89c66fe86e32cdafde142'] /* From */,
                   name : 'from_name',
                   width : 300,

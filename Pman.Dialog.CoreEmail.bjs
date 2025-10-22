@@ -372,11 +372,12 @@
                   },
                   {
                    "$ xns" : "Roo.form",
+                   "Boolean allowDecimals" : true,
                    "allowBlank" : false,
                    "fieldLabel" : "From",
                    "name" : "from_name",
                    "width" : 300,
-                   "xtype" : "Number"
+                   "xtype" : "NumberField"
                   }
                  ],
                  "xtype" : "Row"
