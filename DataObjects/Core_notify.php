@@ -258,6 +258,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     {
         return array();
     }
+
+    function isDuplicate()
+    {
+        return false;
+    }
     
     function applyFilters($q, $au, $roo)
     {
