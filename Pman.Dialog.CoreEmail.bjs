@@ -1673,17 +1673,6 @@
          "xtype" : "PagingToolbar"
         },
         {
-         "$ xns" : "Roo",
-         "* prop" : "toolbar",
-         "items" : [
-          {
-           "$ xns" : "Roo.Toolbar",
-           "xtype" : "Fill"
-          }
-         ],
-         "xtype" : "Toolbar"
-        },
-        {
          "$ renderer" : [
           "function(v) ",
           "{ ",

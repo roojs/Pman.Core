@@ -1796,18 +1796,6 @@ Pman.Dialog.CoreEmail = {
         xns : Roo,
         '|xns' : 'Roo'
        },
-       toolbar : {
-        xtype : 'Toolbar',
-        xns : Roo,
-        '|xns' : 'Roo',
-        items  : [
-         {
-          xtype : 'Fill',
-          xns : Roo.Toolbar,
-          '|xns' : 'Roo.Toolbar'
-         }
-        ]
-       },
        dataSource : {
         xtype : 'Store',
         remoteSort : true,
