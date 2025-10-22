@@ -1593,10 +1593,13 @@ Pman.Dialog.CoreEmail = {
           {
               options.params = options.params || {};
               
+              /*
+              
               options.params.ontable = 'crm_mailing_list_queue';
               
               options.params.crm_person_id = _this.form.findField('id').getValue();
               options.params['query[status]'] = _this.status.getValue();
+              */
           }
         },
         xns : Roo.data,
