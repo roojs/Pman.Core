@@ -13,6 +13,7 @@ Pman.Dialog.CoreEmail = {
   'b357b524e740bc85b9790a0712d84a30' :"Email address",
   '962b90039a542a29cedd51d87a9f28a1' :"Html Editor",
   '28690be026c0bb9003aa58e45e5662ca' :"Enabled - will be sent out",
+  '705a7189331c68cdbbe8514127774f4e' :"Edit / Create Messageee",
   '31fde7b05ac8952dacf4af8a704074ec' :"Preview",
   'ea30b40c3caf28acb29198d20d243e54' :"Images / Attachments >>",
   'b337c8a67244afb6551ee1f8f9717676' :"Test Class <BR/> (for system reference only)",
@@ -28,7 +29,6 @@ Pman.Dialog.CoreEmail = {
   '6fa7053e67f9aca02815e903a655ef3d' :"Save & Send",
   'c7892ebbb139886662c6f2fc8c450710' :"Subject",
   '8a10310fb61d63d1711b319163eff1b1' :"Select email",
-  '396ecabf0cd1f9503e591418851ef406' :"Edit / Create Message",
   'b9c49611cfda3259a2b837b39489e650' :"Add Image",
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
@@ -95,7 +95,7 @@ Pman.Dialog.CoreEmail = {
     height : 500,
     modal : true,
     resizable : true,
-    title : _this._strings['396ecabf0cd1f9503e591418851ef406'] /* Edit / Create Message */,
+    title : _this._strings['705a7189331c68cdbbe8514127774f4e'] /* Edit / Create Messageee */,
     width : 800,
     listeners : {
      show : function (_self)

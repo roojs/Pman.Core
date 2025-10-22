@@ -1,5 +1,4 @@
 {
- "gen_extended" : false,
  "items" : [
   {
    "$ xns" : "Roo",
@@ -1715,7 +1714,7 @@
    },
    "modal" : true,
    "resizable" : true,
-   "title" : "Edit / Create Message",
+   "title" : "Edit / Create Messageee",
    "width" : 800,
    "xtype" : "LayoutDialog"
   }
@@ -1741,6 +1740,7 @@
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
  },
  "parent" : "",
+ "path" : "/home/leon/gitlive/web.MediaOutreach/Pman/Core/Pman.Dialog.CoreEmail.bjs",
  "permname" : "",
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
@@ -1751,7 +1751,6 @@
   "2f26e35d61be90501e099089dc533638" : "Select Images",
   "308f2757bfc9ce92fb00ff93fdffd279" : "Images / Attachments",
   "31fde7b05ac8952dacf4af8a704074ec" : "Preview",
-  "396ecabf0cd1f9503e591418851ef406" : "Edit / Create Message",
   "4994a8ffeba4ac3140beb89e8d41f174" : "Language",
   "4c2a8fe7eaf24721cc7a9f0175115bd4" : "Message",
   "5b8ef4e762c00a15a41cfc26dc3ef99c" : "Send me a test copy",
@@ -1760,6 +1759,7 @@
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "6fa7053e67f9aca02815e903a655ef3d" : "Save & Send",
+  "705a7189331c68cdbbe8514127774f4e" : "Edit / Create Messageee",
   "8a10310fb61d63d1711b319163eff1b1" : "Select email",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "b20a8b77b05d53b4e695738731400c85" : "Mailout Name",
