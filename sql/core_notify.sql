@@ -39,7 +39,7 @@ ALTER TABLE core_notify ADD COLUMN reject_match_id INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN mail_imap_actor_id INT(11) NOT NULL DEFAULT 0;
 
-ALTER TABLE core_notify ADD COLUMN core_email_id INT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify ADD COLUMN email_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
