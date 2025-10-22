@@ -1804,8 +1804,7 @@ Pman.Dialog.CoreEmail = {
          beforeload : function (_self, options)
           {
               options.params = options.params || {};
-              options.params._from_email_template = _this.form.findField('id').getValue();
-              Roo.log(_this.form.getValues());
+              options.params._from_email_template = _this.data.id;
           }
         },
         xns : Roo.data,
