@@ -369,15 +369,6 @@
                     }
                    ],
                    "xtype" : "Column"
-                  },
-                  {
-                   "$ xns" : "Roo.form",
-                   "Boolean allowDecimals" : false,
-                   "allowBlank" : false,
-                   "fieldLabel" : "Maximum duplicate allowed",
-                   "name" : "max_duplicate",
-                   "width" : 100,
-                   "xtype" : "NumberField"
                   }
                  ],
                  "xtype" : "Row"
@@ -549,6 +540,15 @@
                    "valueField" : "id",
                    "width" : 300,
                    "xtype" : "ComboBox"
+                  },
+                  {
+                   "$ xns" : "Roo.form",
+                   "Boolean allowDecimals" : false,
+                   "allowBlank" : false,
+                   "fieldLabel" : "Maximum duplicate allowed",
+                   "name" : "max_duplicate",
+                   "width" : 100,
+                   "xtype" : "NumberField"
                   }
                  ],
                  "xtype" : "Row"

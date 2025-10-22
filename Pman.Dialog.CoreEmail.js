@@ -59,8 +59,8 @@ Pman.Dialog.CoreEmail = {
   'from_email_combo_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'from_email_combo_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
-  'max_duplicate_fieldLabel' : 'b4351bcd15bf9c938eb0d5038b1370a2' /* Maximum duplicate allowed */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
+  'max_duplicate_fieldLabel' : 'b4351bcd15bf9c938eb0d5038b1370a2' /* Maximum duplicate allowed */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
   'from_email_text_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
@@ -780,16 +780,6 @@ Pman.Dialog.CoreEmail = {
                     '|xns' : 'Roo.form'
                    }
                   ]
-                 },
-                 {
-                  xtype : 'NumberField',
-                  allowBlank : false,
-                  allowDecimals : false,
-                  fieldLabel : _this._strings['b4351bcd15bf9c938eb0d5038b1370a2'] /* Maximum duplicate allowed */,
-                  name : 'max_duplicate',
-                  width : 100,
-                  xns : Roo.form,
-                  '|xns' : 'Roo.form'
                  }
                 ]
                },
@@ -946,6 +936,16 @@ Pman.Dialog.CoreEmail = {
                     '|xns' : 'Roo.data'
                    }
                   }
+                 },
+                 {
+                  xtype : 'NumberField',
+                  allowBlank : false,
+                  allowDecimals : false,
+                  fieldLabel : _this._strings['b4351bcd15bf9c938eb0d5038b1370a2'] /* Maximum duplicate allowed */,
+                  name : 'max_duplicate',
+                  width : 100,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
                  }
                 ]
                },
