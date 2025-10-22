@@ -244,7 +244,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return false;
         }
         
-        if($ce->max_duplicate == -1) {
+        if($ce->daily_email_limit == 0) {
             // no limit
             return false;
         }
