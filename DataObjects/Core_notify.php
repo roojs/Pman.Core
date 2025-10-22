@@ -236,7 +236,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     }
 
 
-    function whereAddFromEmailTemplate($emailTemplate)
+    function whereAddFromEmailTemplate($emailTemplateId)
     {
         $this->whereAdd("0 = 1");
     }
