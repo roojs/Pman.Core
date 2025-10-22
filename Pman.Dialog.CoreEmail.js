@@ -46,12 +46,11 @@ Pman.Dialog.CoreEmail = {
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
   'b78a3223503896721cca1303f776159b' :"Title",
   '16d2b386b2034b9488996466aaae0b57' :"History",
+  '1351017ac6423911223bc19a8cb7c653' :"Filename",
   '6c95f468940d0f7b821a200aed9142c1' :"Daily Email Limit",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
-  '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
   '5feb9bf3c03b32635135006cbacb9542' :"Insert Field",
-  '6d765c43388bd1f1843a9ed6ffbad0b2' :"Maximum number of emails allowed to be sent to the same person on a day",
   '4c2a8fe7eaf24721cc7a9f0175115bd4' :"Message",
   'fff0d600f8a0b5e19e88bfb821dd1157' :"Images"
  },
@@ -59,7 +58,6 @@ Pman.Dialog.CoreEmail = {
   'active_boxLabel' : '28690be026c0bb9003aa58e45e5662ca' /* Enabled - will be sent out */ ,
   'from_email_combo_emptyText' : '8a10310fb61d63d1711b319163eff1b1' /* Select email */ ,
   'from_email_combo_qtip' : 'ce8ae9da5b7cd6c3df2929543a9af92d' /* Email */ ,
-  'daily_email_limit_qtip' : '6d765c43388bd1f1843a9ed6ffbad0b2' /* Maximum number of emails allowed to be sent to the same person on a day */ ,
   'name_fieldLabel' : 'b20a8b77b05d53b4e695738731400c85' /* Mailout Name */ ,
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
@@ -1441,12 +1439,11 @@ Pman.Dialog.CoreEmail = {
                   allowDecimals : false,
                   fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
                   name : 'daily_email_limit',
-                  qtip : _this._strings['6d765c43388bd1f1843a9ed6ffbad0b2'] /* Maximum number of emails allowed to be sent to the same person on a day */,
                   width : 50,
                   listeners : {
                    render : function (_self)
                     {
-                    
+                        _self.el.attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');
                     }
                   },
                   xns : Roo.form,
