@@ -1339,24 +1339,6 @@
          "displayInfo" : true,
          "displayMsg" : "Displaying Notifications{0} - {1} of {2}",
          "emptyMsg" : "No Notifications found",
-         "items" : [
-          {
-           "$ xns" : "Roo.Toolbar",
-           "listeners" : {
-            "click" : [
-             "function (_self, e)",
-             "{",
-             "    new Pman.Download({",
-             "        grid : _this.mgrid",
-             "    });",
-             "    Roo.MessageBox.alert(\"Notice\", \"Report will download shortly\");",
-             "}"
-            ]
-           },
-           "text" : "Download",
-           "xtype" : "Button"
-          }
-         ],
          "pageSize" : 25,
          "xtype" : "PagingToolbar"
         },
@@ -1365,83 +1347,8 @@
          "* prop" : "toolbar",
          "items" : [
           {
-           "$ xns" : "Roo.form",
-           "allowBlank" : false,
-           "displayField" : "fname",
-           "editable" : false,
-           "fieldLabel" : "Status",
-           "hiddenName" : "cm_status",
-           "items" : [
-            {
-             "$ data" : [
-              "[ ",
-              "    [ 'ALL', \"All\"],",
-              "    [ 'SUCCESS' , \"Delivered Succesfully\"],",
-              "    [ 'FAILED', \"Delivery Failed\"] ,",
-              "    [ 'PENDING', \"Pending Delivery\"] ",
-              "]",
-              ""
-             ],
-             "$ fields" : "[  'ftype', 'fname']",
-             "$ xns" : "Roo.data",
-             "* prop" : "store",
-             "xtype" : "SimpleStore"
-            }
-           ],
-           "listWidth" : 200,
-           "listeners" : {
-            "render" : [
-             "function (_self)",
-             "{",
-             "  _this.status = _self;",
-             "}"
-            ],
-            "select" : [
-             "function (combo, record, index)",
-             "{",
-             "    Roo.log('select');",
-             "    _this.mgrid.footer.onClick('first');",
-             "}"
-            ]
-           },
-           "mode" : "local",
-           "name" : "cm_status_name",
-           "triggerAction" : "all",
-           "value" : "ALL",
-           "valueField" : "ftype",
-           "width" : 150,
-           "xtype" : "ComboBox"
-          },
-          {
            "$ xns" : "Roo.Toolbar",
            "xtype" : "Fill"
-          },
-          {
-           "$ icon" : "rootURL + '/Pman/templates/images/trash.gif'",
-           "$ xns" : "Roo.Toolbar",
-           "cls" : "x-btn-text-icon",
-           "listeners" : {
-            "|click" : [
-             "function()",
-             "{",
-             "    var s = _this.mgrid.getSelectionModel().getSelected();",
-             "    ",
-             "    if(!s || s.data.id * 1 < 1){",
-             "        return;",
-             "    }",
-             "    ",
-             "    if(s.data.msgid.length){",
-             "        Roo.MessageBox.alert(\"Error\", \"This notification has been sent!\");",
-             "        return;",
-             "    }",
-             "    ",
-             "    Pman.genericDelete(_this, 'core_notify'); ",
-             "}",
-             "        "
-            ]
-           },
-           "text" : "Remove from Queue",
-           "xtype" : "Button"
           }
          ],
          "xtype" : "Toolbar"
@@ -1481,15 +1388,6 @@
          "dataIndex" : "msgid",
          "header" : "Delivered",
          "width" : 75,
-         "xtype" : "ColumnModel"
-        },
-        {
-         "$ renderer" : "function(v) { return String.format('<span qtip=\"{0}\">{0}</span>', v ); }",
-         "$ xns" : "Roo.grid",
-         "* prop" : "colModel[]",
-         "dataIndex" : "ontable_id_message_id_subject",
-         "header" : "Message",
-         "width" : 200,
          "xtype" : "ColumnModel"
         },
         {
@@ -2003,8 +1901,6 @@
   "bcc_group_id_name_fieldLabel" : "68b00d723d37122f64da8d9939f836f0",
   "bcc_group_id_name_loadingText" : "1243daf593fa297e07ab03bf06d925af",
   "bcc_group_id_name_qtip" : "2c466a2c159463f1d9ef5a7b57b52827",
-  "cm_status_name_fieldLabel" : "ec53a8c4f07baed5d8825072c89799be",
-  "cm_status_name_value" : "5fb1f955b45e38e31789286a1790398d",
   "from_email_combo_emptyText" : "8a10310fb61d63d1711b319163eff1b1",
   "from_email_combo_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
   "from_email_combo_loadingText" : "1243daf593fa297e07ab03bf06d925af",
@@ -2037,13 +1933,11 @@
   "5b7d0fb4422f6d5854b9827293ece5ea" : "Sent Date",
   "5b8ef4e762c00a15a41cfc26dc3ef99c" : "Send me a test copy",
   "5da618e8e4b89c66fe86e32cdafde142" : "From",
-  "5fb1f955b45e38e31789286a1790398d" : "ALL",
   "5feb9bf3c03b32635135006cbacb9542" : "Insert Field",
   "67edd3b99247c9eb5884a02802a20fa7" : "Delivered",
   "68b00d723d37122f64da8d9939f836f0" : "BCC Group",
   "6f16a5f8ff5d75ab84c018adacdfcbb7" : "Field",
   "6fa7053e67f9aca02815e903a655ef3d" : "Save & Send",
-  "801ab24683a4a8c433c6eb40c48bcd9d" : "Download",
   "8a10310fb61d63d1711b319163eff1b1" : "Select email",
   "962b90039a542a29cedd51d87a9f28a1" : "Html Editor",
   "9c9745a343efeacc9efe9b7222b27afb" : "Ref#",
@@ -2052,7 +1946,6 @@
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",
   "b78a3223503896721cca1303f776159b" : "Title",
-  "b8f079438b0f54f53c0ddea303b2cd8d" : "Remove from Queue",
   "b9c49611cfda3259a2b837b39489e650" : "Add Image",
   "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",
   "c4ca4238a0b923820dcc509a6f75849b" : "1",
@@ -2065,7 +1958,6 @@
   "ea30b40c3caf28acb29198d20d243e54" : "Images / Attachments >>",
   "ea4788705e6873b424c65e91c2846b19" : "Cancel",
   "ec211f7c20af43e742bf2570c3cb84f9" : "Add",
-  "ec53a8c4f07baed5d8825072c89799be" : "Status",
   "f2a6c498fb90ee345d997f888fce3b18" : "Delete",
   "f3017f202748e13d3554a15cbbd1b767" : "Refresh from Stripo",
   "fff0d600f8a0b5e19e88bfb821dd1157" : "Images"
