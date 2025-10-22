@@ -249,10 +249,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             "core_notify.ontable = 'core_email' AND core_notify.onid = " . $emailTemplateId
         );
 
+        $conds = array_merge($conds, $this->addFromEmailTemplateConds($ce->name));
+
         $this->whereAdd(implode(' OR ', $conds));
     }
 
-    function addFromEmailTemplateConds($emailTemplateId)
+    function addFromEmailTemplateConds($emailTemplateName)
     {
         return array();
     }
