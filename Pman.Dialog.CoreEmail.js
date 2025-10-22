@@ -943,7 +943,7 @@ Pman.Dialog.CoreEmail = {
                   allowDecimals : false,
                   fieldLabel : _this._strings['b4351bcd15bf9c938eb0d5038b1370a2'] /* Maximum duplicate allowed */,
                   name : 'max_duplicate',
-                  width : 100,
+                  width : 50,
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }

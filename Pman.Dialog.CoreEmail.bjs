@@ -547,7 +547,7 @@
                    "allowBlank" : false,
                    "fieldLabel" : "Maximum duplicate allowed",
                    "name" : "max_duplicate",
-                   "width" : 100,
+                   "width" : 50,
                    "xtype" : "NumberField"
                   }
                  ],
