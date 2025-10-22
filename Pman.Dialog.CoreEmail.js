@@ -1805,6 +1805,7 @@ Pman.Dialog.CoreEmail = {
           {
               options.params = options.params || {};
               options.params._from_email_template = _this.form.findField('id').getValue();
+              Roo.log(_this.form.findField('id'));
           }
         },
         xns : Roo.data,
