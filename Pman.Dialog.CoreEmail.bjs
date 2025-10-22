@@ -341,16 +341,6 @@
                   },
                   {
                    "$ xns" : "Roo.form",
-                   "Boolean allowDecimals" : false,
-                   "String qtip" : "Maximum number of emails allowed to be sent to the same person on a day",
-                   "allowBlank" : false,
-                   "fieldLabel" : "Daily Email Limit",
-                   "name" : "daily_email_limit",
-                   "width" : 50,
-                   "xtype" : "NumberField"
-                  },
-                  {
-                   "$ xns" : "Roo.form",
                    "Number labelWidth" : 0,
                    "String labelSeparator" : " ",
                    "items" : [
@@ -1063,6 +1053,23 @@
                    "name" : "test_class",
                    "width" : 300,
                    "xtype" : "TextField"
+                  }
+                 ],
+                 "xtype" : "Row"
+                },
+                {
+                 "$ xns" : "Roo.form",
+                 "hideLabels" : true,
+                 "items" : [
+                  {
+                   "$ xns" : "Roo.form",
+                   "Boolean allowDecimals" : false,
+                   "String qtip" : "Maximum number of emails allowed to be sent to the same person on a day",
+                   "allowBlank" : false,
+                   "fieldLabel" : "Daily Email Limit",
+                   "name" : "daily_email_limit",
+                   "width" : 50,
+                   "xtype" : "NumberField"
                   }
                  ],
                  "xtype" : "Row"

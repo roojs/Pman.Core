@@ -64,8 +64,8 @@ Pman.Dialog.CoreEmail = {
   'bcc_group_id_name_qtip' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'bcc_group_id_name_emptyText' : '2c466a2c159463f1d9ef5a7b57b52827' /* Select BCC Group */ ,
   'language_name_fieldLabel' : '4994a8ffeba4ac3140beb89e8d41f174' /* Language */ ,
-  'daily_email_limit_fieldLabel' : '6c95f468940d0f7b821a200aed9142c1' /* Daily Email Limit */ ,
   'from_email_text_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
+  'daily_email_limit_fieldLabel' : '6c95f468940d0f7b821a200aed9142c1' /* Daily Email Limit */ ,
   'active_value' : 'c4ca4238a0b923820dcc509a6f75849b' /* 1 */ ,
   'from_name_fieldLabel' : '5da618e8e4b89c66fe86e32cdafde142' /* From */ ,
   'from_email_combo_fieldLabel' : 'b357b524e740bc85b9790a0712d84a30' /* Email address */ ,
@@ -753,17 +753,6 @@ Pman.Dialog.CoreEmail = {
                   '|xns' : 'Roo.form'
                  },
                  {
-                  xtype : 'NumberField',
-                  allowBlank : false,
-                  allowDecimals : false,
-                  fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
-                  name : 'daily_email_limit',
-                  qtip : _this._strings['6d765c43388bd1f1843a9ed6ffbad0b2'] /* Maximum number of emails allowed to be sent to the same person on a day */,
-                  width : 50,
-                  xns : Roo.form,
-                  '|xns' : 'Roo.form'
-                 },
-                 {
                   xtype : 'Column',
                   labelSeparator : ' ',
                   labelWidth : 0,
@@ -1436,6 +1425,25 @@ Pman.Dialog.CoreEmail = {
                   name : 'test_class',
                   readOnly : true,
                   width : 300,
+                  xns : Roo.form,
+                  '|xns' : 'Roo.form'
+                 }
+                ]
+               },
+               {
+                xtype : 'Row',
+                hideLabels : true,
+                xns : Roo.form,
+                '|xns' : 'Roo.form',
+                items  : [
+                 {
+                  xtype : 'NumberField',
+                  allowBlank : false,
+                  allowDecimals : false,
+                  fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
+                  name : 'daily_email_limit',
+                  qtip : _this._strings['6d765c43388bd1f1843a9ed6ffbad0b2'] /* Maximum number of emails allowed to be sent to the same person on a day */,
+                  width : 50,
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }
