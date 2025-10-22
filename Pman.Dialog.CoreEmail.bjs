@@ -24,6 +24,7 @@
     },
     {
      "$ xns" : "Roo",
+     "String title" : "Message",
      "autoScroll" : false,
      "fitContainer" : true,
      "fitToFrame" : true,
@@ -1438,7 +1439,7 @@
      },
      "region" : "center",
      "tableName" : "Groups",
-     "title" : "Message History",
+     "title" : "History",
      "xtype" : "GridPanel"
     },
     {
@@ -1918,6 +1919,7 @@
  "strings" : {
   "1243daf593fa297e07ab03bf06d925af" : "Searching...",
   "1351017ac6423911223bc19a8cb7c653" : "Filename",
+  "16d2b386b2034b9488996466aaae0b57" : "History",
   "231bc72756b5e6de492aaaa1577f61b1" : "Remarks",
   "2393ad754ba179442d85e415d1d5167c" : "Displayorder",
   "28690be026c0bb9003aa58e45e5662ca" : "Enabled - will be sent out",
@@ -1929,7 +1931,6 @@
   "396ecabf0cd1f9503e591418851ef406" : "Edit / Create Message",
   "4994a8ffeba4ac3140beb89e8d41f174" : "Language",
   "4c2a8fe7eaf24721cc7a9f0175115bd4" : "Message",
-  "535636e1c190a6979d982d4944f3794a" : "Message History",
   "5b7d0fb4422f6d5854b9827293ece5ea" : "Sent Date",
   "5b8ef4e762c00a15a41cfc26dc3ef99c" : "Send me a test copy",
   "5da618e8e4b89c66fe86e32cdafde142" : "From",

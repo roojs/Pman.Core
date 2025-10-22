@@ -39,13 +39,13 @@ Pman.Dialog.CoreEmail = {
   'ea4788705e6873b424c65e91c2846b19' :"Cancel",
   '68b00d723d37122f64da8d9939f836f0' :"BCC Group",
   'c4ca4238a0b923820dcc509a6f75849b' :"1",
-  '535636e1c190a6979d982d4944f3794a' :"Message History",
   '4994a8ffeba4ac3140beb89e8d41f174' :"Language",
   'bd88a20b53a47f7b5704a83a15ff5506' :"Saved Version",
   'b20a8b77b05d53b4e695738731400c85' :"Mailout Name",
   '2c466a2c159463f1d9ef5a7b57b52827' :"Select BCC Group",
   '5da618e8e4b89c66fe86e32cdafde142' :"From",
   'b78a3223503896721cca1303f776159b' :"Title",
+  '16d2b386b2034b9488996466aaae0b57' :"History",
   '308f2757bfc9ce92fb00ff93fdffd279' :"Images / Attachments",
   '1351017ac6423911223bc19a8cb7c653' :"Filename",
   'c9cc8cce247e49bae79f15173ce97354' :"Save",
@@ -250,6 +250,7 @@ Pman.Dialog.CoreEmail = {
       fitContainer : true,
       fitToFrame : true,
       region : 'center',
+      title : _this._strings['4c2a8fe7eaf24721cc7a9f0175115bd4'] /* Message */,
       xns : Roo,
       '|xns' : 'Roo',
       toolbar : {
@@ -1440,7 +1441,7 @@ Pman.Dialog.CoreEmail = {
       fitToframe : true,
       region : 'center',
       tableName : 'Groups',
-      title : _this._strings['535636e1c190a6979d982d4944f3794a'] /* Message History */,
+      title : _this._strings['16d2b386b2034b9488996466aaae0b57'] /* History */,
       listeners : {
        activate : function() {
             _this.mpanel = this;
