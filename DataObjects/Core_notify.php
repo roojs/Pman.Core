@@ -251,6 +251,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
 
         $this->whereAdd(implode(' OR ', $conds));
     }
+
+    function addFromEmailTemplateConds($emailTemplateId)
+    {
+        return array();
+    }
     
     function applyFilters($q, $au, $roo)
     {
