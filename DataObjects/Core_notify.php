@@ -235,25 +235,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
 
-
-    function whereAddFromEmailTemplate($emailTemplateId)
-    {
-        $ce = DB_DataObject::factory('core_email');
-        if(!$ce->get($emailTemplateId)) {
-            // invalid email template id
-            $this->whereAdd("0 = 1");
-            return;
-        }
-
-        $conds = array(
-            "core_notify.ontable = 'core_email' AND core_notify.onid = " . $emailTemplateId
-        );
-
-        $conds = array_merge($conds, $this->addFromEmailTemplateConds($ce->name));
-
-        $this->whereAdd(implode(' OR ', $conds));
-    }
-
     function addFromEmailTemplateConds($emailTemplateName)
     {
         return array();
@@ -266,9 +247,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     
     function applyFilters($q, $au, $roo)
     {
-        if(!empty($q['_from_email_template'])) {
-            $this->whereAddFromEmailTemplate($q['_from_email_template']);
-        }
         if(!empty($q['search']['email_or_name'])) {
             $this->whereAdd("
                 join_crm_person_id_id.name LIKE '%" . $this->escape($q['search']['email_or_name']) . "%'
