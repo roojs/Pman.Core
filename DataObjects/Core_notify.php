@@ -256,11 +256,11 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
         $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
         if($cn->count() >= $ce->daily_email_limit) {
-            // exceed the limit
+            // reach the limit
             return true;
         }
 
-        // not exceed the limit
+        // not reach the limit
         return false;
     }
     
