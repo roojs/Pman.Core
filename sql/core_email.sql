@@ -36,5 +36,7 @@ ALTER TABLE core_email ADD INDEX lookup_owner_id (owner_id);
 
 ALTER TABLE core_email ADD COLUMN language varchar(5)  NOT NULL DEFAULT 'en';
 
+ALTER TABLE core_email ADD COLUMN max_duplicate INT NOT NULL DEFAULT -1;
+
 UPDATE core_email SET updated_dt = NOW() where updated_dt IS NULL;
 
