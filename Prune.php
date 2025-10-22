@@ -88,7 +88,7 @@ class Pman_Core_Prune extends Pman
         $this->archiveEvents($inM);
     }
       
-    function pruneEventDupes($inM)
+    function pruneEventDupes( )
     {
         /// deletes events on 'NOTIFY' that are dupes..
         $f = DB_DataObject::Factory('Events');
@@ -115,6 +115,7 @@ class Pman_Core_Prune extends Pman
                   
             ");
         }
+  
     }
         // clean up archiver 
     

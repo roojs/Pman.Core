@@ -25,26 +25,9 @@ class Pman_Core_Heartbeat extends Pman
             die("FAILED");
         }
         
-        
-        $cd = DB_DataObject::Factory('core_enum');
-        $cd->setFrom(array(
-            'etype' => 'heartbeat',
-            'name' => 'last_update_'. gethostname()
-        ));
-        if (!$cd->count()) {
-            $cd->display_name = date("Y-m-d H:i:s");
-            $cd->insert();
-            die("OK - HEARTBEAT WORKING");
-        }
-        $cd->find(true);
-        $cc = clone($cd);
-        if ( (time() - strtotime($cc->display_name)) < 30) {
-            die("OK - HEARTBEAT WORKING");
-        }
-        
-        $cd->display_name = date("Y-m-d H:i:s");
-        $cd->update($cc);
-        die("OK - HEARTBEAT WORKING");
+        // Use gethostbyaddr("127.0.1.1") to get FQN from hosts file
+        $res = DB_DataObject::Factory('core_heartbeat')->hostCheck(gethostbyaddr("127.0.1.1"));
+        die($res);
     }
     
      
