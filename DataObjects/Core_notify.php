@@ -234,7 +234,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         
     }
-    
+
+
+    function whereAddFromEmailTemplate($emailTemplate)
+    {
+        $this->whereAdd("0 = 1");
+    }
     
     function applyFilters($q, $au, $roo)
     {
