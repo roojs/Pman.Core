@@ -231,6 +231,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
         }
+        die('test');
         
         // let's work out the last notification sent to this user..
         $l = DB_DataObject::factory($this->table);
