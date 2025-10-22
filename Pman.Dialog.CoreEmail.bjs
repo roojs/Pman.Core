@@ -374,7 +374,7 @@
                    "$ xns" : "Roo.form",
                    "Boolean allowDecimals" : false,
                    "allowBlank" : false,
-                   "fieldLabel" : "From",
+                   "fieldLabel" : "Maximum duplicate allowed",
                    "name" : "max_duplicate",
                    "width" : 100,
                    "xtype" : "NumberField"
@@ -1921,7 +1921,7 @@
   "from_email_text_fieldLabel" : "b357b524e740bc85b9790a0712d84a30",
   "from_name_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
   "language_name_fieldLabel" : "4994a8ffeba4ac3140beb89e8d41f174",
-  "max_duplicate_fieldLabel" : "5da618e8e4b89c66fe86e32cdafde142",
+  "max_duplicate_fieldLabel" : "b4351bcd15bf9c938eb0d5038b1370a2",
   "name_fieldLabel" : "b20a8b77b05d53b4e695738731400c85",
   "subject_fieldLabel" : "c7892ebbb139886662c6f2fc8c450710",
   "test_class_fieldLabel" : "b337c8a67244afb6551ee1f8f9717676"
@@ -1959,6 +1959,7 @@
   "b2902068bd468131aae5469000ead0f9" : "Displaying Notifications{0} - {1} of {2}",
   "b337c8a67244afb6551ee1f8f9717676" : "Test Class <BR/> (for system reference only)",
   "b357b524e740bc85b9790a0712d84a30" : "Email address",
+  "b4351bcd15bf9c938eb0d5038b1370a2" : "Maximum duplicate allowed",
   "b78a3223503896721cca1303f776159b" : "Title",
   "b9c49611cfda3259a2b837b39489e650" : "Add Image",
   "bd88a20b53a47f7b5704a83a15ff5506" : "Saved Version",
