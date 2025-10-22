@@ -225,7 +225,7 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler($ev->remarks);
         }
 
-        if($w->shouldSkip()) {
+        if($w->isDuplicate()) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (duplicate notification)" );
             $w->flagDone($ev, '');
             $this->errorHandler($ev->remarks);
