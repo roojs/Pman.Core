@@ -1286,7 +1286,7 @@
          "xtype" : "RowSelectionModel"
         },
         {
-         "$ sortInfo" : "{ field : 'act_when', direction: 'DESC' }",
+         "$ sortInfo" : "{ field : 'id', direction: 'DESC' }",
          "$ xns" : "Roo.data",
          "* prop" : "dataSource",
          "items" : [
