@@ -245,7 +245,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         }
         
         if($ce->max_duplicate == -1) {
-            // no limit -> OK
+            // no limit
             return false;
         }
 
@@ -256,12 +256,12 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
         $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
         if($cn->count > $ce->max_duplicate) {
-            // exceed the limit -> not OK
+            // exceed the limit
             return true;
         }
 
-        // not exceed the limit -> OK
-        return true;
+        // not exceed the limit
+        return false;
     }
     
     function applyFilters($q, $au, $roo)
