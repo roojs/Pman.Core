@@ -235,7 +235,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
 
-    function exceedsDuplicateLimit()
+    function reachEmailLimit()
     {
         $ce = DB_DataObject::factory('core_email');
         if(!$ce->get($this->email_id)) {
