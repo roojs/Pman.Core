@@ -1587,7 +1587,7 @@ Pman.Dialog.CoreEmail = {
        dataSource : {
         xtype : 'Store',
         remoteSort : true,
-        sortInfo : { field : 'id', direction: 'DESC' },
+        sortInfo : { field : 'act_when', direction: 'DESC' },
         listeners : {
          beforeload : function (_self, options)
           {
