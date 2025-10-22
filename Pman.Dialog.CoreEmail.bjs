@@ -369,6 +369,14 @@
                     }
                    ],
                    "xtype" : "Column"
+                  },
+                  {
+                   "$ xns" : "Roo.form",
+                   "allowBlank" : false,
+                   "fieldLabel" : "From",
+                   "name" : "from_name",
+                   "width" : 300,
+                   "xtype" : "Number"
                   }
                  ],
                  "xtype" : "Row"
