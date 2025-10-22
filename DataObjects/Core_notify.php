@@ -235,13 +235,18 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
     }
 
-    function addFromEmailTemplateConds($emailTemplateName)
-    {
-        return array();
-    }
-
     function isDuplicate()
     {
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->email_id = $this->email_id;
+        $cn->person_id = $this->person_id;
+        $cn->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != '' AND core_notify.sent > '1000-01-01 00:00:00'"); // successfully sent
+        $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
+        $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
+        if($cn->count()) {
+            return true;
+        }
+
         return false;
     }
     
