@@ -150,7 +150,7 @@ class Pman_Core_DataObjects_Core_notify_recur extends DB_DataObject
 
     function generateNotificationsSingle()
     {
-        $notifytimes = $this->notifyTimes(2);
+        $notifytimes = $this->notifyTimes(7);
         
         $newSearch = DB_DataObject::factory('core_notify');
         $newSearch->whereAdd( 'act_start > NOW()');
