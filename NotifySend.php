@@ -263,6 +263,7 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
+        // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
 
         if($w->reachEmailLimit()) {
