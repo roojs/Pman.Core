@@ -88,15 +88,16 @@ class Pman_Core_Prune extends Pman
         $this->archiveEvents($inM);
     }
       
-    function pruneEventDupes($inM)
+    function pruneEventDupes( )
     {
         /// deletes events on 'NOTIFY' that are dupes..
+        // and when notify sent is also there..
         $f = DB_DataObject::Factory('Events');
         $f->selectAdd();
         $f->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
-        $f->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
+        $f->whereAdd("action in( 'NOTIFY', 'NOTIFYSENT') and event_when < NOW() - INTERVAL 1 WEEK");
         $f->groupBy('on_id, on_table');
-        $f->having("mm > 2");
+        $f->having("mm > 1");
         $f->orderBy('mm desc') ;
         $f->limit(10000);
         $ar = $f->fetchAll();
@@ -104,7 +105,7 @@ class Pman_Core_Prune extends Pman
         foreach($ar as $f) {
             
             $q = DB_DataObject::Factory('Events');
-            $q->query("DELETE FROM Events where 
+            $q->query("DELETE FROM Events where
                   action = 'NOTIFY'
                   AND
                   on_id = {$f->on_id}
@@ -115,6 +116,7 @@ class Pman_Core_Prune extends Pman
                   
             ");
         }
+        
     }
         // clean up archiver 
     
