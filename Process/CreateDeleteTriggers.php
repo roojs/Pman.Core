@@ -47,6 +47,8 @@ class Pman_Core_Process_CreateDeleteTriggers extends Pman_Core_Cli
         $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
         $this->loadIniFiles();
         $this->createDeleteTriggers();
+
+        $this->jok('DONE');
     }
     
     function loadIniFiles()
