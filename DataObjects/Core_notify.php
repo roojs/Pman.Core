@@ -249,9 +249,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return false;
         }
 
-        var_dump($ce->daily_email_limit);
-        die('test');
-
         $cn = DB_DataObject::factory('core_notify');
         $cn->email_id = $this->email_id; // same email template
         $cn->person_id = $this->person_id; // same person
