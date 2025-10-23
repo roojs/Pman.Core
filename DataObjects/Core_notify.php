@@ -240,7 +240,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $ce = DB_DataObject::factory('core_email');
         if(!$ce->get($this->email_id)) {
             // 0 as email_id
-            // no linked to any email template
+            // not linked to any email template
             return false;
         }
         
