@@ -171,6 +171,18 @@ Pman.Dialog.CoreViewWebsite = {
       },
       xns : Roo,
       '|xns' : 'Roo'
+     },
+     {
+      xtype : 'Button',
+      text : _this._strings['a60852f204ed8028c1c58808b746d115'] /* Ok */,
+      listeners : {
+       click : function (_self, e)
+        {
+            _this.dialog.hide();
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
      }
     ],
     items  : [

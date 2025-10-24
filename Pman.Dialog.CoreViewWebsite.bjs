@@ -38,6 +38,20 @@
      },
      "text" : "Ok",
      "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
+       "    _this.dialog.hide();",
+       "}"
+      ]
+     },
+     "text" : "Ok",
+     "xtype" : "Button"
     }
    ],
    "listeners" : {
