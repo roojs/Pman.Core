@@ -55,7 +55,7 @@ class Pman_Core_ViewWebsite extends Pman
 
             $ret = $dom->saveXML();
         }
-        echo $ret;
+        echo "<pre>" . htmlspecialchars($ret) . "</pre>";
         exit;
     }
 }
