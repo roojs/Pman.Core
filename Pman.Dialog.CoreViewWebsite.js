@@ -112,14 +112,20 @@ Pman.Dialog.CoreViewWebsite = {
                              var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+|&lt;https?:\/\/[^\s<>"']+|&lt;ftp:\/\/[^\s<>"']+|&lt;www\.[^\s<>"']+)/gi;
                             
                             var withLink = escaped.replace(urlRegex, function(url) {
+                                // Handle HTML-escaped URLs
+                                var cleanUrl = url;
+                                if (url.startsWith('&lt;')) {
+                                    cleanUrl = url.substring(4); // Remove &lt; prefix
+                                }
+                                
                                 // Ensure protocol is present for www URLs
-                                var href = url;
-                                if (url.toLowerCase().startsWith('www.')) {
-                                    href = 'http://' + url;
+                                var href = cleanUrl;
+                                if (cleanUrl.toLowerCase().startsWith('www.')) {
+                                    href = 'http://' + cleanUrl;
                                 }
                                 
                                 // Create clickable link that opens in new tab
-                                return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
+                                return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + cleanUrl + '</a>';
                             });
                             
                           _this.websiteViewPanel.setContent('<pre style="white-space: pre-wrap;">' + withLink + '</pre>');
