@@ -112,8 +112,6 @@ Pman.Dialog.CoreViewWebsite = {
                             var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
                             
                             var withLink = escaped.replace(urlRegex, function(url) {
-                              Roo.log("RUL");
-                              Roo.log(url);
                                 // Ensure protocol is present for www URLs
                                 var href = url;
                                 if (url.toLowerCase().startsWith('www.')) {
@@ -124,7 +122,7 @@ Pman.Dialog.CoreViewWebsite = {
                                 return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
                             });
                             
-                          _this.websiteViewPanel.setContent('<pre style="white-space: pre-wrap;">' + escaped + '</pre>');
+                          _this.websiteViewPanel.setContent('<pre style="white-space: pre-wrap;">' + withLink + '</pre>');
                       });
                   } else {
                       return res.text().then(function(html) {
