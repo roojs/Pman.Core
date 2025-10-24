@@ -109,7 +109,7 @@ Pman.Dialog.CoreViewWebsite = {
                             .replace(/>/g, '&gt;');
                             
                             // URL regex pattern that matches http, https, ftp, and www URLs
-                            var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)(?=&lt;|)/gi;
+                            var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)(?=&lt;)/gi;
                             
                             var withLink = escaped.replace(urlRegex, function(url) {
                                 // Ensure protocol is present for www URLs
