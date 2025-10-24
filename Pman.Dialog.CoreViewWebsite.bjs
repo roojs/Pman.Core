@@ -109,6 +109,8 @@
      "                      var urlRegex = /(https?:\\/\\/[^\\s<>\"']+|ftp:\\/\\/[^\\s<>\"']+|www\\.[^\\s<>\"']+)/gi;",
      "                      ",
      "                      var withLink = escaped.replace(urlRegex, function(url) {",
+     "                        Roo.log(\"RUL\");",
+     "                        Roo.log(url);",
      "                          // Ensure protocol is present for www URLs",
      "                          var href = url;",
      "                          if (url.toLowerCase().startsWith('www.')) {",
