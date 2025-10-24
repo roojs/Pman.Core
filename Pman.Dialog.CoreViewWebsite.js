@@ -100,7 +100,7 @@ Pman.Dialog.CoreViewWebsite = {
                                 // Create clickable link that opens in new tab
                                 return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
                             });
-                          _this.websiteViewPanel.setContent(formatted);
+                          _this.websiteViewPanel.setContent(withLink);
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
