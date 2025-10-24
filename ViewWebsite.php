@@ -54,8 +54,6 @@ class Pman_Core_ViewWebsite extends Pman
 
             $ret = $dom->saveXML();
         }
-        var_dump($ret);
-        die('test');
         echo $ret;
         exit;
     }
