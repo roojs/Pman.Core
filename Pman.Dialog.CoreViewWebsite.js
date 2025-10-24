@@ -94,12 +94,9 @@ Pman.Dialog.CoreViewWebsite = {
                       return res.text().then(function(xml) {
                           Roo.log("XML");
                           Roo.log(xml);
-                          var parser = new DOMParser();
-                          var xmlDoc = parser.parseFromString(xml.trim(), "application/xml");
-      
-                          // Serialize back to string with formatting
-                          var serializer = new XMLSerializer();
-                          var prettyXML = serializer.serializeToString(xmlDoc);
+                          
+                          // Pretty print XML using custom function
+                          var prettyXML = _this.prettyPrintXML(xml);
                           
                           var escaped = prettyXML
                             .replace(/&/g, '&amp;')
