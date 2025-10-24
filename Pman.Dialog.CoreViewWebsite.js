@@ -92,8 +92,6 @@ Pman.Dialog.CoreViewWebsite = {
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
-                          Roo.log("XML");
-                          Roo.log(xml);
                           var parser = new DOMParser();
                           var xmlDoc = parser.parseFromString(xml.trim(), "application/xml");
       
