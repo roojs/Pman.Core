@@ -73,9 +73,6 @@ class Pman_Core_ViewWebsite extends Pman
      */
     private function prettyPrintXML($xmlContent) 
     {
-        if(empty($xmlContent)) {
-            return "AAAA";
-        }
         try {
             $dom = new DOMDocument();
             $dom->preserveWhiteSpace = false;
