@@ -48,10 +48,10 @@ class Pman_Core_ViewWebsite extends Pman
         header("Content-Type: $contentType");
         curl_close($ch);
         
-        // Pretty print XML for various XML content types
-        if (preg_match('/\bxml\b/i', $contentType) || $this->isXMLContent($body)) {
-            $ret = $this->prettyPrintXML($body);
-        }
+        // // Pretty print XML for various XML content types
+        // if (preg_match('/\bxml\b/i', $contentType) || $this->isXMLContent($body)) {
+        //     $ret = $this->prettyPrintXML($body);
+        // }
         
         echo $ret;
         exit;
