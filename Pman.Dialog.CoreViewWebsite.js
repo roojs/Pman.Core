@@ -86,6 +86,15 @@ Pman.Dialog.CoreViewWebsite = {
      
      return result;
  },
+ 
+ /**
+  * Check if content is XML by examining the content itself
+  */
+ isXMLContent: function(response) {
+     // This is a placeholder - in practice, you'd need to peek at the response body
+     // For now, we'll rely on Content-Type detection
+     return false;
+ },
 
  show : function(data, cb)
  {
@@ -163,7 +172,7 @@ Pman.Dialog.CoreViewWebsite = {
                           var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
                           _this.websiteViewPanel.setContent(formatted);
                       });
-                  } else if (contentType && contentType.includes('application/rss+xml')) { 
+                  } else if (contentType && (contentType.includes('xml') || _this.isXMLContent(res))) { 
                       return res.text().then(function(xml) {
                           Roo.log("XML");
                           Roo.log(xml);
