@@ -36,7 +36,7 @@
        "}"
       ]
      },
-     "text" : "Ok",
+     "text" : "Open in new window",
      "xtype" : "Button"
     },
     {
@@ -178,6 +178,7 @@
  "permname" : "",
  "strings" : {
   "1e35fe802ad1aaf4414fd68ad3157675" : "View Website",
+  "2959ce8aed67d6b6e6f5cefd601f1091" : "Open in new window",
   "a60852f204ed8028c1c58808b746d115" : "Ok"
  },
  "title" : ""
