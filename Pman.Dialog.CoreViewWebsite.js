@@ -14,25 +14,6 @@ Pman.Dialog.CoreViewWebsite = {
  dialog : false,
  callback:  false,
  
- /**
-  * Convert URLs in text to clickable links
-  */
- convertUrlsToLinks: function(text) {
-     // URL regex pattern that matches http, https, ftp, and www URLs
-     var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
-     
-     return text.replace(urlRegex, function(url) {
-         // Ensure protocol is present for www URLs
-         var href = url;
-         if (url.toLowerCase().startsWith('www.')) {
-             href = 'http://' + url;
-         }
-         
-         // Create clickable link that opens in new tab
-         return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
-     });
- },
- 
  show : function(data, cb)
  {
   if (!this.dialog) {
