@@ -167,7 +167,7 @@ Pman.Dialog.CoreViewWebsite = {
       listeners : {
        click : function (_self, e)
         {
-            _this.dialog.hide();
+            window.open(_this.data.url, "_blank");
         }
       },
       xns : Roo,
