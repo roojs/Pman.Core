@@ -73,8 +73,6 @@ class Pman_Core_ViewWebsite extends Pman
      */
     private function prettyPrintXML($xmlContent) 
     {
-        var_dump($xmlContent);
-        die('test');
         if(empty($xmlContent)) {
             return "AAAA";
         }
