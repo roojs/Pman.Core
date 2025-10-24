@@ -13,88 +13,6 @@ Pman.Dialog.CoreViewWebsite = {
 
  dialog : false,
  callback:  false,
- 
- /**
-  * Pretty print XML content with proper indentation
-  */
- prettyPrintXML: function(xmlString) {
-     try {
-         // Parse XML
-         var parser = new DOMParser();
-         var xmlDoc = parser.parseFromString(xmlString.trim(), "application/xml");
-         
-         // Check for parsing errors
-         var parseError = xmlDoc.getElementsByTagName("parsererror");
-         if (parseError.length > 0) {
-             return xmlString; // Return original if parsing fails
-         }
-         
-         // Format XML with indentation
-         return this.formatXML(xmlDoc.documentElement, 0);
-     } catch (e) {
-         return xmlString; // Return original if any error occurs
-     }
- },
- 
- /**
-  * Recursively format XML elements with indentation
-  */
- formatXML: function(node, indentLevel) {
-     var indent = "  ".repeat(indentLevel);
-     var result = "";
-     
-     if (node.nodeType === Node.ELEMENT_NODE) {
-         // Opening tag
-         result += indent + "<" + node.tagName;
-         
-         // Add attributes
-         for (var i = 0; i < node.attributes.length; i++) {
-             var attr = node.attributes[i];
-             result += " " + attr.name + '="' + attr.value + '"';
-         }
-         
-         // Check if element has children
-         var hasChildren = false;
-         var textContent = "";
-         var childElements = [];
-         
-         for (var i = 0; i < node.childNodes.length; i++) {
-             var child = node.childNodes[i];
-             if (child.nodeType === Node.ELEMENT_NODE) {
-                 hasChildren = true;
-                 childElements.push(child);
-             } else if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
-                 textContent = child.textContent.trim();
-             }
-         }
-         
-         if (hasChildren) {
-             // Element has child elements
-             result += ">\n";
-             for (var i = 0; i < childElements.length; i++) {
-                 result += this.formatXML(childElements[i], indentLevel + 1);
-             }
-             result += indent + "</" + node.tagName + ">\n";
-         } else if (textContent) {
-             // Element has text content
-             result += ">" + textContent + "</" + node.tagName + ">\n";
-         } else {
-             // Self-closing element
-             result += "/>\n";
-         }
-     }
-     
-     return result;
- },
- 
- /**
-  * Check if content is XML by examining the content itself
-  */
- isXMLContent: function(response) {
-     // This is a placeholder - in practice, you'd need to peek at the response body
-     // For now, we'll rely on Content-Type detection
-     return false;
- },
 
  show : function(data, cb)
  {
@@ -172,13 +90,16 @@ Pman.Dialog.CoreViewWebsite = {
                           var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
                           _this.websiteViewPanel.setContent(formatted);
                       });
-                  } else if (contentType && (contentType.includes('xml') || _this.isXMLContent(res))) { 
+                  } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
                           Roo.log("XML");
                           Roo.log(xml);
-                          
-                          // Pretty print XML using custom function
-                          var prettyXML = _this.prettyPrintXML(xml);
+                          var parser = new DOMParser();
+                          var xmlDoc = parser.parseFromString(xml.trim(), "application/xml");
+      
+                          // Serialize back to string with formatting
+                          var serializer = new XMLSerializer();
+                          var prettyXML = serializer.serializeToString(xmlDoc);
                           
                           var escaped = prettyXML
                             .replace(/&/g, '&amp;')
