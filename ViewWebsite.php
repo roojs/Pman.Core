@@ -53,7 +53,7 @@ class Pman_Core_ViewWebsite extends Pman
             $dom = new DOMDocument();
             $dom->preserveWhiteSpace = false;
             $dom->formatOutput = true;
-            $dom->loadXML($xmlContent);
+            $dom->loadXML($body);
             $ret = $dom->saveXML();
         }
         
