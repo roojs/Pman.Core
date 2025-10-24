@@ -143,9 +143,9 @@ class Pman_Core_Process_PruneCheck extends Pman_Core_Cli
         
         $events_dup->selectAdd();
         $events_dup->selectAdd("on_id, on_table, min(id) as min_id, max(id) as max_id, count(*) as mm");
-        $events_dup->whereAdd("action = 'NOTIFY' and event_when < NOW() - INTERVAL 1 WEEK");
+        $events_dup->whereAdd("action IN( 'NOTIFY', 'NOTIFYSENT') and event_when < NOW() - INTERVAL 1 WEEK");
         $events_dup->groupBy('on_id, on_table');
-        $events_dup->having("mm > 2");
+        $events_dup->having("mm > 1");
         $events_dup->orderBy('mm desc');
        
         
