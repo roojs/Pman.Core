@@ -92,6 +92,10 @@ Pman.Dialog.CoreViewWebsite = {
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
+                          if(xml == ''){
+                              _this.websiteViewPanel.setContent('Empty xml?');
+                              return;
+                          }
                           var parser = new DOMParser();
                           var xmlDoc = parser.parseFromString(xml.trim(), "application/xml");
       
