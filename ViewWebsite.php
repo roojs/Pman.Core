@@ -50,7 +50,11 @@ class Pman_Core_ViewWebsite extends Pman
         
         // Pretty print XML for various XML content types
         if (preg_match('/\bxml\b/i', $contentType) || $this->isXMLContent($body)) {
-            $ret = $this->prettyPrintXML($body);
+            $dom = new DOMDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            $dom->loadXML($xmlContent);
+            $ret = $dom->saveXML();
         }
         
         echo $ret;
