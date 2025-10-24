@@ -85,6 +85,8 @@
      "            if (contentType && contentType.includes('application/json')) {",
      "                return res.json().then(function(json) {",
      "                    var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';",
+     "                      // URL regex pattern that matches http, https, ftp, and www URLs",
+     "                      var urlRegex = /(https?:\\/\\/[^\\s<>\"']+|ftp:\\/\\/[^\\s<>\"']+|www\\.[^\\s<>\"']+)/gi;",
      "                      var withLink = formatted.replace(urlRegex, function(url) {",
      "                          // Ensure protocol is present for www URLs",
      "                          var href = url;",
