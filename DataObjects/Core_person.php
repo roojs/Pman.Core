@@ -3,6 +3,7 @@
  * Table Definition for Person
  */
 class_exists('DB_DataObject') ? '' : require_once 'DB/DataObject.php';
+require_once 'Mail/RFC822.php';
 
 
 class Pman_Core_DataObjects_Core_person extends DB_DataObject 
@@ -219,11 +220,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function getEmailFrom()
     {
-        if (empty($this->name)) {
-            return $this->email;
-        }
-        
-        return '"' . addslashes($this->name) . '" <' . $this->email . '>';
+        return Mail_RFC822::create($this->name, $this->email)->toMime();
     }
     
     function toEventString() 

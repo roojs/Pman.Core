@@ -537,10 +537,7 @@ class Pman_Core_NotifySend extends Pman
 
 
                             $fromUser = $sendAsUser;
-                            $email['headers']['From'] = 
-                                empty($fromUser->name) ? 
-                                $fromUser->email:
-                                "{$fromUser->name} <{$fromUser->email}>";
+                            $email['headers']['From'] = Mail_RFC822::create($fromUser->name, $fromUser->email)->toMime();
                         }
             
                         $s = $fromUser->server();
