@@ -74,7 +74,7 @@ class Pman_Core_ViewWebsite extends Pman
     private function prettyPrintXML($xmlContent) 
     {
         if(empty($xmlContent)) {
-            return $xmlContent;
+            return "AAAA";
         }
         try {
             $dom = new DOMDocument();
