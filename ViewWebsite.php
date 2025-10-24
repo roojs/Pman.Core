@@ -41,10 +41,20 @@ class Pman_Core_ViewWebsite extends Pman
             $contentType = trim($matches[1]);
         }
 
+        $ret = $body;
+
         // Set Content-Type header for browser
         header("Content-Type: $contentType");
         curl_close($ch);
-        echo $body;
+        if($contentType == 'application/rss+xml') {
+            $dom = new DOMDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            $dom->loadXML($body);
+
+            $ret = $dom->saveXML();
+        }
+        echo $ret;
         exit;
     }
 }
