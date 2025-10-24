@@ -443,8 +443,6 @@ class Pman_Core_NotifySend extends Pman
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
         }
-
-        $isTimeOut = false;
         
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
                         
@@ -618,13 +616,7 @@ class Pman_Core_NotifySend extends Pman
                 
             }
             
-            // Set up custom error handler to suppress only stream_socket_client connection timeout warnings
-            $original_error_handler = set_error_handler(array($this, 'customErrorHandler'));
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
-            // Restore original error handler
-            if (isset($original_error_handler)) {
-                set_error_handler($original_error_handler);
-            }
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
@@ -676,10 +668,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = -1; 
-                if(strpos($res->toString(), 'Failed to connect socket: Connection timed out') !== false) {
-                    $isTimeOut = true;
-                }
+                $code = -1;
             }
             
             if ($code < 0) {
@@ -713,10 +702,6 @@ class Pman_Core_NotifySend extends Pman
             $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
-            }
-
-            if($isTimeOut) {
-                $errmsg .= " (Connection timed out)";
             }
             
             $ev = $this->addEvent('NOTIFYFAIL', $w,  "RETRY TIME EXCEEDED - " .  $errmsg);
@@ -876,20 +861,6 @@ class Pman_Core_NotifySend extends Pman
         if ($this->debug) { 
             echo $message ."\n";
         }
-    }
-    
-    function customErrorHandler($errno, $errstr, $errfile, $errline, $errcontext = null)
-    {
-        // Suppress only stream_socket_client connection timeout warnings
-        if ($errno == E_WARNING && 
-            strpos($errstr, 'stream_socket_client(): Unable to connect') !== false &&
-            strpos($errstr, '(Connection timed out)') !== false) {
-            // Suppress only connection timeout warnings
-            return true;
-        }
-        
-        // Let all other errors be handled normally (including connection refused, etc.)
-        return false;
     }
     
     function errorHandler($msg)
