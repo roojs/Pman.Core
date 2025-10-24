@@ -17,7 +17,6 @@ class Pman_Core_ViewWebsite extends Pman
     
     function get($base='', $opts = array())
     {
-        $this->post($base);
         die('invalid get');
     }
 
