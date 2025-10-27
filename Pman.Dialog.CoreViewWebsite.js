@@ -89,19 +89,7 @@ Pman.Dialog.CoreViewWebsite = {
                   if (contentType && contentType.includes('application/json')) {
                       return res.json().then(function(json) {
                           var formatted = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
-                            // URL regex pattern that matches http, https, ftp, and www URLs
-                            var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)/gi;
-                            var withLink = formatted.replace(urlRegex, function(url) {
-                                // Ensure protocol is present for www URLs
-                                var href = url;
-                                if (url.toLowerCase().startsWith('www.')) {
-                                    href = 'http://' + url;
-                                }
-                                
-                                // Create clickable link that opens in new tab
-                                return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
-                            });
-                          _this.websiteViewPanel.setContent(withLink);
+                          _this.websiteViewPanel.setContent(formatted);
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
@@ -120,22 +108,7 @@ Pman.Dialog.CoreViewWebsite = {
                             .replace(/&/g, '&amp;')
                             .replace(/</g, '&lt;')
                             .replace(/>/g, '&gt;');
-                            
-                            // URL regex pattern that matches http, https, ftp, and www URLs
-                            var urlRegex = /(https?:\/\/[^\s<>"']+|ftp:\/\/[^\s<>"']+|www\.[^\s<>"']+)(?=&lt;)/gi;
-                            
-                            var withLink = escaped.replace(urlRegex, function(url) {
-                                // Ensure protocol is present for www URLs
-                                var href = url;
-                                if (url.toLowerCase().startsWith('www.')) {
-                                    href = 'http://' + url;
-                                }
-                                
-                                // Create clickable link that opens in new tab
-                                return '<a href="' + href + '" target="_blank" style="color: #0066cc; text-decoration: underline;">' + url + '</a>';
-                            });
-                            
-                          _this.websiteViewPanel.setContent('<pre style="white-space: pre-wrap;">' + withLink + '</pre>');
+                          _this.websiteViewPanel.setContent('<pre style="white-space: pre-wrap;">' + escaped + '</pre>');
                       });
                   } else {
                       return res.text().then(function(html) {
