@@ -119,7 +119,8 @@ class Pman_Core_NotifySend extends Pman
     }
    
     function get($id,$opts=array())
-    {   
+    {
+        
         // DB_DataObject::debugLevel(5);
         //if ($this->database_is_locked()) {
         //    die("LATER - DATABASE IS LOCKED");
@@ -146,7 +147,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
-        if (!$force &&  $w->server_id != $this->server->id) {
+         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
@@ -263,7 +264,14 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
+        // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
+
+        if($w->reachEmailLimit()) {
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -309,6 +317,20 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+
+        if(empty($email['headers']['X-Notify-Id'])) {
+            $email['headers']['X-Notify-Id'] = $w->id;
+        }
+
+        if(empty($email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
+            $email['headers']['X-Notify-To-Id'] = $p->id;
+        }
+
+        if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
+            $email['headers']['X-Notify-Recur-Id'] = $w->onid;
+        }
+
+
         
         
             
@@ -436,7 +458,6 @@ class Pman_Core_NotifySend extends Pman
         
         $fail = false;
         require_once 'Mail.php';
-        
         
         $this->server->initHelo();
         
@@ -617,6 +638,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
@@ -667,7 +689,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = -1; 
+                $code = -1;
             }
             
             if ($code < 0) {
@@ -748,7 +770,6 @@ class Pman_Core_NotifySend extends Pman
         
          
         $this->errorHandler($ev->remarks);
-
         
     }
     function mxs($fqdn)

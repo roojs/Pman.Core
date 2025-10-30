@@ -15,7 +15,7 @@ class Pman_Core_Prune extends Pman
     static $cli_opts = array(
         'months' => array(
             'desc' => 'How many months',
-            'default' => 6,
+            'default' => 4,
             'short' => 'm',
             'min' => 1,
             'max' => 1,
