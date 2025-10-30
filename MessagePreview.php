@@ -201,7 +201,8 @@ class Pman_Core_MessagePreview extends Pman
             'person_id'     => $this->authUser->id,
             'person_table'  => 'Person',
             'act_when'      => $cn->sqlValue("NOW()"),
-            'act_start'     => $cn->sqlValue("NOW()")
+            'act_start'     => $cn->sqlValue("NOW()"),
+            'email_id'      => $core_email->id
         ));
         
         $cn->insert();
