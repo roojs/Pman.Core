@@ -264,7 +264,14 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
+        // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
+
+        if($w->reachEmailLimit()) {
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -310,6 +317,20 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+
+        if(empty($email['headers']['X-Notify-Id'])) {
+            $email['headers']['X-Notify-Id'] = $w->id;
+        }
+
+        if(empty($email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
+            $email['headers']['X-Notify-To-Id'] = $p->id;
+        }
+
+        if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
+            $email['headers']['X-Notify-Recur-Id'] = $w->onid;
+        }
+
+
         
         
             
