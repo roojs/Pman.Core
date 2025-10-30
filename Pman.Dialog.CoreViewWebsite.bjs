@@ -32,6 +32,20 @@
       "click" : [
        "function (_self, e)",
        "{",
+       "    window.open(_this.data.url, \"_blank\");",
+       "}"
+      ]
+     },
+     "text" : "Open in new window",
+     "xtype" : "Button"
+    },
+    {
+     "$ xns" : "Roo",
+     "* prop" : "buttons[]",
+     "listeners" : {
+      "click" : [
+       "function (_self, e)",
+       "{",
        "    _this.dialog.hide();",
        "}"
       ]
@@ -89,6 +103,10 @@
      "                });",
      "            } else if (contentType && contentType.includes('application/rss+xml')) { ",
      "                return res.text().then(function(xml) {",
+     "                    if(xml == ''){",
+     "                        _this.websiteViewPanel.setContent('Empty xml?');",
+     "                        return;",
+     "                    }",
      "                    var parser = new DOMParser();",
      "                    var xmlDoc = parser.parseFromString(xml.trim(), \"application/xml\");",
      "",
@@ -133,6 +151,7 @@
  "permname" : "",
  "strings" : {
   "1e35fe802ad1aaf4414fd68ad3157675" : "View Website",
+  "2959ce8aed67d6b6e6f5cefd601f1091" : "Open in new window",
   "a60852f204ed8028c1c58808b746d115" : "Ok"
  },
  "title" : ""
