@@ -14,7 +14,6 @@
  */
 
 require_once 'Pman/Core/Cli.php';
-require_once 'Pman/Core/UpdateDatabase/MysqlLinks.php';
 
 class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
 {
@@ -29,7 +28,9 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         )
     );
     
-    var $mysqlLinks;
+    var $dburl;
+    var $schema;
+    var $links = array();
     var $target_table = '';
     
     function getAuth() 
@@ -44,21 +45,74 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
     function get($m="", $opts=array())
     {
         $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
-        // Create MysqlLinks instance to reuse its methods
-        // We'll manually call loadIniFiles() to avoid constructor side effects
-        $this->mysqlLinks = new Pman_Core_UpdateDatabase_MysqlLinks();
+        $this->loadIniFiles();
         $this->createDeleteTriggers();
+    }
+    
+    function loadIniFiles()
+    {
+        // will create the combined ini cache file for the running user.
+        
+        $ff = HTML_FlexyFramework::get();
+        $ff->generateDataobjectsCache(true);
+        $this->dburl = parse_url($ff->database);
+        
+        $dbini = 'ini_'. basename($this->dburl['path']);
+        
+        
+        $iniCache = isset( $ff->PDO_DataObject) ?  $ff->PDO_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
+        
+        if (strpos($iniCache, PATH_SEPARATOR) !== false) {
+            echo "SKIP links code - cached ini file has not been created\n";
+            return;
+        }
+        $this->schema = parse_ini_file($iniCache, true);
+        $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
+        
+        $lcfg = &$this->links;
+        $cfg = empty($ff->DB_DataObject) ? array() : $ff->DB_DataObject;
+        
+        if (!empty($cfg['table_alias'])) {
+            $ta = $cfg['table_alias'];
+            foreach($lcfg  as $k=>$v) {
+                $kk = $k;
+                if (isset($ta[$k])) {
+                    $kk = $ta[$k];
+                    if (!isset($lcfg[$kk])) {
+                        $lcfg[$kk] = array();
+                    }
+                }
+                foreach($v as $l => $t_c) {
+                    $bits = explode(':',$t_c);
+                    $tt = isset($ta[$bits[0]]) ? $ta[$bits[0]] : $bits[0];
+                    if ($tt == $bits[0] && $kk == $k) {
+                        continue;
+                    }
+                    
+                    $lcfg[$kk][$l] = $tt .':'. $bits[1];
+                    
+                    
+                }
+                
+            }
+        }
+         
+        
     }
     
     function createDeleteTriggers()
     {
-        // Reuse the createDeleteTriggers logic from MysqlLinks
-        // but add target_table filtering for CLI option
         
-        // create a list of source/targets from $this->mysqlLinks->links
+        // this should only be enabled if the project settings are configured..
+        
+        // delete triggers on targets -
+        // if you delete a company, and a person points to it, then it should fire an error...
+        
+        // create a list of source/targets from $this->links
+        
         $revmap = array();
-        foreach($this->mysqlLinks->links as $tbl => $map) {
-            if (!isset($this->mysqlLinks->schema[$tbl])) {
+        foreach($this->links as $tbl => $map) {
+            if (!isset($this->schema[$tbl])) {
                 continue;
             }
             foreach($map as $k =>$v) {
@@ -74,14 +128,14 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         
         foreach($revmap as $target_table => $sources) {
             
-            // If specific table requested, skip others (target_table option only for CreateDeleteTriggers)
+            // If specific table requested, skip others
             if (!empty($this->target_table) && $target_table !== $this->target_table) {
                 continue;
             }
             
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
             
-            if (!isset($this->mysqlLinks->schema[$target_table])) {
+            if (!isset($this->schema[$target_table])) {
                 echo "Skip $target_table  = table does not exist in schema\n";
                 continue;
             }
@@ -116,7 +170,7 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
                 ";
             }
             
-            $ar = $this->mysqlLinks->listTriggerFunctions($target_table, 'delete');
+            $ar = $this->listTriggerFunctions($target_table, 'delete');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn( OLD.{$col});
@@ -140,5 +194,50 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         } else {
             echo "Completed creating delete triggers for all tables\n";
         }
+    }
+    
+    /**
+     * check the information schema for any methods that match the trigger criteria.
+     *   -- {tablename}_trigger_{optional_string}_before_delete_{column_name}(NEW.column)
+     *   -- {tablename}_trigger_{optional_string}_before_update_{column_name}(OLD.column, NEW.column}
+     *   -- {tablename}_trigger_{optional_string}_before_insert_{column_name}(OLD.column}
+     *
+     *
+     */
+    // type = update/insert/delete
+    
+    function listTriggerFunctions($table, $type)
+    {
+        static $cache = array();
+        if (!isset($cache[$table])) {
+            $cache[$table] = array();
+            $q = DB_DAtaObject::factory('core_enum');
+            $q->query("SELECT
+                            SPECIFIC_NAME
+                        FROM
+                            information_schema.ROUTINES
+                        WHERE
+                            ROUTINE_SCHEMA = '{$q->escape($q->database())}'
+                            AND
+                            ROUTINE_NAME LIKE '" . $q->escape("{$table}_trigger_")  . "%'
+                            AND
+                            ROUTINE_TYPE = 'PROCEDURE'
+                            
+            ");
+            while ($q->fetch()) {
+                $cache[$table][] = $q->SPECIFIC_NAME;
+            }
+            
+        }
+        // now see which of the procedures match the specification..
+        $ret = array();
+        foreach($cache[$table] as $cname) {
+            $bits = explode("_before_{$type}_", $cname);
+            if (count($bits) < 2) {
+                continue;
+            }
+            $ret[$cname] = $bits[1];
+        }
+        return $ret;
     }
 }
