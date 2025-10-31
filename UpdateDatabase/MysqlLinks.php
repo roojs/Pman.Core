@@ -42,8 +42,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     var $schema;
     var $links = array();
     
-    function __construct()
+    function __construct($onlyConstruct = false)
     {
+        if($onlyConstruct) {
+            return;
+        }
           
         $this->loadIniFiles();
         $this->updateTableComments();
