@@ -52,8 +52,12 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             }
             
             if(!file_exists($path)){
-                $wrong_encoded = mb_convert_encoding($_REQUEST['bodytext'], 'ISO-8859-1', 'UTF-8');
-                file_put_contents($path, $wrong_encoded); 
+                $double_encoded = mb_convert_encoding(
+                    mb_convert_encoding($_REQUEST['bodytext'], 'ISO-8859-1', 'UTF-8'),
+                    'UTF-8',
+                    'ISO-8859-1'
+                );
+                file_put_contents($path, $double_encoded); 
             //    file_put_contents($path, $_REQUEST['bodytext']); 
             }
             require_once 'File/Convert.php';
