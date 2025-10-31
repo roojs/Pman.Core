@@ -52,57 +52,6 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         $this->createDeleteTriggers();
     }
     
-    function loadIniFiles()
-    {
-        // will create the combined ini cache file for the running user.
-        
-        $ff = HTML_FlexyFramework::get();
-        $ff->generateDataobjectsCache(true);
-        $this->dburl = parse_url($ff->database);
-        
-        $dbini = 'ini_'. basename($this->dburl['path']);
-        
-        
-        $iniCache = isset( $ff->PDO_DataObject) ?  $ff->PDO_DataObject['schema_location'] : $ff->DB_DataObject[$dbini];
-        
-        if (strpos($iniCache, PATH_SEPARATOR) !== false) {
-            echo "SKIP links code - cached ini file has not been created\n";
-            return;
-        }
-        $this->schema = parse_ini_file($iniCache, true);
-        $this->links = parse_ini_file(preg_replace('/\.ini$/', '.links.ini', $iniCache), true);
-        
-        $lcfg = &$this->links;
-        $cfg = empty($ff->DB_DataObject) ? array() : $ff->DB_DataObject;
-        
-        if (!empty($cfg['table_alias'])) {
-            $ta = $cfg['table_alias'];
-            foreach($lcfg  as $k=>$v) {
-                $kk = $k;
-                if (isset($ta[$k])) {
-                    $kk = $ta[$k];
-                    if (!isset($lcfg[$kk])) {
-                        $lcfg[$kk] = array();
-                    }
-                }
-                foreach($v as $l => $t_c) {
-                    $bits = explode(':',$t_c);
-                    $tt = isset($ta[$bits[0]]) ? $ta[$bits[0]] : $bits[0];
-                    if ($tt == $bits[0] && $kk == $k) {
-                        continue;
-                    }
-                    
-                    $lcfg[$kk][$l] = $tt .':'. $bits[1];
-                    
-                    
-                }
-                
-            }
-        }
-         
-        
-    }
-    
     function createDeleteTriggers()
     {
         
