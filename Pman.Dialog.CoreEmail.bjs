@@ -1048,6 +1048,7 @@
                   {
                    "$ xns" : "Roo.form",
                    "Boolean readOnly" : true,
+                   "String actionMode" : "fieldEl",
                    "allowBlank" : true,
                    "fieldLabel" : "Test Class <BR/> (for system reference only)",
                    "listeners" : {

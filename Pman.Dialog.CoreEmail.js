@@ -1426,6 +1426,7 @@ Pman.Dialog.CoreEmail = {
                 items  : [
                  {
                   xtype : 'TextField',
+                  actionMode : 'fieldEl',
                   allowBlank : true,
                   fieldLabel : _this._strings['b337c8a67244afb6551ee1f8f9717676'] /* Test Class <BR/> (for system reference only) */,
                   name : 'test_class',
