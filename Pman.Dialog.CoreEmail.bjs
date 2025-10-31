@@ -1063,6 +1063,7 @@
                   {
                    "$ xns" : "Roo.form",
                    "Boolean allowDecimals" : false,
+                   "String actionMode" : "fieldEl",
                    "allowBlank" : false,
                    "fieldLabel" : "Daily Email Limit",
                    "listeners" : {

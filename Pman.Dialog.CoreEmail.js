@@ -1440,6 +1440,7 @@ Pman.Dialog.CoreEmail = {
                 items  : [
                  {
                   xtype : 'NumberField',
+                  actionMode : 'fieldEl',
                   allowBlank : false,
                   allowDecimals : false,
                   fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
