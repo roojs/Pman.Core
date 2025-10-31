@@ -173,7 +173,7 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
                 ";
             }
             
-            $ar = $this->listTriggerFunctions($target_table, 'delete');
+            $ar = $this->mysqlLinks->listTriggerFunctions($target_table, 'delete');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn( OLD.{$col});
