@@ -217,6 +217,9 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             if (!empty($targetTableName) && $target_table !== $targetTableName) {
                 continue;
             }
+
+            var_dump($targetTableName);
+            die('aa');
             
             
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
