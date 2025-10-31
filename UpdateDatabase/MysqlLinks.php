@@ -373,7 +373,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
     }
-     function createUpdateTriggers($target_table = '')
+     function createUpdateTriggers()
     {
         foreach($this->links as $tbl => $map) {
             if (!isset($this->schema[$tbl])) {
