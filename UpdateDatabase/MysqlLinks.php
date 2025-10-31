@@ -177,7 +177,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     }
     
-    function createDeleteTriggers($targetTableName = false)
+    function createDeleteTriggers($targetTableName = "")
     {
         
         // this should only be enabled if the project settings are configured..
