@@ -600,6 +600,7 @@ Pman.Dialog.CoreEmail = {
                         _this.stripoUpdate.hide();
                         _this.sendBtn.hide();
                         _this.sendTestBtn.hide();
+                        _this.dailyEmailLimit.show();
                         
                         
                           if (typeof(_this.data._fields) != 'undefined') {
@@ -609,6 +610,7 @@ Pman.Dialog.CoreEmail = {
                         
                         if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
                             _this.sendTestBtn.show();
+                            _this.dailyEmailLimit.show();
                         }
                             
                         if(_this.data.id*1 > 0){
