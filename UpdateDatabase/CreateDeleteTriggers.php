@@ -29,9 +29,6 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         )
     );
     
-    var $dburl;
-    var $schema;
-    var $links = array();
     var $target_table = '';
     var $mysqlLinks;
     
