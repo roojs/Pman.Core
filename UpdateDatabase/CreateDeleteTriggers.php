@@ -52,17 +52,13 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
     
     function createDeleteTriggers()
     {
+        // Reuse the createDeleteTriggers logic from MysqlLinks
+        // but add target_table filtering for CLI option
         
-        // this should only be enabled if the project settings are configured..
-        
-        // delete triggers on targets -
-        // if you delete a company, and a person points to it, then it should fire an error...
-        
-        // create a list of source/targets from $this->links
-        
+        // create a list of source/targets from $this->mysqlLinks->links
         $revmap = array();
-        foreach($this->links as $tbl => $map) {
-            if (!isset($this->schema[$tbl])) {
+        foreach($this->mysqlLinks->links as $tbl => $map) {
+            if (!isset($this->mysqlLinks->schema[$tbl])) {
                 continue;
             }
             foreach($map as $k =>$v) {
@@ -78,14 +74,14 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         
         foreach($revmap as $target_table => $sources) {
             
-            // If specific table requested, skip others
+            // If specific table requested, skip others (target_table option only for CreateDeleteTriggers)
             if (!empty($this->target_table) && $target_table !== $this->target_table) {
                 continue;
             }
             
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
             
-            if (!isset($this->schema[$target_table])) {
+            if (!isset($this->mysqlLinks->schema[$target_table])) {
                 echo "Skip $target_table  = table does not exist in schema\n";
                 continue;
             }
@@ -120,7 +116,7 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
                 ";
             }
             
-            $ar = $this->listTriggerFunctions($target_table, 'delete');
+            $ar = $this->mysqlLinks->listTriggerFunctions($target_table, 'delete');
             foreach($ar as $fn=>$col) {
                 $trigger .= "
                     CALL $fn( OLD.{$col});
