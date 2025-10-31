@@ -198,49 +198,4 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
             echo "Completed creating delete triggers for all tables\n";
         }
     }
-    
-    /**
-     * check the information schema for any methods that match the trigger criteria.
-     *   -- {tablename}_trigger_{optional_string}_before_delete_{column_name}(NEW.column)
-     *   -- {tablename}_trigger_{optional_string}_before_update_{column_name}(OLD.column, NEW.column}
-     *   -- {tablename}_trigger_{optional_string}_before_insert_{column_name}(OLD.column}
-     *
-     *
-     */
-    // type = update/insert/delete
-    
-    function listTriggerFunctions($table, $type)
-    {
-        static $cache = array();
-        if (!isset($cache[$table])) {
-            $cache[$table] = array();
-            $q = DB_DAtaObject::factory('core_enum');
-            $q->query("SELECT
-                            SPECIFIC_NAME
-                        FROM
-                            information_schema.ROUTINES
-                        WHERE
-                            ROUTINE_SCHEMA = '{$q->escape($q->database())}'
-                            AND
-                            ROUTINE_NAME LIKE '" . $q->escape("{$table}_trigger_")  . "%'
-                            AND
-                            ROUTINE_TYPE = 'PROCEDURE'
-                            
-            ");
-            while ($q->fetch()) {
-                $cache[$table][] = $q->SPECIFIC_NAME;
-            }
-            
-        }
-        // now see which of the procedures match the specification..
-        $ret = array();
-        foreach($cache[$table] as $cname) {
-            $bits = explode("_before_{$type}_", $cname);
-            if (count($bits) < 2) {
-                continue;
-            }
-            $ret[$cname] = $bits[1];
-        }
-        return $ret;
-    }
 }
