@@ -1443,6 +1443,7 @@ Pman.Dialog.CoreEmail = {
                   listeners : {
                    render : function (_self)
                     {
+                        _this.dailyEmailLimit = _self;
                         _self.fieldEl.down('label').attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');
                     }
                   },
