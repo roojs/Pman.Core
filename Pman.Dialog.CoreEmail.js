@@ -601,6 +601,7 @@ Pman.Dialog.CoreEmail = {
                         _this.sendBtn.hide();
                         _this.sendTestBtn.hide();
                         _this.dailyEmailLimit.show();
+                        _this.dailyEmailLimit.allowBlank = false;
                         
                         
                           if (typeof(_this.data._fields) != 'undefined') {
@@ -612,6 +613,7 @@ Pman.Dialog.CoreEmail = {
                             _this.sendTestBtn.show();
                             // hide daily email limit for crm mailing list message
                             _this.dailyEmailLimit.hide();
+                            _this.dailyEmailLimit.allowBlank = true;
                         }
                             
                         if(_this.data.id*1 > 0){
