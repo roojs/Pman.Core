@@ -177,7 +177,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     }
     
-    function createDeleteTriggers($target_table = false)
+    function createDeleteTriggers($targetTableName = false)
     {
         
         // this should only be enabled if the project settings are configured..
@@ -213,6 +213,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
         foreach($revmap as $target_table => $sources) {
+            // If specific table requested, skip others
+            if (!empty($targetTableName) && $target_table !== $targetTableName) {
+                continue;
+            }
             
             
             // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
