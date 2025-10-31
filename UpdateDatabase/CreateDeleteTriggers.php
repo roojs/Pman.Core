@@ -44,9 +44,9 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
     function get($m="", $opts=array())
     {
         $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
+        // Create MysqlLinks instance to reuse its methods
+        // We'll manually call loadIniFiles() to avoid constructor side effects
         $this->mysqlLinks = new Pman_Core_UpdateDatabase_MysqlLinks();
-        // Copy properties for easier access
-        $this->mysqlLinks->loadIniFiles();
         $this->createDeleteTriggers();
     }
     
