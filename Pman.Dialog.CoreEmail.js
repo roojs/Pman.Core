@@ -1431,7 +1431,7 @@ Pman.Dialog.CoreEmail = {
                   listeners : {
                    render : function (_self)
                     {
-                    
+                        _this.testClass = _self;
                     }
                   },
                   xns : Roo.form,

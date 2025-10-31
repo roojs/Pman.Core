@@ -1054,7 +1054,7 @@
                     "render" : [
                      "function (_self)",
                      "{",
-                     "",
+                     "    _this.testClass = _self;",
                      "}"
                     ]
                    },
