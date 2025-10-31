@@ -376,10 +376,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
      function createUpdateTriggers()
     {
         foreach($this->links as $tbl => $map) {
-            // If specific table requested, skip others
-            if (!empty($this->target_table) && $target_table !== $this->target_table) {
-                continue;
-            }
 
             if (!isset($this->schema[$tbl])) {
                 continue;
