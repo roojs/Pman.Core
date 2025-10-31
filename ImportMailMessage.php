@@ -50,11 +50,6 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
                 $_REQUEST['bodytext'] = $doc->saveHTML();
                 libxml_use_internal_errors (false);
             }
-
-            // bodytext should be UTF-8 encoded
-            if (!mb_check_encoding($_REQUEST['bodytext'], 'UTF-8')) {
-                $_REQUEST['bodytext'] = mb_convert_encoding($_REQUEST['bodytext'], 'UTF-8', 'auto');
-            }
             
             if(!file_exists($path)){
                file_put_contents($path, $_REQUEST['bodytext']); 
