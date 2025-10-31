@@ -1428,6 +1428,12 @@ Pman.Dialog.CoreEmail = {
                   name : 'test_class',
                   readOnly : true,
                   width : 300,
+                  listeners : {
+                   render : function (_self)
+                    {
+                    
+                    }
+                  },
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }

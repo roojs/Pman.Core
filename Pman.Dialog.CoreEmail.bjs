@@ -1050,6 +1050,14 @@
                    "Boolean readOnly" : true,
                    "allowBlank" : true,
                    "fieldLabel" : "Test Class <BR/> (for system reference only)",
+                   "listeners" : {
+                    "render" : [
+                     "function (_self)",
+                     "{",
+                     "",
+                     "}"
+                    ]
+                   },
                    "name" : "test_class",
                    "width" : 300,
                    "xtype" : "TextField"
