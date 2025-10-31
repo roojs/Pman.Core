@@ -177,7 +177,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     }
     
-    function createDeleteTriggers()
+    function createDeleteTriggers($target_table = false)
     {
         
         // this should only be enabled if the project settings are configured..
@@ -380,7 +380,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             if (!empty($this->target_table) && $target_table !== $this->target_table) {
                 continue;
             }
-            
+
             if (!isset($this->schema[$tbl])) {
                 continue;
             }
