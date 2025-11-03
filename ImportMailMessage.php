@@ -34,8 +34,6 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $path = $tmpdir . '/' . time() . '.html';
             
             if(isset($_REQUEST['_check_unsubscribe'])){
-                var_dump($_REQUEST['bodytext']);
-                die('test');
                 libxml_use_internal_errors (true);
                 $doc = new DOMDocument('1.0', 'UTF-8');
                 $doc->loadHTML($_REQUEST['bodytext']);
