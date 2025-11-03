@@ -60,6 +60,8 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $plain = $fc->convert('text/plain');
             $plainText = file_get_contents($plain);
             $plainText = preg_replace('/(.)\x08\1/', '$1', $plainText);
+            // Remove any remaining standalone backspace characters
+            $plainText = str_replace("\x08", '', $plainText);
             $this->jok($plainText);
         }
         
