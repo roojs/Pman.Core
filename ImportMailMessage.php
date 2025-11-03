@@ -58,7 +58,7 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $fc = new File_Convert($path, 'text/html');
             
             $plain = $fc->convert('text/plain');
-            $this->jok("\x08" .file_get_contents($plain));
+            $this->jok(file_get_contents($plain));
         }
         
         // Import from URL
