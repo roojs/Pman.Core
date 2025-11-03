@@ -58,6 +58,7 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             $fc = new File_Convert($path, 'text/html');
             
             $plain = $fc->convert('text/plain');
+            // Replace overstrikes with single characters
             $plainText = file_get_contents($plain);
             $plainText = preg_replace('/(.)\x08\1/', '$1', $plainText);
             // Remove any remaining standalone backspace characters
