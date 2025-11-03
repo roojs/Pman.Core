@@ -39,6 +39,8 @@ ALTER TABLE core_notify ADD COLUMN reject_match_id INT(11) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD COLUMN mail_imap_actor_id INT(11) NOT NULL DEFAULT 0;
 
+ALTER TABLE core_notify ADD COLUMN email_id INT NOT NULL DEFAULT 0;
+
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
 -- ALTER TABLE core_notify ADD   INDEX lookup_a(onid, ontable, person_id, act_when, msgid, to_email); (too long?!)
@@ -58,3 +60,5 @@ ALTER TABLE core_notify ADD INDEX lookup_person_id (person_id);
 ALTER TABLE core_notify ADD INDEX lookup_trigger_person_id (trigger_person_id);
 
 ALTER TABLE core_notify ADD   INDEX lookup_reject (person_id, reject_match_id, event_id);
+
+ALTER TABLE core_notify ADD INDEX lookup_email_id (email_id);
