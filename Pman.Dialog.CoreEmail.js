@@ -600,6 +600,9 @@ Pman.Dialog.CoreEmail = {
                         _this.stripoUpdate.hide();
                         _this.sendBtn.hide();
                         _this.sendTestBtn.hide();
+                        _this.dailyEmailLimit.show();
+                        _this.dailyEmailLimit.allowBlank = false;
+                        _this.testClass.show();
                         
                         
                           if (typeof(_this.data._fields) != 'undefined') {
@@ -609,6 +612,11 @@ Pman.Dialog.CoreEmail = {
                         
                         if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {
                             _this.sendTestBtn.show();
+                            // hide daily email limit for crm mailing list message
+                            _this.dailyEmailLimit.hide();
+                            _this.dailyEmailLimit.allowBlank = true;
+                            // hide test class for crm mailing list message
+                            _this.testClass.hide();
                         }
                             
                         if(_this.data.id*1 > 0){
@@ -1418,11 +1426,18 @@ Pman.Dialog.CoreEmail = {
                 items  : [
                  {
                   xtype : 'TextField',
+                  actionMode : 'fieldEl',
                   allowBlank : true,
                   fieldLabel : _this._strings['b337c8a67244afb6551ee1f8f9717676'] /* Test Class <BR/> (for system reference only) */,
                   name : 'test_class',
                   readOnly : true,
                   width : 300,
+                  listeners : {
+                   render : function (_self)
+                    {
+                        _this.testClass = _self;
+                    }
+                  },
                   xns : Roo.form,
                   '|xns' : 'Roo.form'
                  }
@@ -1435,6 +1450,7 @@ Pman.Dialog.CoreEmail = {
                 items  : [
                  {
                   xtype : 'NumberField',
+                  actionMode : 'fieldEl',
                   allowBlank : false,
                   allowDecimals : false,
                   fieldLabel : _this._strings['6c95f468940d0f7b821a200aed9142c1'] /* Daily Email Limit */,
@@ -1443,6 +1459,7 @@ Pman.Dialog.CoreEmail = {
                   listeners : {
                    render : function (_self)
                     {
+                        _this.dailyEmailLimit = _self;
                         _self.fieldEl.down('label').attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');
                     }
                   },
