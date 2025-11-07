@@ -3,9 +3,6 @@
 /**
  * Create triggers for database tables
  * 
- * This script creates delete triggers that prevent deletion of records
- * that are referenced by other tables, maintaining referential integrity.
- * 
  * Usage:
  *   php press.php Core/UpdateDatabase/CreateTriggers                    # Create triggers for all tables
  *   php press.php Core/UpdateDatabase/CreateTriggers -t table_name      # Create trigger for specific table only
