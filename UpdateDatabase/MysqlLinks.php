@@ -41,6 +41,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     var $dburl;
     var $schema;
     var $links = array();
+    var $debug = false;
     
     function __construct($onlyConstruct = false)
     {
