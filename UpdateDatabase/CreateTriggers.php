@@ -3,6 +3,8 @@
 /**
  * Create triggers for database tables
  * 
+ * This script creates triggers for database tables to maintain referential integrity.
+ * 
  * Usage:
  *   php press.php Core/UpdateDatabase/CreateTriggers                    # Create triggers for all tables
  *   php press.php Core/UpdateDatabase/CreateTriggers -t table_name      # Create trigger for specific table only
