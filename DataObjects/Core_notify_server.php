@@ -382,4 +382,25 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
+    function resetQueueForTable($table)
+    {
+        if (!$this->id) {
+            return;
+        }
+        
+        $p = DB_DataObject::factory($table);
+        $p->query("
+            UPDATE
+                {$table}
+            SET
+                server_id = 0
+            WHERE
+                server_id = {$this->id}
+            AND
+                (sent < '2000-01-01' OR sent IS NULL)
+            AND
+                event_id = 0
+        ");
+    }
+    
 }
