@@ -47,7 +47,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         if($onlyConstruct) {
             return;
         }
-        die('tset');
           
         $this->loadIniFiles();
         $this->updateTableComments();
