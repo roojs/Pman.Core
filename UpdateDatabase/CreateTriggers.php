@@ -25,7 +25,14 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
             'short' => 't',
             'min' => 0,
             'max' => 1,
-        )
+        ),
+        'debug' => array(
+            'desc' => 'Enable debug mode',
+            'default' => false,
+            'short' => 'd',
+            'min' => 0,
+            'max' => 0,
+        ),
     );
     
     var $target_table = '';
@@ -43,6 +50,7 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
     function get($m="", $opts=array())
     {
         $this->mysqlLinks = new Pman_Core_UpdateDatabase_MysqlLinks(true);
+        $this->mysqlLinks->debug = !empty($opts['debug']) ? true : false;
         $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
         $this->mysqlLinks->loadIniFiles();
         $this->mysqlLinks->createDeleteTriggers($this->target_table);
