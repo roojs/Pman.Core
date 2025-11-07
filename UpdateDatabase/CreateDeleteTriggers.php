@@ -47,5 +47,7 @@ class Pman_Core_UpdateDatabase_CreateDeleteTriggers extends Pman_Core_Cli
         $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
         $this->mysqlLinks->loadIniFiles();
         $this->mysqlLinks->createDeleteTriggers($this->target_table);
+        $this->mysqlLinks->createInsertTriggers();
+        $this->mysqlLinks->createUpdateTriggers();
     }
 }
