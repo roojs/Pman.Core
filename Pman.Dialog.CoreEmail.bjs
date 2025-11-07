@@ -1048,8 +1048,17 @@
                   {
                    "$ xns" : "Roo.form",
                    "Boolean readOnly" : true,
+                   "String actionMode" : "fieldEl",
                    "allowBlank" : true,
                    "fieldLabel" : "Test Class <BR/> (for system reference only)",
+                   "listeners" : {
+                    "render" : [
+                     "function (_self)",
+                     "{",
+                     "    _this.testClass = _self;",
+                     "}"
+                    ]
+                   },
                    "name" : "test_class",
                    "width" : 300,
                    "xtype" : "TextField"
@@ -1063,12 +1072,14 @@
                   {
                    "$ xns" : "Roo.form",
                    "Boolean allowDecimals" : false,
+                   "String actionMode" : "fieldEl",
                    "allowBlank" : false,
                    "fieldLabel" : "Daily Email Limit",
                    "listeners" : {
                     "render" : [
                      "function (_self)",
                      "{",
+                     "    _this.dailyEmailLimit = _self;",
                      "    _self.fieldEl.down('label').attr('qtip', 'Maximum number of emails allowed to be sent to the same perosn on a day');",
                      "}"
                     ]
@@ -1117,6 +1128,9 @@
                  "        _this.stripoUpdate.hide();",
                  "        _this.sendBtn.hide();",
                  "        _this.sendTestBtn.hide();",
+                 "        _this.dailyEmailLimit.show();",
+                 "        _this.dailyEmailLimit.allowBlank = false;",
+                 "        _this.testClass.show();",
                  "        ",
                  "        ",
                  "          if (typeof(_this.data._fields) != 'undefined') {",
@@ -1126,6 +1140,11 @@
                  "        ",
                  "        if(typeof(_this.data.module) != 'undefined' && _this.data.module == 'crm_mailing_list_message') {",
                  "            _this.sendTestBtn.show();",
+                 "            // hide daily email limit for crm mailing list message",
+                 "            _this.dailyEmailLimit.hide();",
+                 "            _this.dailyEmailLimit.allowBlank = true;",
+                 "            // hide test class for crm mailing list message",
+                 "            _this.testClass.hide();",
                  "        }",
                  "            ",
                  "        if(_this.data.id*1 > 0){",

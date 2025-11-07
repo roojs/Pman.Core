@@ -52,13 +52,18 @@ class Pman_Core_ImportMailMessage extends Pman_Core_ConvertStyle
             }
             
             if(!file_exists($path)){
-               file_put_contents($path, $_REQUEST['bodytext']); 
+                file_put_contents($path, $_REQUEST['bodytext']);
             }
             require_once 'File/Convert.php';
             $fc = new File_Convert($path, 'text/html');
             
             $plain = $fc->convert('text/plain');
-            $this->jok(file_get_contents($plain));
+            // Replace overstrikes with single characters
+            $plainText = file_get_contents($plain);
+            $plainText = preg_replace('/(.)\x08\1/', '$1', $plainText);
+            // Remove any remaining standalone backspace characters
+            $plainText = str_replace("\x08", '', $plainText);
+            $this->jok($plainText);
         }
         
         // Import from URL
