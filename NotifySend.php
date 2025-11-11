@@ -147,6 +147,13 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
+        
+        // Check if server is disabled or not found - exit gracefully (unless force is set)
+        // id = 0 means no servers exist, is_active = 0 means server is disabled
+        if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
+            $this->errorHandler("Server is disabled or not found - exiting gracefully\n");
+        }
+        
          if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
@@ -264,7 +271,14 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
+        // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
+
+        if($w->reachEmailLimit()) {
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -310,6 +324,20 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+
+        if(empty($email['headers']['X-Notify-Id'])) {
+            $email['headers']['X-Notify-Id'] = $w->id;
+        }
+
+        if(empty($email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
+            $email['headers']['X-Notify-To-Id'] = $p->id;
+        }
+
+        if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
+            $email['headers']['X-Notify-Recur-Id'] = $w->onid;
+        }
+
+
         
         
             
@@ -714,19 +742,25 @@ class Pman_Core_NotifySend extends Pman
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
-            /* Blacklisted is now a hard failure
-            if ( $res->userinfo['smtpcode']> 500 ) {
-                
+            
+            // Check if error message contains spamhaus (case-insensitive)
+            // If spamhaus is found, continue current behavior (don't pass to next server)
+            $is_spamhaus = stripos($errmsg, 'spamhaus') !== false;
+            
+            // If NOT spamhaus and smtpcode > 500, restore old behavior: check for blacklist and pass to next server
+            if (!$is_spamhaus && !empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
                 DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-
                 
                 if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                     $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                    $this->server->updateNotifyToNextServer($w,  $retry_when, true);
                     $this->errorHandler( $ev->remarks);
+                    // Successfully passed to next server, exit
+                    return;
                 }
             }
-            */
+            
+            // If spamhaus or not blacklisted, mark as failed
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
             if (method_exists($w, 'matchReject')) {
