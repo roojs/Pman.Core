@@ -58,7 +58,7 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
             $ml->createUpdateTrigger($tt);
         } else {
             // Create all triggers
-            $ml->createAll();
+            $ml->run();
         }
     }
 }
