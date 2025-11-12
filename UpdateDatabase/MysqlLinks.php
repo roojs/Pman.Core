@@ -43,10 +43,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     var $links = array();
     var $debug = false;
     
-    function __construct()
-    {
-    }
-    
     function createAll()
     {
         $this->loadIniFiles();
