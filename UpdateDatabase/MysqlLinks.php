@@ -285,18 +285,19 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         }
          echo "CREATED TRIGGER {$target_table}_before_delete\n";
     }
-    function createInsertTriggers($targetTableName = "")
+    function createInsertTriggers()
     {
         foreach($this->links as $tbl => $map) {
-            // If specific table requested, skip others
-            if (!empty($targetTableName) && $tbl !== $targetTableName) {
-                continue;
-            }
             if (!isset($this->schema[$tbl])) {
                 continue;
             }
-            
-            $q = DB_DataObject::factory('core_enum');
+            $this->createInsertTrigger($tbl, $map);
+        }
+    }
+    
+    function createInsertTrigger($tbl, $map)
+    {
+        $q = DB_DataObject::factory('core_enum');
             $q->query("
                 DROP TRIGGER IF EXISTS `{$tbl}_before_insert` ;
             ");
