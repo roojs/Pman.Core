@@ -50,7 +50,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         }
           
         $this->loadIniFiles();
-        $this->updateTableComments();
+       
+        foreach(array_keys($this->schema) as $table) {
+            $this->updateTableComment($table);
+        }
        
         $ff = HTML_FlexyFramework::get();
         if (empty($ff->Pman['enable_trigger_tests'])) {
@@ -63,11 +66,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             // note we may want to override some of these... - to do special triggers..
             // as you can only have one trigger per table for each action.
             
-        $this->createDeleteTriggers();
-        $this->createInsertTriggers();
-        $this->createUpdateTriggers();
-        
-        
+        foreach(array_keys($this->schema) as $table) {
+            $this->createDeleteTrigger($table);
+            $this->createInsertTrigger($table);
+            $this->createUpdateTrigger($table);
+        }
         
     }
     
@@ -121,25 +124,18 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
          
         
     }
-    function updateTableComments()
+    function updateTableComment($tbl)
     {
-        foreach($this->links as $tbl =>$map) {
-            $this->updateTableComment($tbl, $map);
-            
-        }
-        
-        
-    }
-    
-    function updateTableComment($tbl, $map)
-    {
-         
-        
         if (!isset($this->schema[$tbl])) {
             echo "Skip $tbl = table does not exist in schema\n";
             return;
         }
         
+        if (!isset($this->links[$tbl])) {
+            return;
+        }
+        
+        $map = $this->links[$tbl];
         
         $q = DB_DAtaObject::factory('core_enum');
         $q->query("SELECT
@@ -177,22 +173,14 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     }
     
-    function createDeleteTriggers()
+    function tableSources($table)
     {
+        static $revmap = false;
         
-        // this should only be enabled if the project settings are configured..
+        if ($revmap !== false) {
+            return isset($revmap[$table]) ? $revmap[$table] : array();
+        }
         
-       
-        
-        // delete triggers on targets -
-        // if you delete a company, and a person points to it, then it should fire an error...
-        
-        
-        
-        
-        // create a list of source/targets from $this->links
-        
-                
         $revmap = array();
         foreach($this->links as $tbl => $map) {
             if (!isset($this->schema[$tbl])) {
@@ -209,22 +197,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             }
         }
         
-        
-        
-        
-        foreach($revmap as $target_table => $sources) {
-            $this->createDeleteTrigger($target_table, $sources);
-        }
-        
-        
-        // inserting - row should not point to a reference that does not exist...
-        
-        
-        
-        
+        return isset($revmap[$table]) ? $revmap[$table] : array();
     }
     
-    function createDeleteTrigger($target_table, $sources)
+    
+    function createDeleteTrigger($target_table)
     {
         // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
         
@@ -233,6 +210,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             return;
         }
     
+        $sources = $this->tableSources($target_table);
+        if (empty($sources)) {
+            echo "Skip $target_table  = table does not have any tables pointing to it\n";
+            return;
+        }
         
         $q = DB_DataObject::factory('core_enum');
         $q->query("
@@ -285,16 +267,6 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         }
          echo "CREATED TRIGGER {$target_table}_before_delete\n";
     }
-    function createInsertTriggers()
-    {
-        foreach($this->links as $tbl => $map) {
-            if (!isset($this->schema[$tbl])) {
-                continue;
-            }
-            $this->createInsertTrigger($tbl);
-        }
-    }
-    
     function createInsertTrigger($tbl)
     {
         $q = DB_DataObject::factory('core_enum');
@@ -316,169 +288,142 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         $errs = array();
         $map = $this->links[$tbl];
         foreach($map as $source_col=>$target) {
-                // check that source_col exists in schema.
-                if (!isset($this->schema[$tbl][$source_col])) {
-                    $errs[] = "SOURCE MISSING: $source_col => $target";
-                    continue;
-                }
-                
-                
-                $source_tbl = $tbl;
-                list($target_table , $target_col) = explode(':', $target);
-                
-                if (!isset($this->schema[$target_table])) {
-                    // skip... target table does not exist
-                    $errs[] = "TARGET MISSING: $source_col => $target";
-                    continue;
-                }
-                
-                
-                $err = substr("Fail: INSERT referenced {$tbl}:{$source_col}", 0, 64);
-                $trigger .="
-                    SET mid = 0;
-                    if NEW.{$source_col} > 0 THEN
-                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
-                        IF mid < 1 THEN
-                            UPDATE `$err` SET x = 1;
-                        END IF;
-                       
+            // check that source_col exists in schema.
+            if (!isset($this->schema[$tbl][$source_col])) {
+                $errs[] = "SOURCE MISSING: $source_col => $target";
+                continue;
+            }
+            
+            
+            $source_tbl = $tbl;
+            list($target_table , $target_col) = explode(':', $target);
+            
+            if (!isset($this->schema[$target_table])) {
+                // skip... target table does not exist
+                $errs[] = "TARGET MISSING: $source_col => $target";
+                continue;
+            }
+            
+            
+            $err = substr("Fail: INSERT referenced {$tbl}:{$source_col}", 0, 64);
+            $trigger .="
+                SET mid = 0;
+                if NEW.{$source_col} > 0 THEN
+                    SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
+                    IF mid < 1 THEN
+                        UPDATE `$err` SET x = 1;
                     END IF;
-                ";
-                $has_checks=  true;
-                
-                
-            }
-            
-            $ar = $this->listTriggerFunctions($tbl, 'insert');
-            foreach($ar as $fn=>$col) {
-                $trigger .= "
-                    CALL $fn( NEW.{$col});
-                ";
-                $has_checks=  true;
-            }
-            
-            $trigger .= "
+                   
                 END IF;
-            END 
-           
             ";
+            $has_checks=  true;
             
+            
+        }
+        
+        $ar = $this->listTriggerFunctions($tbl, 'insert');
+        foreach($ar as $fn=>$col) {
+            $trigger .= "
+                CALL $fn( NEW.{$col});
+            ";
+            $has_checks=  true;
+        }
+        
+        $trigger .= "
+            END IF;
+        END 
+       
+        ";
+        
         if (!$has_checks) {
             echo "SKIP TRIGGER {$tbl}_before_insert (missing " . implode(", ", $errs) . ")\n";
             return;
         }
-            //echo $trigger; exit;
-            //DB_DAtaObject::debugLevel(1);
-            $q = DB_DataObject::factory('core_enum');
-            $q->query($trigger);
-            if($this->debug) {
-                echo $trigger;
-            }
-            echo "CREATED TRIGGER {$tbl}_before_insert\n";
-            
-            
-            
-            
-            
-            
-            
+        //echo $trigger; exit;
+        //DB_DAtaObject::debugLevel(1);
+        $q = DB_DataObject::factory('core_enum');
+        $q->query($trigger);
+        if($this->debug) {
+            echo $trigger;
         }
-        
-        
-        
+        echo "CREATED TRIGGER {$tbl}_before_insert\n";
     }
-     function createUpdateTriggers($targetTableName = "")
+    function createUpdateTrigger($tbl)
     {
-        foreach($this->links as $tbl => $map) {
-
-            // If specific table requested, skip others
-            if (!empty($targetTableName) && $tbl !== $targetTableName) {
-                continue;
-            }
-
-            if (!isset($this->schema[$tbl])) {
-                continue;
-            }
-            
-            $q = DB_DataObject::factory('core_enum');
-            $q->query("
-                DROP TRIGGER IF EXISTS `{$tbl}_before_update` ;
-            ");
-            
-            $trigger = "
-             
-            CREATE TRIGGER `{$tbl}_before_update`
-                BEFORE UPDATE ON `{$tbl}`
-            FOR EACH ROW
-            BEGIN
-               DECLARE mid INT(11);
-               IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN  
-               
-            ";
-            $has_checks=  false;
-            $errs = array();
-            foreach($map as $source_col=>$target) {
-                // check that source_col exists in schema.
-                if (!isset($this->schema[$tbl][$source_col])) {
-                    $errs[] = "SOURCE MISSING: $source_col => $target";
-                    continue;
-                }
-                
-                
-                $source_tbl = $tbl;
-                list($target_table , $target_col) = explode(':', $target);
-                
-                if (!isset($this->schema[$target_table])) {
-                    // skip... target table does not exist
-                    $errs[] = "TARGET MISSING: $source_col => $target";
-                    continue;
-                }
-                
-                $err = substr("Fail: UPDATE referenced {$tbl}:$source_col", 0, 64);
-                $trigger .="
-                    SET mid = 0;
-                    if NEW.{$source_col} > 0 THEN
-                        SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
-                        IF mid < 1 THEN
-                            UPDATE `$err` SET x = 1;
-                        END IF;
-                       
-                    END IF;
-                ";
-                $has_checks=  true;
-            }
-            $ar = $this->listTriggerFunctions($tbl, 'update');
-            foreach($ar as $fn=>$col) {
-                $trigger .= "
-                    CALL $fn(OLD.{$col}, NEW.{$col});
-                ";
-                $has_checks=  true;
-            }
-            
-            $trigger .= "
-                END IF;
-            END 
+        $q = DB_DataObject::factory('core_enum');
+        $q->query("
+            DROP TRIGGER IF EXISTS `{$tbl}_before_update` ;
+        ");
+        
+        $trigger = "
+         
+        CREATE TRIGGER `{$tbl}_before_update`
+            BEFORE UPDATE ON `{$tbl}`
+        FOR EACH ROW
+        BEGIN
+           DECLARE mid INT(11);
+           IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN  
            
-            ";
-            if (!$has_checks) {
-                echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $errs) . ")\n";
+        ";
+        $has_checks=  false;
+        $errs = array();
+        $map = $this->links[$tbl];
+        foreach($map as $source_col=>$target) {
+            // check that source_col exists in schema.
+            if (!isset($this->schema[$tbl][$source_col])) {
+                $errs[] = "SOURCE MISSING: $source_col => $target";
                 continue;
             }
             
-            //echo $trigger; exit;
-            //DB_DAtaObject::debugLevel(1);
-            $q = DB_DataObject::factory('core_enum');
-            $q->query($trigger);
-            if($this->debug) {
-                echo $trigger;
+            
+            $source_tbl = $tbl;
+            list($target_table , $target_col) = explode(':', $target);
+            
+            if (!isset($this->schema[$target_table])) {
+                // skip... target table does not exist
+                $errs[] = "TARGET MISSING: $source_col => $target";
+                continue;
             }
-            echo "CREATED TRIGGER {$tbl}_before_update\n";
             
-            
+            $err = substr("Fail: UPDATE referenced {$tbl}:$source_col", 0, 64);
+            $trigger .="
+                SET mid = 0;
+                if NEW.{$source_col} > 0 THEN
+                    SELECT {$target_col} into mid FROM {$target_table} WHERE {$target_col} = NEW.{$source_col} LIMIT 1;
+                    IF mid < 1 THEN
+                        UPDATE `$err` SET x = 1;
+                    END IF;
+                   
+                END IF;
+            ";
+            $has_checks=  true;
+        }
+        $ar = $this->listTriggerFunctions($tbl, 'update');
+        foreach($ar as $fn=>$col) {
+            $trigger .= "
+                CALL $fn(OLD.{$col}, NEW.{$col});
+            ";
+            $has_checks=  true;
         }
         
+        $trigger .= "
+            END IF;
+        END 
+       
+        ";
+        if (!$has_checks) {
+            echo "SKIP TRIGGER {$tbl}_before_update (missing " . implode(", ", $errs) . ")\n";
+            return;
+        }
         
-        
+        //echo $trigger; exit;
+        //DB_DAtaObject::debugLevel(1);
+        $q = DB_DataObject::factory('core_enum');
+        $q->query($trigger);
+        if($this->debug) {
+            echo $trigger;
+        }
+        echo "CREATED TRIGGER {$tbl}_before_update\n";
     }
     /**
      * check the information schema for any methods that match the trigger criteria.
