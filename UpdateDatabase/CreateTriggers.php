@@ -50,15 +50,15 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
         $ml = new Pman_Core_UpdateDatabase_MysqlLinks();
         $ml->debug = !empty($opts['debug']) ? true : false;
         $tt = !empty($opts['table']) ? $opts['table'] : '';
-        if (!empty($tt)) {
-            // Create triggers for specific table only
-            $ml->loadIniFiles();
-            $ml->createDeleteTrigger($tt);
-            $ml->createInsertTrigger($tt);
-            $ml->createUpdateTrigger($tt);
-        } else {
+        if (empty($tt)) {
             // Create all triggers
             $ml->run();
+            return;
         }
+        // Create triggers for specific table only
+        $ml->loadIniFiles();
+        $ml->createDeleteTrigger($tt);
+        $ml->createInsertTrigger($tt);
+        $ml->createUpdateTrigger($tt);
     }
 }
