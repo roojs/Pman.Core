@@ -298,22 +298,22 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     function createInsertTrigger($tbl, $map)
     {
         $q = DB_DataObject::factory('core_enum');
-            $q->query("
-                DROP TRIGGER IF EXISTS `{$tbl}_before_insert` ;
-            ");
-            
-            $trigger = "
-             
-            CREATE TRIGGER `{$tbl}_before_insert`
-                BEFORE INSERT ON `{$tbl}`
-            FOR EACH ROW
-            BEGIN
-               DECLARE mid INT(11);
-                IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN 
-               
-            ";
-            $has_checks=  false;
-            $errs = array();
+        $q->query("
+            DROP TRIGGER IF EXISTS `{$tbl}_before_insert` ;
+        ");
+        
+        $trigger = "
+         
+        CREATE TRIGGER `{$tbl}_before_insert`
+            BEFORE INSERT ON `{$tbl}`
+        FOR EACH ROW
+        BEGIN
+           DECLARE mid INT(11);
+            IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$tbl} IS NULL ) THEN 
+           
+        ";
+        $has_checks=  false;
+        $errs = array();
             foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
