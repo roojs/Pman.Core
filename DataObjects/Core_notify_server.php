@@ -318,7 +318,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         // next server..
         $pp = clone($w);
         $w->server_id = $good->id;   
-        $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
+        $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 5 MINUTE') : $when;
         $w->update($pp);
         return true;
     }
@@ -380,6 +380,27 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->insert();
         return true;
         
+    }
+    
+    function resetQueueForTable($table)
+    {
+        if (!$this->id) {
+            return;
+        }
+        
+        $p = DB_DataObject::factory($table);
+        $p->query("
+            UPDATE
+                {$table}
+            SET
+                server_id = 0
+            WHERE
+                server_id = {$this->id}
+            AND
+                (sent < '2000-01-01' OR sent IS NULL)
+            AND
+                event_id = 0
+        ");
     }
     
 }

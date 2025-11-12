@@ -219,11 +219,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function getEmailFrom()
     {
-        if (empty($this->name)) {
-            return $this->email;
-        }
-        
-        return '"' . addslashes($this->name) . '" <' . $this->email . '>';
+        require_once 'Mail/RFC822.php';
+        $rfc822 = new Mail_RFC822(array('name' => $this->name, 'address' => $this->email));
+        return $rfc822->toMime();
     }
     
     function toEventString() 
