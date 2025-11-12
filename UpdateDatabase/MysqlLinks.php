@@ -291,11 +291,11 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             if (!isset($this->schema[$tbl])) {
                 continue;
             }
-            $this->createInsertTrigger($tbl, $map);
+            $this->createInsertTrigger($tbl);
         }
     }
     
-    function createInsertTrigger($tbl, $map)
+    function createInsertTrigger($tbl)
     {
         $q = DB_DataObject::factory('core_enum');
         $q->query("
@@ -314,7 +314,8 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         ";
         $has_checks=  false;
         $errs = array();
-            foreach($map as $source_col=>$target) {
+        $map = $this->links[$tbl];
+        foreach($map as $source_col=>$target) {
                 // check that source_col exists in schema.
                 if (!isset($this->schema[$tbl][$source_col])) {
                     $errs[] = "SOURCE MISSING: $source_col => $target";
@@ -362,10 +363,10 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
            
             ";
             
-            if (!$has_checks) {
-                echo "SKIP TRIGGER {$tbl}_before_insert (missing " . implode(", ", $errs) . ")\n";
-                continue;
-            }
+        if (!$has_checks) {
+            echo "SKIP TRIGGER {$tbl}_before_insert (missing " . implode(", ", $errs) . ")\n";
+            return;
+        }
             //echo $trigger; exit;
             //DB_DAtaObject::debugLevel(1);
             $q = DB_DataObject::factory('core_enum');
