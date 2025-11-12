@@ -177,7 +177,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
     }
     
-    function createDeleteTriggers($targetTableName = "")
+    function createDeleteTriggers()
     {
         
         // this should only be enabled if the project settings are configured..
@@ -213,71 +213,7 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
         foreach($revmap as $target_table => $sources) {
-            // If specific table requested, skip others
-            if (!empty($targetTableName) && $target_table !== $targetTableName) {
-                continue;
-            }
-            
-            
-            // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
-            
-            if (!isset($this->schema[$target_table])) {
-                echo "Skip $target_table  = table does not exist in schema\n";
-                continue;
-            }
-        
-            
-            
-            $q = DB_DataObject::factory('core_enum');
-            $q->query("
-                DROP TRIGGER IF EXISTS `{$target_table}_before_delete` ;
-            ");
-            
-            $trigger = "
-             
-            CREATE TRIGGER `{$target_table}_before_delete`
-                BEFORE DELETE ON `{$target_table}`
-            FOR EACH ROW
-            BEGIN
-                DECLARE mid INT(11);
-                IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$target_table} IS NULL ) THEN  
-               
-            ";
-            foreach($sources as $source=>$target) {
-                list($source_table , $source_col) = explode(':', $source);
-                list($target_table , $target_col) = explode(':', $target);
-                $err = substr("Failed Delete {$target_table} refs {$source_table}:{$source_col}", 0, 64);
-                $trigger .="
-                    SET mid = 0;
-                    IF OLD.{$target_col} > 0 THEN 
-                        SELECT count(*) into mid FROM {$source_table} WHERE {$source_col} = OLD.{$target_col} LIMIT 1;
-                        IF mid > 0 THEN   
-                           UPDATE `$err` SET x = 1;
-                        END IF;
-                    END IF;
-                ";
-            }
-            
-            $ar = $this->listTriggerFunctions($tbl, 'delete');
-            foreach($ar as $fn=>$col) {
-                $trigger .= "
-                    CALL $fn( OLD.{$col});
-                ";
-            }
-            
-            $trigger .= "
-                END IF;
-            END 
-           
-            ";
-            
-            //DB_DAtaObject::debugLevel(1);
-            $q = DB_DataObject::factory('core_enum');
-            $q->query($trigger);
-            if($this->debug) {
-                echo $trigger;
-            }
-             echo "CREATED TRIGGER {$target_table}_before_delete\n";
+            $this->createDeleteTrigger($target_table, $sources);
         }
         
         
@@ -286,6 +222,68 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
         
         
         
+    }
+    
+    function createDeleteTrigger($target_table, $sources)
+    {
+        // throw example.. UPDATE `Error: invalid_id_test` SET x=1;
+        
+        if (!isset($this->schema[$target_table])) {
+            echo "Skip $target_table  = table does not exist in schema\n";
+            return;
+        }
+    
+        
+        $q = DB_DataObject::factory('core_enum');
+        $q->query("
+            DROP TRIGGER IF EXISTS `{$target_table}_before_delete` ;
+        ");
+        
+        $trigger = "
+         
+        CREATE TRIGGER `{$target_table}_before_delete`
+            BEFORE DELETE ON `{$target_table}`
+        FOR EACH ROW
+        BEGIN
+            DECLARE mid INT(11);
+            IF (@DISABLE_TRIGGER IS NULL AND @DISABLE_TRIGGER_{$target_table} IS NULL ) THEN  
+           
+        ";
+        foreach($sources as $source=>$target) {
+            list($source_table , $source_col) = explode(':', $source);
+            list($target_table , $target_col) = explode(':', $target);
+            $err = substr("Failed Delete {$target_table} refs {$source_table}:{$source_col}", 0, 64);
+            $trigger .="
+                SET mid = 0;
+                IF OLD.{$target_col} > 0 THEN 
+                    SELECT count(*) into mid FROM {$source_table} WHERE {$source_col} = OLD.{$target_col} LIMIT 1;
+                    IF mid > 0 THEN   
+                       UPDATE `$err` SET x = 1;
+                    END IF;
+                END IF;
+            ";
+        }
+        
+        $ar = $this->listTriggerFunctions($target_table, 'delete');
+        foreach($ar as $fn=>$col) {
+            $trigger .= "
+                CALL $fn( OLD.{$col});
+            ";
+        }
+        
+        $trigger .= "
+            END IF;
+        END 
+       
+        ";
+        
+        //DB_DAtaObject::debugLevel(1);
+        $q = DB_DataObject::factory('core_enum');
+        $q->query($trigger);
+        if($this->debug) {
+            echo $trigger;
+        }
+         echo "CREATED TRIGGER {$target_table}_before_delete\n";
     }
     function createInsertTriggers($targetTableName = "")
     {
