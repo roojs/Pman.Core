@@ -35,8 +35,6 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
         ),
     );
     
-    var $target_table = '';
-    var $mysqlLinks;
     
     function getAuth() 
     {
@@ -49,12 +47,12 @@ class Pman_Core_UpdateDatabase_CreateTriggers extends Pman_Core_Cli
     
     function get($m="", $opts=array())
     {
-        $this->mysqlLinks = new Pman_Core_UpdateDatabase_MysqlLinks(true);
-        $this->mysqlLinks->debug = !empty($opts['debug']) ? true : false;
-        $this->target_table = !empty($opts['table']) ? $opts['table'] : '';
-        $this->mysqlLinks->loadIniFiles();
-        $this->mysqlLinks->createDeleteTriggers($this->target_table);
-        $this->mysqlLinks->createInsertTriggers($this->target_table);
-        $this->mysqlLinks->createUpdateTriggers($this->target_table);
+        $ml = new Pman_Core_UpdateDatabase_MysqlLinks(true);
+        $ml->debug = !empty($opts['debug']) ? true : false;
+        $tt = !empty($opts['table']) ? $opts['table'] : '';
+        $ml->loadIniFiles();
+        $ml->createDeleteTriggers($tt);
+        $ml->createInsertTriggers($tt);
+        $ml->createUpdateTriggers($tt);
     }
 }
