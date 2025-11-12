@@ -43,12 +43,12 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
     var $links = array();
     var $debug = false;
     
-    function __construct($onlyConstruct = false)
+    function __construct()
     {
-        if($onlyConstruct) {
-            return;
-        }
-          
+    }
+    
+    function createAll()
+    {
         $this->loadIniFiles();
        
         foreach(array_keys($this->schema) as $table) {
@@ -63,15 +63,14 @@ class Pman_Core_UpdateDatabase_MysqlLinks {
             return;
         }
             
-            // note we may want to override some of these... - to do special triggers..
-            // as you can only have one trigger per table for each action.
+        // note we may want to override some of these... - to do special triggers..
+        // as you can only have one trigger per table for each action.
             
         foreach(array_keys($this->schema) as $table) {
             $this->createDeleteTrigger($table);
             $this->createInsertTrigger($table);
             $this->createUpdateTrigger($table);
         }
-        
     }
     
     function loadIniFiles()
