@@ -219,11 +219,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
     
     function getEmailFrom()
     {
-        if (empty($this->name)) {
-            return $this->email;
-        }
-        
-        return '"' . addslashes($this->name) . '" <' . $this->email . '>';
+        require_once 'Mail/RFC822.php';
+        $rfc822 = new Mail_RFC822(array('name' => $this->name, 'address' => $this->email));
+        return $rfc822->toMime();
     }
     
     function toEventString() 
@@ -682,9 +680,21 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (empty($this->company_id)) {
             return false;
         }
+        
+        static $cache = array();
+        
+        // Check if we have cached this company
+        if (isset($cache[$this->company_id])) {
+            return $cache[$this->company_id];
+        }
+        
         $x = DB_DataObject::factory('core_company');
         $x->autoJoin();
         $x->get($this->company_id);
+        
+        // Cache the result
+        $cache[$this->company_id] = $x;
+        
         return $x;
     }
     function loadCompany()

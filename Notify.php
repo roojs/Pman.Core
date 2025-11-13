@@ -202,6 +202,20 @@ class Pman_Core_Notify extends Pman
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
         
+        // Check if server is disabled or not found (id = 0 means no servers exist)
+        if (empty($this->server->id)) {
+            $this->logecho("Server is disabled or not found - exiting gracefully");
+            exit;
+        }
+        
+        // If server is disabled, reset all unsent notifications for this server
+        if (empty($this->server->is_active)) {
+            $this->logecho("Server is disabled - resetting unsent notifications server_id to 0");
+            $this->server->resetQueueForTable($this->table);
+            $this->logecho("Server is disabled - exiting gracefully");
+            exit;
+        }
+        
         $this->server->assignQueues($this);
         
         

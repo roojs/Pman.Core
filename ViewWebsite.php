@@ -41,10 +41,49 @@ class Pman_Core_ViewWebsite extends Pman
             $contentType = trim($matches[1]);
         }
 
+        $ret = $body;
+
         // Set Content-Type header for browser
         header("Content-Type: $contentType");
         curl_close($ch);
-        echo $body;
+        
+        // Pretty print XML for various XML content types
+        if (preg_match('/\bxml\b/i', $contentType) || $this->isXMLContent($body)) {
+            $ret = $this->prettyPrintXML($body);
+        }
+        
+        echo $ret;
         exit;
+    }
+    
+    /**
+     * Check if content is XML by examining the content itself
+     */
+    private function isXMLContent($content) 
+    {
+        // Trim whitespace and check for XML declaration or root element
+        $trimmed = trim($content);
+        return (strpos($trimmed, '<?xml') === 0) || 
+               (strpos($trimmed, '<') === 0 && strpos($trimmed, '>') !== false);
+    }
+    
+    /**
+     * Pretty print XML content
+     */
+    private function prettyPrintXML($xmlContent) 
+    {
+        if(empty($xmlContent)) {
+            return $xmlContent;
+        }
+        try {
+            $dom = new DOMDocument();
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            $dom->loadXML($xmlContent);
+            return $dom->saveXML();
+        } catch (Exception $e) {
+            // If XML parsing fails, return original content
+            return $xmlContent;
+        }
     }
 }

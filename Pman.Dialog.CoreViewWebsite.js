@@ -7,6 +7,7 @@ Roo.namespace('Pman.Dialog');
 Pman.Dialog.CoreViewWebsite = {
 
  _strings : {
+  '2959ce8aed67d6b6e6f5cefd601f1091' :"Open in new window",
   '1e35fe802ad1aaf4414fd68ad3157675' :"View Website",
   'a60852f204ed8028c1c58808b746d115' :"Ok"
  },
@@ -92,6 +93,10 @@ Pman.Dialog.CoreViewWebsite = {
                       });
                   } else if (contentType && contentType.includes('application/rss+xml')) { 
                       return res.text().then(function(xml) {
+                          if(xml == ''){
+                              _this.websiteViewPanel.setContent('Empty xml?');
+                              return;
+                          }
                           var parser = new DOMParser();
                           var xmlDoc = parser.parseFromString(xml.trim(), "application/xml");
       
@@ -129,6 +134,18 @@ Pman.Dialog.CoreViewWebsite = {
      '|xns' : 'Roo'
     },
     buttons : [
+     {
+      xtype : 'Button',
+      text : _this._strings['2959ce8aed67d6b6e6f5cefd601f1091'] /* Open in new window */,
+      listeners : {
+       click : function (_self, e)
+        {
+            window.open(_this.data.url, "_blank");
+        }
+      },
+      xns : Roo,
+      '|xns' : 'Roo'
+     },
      {
       xtype : 'Button',
       text : _this._strings['a60852f204ed8028c1c58808b746d115'] /* Ok */,
