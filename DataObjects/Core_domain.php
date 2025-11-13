@@ -181,7 +181,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         // all domains have no person reference count
     }
 
-    function validateEmail($email, $roo)
+    function validateEmail($email, $dom, $roo)
     {
         // email domain should be in lowercase
         $cd = DB_DataObject::factory('core_domain');
@@ -195,7 +195,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         // error if no MX
         if(!$hasMX) {
-            $roo->jnotice("BADDOM", $this->{$email} .  " {$dom} is not a valid domain (cant deliver email to it)");
+            $roo->jnotice("BADDOM", $email .  " {$dom} is not a valid domain (cant deliver email to it)");
         }
 
         // test smtp connection
@@ -334,8 +334,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 }
             }
 
-            $res = $mailer->send($this->{$email}, array(
-                'To'   => $this->{$email},  
+            $res = $mailer->send($email, array(
+                'To'   => $email,  
                 'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
             ), '');
 
@@ -349,7 +349,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         if ($fail) {
-            $errorMsg = "cannot send to " . $this->{$email};
+            $errorMsg = "cannot send to " . $email;
             if ($lastError) {
                 $errorMsg .= " ({$lastError})";
             } else {
