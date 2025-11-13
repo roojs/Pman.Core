@@ -75,7 +75,15 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
     // most services should call this first..
     
-    function getCurrent($notify, $force = false)
+    /**
+     * Get current notify server
+     * 
+     * @param object $roo Normally a notify object, but could also be a roo object
+     * @param bool $force Force fallback to any server if hostname not found
+     * @param string|false $poolname Pool name to use. Required when $roo is a roo object (which doesn't have poolname property)
+     * @return object Core_notify_server instance
+     */
+    function getCurrent($roo, $force = false, $poolname = false)
     {
         static $current = false;;
         
@@ -90,7 +98,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         
         
-        $ns->poolname = $notify->poolname;
+        $ns->poolname = ($poolname !== false) ? $poolname : $roo->poolname;
         $ns->is_active = 1;
         $ns->hostname = gethostbyaddr("127.0.1.1");
         $ns->limit(1);
@@ -99,7 +107,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return $ns;
         }
         if (!$force) {
-            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
+            $roo->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         // fallback to any server - if we are using force. (this is so helo will work...)
         
@@ -107,7 +115,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         //$ns->is_active = 1; // we allow non active servers if force is used
         $ns->hostname = gethostbyaddr("127.0.1.1");
         if (!strlen($ns->hostname) ||  !$ns->find(true)) {
-            $notify->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
+            $roo->jerr("Server not found for this server hostname 127.0.1.1 - {$ns->hostname} in core_notify_server" );
         }
         
         $current = $ns;
