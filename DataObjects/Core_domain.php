@@ -181,6 +181,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         // all domains have no person reference count
     }
 
+    /**
+     * validate email
+     * 
+     * @param string $email email
+     * @param string $dom domain
+     * @param object $roo roo object
+     * 
+     * @return void
+     */
     function validateEmail($email, $dom, $roo)
     {
         // email domain should be in lowercase
