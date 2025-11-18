@@ -58,12 +58,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (empty($dom)) {
             return "domain is empty";
         }
-        
-        // Basic domain name validation using Validate library
-        if (!Validate::domain($dom)) {
-            return "domain is invalid";
-        }
-        
+         
         // DNS validation - check if domain exists (but not MX)
         if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
             return "Domain {$dom} does not exist (no A or AAAA records)";
