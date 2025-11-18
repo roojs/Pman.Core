@@ -296,30 +296,24 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
-                if ($validUser === false) {
-                    continue;
-                }
-                
                 $s = $validUser->server();
                 $mailer->host = $s->smtp_host;
-                $settings['port'] = $s->smtp_port;
-                $settings['username'] = $validUser->email;
-                $settings['password'] = $s->requestToken($validUser);
+                $mailer->port = $s->smtp_port;
+                $mailer->username = $validUser->email;
+                $mailer->password = $s->requestToken($validUser);
             } else {
                 $mailer->host = $server;
+                $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+                $mailer->username = $settings['username'];
+                $mailer->password = $settings['password'];
+                if (isset($settings['port'])) {
+                    $mailer->port = $settings['port'];
+                }
+                $mailer->socket_options = isset($settings['socket_options']) 
+                    ? $settings['socket_options'] 
+                    : $mailer->socket_options;
+                $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
             }
-
-            $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
-            $mailer->username = $settings['username'];
-            $mailer->password = $settings['password'];
-            if (isset($settings['port'])) {
-                $mailer->port = $settings['port'];
-            }
-            $mailer->socket_options = isset($settings['socket_options']) 
-                ? $settings['socket_options'] 
-                :  $mailer->socket_options;
-                
-            $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
 
             return $mailer;
         }
