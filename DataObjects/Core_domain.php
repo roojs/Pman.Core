@@ -45,7 +45,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * Get or create domain with validation
      * 
      * @param string $dom domain name
-     * @return object|false|string returns domain object on success, false if domain name is invalid, error string if validation fails
+     * @return object|string returns domain object on success, error string if validation fails
      */
     function getOrCreate($dom)
     {
