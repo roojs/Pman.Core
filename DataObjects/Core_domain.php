@@ -72,7 +72,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $this->insert();
             $needsMxUpdate = true;
         } elseif (
-            strtotime($this->mx_updated) < strtotime('NOW - 30 day') ||
+            strtotime($this->mx_updated) < strtotime('NOW - 30 day')
         ) {
             $needsMxUpdate = true;
         }
