@@ -268,19 +268,19 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
         }
         
-        $socketOptions = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false, 
-                'allow_self_signed' => true
-            )
-        );
-        
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
             'timeout' => 15,
-            'socket_options' => $socketOptions,
+            'socket_options' => isset($ff->Mail['socket_options']) 
+                ? $ff->Mail['socket_options'] 
+                : array(
+                    'ssl' => array(
+                        'verify_peer_name' => false,
+                        'verify_peer' => false, 
+                        'allow_self_signed' => true
+                    )
+                ),
             'test' => true
         ));
 
@@ -313,7 +313,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (isset($settings['port'])) {
                 $mailer->port = $settings['port'];
             }
-            $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : $socketOptions;
+            $mailer->socket_options = isset($settings['socket_options']) 
+                ? $settings['socket_options'] 
+                : array(
+                    'ssl' => array(
+                        'verify_peer_name' => false,
+                        'verify_peer' => false, 
+                        'allow_self_signed' => true
+                    )
+                );
             $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
 
             return $mailer;
