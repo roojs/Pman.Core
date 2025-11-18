@@ -288,6 +288,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return $mailer;
         }
 
+        if ($validUser === false) {
+            return $mailer;
+        }
+
         foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
             if (!$this->matchesRoute($this->domain, $mx, $settings)) {
                 continue;
