@@ -291,7 +291,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
          
 
         foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
-            if (!$this->matchesRoute($this->domain, $mx, $settings)) {
+            if (!in_array($this->domain, $settings['domains']) && (empty($settings['mx']) || !array_filter($settings['mx'], function($mmx) use ($mx) { return preg_match($mmx, $mx); }))) {
                 continue;
             }
 
@@ -303,6 +303,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $mailer->password = $s->requestToken($validUser);
                 return $mailer;
             } 
+            
             $mailer->host = $server;
             $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
             $mailer->username = $settings['username'];
@@ -321,23 +322,5 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mailer;
     }
 
-    function matchesRoute($dom, $mx, $settings)
-    {
-        if (in_array($dom, $settings['domains'])) {
-            return true;
-        }
-
-        if (empty($settings['mx'])) {
-            return false;
-        }
-
-        foreach($settings['mx'] as $mmx) {
-            if (preg_match($mmx, $mx)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
 }
