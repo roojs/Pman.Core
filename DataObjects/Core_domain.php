@@ -284,13 +284,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             'test' => true
         ));
 
-        if (empty($ff->Mail_Validate) || empty($ff->Mail_Validate['routes'])) {
+        if ($validUser === false || empty($ff->Mail_Validate) || empty($ff->Mail_Validate['routes'])) {
             return $mailer;
         }
 
-        if ($validUser === false) {
-            return $mailer;
-        }
+         
 
         foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
             if (!$this->matchesRoute($this->domain, $mx, $settings)) {
