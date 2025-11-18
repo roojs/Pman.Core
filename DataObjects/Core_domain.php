@@ -63,32 +63,31 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
             return "Domain {$dom} does not exist (no A or AAAA records)";
         }
-        
+        $needsMxUpdate = false;
         // Get or create domain object
         if (!$this->get('domain', $dom)) {
             $this->domain = $dom;
             $this->has_mx = 0;
             $this->mx_updated = '1000-01-01 00:00:00';
             $this->insert();
-        }
-        
-        // Update MX if needed (if not updated within last 30 days)
-        $needsMxUpdate = false;
-        if (strtotime($this->mx_updated) < strtotime('NOW - 30 day') || $this->mx_updated == '1000-01-01 00:00:00') {
+            $needsMxUpdate = true
+        } else  if (strtotime($this->mx_updated) < strtotime('NOW - 30 day') || $this->mx_updated == '1000-01-01 00:00:00') {
             $needsMxUpdate = true;
         }
         
-        if ($needsMxUpdate) {
-            $old = clone($this);
-            $this->has_mx = $this->hasValidMx($dom) ? 1 : 0;
-            $this->mx_updated = date('Y-m-d H:i:s');
-            if (!$this->has_mx) {
-                $this->no_mx_dt = date('Y-m-d H:i:s');
-            } else {
-                $this->no_mx_dt = '1000-01-01 00:00:00';
-            }
-            $this->update($old);
+        if (!$needsMxUpdate) {
+            return $this;
         }
+        $old = clone($this);
+        $this->has_mx = $this->hasValidMx($dom) ? 1 : 0;
+        $this->mx_updated = date('Y-m-d H:i:s');
+        if (!$this->has_mx) {
+            $this->no_mx_dt = date('Y-m-d H:i:s');
+        } else {
+            $this->no_mx_dt = '1000-01-01 00:00:00';
+        }
+        $this->update($old);
+        
         
         return $this;
     }
