@@ -319,13 +319,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
             $mailer->socket_options = isset($settings['socket_options']) 
                 ? $settings['socket_options'] 
-                : array(
-                    'ssl' => array(
-                        'verify_peer_name' => false,
-                        'verify_peer' => false, 
-                        'allow_self_signed' => true
-                    )
-                );
+                :  $mailer->socket_options;
+                
             $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
 
             return $mailer;
