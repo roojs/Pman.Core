@@ -291,7 +291,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
          
 
         foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
-            if (!in_array($this->domain, $settings['domains']) && (empty($settings['mx']) || !array_filter($settings['mx'], function($mmx) use ($mx) { return preg_match($mmx, $mx); }))) {
+            $matches = in_array($this->domain, $settings['domains']);
+            if (!$matches && !empty($settings['mx'])) {
+                foreach($settings['mx'] as $mmx) {
+                    if (preg_match($mmx, $mx)) {
+                        $matches = true;
+                        break;
+                    }
+                }
+            }
+            if (!$matches) {
                 continue;
             }
 
