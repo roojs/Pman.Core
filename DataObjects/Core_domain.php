@@ -40,6 +40,63 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $cache[$dom] = $cd;
         return $cd;
     }
+
+    /**
+     * Get or create domain with validation
+     * 
+     * @param string $dom domain name
+     * @return object|false|string returns domain object on success, false if domain name is invalid, error string if validation fails
+     */
+    function getOrCreate($dom)
+    {
+        require_once 'Validate.php';
+        
+        // Normalize domain
+        $dom = trim(strtolower($dom));
+        $dom = preg_replace('/^www\./i', '', $dom);
+        
+        if (empty($dom)) {
+            return false;
+        }
+        
+        // Basic domain name validation using Validate library
+        if (!Validate::domain($dom)) {
+            return false;
+        }
+        
+        // DNS validation - check if domain exists (but not MX)
+        if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
+            return "Domain {$dom} does not exist (no A or AAAA records)";
+        }
+        
+        // Get or create domain object
+        if (!$this->get('domain', $dom)) {
+            $this->domain = $dom;
+            $this->has_mx = 0;
+            $this->mx_updated = '1000-01-01 00:00:00';
+            $this->insert();
+        }
+        
+        // Update MX if needed (if not updated within last 30 days)
+        $needsMxUpdate = false;
+        if (strtotime($this->mx_updated) < strtotime('NOW - 30 day') || $this->mx_updated == '1000-01-01 00:00:00') {
+            $needsMxUpdate = true;
+        }
+        
+        if ($needsMxUpdate) {
+            $old = clone($this);
+            $this->has_mx = $this->hasValidMx($dom) ? 1 : 0;
+            $this->mx_updated = date('Y-m-d H:i:s');
+            if (!$this->has_mx) {
+                $this->no_mx_dt = date('Y-m-d H:i:s');
+            } else {
+                $this->no_mx_dt = '1000-01-01 00:00:00';
+            }
+            $this->update($old);
+        }
+        
+        return $this;
+    }
     function server()
     {
         $mid = DB_DataObject::factory('mail_imap_domain');
