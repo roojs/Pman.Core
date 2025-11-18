@@ -257,13 +257,11 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     function createMailer($mx, $ff, $defaultSocketOptions)
     {
-        $socketOptions = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : $defaultSocketOptions;
-        
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
             'timeout' => 15,
-            'socket_options' => $socketOptions,
+            'socket_options' => isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : $defaultSocketOptions,
             'test' => true
         ));
 
@@ -271,23 +269,22 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return $mailer;
         }
 
-        $dom = $this->domain;
         foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
-            if (!$this->matchesRoute($dom, $mx, $settings)) {
+            if (!$this->matchesRoute($this->domain, $mx, $settings)) {
                 continue;
             }
 
-            $host = $server;
             if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
                 $oauthResult = $this->configureOAuth($settings);
                 if ($oauthResult === false) {
                     continue;
                 }
-                $host = $oauthResult['host'];
+                $mailer->host = $oauthResult['host'];
                 $settings = array_merge($settings, $oauthResult);
+            } else {
+                $mailer->host = $server;
             }
 
-            $mailer->host = $host;
             $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
             $mailer->username = $settings['username'];
             $mailer->password = $settings['password'];
