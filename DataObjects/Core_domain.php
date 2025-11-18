@@ -196,13 +196,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         // Check MX records - use cache if updated within last 30 days
-        if ($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) {
-            $hasMX = $this->has_mx;
-        } else {
-            $hasMX = $this->hasValidMx($dom);
-        }
-
-        if (!$hasMX) {
+        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
             return "{$email} {$dom} is not a valid domain (cant deliver email to it)";
         }
 
