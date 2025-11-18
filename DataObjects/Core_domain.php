@@ -275,12 +275,24 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
-                $oauthResult = $this->configureOAuth($settings);
-                if ($oauthResult === false) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                preg_match('/<([^>]+)>|^([^<>]+)$/', 'newswire-reply@media-outreach.com', $matches);
+                $from = end($matches);
+                
+                if (!$fromUser->get('email', $from)) {
                     continue;
                 }
-                $mailer->host = $oauthResult['host'];
-                $settings = array_merge($settings, $oauthResult);
+                
+                $validUser = $fromUser->validateAsOAuth();
+                if ($validUser === false) {
+                    continue;
+                }
+                
+                $s = $validUser->server();
+                $mailer->host = $s->smtp_host;
+                $settings['port'] = $s->smtp_port;
+                $settings['username'] = $validUser->email;
+                $settings['password'] = $s->requestToken($validUser);
             } else {
                 $mailer->host = $server;
             }
@@ -319,40 +331,4 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return false;
     }
 
-    function configureOAuth($settings)
-    {
-        $from = 'newswire-reply@media-outreach.com';
-        preg_match('/<([^>]+)>|^([^<>]+)$/', $from, $matches);
-        $from = end($matches);
-
-        $fromUser = DB_DataObject::factory('mail_imap_user');
-        $fromUser->setFrom(array('is_active' => 1));
-        if (!$fromUser->get('email', $from)) {
-            return false;
-        }
-
-        if ($fromUser->is_reply_to_only) {
-            $sendAsUser = DB_DataObject::factory('mail_imap_user');
-            if (!$sendAsUser->get($fromUser->send_as_id)) {
-                return false;
-            }
-            $fromUser = $sendAsUser;
-        }
-
-        $s = $fromUser->server();
-        if ($s === false || $s->is_valid() !== true || !$s->is_oauth) {
-            return false;
-        }
-
-        if (empty($fromUser->token) || empty($fromUser->id_token) || empty($fromUser->code)) {
-            return false;
-        }
-
-        return array(
-            'host' => $s->smtp_host,
-            'port' => $s->smtp_port,
-            'username' => $fromUser->email,
-            'password' => $s->requestToken($fromUser)
-        );
-    }
 }
