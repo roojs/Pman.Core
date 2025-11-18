@@ -56,12 +56,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $dom = preg_replace('/^www\./i', '', $dom);
         
         if (empty($dom)) {
-            return false;
+            return "domain is empty";
         }
         
         // Basic domain name validation using Validate library
         if (!Validate::domain($dom)) {
-            return false;
+            return "domain is invalid";
         }
         
         // DNS validation - check if domain exists (but not MX)
