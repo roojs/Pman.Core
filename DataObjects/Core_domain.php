@@ -255,8 +255,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
-    function createMailer($mx, $ff, $defaultSocketOptions)
+    function createMailer($mx, $defaultSocketOptions)
     {
+        $ff = HTML_FlexyFramework::get();
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
@@ -275,24 +276,46 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
-                $fromUser = DB_DataObject::factory('mail_imap_user');
-                preg_match('/<([^>]+)>|^([^<>]+)$/', 'newswire-reply@media-outreach.com', $matches);
-                $from = end($matches);
+                $fromUser = null;
+                $authUser = $ff->page->getAuthUser();
                 
-                if (!$fromUser->get('email', $from)) {
+                if ($authUser) {
+                    $fromUser = DB_DataObject::factory('mail_imap_user');
+                    if ($fromUser->get('email', $authUser->email)) {
+                        $validUser = $fromUser->validateAsOAuth();
+                        if ($validUser !== false) {
+                            $fromUser = $validUser;
+                        } else {
+                            $fromUser = null;
+                        }
+                    } else {
+                        $fromUser = null;
+                    }
+                }
+                
+                if ($fromUser === null && !empty($ff->Mail_Validate['test_user'])) {
+                    $fromUser = DB_DataObject::factory('mail_imap_user');
+                    if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
+                        $validUser = $fromUser->validateAsOAuth();
+                        if ($validUser !== false) {
+                            $fromUser = $validUser;
+                        } else {
+                            $fromUser = null;
+                        }
+                    } else {
+                        $fromUser = null;
+                    }
+                }
+                
+                if ($fromUser === null) {
                     continue;
                 }
                 
-                $validUser = $fromUser->validateAsOAuth();
-                if ($validUser === false) {
-                    continue;
-                }
-                
-                $s = $validUser->server();
+                $s = $fromUser->server();
                 $mailer->host = $s->smtp_host;
                 $settings['port'] = $s->smtp_port;
-                $settings['username'] = $validUser->email;
-                $settings['password'] = $s->requestToken($validUser);
+                $settings['username'] = $fromUser->email;
+                $settings['password'] = $s->requestToken($fromUser);
             } else {
                 $mailer->host = $server;
             }
