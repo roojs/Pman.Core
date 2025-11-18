@@ -226,9 +226,25 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
 
+        $validUser = false;
+        if (!empty($ff->Mail_Validate['routes'])) {
+            $authUser = $ff->page->getAuthUser();
+            $fromUser = DB_DataObject::factory('mail_imap_user');
+            if ($fromUser->get('email', $authUser->email)) {
+                $validUser = $fromUser->validateAsOAuth();
+            }
+            
+            if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+        }
+
         $lastError = '';
         foreach($mxs as $mx) {
-            $mailer = $this->createMailer($mx);
+            $mailer = $this->createMailer($mx, $validUser);
             if ($mailer === false) {
                 continue;
             }
@@ -248,25 +264,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
-    function createMailer($mx)
+    function createMailer($mx, $validUser = false)
     {
         $ff = HTML_FlexyFramework::get();
-        
-        $validUser = false;
-        if (!empty($ff->Mail_Validate['routes'])) {
-            $authUser = $ff->page->getAuthUser();
-            $fromUser = DB_DataObject::factory('mail_imap_user');
-            if ($fromUser->get('email', $authUser->email)) {
-                $validUser = $fromUser->validateAsOAuth();
-            }
-            
-            if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
-                $fromUser = DB_DataObject::factory('mail_imap_user');
-                if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
-                    $validUser = $fromUser->validateAsOAuth();
-                }
-            }
-        }
         
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
