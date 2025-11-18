@@ -49,7 +49,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      */
     function getOrCreate($dom)
     {
-        require_once 'Validate.php';
+        static $dom_cache = array();
         
         // Normalize domain
         $dom = trim(strtolower($dom));
@@ -58,10 +58,23 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if (empty($dom)) {
             return "domain is empty";
         }
+        
+        // Basic domain syntax validation
+        if (!preg_match('/^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i', $dom)) {
+            return "Invalid domain name format: {$dom}";
+        }
          
-        // DNS validation - check if domain exists (but not MX)
-        if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
-            return "Domain {$dom} does not exist (no A or AAAA records)";
+        // DNS validation - check if domain exists (but not MX) - use cache
+        if (isset($dom_cache[$dom])) {
+            if (!$dom_cache[$dom]) {
+                return "Domain {$dom} does not exist (no A or AAAA records)";
+            }
+        } else {
+            $hasDns = checkdnsrr($dom, 'A') || checkdnsrr($dom, 'AAAA');
+            $dom_cache[$dom] = $hasDns;
+            if (!$hasDns) {
+                return "Domain {$dom} does not exist (no A or AAAA records)";
+            }
         }
         $needsMxUpdate = false;
         // Get or create domain object
