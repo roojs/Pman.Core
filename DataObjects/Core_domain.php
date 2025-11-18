@@ -225,17 +225,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         PEAR::setErrorHandling(PEAR_ERROR_RETURN);
-        $defaultSocketOptions = array(
-            'ssl' => array(
-                'verify_peer_name' => false,
-                'verify_peer' => false, 
-                'allow_self_signed' => true
-            )
-        );
 
         $lastError = '';
         foreach($mxs as $mx) {
-            $mailer = $this->createMailer($mx, $defaultSocketOptions);
+            $mailer = $this->createMailer($mx);
             if ($mailer === false) {
                 continue;
             }
@@ -255,9 +248,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
-    function createMailer($mx, $defaultSocketOptions)
+    function createMailer($mx)
     {
         $ff = HTML_FlexyFramework::get();
+        $defaultSocketOptions = array(
+            'ssl' => array(
+                'verify_peer_name' => false,
+                'verify_peer' => false, 
+                'allow_self_signed' => true
+            )
+        );
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
