@@ -258,6 +258,23 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 'allow_self_signed' => true
             )
         );
+        
+        $validUser = false;
+        if (!empty($ff->Mail_Validate['routes'])) {
+            $authUser = $ff->page->getAuthUser();
+            $fromUser = DB_DataObject::factory('mail_imap_user');
+            if ($fromUser->get('email', $authUser->email)) {
+                $validUser = $fromUser->validateAsOAuth();
+            }
+            
+            if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+        }
+        
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
@@ -276,46 +293,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             }
 
             if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
-                $fromUser = null;
-                $authUser = $ff->page->getAuthUser();
-                
-                if ($authUser) {
-                    $fromUser = DB_DataObject::factory('mail_imap_user');
-                    if ($fromUser->get('email', $authUser->email)) {
-                        $validUser = $fromUser->validateAsOAuth();
-                        if ($validUser !== false) {
-                            $fromUser = $validUser;
-                        } else {
-                            $fromUser = null;
-                        }
-                    } else {
-                        $fromUser = null;
-                    }
-                }
-                
-                if ($fromUser === null && !empty($ff->Mail_Validate['test_user'])) {
-                    $fromUser = DB_DataObject::factory('mail_imap_user');
-                    if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
-                        $validUser = $fromUser->validateAsOAuth();
-                        if ($validUser !== false) {
-                            $fromUser = $validUser;
-                        } else {
-                            $fromUser = null;
-                        }
-                    } else {
-                        $fromUser = null;
-                    }
-                }
-                
-                if ($fromUser === null) {
+                if ($validUser === false) {
                     continue;
                 }
                 
-                $s = $fromUser->server();
+                $s = $validUser->server();
                 $mailer->host = $s->smtp_host;
                 $settings['port'] = $s->smtp_port;
-                $settings['username'] = $fromUser->email;
-                $settings['password'] = $s->requestToken($fromUser);
+                $settings['username'] = $validUser->email;
+                $settings['password'] = $s->requestToken($validUser);
             } else {
                 $mailer->host = $server;
             }
