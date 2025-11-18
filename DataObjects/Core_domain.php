@@ -235,7 +235,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $lastError = '';
         foreach($mxs as $mx) {
-            $mailer = $this->createMailer($mx, $ff, $defaultSocketOptions);
+            $mailer = $this->createMailer($mx, $defaultSocketOptions);
             if ($mailer === false) {
                 continue;
             }
