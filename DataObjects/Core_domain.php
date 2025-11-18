@@ -60,12 +60,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
          
         // DNS validation - check if domain exists (but not MX)
-        if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
-            return "Domain {$dom} does not exist (no A or AAAA records)";
-        }
+        
         $needsMxUpdate = false;
         // Get or create domain object
         if (!$this->get('domain', $dom)) {
+
+            if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
+                return "Domain {$dom} does not exist (no A or AAAA records)";
+            }
+
+
             $this->domain = $dom;
             $this->has_mx = 0;
             $this->mx_updated = '1000-01-01 00:00:00';
