@@ -252,13 +252,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $lastError = $res->message;
         }
 
-        $errorMsg = "cannot send to {$email}";
-        if ($lastError) {
-            $errorMsg .= " ({$lastError})";
-        } else {
-            $errorMsg .= " (connection failed to all MX servers)";
-        }
-        return $errorMsg;
+        return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
     function createMailer($mx, $ff, $defaultSocketOptions)
