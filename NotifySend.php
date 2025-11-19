@@ -488,7 +488,8 @@ class Pman_Core_NotifySend extends Pman
                         'ssl' => array(
                             'verify_peer_name' => false,
                             'verify_peer' => false, 
-                            'allow_self_signed' => true
+                            'allow_self_signed' => true,
+                            'security_level' => 1
                         )
                     ),
                 
@@ -597,8 +598,7 @@ class Pman_Core_NotifySend extends Pman
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $s->requestToken($fromUser);;
                     }
-                    
-                   
+                     
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
                     // if it's newer that '1' minute...
                     // then shunt it..
@@ -631,8 +631,9 @@ class Pman_Core_NotifySend extends Pman
                     $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                         'ssl' => array(
                             'verify_peer_name' => false,
-                             'verify_peer' => false, 
-                             'allow_self_signed' => true
+                            'verify_peer' => false, 
+                            'allow_self_signed' => true,
+                            'security_level' => 1
                         )
                     );
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
