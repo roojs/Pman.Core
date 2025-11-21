@@ -179,9 +179,10 @@ class Pman_Core_Notify extends Pman
     function get($r,$opts=array())    
     {
         
-       // if ($this->database_is_locked()) {
-        //    die("LATER - DATABASE IS LOCKED");
-        //}
+        if ($this->database_is_locked()) {
+            $this->logecho("LATER - DATABASE IS LOCKED");
+            exit;
+        }
         
         
         $this->parseArgs($opts); 
@@ -284,6 +285,11 @@ class Pman_Core_Notify extends Pman
        
         
         while (true) {
+            if ($this->database_is_locked()) {
+                $this->logecho("LATER - DATABASE IS LOCKED");
+                exit;
+            }
+            
             // only add if we don't have any queued up..
             if (empty($this->queue) && $w->fetch()) {
                 $this->queue[] = clone($w);
