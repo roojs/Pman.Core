@@ -65,8 +65,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         // Get or create domain object
         if (!$this->get('domain', $dom)) {
 
-            if (!checkdnsrr($dom, 'A') && !checkdnsrr($dom, 'AAAA')) {
-                return "Domain {$dom} does not exist (no A or AAAA records)";
+            if (!checkdnsrr($dom, 'ANY')) {
+                return "Domain {$dom} does not exist (no dns records found)";
             }
 
 
