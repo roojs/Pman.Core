@@ -367,6 +367,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $mailer->port = $s->smtp_port;
                 $mailer->username = $validUser->email;
                 $mailer->password = $s->requestToken($validUser);
+                $mailer->auth = 'XOAUTH2';
+                $mailer->tls = true;
                 return $mailer;
             } 
             
