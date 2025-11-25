@@ -366,6 +366,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                     join_user_id_id.email = '" . $member->escape($ff->Pman['local_autoauth']) . "'
                 ");
             }
+
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 $default_admin->autoJoin();
@@ -374,6 +375,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         }
+
+        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        die($error->toString());
         
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
         $u = DB_DataObject::factory($this->tableName());
