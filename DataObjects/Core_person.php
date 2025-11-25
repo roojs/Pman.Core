@@ -305,6 +305,10 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             self::$authUser = $u;
             return true; 
         }
+
+        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        var_dump("A");
+        die($error->toString());
         
         // at this point all http auth stuff is done, so we can init session
         
@@ -375,10 +379,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         }
-
-        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
-        var_dump("A");
-        die($error->toString());
         
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
         $u = DB_DataObject::factory($this->tableName());
