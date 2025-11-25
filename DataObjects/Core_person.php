@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 }
             }
         }
-        die('e');
+        die($ff->Pman['local_autoauth']);
         
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
         $u = DB_DataObject::factory($this->tableName());
