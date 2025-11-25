@@ -726,6 +726,7 @@ class Pman_Core_NotifySend extends Pman
             break;
         }
 
+        var_dump($fail);
         die('aa');
         
         // after trying all mxs - could not connect...
