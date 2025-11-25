@@ -703,7 +703,6 @@ class Pman_Core_NotifySend extends Pman
             
             if ($code < 0) {
                 $this->debug($res->message);
-                var_dump("CPONTINUE");
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
             // give up after 2 days..
@@ -727,7 +726,6 @@ class Pman_Core_NotifySend extends Pman
             break;
         }
 
-        var_dumP("OUTSIDE");
         die('aa');
         
         // after trying all mxs - could not connect...
