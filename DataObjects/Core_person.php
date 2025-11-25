@@ -416,6 +416,8 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (!$n){ // authenticated as there are no users in the system...
              return true;
         }
+        var_dump("FALSE");
+        die('false');
          return false;
         
     }
