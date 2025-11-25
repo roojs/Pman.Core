@@ -477,8 +477,6 @@ class Pman_Core_NotifySend extends Pman
         $mxs = array('127.0.0.1:9999');
                         
         foreach($mxs as $mx) {
-
-            var_dump("MX: " . $mx);
             
            
             $this->debug_str = '';
