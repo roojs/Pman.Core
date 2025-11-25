@@ -700,8 +700,6 @@ class Pman_Core_NotifySend extends Pman
                 // fake greylist if timed out.
                 $code = -1;
             }
-
-            var_dumP($code);
             
             if ($code < 0) {
                 $this->debug($res->message);
