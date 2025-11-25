@@ -409,7 +409,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
         if (class_exists('PEAR')) {
             $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
-            die('a');
             if ($error) {
                 die($error->toString()); // not really a good thing to do...
             }
