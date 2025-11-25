@@ -649,6 +649,7 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            var_dump($res);
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
