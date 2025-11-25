@@ -779,8 +779,6 @@ class Pman_Core_NotifySend extends Pman
         // try again.
         
         $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
-
-        var_dump("a");
         
         $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
