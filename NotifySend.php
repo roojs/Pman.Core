@@ -274,6 +274,10 @@ class Pman_Core_NotifySend extends Pman
         // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
 
+        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        var_dump("AB");
+        die($error->toString());
+
         if($w->reachEmailLimit()) {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
             $w->flagDone($ev, '');
