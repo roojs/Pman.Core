@@ -410,14 +410,13 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         if (class_exists('PEAR')) {
             $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
             if ($error) {
+                var_dump('a');
                 die($error->toString()); // not really a good thing to do...
             }
         }
         if (!$n){ // authenticated as there are no users in the system...
              return true;
         }
-        var_dump("FALSE");
-        die('false');
          return false;
         
     }
