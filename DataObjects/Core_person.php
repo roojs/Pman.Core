@@ -369,7 +369,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             if($member->find(true)){
                 $default_admin = DB_DataObject::factory($this->tableName());
                 $default_admin->autoJoin();
-                var_dump($member->user_id);
                 if(!$default_admin->get($member->user_id)){
                     $default_admin = false;
                 }
