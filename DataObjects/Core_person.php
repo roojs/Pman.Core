@@ -403,12 +403,12 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         $u = DB_DataObject::factory($this->tableName());
         $u->whereAdd(' LENGTH(passwd) > 0');
         $n = $u->count();
-        die('c');
         if (empty($_SESSION[get_class($this)]) || !is_array($_SESSION[get_class($this)])) { 
             $_SESSION[get_class($this)] = array();
         }
         $_SESSION[get_class($this)][$sesPrefix .'-empty']  = $n;
         if (class_exists('PEAR')) {
+            die('ddd');
             $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
             if ($error) {
                 die($error->toString()); // not really a good thing to do...
