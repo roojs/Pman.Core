@@ -377,6 +377,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         }
 
         $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        var_dump("A");
         die($error->toString());
         
         //var_dump($ff->Pman['local_autoauth']);         var_dump($_SERVER); exit;
