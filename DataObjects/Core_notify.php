@@ -45,7 +45,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $person_table;
     public $to_email;
     public $language;
-    public $email_id;
  
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
@@ -238,8 +237,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
 
     function reachEmailLimit()
     {
-        var_dump($this->toArray());
-        die('test');
         $ce = DB_DataObject::factory('core_email');
         if(!$ce->get($this->email_id)) {
             // 0 as email_id
