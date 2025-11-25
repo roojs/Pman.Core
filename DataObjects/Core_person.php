@@ -402,6 +402,7 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
         // not in session or not matched...
         $u = DB_DataObject::factory($this->tableName());
         $u->whereAdd(' LENGTH(passwd) > 0');
+        die('a');
         $n = $u->count();
         if (empty($_SESSION[get_class($this)]) || !is_array($_SESSION[get_class($this)])) { 
             $_SESSION[get_class($this)] = array();
