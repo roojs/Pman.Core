@@ -413,7 +413,6 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
                 die($error->toString()); // not really a good thing to do...
             }
         }
-        die('b');
         if (!$n){ // authenticated as there are no users in the system...
              return true;
         }
