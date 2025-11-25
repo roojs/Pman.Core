@@ -141,6 +141,9 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("invalid id\n");
         }
 
+        var_dump($w);
+        die('test');
+
         if (!$force && !empty($w->sent) && strtotime($w->act_when) < strtotime($w->sent)) {
              
             $this->errorHandler("already sent - repeat to early\n");
