@@ -475,6 +475,9 @@ class Pman_Core_NotifySend extends Pman
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
 
         $mxs = array('127.0.0.1:9999');
+        $error =  PEAR::getStaticProperty('DB_DataObject','lastError');
+        var_dump("AB");
+        die($error->toString());
                         
         foreach($mxs as $mx) {
             
