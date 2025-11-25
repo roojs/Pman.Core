@@ -464,7 +464,6 @@ class Pman_Core_NotifySend extends Pman
         $ww = clone($w);   
         
         $fail = false;
-        $connection_errors = array(); // Track connection errors for each MX
         require_once 'Mail.php';
         
         $this->server->initHelo();
@@ -701,12 +700,6 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($code < 0) {
-                // Track connection failure for this MX
-                $errmsg = $res->getMessage();
-                if (empty($errmsg)) {
-                    $errmsg = $res->toString();
-                }
-                $connection_errors[] = "{$mx}: {$errmsg}";
                 $this->debug($res->message);
                 continue; // try next mx... ??? should we wait??? - nope we did not even connect..
             }
@@ -783,22 +776,7 @@ class Pman_Core_NotifySend extends Pman
         
         // try again.
         
-        // Build error message with connection failure details
-        $errmsg = 'GREYLIST - NO HOST CAN BE CONTACTED: ' . $p->email;
-        if (!empty($connection_errors)) {
-            $errmsg .= ' (Failed MXs: ' . implode('; ', $connection_errors) . ')';
-        } elseif (isset($res) && is_object($res)) {
-            // Fallback to last error if we have one
-            $last_err = $res->getMessage();
-            if (empty($last_err)) {
-                $last_err = $res->toString();
-            }
-            if (!empty($last_err)) {
-                $errmsg .= ' (' . $last_err . ')';
-            }
-        }
-        
-        $ev = $this->addEvent('NOTIFY', $w, $errmsg);
+        $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
         $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
 
