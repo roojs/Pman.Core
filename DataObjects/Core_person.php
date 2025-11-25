@@ -287,9 +287,9 @@ class Pman_Core_DataObjects_Core_person extends DB_DataObject
             //setcookie('Pman.timeout', -1, time() + (30*60), '/');
             return false;
         }
-        var_dump($u->get('email', $_SERVER['PHP_AUTH_USER']));
         // http basic auth..
         $u = DB_DataObject::factory($this->tableName());
+        var_dump($u->get('email', $_SERVER['PHP_AUTH_USER']));
         if (empty($ff->disable_http_auth)  // http auth requests should not have this...
             &&
             !empty($_SERVER['PHP_AUTH_USER']) 
