@@ -45,6 +45,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     public $person_table;
     public $to_email;
     public $language;
+    public $email_id;
  
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
