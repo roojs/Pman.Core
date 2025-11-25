@@ -725,11 +725,6 @@ class Pman_Core_NotifySend extends Pman
             $fail = true;
             break;
         }
-
-        var_dump($fail);
-        var_dump($next_try_min);
-        var_dump($w->act_start);
-        die('aa');
         
         // after trying all mxs - could not connect...
         if  (!$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
@@ -782,6 +777,8 @@ class Pman_Core_NotifySend extends Pman
         
         
         // try again.
+
+        die('aa');
         
         $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
