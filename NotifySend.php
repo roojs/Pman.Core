@@ -726,6 +726,9 @@ class Pman_Core_NotifySend extends Pman
             $fail = true;
             break;
         }
+
+        var_dumP("OUTSIDE");
+        die('aa');
         
         // after trying all mxs - could not connect...
         if  (!$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
