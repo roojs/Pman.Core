@@ -318,14 +318,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
-            if (isset($res->code) && $res->code == 421) {
+            if ($res->code == 421) {
                 return true; // Treat 421 as success
             }
-            
-            // Also check if error message contains 421
-            //if (isset($res->message) && preg_match('/\b421\b/', $res->message)) {
-             //   return true; // Treat 421 as success
-           // }
             
             $lastError = $res->message;
         }
