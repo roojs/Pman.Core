@@ -238,7 +238,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
     function reachEmailLimit()
     {
         $ce = DB_DataObject::factory('core_email');
-        if(!$ce->get($this->email_id)) {
+        if(!isset($this->email_id) ||!$ce->get($this->email_id)) {
             // 0 as email_id
             // not linked to any email template
             return false;
