@@ -328,6 +328,19 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return true; // Treat 421 as success
             }
             
+            // Check for SMTP error 451 (Greylisting - temporary failure)
+            // This is a temporary error indicating greylisting, so treat it as a valid check
+            if ($res->code == 451) {
+                // Log 451 error to Apache error log with full error object details
+                
+                $roo->errorlog(
+                    "SMTP 451 error (Greylisting) for email validation: " . 
+                    "Email: {$email} on domain {$dom} - treating as valid. Error object: " . print_r($res, true));
+                
+                return true; // Treat 451 as success
+            }
+             
+            
             $lastError = $res->message;
         }
 
