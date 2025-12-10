@@ -247,6 +247,7 @@ Pman.Dialog.Image = {
                   
                   this.url = _this.data._url ? _this.data._url : baseURL + '/Roo/Images.php';
                   this.el.dom.action = this.url;
+                  this.useSSE = _this.data.useSSE || false;
                   if (typeof(_this.data.timeout) != 'undefined') {
                       this.timeout = _this.data.timeout;
                   }
