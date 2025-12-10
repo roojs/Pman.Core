@@ -315,16 +315,18 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!is_object($res)) {
                 return true; // Success
             }
+            // PEAR_Error objects have both ->message property and getMessage() method
+            // Using getMessage() method is the standard approach
+            $roo->errorlog(
+                "SMTP {$res->code} Email: {$email} - Error: " . $res->getMessage()
+            );
             
+        
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
                 // Log 421 error to Apache error log with full error object details
-                
-                $roo->errorlog(
-                    "SMTP 421 error (Service unavailable) for email validation: " . 
-                    "Email: {$email} on domain {$dom} - treating as valid. Error object: " . print_r($res, true));
-                
+                 
                 return true; // Treat 421 as success
             }
             
@@ -332,16 +334,17 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 // Log 451 error to Apache error log with full error object details
-                
-                $roo->errorlog(
-                    "SMTP 451 error (Greylisting) for email validation: " . 
-                    "Email: {$email} on domain {$dom} - treating as valid. Error object: " . print_r($res, true));
-                
                 return true; // Treat 451 as success
             }
-             
             
-            $lastError = $res->message;
+            // Check for SMTP error 550 with Spamhaus failure
+            // Spamhaus failures are false positives we can't fix, so treat as valid
+            if ($res->code == 550 && preg_match('/spamhaus/i', $res->getMessage())) {
+                return true; // Treat 550 Spamhaus as success
+            }
+              
+            
+            $lastError = $res->getMessage();
         }
 
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
