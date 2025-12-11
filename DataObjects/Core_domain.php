@@ -18,6 +18,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
+
     function loadOrCreate($dom)
     {
         // should we validate domain?
@@ -39,18 +40,70 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $cache[$dom] = $cd;
         return $cd;
     }
+
+    /**
+     * Get or create domain with validation
+     * 
+     * @param string $dom domain name
+     * @return object|string returns domain object on success, error string if validation fails
+     */
+    function getOrCreate($dom)
+    {
+        static $dom_cache = array();
+        
+        // Normalize domain
+        $dom = trim(strtolower($dom));
+        $dom = preg_replace('/^www\./i', '', $dom);
+        
+        if (empty($dom)) {
+            return "domain is empty";
+        }
+         
+        // DNS validation - check if domain exists (but not MX)
+        
+        $needsMxUpdate = false;
+        // Get or create domain object
+        if (!$this->get('domain', $dom)) {
+
+            if (!checkdnsrr($dom, 'ANY')) {
+                return "Domain {$dom} does not exist (no dns records found)";
+            }
+
+
+            $this->domain = $dom;
+            $this->has_mx = 0;
+            $this->mx_updated = '1000-01-01 00:00:00';
+            $this->insert();
+            $needsMxUpdate = true;
+        } elseif (
+            strtotime($this->mx_updated) < strtotime('NOW - 30 day')
+        ) {
+            $needsMxUpdate = true;
+        }
+        
+        if (!$needsMxUpdate) {
+            return $this;
+        }
+        $old = clone($this);
+        $this->has_mx = $this->hasValidMx($dom) ? 1 : 0;
+        $this->mx_updated = date('Y-m-d H:i:s');
+        if (!$this->has_mx) {
+            $this->no_mx_dt = date('Y-m-d H:i:s');
+        } else {
+            $this->no_mx_dt = '1000-01-01 00:00:00';
+        }
+        $this->update($old);
+        
+        
+        return $this;
+    }
     function server()
     {
-        static $cache = array();
-        if (!isset($cache[$this->server_id])) {
-            
-            $server = DB_DataObject::factory('mail_imap_server');
-            if(!$this->server_id || !$server->get($this->server_id)) {
-                return false;
-            }
-            $cache[$this->server_id] = $server;
+        $mid = DB_DataObject::factory('mail_imap_domain');
+        if(!$mid->get('domain', $this->domain)) {
+            return false;
         }
-        return  $cache[$this->server_id];
+        return $mid->server();
     }
 
     function beforeUpdate($old, $q, $roo)
@@ -196,8 +249,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             return;
         }
 
-        // Get MX records for the domain
-        $mx_records = array();
         if (getmxrr($this->domain, $mx_records)) {
             // Check if any MX record has AAAA record
             foreach ($mx_records as $mx) {
@@ -242,5 +293,202 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         return $cnsi;
+    }
+
+    /**
+     * validate email
+     * 
+     * @param object $roo Roo object
+     * @param string $email email address to validate
+     * @return bool|string true on success, error message string on failure
+     * @throws Exception if configuration is invalid
+     */
+    function validateEmail($roo, $email)
+    {
+        $dom = $this->domain;
+        if (empty($dom)) {
+            throw new Exception("Domain not set on core_domain object");
+        }
+
+        // Check MX records - use cache if updated within last 30 days
+        if (!(($this->mx_updated && strtotime($this->mx_updated) >= strtotime('NOW - 30 day')) ? $this->has_mx : $this->hasValidMx($dom))) {
+            return "{$email} {$dom} is not a valid domain (cant deliver email to it)";
+        }
+
+        require_once 'Mail.php';
+        $ff = HTML_FlexyFramework::get();
+        
+        if (!isset($ff->Mail['helo'])) {
+            throw new Exception("config Mail[helo] is not set");
+        }
+
+        // Get MX records for the domain
+        $mx_records = array();
+        $mx_weight = array();
+        getmxrr($dom, $mx_records, $mx_weight);
+        asort($mx_weight, SORT_NUMERIC);
+        
+        $mxs = array();
+        foreach($mx_weight as $k => $weight) {
+            if (!empty($mx_records[$k])) {
+                $mxs[] = $mx_records[$k];
+            }
+        }
+
+        if (empty($mxs)) {
+            return "cannot send to {$email} (no MX records found)";
+        }
+
+        PEAR::setErrorHandling(PEAR_ERROR_RETURN);
+
+        $validUser = false;
+        if (!empty($ff->Mail_Validate['routes'])) {
+            $authUser = $ff->page->getAuthUser();
+            $fromUser = DB_DataObject::factory('mail_imap_user');
+            if ($fromUser->get('email', $authUser->email)) {
+                $validUser = $fromUser->validateAsOAuth();
+            }
+            
+            if ($validUser === false && !empty($ff->Mail_Validate['test_user'])) {
+                $fromUser = DB_DataObject::factory('mail_imap_user');
+                if ($fromUser->get('email', $ff->Mail_Validate['test_user'])) {
+                    $validUser = $fromUser->validateAsOAuth();
+                }
+            }
+        }
+
+        $lastError = '';
+        foreach($mxs as $mx) {
+            $mailer = $this->createMailer($roo, $mx, $validUser);
+            if ($mailer === false) {
+                continue;
+            }
+
+            $res = $mailer->send($email, array(
+                'To'   => $email,  
+                'From'   => '"Media OutReach Newswire" <newswire-reply@media-outreach.com>'
+            ), '');
+
+            if (!is_object($res)) {
+                return true; // Success
+            }
+            // PEAR_Error objects have both ->message property and getMessage() method
+            // Using getMessage() method is the standard approach
+            $roo->errorlog(
+                "SMTP {$res->code} Email: {$email} - Error: " . $res->getMessage()
+            );
+            
+        
+            // Check for SMTP error 421 (Service unavailable - server busy)
+            // This is a temporary error we can't fix, so treat it as a valid check
+            if ($res->code == 421) {
+                // Log 421 error to Apache error log with full error object details
+                 
+                return true; // Treat 421 as success
+            }
+            
+            // Check for SMTP error 451 (Greylisting - temporary failure)
+            // This is a temporary error indicating greylisting, so treat it as a valid check
+            if ($res->code == 451) {
+                // Log 451 error to Apache error log with full error object details
+                return true; // Treat 451 as success
+            }
+            
+            // Check for SMTP error 550 with Spamhaus failure
+            // Spamhaus failures are false positives we can't fix, so treat as valid
+            if ($res->code == 550 && preg_match('/spamhaus/i', $res->getMessage())) {
+                return true; // Treat 550 Spamhaus as success
+            }
+              
+            
+            $lastError = $res->getMessage();
+        }
+
+        return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
+    }
+
+    function createMailer($roo, $mx, $validUser = false)
+    {
+        $ff = HTML_FlexyFramework::get();
+
+        $socket_options = isset($ff->Mail_Validate['socket_options']) 
+            ? $ff->Mail_Validate['socket_options'] 
+            : array(
+                'ssl' => array(
+                    'verify_peer_name' => false,
+                    'verify_peer' => false, 
+                    'allow_self_signed' => true
+                )
+        );
+
+        $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
+        $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
+
+        // current server has ipv6 address
+        if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
+            $aaaa_records = dns_get_record($mx, DNS_AAAA);
+            // target mx has aaaa record
+            if (!empty($aaaa_records)) {
+                $socket_options['socket'] = array(
+                    'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
+                ); 
+            }
+        }
+        
+        $mailer = Mail::factory('smtp', array(
+            'host'    => $mx,
+            'localhost' => $ff->Mail['helo'],
+            'timeout' => 15,
+            'socket_options' => $socket_options,
+            'test' => true
+        ));
+
+        if ($validUser === false || empty($ff->Mail_Validate) || empty($ff->Mail_Validate['routes'])) {
+            return $mailer;
+        }
+
+         
+
+        foreach ($ff->Mail_Validate['routes'] as $server => $settings) {
+            $matches = in_array($this->domain, $settings['domains']);
+            if (!$matches && !empty($settings['mx'])) {
+                foreach($settings['mx'] as $mmx) {
+                    if (preg_match($mmx, $mx)) {
+                        $matches = true;
+                        break;
+                    }
+                }
+            }
+            if (!$matches) {
+                continue;
+            }
+
+            if (!empty($settings['auth']) && $settings['auth'] == 'XOAUTH2') {
+                $s = $validUser->server();
+                $mailer->host = $s->smtp_host;
+                $mailer->port = $s->smtp_port;
+                $mailer->username = $validUser->email;
+                $mailer->password = $s->requestToken($validUser);
+                $mailer->auth = 'XOAUTH2';
+                $mailer->tls = true;
+                return $mailer;
+            } 
+            
+            $mailer->host = $server;
+            $mailer->auth = isset($settings['auth']) ? $settings['auth'] : true;
+            $mailer->username = $settings['username'];
+            $mailer->password = $settings['password'];
+            if (isset($settings['port'])) {
+                $mailer->port = $settings['port'];
+            }
+            $mailer->socket_options = isset($settings['socket_options']) 
+                ? $settings['socket_options'] 
+                : $mailer->socket_options;
+            $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
+        
+            return $mailer;
+        }
+
+        return $mailer;
     }
 }

@@ -120,11 +120,12 @@ class Pman_Core_NotifySend extends Pman
     }
    
     function get($id,$opts=array())
-    {   
+    {
+        
         // DB_DataObject::debugLevel(5);
-        //if ($this->database_is_locked()) {
-        //    die("LATER - DATABASE IS LOCKED");
-       // }
+        if ($this->database_is_locked()) {
+            $this->errorHandler("LATER - DATABASE IS LOCKED\n");
+        }
         //print_r($opts);
         if (!empty($opts['DB_DataObject-debug'])) {
             DB_DataObject::debugLevel($opts['DB_DataObject-debug']);
@@ -159,7 +160,13 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
-        if (!$force &&  $w->server_id != $this->server->id && $this->server_ipv6 == null) {
+        // Check if server is disabled or not found - exit gracefully (unless force is set)
+        // id = 0 means no servers exist, is_active = 0 means server is disabled
+        if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
+            $this->errorHandler("Server is disabled or not found - exiting gracefully\n");
+        }
+        
+         if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
         
@@ -275,7 +282,14 @@ class Pman_Core_NotifySend extends Pman
         $next_try = $next_try_min . ' MINUTES';
          
         // this may modify $p->email. (it will not update it though)
+        // may modify $w->email_id
         $email =  $this->makeEmail($o, $p, $last, $w, $force);
+
+        if($w->reachEmailLimit()) {
+            $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (reach email limit)" );
+            $w->flagDone($ev, '');
+            $this->errorHandler($ev->remarks);
+        }
          
         if ($email === true)  {
             $ev = $this->addEvent('NOTIFY', $w, "Notification event cleared (not required any more) - toEmail=true" );;
@@ -321,6 +335,20 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['Message-Id'] = "<{$this->table}-{$id}@{$HOST}>";
             
         }
+
+        if(empty($email['headers']['X-Notify-Id'])) {
+            $email['headers']['X-Notify-Id'] = $w->id;
+        }
+
+        if(empty($email['headers']['X-Notify-To-Id']) && !empty($p) && !empty($p->id)) {
+            $email['headers']['X-Notify-To-Id'] = $p->id;
+        }
+
+        if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
+            $email['headers']['X-Notify-Recur-Id'] = $w->onid;
+        }
+
+
         
         
             
@@ -473,7 +501,8 @@ class Pman_Core_NotifySend extends Pman
                 'ssl' => array(
                     'verify_peer_name' => false,
                     'verify_peer' => false, 
-                    'allow_self_signed' => true
+                    'allow_self_signed' => true,
+                    'security_level' => 1
                 )
             );
             
@@ -558,10 +587,9 @@ class Pman_Core_NotifySend extends Pman
 
 
                             $fromUser = $sendAsUser;
-                            $email['headers']['From'] = 
-                                empty($fromUser->name) ? 
-                                $fromUser->email:
-                                "{$fromUser->name} <{$fromUser->email}>";
+                            require_once 'Mail/RFC822.php';
+                            $rfc822 = new Mail_RFC822(array('name' => $fromUser->name, 'address' => $fromUser->email));
+                            $email['headers']['From'] = $rfc822->toMime();
                         }
             
                         $s = $fromUser->server();
@@ -591,8 +619,7 @@ class Pman_Core_NotifySend extends Pman
                         $settings['username'] = $fromUser->email;
                         $settings['password'] = $s->requestToken($fromUser);;
                     }
-                    
-                   
+                     
                     // what's the minimum timespan.. - if we have 60/hour.. that's 1 every minute.
                     // if it's newer that '1' minute...
                     // then shunt it..
@@ -626,8 +653,9 @@ class Pman_Core_NotifySend extends Pman
                     $base_route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                         'ssl' => array(
                             'verify_peer_name' => false,
-                             'verify_peer' => false, 
-                             'allow_self_signed' => true
+                            'verify_peer' => false, 
+                            'allow_self_signed' => true,
+                            'security_level' => 1
                         )
                     );
                     
@@ -641,13 +669,12 @@ class Pman_Core_NotifySend extends Pman
             }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            
             if (is_object($res)) {
                 $res->backtrace = array(); 
             }
             $this->debug("GOT response to send: ". print_r($res,true));
 
-
-            
             if ($res === true) {
                 // success....
                 
@@ -691,7 +718,7 @@ class Pman_Core_NotifySend extends Pman
             $code = empty($res->userinfo['smtpcode']) ? -1 : $res->userinfo['smtpcode'];
             if (!empty($res->code) && $res->code == 10001) {
                 // fake greylist if timed out.
-                $code = -1; 
+                $code = -1;
             }
             
             if ($code < 0) {
@@ -739,38 +766,45 @@ class Pman_Core_NotifySend extends Pman
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
 
+            
+            // Check if error message contains spamhaus (case-insensitive)
+            // If spamhaus is found, continue current behavior (don't pass to next server)
+            $is_spamhaus = stripos($errmsg, 'spamhaus') !== false;
 
+            $shouldRetry = false;
 
-            // permanent failure
-            // IPv6 not set up yet
-            if ( $res->userinfo['smtpcode']> 500 && $this->server_ipv6 == null) {
-
-                $shouldRetry = false;
-
-                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-
-                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                    // blacklisted -> retry
-                    $shouldRetry = true;
+            // smtpcode > 500 (permanent failure)
+            if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
+                // spamhaus
+                if($is_spamhaus) {
+                    // not using ipv6 -> try setting up ipv6
+                    if($this->server_ipv6 == null) {
+                        // no IPv6 can be set up -> don't retry
+                        // IPv6 set up successfully
+                        if($this->server_ipv6 = $core_domain->setUpIpv6()) {
+                            $shouldRetry = true;
+                        }
+                    }
                 }
-
-                // blocked by Spamhaus
-                if(strpos(strtolower($errmsg), 'spamhaus') !== false) {
-                    // no IPv6 can be set up -> don't retry
-                    $shouldRetry = false;
-                    // IPv6 set up successfully
-                    if($this->server_ipv6 = $core_domain->setUpIpv6()) {
+                // not spamhaus
+                else {
+                    DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+                    // blacklisted
+                    if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
                         $shouldRetry = true;
                     }
                 }
+            }
 
-                if($shouldRetry) {
-                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                    $this->errorHandler( $ev->remarks);
-                }
+            // try next server
+            if($shouldRetry) {
+                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                $this->errorHandler( $ev->remarks);
+                // Successfully passed to next server, exit
+                return;
             }
             
+            // mark as failed
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
             if (method_exists($w, 'matchReject')) {
@@ -792,7 +826,6 @@ class Pman_Core_NotifySend extends Pman
         
          
         $this->errorHandler($ev->remarks);
-
         
     }
     function mxs($fqdn)

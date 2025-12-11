@@ -234,7 +234,36 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         
     }
-    
+
+    function reachEmailLimit()
+    {
+        $ce = DB_DataObject::factory('core_email');
+        if(!isset($this->email_id) ||!$ce->get($this->email_id)) {
+            // 0 as email_id
+            // not linked to any email template
+            return false;
+        }
+        
+        if($ce->daily_email_limit == 0) {
+            // no limit
+            return false;
+        }
+
+        $cn = DB_DataObject::factory('core_notify');
+        $cn->email_id = $this->email_id; // same email template
+        $cn->person_id = $this->person_id; // same person
+        $cn->whereAdd("core_notify.msgid IS NOT NULL AND core_notify.msgid != '' AND core_notify.sent > '1000-01-01 00:00:00'"); // successfully sent
+        $cn->whereAdd("DATE(core_notify.sent) = DATE('" . $this->act_start . "')"); // on the same day
+        $cn->whereAdd("core_notify.id != " . $this->id); // not the same notify
+        $cn->whereAdd("core_notify.evtype != 'Core_email::testData'"); // do not count test emails
+        if($cn->count() >= $ce->daily_email_limit) {
+            // reach the limit
+            return true;
+        }
+
+        // not reach the limit
+        return false;
+    }
     
     function applyFilters($q, $au, $roo)
     {
