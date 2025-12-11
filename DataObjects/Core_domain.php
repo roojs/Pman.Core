@@ -241,11 +241,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     /**
      * validate email
      * 
+     * @param object $roo Roo object
      * @param string $email email address to validate
      * @return bool|string true on success, error message string on failure
      * @throws Exception if configuration is invalid
      */
-    function validateEmail($email)
+    function validateEmail($roo, $email)
     {
         $dom = $this->domain;
         if (empty($dom)) {
@@ -301,7 +302,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         $lastError = '';
         foreach($mxs as $mx) {
-            $mailer = $this->createMailer($mx, $validUser);
+            $mailer = $this->createMailer($roo, $mx, $validUser);
             if ($mailer === false) {
                 continue;
             }
@@ -314,30 +315,74 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!is_object($res)) {
                 return true; // Success
             }
+            // PEAR_Error objects have both ->message property and getMessage() method
+            // Using getMessage() method is the standard approach
+            $roo->errorlog(
+                "SMTP {$res->code} Email: {$email} - Error: " . $res->getMessage()
+            );
             
-            $lastError = $res->message;
+        
+            // Check for SMTP error 421 (Service unavailable - server busy)
+            // This is a temporary error we can't fix, so treat it as a valid check
+            if ($res->code == 421) {
+                // Log 421 error to Apache error log with full error object details
+                 
+                return true; // Treat 421 as success
+            }
+            
+            // Check for SMTP error 451 (Greylisting - temporary failure)
+            // This is a temporary error indicating greylisting, so treat it as a valid check
+            if ($res->code == 451) {
+                // Log 451 error to Apache error log with full error object details
+                return true; // Treat 451 as success
+            }
+            
+            // Check for SMTP error 550 with Spamhaus failure
+            // Spamhaus failures are false positives we can't fix, so treat as valid
+            if ($res->code == 550 && preg_match('/spamhaus/i', $res->getMessage())) {
+                return true; // Treat 550 Spamhaus as success
+            }
+              
+            
+            $lastError = $res->getMessage();
         }
 
         return "cannot send to {$email}" . ($lastError ? " ({$lastError})" : " (connection failed to all MX servers)");
     }
 
-    function createMailer($mx, $validUser = false)
+    function createMailer($roo, $mx, $validUser = false)
     {
         $ff = HTML_FlexyFramework::get();
+
+        $socket_options = isset($ff->Mail_Validate['socket_options']) 
+            ? $ff->Mail_Validate['socket_options'] 
+            : array(
+                'ssl' => array(
+                    'verify_peer_name' => false,
+                    'verify_peer' => false, 
+                    'allow_self_signed' => true
+                )
+        );
+
+        $currentServer = DB_DataObject::Factory('core_notify_server')->getCurrent($roo, true, 'core');
+        $ipv6Map = isset($ff->Mail_Validate['ipv6']) ? $ff->Mail_Validate['ipv6'] : array();
+
+        // current server has ipv6 address
+        if(!empty($currentServer->id) && !empty($currentServer->hostname) && !empty($ipv6Map[$currentServer->hostname])) {
+            $aaaa_records = dns_get_record($mx, DNS_AAAA);
+            // target mx has aaaa record
+            if (!empty($aaaa_records)) {
+                $socket_options['socket'] = array(
+                    'bindto' => '[' . $ipv6Map[$currentServer->hostname] . ']:0'
+                ); 
+            }
+        }
         
         $mailer = Mail::factory('smtp', array(
             'host'    => $mx,
             'localhost' => $ff->Mail['helo'],
             'timeout' => 15,
-            'socket_options' => isset($ff->Mail['socket_options']) 
-                ? $ff->Mail['socket_options'] 
-                : array(
-                    'ssl' => array(
-                        'verify_peer_name' => false,
-                        'verify_peer' => false, 
-                        'allow_self_signed' => true
-                    )
-                ),
+            'socket_options' => $socket_options,
             'test' => true
         ));
 
@@ -367,6 +412,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 $mailer->port = $s->smtp_port;
                 $mailer->username = $validUser->email;
                 $mailer->password = $s->requestToken($validUser);
+                $mailer->auth = 'XOAUTH2';
+                $mailer->tls = true;
                 return $mailer;
             } 
             
@@ -387,6 +434,4 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         return $mailer;
     }
-
-
 }

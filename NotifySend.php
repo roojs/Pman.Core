@@ -651,8 +651,6 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("GOT response to send: ". print_r($res,true));
 
-
-            
             if ($res === true) {
                 // success....
                 
