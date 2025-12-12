@@ -345,11 +345,20 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, 
+						however we accepted it as valid"
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
-            
+            if ($res->code == 554 && (
+                preg_match('/spam/i', $errorMessage)  
+            )) {
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spam, 
+						however we accepted it as valid"
+                );
+                return true; // Treat 550 Spamhaus/Mimecast as success
+            }
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
