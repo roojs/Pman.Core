@@ -372,33 +372,56 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if (!is_object($res)) {
                 return true; // Success
             }
-            // PEAR_Error objects have both ->message property and getMessage() method
-            // Using getMessage() method is the standard approach
-            $roo->errorlog(
-                "SMTP {$res->code} Email: {$email} - Error: " . $res->getMessage()
-            );
             
-        
+            // Check for known false positives BEFORE logging
+            // These are temporary errors or false positives we can't fix, so treat as valid
+            $errorMessage = $res->getMessage();
+            
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
-                // Log 421 error to Apache error log with full error object details
-                 
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid"
+                );
                 return true; // Treat 421 as success
             }
             
             // Check for SMTP error 451 (Greylisting - temporary failure)
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
-                // Log 451 error to Apache error log with full error object details
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid"
+                );
                 return true; // Treat 451 as success
             }
             
             // Check for SMTP error 550 with Spamhaus failure
             // Spamhaus failures are false positives we can't fix, so treat as valid
-            if ($res->code == 550 && preg_match('/spamhaus/i', $res->getMessage())) {
-                return true; // Treat 550 Spamhaus as success
+            // Also check for Mimecast which uses Spamhaus (zen.mimecast.org)
+            if ($res->code == 550 && (
+                preg_match('/spamhaus/i', $errorMessage)  
+            )) {
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, 
+						however we accepted it as valid"
+                );
+                return true; // Treat 550 Spamhaus/Mimecast as success
             }
+            if ($res->code == 554 && (
+                preg_match('/spam/i', $errorMessage)  
+            )) {
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spam, 
+						however we accepted it as valid"
+                );
+                return true; // Treat 550 Spamhaus/Mimecast as success
+            }
+            // Only log errors that aren't known false positives
+            // PEAR_Error objects have both ->message property and getMessage() method
+            // Using getMessage() method is the standard approach
+            $roo->errorlog(
+                "SMTP Validate Rejected Email {$res->code} Email: {$email} - Error: " . $errorMessage
+            );
               
             
             $lastError = $res->getMessage();
