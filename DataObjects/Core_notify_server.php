@@ -25,6 +25,44 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $this->addQueueSize();
         }
     }
+
+    function beforeUpdate($old, $q, $roo)
+    {
+        if(!empty($q['ipv6_range_from'])) {
+            $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
+            $core_domain->setUpIpv6();
+        }
+
+        // if any of the ipv6 fields is set, make sure all of them are set
+        if(
+            !empty($q['ipv6_range_from'])
+            ||
+            !empty($q['ipv6_range_to'])
+            ||
+            !empty($q['ipv6_ptr'])
+            ||
+            !empty($q['ipv6_sender_id'])
+        ) {
+            if(empty($q['ipv6_range_from'])) {
+                $roo->jerr("IPv6 range from is required");
+            }
+            if(filter_var($q['ipv6_range_from'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range from is not a valid IPv6 address");
+            }
+            if(empty($q['ipv6_range_to'])) {
+                $roo->jerr("IPv6 range to is required");
+            }
+            if(filter_var($q['ipv6_range_to'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+                $roo->jerr("IPv6 range to is not a valid IPv6 address");
+            }
+            if(empty($q['ipv6_ptr'])) {
+                $roo->jerr("IPv6 ptr is required");
+            }
+            if(empty($q['ipv6_sender_id'])) {
+                $roo->jerr("IPv6 sender is required");
+            }
+        }
+    }
     
     
     function addQueueSize()
@@ -162,6 +200,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if ($this->id != $ids[0]) {
             return; 
         }
+        
+        // First, assign servers based on IPv6 domain assignments
+        $assignedIPv6Ids = $this->assignQueuesByIPv6Domain($notify);
         foreach($ids as $rn) {
             $up[$rn]  = array();
         }
@@ -183,6 +224,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     act_start < NOW() +  INTERVAL 3 HOUR 
                     and
                     server_id != {$ids[0]}
+                    " . (!empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "") . "
             ");
             return;
         }
@@ -198,6 +240,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 act_start < NOW() +  INTERVAL 3 HOUR 
                 and
                 server_id NOT IN (" . implode(",", $ids) . ")
+                " . (!empty($assignedIPv6Ids) ? "and id NOT IN (" . implode(",", $assignedIPv6Ids) . ")" : "") . "
         ");
         $p->orderBy('act_when asc'); //?
         $total_add = $p->count();
@@ -227,6 +270,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $in_q[$sid] = 0;
             }
         }
+
         $totalq = 0;
         foreach($in_q as $sid => $n) {
             $totalq += $n;
@@ -240,8 +284,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if ( $cq > $target_len) {
                 continue;
             }
-            $up[ $sid ] = array_slice($to_add, 0, $target_len - $cq);
+            $up[ $sid ] = array_splice($to_add, 0, $target_len - $cq);
         }
+
         
         // add the reminder evently
         foreach($to_add as $n=>$i) {
@@ -271,6 +316,45 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         DB_DataObject::factory("core_notify_blacklist")->prune();
         
     }
+    
+    /**
+     * Assign servers based on IPv6 domain assignments
+     * If domain_id exists in server_ipv6, set the server_id to the same server
+     * If no domain_id match, leave for normal assignment
+     */
+    function assignQueuesByIPv6Domain($notify)
+    {
+        $assignedIds = array();
+        // Get all pending notifications that have domain_id
+        $p = DB_DataObject::factory($notify->table);
+        $p->whereAdd("
+            sent < '2000-01-01'
+            and
+            event_id = 0
+            and
+            act_start < NOW() + INTERVAL 3 HOUR
+            and
+            domain_id > 0
+        ");
+        
+        $pending_notifications = $p->fetchAll();
+        
+        foreach ($pending_notifications as $notification) {
+            // Check if this domain_id has an IPv6 server assignment
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->domain_id = $notification->domain_id;
+            
+            if ($ipv6->find(true)) {
+                // Assign the IPv6 server regardless of availability status
+                $update_notification = DB_DataObject::factory($notify->table);
+                $update_notification->get($notification->id);
+                $update_notification->server_id = $ipv6->server_id;
+                $update_notification->update();
+                $assignedIds[] = $notification->id;
+            }
+        }
+        return $assignedIds;
+    }
         // called on current server.
 
     function availableServers()
@@ -283,7 +367,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
     }
     
-    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false)
+    function updateNotifyToNextServer( $cn , $when = false, $allow_same = false, $server_ipv6 = null)
     {
         if (!$this->id) {
             return;
@@ -294,6 +378,17 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
         $w = DB_DataObject::factory($cn->tableName());
         $w->get($cn->id);
+
+        // set to ipv6 server if available
+        // update act_when
+        if($server_ipv6 != null) {
+            $pp = clone($w);
+
+            $w->server_id = $server_ipv6->server_id;
+            $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
+            $w->update($pp);
+            return true;
+        }
         
         $servers = $this->availableServers();
         $start = 0;
@@ -359,13 +454,18 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         return false; 
     }
-    function initHelo()
+    function initHelo($server_ipv6 = null)
     {
         if (!$this->id) {
             return;
         }
         $ff = HTML_FlexyFramework::get();
-        $ff->Mail['helo'] = $this->helo;
+        
+        if (!empty($server_ipv6) && !empty($server_ipv6->server_id_ipv6_ptr)) {
+            $ff->Mail['helo'] = $server_ipv6->server_id_ipv6_ptr;
+        } else {
+            $ff->Mail['helo'] = $this->helo;
+        }
         
     }
     function checkSmtpResponse($errmsg, $core_domain)
@@ -388,6 +488,138 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $bl->insert();
         return true;
         
+    }
+
+    /**
+     * Find a server with ipv6 range and ptr
+     * If current server has ipv6 range and ptr, return it
+     * If no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+     * If no server has ipv6 range and ptr, return false
+     * 
+     * @return core_notify_server
+     */
+    function findServerWithIpv6()
+    {
+        $server = DB_DataObject::factory('core_notify_server');
+        $server->whereAdd("
+            ipv6_range_from != ''
+            and
+            ipv6_range_to != ''
+        ");
+        $server->is_active = 1;
+        $server->limit(1);
+
+        $current = clone($server);
+        $current->hostname = gethostbyaddr("127.0.1.1");
+
+        // if current server has ipv6 range and ptr, return it
+        if($current->find(true)) {
+            return $current;
+        }
+
+        // if no current server has ipv6 range and ptr, return the first server with ipv6 range and ptr
+        if($server->find(true)) {
+            return $server;
+        }
+        return false;
+    }
+
+    /**
+     * Find the smallest unused ipv6 address in the range
+     * If no unused ipv6 address is found, return false
+     * 
+     * @return string|false
+     */
+    function findSmallestUnusedIpv6()
+    {
+        if($this->ipv6_range_from == '' || $this->ipv6_range_to == '') {
+            return false;
+        }
+
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->server_id = $this->id;
+        $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
+
+        $start = $this->ipv6ToDecimal($this->ipv6_range_from);
+        if($start === false) {
+            return false;
+        }
+        $end = $this->ipv6ToDecimal($this->ipv6_range_to);
+        if($end === false) {
+            return false;
+        }
+        $used = array();
+        foreach($usedIPv6 as $ipv6) {
+            $decimal = $this->ipv6ToDecimal($ipv6);
+            if($decimal === false) {
+                continue;
+            }
+            $used[] = $decimal;
+        }
+        $usedSet = array_flip($used);
+    
+        // Start from the next address after 'from'
+        $current = bcadd($start, '1');
+        
+        while (bccomp($current, $end) <= 0) {
+            if (!isset($usedSet[$current])) {
+                return $this->decimalToIPv6($current);
+            }
+            $current = bcadd($current, '1');
+        }
+        return false; // All addresses used
+    }
+
+    /**
+     * Convert ipv6 to decimal
+     * If invalid ipv6 address, return false
+     * 
+     * @param string $ip
+     * @return string|false
+     */
+    function ipv6ToDecimal($ip) {
+        $binary = inet_pton($ip);
+        if ($binary === false) {
+            return false;
+        }
+        
+        // Convert to hex string
+        $hex = bin2hex($binary);
+        
+        // Convert hex to decimal using bcmath
+        $decimal = '0';
+        for ($i = 0; $i < strlen($hex); $i++) {
+            $decimal = bcmul($decimal, '16');
+            $decimal = bcadd($decimal, hexdec($hex[$i]));
+        }
+        
+        return $decimal;
+    }
+    
+
+    /**
+     * Convert decimal to ipv6
+     * 
+     * @param string $dec
+     * @return string
+     */
+    function decimalToIPv6($dec) {
+        // Convert decimal to hex
+        $hex = '';
+        $temp = $dec;
+        
+        while (bccomp($temp, '0') > 0) {
+            $remainder = bcmod($temp, '16');
+            $hex = dechex($remainder) . $hex;
+            $temp = bcdiv($temp, '16', 0);
+        }
+        
+        // Pad to 32 characters (128 bits)
+        $hex = str_pad($hex, 32, '0', STR_PAD_LEFT);
+        
+        // Convert hex to binary and then to IPv6
+        $binary = hex2bin($hex);
+        return inet_ntop($binary);
     }
     
     function resetQueueForTable($table)

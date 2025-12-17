@@ -95,6 +95,7 @@ class Pman_Core_NotifySend extends Pman
     var $error_handler = 'die';
     var $poolname = 'core';
     var $server; // core_notify_server
+    var $server_ipv6;
     var $debug;
     
     function getAuth()
@@ -148,6 +149,17 @@ class Pman_Core_NotifySend extends Pman
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
         
+        // Fetch IPv6 server configuration if available
+        $this->server_ipv6 = null;
+        if (!empty($w->domain_id)) {
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->autoJoin();
+            $ipv6->domain_id = $w->domain_id;
+            if ($ipv6->find(true)) {
+                $this->server_ipv6 = $ipv6;
+            }
+        }
+
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
         if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
@@ -157,7 +169,6 @@ class Pman_Core_NotifySend extends Pman
          if (!$force &&  $w->server_id != $this->server->id) {
             $this->errorHandler("Server id does not match - message = {$w->server_id} - our id is {$this->server->id} use force to try again\n");
         }
-        
         
         if (!empty($opts['debug'])) {
             print_r($w);
@@ -313,7 +324,7 @@ class Pman_Core_NotifySend extends Pman
         
         if (isset($email['later'])) {
              
-            $this->server->updateNotifyToNextServer($w, $email['later'],true);
+            $this->server->updateNotifyToNextServer($w, $email['later'],true, $this->server_ipv6);
              
             $this->errorHandler("Delivery postponed by email creator to {$email['later']}");
         }
@@ -466,12 +477,18 @@ class Pman_Core_NotifySend extends Pman
         $fail = false;
         require_once 'Mail.php';
         
-        $this->server->initHelo();
+        
+        $this->server->initHelo($this->server_ipv6);
         
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
         }
         
+        $sender = DB_DataObject::factory('core_notify_sender');
+        if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
+            $email['headers']['From'] = $sender->email;
+        }
+
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
                         
         foreach($mxs as $mx) {
@@ -479,19 +496,23 @@ class Pman_Core_NotifySend extends Pman
            
             $this->debug_str = '';
             $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            // Prepare socket options with IPv6 binding if available
+            $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
+                'ssl' => array(
+                    'verify_peer_name' => false,
+                    'verify_peer' => false, 
+                    'allow_self_signed' => true,
+                    'security_level' => 1
+                )
+            );
+            
+            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
+            
             $mailer = Mail::factory('smtp', array(
                 'host'    => $mx ,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
-                'socket_options' =>  
-                    isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
-                        'ssl' => array(
-                            'verify_peer_name' => false,
-                            'verify_peer' => false, 
-                            'allow_self_signed' => true,
-                            'security_level' => 1
-                        )
-                    ),
+                'socket_options' => $socket_options,
                 
                  
                 //'debug' => isset($opts['debug']) ?  1 : 0,
@@ -615,7 +636,7 @@ class Pman_Core_NotifySend extends Pman
                     ");
                     
                     if($core_notify->count()){
-                        $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true);
+                        $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
                      
@@ -628,7 +649,8 @@ class Pman_Core_NotifySend extends Pman
                     if (isset($settings['port'])) {
                         $mailer->port = $settings['port'];
                     }
-                    $mailer->socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
+                    // Prepare socket options with IPv6 binding if available
+                    $base_route_socket_options = isset($settings['socket_options']) ? $settings['socket_options'] : array(
                         'ssl' => array(
                             'verify_peer_name' => false,
                             'verify_peer' => false, 
@@ -636,6 +658,8 @@ class Pman_Core_NotifySend extends Pman
                             'security_level' => 1
                         )
                     );
+                    
+                    $mailer->socket_options = $this->prepareSocketOptionsWithIPv6($base_route_socket_options);
                     $mailer->tls = isset($settings['tls']) ? $settings['tls'] : true;
                     $this->debug("Got Core_Notify route match - " . print_R($mailer,true));
 
@@ -713,7 +737,7 @@ class Pman_Core_NotifySend extends Pman
                 //print_r($res);
                 $ev = $this->addEvent('NOTIFY', $w, 'GREYLISTED - ' . $errmsg);
                 
-                $this->server->updateNotifyToNextServer($w,  $retry_when,true);
+                $this->server->updateNotifyToNextServer($w,  $retry_when,true, $this->server_ipv6);
                 
                 $this->errorHandler(  $ev->remarks);
             }
@@ -741,25 +765,46 @@ class Pman_Core_NotifySend extends Pman
             if (isset($res->userinfo['smtptext'])) {
                 $errmsg=  $res->userinfo['smtpcode'] . ':' . $res->userinfo['smtptext'];
             }
+
             
             // Check if error message contains spamhaus (case-insensitive)
             // If spamhaus is found, continue current behavior (don't pass to next server)
             $is_spamhaus = stripos($errmsg, 'spamhaus') !== false;
-            
-            // If NOT spamhaus and smtpcode > 500, restore old behavior: check for blacklist and pass to next server
-            if (!$is_spamhaus && !empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
-                DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
-                
-                if ($this->server->checkSmtpResponse($errmsg, $core_domain)) {
-                    $ev = $this->addEvent('NOTIFY', $w, 'BLACKLISTED  - ' . $errmsg);
-                    $this->server->updateNotifyToNextServer($w,  $retry_when, true);
-                    $this->errorHandler( $ev->remarks);
-                    // Successfully passed to next server, exit
-                    return;
+
+            $shouldRetry = false;
+
+            // smtpcode > 500 (permanent failure)
+            if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
+                // spamhaus
+                if($is_spamhaus) {
+                    // not using ipv6 -> try setting up ipv6
+                    if($this->server_ipv6 == null) {
+                        // no IPv6 can be set up -> don't retry
+                        // IPv6 set up successfully
+                        if($this->server_ipv6 = $core_domain->setUpIpv6()) {
+                            $shouldRetry = true;
+                        }
+                    }
+                }
+                // not spamhaus
+                else {
+                    DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
+                    // blacklisted
+                    if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
+                        $shouldRetry = true;
+                    }
                 }
             }
+
+            // try next server
+            if($shouldRetry) {
+                $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
+                $this->errorHandler( $ev->remarks);
+                // Successfully passed to next server, exit
+                return;
+            }
             
-            // If spamhaus or not blacklisted, mark as failed
+            // mark as failed
             $ev = $this->addEvent('NOTIFYBOUNCE', $w, ($fail ? "FAILED - " : "RETRY TIME EXCEEDED - ") .  $errmsg);
             $w->flagDone($ev, '');
             if (method_exists($w, 'matchReject')) {
@@ -776,7 +821,7 @@ class Pman_Core_NotifySend extends Pman
         
         $ev = $this->addEvent('NOTIFY', $w, 'GREYLIST - NO HOST CAN BE CONTACTED:' . $p->email);
         
-        $this->server->updateNotifyToNextServer($w,  $retry_when ,true);
+        $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
 
         
          
@@ -895,6 +940,27 @@ class Pman_Core_NotifySend extends Pman
         }
     }
     
+    /**
+     * Prepare socket options with IPv6 binding if available
+     * 
+     * @param array $base_options Base socket options
+     * @return array Enhanced socket options with IPv6 binding
+     */
+    function prepareSocketOptionsWithIPv6($base_options = array())
+    {
+        $socket_options = $base_options;
+        
+        // Add IPv6 binding if server_ipv6 is configured
+        if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
+            $socket_options['socket'] = array(
+                'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
+            );
+            $this->debug("Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+        }
+        
+        return $socket_options;
+    }
+    
     function errorHandler($msg)
     {
         if($this->error_handler == 'exception'){
@@ -929,7 +995,4 @@ class Pman_Core_NotifySend extends Pman
         $w->server_id = ($w->server_id + 1) % count(array_keys($ff->Core_Notify['servers']));
          
     }
-    
-
-    
 }

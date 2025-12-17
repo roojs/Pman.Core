@@ -239,6 +239,63 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     }
 
     /**
+     * Check if the domain has an AAAA record
+     * 
+     * @return bool
+     */
+    function hasAAAARecord()
+    {
+        if (empty($this->domain)) {
+            return;
+        }
+
+        if (getmxrr($this->domain, $mx_records)) {
+            // Check if any MX record has AAAA record
+            foreach ($mx_records as $mx) {
+                $aaaa_records = dns_get_record($mx, DNS_AAAA);
+                if (!empty($aaaa_records)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Set up ipv6 for the domain
+     * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
+     * 
+     * @return core_notify_server_ipv6|false
+     */
+    function setUpIpv6()
+    {
+        if(!$this->hasAAAARecord()) {
+            return false;
+        }
+
+        $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
+        if(!$server) {
+            return false;
+        }
+
+        $ipv6_addr = $server->findSmallestUnusedIpv6();
+        if(!$ipv6_addr) {
+            return false;
+        }
+
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->server_id = $server->id;
+        $cnsi->domain_id = $this->id;
+        $cnsi->ipv6_addr = $ipv6_addr;
+        if(!$cnsi->find(true)) {
+            $cnsi->insert();
+        }
+
+        return $cnsi;
+    }
+
+    /**
      * validate email
      * 
      * @param object $roo Roo object

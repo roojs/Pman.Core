@@ -9,4 +9,9 @@ CREATE  TABLE core_notify_server (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;;
 
+ALTER TABLE core_notify_server ADD COLUMN ipv6_range_from VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE core_notify_server ADD COLUMN ipv6_range_to VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE core_notify_server ADD COLUMN ipv6_ptr VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE core_notify_server ADD COLUMN ipv6_sender_id INT NOT NULL DEFAULT 0;
+
 ALTER TABLE core_notify_server ADD INDEX lookup (hostname,poolname,is_active);
