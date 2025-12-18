@@ -351,9 +351,6 @@ class Pman_Core_Notify extends Pman
                 //sleep(3);
                 continue;
             }
-
-            var_dump('run');
-            die('test');
             
             
             $this->run($p->id,$email);
