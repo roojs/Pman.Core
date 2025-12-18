@@ -266,6 +266,8 @@ class Pman_Core_Notify extends Pman
             $this->logecho("Nothing In Queue - DONE");
             exit;
         }
+
+        die('test');
         
         
         if (!empty($opts['list'])) {
