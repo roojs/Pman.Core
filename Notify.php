@@ -228,7 +228,6 @@ class Pman_Core_Notify extends Pman
         }
         
         $w->server_id = $this->server->id;
-        var_dump($this->server->id);
 
         
         if (!empty($opts['old'])) {
@@ -281,7 +280,7 @@ class Pman_Core_Notify extends Pman
             }
             exit;
         }
-        
+
         var_dump($total);
         die('test');
         
