@@ -220,7 +220,7 @@ class Pman_Core_Notify extends Pman
         $this->server->assignQueues($this);
         
         
-        $this->clearOld();
+        // $this->clearOld();
         
         
         if (!empty($this->evtype)) {
