@@ -202,6 +202,8 @@ class Pman_Core_Notify extends Pman
         
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this);
+        var_dump($this->server->id);
+        die('test');
         
         // Check if server is disabled or not found (id = 0 means no servers exist)
         if (empty($this->server->id)) {
