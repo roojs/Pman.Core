@@ -315,8 +315,7 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-
-            die('test');
+            
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
