@@ -133,6 +133,11 @@ class Pman_Core_Notify extends Pman
     
     var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
     
+    /**
+     * @var {Array} greylist_defer_domains - domains to defer entirely when greylisting is detected
+     */
+    var $greylist_defer_domains = array('yahoo.com');
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -313,6 +318,13 @@ class Pman_Core_Notify extends Pman
             if (!$this->poolfree()) {
                 array_unshift($this->queue,$p); /// put it back on..
                 sleep(3);
+                continue;
+            }
+
+            $ww = DB_DataObject::factory($this->table);
+            $ww->get($p->id);
+            if(strtotime($ww->act_when) > time()) {
+                $this->logecho("Skipping - ($ww->id) deferred to ". $ww->act_when);
                 continue;
             }
 
@@ -529,7 +541,7 @@ class Pman_Core_Notify extends Pman
             
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
-                //echo "RUNTIME ({$p['pid']}): $runtime\n";
+                // echo "RUNTIME ({$p['pid']}): $runtime\n";
                 if ($runtime > $this->maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
@@ -557,7 +569,7 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             fclose($p['pipes'][0]);
-            //echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
+            echo "CLOSING: ({$p['pid']}) " . $p['cmd'] . " : " . file_get_contents($p['out']) . "\n";
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
@@ -573,10 +585,23 @@ class Pman_Core_Notify extends Pman
             //    $pool[] = $p;
             //    continue;
             //}
+            $output = file_exists($p['out']) ? file_get_contents($p['out']) : '';
+            $outputErr = file_exists($p['oute']) ? file_get_contents($p['oute']) : '';
+            
             $this->logecho("ENDED: ({$p['pid']}) {$p['email']} " .  $p['cmd'] . " : " .
-                (file_exists($p['out']) ?  file_get_contents($p['out']) : "output DELETED?") . " : " .
-                (file_exists($p['oute']) ?  file_get_contents($p['oute']) : "error output DELETED?") . " : "
+                ($output ?: "output DELETED?") . " : " .
+                ($outputErr ?: "error output DELETED?") . " : "
             );
+            
+            // Check for greylisting with "temporarily deferred" - defer yahoo.com only
+            if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
+                $domain = $this->getDomainFromEmail($p['email']);
+                if (!empty($domain) && in_array($domain, $this->greylist_defer_domains)) {
+                    $this->logecho("GREYLISTING DETECTED for {$domain} - deferring all pending notifications");
+                    $this->deferDomainForGreylist($domain);
+                }
+            }
+            
             @unlink($p['out']);
             @unlink($p['oute']);
             // at this point we could pop onto the queue the 
@@ -692,5 +717,109 @@ class Pman_Core_Notify extends Pman
     function logecho($str)
     {
         echo date("Y-m-d H:i:s - ") . $str . "\n";
+    }
+    
+    /**
+     * Extract domain from email address
+     * 
+     * @param string $email Email address
+     * @return string Domain in lowercase
+     */
+    function getDomainFromEmail($email)
+    {
+        $parts = explode('@', $email);
+        return strtolower(array_pop($parts));
+    }
+    
+    /**
+     * Defer a single notification to a later time
+     * 
+     * @param object $notify The notification object
+     * @param string $when DateTime string for when to retry
+     * @param string $reason Reason for deferral (for logging)
+     */
+    function deferNotification($notify, $when, $reason)
+    {
+        $old = clone($notify);
+        $notify->act_when = $when;
+        $notify->update($old);
+        
+        if ($this->log_events) {
+            $this->addEvent('NOTIFY', $notify, $reason);
+        }
+    }
+    
+    /**
+     * Handle greylisting for an entire domain - defer all pending notifications
+     * for this domain to now + 30 minutes, unless they're older than 2 days.
+     * Only applies to domains in $greylist_defer_domains (e.g., yahoo.com).
+     * 
+     * @param string $domain The email domain to defer (e.g., 'yahoo.com')
+     * @return int Number of notifications deferred
+     */
+    function deferDomainForGreylist($domain)
+    {
+        $domain = strtolower($domain);
+        
+        // Only defer for specific domains
+        if (!in_array($domain, $this->greylist_defer_domains)) {
+            return 0;
+        }
+        
+        $count = 0;
+        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 30 MINUTES'));
+        
+        // 1. Remove matching items from memory queue and defer them
+        $newQueue = array();
+        foreach ($this->queue as $item) {
+            $email = empty($item->to_email) ? ($item->person() ? $item->person()->email : '') : $item->to_email;
+            $itemDomain = $this->getDomainFromEmail($email);
+            
+            if ($itemDomain === $domain) {
+                // Check if older than 2 days - if so, skip deferring (let it fail naturally)
+                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
+                    $newQueue[] = $item; // Keep in queue, let normal processing handle it
+                    continue;
+                }
+                // Defer in database
+                $this->deferNotification($item, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $count++;
+            } else {
+                $newQueue[] = $item;
+            }
+        }
+        $this->queue = $newQueue;
+        
+        // 2. Remove matching items from domain queue
+        if ($this->domain_queue !== false && isset($this->domain_queue[$domain])) {
+            foreach ($this->domain_queue[$domain] as $item) {
+                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
+                    continue; // Skip old ones
+                }
+                $this->deferNotification($item, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $count++;
+            }
+            unset($this->domain_queue[$domain]);
+        }
+        
+        // 3. Also defer any other pending notifications for this domain in the database 
+        //    that are assigned to this server and haven't been sent yet
+        $notify = DB_DataObject::factory($this->table);
+        $notify->server_id = $this->server->id;
+        $notify->whereAdd("sent < '1970-01-01' OR sent IS NULL");
+        $notify->whereAdd('act_when < NOW()');
+        $notify->whereAdd('act_start > NOW() - INTERVAL 2 DAY'); // Only within 2 days
+        $notify->whereAdd("to_email LIKE '%@" . $notify->escape($domain) . "'");
+        
+        if ($notify->find()) {
+            while ($notify->fetch()) {
+                $this->deferNotification($notify, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $count++;
+            }
+        }
+        
+        $this->logecho("GREYLISTED: Deferred {$count} notifications for domain {$domain} to {$deferTime}");
+        
+        return $count;
     }
 }
