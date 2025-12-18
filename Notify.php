@@ -468,8 +468,6 @@ class Pman_Core_Notify extends Pman
        
         $pipe = array();
         //$this->logecho("call proc_open $cmd");
-        var_dump($cmd);
-        die('test');
         
         if ($this->max_pool_size === 1) {
             $this->logecho("call passthru [{$email}] $cmd");
