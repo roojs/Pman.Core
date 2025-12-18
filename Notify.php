@@ -341,9 +341,6 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             */
-
-            var_dump($this->pool);
-            die('test');
             
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
