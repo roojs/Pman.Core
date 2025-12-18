@@ -315,7 +315,7 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            
+
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
@@ -323,6 +323,8 @@ class Pman_Core_Notify extends Pman
                 $p->flagDone($ev, '');
                 continue;
             }
+
+            die('test');
             /*
             dont try and get around blacklists at present
             $black = $this->server->isBlacklisted($email);
