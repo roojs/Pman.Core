@@ -323,7 +323,7 @@ class Pman_Core_Notify extends Pman
                 $p->flagDone($ev, '');
                 continue;
             }
-            
+
             /*
             dont try and get around blacklists at present
             $black = $this->server->isBlacklisted($email);
@@ -341,6 +341,9 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             */
+
+            var_dump($this->pool);
+            die('test');
             
             if ($this->poolHasDomain($email) > $this->max_to_domain) {
                 
