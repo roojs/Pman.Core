@@ -281,7 +281,7 @@ class Pman_Core_Notify extends Pman
             }
             exit;
         }
-        
+        var_dump($opts);
         var_dump($total);
         die('test');
         
