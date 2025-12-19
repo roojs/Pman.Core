@@ -749,75 +749,94 @@ class Pman_Core_Notify extends Pman
     }
     
     /**
-     * Handle greylisting for an entire domain - defer all pending notifications
-     * for this domain to now + 30 minutes.
-     * Only applies to domains in $greylist_defer_domains (e.g., yahoo.com).
-     * Old notifications are cleaned up by clearOld() which runs before processing
-     * so that they won't be endlessly deferred.
+     * Bulk defer all notifications for domains that were flagged as temporarily deferred.
+     * Uses a single UPDATE query per domain for efficiency.
+     * Defers to NOW + 15 minutes and passes to next server.
      * 
-     * @param string $domain The email domain to defer (e.g., 'yahoo.com')
-     * @return int Number of notifications deferred
+     * @return int Total number of notifications deferred
      */
-    function deferDomainForGreylist($domain)
+    function bulkDeferDomains()
     {
-        $domain = strtolower($domain);
-        
-        // Only defer for specific domains
-        if (!in_array($domain, $this->greylist_defer_domains)) {
+        if (empty($this->deferred_domains)) {
             return 0;
         }
         
-        $count = 0;
-        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 30 MINUTES'));
-
-        $this->logecho("QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->queue));
-        if($this->domain_queue !== false) {
-            $this->logecho("DOMAIN QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->domain_queue));
-        }
+        $totalCount = 0;
+        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES'));
         
-        // 1. Remove matching items from memory queue and defer them
-        $newQueue = array();
-        foreach ($this->queue as $item) {
-            $email = empty($item->to_email) ? ($item->person() ? $item->person()->email : '') : $item->to_email;
-            $itemDomain = $this->getDomainFromEmail($email);
+        // Find the next server (similar to updateNotifyToNextServer logic)
+        $nextServerId = $this->getNextServerId();
+        
+        foreach ($this->deferred_domains as $domain) {
+            $domain = strtolower($domain);
             
-            if ($itemDomain === $domain) {
-                // Defer in database
-                $this->server->updateNotifyToNextServer($item, $deferTime, true);
-                $count++;
-            } else {
-                $newQueue[] = $item;
+            // Build domain condition for LIKE matching
+            $notify = DB_DataObject::factory($this->table);
+            $escapedDomain = $notify->escape($domain);
+            
+            // Count how many will be affected
+            $countQuery = DB_DataObject::factory($this->table);
+            $countQuery->server_id = $this->server->id;
+            $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
+            $countQuery->whereAdd('act_when < NOW()');
+            $countQuery->whereAdd("to_email LIKE '%@{$escapedDomain}'");
+            $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
+            $count = $countQuery->count();
+            
+            if ($count == 0) {
+                $this->logecho("GREYLISTED DEFER: No pending notifications for domain {$domain}");
+                continue;
+            }
+            
+            // Do single UPDATE query
+            $notify->query("
+                UPDATE
+                    {$this->table}
+                SET
+                    server_id = {$nextServerId},
+                    act_when = '{$deferTime}'
+                WHERE
+                    server_id = {$this->server->id}
+                    AND (sent < '1970-01-01' OR sent IS NULL)
+                    AND act_when < NOW()
+                    AND to_email LIKE '%@{$escapedDomain}'
+                    AND act_start > NOW() - INTERVAL 14 DAY
+            ");
+            
+            $this->logecho("GREYLISTED DEFER: Deferred {$count} notifications for domain {$domain} to {$deferTime} (server_id: {$nextServerId})");
+            $totalCount += $count;
+        }
+        
+        return $totalCount;
+    }
+    
+    /**
+     * Get the next available server ID for deferral.
+     * Similar logic to updateNotifyToNextServer but returns just the server ID.
+     * Falls back to current server if no other servers available.
+     * 
+     * @return int Server ID
+     */
+    function getNextServerId()
+    {
+        $servers = $this->server->availableServers();
+        
+        if (empty($servers) || count($servers) < 2) {
+            // No other servers, use current server
+            return $this->server->id;
+        }
+        
+        // Find current server position
+        $start = 0;
+        foreach ($servers as $i => $s) {
+            if ($s->id == $this->server->id) {
+                $start = $i;
+                break;
             }
         }
-        $this->queue = $newQueue;
         
-        // 2. Remove matching items from domain queue
-        if ($this->domain_queue !== false && isset($this->domain_queue[$domain])) {
-            foreach ($this->domain_queue[$domain] as $item) {
-                $this->server->updateNotifyToNextServer($item, $deferTime, true);
-                $count++;
-            }
-            unset($this->domain_queue[$domain]);
-        }
-        
-        // 3. Also defer any other pending notifications for this domain in the database 
-        //    that are assigned to this server and haven't been sent yet
-        $notify = DB_DataObject::factory($this->table);
-        $notify->server_id = $this->server->id;
-        $notify->whereAdd("sent < '1970-01-01' OR sent IS NULL");
-        $notify->whereAdd('act_when < NOW()');
-        $notify->whereAdd("to_email LIKE '%@" . $notify->escape($domain) . "'");
-        $notify->whereAdd('act_start > NOW() - INTERVAL 14 DAY'); // Only defer recent notifications
-        
-        if ($notify->find()) {
-            while ($notify->fetch()) {
-                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
-                $count++;
-            }
-        }
-        
-        $this->logecho("GREYLISTED: Deferred {$count} notifications for domain {$domain} to {$deferTime}");
-        
-        return $count;
+        // Get next server (cycle to beginning if at end)
+        $nextIndex = ($start + 1) % count($servers);
+        return $servers[$nextIndex]->id;
     }
 }
