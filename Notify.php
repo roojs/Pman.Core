@@ -136,7 +136,7 @@ class Pman_Core_Notify extends Pman
     /**
      * @var {Array} greylist_defer_domains - domains to defer entirely when greylisting is detected
      */
-    var $greylist_defer_domains = array('yahoo.com');
+    var $greylist_defer_domains = array('yahoo');
     
     /**
      * @var {Array} deferred_domains - domains that have been flagged as temporarily deferred during this run
