@@ -758,7 +758,28 @@ class Pman_Core_Notify extends Pman
             $this->logecho("DOMAIN QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->domain_queue));
         }
         
-        // 1. Remove matching items from domain queue and defer them
+        // 1. Remove matching items from memory queue and defer them
+        $newQueue = array();
+        foreach ($this->queue as $item) {
+            $email = empty($item->to_email) ? ($item->person() ? $item->person()->email : '') : $item->to_email;
+            $itemDomain = $this->getDomainFromEmail($email);
+            
+            if ($itemDomain === $domain) {
+                // Check if older than 2 days - if so, skip deferring (let it fail naturally)
+                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
+                    $newQueue[] = $item; // Keep in queue, let normal processing handle it
+                    continue;
+                }
+                // Defer in database
+                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
+                $count++;
+            } else {
+                $newQueue[] = $item;
+            }
+        }
+        $this->queue = $newQueue;
+        
+        // 2. Remove matching items from domain queue
         if ($this->domain_queue !== false && isset($this->domain_queue[$domain])) {
             foreach ($this->domain_queue[$domain] as $item) {
                 $this->server->updateNotifyToNextServer($item, $deferTime, true);
@@ -767,7 +788,7 @@ class Pman_Core_Notify extends Pman
             unset($this->domain_queue[$domain]);
         }
         
-        // 2. Defer any other pending notifications for this domain in the database 
+        // 3. Also defer any other pending notifications for this domain in the database 
         //    that are assigned to this server and haven't been sent yet
         $notify = DB_DataObject::factory($this->table);
         $notify->server_id = $this->server->id;
