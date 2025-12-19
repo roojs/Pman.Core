@@ -732,19 +732,6 @@ class Pman_Core_Notify extends Pman
     }
     
     /**
-     * Defer a single notification to a later time
-     * 
-     * @param object $notify The notification object
-     * @param string $when DateTime string for when to retry
-     * @param string $reason Reason for deferral (for logging)
-     */
-    function deferNotification($notify, $when, $reason)
-    {
-        $this->server->updateNotifyToNextServer($notify, $when, true);
-       
-    }
-    
-    /**
      * Handle greylisting for an entire domain - defer all pending notifications
      * for this domain to now + 30 minutes, unless they're older than 2 days.
      * Only applies to domains in $greylist_defer_domains (e.g., yahoo.com).
