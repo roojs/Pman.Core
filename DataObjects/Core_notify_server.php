@@ -468,12 +468,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff = HTML_FlexyFramework::get();
         
-        if (!empty($server_ipv6) && !empty($server_ipv6->server_id_ipv6_ptr)) {
-            $ff->Mail['helo'] = $server_ipv6->server_id_ipv6_ptr;
-        } else {
-            $ff->Mail['helo'] = $this->helo;
+        if (!empty($server_ipv6)) {
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6();
+            if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
+                $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;
+                return;
+            }
         }
-        
+        $ff->Mail['helo'] = $this->helo;
     }
     function checkSmtpResponse($errmsg, $core_domain)
     {
