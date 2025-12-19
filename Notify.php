@@ -740,13 +740,8 @@ class Pman_Core_Notify extends Pman
      */
     function deferNotification($notify, $when, $reason)
     {
-        $old = clone($notify);
-        $notify->act_when = $when;
-        $notify->update($old);
-        
-        if ($this->log_events) {
-            $this->addEvent('NOTIFY', $notify, $reason);
-        }
+        $this->server->updateNotifyToNextServer($notify,  $when,true, $this->server_ipv6);
+       
     }
     
     /**
