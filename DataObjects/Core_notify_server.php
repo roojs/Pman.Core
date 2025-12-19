@@ -537,7 +537,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
 
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->server_id = $this->id;
         $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
 
         $start = $this->ipv6ToDecimal($this->ipv6_range_from);
