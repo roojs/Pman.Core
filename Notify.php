@@ -326,13 +326,6 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
 
-            $ww = DB_DataObject::factory($this->table);
-            $ww->get($p->id);
-            if(strtotime($ww->act_when) > time()) {
-                $this->logecho("Skipping - ($ww->id) deferred to ". $ww->act_when);
-                continue;
-            }
-
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
