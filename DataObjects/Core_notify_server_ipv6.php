@@ -11,7 +11,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
 
     public $__table = 'core_notify_server_ipv6';    // table name
     public $id;                              // int  not_null primary_key auto_increment
-    public $server_id;                        // int  not_null
     public $ipv6_addr;                       // varchar(255)  not_null
     public $domain_id;                       // int  not_null
     
