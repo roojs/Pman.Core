@@ -320,7 +320,6 @@ class Pman_Core_Notify extends Pman
                 sleep(3);
                 continue;
             }
-            sleep(10);
 
             $ww = DB_DataObject::factory($this->table);
             $ww->get($p->id);
@@ -367,6 +366,7 @@ class Pman_Core_Notify extends Pman
             
             
             $this->run($p->id,$email); 
+            sleep(10);
             
             
             
