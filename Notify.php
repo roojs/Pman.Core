@@ -765,11 +765,6 @@ class Pman_Core_Notify extends Pman
             $itemDomain = $this->getDomainFromEmail($email);
             
             if ($itemDomain === $domain) {
-                // Check if older than 2 days - if so, skip deferring (let it fail naturally)
-                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
-                    $newQueue[] = $item; // Keep in queue, let normal processing handle it
-                    continue;
-                }
                 // Defer in database
                 $this->server->updateNotifyToNextServer($notify, $deferTime, true);
                 $count++;
