@@ -400,8 +400,11 @@ class Pman_Core_Notify extends Pman
             $this->poolfree();
             sleep(3);
         }
-
         
+        // Defer all notifications for domains that were flagged as temporarily deferred
+        if (!empty($this->deferred_domains)) {
+            $this->bulkDeferDomains();
+        }
         
         $this->logecho("DONE");
         exit;
