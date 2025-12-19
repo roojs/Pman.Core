@@ -334,10 +334,11 @@ class Pman_Core_Notify extends Pman
                 continue;
             }
             
-            // Skip domains that have been flagged as temporarily deferred
+            // Skip domains that have been flagged as temporarily deferred (using substring match)
             $emailDomain = $this->getDomainFromEmail($email);
-            if (in_array($emailDomain, $this->deferred_domains)) {
-                $this->logecho("SKIPPING - domain {$emailDomain} is temporarily deferred - {$email}");
+            $matchedPattern = $this->matchesDeferPattern($emailDomain, $this->deferred_domains);
+            if ($matchedPattern !== false) {
+                $this->logecho("SKIPPING - domain {$emailDomain} matches deferred pattern '{$matchedPattern}' - {$email}");
                 continue;
             }
 
