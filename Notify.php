@@ -765,7 +765,7 @@ class Pman_Core_Notify extends Pman
                     continue;
                 }
                 // Defer in database
-                $this->server->updateNotifyToNextServer($notify, $when, true);
+                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
                 $count++;
             } else {
                 $newQueue[] = $item;
@@ -779,7 +779,7 @@ class Pman_Core_Notify extends Pman
                 if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
                     continue; // Skip old ones
                 }
-                $this->server->updateNotifyToNextServer($notify, $when, true);
+                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
                 $count++;
             }
             unset($this->domain_queue[$domain]);
@@ -796,7 +796,7 @@ class Pman_Core_Notify extends Pman
         
         if ($notify->find()) {
             while ($notify->fetch()) {
-                $this->server->updateNotifyToNextServer($notify, $when, true);
+                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
                 $count++;
             }
         }
