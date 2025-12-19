@@ -598,12 +598,14 @@ class Pman_Core_Notify extends Pman
                 ($outputErr ?: "error output DELETED?") . " : "
             );
             
-            // Check for greylisting with "temporarily deferred" - defer yahoo.com only
+            // Check for greylisting with "temporarily deferred" - flag yahoo.com for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
                 $domain = $this->getDomainFromEmail($p['email']);
                 if (!empty($domain) && in_array($domain, $this->greylist_defer_domains)) {
-                    $this->logecho("GREYLISTING DETECTED for {$domain} - deferring all pending notifications");
-                    $this->deferDomainForGreylist($domain);
+                    if (!in_array($domain, $this->deferred_domains)) {
+                        $this->logecho("GREYLISTING DETECTED for {$domain} - flagging domain for deferral");
+                        $this->deferred_domains[] = $domain;
+                    }
                 }
             }
             
