@@ -138,6 +138,11 @@ class Pman_Core_Notify extends Pman
      */
     var $greylist_defer_domains = array('yahoo.com');
     
+    /**
+     * @var {Array} deferred_domains - domains that have been flagged as temporarily deferred during this run
+     */
+    var $deferred_domains = array();
+    
     function getAuth()
     {
         $ff = HTML_FlexyFramework::get();
@@ -388,8 +393,7 @@ class Pman_Core_Notify extends Pman
             $this->poolfree();
             sleep(3);
         }
-         
-        
+
         
         
         $this->logecho("DONE");
