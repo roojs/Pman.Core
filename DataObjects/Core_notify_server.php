@@ -345,12 +345,16 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $ipv6->domain_id = $notification->domain_id;
             
             if ($ipv6->find(true)) {
-                // Assign the IPv6 server regardless of availability status
-                $update_notification = DB_DataObject::factory($notify->table);
-                $update_notification->get($notification->id);
-                $update_notification->server_id = $ipv6->server_id;
-                $update_notification->update();
-                $assignedIds[] = $notification->id;
+                // Find the server whose range contains this IPv6 address
+                $serverFromIpv6 = $ipv6->findServerFromIpv6();
+                if ($serverFromIpv6) {
+                    // Assign the IPv6 server regardless of availability status
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $serverFromIpv6->id;
+                    $update_notification->update();
+                    $assignedIds[] = $notification->id;
+                }
             }
         }
         return $assignedIds;
