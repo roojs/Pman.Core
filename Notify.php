@@ -340,6 +340,13 @@ class Pman_Core_Notify extends Pman
                 $p->flagDone($ev, '');
                 continue;
             }
+            
+            // Skip domains that have been flagged as temporarily deferred
+            $emailDomain = $this->getDomainFromEmail($email);
+            if (in_array($emailDomain, $this->deferred_domains)) {
+                $this->logecho("SKIPPING - domain {$emailDomain} is temporarily deferred - {$email}");
+                continue;
+            }
 
             /*
             dont try and get around blacklists at present
