@@ -764,7 +764,7 @@ class Pman_Core_Notify extends Pman
                     continue;
                 }
                 // Defer in database
-                $this->deferNotification($item, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $this->server->updateNotifyToNextServer($notify, $when, true);
                 $count++;
             } else {
                 $newQueue[] = $item;
@@ -778,7 +778,7 @@ class Pman_Core_Notify extends Pman
                 if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
                     continue; // Skip old ones
                 }
-                $this->deferNotification($item, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $this->server->updateNotifyToNextServer($notify, $when, true);
                 $count++;
             }
             unset($this->domain_queue[$domain]);
@@ -795,7 +795,7 @@ class Pman_Core_Notify extends Pman
         
         if ($notify->find()) {
             while ($notify->fetch()) {
-                $this->deferNotification($notify, $deferTime, "GREYLISTED DOMAIN: $domain");
+                $this->server->updateNotifyToNextServer($notify, $when, true);
                 $count++;
             }
         }
