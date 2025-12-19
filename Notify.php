@@ -791,6 +791,7 @@ class Pman_Core_Notify extends Pman
         $notify->whereAdd("sent < '1970-01-01' OR sent IS NULL");
         $notify->whereAdd('act_when < NOW()');
         $notify->whereAdd("to_email LIKE '%@" . $notify->escape($domain) . "'");
+        $notify->whereAdd('act_start > NOW() - INTERVAL 14 DAY'); // Only defer recent notifications
         
         if ($notify->find()) {
             while ($notify->fetch()) {
