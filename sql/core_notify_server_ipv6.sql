@@ -7,7 +7,7 @@ CREATE TABLE core_notify_server_ipv6 (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE core_notify_server_ipv6 DROP column server_id;
+ALTER TABLE core_notify_server_ipv6 DROP COLUMN server_id;
 
 ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_range (server_id);
 ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_addr (ipv6_addr);
