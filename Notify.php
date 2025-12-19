@@ -766,7 +766,7 @@ class Pman_Core_Notify extends Pman
             
             if ($itemDomain === $domain) {
                 // Defer in database
-                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
+                $this->server->updateNotifyToNextServer($item, $deferTime, true);
                 $count++;
             } else {
                 $newQueue[] = $item;
