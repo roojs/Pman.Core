@@ -737,7 +737,7 @@ class Pman_Core_Notify extends Pman
      * for this domain to now + 30 minutes.
      * Only applies to domains in $greylist_defer_domains (e.g., yahoo.com).
      * Old notifications are cleaned up by clearOld() which runs before processing
-     * so that they won't be endlessley deferred.
+     * so that they won't be endlessly deferred.
      * 
      * @param string $domain The email domain to defer (e.g., 'yahoo.com')
      * @return int Number of notifications deferred
