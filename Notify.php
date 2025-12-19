@@ -742,6 +742,25 @@ class Pman_Core_Notify extends Pman
     }
     
     /**
+     * Check if a domain matches any pattern in a list using substring matching.
+     * E.g., domain "yahoo.com" or "yahoo.com.hk" matches pattern "yahoo"
+     * 
+     * @param string $domain The domain to check
+     * @param array $patterns List of patterns to match against
+     * @return string|false The matching pattern, or false if no match
+     */
+    function matchesDeferPattern($domain, $patterns)
+    {
+        $domain = strtolower($domain);
+        foreach ($patterns as $pattern) {
+            if (strpos($domain, strtolower($pattern)) !== false) {
+                return $pattern;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Bulk defer all notifications for domains that were flagged as temporarily deferred.
      * Uses a single UPDATE query per domain for efficiency.
      * Defers to NOW + 15 minutes and passes to next server.
