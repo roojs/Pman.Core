@@ -524,7 +524,7 @@ class Pman_Core_Notify extends Pman
          
         foreach($this->pool as $p) {
              
-            //echo "CHECK PID: " . $p['pid'] . "\n";
+            echo "CHECK PID: " . $p['pid'] . "\n";
             
             
             $info =  proc_get_status($p['proc']);
@@ -542,7 +542,7 @@ class Pman_Core_Notify extends Pman
             
                 //if (file_exists('/proc/'.$p['pid'])) {
                 $runtime = time() - $p['started'];
-                // echo "RUNTIME ({$p['pid']}): $runtime\n";
+                echo "RUNTIME ({$p['pid']}): $runtime\n";
                 if ($runtime > $this->maxruntime) {
                     
                     proc_terminate($p['proc'], 9);
