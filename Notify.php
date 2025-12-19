@@ -734,8 +734,9 @@ class Pman_Core_Notify extends Pman
     
     /**
      * Handle greylisting for an entire domain - defer all pending notifications
-     * for this domain to now + 30 minutes, unless they're older than 2 days.
+     * for this domain to now + 30 minutes.
      * Only applies to domains in $greylist_defer_domains (e.g., yahoo.com).
+     * Old notifications are cleaned up by clearOld() which runs before processing.
      * 
      * @param string $domain The email domain to defer (e.g., 'yahoo.com')
      * @return int Number of notifications deferred
@@ -757,46 +758,21 @@ class Pman_Core_Notify extends Pman
             $this->logecho("DOMAIN QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->domain_queue));
         }
         
-        // 1. Remove matching items from memory queue and defer them
-        $newQueue = array();
-        foreach ($this->queue as $item) {
-            $email = empty($item->to_email) ? ($item->person() ? $item->person()->email : '') : $item->to_email;
-            $itemDomain = $this->getDomainFromEmail($email);
-            
-            if ($itemDomain === $domain) {
-                // Check if older than 2 days - if so, skip deferring (let it fail naturally)
-                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
-                    $newQueue[] = $item; // Keep in queue, let normal processing handle it
-                    continue;
-                }
-                // Defer in database
-                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
-                $count++;
-            } else {
-                $newQueue[] = $item;
-            }
-        }
-        $this->queue = $newQueue;
-        
-        // 2. Remove matching items from domain queue
+        // 1. Remove matching items from domain queue and defer them
         if ($this->domain_queue !== false && isset($this->domain_queue[$domain])) {
             foreach ($this->domain_queue[$domain] as $item) {
-                if (strtotime($item->act_start) < strtotime('NOW - 2 DAY')) {
-                    continue; // Skip old ones
-                }
-                $this->server->updateNotifyToNextServer($notify, $deferTime, true);
+                $this->server->updateNotifyToNextServer($item, $deferTime, true);
                 $count++;
             }
             unset($this->domain_queue[$domain]);
         }
         
-        // 3. Also defer any other pending notifications for this domain in the database 
+        // 2. Defer any other pending notifications for this domain in the database 
         //    that are assigned to this server and haven't been sent yet
         $notify = DB_DataObject::factory($this->table);
         $notify->server_id = $this->server->id;
         $notify->whereAdd("sent < '1970-01-01' OR sent IS NULL");
         $notify->whereAdd('act_when < NOW()');
-        $notify->whereAdd('act_start > NOW() - INTERVAL 2 DAY'); // Only within 2 days
         $notify->whereAdd("to_email LIKE '%@" . $notify->escape($domain) . "'");
         
         if ($notify->find()) {
