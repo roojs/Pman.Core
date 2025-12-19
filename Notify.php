@@ -753,7 +753,7 @@ class Pman_Core_Notify extends Pman
         $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 30 MINUTES'));
 
         $this->logecho("QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->queue));
-        $this->logecho("DOMAIN QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->domain_queue[$domain]));
+        $this->logecho("DOMAIN QUEUE SIZE IN DEFERRING DOMAIN: " . count($this->domain_queue));
         
         // 1. Remove matching items from memory queue and defer them
         $newQueue = array();
