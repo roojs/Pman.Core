@@ -266,12 +266,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * Set up ipv6 for the domain
      * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
      * 
+     * @param string $allocation_reason Reason why IPv6 was allocated (e.g., bounce message, error details)
      * @return core_notify_server_ipv6|false
      */
-    function setUpIpv6()
+    function setUpIpv6($allocation_reason = '')
     {
         if(!$this->hasAAAARecord()) {
-            // return false;
+            return false;
         }
 
         $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
@@ -288,6 +289,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $cnsi->domain_id = $this->id;
         $cnsi->ipv6_addr = $ipv6_addr;
         if(!$cnsi->find(true)) {
+            $cnsi->allocation_reason = $allocation_reason;
             $cnsi->insert();
         }
 

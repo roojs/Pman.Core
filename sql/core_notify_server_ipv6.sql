@@ -16,3 +16,5 @@ ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_domain (domain_id);
  
 
 ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_seq (domain_id, seq);
+
+ALTER TABLE core_notify_server_ipv6 ADD COLUMN allocation_reason TEXT;

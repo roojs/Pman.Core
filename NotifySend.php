@@ -774,9 +774,10 @@ class Pman_Core_NotifySend extends Pman
             
             // Check if error message contains spamhaus (case-insensitive)
             // If spamhaus is found, continue current behavior (don't pass to next server)
-            $is_spamhaus = stripos($errmsg, 'spamhaus') !== false;
-            $is_spamhaus = true;
-
+            $is_spamhaus = stripos($errmsg, 'spam') !== false 
+                || stripos($errmsg, 'in rbl') !== false 
+                || stripos($errmsg, 'reputation') !== false ; 
+ 
             $shouldRetry = false;
 
             // smtpcode > 500 (permanent failure)
@@ -785,9 +786,17 @@ class Pman_Core_NotifySend extends Pman
                 if($is_spamhaus) {
                     // not using ipv6 -> try setting up ipv6
                     if($this->server_ipv6 == null) {
+                        // Build allocation reason with error details
+                        $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
+                        if (!empty($res->userinfo['smtptext'])) {
+                            $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
+                        }
+                        $allocation_reason .= "; Email: " . $w->to_email;
+                        $allocation_reason .= "; Spamhaus detected: yes";
+                        
                         // no IPv6 can be set up -> don't retry
                         // IPv6 set up successfully
-                        if($this->server_ipv6 = $core_domain->setUpIpv6()) {
+                        if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
                             $shouldRetry = true;
                         }
                     }

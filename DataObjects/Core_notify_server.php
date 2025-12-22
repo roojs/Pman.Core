@@ -30,7 +30,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         if(!empty($q['ipv6_range_from'])) {
             $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
-            $core_domain->setUpIpv6();
+            $core_domain->setUpIpv6("Manual allocation via server configuration update");
         }
 
         // if any of the ipv6 fields is set, make sure all of them are set
