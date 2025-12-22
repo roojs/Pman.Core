@@ -178,7 +178,7 @@ class Pman_Core_Notify extends Pman
    
     function get($r,$opts=array())    
     {
-        
+         
         if ($this->database_is_locked()) {
             $this->logecho("LATER - DATABASE IS LOCKED");
             exit;
@@ -282,12 +282,15 @@ class Pman_Core_Notify extends Pman
         }
         
         //echo "BATCH SIZE: ".  count($ar) . "\n";
-       
+        $db_locked = false;
         
         while (true) {
             if ($this->database_is_locked()) {
                 $this->logecho("LATER - DATABASE IS LOCKED");
-                exit;
+                // Empty the queue and flag database is locked
+                $this->queue = array();
+                $db_locked = true;
+                break; // exit the while loop
             }
             
             // Always check for finished processes first - this allows us to start new ones immediately
@@ -366,15 +369,17 @@ class Pman_Core_Notify extends Pman
             
             
         }
-        $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
-        if (!empty($this->next_queue)) {
-             
+        // Skip requeuing if database was locked
+       
+        if (!$db_locked && !empty($this->next_queue)) {
+            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));       
             foreach($this->next_queue as $p) {
                 if (false === $this->server->updateNotifyToNextServer($p)) {
                     $p->updateState("????");
                 }
             }
         }
+         
         
         
         $this->logecho("QUEUE COMPLETE - waiting for pool to end");
