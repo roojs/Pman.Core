@@ -533,9 +533,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
         $domain = DB_DataObject::factory('core_domain');
         if($domain->get('domain', $dom)) {
+            $cache[$dom] = $domain->id;
             return $domain->id;
         }
-        $cache[$dom] = $domain->id;
+        $cache[$dom] = 0;
         return 0;
     }
 
