@@ -618,7 +618,7 @@ class Pman_Core_Notify extends Pman
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
                 $cd = DB_DataObject::factory('core_domain');
                 $domainId = $cd->getDomainIdFromEmail($p['email']);
-                $deferredDomainIds = $cd->getDomainIdsFromPattern(array('yahoo'));
+                $deferredDomainIds = $cd->getDomainIdsFromPattern('yahoo');
                 // the email should be deferred
                 if (in_array($domainId, $deferredDomainIds)) {
                     $this->logecho("GREYLISTING DETECTED for {$domain} - flagging for deferral");
