@@ -452,9 +452,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return 0;
         }
         
-        // Find the next server
-        $nextServerId = $this->getNextServerId($server);
-        
         // Sanitize domain IDs
         $domainIds = array_map('intval', $deferred_domains);
         $domainIdList = implode(',', $domainIds);
@@ -477,7 +474,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             UPDATE
                 " . $this->tableName() . "
             SET
-                server_id = {$nextServerId},
+                server_id = " . $this->getNextServerId($server) . ",
                 act_when = '" . date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES')) . "'
             WHERE
                 server_id = {$server->id}
