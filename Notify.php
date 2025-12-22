@@ -188,7 +188,7 @@ class Pman_Core_Notify extends Pman
    
     function get($r,$opts=array())    
     {
-        
+         
         if ($this->database_is_locked()) {
             $this->logecho("LATER - DATABASE IS LOCKED");
             exit;
@@ -292,13 +292,19 @@ class Pman_Core_Notify extends Pman
         }
         
         //echo "BATCH SIZE: ".  count($ar) . "\n";
-       
+        $db_locked = false;
         
         while (true) {
             if ($this->database_is_locked()) {
                 $this->logecho("LATER - DATABASE IS LOCKED");
-                exit;
+                // Empty the queue and flag database is locked
+                $this->queue = array();
+                $db_locked = true;
+                break; // exit the while loop
             }
+            
+            // Always check for finished processes first - this allows us to start new ones immediately
+            $this->poolfree();
             
             // only add if we don't have any queued up..
             if (empty($this->queue) && $w->fetch()) {
@@ -315,17 +321,23 @@ class Pman_Core_Notify extends Pman
                      
                     continue;
                 }
+                // If queue is empty but pool still has running processes, wait for them
+                if (count($this->pool) > 0) {
+                    sleep(1);
+                    continue;
+                }
                 break; // nothing more in queue.. and no remaining one
             }
             
-            
-            $p = array_shift($this->queue);
-            if (!$this->poolfree()) {
-                array_unshift($this->queue,$p); /// put it back on..
-                sleep(3);
+            // Check if we have space in the pool before trying to start a new process
+            if (count($this->pool) >= $this->max_pool_size) {
+                // Pool is full, wait a bit and check again
+                sleep(1);
                 continue;
             }
-
+            
+            $p = array_shift($this->queue);
+            
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
@@ -376,15 +388,17 @@ class Pman_Core_Notify extends Pman
             
             
         }
-        $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));
-        if (!empty($this->next_queue)) {
-             
+        // Skip requeuing if database was locked
+       
+        if (!$db_locked && !empty($this->next_queue)) {
+            $this->logecho("REQUEUING all emails that maxed out:" . count($this->next_queue));       
             foreach($this->next_queue as $p) {
                 if (false === $this->server->updateNotifyToNextServer($p)) {
                     $p->updateState("????");
                 }
             }
         }
+         
         
         
         $this->logecho("QUEUE COMPLETE - waiting for pool to end");
@@ -581,7 +595,7 @@ class Pman_Core_Notify extends Pman
             //fclose($p['pipes'][1]);
             
             proc_close($p['proc']);
-             sleep(1);
+             //sleep(1);
             clearstatcache();
             if (file_exists('/proc/'. $p['pid'])) {
                 $this->logecho("proc PID={$p['pid']} still here - trying to wait");
