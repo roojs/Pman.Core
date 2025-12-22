@@ -515,13 +515,24 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mailer;
     }
 
+    function getDomainIdsFromEmail($email)
+    {
+        $parts = explode('@', $email);
+        $dom = array_pop($parts);
+        $domain = DB_DataObject::factory('core_domain');
+        if($domain->get('domain', $dom)) {
+            return $domain->id;
+        }
+        return false;
+    }
+
     /**
      * Get domain ids by pattern
      * 
      * @param string $pattern pattern to search for
      * @return array array of domain ids
      */
-    function getDomainIdsByPattern($pattern)
+    function getDomainIdsFromPattern($pattern)
     {
         $domain_ids = array();
         $domains = DB_DataObject::factory('core_domain');
