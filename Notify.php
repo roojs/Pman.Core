@@ -134,11 +134,6 @@ class Pman_Core_Notify extends Pman
     var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
     
     /**
-     * @var {Array} greylist_defer_domains - domains to defer entirely when greylisting is detected
-     */
-    var $greylist_defer_domains = array('yahoo');
-    
-    /**
      * @var {Array} deferred_domains - domains that have been flagged as temporarily deferred during this run
      */
     var $deferred_domains = array();
@@ -618,7 +613,7 @@ class Pman_Core_Notify extends Pman
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
                 $domain = $this->getDomainFromEmail($p['email']);
-                $matchedPattern = $this->matchesDeferPattern($domain, $this->greylist_defer_domains);
+                $matchedPattern = $this->matchesDeferPattern($domain, array('yahoo'));
                 if ($matchedPattern !== false) {
                     if (!in_array($matchedPattern, $this->deferred_domains)) {
                         $this->logecho("GREYLISTING DETECTED for {$domain} (matches '{$matchedPattern}') - flagging for deferral");
