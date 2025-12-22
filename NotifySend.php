@@ -739,8 +739,7 @@ class Pman_Core_NotifySend extends Pman
                 // For 452 "out of storage" errors, wait 12 hours before retrying
                 $actual_retry_when = $retry_when;
                 if ($code == 452 && stripos($errmsg, 'out of storage') !== false) {
-                    $actual_retry_when = date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS'));
-                    $this->debug("Mailbox full - delaying retry to {$actual_retry_when}");
+                    $this->debug("Mailbox full - delaying retry to " . date('Y-m-d H:i:s', strtotime('NOW + 12 HOURS'));
                 }
                 
                 $this->server->updateNotifyToNextServer($w, $actual_retry_when, true, $this->server_ipv6);
