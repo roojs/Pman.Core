@@ -190,6 +190,7 @@ class Pman_Core_NotifySend extends Pman
             $w->flagDone($cev, $cev->action == 'NOTIFYSENT' ? 'alreadysent' : '');
             $this->errorHandler( $cev->action . " (fix old) ".  $cev->remarks);
         }
+        die('test');
         
         $o = $w->object();
         
