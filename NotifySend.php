@@ -478,9 +478,6 @@ class Pman_Core_NotifySend extends Pman
         
         
         $this->server->initHelo($this->server_ipv6);
-
-        var_dump($ff->Mail['helo']);
-        die('test');
         
         if (!isset($ff->Mail['helo'])) {
             $this->errorHandler("config Mail[helo] is not set");
