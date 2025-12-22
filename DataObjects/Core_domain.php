@@ -526,10 +526,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     {
         $parts = explode('@', $email);
         $dom = array_pop($parts);
+
+        static $cache = array();
+        if(isset($cache[$dom])) {
+            return $cache[$dom];
+        }
         $domain = DB_DataObject::factory('core_domain');
         if($domain->get('domain', $dom)) {
             return $domain->id;
         }
+        $cache[$dom] = $domain->id;
         return 0;
     }
 
