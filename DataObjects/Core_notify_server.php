@@ -30,7 +30,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         if(!empty($q['ipv6_range_from'])) {
             $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
-            $core_domain->setUpIpv6();
+            $core_domain->setUpIpv6("Manual allocation via server configuration update");
         }
 
         // if any of the ipv6 fields is set, make sure all of them are set
@@ -345,12 +345,16 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $ipv6->domain_id = $notification->domain_id;
             
             if ($ipv6->find(true)) {
-                // Assign the IPv6 server regardless of availability status
-                $update_notification = DB_DataObject::factory($notify->table);
-                $update_notification->get($notification->id);
-                $update_notification->server_id = $ipv6->server_id;
-                $update_notification->update();
-                $assignedIds[] = $notification->id;
+                // Find the server whose range contains this IPv6 address
+                $serverFromIpv6 = $ipv6->findServerFromIpv6($this->poolname);
+                if ($serverFromIpv6) {
+                    // Assign the IPv6 server regardless of availability status
+                    $update_notification = DB_DataObject::factory($notify->table);
+                    $update_notification->get($notification->id);
+                    $update_notification->server_id = $serverFromIpv6->id;
+                    $update_notification->update();
+                    $assignedIds[] = $notification->id;
+                }
             }
         }
         return $assignedIds;
@@ -384,7 +388,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if($server_ipv6 != null) {
             $pp = clone($w);
 
-            $w->server_id = $server_ipv6->server_id;
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
+            if($serverFromIpv6 != false) {
+                $w->server_id = $serverFromIpv6->id;
+            }
             $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
             $w->update($pp);
             return true;
@@ -461,12 +468,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
         $ff = HTML_FlexyFramework::get();
         
-        if (!empty($server_ipv6) && !empty($server_ipv6->server_id_ipv6_ptr)) {
-            $ff->Mail['helo'] = $server_ipv6->server_id_ipv6_ptr;
-        } else {
-            $ff->Mail['helo'] = $this->helo;
+        if (!empty($server_ipv6)) {
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
+            if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
+                $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;
+                return;
+            }
         }
-        
+        $ff->Mail['helo'] = $this->helo;
     }
     function checkSmtpResponse($errmsg, $core_domain)
     {
@@ -537,7 +546,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         }
 
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->server_id = $this->id;
         $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
 
         $start = $this->ipv6ToDecimal($this->ipv6_range_from);
