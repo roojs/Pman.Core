@@ -819,7 +819,7 @@ class Pman_Core_Notify extends Pman
                 server_id = {$this->server->id}
                 AND (sent < '1970-01-01' OR sent IS NULL)
                 AND act_when < NOW() + 15 MINUTES
-                AND domain_id IN (" . implode(",", $this->deferred_domains) . ")")
+                AND to_email LIKE '%@%{$escapedDomain}%'
                 AND act_start > NOW() - INTERVAL 14 DAY
         ");
         
