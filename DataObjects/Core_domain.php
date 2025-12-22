@@ -523,7 +523,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         if($domain->get('domain', $dom)) {
             return $domain->id;
         }
-        return false;
+        return 0;
     }
 
     /**
