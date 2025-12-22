@@ -514,4 +514,16 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
         return $mailer;
     }
+
+    function getDomainIdsByPattern($pattern)
+    {
+        $domain_ids = array();
+        $domains = DB_DataObject::factory('core_domain');
+        $domains->whereAdd("domain LIKE '%{$pattern}%'");
+        $domains->find();
+        while($domains->fetch()) {
+            $domain_ids[] = $domains->id;
+        }
+        return $domain_ids;
+    }
 }
