@@ -452,8 +452,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
             return 0;
         }
         
-        $tableName = $this->tableName();
-        
         // Find the next server
         $nextServerId = $this->getNextServerId($server);
         
