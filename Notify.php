@@ -615,7 +615,7 @@ class Pman_Core_Notify extends Pman
                 $cd = DB_DataObject::factory('core_domain');
                 $emailDomainId = $cd->getDomainFromEmail($p['email']);
                 $matchingDomainIds = $cd->getDomainIdsFromPattern(array('yahoo'));
-                if ($matchedPattern !== false) {
+                if (in_array($emailDomainId, $matchingDomainIds)) {
                     if (!in_array($matchedPattern, $this->deferred_domains)) {
                         $this->logecho("GREYLISTING DETECTED for {$domain} (matches '{$matchedPattern}') - flagging for deferral");
                         $this->deferred_domains[] = $matchedPattern;
