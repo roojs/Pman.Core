@@ -290,6 +290,9 @@ class Pman_Core_Notify extends Pman
                 exit;
             }
             
+            // Always check for finished processes first - this allows us to start new ones immediately
+            $this->poolfree();
+            
             // only add if we don't have any queued up..
             if (empty($this->queue) && $w->fetch()) {
                 $this->queue[] = clone($w);
@@ -305,16 +308,23 @@ class Pman_Core_Notify extends Pman
                      
                     continue;
                 }
+                // If queue is empty but pool still has running processes, wait for them
+                if (count($this->pool) > 0) {
+                    sleep(1);
+                    continue;
+                }
                 break; // nothing more in queue.. and no remaining one
             }
             
-            
-            $p = array_shift($this->queue);
-            if (!$this->poolfree()) {
-                array_unshift($this->queue,$p); /// put it back on..
-                sleep(3);
+            // Check if we have space in the pool before trying to start a new process
+            if (count($this->pool) >= $this->max_pool_size) {
+                // Pool is full, wait a bit and check again
+                sleep(1);
                 continue;
             }
+            
+            $p = array_shift($this->queue);
+            
             // not sure what happesn if person email and to_email is empty!!?
             $email = empty($p->to_email) ? ($p->person() ? $p->person()->email : $p->to_email) : $p->to_email;
             if (empty($email)) {
