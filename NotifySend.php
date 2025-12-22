@@ -375,8 +375,20 @@ class Pman_Core_NotifySend extends Pman
         // if to_email has not been set!?
         $ww->update($w); // if nothing has changed this will not do anything.
         $w = clone($ww);
-        
-    
+
+        // Fetch IPv6 server configuration if available
+        $this->server_ipv6 = null;
+        if (!empty($w->domain_id)) {
+            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+            $ipv6->autoJoin();
+            $ipv6->domain_id = $w->domain_id;
+            if ($ipv6->find(true)) {
+                $this->server_ipv6 = $ipv6;
+            }
+        }
+
+        var_dump($this->server_ipv6);
+        die('test');
       
         
         require_once 'Validate.php';
