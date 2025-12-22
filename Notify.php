@@ -134,7 +134,7 @@ class Pman_Core_Notify extends Pman
     var $clear_interval = '1 WEEK'; // how long to clear the old queue of items.
     
     /**
-     * @var {Array} deferred_domains - domains that have been flagged as temporarily deferred during this run
+     * @var {Array} deferred_domains - ids of domains that have been flagged as temporarily deferred during this run
      */
     var $deferred_domains = array();
     
