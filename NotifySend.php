@@ -159,6 +159,8 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
+        die('test');
+
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
         if (!$force && (empty($this->server->id) || empty($this->server->is_active))) {
