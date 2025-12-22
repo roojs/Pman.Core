@@ -515,7 +515,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mailer;
     }
 
-    function getDomainIdsFromEmail($email)
+    /**
+     * Get domain id from email
+     * 
+     * @param string $email email address
+     * @return int domain id (0 if not found)
+     */
+    function getDomainIdFromEmail($email)
     {
         $parts = explode('@', $email);
         $dom = array_pop($parts);
