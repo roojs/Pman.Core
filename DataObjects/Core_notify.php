@@ -461,7 +461,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $countQuery->server_id = $server->id;
         $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
         $countQuery->whereAdd("act_when < NOW() + INTERVAL 15 MINUTE");
-        $countQuery->whereAdd("domain_id IN ({$domainIdList})");
         $countQuery->whereAddIn("domain_id", $domainIds, 'int');
         $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
         $count = $countQuery->count();
