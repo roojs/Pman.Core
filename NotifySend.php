@@ -782,23 +782,20 @@ class Pman_Core_NotifySend extends Pman
 
             // smtpcode > 500 (permanent failure)
             if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
-                // spamhaus
-                if($is_spamhaus) {
-                    // not using ipv6 -> try setting up ipv6
-                    if($this->server_ipv6 == null) {
-                        // Build allocation reason with error details
-                        $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
-                        if (!empty($res->userinfo['smtptext'])) {
-                            $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
-                        }
-                        $allocation_reason .= "; Email: " . $w->to_email;
-                        $allocation_reason .= "; Spamhaus detected: yes";
-                        
-                        // no IPv6 can be set up -> don't retry
-                        // IPv6 set up successfully
-                        if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
-                            $shouldRetry = true;
-                        }
+                // spamhaus - not using ipv6 -> try setting up ipv6
+                if($is_spamhaus && empty($this->server_ipv6)) {
+                    // Build allocation reason with error details
+                    $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
+                    if (!empty($res->userinfo['smtptext'])) {
+                        $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
+                    }
+                    $allocation_reason .= "; Email: " . $w->to_email;
+                    $allocation_reason .= "; Spamhaus detected: yes";
+                    
+                    // no IPv6 can be set up -> don't retry
+                    // IPv6 set up successfully
+                    if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
+                        $shouldRetry = true;
                     }
                 }
                 // not spamhaus
