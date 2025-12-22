@@ -800,7 +800,7 @@ class Pman_Core_Notify extends Pman
             $countQuery = DB_DataObject::factory($this->table);
             $countQuery->server_id = $this->server->id;
             $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
-            $countQuery->whereAdd('act_when < NOW()');
+            $countQuery->whereAdd('act_when < NOW() + 15 MINUTES');
             $countQuery->whereAdd("to_email LIKE '%@%{$escapedDomain}%'");
             $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
             $count = $countQuery->count();
@@ -820,7 +820,7 @@ class Pman_Core_Notify extends Pman
                 WHERE
                     server_id = {$this->server->id}
                     AND (sent < '1970-01-01' OR sent IS NULL)
-                    AND act_when < NOW()
+                    AND act_when < NOW() + 15 MINUTES
                     AND to_email LIKE '%@%{$escapedDomain}%'
                     AND act_start > NOW() - INTERVAL 14 DAY
             ");
