@@ -271,7 +271,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function setUpIpv6()
     {
         if(!$this->hasAAAARecord()) {
-            return false;
+            // return false;
         }
 
         $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
@@ -285,7 +285,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->server_id = $server->id;
         $cnsi->domain_id = $this->id;
         $cnsi->ipv6_addr = $ipv6_addr;
         if(!$cnsi->find(true)) {
