@@ -782,8 +782,6 @@ class Pman_Core_NotifySend extends Pman
                         if($this->server_ipv6 = $core_domain->setUpIpv6()) {
                             $shouldRetry = true;
                         }
-                        var_dump($this->server_ipv6);
-                        die('test');
                     }
                 }
                 // not spamhaus
