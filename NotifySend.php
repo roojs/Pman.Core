@@ -214,9 +214,6 @@ class Pman_Core_NotifySend extends Pman
             $p->email = $p->email();
         }
 
-
-        die('test');
-
         // has it failed mutliple times..
         
         if (!empty($w->field) && isset($p->{$w->field .'_fails'}) && $p->{$w->field .'_fails'} > 9) {
