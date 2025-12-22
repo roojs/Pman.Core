@@ -540,6 +540,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      */
     function getDomainIdsFromPattern($pattern)
     {
+        static $cache = array();
+        if(isset($cache[$pattern])) {
+            return $cache[$pattern];
+        }
         $domain_ids = array();
         $domains = DB_DataObject::factory('core_domain');
         $domains->whereAdd("domain LIKE '%{$pattern}%'");
@@ -547,6 +551,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         while($domains->fetch()) {
             $domain_ids[] = $domains->id;
         }
+        $cache[$pattern] = $domain_ids;
         return $domain_ids;
     }
 }
