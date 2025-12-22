@@ -28,9 +28,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Find the server whose IPv6 range contains this record's ipv6_addr
      * 
+     * @param string $poolname
      * @return Pman_Core_DataObjects_Core_notify_server|false
      */
-    function findServerFromIpv6()
+    function findServerFromIpv6($poolname)
     {
         if (empty($this->ipv6_addr)) {
             return false;
@@ -44,7 +45,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             ipv6_range_to != ''
         ");
         $server->is_active = 1;
-        
+        $server->poolname = $poolname;
         $servers = $server->fetchAll();
         
         if (empty($servers)) {
