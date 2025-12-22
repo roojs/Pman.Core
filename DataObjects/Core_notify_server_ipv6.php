@@ -45,7 +45,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             ipv6_range_to != ''
         ");
         $server->is_active = 1;
-        $server->poolname = $poolname;
         $servers = $server->fetchAll();
         
         if (empty($servers)) {
