@@ -246,9 +246,6 @@ class Pman_Core_NotifySend extends Pman
                 $lar[$personid_col] = $w->{$personid_col};
             }
         }
-
-
-        die('test');
         
         
         $l->setFrom( $lar );       
