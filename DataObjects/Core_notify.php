@@ -454,7 +454,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         // Sanitize domain IDs
         $domainIds = array_map('intval', $deferred_domains);
-        $domainIdList = implode(',', $domainIds);
         
         // Count how many will be affected
         $countQuery = DB_DataObject::factory($this->tableName());
@@ -480,7 +479,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 server_id = {$server->id}
                 AND (sent < '1970-01-01' OR sent IS NULL)
                 AND act_when < NOW() + INTERVAL 15 MINUTE
-                AND domain_id IN ({$domainIdList})
+                AND domain_id IN (" . implode(",", $domainIds) . ")
                 AND act_start > NOW() - INTERVAL 14 DAY
         ");
         
