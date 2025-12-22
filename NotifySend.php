@@ -779,6 +779,8 @@ class Pman_Core_NotifySend extends Pman
                 if($is_spamhaus) {
                     // not using ipv6 -> try setting up ipv6
                     if($this->server_ipv6 == null) {
+                        var_dump($this->server_ipv6);
+                        die('test');
                         // no IPv6 can be set up -> don't retry
                         // IPv6 set up successfully
                         if($this->server_ipv6 = $core_domain->setUpIpv6()) {
