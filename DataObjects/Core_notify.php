@@ -481,7 +481,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
                 {$tableName}
             SET
                 server_id = {$nextServerId},
-                act_when = '{$deferTime}'
+                act_when = '" . date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES')) . "'
             WHERE
                 server_id = {$server->id}
                 AND (sent < '1970-01-01' OR sent IS NULL)
