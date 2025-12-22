@@ -515,11 +515,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mailer;
     }
 
-    function shouldEmailBeDeferred($email, $patterns)
-    {
-
-    }
-
     /**
      * Get domain id from email
      * 
