@@ -743,18 +743,6 @@ class Pman_Core_Notify extends Pman
     }
     
     /**
-     * Extract domain from email address
-     * 
-     * @param string $email Email address
-     * @return string Domain in lowercase
-     */
-    function getDomainFromEmail($email)
-    {
-        $parts = explode('@', $email);
-        return strtolower(array_pop($parts));
-    }
-    
-    /**
      * Check if a domain matches any pattern in a list using substring matching.
      * E.g., domain "yahoo.com" or "yahoo.com.hk" matches pattern "yahoo"
      * 
