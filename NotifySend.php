@@ -335,6 +335,7 @@ class Pman_Core_NotifySend extends Pman
         if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
             $email['headers']['X-Notify-Recur-Id'] = $w->onid;
         }
+        die('test');
 
 
         
@@ -387,8 +388,6 @@ class Pman_Core_NotifySend extends Pman
                 $this->server_ipv6 = $ipv6;
             }
         }
-
-        die('test');
       
         
         require_once 'Validate.php';
