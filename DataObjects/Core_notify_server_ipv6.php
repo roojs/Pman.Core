@@ -80,6 +80,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
                 }
             }
         }
+
+        var_dump($serverWithFittingRangeAndPoolname);
+        var_dump($poolname);
+        die('test');
         
         return $serverWithFittingRangeAndPoolname ? $serverWithFittingRangeAndPoolname : $serverWithFittingRange;
     }
