@@ -808,6 +808,7 @@ class Pman_Core_Notify extends Pman
         }
         
         // Do single UPDATE query (using substring match on domain pattern)
+        $notify = DB_DataObject::factory($this->table);
         $notify->query("
             UPDATE
                 {$this->table}
