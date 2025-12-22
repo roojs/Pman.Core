@@ -346,7 +346,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             
             if ($ipv6->find(true)) {
                 // Find the server whose range contains this IPv6 address
-                $serverFromIpv6 = $ipv6->findServerFromIpv6();
+                $serverFromIpv6 = $ipv6->findServerFromIpv6($this->poolname);
                 if ($serverFromIpv6) {
                     // Assign the IPv6 server regardless of availability status
                     $update_notification = DB_DataObject::factory($notify->table);
