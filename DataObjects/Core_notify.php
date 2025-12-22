@@ -453,7 +453,6 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         }
         
         $tableName = $this->tableName();
-        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES'));
         
         // Find the next server
         $nextServerId = $this->getNextServerId($server);
@@ -463,7 +462,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         $domainIdList = implode(',', $domainIds);
         
         // Count how many will be affected
-        $countQuery = DB_DataObject::factory($tableName);
+        $countQuery = DB_DataObject::factory($this->tableName());
         $countQuery->server_id = $server->id;
         $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
         $countQuery->whereAdd("act_when < NOW() + INTERVAL 15 MINUTE");
@@ -478,7 +477,7 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         // Do single UPDATE query
         $this->query("
             UPDATE
-                {$tableName}
+                " . $this->tableName() . "
             SET
                 server_id = {$nextServerId},
                 act_when = '" . date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES')) . "'
