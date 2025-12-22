@@ -344,8 +344,6 @@ class Pman_Core_Notify extends Pman
             // Skip domains that have been flagged as temporarily deferred (using substring match)
             $cd = DB_DataObject::factory('core_domain');
             $domainId = $cd->getDomainIdFromEmail($p['email']);
-            var_dump($this->deferred_domains);
-            die('test');
             if (in_array($domainId, $this->deferred_domains)) {
                 $this->logecho("SKIPPING - {$email} should be deferred");
                 continue;
