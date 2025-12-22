@@ -436,4 +436,91 @@ class Pman_Core_DataObjects_Core_notify extends DB_DataObject
         
         return $p;
     }
+    
+    /**
+     * Bulk defer all notifications for domains that were flagged as temporarily deferred.
+     * Uses a single UPDATE query for efficiency.
+     * Defers to NOW + 15 minutes and passes to next server.
+     * 
+     * @param array $deferred_domains Array of domain_ids to defer
+     * @param object $server The current core_notify_server object
+     * @return int Total number of notifications deferred
+     */
+    function bulkDeferDomains($deferred_domains, $server)
+    {
+        if (empty($deferred_domains)) {
+            return 0;
+        }
+        
+        $tableName = $this->tableName();
+        $deferTime = date('Y-m-d H:i:s', strtotime('NOW + 15 MINUTES'));
+        
+        // Find the next server
+        $nextServerId = $this->getNextServerId($server);
+        
+        // Sanitize domain IDs
+        $domainIds = array_map('intval', $deferred_domains);
+        $domainIdList = implode(',', $domainIds);
+        
+        // Count how many will be affected
+        $countQuery = DB_DataObject::factory($tableName);
+        $countQuery->server_id = $server->id;
+        $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
+        $countQuery->whereAdd("act_when < NOW() + INTERVAL 15 MINUTE");
+        $countQuery->whereAdd("domain_id IN ({$domainIdList})");
+        $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
+        $count = $countQuery->count();
+        
+        if ($count == 0) {
+            return 0;
+        }
+        
+        // Do single UPDATE query
+        $this->query("
+            UPDATE
+                {$tableName}
+            SET
+                server_id = {$nextServerId},
+                act_when = '{$deferTime}'
+            WHERE
+                server_id = {$server->id}
+                AND (sent < '1970-01-01' OR sent IS NULL)
+                AND act_when < NOW() + INTERVAL 15 MINUTE
+                AND domain_id IN ({$domainIdList})
+                AND act_start > NOW() - INTERVAL 14 DAY
+        ");
+        
+        return $count;
+    }
+    
+    /**
+     * Get the next available server ID for deferral.
+     * Similar logic to updateNotifyToNextServer but returns just the server ID.
+     * Falls back to current server if no other servers available.
+     * 
+     * @param object $server The current core_notify_server object
+     * @return int Server ID
+     */
+    function getNextServerId($server)
+    {
+        $servers = $server->availableServers();
+        
+        if (empty($servers) || count($servers) < 2) {
+            // No other servers, use current server
+            return $server->id;
+        }
+        
+        // Find current server position
+        $start = 0;
+        foreach ($servers as $i => $s) {
+            if ($s->id == $server->id) {
+                $start = $i;
+                break;
+            }
+        }
+        
+        // Get next server (cycle to beginning if at end)
+        $nextIndex = ($start + 1) % count($servers);
+        return $servers[$nextIndex]->id;
+    }
 }
