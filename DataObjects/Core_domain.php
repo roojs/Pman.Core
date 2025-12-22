@@ -515,6 +515,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         return $mailer;
     }
 
+    /**
+     * Get domain ids by pattern
+     * 
+     * @param string $pattern pattern to search for
+     * @return array array of domain ids
+     */
     function getDomainIdsByPattern($pattern)
     {
         $domain_ids = array();
