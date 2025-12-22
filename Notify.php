@@ -406,7 +406,6 @@ class Pman_Core_Notify extends Pman
         
         // Defer all notifications for domains that were flagged as temporarily deferred
         if (!empty($this->deferred_domains)) {
-            var_dump($this->deferred_domains);
             $notify = DB_DataObject::factory($this->table);
             $count = $notify->bulkDeferDomains($this->deferred_domains, $this->server);
             $this->logecho("GREYLISTED DEFER: Deferred {$count} notifications to next server");
