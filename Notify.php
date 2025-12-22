@@ -798,13 +798,13 @@ class Pman_Core_Notify extends Pman
         $countQuery->server_id = $this->server->id;
         $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
         $countQuery->whereAdd('act_when < NOW() + 15 MINUTES');
-        $countQuery->whereAdd("to_email LIKE '%@%{$escapedDomain}%'");
+        $countQuery->whereAdd("domain_id IN (" . implode(",", $this->deferred_domains) . ")");
         $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
         $count = $countQuery->count();
         
         if ($count == 0) {
             $this->logecho("GREYLISTED DEFER: No pending notifications matching pattern '{$domain}'");
-            continue;
+            return 0;
         }
         
         // Do single UPDATE query (using substring match on domain pattern)
