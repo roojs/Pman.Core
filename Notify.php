@@ -789,45 +789,41 @@ class Pman_Core_Notify extends Pman
         // Find the next server (similar to updateNotifyToNextServer logic)
         $nextServerId = $this->getNextServerId();
         
-        foreach ($this->deferred_domains as $domain) {
-            $domain = strtolower($domain);
+        $domain = strtolower($domain);
             
-            // Build domain condition for LIKE matching
-            $notify = DB_DataObject::factory($this->table);
-            $escapedDomain = $notify->escape($domain);
-            
-            // Count how many will be affected (using substring match on domain pattern)
-            $countQuery = DB_DataObject::factory($this->table);
-            $countQuery->server_id = $this->server->id;
-            $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
-            $countQuery->whereAdd('act_when < NOW() + 15 MINUTES');
-            $countQuery->whereAdd("to_email LIKE '%@%{$escapedDomain}%'");
-            $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
-            $count = $countQuery->count();
-            
-            if ($count == 0) {
-                $this->logecho("GREYLISTED DEFER: No pending notifications matching pattern '{$domain}'");
-                continue;
-            }
-            
-            // Do single UPDATE query (using substring match on domain pattern)
-            $notify->query("
-                UPDATE
-                    {$this->table}
-                SET
-                    server_id = {$nextServerId},
-                    act_when = '{$deferTime}'
-                WHERE
-                    server_id = {$this->server->id}
-                    AND (sent < '1970-01-01' OR sent IS NULL)
-                    AND act_when < NOW() + 15 MINUTES
-                    AND to_email LIKE '%@%{$escapedDomain}%'
-                    AND act_start > NOW() - INTERVAL 14 DAY
-            ");
-            
-            $this->logecho("GREYLISTED DEFER: Deferred {$count} notifications matching pattern '{$domain}' to {$deferTime} (server_id: {$nextServerId})");
-            $totalCount += $count;
+        // Build domain condition 
+        
+        // Count how many will be affected (using substring match on domain pattern)
+        $countQuery = DB_DataObject::factory($this->table);
+        $countQuery->server_id = $this->server->id;
+        $countQuery->whereAdd("sent < '1970-01-01' OR sent IS NULL");
+        $countQuery->whereAdd('act_when < NOW() + 15 MINUTES');
+        $countQuery->whereAdd("to_email LIKE '%@%{$escapedDomain}%'");
+        $countQuery->whereAdd('act_start > NOW() - INTERVAL 14 DAY');
+        $count = $countQuery->count();
+        
+        if ($count == 0) {
+            $this->logecho("GREYLISTED DEFER: No pending notifications matching pattern '{$domain}'");
+            continue;
         }
+        
+        // Do single UPDATE query (using substring match on domain pattern)
+        $notify->query("
+            UPDATE
+                {$this->table}
+            SET
+                server_id = {$nextServerId},
+                act_when = '{$deferTime}'
+            WHERE
+                server_id = {$this->server->id}
+                AND (sent < '1970-01-01' OR sent IS NULL)
+                AND act_when < NOW() + 15 MINUTES
+                AND to_email LIKE '%@%{$escapedDomain}%'
+                AND act_start > NOW() - INTERVAL 14 DAY
+        ");
+        
+        $this->logecho("GREYLISTED DEFER: Deferred {$count} notifications matching pattern '{$domain}' to {$deferTime} (server_id: {$nextServerId})");
+        $totalCount += $count;
         
         return $totalCount;
     }
