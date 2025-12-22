@@ -376,6 +376,7 @@ class Pman_Core_NotifySend extends Pman
         $ww->update($w); // if nothing has changed this will not do anything.
         $w = clone($ww);
 
+        // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
         if (!empty($w->domain_id)) {
