@@ -388,7 +388,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         if($server_ipv6 != null) {
             $pp = clone($w);
 
-            $serverFromIpv6 = $server_ipv6->findServerFromIpv6();
+            $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
             if($serverFromIpv6 != false) {
                 $w->server_id = $serverFromIpv6->id;
             }
