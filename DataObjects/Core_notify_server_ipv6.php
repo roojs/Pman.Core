@@ -72,11 +72,16 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             
             // Check if address is within range: rangeFrom <= addr <= rangeTo
             if (bccomp($addrDecimal, $rangeFrom) >= 0 && bccomp($addrDecimal, $rangeTo) <= 0) {
-                return $s;
+                if($s->poolname == $poolname) {
+                    $serverWithFittingRangeAndPoolname = $s;
+                }
+                else {
+                    $serverWithFittingRange = $s;
+                }
             }
         }
         
-        return false;
+        return $serverWithFittingRangeAndPoolname ? $serverWithFittingRangeAndPoolname : $serverWithFittingRange;
     }
     
     /**
