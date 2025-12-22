@@ -289,6 +289,7 @@ class Pman_Core_NotifySend extends Pman
                 'error' => $email->toString()
             );
         }
+        die('aaa');
       
         if ((empty($p) || empty($p->id)) && !empty($email['recipients'])) {
             // make a fake person..
@@ -335,7 +336,6 @@ class Pman_Core_NotifySend extends Pman
         if(empty($email['headers']['X-Notify-Recur-Id']) && $w->ontable == 'core_notify_recur' && !empty($w->onid)) {
             $email['headers']['X-Notify-Recur-Id'] = $w->onid;
         }
-        die('test');
 
 
         
