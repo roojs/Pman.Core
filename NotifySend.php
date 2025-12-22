@@ -147,17 +147,6 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $this->server = DB_DataObject::Factory('core_notify_server')->getCurrent($this, $force);
-        
-        // Fetch IPv6 server configuration if available
-        $this->server_ipv6 = null;
-        if (!empty($w->domain_id)) {
-            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
-            $ipv6->autoJoin();
-            $ipv6->domain_id = $w->domain_id;
-            if ($ipv6->find(true)) {
-                $this->server_ipv6 = $ipv6;
-            }
-        }
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
         // id = 0 means no servers exist, is_active = 0 means server is disabled
