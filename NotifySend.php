@@ -159,6 +159,7 @@ class Pman_Core_NotifySend extends Pman
             }
         }
 
+        var_dump($this->server_ipv6);
         die('test');
 
         // Check if server is disabled or not found - exit gracefully (unless force is set)
