@@ -289,7 +289,6 @@ class Pman_Core_NotifySend extends Pman
                 'error' => $email->toString()
             );
         }
-        die('aaa');
       
         if ((empty($p) || empty($p->id)) && !empty($email['recipients'])) {
             // make a fake person..
