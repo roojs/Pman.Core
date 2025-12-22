@@ -799,7 +799,7 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                $this->errorHandler( $ev->remarks);
+                $this->errorHandler($errmsg);
                 // Successfully passed to next server, exit
                 return;
             }
