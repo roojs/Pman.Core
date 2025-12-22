@@ -615,9 +615,11 @@ class Pman_Core_Notify extends Pman
             
             // Check for greylisting with "temporarily deferred" - flag matching pattern for later deferral
             if (stripos($output, 'GREYLISTED') !== false && stripos($output, 'temporarily deferred') !== false) {
-                $domain = $this->getDomainFromEmail($p['email']);
-                $matchedPattern = $this->matchesDeferPattern($domain, array('yahoo'));
-                if ($matchedPattern !== false) {
+                $cd = DB_DataObject::factory('core_domain');
+                $domainId = $cd->getDomainIdFromEmail($p['email']);
+                $deferredDomainIds = $cd->getDomainIdsFromPattern(array('yahoo'));
+                // if the email should be deferred, flag it for deferral
+                if (in_array($domainId, $deferredDomainIds)) {
                     if (!in_array($matchedPattern, $this->deferred_domains)) {
                         $this->logecho("GREYLISTING DETECTED for {$domain} (matches '{$matchedPattern}') - flagging for deferral");
                         $this->deferred_domains[] = $matchedPattern;
