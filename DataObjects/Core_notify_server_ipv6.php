@@ -56,6 +56,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($addrDecimal === false) {
             return false;
         }
+
+        $serverWithFittingRangeAndPoolname = false;
+        $serverWithFittingRange = false;
+
         
         // Check each server's range
         foreach ($servers as $s) {
