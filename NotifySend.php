@@ -505,6 +505,8 @@ class Pman_Core_NotifySend extends Pman
             );
             
             $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
+
+            var_dump($socket_options);
             
             $mailer = Mail::factory('smtp', array(
                 'host'    => $mx ,
