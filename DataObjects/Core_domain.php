@@ -420,10 +420,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
 
             // We don't need to log these errors and don't need to show these errors to the user
             if($res->code == 550 &&preg_match('/does not exist/i', $errorMessage)) {
-                // return "This email is invalid - we tested it and it does not exist";
+                return "This email is invalid - we tested it and it does not exist";
             }
-
-            var_dump($mx);
 
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
