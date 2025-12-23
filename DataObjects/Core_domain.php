@@ -377,6 +377,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // Check for known false positives BEFORE logging
             // These are temporary errors or false positives we can't fix, so treat as valid
             $errorMessage = $res->getMessage();
+
+            var_dump($errorMessage);
+            die('test');
             
             // Check for SMTP error 421 (Service unavailable - server busy)
             // This is a temporary error we can't fix, so treat it as a valid check
