@@ -777,15 +777,17 @@ class Pman_Core_NotifySend extends Pman
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
                 || stripos($errmsg, 'in rbl') !== false 
                 || stripos($errmsg, 'reputation') !== false ; 
- 
+
             $shouldRetry = false;
 
             // smtpcode > 500 (permanent failure)
-            if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
+            $smtpcode = isset($res->userinfo['smtpcode']) ? $res->userinfo['smtpcode'] : 0;
+            if(!empty($smtpcode) && $smtpcode > 500) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
+                    $this->debug("IPv6: Spamhaus detected (code: $smtpcode), attempting IPv6 setup");
                     // Build allocation reason with error details
-                    $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
+                    $allocation_reason = "SMTP Code: " . $smtpcode;
                     if (!empty($res->userinfo['smtptext'])) {
                         $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
                     }
@@ -795,11 +797,15 @@ class Pman_Core_NotifySend extends Pman
                     // no IPv6 can be set up -> don't retry
                     // IPv6 set up successfully
                     if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
+                        $this->debug("IPv6: Setup successful, will retry");
                         $shouldRetry = true;
+                    } else {
+                        $this->debug("IPv6: Setup failed");
                     }
                 }
                 // not spamhaus
                 else {
+                    $this->debug("IPv6: Not spamhaus (spamhaus=" . ($is_spamhaus ? 'yes' : 'no') . ", ipv6_empty=" . (empty($this->server_ipv6) ? 'yes' : 'no') . ")");
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
                     if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
