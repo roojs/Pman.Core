@@ -385,7 +385,12 @@ class Pman_Core_NotifySend extends Pman
             $ipv6->domain_id = $w->domain_id;
             if ($ipv6->find(true)) {
                 $this->server_ipv6 = $ipv6;
+                $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . (isset($ipv6->ipv6_addr) ? $ipv6->ipv6_addr : 'NOT SET'));
+            } else {
+                $this->debug("IPv6: No existing IPv6 found for domain_id={$w->domain_id}");
             }
+        } else {
+            $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
       
         
@@ -803,9 +808,12 @@ class Pman_Core_NotifySend extends Pman
                         $this->debug("IPv6: Setup failed");
                     }
                 }
-                // not spamhaus
+                // not spamhaus OR IPv6 already exists
                 else {
-                    $this->debug("IPv6: Not spamhaus (spamhaus=" . ($is_spamhaus ? 'yes' : 'no') . ", ipv6_empty=" . (empty($this->server_ipv6) ? 'yes' : 'no') . ")");
+                    $reason = array();
+                    if (!$is_spamhaus) $reason[] = "not spamhaus";
+                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . (isset($this->server_ipv6->ipv6_addr) ? $this->server_ipv6->ipv6_addr : 'no address') . ")";
+                    $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
                     if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
@@ -973,7 +981,9 @@ class Pman_Core_NotifySend extends Pman
             $socket_options['socket'] = array(
                 'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
             );
-            $this->debug("Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+        } else {
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . (empty($this->server_ipv6->ipv6_addr) ? 'empty' : $this->server_ipv6->ipv6_addr) . ")");
         }
         
         return $socket_options;
