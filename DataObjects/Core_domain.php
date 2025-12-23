@@ -417,8 +417,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
-
-            var_dump($errorMessage);
             
             // 554 5.7.1 <pr@bunkatsushin.com>: Recipient address rejected: Access denied ??
 
