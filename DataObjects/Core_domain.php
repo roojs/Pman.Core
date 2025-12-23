@@ -417,6 +417,12 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
+
+            // We don't need to log these errors and don't need to show these errors to the user
+            if(in_array($res->userinfo['smtptext'], array('does not exist'))) {
+                return "This email is invalid - we tested it and it does not exist";
+            }
+            
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
