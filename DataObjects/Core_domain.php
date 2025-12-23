@@ -418,7 +418,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
 
-            if($res->code = 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+            if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), 
 						however we accepted it as valid. Error: {$errorMessage}"
