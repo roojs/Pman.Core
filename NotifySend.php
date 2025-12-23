@@ -516,8 +516,14 @@ class Pman_Core_NotifySend extends Pman
             
             $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
             
+            // Format IPv6 address with brackets for PEAR Mail compatibility
+            $mailer_host = $smtp_host;
+            if (filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                $mailer_host = '[' . $smtp_host . ']';
+            }
+            
             $mailer = Mail::factory('smtp', array(
-                'host'    => $smtp_host,
+                'host'    => $mailer_host,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
                 'socket_options' => $socket_options,
