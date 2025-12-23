@@ -423,6 +423,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 // return "This email is invalid - we tested it and it does not exist";
             }
 
+            var_dump($mx);
+
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
