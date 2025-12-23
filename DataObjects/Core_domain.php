@@ -382,7 +382,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 421 as success
             }
@@ -391,7 +391,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 451 as success
             }
@@ -404,7 +404,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             )) {
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, 
-						however we accepted it as valid"
+						however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
@@ -413,7 +413,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             )) {
                 $roo->errorlog(
                     "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spam, 
-						however we accepted it as valid"
+						however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
