@@ -402,7 +402,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if ($res->code == 550 && (
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
-                var_dump($errorMessage);
                 // Don't need to log error for spamhaus failures
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
