@@ -493,12 +493,17 @@ class Pman_Core_NotifySend extends Pman
         }
 
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+        
+        // Convert MX hostnames to map of IP addresses => domain
+        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr);
+        $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
                         
-        foreach($mxs as $mx) {
+        foreach($mx_ip_map as $smtp_host => $mx) {
             
            
             $this->debug_str = '';
-            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+            
             // Prepare socket options with IPv6 binding if available
             $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
                 'ssl' => array(
@@ -512,7 +517,7 @@ class Pman_Core_NotifySend extends Pman
             $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
             
             $mailer = Mail::factory('smtp', array(
-                'host'    => $mx ,
+                'host'    => $smtp_host,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
                 'socket_options' => $socket_options,
@@ -679,6 +684,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("GOT response to send: ". print_r($res,true));
 
             if ($res === true) {
+                $mx_success = true;
                 // success....
                 
                 $successEventName = (empty($email['successEventName'])) ? 'NOTIFYSENT' : $email['successEventName'];
@@ -725,8 +731,8 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($code < 0) {
-                $this->debug($res->message);
-                continue; // try next mx... ??? should we wait??? - nope we did not even connect..
+                $this->debug("Connection error with $smtp_host: " . $res->message);
+                continue; // try next IP address
             }
             // give up after 2 days..
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
@@ -964,6 +970,58 @@ class Pman_Core_NotifySend extends Pman
         if ($this->debug) { 
             echo $message ."\n";
         }
+    }
+    
+    /**
+     * Convert array of MX hostnames to map of IP addresses => domain
+     * Prioritizes IPv6 addresses if use_ipv6 is true
+     * 
+     * @param array $mxs Array of MX hostnames
+     * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
+     * @return array Map of IP address => domain name
+     */
+    function convertMxsToIpMap($mxs, $use_ipv6 = false)
+    {
+        $mx_ip_map = array();
+        
+        foreach ($mxs as $mx) {
+            // Resolve IPv6 addresses (AAAA records) only if use_ipv6 is true
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if ($use_ipv6 && !empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
+                    }
+
+                    $mx_ip_map[$record['ipv6']] = $mx;
+                    
+                }
+            }
+            
+            // Resolve IPv4 addresses (A records)
+            $ipv4_records = @dns_get_record($mx, DNS_A);
+            if (empty($ipv4_records)) {
+                continue;
+            }
+            foreach ($ipv4_records as $record) {
+                if (empty($record['ip'])) {
+                    continue;
+                }
+                $mx_ip_map[$record['ip']] = $mx;
+                
+            }
+            
+        }
+        
+        // If no IPs resolved, fall back to hostnames
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
+        }
+        
+        return $mx_ip_map;
     }
     
     /**
