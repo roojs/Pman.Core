@@ -417,9 +417,15 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 );
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
+            
+            // 554 5.7.1 <pr@bunkatsushin.com>: Recipient address rejected: Access denied ??
 
             // We don't need to log these errors and don't need to show these errors to the user
-            if($res->code == 550 &&preg_match('/does not exist/i', $errorMessage)) {
+            if(
+                $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+            ) {
                 return "This email is invalid - we tested it and it does not exist";
             }
 
