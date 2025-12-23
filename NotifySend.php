@@ -991,9 +991,16 @@ class Pman_Core_NotifySend extends Pman
         $mx_ip_map = array();
         
         foreach ($mxs as $mx) {
-            // Resolve IPv6 addresses (AAAA records) only if use_ipv6 is true
+            // Disable IPv6 DNS lookups for Outlook servers (IPv6 binding still works but DNS will only return IPv4)
+            $mx_use_ipv6 = $use_ipv6;
+            if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
+                $mx_use_ipv6 = false;
+                $this->debug("IPv6: Disabling IPv6 DNS lookups for Outlook server: $mx");
+            }
+            
+            // Resolve IPv6 addresses (AAAA records) only if mx_use_ipv6 is true
             $ipv6_records = @dns_get_record($mx, DNS_AAAA);
-            if ($use_ipv6 && !empty($ipv6_records)) {
+            if ($mx_use_ipv6 && !empty($ipv6_records)) {
                 foreach ($ipv6_records as $record) {
                     if (empty($record['ipv6'])) {
                         continue;
