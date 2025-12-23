@@ -378,7 +378,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // These are temporary errors or false positives we can't fix, so treat as valid
             $errorMessage = $res->getMessage();
 
-            var_dump($errorMessage);
+            var_dump($res->userinfo['smtptext']);
             die('test');
             
             // Check for SMTP error 421 (Service unavailable - server busy)
