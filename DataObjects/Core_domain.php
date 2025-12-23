@@ -371,7 +371,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             ), '');
 
             if (!is_object($res)) {
-                die('success');
                 return true; // Success
             }
             
