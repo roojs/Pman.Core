@@ -14,8 +14,7 @@ ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_domain (domain_id);
 
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN allocation_reason TEXT NOT NULL DEFAULT '';
 
-ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_ipv6 (domain_id, ipv6_addr);
+ALTER TABLE core_notify_server_ipv6 ADD COLUMN seq INT NOT NULL DEFAULT 0;
 
--- Migration: remove old seq column and unique key if they exist
-ALTER TABLE core_notify_server_ipv6 DROP INDEX domain_seq;
-ALTER TABLE core_notify_server_ipv6 DROP COLUMN seq;
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_seq (domain_id, seq);
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX ipv6_seq (ipv6_addr, seq);
