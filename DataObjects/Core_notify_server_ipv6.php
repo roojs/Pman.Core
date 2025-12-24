@@ -65,6 +65,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         } else {
             $this->seq = 0;
         }
+
+        $this->allocation_reason = "Manual allocation: " . $this->allocation_reason;
     }
     
     /**
