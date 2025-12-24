@@ -25,6 +25,27 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
     }
     
+    function beforeInsert($q, $roo)
+    {
+        // Validate IPv6 address format
+        if (empty($this->ipv6_addr)) {
+            $roo->jerr("IPv6 address is required");
+        }
+        
+        if (inet_pton($this->ipv6_addr) === false) {
+            $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
+        }
+        
+        // Check for duplicate ipv6_addr + domain_id combination
+        $check = DB_DataObject::factory($this->tableName());
+        $check->ipv6_addr = $this->ipv6_addr;
+        $check->domain_id = $this->domain_id;
+        
+        if ($check->find(true)) {
+            $roo->jerr("A record with this IPv6 address and domain already exists");
+        }
+    }
+    
     /**
      * Find the server whose IPv6 range contains this record's ipv6_addr
      * 
