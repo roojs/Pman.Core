@@ -53,6 +53,18 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($check->find(true)) {
             $roo->jerr("A record with this IPv6 address and domain already exists");
         }
+        
+        // Auto-increment seq based on highest existing seq for this domain
+        $existing = DB_DataObject::factory($this->tableName());
+        $existing->domain_id = $this->domain_id;
+        $existing->orderBy('seq DESC');
+        $existing->limit(1);
+        
+        if ($existing->find(true)) {
+            $this->seq = $existing->seq + 1;
+        } else {
+            $this->seq = 0;
+        }
     }
     
     /**
