@@ -85,7 +85,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     /**
-     * Get the next seq value based on max(id) + 1
+     * Get the next seq value based on max(seq) + 1
      * 
      * @return int The next seq value
      */
@@ -93,10 +93,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $q = DB_DataObject::factory($this->tableName());
         $q->selectAdd();
-        $q->selectAdd('MAX(id) as max_id');
+        $q->selectAdd('MAX(seq) as max_seq');
         $q->find(true);
         
-        return ($q->max_id ?: 0) + 1;
+        return ($q->max_seq ?: 0) + 1;
     }
     
     /**
