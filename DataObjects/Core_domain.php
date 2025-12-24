@@ -272,7 +272,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
     function setUpIpv6($allocation_reason = '')
     {
         if(!$this->hasAAAARecord()) {
-            var_dump("No AAAA record found for domain {$this->domain}");
             return false;
         }
 
