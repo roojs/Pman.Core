@@ -1094,7 +1094,6 @@ class Pman_Core_NotifySend extends Pman
         $new_mapping->ipv6_addr = $least_used_ipv6;
         $new_mapping->domain_id = $core_domain->id;
         $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
-        $new_mapping->seq = 0;
         
         $new_mapping->insert();
         
