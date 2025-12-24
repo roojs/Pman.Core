@@ -1060,14 +1060,6 @@ class Pman_Core_NotifySend extends Pman
             return false;
         }
         
-        // Check if this domain already has an IPv6 mapping
-        $existing = DB_DataObject::factory('core_notify_server_ipv6');
-        $existing->domain_id = $core_domain->id;
-        if ($existing->find(true)) {
-            $this->server_ipv6 = $existing;
-            return $existing;
-        }
-        
         // Find the least-used IPv6 address for Outlook domains
         $least_used_ipv6 = $this->findLeastUsedOutlookIpv6();
         
@@ -1075,22 +1067,34 @@ class Pman_Core_NotifySend extends Pman
             return false;
         }
         
+        // Check if this domain already has an IPv6 mapping
+        $existing = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing->domain_id = $core_domain->id;
+        if ($existing->find(true)) {
+            // Check if existing IPv6 is one of the Outlook IPv6 addresses
+            if ($this->isOutlookIpv6($existing->ipv6_addr)) {
+                $this->server_ipv6 = $existing;
+                $this->debug("IPv6: Using existing Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
+                return $existing;
+            }
+            
+            // Existing IPv6 is not an Outlook one, update to the least-used Outlook IPv6
+            $old = clone($existing);
+            $existing->ipv6_addr = $least_used_ipv6;
+            $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
+            $existing->update($old);
+            
+            $this->server_ipv6 = $existing;
+            $this->debug("IPv6: Updated to Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
+            return $existing;
+        }
+        
         // Create a new mapping for this domain with the least-used IPv6
         $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
         $new_mapping->ipv6_addr = $least_used_ipv6;
         $new_mapping->domain_id = $core_domain->id;
         $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
-        
-        // Get the next seq for this domain
-        $existing_seq = DB_DataObject::factory('core_notify_server_ipv6');
-        $existing_seq->domain_id = $core_domain->id;
-        $existing_seq->orderBy('seq DESC');
-        $existing_seq->limit(1);
-        if ($existing_seq->find(true)) {
-            $new_mapping->seq = $existing_seq->seq + 1;
-        } else {
-            $new_mapping->seq = 0;
-        }
+        $new_mapping->seq = 0;
         
         $new_mapping->insert();
         
