@@ -1152,6 +1152,33 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
+     * Check if an IPv6 address is configured for Outlook-pattern domains
+     * 
+     * @param string $ipv6_addr The IPv6 address to check
+     * @return bool True if this IPv6 is used by an Outlook-pattern domain
+     */
+    function isOutlookIpv6($ipv6_addr)
+    {
+        if (empty($ipv6_addr)) {
+            return false;
+        }
+        
+        $check = DB_DataObject::factory('core_notify_server_ipv6');
+        $check->ipv6_addr = $ipv6_addr;
+        $check->whereAdd("
+            domain_id IN (
+                SELECT id FROM core_domain 
+                WHERE domain LIKE '%.outlook.com'
+                   OR domain LIKE '%.office365.com'
+                   OR domain LIKE '%.hotmail.com'
+                   OR domain = 'protection.outlook.com'
+            )
+        ");
+        
+        return $check->count() > 0;
+    }
+    
+    /**
      * Prepare socket options with IPv6 binding if available
      * 
      * @param array $base_options Base socket options
