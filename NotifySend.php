@@ -837,7 +837,7 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                $this->errorHandler("Retry in next server - Error: $errmsg");
+                $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
             }
