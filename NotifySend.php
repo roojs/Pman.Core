@@ -385,7 +385,12 @@ class Pman_Core_NotifySend extends Pman
             $ipv6->domain_id = $w->domain_id;
             if ($ipv6->find(true)) {
                 $this->server_ipv6 = $ipv6;
+                $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . (isset($ipv6->ipv6_addr) ? $ipv6->ipv6_addr : 'NOT SET'));
+            } else {
+                $this->debug("IPv6: No existing IPv6 found for domain_id={$w->domain_id}");
             }
+        } else {
+            $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
       
         
@@ -488,12 +493,17 @@ class Pman_Core_NotifySend extends Pman
         }
 
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+        
+        // Convert MX hostnames to map of IP addresses => domain
+        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr);
+        $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
                         
-        foreach($mxs as $mx) {
+        foreach($mx_ip_map as $smtp_host => $mx) {
             
            
             $this->debug_str = '';
-            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+            
             // Prepare socket options with IPv6 binding if available
             $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
                 'ssl' => array(
@@ -506,8 +516,14 @@ class Pman_Core_NotifySend extends Pman
             
             $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
             
+            // Format IPv6 address with brackets for PEAR Mail compatibility
+            $mailer_host = $smtp_host;
+            if (filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+                $mailer_host = '[' . $smtp_host . ']';
+            }
+            
             $mailer = Mail::factory('smtp', array(
-                'host'    => $mx ,
+                'host'    => $mailer_host,
                 'localhost' => $ff->Mail['helo'],
                 'timeout' => 15,
                 'socket_options' => $socket_options,
@@ -674,6 +690,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("GOT response to send: ". print_r($res,true));
 
             if ($res === true) {
+                $mx_success = true;
                 // success....
                 
                 $successEventName = (empty($email['successEventName'])) ? 'NOTIFYSENT' : $email['successEventName'];
@@ -720,8 +737,8 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($code < 0) {
-                $this->debug($res->message);
-                continue; // try next mx... ??? should we wait??? - nope we did not even connect..
+                $this->debug("Connection error with $smtp_host: " . $res->message);
+                continue; // try next IP address
             }
             // give up after 2 days..
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
@@ -777,15 +794,17 @@ class Pman_Core_NotifySend extends Pman
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
                 || stripos($errmsg, 'in rbl') !== false 
                 || stripos($errmsg, 'reputation') !== false ; 
- 
+
             $shouldRetry = false;
 
             // smtpcode > 500 (permanent failure)
-            if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
+            $smtpcode = isset($res->userinfo['smtpcode']) ? $res->userinfo['smtpcode'] : 0;
+            if(!empty($smtpcode) && $smtpcode > 500) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
+                    $this->debug("IPv6: Spamhaus detected (code: $smtpcode), attempting IPv6 setup");
                     // Build allocation reason with error details
-                    $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
+                    $allocation_reason = "SMTP Code: " . $smtpcode;
                     if (!empty($res->userinfo['smtptext'])) {
                         $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
                     }
@@ -795,11 +814,18 @@ class Pman_Core_NotifySend extends Pman
                     // no IPv6 can be set up -> don't retry
                     // IPv6 set up successfully
                     if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
+                        $this->debug("IPv6: Setup successful, will retry");
                         $shouldRetry = true;
+                    } else {
+                        $this->debug("IPv6: Setup failed");
                     }
                 }
-                // not spamhaus
+                // not spamhaus OR IPv6 already exists
                 else {
+                    $reason = array();
+                    if (!$is_spamhaus) $reason[] = "not spamhaus";
+                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . (isset($this->server_ipv6->ipv6_addr) ? $this->server_ipv6->ipv6_addr : 'no address') . ")";
+                    $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
                     if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
@@ -953,6 +979,65 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
+     * Convert array of MX hostnames to map of IP addresses => domain
+     * Prioritizes IPv6 addresses if use_ipv6 is true
+     * 
+     * @param array $mxs Array of MX hostnames
+     * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
+     * @return array Map of IP address => domain name
+     */
+    function convertMxsToIpMap($mxs, $use_ipv6 = false)
+    {
+        $mx_ip_map = array();
+        
+        foreach ($mxs as $mx) {
+            // Disable IPv6 DNS lookups for Outlook servers (IPv6 binding still works but DNS will only return IPv4)
+            $mx_use_ipv6 = $use_ipv6;
+            if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
+                $mx_use_ipv6 = false;
+                $this->debug("IPv6: Disabling IPv6 DNS lookups for Outlook server: $mx");
+            }
+            
+            // Resolve IPv6 addresses (AAAA records) only if mx_use_ipv6 is true
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if ($mx_use_ipv6 && !empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
+                    }
+
+                    $mx_ip_map[$record['ipv6']] = $mx;
+                    
+                }
+            }
+            
+            // Resolve IPv4 addresses (A records)
+            $ipv4_records = @dns_get_record($mx, DNS_A);
+            if (empty($ipv4_records)) {
+                continue;
+            }
+            foreach ($ipv4_records as $record) {
+                if (empty($record['ip'])) {
+                    continue;
+                }
+                $mx_ip_map[$record['ip']] = $mx;
+                
+            }
+            
+        }
+        
+        // If no IPs resolved, fall back to hostnames
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
+        }
+        
+        return $mx_ip_map;
+    }
+    
+    /**
      * Prepare socket options with IPv6 binding if available
      * 
      * @param array $base_options Base socket options
@@ -967,7 +1052,9 @@ class Pman_Core_NotifySend extends Pman
             $socket_options['socket'] = array(
                 'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
             );
-            $this->debug("Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+        } else {
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . (empty($this->server_ipv6->ipv6_addr) ? 'empty' : $this->server_ipv6->ipv6_addr) . ")");
         }
         
         return $socket_options;
