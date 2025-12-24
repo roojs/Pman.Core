@@ -1095,16 +1095,12 @@ class Pman_Core_NotifySend extends Pman
         $new_mapping->domain_id = $core_domain->id;
         $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
         
-        // Check if domain_id or ipv6_addr already exists - will need unique seq
-        $needs_seq_update = $new_mapping->needsSeqUpdate();
+        // Set seq before insert if domain_id or ipv6_addr already exists
+        if ($new_mapping->needsUniqueSeq()) {
+            $new_mapping->seq = $new_mapping->getNextSeq();
+        }
         
         $new_mapping->insert();
-        
-        // If domain_id or ipv6_addr already existed, set seq = id to ensure uniqueness
-        if ($needs_seq_update) {
-            $new_mapping->query("UPDATE {$new_mapping->tableName()} SET seq = {$new_mapping->id} WHERE id = {$new_mapping->id}");
-            $new_mapping->seq = $new_mapping->id;
-        }
         
         $this->server_ipv6 = $new_mapping;
         $this->debug("IPv6: Created new Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
