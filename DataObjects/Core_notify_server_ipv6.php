@@ -55,6 +55,41 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
 
         $this->allocation_reason = "Manual allocation: " . $this->allocation_reason;
+        
+        // Check if domain_id or ipv6_addr already exists - will need unique seq
+        $this->_needs_seq_update = $this->needsSeqUpdate();
+    }
+    
+    /**
+     * Check if domain_id or ipv6_addr already exists in the table
+     * Used to determine if seq needs to be set to id after insert
+     * 
+     * @return bool True if seq needs to be updated to id after insert
+     */
+    function needsSeqUpdate()
+    {
+        $check_domain = DB_DataObject::factory($this->tableName());
+        $check_domain->domain_id = $this->domain_id;
+        if ($check_domain->count() > 0) {
+            return true;
+        }
+        
+        $check_ipv6 = DB_DataObject::factory($this->tableName());
+        $check_ipv6->ipv6_addr = $this->ipv6_addr;
+        if ($check_ipv6->count() > 0) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    function afterInsert()
+    {
+        // If domain_id or ipv6_addr already existed, set seq = id to ensure uniqueness
+        if (!empty($this->_needs_seq_update)) {
+            $this->query("UPDATE {$this->tableName()} SET seq = {$this->id} WHERE id = {$this->id}");
+            $this->seq = $this->id;
+        }
     }
     
     /**
