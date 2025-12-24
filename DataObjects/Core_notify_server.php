@@ -29,7 +29,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     function beforeUpdate($old, $q, $roo)
     {
         if(!empty($q['ipv6_range_from'])) {
-            var_dump($q['ipv6_range_from']);
             $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
             $core_domain->setUpIpv6("Manual allocation via server configuration update");
         }
