@@ -1104,12 +1104,6 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Cache for Outlook IPv6 addresses
-     * @var array|null
-     */
-    var $outlook_ipv6_cache = null;
-    
-    /**
      * Get the list of IPv6 addresses configured for Outlook-pattern domains
      * 
      * Results are cached to avoid repeated database queries.
@@ -1118,8 +1112,10 @@ class Pman_Core_NotifySend extends Pman
      */
     function getOutlookIpv6()
     {
-        if ($this->outlook_ipv6_cache !== null) {
-            return $this->outlook_ipv6_cache;
+        static $cache = null;
+        
+        if ($cache !== null) {
+            return $cache;
         }
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
@@ -1136,14 +1132,14 @@ class Pman_Core_NotifySend extends Pman
         $outlook_ipv6_records = $ipv6_lookup->fetchAll();
         
         // Extract unique IPv6 addresses
-        $this->outlook_ipv6_cache = array();
+        $cache = array();
         foreach ($outlook_ipv6_records as $record) {
-            if (!in_array($record->ipv6_addr, $this->outlook_ipv6_cache)) {
-                $this->outlook_ipv6_cache[] = $record->ipv6_addr;
+            if (!in_array($record->ipv6_addr, $cache)) {
+                $cache[] = $record->ipv6_addr;
             }
         }
         
-        return $this->outlook_ipv6_cache;
+        return $cache;
     }
     
     /**
