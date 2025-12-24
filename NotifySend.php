@@ -984,18 +984,26 @@ class Pman_Core_NotifySend extends Pman
      * 
      * @param array $mxs Array of MX hostnames
      * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
+     * @param object $core_domain The recipient's core_domain object
      * @return array Map of IP address => domain name
      */
-    function convertMxsToIpMap($mxs, $use_ipv6 = false)
+    function convertMxsToIpMap($mxs, $use_ipv6 = false, $core_domain = null)
     {
         $mx_ip_map = array();
         
         foreach ($mxs as $mx) {
-            // Disable IPv6 DNS lookups for Outlook servers (IPv6 binding still works but DNS will only return IPv4)
             $mx_use_ipv6 = $use_ipv6;
-            if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
-                $mx_use_ipv6 = false;
-                $this->debug("IPv6: Disabling IPv6 DNS lookups for Outlook server: $mx");
+            
+            // Handle Outlook servers - try to use pre-configured IPv6 addresses
+            if (preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
+                $outlook_ipv6 = $this->findOutlookIpv6ForDomain($mx, $core_domain);
+                if ($outlook_ipv6) {
+                    $mx_use_ipv6 = true;
+                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $outlook_ipv6->ipv6_addr . " for domain: " . $core_domain->domain);
+                } else {
+                    $mx_use_ipv6 = false;
+                    $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
+                }
             }
             
             // Resolve IPv6 addresses (AAAA records) only if mx_use_ipv6 is true
@@ -1033,11 +1041,98 @@ class Pman_Core_NotifySend extends Pman
             }
             $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
         }
-
-        var_dump($mx_ip_map);
-        die('test');
         
         return $mx_ip_map;
+    }
+    
+    /**
+     * Find or create an IPv6 address mapping for Outlook domains
+     * 
+     * Looks for pre-configured IPv6 addresses for Outlook-pattern domains,
+     * finds the one with the least domains mapped, and creates a mapping
+     * for the current domain.
+     * 
+     * @param string $mx The MX hostname (Outlook server)
+     * @param object $core_domain The recipient's domain object
+     * @return object|false The IPv6 record to use, or false if none available
+     */
+    function findOutlookIpv6ForDomain($mx, $core_domain)
+    {
+        if (empty($core_domain) || empty($core_domain->id)) {
+            return false;
+        }
+        
+        // Check if this domain already has an IPv6 mapping
+        $existing = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing->domain_id = $core_domain->id;
+        if ($existing->find(true)) {
+            $this->server_ipv6 = $existing;
+            return $existing;
+        }
+        
+        // Find IPv6 addresses configured for Outlook-pattern domains
+        // Look for domains like 'protection.outlook.com', 'outlook.com', 'office365.com', etc.
+        $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6_lookup->whereAdd("
+            domain_id IN (
+                SELECT id FROM core_domain 
+                WHERE domain LIKE '%.outlook.com'
+                   OR domain LIKE '%.office365.com'
+                   OR domain LIKE '%.hotmail.com'
+                   OR domain = 'protection.outlook.com'
+            )
+        ");
+        
+        $outlook_ipv6_records = $ipv6_lookup->fetchAll();
+        
+        if (empty($outlook_ipv6_records)) {
+            return false;
+        }
+        
+        // Group by ipv6_addr and count domains for each
+        $ipv6_domain_counts = array();
+        foreach ($outlook_ipv6_records as $record) {
+            if (!isset($ipv6_domain_counts[$record->ipv6_addr])) {
+                $ipv6_domain_counts[$record->ipv6_addr] = 0;
+            }
+            
+            // Count how many domains are using this IPv6 address
+            $count = DB_DataObject::factory('core_notify_server_ipv6');
+            $count->ipv6_addr = $record->ipv6_addr;
+            $ipv6_domain_counts[$record->ipv6_addr] = $count->count();
+        }
+        
+        // Find the IPv6 address with the least domains mapped
+        asort($ipv6_domain_counts);
+        $least_used_ipv6 = key($ipv6_domain_counts);
+        
+        if (empty($least_used_ipv6)) {
+            return false;
+        }
+        
+        // Create a new mapping for this domain with the least-used IPv6
+        $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
+        $new_mapping->ipv6_addr = $least_used_ipv6;
+        $new_mapping->domain_id = $core_domain->id;
+        $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
+        
+        // Get the next seq for this domain
+        $existing_seq = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing_seq->domain_id = $core_domain->id;
+        $existing_seq->orderBy('seq DESC');
+        $existing_seq->limit(1);
+        if ($existing_seq->find(true)) {
+            $new_mapping->seq = $existing_seq->seq + 1;
+        } else {
+            $new_mapping->seq = 0;
+        }
+        
+        $new_mapping->insert();
+        
+        $this->server_ipv6 = $new_mapping;
+        $this->debug("IPv6: Created new Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
+        
+        return $new_mapping;
     }
     
     /**
