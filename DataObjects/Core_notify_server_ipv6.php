@@ -36,7 +36,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $roo->jerr("Domain is required");
         }
         
-        if (empty($this->allocate_reason)) {
+        if (empty($this->allocation_reason)) {
             $roo->jerr("Allocate reason is required");
         }
         
