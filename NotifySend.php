@@ -1081,7 +1081,7 @@ class Pman_Core_NotifySend extends Pman
             // Existing IPv6 is not an Outlook one, update to the least-used Outlook IPv6
             $old = clone($existing);
             $existing->ipv6_addr = $least_used_ipv6;
-            $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
+            // $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
             $existing->update($old);
             
             $this->server_ipv6 = $existing;
