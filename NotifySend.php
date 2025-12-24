@@ -1104,17 +1104,24 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Find the least-used IPv6 address configured for Outlook-pattern domains
-     * 
-     * Looks for IPv6 addresses mapped to domains like 'protection.outlook.com',
-     * 'outlook.com', 'office365.com', etc. and returns the one with the fewest
-     * domain mappings.
-     * 
-     * @return string|false The IPv6 address with least mappings, or false if none found
+     * Cache for Outlook IPv6 addresses
+     * @var array|null
      */
-    function findLeastUsedOutlookIpv6()
+    var $outlook_ipv6_cache = null;
+    
+    /**
+     * Get the list of IPv6 addresses configured for Outlook-pattern domains
+     * 
+     * Results are cached to avoid repeated database queries.
+     * 
+     * @return array Array of unique IPv6 addresses configured for Outlook domains
+     */
+    function getOutlookIpv6()
     {
-        // Find IPv6 addresses configured for Outlook-pattern domains
+        if ($this->outlook_ipv6_cache !== null) {
+            return $this->outlook_ipv6_cache;
+        }
+        
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6_lookup->whereAdd("
             domain_id IN (
@@ -1128,19 +1135,40 @@ class Pman_Core_NotifySend extends Pman
         
         $outlook_ipv6_records = $ipv6_lookup->fetchAll();
         
-        if (empty($outlook_ipv6_records)) {
+        // Extract unique IPv6 addresses
+        $this->outlook_ipv6_cache = array();
+        foreach ($outlook_ipv6_records as $record) {
+            if (!in_array($record->ipv6_addr, $this->outlook_ipv6_cache)) {
+                $this->outlook_ipv6_cache[] = $record->ipv6_addr;
+            }
+        }
+        
+        return $this->outlook_ipv6_cache;
+    }
+    
+    /**
+     * Find the least-used IPv6 address configured for Outlook-pattern domains
+     * 
+     * Looks for IPv6 addresses mapped to domains like 'protection.outlook.com',
+     * 'outlook.com', 'office365.com', etc. and returns the one with the fewest
+     * domain mappings.
+     * 
+     * @return string|false The IPv6 address with least mappings, or false if none found
+     */
+    function findLeastUsedOutlookIpv6()
+    {
+        $outlook_ipv6_list = $this->getOutlookIpv6();
+        
+        if (empty($outlook_ipv6_list)) {
             return false;
         }
         
-        // Group by ipv6_addr and count domains for each
+        // Count domains for each IPv6 address
         $ipv6_domain_counts = array();
-        foreach ($outlook_ipv6_records as $record) {
-            if (!isset($ipv6_domain_counts[$record->ipv6_addr])) {
-                // Count how many domains are using this IPv6 address
-                $count = DB_DataObject::factory('core_notify_server_ipv6');
-                $count->ipv6_addr = $record->ipv6_addr;
-                $ipv6_domain_counts[$record->ipv6_addr] = $count->count();
-            }
+        foreach ($outlook_ipv6_list as $ipv6_addr) {
+            $count = DB_DataObject::factory('core_notify_server_ipv6');
+            $count->ipv6_addr = $ipv6_addr;
+            $ipv6_domain_counts[$ipv6_addr] = $count->count();
         }
         
         // Find the IPv6 address with the least domains mapped
@@ -1162,19 +1190,9 @@ class Pman_Core_NotifySend extends Pman
             return false;
         }
         
-        $check = DB_DataObject::factory('core_notify_server_ipv6');
-        $check->ipv6_addr = $ipv6_addr;
-        $check->whereAdd("
-            domain_id IN (
-                SELECT id FROM core_domain 
-                WHERE domain LIKE '%.outlook.com'
-                   OR domain LIKE '%.office365.com'
-                   OR domain LIKE '%.hotmail.com'
-                   OR domain = 'protection.outlook.com'
-            )
-        ");
+        $outlook_ipv6_list = $this->getOutlookIpv6();
         
-        return $check->count() > 0;
+        return in_array($ipv6_addr, $outlook_ipv6_list);
     }
     
     /**
