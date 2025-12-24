@@ -27,11 +27,20 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
-        // Validate IPv6 address format
+        // Validate required fields
         if (empty($this->ipv6_addr)) {
             $roo->jerr("IPv6 address is required");
         }
         
+        if (empty($this->domain_id)) {
+            $roo->jerr("Domain is required");
+        }
+        
+        if (empty($this->allocate_reason)) {
+            $roo->jerr("Allocate reason is required");
+        }
+        
+        // Validate IPv6 address format
         if (inet_pton($this->ipv6_addr) === false) {
             $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
         }
