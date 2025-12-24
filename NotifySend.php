@@ -1084,6 +1084,8 @@ class Pman_Core_NotifySend extends Pman
             // $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
             if($existing->needsUniqueSeq()) {
                 $existing->seq = $existing->getNextSeq();
+                var_dump($existing->seq);
+                die('test');
             }
             $existing->update($old);
             
