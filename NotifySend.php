@@ -1156,17 +1156,17 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Find the least-used IPv6 address configured for Outlook-pattern domains
+     * Find the least-used IPv6 address configured for domains matching the MX record
      * 
-     * Looks for IPv6 addresses mapped to domains like 'protection.outlook.com',
-     * 'outlook.com', 'office365.com', etc. and returns the one with the fewest
-     * domain mappings.
+     * Looks for IPv6 addresses mapped to domains that are suffixes of the MX record
+     * and returns the one with the fewest domain mappings.
      * 
+     * @param string $mx The MX hostname
      * @return string|false The IPv6 address with least mappings, or false if none found
      */
-    function findLeastUsedOutlookIpv6()
+    function findLeastUsedOutlookIpv6($mx)
     {
-        $outlook_ipv6_list = $this->getOutlookIpv6();
+        $outlook_ipv6_list = $this->getOutlookIpv6($mx);
         
         if (empty($outlook_ipv6_list)) {
             return false;
