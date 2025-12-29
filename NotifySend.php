@@ -527,17 +527,47 @@ class Pman_Core_NotifySend extends Pman
                 )
             );
             
-            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
+            // Check if we're using IPv6 and prepare HELO hostname
+            $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            $helo_hostname = $ff->Mail['helo'];
+            
+            if ($is_ipv6) {
+                // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
+                // Handle compressed zeros (::) by splitting and taking the rightmost part
+                $ipv6_parts = explode('::', $smtp_host);
+                $right_part = end($ipv6_parts);
+                if (empty($right_part)) {
+                    // Address ends with ::, get last segment from left part
+                    $left_part = $ipv6_parts[0];
+                    $segments = explode(':', $left_part);
+                    $last_segment = end($segments);
+                } else {
+                    $segments = explode(':', $right_part);
+                    $last_segment = end($segments);
+                }
+                
+                // Remove leading zeros from last segment
+                $last_segment = ltrim($last_segment, '0');
+                if (empty($last_segment)) {
+                    $last_segment = '0';
+                }
+                
+                // Modify HELO hostname: sgfs1.media-outreach.com -> sgfs1-22a.media-outreach.com
+                $helo_hostname = preg_replace('/^([^.]+)\./', '$1-' . $last_segment . '.', $ff->Mail['helo']);
+                $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
+            }
+            
+            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
             
             // Format IPv6 address with brackets for PEAR Mail compatibility
             $mailer_host = $smtp_host;
-            if (filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            if ($is_ipv6) {
                 $mailer_host = '[' . $smtp_host . ']';
             }
             
             $mailer = Mail::factory('smtp', array(
                 'host'    => $mailer_host,
-                'localhost' => $ff->Mail['helo'],
+                'localhost' => $helo_hostname,
                 'timeout' => 15,
                 'socket_options' => $socket_options,
                 
@@ -782,7 +812,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // after trying all mxs - could not connect...
-        if  (!$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
+        if  (!$force && !$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
             
             $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
@@ -1033,15 +1063,22 @@ class Pman_Core_NotifySend extends Pman
             
             // Resolve IPv4 addresses (A records)
             $ipv4_records = @dns_get_record($mx, DNS_A);
-            if (empty($ipv4_records)) {
-                continue;
-            }
-            foreach ($ipv4_records as $record) {
-                if (empty($record['ip'])) {
-                    continue;
+            $dns_ips = array();
+            if (!empty($ipv4_records)) {
+                foreach ($ipv4_records as $record) {
+                    if (empty($record['ip'])) {
+                        continue;
+                    }
+                    $dns_ips[] = $record['ip'];
+                    $mx_ip_map[$record['ip']] = $mx;
                 }
-                $mx_ip_map[$record['ip']] = $mx;
-                
+            }
+            
+            // Also check hostname lookup (gethostbyname) as hosts file might override A record
+            $hostname_ip = @gethostbyname($mx);
+            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+                $mx_ip_map[$hostname_ip] = $mx;
+                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
             }
             
         }
@@ -1218,11 +1255,17 @@ class Pman_Core_NotifySend extends Pman
      * Prepare socket options with IPv6 binding if available
      * 
      * @param array $base_options Base socket options
+     * @param string $smtp_host The SMTP host (IP address or hostname)
      * @return array Enhanced socket options with IPv6 binding
      */
-    function prepareSocketOptionsWithIPv6($base_options = array())
+    function prepareSocketOptionsWithIPv6($base_options = array(), $smtp_host = null)
     {
         $socket_options = $base_options;
+        
+        // Return early if not using IPv6
+        if (empty($smtp_host) || !filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return $socket_options;
+        }
         
         // Add IPv6 binding if server_ipv6 is configured
         if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
