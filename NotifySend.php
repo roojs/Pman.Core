@@ -1133,13 +1133,9 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6_lookup->autoJoin();
         $escaped_mx = $ipv6_lookup->escape($mx);
-        $ipv6_lookup->whereAdd("
-            domain_id IN (
-                SELECT id FROM core_domain 
-                WHERE '$escaped_mx' LIKE CONCAT('%', domain)
-            )
-        ");
+        $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
         
         $outlook_ipv6_records = $ipv6_lookup->fetchAll();
