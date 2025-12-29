@@ -1151,6 +1151,9 @@ class Pman_Core_NotifySend extends Pman
                 $cache[$mx][] = $record->ipv6_addr;
             }
         }
+
+        var_dump($cache[$mx]);
+        die('test');
         
         return $cache[$mx];
     }
