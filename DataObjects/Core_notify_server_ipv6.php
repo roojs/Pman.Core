@@ -45,6 +45,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
         }
         
+        // Check if IPv6 address is within any notify server's IPv6 range
+        if (!$this->isInAnyServerRange()) {
+            $roo->jerr("IPv6 address {$this->ipv6_addr} is not within any configured server IPv6 range");
+        }
+        
         // Check for duplicate ipv6_addr + domain_id combination
         $check = DB_DataObject::factory($this->tableName());
         $check->ipv6_addr = $this->ipv6_addr;
