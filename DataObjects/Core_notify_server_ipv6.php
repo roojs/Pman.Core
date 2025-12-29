@@ -41,7 +41,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Validate IPv6 address format
-        if (inet_pton($this->ipv6_addr) === false) {
+        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
             $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
         }
         
