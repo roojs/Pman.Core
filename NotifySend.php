@@ -990,6 +990,9 @@ class Pman_Core_NotifySend extends Pman
     function convertMxsToIpMap($mxs, $use_ipv6 = false, $core_domain = null)
     {
         $mx_ip_map = array();
+
+        var_dump($mxs);
+        die('test');
         
         foreach ($mxs as $mx) {
             $mx_use_ipv6 = $use_ipv6;
