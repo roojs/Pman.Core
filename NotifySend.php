@@ -1136,7 +1136,7 @@ class Pman_Core_NotifySend extends Pman
                    OR domain = 'protection.outlook.com'
             )
         ");
-        $ipv6_lookup->has_reverse_ptr = 1;
+        $ipv6_lookup->has_reverse_ptr = 1; // has a reverse pointer
         
         $outlook_ipv6_records = $ipv6_lookup->fetchAll();
         
