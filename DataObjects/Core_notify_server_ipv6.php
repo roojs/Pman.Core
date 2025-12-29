@@ -105,6 +105,54 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     /**
+     * Check if the IPv6 address is within any notify server's IPv6 range
+     * 
+     * @return bool True if the address is within at least one server's range
+     */
+    function isInAnyServerRange()
+    {
+        if (empty($this->ipv6_addr)) {
+            return false;
+        }
+        
+        // Get all servers with IPv6 ranges defined
+        $server = DB_DataObject::factory('core_notify_server');
+        $server->whereAdd("
+            ipv6_range_from != ''
+            AND
+            ipv6_range_to != ''
+        ");
+        $servers = $server->fetchAll();
+        
+        if (empty($servers)) {
+            return false;
+        }
+        
+        // Convert this record's IPv6 address to decimal for comparison
+        $addrDecimal = $this->ipv6ToDecimal($this->ipv6_addr);
+        if ($addrDecimal === false) {
+            return false;
+        }
+        
+        // Check if address is within any server's range
+        foreach ($servers as $s) {
+            $rangeFrom = $this->ipv6ToDecimal($s->ipv6_range_from);
+            $rangeTo = $this->ipv6ToDecimal($s->ipv6_range_to);
+            
+            if ($rangeFrom === false || $rangeTo === false) {
+                continue;
+            }
+            
+            // Check if address is within range: rangeFrom <= addr <= rangeTo
+            if (bccomp($addrDecimal, $rangeFrom) >= 0 && bccomp($addrDecimal, $rangeTo) <= 0) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
      * Find the server whose IPv6 range contains this record's ipv6_addr
      * 
      * @param string $poolname
