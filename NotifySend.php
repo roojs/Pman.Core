@@ -1110,43 +1110,49 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Get the list of IPv6 addresses configured for Outlook-pattern domains
+     * Get the list of IPv6 addresses configured for domains matching the MX record
      * 
-     * Results are cached to avoid repeated database queries.
+     * Finds IPv6 addresses where the domain is a suffix of the MX record.
+     * E.g., for MX 'roojs.mail.protection.outlook.com', matches domains like:
+     * - 'roojs.mail.protection.outlook.com'
+     * - 'mail.protection.outlook.com'
+     * - 'protection.outlook.com'
+     * - 'outlook.com'
      * 
-     * @return array Array of unique IPv6 addresses configured for Outlook domains
+     * Results are cached per MX to avoid repeated database queries.
+     * 
+     * @param string $mx The MX hostname
+     * @return array Array of unique IPv6 addresses configured for matching domains
      */
-    function getOutlookIpv6()
+    function getOutlookIpv6($mx)
     {
-        static $cache = null;
+        static $cache = array();
         
-        if ($cache !== null) {
-            return $cache;
+        if (isset($cache[$mx])) {
+            return $cache[$mx];
         }
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
+        $escaped_mx = $ipv6_lookup->escape($mx);
         $ipv6_lookup->whereAdd("
             domain_id IN (
                 SELECT id FROM core_domain 
-                WHERE domain LIKE '%.outlook.com'
-                   OR domain LIKE '%.office365.com'
-                   OR domain LIKE '%.hotmail.com'
-                   OR domain = 'protection.outlook.com'
+                WHERE '$escaped_mx' LIKE CONCAT('%', domain)
             )
         ");
-        $ipv6_lookup->has_reverse_ptr = 1; // has a reverse pointer
+        $ipv6_lookup->has_reverse_ptr = 1;
         
         $outlook_ipv6_records = $ipv6_lookup->fetchAll();
         
         // Extract unique IPv6 addresses
-        $cache = array();
+        $cache[$mx] = array();
         foreach ($outlook_ipv6_records as $record) {
-            if (!in_array($record->ipv6_addr, $cache)) {
-                $cache[] = $record->ipv6_addr;
+            if (!in_array($record->ipv6_addr, $cache[$mx])) {
+                $cache[$mx][] = $record->ipv6_addr;
             }
         }
         
-        return $cache;
+        return $cache[$mx];
     }
     
     /**
