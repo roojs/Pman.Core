@@ -1188,18 +1188,19 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Check if an IPv6 address is configured for Outlook-pattern domains
+     * Check if an IPv6 address is configured for domains matching the MX record
      * 
      * @param string $ipv6_addr The IPv6 address to check
-     * @return bool True if this IPv6 is used by an Outlook-pattern domain
+     * @param string $mx The MX hostname
+     * @return bool True if this IPv6 is used by a matching domain
      */
-    function isOutlookIpv6($ipv6_addr)
+    function isOutlookIpv6($ipv6_addr, $mx)
     {
         if (empty($ipv6_addr)) {
             return false;
         }
         
-        $outlook_ipv6_list = $this->getOutlookIpv6();
+        $outlook_ipv6_list = $this->getOutlookIpv6($mx);
         
         return in_array($ipv6_addr, $outlook_ipv6_list);
     }
