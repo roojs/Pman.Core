@@ -1074,6 +1074,7 @@ class Pman_Core_NotifySend extends Pman
         if ($existing->find(true)) {
             // Check if existing IPv6 is one of the Outlook IPv6 addresses
             if ($this->isOutlookIpv6($existing->ipv6_addr)) {
+                $this->debug("IPv6: Using existing Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
                 return $existing;
             }
             
@@ -1086,6 +1087,7 @@ class Pman_Core_NotifySend extends Pman
             }
             $existing->update($old);
             
+            $this->debug("IPv6: Updated to Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
             return $existing;
         }
         
@@ -1101,6 +1103,8 @@ class Pman_Core_NotifySend extends Pman
         }
         
         $new_mapping->insert();
+        
+        $this->debug("IPv6: Created new Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
         
         return $new_mapping;
     }
