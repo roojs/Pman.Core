@@ -87,31 +87,35 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function beforeUpdate($old, $q, $roo)
     {
-        if(!empty($q['ipv6_range_from'])) {
-            $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
+        // Handle ipv6_range_from_str and ipv6_range_to_str from form
+        $ipv6_range_from_str = isset($q['ipv6_range_from_str']) ? trim($q['ipv6_range_from_str']) : '';
+        $ipv6_range_to_str = isset($q['ipv6_range_to_str']) ? trim($q['ipv6_range_to_str']) : '';
+        
+        if(!empty($ipv6_range_from_str)) {
+            $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($ipv6_range_from_str);
             $core_domain->setUpIpv6("Manual allocation via server configuration update");
         }
 
         // if any of the ipv6 fields is set, make sure all of them are set
         if(
-            !empty($q['ipv6_range_from'])
+            !empty($ipv6_range_from_str)
             ||
-            !empty($q['ipv6_range_to'])
+            !empty($ipv6_range_to_str)
             ||
             !empty($q['ipv6_ptr'])
             ||
             !empty($q['ipv6_sender_id'])
         ) {
-            if(empty($q['ipv6_range_from'])) {
+            if(empty($ipv6_range_from_str)) {
                 $roo->jerr("IPv6 range from is required");
             }
-            if(filter_var($q['ipv6_range_from'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            if(filter_var($ipv6_range_from_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
                 $roo->jerr("IPv6 range from is not a valid IPv6 address");
             }
-            if(empty($q['ipv6_range_to'])) {
+            if(empty($ipv6_range_to_str)) {
                 $roo->jerr("IPv6 range to is required");
             }
-            if(filter_var($q['ipv6_range_to'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            if(filter_var($ipv6_range_to_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
                 $roo->jerr("IPv6 range to is not a valid IPv6 address");
             }
             if(empty($q['ipv6_ptr'])) {
@@ -120,6 +124,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(empty($q['ipv6_sender_id'])) {
                 $roo->jerr("IPv6 sender is required");
             }
+            
+            // Convert string to binary for storage
+            $this->ipv6_range_from = self::ipv6ToBinary($ipv6_range_from_str);
+            $this->ipv6_range_to = self::ipv6ToBinary($ipv6_range_to_str);
         }
     }
     
