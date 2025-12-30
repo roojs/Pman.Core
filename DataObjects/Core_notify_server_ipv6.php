@@ -373,7 +373,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
         $new_mapping->ipv6_addr = $least_used_ipv6;
         $new_mapping->domain_id = $core_domain->id;
-        $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
+        $new_mapping->allocation_reason = "Auto-allocated for MX: $mx";
         
         // Set seq before insert if domain_id or ipv6_addr already exists
         if ($new_mapping->needsUniqueSeq()) {
