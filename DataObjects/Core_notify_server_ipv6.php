@@ -365,7 +365,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             }
             $existing->update($old);
             
-            $this->debug("IPv6: Updated to Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
+            $this->debug("IPv6: Updated to IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
             return $existing;
         }
         
