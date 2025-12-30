@@ -254,41 +254,26 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
-        // Get all servers with IPv6 ranges defined
+        // Validate IPv6 format
+        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            return false;
+        }
+        
+        // Use MySQL BETWEEN to check if address is in any server's range
         $server = DB_DataObject::factory('core_notify_server');
+        $ipv6_escaped = $server->escape($ipv6_str);
+        $server->selectAdd();
+        $server->selectAdd("id");
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
+            AND
+            INET6_ATON('{$ipv6_escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
         ");
-        $servers = $server->fetchAll();
+        $server->limit(1);
         
-        if (empty($servers)) {
-            return false;
-        }
-        
-        // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = self::ipv6ToDecimal($ipv6_str);
-        if ($addrDecimal === false) {
-            return false;
-        }
-        
-        // Check if address is within any server's range
-        foreach ($servers as $s) {
-            $rangeFrom = self::ipv6ToDecimal($s->getIpv6RangeFrom());
-            $rangeTo = self::ipv6ToDecimal($s->getIpv6RangeTo());
-            
-            if ($rangeFrom === false || $rangeTo === false) {
-                continue;
-            }
-            
-            // Check if address is within range: rangeFrom <= addr <= rangeTo
-            if (bccomp($addrDecimal, $rangeFrom) >= 0 && bccomp($addrDecimal, $rangeTo) <= 0) {
-                return true;
-            }
-        }
-        
-        return false;
+        return $server->find(true) ? true : false;
     }
     
     /**
