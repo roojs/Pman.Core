@@ -248,7 +248,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * @param string $mx The MX hostname
      * @return array Array of unique IPv6 addresses configured for matching domains
      */
-    function getOutlookIpv6($mx)
+    function getIpv6ForMx($mx)
     {
         static $cache = array();
         
