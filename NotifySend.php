@@ -1208,7 +1208,8 @@ class Pman_Core_NotifySend extends Pman
             return false;
         }
         
-        $outlook_ipv6_list = $this->getOutlookIpv6($mx);
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $outlook_ipv6_list = $cnsi->getIpv6ForMx($mx);
         
         return in_array($ipv6_addr, $outlook_ipv6_list);
     }
