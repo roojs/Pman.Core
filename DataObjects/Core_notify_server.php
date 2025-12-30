@@ -67,19 +67,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         return self::binaryToIpv6($this->ipv6_range_to);
     }
     
-    /**
-     * Override toArray to include string versions of IPv6 fields
-     */
-    function toArray()
-    {
-        $ret = parent::toArray();
-        $ret['ipv6_range_from_str'] = $this->getIpv6RangeFrom();
-        $ret['ipv6_range_to_str'] = $this->getIpv6RangeTo();
-        return $ret;
-    }
-    
     function  applyFilters($q, $au, $roo)
     {
+        // Add string versions of binary IPv6 fields for the interface
+        $this->selectAdd("INET6_NTOA(ipv6_range_from) as ipv6_range_from_str");
+        $this->selectAdd("INET6_NTOA(ipv6_range_to) as ipv6_range_to_str");
+        
         if (isset($q['_with_queue_size'])) {
             $this->addQueueSize();
         }
