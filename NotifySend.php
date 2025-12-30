@@ -1115,13 +1115,14 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // Add IPv6 binding if server_ipv6 is configured
-        if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
+        $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->getIpv6Addr() : false;
+        if ($ipv6_addr_str) {
             $socket_options['socket'] = array(
-                'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
+                'bindto' => '[' . $ipv6_addr_str . ']:0'
             );
-            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $ipv6_addr_str);
         } else {
-            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . (empty($this->server_ipv6->ipv6_addr) ? 'empty' : $this->server_ipv6->ipv6_addr) . ")");
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
         }
         
         return $socket_options;
