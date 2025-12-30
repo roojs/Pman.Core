@@ -241,27 +241,19 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
      * 
-     * @param string $ipv6_str IPv6 address as string (optional, uses $this->ipv6_addr if not provided)
      * @return bool True if the address is within at least one server's range
      */
-    function isInAnyServerRange($ipv6_str = null)
+    function isInAnyServerRange()
     {
-        if ($ipv6_str === null) {
-            $ipv6_str = $this->getIpv6Addr();
-        }
+        $ipv6_bin = $this->ipv6_addr;
         
-        if (empty($ipv6_str)) {
-            return false;
-        }
-        
-        // Validate IPv6 format
-        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+        if (empty($ipv6_bin) || $ipv6_bin === str_repeat("\x00", 16)) {
             return false;
         }
         
         // Use MySQL BETWEEN to check if address is in any server's range
+        $ipv6_hex = bin2hex($ipv6_bin);
         $server = DB_DataObject::factory('core_notify_server');
-        $ipv6_escaped = $server->escape($ipv6_str);
         $server->selectAdd();
         $server->selectAdd("id");
         $server->whereAdd("
@@ -269,7 +261,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             AND
             ipv6_range_to != 0x0
             AND
-            INET6_ATON('{$ipv6_escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
+            0x{$ipv6_hex} BETWEEN ipv6_range_from AND ipv6_range_to
         ");
         $server->limit(1);
         
