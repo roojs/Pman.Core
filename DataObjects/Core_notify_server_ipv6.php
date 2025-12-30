@@ -208,9 +208,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Get all servers with IPv6 ranges defined
         $server = DB_DataObject::factory('core_notify_server');
         $server->whereAdd("
-            ipv6_range_from != ''
+            ipv6_range_from != 0x0
             AND
-            ipv6_range_to != ''
+            ipv6_range_to != 0x0
         ");
         $servers = $server->fetchAll();
         
@@ -226,8 +226,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Check if address is within any server's range
         foreach ($servers as $s) {
-            $rangeFrom = $this->ipv6ToDecimal($s->ipv6_range_from);
-            $rangeTo = $this->ipv6ToDecimal($s->ipv6_range_to);
+            $rangeFrom = $this->ipv6ToDecimal($s->getIpv6RangeFrom());
+            $rangeTo = $this->ipv6ToDecimal($s->getIpv6RangeTo());
             
             if ($rangeFrom === false || $rangeTo === false) {
                 continue;
