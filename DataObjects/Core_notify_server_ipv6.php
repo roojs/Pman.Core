@@ -254,6 +254,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Use MySQL BETWEEN to check if address is in any server's range
         $ipv6_hex = bin2hex($ipv6_bin);
         var_dump($ipv6_hex);
+        die('test');
         $server = DB_DataObject::factory('core_notify_server');
         $server->selectAdd();
         $server->selectAdd("id");
