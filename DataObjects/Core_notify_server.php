@@ -574,69 +574,51 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      * Find the smallest unused ipv6 address in the range
      * If no unused ipv6 address is found, return false
      * 
-     * @return string|false Returns binary IPv6 (16 bytes) or false
+     * @return string|false
      */
     function findSmallestUnusedIpv6()
     {
-        $range_from_bin = $this->ipv6_range_from;
-        $range_to_bin = $this->ipv6_range_to;
+        $range_from_str = $this->getIpv6RangeFrom();
+        $range_to_str = $this->getIpv6RangeTo();
         
-        // Check if range is valid
-        $zero_bin = str_repeat("\x00", 16);
-        if (empty($range_from_bin) || $range_from_bin === $zero_bin ||
-            empty($range_to_bin) || $range_to_bin === $zero_bin) {
+        if(empty($range_from_str) || empty($range_to_str)) {
             return false;
         }
-        
+
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        
-        // Calculate start = range_from + 1
-        $range_from_str = $cnsi->binaryToIpv6($range_from_bin);
-        $start_dec = bcadd($cnsi->ipv6ToDecimal($range_from_str), '1');
-        $start_bin = $cnsi->ipv6ToBinary($cnsi->decimalToIPv6($start_dec));
-        
-        $start_hex = bin2hex($start_bin);
-        $end_hex = bin2hex($range_to_bin);
-        
-        // Use SQL to get all used addresses in range, ordered
-        $q = DB_DataObject::factory('core_notify_server_ipv6');
-        $q->selectAdd();
-        $q->selectAdd('ipv6_addr');
-        $q->whereAdd("ipv6_addr >= 0x{$start_hex}");
-        $q->whereAdd("ipv6_addr <= 0x{$end_hex}");
-        $q->orderBy('ipv6_addr ASC');
-        $used = $q->fetchAll('ipv6_addr');
-        
-        // If no addresses used in range, return start
-        if (empty($used)) {
-            return $start_bin;
+        $usedIPv6Records = $cnsi->fetchAll();
+
+        $start = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($range_from_str);
+        if($start === false) {
+            return false;
         }
-        
-        // Check if start is before the first used address (gap at beginning)
-        if ($start_bin < $used[0]) {
-            return $start_bin;
+        $end = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($range_to_str);
+        if($end === false) {
+            return false;
         }
-        
-        // Find first gap between consecutive used addresses
-        $range_to_dec = $cnsi->ipv6ToDecimal($cnsi->binaryToIpv6($range_to_bin));
-        
-        for ($i = 0; $i < count($used); $i++) {
-            $curr_dec = $cnsi->ipv6ToDecimal($cnsi->binaryToIpv6($used[$i]));
-            $next_dec = bcadd($curr_dec, '1');
-            
-            // Check if we've exceeded the range
-            if (bccomp($next_dec, $range_to_dec) > 0) {
-                break;
+        $used = array();
+        foreach($usedIPv6Records as $record) {
+            $ipv6_str = $record->getIpv6Addr();
+            if (empty($ipv6_str)) {
+                continue;
             }
-            
-            $next_bin = $cnsi->ipv6ToBinary($cnsi->decimalToIPv6($next_dec));
-            
-            // If this is the last used address, or next address is not the next used
-            if ($i == count($used) - 1 || $next_bin < $used[$i + 1]) {
-                return $next_bin;
+            $decimal = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($ipv6_str);
+            if($decimal === false) {
+                continue;
             }
+            $used[] = $decimal;
         }
+        $usedSet = array_flip($used);
+    
+        // Start from the next address after 'from'
+        $current = bcadd($start, '1');
         
+        while (bccomp($current, $end) <= 0) {
+            if (!isset($usedSet[$current])) {
+                return DB_DataObject::factory('core_notify_server_ipv6')->decimalToIPv6($current);
+            }
+            $current = bcadd($current, '1');
+        }
         return false; // All addresses used
     }
 
