@@ -382,7 +382,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 421 as success
             }
@@ -391,7 +391,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 451 as success
             }
@@ -402,21 +402,32 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if ($res->code == 550 && (
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
-                $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, 
-						however we accepted it as valid"
-                );
+                // Don't need to log error for spamhaus failures
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
             if ($res->code == 554 && (
                 preg_match('/spam/i', $errorMessage)  
             )) {
-                $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spam, 
-						however we accepted it as valid"
-                );
+                // Don't need to log error for spam failures
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
+
+            if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
+                );
+                return true;
+            }
+
+            // We don't need to log these errors and don't need to show these errors to the user
+            if(
+                $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+            ) {
+                return "This email is invalid - we tested it and it does not exist";
+            }
+
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach
