@@ -156,6 +156,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return true;
         }
         
+        // ipv6_addr should already be in binary format at this point
         $check_ipv6 = DB_DataObject::factory($this->tableName());
         $check_ipv6->ipv6_addr = $this->ipv6_addr;
         if ($check_ipv6->count() > 0) {
