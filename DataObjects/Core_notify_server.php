@@ -608,24 +608,31 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function findSmallestUnusedIpv6()
     {
-        if($this->ipv6_range_from == '' || $this->ipv6_range_to == '') {
+        $range_from_str = $this->getIpv6RangeFrom();
+        $range_to_str = $this->getIpv6RangeTo();
+        
+        if(empty($range_from_str) || empty($range_to_str)) {
             return false;
         }
 
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
+        $usedIPv6Records = $cnsi->fetchAll();
 
-        $start = $this->ipv6ToDecimal($this->ipv6_range_from);
+        $start = $this->ipv6ToDecimal($range_from_str);
         if($start === false) {
             return false;
         }
-        $end = $this->ipv6ToDecimal($this->ipv6_range_to);
+        $end = $this->ipv6ToDecimal($range_to_str);
         if($end === false) {
             return false;
         }
         $used = array();
-        foreach($usedIPv6 as $ipv6) {
-            $decimal = $this->ipv6ToDecimal($ipv6);
+        foreach($usedIPv6Records as $record) {
+            $ipv6_str = $record->getIpv6Addr();
+            if (empty($ipv6_str)) {
+                continue;
+            }
+            $decimal = $this->ipv6ToDecimal($ipv6_str);
             if($decimal === false) {
                 continue;
             }
