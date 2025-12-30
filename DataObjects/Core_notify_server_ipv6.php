@@ -46,8 +46,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * Convert ipv6 to decimal
      * If invalid ipv6 address, return false
      * 
-     * @param string $ip IPv6 address string
-     * @return string|false decimal representation or false on failure
+     * @param string $ip
+     * @return string|false
      */
     static function ipv6ToDecimal($ip)
     {

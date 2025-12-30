@@ -588,11 +588,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $usedIPv6Records = $cnsi->fetchAll();
 
-        $start = $this->ipv6ToDecimal($range_from_str);
+        $start = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($range_from_str);
         if($start === false) {
             return false;
         }
-        $end = $this->ipv6ToDecimal($range_to_str);
+        $end = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($range_to_str);
         if($end === false) {
             return false;
         }
@@ -602,7 +602,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if (empty($ipv6_str)) {
                 continue;
             }
-            $decimal = $this->ipv6ToDecimal($ipv6_str);
+            $decimal = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($ipv6_str);
             if($decimal === false) {
                 continue;
             }
