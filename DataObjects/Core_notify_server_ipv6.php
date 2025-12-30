@@ -322,4 +322,70 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         return $least_used_ipv6 ?: false;
     }
+
+    /**
+     * Find or create an IPv6 address mapping for Outlook domains
+     * 
+     * Looks for pre-configured IPv6 addresses for Outlook-pattern domains,
+     * finds the one with the least domains mapped, and creates a mapping
+     * for the current domain.
+     * 
+     * @param string $mx The MX hostname (Outlook server)
+     * @param object $core_domain The recipient's domain object
+     * @return object|false The IPv6 record to use, or false if none available
+     */
+    function chooseIpv6ForMx($mx, $core_domain)
+    {
+        if (empty($core_domain) || empty($core_domain->id)) {
+            return false;
+        }
+        
+        // Find the least-used IPv6 address for domains matching this MX
+        $least_used_ipv6 = $this->getLeastUsedIpv6ForMx($mx);
+        
+        if (empty($least_used_ipv6)) {
+            return false;
+        }
+        
+        // Check if this domain already has an IPv6 mapping
+        $existing = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing->domain_id = $core_domain->id;
+        if ($existing->find(true)) {
+            $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+            // Check if existing IPv6 is one of the matching IPv6 addresses for this MX
+            if ($cnsi->isIpv6ForMx($existing->ipv6_addr, $mx)) {
+                $this->debug("IPv6: Using existing Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
+                return $existing;
+            }
+            
+            // Existing IPv6 is not an Outlook one, update to the least-used Outlook IPv6
+            $old = clone($existing);
+            $existing->ipv6_addr = $least_used_ipv6;
+            // $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
+            if($existing->needsUniqueSeq()) {
+                $existing->seq = $existing->getNextSeq();
+            }
+            $existing->update($old);
+            
+            $this->debug("IPv6: Updated to Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
+            return $existing;
+        }
+        
+        // Create a new mapping for this domain with the least-used IPv6
+        $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
+        $new_mapping->ipv6_addr = $least_used_ipv6;
+        $new_mapping->domain_id = $core_domain->id;
+        $new_mapping->allocation_reason = "Auto-allocated for Outlook MX: $mx";
+        
+        // Set seq before insert if domain_id or ipv6_addr already exists
+        if ($new_mapping->needsUniqueSeq()) {
+            $new_mapping->seq = $new_mapping->getNextSeq();
+        }
+        
+        $new_mapping->insert();
+        
+        $this->debug("IPv6: Created new Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6");
+        
+        return $new_mapping;
+    }
 }
