@@ -609,9 +609,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $used[] = $decimal;
         }
         $usedSet = array_flip($used);
-
-        var_dump($usedSet);
-        die('test');
     
         // Start from the next address after 'from'
         $current = bcadd($start, '1');
