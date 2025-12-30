@@ -77,8 +77,19 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     function beforeInsert($q, $roo)
     {
+        // Process ipv6_addr_str from the form - convert to ipv6_addr
+        $ipv6_str = '';
+        if (!empty($q['ipv6_addr_str'])) {
+            $ipv6_str = trim($q['ipv6_addr_str']);
+        } elseif (!empty($this->ipv6_addr_str)) {
+            $ipv6_str = trim($this->ipv6_addr_str);
+        } elseif (!empty($this->ipv6_addr)) {
+            // Fallback: may already be set directly (e.g., programmatic insert)
+            $ipv6_str = $this->getIpv6AddrForValidation();
+        }
+        
         // Validate required fields
-        if (empty($this->ipv6_addr)) {
+        if (empty($ipv6_str)) {
             $roo->jerr("IPv6 address is required");
         }
         
@@ -91,18 +102,21 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Validate IPv6 address format
-        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-            $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
+        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            $roo->jerr("Invalid IPv6 address format: {$ipv6_str}");
         }
         
         // Check if IPv6 address is within any notify server's IPv6 range
-        if (!$this->isInAnyServerRange()) {
-            $roo->jerr("IPv6 address {$this->ipv6_addr} is not within any configured server IPv6 range");
+        if (!$this->isInAnyServerRange($ipv6_str)) {
+            $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
         }
+        
+        // Convert to binary for storage and duplicate check
+        $ipv6_bin = self::ipv6ToBinary($ipv6_str);
         
         // Check for duplicate ipv6_addr + domain_id combination
         $check = DB_DataObject::factory($this->tableName());
-        $check->ipv6_addr = $this->ipv6_addr;
+        $check->ipv6_addr = $ipv6_bin;
         $check->domain_id = $this->domain_id;
         
         if ($check->find(true)) {
@@ -111,10 +125,30 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
 
         $this->allocation_reason = "Manual allocation: " . $this->allocation_reason;
         
+        // Convert to binary for storage
+        $this->ipv6_addr = $ipv6_bin;
+        
         // Set seq before insert if domain_id or ipv6_addr already exists
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
+    }
+    
+    /**
+     * Get IPv6 address as string for validation
+     * Handles both string input (from form) and binary (from DB)
+     * 
+     * @return string IPv6 address as string
+     */
+    function getIpv6AddrForValidation()
+    {
+        // If it's already a valid IPv6 string, return as-is
+        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+            return $this->ipv6_addr;
+        }
+        // Try to convert from binary
+        $str = self::binaryToIpv6($this->ipv6_addr);
+        return $str ?: $this->ipv6_addr;
     }
     
     /**
@@ -130,6 +164,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return true;
         }
         
+        // ipv6_addr should already be in binary format at this point
         $check_ipv6 = DB_DataObject::factory($this->tableName());
         $check_ipv6->ipv6_addr = $this->ipv6_addr;
         if ($check_ipv6->count() > 0) {
@@ -157,11 +192,16 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
      * 
+     * @param string $ipv6_str IPv6 address as string (optional, uses $this->ipv6_addr if not provided)
      * @return bool True if the address is within at least one server's range
      */
-    function isInAnyServerRange()
+    function isInAnyServerRange($ipv6_str = null)
     {
-        if (empty($this->ipv6_addr)) {
+        if ($ipv6_str === null) {
+            $ipv6_str = $this->getIpv6Addr();
+        }
+        
+        if (empty($ipv6_str)) {
             return false;
         }
         
@@ -179,7 +219,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($this->ipv6_addr);
+        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
@@ -210,7 +250,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      */
     function findServerFromIpv6($poolname)
     {
-        if (empty($this->ipv6_addr)) {
+        $ipv6_str = $this->getIpv6Addr();
+        
+        if (empty($ipv6_str)) {
             return false;
         }
         
@@ -229,7 +271,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($this->ipv6_addr);
+        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
@@ -312,11 +354,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
 
-        // Extract unique IPv6 addresses
+        // Extract unique IPv6 addresses (convert binary to string)
         $cache[$mx] = array();
         foreach ($ipv6_lookup->fetchAll() as $record) {
-            if (!in_array($record->ipv6_addr, $cache[$mx])) {
-                $cache[$mx][] = $record->ipv6_addr;
+            $ipv6_str = $record->getIpv6Addr();
+            if ($ipv6_str && !in_array($ipv6_str, $cache[$mx])) {
+                $cache[$mx][] = $ipv6_str;
             }
         }
         
@@ -358,10 +401,21 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
+        // Convert string IPv6 addresses to binary for SQL comparison
+        $binary_list = array();
+        foreach ($ipv6_list as $ipv6_str) {
+            $binary_list[] = self::ipv6ToBinary($ipv6_str);
+        }
+        
         // Single query to find the IPv6 with least domain mappings
         $q = DB_DataObject::factory('core_notify_server_ipv6');
-        $escaped_list = array_map(array($q, 'escape'), $ipv6_list);
-        $in_clause = "'" . implode("','", $escaped_list) . "'";
+        
+        // Build IN clause with hex values for binary comparison
+        $hex_values = array();
+        foreach ($binary_list as $bin) {
+            $hex_values[] = "0x" . bin2hex($bin);
+        }
+        $in_clause = implode(",", $hex_values);
         
         $q->selectAdd();
         $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
@@ -371,7 +425,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $q->limit(1);
         
         if ($q->find(true)) {
-            return $q->ipv6_addr;
+            // Return as string
+            return $q->getIpv6Addr();
         }
         
         return false;
@@ -394,10 +449,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
-        // Find the least-used IPv6 address for domains matching this MX
-        $least_used_ipv6 = $this->getLeastUsedIpv6ForMx($mx);
+        // Find the least-used IPv6 address for domains matching this MX (returns string)
+        $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
         
-        if (empty($least_used_ipv6)) {
+        if (empty($least_used_ipv6_str)) {
             return false;
         }
         
@@ -406,26 +461,27 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $existing->domain_id = $core_domain->id;
         if ($existing->find(true)) {
             // Check if existing IPv6 is one of the matching IPv6 addresses for this MX
-            if ($this->isIpv6ForMx($existing->ipv6_addr, $mx)) {
-                echo "IPv6: Using existing IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}\n";
+            $existing_ipv6_str = $existing->getIpv6Addr();
+            if ($this->isIpv6ForMx($existing_ipv6_str, $mx)) {
+                echo "IPv6: Using existing IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing_ipv6_str}\n";
                 return $existing;
             }
             
             // Existing IPv6 is not one of the matching IPv6 addresses for this MX, update to the least-used IPv6
             $old = clone($existing);
-            $existing->ipv6_addr = $least_used_ipv6;
+            $existing->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
             if($existing->needsUniqueSeq()) {
                 $existing->seq = $existing->getNextSeq();
             }
             $existing->update($old);
             
-            echo "IPv6: Updated to IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6\n";
+            echo "IPv6: Updated to IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6_str\n";
             return $existing;
         }
         
         // Create a new mapping for this domain with the least-used IPv6
         $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
-        $new_mapping->ipv6_addr = $least_used_ipv6;
+        $new_mapping->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
         $new_mapping->domain_id = $core_domain->id;
         $new_mapping->allocation_reason = "Auto-allocated for MX: $mx";
         
@@ -436,7 +492,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         $new_mapping->insert();
         
-        echo "IPv6: Created new IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6\n";
+        echo "IPv6: Created new IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6_str\n";
         
         return $new_mapping;
     }
