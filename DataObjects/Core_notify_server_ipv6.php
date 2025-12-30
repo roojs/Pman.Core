@@ -247,7 +247,17 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $ipv6_bin = $this->ipv6_addr;
         
-        if (empty($ipv6_bin) || $ipv6_bin === str_repeat("\x00", 16)) {
+        // Validate binary IPv6: must be exactly 16 bytes and not all zeros
+        if (empty($ipv6_bin) || 
+            !is_string($ipv6_bin) || 
+            strlen($ipv6_bin) !== 16 ||
+            $ipv6_bin === str_repeat("\x00", 16)) {
+            return false;
+        }
+        
+        // Validate it can be converted to a valid IPv6 string
+        $ipv6_str = @inet_ntop($ipv6_bin);
+        if ($ipv6_str === false) {
             return false;
         }
         
