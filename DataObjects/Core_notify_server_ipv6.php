@@ -183,11 +183,16 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
      * 
+     * @param string $ipv6_str IPv6 address as string (optional, uses $this->ipv6_addr if not provided)
      * @return bool True if the address is within at least one server's range
      */
-    function isInAnyServerRange()
+    function isInAnyServerRange($ipv6_str = null)
     {
-        if (empty($this->ipv6_addr)) {
+        if ($ipv6_str === null) {
+            $ipv6_str = $this->getIpv6Addr();
+        }
+        
+        if (empty($ipv6_str)) {
             return false;
         }
         
@@ -205,7 +210,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($this->ipv6_addr);
+        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
