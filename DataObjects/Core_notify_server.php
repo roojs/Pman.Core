@@ -108,11 +108,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(empty($q['ipv6_sender_id'])) {
                 $roo->jerr("IPv6 sender is required");
             }
-
-            if(!empty($q['ipv6_range_from_str'])) {
-                $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from_str']);
-                $core_domain->setUpIpv6("Manual allocation via server configuration update");
-            }
             
             // Convert string to binary for storage
             $this->ipv6_range_from = self::ipv6ToBinary($q['ipv6_range_from_str']);
