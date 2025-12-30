@@ -108,10 +108,19 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(empty($q['ipv6_sender_id'])) {
                 $roo->jerr("IPv6 sender is required");
             }
+
+            $ipv6_range_from = self::ipv6ToBinary($q['ipv6_range_from_str']);
+            if($ipv6_range_from === false) {
+                $roo->jerr("IPv6 range from is not a valid IPv6 address");
+            }
+            $ipv6_range_to = self::ipv6ToBinary($q['ipv6_range_to_str']);
+            if($ipv6_range_to === false) {
+                $roo->jerr("IPv6 range to is not a valid IPv6 address");
+            }
             
             // Convert string to binary for storage
-            $this->ipv6_range_from = self::ipv6ToBinary($q['ipv6_range_from_str']);
-            $this->ipv6_range_to = self::ipv6ToBinary($q['ipv6_range_to_str']);
+            $this->ipv6_range_from = $ipv6_range_from;
+            $this->ipv6_range_to = $ipv6_range_to;
         }
     }
     
