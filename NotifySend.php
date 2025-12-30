@@ -1114,8 +1114,9 @@ class Pman_Core_NotifySend extends Pman
             return false;
         }
         
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         // Find the least-used IPv6 address for domains matching this MX
-        $least_used_ipv6 = $this->findLeastUsedOutlookIpv6($mx);
+        $least_used_ipv6 = $cnsi->getLeastUsedIpv6ForMx($mx);
         
         if (empty($least_used_ipv6)) {
             return false;
