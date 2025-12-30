@@ -80,10 +80,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function beforeUpdate($old, $q, $roo)
     {
-        // Handle ipv6_range_from_str and ipv6_range_to_str from form
-        $ipv6_range_from_str = isset($q['ipv6_range_from_str']) ? trim($q['ipv6_range_from_str']) : '';
-        $ipv6_range_to_str = isset($q['ipv6_range_to_str']) ? trim($q['ipv6_range_to_str']) : '';
-
         // if any of the ipv6 fields is set, make sure all of them are set
         if(
             !empty($q['ipv6_range_from_str'])
