@@ -262,11 +262,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
         
-        $outlook_ipv6_records = $ipv6_lookup->fetchAll();
+        $mx_ipv6_records = $ipv6_lookup->fetchAll();
         
         // Extract unique IPv6 addresses
         $cache[$mx] = array();
-        foreach ($outlook_ipv6_records as $record) {
+        foreach ($mx_ipv6_records as $record) {
             if (!in_array($record->ipv6_addr, $cache[$mx])) {
                 $cache[$mx][] = $record->ipv6_addr;
             }
