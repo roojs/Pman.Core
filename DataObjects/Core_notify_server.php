@@ -24,7 +24,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function getIpv6RangeFrom()
     {
-        return Pman_Core_DataObjects_Core_notify_server_ipv6::binaryToIpv6($this->ipv6_range_from);
+        return DB_DataObject::factory('core_notify_server_ipv6')->binaryToIpv6($this->ipv6_range_from);
     }
     
     /**
@@ -34,7 +34,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function getIpv6RangeTo()
     {
-        return Pman_Core_DataObjects_Core_notify_server_ipv6::binaryToIpv6($this->ipv6_range_to);
+        return DB_DataObject::factory('core_notify_server_ipv6')->binaryToIpv6($this->ipv6_range_to);
     }
     
     function  applyFilters($q, $au, $roo)
@@ -588,11 +588,11 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $usedIPv6Records = $cnsi->fetchAll();
 
-        $start = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($range_from_str);
+        $start = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($range_from_str);
         if($start === false) {
             return false;
         }
-        $end = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($range_to_str);
+        $end = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($range_to_str);
         if($end === false) {
             return false;
         }
@@ -602,7 +602,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if (empty($ipv6_str)) {
                 continue;
             }
-            $decimal = Pman_Core_DataObjects_Core_notify_server_ipv6::ipv6ToDecimal($ipv6_str);
+            $decimal = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToDecimal($ipv6_str);
             if($decimal === false) {
                 continue;
             }
