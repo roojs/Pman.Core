@@ -90,19 +90,25 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $roo->jerr("Allocate reason is required");
         }
         
+        // Get IPv6 as string for validation (it may already be binary or still string)
+        $ipv6_str = $this->getIpv6AddrForValidation();
+        
         // Validate IPv6 address format
-        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-            $roo->jerr("Invalid IPv6 address format: {$this->ipv6_addr}");
+        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            $roo->jerr("Invalid IPv6 address format: {$ipv6_str}");
         }
         
         // Check if IPv6 address is within any notify server's IPv6 range
-        if (!$this->isInAnyServerRange()) {
-            $roo->jerr("IPv6 address {$this->ipv6_addr} is not within any configured server IPv6 range");
+        if (!$this->isInAnyServerRange($ipv6_str)) {
+            $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
         }
+        
+        // Convert to binary for storage and duplicate check
+        $ipv6_bin = self::ipv6ToBinary($ipv6_str);
         
         // Check for duplicate ipv6_addr + domain_id combination
         $check = DB_DataObject::factory($this->tableName());
-        $check->ipv6_addr = $this->ipv6_addr;
+        $check->ipv6_addr = $ipv6_bin;
         $check->domain_id = $this->domain_id;
         
         if ($check->find(true)) {
@@ -111,10 +117,30 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
 
         $this->allocation_reason = "Manual allocation: " . $this->allocation_reason;
         
+        // Convert to binary for storage
+        $this->ipv6_addr = $ipv6_bin;
+        
         // Set seq before insert if domain_id or ipv6_addr already exists
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
+    }
+    
+    /**
+     * Get IPv6 address as string for validation
+     * Handles both string input (from form) and binary (from DB)
+     * 
+     * @return string IPv6 address as string
+     */
+    function getIpv6AddrForValidation()
+    {
+        // If it's already a valid IPv6 string, return as-is
+        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+            return $this->ipv6_addr;
+        }
+        // Try to convert from binary
+        $str = self::binaryToIpv6($this->ipv6_addr);
+        return $str ?: $this->ipv6_addr;
     }
     
     /**
