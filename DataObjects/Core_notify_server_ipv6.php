@@ -324,7 +324,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Find or create an IPv6 address mapping for a mx record
+     * Find or create an IPv6 address mapping for a domain
      * 
      * Looks for pre-configured IPv6 addresses for Outlook-pattern domains,
      * finds the one with the least domains mapped, and creates a mapping
