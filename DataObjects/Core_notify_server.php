@@ -619,10 +619,19 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             }
             $current = bcadd($current, '1');
         }
-        return false;
+        return false; // All addresses used
     }
+
+
     
     function resetQueueForTable($table)
+    {
+        if (!$this->id) {
+            return;
+        }
+        
+        $p = DB_DataObject::factory($table);
+        $p->query("
             UPDATE
                 {$table}
             SET
