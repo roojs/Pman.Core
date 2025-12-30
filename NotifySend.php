@@ -1196,25 +1196,6 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
-     * Check if an IPv6 address is configured for domains matching the MX record
-     * 
-     * @param string $ipv6_addr The IPv6 address to check
-     * @param string $mx The MX hostname
-     * @return bool True if this IPv6 is used by a matching domain
-     */
-    function isOutlookIpv6($ipv6_addr, $mx)
-    {
-        if (empty($ipv6_addr)) {
-            return false;
-        }
-        
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $outlook_ipv6_list = $cnsi->getIpv6ForMx($mx);
-        
-        return in_array($ipv6_addr, $outlook_ipv6_list);
-    }
-    
-    /**
      * Prepare socket options with IPv6 binding if available
      * 
      * @param array $base_options Base socket options
