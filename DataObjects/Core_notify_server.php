@@ -87,6 +87,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $roo->jerr("IPv6 sender is required");
             }
             
+            // Validate that range_to is not smaller than range_from
+            $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+            $fromDecimal = $cnsi->ipv6ToDecimal($q['ipv6_range_from_str']);
+            $toDecimal = $cnsi->ipv6ToDecimal($q['ipv6_range_to_str']);
+            if (bccomp($toDecimal, $fromDecimal) < 0) {
+                $roo->jerr("IPv6 range to must be greater than or equal to range from");
+            }
+            
             // Convert string to binary for storage
             $this->ipv6_range_from = $ipv6_range_from;
             $this->ipv6_range_to = $ipv6_range_to;
