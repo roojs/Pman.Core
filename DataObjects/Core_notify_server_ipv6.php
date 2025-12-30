@@ -173,7 +173,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         die('test');
 
         // Check if IPv6 address is within any notify server's IPv6 range
-        if (!$this->isInAnyServerRange($ipv6_str)) {
+        if (!$this->isInAnyServerRange()) {
             $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
         }
         
