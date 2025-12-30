@@ -241,7 +241,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      */
     function findServerFromIpv6($poolname)
     {
-        if (empty($this->ipv6_addr)) {
+        $ipv6_str = $this->getIpv6Addr();
+        
+        if (empty($ipv6_str)) {
             return false;
         }
         
@@ -260,7 +262,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($this->ipv6_addr);
+        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
