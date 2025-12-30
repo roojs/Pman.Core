@@ -17,6 +17,56 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
 
+    /**
+     * Convert IPv6 string to binary format for database storage
+     * 
+     * @param string $ipv6_str IPv6 address as string (e.g., "2001:db8::1")
+     * @return string Binary representation (16 bytes)
+     */
+    static function ipv6ToBinary($ipv6_str)
+    {
+        return inet_pton($ipv6_str);
+    }
+    
+    /**
+     * Convert binary IPv6 to string format for display
+     * 
+     * @param string $ipv6_bin Binary IPv6 address (16 bytes)
+     * @return string|false IPv6 address as string, or false on failure
+     */
+    static function binaryToIpv6($ipv6_bin)
+    {
+        if (empty($ipv6_bin) || $ipv6_bin === "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00") {
+            return false;
+        }
+        return inet_ntop($ipv6_bin);
+    }
+    
+    /**
+     * Get the IPv6 address as a string (converts from binary storage)
+     * 
+     * @return string|false IPv6 address as string
+     */
+    function getIpv6Addr()
+    {
+        return self::binaryToIpv6($this->ipv6_addr);
+    }
+    
+    /**
+     * Set the IPv6 address from a string (converts to binary for storage)
+     * 
+     * @param string $ipv6_str IPv6 address as string
+     * @return bool True on success, false on invalid IPv6
+     */
+    function setIpv6Addr($ipv6_str)
+    {
+        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            return false;
+        }
+        $this->ipv6_addr = self::ipv6ToBinary($ipv6_str);
+        return true;
+    }
+
     function applyFilters($q, $au, $roo)
     {
         if(!empty($q['search']['domain'])){
