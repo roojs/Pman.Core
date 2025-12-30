@@ -345,11 +345,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
 
-        // Extract unique IPv6 addresses
+        // Extract unique IPv6 addresses (convert binary to string)
         $cache[$mx] = array();
         foreach ($ipv6_lookup->fetchAll() as $record) {
-            if (!in_array($record->ipv6_addr, $cache[$mx])) {
-                $cache[$mx][] = $record->ipv6_addr;
+            $ipv6_str = $record->getIpv6Addr();
+            if ($ipv6_str && !in_array($ipv6_str, $cache[$mx])) {
+                $cache[$mx][] = $ipv6_str;
             }
         }
         
