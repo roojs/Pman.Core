@@ -41,6 +41,37 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         return inet_ntop($ipv6_bin);
     }
+
+    /**
+     * Convert IPv6 string to decimal number
+     * If invalid IPv6 address, return false
+     * 
+     * @param string $ip IPv6 address string
+     * @return string|false decimal representation or false on failure
+     */
+    static function ipv6ToDecimal($ip)
+    {
+        if (empty($ip)) {
+            return false;
+        }
+        
+        $binary = @inet_pton($ip);
+        if ($binary === false) {
+            return false;
+        }
+        
+        // Convert to hex string
+        $hex = bin2hex($binary);
+        
+        // Convert hex to decimal using bcmath
+        $decimal = '0';
+        for ($i = 0; $i < strlen($hex); $i++) {
+            $decimal = bcmul($decimal, '16');
+            $decimal = bcadd($decimal, hexdec($hex[$i]));
+        }
+        
+        return $decimal;
+    }
     
     /**
      * Get the IPv6 address as a string (converts from binary storage)
@@ -296,33 +327,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         return false;
-    }
-    
-    /**
-     * Convert ipv6 to decimal
-     * If invalid ipv6 address, return false
-     * 
-     * @param string $ip
-     * @return string|false
-     */
-    function ipv6ToDecimal($ip)
-    {
-        $binary = inet_pton($ip);
-        if ($binary === false) {
-            return false;
-        }
-        
-        // Convert to hex string
-        $hex = bin2hex($binary);
-        
-        // Convert hex to decimal using bcmath
-        $decimal = '0';
-        for ($i = 0; $i < strlen($hex); $i++) {
-            $decimal = bcmul($decimal, '16');
-            $decimal = bcadd($decimal, hexdec($hex[$i]));
-        }
-        
-        return $decimal;
     }
 
     /**
