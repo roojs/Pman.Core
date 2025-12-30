@@ -1046,7 +1046,7 @@ class Pman_Core_NotifySend extends Pman
                 $outlook_ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $core_domain);
                 if ($outlook_ipv6) {
                     $this->server_ipv6 = $outlook_ipv6;
-                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $outlook_ipv6->ipv6_addr . " for domain: " . $core_domain->domain);
+                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $outlook_ipv6->getIpv6Addr() . " for domain: " . $core_domain->domain);
                 } else {
                     $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
                 }
