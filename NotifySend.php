@@ -870,7 +870,7 @@ class Pman_Core_NotifySend extends Pman
                 else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . (isset($this->server_ipv6->ipv6_addr) ? $this->server_ipv6->ipv6_addr : 'no address') . ")";
+                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->getIpv6Addr() ?: 'no address') . ")";
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
