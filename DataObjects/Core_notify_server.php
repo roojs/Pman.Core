@@ -67,6 +67,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 // $roo->jerr("IPv6 range from is not a valid IPv6 address");
             }
             $ipv6_range_from = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToBinary($q['ipv6_range_from_str']);
+            var_dump($ipv6_range_from);
+            die('test');
             if($ipv6_range_from === false) {
                 $roo->jerr("IPv6 range from is not a valid IPv6 address");
             }
