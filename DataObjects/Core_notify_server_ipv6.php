@@ -148,8 +148,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Validate IPv6 address format
-        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-            $roo->jerr("Invalid IPv6 address format: {$ipv6_str}");
+        if (filter_var($q['ipv6_addr_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            $roo->jerr("Invalid IPv6 address format: {$q['ipv6_addr_str']}");
         }
         
         // Check if IPv6 address is within any notify server's IPv6 range
