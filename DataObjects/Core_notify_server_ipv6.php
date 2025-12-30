@@ -178,9 +178,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
-        
-        var_dump($this->ipv6_addr);
-        die('test');
     }
     
     /**
