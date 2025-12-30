@@ -263,6 +263,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
 
         var_dump($ipv6_str);
+        var_dumP(strlen($ipv6_bin));
         
         // Use MySQL BETWEEN to check if address is in any server's range
         $ipv6_hex = bin2hex($ipv6_bin);
