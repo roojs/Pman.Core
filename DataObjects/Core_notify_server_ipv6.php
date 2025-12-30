@@ -74,6 +74,32 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     /**
+     * Convert decimal to IPv6 string
+     * 
+     * @param string $dec decimal representation
+     * @return string IPv6 address
+     */
+    static function decimalToIPv6($dec)
+    {
+        // Convert decimal to hex
+        $hex = '';
+        $temp = $dec;
+        
+        while (bccomp($temp, '0') > 0) {
+            $remainder = bcmod($temp, '16');
+            $hex = dechex($remainder) . $hex;
+            $temp = bcdiv($temp, '16', 0);
+        }
+        
+        // Pad to 32 characters (128 bits)
+        $hex = str_pad($hex, 32, '0', STR_PAD_LEFT);
+        
+        // Convert hex to binary and then to IPv6
+        $binary = hex2bin($hex);
+        return inet_ntop($binary);
+    }
+    
+    /**
      * Get the IPv6 address as a string (converts from binary storage)
      * 
      * @return string|false IPv6 address as string
