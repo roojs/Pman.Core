@@ -247,23 +247,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $ipv6_bin = $this->ipv6_addr;
         
-        // Validate binary IPv6: must be exactly 16 bytes and not all zeros
-        if (empty($ipv6_bin) || 
-            !is_string($ipv6_bin) || 
-            strlen($ipv6_bin) !== 16 ||
-            $ipv6_bin === str_repeat("\x00", 16)) {
-            var_dump(strlen($ipv6_bin));
-            return false;
-        }
-        
         // Validate it can be converted to a valid IPv6 string
         $ipv6_str = @inet_ntop($ipv6_bin);
         if ($ipv6_str === false) {
             return false;
         }
-
-        var_dump($ipv6_str);
-        var_dumP(strlen($ipv6_bin));
         
         // Use MySQL BETWEEN to check if address is in any server's range
         $ipv6_hex = bin2hex($ipv6_bin);
