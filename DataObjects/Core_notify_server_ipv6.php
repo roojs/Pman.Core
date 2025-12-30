@@ -232,4 +232,46 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         return $decimal;
     }
+
+    /**
+     * Get the list of IPv6 addresses configured for domains matching the MX record
+     * 
+     * Finds IPv6 addresses where the domain is a suffix of the MX record.
+     * E.g., for MX 'roojs.mail.protection.outlook.com', matches domains like:
+     * - 'roojs.mail.protection.outlook.com'
+     * - 'mail.protection.outlook.com'
+     * - 'protection.outlook.com'
+     * - 'outlook.com'
+     * 
+     * Results are cached per MX to avoid repeated database queries.
+     * 
+     * @param string $mx The MX hostname
+     * @return array Array of unique IPv6 addresses configured for matching domains
+     */
+    function getOutlookIpv6($mx)
+    {
+        static $cache = array();
+        
+        if (isset($cache[$mx])) {
+            return $cache[$mx];
+        }
+        
+        $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6_lookup->autoJoin();
+        $escaped_mx = $ipv6_lookup->escape($mx);
+        $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
+        $ipv6_lookup->has_reverse_ptr = 1;
+        
+        $outlook_ipv6_records = $ipv6_lookup->fetchAll();
+        
+        // Extract unique IPv6 addresses
+        $cache[$mx] = array();
+        foreach ($outlook_ipv6_records as $record) {
+            if (!in_array($record->ipv6_addr, $cache[$mx])) {
+                $cache[$mx][] = $record->ipv6_addr;
+            }
+        }
+        
+        return $cache[$mx];
+    }
 }
