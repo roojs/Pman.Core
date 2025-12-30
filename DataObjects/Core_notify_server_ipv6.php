@@ -392,10 +392,21 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
+        // Convert string IPv6 addresses to binary for SQL comparison
+        $binary_list = array();
+        foreach ($ipv6_list as $ipv6_str) {
+            $binary_list[] = self::ipv6ToBinary($ipv6_str);
+        }
+        
         // Single query to find the IPv6 with least domain mappings
         $q = DB_DataObject::factory('core_notify_server_ipv6');
-        $escaped_list = array_map(array($q, 'escape'), $ipv6_list);
-        $in_clause = "'" . implode("','", $escaped_list) . "'";
+        
+        // Build IN clause with hex values for binary comparison
+        $hex_values = array();
+        foreach ($binary_list as $bin) {
+            $hex_values[] = "0x" . bin2hex($bin);
+        }
+        $in_clause = implode(",", $hex_values);
         
         $q->selectAdd();
         $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
@@ -405,7 +416,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $q->limit(1);
         
         if ($q->find(true)) {
-            return $q->ipv6_addr;
+            // Return as string
+            return $q->getIpv6Addr();
         }
         
         return false;
