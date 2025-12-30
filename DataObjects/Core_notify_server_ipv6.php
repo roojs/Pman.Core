@@ -326,11 +326,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Find or create an IPv6 address mapping for a domain based on a MX record
      * 
-     * Looks for pre-configured IPv6 addresses for Outlook-pattern domains,
+     * Looks for pre-configured IPv6 addresses for domains matching the MX record,
      * finds the one with the least domains mapped, and creates a mapping
      * for the current domain.
      * 
-     * @param string $mx The MX hostname (Outlook server)
+     * @param string $mx The MX hostname
      * @param object $core_domain The recipient's domain object
      * @return object|false The IPv6 record to use, or false if none available
      */
