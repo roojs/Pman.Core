@@ -317,7 +317,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
         $q->whereAdd("ipv6_addr IN ($in_clause)");
         $q->groupBy('ipv6_addr');
-        $q->orderBy('domain_count ASC');
+        $q->orderBy('domain_count DESC');
         $q->limit(1);
         
         if ($q->find(true)) {
