@@ -612,11 +612,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     
         // Start from the next address after 'from'
         $current = bcadd($start, '1');
-
-        var_dump($start);
-        var_dump($current);
-        var_dump($end);
-        die('test');
         
         while (bccomp($current, $end) <= 0) {
             if (!isset($usedSet[$current])) {
