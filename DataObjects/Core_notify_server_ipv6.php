@@ -360,7 +360,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             // Existing IPv6 is not one of the matching IPv6 addresses for this MX, update to the least-used IPv6
             $old = clone($existing);
             $existing->ipv6_addr = $least_used_ipv6;
-            // $existing->allocation_reason = "Auto-updated to Outlook IPv6 for MX: $mx";
             if($existing->needsUniqueSeq()) {
                 $existing->seq = $existing->getNextSeq();
             }
