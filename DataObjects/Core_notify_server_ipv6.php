@@ -43,8 +43,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Convert IPv6 string to decimal number
-     * If invalid IPv6 address, return false
+     * Convert ipv6 to decimal
+     * If invalid ipv6 address, return false
      * 
      * @param string $ip IPv6 address string
      * @return string|false decimal representation or false on failure
@@ -250,15 +250,15 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
+        $addrDecimal = self::ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
         
         // Check if address is within any server's range
         foreach ($servers as $s) {
-            $rangeFrom = $this->ipv6ToDecimal($s->getIpv6RangeFrom());
-            $rangeTo = $this->ipv6ToDecimal($s->getIpv6RangeTo());
+            $rangeFrom = self::ipv6ToDecimal($s->getIpv6RangeFrom());
+            $rangeTo = self::ipv6ToDecimal($s->getIpv6RangeTo());
             
             if ($rangeFrom === false || $rangeTo === false) {
                 continue;
@@ -302,7 +302,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = $this->ipv6ToDecimal($ipv6_str);
+        $addrDecimal = self::ipv6ToDecimal($ipv6_str);
         if ($addrDecimal === false) {
             return false;
         }
@@ -310,8 +310,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Check each server's range
         foreach ($servers as $s) {
-            $rangeFrom = $this->ipv6ToDecimal($s->getIpv6RangeFrom());
-            $rangeTo = $this->ipv6ToDecimal($s->getIpv6RangeTo());
+            $rangeFrom = self::ipv6ToDecimal($s->getIpv6RangeFrom());
+            $rangeTo = self::ipv6ToDecimal($s->getIpv6RangeTo());
             
             if ($rangeFrom === false || $rangeTo === false) {
                 continue;
