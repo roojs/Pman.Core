@@ -304,13 +304,13 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $ipv6_list = $this->getIpv6ForMx($mx);
         
-        if (empty($outlook_ipv6_list)) {
+        if (empty($ipv6_list)) {
             return false;
         }
         
         // Count domains for each IPv6 address
         $ipv6_domain_counts = array();
-        foreach ($outlook_ipv6_list as $ipv6_addr) {
+        foreach ($ipv6_list as $ipv6_addr) {
             $count = DB_DataObject::factory('core_notify_server_ipv6');
             $count->ipv6_addr = $ipv6_addr;
             $ipv6_domain_counts[$ipv6_addr] = $count->count();
