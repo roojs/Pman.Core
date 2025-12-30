@@ -173,14 +173,14 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if (!$this->isInAnyServerRange()) {
             $roo->jerr("IPv6 address {$q['ipv6_addr_str']} is not within any configured server IPv6 range");
         }
-
-        var_dump($this->ipv6_addr);
-        die('test');
         
         // Set seq before insert if domain_id or ipv6_addr already exists
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
+        
+        var_dump($this->ipv6_addr);
+        die('test');
     }
     
     /**
