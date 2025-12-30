@@ -169,6 +169,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Convert to binary for storage
         $this->ipv6_addr = $ipv6_bin;
 
+        var_dump($this->ipv6_addr);
+        die('test');
+
         // Check if IPv6 address is within any notify server's IPv6 range
         if (!$this->isInAnyServerRange($ipv6_str)) {
             $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
