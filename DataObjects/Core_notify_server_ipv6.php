@@ -308,19 +308,23 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
-        // Count domains for each IPv6 address
-        $ipv6_domain_counts = array();
-        foreach ($ipv6_list as $ipv6_addr) {
-            $count = DB_DataObject::factory('core_notify_server_ipv6');
-            $count->ipv6_addr = $ipv6_addr;
-            $ipv6_domain_counts[$ipv6_addr] = $count->count();
+        // Single query to find the IPv6 with least domain mappings
+        $q = DB_DataObject::factory('core_notify_server_ipv6');
+        $escaped_list = array_map(array($q, 'escape'), $ipv6_list);
+        $in_clause = "'" . implode("','", $escaped_list) . "'";
+        
+        $q->selectAdd();
+        $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
+        $q->whereAdd("ipv6_addr IN ($in_clause)");
+        $q->groupBy('ipv6_addr');
+        $q->orderBy('domain_count ASC');
+        $q->limit(1);
+        
+        if ($q->find(true)) {
+            return $q->ipv6_addr;
         }
         
-        // Find the IPv6 address with the least domains mapped
-        asort($ipv6_domain_counts);
-        $least_used_ipv6 = key($ipv6_domain_counts);
-        
-        return $least_used_ipv6 ?: false;
+        return false;
     }
 
     /**
