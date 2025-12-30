@@ -152,11 +152,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $roo->jerr("Invalid IPv6 address format: {$q['ipv6_addr_str']}");
         }
         
-        // Check if IPv6 address is within any notify server's IPv6 range
-        if (!$this->isInAnyServerRange($ipv6_str)) {
-            $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
-        }
-        
         // Convert to binary for storage and duplicate check
         $ipv6_bin = self::ipv6ToBinary($ipv6_str);
         
@@ -173,6 +168,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Convert to binary for storage
         $this->ipv6_addr = $ipv6_bin;
+
+        // Check if IPv6 address is within any notify server's IPv6 range
+        if (!$this->isInAnyServerRange($ipv6_str)) {
+            $roo->jerr("IPv6 address {$ipv6_str} is not within any configured server IPv6 range");
+        }
         
         // Set seq before insert if domain_id or ipv6_addr already exists
         if ($this->needsUniqueSeq()) {
