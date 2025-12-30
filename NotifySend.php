@@ -1174,7 +1174,7 @@ class Pman_Core_NotifySend extends Pman
     function findLeastUsedOutlookIpv6($mx)
     {
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $outlook_ipv6_list = $cnsi->getOutlookIpv6($mx);
+        $outlook_ipv6_list = $cnsi->getIpv6ForMx($mx);
         
         if (empty($outlook_ipv6_list)) {
             return false;
