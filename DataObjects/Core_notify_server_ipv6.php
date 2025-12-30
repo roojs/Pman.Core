@@ -261,7 +261,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $escaped_mx = $ipv6_lookup->escape($mx);
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
-        
+
         // Extract unique IPv6 addresses
         $cache[$mx] = array();
         foreach ($ipv6_lookup->fetchAll() as $record) {
@@ -289,5 +289,37 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $ipv6_list = $this->getIpv6ForMx($mx);
         
         return in_array($ipv6_addr, $ipv6_list);
+    }
+
+    /**
+     * Find the least-used IPv6 address configured for domains matching the MX record
+     * 
+     * Looks for IPv6 addresses mapped to domains that are suffixes of the MX record
+     * and returns the one with the fewest domain mappings.
+     * 
+     * @param string $mx The MX hostname
+     * @return string|false The IPv6 address with least mappings, or false if none found
+     */
+    function getLeastUsedIpv6ForMx($mx)
+    {
+        $ipv6_list = $this->getIpv6ForMx($mx);
+        
+        if (empty($outlook_ipv6_list)) {
+            return false;
+        }
+        
+        // Count domains for each IPv6 address
+        $ipv6_domain_counts = array();
+        foreach ($outlook_ipv6_list as $ipv6_addr) {
+            $count = DB_DataObject::factory('core_notify_server_ipv6');
+            $count->ipv6_addr = $ipv6_addr;
+            $ipv6_domain_counts[$ipv6_addr] = $count->count();
+        }
+        
+        // Find the IPv6 address with the least domains mapped
+        asort($ipv6_domain_counts);
+        $least_used_ipv6 = key($ipv6_domain_counts);
+        
+        return $least_used_ipv6 ?: false;
     }
 }
