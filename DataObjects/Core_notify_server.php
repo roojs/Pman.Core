@@ -18,43 +18,13 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $last_send;
     
     /**
-     * Convert IPv6 string to binary (16 bytes)
-     * 
-     * @param string $ipv6_str
-     * @return string|false binary representation or false on failure
-     */
-    static function ipv6ToBinary($ipv6_str) 
-    {
-        if (empty($ipv6_str)) {
-            return false;
-        }
-        $bin = @inet_pton($ipv6_str);
-        return $bin !== false ? $bin : false;
-    }
-    
-    /**
-     * Convert binary (16 bytes) to IPv6 string
-     * 
-     * @param string $ipv6_bin
-     * @return string|false human-readable IPv6 or false on failure
-     */
-    static function binaryToIpv6($ipv6_bin) 
-    {
-        if (empty($ipv6_bin) || $ipv6_bin === "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00") {
-            return '';
-        }
-        $str = @inet_ntop($ipv6_bin);
-        return $str !== false ? $str : '';
-    }
-    
-    /**
      * Get ipv6_range_from as human-readable string
      * 
      * @return string
      */
     function getIpv6RangeFrom()
     {
-        return self::binaryToIpv6($this->ipv6_range_from);
+        return Pman_Core_DataObjects_Core_notify_server_ipv6::binaryToIpv6($this->ipv6_range_from);
     }
     
     /**
@@ -64,7 +34,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function getIpv6RangeTo()
     {
-        return self::binaryToIpv6($this->ipv6_range_to);
+        return Pman_Core_DataObjects_Core_notify_server_ipv6::binaryToIpv6($this->ipv6_range_to);
     }
     
     function  applyFilters($q, $au, $roo)
