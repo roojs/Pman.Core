@@ -615,23 +615,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         while (bccomp($current, $end) <= 0) {
             if (!isset($usedSet[$current])) {
-                return $cnsi->decimalToIPv6($current);
+                return $cnsi->ipv6ToBinary($cnsi->decimalToIPv6($current));
             }
             $current = bcadd($current, '1');
         }
-        return false; // All addresses used
+        return false;
     }
-
-
     
     function resetQueueForTable($table)
-    {
-        if (!$this->id) {
-            return;
-        }
-        
-        $p = DB_DataObject::factory($table);
-        $p->query("
             UPDATE
                 {$table}
             SET
