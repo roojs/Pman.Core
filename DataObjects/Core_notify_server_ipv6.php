@@ -133,20 +133,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     function beforeInsert($q, $roo)
-    {
-        // Process ipv6_addr_str from the form - convert to ipv6_addr
-        $ipv6_str = '';
-        if (!empty($q['ipv6_addr_str'])) {
-            $ipv6_str = trim($q['ipv6_addr_str']);
-        } elseif (!empty($this->ipv6_addr_str)) {
-            $ipv6_str = trim($this->ipv6_addr_str);
-        } elseif (!empty($this->ipv6_addr)) {
-            // Fallback: may already be set directly (e.g., programmatic insert)
-            $ipv6_str = $this->getIpv6AddrForValidation();
-        }
-        
+    {   
         // Validate required fields
-        if (empty($ipv6_str)) {
+        if (empty($q['ipv6_addr_str'])) {
             $roo->jerr("IPv6 address is required");
         }
         
