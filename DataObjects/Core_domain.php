@@ -281,6 +281,8 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         $ipv6_addr = $server->findSmallestUnusedIpv6();
+        var_dump($ipv6_addr);
+        die('test');
         if(!$ipv6_addr) {
             return false;
         }
