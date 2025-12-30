@@ -511,7 +511,7 @@ class Pman_Core_NotifySend extends Pman
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
         
         // Convert MX hostnames to map of IP addresses => domain
-        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr);
+        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->getIpv6Addr());
         $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6, $core_domain);
                         
         foreach($mx_ip_map as $smtp_host => $mx) {
