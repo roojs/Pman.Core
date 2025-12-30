@@ -252,6 +252,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             !is_string($ipv6_bin) || 
             strlen($ipv6_bin) !== 16 ||
             $ipv6_bin === str_repeat("\x00", 16)) {
+            var_dump(strlen($ipv6_bin));
             return false;
         }
         
