@@ -615,6 +615,8 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         while (bccomp($current, $end) <= 0) {
             if (!isset($usedSet[$current])) {
+                var_dump($current);
+                die('test');
                 return $cnsi->ipv6ToBinary($cnsi->decimalToIPv6($current));
             }
             $current = bcadd($current, '1');
