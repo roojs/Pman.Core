@@ -353,7 +353,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($existing->find(true)) {
             // Check if existing IPv6 is one of the matching IPv6 addresses for this MX
             if ($this->isIpv6ForMx($existing->ipv6_addr, $mx)) {
-                $this->debug("IPv6: Using existing Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
+                $this->debug("IPv6: Using existing IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
                 return $existing;
             }
             
