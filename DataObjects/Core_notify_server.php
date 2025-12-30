@@ -578,9 +578,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         $server = DB_DataObject::factory('core_notify_server');
         $server->whereAdd("
-            ipv6_range_from != ''
+            ipv6_range_from != 0x0
             and
-            ipv6_range_to != ''
+            ipv6_range_to != 0x0
         ");
         $server->is_active = 1;
         $server->limit(1);
