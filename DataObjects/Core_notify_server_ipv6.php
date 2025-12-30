@@ -334,7 +334,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * @param object $core_domain The recipient's domain object
      * @return object|false The IPv6 record to use, or false if none available
      */
-    function chooseIpv6ForMx($mx, $core_domain)
+    function findOrCreateIpv6ForMx($mx, $core_domain)
     {
         if (empty($core_domain) || empty($core_domain->id)) {
             return false;
