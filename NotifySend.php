@@ -1125,8 +1125,9 @@ class Pman_Core_NotifySend extends Pman
         $existing = DB_DataObject::factory('core_notify_server_ipv6');
         $existing->domain_id = $core_domain->id;
         if ($existing->find(true)) {
+            $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
             // Check if existing IPv6 is one of the matching IPv6 addresses for this MX
-            if ($this->isOutlookIpv6($existing->ipv6_addr, $mx)) {
+            if ($cnsi->isIpv6ForMx($existing->ipv6_addr, $mx)) {
                 $this->debug("IPv6: Using existing Outlook IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing->ipv6_addr}");
                 return $existing;
             }
