@@ -389,7 +389,7 @@ class Pman_Core_NotifySend extends Pman
                 $ipv6_records = $ipv6->fetchAll();
                 if (!empty($ipv6_records)) {
                     $this->server_ipv6 = $ipv6_records[array_rand($ipv6_records)];
-                    $this->debug("IPv6: Randomly selected IPv6 for Yahoo domain {$core_domain->domain}, address=" . $this->server_ipv6->ipv6_addr);
+                    $this->debug("IPv6: Randomly selected IPv6 for Yahoo domain {$core_domain->domain}, address=" . $this->server_ipv6->getIpv6Addr());
                 } else {
                     $this->debug("IPv6: No existing IPv6 found for Yahoo domain {$core_domain->domain}");
                 }
@@ -397,7 +397,7 @@ class Pman_Core_NotifySend extends Pman
                 // For other domains, just use the first one
                 if ($ipv6->find(true)) {
                     $this->server_ipv6 = $ipv6;
-                    $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . (isset($ipv6->ipv6_addr) ? $ipv6->ipv6_addr : 'NOT SET'));
+                    $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->getIpv6Addr() ?: 'NOT SET'));
                 } else {
                     $this->debug("IPv6: No existing IPv6 found for domain_id={$w->domain_id}");
                 }
