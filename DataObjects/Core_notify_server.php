@@ -413,6 +413,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if($serverFromIpv6 != false) {
                 $w->server_id = $serverFromIpv6->id;
             }
+            $w->ipv6_id = $server_ipv6->id;
             $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
             $w->update($pp);
             return true;
