@@ -126,6 +126,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
 
     function applyFilters($q, $au, $roo)
     {
+        // Add string version of binary IPv6 field for the interface
+        $this->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+        
         if(!empty($q['search']['domain'])){
             $s = $this->escape($q['search']['domain']);
             $this->whereAdd("join_domain_id_id.domain like '%$s%'");
