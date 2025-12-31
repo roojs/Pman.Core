@@ -820,7 +820,8 @@ class Pman_Core_NotifySend extends Pman
             // If spamhaus is found, continue current behavior (don't pass to next server)
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
                 || stripos($errmsg, 'in rbl') !== false 
-                || stripos($errmsg, 'reputation') !== false ; 
+                || stripos($errmsg, 'reputation') !== false ;
+            $is_spamhaus = true;
 
             $shouldRetry = false;
 
