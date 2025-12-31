@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Ensure this record's IPv6 address is appropriate for the given MX
+     * Ensure this record's IPv6 address is appropriate for the given MX and has reverse pointer
      * 
      * Checks if the current IPv6 address matches the MX pattern.
      * If not, updates to the least-used IPv6 for that MX.
