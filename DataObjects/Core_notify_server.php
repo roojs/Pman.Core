@@ -578,6 +578,14 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function findSmallestUnusedIpv6()
     {
+        $cns = DB_DataObject::factory('core_notify_server');
+        $cns->selectAdd();
+        $cns->selectAdd("find_smallest_unused_ipv6(" . $this->id . ") as smallest_unused_ipv6");
+        $cns->limit(1);
+        if($cns->find(true)) {
+            return $cns->smallest_unused_ipv6;
+        }
+        return false;
         $range_from_str = $this->getIpv6RangeFrom();
         $range_to_str = $this->getIpv6RangeTo();
         
