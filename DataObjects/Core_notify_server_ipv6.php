@@ -374,67 +374,40 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Find or create an IPv6 address mapping for a domain based on a MX record
+     * Ensure this record's IPv6 address is appropriate for the given MX
      * 
-     * Looks for pre-configured IPv6 addresses for domains matching the MX record,
-     * finds the one with the least domains mapped, and creates a mapping
-     * for the current domain.
+     * Checks if the current IPv6 address matches the MX pattern.
+     * If not, updates to the least-used IPv6 for that MX.
+     * Never creates new records - only updates $this if needed.
      * 
      * @param string $mx The MX hostname
-     * @param object $core_domain The recipient's domain object
-     * @return object|false The IPv6 record to use, or false if none available
+     * @return object|false Returns $this (possibly updated), or false if no IPv6 available for MX
      */
-    function findOrCreateIpv6ForMx($mx, $core_domain)
+    function ensureIpv6ForMx($mx)
     {
-        if (empty($core_domain) || empty($core_domain->id)) {
-            return false;
+        // Check if current IPv6 is already valid for this MX
+        $current_ipv6_str = $this->getIpv6Addr();
+        if (!empty($current_ipv6_str) && $this->isIpv6ForMx($current_ipv6_str, $mx)) {
+            return $this;
         }
         
-        // Find the least-used IPv6 address for domains matching this MX (returns string)
+        // Current IPv6 is not valid for this MX, find the least-used one
         $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
         
         if (empty($least_used_ipv6_str)) {
             return false;
         }
         
-        // Check if this domain already has an IPv6 mapping
-        $existing = DB_DataObject::factory('core_notify_server_ipv6');
-        $existing->domain_id = $core_domain->id;
-        if ($existing->find(true)) {
-            // Check if existing IPv6 is one of the matching IPv6 addresses for this MX
-            $existing_ipv6_str = $existing->getIpv6Addr();
-            if ($this->isIpv6ForMx($existing_ipv6_str, $mx)) {
-                echo "IPv6: Using existing IPv6 mapping - domain: {$core_domain->domain}, ipv6: {$existing_ipv6_str}\n";
-                return $existing;
-            }
-            
-            // Existing IPv6 is not one of the matching IPv6 addresses for this MX, update to the least-used IPv6
-            $old = clone($existing);
-            $existing->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
-            if($existing->needsUniqueSeq()) {
-                $existing->seq = $existing->getNextSeq();
-            }
-            $existing->update($old);
-            
-            echo "IPv6: Updated to IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6_str\n";
-            return $existing;
+        // Update this record to use the least-used IPv6
+        $old = clone($this);
+        $this->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
+        
+        if ($this->needsUniqueSeq()) {
+            $this->seq = $this->getNextSeq();
         }
         
-        // Create a new mapping for this domain with the least-used IPv6
-        $new_mapping = DB_DataObject::factory('core_notify_server_ipv6');
-        $new_mapping->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
-        $new_mapping->domain_id = $core_domain->id;
-        $new_mapping->allocation_reason = "Auto-allocated for MX: $mx";
+        $this->update($old);
         
-        // Set seq before insert if domain_id or ipv6_addr already exists
-        if ($new_mapping->needsUniqueSeq()) {
-            $new_mapping->seq = $new_mapping->getNextSeq();
-        }
-        
-        $new_mapping->insert();
-        
-        echo "IPv6: Created new IPv6 mapping - domain: {$core_domain->domain}, ipv6: $least_used_ipv6_str\n";
-        
-        return $new_mapping;
+        return $this;
     }
 }
