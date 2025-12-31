@@ -1,16 +1,17 @@
-DROP TRIGGER IF EXISTS find_smallest_unused_ipv6;
+DROP FUNCTION IF EXISTS find_smallest_unused_ipv6;
 
 DELIMITER $$
 
-CREATE PROCEDURE find_smallest_unused_ipv6(
-    IN p_server_id INT,
-    OUT p_unused_ipv6 VARBINARY(16)
-)
+CREATE FUNCTION FindSmallestUnusedIpv6(p_server_id INT)
+RETURNS VARBINARY(16)
+DETERMINISTIC
+READS SQL DATA
 BEGIN
     DECLARE v_prefix VARBINARY(14);
     DECLARE v_start_suffix INT;
     DECLARE v_end_suffix INT;
     DECLARE v_found_suffix INT DEFAULT NULL;
+    DECLARE v_result VARBINARY(16);
     
     -- Get range boundaries from server
     SELECT 
@@ -25,39 +26,33 @@ BEGIN
     
     -- If no valid range found, return NULL
     IF v_prefix IS NULL THEN
-        SET p_unused_ipv6 = NULL;
+        RETURN NULL;
+    END IF;
+    
+    -- Find smallest unused suffix
+    SELECT MIN(candidate) INTO v_found_suffix
+    FROM (
+        SELECT v_start_suffix AS candidate
+        UNION ALL
+        SELECT CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) + 1
+        FROM core_notify_server_ipv6
+        WHERE SUBSTR(ipv6_addr, 1, 14) = v_prefix
+        AND CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) >= v_start_suffix
+        AND CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) < v_end_suffix
+    ) AS candidates
+    WHERE candidate >= v_start_suffix
+    AND candidate <= v_end_suffix
+    AND candidate NOT IN (
+        SELECT CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10)
+        FROM core_notify_server_ipv6
+        WHERE SUBSTR(ipv6_addr, 1, 14) = v_prefix
+    );
+    
+    -- Build and return the full IPv6 address
+    IF v_found_suffix IS NOT NULL THEN
+        RETURN CONCAT(v_prefix, UNHEX(LPAD(HEX(v_found_suffix), 4, '0')));
     ELSE
-        -- Find smallest unused suffix
-        -- Strategy: Check start_suffix first, then find gaps after used addresses
-        SELECT MIN(candidate) INTO v_found_suffix
-        FROM (
-            -- Candidate: start_suffix (range_from + 1)
-            SELECT v_start_suffix AS candidate
-            UNION ALL
-            -- Candidates: each used suffix + 1
-            SELECT CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) + 1
-            FROM core_notify_server_ipv6
-            WHERE SUBSTR(ipv6_addr, 1, 14) = v_prefix
-            AND CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) >= v_start_suffix
-            AND CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10) < v_end_suffix
-        ) AS candidates
-        WHERE candidate >= v_start_suffix
-        AND candidate <= v_end_suffix
-        AND candidate NOT IN (
-            SELECT CONV(HEX(SUBSTR(ipv6_addr, 15, 2)), 16, 10)
-            FROM core_notify_server_ipv6
-            WHERE SUBSTR(ipv6_addr, 1, 14) = v_prefix
-        );
-        
-        -- Build the full IPv6 address
-        IF v_found_suffix IS NOT NULL THEN
-            SET p_unused_ipv6 = CONCAT(
-                v_prefix,
-                UNHEX(LPAD(HEX(v_found_suffix), 4, '0'))
-            );
-        ELSE
-            SET p_unused_ipv6 = NULL;
-        END IF;
+        RETURN NULL;
     END IF;
 END $$
 
