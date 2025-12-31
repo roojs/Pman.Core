@@ -357,13 +357,17 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $pending_notifications = $p->fetchAll();
         foreach ($pending_notifications as $notification) {
-            // Check if this domain_id has an IPv6 server assignment
+            // Check if this domain_id has IPv6 server assignments
             $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
             $ipv6->domain_id = $notification->domain_id;
+            $ipv6_records = $ipv6->fetchAll();
             
-            if ($ipv6->find(true)) {
+            if (!empty($ipv6_records)) {
+                // Randomly pick one if multiple exist
+                $selected_ipv6 = $ipv6_records[array_rand($ipv6_records)];
+                
                 // Find the server whose range contains this IPv6 address
-                $serverFromIpv6 = $ipv6->findServerFromIpv6($this->poolname);
+                $serverFromIpv6 = $selected_ipv6->findServerFromIpv6($this->poolname);
                 if ($serverFromIpv6) {
                     // Assign the IPv6 server regardless of availability status
                     $update_notification = DB_DataObject::factory($notify->table);
