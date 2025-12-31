@@ -215,7 +215,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
          
         // only run this on the first server...
         if ($this->id != $ids[0]) {
-            // return; 
+            return; 
         }
         
         // First, assign servers based on IPv6 domain assignments
