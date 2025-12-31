@@ -363,6 +363,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $ipv6_records = $ipv6->fetchAll();
             
             if (!empty($ipv6_records)) {
+                var_dump(count($ipv6_records)); 
                 // Randomly pick one if multiple exist
                 $selected_ipv6 = $ipv6_records[array_rand($ipv6_records)];
                 
@@ -378,6 +379,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 }
             }
         }
+        die('test');
         return $assignedIds;
     }
         // called on current server.
