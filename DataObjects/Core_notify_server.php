@@ -17,26 +17,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $is_active;
     public $last_send;
     
-    /**
-     * Get ipv6_range_from as human-readable string
-     * 
-     * @return string
-     */
-    function getIpv6RangeFrom()
-    {
-        return DB_DataObject::factory('core_notify_server_ipv6')->binaryToIpv6($this->ipv6_range_from);
-    }
-    
-    /**
-     * Get ipv6_range_to as human-readable string
-     * 
-     * @return string
-     */
-    function getIpv6RangeTo()
-    {
-        return DB_DataObject::factory('core_notify_server_ipv6')->binaryToIpv6($this->ipv6_range_to);
-    }
-    
     function  applyFilters($q, $au, $roo)
     {
         // Add string versions of binary IPv6 fields for the interface
