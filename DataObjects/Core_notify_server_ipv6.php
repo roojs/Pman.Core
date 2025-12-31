@@ -326,7 +326,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Find the least-used IPv6 address configured for domains matching the MX record and has reverse pointer
+     * Find the least-used IPv6 address configured for domains matching the MX record and with reverse pointer
      * 
      * Looks for IPv6 addresses mapped to domains that are suffixes of the MX record
      * and returns the one with the fewest domain mappings.
