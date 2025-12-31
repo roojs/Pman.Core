@@ -1,6 +1,8 @@
+DROP TRIGGER IF EXISTS find_smallest_unused_ipv6;
+
 DELIMITER $$
 
-CREATE PROCEDURE FindSmallestUnusedIpv6(
+CREATE PROCEDURE find_smallest_unused_ipv6(
     IN p_server_id INT,
     OUT p_unused_ipv6 VARBINARY(16)
 )
