@@ -227,6 +227,7 @@ class Pman_Core_Notify extends Pman
             exit;
         }
         
+        die('test');
         $this->server->assignQueues($this);
         
         
