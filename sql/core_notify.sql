@@ -41,7 +41,7 @@ ALTER TABLE core_notify ADD COLUMN mail_imap_actor_id INT(11) NOT NULL DEFAULT 0
 
 ALTER TABLE core_notify ADD COLUMN email_id INT NOT NULL DEFAULT 0;
 
-ALTER TABLE core_notify ADD COLUMN ipv6_addr VARBINARY(16) NOT NULL DEFAULT 0x0;
+ALTER TABLE core_notify ADD COLUMN ipv6_id INT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify ADD   INDEX lookup(act_when, msgid);
 
