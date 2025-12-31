@@ -388,6 +388,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Check if current IPv6 is already valid for this MX
         $current_ipv6_str = $this->getIpv6Addr();
         if (!empty($current_ipv6_str) && $this->isIpv6ForMx($current_ipv6_str, $mx)) {
+            echo "IPv6 is already valid for this MX {$current_ipv6_str}\n";
             return $this;
         }
         
@@ -407,6 +408,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         $this->update($old);
+
+        echo "IPv6 is not valid for this MX, using least-used one {$least_used_ipv6_str}\n";
         
         return $this;
     }
