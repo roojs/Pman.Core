@@ -267,7 +267,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Get the list of IPv6 addresses configured for domains matching the MX record
+     * Get the list of IPv6 addresses configured for domains matching the MX record and with reverse pointer
      * 
      * Finds IPv6 addresses where the domain is a suffix of the MX record.
      * E.g., for MX 'roojs.mail.protection.outlook.com', matches domains like:
