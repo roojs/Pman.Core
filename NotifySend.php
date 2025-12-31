@@ -123,7 +123,7 @@ class Pman_Core_NotifySend extends Pman
     {   
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
         $cnsi->get(10);
-        var_dump($cnsi->findServerFromIpv6('pressrelease'));
+        var_dump($cnsi->findServerFromIpv6('core'));
         die('test');
 
         // DB_DataObject::debugLevel(5);
