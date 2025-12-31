@@ -2,7 +2,7 @@ DROP FUNCTION IF EXISTS find_smallest_unused_ipv6;
 
 DELIMITER $$
 
-CREATE FUNCTION FindSmallestUnusedIpv6(p_server_id INT)
+CREATE FUNCTION find_smallest_unused_ipv6(p_server_id INT)
 RETURNS VARBINARY(16)
 DETERMINISTIC
 READS SQL DATA
