@@ -1024,7 +1024,7 @@ class Pman_Core_NotifySend extends Pman
             // Handle Outlook servers - try to use pre-configured IPv6 addresses
             if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
                 if($this->server_ipv6->ensureIpv6ForMx($mx)) {
-                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $outlook_ipv6->getIpv6Addr() . " for domain: " . $core_domain->domain);
+                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $this->server_ipv6->getIpv6Addr() . " for domain: " . $core_domain->domain);
                 } else {
                     $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
                 }
