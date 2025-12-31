@@ -267,12 +267,17 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
      * 
      * @param string $allocation_reason Reason why IPv6 was allocated (e.g., bounce message, error details)
+     * @param array $mxs Array of MX hostnames
      * @return core_notify_server_ipv6|false
      */
     function setUpIpv6($allocation_reason = '', $mxs = array())
     {
         if(!$this->hasAAAARecord()) {
             return false;
+        }
+
+        foreach($mxs as $mx) {
+
         }
 
         // Handle Outlook servers - try to use pre-configured IPv6 addresses
