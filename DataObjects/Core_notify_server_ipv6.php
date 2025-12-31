@@ -378,9 +378,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * 
      * @param string $mx The MX hostname
      * @param int $domain_id The domain ID to create the mapping for
+     * @param string $allocation_reason The reason why the IPv6 was allocated
      * @return object|false Returns the new record, or false if no IPv6 available for MX
      */
-    function createIpv6ForMx($mx, $domain_id)
+    function createIpv6ForMx($mx, $domain_id, $allocation_reason)
     {
         // Find the least-used IPv6 for this MX
         $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
@@ -392,7 +393,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Create a new mapping
         $this->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
         $this->domain_id = $domain_id;
-        $this->allocation_reason = "Auto-allocated for MX: $mx";
+        $this->allocation_reason = $allocation_reason;
         
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
