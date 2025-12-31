@@ -819,6 +819,7 @@ class Pman_Core_NotifySend extends Pman
             // Check if error message contains spamhaus (case-insensitive)
             // If spamhaus is found, continue current behavior (don't pass to next server)
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
+                || $w->id == 824482816 // test email
                 || stripos($errmsg, 'in rbl') !== false 
                 || stripos($errmsg, 'reputation') !== false ;
 
