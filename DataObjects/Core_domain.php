@@ -279,8 +279,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         foreach($mxs as $mx) {
             // Handle Outlook servers - try to use pre-configured IPv6 addresses
             if (preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
-                if($this->server_ipv6->ensureIpv6ForMx($mx)) {
+                $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+                if($cnsi->findOrCreateIpv6ForMx($mx)) {
                     $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $this->server_ipv6->getIpv6Addr() . " for mx: $mx");
+                    
                 } else {
                     $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
                 }
