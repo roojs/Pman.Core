@@ -181,23 +181,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     /**
-     * Get IPv6 address as string for validation
-     * Handles both string input (from form) and binary (from DB)
-     * 
-     * @return string IPv6 address as string
-     */
-    function getIpv6AddrForValidation()
-    {
-        // If it's already a valid IPv6 string, return as-is
-        if (filter_var($this->ipv6_addr, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
-            return $this->ipv6_addr;
-        }
-        // Try to convert from binary
-        $str = self::binaryToIpv6($this->ipv6_addr);
-        return $str ?: $this->ipv6_addr;
-    }
-    
-    /**
      * Check if domain_id or ipv6_addr already exists in the table
      * 
      * @return bool True if a unique seq is needed
