@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Create a new IPv6 mapping using the least-used IPv6 for the given MX
+     * Create a new IPv6 mapping using the least-used IPv6 with reverse pointer for the given MX
      * 
      * @param string $mx The MX hostname
      * @param int $domain_id The domain ID to create the mapping for
