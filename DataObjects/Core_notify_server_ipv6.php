@@ -374,15 +374,22 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Create a new IPv6 mapping using the least-used IPv6 with reverse pointer for the given MX
+     * Find existing or create new IPv6 mapping using the least-used IPv6 with reverse pointer for the given MX
      * 
      * @param string $mx The MX hostname
-     * @param int $domain_id The domain ID to create the mapping for
-     * @param string $allocation_reason The reason why the IPv6 was allocated
-     * @return object|false Returns the new record, or false if no IPv6 available for MX
+     * @param int $domain_id The domain ID to find/create the mapping for
+     * @param string $allocation_reason The reason why the IPv6 was allocated (used only for new records)
+     * @return object|false Returns the existing or new record, or false if no IPv6 available for MX
      */
-    function createIpv6ForMx($mx, $domain_id, $allocation_reason)
+    function findOrCreateIpv6ForMx($mx, $domain_id, $allocation_reason)
     {
+        // Check if there's an existing IPv6 mapping for this domain
+        $existing = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing->domain_id = $domain_id;
+        if ($existing->find(true)) {
+            return $existing;
+        }
+        
         // Find the least-used IPv6 for this MX
         $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
         
