@@ -374,7 +374,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     $update_notification = DB_DataObject::factory($notify->table);
                     $update_notification->get($notification->id);
                     $update_notification->server_id = $serverFromIpv6->id;
-                    $update_notification->ipv6_addr = $selected_ipv6->ipv6_addr;
+                    $update_notification->ipv6_id = $selected_ipv6->id;
                     $update_notification->update();
                     $assignedIds[] = $notification->id;
                 }
