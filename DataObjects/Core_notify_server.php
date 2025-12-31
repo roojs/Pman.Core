@@ -586,48 +586,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             return $cns->smallest_unused_ipv6;
         }
         return false;
-        $range_from_str = $this->getIpv6RangeFrom();
-        $range_to_str = $this->getIpv6RangeTo();
-        
-        if(empty($range_from_str) || empty($range_to_str)) {
-            return false;
-        }
-
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $usedIPv6Records = $cnsi->fetchAll();
-
-        $start = $cnsi->ipv6ToDecimal($range_from_str);
-        if($start === false) {
-            return false;
-        }
-        $end = $cnsi->ipv6ToDecimal($range_to_str);
-        if($end === false) {
-            return false;
-        }
-        $used = array();
-        foreach($usedIPv6Records as $record) {
-            $ipv6_str = $record->getIpv6Addr();
-            if (empty($ipv6_str)) {
-                continue;
-            }
-            $decimal = $cnsi->ipv6ToDecimal($ipv6_str);
-            if($decimal === false) {
-                continue;
-            }
-            $used[] = $decimal;
-        }
-        $usedSet = array_flip($used);
-    
-        // Start from the next address after 'from'
-        $current = bcadd($start, '1');
-        
-        while (bccomp($current, $end) <= 0) {
-            if (!isset($usedSet[$current])) {
-                return $cnsi->ipv6ToBinary($cnsi->decimalToIPv6($current));
-            }
-            $current = bcadd($current, '1');
-        }
-        return false; // All addresses used
     }
 
 
