@@ -357,8 +357,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         $pending_notifications = $p->fetchAll();
         foreach ($pending_notifications as $notification) {
-            var_dump($notification->id);
-            /*
             // Check if this domain_id has an IPv6 server assignment
             $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
             $ipv6->domain_id = $notification->domain_id;
@@ -375,9 +373,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                     $assignedIds[] = $notification->id;
                 }
             }
-            */
         }
-        die('test3');
         return $assignedIds;
     }
         // called on current server.
