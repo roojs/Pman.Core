@@ -360,9 +360,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
             $ipv6->domain_id = $notification->domain_id;
             $ipv6_records = $ipv6->fetchAll();
-
-            var_dump($notification->to_email);
-            var_dump(count($ipv6_records));
             
             if (!empty($ipv6_records)) {
                 // Randomly pick one if multiple exist
