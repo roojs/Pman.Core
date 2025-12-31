@@ -269,7 +269,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * @param string $allocation_reason Reason why IPv6 was allocated (e.g., bounce message, error details)
      * @return core_notify_server_ipv6|false
      */
-    function setUpIpv6($allocation_reason = '')
+    function setUpIpv6($allocation_reason = '', $mxs = array())
     {
         if(!$this->hasAAAARecord()) {
             return false;
