@@ -1020,15 +1020,6 @@ class Pman_Core_NotifySend extends Pman
         foreach ($mxs as $mx) {
             $mx_use_ipv6 = $use_ipv6;
             
-            // Handle Outlook servers - try to use pre-configured IPv6 addresses
-            if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
-                if($this->server_ipv6->ensureIpv6ForMx($mx)) {
-                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $this->server_ipv6->getIpv6Addr() . " for mx: $mx");
-                } else {
-                    $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
-                }
-            }
-            
             // Resolve IPv6 addresses (AAAA records) only if mx_use_ipv6 is true
             $ipv6_records = @dns_get_record($mx, DNS_AAAA);
             if ($mx_use_ipv6 && !empty($ipv6_records)) {
