@@ -379,7 +379,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 }
             }
         }
-        die('test');
         return $assignedIds;
     }
         // called on current server.
