@@ -1023,20 +1023,13 @@ class Pman_Core_NotifySend extends Pman
             
             // Handle Outlook servers - try to use pre-configured IPv6 addresses
             if ($mx_use_ipv6 && preg_match('/(\.outlook\.com)|(\.office365\.com)|(\.hotmail\.com)|(mail\.protection\.outlook\.com)$/i', $mx)) {
-                // Find existing IPv6 record for this domain
                 $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-                $cnsi->domain_id = $core_domain->id;
-                if ($cnsi->find(true)) {
-                    // Ensure the IPv6 is appropriate for this MX (updates if needed)
-                    $outlook_ipv6 = $cnsi->ensureIpv6ForMx($mx);
-                    if ($outlook_ipv6) {
-                        $this->server_ipv6 = $outlook_ipv6;
-                        $this->debug("IPv6: Using Outlook IPv6 address: " . $outlook_ipv6->getIpv6Addr() . " for domain: " . $core_domain->domain);
-                    } else {
-                        $this->debug("IPv6: No matching IPv6 available for Outlook server: $mx");
-                    }
+                $outlook_ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $core_domain);
+                if ($outlook_ipv6) {
+                    $this->server_ipv6 = $outlook_ipv6;
+                    $this->debug("IPv6: Using pre-configured Outlook IPv6 address: " . $outlook_ipv6->getIpv6Addr() . " for domain: " . $core_domain->domain);
                 } else {
-                    $this->debug("IPv6: No existing IPv6 record for domain: " . $core_domain->domain);
+                    $this->debug("IPv6: No pre-configured IPv6 for Outlook server: $mx");
                 }
             }
             
