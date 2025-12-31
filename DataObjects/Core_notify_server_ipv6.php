@@ -261,49 +261,34 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      */
     function findServerFromIpv6($poolname)
     {
-        $ipv6_str = $this->getIpv6Addr();
+        $ipv6_bin = $this->ipv6_addr;
         
-        if (empty($ipv6_str)) {
+        // Validate binary IPv6
+        if (empty($ipv6_bin) || 
+            !is_string($ipv6_bin) || 
+            strlen($ipv6_bin) !== 16 ||
+            $ipv6_bin === str_repeat("\x00", 16)) {
             return false;
         }
         
-        // Get all active servers with IPv6 ranges defined
+        // Use MySQL BETWEEN to find server with matching range and poolname
+        $ipv6_hex = bin2hex($ipv6_bin);
         $server = DB_DataObject::factory('core_notify_server');
+        $poolname_escaped = $server->escape($poolname);
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
+            AND
+            0x{$ipv6_hex} BETWEEN ipv6_range_from AND ipv6_range_to
+            AND
+            poolname = '{$poolname_escaped}'
         ");
         $server->is_active = 1;
-        $servers = $server->fetchAll();
+        $server->limit(1);
         
-        if (empty($servers)) {
-            return false;
-        }
-        
-        // Convert this record's IPv6 address to decimal for comparison
-        $addrDecimal = self::ipv6ToDecimal($ipv6_str);
-        if ($addrDecimal === false) {
-            return false;
-        }
-
-        
-        // Check each server's range
-        foreach ($servers as $s) {
-            $rangeFrom = self::ipv6ToDecimal($s->getIpv6RangeFrom());
-            $rangeTo = self::ipv6ToDecimal($s->getIpv6RangeTo());
-            
-            if ($rangeFrom === false || $rangeTo === false) {
-                continue;
-            }
-            
-            // Check if address is within range: rangeFrom <= addr <= rangeTo
-            if (bccomp($addrDecimal, $rangeFrom) >= 0 && bccomp($addrDecimal, $rangeTo) <= 0) {
-                // fitting poolname
-                if($s->poolname == $poolname) {
-                    return $s;
-                }
-            }
+        if ($server->find(true)) {
+            return $server;
         }
         
         return false;
