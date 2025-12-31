@@ -582,7 +582,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         $cns->selectAdd();
         $cns->selectAdd("find_smallest_unused_ipv6(core_notify_server.id) as smallest_unused_ipv6");
         $cns->id = $this->id;
-        if($cns->find(true)) {
+        if($cns->find(true) && !empty($cns->smallest_unused_ipv6)) {
             return $cns->smallest_unused_ipv6;
         }
         return false;
