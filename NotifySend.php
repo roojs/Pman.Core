@@ -821,7 +821,6 @@ class Pman_Core_NotifySend extends Pman
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
                 || stripos($errmsg, 'in rbl') !== false 
                 || stripos($errmsg, 'reputation') !== false ;
-            $is_spamhaus = true;
 
             $shouldRetry = false;
 
