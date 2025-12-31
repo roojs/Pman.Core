@@ -308,7 +308,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Check if an IPv6 address is configured for domains matching the MX record
+     * Check if an IPv6 address is configured for domains matching the MX record and has reverse pointer
      * 
      * @param string $ipv6_addr The IPv6 address to check
      * @param string $mx The MX hostname
