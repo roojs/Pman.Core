@@ -226,9 +226,9 @@ class Pman_Core_Notify extends Pman
             $this->logecho("Server is disabled - exiting gracefully");
             exit;
         }
-        
-        die('test');
+
         $this->server->assignQueues($this);
+        die('test');
         
         
         $this->clearOld();
