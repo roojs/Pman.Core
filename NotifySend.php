@@ -1011,10 +1011,9 @@ class Pman_Core_NotifySend extends Pman
      * 
      * @param array $mxs Array of MX hostnames
      * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
-     * @param object $core_domain The recipient's core_domain object
      * @return array Map of IP address => domain name
      */
-    function convertMxsToIpMap($mxs, $use_ipv6 = false, $core_domain = null)
+    function convertMxsToIpMap($mxs, $use_ipv6 = false)
     {
         $mx_ip_map = array();
         
