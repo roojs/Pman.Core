@@ -374,42 +374,31 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Ensure this record's IPv6 address is appropriate for the given MX and has reverse pointer
-     * 
-     * Checks if the current IPv6 address matches the MX pattern.
-     * If not, updates to the least-used IPv6 for that MX.
-     * Never creates new records - only updates $this if needed.
+     * Create a new IPv6 mapping using the least-used IPv6 for the given MX
      * 
      * @param string $mx The MX hostname
-     * @return object|false Returns $this (possibly updated), or false if no IPv6 available for MX
+     * @param int $domain_id The domain ID to create the mapping for
+     * @return object|false Returns the new record, or false if no IPv6 available for MX
      */
-    function ensureIpv6ForMx($mx)
+    function createIpv6ForMx($mx, $domain_id)
     {
-        // Check if current IPv6 is already valid for this MX
-        $current_ipv6_str = $this->getIpv6Addr();
-        if (!empty($current_ipv6_str) && $this->isIpv6ForMx($current_ipv6_str, $mx)) {
-            echo "IPv6 is already valid for this MX {$current_ipv6_str}\n";
-            return $this;
-        }
-        
-        // Current IPv6 is not valid for this MX, find the least-used one
+        // Find the least-used IPv6 for this MX
         $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
         
         if (empty($least_used_ipv6_str)) {
             return false;
         }
         
-        // Update this record to use the least-used IPv6
-        $old = clone($this);
+        // Create a new mapping
         $this->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
+        $this->domain_id = $domain_id;
+        $this->allocation_reason = "Auto-allocated for MX: $mx";
         
         if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
         
-        $this->update($old);
-
-        echo "IPv6 is not valid for this MX, using least-used one {$least_used_ipv6_str}\n";
+        $this->insert();
         
         return $this;
     }
