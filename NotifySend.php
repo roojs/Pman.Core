@@ -122,7 +122,7 @@ class Pman_Core_NotifySend extends Pman
     function get($id,$opts=array())
     {   
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        var_dump($cnsi->getLeastUsedIpv6ForMx('roojs.mail.protection.outlook.com'));
+        var_dump($cnsi->findOrCreateIpv6ForMx('roojs.mail.protection.outlook.com', 1, 'test'));
         die('test');
         // DB_DataObject::debugLevel(5);
         if ($this->database_is_locked()) {
