@@ -341,8 +341,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if (empty($ipv6_list)) {
             return false;
         }
-
-        var_dump($ipv6_list);
         
         // Convert string IPv6 addresses to binary for SQL comparison
         $binary_list = array();
@@ -359,6 +357,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $hex_values[] = "0x" . bin2hex($bin);
         }
         $in_clause = implode(",", $hex_values);
+        var_dump($in_clause);
         
         $q->selectAdd();
         $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
