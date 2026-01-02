@@ -147,7 +147,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
                 if(empty($mx_record) || $mx_record === '.') {
                     continue;
                 }
-                var_dump($mx_record);
                 if(checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
                     return true;
                 }

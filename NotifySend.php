@@ -121,9 +121,6 @@ class Pman_Core_NotifySend extends Pman
    
     function get($id,$opts=array())
     {   
-        $cd = DB_DataObject::factory('core_domain');
-        var_dump($cd->hasValidMx('nullmxtest.mvevea.us'));
-        die('test');
         // DB_DataObject::debugLevel(5);
         if ($this->database_is_locked()) {
             $this->errorHandler("LATER - DATABASE IS LOCKED\n");
