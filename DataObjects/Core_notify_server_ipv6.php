@@ -341,6 +341,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if (empty($ipv6_list)) {
             return false;
         }
+
+        var_dump($ipv6_list);
         
         // Convert string IPv6 addresses to binary for SQL comparison
         $binary_list = array();
