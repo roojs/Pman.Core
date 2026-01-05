@@ -277,7 +277,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $q->limit(1);
         
         if ($q->find(true)) {
-            return $q->ipv6_addr_str;
+            return $q->ipv6_addr;
         }
         
         return false;
