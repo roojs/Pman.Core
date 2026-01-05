@@ -18,17 +18,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     ###END_AUTOCODE
 
     /**
-     * Convert IPv6 string to binary format for database storage
-     * 
-     * @param string $ipv6_str IPv6 address as string (e.g., "2001:db8::1")
-     * @return string Binary representation (16 bytes)
-     */
-    static function ipv6ToBinary($ipv6_str)
-    {
-        return inet_pton($ipv6_str);
-    }
-
-    /**
      * Convert ipv6 to decimal
      * If invalid ipv6 address, return false
      * 
@@ -70,7 +59,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
             return false;
         }
-        $this->ipv6_addr = self::ipv6ToBinary($ipv6_str);
+        $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_str) . "')");
         return true;
     }
 
