@@ -94,12 +94,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             $roo->jerr("Invalid IPv6 address format: {$q['ipv6_addr_str']}");
         }
         
-        // Convert to binary for storage and duplicate check
-        $ipv6_bin = self::ipv6ToBinary($q['ipv6_addr_str']);
-        
         // Check for duplicate ipv6_addr + domain_id combination
         $check = DB_DataObject::factory($this->tableName());
-        $check->ipv6_addr = $ipv6_bin;
+        $check->whereAdd("ipv6_addr = INET6_ATON('" . $check->escape($q['ipv6_addr_str']) . "')");
         $check->domain_id = $this->domain_id;
         
         if ($check->find(true)) {
