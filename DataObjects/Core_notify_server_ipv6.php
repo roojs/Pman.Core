@@ -246,7 +246,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * and returns the one with the fewest domain mappings.
      * 
      * @param string $mx The MX hostname
-     * @return string|false The IPv6 address with least mappings, or false if none found
+     * @return int|false The IPv6 address with least mappings, or false if none found
      */
     function getLeastUsedIpv6ForMx($mx)
     {
