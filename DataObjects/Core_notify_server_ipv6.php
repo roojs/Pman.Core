@@ -165,30 +165,37 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
      * 
+     * @param string $ipv6_str Optional IPv6 address string to check (uses INET6_ATON in SQL)
      * @return bool True if the address is within at least one server's range
      */
-    function isInAnyServerRange()
+    function isInAnyServerRange($ipv6_str = null)
     {
-        $ipv6_bin = $this->ipv6_addr;
-        
-        // Validate it can be converted to a valid IPv6 string
-        $ipv6_str = @inet_ntop($ipv6_bin);
-        if ($ipv6_str === false) {
-            return false;
-        }
-        
-        // Use MySQL BETWEEN to check if address is in any server's range
-        $ipv6_hex = bin2hex($ipv6_bin);
         $server = DB_DataObject::factory('core_notify_server');
         $server->selectAdd();
         $server->selectAdd("id");
-        $server->whereAdd("
-            ipv6_range_from != 0x0
-            AND
-            ipv6_range_to != 0x0
-            AND
-            0x{$ipv6_hex} BETWEEN ipv6_range_from AND ipv6_range_to
-        ");
+        
+        if ($ipv6_str !== null) {
+            // Use INET6_ATON directly in SQL
+            $escaped = $server->escape($ipv6_str);
+            $server->whereAdd("
+                ipv6_range_from != 0x0
+                AND
+                ipv6_range_to != 0x0
+                AND
+                INET6_ATON('{$escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
+            ");
+        } else {
+            // Use binary value from $this->ipv6_addr
+            $ipv6_bin = $this->ipv6_addr;
+            $ipv6_hex = bin2hex($ipv6_bin);
+            $server->whereAdd("
+                ipv6_range_from != 0x0
+                AND
+                ipv6_range_to != 0x0
+                AND
+                0x{$ipv6_hex} BETWEEN ipv6_range_from AND ipv6_range_to
+            ");
+        }
         $server->limit(1);
         
         return $server->find(true) ? true : false;
