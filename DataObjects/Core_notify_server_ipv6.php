@@ -122,7 +122,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /**
      * Check if domain_id or ipv6_addr already exists in the table
-     * Uses $this->ipv6_addr_str with INET6_ATON in SQL
      * 
      * @return bool True if a unique seq is needed
      */
@@ -134,9 +133,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return true;
         }
         
-        // Check using INET6_ATON with ipv6_addr_str
+        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
+        $ipv6_sql = $this->getIpv6AddrSql();
+        
         $check_ipv6 = DB_DataObject::factory($this->tableName());
-        $check_ipv6->whereAdd("ipv6_addr = INET6_ATON('" . $check_ipv6->escape($this->ipv6_addr_str) . "')");
+        $check_ipv6->whereAdd("ipv6_addr = {$ipv6_sql}");
         if ($check_ipv6->count() > 0) {
             return true;
         }
