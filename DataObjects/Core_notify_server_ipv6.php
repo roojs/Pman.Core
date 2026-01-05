@@ -122,9 +122,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if domain_id or ipv6_addr already exists in the table
      * 
+     * @param string $ipv6_addr_str The IPv6 address to check
      * @return bool True if a unique seq is needed
      */
-    function needsUniqueSeq()
+    function needsUniqueSeq($ipv6_addr_str)
     {
         $check_domain = DB_DataObject::factory($this->tableName());
         $check_domain->domain_id = $this->domain_id;
@@ -176,7 +177,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             AND
             ipv6_range_to != 0x0
             AND
-            {$ipv6_sql} BETWEEN ipv6_range_from AND ipv6_range_to
+            {$ipv6_addr} BETWEEN ipv6_range_from AND ipv6_range_to
         ");
         $server->limit(1);
         
