@@ -122,7 +122,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $this->allocation_reason = "Manual allocation: " . $this->allocation_reason;
         
         // Convert to binary for storage using MySQL
-        $this->ipv6_addr_str = $q['ipv6_addr_str'];
         $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_addr_str']) . "')");
 
         // Check if IPv6 address is within any notify server's IPv6 range
