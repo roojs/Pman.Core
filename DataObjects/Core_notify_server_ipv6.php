@@ -280,17 +280,17 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6_lookup->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
         $ipv6_lookup->autoJoin();
         $escaped_mx = $ipv6_lookup->escape($mx);
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
 
-        // Extract unique IPv6 addresses (convert binary to string)
+        // Extract unique IPv6 addresses
         $cache[$mx] = array();
         foreach ($ipv6_lookup->fetchAll() as $record) {
-            $ipv6_str = $record->getIpv6Addr();
-            if ($ipv6_str && !in_array($ipv6_str, $cache[$mx])) {
-                $cache[$mx][] = $ipv6_str;
+            if ($record->ipv6_addr_str && !in_array($record->ipv6_addr_str, $cache[$mx])) {
+                $cache[$mx][] = $record->ipv6_addr_str;
             }
         }
         
@@ -349,15 +349,14 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $in_clause = implode(",", $hex_values);
         
         $q->selectAdd();
-        $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
+        $q->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str, COUNT(*) as domain_count');
         $q->whereAdd("ipv6_addr IN ($in_clause)");
         $q->groupBy('ipv6_addr');
         $q->orderBy('domain_count ASC');
         $q->limit(1);
         
         if ($q->find(true)) {
-            // Return as string
-            return $q->getIpv6Addr();
+            return $q->ipv6_addr_str;
         }
         
         return false;
