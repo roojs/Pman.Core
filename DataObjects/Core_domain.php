@@ -304,10 +304,6 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $cnsi->insert();
         }
 
-        var_dump($cnsi);
-        die('test');
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6')->get($cnsi->id);
-
         return $cnsi;
     }
 
