@@ -132,12 +132,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($check_domain->count() > 0) {
             return true;
         }
-        
-        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
-        $ipv6_sql = $this->getIpv6AddrSql();
+        $ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_addr_str) . "')");
         
         $check_ipv6 = DB_DataObject::factory($this->tableName());
-        $check_ipv6->whereAdd("ipv6_addr = {$ipv6_sql}");
+        $check_ipv6->whereAdd("ipv6_addr = {$ipv6_addr}");
         if ($check_ipv6->count() > 0) {
             return true;
         }
