@@ -193,15 +193,14 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
         
-        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
-        $ipv6_sql = $this->getIpv6AddrSql();
+        
         
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
             AND
-            {$ipv6_sql} BETWEEN ipv6_range_from AND ipv6_range_to
+            {$this->ipv6_addr} BETWEEN ipv6_range_from AND ipv6_range_to
             AND
             poolname = '{$poolname_escaped}'
         ");
@@ -343,11 +342,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Create a new mapping
         $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($least_used_ipv6_str) . "')");
-        $this->ipv6_addr_str = $least_used_ipv6_str;  // For the caller to use
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
-        if ($this->needsUniqueSeq()) {
+        if ($this->needsUniqueSeq($least_used_ipv6_str)) {
             $this->seq = $this->getNextSeq();
         }
         
