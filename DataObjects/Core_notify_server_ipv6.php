@@ -304,10 +304,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Find the least-used IPv6 for this MX
         $least_used_ipv6 = $this->getLeastUsedIpv6ForMx($mx);
-
-        var_dump("LEAST USED IPV6");
-        var_dump($least_used_ipv6);
-        var_dump(inet_ntop($least_used_ipv6));
         
         if (empty($least_used_ipv6)) {
             return false;
