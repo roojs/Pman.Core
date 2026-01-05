@@ -164,15 +164,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      * 
      * @return bool True if the address is within at least one server's range
      */
-    function isInAnyServerRange()
+    function isInAnyServerRange($ipv6_addr_str)
     {
         $server = DB_DataObject::factory('core_notify_server');
         $server->selectAdd();
         $server->selectAdd("id");
-        
-        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
-        $ipv6_sql = $this->getIpv6AddrSql();
-        
+        $ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_addr_str) . "')");
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
