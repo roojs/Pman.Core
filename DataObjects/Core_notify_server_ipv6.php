@@ -175,6 +175,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
+
+        var_dump($ipv6_addr);
+        die('test');
         
         
         
