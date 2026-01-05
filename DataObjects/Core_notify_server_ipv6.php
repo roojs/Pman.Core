@@ -181,7 +181,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             AND
             ipv6_range_to != 0x0
             AND
-            INET6_ATON('" . $this->escape(inet_ntop($this->ipv6_addr)) . "') BETWEEN ipv6_range_from AND ipv6_range_to
+            INET6_ATON('" . $this->escape($this->ipv6_addr_str) . "') BETWEEN ipv6_range_from AND ipv6_range_to
             AND
             poolname = '{$poolname_escaped}'
         ");
