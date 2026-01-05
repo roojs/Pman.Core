@@ -204,7 +204,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /**
      * Find the server whose IPv6 range contains this record's ipv6_addr
-     * Uses $this->ipv6_addr_str with INET6_ATON in SQL
      * 
      * @param string $poolname
      * @return Pman_Core_DataObjects_Core_notify_server|false
@@ -213,14 +212,16 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
-        $escaped = $server->escape($this->ipv6_addr_str);
+        
+        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
+        $ipv6_sql = $this->getIpv6AddrSql();
         
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
             AND
-            INET6_ATON('{$escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
+            {$ipv6_sql} BETWEEN ipv6_range_from AND ipv6_range_to
             AND
             poolname = '{$poolname_escaped}'
         ");
