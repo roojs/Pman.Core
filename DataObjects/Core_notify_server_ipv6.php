@@ -325,21 +325,15 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return false;
         }
         
-        // Convert string IPv6 addresses to binary for SQL comparison
-        $binary_list = array();
-        foreach ($ipv6_list as $ipv6_str) {
-            $binary_list[] = self::ipv6ToBinary($ipv6_str);
-        }
-        
         // Single query to find the IPv6 with least domain mappings
         $q = DB_DataObject::factory('core_notify_server_ipv6');
         
-        // Build IN clause with hex values for binary comparison
-        $hex_values = array();
-        foreach ($binary_list as $bin) {
-            $hex_values[] = "0x" . bin2hex($bin);
+        // Build IN clause using INET6_ATON for each IPv6 string
+        $in_values = array();
+        foreach ($ipv6_list as $ipv6_str) {
+            $in_values[] = "INET6_ATON('" . $q->escape($ipv6_str) . "')";
         }
-        $in_clause = implode(",", $hex_values);
+        $in_clause = implode(",", $in_values);
         
         $q->selectAdd();
         $q->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str, COUNT(*) as domain_count');
@@ -382,12 +376,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Create a new mapping
-        $this->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
+        $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($least_used_ipv6_str) . "')");
         $this->ipv6_addr_str = $least_used_ipv6_str;
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
-        if ($this->needsUniqueSeq()) {
+        if ($this->needsUniqueSeq($least_used_ipv6_str)) {
             $this->seq = $this->getNextSeq();
         }
         
