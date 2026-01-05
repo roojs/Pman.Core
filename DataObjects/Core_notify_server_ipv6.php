@@ -314,12 +314,16 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Create a new mapping
         $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($least_used_ipv6_str) . "')");
+
+        var_dump($this->ipv6_addr);
+        die('test');
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
         if ($this->needsUniqueSeq($least_used_ipv6_str)) {
             $this->seq = $this->getNextSeq();
         }
+        
         
         $this->insert();
 
