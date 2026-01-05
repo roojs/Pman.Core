@@ -169,13 +169,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $server = DB_DataObject::factory('core_notify_server');
         $server->selectAdd();
         $server->selectAdd("id");
-        $ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_addr_str) . "')");
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
             AND
-            {$ipv6_addr} BETWEEN ipv6_range_from AND ipv6_range_to
+            INET6_ATON('" . $this->escape($ipv6_addr_str) . "') BETWEEN ipv6_range_from AND ipv6_range_to
         ");
         $server->limit(1);
         
