@@ -239,24 +239,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
 
     /**
-     * Check if an IPv6 address is configured for domains matching the MX record and has reverse pointer
-     * 
-     * @param string $ipv6_addr The IPv6 address to check
-     * @param string $mx The MX hostname
-     * @return bool True if this IPv6 is used by a matching domain
-     */
-    function isIpv6ForMx($ipv6_addr, $mx)
-    {
-        if (empty($ipv6_addr)) {
-            return false;
-        }
-        
-        $ipv6_list = $this->getIpv6ForMx($mx);
-        
-        return in_array($ipv6_addr, $ipv6_list);
-    }
-
-    /**
      * Find the least-used IPv6 address configured for domains matching the MX record and with reverse pointer
      * 
      * Looks for IPv6 addresses mapped to domains that are suffixes of the MX record
