@@ -74,16 +74,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     }
     
     /**
-     * Get the IPv6 address as a string (converts from binary storage)
-     * 
-     * @return string|false IPv6 address as string
-     */
-    function getIpv6Addr()
-    {
-        return self::binaryToIpv6($this->ipv6_addr);
-    }
-    
-    /**
      * Set the IPv6 address from a string (converts to binary for storage)
      * 
      * @param string $ipv6_str IPv6 address as string
