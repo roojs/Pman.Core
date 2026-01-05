@@ -46,18 +46,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(filter_var($q['ipv6_range_from_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
                 $roo->jerr("IPv6 range from is not a valid IPv6 address");
             }
-            $ipv6_range_from = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToBinary($q['ipv6_range_from_str']);
-            if($ipv6_range_from === false) {
-                $roo->jerr("IPv6 range from is not a valid IPv6 address");
-            }
             if(empty($q['ipv6_range_to_str'])) {
                 $roo->jerr("IPv6 range to is required");
             }
             if(filter_var($q['ipv6_range_to_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-                $roo->jerr("IPv6 range to is not a valid IPv6 address");
-            }
-            $ipv6_range_to = DB_DataObject::factory('core_notify_server_ipv6')->ipv6ToBinary($q['ipv6_range_to_str']);
-            if($ipv6_range_to === false) {
                 $roo->jerr("IPv6 range to is not a valid IPv6 address");
             }
             if(empty($q['ipv6_ptr'])) {
@@ -75,9 +67,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
                 $roo->jerr("IPv6 range to must be greater than or equal to range from");
             }
             
-            // Convert string to binary for storage
-            $this->ipv6_range_from = $ipv6_range_from;
-            $this->ipv6_range_to = $ipv6_range_to;
+            // Convert string to binary for storage using MySQL INET6_ATON
+            $this->ipv6_range_from = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_from_str']) . "')");
+            $this->ipv6_range_to = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_to_str']) . "')");
         }
     }
     
