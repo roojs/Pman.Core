@@ -362,11 +362,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Create a new mapping
         $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($least_used_ipv6_str) . "')");
-        $this->ipv6_addr_str = $least_used_ipv6_str;
+        $this->ipv6_addr_str = $least_used_ipv6_str;  // For the caller to use
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
-        if ($this->needsUniqueSeq($least_used_ipv6_str)) {
+        if ($this->needsUniqueSeq()) {
             $this->seq = $this->getNextSeq();
         }
         
