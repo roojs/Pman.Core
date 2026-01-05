@@ -224,8 +224,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         DB_DataObject::debugLevel(1);
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
-        $ipv6_lookup->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
         $ipv6_lookup->autoJoin();
+        $ipv6_lookup->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
         $escaped_mx = $ipv6_lookup->escape($mx);
         $ipv6_lookup->whereAdd("'$escaped_mx' LIKE CONCAT('%', join_domain_id_id.domain)");
         $ipv6_lookup->has_reverse_ptr = 1;
