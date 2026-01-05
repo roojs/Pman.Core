@@ -233,7 +233,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         // Extract unique IPv6 addresses
         $cache[$mx] = array();
         foreach ($ipv6_lookup->fetchAll() as $record) {
-            die('tests');
             if ($record->ipv6_addr_str && !in_array($record->ipv6_addr_str, $cache[$mx])) {
                 $cache[$mx][] = $record->ipv6_addr_str;
             }
