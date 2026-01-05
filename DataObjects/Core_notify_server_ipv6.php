@@ -374,6 +374,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         // Check if there's an existing IPv6 mapping for this domain
         $existing = DB_DataObject::factory('core_notify_server_ipv6');
+        $existing->selectAdd();
+        $existing->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         $existing->domain_id = $domain_id;
         if ($existing->find(true)) {
             return $existing;
@@ -388,6 +390,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         // Create a new mapping
         $this->ipv6_addr = self::ipv6ToBinary($least_used_ipv6_str);
+        $this->ipv6_addr_str = $least_used_ipv6_str;
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
