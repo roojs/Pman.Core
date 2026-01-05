@@ -176,17 +176,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
 
-        var_dump(inet_ntop($this->ipv6_addr));
-        die('test');
-        
-        
-        
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
             AND
-            {$this->ipv6_addr} BETWEEN ipv6_range_from AND ipv6_range_to
+            INET6_ATON('" . $this->escape(inet_ntop($this->ipv6_addr)) . "') BETWEEN ipv6_range_from AND ipv6_range_to
             AND
             poolname = '{$poolname_escaped}'
         ");
