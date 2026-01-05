@@ -303,17 +303,17 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Find the least-used IPv6 for this MX
-        $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
+        $least_used_ipv6 = $this->getLeastUsedIpv6ForMx($mx);
 
-        var_dump("LEAST USED IPV6 STR");
-        var_dump($least_used_ipv6_str);
+        var_dump("LEAST USED IPV6");
+        var_dump($least_used_ipv6);
         
-        if (empty($least_used_ipv6_str)) {
+        if (empty($least_used_ipv6)) {
             return false;
         }
         
         // Create a new mapping
-        $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($least_used_ipv6_str) . "')");
+        $this->ipv6_addr = $least_used_ipv6;
         $this->domain_id = $domain_id;
         $this->allocation_reason = $allocation_reason;
         
