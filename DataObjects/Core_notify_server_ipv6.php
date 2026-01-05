@@ -122,11 +122,11 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /**
      * Check if domain_id or ipv6_addr already exists in the table
+     * Uses $this->ipv6_addr_str with INET6_ATON in SQL
      * 
-     * @param string $ipv6_str Optional IPv6 address string to check (uses INET6_ATON in SQL)
      * @return bool True if a unique seq is needed
      */
-    function needsUniqueSeq($ipv6_str = null)
+    function needsUniqueSeq()
     {
         $check_domain = DB_DataObject::factory($this->tableName());
         $check_domain->domain_id = $this->domain_id;
@@ -134,13 +134,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
             return true;
         }
         
-        // Check using INET6_ATON if string provided, otherwise use binary value
+        // Check using INET6_ATON with ipv6_addr_str
         $check_ipv6 = DB_DataObject::factory($this->tableName());
-        if ($ipv6_str !== null) {
-            $check_ipv6->whereAdd("ipv6_addr = INET6_ATON('" . $check_ipv6->escape($ipv6_str) . "')");
-        } else {
-            $check_ipv6->ipv6_addr = $this->ipv6_addr;
-        }
+        $check_ipv6->whereAdd("ipv6_addr = INET6_ATON('" . $check_ipv6->escape($this->ipv6_addr_str) . "')");
         if ($check_ipv6->count() > 0) {
             return true;
         }
