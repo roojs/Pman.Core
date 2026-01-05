@@ -62,6 +62,22 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_str) . "')");
         return true;
     }
+    
+    /**
+     * Get SQL expression for $this->ipv6_addr
+     * Handles both sqlValue (DB_DataObject_Cast) and binary data
+     * 
+     * @return string SQL expression for the IPv6 address
+     */
+    function getIpv6AddrSql()
+    {
+        if ($this->ipv6_addr instanceof DB_DataObject_Cast) {
+            // Extract SQL expression from sqlValue (e.g., "INET6_ATON('2001:db8::1')")
+            return $this->ipv6_addr->value;
+        }
+        // Binary data - convert to hex
+        return "0x" . bin2hex($this->ipv6_addr);
+    }
 
     function applyFilters($q, $au, $roo)
     {
