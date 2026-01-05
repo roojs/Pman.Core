@@ -111,7 +111,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Set seq before insert if domain_id or ipv6_addr already exists
-        if ($this->needsUniqueSeq()) {
+        if ($this->needsUniqueSeq($q['ipv6_addr_str'])) {
             $this->seq = $this->getNextSeq();
         }
 
