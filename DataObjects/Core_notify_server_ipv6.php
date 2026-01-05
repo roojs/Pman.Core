@@ -220,8 +220,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
 
         var_dump("MX");
         var_dump($mx);
-
-        DB_DataObject::debugLevel(1);
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6_lookup->autoJoin();
