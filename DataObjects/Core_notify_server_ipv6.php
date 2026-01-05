@@ -162,6 +162,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
      * 
+     * @param string $ipv6_addr_str The IPv6 address to check
      * @return bool True if the address is within at least one server's range
      */
     function isInAnyServerRange($ipv6_addr_str)
