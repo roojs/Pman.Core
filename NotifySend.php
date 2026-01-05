@@ -380,9 +380,11 @@ class Pman_Core_NotifySend extends Pman
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
         $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6->selectAdd();
+        $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         if (!empty($w->ipv6_id) && $ipv6->get($w->ipv6_id)) {
             $this->server_ipv6 = $ipv6;
-            $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->getIpv6Addr() ?: 'NOT SET'));
+            $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->ipv6_addr_str ?: 'NOT SET'));
         } else {
             $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
@@ -492,7 +494,7 @@ class Pman_Core_NotifySend extends Pman
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
         
         // Convert MX hostnames to map of IP addresses => domain
-        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->getIpv6Addr());
+        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
         $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
                         
         foreach($mx_ip_map as $smtp_host => $mx) {
@@ -851,7 +853,7 @@ class Pman_Core_NotifySend extends Pman
                 else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->getIpv6Addr() ?: 'no address') . ")";
+                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
@@ -1083,7 +1085,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // Add IPv6 binding if server_ipv6 is configured
-        $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->getIpv6Addr() : false;
+        $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->ipv6_addr_str : false;
         if ($ipv6_addr_str) {
             $socket_options['socket'] = array(
                 'bindto' => '[' . $ipv6_addr_str . ']:0'
