@@ -27,20 +27,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     {
         return inet_pton($ipv6_str);
     }
-    
-    /**
-     * Convert binary IPv6 to string format for display
-     * 
-     * @param string $ipv6_bin Binary IPv6 address (16 bytes)
-     * @return string|false IPv6 address as string, or false on failure
-     */
-    static function binaryToIpv6($ipv6_bin)
-    {
-        if (empty($ipv6_bin) || $ipv6_bin === "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00") {
-            return false;
-        }
-        return inet_ntop($ipv6_bin);
-    }
 
     /**
      * Convert ipv6 to decimal
