@@ -47,21 +47,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         return $decimal;
     }
-    
-    /**
-     * Set the IPv6 address from a string (converts to binary for storage)
-     * 
-     * @param string $ipv6_str IPv6 address as string
-     * @return bool True on success, false on invalid IPv6
-     */
-    function setIpv6Addr($ipv6_str)
-    {
-        if (filter_var($ipv6_str, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
-            return false;
-        }
-        $this->ipv6_addr = $this->sqlValue("INET6_ATON('" . $this->escape($ipv6_str) . "')");
-        return true;
-    }
 
     function applyFilters($q, $au, $roo)
     {
