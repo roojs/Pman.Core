@@ -268,6 +268,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     function getLeastUsedIpv6ForMx($mx)
     {
         $ipv6_list = $this->getIpv6ForMx($mx);
+
+        var_dump("IPV6 LIST");
+        var_dump($ipv6_list);
         
         if (empty($ipv6_list)) {
             return false;
