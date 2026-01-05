@@ -322,7 +322,12 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         $this->insert();
+
+        $this->get($this->id);
+        var_dump("THIS");
+        var_dump($this);
+        die('test');
         
         return $this;
-    }
+    }   
 }
