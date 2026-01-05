@@ -187,42 +187,26 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /**
      * Find the server whose IPv6 range contains this record's ipv6_addr
+     * Uses $this->ipv6_addr_str with INET6_ATON in SQL
      * 
      * @param string $poolname
-     * @param string $ipv6_str Optional IPv6 address string to check (uses INET6_ATON in SQL)
      * @return Pman_Core_DataObjects_Core_notify_server|false
      */
-    function findServerFromIpv6($poolname, $ipv6_str = null)
+    function findServerFromIpv6($poolname)
     {
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
+        $escaped = $server->escape($this->ipv6_addr_str);
         
-        if ($ipv6_str !== null) {
-            // Use INET6_ATON directly in SQL
-            $escaped = $server->escape($ipv6_str);
-            $server->whereAdd("
-                ipv6_range_from != 0x0
-                AND
-                ipv6_range_to != 0x0
-                AND
-                INET6_ATON('{$escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
-                AND
-                poolname = '{$poolname_escaped}'
-            ");
-        } else {
-            // Use binary value from $this->ipv6_addr
-            $ipv6_bin = $this->ipv6_addr;
-            $ipv6_hex = bin2hex($ipv6_bin);
-            $server->whereAdd("
-                ipv6_range_from != 0x0
-                AND
-                ipv6_range_to != 0x0
-                AND
-                0x{$ipv6_hex} BETWEEN ipv6_range_from AND ipv6_range_to
-                AND
-                poolname = '{$poolname_escaped}'
-            ");
-        }
+        $server->whereAdd("
+            ipv6_range_from != 0x0
+            AND
+            ipv6_range_to != 0x0
+            AND
+            INET6_ATON('{$escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
+            AND
+            poolname = '{$poolname_escaped}'
+        ");
         $server->is_active = 1;
         $server->limit(1);
         
