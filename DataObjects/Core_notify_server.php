@@ -484,9 +484,6 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         
         if (!empty($server_ipv6)) {
             $serverFromIpv6 = $server_ipv6->findServerFromIpv6($this->poolname);
-            var_dump("SERVER FROM IPV6");
-            var_dump($serverFromIpv6->ipv6_ptr);
-            die('test');
             if ($serverFromIpv6 && !empty($serverFromIpv6->ipv6_ptr)) {
                 $ff->Mail['helo'] = $serverFromIpv6->ipv6_ptr;
                 return;
