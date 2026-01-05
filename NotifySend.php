@@ -388,6 +388,7 @@ class Pman_Core_NotifySend extends Pman
         } else {
             $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
+        die('test');
       
         
         require_once 'Validate.php';
