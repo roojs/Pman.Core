@@ -217,6 +217,9 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if (isset($cache[$mx])) {
             return $cache[$mx];
         }
+
+        var_dump("MX");
+        var_dump($mx);
         
         $ipv6_lookup = DB_DataObject::factory('core_notify_server_ipv6');
         $ipv6_lookup->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
