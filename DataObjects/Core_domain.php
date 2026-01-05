@@ -297,13 +297,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         }
 
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->selectAdd();
-        $cnsi->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
         $cnsi->domain_id = $this->id;
         $cnsi->ipv6_addr = $ipv6_addr;
         if(!$cnsi->find(true)) {
             $cnsi->allocation_reason = $allocation_reason;
-            $cnsi->ipv6_addr_str = Pman_Core_DataObjects_Core_notify_server_ipv6::binaryToIpv6($ipv6_addr);
             $cnsi->insert();
         }
 
