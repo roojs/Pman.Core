@@ -162,7 +162,6 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     
     /**
      * Check if the IPv6 address is within any notify server's IPv6 range
-     * Uses $this->ipv6_addr_str with INET6_ATON in SQL
      * 
      * @return bool True if the address is within at least one server's range
      */
@@ -172,14 +171,15 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $server->selectAdd();
         $server->selectAdd("id");
         
-        // Use INET6_ATON with ipv6_addr_str
-        $escaped = $server->escape($this->ipv6_addr_str);
+        // Get SQL expression for ipv6_addr (handles both sqlValue and binary)
+        $ipv6_sql = $this->getIpv6AddrSql();
+        
         $server->whereAdd("
             ipv6_range_from != 0x0
             AND
             ipv6_range_to != 0x0
             AND
-            INET6_ATON('{$escaped}') BETWEEN ipv6_range_from AND ipv6_range_to
+            {$ipv6_sql} BETWEEN ipv6_range_from AND ipv6_range_to
         ");
         $server->limit(1);
         
