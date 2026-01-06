@@ -283,7 +283,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         
-        $this->insert();
+        $cnsi->insert();
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6')->get($cnsi->id);
         
         return $this;
     }   
