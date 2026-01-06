@@ -143,6 +143,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $mx_weight = array();
         if(getmxrr($domain, $mx_records, $mx_weight)) {
             foreach($mx_records as $mx_record) {
+                // Skip empty MX records (e.g., null MX per RFC 7505)
+                if(empty($mx_record) || $mx_record === '.') {
+                    continue;
+                }
                 if(checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
                     return true;
                 }
