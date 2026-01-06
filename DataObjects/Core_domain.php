@@ -304,7 +304,9 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $cnsi->insert();
         }
 
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6')->get($cnsi->id);
+        $cnsi2 = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi2->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+        $cnsi2->get($cnsi->id);
 
         return $cnsi;
     }
