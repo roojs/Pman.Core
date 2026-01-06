@@ -233,14 +233,14 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $in_clause = implode(",", $in_values);
         
         $q->selectAdd();
-        $q->selectAdd('ipv6_addr, COUNT(*) as domain_count');
+        $q->selectAdd('INET6_NTOA(ipv6_addr) as ipv6_addr_str, COUNT(*) as domain_count');
         $q->whereAdd("ipv6_addr IN ($in_clause)");
         $q->groupBy('ipv6_addr');
         $q->orderBy('domain_count ASC');
         $q->limit(1);
         
         if ($q->find(true)) {
-            return $q->ipv6_addr;
+            return $q->ipv6_addr_str;
         }
         
         return false;
@@ -281,7 +281,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         if ($cnsi->needsUniqueSeq(inet_ntop($least_used_ipv6))) {
             $cnsi->seq = $this->getNextSeq();
         }
-        
+
         $cnsi->insert();
 
         // make sure the ipv6_addr_str is available
