@@ -228,8 +228,6 @@ class Pman_Core_Notify extends Pman
         }
 
         $this->server->assignQueues($this);
-
-        die('test');
         
         
         $this->clearOld();
