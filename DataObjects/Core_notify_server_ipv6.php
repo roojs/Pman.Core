@@ -143,7 +143,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
     function findServerFromIpv6($poolname)
     {
         // if ipv6_addr_str is not available, return false
-        if(!empty($this->ipv6_addr_str)) {
+        if(empty($this->ipv6_addr_str)) {
             return false;
         }
 
