@@ -278,7 +278,7 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $cnsi->domain_id = $domain_id;
         $cnsi->allocation_reason = $allocation_reason;
         
-        if ($cnsi->needsUniqueSeq(inet_ntop($least_used_ipv6))) {
+        if ($cnsi->needsUniqueSeq($least_used_ipv6_str)) {
             $cnsi->seq = $this->getNextSeq();
         }
 
@@ -288,6 +288,8 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         $cnsi2 = DB_DataObject::factory('core_notify_server_ipv6');
         $cnsi2->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
         $cnsi2->get($cnsi->id);
+
+        var_dump($cnsi2);
         
         return $cnsi2;
     }   
