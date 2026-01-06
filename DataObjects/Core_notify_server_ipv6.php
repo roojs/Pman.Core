@@ -266,15 +266,15 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Find the least-used IPv6 for this MX
-        $least_used_ipv6 = $this->getLeastUsedIpv6ForMx($mx);
+        $least_used_ipv6_str = $this->getLeastUsedIpv6ForMx($mx);
         
-        if (empty($least_used_ipv6)) {
+        if (empty($least_used_ipv6_str)) {
             return false;
         }
         
         // Create a new mapping
         $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->ipv6_addr = $least_used_ipv6;
+        $cnsi->ipv6_addr = $cnsi->sqlValue("INET6_ATON('" . $cnsi->escape($least_used_ipv6_str) . "')");
         $cnsi->domain_id = $domain_id;
         $cnsi->allocation_reason = $allocation_reason;
         
