@@ -142,6 +142,10 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
      */
     function findServerFromIpv6($poolname)
     {
+        if(empty($this->ipv6_addr_str)) {
+            return false;
+        }
+        
         $server = DB_DataObject::factory('core_notify_server');
         $poolname_escaped = $server->escape($poolname);
 
