@@ -304,12 +304,13 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         }
         
         // Create a new mapping
-        $this->ipv6_addr = $least_used_ipv6;
-        $this->domain_id = $domain_id;
-        $this->allocation_reason = $allocation_reason;
+        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi->ipv6_addr = $least_used_ipv6;
+        $cnsi->domain_id = $domain_id;
+        $cnsi->allocation_reason = $allocation_reason;
         
-        if ($this->needsUniqueSeq(inet_ntop($least_used_ipv6))) {
-            $this->seq = $this->getNextSeq();
+        if ($cnsi->needsUniqueSeq(inet_ntop($least_used_ipv6))) {
+            $cnsi->seq = $this->getNextSeq();
         }
         
         
