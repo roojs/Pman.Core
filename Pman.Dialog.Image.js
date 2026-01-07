@@ -205,12 +205,8 @@ Pman.Dialog.Image = {
                 }
             });
             
-            Roo.log("PRESS UPLOAD");
-            Roo.log(_this.data);
-            if (!_this.data.useSSE) {
-                _this.dialog.haveProgress = 0; // set to show..
-                _this.dialog.uploadProgress.defer(1000, _this.dialog);
-            }
+            _this.dialog.haveProgress = 0; // set to show..
+            _this.dialog.uploadProgress.defer(1000, _this.dialog);
         
         }
       },
