@@ -22,13 +22,9 @@ ALTER TABLE core_notify_server ADD COLUMN ipv6_range_from_bin VARBINARY(16) NOT 
 ALTER TABLE core_notify_server ADD COLUMN ipv6_range_to_bin VARBINARY(16) NOT NULL DEFAULT 0x0;
 
 -- Convert existing VARCHAR data to binary (using inet6_aton for MySQL)
-UPDATE core_notify_server 
-SET ipv6_range_from_bin = INET6_ATON(ipv6_range_from) 
-WHERE ipv6_range_from != '' AND ipv6_range_from IS NOT NULL;
+-- UPDATE core_notify_server SET ipv6_range_from_bin = INET6_ATON(ipv6_range_from) WHERE ipv6_range_from != '' AND ipv6_range_from IS NOT NULL;
 
-UPDATE core_notify_server 
-SET ipv6_range_to_bin = INET6_ATON(ipv6_range_to) 
-WHERE ipv6_range_to != '' AND ipv6_range_to IS NOT NULL;
+-- UPDATE core_notify_server SET ipv6_range_to_bin = INET6_ATON(ipv6_range_to) WHERE ipv6_range_to != '' AND ipv6_range_to IS NOT NULL;
 
 -- Drop old VARCHAR columns
 ALTER TABLE core_notify_server DROP COLUMN ipv6_range_from;
