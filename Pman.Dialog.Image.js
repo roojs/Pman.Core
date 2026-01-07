@@ -203,8 +203,10 @@ Pman.Dialog.Image = {
                     ts : Math.random()
                 }
             });
-            _this.dialog.haveProgress = 0; // set to show..
-            _this.dialog.uploadProgress.defer(1000, _this.dialog);
+            if (!_this.data.useSSE) {
+                _this.dialog.haveProgress = 0; // set to show..
+                _this.dialog.uploadProgress.defer(1000, _this.dialog);
+            }
         
         }
       },
