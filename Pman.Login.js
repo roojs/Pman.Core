@@ -39,6 +39,7 @@ Pman.Login =  new Roo.util.Observable({
     logging_out : false,
     
     checkConnection : false, // the Roo.data.Connection for checking if still authenticated.
+    authCheckPaused : false, // pause auth checks during long-running SSE operations
     
     onLoad : function() // called on page load...
     {
