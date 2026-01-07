@@ -67,9 +67,7 @@ Pman.Dialog.Image = {
             }
         });
         
-        Roo.log("_THIS.DATA.USESSE!!!!!!!!!!!!!!!!!!");
         if (!_this.data.useSSE) {
-            Roo.log("NOT SSE CALL UPLOAD PROGRESS!!!!!!!!!!!!!!!!!");
             _this.dialog.haveProgress = 0; // set to show..
             _this.dialog.uploadProgress.defer(1000, _this.dialog);
         }
@@ -79,7 +77,6 @@ Pman.Dialog.Image = {
     uploadComplete : false,
     uploadProgress : function()
     {
-        Roo.log("CALLING UPLOAD PROGRESS ...");
         var dlg = this;
        if (!dlg.haveProgress) {
             Roo.MessageBox.progress("Uploading", "Uploading");
