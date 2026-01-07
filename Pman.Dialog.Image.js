@@ -241,6 +241,7 @@ Pman.Dialog.Image = {
               //_this.dialog.el.unmask();
                
               if (act.type == 'setdata') { 
+                  Roo.log("SET DATA!!!!!!!!!!!!!!!!!");
               
                   _this.form.findField('imgtype').hide();
                   
