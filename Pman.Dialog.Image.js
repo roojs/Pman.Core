@@ -77,6 +77,7 @@ Pman.Dialog.Image = {
     uploadComplete : false,
     uploadProgress : function()
     {
+        Roo.log("CALLING UPLOAD PROGRESS ...");
         var dlg = this;
        if (!dlg.haveProgress) {
             Roo.MessageBox.progress("Uploading", "Uploading");
