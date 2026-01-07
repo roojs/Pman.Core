@@ -271,12 +271,21 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
      * 
      * @param string $allocation_reason Reason why IPv6 was allocated (e.g., bounce message, error details)
+     * @param array $mxs Array of MX hostnames
      * @return core_notify_server_ipv6|false
      */
-    function setUpIpv6($allocation_reason = '')
+    function setUpIpv6($allocation_reason = '', $mxs = array())
     {
         if(!$this->hasAAAARecord()) {
             return false;
+        }
+
+        foreach($mxs as $mx) {
+            // try to use pre-configured IPv6 addresses
+            $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+            if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
+                return $ipv6;
+            }
         }
 
         $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
@@ -296,8 +305,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $cnsi->allocation_reason = $allocation_reason;
             $cnsi->insert();
         }
+        
+        // make sure the ipv6_addr_str is available
+        $cnsi2 = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi2->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+        $cnsi2->get($cnsi->id);
 
-        return $cnsi;
+        return $cnsi2;
     }
 
     /**
