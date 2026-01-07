@@ -380,6 +380,7 @@
    "xtype" : "LayoutDialog",
    "| uploadCallback" : [
     "function() {",
+    "    Roo.log(\"UPLOAD CALLBACK!!!!!!!!!!!!!!!!!!!!!!!\");",
     "    _this.dialog.uploadComplete = false;",
     "    _this.form.doAction('submit', {",
     "        params: {",
