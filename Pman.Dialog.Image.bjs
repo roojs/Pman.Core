@@ -378,6 +378,12 @@
    "xtype" : "LayoutDialog",
    "| uploadCallback" : [
     "function() {",
+    "    // At start of uploadCallback:",
+    "    if (_this.dialog.uploading) {",
+    "        return;",
+    "    }",
+    "    _this.dialog.uploading = true;",
+    "    ",
     "    _this.dialog.uploadComplete = false;",
     "    _this.form.doAction('submit', {",
     "        params: {",
