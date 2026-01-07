@@ -71,8 +71,6 @@ Pman.Dialog.Image = {
             _this.dialog.haveProgress = 0; // set to show..
             _this.dialog.uploadProgress.defer(1000, _this.dialog);
         }
-        
-        _this.form.findField('imageUpload').el.un('change', _this.dialog.uploadCallback);
     },
     uploadComplete : false,
     uploadProgress : function()
@@ -136,7 +134,8 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
-          _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);
+          _this.form.findField('imageUpload').el.un('change', _this.dialog.uploadCallback);
+          _this.form.findField('imageUpload').el.on('change', _this.dialog.uploadCallback);
           _this.form.findField('imageUpload').el.dom.click();
           _this.dialog.hide();
       
