@@ -23,7 +23,8 @@ ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_ipv6 (domain_id, ipv
 
 -- Migration: Change ipv6_addr to VARBINARY(16) for efficient storage
 -- Reset all data first
-TRUNCATE TABLE core_notify_server_ipv6;
+-- TRUNCATE TABLE core_notify_server_ipv6;
+
 ALTER TABLE core_notify_server_ipv6 DROP INDEX lookup_addr;
 ALTER TABLE core_notify_server_ipv6 DROP INDEX ipv6_seq;
 ALTER TABLE core_notify_server_ipv6 DROP INDEX domain_ipv6;
