@@ -60,7 +60,6 @@ Pman.Dialog.Image = {
     shadow : true,
     title : _this._strings['2859a4ae58ae4e25abdfc530f814e42f'] /* Upload an Image or File */,
     uploadCallback : function() {
-        Roo.log("UPLOAD CALLBACK!!!!!!!!!!!!!!!!!!!!!!!");
         _this.dialog.uploadComplete = false;
         _this.form.doAction('submit', {
             params: {
@@ -140,7 +139,6 @@ Pman.Dialog.Image = {
     listeners : {
      show : function (_self)
       {
-          Roo.log("SHOW!!!!!!!!!!!!!!!!!!!!!!!!!");
           _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);
           _this.form.findField('imageUpload').el.dom.click();
           _this.dialog.hide();

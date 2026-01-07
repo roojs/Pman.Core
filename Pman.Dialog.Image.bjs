@@ -337,7 +337,6 @@
     "show" : [
      "function (_self)",
      "{",
-     "    Roo.log(\"SHOW!!!!!!!!!!!!!!!!!!!!!!!!!\");",
      "    _this.form.findField('imageUpload').el.on('change', _self.uploadCallback);",
      "    _this.form.findField('imageUpload').el.dom.click();",
      "    _this.dialog.hide();",
@@ -380,7 +379,6 @@
    "xtype" : "LayoutDialog",
    "| uploadCallback" : [
     "function() {",
-    "    Roo.log(\"UPLOAD CALLBACK!!!!!!!!!!!!!!!!!!!!!!!\");",
     "    _this.dialog.uploadComplete = false;",
     "    _this.form.doAction('submit', {",
     "        params: {",
