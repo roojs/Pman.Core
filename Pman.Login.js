@@ -148,6 +148,9 @@ Pman.Login =  new Roo.util.Observable({
         if (Pman.Login.logging_out) {
             return; // don't keep rechecking if we are already about to log out.
         }
+        if (Pman.Login.authCheckPaused) {
+            return; // skip auth check during long-running SSE operations
+        }
         
         if (again) { // could be undefined..
             Pman.Login.checkFails++;
