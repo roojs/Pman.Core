@@ -17,10 +17,12 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     public $is_active;
     public $last_send;
     
-    
-    
     function  applyFilters($q, $au, $roo)
     {
+        // Add string versions of binary IPv6 fields for the interface
+        $this->selectAdd("INET6_NTOA(ipv6_range_from) as ipv6_range_from_str");
+        $this->selectAdd("INET6_NTOA(ipv6_range_to) as ipv6_range_to_str");
+        
         if (isset($q['_with_queue_size'])) {
             $this->addQueueSize();
         }
@@ -28,31 +30,26 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
 
     function beforeUpdate($old, $q, $roo)
     {
-        if(!empty($q['ipv6_range_from'])) {
-            $core_domain = DB_DataObject::factory('core_domain')->loadOrCreate($q['ipv6_range_from']);
-            $core_domain->setUpIpv6("Manual allocation via server configuration update");
-        }
-
         // if any of the ipv6 fields is set, make sure all of them are set
         if(
-            !empty($q['ipv6_range_from'])
+            !empty($q['ipv6_range_from_str'])
             ||
-            !empty($q['ipv6_range_to'])
+            !empty($q['ipv6_range_to_str'])
             ||
             !empty($q['ipv6_ptr'])
             ||
             !empty($q['ipv6_sender_id'])
         ) {
-            if(empty($q['ipv6_range_from'])) {
+            if(empty($q['ipv6_range_from_str'])) {
                 $roo->jerr("IPv6 range from is required");
             }
-            if(filter_var($q['ipv6_range_from'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            if(filter_var($q['ipv6_range_from_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
                 $roo->jerr("IPv6 range from is not a valid IPv6 address");
             }
-            if(empty($q['ipv6_range_to'])) {
+            if(empty($q['ipv6_range_to_str'])) {
                 $roo->jerr("IPv6 range to is required");
             }
-            if(filter_var($q['ipv6_range_to'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
+            if(filter_var($q['ipv6_range_to_str'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false) {
                 $roo->jerr("IPv6 range to is not a valid IPv6 address");
             }
             if(empty($q['ipv6_ptr'])) {
@@ -61,6 +58,10 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if(empty($q['ipv6_sender_id'])) {
                 $roo->jerr("IPv6 sender is required");
             }
+            
+            // Convert string to binary for storage using MySQL INET6_ATON
+            $this->ipv6_range_from = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_from_str']) . "')");
+            $this->ipv6_range_to = $this->sqlValue("INET6_ATON('" . $this->escape($q['ipv6_range_to_str']) . "')");
         }
     }
     
@@ -338,20 +339,25 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
         ");
         
         $pending_notifications = $p->fetchAll();
-        
         foreach ($pending_notifications as $notification) {
-            // Check if this domain_id has an IPv6 server assignment
+            // Check if this domain_id has IPv6 server assignments
             $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
             $ipv6->domain_id = $notification->domain_id;
+            $ipv6->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+            $ipv6_records = $ipv6->fetchAll();
             
-            if ($ipv6->find(true)) {
+            if (!empty($ipv6_records)) {
+                // Randomly pick one if multiple exist
+                $selected_ipv6 = $ipv6_records[array_rand($ipv6_records)];
+                
                 // Find the server whose range contains this IPv6 address
-                $serverFromIpv6 = $ipv6->findServerFromIpv6($this->poolname);
+                $serverFromIpv6 = $selected_ipv6->findServerFromIpv6($this->poolname);
                 if ($serverFromIpv6) {
                     // Assign the IPv6 server regardless of availability status
                     $update_notification = DB_DataObject::factory($notify->table);
                     $update_notification->get($notification->id);
                     $update_notification->server_id = $serverFromIpv6->id;
+                    $update_notification->ipv6_id = $selected_ipv6->id;
                     $update_notification->update();
                     $assignedIds[] = $notification->id;
                 }
@@ -392,6 +398,7 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
             if($serverFromIpv6 != false) {
                 $w->server_id = $serverFromIpv6->id;
             }
+            $w->ipv6_id = $server_ipv6->id;
             $w->act_when = $when === false ? $w->sqlValue('NOW() + INTERVAL 1 MINUTE') : $when;
             $w->update($pp);
             return true;
@@ -511,9 +518,9 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
     {
         $server = DB_DataObject::factory('core_notify_server');
         $server->whereAdd("
-            ipv6_range_from != ''
+            ipv6_range_from != 0x0
             and
-            ipv6_range_to != ''
+            ipv6_range_to != 0x0
         ");
         $server->is_active = 1;
         $server->limit(1);
@@ -541,94 +548,17 @@ class Pman_Core_DataObjects_Core_notify_server extends DB_DataObject
      */
     function findSmallestUnusedIpv6()
     {
-        if($this->ipv6_range_from == '' || $this->ipv6_range_to == '') {
-            return false;
+        $cns = DB_DataObject::factory('core_notify_server');
+        $cns->selectAdd();
+        $cns->selectAdd("find_smallest_unused_ipv6(core_notify_server.id) as smallest_unused_ipv6");
+        $cns->id = $this->id;
+        if($cns->find(true) && !empty($cns->smallest_unused_ipv6)) {
+            return $cns->smallest_unused_ipv6;
         }
-
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $usedIPv6 = $cnsi->fetchAll('ipv6_addr');
-
-        $start = $this->ipv6ToDecimal($this->ipv6_range_from);
-        if($start === false) {
-            return false;
-        }
-        $end = $this->ipv6ToDecimal($this->ipv6_range_to);
-        if($end === false) {
-            return false;
-        }
-        $used = array();
-        foreach($usedIPv6 as $ipv6) {
-            $decimal = $this->ipv6ToDecimal($ipv6);
-            if($decimal === false) {
-                continue;
-            }
-            $used[] = $decimal;
-        }
-        $usedSet = array_flip($used);
-    
-        // Start from the next address after 'from'
-        $current = bcadd($start, '1');
-        
-        while (bccomp($current, $end) <= 0) {
-            if (!isset($usedSet[$current])) {
-                return $this->decimalToIPv6($current);
-            }
-            $current = bcadd($current, '1');
-        }
-        return false; // All addresses used
+        return false;
     }
 
-    /**
-     * Convert ipv6 to decimal
-     * If invalid ipv6 address, return false
-     * 
-     * @param string $ip
-     * @return string|false
-     */
-    function ipv6ToDecimal($ip) {
-        $binary = inet_pton($ip);
-        if ($binary === false) {
-            return false;
-        }
-        
-        // Convert to hex string
-        $hex = bin2hex($binary);
-        
-        // Convert hex to decimal using bcmath
-        $decimal = '0';
-        for ($i = 0; $i < strlen($hex); $i++) {
-            $decimal = bcmul($decimal, '16');
-            $decimal = bcadd($decimal, hexdec($hex[$i]));
-        }
-        
-        return $decimal;
-    }
-    
 
-    /**
-     * Convert decimal to ipv6
-     * 
-     * @param string $dec
-     * @return string
-     */
-    function decimalToIPv6($dec) {
-        // Convert decimal to hex
-        $hex = '';
-        $temp = $dec;
-        
-        while (bccomp($temp, '0') > 0) {
-            $remainder = bcmod($temp, '16');
-            $hex = dechex($remainder) . $hex;
-            $temp = bcdiv($temp, '16', 0);
-        }
-        
-        // Pad to 32 characters (128 bits)
-        $hex = str_pad($hex, 32, '0', STR_PAD_LEFT);
-        
-        // Convert hex to binary and then to IPv6
-        $binary = hex2bin($hex);
-        return inet_ntop($binary);
-    }
     
     function resetQueueForTable($table)
     {

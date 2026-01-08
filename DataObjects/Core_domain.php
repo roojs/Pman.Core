@@ -143,6 +143,10 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
         $mx_weight = array();
         if(getmxrr($domain, $mx_records, $mx_weight)) {
             foreach($mx_records as $mx_record) {
+                // Skip empty MX records (e.g., null MX per RFC 7505)
+                if(empty($mx_record) || $mx_record === '.') {
+                    continue;
+                }
                 if(checkdnsrr($mx_record, 'A') || checkdnsrr($mx_record, 'AAAA')) {
                     return true;
                 }
@@ -267,12 +271,21 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
      * If the domain has an AAAA record, find the smallest unused ipv6 address in the range and set it up
      * 
      * @param string $allocation_reason Reason why IPv6 was allocated (e.g., bounce message, error details)
+     * @param array $mxs Array of MX hostnames
      * @return core_notify_server_ipv6|false
      */
-    function setUpIpv6($allocation_reason = '')
+    function setUpIpv6($allocation_reason = '', $mxs = array())
     {
         if(!$this->hasAAAARecord()) {
             return false;
+        }
+
+        foreach($mxs as $mx) {
+            // try to use pre-configured IPv6 addresses
+            $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
+            if($ipv6 = $cnsi->findOrCreateIpv6ForMx($mx, $this->id, $allocation_reason)) {
+                return $ipv6;
+            }
         }
 
         $server = DB_DataObject::factory('core_notify_server')->findServerWithIpv6();
@@ -292,8 +305,13 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             $cnsi->allocation_reason = $allocation_reason;
             $cnsi->insert();
         }
+        
+        // make sure the ipv6_addr_str is available
+        $cnsi2 = DB_DataObject::factory('core_notify_server_ipv6');
+        $cnsi2->selectAdd("INET6_NTOA(ipv6_addr) as ipv6_addr_str");
+        $cnsi2->get($cnsi->id);
 
-        return $cnsi;
+        return $cnsi2;
     }
 
     /**
@@ -382,7 +400,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error we can't fix, so treat it as a valid check
             if ($res->code == 421) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Service unavailable), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 421 as success
             }
@@ -391,7 +409,7 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             // This is a temporary error indicating greylisting, so treat it as a valid check
             if ($res->code == 451) {
                 $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid"
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Greylisting), however we accepted it as valid. Error: {$errorMessage}"
                 );
                 return true; // Treat 451 as success
             }
@@ -402,21 +420,32 @@ class Pman_Core_DataObjects_Core_domain extends DB_DataObject
             if ($res->code == 550 && (
                 preg_match('/spamhaus/i', $errorMessage)  
             )) {
-                $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spamhaus, 
-						however we accepted it as valid"
-                );
+                // Don't need to log error for spamhaus failures
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
             if ($res->code == 554 && (
                 preg_match('/spam/i', $errorMessage)  
             )) {
-                $roo->errorlog(
-                    "WARNING: Email test failed for {$email} - returned code {$res->code} and contained Spam, 
-						however we accepted it as valid"
-                );
+                // Don't need to log error for spam failures
                 return true; // Treat 550 Spamhaus/Mimecast as success
             }
+
+            if($res->code == 554 && preg_match('/Recipient address rejected: Access denied/i', $errorMessage)) {
+                $roo->errorlog(
+                    "WARNING: Email test failed for {$email} - returned code {$res->code} (Access denied), however we accepted it as valid. Error: {$errorMessage}"
+                );
+                return true;
+            }
+
+            // We don't need to log these errors and don't need to show these errors to the user
+            if(
+                $res->code == 550 && preg_match('/does not exist/i', $errorMessage)
+                ||
+                $res->code == 550 && preg_match('/no mailbox here/i', $errorMessage)
+            ) {
+                return "This email is invalid - we tested it and it does not exist";
+            }
+
             // Only log errors that aren't known false positives
             // PEAR_Error objects have both ->message property and getMessage() method
             // Using getMessage() method is the standard approach

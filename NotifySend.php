@@ -379,13 +379,14 @@ class Pman_Core_NotifySend extends Pman
         // make sure there is a correct domain_id in the notify record
         // Fetch IPv6 server configuration if available
         $this->server_ipv6 = null;
-        if (!empty($w->domain_id)) {
-            $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
-            $ipv6->autoJoin();
-            $ipv6->domain_id = $w->domain_id;
-            if ($ipv6->find(true)) {
-                $this->server_ipv6 = $ipv6;
-            }
+        $ipv6 = DB_DataObject::factory('core_notify_server_ipv6');
+        $ipv6->selectAdd();
+        $ipv6->selectAdd('*, INET6_NTOA(ipv6_addr) as ipv6_addr_str');
+        if (!empty($w->ipv6_id) && $ipv6->get($w->ipv6_id)) {
+            $this->server_ipv6 = $ipv6;
+            $this->debug("IPv6: Loaded existing IPv6 for domain_id={$w->domain_id}, address=" . ($ipv6->ipv6_addr_str ?: 'NOT SET'));
+        } else {
+            $this->debug("IPv6: domain_id is empty, cannot load IPv6");
         }
       
         
@@ -482,18 +483,26 @@ class Pman_Core_NotifySend extends Pman
             $this->errorHandler("config Mail[helo] is not set");
         }
         
+        // Disabled for now
+        /*
         $sender = DB_DataObject::factory('core_notify_sender');
         if(!empty($this->server_ipv6) && $sender->get($this->server->ipv6_sender_id)) {
             $email['headers']['From'] = $sender->email;
         }
+        */
 
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
+        
+        // Convert MX hostnames to map of IP addresses => domain
+        $use_ipv6 = !empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr_str);
+        $mx_ip_map = $this->convertMxsToIpMap($mxs, $use_ipv6);
                         
-        foreach($mxs as $mx) {
+        foreach($mx_ip_map as $smtp_host => $mx) {
             
            
             $this->debug_str = '';
-            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']}");
+            $this->debug("Trying SMTP: $mx / HELO {$ff->Mail['helo']} (IP: $smtp_host)");
+            
             // Prepare socket options with IPv6 binding if available
             $base_socket_options = isset($ff->Mail['socket_options']) ? $ff->Mail['socket_options'] : array(
                 'ssl' => array(
@@ -504,11 +513,47 @@ class Pman_Core_NotifySend extends Pman
                 )
             );
             
-            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options);
+            // Check if we're using IPv6 and prepare HELO hostname
+            $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
+            $helo_hostname = $ff->Mail['helo'];
+            
+            if ($is_ipv6) {
+                // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
+                // Handle compressed zeros (::) by splitting and taking the rightmost part
+                $ipv6_parts = explode('::', $smtp_host);
+                $right_part = end($ipv6_parts);
+                if (empty($right_part)) {
+                    // Address ends with ::, get last segment from left part
+                    $left_part = $ipv6_parts[0];
+                    $segments = explode(':', $left_part);
+                    $last_segment = end($segments);
+                } else {
+                    $segments = explode(':', $right_part);
+                    $last_segment = end($segments);
+                }
+                
+                // Remove leading zeros from last segment
+                $last_segment = ltrim($last_segment, '0');
+                if (empty($last_segment)) {
+                    $last_segment = '0';
+                }
+                
+                // Modify HELO hostname: sgfs1.media-outreach.com -> sgfs1-22a.media-outreach.com
+                $helo_hostname = preg_replace('/^([^.]+)\./', '$1-' . $last_segment . '.', $ff->Mail['helo']);
+                $this->debug("IPv6: Modified HELO hostname: {$ff->Mail['helo']} -> $helo_hostname");
+            }
+            
+            $socket_options = $this->prepareSocketOptionsWithIPv6($base_socket_options, $smtp_host);
+            
+            // Format IPv6 address with brackets for PEAR Mail compatibility
+            $mailer_host = $smtp_host;
+            if ($is_ipv6) {
+                $mailer_host = '[' . $smtp_host . ']';
+            }
             
             $mailer = Mail::factory('smtp', array(
-                'host'    => $mx ,
-                'localhost' => $ff->Mail['helo'],
+                'host'    => $mailer_host,
+                'localhost' => $helo_hostname,
                 'timeout' => 15,
                 'socket_options' => $socket_options,
                 
@@ -674,6 +719,7 @@ class Pman_Core_NotifySend extends Pman
             $this->debug("GOT response to send: ". print_r($res,true));
 
             if ($res === true) {
+                $mx_success = true;
                 // success....
                 
                 $successEventName = (empty($email['successEventName'])) ? 'NOTIFYSENT' : $email['successEventName'];
@@ -720,8 +766,8 @@ class Pman_Core_NotifySend extends Pman
             }
             
             if ($code < 0) {
-                $this->debug($res->message);
-                continue; // try next mx... ??? should we wait??? - nope we did not even connect..
+                $this->debug("Connection error with $smtp_host: " . $res->message);
+                continue; // try next IP address
             }
             // give up after 2 days..
             if (in_array($code, array( 421, 450, 451, 452))   && $next_try_min < (2*24*60)) {
@@ -751,7 +797,7 @@ class Pman_Core_NotifySend extends Pman
         }
         
         // after trying all mxs - could not connect...
-        if  (!$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
+        if  (!$force && !$fail && ($next_try_min > (2*24*60) || strtotime($w->act_start) < strtotime('NOW - 3 DAYS'))) {
             
             $errmsg=  " - UNKNOWN ERROR";
             if (isset($res->userinfo['smtptext'])) {
@@ -775,16 +821,18 @@ class Pman_Core_NotifySend extends Pman
             // If spamhaus is found, continue current behavior (don't pass to next server)
             $is_spamhaus = stripos($errmsg, 'spam') !== false 
                 || stripos($errmsg, 'in rbl') !== false 
-                || stripos($errmsg, 'reputation') !== false ; 
- 
+                || stripos($errmsg, 'reputation') !== false ;
+
             $shouldRetry = false;
 
             // smtpcode > 500 (permanent failure)
-            if(!empty($res->userinfo['smtpcode']) && $res->userinfo['smtpcode'] > 500) {
+            $smtpcode = isset($res->userinfo['smtpcode']) ? $res->userinfo['smtpcode'] : 0;
+            if(!empty($smtpcode) && $smtpcode > 500) {
                 // spamhaus - not using ipv6 -> try setting up ipv6
                 if($is_spamhaus && empty($this->server_ipv6)) {
+                    $this->debug("IPv6: Spamhaus detected (code: $smtpcode), attempting IPv6 setup");
                     // Build allocation reason with error details
-                    $allocation_reason = "SMTP Code: " . $res->userinfo['smtpcode'];
+                    $allocation_reason = "SMTP Code: " . $smtpcode;
                     if (!empty($res->userinfo['smtptext'])) {
                         $allocation_reason .= "; Error: " . $res->userinfo['smtptext'];
                     }
@@ -793,12 +841,19 @@ class Pman_Core_NotifySend extends Pman
                     
                     // no IPv6 can be set up -> don't retry
                     // IPv6 set up successfully
-                    if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason)) {
+                    if($this->server_ipv6 = $core_domain->setUpIpv6($allocation_reason, $mxs)) {
+                        $this->debug("IPv6: Setup successful, will retry");
                         $shouldRetry = true;
+                    } else {
+                        $this->debug("IPv6: Setup failed");
                     }
                 }
-                // not spamhaus
+                // not spamhaus OR IPv6 already exists
                 else {
+                    $reason = array();
+                    if (!$is_spamhaus) $reason[] = "not spamhaus";
+                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
+                    $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
                     if($this->server->checkSmtpResponse($errmsg, $core_domain)) {
@@ -810,7 +865,7 @@ class Pman_Core_NotifySend extends Pman
             // try next server
             if($shouldRetry) {
                 $this->server->updateNotifyToNextServer($w,  $retry_when ,true, $this->server_ipv6);
-                $this->errorHandler($errmsg);
+                $this->errorHandler("Retry in next server at {$retry_when} - Error: $errmsg");
                 // Successfully passed to next server, exit
                 return;
             }
@@ -952,21 +1007,91 @@ class Pman_Core_NotifySend extends Pman
     }
     
     /**
+     * Convert array of MX hostnames to map of IP addresses => domain
+     * Prioritizes IPv6 addresses if use_ipv6 is true
+     * 
+     * @param array $mxs Array of MX hostnames
+     * @param bool $use_ipv6 Whether to perform IPv6 DNS lookups
+     * @return array Map of IP address => domain name
+     */
+    function convertMxsToIpMap($mxs, $use_ipv6 = false)
+    {
+        $mx_ip_map = array();
+        
+        foreach ($mxs as $mx) {
+            $mx_use_ipv6 = $use_ipv6;
+            
+            // Resolve IPv6 addresses (AAAA records) only if mx_use_ipv6 is true
+            $ipv6_records = @dns_get_record($mx, DNS_AAAA);
+            if ($mx_use_ipv6 && !empty($ipv6_records)) {
+                foreach ($ipv6_records as $record) {
+                    if (empty($record['ipv6'])) {
+                        continue;
+                    }
+
+                    $mx_ip_map[$record['ipv6']] = $mx;
+                    
+                }
+            }
+            
+            // Resolve IPv4 addresses (A records)
+            $ipv4_records = @dns_get_record($mx, DNS_A);
+            $dns_ips = array();
+            if (!empty($ipv4_records)) {
+                foreach ($ipv4_records as $record) {
+                    if (empty($record['ip'])) {
+                        continue;
+                    }
+                    $dns_ips[] = $record['ip'];
+                    $mx_ip_map[$record['ip']] = $mx;
+                }
+            }
+            
+            // Also check hostname lookup (gethostbyname) as hosts file might override A record
+            $hostname_ip = @gethostbyname($mx);
+            if (!empty($hostname_ip) && filter_var($hostname_ip, FILTER_VALIDATE_IP)) {
+                $mx_ip_map[$hostname_ip] = $mx;
+                $this->debug("DNS: Found hosts file override for $mx: $hostname_ip");
+            }
+            
+        }
+        
+        // If no IPs resolved, fall back to hostnames
+        if (empty($mx_ip_map)) {
+            foreach ($mxs as $mx) {
+                $mx_ip_map[$mx] = $mx;
+            }
+            $this->debug("DNS: No IP addresses resolved for any MX, using hostnames");
+        }
+        
+        return $mx_ip_map;
+    }
+    
+    /**
      * Prepare socket options with IPv6 binding if available
      * 
      * @param array $base_options Base socket options
+     * @param string $smtp_host The SMTP host (IP address or hostname)
      * @return array Enhanced socket options with IPv6 binding
      */
-    function prepareSocketOptionsWithIPv6($base_options = array())
+    function prepareSocketOptionsWithIPv6($base_options = array(), $smtp_host = null)
     {
         $socket_options = $base_options;
         
+        // Return early if not using IPv6
+        if (empty($smtp_host) || !filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return $socket_options;
+        }
+        
         // Add IPv6 binding if server_ipv6 is configured
-        if (!empty($this->server_ipv6) && !empty($this->server_ipv6->ipv6_addr)) {
+        $ipv6_addr_str = !empty($this->server_ipv6) ? $this->server_ipv6->ipv6_addr_str : false;
+        if ($ipv6_addr_str) {
             $socket_options['socket'] = array(
-                'bindto' => '[' . $this->server_ipv6->ipv6_addr . ']:0'
+                'bindto' => '[' . $ipv6_addr_str . ']:0'
             );
-            $this->debug("Binding SMTP connection to IPv6 address: " . $this->server_ipv6->ipv6_addr);
+            $this->debug("IPv6: Binding SMTP connection to IPv6 address: " . $ipv6_addr_str);
+        } else {
+            $this->debug("IPv6: Not binding to IPv6 (server_ipv6=" . (empty($this->server_ipv6) ? 'empty' : 'set') . ", ipv6_addr=" . ($ipv6_addr_str ?: 'empty') . ")");
         }
         
         return $socket_options;
