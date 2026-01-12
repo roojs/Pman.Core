@@ -713,7 +713,7 @@ class Pman_Core_NotifySend extends Pman
 
             if($this->server_ipv6->is_spam_rejecting) {
                 $fromArr = explode("@", $email['headers']['From']);
-                $domArr = array_pop(explode(".". $dom));
+                $domArr = implode("-", array_pop(explode(".". $dom)));
 
                 $fromArr[0] .= ('+' . $dom);
                 $email['headers']['From'] = implode("@", $fromArr);
