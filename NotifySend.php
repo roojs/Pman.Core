@@ -713,9 +713,7 @@ class Pman_Core_NotifySend extends Pman
 
             if($this->server_ipv6->is_spam_rejecting) {
                 $fromArr = explode("@", $email['headers']['From']);
-                $domArr = implode("-", array_pop(explode(".". $dom)));
-
-                $fromArr[0] .= ('+' . $dom);
+                $fromArr[0] .= ('+' . implode("-", array_pop(explode(".". $dom))));
                 $email['headers']['From'] = implode("@", $fromArr);
                 $this->debug("IPv6: Spam rejecting, changing from address to {$email['headers']['From']}");
             }
