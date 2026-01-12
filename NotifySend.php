@@ -605,6 +605,8 @@ class Pman_Core_NotifySend extends Pman
                         continue;
                     }
 
+                    die('match');
+
                     $host = $server;
 
                     // check if there is a mail_imap_user for the 'From' email before using oauth
