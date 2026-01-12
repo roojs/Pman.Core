@@ -711,7 +711,8 @@ class Pman_Core_NotifySend extends Pman
                 
             }
 
-            var_dump($email['headers']['From']);
+            var_dump($email['headers']);
+            var_dump($p->email);
             die('test');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
