@@ -589,11 +589,6 @@ class Pman_Core_NotifySend extends Pman
                     
                     $match = false;
 
-                    var_dump($settings);
-
-                    var_dump($dom);
-                    die('test');
-
                     if(in_array($dom, $settings['domains'])){
                         $match = true;
                     }
@@ -609,8 +604,6 @@ class Pman_Core_NotifySend extends Pman
                     if (!$match) {
                         continue;
                     }
-
-                    die('match');
 
                     $host = $server;
 
