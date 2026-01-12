@@ -710,8 +710,6 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
-
-            die('test2');
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             
