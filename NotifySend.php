@@ -710,6 +710,15 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
+
+            if($this->server_ipv6->is_spam_rejecting) {
+                $fromArr = explode("@", $email['headers']['From']);
+                $domArr = explode(".". $dom);
+                
+                $fromArr[0] .= ('+' . $dom);
+                $email['headers']['From'] = implode("@", $fromArr);
+                $this->debug("IPv6: Spam rejecting, changing from address to {$email['headers']['From']}");
+            }
             
             $res = $mailer->send($p->email, $email['headers'], $email['body']);
             
@@ -853,7 +862,20 @@ class Pman_Core_NotifySend extends Pman
                 else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
+                    if (!empty($this->server_ipv6)) {
+                        $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
+
+                        // is spamhaus AND 
+                        // IPv6 already exists AND 
+                        // the ip is not already spam rejecting AND 
+                        // the ip does not have a reverse pointer
+                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->ipHasReversePtr()) {
+                            $old = clone($this->server_ipv6);
+                            $this->server_ipv6->is_spam_rejecting = 1;
+                            $this->server_ipv6->update($old);
+                            $this->debug("IPv6: Set spam rejecting for " . $this->server_ipv6->ipv6_addr_str);
+                        }
+                    }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
