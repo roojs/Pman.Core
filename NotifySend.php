@@ -492,6 +492,9 @@ class Pman_Core_NotifySend extends Pman
             $email['headers']['From'] = $sender->email;
         }
 
+        var_dump($email);
+        die('test');
+
         $email = DB_DataObject::factory('core_notify_sender')->filterEmail($email, $w);
         
         // Convert MX hostnames to map of IP addresses => domain
