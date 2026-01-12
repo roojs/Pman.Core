@@ -8,14 +8,28 @@ CREATE TABLE core_notify_server_ipv6 (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE core_notify_server_ipv6 DROP COLUMN server_id;
-ALTER TABLE core_notify_server_ipv6 ADD COLUMN seq INT NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_addr (ipv6_addr);
 ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_domain (domain_id);
 
- 
-
-ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_seq (domain_id, seq);
-
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN allocation_reason TEXT NOT NULL DEFAULT '';
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN is_spam_rejecting INT(2) NOT NULL DEFAULT 0;
+
+ALTER TABLE core_notify_server_ipv6 ADD COLUMN seq INT NOT NULL DEFAULT 0;
+ALTER TABLE core_notify_server_ipv6 ADD COLUMN has_reverse_ptr INT NOT NULL DEFAULT 0;
+
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_seq (domain_id, seq);
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX ipv6_seq (ipv6_addr, seq);
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_ipv6 (domain_id, ipv6_addr);
+
+-- Migration: Change ipv6_addr to VARBINARY(16) for efficient storage
+-- Reset all data first
+-- TRUNCATE TABLE core_notify_server_ipv6;
+
+ALTER TABLE core_notify_server_ipv6 DROP INDEX lookup_addr;
+ALTER TABLE core_notify_server_ipv6 DROP INDEX ipv6_seq;
+ALTER TABLE core_notify_server_ipv6 DROP INDEX domain_ipv6;
+ALTER TABLE core_notify_server_ipv6 MODIFY COLUMN ipv6_addr VARBINARY(16) NOT NULL DEFAULT 0x0;
+ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_addr (ipv6_addr);
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX ipv6_seq (ipv6_addr, seq);
+ALTER TABLE core_notify_server_ipv6 ADD UNIQUE INDEX domain_ipv6 (domain_id, ipv6_addr);
