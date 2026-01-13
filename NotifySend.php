@@ -720,7 +720,7 @@ class Pman_Core_NotifySend extends Pman
                 }
                 $fromArr[0] .= ('+' . implode("-", $parts));
               
-                if (!empty($emailHeaders['Reply-To']) &&$emailHeaders['From'] == $emailHeaders['Reply-To'] )
+                if (!empty($emailHeaders['Reply-To']) && $emailHeaders['From'] == $emailHeaders['Reply-To'] ) {
                     $emailHeaders['Reply-To'] = implode("@", $fromArr); 
                 }
                 $emailHeaders['From'] = implode("@", $fromArr);
