@@ -710,8 +710,10 @@ class Pman_Core_NotifySend extends Pman
                 
             }
 
+            $emailHeaders = $email['headers'];
+
             if($this->server_ipv6->is_spam_rejecting) {
-                $fromArr = explode("@", $email['headers']['From']);
+                $fromArr = explode("@", $emailHeaders['From']);
                 var_dump($is_ipv6);
                 var_dump($fromArr);
                 $parts = explode(".", $dom);
@@ -719,11 +721,11 @@ class Pman_Core_NotifySend extends Pman
                     array_pop($parts);
                 }
                 $fromArr[0] .= ('+' . implode("-", $parts));
-                $email['headers']['From'] = implode("@", $fromArr);
+                $emailHeaders['From'] = implode("@", $fromArr);
                 $this->debug("IPv6: Spam rejecting, changing from address to {$email['headers']['From']}");
             }
             
-            $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            $res = $mailer->send($p->email, $emailHeaders, $email['body']);
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
