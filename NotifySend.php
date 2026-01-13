@@ -713,17 +713,11 @@ class Pman_Core_NotifySend extends Pman
             $emailHeaders = $email['headers'];
 
             if($use_ipv6 && $this->server_ipv6->is_spam_rejecting && $is_ipv6) {
-                $fromArr = explode("@", $emailHeaders['From']);
-                $parts = explode(".", $dom);
-                if(count($parts) > 1) {
-                    array_pop($parts);
-                }
-                $fromArr[0] .= ('+' . implode("-", $parts));
+                $emailHeaders['From'] = $this->addDomainToEmail($emailHeaders['From'], $dom);
               
-                if (!empty($emailHeaders['Reply-To']) && $emailHeaders['From'] == $emailHeaders['Reply-To'] ) {
-                    $emailHeaders['Reply-To'] = implode("@", $fromArr); 
+                if (!empty($emailHeaders['Reply-To'])) {
+                    $emailHeaders['Reply-To'] = $this->addDomainToEmail($emailHeaders['Reply-To'], $dom);
                 }
-                $emailHeaders['From'] = implode("@", $fromArr);
                 $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
             }
             
@@ -1125,6 +1119,27 @@ class Pman_Core_NotifySend extends Pman
         }
         
         return $socket_options;
+    }
+    
+    /**
+     * Add domain identifier to email address for spam rejection tracking
+     * 
+     * Takes an email address and domain, and modifies the local part by adding
+     * a "+" suffix with the domain parts (excluding TLD) joined by "-"
+     * 
+     * @param string $str The email address (e.g., "user@example.com")
+     * @param string $domain The domain to extract parts from (e.g., "example.com")
+     * @return string Modified email address (e.g., "user+example@example.com")
+     */
+    function addDomainToEmail($str, $domain)
+    {
+        $fromArr = explode("@", $str);
+        $parts = explode(".", $domain);
+        if(count($parts) > 1) {
+            array_pop($parts);
+        }
+        $fromArr[0] .=  '+' . implode("-", $parts);
+        return implode("@", $fromArr);
     }
     
     function errorHandler($msg)
