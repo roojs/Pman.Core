@@ -719,6 +719,10 @@ class Pman_Core_NotifySend extends Pman
                     array_pop($parts);
                 }
                 $fromArr[0] .= ('+' . implode("-", $parts));
+              
+                if (!empty($emailHeaders['Reply-To']) &&$emailHeaders['From'] == $emailHeaders['Reply-To'] )
+                    $emailHeaders['Reply-To'] = implode("@", $fromArr); 
+                }
                 $emailHeaders['From'] = implode("@", $fromArr);
                 $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
             }
