@@ -296,17 +296,4 @@ class Pman_Core_DataObjects_Core_notify_server_ipv6 extends DB_DataObject
         
         return $cnsi2;
     }
-
-    /**
-     * Check if the IPv6 address has a reverse pointer
-     * 
-     * @return bool True if the address has a reverse pointer
-     */
-    function ipHasReversePtr()
-    {
-        $cnsi = DB_DataObject::factory('core_notify_server_ipv6');
-        $cnsi->ipv6_addr = $this->ipv6_addr;
-        $cnsi->has_reverse_ptr = 1;
-        return $cnsi->find(true) ? true : false;
-    }
 }

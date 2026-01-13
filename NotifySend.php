@@ -517,10 +517,10 @@ class Pman_Core_NotifySend extends Pman
             $is_ipv6 = filter_var($smtp_host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6);
             $helo_hostname = $ff->Mail['helo'];
             
-            if ($is_ipv6) {
+            if ($is_ipv6 && !empty($this->server_ipv6)) {
                 // Extract last hex segment from IPv6 address (e.g., 2400:8901:e001:52a::22a -> 22a)
                 // Handle compressed zeros (::) by splitting and taking the rightmost part
-                $ipv6_parts = explode('::', $smtp_host);
+                $ipv6_parts = explode('::', $this->server_ipv6->ipv6_addr_str);
                 $right_part = end($ipv6_parts);
                 if (empty($right_part)) {
                     // Address ends with ::, get last segment from left part
@@ -870,9 +870,9 @@ class Pman_Core_NotifySend extends Pman
 
                         // is spamhaus AND 
                         // IPv6 already exists AND 
-                        // the ip is not already spam rejecting AND 
-                        // the ip does not have a reverse pointer
-                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->ipHasReversePtr()) {
+                        // this ip mapping is not already spam rejecting AND 
+                        // this ip mapping does not have a reverse pointer
+                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->has_reverse_ptr) {
                             $old = clone($this->server_ipv6);
                             $this->server_ipv6->is_spam_rejecting = 1;
                             $this->server_ipv6->update($old);
