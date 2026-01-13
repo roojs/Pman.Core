@@ -13,6 +13,7 @@ ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_addr (ipv6_addr);
 ALTER TABLE core_notify_server_ipv6 ADD INDEX lookup_domain (domain_id);
 
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN allocation_reason TEXT NOT NULL DEFAULT '';
+ALTER TABLE core_notify_server_ipv6 ADD COLUMN is_spam_rejecting INT(2) NOT NULL DEFAULT 0;
 
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN seq INT NOT NULL DEFAULT 0;
 ALTER TABLE core_notify_server_ipv6 ADD COLUMN has_reverse_ptr INT NOT NULL DEFAULT 0;
