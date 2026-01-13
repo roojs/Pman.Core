@@ -682,7 +682,6 @@ class Pman_Core_NotifySend extends Pman
                         $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
-                     
                     
                     
                     $mailer->host = $host;
@@ -710,8 +709,21 @@ class Pman_Core_NotifySend extends Pman
                 }
                 
             }
+
+            $emailHeaders = $email['headers'];
+
+            if($use_ipv6 && $this->server_ipv6->is_spam_rejecting && $is_ipv6) {
+                $fromArr = explode("@", $emailHeaders['From']);
+                $parts = explode(".", $dom);
+                if(count($parts) > 1) {
+                    array_pop($parts);
+                }
+                $fromArr[0] .= ('+' . implode("-", $parts));
+                $emailHeaders['From'] = implode("@", $fromArr);
+                $this->debug("IPv6: Spam rejecting, changing from address to {$emailHeaders['From']}");
+            }
             
-            $res = $mailer->send($p->email, $email['headers'], $email['body']);
+            $res = $mailer->send($p->email, $emailHeaders, $email['body']);
             
             if (is_object($res)) {
                 $res->backtrace = array(); 
@@ -853,7 +865,20 @@ class Pman_Core_NotifySend extends Pman
                 else {
                     $reason = array();
                     if (!$is_spamhaus) $reason[] = "not spamhaus";
-                    if (!empty($this->server_ipv6)) $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
+                    if (!empty($this->server_ipv6)) {
+                        $reason[] = "IPv6 already exists (" . ($this->server_ipv6->ipv6_addr_str ?: 'no address') . ")";
+
+                        // is spamhaus AND 
+                        // IPv6 already exists AND 
+                        // the ip is not already spam rejecting AND 
+                        // the ip does not have a reverse pointer
+                        if($is_spamhaus && !$this->server_ipv6->is_spam_rejecting && !$this->server_ipv6->ipHasReversePtr()) {
+                            $old = clone($this->server_ipv6);
+                            $this->server_ipv6->is_spam_rejecting = 1;
+                            $this->server_ipv6->update($old);
+                            $this->debug("IPv6: Set spam rejecting for " . $this->server_ipv6->ipv6_addr_str);
+                        }
+                    }
                     $this->debug("IPv6: Skipping setup - " . implode(", ", $reason));
                     DB_DataObject::factory('core_notify_sender')->checkSmtpResponse($email, $w, $errmsg);
                     // blacklisted
