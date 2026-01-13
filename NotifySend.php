@@ -682,7 +682,6 @@ class Pman_Core_NotifySend extends Pman
                         $this->server->updateNotifyToNextServer( $w , date("Y-m-d H:i:s", time() + $seconds), true, $this->server_ipv6);
                         $this->errorHandler( " Too many emails sent by {$dom} - requeing");
                     }
-                     
                     
                     
                     $mailer->host = $host;
